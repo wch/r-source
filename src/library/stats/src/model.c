@@ -25,6 +25,13 @@
 #include <Defn.h>
 
 #include "statsR.h"
+#undef _
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 /* inline-able versions, used just once! */
 static R_INLINE Rboolean isUnordered_int(SEXP s)
@@ -233,12 +240,11 @@ static void firstfactor(double *x, int nrx, int ncx,
 			double *c, int nrc, int ncc, int *v)
 {
     double *cj, *xj;
-    int i, j;
 
-    for (j = 0; j < ncc; j++) {
-	xj = &x[j*nrx];
-	cj = &c[j*nrc];
-	for (i = 0; i < nrx; i++)
+    for (int j = 0; j < ncc; j++) {
+	xj = &x[j * (R_xlen_t)nrx];
+	cj = &c[j * (R_xlen_t)nrc];
+	for (int i = 0; i < nrx; i++)
 	    if(v[i] == NA_INTEGER) xj[i] = NA_REAL;
 	    else xj[i] = cj[v[i]-1];
     }
@@ -247,15 +253,14 @@ static void firstfactor(double *x, int nrx, int ncx,
 static void addfactor(double *x, int nrx, int ncx,
 		      double *c, int nrc, int ncc, int *v)
 {
-    int i, j, k;
     double *ck, *xj, *yj;
 
-    for (k = ncc - 1; k >= 0; k--) {
-	for (j = 0; j < ncx; j++) {
-	    xj = &x[j*nrx];
-	    yj = &x[(k*ncx+j)*nrx];
-	    ck = &c[k*nrc];
-	    for (i = 0; i < nrx; i++)
+    for (int k = ncc - 1; k >= 0; k--) {
+	for (int j = 0; j < ncx; j++) {
+	    xj = &x[j * (R_xlen_t)nrx];
+	    yj = &x[(k * (R_xlen_t)ncx + j)*nrx];
+	    ck = &c[k * (R_xlen_t)nrc];
+	    for (int i = 0; i < nrx; i++)
 	    if(v[i] == NA_INTEGER) yj[i] = NA_REAL;
 	    else yj[i] = ck[v[i]-1] * xj[i];
 	}
@@ -265,27 +270,25 @@ static void addfactor(double *x, int nrx, int ncx,
 static void firstvar(double *x, int nrx, int ncx, double *c, int nrc, int ncc)
 {
     double *cj, *xj;
-    int i, j;
 
-    for (j = 0; j < ncc; j++) {
-	xj = &x[j*nrx];
-	cj = &c[j*nrc];
-	for (i = 0; i < nrx; i++)
+    for (int j = 0; j < ncc; j++) {
+	xj = &x[j * (R_xlen_t)nrx];
+	cj = &c[j * (R_xlen_t)nrc];
+	for (int i = 0; i < nrx; i++)
 	    xj[i] = cj[i];
     }
 }
 
 static void addvar(double *x, int nrx, int ncx, double *c, int nrc, int ncc)
 {
-    int i, j, k;
     double *ck, *xj, *yj;
 
-    for (k = ncc - 1; k >= 0; k--) {
-	for (j = 0; j < ncx; j++) {
-	    xj = &x[j*nrx];
-	    yj = &x[(k*ncx+j)*nrx];
-	    ck = &c[k*nrc];
-	    for (i = 0; i < nrx; i++)
+    for (int k = ncc - 1; k >= 0; k--) {
+	for (int j = 0; j < ncx; j++) {
+	    xj = &x[j * (R_xlen_t)nrx];
+	    yj = &x[(k * (R_xlen_t)ncx + j)*nrx];
+	    ck = &c[k * (R_xlen_t)nrc];
+	    for (int i = 0; i < nrx; i++)
 		yj[i] = ck[i] * xj[i];
 	}
     }
@@ -329,6 +332,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     char buf[BUFSIZE]="\0";
     char *bufp;
     const char *addp;
+    R_xlen_t nn;
 
     args = CDR(args);
 
@@ -385,7 +389,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(vars) == 0)
 	error(_("do not know how many cases"));
 
-    n = nrows(VECTOR_ELT(vars, 0));
+    nn = n = nrows(VECTOR_ELT(vars, 0));
     /* This could be generated, so need to protect it */
     PROTECT(rnames = getAttrib(vars, R_RowNamesSymbol));
 
@@ -664,6 +668,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Allocate and compute the design matrix. */
 
     PROTECT(x = allocMatrix(REALSXP, n, nc));
+    double *rx = REAL(x);
 
 #ifdef R_MEMORY_PROFILING
     if (RTRACE(vars)){
@@ -674,11 +679,9 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* a) Begin with a column of 1s for the intercept. */
 
-    if ((jnext = jstart = intrcept) != 0) {
-	for (i = 0; i < n; i++) {
-	    REAL(x)[i] = 1.0;
-	}
-    }
+    if ((jnext = jstart = intrcept) != 0)
+	for (i = 0; i < n; i++)
+	    rx[i] = 1.0;
 
     /* b) Now loop over the model terms */
 
@@ -709,13 +712,14 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (jnext == jstart) {
 		    if (INTEGER(nlevs)[i] > 0) {
 			int adj = isLogical(var_i)?1:0;
-			firstfactor(&REAL(x)[jstart * n], n, jnext - jstart,
+			// avoid overflow of jstart * nn PR#15578
+			firstfactor(&rx[jstart * nn], n, jnext - jstart,
 				    REAL(contrast), nrows(contrast),
 				    ncols(contrast), INTEGER(var_i)+adj);
 			jnext = jnext + ncols(contrast);
 		    }
 		    else {
-			firstvar(&REAL(x)[jstart * n], n, jnext - jstart,
+			firstvar(&rx[jstart * nn], n, jnext - jstart,
 				 REAL(var_i), n, ncols(var_i));
 			jnext = jnext + ncols(var_i);
 		    }
@@ -723,13 +727,13 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else {
 		    if (INTEGER(nlevs)[i] > 0) {
 			int adj = isLogical(var_i)?1:0;
-			addfactor(&REAL(x)[jstart * n], n, jnext - jstart,
+			addfactor(&rx[jstart * nn], n, jnext - jstart,
 				  REAL(contrast), nrows(contrast),
 				  ncols(contrast), INTEGER(var_i)+adj);
 			jnext = jnext + (jnext - jstart)*(ncols(contrast) - 1);
 		    }
 		    else {
-			addvar(&REAL(x)[jstart * n], n, jnext - jstart,
+			addvar(&rx[jstart * nn], n, jnext - jstart,
 			       REAL(var_i), n, ncols(var_i));
 			jnext = jnext + (jnext - jstart) * (ncols(var_i) - 1);
 		    }

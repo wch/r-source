@@ -23,8 +23,7 @@ SHLIB = $(pkg)@SHLIB_EXT@
 PKG_CPPFLAGS = @TCLTK_CPPFLAGS@
 PKG_LIBS = @TCLTK_LIBS@ @LIBM@
 
-all: Makefile Makedeps
-	@$(MAKE) Makedeps
+all: Makedeps
 	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

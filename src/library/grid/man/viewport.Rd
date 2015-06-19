@@ -55,9 +55,9 @@ vpTree(parent, children)
     For back-compatibility, a logical value of \code{TRUE} corresponds
     to \code{"on"} and \code{FALSE} corresponds to \code{"inherit"}.}
   \item{xscale}{A numeric vector of length two indicating the minimum and
-    maximum on the x-scale.}
+    maximum on the x-scale.  The limits may not be identical. }
   \item{yscale}{A numeric vector of length two indicating the minimum
-    and maximum on the y-scale.}
+    and maximum on the y-scale. The limits may not be identical. }
   \item{angle}{A numeric value indicating the angle of rotation of the
     viewport.  Positive values indicate the amount of rotation, in
     degrees, anticlockwise from the positive x-axis.}

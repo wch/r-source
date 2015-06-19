@@ -173,7 +173,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     rpipe *fp;
     char  buf[INTERN_BUFSIZE];
     const char *fout = "", *ferr = "";
-    int   vis = 0, flag = 2, i = 0, j, ll;
+    int   vis = 0, flag = 2, i = 0, j, ll = 0;
     SEXP  cmd, fin, Stdout, Stderr, tlist = R_NilValue, tchar, rval;
 
     checkArity(op, args);
@@ -194,7 +194,6 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
     Stderr = CAR(args);
     
- 
     if (CharacterMode == RGui) {
 	/* This is a rather conservative approach: if
 	   Rgui is launched from a console window it does have
@@ -251,12 +250,12 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    R_WriteConsole(buf, strlen(buf));
 	    }
 	    ll = rpipeClose(fp);
-	    if(ll) {
-		warningcall(R_NilValue, 
-			    _("running command '%s' had status %d"), 
-			    CHAR(STRING_ELT(cmd, 0)), ll);
-	    }
 	}
+    }
+    if(ll) {
+	warningcall(R_NilValue, 
+		    _("running command '%s' had status %d"), 
+		    CHAR(STRING_ELT(cmd, 0)), ll);
     }
     if (flag == 3) { /* intern = TRUE: convert pairlist to list */
 	PROTECT(rval = allocVector(STRSXP, i));

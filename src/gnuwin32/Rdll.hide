@@ -979,6 +979,7 @@
  do_trunc
  do_truncate
  do_typeof
+ do_tzone_name
  do_unclass
  do_unlink
  do_unlist

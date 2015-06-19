@@ -44,7 +44,7 @@ function(files, filter, control = list(), encoding = "unknown",
                     readLines(ifile$filename, encoding = encoding,
                               warn = FALSE)
                 else if(inherits(ifile, "connection"))
-                    readLines(ifile, encoding = encoding)
+                    readLines(ifile, encoding = encoding, warn = FALSE)
                 else {
                     ## What should this do with encodings?
                     as.character(ifile)
@@ -171,7 +171,7 @@ function(files, filter, control = list(), encoding = "unknown",
 
         out <- tools:::.system_with_capture(program, c("-a", control),
                                             stdin = tfile)
-                                           
+
 	if(out$status != 0L)
 	    stop(gettextf("Running aspell failed with diagnostics:\n%s",
 			  paste(out$stderr, collapse = "\n")),
@@ -589,7 +589,7 @@ function(dir,
     vinfo <- tools::pkgVignettes(dir = dir)
     files <- vinfo$docs
     if(!length(files)) return(aspell(character()))
-    
+
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
@@ -667,7 +667,7 @@ function(ifile, encoding = "unknown", ignore = character())
         ## (See above for doing this twice.)
     }
 
-    lines <- readLines(ifile, encoding = encoding)
+    lines <- readLines(ifile, encoding = encoding, warn = FALSE)
 
     ## Column positions in the parse data have tabs expanded to tab
     ## stops using a tab width of 8, so for lines with tabs we need to
@@ -887,7 +887,7 @@ function(dir, ignore = character(),
 aspell_filter_db$pot <-
 function (ifile, encoding = "unknown", ignore = character())
 {
-    lines <- readLines(ifile, encoding = encoding)
+    lines <- readLines(ifile, encoding = encoding, warn = FALSE)
 
     ind <- grepl("^msgid[ \t]", lines)
 
@@ -1023,7 +1023,7 @@ aspell_filter_db$dcf <-
 function(ifile, encoding, keep = c("Title", "Description"),
          ignore = character())
 {
-    lines <- readLines(ifile, encoding = encoding)
+    lines <- readLines(ifile, encoding = encoding, warn = FALSE)
     line_has_tags <- grepl("^[^[:blank:]][^:]*:", lines)
     tags <- sub(":.*", "", lines[line_has_tags])
     lines <- split(lines, cumsum(line_has_tags))

@@ -56,7 +56,11 @@ packages which provide more general color space facilities.
 }
 \value{
   A vector of character strings which can be used as color
-  specifications by R graphics functions.
+  specifications by \R graphics functions.
+  
+  Missing or infinite values of any of \code{h}, \code{c}, \code{l}
+  result in \code{NA}: such values of \code{alpha} are taken as \code{1}
+  (opaque).  
 }
 \references{
 Ihaka, R. (2003).

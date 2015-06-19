@@ -162,7 +162,7 @@ function(file)
     ## Everything before the first version line is a header which will
     ## be dropped.
     if(!ind[1L]) {
-        pos <- seq_len(which(ind)[1L] - 1L)
+	pos <- seq_len(which.max(ind) - 1L)
         lines <- lines[-pos]
         ind <- ind[-pos]
     }

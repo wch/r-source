@@ -260,6 +260,7 @@ setRlibs <-
         haveR <- dir.exists("R") && !extra_arch
 
         if (!extra_arch) {
+            if(dir.exists("build")) check_build()
             check_meta()  # Check DESCRIPTION meta-information.
             check_top_level()
             check_detritus()
@@ -315,6 +316,36 @@ setRlibs <-
         }
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
         if (dir.exists("vignettes")) check_vign_contents()
+        if (dir.exists("inst/doc") && !dir.exists("vignettes")) {
+            pattern <- vignetteEngine("Sweave")$pattern
+            sources <- setdiff(list.files(file.path("inst", "doc"),
+                                          pattern = pattern),
+                               list.files("vignettes", pattern = pattern))
+            buildPkgs <- .get_package_metadata(".")["VignetteBuilder"]
+            if (!is.na(buildPkgs)) {
+                buildPkgs <- unlist(strsplit(buildPkgs, ","))
+                buildPkgs <- unique(gsub('[[:space:]]', '', buildPkgs))
+                engineList <- vignetteEngine(package = buildPkgs)
+                for(nm in names(engineList)) {
+                    pattern <- engineList[[nm]]$pattern
+                    sources <- c(sources,
+                                 setdiff(list.files(file.path("inst", "doc"),
+                                                    pattern = pattern),
+                                         list.files("vignettes", pattern = pattern)))
+                }
+            }
+            sources <- unique(sources)
+            if(length(sources)) {
+                checkingLog(Log, "for old-style vignette sources")
+                msg <- c("Vignette sources only in 'inst/doc':",
+                         strwrap(paste(sQuote(sources), collapse = ", "),
+                                 indent = 2L, exdent = 2L),
+                         "A 'vignettes' directory is required as from R 3.1.0",
+                         "and these will not be indexed nor checked")
+                ## warning or error eventually
+                noteLog(Log, paste(msg, collapse = "\n"))
+            }
+        }
 
         setwd(pkgoutdir)
 
@@ -675,6 +706,34 @@ setRlibs <-
         if (!any) resultLog(Log, "OK")
     }
 
+    check_build <- function()
+    {
+        fv <- file.path("build", "vignette.rds")
+        if(!file.exists(fv)) return()
+        checkingLog(Log, "'build' directory")
+        any <- FALSE
+        db <- readRDS(fv)
+        ## do as CRAN-pack does
+        keep <- nzchar(db$PDF)
+        if(any(!keep)) {
+            if(!any) warningLog(Log)
+            any <- TRUE
+            msg <- c("Vignette(s) without any output listed in 'build/vignette.rds'",
+                     strwrap(sQuote(db$file[!keep]), indent = 2L, exdent = 2L))
+            printLog(Log, paste(msg, collapse = "\n"), "\n")
+        }
+        pdfs <- file.path("inst", "doc", db[keep, ]$PDF)
+        missing <- !file.exists(pdfs)
+        if(any(missing)) {
+            if(!any) warningLog(Log)
+            any <- TRUE
+            msg <- c("Output(s) listed in 'build/vignette.rds' but not in package:",
+                     strwrap(sQuote(pdfs[missing]), indent = 2L, exdent = 2L))
+            printLog(Log, paste(msg, collapse = "\n"), "\n")
+        }
+        if (!any) resultLog(Log, "OK")
+    }
+
     check_top_level <- function()
     {
         checkingLog(Log, "top-level files")
@@ -751,7 +810,8 @@ setRlibs <-
                        "BUGS", "Bugs",
                        "ChangeLog", "Changelog", "CHANGELOG", "CHANGES", "Changes",
                        "INSTALL", "README", "THANKS", "TODO", "ToDo",
-                       "README.md", # seems popular
+                       "INSTALL.windows",
+                       "README.md",   # seems popular
                        "configure", "configure.win", "cleanup", "cleanup.win",
                        "configure.ac", "configure.in",
                        "datafiles",
@@ -1870,7 +1930,7 @@ setRlibs <-
             warningLog(Log)
             any <- TRUE
             msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                    strwrap(paste(sources, collapse = ", "),
+                    strwrap(paste(sQuote(sources), collapse = ", "),
                             indent = 2L, exdent = 4L),
                      "")
             printLog(Log, paste(msg, collapse = "\n"))
@@ -2486,7 +2546,8 @@ setRlibs <-
                 res <- TRUE
                 for (arch in inst_archs)
                     if (!(arch %in% R_check_skip_tests_arch)) {
-                        printLog(Log, "** running tests for arch ", sQuote(arch))
+                        printLog(Log, "** running tests for arch ",
+                                 sQuote(arch), " ...")
                         res <- res & run_one_arch(arch)
                     }
             }
@@ -2676,7 +2737,7 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                savefile <- paste0(name, ".Rout.save")
+                savefile <- file.path(dirname(file), paste0(name, ".Rout.save"))
                 if(length(grep("^  When (running|tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
@@ -3234,10 +3295,8 @@ setRlibs <-
                                   lines, invert = TRUE, value = TRUE)
                 }
 
-                ## Warnings about replacing imports are almost always
-                ## due to auto-generated namespaces
                 check_imports_flag <-
-                    Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "FALSE")
+                    Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "TRUE")
                 if (!config_val_to_logical(check_imports_flag))
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
@@ -3381,7 +3440,9 @@ setRlibs <-
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
             } else if(length(res$bad_version) ||
-                      identical(res$foss_with_BuildVigettes, TRUE))
+                      identical(res$foss_with_BuildVigettes, TRUE) ||
+                      res$empty_Maintainer_name ||
+                      res$Maintainer_needs_quotes)
                 warningLog(Log)
             else if(length(res) > 1L) noteLog(Log)
             else resultLog(Log, "OK")
@@ -3431,9 +3492,32 @@ setRlibs <-
                      })
             nS3methods <- nrow(ns$S3methods)
             if (nS3methods > 500L) {
-                msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
-                               nS3methods)
-                noteLog(Log, msg)
+                ## check that this is installable in R 3.0.1
+                meta <- .read_description(file.path(pkgdir, "DESCRIPTION"))
+                deps <- .split_description(meta, verbose = TRUE)$Rdepends2
+                status <- 0L
+                current <- as.numeric_version("3.0.1")
+                for(depends in deps) {
+                    ## .check_package_description will insist on these operators
+                    if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!="))
+                        next
+                    status <- if(inherits(depends$version, "numeric_version"))
+                        !do.call(depends$op, list(current, depends$version))
+                    else {
+                        ver <- R.version
+                        if (ver$status %in% c("", "Patched")) FALSE
+                        else !do.call(depends$op,
+                                      list(ver[["svn rev"]],
+                                           as.numeric(sub("^r", "", depends$version))))
+                    }
+                    if(status != 0L)  break
+                }
+                if (status == 0L) {
+                    msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
+                                   nS3methods)
+                    noteLog(Log, msg)
+                } else
+                    resultLog(Log, "OK")
             } else
                 resultLog(Log, "OK")
         }

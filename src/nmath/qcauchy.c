@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998   Ross Ihaka
- *  Copyright (C) 2000   The R Core Team
- *  Copyright (C) 2005-6 The R Foundation
+ *  Copyright (C) 1998    Ross Ihaka
+ *  Copyright (C) 2000-13 The R Core Team
+ *  Copyright (C) 2005-6  The R Foundation
  *
  *  This version is based on a suggestion by Morten Welinder.
  *
@@ -54,9 +54,17 @@ double qcauchy(double p, double location, double scale,
 	    p = -expm1(p);
 	} else
 	    p = exp(p);
-    } else if (p == 1.)
-	return my_INF;
+    } else {
+	if (p > 0.5) {
+	    if (p == 1.)
+		return my_INF;
+	    p = 1 - p;
+	    lower_tail = !lower_tail;
+	}
+    }
 
-    return location + (lower_tail ? -scale : scale) / tan(M_PI * p);
+    if (p == 0.5) return location; // avoid 1/Inf below
+    if (p == 0.) return location + (lower_tail ? scale : -scale) * ML_NEGINF; // p = 1. is handled above
+    return location + (lower_tail ? -scale : scale) / tanpi(p);
     /*	-1/tan(pi * p) = -cot(pi * p) = tan(pi * (p - 1/2))  */
 }

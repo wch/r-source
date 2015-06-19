@@ -1,6 +1,6 @@
 % File src/library/base/man/gl.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gl}
@@ -10,7 +10,7 @@
   Generate factors by specifying the pattern of their levels.
 }
 \usage{
-gl(n, k, length = n*k, labels = 1:n, ordered = FALSE)
+gl(n, k, length = n*k, labels = seq_len(n), ordered = FALSE)
 }
 \arguments{
   \item{n}{an integer giving the number of levels.}

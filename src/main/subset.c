@@ -659,8 +659,8 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
 {
     if (IS_R_NilValue(ATTRIB(s)))
 	switch (TYPEOF(s)) {
-	case REALSXP:
-	    if (XLENGTH(s) == 1 && ! ISNAN(REAL(s)[0]))
+	case REALSXP: // treat infinite indices as NA, like asInteger
+	    if (XLENGTH(s) == 1 && R_FINITE(REAL(s)[0]))
 		return (R_xlen_t) REAL(s)[0];
 	    else return -1;
 	case INTSXP:

@@ -3102,9 +3102,9 @@ smoothing (it usually does for ``interesting'' densities).  (Better
 automated methods of bandwidth choice are available, and in this example
 @code{bw = "SJ"} gives a good result.)
 
-@iftex
+@ifnotinfo
 @image{images/hist,9cm}
-@end iftex
+@end ifnotinfo
 
 We can plot the empirical cumulative distribution function by using the
 function @code{ecdf}.
@@ -3126,9 +3126,9 @@ Let us fit a normal distribution and overlay the fitted CDF.
 > lines(x, pnorm(x, mean=mean(long), sd=sqrt(var(long))), lty=3)
 @end example
 
-@iftex
+@ifnotinfo
 @image{images/ecdf,9cm}
-@end iftex
+@end ifnotinfo
 
 Quantile-quantile (Q-Q) plots can help us examine this more carefully.
 @cindex Quantile-quantile plots
@@ -3145,9 +3145,9 @@ which shows a reasonable fit but a shorter right tail than one would
 expect from a normal distribution.  Let us compare this with some
 simulated data from a @math{t} distribution
 
-@iftex
+@ifnotinfo
 @image{images/QQ,7cm}
-@end iftex
+@end ifnotinfo
 
 @example
 x <- rt(250, df = 5)
@@ -3238,9 +3238,9 @@ boxplot(A, B)
 which indicates that the first group tends to give higher results than
 the second.
 
-@iftex
+@ifnotinfo
 @image{images/ice,7cm}
-@end iftex
+@end ifnotinfo
 
 To test for the equality of the means of the two examples, we can use
 an @emph{unpaired} @math{t}-test by
@@ -6125,11 +6125,11 @@ A single plot in @R{} is known as a @code{figure} and comprises a
 @emph{plot region} surrounded by margins (possibly containing axis
 labels, titles, etc.) and (usually) bounded by the axes themselves.
 
-@iftex
+@ifnotinfo
 A typical figure is
 
 @image{images/fig11,7cm}
-@end iftex
+@end ifnotinfo
 
 Graphics parameters controlling figure layout include:
 
@@ -6162,9 +6162,9 @@ single page.  Each figure has its own margins, and the array of figures
 is optionally surrounded by an @emph{outer margin}, as shown in the
 following figure.
 
-@iftex
+@ifnotinfo
 @image{images/fig12,6cm}
-@end iftex
+@end ifnotinfo
 
 The graphical parameters relating to multiple figures are as follows:
 
@@ -7132,7 +7132,7 @@ metacharacters will need to be quoted.)
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
 is useful when running @R{} from within Emacs using the @acronym{ESS}
 (``Emacs Speaks Statistics'') package.  @xref{The command-line editor},
-for more information.  Command-line editing is enabled by default
+for more information.  Command-line editing is enabled for default
 interactive use (see @option{--interactive}).  This option also affects
 tilde-expansion: see the help for @code{path.expand}.
 
@@ -7178,10 +7178,12 @@ terminal or @code{pty}.)  Using @option{-e}, @option{-f} or
 @option{--file} asserts non-interactive use even if
 @option{--interactive} is given.
 
+Note that this does not turn on command-line editing.
+
 @item --ess
 (Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in
-@acronym{ESS}, including asserting interactive use without the
-command-line editor.
+@acronym{ESS}, including asserting interactive use (without the
+command-line editor) and no buffering of @file{stdout}.
 
 @item --verbose
 Print more information about progress, and in particular set @R{}'s

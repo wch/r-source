@@ -1730,7 +1730,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     setresize(xd->gawin, HelpResize);
     setredraw(xd->gawin, HelpExpose);
     setmousedown(xd->gawin, HelpMouseClick);
-    setmousemove(xd->gawin, HelpMouseMove);
+    setmousemove(xd->gawin, HelpMouseMove); 
     setmousedrag(xd->gawin, HelpMouseMove);
     setmouseup(xd->gawin, HelpMouseUp);
     setkeydown(xd->gawin, NHelpKeyIn);
@@ -3149,7 +3149,7 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 
     while (!xd->clicked) {
 	SH;
-	if (!peekevent()) WaitMessage();
+	R_WaitEvent();
 	R_ProcessEvents();
     }
 
@@ -3779,7 +3779,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	SH;
-	if (!peekevent()) WaitMessage();
+	R_WaitEvent();
 	R_ProcessEvents(); /* May not return if user interrupts */
     }
     dev->onExit(dev);

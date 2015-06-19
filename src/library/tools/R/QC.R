@@ -2839,11 +2839,12 @@ function(dir, force_suggests = TRUE)
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
 
-    ## This is unsafe if the package itself is the VignetteBuilder,
-    ## as we may not have installed it yet.
-    ## But only problematic if we get an old version.
+    ## This is a check for old-location vignettes.
+    ## If the package itself is the VignetteBuilder,
+    ## we may not have installed it yet.
+    defer <- package_name %in%  db["VignetteBuilder"]
     vigns <- pkgVignettes(dir = dir, subdirs = file.path("inst", "doc"),
-                          check = TRUE)
+                          check = !defer)
 
      if(length(vigns$msg))
          bad_depends$bad_engine <- vigns$msg
@@ -3207,8 +3208,27 @@ function(dfile)
     links <- character()
     llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
     if(length(llinks)) {
-        llinks <- llinks[sapply(llinks, length) > 1L]
-        if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
+        ## See if this is installable under 3.0.1:
+        ## if so check for versioned specs
+        deps <- .split_description(db, verbose = TRUE)$Rdepends2
+        status <- 0L
+        current <- as.numeric_version("3.0.1")
+        for(depends in deps) {
+            if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!=")) next
+            status <- if(inherits(depends$version, "numeric_version"))
+                !do.call(depends$op, list(current, depends$version))
+            else {
+                ver <- R.version
+                if (ver$status %in% c("", "Patched")) FALSE
+                else !do.call(depends$op,
+                              list(ver[["svn rev"]],
+                                   as.numeric(sub("^r", "", depends$version))))
+            }
+        }
+        if(!status) {
+            llinks <- llinks[sapply(llinks, length) > 1L]
+            if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
+        }
     }
     out <- list(duplicates = unique(allpkgs[duplicated(allpkgs)]),
                 bad_links = links)
@@ -3228,11 +3248,11 @@ format.check_package_description2 <- function(x, ...)
     },
       if(length(xx <- x$bad_links)) {
           if(length(xx) > 1L)
-              c("Versioned LinkingTo values for",
+              c("Versioned 'LinkingTo' values for",
                 paste(c(" ", sQuote(xx)), collapse = " "),
                 "are only usable in R >= 3.0.2")
           else
-              sprintf("Versioned LinkingTo value for %s is only usable in R >= 3.0.2",
+              sprintf("Versioned 'LinkingTo' value for %s is only usable in R >= 3.0.2",
                       sQuote(xx))
       })
 }
@@ -3862,7 +3882,7 @@ function(package, dir, lib.loc = NULL)
     unknown <- character()
     thispkg <- anchor
     thisfile <- db[, 1L]
-    thispkg[have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
+    thispkg [have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
     thisfile[have_colon] <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
 
     use_aliases_from_CRAN <-
@@ -4278,19 +4298,21 @@ function(dir, doDelete = FALSE)
         }
     }
 
+    ## check installed vignette material
     subdir <- file.path("inst", "doc")
-    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
-    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+    vigns <- pkgVignettes(dir = dir, subdirs = subdir)
+    if (!is.null(vigns) && length(vigns$docs)) {
         vignettes <- basename(vigns$docs)
 
-        # Add vignette output files, if they exist
+        ## Add vignette output files, if they exist
         tryCatch({
-            vigns <- pkgVignettes(dir=dir, subdirs=subdir, output=TRUE)
+            vigns <- pkgVignettes(dir = dir, subdirs = subdir, output = TRUE)
             vignettes <- c(vignettes, basename(vigns$outputs))
         }, error = function(ex) {})
 
-        ## we specify ASCII filenames starting with a letter in R-exts
-        ## do this in a locale-independent way.
+        ## 'the file names should start with an ASCII letter and be comprised
+        ## entirely of ASCII letters or digits or hyphen or underscore'
+        ## Do this in a locale-independent way.
         OK <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz][ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
@@ -5182,16 +5204,6 @@ function(package, dir, lib.loc = NULL)
     imp3selfcalls <- as.vector(imp3f[names(imp3f) == pkg_name])
     imp3 <- setdiff(imp3, pkg_name)
     if(length(imp3)) {
-        ## remove other packages which have the same maintainer,
-        ## but report references to itself.
-        maintainers <-
-            sapply(imp3,
-                   function(p) {
-                       dfile <- system.file("DESCRIPTION", package = p)
-                       if(dfile == "") return("")
-                       .read_description(dfile)["Maintainer"]
-                   })
-        imp3 <- imp3[(maintainers != db["Maintainer"])]
         imp3f <- imp3f[names(imp3f) %in% imp3]
         imps <- split(imp3f, names(imp3f))
         imp32 <- imp3 <- imp3f <- imp3ff <- unknown <- character()
@@ -5229,7 +5241,19 @@ function(package, dir, lib.loc = NULL)
                  }
             }
         }
-    } else imp32 <- imp3ff <- unknown <- character()
+        if(length(imp3f)) {
+            ## remove other packages which have the same maintainer,
+            ## but report references to itself.  Unless they should be :: .
+            maintainers <-
+                sapply(strsplit(imp3f, ":::", fixed = TRUE),
+                       function(p) {
+                           dfile <- system.file("DESCRIPTION", package = p[[1L]])
+                           if(dfile == "") return("")
+                           unname(.read_description(dfile)["Maintainer"])
+                       })
+            imp3f <- imp3f[(maintainers != db["Maintainer"])]
+        }
+    } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
@@ -5293,9 +5317,9 @@ function(x, ...)
           }
       },
       if(length(xx <- x$depends_not_import)) {
-          msg <- c("  These packages needs to imported from for the case when",
+          msg <- c("  These packages need to be imported from for the case when",
                    "  this namespace is loaded but not attached.")
-         if(length(xx) > 1L) {
+          if(length(xx) > 1L) {
               c(gettext("Packages in Depends field not imported from:"),
                 .pretty_format(sort(xx)), msg)
           } else {
@@ -5331,13 +5355,12 @@ function(x, ...)
                        sQuote(xx))
           }
      },
-      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
-          xxx <- x$imp3f
+      if(length(xxx <- x$imp3f)) { ## ' ' seems to get converted to dir quotes
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(incoming) {
               base <- unlist(.get_standard_package_names()[c("base", "recommended")])
-              if (any(xx %in% base))
+              if (any(xxx %in% base))
                   msg <- c(msg,
                            "  Including base/recommended package(s):",
                            .pretty_format(intersect(base, xx)))
@@ -5549,31 +5572,15 @@ function(dir, lib.loc = NULL)
 ### * .check_packages_used_in_vignettes
 
 .check_packages_used_in_vignettes <-
-function(package, dir, lib.loc = NULL)
+function(package, lib.loc = NULL)
 {
     ## Argument handling.
-    if(!missing(package)) {
-        if(length(package) != 1L)
-            stop("argument 'package' must be of length 1")
-        dir <- find.package(package, lib.loc)
-        subdir <- "doc"
-    }
-    else if(!missing(dir)) {
-        ## Using sources from directory @code{dir} ...
-        ## not currently used
-        ## <NOTE>
-        ## This needs unpacked sources built with R >= 3.0.0, which
-        ## apparently also tangles the vignette sources.
-        if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA)
-        else
-            dir <- file_path_as_absolute(dir)
-        subdir <- file.path("inst", "doc")
-        ## </NOTE>
-    }
+    if(missing(package) || length(package) != 1L)
+        stop("argument 'package' must be of length 1")
+    dir <- find.package(package, lib.loc)
+    ## FIXME: use Meta directory.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
-    vinfo <- pkgVignettes(dir = dir, subdirs = subdir, source = TRUE)
+    vinfo <- pkgVignettes(dir = dir, subdirs = "doc", source = TRUE)
     Rfiles <- unique(as.character(unlist(vinfo$sources)))
     .check_packages_used_helper(db, Rfiles)
 }
@@ -6174,10 +6181,32 @@ function(dir)
     ## Record to notify about components extending a base license which
     ## permits extensions.
     if(length(extensions <- info$extensions) &&
-       any(ind <- extensions$extensible))
+       any(ind <- extensions$extensible)) {
         out$extensions <- extensions$components[ind]
+        out$pointers <-
+            Filter(length,
+                   lapply(info$pointers,
+                          function(p) {
+                              fp <- file.path(dir, p)
+                              if(file_test("-f", fp)) {
+                                  ## Should this use the package
+                                  ## encoding?
+                                  c(p, readLines(fp, warn = FALSE))
+                              } else NULL
+                          }))
+    }
 
     out$Maintainer <- meta["Maintainer"]
+    ## pick out 'display name'
+    display <- gsub("<.*", "", as.vector(out$Maintainer))
+    display <- sub("[[:space:]]+$", "",
+                   sub("^[[:space:]]+", "", display, useBytes = TRUE),
+                   useBytes = TRUE)
+    ## RFC 5322 allows '.' in the display name, but 2822 did not.
+    ## ',' separates email addresses.
+    out$Maintainer_needs_quotes <-
+        grepl("[,]", display, useBytes = TRUE) && !grepl('^".*"$', display, useBytes = TRUE)
+    out$empty_Maintainer_name <- !nzchar(display)
 
     ver <- meta["Version"]
     if(is.na(ver))
@@ -6464,28 +6493,37 @@ function(dir)
     if (length(uses)) out$uses <- sort(unique(uses))
     if (length(BUGS)) out$BUGS <- sort(unique(BUGS))
 
-    ## Check for vignette source (only) in old-style 'inst/doc' rather
-    ## than new-style 'vignettes'.
-    ## Currently only works for Sweave vignettes: eventually, we should
-    ## be able to use build/vignette.rds for determining *all* package
-    ## vignettes.
+    ## Check for non-Sweave vignettes (as indicated by the presense of a
+    ## 'VignetteBuilder' field in DESCRIPTION) without
+    ## 'build/vignette.rds'.
 
-    pattern <- vignetteEngine("Sweave")$pattern
+    vds <- character()
+    if(!is.na(meta["VignetteBuilder"])) {
+        if(!file.exists(vds <- file.path(dir, "build", "vignette.rds")))
+            out$missing_vignette_index <- TRUE
+        else
+            vds <- readRDS(vds)[, "File"]
+    }
+
+    ## Check for vignette source (only) in old-style 'inst/doc' rather
+    ## than 'vignettes'.
     vign_dir <- file.path(dir, "vignettes")
-    sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
-                                  pattern = pattern),
-                       list.files(vign_dir, pattern = pattern))
+    if(length(vds)) {
+        sources <- setdiff(list.files(file.path(dir, "inst", "doc")),
+                           list.files(vign_dir))
+        sources <- intersect(vds, sources)
+    } else {
+        pattern <- vignetteEngine("Sweave")$pattern
+        sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
+                                      pattern = pattern),
+                           list.files(vign_dir, pattern = pattern))
+    }
+
     if(length(sources)) {
         out$have_vignettes_dir <- file_test("-d", vign_dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
-    ## Check for non-Sweave vignettes (as indicated by the presense of a
-    ## 'VignetteBuilder' field in DESCRIPTION) without
-    ## 'build/vignette.rds'.
-    if(!is.na(meta["VignetteBuilder"]) &&
-       !file.exists(file.path(dir, "build", "vignette.rds")))
-        out$missing_vignette_index <- TRUE
 
     out
 }
@@ -6497,6 +6535,10 @@ function(x, ...)
       if(length(x$Maintainer))
           sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
       else "No maintainer field in DESCRIPTION file",
+      if(x$empty_Maintainer_name)
+          'The maintainer field lacks a name',
+      if(x$Maintainer_needs_quotes)
+          'The display-name part of the maintainer field should be enclosed in ""',
       if(length(x$new_submission))
           "New submission",
       if(length(y <- x$bad_package))
@@ -6531,9 +6573,15 @@ function(x, ...)
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old license:",
             strwrap(y[[2L]], indent = 2L, exdent = 4L)),
-      if(length(y <- x$extensions))
+      if(length(y <- x$extensions)) {
           c("Components with restrictions and base license permitting such:",
-            paste(" ", y)),
+            paste(" ", y),
+            unlist(lapply(x$pointers,
+                          function(e) {
+                              c(sprintf("File '%s':", e[1L]),
+                                paste(" ", e[-1L]))
+                          })))
+      },
       if(NROW(y <- x$spelling)) {
           s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
           c("Possibly mis-spelled words in DESCRIPTION:",
@@ -6592,14 +6640,16 @@ function(x, ...)
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
               c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
-                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L),
-                "A 'vignettes' directory has been preferred since R 2.14.0")
+                strwrap(paste(sQuote(y), collapse = ", "),
+                        indent = 2L, exdent = 2L),
+                "A 'vignettes' directory is required as from R 3.1.0")
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+                strwrap(paste(sQuote(y), collapse = ", "),
+                        indent = 2L, exdent = 2L))
       },
       if(length(y <- x$missing_vignette_index)) {
-          "Package has non-Sweave vignettes but no prebuilt vignette index."
+          "Package has a VignetteBuilder field but no prebuilt vignette index."
       }
       )
 }

@@ -16,12 +16,14 @@
 
 ## tests of nls, especially of weighted fits
 
-.proctime00 <- proc.time()
 library(stats)
 options(digits=5) # to avoid trivial printed differences
-options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
+options(useFancyQuotes=FALSE) # avoid fancy quotes in o/p
 options(show.nls.convergence=FALSE) # avoid non-diffable output
 pdf("nls-test.pdf")
+
+## utility for comparing nls() results:  [TODO: use more often below]
+.n <- function(r) r[names(r) != "call"]
 
 ## selfStart.default() w/ no parameters:
 logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
@@ -205,22 +207,34 @@ confint(m2)
 options(op)
 
 ## scoping problems
-test <- function()
+test <- function(trace=TRUE)
 {
     x <- seq(0,5,len=20)
     n <- 1
     y <- 2*x^2 + n + rnorm(x)
     xy <- data.frame(x=x,y=y)
     myf <- function(x,a,b,c) a*x^b+c
-    nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=TRUE)
+    list(with.start=
+         nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=trace),
+         no.start= ## cheap auto-init to 1
+	 suppressWarnings(
+	     nls(y ~ myf(x,A,B,n), data=xy)))
 }
-test()
+t1 <- test(); t1$with.start
+##__with.start:
 ## failed to find n in 2.2.x
 ## found wrong n in 2.3.x
 ## finally worked in 2.4.0
+##__no.start: failed in 3.0.2
+stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
+rm(a,b)
+t2 <- test(FALSE)
+stopifnot(all.equal(lapply(t1, .n),
+		    lapply(t2, .n), tol=0.16))# different random error
 
 
 ## list 'start'
+set.seed(101)# (remain independent of above)
 getExpmat <- function(theta, t)
 {
         conc <- matrix(nrow = length(t), ncol = length(theta))
@@ -258,5 +272,3 @@ fit <- nls(y~b0[fac] + b1*x, start = list(b0=c(1,1), b1=101),
            control = list(warnOnly=TRUE))# warning ..
 with(fit$convInfo, ## start par. violates constraints
      stopifnot(isConv == FALSE, stopCode == 300))
-
-cat('Time elapsed: ', proc.time() - .proctime00,'\n')

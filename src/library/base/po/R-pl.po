@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -94,16 +94,6 @@ msgstr "wartość nieskończona lub brakuje wartości w 'x'"
 # stop("a dimension is zero")
 msgid "a dimension is zero"
 msgstr "wymiar wynosi zero"
-
-# src/library/base/R/LAPACK.R: 43
-# stop("'nu' must be 0, nrow(x) or ncol(x)")
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu' musi mieć wartość 0, nrow(x) lub ncol(x)"
-
-# src/library/base/R/LAPACK.R: 58
-# stop("'nv' must be 0, nrow(x) or ncol(x)")
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv' musi mieć wartość 0, nrow(x) lub ncol(x)"
 
 # src/library/base/R/New-Internal.R: 130
 # stop("second argument must be a list")
@@ -1114,6 +1104,12 @@ msgstr "'from' musi być obiektem klasy \"POSIXt\""
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' musi być obiektem klasy \"POSIXt\""
 
+# src/library/base/R/files.R: 185
+# stop("no file found")
+#, fuzzy
+msgid "no Olson database found"
+msgstr "nie znaleziono pliku"
+
 # src/library/base/R/dcf.R: 27
 # stop("'file' must be a character string or connection")
 # src/library/base/R/dcf.R: 143
@@ -1539,6 +1535,12 @@ msgstr "potrzeba mieć zamiany dla niedopasowań"
 # stop("must have replacements for matches")
 msgid "must have replacements for matches"
 msgstr "potrzeba mieć zamiany dla dopasowań"
+
+# src/library/base/R/library.R: 543
+# stop("no DLL was specified")
+#, fuzzy
+msgid "No factors specified"
+msgstr "nie określono pliku DLL"
 
 # src/library/base/R/kappa.R: 60
 # warning(gettextf("norm '%s' currently always uses exact = FALSE",
@@ -4556,6 +4558,16 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+# src/library/base/R/LAPACK.R: 43
+# stop("'nu' must be 0, nrow(x) or ncol(x)")
+#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nu' musi mieć wartość 0, nrow(x) lub ncol(x)"
+
+# src/library/base/R/LAPACK.R: 58
+# stop("'nv' must be 0, nrow(x) or ncol(x)")
+#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nv' musi mieć wartość 0, nrow(x) lub ncol(x)"
 
 # src/library/base/R/namespace.R: 1259
 # stop("too many 'S3method' directives", call. = FALSE)

@@ -595,7 +595,7 @@ stringWidth <- function(string) {
     } else {
         data <- as.list(as.character(string))
     }
-    unit(rep(1, n), "strwidth", data=data)
+    unit(rep_len(1, n), "strwidth", data=data)
 }
 
 stringHeight <- function(string) {
@@ -607,7 +607,7 @@ stringHeight <- function(string) {
     } else {
         data <- as.list(as.character(string))
     }
-    unit(rep(1, n), "strheight", data=data)
+    unit(rep_len(1, n), "strheight", data=data)
 }
 
 stringAscent <- function(string) {
@@ -619,7 +619,7 @@ stringAscent <- function(string) {
     } else {
         data <- as.list(as.character(string))
     }
-    unit(rep(1, n), "strascent", data=data)
+    unit(rep_len(1, n), "strascent", data=data)
 }
 
 stringDescent <- function(string) {
@@ -631,7 +631,7 @@ stringDescent <- function(string) {
     } else {
         data <- as.list(as.character(string))
     }
-    unit(rep(1, n), "strdescent", data=data)
+    unit(rep_len(1, n), "strdescent", data=data)
 }
 
 convertTheta <- function(theta) {
@@ -700,7 +700,7 @@ grobWidth.grob <- function(x) {
 }
 
 grobWidth.gList <- function(x) {
-  unit(rep(1, length(gList)), "grobwidth", data=x)
+  unit(rep_len(1, length(gList)), "grobwidth", data=x)
 }
 
 grobWidth.gPath <- function(x) {
@@ -721,7 +721,7 @@ grobHeight.grob <- function(x) {
 }
 
 grobHeight.gList <- function(x) {
-  unit(rep(1, length(gList)), "grobheight", data=x)
+  unit(rep_len(1, length(gList)), "grobheight", data=x)
 }
 
 grobHeight.gPath <- function(x) {
@@ -742,7 +742,7 @@ grobAscent.grob <- function(x) {
 }
 
 grobAscent.gList <- function(x) {
-  unit(rep(1, length(gList)), "grobascent", data=x)
+  unit(rep_len(1, length(gList)), "grobascent", data=x)
 }
 
 grobAscent.gPath <- function(x) {
@@ -763,7 +763,7 @@ grobDescent.grob <- function(x) {
 }
 
 grobDescent.gList <- function(x) {
-  unit(rep(1, length(gList)), "grobdescent", data=x)
+  unit(rep_len(1, length(gList)), "grobdescent", data=x)
 }
 
 grobDescent.gPath <- function(x) {

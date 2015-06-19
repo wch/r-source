@@ -48,7 +48,18 @@ factor <- function(x = character(), levels, labels = levels,
 }
 
 is.factor <- function(x) inherits(x, "factor")
-as.factor <- function(x) if (is.factor(x)) x else factor(x)
+
+as.factor <- function(x) {
+    if (is.factor(x)) x
+    else if (!is.object(x) && is.integer(x)) {
+        ## optimization for calls from tapply via split.default
+        levels <- sort(unique.default(x)) # avoid array methods
+        f <- match(x, levels)
+        levels(f) <- as.character(levels)
+        class(f) <- "factor"
+        f
+    } else factor(x)
+}
 
 levels <- function(x) UseMethod("levels")
 levels.default <- function(x) attr(x, "levels")

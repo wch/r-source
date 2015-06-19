@@ -26,7 +26,9 @@ vignette_type <- function(file) {
     ext <- tolower(file_ext(file))
     type <- c(pdf="PDF", html="HTML")[ext]
     if (is.na(type))
-        stop("Vignette product ", sQuote(file), " does not have a known filename extension (", paste(sQuote(names(type)), collapse=", "), ")")
+        stop(gettextf("Vignette product %s does not have a known filename extension (%s)",
+                      sQuote(file), paste(sQuote(names(type)), collapse=", ")),
+             domain = NA)
     unname(type)
 }
 
@@ -73,9 +75,17 @@ find_vignette_product <-
 
     if (by == "weave") {
         if (length(output) == 0L)
-            stop("Failed to locate the ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
+            stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
+                          sQuote(by),
+                          sQuote(sprintf("%s::%s", engine$package, engine$name)),
+                          sQuote(name), sQuote(dir),
+                          paste(sQuote(output0), collapse=", ")),
+                 domain = NA)
         if (length(output) > 2L || (final && length(output) > 1L))
-	    stop("Located more than one ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
+            stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s", sQuote(by),
+                          sQuote(sprintf("%s::%s", engine$package, engine$name)),
+                          sQuote(name), paste(sQuote(output), collapse=", ")),
+                 domain  = NA)
 	# If weave produced a TeX and then a PDF without cleaning out
 	# the TeX, consider the newer one (PDF wins a tie) as the weave product
 	if (length(output) == 2L) {
@@ -89,9 +99,18 @@ find_vignette_product <-
             stopifnot(length(output) <= 1L)
     } else if (by == "texi2pdf") {
         if (length(output) == 0L)
-            stop("Failed to locate the ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ". The following files exists in directory ", sQuote(dir), ": ", paste(sQuote(output0), collapse=", "))
+            stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
+                          sQuote(by),
+                          sQuote(sprintf("%s::%s", engine$package, engine$name)),
+                          sQuote(name), sQuote(dir),
+                          paste(sQuote(output0), collapse=", ")),
+                 domain = NA)
         if (length(output) > 1L)
-            stop("Located more than one ", sQuote(by), " output file (by engine ", sQuote(sprintf("%s::%s", engine$package, engine$name)), ") for vignette with name ", sQuote(name), ": ", paste(sQuote(output), collapse=", "))
+            stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s",
+                          sQuote(by),
+                          sQuote(sprintf("%s::%s", engine$package, engine$name)),
+                          sQuote(name), paste(sQuote(output), collapse=", ")),
+                 domain = NA)
     }
 
     if (length(output) > 0L) {
@@ -197,7 +216,12 @@ function(package, dir, lib.loc = NULL,
                  outputsJ <- normalizePath(outputsJ)
                  bad <- intersect(outputsJ, outputsI)
                  if (length(bad) > 0L) {
-                     stop("Vignette ", sQuote(basename(names(resultsT)[j])), " overwrites the following ", sQuote(name), " output by vignette ", sQuote(basename(names(resultsT)[i])), ": ", paste(basename(bad), collapse=", "))
+                     stop(gettextf("Vignette %s overwrites the following %s output by vignette %s: %s",
+                                   sQuote(basename(names(resultsT)[j])),
+                                   sQuote(name),
+                                   sQuote(basename(names(resultsT)[i])),
+                                   paste(basename(bad), collapse=", ")),
+                          domain = NA)
                  }
             }
         }
@@ -321,6 +345,9 @@ engineMatches <- function(regengine, vigengine) {
 ### vignette source files, the registered vignette engine for
 ### each of them, and the name of the directory which contains them.
 
+### A vector of 'subdirs' is allowed for historical reasons but the
+### first which exists is used.
+
 pkgVignettes <-
 function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
          source = FALSE, check = FALSE)
@@ -339,7 +366,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     else {
 	dir <- file_path_as_absolute(dir)
 	if (is.null(subdirs))
-	    subdirs <- c("vignettes", if (missing(package)) file.path("inst", "doc") else file.path("doc") )
+	    subdirs <- if (missing(package)) "vignettes" else "doc"
 	for (subdir in subdirs) {
 	    docdir <- file.path(dir, subdir)
 	    if(file_test("-d", docdir))
@@ -448,7 +475,10 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     if (any(dups)) {
         names <- unique(vigns$names[dups])
         docs <- sort(basename(vigns$docs[vigns$names %in% names]))
-        stop("Detected vignette source files (", paste(sQuote(docs), collapse=", "), ") with shared names (", paste(sQuote(names), collapse=", "), ") and therefore risking overwriting each others output files")
+        stop(gettextf("Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each others output files",
+                      paste(sQuote(docs), collapse=", "),
+                      paste(sQuote(names), collapse=", ")),
+             domain = NA)
     }
 
     ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
@@ -563,12 +593,13 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 ### Run a weave and/or tangle on one vignette and try to
 ### remove all temporary files that were created.
 
-buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
-    quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
+buildVignette <-
+    function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
+    quiet = TRUE, clean = TRUE, engine = NULL, buildPkg = NULL, ...)
+{
 
     if (!file_test("-f", file))
-	stop(gettextf("file '%s' not found", file),
-	     domain = NA)
+	stop(gettextf("file '%s' not found", file), domain = NA)
 
     if (!file_test("-d", dir))
 	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
@@ -583,7 +614,7 @@ buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = 
 
     # Get the vignette engine
     if (is.character(engine))
-	engine <- vignetteEngine(engine, package=buildPkg)
+	engine <- vignetteEngine(engine, package = buildPkg)
 
     # Infer the vignette name
     names <- sapply(engine$pattern, FUN = sub, "", file)
@@ -607,31 +638,29 @@ buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = 
 	file.create(".build.timestamp")
     }
 
+    tdir <- getwd()# if 'dir' was relative, resetting to tdir will work
     output <- NULL
 
     # Weave
-    if (weave) {
+    final <- if (weave) {
 	engine$weave(file, quiet = quiet, ...)
-	setwd(dir)  # In case weave/vignette changed it
+	setwd(tdir)  # In case weave/vignette changed it
 	output <- find_vignette_product(name, by = "weave", engine = engine)
 
 	# Compile TeX to PDF?
 	if(latex && vignette_is_tex(output)) {
 	    texi2pdf(file = output, clean = FALSE, quiet = quiet)
-	    final <- find_vignette_product(name, by = "texi2pdf", engine = engine)
+	    find_vignette_product(name, by = "texi2pdf", engine = engine)
 	} else
-	    final <- output
-    } else {
-	final <- NULL
-    }
+	    output
+    } # else NULL
 
     # Tangle
-    if (tangle) {
+    sources <- if (tangle) {
 	engine$tangle(file, quiet = quiet, ...)
-	setwd(dir)  # In case tangle changed it
-	sources <- find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
-    } else
-	sources <- NULL
+	setwd(tdir)  # In case tangle changed it
+	find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
+    } # else NULL
 
     # Cleanup
     keep <- c(sources, final)
@@ -656,8 +685,20 @@ buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = 
 
 getVignetteEncoding <-  function(file, ...)
 {
+    # Look for inputen[cx] first, then %\SweaveUTF8.  Complain about 
+    # inconsistencies.
+    
     lines <- readLines(file, warn = FALSE)
-    .getVignetteEncoding(lines, ...)
+    result1 <- .getVignetteEncoding(lines, ...)
+    
+    poss <- grep("^[[:space:]]*%\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
+    if (length(poss)) {
+    	result <- "UTF-8"
+    	if (!(result1 %in% c("", "non-ASCII", "UTF-8")))
+    	    stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
+    } else 
+    	result <- result1
+    result
 }
 
 .getVignetteEncoding <- function(lines, convert = FALSE)
@@ -828,16 +869,14 @@ function(vignetteDir, pkgdir = ".")
 {
     dir <- file.path(pkgdir, vignetteDir)
     if(!file_test("-d", dir))
-        stop(gettextf("directory '%s' does not exist", dir),
-             domain = NA)
+        stop(gettextf("directory '%s' does not exist", dir), domain = NA)
 
     subdir <- gsub(pkgdir, "", dir, fixed=TRUE)
     vigns <- pkgVignettes(dir = pkgdir, subdirs = subdir)
 
     vignetteIndex <- .build_vignette_index(vigns)
     badEntries <-
-        vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, "Title"]),
-                      "File"]
+        vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, "Title"]), "File"]
     class(badEntries) <- "check_vignette_index"
     badEntries
 }
@@ -903,8 +942,7 @@ function(vignette, recursive = TRUE, reduce = TRUE,
         stop("argument 'vignette' must be of length 1")
     if (!nzchar(vignette)) return(invisible()) # lets examples work.
     if (!file.exists(vignette))
-        stop(gettextf("file '%s' not found", vignette),
-             domain = NA)
+        stop(gettextf("file '%s' not found", vignette), domain = NA)
 
     vigDeps <- vignetteInfo(vignette)$depends
 
@@ -999,7 +1037,7 @@ vignetteEngine <- local({
         key <- strsplit(name, split = "::", fixed = TRUE)[[1L]]
         if (length(key) == 1L) {
 	    if (missing(package))
-		stop("Vignette engine package not specified.", call.=FALSE)
+		stop("Vignette engine package not specified", call.=FALSE)
             key[2L] <- key[1L]
             key[1L] <- package
         } else if (length(key) != 2L) {
@@ -1016,7 +1054,9 @@ vignetteEngine <- local({
                pkgs <- sapply(result, function(engine) engine$package)
                keep <- is.element(pkgs, package)
                if (!any(keep)) {
-                   stop("None of packages ", paste(sQuote(package), collapse = ", "), " have registered vignette engines")
+                   stop(gettextf("None of packages %s have registered vignette engines",
+                                 paste(sQuote(package), collapse = ", ")),
+                        domain = NA)
                }
                result <- result[keep]
                pkgs <- pkgs[keep]
@@ -1036,7 +1076,8 @@ vignetteEngine <- local({
                 name <- paste(key, collapse = "::")
                 result <- registry[[name]]
                 if (is.null(result))
-                    stop("Vignette engine ", sQuote(name), " is not registered")
+                    stop(gettextf("Vignette engine %s is not registered",
+                                  sQuote(name)), domain = NA)
             } else {
                 for (pkg in package) {
                     key <- engineKey(name, pkg)
@@ -1047,11 +1088,17 @@ vignetteEngine <- local({
                         break
                 }
                 if (is.null(result))
-                    stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse = ", "))
+                    stop(gettextf("Vignette engine %s is not registered by any of the packages %s",
+                                  sQuote(name),
+                                  paste(sQuote(package), collapse = ", ")),
+                         domain = NA)
             }
 
             if (!is.null(package) && !is.element(result$package, package))
-                stop("Vignette engine ", sQuote(name), " is not registered by any of the packages ", paste(sQuote(package), collapse = ", "))
+                stop(gettextf("Vignette engine %s is not registered by any of the packages %s",
+                              sQuote(name),
+                              paste(sQuote(package), collapse = ", ")),
+                     domain = NA)
         }
         result
     }
@@ -1060,7 +1107,8 @@ vignetteEngine <- local({
                           aspell = list()) {
         key <- engineKey(name, package)
         if (!is.null(package) && key[1L] != package)
-            stop("Engine name ", sQuote(name), " and package ", sQuote(package), " do not match")
+            stop(gettextf("Engine name %s and package %s do not match",
+                          sQuote(name), sQuote(package)), domain = NA)
 
 
         rname <- paste(key, collapse = "::")
@@ -1074,14 +1122,20 @@ vignetteEngine <- local({
                     tangle <- NA
             } else {
                 if (!is.function(weave))
-                    stop("Argument ", sQuote("weave"), " must be a function and not ", sQuote(class(weave)[1L]))
+                    stop(gettextf("Argument %s must be a function and not %s",
+                                  sQuote("weave"), sQuote(class(weave)[1L])),
+                         domain = NA)
                 if (!is.function(tangle))
-                    stop("Argument ", sQuote("tangle"), " must be a function and not ", sQuote(class(tangle)[1L]))
+                    stop(gettextf("Argument %s must be a function and not %s",
+                                  sQuote("tangle"), sQuote(class(tangle)[1L])),
+                         domain = NA)
             }
             if (is.null(pattern))
                 pattern <- "[.][rRsS](nw|tex)$"
             else if (!is.character(pattern))
-                stop("Argument ", sQuote("pattern"), " must be a character vector or NULL and not ", sQuote(class(pattern)[1L]))
+                stop(gettextf("Argument %s must be a character vector or NULL and not %s",
+                              sQuote("pattern"), sQuote(class(pattern)[1L])),
+                     domain = NA)
 
             result <-
                 list(name = key[2L], package = key[1L], pattern = pattern,
@@ -1103,7 +1157,8 @@ vignetteEngine <- local({
             getEngine(name, package)
         } else { # we're setting a new engine
             if (is.element(name, c("Sweave", "utils::Sweave"))) {
-                stop("Cannot change the ", sQuote("Sweave"), " engine or use an engine of that name")
+                stop(gettextf("Cannot change the %s engine or use an engine of that name",
+                              sQuote("Sweave")), domain = NA)
             }
             if (missing(package))
                 package <- utils::packageName(parent.frame())
@@ -1128,8 +1183,8 @@ function(pkgdir, mustwork = TRUE)
     pkgs <- unique(c(pkgs, "utils"))
 
     for (pkg in pkgs) {
-        res <- try(loadNamespace(pkg), silent = TRUE)
-        if (mustwork && inherits(res, "try-error"))
+	res <- tryCatch(loadNamespace(pkg), error = function(e)e)
+	if (mustwork && inherits(res, "error"))
             stop(gettextf("vignette builder '%s' not found", pkg), domain = NA)
     }
     pkgs

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/databrowser.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 		    nm <- rep.int("", lg)
 		Container[N] <- TRUE
 		ItemsPerContainer[N] <- lg
-		for(i in 1L:lg){
+		for(i in seq_len(lg)){
 		    M <- M+1L
 		    ParentID[M] <- N
 		    if(nm[i] == "") nm[i] = paste0("[[",i,"]]")
@@ -141,7 +141,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 		lg <- length(nm)
 		Container[N] <- TRUE
 		ItemsPerContainer[N] <- lg
-		for(i in 1L:lg){
+		for(i in seq_len(lg)){
 		    M <- M+1L
 		    ParentID[M] <- N
 		    md.l  <- mode(obj[[i]])
@@ -233,7 +233,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 	   entry(bold("Type")),
 	   entry(bold("Property")))
 
-    for(i in 1L:NumOfRoots) {
+    for(i in seq_len(NumOfRoots)) {
 	iid <- RootItems[i]
 	catRow(entry(NAMES[iid]),
 	       if(expanded) entry(""),
@@ -241,7 +241,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 	       entry(DIMS[iid]))
 	if(IsContainer[i] && expanded) {
 	    items <- which(ParentID == i)
-	    for(j in 1L:ItemsPerContainer[i]) {
+	    for(j in seq_len(ItemsPerContainer[i])) {
 		id <- IDS[items[j]]
 		catRow(entry(""),
 		       entry(NAMES[id]),#was paste0("$",NAMES[id]) : ugly for [[i]]

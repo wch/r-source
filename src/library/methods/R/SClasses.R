@@ -765,8 +765,10 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
         }
     }
     else if(length(where) > 1L) {
-        pkgs <- sapply(where, getPackageName)
-        where <- where[!duplicated(pkgs)]
+        pkgs <- sapply(where, getPackageName, create = FALSE)
+        ## not all environments need be packages (e.g., imports)
+        ## We only try to eliminate duplicate package namespaces
+        where <- where[!(nzchar(pkgs) & duplicated(pkgs))]
         if(length(where) > 1L)
             if(nzchar(unique)) {
                 pkgs <- base::unique(pkgs)

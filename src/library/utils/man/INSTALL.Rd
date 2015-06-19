@@ -102,6 +102,11 @@
 #endif
 #ifdef unix
 
+  Option \option{--build} can be used to tar up the installed package
+  for distribution as a binary package (as used on OS X).  This is done
+  by \code{utils::tar} unless environment variable \env{R_INSTALL_TAR}
+  is set.
+
   Some platforms (notably Windows) make use of
   sub-architectures in which binaries for different CPUs are installed
   within the same library tree. For such installations, the default

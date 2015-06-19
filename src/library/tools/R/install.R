@@ -110,7 +110,9 @@
     SHLIB_EXT <- if (WINDOWS) ".dll" else {
         ## can we do better?
         mconf <- file.path(R.home(), paste0("etc", rarch), "Makeconf")
-        sub(".*= ", "", grep("^SHLIB_EXT", readLines(mconf), value = TRUE))
+        ## PCRE needed for Debian arm* platforms
+        sub(".*= ", "", grep("^SHLIB_EXT", readLines(mconf), value = TRUE,
+                             perl = TRUE))
     }
 
     options(warn = 1)
@@ -139,7 +141,7 @@
             "  -v, --version		print INSTALL version info and exit",
             "  -c, --clean		remove files created during installation",
             "      --preclean	remove files created during a previous run",
-            "  -d, --debug		turn on debugging messaages",
+	    "  -d, --debug		turn on debugging messages",
             if(WINDOWS) "			and build a debug DLL",
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
@@ -304,30 +306,25 @@
         is_first_package <<- FALSE
 
         if (tar_up) { # Unix only
+            starsmsg(stars, "creating tarball")
             version <- desc["Version"]
-            filename <- paste0(pkg_name, "_", version, "_R_",
-                               Sys.getenv("R_PLATFORM"), ".tar")
-            filepath <- shQuote(file.path(startdir, filename))
-            owd <- setwd(lib)
-            TAR <- Sys.getenv("TAR", 'tar')
-            system(paste(shQuote(TAR), "-chf", filepath,
-                         paste(curPkg, collapse = " ")))
-            GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
-            system(paste(shQuote(GZIP), "-9f", filepath))
-            if (grepl("darwin", R.version$os)) {
-                filename <- paste0(filename, ".gz")
-                nfilename <- paste0(pkg_name, "_", version,".tgz")
-                file.rename(file.path(startdir, filename),
-                            file.path(startdir, nfilename))
-                message("packaged installation of ",
-                        sQuote(pkg_name), " as ", sQuote(nfilename),
-                        domain = NA)
+            filename <- if (!grepl("darwin", R.version$os)) {
+                paste0(pkg_name, "_", version, "_R_",
+                       Sys.getenv("R_PLATFORM"), ".tar.gz")
             } else {
-                message("packaged installation of ",
-                        sQuote(pkg_name), " as ",
-                        sQuote(paste0(filename, ".gz")),
-                        domain = NA)
+                paste0(pkg_name, "_", version,".tgz")
             }
+            filepath <- file.path(startdir, filename)
+            owd <- setwd(lib)
+            res <- utils::tar(filepath, curPkg, compression = "gzip",
+                              compression_level = 9L,
+                              tar = Sys.getenv("R_INSTALL_TAR"))
+            if (res)
+                errmsg(sprintf("packaging into %s failed", sQuote(filename)))
+            message("packaged installation of ",
+                    sQuote(pkg_name), " as ",
+                    sQuote(paste0(filename, ".gz")),
+                    domain = NA)
             setwd(owd)
         }
 
@@ -889,7 +886,15 @@
 
 	    if (file.exists(f <- file.path("R", "sysdata.rda"))) {
                 comp <- TRUE
-                if (file.info(f)$size > 1e6) comp <- 3 # "xz"
+                ## (We set .libPaths)
+                if(!is.na(lazycompress <- desc["SysDataCompression"])) {
+                    comp <- switch(lazycompress,
+                                   "none" = FALSE,
+                                   "gzip" = TRUE,
+                                   "bzip2" = 2L,
+                                   "xz" = 3L,
+                                   TRUE)  # default to gzip
+                } else if(file.info(f)$size > 1e6) comp <- 3L # "xz"
 		res <- try(sysdata2LazyLoadDB(f, file.path(instdir, "R"),
                                               compress = comp))
 		if (inherits(res, "try-error"))
@@ -972,8 +977,8 @@
                         data_compress <- switch(lazycompress,
                                                 "none" = FALSE,
                                                 "gzip" = TRUE,
-                                                "bzip2" = 2,
-                                                "xz" = 3,
+                                                "bzip2" = 2L,
+                                                "xz" = 3L,
                                                 TRUE)  # default to gzip
 		    res <- try(data2LazyLoadDB(pkg_name, lib,
 					       compress = data_compress))
@@ -1151,15 +1156,16 @@
 	    res <- try(.install_package_indices(".", instdir))
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
-            if(file_test("-d", "vignettes") || file_test("-d", "inst/doc")) {
+            if(file_test("-d", "vignettes")) {
                 starsmsg(stars, "installing vignettes")
                 enc <- desc["Encoding"]
                 if (is.na(enc)) enc <- ""
-		if (file_test("-f", file.path("build", "vignette.rds")))
-		    installer <- .install_package_vignettes3   
-		# FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
+		if (!fake &&
+                    file_test("-f", file.path("build", "vignette.rds")))
+		    installer <- .install_package_vignettes3
+		## FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
 		else
-		    installer <- .install_package_vignettes2 
+		    installer <- .install_package_vignettes2
                 res <- try(installer(".", instdir, enc))
 	    if (inherits(res, "try-error"))
 		errmsg("installing vignettes failed")
@@ -1477,8 +1483,8 @@
             of <- dir(tmpdir, full.names = TRUE)
             ## force the use of internal untar unless over-ridden
             ## so e.g. .tar.xz works everywhere
-            if (untar(pkg, exdir = tmpdir,
-                      tar =  Sys.getenv("R_INSTALL_TAR", "internal")))
+            if (utils::untar(pkg, exdir = tmpdir,
+                             tar =  Sys.getenv("R_INSTALL_TAR", "internal")))
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)
@@ -1608,7 +1614,7 @@
 	install_libs <- FALSE
 	install_demo <- FALSE
 	install_exec <- FALSE
-	install_inst <- FALSE
+#	install_inst <- FALSE
     }
 
     build_help_types <- character()
@@ -1676,8 +1682,10 @@
         mconf <- readLines(file.path(R.home(),
                                      paste0("etc", Sys.getenv("R_ARCH")),
                                      "Makeconf"))
-        SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
-        SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
+        SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE,
+                                          perl = TRUE))
+        SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf,
+                                             value = TRUE, perl = TRUE))
         MAKE <- Sys.getenv("MAKE")
         rarch <- Sys.getenv("R_ARCH")
     } else {
@@ -1713,6 +1721,7 @@
     with_f77 <- FALSE
     with_f9x <- FALSE
     with_objc <- FALSE
+    use_cxx1x <- FALSE
     pkg_libs <- character()
     clean <- FALSE
     preclean <- FALSE
@@ -1812,13 +1821,25 @@
     if (WINDOWS && file.exists("Makevars.win")) {
         makefiles <- c("Makevars.win", makefiles)
         lines <- readLines("Makevars.win", warn = FALSE)
-        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes = TRUE)))
             makeobjs <- ""
+        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+                              value = TRUE, useBytes = TRUE))) {
+            use_cxx1x <- TRUE
+            cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
+            if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
+        }
     } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars", warn = FALSE)
-        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+        if (length(grep("^OBJECTS *=", lines, perl = TRUE, useBytes = TRUE)))
             makeobjs <- ""
+        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+                              value = TRUE, useBytes = TRUE))) {
+            use_cxx1x <- TRUE
+            cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
+            if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
+        }
     }
 
     makeargs <- paste0("SHLIB=", shQuote(shlib))
@@ -1826,8 +1847,15 @@
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     } else if (with_cxx) {
-        makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_CXXLDFLAGS)'",
-                      "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
+        makeargs <- if (use_cxx1x)
+            c(sprintf("CXX='$(CXX1X) %s'", cxx1xstd),
+              "CXXFLAGS='$(CXX1XFLAGS)'",
+              "CXXPICFLAGS='$(CXX1XPICFLAGS)'",
+              "SHLIB_LDFLAGS='$(SHLIB_CXX1XLDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXX1XLD)'", makeargs)
+        else
+            c("SHLIB_LDFLAGS='$(SHLIB_CXXLDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
     }
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
     if (with_f77) shlib_libadd <- c(shlib_libadd, "$(FLIBS)")

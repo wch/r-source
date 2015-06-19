@@ -55,7 +55,7 @@ u <- as.character(runif(1e5))
 t1 <- max(0.001, system.time(str(u))[[1]]) # get a baseline > 0
 uf <- factor(u)
 (t2 <- system.time(str(uf))[[1]]) / t1 # typically around 1--2
-stopifnot(t2  / t1 < 20)
+stopifnot(t2  / t1 < 30)
 ## was around 600--850 for R <= 3.0.1
 
 
@@ -179,6 +179,72 @@ provideDimnames(matrix(nrow = 0, ncol = 1))
 provideDimnames(table(character()))
 as.data.frame(table(character()))
 ## all failed in 3.0.2
+
+## PR#15004
+n <- 10
+s <- 3
+l <- 10000
+m <- 20
+x <- data.frame(x1 = 1:n, x2 = 1:n)
+by <- data.frame(V1 = factor(rep(1:3, n %/% s + 1)[1:n], levels = 1:s))
+for(i in 1:m) {
+    by[[i + 1]] <- factor(rep(l, n), levels = 1:l)
+}
+agg <- aggregate.data.frame(x, by, mean)
+stopifnot(nrow(unique(by)) == nrow(agg))
+## rounding caused groups to be falsely merged
+
+## PR#15454
+set.seed(357)
+z <- matrix(c(runif(50, -1, 1), runif(50, -1e-190, 1e-190)), nrow = 10)
+contour(z)
+## failed because rounding made crossing tests inconsistent
+
+## Various cases where zero length vectors were not handled properly
+## by functions in base and utils, including PR#15499
+y <- as.data.frame(list())
+format(y)
+format(I(integer()))
+gl(0, 2)
+z <- list(numeric(0), 1)
+stopifnot(identical(relist(unlist(z), z), z))
+summary(y)
+## all failed in 3.0.2
+
+## PR#15518 Parser catching errors in particular circumstance:
+(ee <- tryCatch(parse(text = "_"), error= function(e)e))
+stopifnot(inherits(ee, "error"))
+## unexpected characters caused the parser to segfault in 3.0.2
+
+
+## nonsense value of nmax
+unique(1:3, nmax = 1)
+## infinite-looped in 3.0.2, now ignored.
+
+
+## besselI() (and others), now using sinpi() etc:
+stopifnot(all.equal(besselI(2.125,-5+1/1024),
+		    0.02679209380095711, tol= 8e-16),
+	  all.equal(lgamma(-12+1/1024), -13.053274367453049, tol=8e-16))
+## rel.error was 1.5e-13 / 7.5e-14 in R <= 3.0.x
+ss <- sinpi(2*(-10:10)-2^-12)
+tt <- tanpi(  (-10:10)-2^-12)
+stopifnot(ss == ss[1], tt == tt[1], # as internal arithmetic must be exact here
+	  all.equal(ss[1], -0.00076699031874270453, tol=8e-16),
+	  all.equal(tt[1], -0.00076699054434309260, tol=8e-16))
+## (checked via Rmpfr) The above failed during development
+
+
+## PR#15535 c() "promoted" raw vectors to bad logical values
+stopifnot( c(as.raw(11), TRUE) == TRUE )
+## as.raw(11) became a logical value coded as 11,
+## and did not test equal to TRUE.
+
+
+## PR#15564
+fit <- lm(rnorm(10) ~ I(1:10))
+predict(fit, interval = "confidence", scale = 1)
+## failed in <= 3.0.2 with object 'w' not found
 
 
 proc.time()

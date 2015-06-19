@@ -88,6 +88,9 @@ so_symbol_names_table <-
       "linux, C, gcc, vprintf, vprintf",
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
+      ## libcxx variants
+      "linux, C++, gxx, std::cout, _ZNSt3__14coutE",
+      "linux, C++, gxx, std::cerr, _ZNSt3__14cerrE",
       "linux, Fortran, gfortran, write, _gfortran_st_write",
       "linux, Fortran, gfortran, print, _gfortran_st_write",
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
@@ -105,6 +108,9 @@ so_symbol_names_table <-
       "osx, C, gcc, vprintf, _vprintf",
       "osx, C++, gxx, std::cout, __ZSt4cout",
       "osx, C++, gxx, std::cerr, __ZSt4cerr",
+      ## libcxx variants
+      "osx, C++, gxx, std::cout, __ZNSt3__14coutE",
+      "osx, C++, gxx, std::cerr, __ZNSt3__14cerrE",
       "osx, Fortran, gfortran, write, __gfortran_st_write",
       "osx, Fortran, gfortran, print, __gfortran_st_write",
       "osx, Fortran, gfortran, stop, __gfortran_stop_numeric",

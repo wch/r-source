@@ -113,7 +113,7 @@ libR_la_DEPENDENCIES = $(STATIC_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@
 LIBR_LDFLAGS = @LIBR_LDFLAGS@
 
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -131,8 +131,7 @@ Makedeps: Makefile $(DEPENDS)
 ## objects are not re-made.
 ## Note that dependencies in the test Makefiles used to depend on these objects,
 ## so copy-if-change is used.
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makedeps
 @WANT_R_SHLIB_TRUE@	@$(MAKE) install-lib-local
 @WANT_R_STATIC_TRUE@	@$(MAKE) install-static-local
 	@$(MAKE) install-bin-local

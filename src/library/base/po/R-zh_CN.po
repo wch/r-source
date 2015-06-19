@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -46,12 +46,6 @@ msgstr "'x'里有无穷值或遗漏值"
 
 msgid "a dimension is zero"
 msgstr "维度为零"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu'的值必需是零，nrow(x) 或ncol(x)"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv'的值必需是零，nrow(x)或ncol(x)"
 
 msgid "second argument must be a list"
 msgstr "第二个参数必需为串列"
@@ -458,6 +452,10 @@ msgstr "'from'一定得是\"POSIXt\"对象"
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to'一定得是\"POSIXt\"对象"
 
+#, fuzzy
+msgid "no Olson database found"
+msgstr "找不到文件"
+
 msgid "'file' must be a character string or connection"
 msgstr "'file'要么是字符串，要么是连接"
 
@@ -673,6 +671,10 @@ msgstr "非匹配值必需有替换值"
 
 msgid "must have replacements for matches"
 msgstr "匹配必需有替换"
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "没有指定DLL"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "范数'%s'现在总是用exact = FALSE"
@@ -1621,6 +1623,12 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nu'的值必需是零，nrow(x) 或ncol(x)"
+
+#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nv'的值必需是零，nrow(x)或ncol(x)"
 
 #~ msgid "too many 'S3method' directives"
 #~ msgstr "'S3method'指令太多"

@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2013 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,9 +55,9 @@ double bessel_y(double x, double alpha)
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_y(x, -alpha) * cos(M_PI * alpha) -
+	return(bessel_y(x, -alpha) * cospi(alpha) -
 	       ((alpha == na) ? 0 :
-		bessel_j(x, -alpha) * sin(M_PI * alpha)));
+		bessel_j(x, -alpha) * sinpi(alpha)));
     }
     nb = 1+ (long)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -70,8 +70,14 @@ double bessel_y(double x, double alpha)
 #endif
     Y_bessel(&x, &alpha, &nb, by, &ncalc);
     if(ncalc != nb) {/* error input */
-	if(ncalc == -1)
+	if(ncalc == -1) {
+#ifdef MATHLIB_STANDALONE
+	    free(by);
+#else
+	    vmaxset(vmax);
+#endif
 	    return ML_POSINF;
+	}
 	else if(ncalc < -1)
 	    MATHLIB_WARNING4(_("bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
 			     x, ncalc, nb, alpha);
@@ -107,9 +113,9 @@ double bessel_y_ex(double x, double alpha, double *by)
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_y_ex(x, -alpha, by) * cos(M_PI * alpha) -
+	return(bessel_y_ex(x, -alpha, by) * cospi(alpha) -
 	       ((alpha == na) ? 0 :
-		bessel_j_ex(x, -alpha, by) * sin(M_PI * alpha)));
+		bessel_j_ex(x, -alpha, by) * sinpi(alpha)));
     }
     nb = 1+ (long)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -134,7 +140,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 /* ----------------------------------------------------------------------
 
  This routine calculates Bessel functions Y_(N+ALPHA) (X)
- for non-negative argument X, and non-negative order N+ALPHA.
+v for non-negative argument X, and non-negative order N+ALPHA.
 
 
  Explanation of variables in the calling sequence
@@ -258,7 +264,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 		by[i] = by[0];
 	    return;
 	}
-	xna = ftrunc(nu + .5);
+	xna = trunc(nu + .5);
 	na = (long) xna;
 	if (na == 1) {/* <==>  .5 <= *alpha < 1	 <==>  -5. <= nu < 0 */
 	    nu -= xna;
@@ -278,7 +284,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    if (fabs(nu) < M_eps_sinc)
 		c = M_1_PI;
 	    else
-		c = nu / sin(nu * M_PI);
+		c = nu / sinpi(nu);
 
 	    /* ------------------------------------------------------------
 	       Computation of sinh(f)/f
@@ -322,7 +328,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    if (fabs(c) < M_eps_sinc)
 		r = 1.;
 	    else
-		r = sin(c) / c;
+		r = sinpi(nu/2) / c;
 
 	    r = M_PI * c * r * r;
 	    c = 1.;
@@ -352,7 +358,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	       -------------------------------------------------------------- */
 	    c = (.5 - nu) * (.5 + nu);
 	    b = ex + ex;
-	    e = ex * M_1_PI * cos(nu * M_PI) / DBL_EPSILON;
+	    e = ex * M_1_PI * cospi(nu) / DBL_EPSILON;
 	    e *= e;
 	    p = 1.;
 	    q = -ex;
@@ -405,7 +411,7 @@ L220:
 	       Use Campbell's asymptotic scheme.
 	       ---------------------------------------------------------- */
 	    na = 0;
-	    d1 = ftrunc(ex / fivpi);
+	    d1 = trunc(ex / fivpi);
 	    i = (long) d1;
 	    dmu = ex - 15. * d1 - d1 * pim5 - (*alpha + .5) * M_PI_2;
 	    if (i - (i / 2 << 1) == 0) {

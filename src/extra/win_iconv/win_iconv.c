@@ -48,7 +48,7 @@ http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.as
 
 #define FLAG_USE_BOM            1
 #define FLAG_TRANSLIT           2 /* //TRANSLIT */
-#define FLAG_IGNORE             4 /* //IGNORE (not implemented) */
+#define FLAG_IGNORE             4 /* //IGNORE */
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;

@@ -1,7 +1,7 @@
 #  File src/library/base/R/cut.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,9 +28,14 @@ cut.default <-
 	    stop("invalid number of intervals")
 	nb <- as.integer(breaks + 1) # one more than #{intervals}
 	dx <- diff(rx <- range(x, na.rm = TRUE))
-	if(dx == 0) dx <- abs(rx[1L])
-	breaks <- seq.int(rx[1L] - dx/1000,
-                          rx[2L] + dx/1000, length.out = nb)
+	if(dx == 0) {
+            dx <- abs(rx[1L])
+            breaks <- seq.int(rx[1L] - dx/1000, rx[2L] + dx/1000, 
+                              length.out = nb)
+        } else {
+            breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
+            breaks[c(1L, nb)] <- c(rx[1L] - dx/1000, rx[2L] + dx/1000)
+        }
     } else nb <- length(breaks <- sort.int(as.double(breaks)))
     if (anyDuplicated(breaks)) stop("'breaks' are not unique")
     codes.only <- FALSE

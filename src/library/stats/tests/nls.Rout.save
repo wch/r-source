@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-11-25 r64294) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -33,12 +33,14 @@ Type 'q()' to quit R.
 > 
 > ## tests of nls, especially of weighted fits
 > 
-> .proctime00 <- proc.time()
 > library(stats)
 > options(digits=5) # to avoid trivial printed differences
-> options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
+> options(useFancyQuotes=FALSE) # avoid fancy quotes in o/p
 > options(show.nls.convergence=FALSE) # avoid non-diffable output
 > pdf("nls-test.pdf")
+> 
+> ## utility for comparing nls() results:  [TODO: use more often below]
+> .n <- function(r) r[names(r) != "call"]
 > 
 > ## selfStart.default() w/ no parameters:
 > logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
@@ -109,9 +111,11 @@ Weighted Residuals:
 -0.01562 -0.00723 -0.00158  0.00403  0.02413 
 
 Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept)  0.00517    0.00764    0.68     0.52
-x            0.99915    0.00119  841.38   <2e-16
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.00517    0.00764    0.68     0.52    
+x            0.99915    0.00119  841.38   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 Multiple R-squared:     1,	Adjusted R-squared:     1 
@@ -131,9 +135,11 @@ x -0.89
 Formula: yeps ~ a + b * x
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)
-a  0.00517    0.00764    0.68     0.52
-b  0.99915    0.00119  841.37   <2e-16
+  Estimate Std. Error t value Pr(>|t|)    
+a  0.00517    0.00764    0.68     0.52    
+b  0.99915    0.00119  841.37   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
@@ -156,9 +162,11 @@ b -0.89
 Formula: yeps ~ a + b * x
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)
-a  0.00517    0.00764    0.68     0.52
-b  0.99915    0.00119  841.38   <2e-16
+  Estimate Std. Error t value Pr(>|t|)    
+a  0.00517    0.00764    0.68     0.52    
+b  0.99915    0.00119  841.38   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
@@ -185,10 +193,12 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 Formula: density ~ SSlogis(log(conc), Asym, xmid, scal)
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+     Estimate Std. Error t value Pr(>|t|)    
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -202,10 +212,12 @@ Residual standard error: 0.0355 on 13 degrees of freedom
 Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+     Estimate Std. Error t value Pr(>|t|)    
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -232,10 +244,12 @@ Model 2: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 Formula: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+     Estimate Std. Error t value Pr(>|t|)    
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -266,10 +280,12 @@ Model 2: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
 Formula: density ~ 1/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
-.lin   2.3350     0.0966    24.2  3.5e-12
+     Estimate Std. Error t value Pr(>|t|)    
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+.lin   2.3350     0.0966    24.2  3.5e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -301,10 +317,12 @@ Model 2: density ~ 1/(1 + exp((xmid - log(conc))/scal))
 Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
-     Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+     Estimate Std. Error t value Pr(>|t|)    
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -489,9 +507,11 @@ attr(,"summary")
 Formula: y ~ gfun(a, b, x)
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)
-a    1.538      0.617    2.49    0.037
-b    0.263      0.352    0.75    0.476
+  Estimate Std. Error t value Pr(>|t|)  
+a    1.538      0.617    2.49    0.037 *
+b    0.263      0.352    0.75    0.476  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.221 on 8 degrees of freedom
 
@@ -541,9 +561,11 @@ attr(,"summary")
 Formula: y ~ gfun(a, b, x)
 
 Parameters:
-  Estimate Std. Error t value Pr(>|t|)
-a    1.500      0.598    2.51    0.036
-b    0.243      0.356    0.68    0.514
+  Estimate Std. Error t value Pr(>|t|)  
+a    1.500      0.598    2.51    0.036 *
+b    0.243      0.356    0.68    0.514  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.221 on 8 degrees of freedom
 
@@ -559,16 +581,20 @@ b    NA 0.611
 > options(op)
 > 
 > ## scoping problems
-> test <- function()
+> test <- function(trace=TRUE)
 + {
 +     x <- seq(0,5,len=20)
 +     n <- 1
 +     y <- 2*x^2 + n + rnorm(x)
 +     xy <- data.frame(x=x,y=y)
 +     myf <- function(x,a,b,c) a*x^b+c
-+     nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=TRUE)
++     list(with.start=
++          nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=trace),
++          no.start= ## cheap auto-init to 1
++ 	 suppressWarnings(
++ 	     nls(y ~ myf(x,A,B,n), data=xy)))
 + }
-> test()
+> t1 <- test(); t1$with.start
 8291.9 :  1 1
 726.02 :  0.80544 2.42971
 552.85 :  1.290 2.129
@@ -582,12 +608,20 @@ Nonlinear regression model
    a    b 
 1.98 2.00 
  residual sum-of-squares: 26.5
+> ##__with.start:
 > ## failed to find n in 2.2.x
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
+> ##__no.start: failed in 3.0.2
+> stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
+> rm(a,b)
+> t2 <- test(FALSE)
+> stopifnot(all.equal(lapply(t1, .n),
++ 		    lapply(t2, .n), tol=0.16))# different random error
 > 
 > 
 > ## list 'start'
+> set.seed(101)# (remain independent of above)
 > getExpmat <- function(theta, t)
 + {
 +         conc <- matrix(nrow = length(t), ncol = length(theta))
@@ -606,13 +640,15 @@ Nonlinear regression model
 Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
 
 Parameters:
-    Estimate Std. Error t value Pr(>|t|)
-k1  5.00e-02   3.07e-04   162.5   <2e-16
-k2  4.99e-03   5.38e-05    92.8   <2e-16
-sp1 1.00e+00   4.47e-03   224.0   <2e-16
-sp2 9.99e-01   5.00e-03   199.8   <2e-16
+    Estimate Std. Error t value Pr(>|t|)    
+k1  5.00e-02   2.73e-04     183   <2e-16 ***
+k2  4.97e-03   4.77e-05     104   <2e-16 ***
+sp1 1.00e+00   3.96e-03     253   <2e-16 ***
+sp2 9.98e-01   4.43e-03     225   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.00205 on 96 degrees of freedom
+Residual standard error: 0.00182 on 96 degrees of freedom
 
 > 
 > ## didn't work with port in 2.4.1
@@ -623,13 +659,15 @@ Residual standard error: 0.00205 on 96 degrees of freedom
 Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
 
 Parameters:
-    Estimate Std. Error t value Pr(>|t|)
-k1  5.00e-02   3.07e-04   162.5   <2e-16
-k2  4.99e-03   5.38e-05    92.8   <2e-16
-sp1 1.00e+00   4.47e-03   224.0   <2e-16
-sp2 9.99e-01   5.00e-03   199.8   <2e-16
+    Estimate Std. Error t value Pr(>|t|)    
+k1  5.00e-02   2.73e-04     183   <2e-16 ***
+k2  4.97e-03   4.77e-05     104   <2e-16 ***
+sp1 1.00e+00   3.96e-03     253   <2e-16 ***
+sp2 9.98e-01   4.43e-03     225   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.00205 on 96 degrees of freedom
+Residual standard error: 0.00182 on 96 degrees of freedom
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 
@@ -655,9 +693,6 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > with(fit$convInfo, ## start par. violates constraints
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
-> cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.119 0.007 1.13 0 0 
-> 
 > proc.time()
    user  system elapsed 
-  1.225   0.019   1.237 
+  1.245   0.015   1.253 

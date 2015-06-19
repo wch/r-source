@@ -29,7 +29,7 @@ libxdr_a_SOURCES = $(SOURCES)
 libxdr_a_OBJECTS = $(OBJECTS)
 
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -40,8 +40,7 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
 
 libxdr.a: $(libxdr_a_OBJECTS)

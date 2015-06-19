@@ -1,7 +1,7 @@
 #  File src/library/stats/R/fisher.test.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             if(any(x > .Machine$integer.max))
                 stop("'x' has entries too large to be integer")
             if(!identical(TRUE, (ax <- all.equal(xo, x))))
-                warning(gettextf("'x' has been rounded to integer: %d", ax),
+                warning(gettextf("'x' has been rounded to integer: %s", ax),
                         domain = NA)
             storage.mode(x) <- "integer"
         }

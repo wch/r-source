@@ -159,7 +159,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{encoding}{encoding to be assumed for input strings.  If the
     value is \code{"latin1"} or \code{"UTF-8"} it is used to mark
     character strings as known to be in Latin-1 or UTF-8: it is not used
-    to re-encode the input (see \code{fileEncoding}.  See also \sQuote{Details}.
+    to re-encode the input (see \code{fileEncoding}).
+    See also \sQuote{Details}.
   }
 
   \item{text}{character string: if \code{file} is not supplied and this is,

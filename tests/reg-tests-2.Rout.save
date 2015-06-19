@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-11-25 r64294) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6402,15 +6402,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x439a948> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2aa63a8> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x43b24d0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ab8428> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x43b24d0> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ab8428> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -7197,6 +7197,13 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
  [7] 1016450281 1178703303 1324731023 1454533441
 > ## dropped spaces without long doubles
 > 
+> ## and rounding was being detected improperly (PR#15583)
+> 1000* ((10^(1/4)) ^ c(0:4))
+[1]  1000.000  1778.279  3162.278  5623.413 10000.000
+> 7/0.07
+[1] 100
+> ## Spacing was incorrect
+> 
 > 
 > ## PR#15468
 > M <- matrix(11:14, ncol=2, dimnames=list(paste0("Row", 1:2), paste0("Col",
@@ -7221,4 +7228,37 @@ Row2 12   14   2
 elem1 1 11   13  
 elem2 2 12   14  
 > ## lost the dim of M, so returned NULL entries
+> 
+> 
+> ## NA_character_ was not handled properly in min and max (reported by Magnus Thor Torfason)
+> str(min(NA, "bla"))
+ chr NA
+> str(min("bla", NA))
+ chr NA
+> str(min(NA_character_, "bla"))
+ chr NA
+> str(max(NA, "bla"))
+ chr NA
+> str(max("bla", NA))
+ chr NA
+> str(max(NA_character_, "bla"))
+ chr NA
+> ## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
+> ## be the min or max.  
+> 
+> 
+> ## When two entries needed to be cut to width, str() mixed up
+> ## the values (reported by Gerrit Eichner)
+> oldopts <- options(width=70, stringsAsFactors=TRUE)
+> n <- 11      # number of rows of data frame
+> M <- 10000   # order of magnitude of numerical values
+> longer.char.string <- "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbjp"
+> X <- data.frame( A = 1:n * M,
++                  B = rep( longer.char.string, n))
+> str( X, strict.width = "cut")
+'data.frame':	11 obs. of  2 variables:
+ $ A: num  1e+04 2e+04 3e+04 4e+04 5e+04 6e+04 7e+04 8e+04 9e+04 1e+..
+ $ B: Factor w/ 1 level "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbj"..
+> options(oldopts)
+> ## The first row of the str() result was duplicated.
 > 

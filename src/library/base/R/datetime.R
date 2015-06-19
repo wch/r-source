@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,13 @@
 
 Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 
-Sys.timezone <- function() Sys.getenv("TZ", names = FALSE)
+## overridden on Windows
+Sys.timezone <- function(location = FALSE) {
+    tz <- Sys.getenv("TZ", names = FALSE)
+    if(!location || nzchar(tz)) return(tz)
+    lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
+    if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt) else ""
+}
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
@@ -951,7 +957,7 @@ diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
     ismat <- is.matrix(x)
     r <- if(inherits(x, "POSIXlt")) as.POSIXct(x) else x
     xlen <- if (ismat) dim(x)[1L] else length(r)
-    if (length(lag) > 1L || length(differences) > 1L || lag < 1L || differences < 1L)
+    if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen) return(.difftime(numeric(), "secs"))
     i1 <- -seq_len(lag)
@@ -1017,4 +1023,27 @@ function(x, value)
 {
     names(x$year) <- value
     x
+}
+
+## 3.1.0
+
+OlsonNames <- function()
+{
+    if(.Platform$OS.type == "windows")
+        tzdir <- file.path(R.home("share"), "zoneinfo")
+    else {
+        tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+                    "/usr/share/lib/zoneinfo", # Solaris, AIX
+                    "/usr/lib/zoneinfo",   # early glibc
+                    "/usr/local/etc/zoneinfo", # tzcode default
+                    "/etc/zoneinfo", "/usr/etc/zoneinfo")
+        tzdirs <- tzdirs[file.exists(tzdirs)]
+        if (!length(tzdirs)) {
+            warning("no Olson database found")
+            return(character())
+        } else tzdir <- tzdirs[1]
+    }
+    x <- list.files(tzdir, recursive = TRUE)
+    ## all auxiliary files are l/case.
+    grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
 }

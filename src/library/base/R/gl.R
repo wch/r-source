@@ -1,7 +1,7 @@
 #  File src/library/base/R/gl.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 ## gl function of GLIM
 
-gl <- function (n, k, length = n*k, labels=1:n, ordered=FALSE)
+gl <- function (n, k, length = n*k, labels=seq_len(n), ordered=FALSE)
   {
     ## We avoid calling factor(), for efficiency.
 
@@ -26,7 +26,7 @@ gl <- function (n, k, length = n*k, labels=1:n, ordered=FALSE)
     ## That way, `levels<-` will pick up an invalid
     ## labels specification.
 
-    f <- rep_len(rep.int(1:n, rep.int(k,n)), length)
+    f <- rep_len(rep.int(seq_len(n), rep.int(k,n)), length)
     levels(f) <- as.character(labels)
     class(f) <- c(if (ordered) "ordered", "factor")
     f

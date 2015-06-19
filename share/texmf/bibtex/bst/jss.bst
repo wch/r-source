@@ -8,8 +8,8 @@
 %% 
 %% ** BibTeX style file for JSS publications (http://www.jstatsoft.org/)
 %% 
-%% Copyright 1994-2005 Patrick W Daly
-%% License: GPL-2
+%% Copyright 1994-2007 Patrick W Daly
+%% License: GPL-2 | GPL-3
  % ===============================================================
  % IMPORTANT NOTICE:
  % This bibliographic style (bst) file has been generated from one or
@@ -17,10 +17,10 @@
  % with kind permission of Patrick W Daly.
  %
  % This generated file can be redistributed and/or modified under the terms
- % of the General Public License (Version 2).
+ % of the General Public License (Version 2 or 3).
  % ===============================================================
  % Name and version information of the main mbs file:
- % \ProvidesFile{merlin.mbs}[2005/10/17 4.14 (PWD, AO, DPC)]
+ % \ProvidesFile{merlin.mbs}[2007/04/24 4.20 (PWD, AO, DPC)]
  %   For use with BibTeX version 0.99a or later
  %-------------------------------------------------------------------
  % This bibliography style file is intended for texts in ENGLISH
@@ -407,8 +407,10 @@ FUNCTION {format.url}
   if$
 }
 
-STRINGS  { bibinfo}
 INTEGERS { nameptr namesleft numnames }
+
+
+STRINGS  { bibinfo}
 
 FUNCTION {format.names}
 { 'bibinfo :=

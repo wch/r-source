@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2010 The R Core Team.
+ *  Copyright (C) 2000-2013 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +29,12 @@
 #include <stdio.h>  /* Used by several packages, remove in due course */
 #include <limits.h> /* for INT_MAX */
 #include <math.h>
+# if defined(__sun)
+# undef DO
+# undef DS
+# undef SO
+# undef SS
+# endif
 #endif
 
 #include <Rconfig.h>
@@ -57,6 +63,9 @@ extern "C" {
 void R_FlushConsole(void);
 /* always declared, but only usable under Win32 and Aqua */
 void R_ProcessEvents(void);
+#ifdef Win32
+void R_WaitEvent(void);
+#endif
 
 #ifdef __cplusplus
 }

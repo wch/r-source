@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team.
+ *  Copyright (C) 1998-2013   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,11 +40,6 @@
 #include <Rconnections.h>
 #include <errno.h>
 #include <Print.h>
-
-static R_INLINE int imin2(int x, int y)
-{
-    return (x < y) ? x : y;
-}
 
 #include <rlocale.h> /* for btowc */
 

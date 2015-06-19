@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -335,16 +335,13 @@ msgstr "nieznana rodzina '%s'"
 msgid "invalid 'family' argument"
 msgstr "niepoprawny argument 'family'"
 
-# grDevices/R/postscript.R: 263
-# stop("invalid 'file'")
-# grDevices/R/postscript.R: 285
-# stop("invalid 'file'")
-# grDevices/R/postscript.R: 363
-# stop("invalid 'file'")
-# grDevices/R/unix/quartz.R: 64
-# stop("invalid 'file'")
-msgid "invalid 'file'"
-msgstr "niepoprawna wartość 'file'"
+# grDevices/R/postscript.R: 258
+# stop("invalid 'family' argument")
+# grDevices/R/postscript.R: 351
+# stop("invalid 'family' argument")
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "niepoprawny argument 'family'"
 
 # grDevices/R/postscript.R: 360
 # stop("invalid PDF version")
@@ -506,15 +503,11 @@ msgstr "brak bieżącego urządzenia z którego można nagrywać"
 msgid "argument is not of class %s"
 msgstr "argument nie jest klasy %s"
 
-# grDevices/R/recordplot.R: 42
-# stop("loading snapshot from pre-3.0.0 R version")
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "ładowanie zrzutu z wersji R przed 3.0.0"
-
 # grDevices/R/recordplot.R: 44
 # warning(gettext("loading snapshot from different R version"),
 #                 " (", version, ")", domain = NA)
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr "ładowanie zrzutu z innej wersji R"
 
 # grDevices/R/smooth2d.R: 29
@@ -668,6 +661,17 @@ msgstr "wartość 'res' musi być określona chyba, że 'units = \"px\"'"
 # stop("invalid 'title'")
 msgid "invalid 'title'"
 msgstr "niepoprawna wartość 'title'"
+
+# grDevices/R/postscript.R: 263
+# stop("invalid 'file'")
+# grDevices/R/postscript.R: 285
+# stop("invalid 'file'")
+# grDevices/R/postscript.R: 363
+# stop("invalid 'file'")
+# grDevices/R/unix/quartz.R: 64
+# stop("invalid 'file'")
+msgid "invalid 'file'"
+msgstr "niepoprawna wartość 'file'"
 
 # grDevices/R/unix/quartz.R: 83
 # stop("invalid Quartz font:  must be 4 strings")
@@ -844,6 +848,11 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+
+# grDevices/R/recordplot.R: 42
+# stop("loading snapshot from pre-3.0.0 R version")
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "ładowanie zrzutu z wersji R przed 3.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "można drukować jedynie z ekranu urządzenia"

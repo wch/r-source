@@ -2765,6 +2765,11 @@ xx <- c(-86870268, 107833358, 302536985, 481015309, 675718935, 854197259,
 xx
 ## dropped spaces without long doubles
 
+## and rounding was being detected improperly (PR#15583)
+1000* ((10^(1/4)) ^ c(0:4))
+7/0.07
+## Spacing was incorrect
+
 
 ## PR#15468
 M <- matrix(11:14, ncol=2, dimnames=list(paste0("Row", 1:2), paste0("Col",
@@ -2775,3 +2780,27 @@ rbind(L, M)
 cbind(M, L)
 cbind(L, M)
 ## lost the dim of M, so returned NULL entries
+
+
+## NA_character_ was not handled properly in min and max (reported by Magnus Thor Torfason)
+str(min(NA, "bla"))
+str(min("bla", NA))
+str(min(NA_character_, "bla"))
+str(max(NA, "bla"))
+str(max("bla", NA))
+str(max(NA_character_, "bla"))
+## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
+## be the min or max.  
+
+
+## When two entries needed to be cut to width, str() mixed up
+## the values (reported by Gerrit Eichner)
+oldopts <- options(width=70, stringsAsFactors=TRUE)
+n <- 11      # number of rows of data frame
+M <- 10000   # order of magnitude of numerical values
+longer.char.string <- "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbjp"
+X <- data.frame( A = 1:n * M,
+                 B = rep( longer.char.string, n))
+str( X, strict.width = "cut")
+options(oldopts)
+## The first row of the str() result was duplicated.

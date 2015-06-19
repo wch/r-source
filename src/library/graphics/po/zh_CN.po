@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45+0100\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -17,88 +17,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: base.c:38
+#: base.c:45
 msgid "no base graphics system is registered"
 msgstr "没有注册的基础图形系统"
 
-#: base.c:328 base.c:335 base.c:343
+#: base.c:335 base.c:342 base.c:350
 msgid "the base graphics system is not registered"
 msgstr "没有注册基础图形系统"
 
-#: graphics.c:289
+#: graphics.c:297
 #, c-format
 msgid "bad units specified in '%s'"
 msgstr "'%s'里的单位设定不对"
 
-#: graphics.c:1783 graphics.c:1805
+#: graphics.c:1791 graphics.c:1813
 msgid "attempt to plot on null device"
 msgstr "null设备上不能绘图"
 
-#: graphics.c:1835
+#: graphics.c:1843
 msgid "outer margins too large (figure region too small)"
 msgstr "外版边太大(图区太小)"
 
-#: graphics.c:1837
+#: graphics.c:1845
 msgid "figure region too large"
 msgstr "图区太大"
 
-#: graphics.c:1839
+#: graphics.c:1847
 msgid "figure margins too large"
 msgstr "图版边太大"
 
-#: graphics.c:1841
+#: graphics.c:1849
 msgid "plot region too large"
 msgstr "绘图区太大"
 
-#: graphics.c:1888
+#: graphics.c:1896
 #, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "相对范围值（%4.0f * EPS）太小(座标%d)"
 
-#: graphics.c:1940
+#: graphics.c:1948
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr "座标范围不能无穷大[GScale(%g,%g,%d, .); log=%d]"
 
-#: graphics.c:1970
+#: graphics.c:1978
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr "座标形式\"%c\"目前没有实现"
 
-#: graphics.c:2208
+#: graphics.c:2216
 msgid "no graphics device is active"
 msgstr "没有已积活的图形设备"
 
-#: graphics.c:2403
+#: graphics.c:2411
 msgid "plot.new has not been called yet"
 msgstr "还没有调用plot.new "
 
-#: graphics.c:2405
+#: graphics.c:2413
 msgid "invalid graphics state"
 msgstr "图形狀態不对"
 
-#: graphics.c:2547
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2596
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr "没有已积活的图形设备"
 
-#: graphics.c:3055
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "零长度箭头的角度不定，因此略过不用"
 
-#: graphics.c:3136
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\")=‘%c'不对; 因此没有画box()"
 
-#: graphics.c:3153
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr "GBox参数不对"
 
-#: graphics.c:3398
+#: graphics.c:3406
 msgid "metric information not available for this device"
 msgstr "公制信息不适用于这个设备"
 
@@ -190,9 +190,9 @@ msgstr "绘图符号不对"
 msgid "invalid font specification"
 msgstr "字形设定不对"
 
-#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2124 plot.c:2131
-#: plot.c:3153 plot.c:3155 plot.c:3157 plot.c:3312 plot3d.c:1155 plot3d.c:1159
-#: plot3d.c:1161 plot3d.c:1895
+#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2129 plot.c:2136
+#: plot.c:3158 plot.c:3160 plot.c:3162 plot.c:3317 plot3d.c:1159 plot3d.c:1163
+#: plot3d.c:1165 plot3d.c:1899
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
@@ -248,9 +248,9 @@ msgstr "对数座标不能有负的极限"
 msgid "invalid type for axis labels"
 msgstr "座标標記种类不对"
 
-#: plot.c:780 plot.c:1313 plot.c:1634 plot.c:1699 plot.c:1774 plot.c:1840
-#: plot.c:1913 plot.c:2008 plot.c:2084 plot.c:2362 plot.c:2536 plot.c:2752
-#: plot.c:3294 plot.c:3421 plot.c:3497 plot.c:3663 plot.c:3943 plot3d.c:1864
+#: plot.c:780 plot.c:1313 plot.c:1636 plot.c:1701 plot.c:1776 plot.c:1842
+#: plot.c:1918 plot.c:2013 plot.c:2089 plot.c:2367 plot.c:2541 plot.c:2757
+#: plot.c:3299 plot.c:3426 plot.c:3502 plot.c:3668 plot.c:3948 plot3d.c:1868
 msgid "too few arguments"
 msgstr "参数数目太少"
 
@@ -263,9 +263,9 @@ msgstr "座标数目%d不对"
 msgid "'hadj' must be of length one"
 msgstr "'hadj'的长度必需为一"
 
-#: plot.c:888 plot.c:2096 plot.c:2373 plot.c:2379 plot.c:2386 plot.c:2394
-#: plot.c:2401 plot.c:2408 plot.c:2415 plot.c:2422 plot.c:2430 plot.c:2437
-#: plot.c:3160
+#: plot.c:888 plot.c:2101 plot.c:2378 plot.c:2384 plot.c:2391 plot.c:2399
+#: plot.c:2406 plot.c:2413 plot.c:2420 plot.c:2427 plot.c:2435 plot.c:2442
+#: plot.c:3165
 #, c-format
 msgid "zero-length '%s' specified"
 msgstr "'%s'长度不能设成零"
@@ -297,181 +297,185 @@ msgstr "%s()里的'x'和'y'的长度不一样"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "绘图种类'%s'被缩短成第一个字符"
 
-#: plot.c:1346 plot.c:3014
+#: plot.c:1346 plot.c:3019
 msgid "invalid plot type"
 msgstr "绘图种类不对"
 
-#: plot.c:1546
+#: plot.c:1548
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "绘图种类'%c'不对"
 
-#: plot.c:1589
+#: plot.c:1591
 msgid "invalid first argument"
 msgstr "第一个参数不对"
 
-#: plot.c:1596
+#: plot.c:1598
 msgid "invalid second argument"
 msgstr "第二个参数不对"
 
-#: plot.c:1604
+#: plot.c:1606
 msgid "invalid third argument"
 msgstr "第三个参数不对"
 
-#: plot.c:1612
+#: plot.c:1614
 msgid "invalid fourth argument"
 msgstr "第四个参数不对"
 
-#: plot.c:1620
+#: plot.c:1622
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "不能将零长度的座标同其它长度的座标混合在一起"
 
-#: plot.c:1926
+#: plot.c:1848
+msgid "Empty raster"
+msgstr ""
+
+#: plot.c:1931
 msgid "invalid arrow head length"
 msgstr "箭头长度不对"
 
-#: plot.c:1931
+#: plot.c:1936
 msgid "invalid arrow head angle"
 msgstr "箭头角度不对"
 
-#: plot.c:1936
+#: plot.c:1941
 msgid "invalid arrow head specification"
 msgstr "箭头设定不对"
 
-#: plot.c:2170
+#: plot.c:2175
 msgid "no coordinates were supplied"
 msgstr "没有座标"
 
-#: plot.c:2793
+#: plot.c:2798
 msgid "invalid a=, b= specification"
 msgstr "a=, b= 设定不对"
 
-#: plot.c:2802
+#: plot.c:2807
 msgid "'a' and 'b' must be finite"
 msgstr "'a'和'b'的值必需是有限的"
 
-#: plot.c:2937 plot.c:4063 plot.c:4067 plot.c:4070 plot.c:4090 plot.c:4094
-#: plot.c:4097 plot3d.c:1077 plot3d.c:1081 plot3d.c:1086 plot3d.c:1090
-#: plot3d.c:1094 plot3d.c:1098 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: plot.c:2942 plot.c:4068 plot.c:4072 plot.c:4075 plot.c:4095 plot.c:4099
+#: plot.c:4102 plot3d.c:1081 plot3d.c:1085 plot3d.c:1090 plot3d.c:1094
+#: plot3d.c:1098 plot3d.c:1102 stem.c:159 stem.c:160 stem.c:162 stem.c:163
 #: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
-#: plot.c:3009 plot.c:3149
+#: plot.c:3014 plot.c:3154
 #, c-format
 msgid "invalid number of points in %s"
 msgstr "%s里点的数目不对"
 
-#: plot.c:3151
+#: plot.c:3156
 msgid "incorrect argument type"
 msgstr "参数种类不对"
 
-#: plot.c:3163
+#: plot.c:3168
 msgid "different argument lengths"
 msgstr "参数长度不一样"
 
-#: plot.c:3165
+#: plot.c:3170
 msgid "more 'labels' than points"
 msgstr "'labels'比点还要多"
 
-#: plot.c:3214
+#: plot.c:3219
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "警告: 没有点在%.2f英尺内\n"
 
-#: plot.c:3220
+#: plot.c:3225
 msgid "warning: nearest point already identified\n"
 msgstr "警告: 已经找到了最近的点\n"
 
-#: plot.c:3305
+#: plot.c:3310
 msgid "invalid units"
 msgstr "单位不对"
 
-#: plot.c:3481 plot.c:3588
+#: plot.c:3486 plot.c:3593
 msgid "invalid dendrogram input"
 msgstr "谱系图输入不对"
 
-#: plot.c:3645
+#: plot.c:3650
 msgid "invalid symbol parameter vector"
 msgstr "符号参数矢量不对"
 
-#: plot.c:3668
+#: plot.c:3673
 msgid "invalid symbol coordinates"
 msgstr "符号座标不对"
 
-#: plot.c:3676
+#: plot.c:3681
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/参数长度不一样"
 
-#: plot.c:3695
+#: plot.c:3700
 msgid "invalid circles data"
 msgstr "圆圈数据不对"
 
-#: plot.c:3697 plot.c:3718 plot.c:3743 plot.c:3773
+#: plot.c:3702 plot.c:3723 plot.c:3748 plot.c:3778
 msgid "invalid symbol parameter"
 msgstr "符号参数不对"
 
-#: plot.c:3716
+#: plot.c:3721
 msgid "invalid squares data"
 msgstr "正方形数据不对"
 
-#: plot.c:3741
+#: plot.c:3746
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "长方形数据不对(需要两个列)"
 
-#: plot.c:3771
+#: plot.c:3776
 msgid "invalid stars data"
 msgstr "星形数据不对"
 
-#: plot.c:3813
+#: plot.c:3818
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
-#: plot.c:3816
+#: plot.c:3821
 #, c-format
 msgid "invalid 'thermometers[, %s]'"
 msgstr "'thermometers[,%s]'不对"
 
-#: plot.c:3819
+#: plot.c:3824
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "'thermometers[,%s]'在[0,1]范围外--看起来会有点不对"
 
-#: plot.c:3822
+#: plot.c:3827
 msgid "invalid 'thermometers[, 1:2]'"
 msgstr "'thermometers[,1:2]'"
 
-#: plot.c:3861
+#: plot.c:3866
 msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "'boxplots'数据不对(需要五个列)"
 
-#: plot.c:3870
+#: plot.c:3875
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "'boxplots[, 5]'在[0,1]范围外--看起来会有点不对"
 
-#: plot.c:3872
+#: plot.c:3877
 msgid "invalid 'boxplots[, 1:4]'"
 msgstr "'boxplots[, 1:4]'不对"
 
-#: plot.c:3918
+#: plot.c:3923
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
-#: plot.c:3956 plot.c:3958 plot.c:3963 plot.c:3965
+#: plot.c:3961 plot.c:3963 plot.c:3968 plot.c:3970
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s'参数的长度不对"
 
-#: plot3d.c:181 plot3d.c:1921
+#: plot3d.c:181 plot3d.c:1925
 msgid "insufficient 'x' or 'y' values"
 msgstr "'x'或'y'值的大小不够"
 
-#: plot3d.c:185 plot3d.c:1924
+#: plot3d.c:185 plot3d.c:1928
 msgid "dimension mismatch"
 msgstr "量度不相符"
 
-#: plot3d.c:193 plot3d.c:1927
+#: plot3d.c:193 plot3d.c:1931
 msgid "no contour values"
 msgstr "无等高值"
 
@@ -483,77 +487,77 @@ msgstr "x/y的值或极限不对"
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "等高层次不对: 必需严格增加"
 
-#: plot3d.c:1041 plot3d.c:1054
+#: plot3d.c:1045 plot3d.c:1058
 msgid "Axis orientation not calculated"
 msgstr "无法计算座标方位"
 
-#: plot3d.c:1074
+#: plot3d.c:1078
 msgid "too few parameters"
 msgstr "参数太少"
 
-#: plot3d.c:1104
+#: plot3d.c:1108
 msgid "invalid 'x' limits"
 msgstr "'x'极限不对"
 
-#: plot3d.c:1106
+#: plot3d.c:1110
 msgid "invalid 'y' limits"
 msgstr "'y'极限不对"
 
-#: plot3d.c:1108
+#: plot3d.c:1112
 msgid "invalid 'z' limits"
 msgstr "'z'极限不对"
 
-#: plot3d.c:1129
+#: plot3d.c:1133
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab'必需是长度为一的字符矢量"
 
-#: plot3d.c:1131
+#: plot3d.c:1135
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab'必需是长度为一的字符矢量"
 
-#: plot3d.c:1133
+#: plot3d.c:1137
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab'必需是长度为一的字符矢量"
 
-#: plot3d.c:1153
+#: plot3d.c:1157
 msgid "invalid viewing parameters"
 msgstr "视见参数不对"
 
-#: plot3d.c:1171 plot3d.c:1175
+#: plot3d.c:1175 plot3d.c:1179
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "'%s'设定不对"
 
-#: plot3d.c:1521
+#: plot3d.c:1525
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "contour():圆的/长的seglist – 是不是应该把%s设成大于%d?"
 
-#: plot3d.c:1931
+#: plot3d.c:1935
 msgid "missing 'x' values"
 msgstr "缺少'x'值"
 
-#: plot3d.c:1933
+#: plot3d.c:1937
 msgid "increasing 'x' values expected"
 msgstr "'x'值应加大"
 
-#: plot3d.c:1938
+#: plot3d.c:1942
 msgid "missing 'y' values"
 msgstr "缺少'y'值"
 
-#: plot3d.c:1940
+#: plot3d.c:1944
 msgid "increasing 'y' values expected"
 msgstr "'y'值应加大"
 
-#: plot3d.c:1945
+#: plot3d.c:1949
 msgid "invalid NA contour values"
 msgstr "NA等高值不对"
 
-#: plot3d.c:1957
+#: plot3d.c:1961
 msgid "all z values are equal"
 msgstr "所有的z值是一样的"
 
-#: plot3d.c:1959
+#: plot3d.c:1963
 msgid "all z values are NA"
 msgstr "所有的z值都是NA"
 

@@ -125,14 +125,28 @@ function(dir,
         pos <- pmatch(names(reverse), names(defaults), nomatch = 0L)
         defaults[pos] <- reverse[pos > 0L]
 
-        rnames <-
+        rnames <- if(is.list(defaults$which)) {
+            ## No recycling of repos for now.
+            defaults$recursive <- rep_len(as.list(defaults$recursive),
+                                          length(defaults$which))
+            unlist(Map(function(w, r)
+                       package_dependencies(setdiff(pnames,
+                                                    pnames_using_install_no),
+                                            available,
+                                            which = w,
+                                            recursive = r,
+                                            reverse = TRUE),
+                       defaults$which,
+                       defaults$recursive),
+                   use.names = FALSE)
+        } else {
             package_dependencies(setdiff(pnames,
                                          pnames_using_install_no),
                                  available,
                                  which = defaults$which,
-                                 recursive =
-                                 defaults$recursive,
+                                 recursive = defaults$recursive,
                                  reverse = TRUE)
+        }
 
         rnames <- intersect(unlist(rnames, use.names = FALSE),
                             available[, "Package"])

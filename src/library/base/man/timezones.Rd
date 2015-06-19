@@ -5,6 +5,7 @@
 
 \name{timezones}
 \alias{Sys.timezone}
+\alias{OlsonNames}
 \alias{timezone}
 \alias{time zone}
 \alias{time zones}
@@ -18,8 +19,17 @@
   Information about time zones in \R.  \code{Sys.timezone} returns
   the current time zone.
 }
+
 \usage{
-Sys.timezone()
+Sys.timezone(location = FALSE)
+
+OlsonNames()
+}
+
+\arguments{
+  \item{location}{logical: should an attempt be made to find the
+    location name as per the Olson database?  (See \sQuote{Time zone
+      names} below.)}
 }
 
 \details{
@@ -29,13 +39,16 @@ Sys.timezone()
   with \R on Windows.
 
   It is not in general possible to retrieve the system's own name(s) for
-  the current timezone, but \code{Sys.timezone} will retrieve the name
-  it uses for the current time (and the name may differ depending on
-  whether daylight saving time is in effect).
+  the current time zone.  By default \code{Sys.timezone} will retrieve
+  the name it uses for the current time (and the name may differ
+  depending on whether daylight saving time is in effect).
 
-  On most platforms it is  possible to set the time zone via the
+  On almost all platforms it is possible to set the time zone via the
   environment variable \env{TZ}: see the section on \sQuote{Time zone
-    names} for suitable values.
+  names} for suitable values.  \code{Sys.timezone(TRUE)} will return the
+  value if set (and on some OSes it is always set), otherwise it will
+  try to retrieve a value which if set for \env{TZ} would give the
+  current time zone.
 
   Note that the principal difficulty with time zones is their individual
   history: over the last 100 years places have changed their affiliation
@@ -46,19 +59,18 @@ Sys.timezone()
 
   Time zones did not come into use until the second half of the
   nineteenth century, and DST was first introduced in the early
-  twentieth century, most widely during the First World War (in 1916).
-#ifdef unix
+  twentieth century, most widely in 1916.
+  
   The most common implementation of \code{POSIXct} is as signed 32-bit
   integers and so only goes back to the end of 1901: on such systems \R
   assumes that dates prior to that are in the same time zone as they
   were in 1902.
-#endif
 }
 
 \note{
-  There is currently (since 2007) considerable disruption over changes
+  There has been since 2007 considerable disruption over changes
   to the timings of the DST transitions, aimed at energy conservation.
-  These often have short notice and timezone databases may not be up to
+  These often have short notice and time-zone databases may not be up to
   date (even if the OS has been updated recently).
 
   Note that except on Windows, the operation of time zones is an OS
@@ -71,7 +83,12 @@ Sys.timezone()
 
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string.  Typically this is an abbreviation such as \code{"EST"}.
+  an empty string.  Typically this is an abbreviation such as
+  \code{"EST"}.  For \code{location = TRUE} on Windows and many
+  Unix-alike OSes this will be a location such as
+  \code{"Europe/London"}.
+
+  \code{OlsonNames} returns a character vector.
 }
 
 \section{Time zone names}{
@@ -81,9 +98,10 @@ Sys.timezone()
   (listed under environment variable \env{TZ} at
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08}),
   which is often at least partially supported, but there usually are
-  other more user-friendly ways to specify timezones.
+  other more user-friendly ways to specify time zones.
 
-  Many systems make use of a timezone database compiled by Arthur Olson,
+  Many systems make use of a time-zone database originally compiled by
+  Arthur David Olson (and now managed by IANA),
   in which the preferred way to refer to a time zone by a location
   (typically of a city) e.g. \code{Europe/London},
   \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
@@ -95,18 +113,20 @@ Sys.timezone()
   optional colon prepended to the path to a file giving complied zone
   information (and the examples above are all files in a system-specific
   location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.  By convention, regions with a unique timezone
+  details and references.  By convention, regions with a unique time-zone
   history since 1970 have specific names, but those with different
   earlier histories may not.
+
+  The function \code{OlsonNames} returns the names known to the Olson
+  database on the current system.
 #ifdef unix
 
-  For most Unix-alikes use the Olson database.  The system-specific
-  default location in the file system varies, e.g.
-  \file{/usr/share/zoneinfo} (Linux, OS X, FreeBSD),
-  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/usr/etc/zoneinfo},
-  \ldots.  It is likely that there is a file \file{zone.tab} in that
-  directory listing the locations known as time-zone names (but not for
-  example \code{EST5EDT}).  See also
+  Most Unix-alikes use the Olson database.  The system-specific default
+  location in the file system varies, e.g.  \file{/usr/share/zoneinfo}
+  (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
+  \ldots.  It is likely that there is a file named something like
+  \file{zone.tab} under that directory listing the locations known as
+  time-zone names (but not for example \code{EST5EDT}).  See also
   \url{http://en.wikipedia.org/wiki/Zone.tab}.
 #endif
 #ifdef windows
@@ -117,7 +137,7 @@ Sys.timezone()
   Environment variable \env{TZDIR} can be used to point to a later
   \file{zoneinfo} directory.  A file listing most known time zones can be
   found at \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
-  \sQuote{Examples}).   By convention, regions with a unique timezone
+  \sQuote{Examples}).   By convention, regions with a unique time-zone
   history since 1970 have specific names, but those with different
   earlier histories may not.
 
@@ -135,12 +155,13 @@ Sys.timezone()
   unreliable and gives a warning.
 #endif
 
-  Many systems support timezones of the form \samp{GMT+n} and
+  Many systems support time zones of the form \samp{GMT+n} and
   \samp{GMT-n}, which are at a fixed offset from UTC (hence no DST).
   Contrary to some usage (but consistent with names such as
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
   positive offsets are times behind (west of) UTC.
 }
+
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
 
@@ -148,24 +169,36 @@ Sys.timezone()
   \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
+% suggested locations include those from libical sources.
+% zone_sun.tab is not quite the same format: has a "-" column before comments
 \examples{
 Sys.timezone()
+Sys.timezone(location = TRUE)
+
+str(OlsonNames()) ## typically 4-900 names
 
 #ifdef windows
 tzfile <- file.path(R.home("share"), "zoneinfo", "zone.tab")
 tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
     col.names = c("country", "coords", "name", "comments"),
     as.is = TRUE, fill = TRUE, comment.char = "#")
-str(tzones$name)
+str(tzones)
 #endif
 #ifdef unix
-\dontrun{
-## need to supply a suitable file path (if any) for your system
-tzfile <- "/usr/share/zoneinfo/zone.tab"
+## need to find a suitable file path (if any) for your system
+tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+            "/usr/lib/zoneinfo",   # early glibc
+            "/usr/share/lib/zoneinfo", # AIX?
+            "/usr/local/etc/zoneinfo", # tzcode default
+            "/etc/zoneinfo", "/usr/etc/zoneinfo")
+tzfiles <- c(file.path(tzdirs, "zone.tab"),
+            "/usr/share/lib/zoneinfo/tab/zone_sun.tab") # Solaris
+if (any(have <- file.exists(tzfiles))) {
+tzfile <- tzfiles[have][1]
 tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
     col.names = c("country", "coords", "name", "comments"),
     as.is = TRUE, fill = TRUE, comment.char = "#")
-str(tzones$name)
+str(tzones)
 }
 #endif
 }

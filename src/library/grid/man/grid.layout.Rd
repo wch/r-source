@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.layout.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.layout}
@@ -12,8 +12,8 @@
 }
 \usage{
 grid.layout(nrow = 1, ncol = 1,
-        widths = unit(rep(1, ncol), "null"),
-        heights = unit(rep(1, nrow), "null"),
+        widths = unit(rep_len(1, ncol), "null"),
+        heights = unit(rep_len(1, nrow), "null"),
         default.units = "null", respect = FALSE,
         just="centre")
 }

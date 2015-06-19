@@ -81,11 +81,6 @@ int matherr(struct exception *exc)
 #endif
 #endif
 
-#ifndef _AIX
-static const double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
-#else
-static double R_Zero_Hack = 0.0;
-#endif
 typedef union
 {
     double value;
@@ -167,10 +162,17 @@ int R_finite(double x)
 void attribute_hidden InitArithmetic()
 {
     R_NaInt = INT_MIN;
-    R_NaN = 0.0/R_Zero_Hack;
     R_NaReal = R_ValueOfNA();
+// we assume C99, so
+#ifndef OLD
+    R_NaN = NAN;
+    R_PosInf = INFINITY;
+    R_NegInf = -INFINITY;
+#else
+    R_NaN = 0.0/R_Zero_Hack;
     R_PosInf = 1.0/R_Zero_Hack;
     R_NegInf = -1.0/R_Zero_Hack;
+#endif
 }
 
 /* Keep these two in step */
@@ -179,10 +181,8 @@ void attribute_hidden InitArithmetic()
  */
 static double myfmod(double x1, double x2)
 {
-    double q = x1 / x2, tmp;
-
     if (x2 == 0.0) return R_NaN;
-    tmp = x1 - floor(q) * x2;
+    double q = x1 / x2, tmp = x1 - floor(q) * x2;
     if(R_FINITE(q) && (fabs(q) > 1/R_AccuracyInfo.eps))
 	warning(_("probable complete loss of accuracy in modulus"));
     q = floor(tmp/x2);
@@ -369,7 +369,7 @@ static R_INLINE int R_integer_plus(int x, int y, Rboolean *pnaflag)
 		*pnaflag = TRUE;
 	    return NA_INTEGER;
 	}
-    }    
+    }
 }
 
 static R_INLINE int R_integer_minus(int x, int y, Rboolean *pnaflag)
@@ -410,7 +410,7 @@ static R_INLINE double R_integer_divide(int x, int y)
 	return NA_REAL;
     else
 	return (double) x / (double) y;
-}    
+}
 
 static R_INLINE SEXP ScalarValue1(SEXP x)
 {
@@ -1241,9 +1241,12 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* case 44: return MATH1(tetragamma);
 	   case 45: return MATH1(pentagamma);
 	   removed in 2.0.0
-	*/
 
-	/* case 46: return MATH1(Rf_gamma_cody); removed in 2.8.0 */
+	   case 46: return MATH1(Rf_gamma_cody); removed in 2.8.0
+	*/
+    case 47: return MATH1(cospi);
+    case 48: return MATH1(sinpi);
+    case 49: return MATH1(tanpi);
 
     default:
 	errorcall(call, _("unimplemented real function of 1 argument"));

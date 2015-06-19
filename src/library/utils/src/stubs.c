@@ -24,6 +24,15 @@
 #include <Defn.h> /* for checkArity */
 #include <Internal.h>
 
+#undef _
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("utils", String)
+#else
+#define _(String) (String)
+#endif
+
+
 #ifdef Win32
 #include "Startup.h"
 extern UImode CharacterMode;

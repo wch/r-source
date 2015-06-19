@@ -72,6 +72,10 @@ CXX = $(BINPREF)g++ $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
 CXXPICFLAGS = 
+CXX1X = $(BINPREF)g++ $(M_ARCH)
+CXX1XFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
+CXX1XPICFLAGS =
+CXX1XSTD = -std=c++0x
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
@@ -133,6 +137,8 @@ SHLIB_CXXFLAGS =
 SHLIB_CXXLD = $(CXX)
 ## ideally -shared -static-libstdc++, but not for gcc 4.2.1
 SHLIB_CXXLDFLAGS = -shared
+SHLIB_CXX1XLD = $(CXX1X)
+SHLIB_CXX1XLDFLAGS = -shared
 SHLIB_EXT = .dll
 SHLIB_FCLD = $(FC)
 ## ideally -shared -static-libgfortran, but not for gcc 4.2.1

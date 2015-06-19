@@ -130,7 +130,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{strictly}{logical.}
   \item{obj}{an \R object.}
   \item{xx}{a classless object to be placed into the class.}
-  \item{tz}{an optional timezone.}
+  \item{tz}{an optional time zone.}
   \item{units}{see \code{\link{difftime}}.}
   \item{\dots}{Arguments passed to non-dot name versions.}
     \item{FUN}{function to apply, found via \code{\link{match.fun}}.}

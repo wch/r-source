@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2004-7  The R Foundation
+ *  Copyright (C) 2013	  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,7 +74,7 @@ do_setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     
     if (!dd->canGenMouseDown) checkHandler(mouseHandlers[0], eventEnv);
     if (!dd->canGenMouseUp)   checkHandler(mouseHandlers[1], eventEnv);
-    if (!dd->canGenMouseMove) checkHandler(mouseHandlers[1], eventEnv);
+    if (!dd->canGenMouseMove) checkHandler(mouseHandlers[2], eventEnv);
     if (!dd->canGenKeybd)     checkHandler(keybdHandler, eventEnv);
 
     dd->eventEnv = eventEnv;
@@ -86,17 +87,40 @@ do_getGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int devnum;
     pGEDevDesc gdd;
-
+    
     checkArity(op, args);
     
     devnum = INTEGER(CAR(args))[0] - 1;
     if(devnum < 1 || devnum > R_MaxDevices)
 	error(_("invalid graphical device number"));
-
+    
     gdd = GEgetDevice(devnum);
     if(!gdd) errorcall(call, _("invalid device"));
     return gdd->dev->eventEnv;
 }
+
+/* helper function to check if there is at least one open graphics device listening for events. Returns TRUE if so, FALSE if no listening devices are found */
+
+Rboolean haveListeningDev()
+{
+    Rboolean ret = FALSE;
+    pDevDesc dd;
+    pGEDevDesc gd;
+    if(!NoDevices())
+    {
+	for(int i = 1; i < NumDevices(); i++)
+	{
+	    gd = GEgetDevice(i);
+	    dd = gd->dev;
+	    if(dd->gettingEvent){
+		ret = TRUE;
+		break;
+	    }
+	}
+    }
+    return ret;
+}
+	  
 
 SEXP
 do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -105,12 +129,12 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     pDevDesc dd;
     pGEDevDesc gd;
     int i, count=0, devNum;
-
+    
     checkArity(op, args);
     
     prompt = CAR(args);
     if (!isString(prompt) || !length(prompt)) error(_("invalid prompt"));
-
+    
     /* NB:  cleanup of event handlers must be done by driver in onExit handler */
     
     if (!NoDevices()) {
@@ -132,12 +156,18 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (!count)
 	    error(_("no graphics event handlers set"));
-	    
+	
 	Rprintf("%s\n", CHAR(asChar(prompt)));
 	R_FlushConsole();
-
+	
 	/* Poll them */
 	while (IS_R_NilValue(result)) {
+	    /* make sure we still have at least one device listening for events, and throw an error if not*/
+	    if(!haveListeningDev()) 
+		return R_NilValue;
+#ifdef Win32
+	    R_WaitEvent();
+#endif
 	    R_ProcessEvents();
 	    R_CheckUserInterrupt();
 	    i = 1;
@@ -150,7 +180,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 		    result = findVar(install("result"), dd->eventEnv);
 		    if (! IS_R_NilValue(result) &&
 			! IS_R_UnboundValue(result)) {
-		        break;
+			break;
 		    }
 		}
 		devNum = nextDevice(devNum);

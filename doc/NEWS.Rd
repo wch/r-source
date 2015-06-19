@@ -71,11 +71,11 @@
       \item There is a new function \code{find_gs_cmd()} in the
       \pkg{tools} package to locate a GhostScript executable.  (This is
       an enhanced version of a previously internal function there.)
-      
+
       \item \code{object.size()} gains a \code{format()} method.
-      
+
       \item There is a new family, \code{"ArialMT"} for the \code{pdf()}
-      and \code{postscriipt()} devices.  This will only be rendered
+      and \code{postscript()} devices.  This will only be rendered
       correctly on viewers which have access to Monotype TrueType fonts
       (but are sometimes requested by journals).
 
@@ -85,19 +85,71 @@
       \item \code{combn(x, simplify = TRUE)} now gives a factor result
       for factor input \code{x} (previously user error).
       (Related to \PR{15442}.)
-      
-      \item Added \code{utils::fileSnapshot()} and 
-      \code{utils::changedFiles()} functions to allow snapshots and 
+
+      \item Added \code{utils::fileSnapshot()} and
+      \code{utils::changedFiles()} functions to allow snapshots and
       comparison of directories of files.
+
+      \item \code{make.names(names, unique=TRUE)} now tries to preserve
+      existing names. (Suggestion of \PR{15452}.)
+
+      \item New functions \code{cospi(x)}, \code{sinpi(x)}, and
+      \code{tanpi(x)}, for more accurate computation of
+      \code{cos(pi*x)}, etc, both in \R{} and the C API.  Using these
+      gains accuracy in some cases, e.g., for \code{lgamma()} or
+      \code{besselI()}.  (Suggested by Morten Wellinder in \PR{15529}.)
+
+      \item \code{print.table(x, zero.print = ".")} now also has an
+      effect when \code{x} is not integer-valued.
+      
+      \item There is more support to explore the system's idea of
+      time-zone names.  \code{Sys.timezone(location = TRUE)} tries to
+      give the current system setting (and succeeds at least on Linux, OS
+      X, Solaris and Windows), and \code{OlsonNames()} lists the names
+      in the system's Olson database.
+      
+      \item Platforms with a 64-bit \code{time_t} type are allowed to
+      handle conversions between the \code{"POSIXct"} and
+      \code{"POSIXlt"} classes for date-times outside the 32-bit range
+      (before 1902 or after 2037): the existing workarounds are used on
+      other platforms.  (Note that time-zone information for post-2037
+      is speculative at best, and the OS services are tested for known
+      errors and so not used on OS X.)
+
+      Currently \code{time_t} is usually \code{long} and hence 64-bit on
+      Unix-alike 64-bit platforms.  On \R for Windows it is 64-bit (for
+      both architectures as from this version).
+
+      \item The \code{"save.defaults"} option can include a value for
+      \code{compression_level}.  (Wish of \PR{15579}.)
+      
+      \item \code{colSums} and friends now have support for arrays and
+      data-frame columns with \eqn{2^{31}}{2^31} or more elements.
+      
+      \item \code{as.factor()} is faster when \code{f} is an unclassed
+      integer vector (for example, when called from \code{tapply()}).
+      
+      \item \code{fft()} now works with longer inputs, from the 12
+      million previously supported up to 2 billion.  (\PR{15593})
+
+      \item Complex \code{svd()} now uses LAPACK subroutine
+      \code{ZGESDD}, the complex analogue of the routine used for the
+      real case.
+      
+      \item Sweave now outputs \file{.tex} files in UTF-8 if the 
+      input encoding is declared to be UTF-8, regardless of the 
+      local encoding.  The UTF-8 encoding may now be declared using
+      a LaTeX comment containing the string \code{\%\\SweaveUTF8}
+      on a line by itself.
     }
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item The included version of LAPACK has been updated to 3.4.2.
+      \item The included version of LAPACK has been updated to 3.5.0.
 
       \item There is some support for parallel testing of an
-      installation, by setting \env{TEST_MC_CORES} is set to an integer
+      installation, by setting \env{TEST_MC_CORES} to an integer
       greater than one to indicate the maximum number of cores to be
       used in parallel. (It is worth specifying at least 8 cores if
       available.)  Most of these require a \command{make} program (such
@@ -116,22 +168,59 @@
       \item More of \command{make check} will work if recommended packages
       are not installed: but recommended packages remain needed for
       thorough checking of an \R build.
+      
+      \item (Windows only.)  The version of \samp{tzcode} included in
+      \file{src/extra/tzone} has been updated.
+
+      \item There is experimental support to produce manuals in ebook
+      formats. (See \file{doc/manual/Makefile}.  Suggested by Mauro
+      Cavalcanti.)
     }
   }
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item The \code{CRANextra} repository is no longer a default
+      repository on Windows: all the binary versions of packages from
+      CRAN are now on CRAN, although \code{CRANextra} contains packages
+      from Omegahat and elsewhere used by CRAN packages.
+
+      \item Only vignettes sources in directory \file{vignettes} are
+      considered to be vignettes and hence indexed as such.
+
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
       is no longer recognized as valid. Use \samp{MIT} or
       \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
-      
+
       \item Help for S4 methods with very long signatures now tries
       harder to split the description in the \samp{Usage} field to no
       more than 80 characters per line (some packages had over 120
       characters).
+
+      \item \command{R CMD INSTALL --build} (not Windows) now defaults to
+      the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
+      
+      \item There is \emph{experimental} support for compiling C++11
+      code in packages.  The file \file{src/Makevars} or
+      \file{src/Makevars.win} should define the macro \samp{USE_CXX1X}
+      (with an empty value).  Where needed, an alternative compiler can
+      be specified by setting macros \samp{CXX1X}, \samp{CXX1XFLAGS} and
+      so on, either when \R is configured or in a personal
+      \file{Makevars} file.  (The default is to use \samp{$(CXX)
+	-std=c++11} except on Windows where \option{-std=c++0x} is used,
+      as supported by \code{g++ 4.6.x}.)
+      
+      Other standards supported by the compiler can be specified by e.g.
+      \samp{USE_CXX1X = -std=c++1y} .
+      
+      \item Fake installs now install the contents of directory
+      \file{inst}: some packages use this to install e.g. C++ headers
+      for use by other packages that are independent of the package
+      itself.  Option \option{--no-inst} can be used to get the previous
+      behaviour.
     }
   }
 
@@ -157,6 +246,10 @@
 
   \subsection{UTILITIES}{
     \itemize{
+      \item Only vignettes sources in directory \file{vignettes} are
+      considered to be vignettes and hence checked.  That has been the
+      preferred location since \R 2.14.0 and is now obligatory.
+
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
       case-insensitively on all platforms (not just on Windows).
@@ -198,10 +291,32 @@
       (where installed) \command{pkg-config --libs libR} are now those
       needed to link a front-end against the (shared or static) \R
       library.
-      
-      \item \command{R CMD check} analyses \code{:::} calls.
-      
+
       \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item (Windows only) A function \code{R_WaitEvent()} has been
+      added (with declaration in header\file{R.h}) to block execution
+      until the next event is received by \R.
+
+      \item Remapping in the \file{Rmath.h} header can be suppressed by
+      defining \samp{R_NO_REMAP_RMATH}.
+      
+      \item The remapping of \code{rround()} in header \file{Rmath.h}
+      has been removed: use \code{fround()} instead.
+      
+      \item \code{ftrunc()} in header \file{Rmath.h} is now a wrapper
+      for the C99 function \code{trunc()}, which might as well be used
+      in C code: \code{ftrunc()} is still needed for portable C++ code.
+
+      \item The never-documented remapping of \code{prec()} to
+      \code{fprec()} in header \file{Rmath.h} has been removed.
+      
+      \item The included LAPACK subset now includes \code{zgesdd} and
+      \code{zgelsd}.
     }
   }
 
@@ -232,7 +347,7 @@
       \item Many methods are no longer exported by package \pkg{stats}.
       They are all registered on their generic, which should be called
       rather than calling a method directly.
-      
+
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are defunct.
     }
@@ -248,23 +363,85 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
+
+      \item \code{getGraphicsEvent()} caused 100\% CPU usage in Windows.
+      (PR#15500)
+
+      \item \code{nls()} with no \code{start} argument now may also work
+      inside another function (scoping issue).
+
+      \item \code{pbeta()} and similar work better for very large
+      (billions) \code{ncp}.
+
+      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
+      \code{"C"} (to restore the sane behavior) no longer yields a
+      warning.
+
+      \item Extra checks have been added for units in \pkg{grid} to
+      catch instances of division-by-zero.  This may introduce error
+      messages in existing code and/or produce a different result
+      in existing code (but only where an infinite location or
+      dimension may now become zero).
     }
   }
 }
 
 \section{\Rlogo CHANGES IN R 3.0.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item On Windows there is support for making \file{.texi} manuals
+      using \command{texinfo} 5.0 or later: the setting is in file
+      \file{src/gnuwin32/MkRules.dist}.
+
+      A packaging of the Perl script and modules for \command{texinfo}
+      5.2 has been made available at
+      \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
+
+      \item \code{write.table()} now handles matrices of
+      \eqn{2^{31}}{2^31} or more elements, for those with large amounts
+      of patience and disc space.
+
+      \item There is a new function, \code{La_version()}, to report the
+      version of LAPACK in use.
+      
+      \item The HTML version of \sQuote{An Introduction to R} now has
+      links to PNG versions of the figures.
+    }
+  }
+  
+      
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The new field \samp{SysDataCompression} in the
+      \file{DESCRIPTION} file allows user control over the compression
+      used for \file{sysdata.rda} objects in the lazy-load database.
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The long undocumented remapping of \code{rround()} to
+      \code{Rf_fround()} in header \file{Rmath.h} is now formally
+      deprecated: use \code{fround()} directly.
+      
+      \item Remapping of \code{prec()} and \code{trunc()} in the
+      \file{Rmath.h} header has been disabled in C++ code (it has caused
+      breakage with \code{libc++} headers).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{getParseData()} truncated the imaginary part of 
+      \item \code{getParseData()} truncated the imaginary part of
       complex number constants.  (Reported by Yihui Xie.)
-      
+
       \item \code{dbeta(x, a, b)} with \code{a} or \code{b} within a
       factor of 2 of the largest representable number could
       infinite-loop.  (Reported by Ioannis Kosmidis.)
 
       \item \code{provideDimnames()} failed for arrays with a 0
       dimension. (\PR{15465})
-      
+
       \item \code{rbind()} and \code{cbind()} did not handle
       list objects correctly. (\PR{15468})
 
@@ -273,9 +450,114 @@
 
       \item \code{rasterImage()} and \code{grid.raster()} now give
       error on an empty (zero-length) raster.  (Reported by Ben North.)
-      
-      \item \code{plot.lm} would sometimes scramble the labels
+
+      \item \code{plot.lm()} would sometimes scramble the labels
       in plot type 5.  (\PR{15458} and \PR{14837})
+
+      \item \code{min()} did not handle \code{NA_character_} values
+      properly.  (Reported by Magnus Thor Torfason.)
+
+      \item (Windows only.)  \code{readRegistry()} would duplicate
+      default values for keys.  (\PR{15455})
+
+      \item \code{str(..., strict.width = "cut")} did not handle
+      it properly when more than one line needed to be cut.  (Reported
+      by Gerrit Eichner.)
+
+      \item Removing subclass back-references when S4 classes were
+      removed or their namespace unloaded had several bugs (e.g., \PR{15481}).
+
+      \item \code{aggregate()} could fail when there were too many
+      levels present in the \code{by} argument.  (\PR{15004})
+
+      \item \code{namespaceImportFrom()} needed to detect primitive
+      functions when checking for duplicated imports (reported by
+      Karl Forner).
+
+      \item \code{getGraphicsEvent()} did not exit when a user closed
+      the graphics window.  (\PR{15208})
+
+      \item Errors in vignettes were not always captured and displayed
+      properly.  (\PR{15495})
+
+      \item \code{contour()} could fail when dealing with extremely
+      small z values.  (\PR{15454})
+
+      \item Several functions did not handle zero-length vectors properly,
+      including \code{browseEnv()}, \code{format()}, \code{gl()},
+      \code{relist()} and \code{summary.data.frame()}.  (E.g., \PR{15499})
+
+      \item \code{Sweave()} did not restore the \R{} output to the
+      console if it was interrupted by a user in the middle of evaluating
+      a code chunk.  (Reported by Michael Sumner.)
+
+      \item Fake installs of packages with vignettes work again.
+
+      \item Illegal characters in the input caused \code{parse()}
+      (and thus \code{source()}) to segfault.  (\PR{15518})
+
+      \item The nonsensical use of \code{nmax = 1} in
+      \code{duplicated()} or \code{unique()} is now silently ignored.
+
+      \item \code{qcauchy(p, *)} is now fully accurate even when p is
+      very close to 1. (\PR{15521})
+
+      \item The \code{validmu()} and \code{valideta()} functions in the
+      standard \code{glm()} families now also report non-finite values,
+      rather than failing.
+
+      \item Saved vignette results (in a \file{.Rout.save} file) were
+      not being compared to the new ones during \command{R CMD check}.
+
+      \item Double-clicking outside of the list box (e.g. on the scrollbar)
+      of a Tk listbox widget generated by \code{tk_select.list()} no
+      longer causes the window to close. (\PR{15407})
+
+      \item Improved handling of edge cases in
+      \code{parallel::splitindices()}. (\PR{15552})
+
+      \item HTML display of results from \code{help.search()} and
+      \code{??} sometimes contained badly constructed links.
+
+      \item \code{c()} and related functions such as \code{unlist()}
+      converted raw vectors to invalid logical vectors. (\PR{15535})
+      
+      \item (Windows only) When a call to \code{system2()} specified
+      one of \code{stdin}, \code{stdout} or \code{stderr} to be a file,
+      but the command was not found (e.g. it contained its arguments,
+      or the program was not on the \env{PATH}), it left the file open
+      and unusable until \R terminated.  (Reported by Mathew McLean.)
+      
+      \item The \code{bmp()} device was not recording \code{res = NA}
+      correctly: it is now recorded as 72 ppi.
+
+      \item Several potential problems with compiler-specific behaviour
+      have been identified using the \sQuote{Undefined Behaviour
+	Sanitizer} in conjunction with the \command{clang} compiler.
+      
+      \item \code{hcl()} now honours \code{NA} inputs (previously they
+      were mapped to black).
+      
+      \item Some translations in base packages were being looked up in
+      the main catalog rather than that for the package.
+
+      \item As a result of the 3.0.2 change about \sQuote{the last
+	second before the epoch}, most conversions which should have given
+      \code{NA} returned that time.  (The platforms affected include
+      Linux and OS X, but not Windows nor Solaris.)
+      
+      \item \code{rowsum} has more support for matrices and dataframes
+      with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
+  
+      \item \code{predict(<lm object>, interval = "confidence", scale =
+	<something>)} now works.  (\PR{15564})
+	
+      \item The bug fix in 3.0.2 for \PR{15411} was too aggressive,
+      and sometimes removed spaces that should not have been removed.
+      (\PR{15583})
+      
+      \item Running \R code in a \pkg{tcltk} callback failed to set the
+      busy flag, which will be needed to tell OS X not to \sQuote{App Nap}.
     }
   }
 }
@@ -290,7 +572,7 @@
       \file{NEWS.2}.  The latter files are now installed when \R is
       installed.  An HTML version of news from 2.10.0 to 2.15.3 is
       available as \file{doc/html/NEWS.2.html}.
-      
+
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
       the very rare case that a cumulative sum exceeds
@@ -374,7 +656,7 @@
       \item \code{termplot()} now has an argument \code{transform.x}
       to control the display of individual terms in the plot.
       (\PR{15329})
-      
+
       \item \code{format()} now supports \code{digits = 0}, to
       display \code{nsmall} decimal places.
 
@@ -389,10 +671,10 @@
       \item \code{utils::modifyList()} gets a new argument \code{keep.null}
       allowing \code{NULL} components in the replacement to be retained,
       instead of causing corresponding components to be deleted.
-      
+
       \item \code{tools::pkgVignettes()} gains argument \code{check};
       if set to \code{TRUE}, it will warn when it appears a vignette requests
-      a non-existent vignette engine. 
+      a non-existent vignette engine.
     }
   }
 
@@ -413,7 +695,7 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
-      
+
       \item \command{R CMD build} now weaves and tangles all vignettes,
       so suggested packages are not required during package installation
       if the source tarball was prepared with current
@@ -471,11 +753,11 @@
 	\item objects imported by \code{:::} calls which do not exist.
       }
       See \sQuote{Writing R Extensions} for good practice.
-      
+
       \item \command{R CMD check} optionally checks for non-standard
       top-level files and directories (which are often mistakes): this
       is enabled for \option{--as-cran}.
-      
+
       \item LaTeX style file \code{upquote.sty} is no longer included
       (the version was several years old): it is no longer used in \R.
       A much later version is commonly included in LaTeX distributions
@@ -485,6 +767,8 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
+      
+      \item \command{R CMD check} analyses \code{:::} calls.
     }
   }
 
@@ -541,7 +825,7 @@
 
       \item The limit of 500 \code{S3method} entries in a
       \code{NAMESPACE} file has been removed.
-  
+
       \item The default \sQuote{version} of Bioconductor for its
       packages has been changed to the upcoming \samp{2.13}, but this
       can be set by the environment variable \env{R_BIOC_VERSION}, e.g.
@@ -571,7 +855,7 @@
 
       \item \code{plclust()} is deprecated: use the \code{plot()} method
       for class \code{"hclust"} instead.
-      
+
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are deprecated (and they have not worked with
       current \file{NEWS} files for a long time).
@@ -761,27 +1045,27 @@
       \item (Windows) \code{system2()} now respects specifying
       \code{stdout} and \code{stderr} as files if called from
       \command{Rgui}. (\PR{15393})
-      
+
       \item Closing an \code{x11()} device whilst \code{locator()} or
       \code{identify()} is in progress no longer hangs \R.  (\PR{15253})
 
       \item \code{list.dirs(full.names = FALSE)} was not implemented.
       (\PR{15170})
-      
-      \item \code{format()} sometimes added unnecessary spaces. 
+
+      \item \code{format()} sometimes added unnecessary spaces.
       (\PR{15411})
-      
+
       \item \code{all.equal(check.names = FALSE)} would ignore the request
       to ignore the names and would check them as attributes.
-      
+
       \item The symbol set by \code{tools::Rd2txt_options(itemBullet=)}
       was not respected in some locales. (\PR{15435})
 
       \item \code{mcMap()} was not exported by package
       \pkg{parallel}. (\PR{15439})
-      
+
       \item \code{plot()} for \code{TukeyHSD} objects did not balance
-      \code{dev.hold()} and \code{dev.flush()} calls on multi-page plots. 
+      \code{dev.hold()} and \code{dev.flush()} calls on multi-page plots.
       (\PR{15449})
     }
   }
@@ -1308,7 +1592,7 @@
       \item \code{untar()} has a new argument \code{restore_times} which
       if false (not the default) discards the times in the tarball.
       This is useful if they are incorrect (some tarballs submitted to
-      \acronym{CRAN} have times in a local timezone or many years in the
+      \acronym{CRAN} have times in a local time zone or many years in the
       past even though the standard required them to be in UTC).
 
       \item \code{replayplot()} cannot (and will not attempt to) replay
@@ -1998,12 +2282,12 @@
 
 \section{CHANGES in previous versions}{
    \itemize{
-     \item 
-     Older news can be found in text format in files 
-     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1} 
-     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and 
-     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for 
-     \R  versions from 2.10.0 to 2.15.3 is in 
+     \item
+     Older news can be found in text format in files
+     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
+     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
+     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for
+     \R  versions from 2.10.0 to 2.15.3 is in
      \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
    }
  }

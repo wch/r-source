@@ -38,9 +38,9 @@
 #include <Rconfig.h>
 #include <Rmath.h>
 
+/* Used internally only */
 double  Rf_d1mach(int);
-#define gamma_cody	Rf_gamma_cody
-double	gamma_cody(double);
+double	Rf_gamma_cody(double);
 
 #include <R_ext/RS.h>
 
@@ -169,9 +169,6 @@ int R_finite(double);
 #define lfastchoose	Rf_lfastchoose
 #define lgammacor	Rf_lgammacor
 #define stirlerr       	Rf_stirlerr
-/* in Rmath.h
-#define gamma_cody      Rf_gamma_cody
-*/
 
 	/* Chebyshev Series */
 

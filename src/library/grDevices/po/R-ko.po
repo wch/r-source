@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2013-03-09 17:03-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -172,8 +172,9 @@ msgstr "알 수 없는 페밀리 '%s'입니다"
 msgid "invalid 'family' argument"
 msgstr "유효하지 않은 'family' 인자입니다"
 
-msgid "invalid 'file'"
-msgstr "유효하지 않은 'file'입니다"
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "유효하지 않은 'family' 인자입니다"
 
 msgid "invalid PDF version"
 msgstr "유효하지 않은 PDF 버전입니다"
@@ -260,10 +261,8 @@ msgstr "다음으로부터 기록을 할 수 있는 장치가 없습니다"
 msgid "argument is not of class %s"
 msgstr "인자는 클래스 %s가 아닙니다"
 
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "pre-3.0.0 R 버전으로부터 스냅샷을 로딩합니다"
-
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr "다른 버전으로부터 스냅샷을 로딩합니다"
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -320,6 +319,9 @@ msgstr "만약 'units = \"px\"'이 아니라면 'res'는 반드시 지정되야 
 
 msgid "invalid 'title'"
 msgstr "유효하지 않은 'title'입니다"
+
+msgid "invalid 'file'"
+msgstr "유효하지 않은 'file'입니다"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "유효하지 않은 Quartz 폰트이므로 반드시 4 문자열이어야 합니다"
@@ -405,3 +407,6 @@ msgstr[0] ""
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] ""
+
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "pre-3.0.0 R 버전으로부터 스냅샷을 로딩합니다"

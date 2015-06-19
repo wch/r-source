@@ -43,7 +43,7 @@ spec.taper <- function (x, p = 0.1)
         m <- floor(nr * p[i])
         if(m == 0) next
         w <- 0.5 * (1 - cos(pi * seq.int(1, 2 * m - 1, by = 2)/(2 * m)))
-        x[, i] <- c(w, rep(1, nr - 2 * m), rev(w)) * x[, i]
+        x[, i] <- c(w, rep_len(1, nr - 2 * m), rev(w)) * x[, i]
     }
     attributes(x) <- a
     x

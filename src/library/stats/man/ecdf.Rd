@@ -1,6 +1,6 @@
 % File src/library/stats/man/ecdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Copyright 2002-2011 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -70,8 +70,14 @@ ecdf(x)
   \code{quantile(x, ...)} would where \code{x} is the original sample.
 }
 \author{
-  Martin Maechler, \email{maechler@stat.math.ethz.ch}.\cr
-  Corrections by R-core.
+  Martin Maechler; fixes and new features by other R-core members.
+}
+\note{
+  The objects of class \code{"ecdf"} are not intended to be used for
+  permanent storage and may change structure between versions of \R (and
+  did at \R 3.0.0).  They can usually be re-created by
+  \preformatted{    eval(attr(old_obj, "call"), environment(old_obj))}
+  since the data used is stored as part of the object's environment.
 }
 \seealso{\code{\link{stepfun}}, the more general class of step functions,
   \code{\link{approxfun}} and \code{\link{splinefun}}.

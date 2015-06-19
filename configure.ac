@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2011 R Core Team
+### Copyright (C) 1998-2013 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -76,7 +76,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 11 being 10.7.  We no longer support < 10.4 (Tiger)
+   ## with 13 being 10.9.  We no longer support < 10.4 (Tiger)
    ## http://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
      AC_MSG_ERROR([The earliest supported MacOS X is 10.4.]
@@ -1726,6 +1726,21 @@ AC_SUBST(FW_VERSION)
 AC_SUBST(STATICR1)
 AC_SUBST(STATICR2)
 
+: ${CXX1X=${CXX}}
+: ${CXX1XFLAGS=${CXXFLAGS}}
+: ${CXX1XPICFLAGS=${CXXPICFLAGS}}
+: ${CXX1XSTD=-std=c++11}
+AC_SUBST(CXX1X)
+AC_SUBST(CXX1XFLAGS)
+AC_SUBST(CXX1XPICFLAGS)
+AC_SUBST(CXX1XSTD)
+if test -z "${SHLIB_CXX1XLD}"; then
+  SHLIB_CXX1XLD="\$(CXX1X)"
+fi
+AC_SUBST(SHLIB_CXX1XLD)
+: ${SHLIB_CXX1XLDFLAGS=${SHLIB_CXXLDFLAGS}}
+AC_SUBST(SHLIB_CXX1XLDFLAGS)
+
 ### OpenMP.
 
 ## The basic checking is performed via AC_OPENMP added in Autoconf 2.62,
@@ -1982,6 +1997,7 @@ R_FUNC_LOG1P
 R_FUNC_FTELL
 R_FUNC_SIGACTION
 R_MKTIME_ERRNO
+R_FUNC_MKTIME
 
 R_C99_COMPLEX
 

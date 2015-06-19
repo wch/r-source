@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rscript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rscript}
@@ -11,16 +11,16 @@
   other scripting applications.
 }
 \usage{
-\special{Rscript [options] [-e expression] file [args]}
+\special{Rscript [options] [-e expr [-e expr2 ...] | file] [args]}
 }
 \arguments{
-  \item{options}{A list of options beginning with \samp{--}.  These can
-    be any of the options of the standard \R front-end, and also those
+  \item{options}{a list of options, all beginning with \samp{--}.  These
+    can be any of the options of the standard \R front-end, and also those
     described in the details.}
-  \item{expression}{a \R expression.}
-  \item{file}{The name of a file containing \R commands.  \samp{-}
+  \item{expr, expr2}{\R expression(s), properly quoted.}
+  \item{file}{the name of a file containing \R commands.  \samp{-}
     indicates \file{stdin}.}
-  \item{args}{Arguments to be passed to the script in \code{file}.}
+  \item{args}{arguments to be passed to the script in \code{file}.}
 }
 \details{
   \command{Rscript --help} gives details of usage, and

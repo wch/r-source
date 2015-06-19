@@ -929,7 +929,7 @@ checkRdaFiles <- function(paths)
     res <- data.frame(size = NA_real_, ASCII = NA,
                       compress = NA_character_, version = NA_integer_,
                       stringsAsFactors = FALSE)
-    res <- res[rep(1L, length(paths)), ]
+    res <- res[rep_len(1L, length(paths)), ]
     row.names(res) <- paths
     keep <- file.exists(paths)
     res$size[keep] <- file.info(paths)$size[keep]

@@ -269,7 +269,7 @@ rc.status <- function()
              update = TRUE)
     ## update=TRUE changes 'start' and 'token', otherwise they are just returned
 {
-    linebuffer <- substr(linebuffer, 1L, end) # end is cursor, not necessarily line-end 
+    linebuffer <- substr(linebuffer, 1L, end) # end is cursor, not necessarily line-end
     ## special rules apply when we are inside quotes (see fileCompletionPreferred() below)
     insideQuotes <- {
         lbss <- head.default(unlist(strsplit(linebuffer, "")), .CompletionEnv[["end"]])
@@ -339,14 +339,14 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
 {
     tryToEval <- function(s)
     {
-        try(eval(parse(text = s), envir = .GlobalEnv), silent = TRUE)
+	tryCatch(eval(parse(text = s), envir = .GlobalEnv), error = function(e)e)
     }
     switch(op,
            "$" = {
                if (.CompletionEnv$settings[["ops"]])
                {
                    object <- tryToEval(prefix)
-                   if (inherits(object, "try-error")) ## nothing else to do
+                   if (inherits(object, "error")) ## nothing else to do
                        suffix
                    else
                    {
@@ -359,7 +359,7 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
                if (.CompletionEnv$settings[["ops"]])
                {
                    object <- tryToEval(prefix)
-                   if (inherits(object, "try-error")) ## nothing else to do
+                   if (inherits(object, "error")) ## nothing else to do
                        suffix
                    else
                    {
@@ -371,8 +371,8 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
            "::" = {
                if (.CompletionEnv$settings[["ns"]])
                {
-                   nse <- try(getNamespaceExports(prefix), silent = TRUE)
-                   if (inherits(nse, "try-error")) ## nothing else to do
+                   nse <- tryCatch(getNamespaceExports(prefix), error = function(e)e)
+                   if (inherits(nse, "error")) ## nothing else to do
                        suffix
                    else
                    {
@@ -384,8 +384,8 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
            ":::" = {
                if (.CompletionEnv$settings[["ns"]])
                {
-                   ns <- try(getNamespace(prefix), silent = TRUE)
-                   if (inherits(ns, "try-error")) ## nothing else to do
+                   ns <- tryCatch(getNamespace(prefix), error = function(e)e)
+                   if (inherits(ns, "error")) ## nothing else to do
                        suffix
                    else
                    {
@@ -971,7 +971,7 @@ fileCompletions <- function(token)
             ## Related to that: if we implement that, should also
             ## check before for '<type>?' and move to help completion
             ## if so.
-            
+
 ### str(correctFilenameToken())
 ### str(.guessTokenFromLine(update = FALSE))
 
@@ -1006,7 +1006,7 @@ fileCompletions <- function(token)
                                  ((substr(.CompletionEnv[["linebuffer"]],
                                           fullToken$start,
                                           fullToken$start)) %in% c("`")))
-                
+
             probablySpecial <- probablyHelp || probablyName || probablyNamespace
 
             ## str(list(probablyHelp = probablyHelp,

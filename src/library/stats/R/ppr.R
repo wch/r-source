@@ -33,7 +33,7 @@ function(formula, data, weights, subset,
     X <- model.matrix(Terms, m, contrasts)
     Y <- model.response(m)
     w <- model.weights(m)
-    if(length(w) == 0L) w <- rep(1, nrow(X))
+    if(length(w) == 0L) w <- rep_len(1, nrow(X))
     fit <- ppr.default(X, Y, w, ...)
     fit$na.action <- attr(m, "na.action")
     fit$terms <- Terms

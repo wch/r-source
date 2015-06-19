@@ -703,7 +703,7 @@ void setup_Rmainloop(void)
 	R_CStackLimit = (uintptr_t)-1;
     /* make sure we have enough head room to handle errors */
     if(R_CStackLimit != -1)
-	R_CStackLimit = 0.95 * R_CStackLimit;
+	R_CStackLimit = (uintptr_t)(0.95 * R_CStackLimit);
 
     InitConnections(); /* needed to get any output at all */
 
@@ -1404,8 +1404,9 @@ R_removeTaskCallback(SEXP which)
     if(TYPEOF(which) == STRSXP) {
 	val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
     } else {
-	id = asInteger(which) - 1;
-	val = Rf_removeTaskCallbackByIndex(id);
+	id = asInteger(which);
+	if (id != NA_INTEGER) val = Rf_removeTaskCallbackByIndex(id - 1);
+	else val = FALSE;
     }
     return ScalarLogical(val);
 }

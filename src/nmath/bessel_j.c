@@ -56,9 +56,9 @@ double bessel_j(double x, double alpha)
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_j(x, -alpha) * cos(M_PI * alpha) +
+	return(bessel_j(x, -alpha) * cospi(alpha) +
 	       ((alpha == na) ? 0 :
-	       bessel_y(x, -alpha) * sin(M_PI * alpha)));
+	       bessel_y(x, -alpha) * sinpi(alpha)));
     }
     nb = 1 + (long)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -106,9 +106,9 @@ double bessel_j_ex(double x, double alpha, double *bj)
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_j_ex(x, -alpha, bj) * cos(M_PI * alpha) +
+	return(bessel_j_ex(x, -alpha, bj) * cospi(alpha) +
 	       ((alpha == na) ? 0 :
-		bessel_y_ex(x, -alpha, bj) * sin(M_PI * alpha)));
+		bessel_y_ex(x, -alpha, bj) * sinpi(alpha)));
     }
     nb = 1 + (long)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -268,7 +268,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 	    alpem = 1. + nu;
 
 	    halfx = (*x > enmten_BESS) ? .5 * *x :  0.;
-	    aa	  = (nu != 0.)	  ? pow(halfx, nu) / (nu * gamma_cody(nu)) : 1.;
+	    aa	  = (nu != 0.)	  ? pow(halfx, nu) / (nu * Rf_gamma_cody(nu)) : 1.;
 	    bb	  = (*x + 1. > 1.)? -halfx * halfx : 0.;
 	    b[1] = aa + aa * bb / alpem;
 	    if (*x != 0. && b[1] == 0.)
@@ -314,7 +314,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 	    /* ------------------------------------------------
 	       Argument reduction for SIN and COS routines.
 	       ------------------------------------------------ */
-	    t = ftrunc(*x / (twopi1 + twopi2) + .5);
+	    t = trunc(*x / (twopi1 + twopi2) + .5);
 	    z = (*x - t * twopi1) - t * twopi2 - (nu + .5) / pi2;
 	    vsin = sin(z);
 	    vcos = cos(z);
@@ -555,7 +555,7 @@ L250:
 	       ---------------------------------------------------*/
 /*	    if (nu + 1. != 1.) poor test */
 	    if(fabs(nu) > 1e-15)
-		sum *= (gamma_cody(nu) * pow(.5* *x, -nu));
+		sum *= (Rf_gamma_cody(nu) * pow(.5* *x, -nu));
 
 	    aa = enmten_BESS;
 	    if (sum > 1.)

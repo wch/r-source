@@ -27,8 +27,15 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-//#include <Colors.h>
 #include <GraphicsBase.h>
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#undef _
+#define _(String) dgettext ("grDevices", String)
+#else
+#define _(String) (String)
+#endif
 
 /* From src/main/devices.c */
 extern int baseRegisterIndex;

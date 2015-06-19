@@ -36,6 +36,12 @@
 #include <R_ext/Complex.h>	/* for Rcomplex */
 #include <R_ext/BLAS.h>
 
+/* The LAPACK version: might change after installation with
+   external LAPACK
+*/
+extern void F77_NAME(ilaver)(int *major, int *minor, int *patch);
+
+
 /*
   LAPACK function names are [dz]<name>(), where d denotes the real
   version of the function, z the complex version.  (Only
@@ -3064,6 +3070,24 @@ F77_NAME(zunmlq)(char *side, char *trans, int *m, int *n,
 	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
 	Rcomplex *c, int *ldc, Rcomplex *work, int *lwork,
 	 int *info);
+
+/* Added in R 3.1.0 */
+/* ZGESVD - compute the singular value decomposition (SVD); of a   */
+/* real M-by-N matrix A, optionally computing the left and/or	   */
+/* right singular vectors					   */
+La_extern void
+F77_NAME(zgesdd)(const char *jobz,
+		 const int *m, const int *n,
+		 Rcomplex *a, const int *lda, double *s,
+		 Rcomplex *u, const int *ldu,
+		 Rcomplex *vt, const int *ldvt,
+		 Rcomplex *work, const int *lwork, double *rwork,
+		 int *iwork, int *info);
+La_extern void
+F77_NAME(zgelsd)(int *m, int *n, int *nrhs,
+	Rcomplex *a, int *lda, Rcomplex *b, int *ldb, double *s,
+        double *rcond, int *rank, 
+        Rcomplex *work, int *lwork, double *rwork, int *iwork, int *info);
 
 #ifdef	__cplusplus
 }

@@ -47,7 +47,7 @@ load <- function (file, envir = parent.frame(), verbose = FALSE)
 
     if (verbose)
     	cat("Loading objects:\n")
-    	
+
     .Internal(loadFromConn2(con, envir, verbose))
 }
 
@@ -60,6 +60,8 @@ save <- function(..., list = character(),
     opts <- getOption("save.defaults")
     if (missing(compress) && ! is.null(opts$compress))
         compress <- opts$compress
+    if (missing(compression_level) && ! is.null(opts$compression_level))
+        compression_level <- opts$compression_level
     if (missing(ascii) && ! is.null(opts$ascii))
         ascii <- opts$ascii
     if (missing(version)) version <- opts$version

@@ -3060,9 +3060,9 @@ The following table lists the functions for the different Groups.
 
 @table @samp
 @item Math
-abs, acos, acosh, asin, asinh, atan, atanh, ceiling, cos, cosh, cumsum,
-exp, floor, gamma, lgamma, log, log10, round, signif, sin, sinh, tan,
-tanh, trunc
+abs, acos, acosh, asin, asinh, atan, atanh, ceiling, cos, cosh, cospi, cumsum,
+exp, floor, gamma, lgamma, log, log10, round, signif, sin, sinh, sinpi, 
+tan, tanh, tanpi, trunc
 
 @item Summary
 all, any, max, min, prod, range, sum

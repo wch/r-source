@@ -35,6 +35,8 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             tmp <- match(tmp, varnames)
             margin[[k]] <- tmp
         }
+        if (!is.numeric(tmp) || any(is.na(tmp) | tmp <= 0))
+            stop("'margin' must contain names or numbers corresponding to 'table'")
         conf[seq_along(tmp), k] <- tmp
         nmar <- nmar + prod(dtab[tmp])
     }

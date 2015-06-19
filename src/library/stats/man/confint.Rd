@@ -1,14 +1,15 @@
 % File src/library/stats/man/confint.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{confint}
+\title{Confidence Intervals for Model Parameters}
 \alias{confint}
 \alias{confint.default}
-\title{Confidence Intervals for Model Parameters}
+\alias{confint.lm}
 \description{
   Computes confidence intervals for one or more parameters in a fitted
   model.  There is a default and a method for objects inheriting from class

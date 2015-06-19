@@ -28,6 +28,7 @@
 #include <Internal.h>
 #include <R_ext/Print.h>
 #include <ctype.h>		/* for isspace */
+#include <float.h>		/* for DBL_MAX */
 
 #undef COMPILING_R
 
@@ -106,9 +107,9 @@ int ncols(SEXP s)
     return -1;/*NOTREACHED*/
 }
 
+#ifdef UNUSED
 const static char type_msg[] = "invalid type passed to internal function\n";
 
-#ifdef UNUSED
 void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
 {
     if (TYPEOF(s) != type) {
@@ -1606,7 +1607,8 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	ans *= fac;
     }
 
-
+// explicit overflow to infinity
+    if (ans > DBL_MAX) return (sign > 0) ? R_PosInf : R_NegInf;
 done:
     if (endptr) *endptr = (char *) p;
     return sign * (double) ans;

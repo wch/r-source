@@ -142,8 +142,8 @@ layout.respect <- function(lay) {
 # Public constructor function
 ####################
 grid.layout <- function (nrow = 1, ncol = 1,
-                         widths = unit(rep(1, ncol), "null"),
-                         heights = unit(rep(1, nrow), "null"),
+                         widths = unit(rep_len(1, ncol), "null"),
+                         heights = unit(rep_len(1, nrow), "null"),
                          default.units = "null",
                          respect = FALSE,
                          just="centre")

@@ -20,7 +20,7 @@ Sys.Date()
   \code{Sys.time} returns an absolute date-time value which can be
   converted to various time zones and may return different days.
 
-  \code{Sys.Date} returns the current day in the current \link{timezone}.
+  \code{Sys.Date} returns the current day in the current \link{time zone}.
 }
 \value{
   \code{Sys.time} returns an object of class \code{"POSIXct"} (see

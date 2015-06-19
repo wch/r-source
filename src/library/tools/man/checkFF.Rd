@@ -54,7 +54,7 @@ checkFF(package, dir, file, lib.loc = NULL,
 \value{
   An object of class \code{"checkFF"}.
 
-  There are \code{formaat} and  \code{print} methods to display the
+  There are \code{\link{format}} and \code{print} methods to display the
   information contained in such objects.
 }
 \seealso{

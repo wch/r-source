@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -171,8 +171,9 @@ msgstr "família desconhecida '%s'"
 msgid "invalid 'family' argument"
 msgstr "argumento 'family' inválido"
 
-msgid "invalid 'file'"
-msgstr "'file' inválido"
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "argumento 'family' inválido"
 
 msgid "invalid PDF version"
 msgstr "versão PDF inválida"
@@ -266,10 +267,7 @@ msgid "argument is not of class %s"
 msgstr "argumento não é da classe \"recordedplot\""
 
 #, fuzzy
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "carregando snapshot de versão R pré-2.0.0"
-
-msgid "loading snapshot from different R version"
+msgid "loading snapshot from a different session"
 msgstr "carregando snapshot de versão R diferente"
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -325,6 +323,9 @@ msgstr "'res' deve ser especificada a não ser 'units = \"px\"'"
 
 msgid "invalid 'title'"
 msgstr "'title' inválido"
+
+msgid "invalid 'file'"
+msgstr "'file' inválido"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "fonte Quartz inválido: deve ser 4 cadeias"
@@ -412,6 +413,10 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "valores %d z <= 0 omitidos do gráfico logarítmico"
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "carregando snapshot de versão R pré-2.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "é possível imprimir somente do dispositivo da tela"

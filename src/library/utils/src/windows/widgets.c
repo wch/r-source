@@ -3,7 +3,7 @@
  *  file selectlist.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2012  The R Core Team
+ *  Copyright (C) 2005--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ SEXP Win_selectlist(SEXP args)
     show(wselect);
     done = 0;
     while(!done) {
-	Sleep(100);
+	R_WaitEvent();
 	R_ProcessEvents();
     }
 

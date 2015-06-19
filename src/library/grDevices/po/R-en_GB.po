@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "invalid 'family' argument"
 msgstr ""
 
-msgid "invalid 'file'"
+msgid "invalid 'file' argument '%s'"
 msgstr ""
 
 msgid "invalid PDF version"
@@ -246,10 +246,7 @@ msgstr ""
 msgid "argument is not of class %s"
 msgstr ""
 
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr ""
-
-msgid "loading snapshot from different R version"
+msgid "loading snapshot from a different session"
 msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -304,6 +301,9 @@ msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr ""
 
 msgid "invalid 'title'"
+msgstr ""
+
+msgid "invalid 'file'"
 msgstr ""
 
 msgid "invalid Quartz font:  must be 4 strings"

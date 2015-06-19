@@ -191,7 +191,7 @@ glm.fit <-
         dev <- sum(dev.resids(y, mu, weights))
         w <- ((weights * mu.eta(eta)^2)/variance(mu))^0.5
         residuals <- (y - mu)/mu.eta(eta)
-        good <- rep(TRUE, length(residuals))
+        good <- rep_len(TRUE, length(residuals))
         boundary <- conv <- TRUE
         coef <- numeric()
         iter <- 0L
@@ -410,7 +410,7 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
     ## check for multiple objects
     dotargs <- list(...)
     named <- if (is.null(names(dotargs)))
-	rep(FALSE, length(dotargs)) else (names(dotargs) != "")
+	rep_len(FALSE, length(dotargs)) else (names(dotargs) != "")
     if(any(named))
 	warning("the following arguments to 'anova.glm' are invalid and dropped: ",
 		paste(deparse(dotargs[named]), collapse=", "))

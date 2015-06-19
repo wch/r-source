@@ -93,20 +93,26 @@
 # include <config.h>
 #endif
 
-/* needed on Windows to avoid redefinition of tzname as _tzname */
-#define _NO_OLDNAMES
-#include <time.h>
-#undef _NO_OLDNAMES
 
 #include <errno.h>
 
 #ifdef Win32
-#define gmtime R_gmtime
-#define localtime R_localtime
-#define mktime R_mktime
+/* needed on Windows to avoid redefinition of tzname as _tzname */
+# define _NO_OLDNAMES
+# include <time.h>
+# undef _NO_OLDNAMES
+# include <stdint.h>
+typedef int64_t R_time_t;
+#define time_t R_time_t
+# define gmtime R_gmtime
+# define localtime R_localtime
+# define mktime R_mktime
 extern struct tm*  gmtime (const time_t*);
 extern struct tm*  localtime (const time_t*);
 extern time_t mktime (struct tm*);
+# define HAVE_WORKING_64BIT_MKTIME
+#else
+# include <time.h>
 #endif
 
 #include <stdlib.h> /* for setenv or putenv */
@@ -125,8 +131,8 @@ extern time_t mktime (struct tm*);
 static Rboolean have_broken_mktime(void)
 {
 #if defined(_AIX)
-    return TRUE;
-#elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
+    return TRUE;  // maybe not so for AIX >= 6, which allegedly uses Olson code
+#elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ == 2 && __GLIBC_MINOR__ >= 2 &&  __GLIBC_MINOR__ < 10
     static int test_result = -1;
 
     if (test_result == -1) {
@@ -393,14 +399,20 @@ static double mktime0 (struct tm *tm, const int local)
 #else
 	errno = 79;
 #endif
-	return (double)(-1);
+	return -1.;
     }
     if(!local) return mktime00(tm);
 
-    OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
+/* OS X 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 */
+#ifdef HAVE_WORKING_64BIT_MKDIR
+    if(sizeof(time_t) == 8)
+	OK = !have_broken_mktime() || tm->tm_year >= 70;
+    else
+#endif
+	OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
     if(OK) {
 	res = (double) mktime(tm);
-	if (res == (double)-1) return res;
+	if (res == -1.) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
 	for(i = 0; i < n_leapseconds; i++)
 	    if(res > leapseconds[i]) res -= 1.0;
@@ -415,10 +427,19 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
     int y, tmp, mon, left, diff, diff2;
-    struct tm *res= ltm;
+    struct tm *res = ltm;
     time_t t;
 
-    if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
+    Rboolean OK;
+/* as mktime is broken, do not trust localtime */
+#ifdef HAVE_WORKING_64BIT_MKDIR
+    if (sizeof(time_t) == 8)
+	OK = !have_broken_mktime() || d > 0.;
+    else
+#endif
+	OK = d < 2147483647.0 && 
+	    d > (have_broken_mktime() ? 0. : -2147483647.0);
+    if(OK) {
 	t = (time_t) d;
 	/* if d is negative and non-integer then t will be off by one day
 	   since we really need floor(). But floor() is slow, so we just
@@ -460,19 +481,26 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     res->tm_mday = day + 1;
 
     if(local) {
-	int shift;
+	double shift;
 	/*  daylight saving time is unknown */
 	res->tm_isdst = -1;
 
-	/* Try to fix up timezone differences */
+	/* Try to fix up time zone differences: cf PR#15480 */
 	diff = (int)(guess_offset(res)/60);
-	shift = res->tm_min + 60*res->tm_hour;
+	// just in case secs are out of range and might affect this.
+	shift = 60.*res->tm_hour + res->tm_min + res->tm_sec/60.;
 	res->tm_min -= diff;
 	validate_tm(res);
 	res->tm_isdst = -1;
 	/* now this might be a different day */
-	if(shift - diff < 0) res->tm_yday--;
-	if(shift - diff > 24) res->tm_yday++;
+	if(shift - diff < 0.) {
+	    res->tm_yday--;
+	    res->tm_wday--;
+	}
+	else if(shift - diff > 24. * 60.) {
+	    res->tm_yday++;
+	    res->tm_wday++;
+	}
 	diff2 = (int)(guess_offset(res)/60);
 	if(diff2 != diff) {
 	    res->tm_min += (diff - diff2);
@@ -502,13 +530,16 @@ double currentTime(void)
     if(res != 0)
 	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
 #elif defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
+    /* Has 2038 issue if time_t: tv.tv_sec is 32-bit. */
     struct timespec tp;
     int res = clock_gettime(CLOCK_REALTIME, &tp);
     if(res == 0)
 	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
 
 #elif defined(HAVE_GETTIMEOFDAY)
-    /* Mac OS X, mingw.org */
+    /* Mac OS X, mingw.org, used on mingw-w64.
+       Has 2038 issue if time_t: tv.tv_sec is 32-bit.
+     */
     struct timeval tv;
     int res = gettimeofday(&tv, NULL);
     if(res == 0)
@@ -780,7 +811,8 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
-	tm.tm_sec   = (int) fsecs;
+	// avoid (int) NAN
+	tm.tm_sec   = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -798,10 +830,10 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
 #else
-	    REAL(ans)[i] = ((tmp == (double)(-1))
+	    REAL(ans)[i] = ((tmp == -1.)
 			    /* avoid silly gotcha at epoch minus one sec */
-			    && (tm.tm_sec == 59)
-			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != (double)(-2)))
+			    && (tm.tm_sec != 59)
+			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != -2.))
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
 #endif
@@ -868,7 +900,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, N));
     for(i = 0; i < N; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
-	tm.tm_sec   = (int) fsecs;
+	// avoid (int) NAN
+	tm.tm_sec   = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];

@@ -46,7 +46,7 @@ as.difftime(tim, format = "\%X", units = "auto")
 }
 \arguments{
   \item{time1, time2}{\link{date-time} or \link[=Dates]{date} objects.}
-  \item{tz}{an optional \link{timezone} specification to be used for the
+  \item{tz}{an optional \link{time zone} specification to be used for the
     conversion, mainly for \code{"POSIXlt"} objects.}
   \item{units}{character string.  Units in which the results are
     desired.  Can be abbreviated.}
@@ -103,8 +103,8 @@ as.difftime(tim, format = "\%X", units = "auto")
 
   The default behaviour when \code{time1} or \code{time2} was a
   \code{"POSIXlt"} object changed in \R 2.12.0: previously such objects
-  were regarded as in the timezone given by \code{tz} which defaulted to
-  the current timezone.
+  were regarded as in the time zone given by \code{tz} which defaulted to
+  the current time zone.
 }
 \seealso{
   \code{\link{DateTimeClasses}}.

@@ -62,7 +62,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     n <- length(lhs)
     fac <- (n -  p)/p
     cc <- QR.B <- NA
-    useParams <- rep(TRUE, p2)
+    useParams <- rep_len(TRUE, p2)
     if(is.null(attr(rhs, "gradient"))) {
         getRHS.noVarying <- function()
             numericDeriv(form[[3L]], names(ind), env)
@@ -77,11 +77,11 @@ nlsModel.plinear <- function(form, data, start, wts)
     if(marg > 0) {
         gradSetArgs <- vector("list", marg + 1L)
         for(i in 2:marg)
-            gradSetArgs[[i]] <- rep(TRUE, dimGrad[i-1])
-        useParams <- rep(TRUE, dimGrad[marg])
+            gradSetArgs[[i]] <- rep_len(TRUE, dimGrad[i-1])
+        useParams <- rep_len(TRUE, dimGrad[marg])
     } else {
         gradSetArgs <- vector("list", 2L)
-        useParams <- rep(TRUE, length(attr(rhs, "gradient")))
+        useParams <- rep_len(TRUE, length(attr(rhs, "gradient")))
     }
     gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
     gradCall <-
@@ -166,7 +166,7 @@ nlsModel.plinear <- function(form, data, start, wts)
                  sqrt( fac*sum(rr[1L:p1]^2) / sum(rr[-(1L:p1)]^2) )
              },
              incr = function() qr.solve(QR.B, cc),
-             setVarying = function(vary = rep(TRUE, length(useParams))) {
+             setVarying = function(vary = rep_len(TRUE, length(useParams))) {
                  assign("useParams", if(is.character(vary)) {
                      temp <- logical(length(useParams))
                      temp[unlist(ind[vary])] <- TRUE
@@ -241,7 +241,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     internalPars <- getPars()
 
     if(!is.null(upper)) upper <- rep_len(upper, parLength)
-    useParams <- rep(TRUE, parLength)
+    useParams <- rep_len(TRUE, parLength)
     lhs <- eval(form[[2L]], envir = env)
     rhs <- eval(form[[3L]], envir = env)
     .swts <- if(!missing(wts) && length(wts))
@@ -268,11 +268,11 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     if(marg > 0L) {
         gradSetArgs <- vector("list", marg + 1L)
         for(i in 2L:marg)
-            gradSetArgs[[i]] <- rep(TRUE, dimGrad[i-1])
-        useParams <- rep(TRUE, dimGrad[marg])
+            gradSetArgs[[i]] <- rep_len(TRUE, dimGrad[i-1])
+        useParams <- rep_len(TRUE, dimGrad[marg])
     } else {
         gradSetArgs <- vector("list", 2L)
-        useParams <- rep(TRUE, length(attr(rhs, "gradient")))
+        useParams <- rep_len(TRUE, length(attr(rhs, "gradient")))
     }
     npar <- length(useParams)
     gradSetArgs[[1L]] <- (~attr(ans, "gradient"))[[2L]]
@@ -328,7 +328,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 		 sqrt( sum(rr[1L:npar]^2) / sum(rr[-(1L:npar)]^2))
 	     },
 	     incr = function() qr.coef(QR, resid),
-	     setVarying = function(vary = rep(TRUE, length(useParams))) {
+	     setVarying = function(vary = rep_len(TRUE, length(useParams))) {
 		 assign("useParams",
 			if(is.character(vary)) {
 			    temp <- logical(length(useParams))
@@ -453,7 +453,7 @@ nls <-
     if(!is.list(data) && !is.environment(data))
         stop("'data' must be a list or an environment")
 
-    mf <- match.call()                  # for creating the model frame
+    mf <- cl <- match.call()		# for creating the model frame
     varNames <- all.vars(formula) # parameter and variable names from formula
     ## adjust a one-sided model formula by using 0 as the response
     if (length(formula) == 2L) {
@@ -472,7 +472,9 @@ nls <-
 		names(attr(data, "parameters"))
 	    } else { ## try selfStart - like object
 		cll <- formula[[length(formula)]]
-		func <- get(as.character(cll[[1L]]))
+		fn <- as.character(cll[[1L]])
+		if(is.null(func <- tryCatch(get(fn), error=function(e)NULL)))
+		    func <- get(fn, envir=parent.frame()) ## trying "above"
 		if(!is.null(pn <- attr(func, "pnames")))
 		    as.character(as.list(match.call(func, call = cll))[-1L][pn])
 	    }
@@ -492,11 +494,11 @@ nls <-
     ## This aux.function needs to be as complicated because
     ## exists(var, data) does not work (with lists or dataframes):
     lenVar <- function(var) tryCatch(length(eval(as.name(var), data, env)),
-				     error = function(e) -1)
+				     error = function(e) -1L)
 
     if(length(varNames)) {
-        n <- sapply(varNames, lenVar)
-        if(any(not.there <- n == -1)) {
+        n <- vapply(varNames, lenVar, 0)
+        if(any(not.there <- n == -1L)) {
             nnn <- names(n[not.there])
             if(missing(start)) {
                 if(algorithm == "plinear")
@@ -508,7 +510,7 @@ nls <-
                         "Initializing ", paste(sQuote(nnn), collapse=", "),
                         " to '1.'.\n",
                         "Consider specifying 'start' or using a selfStart model", domain = NA)
-		start <- setNames(as.list(rep(1., length(nnn))), nnn)
+		start <- setNames(as.list(rep_len(1., length(nnn))), nnn)
                 varNames <- varNames[i <- is.na(match(varNames, nnn))]
                 n <- n[i]
             }
@@ -553,8 +555,8 @@ nls <-
 	    rhs <- eval(formula[[3L]], data, startEnv)
 	    n <- NROW(rhs)
             ## mimic what model.frame.default does
-            wts <- if (mWeights) rep(1, n) else
-                eval(substitute(weights), data, environment(formula))
+            wts <- if (mWeights) rep_len(1, n) else
+            eval(substitute(weights), data, environment(formula))
 	}
         else {
             mf$formula <-  # replace by one-sided linear model formula
@@ -566,7 +568,7 @@ nls <-
             mf <- eval.parent(mf)
             n <- nrow(mf)
             mf <- as.list(mf)
-            wts <- if (!mWeights) model.weights(mf) else rep(1, n)
+            wts <- if (!mWeights) model.weights(mf) else rep_len(1, n)
         }
         if (any(wts < 0 | is.na(wts)))
             stop("missing or negative weights not allowed")
@@ -598,11 +600,11 @@ nls <-
     }
     ## Iterate
     if (algorithm != "port") {
-	if (!missing(lower) || !missing(upper))
+	if (!identical(lower, -Inf) || !identical(upper, +Inf))
 	    warning('upper and lower bounds ignored unless algorithm = "port"')
         convInfo <- .Call(C_nls_iter, m, ctrl, trace)
 	nls.out <- list(m = m, convInfo = convInfo,
-			data = substitute(data), call = match.call())
+			data = substitute(data), call = cl)
     }
     else { ## "port" i.e., PORT algorithm
 	pfit <- nls_port_fit(m, start, lower, upper, control, trace,
@@ -622,14 +624,13 @@ nls <-
 		      nEval = c("function" = iv[6L], "gradient" = iv[30L]),
 		      stopCode = iv[1L],
 		      stopMessage = msg.nls)
-        cl <- match.call()
         ## we need these (evaluated) for profiling
 	cl$lower <- lower
 	cl$upper <- upper
 	nls.out <- list(m = m, data = substitute(data),
                         call = cl, convInfo = cInfo,
-	## UGLY: this is really a logical for  *NON*convergence:
-	## deprecate these two, as they are now part of convInfo
+                        ## UGLY: this is really a logical for  *NON*convergence:
+                        ## deprecate these two, as they are now part of convInfo
 			convergence = as.integer(!conv),
 			message = msg.nls)
     }
@@ -689,7 +690,8 @@ summary.nls <-
     ans
 }
 
-.p.nls.convInfo <- function(x, digits)
+.p.nls.convInfo <- function(x, digits,
+			    show. = getOption("show.nls.convergence", TRUE))
 {
     if(!is.null(x$convInfo)) # older fits will not have this
         with(x$convInfo,
@@ -698,7 +700,7 @@ summary.nls <-
                  cat("\nAlgorithm \"port\", convergence message: ",
                      stopMessage, "\n", sep = "")
              else {
-                 if(!isConv || getOption("show.nls.convergence", TRUE)) {
+                 if(!isConv || show.) {
                      cat("\nNumber of iterations",
                          if(isConv) "to convergence:" else "till stop:", finIter,
                          "\nAchieved convergence tolerance:",
@@ -816,7 +818,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
         stop("cannot calculate REML log-likelihood for \"nls\" objects")
     res <- object$m$resid()
     N <- length(res)
-    if(is.null(w <- object$weights)) w <- rep(1, N)
+    if(is.null(w <- object$weights)) w <- rep_len(1, N)
     ## Note the trick for zero weights
     zw <- w == 0
     val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w + zw)) + log(sum(w*res^2)))/2
@@ -874,7 +876,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     df <- c(NA, -diff(df.r))
     ss <- c(NA, -diff(ss.r))
     ms <- ss/df
-    f <- p <- rep(NA_real_, nmodels)
+    f <- p <- rep_len(NA_real_, nmodels)
     for(i in 2:nmodels) {
 	if(df[i] > 0) {
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])

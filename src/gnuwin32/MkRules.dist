@@ -88,8 +88,13 @@ BUILD_HTML = NO
 # unset this if you are *not* using MiKTeX
 MIKTEX = TRUE
 
-# additional optimization flags
-EOPTS=-mtune=core2
+# for texinfo < 5.0
+MAKEINFO = makeinfo
+# for texinfo >= 5.0.  Might also need -I/path/to/modules
+# MAKEINFO = /path/to/perl /path/to/texi2any
+
+# additional optimization flags (use -mtune=native for a private build)
+EOPTS = -mtune=core2
 
 # define to -fopenmp if the toolchain has OpenMP support
 OPENMP = -fopenmp

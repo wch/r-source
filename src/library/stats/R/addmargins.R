@@ -138,7 +138,7 @@ addmargins <-
 	## where the original table values goes, as a logical vector
 	skip <- prod(d[1L:margin])
 	runl <- skip / d[margin]
-	apos <- rep(c(rep(TRUE, skip), rep(FALSE, n.mar*runl)),
+	apos <- rep(c(rep_len(TRUE, skip), rep_len(FALSE, n.mar*runl)),
 		    n.new/(skip+n.mar*runl))
 
 	## Define a vector to hold all the values of the new table
@@ -153,11 +153,11 @@ addmargins <-
 		apply(A, (1L:n.dim)[-margin], FUN[[i]])
 	    } else FUN[[i]](A)
 	    ## Vector the same length as the number of margins
-	    select <- rep(FALSE, n.mar)
+	    select <- rep_len(FALSE, n.mar)
 	    ## The position of the current margin
 	    select[i] <- TRUE
 	    ## Expand that to a vector the same length as the entire new matrix
-	    mpos <- rep(c(rep(FALSE, skip), rep(select, each=runl)),
+	    mpos <- rep(c(rep_len(FALSE, skip), rep(select, each=runl)),
 			prod(dim(A))/skip)
 	    ## Fill the marginal table in there
 	    values[mpos] <- as.vector(mtab)

@@ -302,6 +302,10 @@ FUNTAB R_FunTab[] =
 {"trigamma",	do_math1,	43,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 /* see "psigamma" below !*/
 
+{"cospi",	do_math1,	47,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sinpi",	do_math1,	48,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"tanpi",	do_math1,	49,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+
 /* Mathematical Functions of Two Numeric (+ 1-2 int) Variables */
 
 {"atan2",	do_math2,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -645,6 +649,7 @@ FUNTAB R_FunTab[] =
 {"Sys.which",	do_syswhich,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"useInternet2",do_setInternet2,0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mkjunction", do_mkjunction,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"tzone_name", do_tzone_name,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 {"parse",	do_parse,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
@@ -936,7 +941,8 @@ FUNTAB R_FunTab[] =
 {"qr_qy_cmpl",	do_lapack,     	304,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"La_svd",	do_lapack,     	400,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_svd_cmplx",do_lapack,     	401,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_svd_cmplx",do_lapack,     	401,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_version",	do_lapack,     	1000,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };
@@ -953,15 +959,15 @@ FUNTAB R_FunTab[] =
    defined in any environment other than base, and hence the ones
    where this is most likely to help. */
 
-static char *Spec_name[] = { 
+static char *Spec_name[] = {
     "if", "while", "repeat", "for", "break", "next", "return", "function",
     "(", "{",
     "+", "-", "*", "/", "^", "%%", "%/%", "%*%", ":",
     "==", "!=", "<", ">", "<=", ">=",
     "&", "|", "&&", "||", "!",
     "<-", "<<-", "=",
-    "$", "[", "[[", 
-    "$<-", "[<-", "[[<-", 
+    "$", "[", "[[",
+    "$<-", "[<-", "[[<-",
     0
 };
 

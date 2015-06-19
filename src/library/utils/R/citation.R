@@ -173,8 +173,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    x_char <- sapply(X = x, FUN = format, ...)
-    print(x_char)
+    print(format(x, ...))
     invisible(x)
 }
 
@@ -1080,9 +1079,6 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         ## if CITATION is available
         if(!auto) {
             return(readCitationFile(citfile, meta))
-        } else if(package == "base") {
-            ## Avoid infinite recursion for broken installation.
-            stop("broken installation, no CITATION file in the base package.")
         }
     }
 

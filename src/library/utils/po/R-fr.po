@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 22:02+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -150,6 +150,12 @@ msgstr "'file' doit être NULL, une chaîne de caractères ou une connexion"
 msgid "bad argument"
 msgstr "argument incorrect"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -198,9 +204,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr "package %s introuvable"
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr "installation incomplète, pas de fichier CITATION dans le package base"
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "pas de champ date dans le fichier DESCRIPTION du package %s"
@@ -283,6 +286,9 @@ msgstr "'dump'  n'est pas un objet de la classe %s"
 
 msgid "Message:"
 msgstr "Message :"
+
+msgid "'dump' is empty"
+msgstr ""
 
 msgid "Available environments had calls:"
 msgstr "Les environnements disponibles avaient les appels suivants :"
@@ -1003,6 +1009,12 @@ msgstr ""
 msgid "file size is limited to 8GB"
 msgstr "la taille du fichier est limitée à 8GB"
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
@@ -1305,6 +1317,10 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr ""
+#~ "installation incomplète, pas de fichier CITATION dans le package base"
 
 #~ msgid "Created PDF document %s"
 #~ msgstr "Document PDF %s créé"

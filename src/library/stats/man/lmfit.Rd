@@ -85,10 +85,13 @@ str(lmw <- lm.wfit(x = X, y = y, w = w))
 
 str(lm. <- lm.fit (x = X, y = y))
 \dontshow{
+  ## These are the same calculations at C level, but a parallel BLAS
+  ## might not do them the same way twice, and if seems serial MKL does not.
   lm.. <- .lm.fit(X,y)
   lm.w <- .lm.fit(X*sqrt(w), y*sqrt(w))
-  stopifnot(identical(unname(lm.$coef), lm..$coef),
-	    identical(unname(lmw$coef), lm.w$coef))
+  id <- function(x, y) all.equal(x, y, tol = 1e-15, scale = 1)
+  stopifnot(id(unname(lm.$coef), lm..$coef),
+	    id(unname(lmw$coef), lm.w$coef))
 }
 \dontrun{
 if(require("microbenchmark")) {

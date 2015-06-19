@@ -36,6 +36,14 @@
 #include <GraphicsBase.h> 
 #include <R_ext/GraphicsEngine.h>
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#undef _
+#define _(String) dgettext ("grDevices", String)
+#else
+#define _(String) (String)
+#endif
+
 
 #define checkArity_length 			\
     args = CDR(args);		       	       	\

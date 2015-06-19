@@ -389,8 +389,10 @@ install.packages <-
             contriburl2 <- contrib.url(repos, "source")
 	    # The line above may have changed the repos option, so..
             if (missing(repos)) repos <- getOption("repos")
-            av1 <- try(suppressWarnings(available.packages(contriburl = contriburl2, method = method)), silent = TRUE)
-            if(inherits(av1, "try-error")) {
+	    av1 <- tryCatch(suppressWarnings(
+			available.packages(contriburl = contriburl2, method = method)),
+			    error = function(e)e)
+	    if(inherits(av1, "error")) {
                 message("source repository is unavailable to check versions")
                 available <-
                     available.packages(contriburl = contrib.url(repos, type), method = method)

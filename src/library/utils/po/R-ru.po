@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 22:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -151,6 +151,12 @@ msgstr "'file' должен быть NULL, текстовой строкой или соединением"
 msgid "bad argument"
 msgstr "неправильный аргумент"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -198,9 +204,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr "пакет %s не найден"
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr "нерабочая установка, в пакете base нет файла CITATION."
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "в файле DESCRIPTION пакета %s нет поля date"
@@ -277,6 +280,10 @@ msgstr "'dump' не является объектом класса %s"
 
 msgid "Message:"
 msgstr "Сообщение:"
+
+#, fuzzy
+msgid "'dump' is empty"
+msgstr "опция 'dvipscmd' пуста"
 
 msgid "Available environments had calls:"
 msgstr "Доступные окружения имеют вызовы:"
@@ -978,6 +985,12 @@ msgstr ""
 msgid "file size is limited to 8GB"
 msgstr "размер файла ограничен 8GB"
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
@@ -1298,6 +1311,9 @@ msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "нерабочая установка, в пакете base нет файла CITATION."
+
 #~ msgid "Created PDF document %s"
 #~ msgstr "Созданный документ PDF %s"
 
@@ -1576,9 +1592,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "'latexcmd' is empty"
 #~ msgstr "опция 'latexcmd' пуста"
-
-#~ msgid "'dvipscmd' is empty"
-#~ msgstr "опция 'dvipscmd' пуста"
 
 #~ msgid ""
 #~ "Changing the default browser (as specified by the 'browser' option) to "

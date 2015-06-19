@@ -457,6 +457,9 @@ II <- c(-Inf,Inf)
 stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
           pcauchy(II, log=TRUE) == c(-Inf,0),
           qcauchy(c(-Inf,0), log=TRUE) == II)
+## PR#15521 :
+p <- 1 - 1/4096
+stopifnot(all.equal(qcauchy(p), 1303.7970381453319163, tol=1e-14))
 
 pr <- 1e-23 ## PR#6757
 stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),

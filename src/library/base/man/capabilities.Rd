@@ -66,7 +66,8 @@ capabilities(what = NULL)
 #ifdef unix
       It will be true for the command-line interface if \code{readline}
       support has been compiled in and \option{--no-readline} was
-      \emph{not} used when \R was invoked.
+      \emph{not} used when \R was invoked.  (If \option{--interactive}
+      was used, command-line editing will not actually be available.)
 #endif
       }
     \item{iconv}{is internationalization conversion via

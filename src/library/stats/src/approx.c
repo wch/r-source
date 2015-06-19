@@ -28,7 +28,7 @@
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
-#define _(String) gettext (String)
+#define _(String) dgettext (String, "stats")
 #else
 #define _(String) (String)
 #endif

@@ -1,7 +1,7 @@
 #  File src/library/base/R/character.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -88,9 +88,13 @@ abbreviate <-
 
 make.names <- function(names, unique = FALSE, allow_ = TRUE)
 {
-    names <- .Internal(make.names(as.character(names), allow_))
-    if(unique) names <- make.unique(names)
-    names
+    names <- as.character(names)
+    names2 <- .Internal(make.names(names, allow_))
+    if(unique) {
+    	o <- order(names != names2)
+        names2[o] <- make.unique(names2[o])
+    }
+    names2
 }
 
 make.unique <- function (names, sep = ".") .Internal(make.unique(names, sep))

@@ -85,7 +85,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{save.image}), see also the \sQuote{Examples} section.  If a
   \code{"save.image.defaults"} option is set it is used in preference to
   \code{"save.defaults"} for function \code{save.image} (which allows
-  this to have different defaults).
+  this to have different defaults). In addition,
+  \code{compression_level} can be part of the \code{"save.defaults"}
+  option.
 
   A connection that is not already open will be opened in mode \code{"wb"}.
 }
@@ -138,8 +140,11 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   Although the default version has not changed since \R 1.4.0, this
   does not mean that saved files are necessarily backwards compatible.
   You will be able to load a saved image into an earlier version of \R
-  unless use is made of later additions (for example, raw vectors or
-  external pointers).
+  unless use is made of later additions (for example, raw vectors,
+  external pointers and some S4 objects).
+
+  On such \sQuote{later addition} was long vectors, introduced in \R
+  3.0.0 and loadable only on 64-bit platforms.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},

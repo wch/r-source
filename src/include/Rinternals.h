@@ -895,6 +895,8 @@ SEXP R_bcDecode(SEXP);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
+SEXP R_ExecWithCleanup(SEXP (*fun)(void *), void *data,
+		       void (*cleanfun)(void *), void *cleandata);
 
 /* Environment and Binding Features */
 void R_RestoreHashCount(SEXP rho);

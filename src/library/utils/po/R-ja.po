@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -140,6 +140,12 @@ msgstr " 'file' は connection か文字列か NULL でなければなりませ�
 msgid "bad argument"
 msgstr " 誤った引数 "
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -188,10 +194,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr " パッケージ %s が見付かりません "
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr ""
-" インストールが不完全です、base パッケージに CITATION ファイルがありません "
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr " パッケージ %s の DESCRIPTION ファイル中に date 欄がありません "
@@ -271,6 +273,10 @@ msgstr " 'dump' はクラス %s のオブジェクトではありません "
 
 msgid "Message:"
 msgstr " メッセージ: "
+
+#, fuzzy
+msgid "'dump' is empty"
+msgstr " 'dvipsscmd' が空です "
 
 msgid "Available environments had calls:"
 msgstr " 利用可能な環境は以下の呼び出しを含んでいました: "
@@ -992,6 +998,12 @@ msgstr ""
 msgid "file size is limited to 8GB"
 msgstr " ファイルサイズは 8GB に制限されています "
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
@@ -1252,6 +1264,11 @@ msgstr[0] " 不正なローマ数字です: %s "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr ""
+#~ " インストールが不完全です、base パッケージに CITATION ファイルがありませ"
+#~ "ん "
 
 #~ msgid "Created PDF document %s"
 #~ msgstr " PDF 文書 %s を作成しました "
@@ -1536,9 +1553,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 
 #~ msgid "'latexcmd' is empty"
 #~ msgstr " 'latexcmd' が空です "
-
-#~ msgid "'dvipscmd' is empty"
-#~ msgstr " 'dvipsscmd' が空です "
 
 #~ msgid ""
 #~ "Changing the default browser (as specified by the 'browser' option) to "

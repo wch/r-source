@@ -1,7 +1,7 @@
 #   File src/library/utils/R/SweaveDrivers.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -187,7 +187,6 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         ## Note that we edit the error message below, so change both
         ## if you change this line:
         chunkexps <- try(parse(text = chunk, srcfile = srcfile), silent = TRUE)
-
         if (inherits(chunkexps, "try-error"))
             chunkexps[1L] <- sub(" parse(text = chunk, srcfile = srcfile) : \n ",
                                  "", chunkexps[1L], fixed = TRUE)
@@ -221,11 +220,11 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         trySrcLines <- function(srcfile, showfrom, showto, ce) {
-            lines <- try(suppressWarnings(getSrcLines(srcfile, showfrom, showto)),
-                         silent = TRUE)
-            if (inherits(lines, "try-error")) {
-                if (is.null(ce)) lines <- character()
-                else lines <- deparse(ce, width.cutoff = 0.75*getOption("width"))
+	    lines <- tryCatch(suppressWarnings(getSrcLines(srcfile, showfrom, showto)),
+			      error = function(e)e)
+	    if (inherits(lines, "error")) {
+		lines <- if (is.null(ce)) character()
+		else deparse(ce, width.cutoff = 0.75*getOption("width"))
             }
             lines
         }
@@ -304,9 +303,10 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (options$eval) {
                 tmpcon <- file()
                 sink(file = tmpcon)
-                err <- evalFunc(ce, options)
-                cat("\n")           # make sure final line is complete
-                sink()
+                err <- tryCatch(evalFunc(ce, options), finally = {
+                     cat("\n")           # make sure final line is complete
+                     sink()
+                })
                 output <- readLines(tmpcon)
                 close(tmpcon)
                 ## delete empty output
@@ -526,22 +526,24 @@ RweaveLatexFinish <- function(object, error = FALSE)
         linesout <- object$linesout
         filenumout <- object$filenumout
         filenames <- object$srcFilenames[filenumout]
-        filegps <- rle(filenames)
-        offset <- 0L
-        for (i in seq_along(filegps$lengths)) {
-            len <- filegps$lengths[i]
-            inputname <- filegps$values[i]
-            vals <- rle(diff(linesout[offset + seq_len(len)]))
-            vals <- c(linesout[offset + 1L], as.numeric(rbind(vals$lengths, vals$values)))
-    	    concordance <- paste(strwrap(paste(vals, collapse = " ")), collapse = " %\n")
-    	    special <- paste0("\\Sconcordance{concordance:", outputname, ":",
-                         inputname, ":",
-                         if (offset) paste0("ofs ", offset, ":") else "",
-                         "%\n",
-                         concordance,"}\n")
-    	    cat(special, file = object$concordfile, append=offset > 0L)
-    	    offset <- offset + len
-    	}
+	if (!is.null(filenames)) {  # Might be NULL if an error occurred
+	    filegps <- rle(filenames)
+	    offset <- 0L
+	    for (i in seq_along(filegps$lengths)) {
+		len <- filegps$lengths[i]
+		inputname <- filegps$values[i]
+		vals <- rle(diff(linesout[offset + seq_len(len)]))
+		vals <- c(linesout[offset + 1L], as.numeric(rbind(vals$lengths, vals$values)))
+		concordance <- paste(strwrap(paste(vals, collapse = " ")), collapse = " %\n")
+		special <- paste0("\\Sconcordance{concordance:", outputname, ":",
+			     inputname, ":",
+			     if (offset) paste0("ofs ", offset, ":") else "",
+			     "%\n",
+			     concordance,"}\n")
+		cat(special, file = object$concordfile, append=offset > 0L)
+		offset <- offset + len
+	    }
+	}
     }
     invisible(outputname)
 }
@@ -607,19 +609,20 @@ RweaveLatexOptions <- function(options)
 RweaveChunkPrefix <- function(options)
 {
     if (!is.null(options$label)) {
-        if (options$prefix)
-            chunkprefix <- paste0(options$prefix.string, "-", options$label)
-        else
-            chunkprefix <- options$label
+	if (options$prefix)
+	    paste0(options$prefix.string, "-", options$label)
+	else
+	    options$label
     } else
-        chunkprefix <- paste0(options$prefix.string, "-",
-                              formatC(options$chunknr, flag = "0", width = 3))
-    chunkprefix
+	paste0(options$prefix.string, "-",
+	       formatC(options$chunknr, flag = "0", width = 3))
 }
 
 RweaveEvalWithOpt <- function (expr, options)
 {
     if (options$eval) {
+	## Note: try() as opposed to tryCatch() for back compatibility;
+	##       and  RweaveTryStop()  will work with it
         res <- try(withVisible(eval(expr, .GlobalEnv)), silent = TRUE)
         if (inherits(res, "try-error")) return(res)
         if (options$print || (options$term && res$visible)) {
@@ -632,7 +635,7 @@ RweaveEvalWithOpt <- function (expr, options)
 
 RweaveTryStop <- function(err, options)
 {
-    if (inherits(err, "try-error")) {
+    if (inherits(err, "try-error")) { ## from  RweaveEvalWithOpt()
         cat("\n")
         msg <- paste(" chunk", options$chunknr)
         if (!is.null(options$label))

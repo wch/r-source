@@ -55,10 +55,11 @@ void	rPsort(double*, int, int);
 void	cPsort(Rcomplex*, int, int);
 
 /* ../../main/qsort.c : */
+/* dummy renamed to II to avoid problems with g++ on Solaris */
 void R_qsort    (double *v,         size_t i, size_t j);
-void R_qsort_I  (double *v, int *I, int i, int j);
+void R_qsort_I  (double *v, int *II, int i, int j);
 void R_qsort_int  (int *iv,         size_t i, size_t j);
-void R_qsort_int_I(int *iv, int *I, int i, int j);
+void R_qsort_int_I(int *iv, int *II, int i, int j);
 #ifdef R_RS_H
 void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
 void F77_NAME(qsort3)(double *v,            int *ii, int *jj);

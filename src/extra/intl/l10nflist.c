@@ -124,7 +124,7 @@ argz_stringify__ (char *argz, size_t len, int sep)
       argz += part_len;
       len -= part_len + 1;
       if (len > 0)
-	*argz++ = sep;
+	  *argz++ = (char) sep;
     }
 }
 # undef __argz_stringify
@@ -371,7 +371,7 @@ _nl_normalize_codeset (const char *codeset, size_t name_len)
 
       for (cnt = 0; cnt < name_len; ++cnt)
 	if (isalpha ((unsigned char) codeset[cnt]))
-	  *wp++ = tolower ((unsigned char) codeset[cnt]);
+	    *wp++ = (char) tolower ((unsigned char) codeset[cnt]);
 	else if (isdigit ((unsigned char) codeset[cnt]))
 	  *wp++ = codeset[cnt];
 

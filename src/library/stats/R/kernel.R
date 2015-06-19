@@ -27,7 +27,7 @@ kernel <- function (coef, m = 2, r, name="unknown")
     modified.daniell.kernel <- function (m)
     {
         if(length(m) == 1L)
-            k <- kernel(c(rep(1, m), 0.5)/(2*m), m)
+            k <- kernel(c(rep_len(1, m), 0.5)/(2*m), m)
         else {
             k <- Recall(m[1L])
             for(i in 2L:length(m)) k <- kernapply(k,  Recall(m[i]))
@@ -39,7 +39,7 @@ kernel <- function (coef, m = 2, r, name="unknown")
     daniell.kernel <- function (m)
     {
         if(length(m) == 1L)
-            k <- kernel(rep(1/(2*m+1),m+1), m)
+            k <- kernel(rep_len(1/(2*m+1),m+1), m)
         else {
             k <- Recall(m[1L])
             for(i in 2L:length(m)) k <- kernapply(k,  Recall(m[i]))
@@ -160,7 +160,7 @@ kernapply.vector <- function (x, k, circular = FALSE, ...)
     else
     {
         n <- length(x)
-        w <- c(k[0L:m], rep(0,n-2L*m-1L), k[-m:-1L])
+        w <- c(k[0L:m], rep_len(0,n-2L*m-1L), k[-m:-1L])
         y <- fft(fft(x)*fft(w), inverse = TRUE)/n
         if (is.numeric(x)) y <- Re(y)
         if (circular)
@@ -196,7 +196,7 @@ kernapply.tskernel <- function (x, k, ...)
     if (!is.tskernel(k))
         stop ("'k' is not a kernel")
     n <- k$m
-    xx <- c(rep(0,n), x[-x$m:x$m], rep(0,n))
+    xx <- c(rep_len(0,n), x[-x$m:x$m], rep_len(0,n))
     coef <- kernapply(xx, k, circular = TRUE)
     m <- length(coef) %/% 2L
     kernel(coef[(m+1L):length(coef)], m,

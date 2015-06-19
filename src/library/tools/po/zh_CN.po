@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -26,30 +26,30 @@ msgstr "参数'files'必需是字符"
 msgid "md5 failed on file '%s'"
 msgstr "用于'%s'文件的md5运行失败"
 
-#: getfmts.c:52
+#: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "只允许%d个参数"
 
-#: getfmts.c:57
+#: getfmts.c:66
 msgid "'fmt' is not a character vector"
 msgstr "'fmt'不是字符向量"
 
-#: getfmts.c:60
+#: getfmts.c:69
 msgid "'fmt' must be length 1"
 msgstr "'fmt'的长度必需为一"
 
-#: getfmts.c:66
+#: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt'的长度超过了最大格式长度%d"
 
-#: getfmts.c:87
+#: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "没有这样的格式设定'%s'"
 
-#: getfmts.c:127
+#: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "每一个转换设置最多只支持一个星'*'"
 
@@ -136,12 +136,12 @@ msgstr "'deparseRd'里的文本模式%d不对"
 msgid "invalid bind address specification"
 msgstr "绑定地址规范不对"
 
-#: install.c:104 install.c:125 install.c:127
+#: install.c:112 install.c:133 install.c:135
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
-#: install.c:155
+#: install.c:163
 msgid "write error during file append"
 msgstr "文件追加写入时出了错"
 

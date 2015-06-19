@@ -390,19 +390,22 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
 
     memset(&pi, 0, sizeof(pi));
     pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi);
-    if (!pi.hProcess) return NOLAUNCH;
-    if (wait) {
-	RCNTXT cntxt;
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		 R_NilValue, R_NilValue);
-	cntxt.cend = &terminate_process;
-	cntxt.cenddata = &pi;
-	ret = pwait2(pi.hProcess);
-	endcontext(&cntxt);
-	snprintf(RunError, 501, _("Exit code was %d"), ret);
-	ret &= 0xffff;
-    } else ret = 0;
-    CloseHandle(pi.hProcess);
+    if (pi.hProcess) {
+	if (wait) {
+	    RCNTXT cntxt;
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	    cntxt.cend = &terminate_process;
+	    cntxt.cenddata = &pi;
+	    ret = pwait2(pi.hProcess);
+	    endcontext(&cntxt);
+	    snprintf(RunError, 501, _("Exit code was %d"), ret);
+	    ret &= 0xffff;
+	} else ret = 0;
+	CloseHandle(pi.hProcess);
+    } else {
+    	ret = NOLAUNCH;
+    }
     if (close1) CloseHandle(hIN);
     if (close2) CloseHandle(hOUT);
     if (close3) CloseHandle(hERR);

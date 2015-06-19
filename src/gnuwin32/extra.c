@@ -834,3 +834,11 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+const char *getTZinfo(void);  // src/extra/tzone/registryTZ.c
+
+SEXP attribute_hidden do_tzone_name(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    return mkString(getTZinfo());
+}
+

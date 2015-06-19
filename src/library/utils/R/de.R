@@ -1,7 +1,7 @@
 #  File src/library/utils/R/de.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ de.setup <- function(ilist, list.names, incols)
 	}
 	else if( is.matrix(telt) ) {
 	    y <- dimnames(telt)[[2L]]
-	    for( j in 1L:ncol(telt) ) {
+	    for( j in seq_len(ncol(telt)) ) {
 		ivec[[i]] <- telt[, j]
 		if( is.null(y) || y[j]=="" )
 		    inames[[i]] <- paste0("var", i)
@@ -90,12 +90,12 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
     rnames <- vector("character", length=p)
     j <- 1L
     lnames <- names(inlist)
-    if(p) for(i in 1L:p) {
+    if(p) for(i in seq_len(p)) {
 	if(coltypes[i]==2) {
 	    tlen <- length(inlist[[j]])
 	    x <- matrix(0, nrow=tlen, ncol=ncols[i])
 	    cnames <- vector("character", ncol(x))
-	    for( ind1 in 1L:ncols[i]) {
+	    for( ind1 in seq_len(ncols[i])) {
 		if(tlen != length(inlist[[j]]) ) {
 		    warning("could not restore type information")
 		    return(inlist)
@@ -115,7 +115,7 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
 	else if(coltypes[i]==3) {
 	    x <- vector("list", length=ncols[i])
 	    cnames <- vector("character", ncols[i])
-	    for( ind1 in 1L:ncols[i]) {
+	    for( ind1 in seq_len(ncols[i])) {
 		x[[ind1]] <- inlist[[j]]
 		cnames[ind1] <- lnames[j]
 		j <- j+1L

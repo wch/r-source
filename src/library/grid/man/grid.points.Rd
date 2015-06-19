@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.points.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.points}
@@ -23,20 +23,22 @@ pointsGrob(x = stats::runif(10),
            gp = gpar(), vp = NULL)
 }
 \arguments{
-  \item{x}{A numeric vector or unit object specifying x-values.}
-  \item{y}{A numeric vector or unit object specifying y-values.}
-  \item{pch}{A numeric or character vector indicating what sort of
+  \item{x}{numeric vector or unit object specifying x-values.}
+  \item{y}{numeric vector or unit object specifying y-values.}
+  \item{pch}{numeric or character vector indicating what sort of
     plotting symbol to use.  See \code{\link{points}} for the
-    interpretation of these values.}
-  \item{size}{A unit object specifying the size of the plotting symbols.}
-  \item{default.units}{A string indicating the default units to use
+    interpretation of these values, and note \code{fill} below.}
+  \item{size}{unit object specifying the size of the plotting symbols.}
+  \item{default.units}{string indicating the default units to use
     if \code{x} or \code{y} are only given as numeric vectors.}
-  \item{name}{ A character identifier. }
-  \item{gp}{An object of class \code{gpar}, typically the output
+  \item{name}{character identifier. }
+  \item{gp}{an \R object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
-    a list of graphical parameter settings.}
-  \item{draw}{A logical value indicating whether graphics output
-    should be produced.}
+    a list of graphical parameter settings; note that \code{fill} (and
+    not \code{bg} as in package \pkg{graphics} \code{\link{points}}) is
+    used to \dQuote{fill}, i.e., color the background of symbols with
+    \code{pch = 21:25}.}
+  \item{draw}{logical indicating whether graphics output should be produced.}
   \item{vp}{A Grid viewport object (or NULL).}
 }
 \details{
@@ -45,7 +47,7 @@ pointsGrob(x = stats::runif(10),
   if \code{draw} is \code{TRUE}).
 }
 \value{
-  A points grob.  \code{grid.points} returns the value invisibly.
+  A points \code{\link{grob}}.  \code{grid.points} returns the value invisibly.
 }
 \author{Paul Murrell}
 \seealso{

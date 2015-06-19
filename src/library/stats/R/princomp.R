@@ -50,7 +50,7 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
 
 princomp.default <-
     function(x, cor = FALSE, scores = TRUE, covmat = NULL,
-             subset = rep(TRUE, nrow(as.matrix(x))), ...)
+             subset = rep_len(TRUE, nrow(as.matrix(x))), ...)
 {
     cl <- match.call()
     cl[[1L]] <- as.name("princomp")

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000	R Core Team
+ *  Copyright (C) 1998--2000, 2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include <config.h>
 #endif
 
+#include <limits.h> /* for INT_MAX */
+#include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for abs */
 #include <math.h>
 #include <Rmath.h> /* for imax2(.),..*/
@@ -117,6 +119,8 @@
  * nfac[15] (array) is working storage for factoring n.	 the smallest
  *	number exceeding the 15 locations provided is 12,754,584.
  *
+ * Update in R 3.1.0: nfac[20], increased array size. It is now possible to
+ * factor any positive int n, up to 2^31 - 1.
  */
 
 static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
@@ -723,7 +727,7 @@ L570:
 
 static int old_n = 0;
 
-static int nfac[15];
+static int nfac[20];
 static int m_fac;
 static int kt;
 static int maxf;
@@ -748,7 +752,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
  *  If *pmaxp == 0  There was an illegal zero parameter among nseg, n, and nspn.
  *  If *pmaxp == 1  There we more than 15 factors to ntot.  */
 
-    int j, jj, k;
+    int j, jj, k, sqrtk, kchanged;
 
 	/* check series length */
 
@@ -775,10 +779,18 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
     }
 
     /* extract 3^2, 5^2, ... */
-    for(j = 3; (jj= j*j) <= k; j += 2) {
+    kchanged = 0;
+    sqrtk = (int)sqrt(k);
+    for(j = 3; j <= sqrtk; j += 2) {
+	jj = j * j;
 	while(k % jj == 0) {
 	    nfac[m_fac++] = j;
 	    k /= jj;
+	    kchanged = 1;
+	}
+	if (kchanged) {
+	    kchanged = 0;
+	    sqrtk = (int)sqrt(k);
 	}
     }
 
@@ -803,6 +815,8 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 		nfac[m_fac++] = j;
 		k /= j;
 	    }
+	    if (j > INT_MAX - 2)
+		break;
 	    j = ((j+1)/2)*2 + 1;
 	}
 	while(j <= k);
@@ -810,7 +824,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 
     if (m_fac <= kt+1)
 	maxp = m_fac+kt+1;
-    if (m_fac+kt > 15) {		/* error - too many factors */
+    if (m_fac+kt > 20) {		/* error - too many factors */
 	old_n = 0; *pmaxf = 0; *pmaxp = 0;
 	return;
     }
@@ -852,7 +866,7 @@ Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
     ntot = nspan * nseg;
 
     fftmx(a, b, ntot, nf, nspan, isn, m_fac, kt,
-	  &work[0], &work[maxf], &work[2*maxf], &work[3*maxf],
+	  &work[0], &work[maxf], &work[2*(size_t)maxf], &work[3*(size_t)maxf],
 	  iwork, nfac);
 
     return TRUE;

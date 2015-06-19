@@ -368,9 +368,9 @@ function (x, type = c("additive", "multiplicative"), filter = NULL)
     ## filter out seasonal components
     if (is.null(filter))
         filter <- if (!f %% 2)
-            c(0.5, rep(1, f - 1), 0.5) / f
+            c(0.5, rep_len(1, f - 1), 0.5) / f
         else
-            rep(1, f) / f
+            rep_len(1, f) / f
     trend <- filter(x, filter)
 
     ## compute seasonal components
