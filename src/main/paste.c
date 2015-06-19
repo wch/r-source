@@ -440,10 +440,13 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	my_OutDec = OutDec; // default
     else {
 	static char sdec[11];
+// not warning here by default for now
+#ifdef _WARN_decimal_mark_non_1
 	if(R_nchar(STRING_ELT(CAR(args), 0), Chars,
 		   /* allowNA = */ FALSE, /* keepNA = */ FALSE,
 		   "decimal.mark") != 1) // will become an error
 	    warning(_("'decimal.mark' must be a string of one character"));
+#endif
 	strncpy(sdec, CHAR(STRING_ELT(CAR(args), 0)), 10);
 	sdec[10] = '\0';
 	my_OutDec = sdec;
