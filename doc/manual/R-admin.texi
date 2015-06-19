@@ -1611,9 +1611,9 @@ Windows' CRLF line endings.
 @end macro
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
-X'. Click on that, then download the file
-@file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
-X 10.9 and later (Mavericks, Yosemite, El Capitan, @dots{}).
+X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
+and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
+El Capitan, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}.
