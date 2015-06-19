@@ -465,7 +465,7 @@ httpd <- function(path, query, ...)
 
     	url <- paste0("http://127.0.0.1:", httpdPort(),
                       "/doc/html/Search?package=",
-                      pkg, "&agrep=FALSE&types=demo")
+                      pkg, "&agrep=0&types.demo=1")
     	return(list(payload = paste0('Redirect to <a href="', url,
     				'">help.search()</a>'),
 		    		"content-type" = 'text/html',
