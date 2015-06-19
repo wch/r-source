@@ -74,6 +74,7 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 #include <errno.h>
 
 #include <R_ext/RS.h>  /* for Calloc/Free */
+#include <R_ext/Utils.h>  // R_nchar()
 
 #include <rlocale.h>
 
@@ -132,10 +133,86 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+int R_nchar(SEXP string, nchar_type type_,
+            Rboolean allowNA, Rboolean keepNA, const char* msg_name)
+{
+    if (string == NA_STRING)
+	return keepNA ? NA_INTEGER : 2;
+    // else :
+    switch(type_) {
+    case Bytes:
+	return LENGTH(string);
+	break;
+    case Chars:
+	if (IS_UTF8(string)) {
+	    const char *p = CHAR(string);
+	    if (!utf8Valid(p)) {
+		if (!allowNA)
+		    error(_("invalid multibyte string, %s"), msg_name);
+		return NA_INTEGER;
+	    } else {
+		int nc = 0;
+		for( ; *p; p += utf8clen(*p)) nc++;
+		return nc;
+	    }
+	} else if (IS_BYTES(string)) {
+	    if (!allowNA) /* could do chars 0 */
+		error(_("number of characters is not computable in \"bytes\" encoding, %s"),
+		      msg_name);
+	    return NA_INTEGER;
+	} else if (mbcslocale) {
+	    int nc = (int) mbstowcs(NULL, translateChar(string), 0);
+	    if (!allowNA && nc < 0)
+		error(_("invalid multibyte string, %s"), msg_name);
+	    return (nc >= 0 ? nc : NA_INTEGER);
+	} else
+	    return ((int) strlen(translateChar(string)));
+	break;
+    case Width:
+	if (IS_UTF8(string)) {
+	    const char *p = CHAR(string);
+	    if (!utf8Valid(p)) {
+		if (!allowNA)
+		    error(_("invalid multibyte string, %s"), msg_name);
+		return NA_INTEGER;
+	    } else {
+		wchar_t wc1;
+		int nc = 0;
+		for( ; *p; p += utf8clen(*p)) {
+		    utf8toucs(&wc1, p);
+		    nc += Ri18n_wcwidth(wc1);
+		}
+		return nc;
+	    }
+	} else if (IS_BYTES(string)) {
+	    if (!allowNA) /* could do width 0 */
+		error(_("width is not computable for %s in \"bytes\" encoding"),
+		      msg_name);
+	    return NA_INTEGER;
+	} else if (mbcslocale) {
+	    const char *xi = translateChar(string);
+	    int nc = (int) mbstowcs(NULL, xi, 0);
+	    if (nc >= 0) {
+		wchar_t *wc = (wchar_t *)
+		    R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+		mbstowcs(wc, xi, nc + 1);
+		int nci18n = Ri18n_wcswidth(wc, 2147483647);
+		return (nci18n < 1) ? nc : nci18n;
+	    } else if (allowNA)
+		error(_("invalid multibyte string, %s"), msg_name);
+	    else
+		return NA_INTEGER;
+	} else
+	    return (int) strlen(translateChar(string));
+
+    } // switch
+    return NA_INTEGER; // -Wall
+} // R_nchar()
+
 SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP d, s, x, stype;
-    int nc, nargs = length(args);
+    int nargs = length(args);
 
 #ifdef R_version_3_4_or_so
     checkArity(op, args);
@@ -160,7 +237,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *type = CHAR(STRING_ELT(stype, 0)); /* always ASCII */
     size_t ntype = strlen(type);
     if (ntype == 0) error(_("invalid '%s' argument"), "type");
-    enum {Bytes, Chars, Width} type_;
+    nchar_type type_;
     if (strncmp(type, "bytes", ntype) == 0)	 type_ = Bytes;
     else if (strncmp(type, "chars", ntype) == 0) type_ = Chars;
     else if (strncmp(type, "width", ntype) == 0) type_ = Width;
@@ -174,80 +251,12 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    keepNA = (type_ == Width) ? FALSE : TRUE;
     } else  keepNA = (type_ == Width) ? FALSE : TRUE;
     PROTECT(s = allocVector(INTSXP, len));
+    int *s_ = INTEGER(s);
     const void *vmax = vmaxget();
     for (R_xlen_t i = 0; i < len; i++) {
 	SEXP sxi = STRING_ELT(x, i);
-	if (sxi == NA_STRING) {
-	    INTEGER(s)[i] = keepNA ? NA_INTEGER : 2;
-	    continue;
-	}
-	switch(type_) {
-	case Bytes:
-	    INTEGER(s)[i] = LENGTH(sxi);
-	    break;
-	case Chars:
-	    if (IS_UTF8(sxi)) {
-		const char *p = CHAR(sxi);
-		if (!utf8Valid(p)) {
-		    if (!allowNA)
-			error(_("invalid multibyte string %d"), i+1);
-		    nc = NA_INTEGER;
-		} else {
-		    nc = 0;
-		    for( ; *p; p += utf8clen(*p)) nc++;
-		}
-		INTEGER(s)[i] = nc;
-	    } else if (IS_BYTES(sxi)) {
-		if (!allowNA) /* could do chars 0 */
-		    error(_(
-		"number of characters is not computable for element %d in \"bytes\" encoding"),
-			  i+1);
-		INTEGER(s)[i] = NA_INTEGER;
-	    } else if (mbcslocale) {
-		nc = (int) mbstowcs(NULL, translateChar(sxi), 0);
-		if (!allowNA && nc < 0)
-		    error(_("invalid multibyte string %d"), i+1);
-		INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
-	    } else
-		INTEGER(s)[i] = (int) strlen(translateChar(sxi));
-	    break;
-	case Width:
-	    if (IS_UTF8(sxi)) {
-		const char *p = CHAR(sxi);
-		if (!utf8Valid(p)) {
-		    if (!allowNA)
-			error(_("invalid multibyte string %d"), i+1);
-		    nc = NA_INTEGER;
-		} else {
-		    wchar_t wc1;
-		    nc = 0;
-		    for( ; *p; p += utf8clen(*p)) {
-			utf8toucs(&wc1, p);
-			nc += Ri18n_wcwidth(wc1);
-		    }
-		}
-		INTEGER(s)[i] = nc;
-	    } else if (IS_BYTES(sxi)) {
-		if (!allowNA) /* could do width 0 */
-		    error(_("width is not computable for element %d in \"bytes\" encoding"), i+1);
-		INTEGER(s)[i] = NA_INTEGER;
-	    } else if (mbcslocale) {
-		const char *xi = translateChar(sxi);
-		nc = (int) mbstowcs(NULL, xi, 0);
-		if (nc >= 0) {
-		    wchar_t *wc = (wchar_t *)
-			R_AllocStringBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-		    mbstowcs(wc, xi, nc + 1);
-		    INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
-		    if (INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
-		} else if (allowNA)
-		    error(_("invalid multibyte string %d"), i+1);
-		else
-		    INTEGER(s)[i] = NA_INTEGER;
-	    } else
-		INTEGER(s)[i] = (int) strlen(translateChar(sxi));
-
-	} // switch(type_)
+	char msg_i[20]; sprintf(msg_i, "element %ld", (long)i+1);
+	s_[i] = R_nchar(sxi, type_, allowNA, keepNA, msg_i);
 	vmaxset(vmax);
     } // for(..)
     R_FreeStringBufferL(&cbuff);

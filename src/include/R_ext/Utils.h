@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2012    The R Core Team
+ *  Copyright (C) 1998-2015    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -101,6 +101,11 @@ void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 
 /* ../../appl/maxcol.c: also in Applic.h */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
+
+// ../../main/character.c :
+typedef enum {Bytes, Chars, Width} nchar_type;
+int R_nchar(SEXP string, nchar_type type_,
+            Rboolean allowNA, Rboolean keepNA, const char* msg_name).
 
 #ifdef  __cplusplus
 }
