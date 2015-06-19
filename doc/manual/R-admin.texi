@@ -1610,21 +1610,19 @@ Windows' CRLF line endings.
 @end macro
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
-X'. Click on that, then download the file
-@file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
-X 10.9 and later (Mavericks and Yosemite).
+X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
+and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
+El Capitan, @dots{}).
 
-@c There may be a separate installer package,
-@c @file{R-@value{VERSIONno}-snowleopard.pkg} which runs on OS X 10.6 and
-@c later (Snow Leopard, Lion, Mountain Lion, Mavericks, Yosemite, @dots{});
-@c it is a 64-bit (@cputype{x86_64}) build which should run on all Macs
-@c from mid-2008 on.
+There may be@footnote{There was for R 3.2.1 but not for R 3.2.0.} a
+separate installer package @file{R-@value{VERSIONno}-snowleopard.pkg},
+which runs on OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion,
+Mavericks, Yosemite, @dots{}); it is a 64-bit (@cputype{x86_64}) build
+which should run on all Macs from mid-2008 on.
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}, including a
-@file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched for OS
-X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
-Yosemite, @dots{}) which should run on all Macs from mid-2008 on.
+@file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched.
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources.
@@ -2126,7 +2124,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
+particular series (e.g.@: @R{} 3.2.x or 3.1.x) of @R{}.
 
 You should not attempt to mix-and-match binary packages built for the
 `Snow Leopard' and `Mavericks' @acronym{CRAN} distributions: doing so is
@@ -4778,7 +4776,7 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 @menu
-* Mavericks and Yosemite::      
+* Mavericks and later::         
 * Lion and Mountain Lion::      
 * Snow Leopard::                
 * Tcl/Tk headers and libraries::  
@@ -4787,8 +4785,8 @@ versions.
 * Building R.app::              
 @end menu
 
-@node Mavericks and Yosemite, Lion and Mountain Lion, OS X, OS X
-@subsection Mavericks and Yosemite
+@node Mavericks and later, Lion and Mountain Lion, OS X, OS X
+@subsection Mavericks and later
 
 For these versions Apple makes available compilers based on
 @command{clang}, and C++ headers and runtime are from LLVM's
@@ -4796,7 +4794,7 @@ For these versions Apple makes available compilers based on
 called `Command Line Developer Tools').
 
 These tools can be (re-)installed by @command{xcode-select --install}.
-(If you have a fresh installation of Mavericks/Yosemite, running e.g.@:
+(If you have a fresh installation of Mavericks or latere, running e.g.@:
 @command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
 after an OS update, you are advised to re-install them.)
@@ -4836,7 +4834,7 @@ under Yosemite.  They give warnings and @command{gfortran-4.8} is
 reported to be unable to link packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
-@node Lion and Mountain Lion, Snow Leopard, Mavericks and Yosemite, OS X
+@node Lion and Mountain Lion, Snow Leopard, Mavericks and later, OS X
 @subsection Lion and Mountain Lion
 
 `Command-line Tools for Xcode' used to be part of the Apple Developer
