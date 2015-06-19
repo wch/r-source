@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2012   Robert Gentleman, Ross Ihaka and the
- *			      R Core Team
+ *  Copyright (C) 1995, 1996   Robert Gentleman and Ross Ihaka
+ *		  1997-2013   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -83,7 +83,8 @@ static double approx1(double v, double *x, double *y, int n,
     if(Meth->kind == 1) /* linear */
 	return y[i] + (y[j] - y[i]) * ((v - x[i])/(x[j] - x[i]));
     else /* 2 : constant */
-	return y[i] * Meth->f1 + y[j] * Meth->f2;
+	return (Meth->f1 != 0.0 ? y[i] * Meth->f1 : 0.0) 
+	     + (Meth->f2 != 0.0 ? y[j] * Meth->f2 : 0.0);
 }/* approx1() */
 
 

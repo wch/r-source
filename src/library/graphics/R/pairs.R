@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/pairs.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #  Some parts  Copyright (C) 1999 Dr. Jens Oehlschlaegel-Akiyoshi
 #
 #  This program is free software; you can redistribute it and/or modify

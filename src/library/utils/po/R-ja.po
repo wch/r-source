@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1085,6 +1085,9 @@ msgstr " 'ccaddress' は長さ 1 の整数でなければなりません "
 
 msgid "no download method found"
 msgstr " ダウンロードの方法が見付かりません "
+
+msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
+msgstr ""
 
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "

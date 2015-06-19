@@ -283,6 +283,11 @@ struct sljit_compiler {
 	sljit_sw cache_argw;
 #endif
 
+#if (defined SLJIT_CONFIG_TILEGX && SLJIT_CONFIG_TILEGX)
+	sljit_si cache_arg;
+	sljit_sw cache_argw;
+#endif
+
 #if (defined SLJIT_VERBOSE && SLJIT_VERBOSE)
 	FILE* verbose;
 #endif

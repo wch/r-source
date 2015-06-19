@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-13   The R Core Team.
+ *  Copyright (C) 2000-2014   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3301,7 +3301,7 @@ static void con_cleanup(void *data)
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, ans2;
-    int ok, warn, c, nbuf, buf_size = BUF_SIZE;
+    int ok, warn, skipNul, c, nbuf, buf_size = BUF_SIZE;
     int oenc = CE_NATIVE;
     Rconnection con = NULL;
     Rboolean wasopen;
@@ -3313,19 +3313,23 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	error(_("'con' is not a connection"));
-    con = getConnection(asInteger(CAR(args)));
-    n = asVecSize(CADR(args));
+    con = getConnection(asInteger(CAR(args))); args = CDR(args);
+    n = asVecSize(CAR(args)); args = CDR(args);
     if(n == -999)
 	error(_("invalid '%s' argument"), "n");
-    ok = asLogical(CADDR(args));
+    ok = asLogical(CAR(args));  args = CDR(args);
     if(ok == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "ok");
-    warn = asLogical(CADDDR(args));
+    warn = asLogical(CAR(args));  args = CDR(args);
     if(warn == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "warn");
-    if(!isString(CAD4R(args)) || LENGTH(CAD4R(args)) != 1)
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAD4R(args), 0)); /* ASCII */
+    encoding = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args); /* ASCII */
+    skipNul = asLogical(CAR(args));
+    if(skipNul == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "skipNul");
+
     wasopen = con->isopen;
     if(!wasopen) {
 	char mode[5];
@@ -3370,7 +3374,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	nbuf = 0;
 	while((c = Rconn_fgetc(con)) != R_EOF) {
-	    if(nbuf == buf_size-1) {  /* need space for the null */
+	    if(nbuf == buf_size-1) {  /* need space for the terminator */
 		buf_size *= 2;
 		char *tmp = (char *) realloc(buf, buf_size);
 		if(!buf) {
@@ -3378,6 +3382,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("cannot allocate buffer in readLines"));
 		} else buf = tmp;
 	    }
+	    if(skipNul && c == '\0') continue;
 	    if(c != '\n') buf[nbuf++] = (char) c; else break;
 	}
 	buf[nbuf] = '\0';
@@ -3386,6 +3391,8 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (nread == 0 && utf8locale &&
 	    !memcmp(buf, "\xef\xbb\xbf", 3)) qbuf = buf + 3;
 	SET_STRING_ELT(ans, nread, mkCharCE(qbuf, oenc));
+	if (warn && strlen(buf) < nbuf)
+	    warning(_("line %d appears to contain an embedded nul"), nread + 1);
 	if(c == R_EOF) goto no_more_lines;
     }
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
@@ -4421,7 +4428,7 @@ void con_pushback(Rconnection con, Rboolean newLine, char *line)
 
 SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, n, nexists, newLine;
+    int i, n, nexists, newLine, type;
     Rconnection con = NULL;
     SEXP stext;
     const char *p;
@@ -4436,6 +4443,7 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
     newLine = asLogical(CADDR(args));
     if(newLine == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "newLine");
+    type = asInteger(CADDDR(args));
     if(!con->canread && !con->isopen)
 	error(_("can only push back on open readable connections"));
     if(!con->text)
@@ -4450,7 +4458,9 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->PushBack = q;
 	q += nexists;
 	for(i = 0; i < n; i++) {
-	    p = translateChar(STRING_ELT(stext, n - i - 1));
+	    p = type == 1 ? translateChar(STRING_ELT(stext, n - i - 1))
+			  : ((type == 3) ? translateCharUTF8(STRING_ELT(stext, n - i - 1))
+					 : CHAR(STRING_ELT(stext, n - i - 1)));
 	    *q = (char *) malloc(strlen(p) + 1 + newLine);
 	    if(!(*q)) error(_("could not allocate space for pushback"));
 	    strcpy(*q, p);

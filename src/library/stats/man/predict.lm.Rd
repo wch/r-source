@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -111,7 +111,8 @@
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{predict}}.
 
-  \link{SafePrediction} for prediction from polynomial and spline fits.
+  \link{SafePrediction} for prediction from (univariable) polynomial and
+  spline fits.
 }
 \examples{
 require(graphics)
@@ -144,6 +145,6 @@ npk.aov <- aov(yield ~ block + N*P*K, npk)
 (pt <- predict(npk.aov, type = "terms"))
 pt. <- predict(npk.aov, type = "terms", terms = termL[1:4])
 stopifnot(all.equal(pt[,1:4], pt.,
-                    check.attr = FALSE, tol = 1e-12))
+                    tolerance = 1e-12, check.attributes = FALSE))
 }
 \keyword{regression}

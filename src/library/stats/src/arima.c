@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2011   The R Core Team.
+ *  Copyright (C) 2002-2014   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,15 +21,12 @@
 # include <config.h>
 #endif
 
-#if !defined(atanh) && defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
-extern double atanh(double x);
-#endif
-
 /* do this first to get the right options for math.h */
 #include <R_ext/Arith.h>
 
 #include <R.h>
 #include "ts.h"
+#include "statsR.h" // for getListElement
 
 #ifndef max
 #define max(a,b) ((a < b)?(b):(a))
@@ -38,6 +35,15 @@ extern double atanh(double x);
 #define min(a,b) ((a < b)?(a):(b))
 #endif
 
+
+/* 
+  KalmanLike, internal to StructTS:
+  .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h, mod$Pn,
+        nit, FALSE, update)
+  KalmanRun:
+  .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h, mod$Pn,
+        nit, TRUE, update)
+*/
 
 /* y vector length n of observations
    Z vector length p for observation equation y_t = Za_t +  eps_t
@@ -50,75 +56,87 @@ extern double atanh(double x);
    Pnew used for P[t|t -1]
    M used for M = P[t|t -1]Z
 
-   No checking here!
+   op is FALSE for KalmanLike, TRUE for KalmanRun.  
+   The latter computes residuals and states and has 
+   a more elaborate return value.
+
+   Almost no checking here!
  */
+
 SEXP
-KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
-	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast)
+KalmanLike(SEXP sy, SEXP mod, SEXP sUP, SEXP op, SEXP update)
 {
-    SEXP res, ans = R_NilValue, resid = R_NilValue, states = R_NilValue;
-    int n, p, lop = asLogical(op);
-    double *y, *Z, *a, *P, *T, *V, h = asReal(sh), *Pnew;
-    double sumlog = 0.0, ssq = 0, resid0, gain, tmp, *anew, *mm, *M;
-    int i, j, k, l;
+    int lop = asLogical(op);
+    mod = PROTECT(duplicate(mod));
+
+    SEXP sZ = getListElement(mod, "Z"), sa = getListElement(mod, "a"), 
+	sP = getListElement(mod, "P"), sT = getListElement(mod, "T"), 
+	sV = getListElement(mod, "V"), sh = getListElement(mod, "h"),
+	sPn = getListElement(mod, "Pn");
 
     if (TYPEOF(sy) != REALSXP || TYPEOF(sZ) != REALSXP ||
 	TYPEOF(sa) != REALSXP || TYPEOF(sP) != REALSXP ||
 	TYPEOF(sPn) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
 	error(_("invalid argument type"));
-    n = LENGTH(sy); p = LENGTH(sa);
-    y = REAL(sy); Z = REAL(sZ); T = REAL(sT); V = REAL(sV);
 
-    /* Avoid modifying arguments unless fast=TRUE */
-    if (!LOGICAL(fast)[0]){
-	    PROTECT(sP = duplicate(sP));
-	    PROTECT(sa = duplicate(sa));
-	    PROTECT(sPn = duplicate(sPn));
-    }
-    P = REAL(sP); a = REAL(sa); Pnew = REAL(sPn);
+    int n = LENGTH(sy), p = LENGTH(sa);
+    double *y = REAL(sy), *Z = REAL(sZ), *T = REAL(sT), *V = REAL(sV),
+	*P = REAL(sP), *a = REAL(sa), *Pnew = REAL(sPn), h = asReal(sh);
 
-    anew = (double *) R_alloc(p, sizeof(double));
-    M = (double *) R_alloc(p, sizeof(double));
-    mm = (double *) R_alloc(p * p, sizeof(double));
+    double *anew = (double *) R_alloc(p, sizeof(double));
+    double *M = (double *) R_alloc(p, sizeof(double));
+    double *mm = (double *) R_alloc(p * p, sizeof(double));
+    // These are only used if(lop), but avoid -Wall trouble
+    SEXP ans = R_NilValue, resid = R_NilValue, states = R_NilValue;
     if(lop) {
 	PROTECT(ans = allocVector(VECSXP, 3));
 	SET_VECTOR_ELT(ans, 1, resid = allocVector(REALSXP, n));
 	SET_VECTOR_ELT(ans, 2, states = allocMatrix(REALSXP, n, p));
+	SEXP nm = PROTECT(allocVector(STRSXP, 3));
+	SET_STRING_ELT(nm, 0, mkChar("values"));
+	SET_STRING_ELT(nm, 1, mkChar("resid"));
+	SET_STRING_ELT(nm, 2, mkChar("states"));
+	setAttrib(ans, R_NamesSymbol, nm);
+	UNPROTECT(1);
     }
-    for (l = 0; l < n; l++) {
-	for (i = 0; i < p; i++) {
-	    tmp = 0.0;
-	    for (k = 0; k < p; k++)
+
+    double sumlog = 0.0, ssq = 0.0;
+    int nu = 0;
+    for (int l = 0; l < n; l++) {
+	for (int i = 0; i < p; i++) {
+	    double tmp = 0.0;
+	    for (int k = 0; k < p; k++)
 		tmp += T[i + p * k] * a[k];
 	    anew[i] = tmp;
 	}
 	if (l > asInteger(sUP)) {
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = 0.0;
-		    for (k = 0; k < p; k++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = 0.0;
+		    for (int k = 0; k < p; k++)
 			tmp += T[i + p * k] * P[k + p * j];
 		    mm[i + p * j] = tmp;
 		}
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = V[i + p * j];
-		    for (k = 0; k < p; k++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = V[i + p * j];
+		    for (int k = 0; k < p; k++)
 			tmp += mm[i + p * k] * T[j + p * k];
 		    Pnew[i + p * j] = tmp;
 		}
 	}
 	if (!ISNAN(y[l])) {
+	    nu++;
 	    double *rr = NULL /* -Wall */;
 	    if(lop) rr = REAL(resid);
-	    resid0 = y[l];
-	    for (i = 0; i < p; i++)
+	    double resid0 = y[l];
+	    for (int i = 0; i < p; i++)
 		resid0 -= Z[i] * anew[i];
-	    gain = h;
-	    for (i = 0; i < p; i++) {
-		tmp = 0.0;
-		for (j = 0; j < p; j++)
+	    double gain = h;
+	    for (int i = 0; i < p; i++) {
+		double tmp = 0.0;
+		for (int j = 0; j < p; j++)
 		    tmp += Pnew[i + j * p] * Z[j];
 		M[i] = tmp;
 		gain += Z[i] * M[i];
@@ -126,72 +144,76 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	    ssq += resid0 * resid0 / gain;
 	    if(lop) rr[l] = resid0 / sqrt(gain);
 	    sumlog += log(gain);
-	    for (i = 0; i < p; i++)
+	    for (int i = 0; i < p; i++)
 		a[i] = anew[i] + M[i] * resid0 / gain;
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++)
 		    P[i + j * p] = Pnew[i + j * p] - M[i] * M[j] / gain;
 	} else {
 	    double *rr = NULL /* -Wall */;
 	    if(lop) rr = REAL(resid);
-	    for (i = 0; i < p; i++)
+	    for (int i = 0; i < p; i++)
 		a[i] = anew[i];
-	    for (i = 0; i < p * p; i++)
+	    for (int i = 0; i < p * p; i++)
 		P[i] = Pnew[i];
 	    if(lop) rr[l] = NA_REAL;
 	}
 	if(lop) {
 	    double *rs = REAL(states);
-	    for(j = 0; j < p; j++) rs[l + n*j] = a[j];
+	    for (int j = 0; j < p; j++) rs[l + n*j] = a[j];
 	}
     }
 
+    SEXP res = allocVector(REALSXP, 2);
+    REAL(res)[0] = ssq/nu; REAL(res)[1] = sumlog/nu;
     if(lop) {
-	SET_VECTOR_ELT(ans, 0, res=allocVector(REALSXP, 2));
-	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
-	UNPROTECT(1);
-	if (!LOGICAL(fast)[0])
-	    UNPROTECT(3);
+	SET_VECTOR_ELT(ans, 0, res);
+	if(asLogical(update)) setAttrib(ans, install("mod"), mod);
+	UNPROTECT(2);
 	return ans;
     } else {
-	res = allocVector(REALSXP, 2);
-	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
-	if (!LOGICAL(fast)[0])
-	    UNPROTECT(3);
+	if(asLogical(update)) setAttrib(res, install("mod"), mod);
+	UNPROTECT(1);
 	return res;
     }
 }
 
 SEXP
-KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
-	     SEXP sV, SEXP sh, SEXP sPn, SEXP sUP)
+KalmanSmooth(SEXP sy, SEXP mod, SEXP sUP)
 {
-    SEXP ssa, ssP, ssPn, res, states = R_NilValue, sN;
-    int n = LENGTH(sy), p = LENGTH(sa);
-    double *y = REAL(sy), *Z = REAL(sZ), *a, *P,
-	*T = REAL(sT), *V = REAL(sV), h = asReal(sh), *Pnew;
-    double resid0, gain, tmp, *anew, *mm, *M;
-    double *at, *rt, *Pt, *gains, *resids, *Mt, *L, gn, *Nt;
-    int i, j, k, l;
-    Rboolean var = TRUE;
+    SEXP sZ = getListElement(mod, "Z"), sa = getListElement(mod, "a"), 
+	sP = getListElement(mod, "P"), sT = getListElement(mod, "T"), 
+	sV = getListElement(mod, "V"), sh = getListElement(mod, "h"),
+	sPn = getListElement(mod, "Pn");
 
-    /* It would be better to check types before using LENGTH and REAL
-       on these, but should still work this way.  LT */
     if (TYPEOF(sy) != REALSXP || TYPEOF(sZ) != REALSXP ||
 	TYPEOF(sa) != REALSXP || TYPEOF(sP) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
 	error(_("invalid argument type"));
+
+    SEXP ssa, ssP, ssPn, res, states = R_NilValue, sN;
+    int n = LENGTH(sy), p = LENGTH(sa);
+    double *y = REAL(sy), *Z = REAL(sZ), *a, *P,
+	*T = REAL(sT), *V = REAL(sV), h = asReal(sh), *Pnew;
+    double *at, *rt, *Pt, *gains, *resids, *Mt, *L, gn, *Nt;
+    Rboolean var = TRUE;
 
     PROTECT(ssa = duplicate(sa)); a = REAL(ssa);
     PROTECT(ssP = duplicate(sP)); P = REAL(ssP);
     PROTECT(ssPn = duplicate(sPn)); Pnew = REAL(ssPn);
 
     PROTECT(res = allocVector(VECSXP, 2));
+    SEXP nm = PROTECT(allocVector(STRSXP, 2));
+    SET_STRING_ELT(nm, 0, mkChar("smooth"));
+    SET_STRING_ELT(nm, 1, mkChar("var"));
+    setAttrib(res, R_NamesSymbol, nm);
+    UNPROTECT(1);
     SET_VECTOR_ELT(res, 0, states = allocMatrix(REALSXP, n, p));
     at = REAL(states);
     SET_VECTOR_ELT(res, 1, sN = allocVector(REALSXP, n*p*p));
     Nt = REAL(sN);
 
+    double *anew, *mm, *M;
     anew = (double *) R_alloc(p, sizeof(double));
     M = (double *) R_alloc(p, sizeof(double));
     mm = (double *) R_alloc(p * p, sizeof(double));
@@ -202,56 +224,56 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     Mt = (double *) R_alloc(n * p, sizeof(double));
     L = (double *) R_alloc(p * p, sizeof(double));
 
-    for (l = 0; l < n; l++) {
-	for (i = 0; i < p; i++) {
-	    tmp = 0.0;
-	    for (k = 0; k < p; k++)
+    for (int l = 0; l < n; l++) {
+	for (int i = 0; i < p; i++) {
+	    double tmp = 0.0;
+	    for (int k = 0; k < p; k++)
 		tmp += T[i + p * k] * a[k];
 	    anew[i] = tmp;
 	}
 	if (l > asInteger(sUP)) {
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = 0.0;
-		    for (k = 0; k < p; k++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = 0.0;
+		    for (int k = 0; k < p; k++)
 			tmp += T[i + p * k] * P[k + p * j];
 		    mm[i + p * j] = tmp;
 		}
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = V[i + p * j];
-		    for (k = 0; k < p; k++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = V[i + p * j];
+		    for (int k = 0; k < p; k++)
 			tmp += mm[i + p * k] * T[j + p * k];
 		    Pnew[i + p * j] = tmp;
 		}
 	}
-	for (i = 0; i < p; i++) at[l + n*i] = anew[i];
-	for (i = 0; i < p*p; i++) Pt[l + n*i] = Pnew[i];
+	for (int i = 0; i < p; i++) at[l + n*i] = anew[i];
+	for (int i = 0; i < p*p; i++) Pt[l + n*i] = Pnew[i];
 	if (!ISNAN(y[l])) {
-	    resid0 = y[l];
-	    for (i = 0; i < p; i++)
+	    double resid0 = y[l];
+	    for (int i = 0; i < p; i++)
 		resid0 -= Z[i] * anew[i];
-	    gain = h;
-	    for (i = 0; i < p; i++) {
-		tmp = 0.0;
-		for (j = 0; j < p; j++)
+	    double gain = h;
+	    for (int i = 0; i < p; i++) {
+		double tmp = 0.0;
+		for (int j = 0; j < p; j++)
 		    tmp += Pnew[i + j * p] * Z[j];
 		Mt[l + n*i] = M[i] = tmp;
 		gain += Z[i] * M[i];
 	    }
 	    gains[l] = gain;
 	    resids[l] = resid0;
-	    for (i = 0; i < p; i++)
+	    for (int i = 0; i < p; i++)
 		a[i] = anew[i] + M[i] * resid0 / gain;
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++)
 		    P[i + j * p] = Pnew[i + j * p] - M[i] * M[j] / gain;
 	} else {
-	    for (i = 0; i < p; i++) {
+	    for (int i = 0; i < p; i++) {
 		a[i] = anew[i];
 		Mt[l + n * i] = 0.0;
 	    }
-	    for (i = 0; i < p * p; i++)
+	    for (int i = 0; i < p * p; i++)
 		P[i] = Pnew[i];
 	    gains[l] = NA_REAL;
 	    resids[l] = NA_REAL;
@@ -260,78 +282,78 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 
     /* rt stores r_{t-1} */
     rt = (double *) R_alloc(n * p, sizeof(double));
-    for (l = n - 1; l >= 0; l--) {
+    for (int l = n - 1; l >= 0; l--) {
 	if (!ISNAN(gains[l])) {
 	    gn = 1/gains[l];
-	    for (i = 0; i < p; i++)
+	    for (int i = 0; i < p; i++)
 		rt[l + n * i] = Z[i] * resids[l] * gn;
 	} else {
-	    for (i = 0; i < p; i++) rt[l + n * i] = 0.0;
+	    for (int i = 0; i < p; i++) rt[l + n * i] = 0.0;
 	    gn = 0.0;
 	}
 
 	if (var) {
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++)
 		    Nt[l + n*i + n*p*j] = Z[i] * Z[j] * gn;
 	}
 
 	if (l < n - 1) {
 	    /* compute r_{t-1} */
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++)
-		    mm[i + p * j] = ((i==j)?1:0) - Mt[l + n * i] * Z[j] * gn;
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = 0.0;
-		    for (k = 0; k < p; k++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++)
+		    mm[i + p * j] = ((i==j) ? 1:0) - Mt[l + n * i] * Z[j] * gn;
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = 0.0;
+		    for (int k = 0; k < p; k++)
 			tmp += T[i + p * k] * mm[k + p * j];
 		    L[i + p * j] = tmp;
 		}
-	    for (i = 0; i < p; i++) {
-		tmp = 0.0;
-		for (j = 0; j < p; j++)
+	    for (int i = 0; i < p; i++) {
+		double tmp = 0.0;
+		for (int j = 0; j < p; j++)
 		    tmp += L[j + p * i] * rt[l + 1 + n * j];
 		rt[l + n * i] += tmp;
 	    }
 	    if(var) { /* compute N_{t-1} */
-		for (i = 0; i < p; i++)
-		    for (j = 0; j < p; j++) {
-			tmp = 0.0;
-			for (k = 0; k < p; k++)
+		for (int i = 0; i < p; i++)
+		    for (int j = 0; j < p; j++) {
+			double tmp = 0.0;
+			for (int k = 0; k < p; k++)
 			    tmp += L[k + p * i] * Nt[l + 1 + n*k + n*p*j];
 			mm[i + p * j] = tmp;
 		    }
-		for (i = 0; i < p; i++)
-		    for (j = 0; j < p; j++) {
-			tmp = 0.0;
-			for (k = 0; k < p; k++)
+		for (int i = 0; i < p; i++)
+		    for (int j = 0; j < p; j++) {
+			double tmp = 0.0;
+			for (int k = 0; k < p; k++)
 			    tmp += mm[i + p * k] * L[k + p * j];
 			Nt[l + n*i + n*p*j] += tmp;
 		    }
 	    }
 	}
 
-	for (i = 0; i < p; i++) {
-	    tmp = 0.0;
-	    for (j = 0; j < p; j++)
+	for (int i = 0; i < p; i++) {
+	    double tmp = 0.0;
+	    for (int j = 0; j < p; j++)
 		tmp += Pt[l + n*i + n*p*j] * rt[l + n * j];
 	    at[l + n*i] += tmp;
 	}
     }
     if (var)
-	for (l = 0; l < n; l++) {
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = 0.0;
-		    for (k = 0; k < p; k++)
+	for (int l = 0; l < n; l++) {
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = 0.0;
+		    for (int k = 0; k < p; k++)
 			tmp += Pt[l + n*i + n*p*k] * Nt[l + n*k + n*p*j];
 		    mm[i + p * j] = tmp;
 		}
-	    for (i = 0; i < p; i++)
-		for (j = 0; j < p; j++) {
-		    tmp = Pt[l + n*i + n*p*j];
-		    for (k = 0; k < p; k++)
+	    for (int i = 0; i < p; i++)
+		for (int j = 0; j < p; j++) {
+		    double tmp = Pt[l + n*i + n*p*j];
+		    for (int k = 0; k < p; k++)
 			tmp -= mm[i + p * k] * Pt[l + n*k + n*p*j];
 		    Nt[l + n*i + n*p*j] = tmp;
 		}
@@ -340,72 +362,76 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     return res;
 }
 
-SEXP
-KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
-	   SEXP sh, SEXP fast)
-{
-    SEXP res, forecasts, se;
-    int  n = asInteger(nahead), p = LENGTH(sa0);
-    double *Z = REAL(sZ), *a = REAL(sa0), *P = REAL(sP0), *T = REAL(sT),
-	*V = REAL(sV), h = asReal(sh);
-    int i, j, k, l;
-    double fc, tmp, *mm, *anew, *Pnew;
 
-    /* It would be better to check types before using LENGTH and REAL
-       on these, but should still work this way.  LT */
+SEXP
+KalmanFore(SEXP nahead, SEXP mod, SEXP update)
+{
+    mod = PROTECT(duplicate(mod));
+    SEXP sZ = getListElement(mod, "Z"), sa = getListElement(mod, "a"), 
+	sP = getListElement(mod, "P"), sT = getListElement(mod, "T"), 
+	sV = getListElement(mod, "V"), sh = getListElement(mod, "h");
+
     if (TYPEOF(sZ) != REALSXP ||
-	TYPEOF(sa0) != REALSXP || TYPEOF(sP0) != REALSXP ||
+	TYPEOF(sa) != REALSXP || TYPEOF(sP) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
 	error(_("invalid argument type"));
+
+    int  n = asInteger(nahead), p = LENGTH(sa);
+    double *Z = REAL(sZ), *a = REAL(sa), *P = REAL(sP), *T = REAL(sT),
+	*V = REAL(sV), h = asReal(sh);
+    double *mm, *anew, *Pnew;
 
     anew = (double *) R_alloc(p, sizeof(double));
     Pnew = (double *) R_alloc(p * p, sizeof(double));
     mm = (double *) R_alloc(p * p, sizeof(double));
+    SEXP res, forecasts, se;
     PROTECT(res = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(res, 0, forecasts = allocVector(REALSXP, n));
     SET_VECTOR_ELT(res, 1, se = allocVector(REALSXP, n));
-    if (!LOGICAL(fast)[0]){
-	PROTECT(sa0=duplicate(sa0));
-	a=REAL(sa0);
-	PROTECT(sP0=duplicate(sP0));
-	P=REAL(sP0);
+    {
+	SEXP nm = PROTECT(allocVector(STRSXP, 2));
+	SET_STRING_ELT(nm, 0, mkChar("pred"));
+	SET_STRING_ELT(nm, 1, mkChar("var"));
+	setAttrib(res, R_NamesSymbol, nm);
+	UNPROTECT(1);
     }
-    for (l = 0; l < n; l++) {
-	fc = 0.0;
-	for (i = 0; i < p; i++) {
-	    tmp = 0.0;
-	    for (k = 0; k < p; k++)
+    for (int l = 0; l < n; l++) {
+	double fc = 0.0;
+	for (int i = 0; i < p; i++) {
+	    double tmp = 0.0;
+	    for (int k = 0; k < p; k++)
 		tmp += T[i + p * k] * a[k];
 	    anew[i] = tmp;
 	    fc += tmp * Z[i];
 	}
-	for (i = 0; i < p; i++)
+	for (int i = 0; i < p; i++)
 	    a[i] = anew[i];
 	REAL(forecasts)[l] = fc;
 
-	for (i = 0; i < p; i++)
-	    for (j = 0; j < p; j++) {
-		tmp = 0.0;
-		for (k = 0; k < p; k++)
+	for (int i = 0; i < p; i++)
+	    for (int j = 0; j < p; j++) {
+		double tmp = 0.0;
+		for (int k = 0; k < p; k++)
 		    tmp += T[i + p * k] * P[k + p * j];
 		mm[i + p * j] = tmp;
 	    }
-	for (i = 0; i < p; i++)
-	    for (j = 0; j < p; j++) {
-		tmp = V[i + p * j];
-		for (k = 0; k < p; k++)
+	for (int i = 0; i < p; i++)
+	    for (int j = 0; j < p; j++) {
+		double tmp = V[i + p * j];
+		for (int k = 0; k < p; k++)
 		    tmp += mm[i + p * k] * T[j + p * k];
 		Pnew[i + p * j] = tmp;
 	    }
-	tmp = h;
-	for (i = 0; i < p; i++)
-	    for (j = 0; j < p; j++) {
+	double tmp = h;
+	for (int i = 0; i < p; i++)
+	    for (int j = 0; j < p; j++) {
 		P[i + j * p] = Pnew[i + j * p];
 		tmp += Z[i] * Z[j] * P[i + j * p];
 	    }
 	REAL(se)[l] = tmp;
     }
-    UNPROTECT(1);
+    if(asLogical(update)) setAttrib(res, install("mod"), mod);
+    UNPROTECT(2);
     return res;
 }
 
@@ -433,12 +459,12 @@ static void partrans(int p, double *raw, double *new)
 SEXP ARIMA_undoPars(SEXP sin, SEXP sarma)
 {
     int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2],
-	i, v, n = LENGTH(sin);
+	v, n = LENGTH(sin);
     double *params, *in = REAL(sin);
     SEXP res = allocVector(REALSXP, n);
 
     params = REAL(res);
-    for (i = 0; i < n; i++) params[i] = in[i];
+    for (int i = 0; i < n; i++) params[i] = in[i];
     if (mp > 0) partrans(mp, in, params);
     v = mp + mq;
     if (msp > 0) partrans(msp, in + v, params + v);
@@ -493,7 +519,9 @@ SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans)
     return res;
 }
 
-
+#if !defined(atanh) && defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
+extern double atanh(double x);
+#endif
 static void invpartrans(int p, double *phi, double *new)
 {
     int j, k;
@@ -531,31 +559,31 @@ SEXP ARIMA_Invtrans(SEXP in, SEXP sarma)
 SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma)
 {
     int *arma = INTEGER(sarma), mp = arma[0], mq = arma[1], msp = arma[2],
-	i, j, v, n = LENGTH(in);
+	n = LENGTH(in);
     SEXP y = allocMatrix(REALSXP, n, n);
     double *raw = REAL(in), *A = REAL(y), w1[100], w2[100], w3[100];
 
-    for(i = 0; i < n; i++)
-	for(j = 0; j < n; j++)
+    for (int i = 0; i < n; i++)
+	for (int j = 0; j < n; j++)
 	    A[i + j*n] = (i == j);
     if(mp > 0) {
-	for(i = 0; i < mp; i++) w1[i] = raw[i];
+	for (int i = 0; i < mp; i++) w1[i] = raw[i];
 	partrans(mp, w1, w2);
-	for(i = 0; i < mp; i++) {
+	for (int i = 0; i < mp; i++) {
 	    w1[i] += eps;
 	    partrans(mp, w1, w3);
-	    for(j = 0; j < mp; j++) A[i + j*n] = (w3[j] - w2[j])/eps;
+	    for (int j = 0; j < mp; j++) A[i + j*n] = (w3[j] - w2[j])/eps;
 	    w1[i] -= eps;
 	}
     }
     if(msp > 0) {
-	v = mp + mq;
-	for(i = 0; i < msp; i++) w1[i] = raw[i + v];
+	int v = mp + mq;
+	for (int i = 0; i < msp; i++) w1[i] = raw[i + v];
 	partrans(msp, w1, w2);
-	for(i = 0; i < msp; i++) {
+	for(int i = 0; i < msp; i++) {
 	    w1[i] += eps;
 	    partrans(msp, w1, w3);
-	    for(j = 0; j < msp; j++)
+	    for(int j = 0; j < msp; j++)
 		A[i + v + (j+v)*n] = (w3[j] - w2[j])/eps;
 	    w1[i] -= eps;
 	}
@@ -565,17 +593,27 @@ SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma)
 
 
 SEXP
-ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
-	   SEXP sa, SEXP sP, SEXP sPn, SEXP sUP, SEXP giveResid)
+ARIMA_Like(SEXP sy, SEXP mod, SEXP sUP, SEXP giveResid)
 {
+    SEXP sPhi = getListElement(mod, "phi"), 
+	sTheta = getListElement(mod, "theta"), 
+	sDelta = getListElement(mod, "Delta"),
+	sa = getListElement(mod, "a"),
+	sP = getListElement(mod, "P"),
+	sPn = getListElement(mod, "Pn");
+
+    if (TYPEOF(sPhi) != REALSXP || TYPEOF(sTheta) != REALSXP ||
+	TYPEOF(sDelta) != REALSXP || TYPEOF(sa) != REALSXP ||
+	TYPEOF(sP) != REALSXP || TYPEOF(sPn) != REALSXP)
+	error(_("invalid argument type"));
+
     SEXP res, nres, sResid = R_NilValue;
-    int  n = LENGTH(sy), rd = LENGTH(sa), p = LENGTH(sPhi),
+    int n = LENGTH(sy), rd = LENGTH(sa), p = LENGTH(sPhi),
 	q = LENGTH(sTheta), d = LENGTH(sDelta), r = rd - d;
     double *y = REAL(sy), *a = REAL(sa), *P = REAL(sP), *Pnew = REAL(sPn);
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *delta = REAL(sDelta);
-    double sumlog = 0.0, ssq = 0, resid, gain, tmp, vi, *anew, *mm = NULL,
-	*M;
-    int i, j, k, l, nu = 0;
+    double sumlog = 0.0, ssq = 0, *anew, *mm = NULL, *M;
+    int nu = 0;
     Rboolean useResid = asLogical(giveResid);
     double *rsResid = NULL /* -Wall */;
 
@@ -588,25 +626,25 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 	rsResid = REAL(sResid);
     }
 
-    for (l = 0; l < n; l++) {
-	for (i = 0; i < r; i++) {
-	    tmp = (i < r - 1) ? a[i + 1] : 0.0;
+    for (int l = 0; l < n; l++) {
+	for (int i = 0; i < r; i++) {
+	    double tmp = (i < r - 1) ? a[i + 1] : 0.0;
 	    if (i < p) tmp += phi[i] * a[0];
 	    anew[i] = tmp;
 	}
 	if (d > 0) {
-	    for (i = r + 1; i < rd; i++) anew[i] = a[i - 1];
-	    tmp = a[0];
-	    for (i = 0; i < d; i++) tmp += delta[i] * a[r + i];
+	    for (int i = r + 1; i < rd; i++) anew[i] = a[i - 1];
+	    double tmp = a[0];
+	    for (int i = 0; i < d; i++) tmp += delta[i] * a[r + i];
 	    anew[r] = tmp;
 	}
 	if (l > asInteger(sUP)) {
 	    if (d == 0) {
-		for (i = 0; i < r; i++) {
-		    vi = 0.0;
+		for (int i = 0; i < r; i++) {
+		    double vi = 0.0;
 		    if (i == 0) vi = 1.0; else if (i - 1 < q) vi = theta[i - 1];
-		    for (j = 0; j < r; j++) {
-			tmp = 0.0;
+		    for (int j = 0; j < r; j++) {
+			double tmp = 0.0;
 			if (j == 0) tmp = vi; else if (j - 1 < q) tmp = vi * theta[j - 1];
 			if (i < p && j < p) tmp += phi[i] * phi[j] * P[0];
 			if (i < r - 1 && j < r - 1) tmp += P[i + 1 + r * (j + 1)];
@@ -617,76 +655,76 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 		}
 	    } else {
 		/* mm = TP */
-		for (i = 0; i < r; i++)
-		    for (j = 0; j < rd; j++) {
-			tmp = 0.0;
+		for (int i = 0; i < r; i++)
+		    for (int j = 0; j < rd; j++) {
+			double tmp = 0.0;
 			if (i < p) tmp += phi[i] * P[rd * j];
 			if (i < r - 1) tmp += P[i + 1 + rd * j];
 			mm[i + rd * j] = tmp;
 		    }
-		for (j = 0; j < rd; j++) {
-		    tmp = P[rd * j];
-		    for (k = 0; k < d; k++)
+		for (int j = 0; j < rd; j++) {
+		    double tmp = P[rd * j];
+		    for (int k = 0; k < d; k++)
 			tmp += delta[k] * P[r + k + rd * j];
 		    mm[r + rd * j] = tmp;
 		}
-		for (i = 1; i < d; i++)
-		    for (j = 0; j < rd; j++)
+		for (int i = 1; i < d; i++)
+		    for (int j = 0; j < rd; j++)
 			mm[r + i + rd * j] = P[r + i - 1 + rd * j];
 
 		/* Pnew = mmT' */
-		for (i = 0; i < r; i++)
-		    for (j = 0; j < rd; j++) {
-			tmp = 0.0;
+		for (int i = 0; i < r; i++)
+		    for (int j = 0; j < rd; j++) {
+			double tmp = 0.0;
 			if (i < p) tmp += phi[i] * mm[j];
 			if (i < r - 1) tmp += mm[rd * (i + 1) + j];
 			Pnew[j + rd * i] = tmp;
 		    }
-		for (j = 0; j < rd; j++) {
-		    tmp = mm[j];
-		    for (k = 0; k < d; k++)
+		for (int j = 0; j < rd; j++) {
+		    double tmp = mm[j];
+		    for (int k = 0; k < d; k++)
 			tmp += delta[k] * mm[rd * (r + k) + j];
 		    Pnew[rd * r + j] = tmp;
 		}
-		for (i = 1; i < d; i++)
-		    for (j = 0; j < rd; j++)
+		for (int i = 1; i < d; i++)
+		    for (int j = 0; j < rd; j++)
 			Pnew[rd * (r + i) + j] = mm[rd * (r + i - 1) + j];
 		/* Pnew <- Pnew + (1 theta) %o% (1 theta) */
-		for (i = 0; i <= q; i++) {
-		    vi = (i == 0) ? 1. : theta[i - 1];
-		    for (j = 0; j <= q; j++)
+		for (int i = 0; i <= q; i++) {
+		    double vi = (i == 0) ? 1. : theta[i - 1];
+		    for (int j = 0; j <= q; j++)
 			Pnew[i + rd * j] += vi * ((j == 0) ? 1. : theta[j - 1]);
 		}
 	    }
 	}
 	if (!ISNAN(y[l])) {
-	    resid = y[l] - anew[0];
-	    for (i = 0; i < d; i++)
+	    double resid = y[l] - anew[0];
+	    for (int i = 0; i < d; i++)
 		resid -= delta[i] * anew[r + i];
 
-	    for (i = 0; i < rd; i++) {
-		tmp = Pnew[i];
-		for (j = 0; j < d; j++)
+	    for (int i = 0; i < rd; i++) {
+		double tmp = Pnew[i];
+		for (int j = 0; j < d; j++)
 		    tmp += Pnew[i + (r + j) * rd] * delta[j];
 		M[i] = tmp;
 	    }
 
-	    gain = M[0];
-	    for (j = 0; j < d; j++) gain += delta[j] * M[r + j];
+	    double gain = M[0];
+	    for (int j = 0; j < d; j++) gain += delta[j] * M[r + j];
 	    if(gain < 1e4) {
 		nu++;
 		ssq += resid * resid / gain;
 		sumlog += log(gain);
 	    }
 	    if (useResid) rsResid[l] = resid / sqrt(gain);
-	    for (i = 0; i < rd; i++)
+	    for (int i = 0; i < rd; i++)
 		a[i] = anew[i] + M[i] * resid / gain;
-	    for (i = 0; i < rd; i++)
-		for (j = 0; j < rd; j++)
+	    for (int i = 0; i < rd; i++)
+		for (int j = 0; j < rd; j++)
 		    P[i + j * rd] = Pnew[i + j * rd] - M[i] * M[j] / gain;
 	} else {
-	    for (i = 0; i < rd; i++) a[i] = anew[i];
-	    for (i = 0; i < rd * rd; i++) P[i] = Pnew[i];
+	    for (int i = 0; i < rd; i++) a[i] = anew[i];
+	    for (int i = 0; i < rd * rd; i++) P[i] = Pnew[i];
 	    if (useResid) rsResid[l] = NA_REAL;
 	}
     }
@@ -720,25 +758,25 @@ ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *w, *resid;
     int n = LENGTH(sy), *arma = INTEGER(sarma), p = LENGTH(sPhi),
 	q = LENGTH(sTheta), ncond = asInteger(sncond);
-    int l, i, j, ns, nu = 0;
+    int ns, nu = 0;
     Rboolean useResid = asLogical(giveResid);
 
     w = (double *) R_alloc(n, sizeof(double));
-    for (l = 0; l < n; l++) w[l] = y[l];
-    for (i = 0; i < arma[5]; i++)
-	for (l = n - 1; l > 0; l--) w[l] -= w[l - 1];
+    for (int l = 0; l < n; l++) w[l] = y[l];
+    for (int i = 0; i < arma[5]; i++)
+	for (int l = n - 1; l > 0; l--) w[l] -= w[l - 1];
     ns = arma[4];
-    for (i = 0; i < arma[6]; i++)
-	for (l = n - 1; l >= ns; l--) w[l] -= w[l - ns];
+    for (int i = 0; i < arma[6]; i++)
+	for (int l = n - 1; l >= ns; l--) w[l] -= w[l - ns];
 
     PROTECT(sResid = allocVector(REALSXP, n));
     resid = REAL(sResid);
-    if (useResid) for (l = 0; l < ncond; l++) resid[l] = 0;
+    if (useResid) for (int l = 0; l < ncond; l++) resid[l] = 0;
 
-    for (l = ncond; l < n; l++) {
+    for (int l = ncond; l < n; l++) {
 	tmp = w[l];
-	for (j = 0; j < p; j++) tmp -= phi[j] * w[l - j - 1];
-	for (j = 0; j < min(l - ncond, q); j++)
+	for (int j = 0; j < p; j++) tmp -= phi[j] * w[l - j - 1];
+	for (int j = 0; j < min(l - ncond, q); j++)
 	    tmp -= theta[j] * resid[l - j - 1];
 	resid[l] = tmp;
 	if (!ISNAN(tmp)) {
@@ -760,7 +798,7 @@ ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
 
 SEXP TSconv(SEXP a, SEXP b)
 {
-    int i, j, na, nb, nab;
+    int na, nb, nab;
     SEXP ab;
     double *ra, *rb, *rab;
 
@@ -771,9 +809,9 @@ SEXP TSconv(SEXP a, SEXP b)
     nab = na + nb - 1;
     PROTECT(ab = allocVector(REALSXP, nab));
     ra = REAL(a); rb = REAL(b); rab = REAL(ab);
-    for (i = 0; i < nab; i++) rab[i] = 0.0;
-    for (i = 0; i < na; i++)
-	for (j = 0; j < nb; j++)
+    for (int i = 0; i < nab; i++) rab[i] = 0.0;
+    for (int i = 0; i < na; i++)
+	for (int j = 0; j < nb; j++)
 	    rab[i + j] += ra[i] * rb[j];
     UNPROTECT(3);
     return (ab);
@@ -816,43 +854,184 @@ inclu2(size_t np, double *xnext, double *xrow, double ynext,
     }
 }
 
+#ifdef DEBUG_Q0bis
+# include <R_ext/Print.h>
+  double chk_V(double v[], char* nm, int jj, int len) { 
+    // len = length(<vector>)  <==> index must be in  {0, len-1}
+    if(jj < 0 || jj >= len)
+	REprintf(" %s[%2d]\n", nm, jj); 
+    return(v[jj]); 
+  }
+#endif
+
+/*
+  Matwey V. Kornilov's implementation of algorithm by
+  Dr. Raphael Rossignol
+  See https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14682 for details.
+*/
+SEXP getQ0bis(SEXP sPhi, SEXP sTheta, SEXP sTol)
+{
+    SEXP res;
+    int p = LENGTH(sPhi), q = LENGTH(sTheta);
+    double *phi = REAL(sPhi), *theta = REAL(sTheta); // tol = REAL(sTol)[0];
+
+    int i,j, r = max(p, q + 1);
+
+    /* Final result is block product 
+     *   Q0 = A1 SX A1^T + A1 SXZ A2^T + (A1 SXZ A2^T)^T + A2 A2^T ,
+     * where A1 [i,j] = phi[i+j],
+     *       A2 [i,j] = ttheta[i+j],  and SX, SXZ are defined below */
+    PROTECT(res = allocMatrix(REALSXP, r, r));
+    double *P = REAL(res);
+
+    /* Clean P */
+    Memzero(P, r*r);
+
+#ifdef DEBUG_Q0bis
+#define _ttheta(j) chk_V(ttheta, "ttheta", j, q+1)// was  r
+#define _tphi(j)   chk_V(tphi,   "tphi",   j, p+1)
+#define _rrz(j)    chk_V(rrz,    "rrz",    j, q)
+#else
+#define _ttheta(j) ttheta[j]
+#define _tphi(j) tphi[j]
+#define _rrz(j)  rrz [j]
+#endif
+
+    double *ttheta = (double *) R_alloc(q + 1, sizeof(double));
+    /* Init ttheta = c(1, theta) */
+    ttheta[0] = 1.;
+    for (i = 1; i < q + 1; ++i) ttheta[i] = theta[i - 1];
+
+    if( p > 0 ) {
+	int r2 = max(p + q, p + 1);
+	SEXP sgam = PROTECT(allocMatrix(REALSXP, r2, r2)),
+	    sg = PROTECT(allocVector(REALSXP, r2));
+	double *gam = REAL(sgam);
+	double *g = REAL(sg);
+	double *tphi = (double *) R_alloc(p + 1, sizeof(double));
+	/* Init tphi = c(1, -phi) */
+	tphi[0] = 1.;
+	for (i = 1; i < p + 1; ++i) tphi[i] = -phi[i - 1];
+
+    /* Compute the autocovariance function of U, the AR part of X */
+
+    /* Gam := C1 + C2 ; initialize */
+	Memzero(gam, r2*r2);
+
+    /* C1[E] */
+	for (j = 0; j < r2; ++j)
+	    for (i = j; i < r2 && i - j < p + 1; ++i)
+		gam[j*r2 + i] += _tphi(i-j);
+
+    /* C2[E] */
+	for (i = 0; i < r2; ++i)
+	    for (j = 1; j < r2 && i + j < p + 1; ++j)
+		gam[j*r2 + i] += _tphi(i+j);
+
+    /* Initialize g = (1 0 0 .... 0) */
+	g[0] = 1.;
+	for (i = 1; i < r2; ++i)
+	    g[i] = 0.;
+
+    /* rU = solve(Gam, g)  -> solve.default() -> .Internal(La_solve, .,)
+     * --> fiddling with R-objects -> C and then F77_CALL(.) of dgesv, dlange, dgecon
+     * FIXME: call these directly here, possibly even use 'info' instead of error(.)
+     * e.g., in case of exact singularity.
+     */
+	SEXP callS = PROTECT(lang4(install("solve.default"), sgam, sg, sTol)),
+	    su = PROTECT(eval(callS, R_BaseEnv));
+	double *u = REAL(su);
+    /* SX = A SU A^T */
+    /* A[i,j]  = ttheta[j-i] */
+    /* SU[i,j] = u[abs(i-j)] */
+    /* Q0 += ( A1 SX A1^T == A1 A SU A^T A1^T) */
+	// (relying on good compiler optimization here:)
+	for (i = 0; i < r; ++i)
+	    for (j = i; j < r; ++j)
+		for (int k = 0; i + k < p; ++k)
+		    for (int L = k; L - k < q + 1; ++L)
+			for (int m = 0; j + m < p; ++m)
+			    for (int n = m; n - m < q + 1; ++n)
+				P[r*i + j] += phi[i + k] * phi[j + m] *
+				    _ttheta(L - k) * _ttheta(n - m) * u[abs(L - n)];
+	UNPROTECT(4);
+    /* Compute correlation matrix between X and Z */
+    /* forwardsolve(C1, g) */
+    /* C[i,j] = tphi[i-j] */
+    /* g[i] = _ttheta(i) */
+	double *rrz = (double *) R_alloc(q, sizeof(double));
+	if(q > 0) {
+	    for (i = 0; i < q; ++i) {
+		rrz[i] = _ttheta(i);
+		for (j = max(0, i - p); j < i; ++j)
+		    rrz[i] -= _rrz(j) * _tphi(i-j);
+	    }
+	}
+
+    /* Q0 += A1 SXZ A2^T + (A1 SXZ A2^T)^T */
+    /* SXZ[i,j] = rrz[j-i-1], j > 0 */
+	for (i = 0; i < r; ++i)
+	    for (j = i; j < r; ++j) {
+		int k, L;
+		for (k = 0; i + k < p; ++k)
+		    for (L = k+1; j + L < q + 1; ++L)
+			P[r*i + j] += phi[i + k] * _ttheta(j + L) * _rrz(L - k - 1);
+		for (k = 0; j + k < p; ++k)
+		    for (L = k+1; i + L < q + 1; ++L)
+			P[r*i + j] += phi[j + k] * _ttheta(i + L) * _rrz(L - k - 1);
+	    }
+    } // end if(p > 0)
+
+    /* Q0 += A2 A2^T */
+    for (i = 0; i < r; ++i)
+	for (j = i; j < r; ++j)
+	    for (int k = 0; j + k < q + 1; ++k)
+		 P[r*i + j] += _ttheta(i + k) * _ttheta(j + k);
+
+    /* Symmetrize result */
+    for (i = 0; i < r; ++i)
+	for (j = i+1; j < r; ++j)
+	    P[r*j + i] = P[r*i + j];
+
+    UNPROTECT(1);
+    return res;
+}
+
 SEXP getQ0(SEXP sPhi, SEXP sTheta)
 {
     SEXP res;
     int  p = LENGTH(sPhi), q = LENGTH(sTheta);
-    double *V, *phi = REAL(sPhi), *theta = REAL(sTheta);
+    double *phi = REAL(sPhi), *theta = REAL(sTheta);
 
     /* thetab[np], xnext[np], xrow[np].  rbar[rbar] */
-    double *P, *xnext, *xrow, *rbar, *thetab;
     /* NB: nrbar could overflow */
     int r = max(p, q + 1);
     size_t np = r * (r + 1) / 2, nrbar = np * (np - 1) / 2, npr, npr1;
-    size_t indi, indj, indn;
-    double phii, phij, ynext, bi, vi, vj;
-    size_t   i, j, ithisr, ind, ind1, ind2, im, jm;
+    size_t indi, indj, indn, i, j, ithisr, ind, ind1, ind2, im, jm;
 
 
     /* This is the limit using an int index.  We could use
-       size_t and get more on a 64-bit system, 
+       size_t and get more on a 64-bit system,
        but there seems no practical need. */
     if(r > 350) error(_("maximum supported lag is 350"));
-    thetab = (double *) R_alloc(np, sizeof(double));
+    double *xnext, *xrow, *rbar, *thetab, *V;
     xnext = (double *) R_alloc(np, sizeof(double));
     xrow = (double *) R_alloc(np, sizeof(double));
     rbar = (double *) R_alloc(nrbar, sizeof(double));
+    thetab = (double *) R_alloc(np, sizeof(double));
     V = (double *) R_alloc(np, sizeof(double));
     for (ind = 0, j = 0; j < r; j++) {
-	vj = 0.0;
+	double vj = 0.0;
 	if (j == 0) vj = 1.0; else if (j - 1 < q) vj = theta[j - 1];
 	for (i = j; i < r; i++) {
-	    vi = 0.0;
+	    double vi = 0.0;
 	    if (i == 0) vi = 1.0; else if (i - 1 < q) vi = theta[i - 1];
 	    V[ind++] = vi * vj;
 	}
     }
 
     PROTECT(res = allocMatrix(REALSXP, r, r));
-    P = REAL(res);
+    double *P = REAL(res);
 
     if (r == 1) {
 	P[0] = 1.0 / (1.0 - phi[0] * phi[0]);
@@ -878,12 +1057,12 @@ SEXP getQ0(SEXP sPhi, SEXP sTheta)
 	indj = npr;
 	ind2 = npr - 1;
 	for (j = 0; j < r; j++) {
-	    phij = (j < p) ? phi[j] : 0.0;
+	    double phij = (j < p) ? phi[j] : 0.0;
 	    xnext[indj++] = 0.0;
 	    indi = npr1 + j;
 	    for (i = j; i < r; i++) {
-		ynext = V[ind++];
-		phii = (i < p) ? phi[i] : 0.0;
+		double ynext = V[ind++];
+		double phii = (i < p) ? phi[i] : 0.0;
 		if (j != r - 1) {
 		    xnext[indj] = -phii;
 		    if (i != r - 1) {
@@ -906,7 +1085,7 @@ SEXP getQ0(SEXP sPhi, SEXP sTheta)
 	ithisr = nrbar - 1;
 	im = np - 1;
 	for (i = 0; i < np; i++) {
-	    bi = thetab[im];
+	    double bi = thetab[im];
 	    for (jm = np - 1, j = 0; j < i; j++)
 		bi -= rbar[ithisr--] * P[jm--];
 	    P[im--] = bi;

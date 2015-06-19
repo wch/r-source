@@ -101,9 +101,9 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 on systems that have a suitable@footnote{e.g.@: @acronym{GNU}
 @command{tar} version 1.15 or later, or that from the @samp{libarchive}
-(as used on OS 10.6 and later) or `Heirloom Toolchest' distributions.}
-@command{tar} installed.  On other systems you need to have the
-@command{gzip} program installed, when you can use
+(as used on OS X versions 10.6 and later) or `Heirloom Toolchest'
+distributions.}  @command{tar} installed.  On other systems you need to
+have the @command{gzip} program installed, when you can use
 
 @example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar -xf -
@@ -550,8 +550,8 @@ make mobi
 
 @noindent
 This requires @command{ebook-convert} from @command{Calibre}
-(@uref{(http://calibre-ebook.com/download}, or from most Linux
-distributions).  If necssary the path to @command{ebook-convert} can be
+(@uref{http://calibre-ebook.com/download}), or from most Linux
+distributions).  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
 (which contains a commented value suitable for OS X).
 
@@ -857,7 +857,7 @@ version of @R{} installed (since this tells the package installation
 code the architecture needed).
 
 At present there is a potential problem with packages using Java, as
-the post-install for a @cputype{i386} RPM on @cputype{x86_64} Linux
+the post-install for a @cputype{i686} RPM on @cputype{x86_64} Linux
 reconfigures Java and will find the @cputype{x86_64} Java.  If you know
 where a 32-bit Java is installed you may be able to run (as root)
 
@@ -890,6 +890,17 @@ and recommended packages are lazyloaded but not byte-compiled.
 (Alternatively the (make or environment) variable
 @env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
 of the build.)
+
+Option @option{--with-internal-tzcode} makes use of @R{}'s own code and
+copy of the Olson database for managing timezones.  This will be
+preferred where there are issues with the system implementation, usually
+involving times after 2037 or before 1916.  An alternative time-zone
+directory@footnote{How to prepare such a directory is described in file
+@file{src/extra/tzone/Notes} in the @R{} sources.} can be used, pointed
+to by environment variable @env{TZDIR}: this should contain files such
+as @file{Europe/London}.  On all tested OSes the system timezone was
+deduced correctly, but if necessary it can be set as the value of
+environment variable @env{TZ}.
 
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
@@ -1645,8 +1656,7 @@ pkgutil --files org.r-project.x86_64.tcltk.x11
 @end example
 
 @noindent
-Note that some but not all of these files replace those in the Tcl/Tk 8.5.5
-installation used for @R{} 2.x, so care is needed if removing either.
+These are paths relative to @file{/}, the root of the file system.
 
 @node Multiple versions,  , Uninstalling under OS X, Installing R under OS X
 @section Multiple versions
@@ -2045,22 +2055,11 @@ CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
 @noindent
-(the first two are necessary if Xcode 5 was installed and Xcode 4.6 was
-not previously installed) and for another version of
-@command{gfortran-4.2} we needed
+%(the first two are necessary if Xcode 5 was installed and Xcode 4.6 was not previously installed) 
+and for another version of @command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
 @end example
-
-Not all packages using C++ will compile with the default headers and
-runtime used by @command{clang++}: you @emph{may} be able to install
-these with
-
-@example
-CXX=clang++ --stdlib=libstc++
-@end example
-
-
 
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
@@ -2091,7 +2090,7 @@ CFLAGS=-g -O -mtune=native
 CXXFLAGS=-g -O -mtune=native
 ## @r{for Fortran code}
 FFLAGS=-g -O -mtune=native
-## @r{for Fortran 95 code}
+## @r{for Fortran 9x code}
 FCFLAGS=-g -O -mtune=native
 @end example
 
@@ -2146,9 +2145,10 @@ with a source tarball.
 @subsection Byte-compilation
 
 The base and recommended packages are byte-compiled by default.  Other
-packages can be byte-compiled on installation by using the option
-@option{--byte-compile} with @command{R CMD INSTALL} or with
-@code{install.packages(type = "source")}.
+packages can be byte-compiled on installation by using @command{R CMD
+INSTALL}with option @option{--byte-compile} or by
+@code{install.packages(type = "source", INSTALL_opts =
+"--byte-compile")}.
 
 Not all contributed packages work correctly when byte-compiled (for
 example because they interfere with the sealing of namespaces).  For
@@ -2879,15 +2879,15 @@ installed.
 @section Essential programs and libraries
 
 You need a means of compiling C and FORTRAN 90 (see @ref{Using
-FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
-compiler should be @acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also
-known as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and
-C99-compliant.@footnote{Note that C11 compilers need not be
-C99-compliant: @R{} requires support for @code{double complex} and
-variable-length arrays which are optional in C11 but is mandatory in
-C99.}  @R{} tries to choose suitable flags for the C compilers it knows
-about, but you may have to set @code{CC} or @code{CFLAGS} suitably.  For
-recent versions of @command{gcc} with @code{glibc} this means including
+FORTRAN}).  Your C compiler should be
+@acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also known as
+@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
+that C11 compilers need not be C99-compliant: @R{} requires support for
+@code{double complex} and variable-length arrays which are optional in
+C11 but is mandatory in C99.}  @R{} tries to choose suitable flags for
+the C compilers it knows about, but you may have to set @code{CC} or
+@code{CFLAGS} suitably.  For recent versions of @command{gcc} with
+@code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.}.  If the compiler is
@@ -2918,18 +2918,6 @@ Unicode wide-character formats @code{"UCS-[24][BL]E"} --- this is true
 for @code{glibc} but not of most commercial Unixes.  However, you can
 make use of @acronym{GNU} @code{libiconv} (possibly as a plug-in
 replacement: see @uref{http://www.gnu.org/@/software/@/libiconv/}).
-
-An implementation of @acronym{XDR} is required.  This is part of
-@acronym{RPC} and historically has been part of @file{libc} on a
-Unix-alike: however some builds@footnote{apparently when built by
-default, but not for example as built for Fedora 15.} of @code{glibc
-2.14} hide it.  The intention seems to be that the @acronym{TI-RPC}
-library be used instead, in which case @code{libtirpc} (and its
-development version) needs to be installed, and its headers need to be
-on the C include path (and @command{configure} tries
-@file{/usr/include/tirpc} if the headers are not found on the standard
-include path).  The @R{} sources contain a fall-back implementation of
-@acronym{XDR} which is likely to suffice.
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
@@ -2973,8 +2961,8 @@ shell script.  Some versions, e.g.@: that from @pkg{texinfo} 4.13a and
 on, say, Solaris.}  Further, the versions of @command{texi2dvi} and
 @file{texinfo.tex} need to be compatible: we have seen problems with
 older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
-@pkg{texinfo} 4.13.  It should be possible to use @command{makeinfo}
-version 5.x.
+@pkg{texinfo} 4.13.  It is possible to use @pkg{texinfo} version 5.x,
+preferably 5.2 or later.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -2989,9 +2977,9 @@ and @pkg{inconsolata} are desirable (and without them you may need to change
 @R{}'s defaults: @pxref{Making the manuals}).
 
 
+@cindex Subversion
 If you want to build from the R Subversion repository you need both
 @command{makeinfo} and @command{pdflatex}.
-@cindex Subversion
 
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time
@@ -3067,16 +3055,28 @@ If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
 PCRE will be used if specified by @option{--with-system-zlib} (version
 1.2.5 or later), @option{--with-system-bzlib} or
-@option{--with-system-pcre} (version 8.10 or later, preferably 8.33
-which is what is supplied with @R{}): otherwise versions in the @R{}
-sources will be compiled in.  As the latter suffice and are tested with
-@R{} you should not need to change this.
+@option{--with-system-pcre} (version 8.10 or later, preferably
+8.34@footnote{which is what is supplied with @R{}: PCRE must be built
+with UTF-8 support (not the default) and support for Unicode properties
+is assumed by some @R{} packages. Neither are tested by
+@command{configure}.}): otherwise versions in the @R{} sources will be
+compiled in.  As the latter suffice and are tested with @R{} you should
+not need to change this.
 
 @code{liblzma} from @code{xz-utils} version 5.0.3 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
 configuring with @option{--with-system-xz=no}.  Systems differ in what
 they call the package including this: e.g.@: on Fedora the library is in
 @samp{xz-libs} and the headers in @samp{xz-devel}.
+
+An implementation of @acronym{XDR} is required, and the @R{} sources
+contain one which is likely to suffice (although a system version may
+have higher performance).  @acronym{XDR} is part of @acronym{RPC} and
+historically has been part of @file{libc} on a Unix-alike.  However some
+builds of @code{glibc} hide it with the intention that the
+@acronym{TI-RPC} library be used instead, in which case @code{libtirpc}
+(and its development version) needs to be installed, and its headers
+need to be on the C include path or in @file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3095,7 +3095,7 @@ or @code{icu4c}.  It will be used by default where available (including
 on OS X >= 10.4): should a very old or broken version of ICU be found
 this can be suppressed by @option{--without-ICU}.
 
-The @code{bitmap} and @code{dev2bitmap} devices and also
+The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
 (@uref{http://www.ghostscript.com/}).  This should either be in your
 path when the command is run, or its full path specified by the
@@ -3106,6 +3106,7 @@ environment variable @env{R_GSCMD} at that time.
 @menu
 * Tcl/Tk::                      
 * Java support::                
+* Other compiled languages::    
 @end menu
 
 @node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
@@ -3135,7 +3136,7 @@ files may be necessary to avoid confusion between them.
 Versions of Tcl/Tk up to 8.5.12 and 8.6.0 have been tested (including
 most versions of 8.4.x, but not recently).
 
-@node Java support,  , Tcl/Tk, Useful libraries and programs
+@node Java support, Other compiled languages, Tcl/Tk, Useful libraries and programs
 @subsection Java support
 
 The build process looks for Java support on the host system, and if it
@@ -3183,6 +3184,33 @@ JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
 @noindent
 worked.
 
+@node Other compiled languages,  , Java support, Useful libraries and programs
+@subsection Other compiled languages
+
+Some add-on packages need a C++ compiler.  This is specified by the
+configure variables @code{CXX}, @code{CXXFLAGS} and similar.
+@command{configure} will normally find a suitable compiler.  However, in
+most cases this will be a C++98 compiler, and as from @R{} 3.1.0 it is
+possible to specify an alternative compiler for use with C++11 by the
+configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
+similar.  Again, @command{configure} will normally find a suitable value
+for @code{CXX1XSTD} if the compiler given by @code{CXX} is capable of
+compiling C++11 code, but it is possible that a completely different
+compiler will be needed (it is for OS X < 10.9 and Solaris, for
+example).
+
+Other packages need full Fortran 90 (or later) support.  For source
+files with extension @file{.f90} or @file{.f95}, the compiler defined by
+the macro @code{FC} is used by @command{R CMD INSTALL}.  This is found
+when @R{} is configured and is often the same as @code{F77}: note that
+it is detected by the name of the command without a test that it can
+actually compile Fortran 90 code.  Set the configure variable @code{FC}
+to override this if necessary: variables @code{FCFLAGS},
+@code{FCPICFLAGS}, @code{FCLIBS}, @code{SHLIB_FCLD} and
+@code{SHLIB_FCLDFLAGS} might also need to be set.
+
+See file @file{config.site} in the @R{} source for more details about
+these variables.
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under a Unix-alike
 @section Linear algebra
@@ -3628,6 +3656,7 @@ gfortran}.
 * Using make::                  
 * Using FORTRAN::               
 * Compile and load flags::      
+* Maintainer mode::             
 @end menu
 
 @node Configuration options, Internationalization support, Configuration on a Unix-alike, Configuration on a Unix-alike
@@ -3964,7 +3993,7 @@ The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
 @command{gfortran 4.4.4} and later: for @code{gfortran 4.3.x} set
 @code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
-@node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
+@node Compile and load flags, Maintainer mode, Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
 
 A wide range of flags can be set in the file @file{config.site} or as
@@ -4045,6 +4074,44 @@ On some platforms @command{configure} will select additional flags for
 which are always required, for example to force @acronym{IEC}@tie{}60559
 compliance.
 
+@node Maintainer mode,  , Compile and load flags, Configuration on a Unix-alike
+@section Maintainer mode
+
+There are several files that are part of the @R{} sources but can be
+re-generated from their own sources by configuring with option
+@option{--enable-maintainer-mode} and then running @command{make} in the
+build directory.  This requires other tools to be installed, discussed
+in the rest of this section.
+
+File @file{configure} is created from @file{configure.ac} and the files
+under @file{m4} by @command{autoconf} and @command{aclocal}.  There is a
+formal version requirement on @command{autoconf} of 2.62 or later, but
+it is unlikely that anything other than the most recent versions have
+been thoroughly tested.
+
+File @file{src/include/config.h} is created by @command{autoheader}.
+
+Grammar files @file{*.y} are converted to C sources by an implementation
+of @command{yacc}, usually @command{bison -y}: these are found in
+@file{src/main} and @file{src/library/tools/src}.  It is known that
+earlier versions of @command{bison} generate code which reads (and in
+some cases writes) outside array bounds: @command{bison} 2.6.1 was found
+to be satisfactory.
+
+The ultimate sources for package @pkg{compiler} are in its @file{noweb}
+directory.  To re-create the sources from
+@file{src/library/compiler/noweb/compiler.nw}, the command
+@command{notangle} is required.  This is likely to need to be installed
+from the sources at @url{http://www.cs.tufts.edu/~nr/noweb/} (and can
+also be found on CTAN).  The package sources are only re-created even in
+maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
+been updated.
+
+It is likely that in future creating @code{configure} will need the GNU
+`autoconf archive' installed.  This can be found at
+@url{http://www.gnu.org/software/autoconf-archive/} and as a package
+(usually called @pkg{autoconf-archive}) in most packaged distributions,
+for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.
 
 @node Platform notes, The Windows toolset, Configuration on a Unix-alike, Top
 @appendix Platform notes
@@ -4389,7 +4456,7 @@ distribution in versions prior to Mountain Lion, but not always
 installed.  For Mountain Lion and later, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
 on earlier versions of OS X instead of the Apple version.  (Note that
-XQuartz will need to be re-installed after an OS upgrade.)
+XQuartz will likely need to be re-installed after an OS upgrade.)
 
 In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
 but this has not been tested recently: 10.6 (Snow Leopard) is the
@@ -4402,9 +4469,9 @@ To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
 would only be used for the data editor/viewer.  (This needs an
-Objective-C compiler@footnote{Apple's @code{clang} should be able to:
-some builds of @code{gcc} can, but not all built with Objective C
-support work.} which can compile the code for @code{quartz()}.)
+Objective-C compiler@footnote{These days that is defined by Apple's
+implementation of @code{clang}, so it is strongly recommended to use
+that.} which can compile the code for @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4423,8 +4490,8 @@ command-line tools from within Xcode, from the @samp{Downloads} pane in
 the @samp{Preferences}.  For Mavericks, see the specific sub-section
 below.
 
-Various compilers can be used.  The @acronym{CRAN} distribution of @R{}
-is built using
+Various compilers can be used.  The current @acronym{CRAN} distribution
+of @R{} is built using
 
 @itemize
 @item @command{gcc}
@@ -4494,6 +4561,10 @@ will show the compilers and configuration options used for the
 @end example
 @noindent
 was used.
+
+Configure option @option{--with-internal-tzcode} is the default, as a
+64-bit @code{time_t} is available but the system implementation of time
+zones does not work correctly for times after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
@@ -4580,11 +4651,12 @@ The command-line tools can be (re-)installed by @command{xcode-select
 --install}.  (If you have a fresh installation of Mavericks, running
 e.g.@: @command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
-after an update to Mavericks, you are advised to re-install them.)
-They are no longer available under the @samp{Downloads} preference pane.
+after an update to Mavericks, you are advised to re-install them.)  They
+are no longer available under the @samp{Downloads} preference pane in
+Xcode.
 
-To use the compilers it provides together with the recommended Fortran
-compiler, have in @file{config.site} something like
+To use the compiler Xcode 5 provides together with the recommended
+Fortran compiler, have in @file{config.site} something like
 
 @example
 CC=clang
@@ -4610,7 +4682,16 @@ previously had them.  They were able to compile @R{} and almost all
 packages when tested.
 
 There are compilers called @code{gcc} and @code{g++}, but despite their
-names they are versions of @code{clang} and @code{clang++}.
+names they are variants of @code{clang} and @code{clang++}.  The
+@acronym{CRAN} binary package installer changes its settings in
+@file{etc/Makeconf} to
+@example
+CC="gcc -arch x86_64"
+CXX="g++ -arch x86_64"
+CXX=clang++
+F77="gfortran-4.2 -arch x86_64"
+@end example
+when installing on Mavericks.
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4805,6 +4886,12 @@ by software emulation.  On such systems @command{configure} option
 @option{--disable-long-double} can be used for faster but less accurate
 computations.
 
+The Solaris time-zone conversion services seem to be unreliable pre-1916
+in Europe (when daylight-savings time was first introduced): most often
+reporting in the non-existent DST variant.  Using @command{configure}
+option @option{--with-internal-tzcode} is recommended if such times are
+to be used.
+
 
 When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
@@ -4909,21 +4996,21 @@ but the use of @code{-nofstore} can be less numerically stable, and some
 packages (notably @CRANpkg{mgcv} on @cputype{x86}) failed to compile at
 higher optimization levels with version 12.3.
 
-The Solaris Studio compilers provide several implementations of the C++
-standard which select both the set of headers and a C++ runtime library.
-These are selected by the @option{-library} flag, which as it is needed
-for both compiling and linking is best specified as part of the
-compiler.  The examples above use @samp{stlport4}, currently the most
-modern of the options: the default (but still needed to be specified as
-it is needed for linking) is @samp{Cstd}: see
+The Solaris Studio compilers provide several implementations of the
+C++98 standard which select both the set of headers and a C++ runtime
+library.  These are selected by the @option{-library} flag, which as it
+is needed for both compiling and linking is best specified as part of
+the compiler.  The examples above use @samp{stlport4}, currently the
+most modern of the options: the default (but still needed to be
+specified as it is needed for linking) is @samp{Cstd}: see
 @uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
-needs to be.  Occasionally the flag @option{-library=stlport4,Crun} has
-been needed.
+needs to be.  Occasionally the option @option{-library=stlport4,Crun}
+has been needed.
 
-Several @acronym{CRAN} packages using C++ need the more liberal interpretation
-given by adding
+Several @acronym{CRAN} packages using C++ need the more liberal
+interpretation given by adding
 
 @example
 CXXFLAGS="-features=tmplrefstatic"
@@ -4947,9 +5034,9 @@ places.  At the time of writing it fails in @file{tests/reg-BLAS.R}, and on
 some builds, including for @cputype{amd64}, it fails in
 @code{example(eigen)}.
 
-Parsing very complex expressions needs a lot of stack space when the
-Oracle compilers are used: several packages require the stack increased
-to say 20MB.
+Parsing very complex @R{} expressions needs a lot of stack space when
+the Oracle compilers are used: several packages require the stack
+increased to at least 20MB.
 
 
 @menu
@@ -5187,6 +5274,9 @@ There have been no reports for @R{} 3.0.0 or later.
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
 workarounds added.  Cygwin has not been tested for @R{} 3.0.0 or later.
+
+The 64-bit version is completely unsupported.  The 32-bit version has
+never worked well enough to pass @R{}'s @command{make check}.
 
 @R{} requires C99 complex type support, which is available as from
 Cygwin 1.7.8 (March 2011).  However, the (then) implementation of

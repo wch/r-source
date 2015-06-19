@@ -29,7 +29,7 @@ stopifnot(
        apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)),
        aa == apply(aa,2:3,function(x) x),
        all.equal(apply(apply(aa,2:3, sum),2,sum),
-                 10+16*0:4, tol=4*.Machine$double.eps)
+                 10+16*0:4, tolerance = 4*.Machine$double.eps)
 )
 marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
 for(m in marg) print(apply(arr, print(m), sum))
@@ -1889,7 +1889,7 @@ fit2 <- glm(counts ~ outcome + treatment, family = poisson,
            data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
 for(z in c("response", "working", "deviance", "pearson"))
     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
-                        scale = 1, tol = 1e-10))
+                        scale = 1, tolerance = 1e-10))
 
 ## apply on arrays with zero extents
 ## Robin Hankin, R-help, 2006-02-13
@@ -2790,7 +2790,7 @@ str(max(NA, "bla"))
 str(max("bla", NA))
 str(max(NA_character_, "bla"))
 ## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
-## be the min or max.  
+## be the min or max.
 
 
 ## When two entries needed to be cut to width, str() mixed up
@@ -2804,3 +2804,37 @@ X <- data.frame( A = 1:n * M,
 str( X, strict.width = "cut")
 options(oldopts)
 ## The first row of the str() result was duplicated.
+
+
+## PR15624: rounding in extreme cases
+dpois(2^52,1,1)
+dpois(2^52+1,1,1)
+## second warned in R 3.0.2.
+
+
+## Example from PR15625
+f <- file.path(Sys.getenv('SRCDIR'), 'EmbeddedNuls.csv')
+## This is a file with a UTF-8 BOM and some fields which are a single nul.
+## The output does rely on this being run in a non-UTF-8 locale (C in tests).
+read.csv(f) # warns
+read.csv(f, skipNul = TRUE, fileEncoding = "UTF-8-BOM")
+## 'skipNul' is new in 3.1.0.  Should not warn on BOM, ignore in second.
+
+
+## all.equal datetime method
+x <- Sys.time()
+all.equal(x,x)
+all.equal(x, as.POSIXlt(x))
+all.equal(x, as.POSIXlt(x, tz = "EST5EDT"))
+all.equal(x, x+1e-4)
+isTRUE(all.equal(x, x+0.002)) # message will depend on representation error
+## as.POSIXt method is new in 3.1.0.
+
+
+
+## Misuse of PR#15633
+try(bartlett.test(yield ~ block*N, data = npk))
+try(fligner.test (yield ~ block*N, data = npk))
+## used the first factor with an incorrect description in R < 3.0.3
+
+

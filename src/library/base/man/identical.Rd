@@ -82,8 +82,13 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
   uncompiled).  To check whether two different compiles are equal, you
   should compare the results of \code{\link{disassemble}()}.
 
-  Note that \code{identical(x, y, FALSE, FALSE, FALSE, FALSE)} pickily tests for
-  exact equality.
+  You almost never want to use \code{identical} on datetimes of class
+  \code{"POSIXlt"}: not only can different times in the different
+  time zones represent the same time and time zones have multiple names,
+  but several of the components are optional.
+
+  Note that \code{identical(x, y, FALSE, FALSE, FALSE, FALSE)} pickily
+  tests for exact equality.
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}

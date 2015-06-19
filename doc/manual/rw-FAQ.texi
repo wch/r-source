@@ -128,7 +128,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 52Mb.
+installer @samp{@RWVER@-win.exe} of about 54Mb.
 
 There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of

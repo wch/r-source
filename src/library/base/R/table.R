@@ -1,7 +1,7 @@
 #  File src/library/base/R/table.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 
     if(zero.print != "0" && any(i0 <- !ina & x == 0))
 	## MM thinks this should be an option for many more print methods...
-	xx[i0] <- sub(if(all(x == round(x)))"0" else "0\\.0+", zero.print, xx[i0])
+	xx[i0] <- zero.print ## keep it simple;  was sub(..., xx[i0])
 
     ## Numbers get right-justified by format(), irrespective of 'justify'.
     ## We need to keep column headers aligned.

@@ -3649,7 +3649,7 @@ The @code{quartz()} device is built (other than as a stub) in package
 access to the OS X screen.
 
 @item
-File @code{src/unix/aqua.c} is compiled.  This now only contains an
+File @file{src/unix/aqua.c} is compiled.  This now only contains an
 interface pointer for the @code{quartz()} device(s).
 
 @item
@@ -3829,6 +3829,9 @@ Allows turning off @code{checkFF()} testing. If set to
 arguments, correct choice of @code{.C/.Fortran/.Call/.External}) for
 such calls provided the package is installed.
 Default: true.
+@item _R_CHECK_FF_DUP_
+Controls @code{checkFF(check_DUP)}
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_LICENSE_
 Control whether/how license checks are performed. A possible value is
 @samp{maybe} (warn in case of problems, but not about standardizable
@@ -3957,9 +3960,9 @@ If set to a true value, running examples, tests and vignettes is done
 with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
 links@footnote{see the previous footnote.} to the installed copies of
-all the Depends/Imports/LinkingTo and (for the second only) Suggests
-packages which are not in @code{.Library}.  Default: false (but true for
-CRAN checks).
+all the Depends/Imports and (for the second only) Suggests packages
+which are not in @code{.Library}.  Default: false (but
+@env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN checks).
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
@@ -4039,6 +4042,10 @@ in `Writing R Extensions' nor are commonly understood (like
 @file{COPYRIGHT}) are also reported.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_GCT_N_
+Should the @option{--use-gct} use @code{gctorture2(@var{n})} rather than
+@code{gctorture(TRUE)}?  Use to a positive integer to enable this.
+Default: @code{0}.
 @end vtable
 
 CRAN's submission checks use something like

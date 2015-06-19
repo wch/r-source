@@ -1,6 +1,6 @@
 % File src/library/stats/man/rWishart.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012 R Core Team
+% Copyright 2012-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rWishart}
@@ -58,11 +58,11 @@ set.seed(11)
 R <- rWishart(1000, 20, S)
 dim(R)  #  10 10  1000
 mR <- apply(R, 1:2, mean)  # ~= E[ Wish(S, 20) ] = 20 * S
-stopifnot(all.equal(mR, 20*S, tol = .009))
+stopifnot(all.equal(mR, 20*S, tolerance = .009))
 
 ## See Details, the variance is
 Va <- 20*(S^2 + tcrossprod(diag(S)))
 vR <- apply(R, 1:2, var)
-stopifnot(all.equal(vR, Va, tol = 1/16))
+stopifnot(all.equal(vR, Va, tolerance = 1/16))
 }
 \keyword{multivariate}

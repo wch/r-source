@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2007  The R Core Team
+ *  Copyright (C) 1998--2014  The R Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -96,7 +96,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     } else {
 	r = qq + qq;
 	t = 1. / (9. * qq);
-	t = r * pow(1. - t + y * sqrt(t), 3.0);
+	t = r * R_pow_di(1. - t + y * sqrt(t), 3);
 	if (t <= 0.)
 	    xinbta = 1. - exp((log1p(-a)+ log(qq) + logbeta) / qq);
 	else {
@@ -131,7 +131,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
      * ---- i.e.,  "new acu" = sqrt(old acu)
 
     */
-    acu = fmax2(acu_min, pow(10., -13 - 2.5/(pp * pp) - 0.5/(a * a)));
+    acu = fmax2(acu_min, pow(10.0, -13.0 - 2.5/(pp * pp) - 0.5/(a * a)));
     tx = prev = 0.;	/* keep -Wall happy */
 
     for (i_pb=0; i_pb < 1000; i_pb++) {

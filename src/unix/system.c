@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -98,7 +98,6 @@ void R_setStartTime(void); /* in sys-unix.c */
 /*  used here and in main/sysutils.c (for system). */
 Rboolean useaqua = FALSE;
 
-// This should have been fixed a long time ago ....
 // Finally in Sep 2012 R.app sets ptr_R_FlushConsole
 #include <R_ext/Rdynload.h>
 DL_FUNC ptr_do_flushconsole;

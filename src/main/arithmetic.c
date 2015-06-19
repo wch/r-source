@@ -108,7 +108,7 @@ static CONST int lw = 0;
 
 static double R_ValueOfNA(void)
 {
-    /* The gcc shipping with RedHat 9 gets this wrong without
+    /* The gcc shipping with Fedora 9 gets this wrong without
      * the volatile declaration. Thanks to Marc Schwartz. */
     volatile ieee_double x;
     x.word[hw] = 0x7ff00000;
@@ -217,20 +217,10 @@ double R_pow(double x, double y) /* = x ^ y */
 	else return(y); /* NA or NaN, we assert */
     }
     if (R_FINITE(x) && R_FINITE(y)) {
-/* work around a bug in May 2007 snapshots of gcc pre-4.3.0, also
-   present in the release version.  If compiled with, say, -g -O3
-   on x86_64 Linux this compiles to a call to sqrtsd and gives
-   100^0.5 as 3.162278.  -g is needed, as well as -O2 or higher.
-   example(pbirthday) will fail.
- */
-/* FIXME: with the y == 2.0 test now at the top that case isn't
-   reached here, but i have left it for someone who understands the
-   bug fix issue here to remove. LT */
-#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3
-	return (y == 2.0) ? x*x : pow(x, y);
-#else
-	return (y == 2.0) ? x*x : ((y == 0.5) ? sqrt(x) : pow(x, y));
-#endif
+	/* There was a special case for y == 0.5 here, but
+	   gcc 4.3.0 -g -O2 mis-compiled it.  Showed up with
+	   100^0.5 as 3.162278, example(pbirthday) failed. */
+	return pow(x, y);
     }
     if (ISNAN(x) || ISNAN(y))
 	return(x + y);
@@ -250,8 +240,7 @@ double R_pow(double x, double y) /* = x ^ y */
 		return (x < 1) ? R_PosInf : 0.;
 	}
     }
-    return(R_NaN);		/* all other cases: (-Inf)^{+-Inf,
-				   non-int}; (neg)^{+-Inf} */
+    return R_NaN; // all other cases: (-Inf)^{+-Inf, non-int}; (neg)^{+-Inf}
 }
 
 static R_INLINE double R_POW(double x, double y) /* handle x ^ 2 inline */
@@ -1194,6 +1183,11 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     return sy;
 }
 
+#ifdef HAVE_TANPI
+// we document that tanpi(0.5) is NaN, but the draft C11 extension
+// does not require this and the Solaris version gives Inf.
+double Rtanpi(double);
+#endif
 
 SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1246,7 +1240,11 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	*/
     case 47: return MATH1(cospi);
     case 48: return MATH1(sinpi);
+#ifndef HAVE_TANPI
     case 49: return MATH1(tanpi);
+#else
+    case 49: return MATH1(Rtanpi);
+#endif
 
     default:
 	errorcall(call, _("unimplemented real function of 1 argument"));
@@ -1441,7 +1439,7 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
     double ai, bi, *a, *b, *y;
     int naflag;
     double amax, *work;
-    long nw;
+    size_t nw;
 
     if (!isNumeric(sa) || !isNumeric(sb))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
@@ -1458,8 +1456,8 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
 	if (av > amax) amax = av;
     }
     const void *vmax = vmaxget();
-    nw = 1 + (long)floor(amax);
-    work = (double *) R_alloc((size_t) nw, sizeof(double));
+    nw = 1 + (size_t)floor(amax);
+    work = (double *) R_alloc(nw, sizeof(double));
 
     mod_iterate(na, nb, ia, ib) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1776,7 +1774,7 @@ static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
     double ai, bi, ci, *a, *b, *c, *y;
     int naflag;
     double amax, *work;
-    long nw;
+    size_t nw;
 
     SETUP_Math3;
 
@@ -1788,8 +1786,8 @@ static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
 	if (av > amax) amax = av;
     }
     const void *vmax = vmaxget();
-    nw = 1 + (long)floor(amax);
-    work = (double *) R_alloc((size_t) nw, sizeof(double));
+    nw = 1 + (size_t)floor(amax);
+    work = (double *) R_alloc(nw, sizeof(double));
 
     mod_iterate3 (na, nb, nc, ia, ib, ic) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();

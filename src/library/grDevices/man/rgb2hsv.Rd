@@ -106,7 +106,7 @@ rgb2hsvR <- function(rgb, gamma = 1, maxColorValue = 255)
 
 ## confirm the equivalence:
 all.equal(rgb2hsv (rgb3),
-          rgb2hsvR(rgb3), tol = 1e-14) # TRUE
+          rgb2hsvR(rgb3), tolerance = 1e-14) # TRUE
 }
 \keyword{color}
 \keyword{dplot}

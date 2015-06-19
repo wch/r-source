@@ -4,7 +4,7 @@
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
-\title{ R News}
+\title{R News}
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
@@ -74,10 +74,10 @@
 
       \item \code{object.size()} gains a \code{format()} method.
 
-      \item There is a new family, \code{"ArialMT"} for the \code{pdf()}
-      and \code{postscript()} devices.  This will only be rendered
-      correctly on viewers which have access to Monotype TrueType fonts
-      (but are sometimes requested by journals).
+      \item There is a new family, \code{"ArialMT"}, for the
+      \code{pdf()} and \code{postscript()} devices.  This will only be
+      rendered correctly on viewers which have access to Monotype
+      TrueType fonts (which are sometimes requested by journals).
 
       \item The text and PDF news files, including \file{NEWS} and
       \file{NEWS.2}, have been moved to the \file{doc} directory.
@@ -96,18 +96,19 @@
       \item New functions \code{cospi(x)}, \code{sinpi(x)}, and
       \code{tanpi(x)}, for more accurate computation of
       \code{cos(pi*x)}, etc, both in \R{} and the C API.  Using these
-      gains accuracy in some cases, e.g., for \code{lgamma()} or
-      \code{besselI()}.  (Suggested by Morten Wellinder in \PR{15529}.)
+      gains accuracy in some cases, e.g., inside \code{lgamma()} or
+      \code{besselI()}.  (Suggested by Morten Welinder in \PR{15529}.)
 
       \item \code{print.table(x, zero.print = ".")} now also has an
       effect when \code{x} is not integer-valued.
-      
+
       \item There is more support to explore the system's idea of
-      time-zone names.  \code{Sys.timezone(location = TRUE)} tries to
-      give the current system setting (and succeeds at least on Linux, OS
-      X, Solaris and Windows), and \code{OlsonNames()} lists the names
-      in the system's Olson database.
-      
+      time-zone names.  \code{Sys.timezone()} tries to give the current
+      system setting (and succeeds at least on Linux, OS X, Solaris and
+      Windows), and \code{OlsonNames()} lists the names in the system's
+      Olson database. \code{Sys.timezone(location = FALSE)} gives the
+      previous behaviour.
+
       \item Platforms with a 64-bit \code{time_t} type are allowed to
       handle conversions between the \code{"POSIXct"} and
       \code{"POSIXlt"} classes for date-times outside the 32-bit range
@@ -122,25 +123,106 @@
 
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
-      
-      \item \code{colSums} and friends now have support for arrays and
+
+      \item \code{colSums()} and friends now have support for arrays and
       data-frame columns with \eqn{2^{31}}{2^31} or more elements.
-      
+
       \item \code{as.factor()} is faster when \code{f} is an unclassed
       integer vector (for example, when called from \code{tapply()}).
-      
+
       \item \code{fft()} now works with longer inputs, from the 12
       million previously supported up to 2 billion.  (\PR{15593})
 
       \item Complex \code{svd()} now uses LAPACK subroutine
       \code{ZGESDD}, the complex analogue of the routine used for the
       real case.
-      
-      \item Sweave now outputs \file{.tex} files in UTF-8 if the 
-      input encoding is declared to be UTF-8, regardless of the 
+
+      \item Sweave now outputs \file{.tex} files in UTF-8 if the
+      input encoding is declared to be UTF-8, regardless of the
       local encoding.  The UTF-8 encoding may now be declared using
       a LaTeX comment containing the string \code{\%\\SweaveUTF8}
       on a line by itself.
+
+      \item \code{file.copy()} gains a \code{copy.date} argument.
+
+      \item Printing of date-times will make use of the time-zone
+      abbreviation in use at the time, if known.  For example, for Paris
+      pre-1940 this could be \samp{LMT}, \samp{PMT}, \samp{WET} or
+      \samp{WEST}.  To enable this, the \code{"POSIXlt"} class has an
+      optional component \code{"zone"} recording the abbreviation for
+      each element.
+
+      For suitable platforms, there is also a component \code{"gmtoff"}
+      recording the offset from GMT where known.
+
+      \item (On Windows, by default on OS X and optionally elsewhere.)
+      The system C function \code{strftime} has been replaced by a more
+      comprehensive version with closer conformance to the POSIX 2008
+      standard.
+
+      \item \code{dnorm(x, log = FALSE)} is more accurate (but somewhat
+      slower) for |x| > 5; as suggested in \PR{15620}.
+
+      \item Some versions of the \code{tiff()} device have further
+      compression options.
+
+      \item \code{read.table()}, \code{readLines()} and \code{scan()}
+      have a new argument to influence the treatment of embedded nuls.
+
+      \item Avoid duplicating the right hand side values in complex
+      assignments when possible.  This reduces copying of replacement
+      values in expressions such as \code{Z$a <- a0} and
+      \code{ans[[i]] <- tmp}: some package code has relied on there
+      being copies.  (Based on suggestions from Michael Lawrence.)
+
+      \item The \code{fast} argument of \code{KalmanLike()},
+      \code{KalmanRun()} and \code{KalmanForecast()} has been replaced
+      by \code{update}, which instead of updating \code{mod} in place,
+      optionally returns the updated model in an attribute \code{"mod"}
+      of the return value.
+
+      \item \code{arima()} and \code{makeARIMA()} get a new optional
+      argument \code{SSinit}, allowing the choice of a different
+      \bold{s}tate \bold{s}pace initialization which has been observed
+      to be more reliable close to non-stationarity: see \PR{14682}.
+
+      \item \code{warning()} has a new argument \code{noBreaks.}, to
+      simplify post-processing of output with \code{options(warn = 1)}.
+
+      \item \code{pushBack()} gains an argument \code{encoding}, to
+      support reading of UTF-8 characters using \code{scan()},
+      \code{read.table()} and related functions in a non-UTF-8 locale.
+
+      \item \code{all.equal.list()} gets a new argument \code{use.names}
+      which by default labels differing components by names (if they
+      match) rather than by integer index.  Saved \R output in packages may
+      need to be updated.
+
+      \item The methods for \code{all.equal()} and
+      \code{attr.all.equal()} now have argument \code{check.attributes}
+      after \code{\dots} so it cannot be partially nor positionally
+      matched (as it has been, unintentionally).
+
+      A side effect is that some previously undetected errors of passing
+      empty arguments (no object between commas) to \code{all.equal()}
+      are detected and reported.
+
+      There are explicit checks that \code{check.attributes} is logical,
+      \code{tolerance} is numeric and \code{scale} is \code{NULL} or
+      numeric.  This catches some unintended positional matching.
+
+      The message for \code{all.equal.numeric()} reports a
+      \code{"scaled difference"} only for \code{scale != 1}.
+      
+      \item \code{all.equal()} now has a \code{"POSIXt"} method
+      replacing the \code{"POSIXct"} method.
+      
+      \item The \code{"Date"} and \code{"POSIXt"} methods of
+      \code{seq()} allows \code{by = "quarter"} for completeness
+      (\code{by = "3 months"} always worked).
+
+      \item A number of changes to reduce copying of objects, contributed
+      by Michael Lawrence.
     }
   }
 
@@ -168,13 +250,29 @@
       \item More of \command{make check} will work if recommended packages
       are not installed: but recommended packages remain needed for
       thorough checking of an \R build.
-      
-      \item (Windows only.)  The version of \samp{tzcode} included in
-      \file{src/extra/tzone} has been updated.
 
-      \item There is experimental support to produce manuals in ebook
-      formats. (See \file{doc/manual/Makefile}.  Suggested by Mauro
-      Cavalcanti.)
+      \item The version of \samp{tzcode} included in
+      \file{src/extra/tzone} has been updated.  (Formerly used only on
+      Windows.)
+
+      \item The included (64-bit) time-zone conversion code and Olson
+      time-zone database can be used instead of the system version: use
+      \command{configure} option \option{--with-internal-tzcode}.  This
+      is the default on Windows and OS X.
+
+      (It might be necessary to set environment variable \env{TZ} on
+      OSes where this is not already set, although the system timezone is
+      deduced correctly on at least Linux, OS X and Windows.)
+
+      This option also switches to the version of \code{strftime}
+      included in directory \file{src/extra/tzone}.
+
+      \item \command{configure} now tests for a C++11-compliant compiler
+      by testing some basic features.  This by default tries flags for
+      the compiler specified by \samp{CXX}, but an alternative compiler,
+      options and standard can be specified by variables \samp{CXX1X},
+      \samp{CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=c++1y} or
+      \samp{-std=gnu++11}).
     }
   }
 
@@ -202,20 +300,20 @@
 
       \item \command{R CMD INSTALL --build} (not Windows) now defaults to
       the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
-      
-      \item There is \emph{experimental} support for compiling C++11
-      code in packages.  The file \file{src/Makevars} or
-      \file{src/Makevars.win} should define the macro \samp{USE_CXX1X}
-      (with an empty value).  Where needed, an alternative compiler can
-      be specified by setting macros \samp{CXX1X}, \samp{CXX1XFLAGS} and
-      so on, either when \R is configured or in a personal
-      \file{Makevars} file.  (The default is to use \samp{$(CXX)
-	-std=c++11} except on Windows where \option{-std=c++0x} is used,
-      as supported by \code{g++ 4.6.x}.)
-      
+
+      \item There is some support for compiling C++11 code in packages.
+      The file \file{src/Makevars} or \file{src/Makevars.win} should
+      define the macro \samp{USE_CXX1X} (with an empty value).  Where
+      needed, an alternative compiler can be specified by setting macros
+      \samp{CXX1X}, \samp{CXX1XFLAGS} and so on, either when \R is
+      configured or in a personal/site \file{Makevars} file.  The
+      default is to use \samp{$(CXX) -std=c++11} otherwise
+      \option{-std=c++0x} if supported, (the latter on Windows, as
+      supported by \code{g++ 4.6.x}.)
+
       Other standards supported by the compiler can be specified by e.g.
       \samp{USE_CXX1X = -std=c++1y} .
-      
+
       \item Fake installs now install the contents of directory
       \file{inst}: some packages use this to install e.g. C++ headers
       for use by other packages that are independent of the package
@@ -247,8 +345,8 @@
   \subsection{UTILITIES}{
     \itemize{
       \item Only vignettes sources in directory \file{vignettes} are
-      considered to be vignettes and hence checked.  That has been the
-      preferred location since \R 2.14.0 and is now obligatory.
+      considered to be vignettes by \command{R CMD check}.  That has
+      been the preferred location since \R 2.14.0 and is now obligatory.
 
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
@@ -268,9 +366,9 @@
       have been added to allow package authors to suppress false
       positive reports.
 
-      \item \command{R CMD check --as-cran} warns about a false value of the
-      \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
-      packages, and ignores it (as an Open Source package needs to have
+      \item \command{R CMD check --as-cran} warns about a false value of
+      the \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
+      packages, and ignores it.  (An Open Source package needs to have
       complete sources for its vignettes which should be usable on a
       suitably well-equipped system).
 
@@ -293,6 +391,20 @@
       library.
 
       \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
+
+      \item \command{R CMD check} customizations such as
+      \env{_R_CHECK_DEPENDS_ONLY_} make available packages only in
+      \samp{LinkingTo} only for installation, and not for
+      loading/runtime tests.
+      
+      \item \command{tools::checkFF()} reports on \code{.C} and
+      \code{.Fortran} calls with \code{DUP = FALSE} if argument
+      \code{check_DUP} is true.  This is selected by
+      \command{R CMD check --as-cran}.
+      
+      \item \command{R CMD check --use-gct} can be tuned to
+      garbage-collect less frequently using \code{gctorture2()} using
+      the setting of environment variable \env{_R_CHECK_GCT_N_}.
     }
   }
 
@@ -304,19 +416,28 @@
 
       \item Remapping in the \file{Rmath.h} header can be suppressed by
       defining \samp{R_NO_REMAP_RMATH}.
-      
+
       \item The remapping of \code{rround()} in header \file{Rmath.h}
       has been removed: use \code{fround()} instead.
-      
+
       \item \code{ftrunc()} in header \file{Rmath.h} is now a wrapper
       for the C99 function \code{trunc()}, which might as well be used
       in C code: \code{ftrunc()} is still needed for portable C++ code.
 
       \item The never-documented remapping of \code{prec()} to
       \code{fprec()} in header \file{Rmath.h} has been removed.
-      
-      \item The included LAPACK subset now includes \code{zgesdd} and
-      \code{zgelsd}.
+
+      \item The included LAPACK subset now contains \code{ZGESDD} and
+      \code{ZGELSD}.
+
+      \item The function \code{LENGTH()} now checks that it is only
+      applied to vector arguments.  However, in packages \code{length()}
+      should be used. (In \R{} itself \code{LENGTH()} is a macro without
+      the function overhead of \code{length()}.)
+
+      \item Calls to \code{SET_VECTOR_ELT()} and \code{SET_STRING_ELT()}
+      are now checked for indices which are in-range: several packages
+      were writing one element beyond the allocated length.
     }
   }
 
@@ -350,6 +471,8 @@
 
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are defunct.
+      
+      \item \code{download.file(method = "lynx")} is deprecated.
     }
   }
 
@@ -367,21 +490,26 @@
       \item \code{getGraphicsEvent()} caused 100\% CPU usage in Windows.
       (PR#15500)
 
-      \item \code{nls()} with no \code{start} argument now may also work
+      \item \code{nls()} with no \code{start} argument may now work
       inside another function (scoping issue).
 
       \item \code{pbeta()} and similar work better for very large
       (billions) \code{ncp}.
 
-      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
-      \code{"C"} (to restore the sane behavior) no longer yields a
-      warning.
+      \item Where time zones have changed abbreviations over the years,
+      the software tries to more consistently use the current
+      abbreviation.  On some platforms where the C function
+      \code{localtime} changed the \code{tzname} variables the reported
+      abbreviation could have been that of the last time converted.
 
-      \item Extra checks have been added for units in \pkg{grid} to
-      catch instances of division-by-zero.  This may introduce error
-      messages in existing code and/or produce a different result
-      in existing code (but only where an infinite location or
-      dimension may now become zero).
+      \item \code{all.equal(list(1), identity)} now works.
+
+      \item Bug fix for pushing viewports in \pkg{grid} (reported by
+      JJ Allaire and Kevin Ushey).
+
+      NOTE for anyone poking around within the graphics engine display
+      list (despite the warnings not to) that this changes what
+      is recorded by \pkg{grid} on the graphics engine display list. 
     }
   }
 }
@@ -403,18 +531,72 @@
 
       \item There is a new function, \code{La_version()}, to report the
       version of LAPACK in use.
-      
+
       \item The HTML version of \sQuote{An Introduction to R} now has
       links to PNG versions of the figures.
+
+      \item There is some support to produce manuals in ebook
+      formats. (See \file{doc/manual/Makefile}.  Suggested by Mauro
+      Cavalcanti.)
+
+      \item On a Unix-alike \code{Sys.timezone()} returns \code{NA} if
+      the environment variable \env{TZ} is unset, to distinguish it from
+      an empty string which on some OSes means the \samp{UTC} time zone.
+
+      \item The backtick may now be escaped in strings, to allow names
+      containing them to be constructed, e.g. \code{`\\``}.  (\PR{15621})
+
+      \item \code{read.table()}, \code{readLines()} and \code{scan()}
+      now warn when an embedded nul is found in the input.  (Related to
+      \PR{15625} which was puzzled by the behaviour in this unsupported
+      case.)
+
+      \item (Windows only.)  \code{file.symlink()} works around the
+      undocumented restriction of the Windows system call to
+      backslashes.  (Wish of \PR{15631}.)
+
+      \item \code{KalmanForecast(fast = FALSE)} is now the default, and
+      the help contains an example of how \code{fast = TRUE} can be used
+      in this version.  (The usage will change in 3.1.0.)
+
+      \item \code{strptime()} now checks the locale only when
+      locale-specific formats are used and caches the locale in use:
+      this can halve the time taken on OSes with slow system
+      functions (e.g. OS X).
+
+      \item \code{strptime()} and the \code{format()} methods for
+      classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"Date"}
+      recognize strings with marked encodings: this allows, for example,
+      UTF-8 French month names to be read on (French) Windows.
+      
+      \item \code{iconv(to = "utf8")} is now accepted on all platforms
+      (some implementations did already, but GNU \pkg{libiconv} did
+      not).  The official name, \code{"UTF-8"} is still preferred.
+
+      \item \code{available.packages()} is better protected against
+      corrupt metadata files (A recurring problem with Debian package
+      shogun-r: \PR{14713}).
     }
   }
-  
-      
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included version of PCRE has been updated to 8.34.  This
+      fixes bugs and makes the behaviour closer to Perl 5.18.  In
+      particular, the concept of \sQuote{space} includes \samp{VT} and
+      hence agrees with POSIX's.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item The new field \samp{SysDataCompression} in the
       \file{DESCRIPTION} file allows user control over the compression
       used for \file{sysdata.rda} objects in the lazy-load database.
+
+      \item \code{install.packages(dependencies = value)} for \code{value =
+	NA} (the default) or \code{value = TRUE} omits packages only in
+      \code{LinkingTo} for binary package installs.
     }
   }
 
@@ -423,13 +605,13 @@
       \item The long undocumented remapping of \code{rround()} to
       \code{Rf_fround()} in header \file{Rmath.h} is now formally
       deprecated: use \code{fround()} directly.
-      
+
       \item Remapping of \code{prec()} and \code{trunc()} in the
       \file{Rmath.h} header has been disabled in C++ code (it has caused
       breakage with \code{libc++} headers).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of
@@ -521,23 +703,23 @@
 
       \item \code{c()} and related functions such as \code{unlist()}
       converted raw vectors to invalid logical vectors. (\PR{15535})
-      
+
       \item (Windows only) When a call to \code{system2()} specified
       one of \code{stdin}, \code{stdout} or \code{stderr} to be a file,
       but the command was not found (e.g. it contained its arguments,
       or the program was not on the \env{PATH}), it left the file open
       and unusable until \R terminated.  (Reported by Mathew McLean.)
-      
+
       \item The \code{bmp()} device was not recording \code{res = NA}
       correctly: it is now recorded as 72 ppi.
 
       \item Several potential problems with compiler-specific behaviour
       have been identified using the \sQuote{Undefined Behaviour
 	Sanitizer} in conjunction with the \command{clang} compiler.
-      
+
       \item \code{hcl()} now honours \code{NA} inputs (previously they
       were mapped to black).
-      
+
       \item Some translations in base packages were being looked up in
       the main catalog rather than that for the package.
 
@@ -545,19 +727,65 @@
 	second before the epoch}, most conversions which should have given
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
-      
-      \item \code{rowsum} has more support for matrices and dataframes
+
+      \item \code{rowsum()} has more support for matrices and dataframes
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
-  
+
       \item \code{predict(<lm object>, interval = "confidence", scale =
 	<something>)} now works.  (\PR{15564})
-	
+
       \item The bug fix in 3.0.2 for \PR{15411} was too aggressive,
       and sometimes removed spaces that should not have been removed.
       (\PR{15583})
-      
+
       \item Running \R code in a \pkg{tcltk} callback failed to set the
       busy flag, which will be needed to tell OS X not to \sQuote{App Nap}.
+
+      \item The code for date-times before 1902 assumed that the offset
+      from GMT in 1902 was a whole number of minutes: that was not true
+      of Paris (as recorded on some platforms).
+
+      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
+      \code{"C"} (to restore the sane behavior) no longer gives a
+      warning.
+
+      \item \code{deparse()} now deparses complex vectors in a way that
+      re-parses to the original values.  (\PR{15534}, patch based on code
+      submitted by Alex Bertram.)
+
+      \item In some extreme cases (more than \eqn{10^{15}}{10^15})
+      integer inputs to \code{dpqrxxx()} functions might have been
+      rounded up by one (with a warning about being non-integer).
+      (\PR{15624})
+
+      \item Plotting symbol \code{pch = 14} had the triangle upside down
+      on some devices (typically screen devices). The triangle is
+      supposed to be point up.  (Reported by Bill Venables.)
+
+      \item \code{getSrcref()} did not work on method definitions if
+      \code{rematchDefinition()} had been used.
+
+      \item \code{KalmanForecast(fast = FALSE)} reported a (harmless)
+      stack imbalance.
+
+      \item The count of observations used by \code{KalmanRun()} did not
+      take missing values into account.
+
+      \item In locales where the abbreviated name of one month is a
+      partial match for the full name of a later one, the \code{\%B}
+      format in \code{strptime()} could fail.  An example was French on
+      OS X, where \samp{juin} is abbreviated to \samp{jui} and partially
+      matches \code{juillet}.  Similarly for weekday names.
+
+      \item \code{pbeta(x, a, b, log.p = TRUE)} sometimes underflowed to
+      zero for very small and very differently sized \code{a}, \code{b}.
+      (\PR{15641})
+      
+      \item \code{approx()} and \code{approxfun()} now handle infinite
+      values with the \code{"constant"} method. (\PR{15655})
+      
+      \item \code{stripchart()} again respects reversed limits in
+      \code{xlim} and \code{ylim}.  (\PR{15664})
     }
   }
 }
@@ -767,7 +995,7 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
-      
+
       \item \command{R CMD check} analyses \code{:::} calls.
     }
   }

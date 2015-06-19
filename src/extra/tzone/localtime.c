@@ -31,39 +31,34 @@ Mingw-w64 changes
 removing ATTRIBUTE_PURE, conditional parts for e.g. ALL_STATE
 use of 'unknown' isdst
 use of 64-bit time_t irrespective of platform.
+use of tm_zone and tm_gmtoff on all platforms.
 */
 
-#include "string.h"
-#include "limits.h"	/* for CHAR_BIT et al. */
+#include <config.h>
+#include <string.h>
+#include <limits.h>	/* for CHAR_BIT et al. */
 
-
-#define  _NO_OLDNAMES   /* avoid tznames */
-#include "time.h"
-#undef _NO_OLDNAMES
-
+#ifdef __GLIBC__
+// to get tm_zone, tm_gmtoff defined
+# define _BSD_SOURCE
+#endif
+#include <time.h>
 
 #include <errno.h>
 #ifndef EOVERFLOW
 # define EOVERFLOW 79
 #endif
 
-#include "stdlib.h"
-#include "stdint.h"
-#include "stdio.h"
-#include "fcntl.h"
-#include "float.h"	/* for FLT_MAX and DBL_MAX */
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h> // for open + modes
 
-#ifdef WIN32
-/* tzname is in the headers as an import in MinGW-w64 */
-#define tzname Rtzname
-#define gmtime R_gmtime
-#define localtime R_localtime
-#define mktime R_mktime
-// alternatively use time64_t from Mingw-w64's time.h
-#include <stdint.h>
-typedef int64_t R_time_t;
-#define time_t R_time_t
+#ifndef WIN32
+# include <unistd.h> // for access, read, close
 #endif
+
+#include "datetime.h"
+#define tzname R_tzname
 
 #ifndef TRUE
 #define TRUE	1
@@ -222,10 +217,8 @@ static const char *	getsecs(const char * strp, int_fast32_t * secsp);
 static const char *	getoffset(const char * strp, int_fast32_t * offsetp);
 static const char *	getrule(const char * strp, struct rule * rulep);
 static void		gmtload(struct state * sp);
-static struct tm *	gmtsub(const time_t * timep, int_fast32_t offset,
-				struct tm * tmp);
-static struct tm *	localsub(const time_t * timep, int_fast32_t offset,
-				struct tm * tmp);
+static stm *	gmtsub(const time_t * timep, int_fast32_t offset, stm * tmp);
+static stm *	localsub(const time_t * timep, int_fast32_t offset, stm * tmp);
 static int		increment_overflow(int * number, int delta);
 static int		leaps_thru_end_of(int y);
 static int		increment_overflow32(int_fast32_t * number, int delta);
@@ -235,22 +228,22 @@ static int		normalize_overflow32(int_fast32_t * tensptr,
 static int		normalize_overflow(int * tensptr, int * unitsptr,
 				int base);
 static void		settzname(void);
-static time_t		time1(struct tm * tmp,
-				struct tm * (*funcp)(const time_t *,
-				int_fast32_t, struct tm *),
+static time_t		time1(stm * tmp,
+				stm * (*funcp)(const time_t *,
+				int_fast32_t, stm *),
 				int_fast32_t offset);
-static time_t		time2(struct tm *tmp,
-				struct tm * (*funcp)(const time_t *,
-				int_fast32_t, struct tm*),
+static time_t		time2(stm *tmp,
+				stm * (*funcp)(const time_t *,
+				int_fast32_t, stm*),
 				int_fast32_t offset, int * okayp);
-static time_t		time2sub(struct tm *tmp,
-				struct tm * (*funcp)(const time_t *,
-				int_fast32_t, struct tm*),
+static time_t		time2sub(stm *tmp,
+				stm * (*funcp)(const time_t *,
+				int_fast32_t, stm*),
 				int_fast32_t offset, int * okayp, int do_norm_secs);
-static struct tm *	timesub(const time_t * timep, int_fast32_t offset,
-				const struct state * sp, struct tm * tmp);
-static int		tmcomp(const struct tm * atmp,
-				const struct tm * btmp);
+static stm *	timesub(const time_t * timep, int_fast32_t offset,
+				const struct state * sp, stm * tmp);
+static int		tmcomp(const stm * atmp,
+				const stm * btmp);
 static int_fast32_t	transtime(int year, const struct rule * rulep,
 				  int_fast32_t offset);
 static int		typesequiv(const struct state * sp, int a, int b);
@@ -285,25 +278,13 @@ char * tzname[2] = {
 ** Thanks to Paul Eggert for noting this.
 */
 
-static struct tm  tm;
-
-#ifdef USG_COMPAT
-long			timezone = 0;
-int			daylight = 0;
-#endif /* defined USG_COMPAT */
-
-#ifdef ALTZONE
-long			altzone = 0;
-#endif /* defined ALTZONE */
+static stm  tm;
 
 static int_fast32_t
 detzcode(const char *const codep)
 {
-    int_fast32_t	result;
-    int		i;
-
-    result = (codep[0] & 0x80) ? -1 : 0;
-    for (i = 0; i < 4; ++i)
+    int_fast32_t result = (codep[0] & 0x80) ? -1 : 0;
+    for (int i = 0; i < 4; ++i)
 	result = (result << 8) | (codep[i] & 0xff);
     return result;
 }
@@ -311,11 +292,8 @@ detzcode(const char *const codep)
 static int_fast64_t
 detzcode64(const char *const codep)
 {
-    int_fast64_t result;
-    int	i;
-
-    result = (codep[0] & 0x80) ? -1 : 0;
-    for (i = 0; i < 8; ++i)
+    int_fast64_t result = (codep[0] & 0x80) ? -1 : 0;
+    for (int i = 0; i < 8; ++i)
 	result = (result << 8) | (codep[i] & 0xff);
     return result;
 }
@@ -324,55 +302,31 @@ static void
 settzname(void)
 {
     struct state * const sp = lclptr;
-    int	i;
 
     tzname[0] = wildabbr;
     tzname[1] = wildabbr;
-#ifdef USG_COMPAT
-    daylight = 0;
-    timezone = 0;
-#endif /* defined USG_COMPAT */
-#ifdef ALTZONE
-    altzone = 0;
-#endif /* defined ALTZONE */
-#ifdef ALL_STATE
-    if (sp == NULL) {
-	tzname[0] = tzname[1] = gmt;
-	return;
-    }
-#endif /* defined ALL_STATE */
     /*
     ** And to get the latest zone names into tzname. . .
     */
-    for (i = 0; i < sp->typecnt; ++i) {
+    for (int i = 0; i < sp->typecnt; ++i) {
 	const struct ttinfo * const ttisp = &sp->ttis[i];
 	tzname[ttisp->tt_isdst] = &sp->chars[ttisp->tt_abbrind];
     }
-    for (i = 0; i < sp->timecnt; ++i) {
+    for (int i = 0; i < sp->timecnt; ++i) {
 	const struct ttinfo * const ttisp = &sp->ttis[sp->types[i]];
 	tzname[ttisp->tt_isdst] = &sp->chars[ttisp->tt_abbrind];
-#ifdef USG_COMPAT
-	if (ttisp->tt_isdst)
-	    daylight = 1;
-	if (!ttisp->tt_isdst)
-	    timezone = -(ttisp->tt_gmtoff);
-#endif /* defined USG_COMPAT */
-#ifdef ALTZONE
-	if (ttisp->tt_isdst)
-	    altzone = -(ttisp->tt_gmtoff);
-#endif /* defined ALTZONE */
     }
     /*
     ** Finally, scrub the abbreviations.
     ** First, replace bogus characters.
     */
-    for (i = 0; i < sp->charcnt; ++i)
+    for (int i = 0; i < sp->charcnt; ++i)
 	if (strchr(TZ_ABBR_CHAR_SET, sp->chars[i]) == NULL)
 	    sp->chars[i] = TZ_ABBR_ERR_CHAR;
     /*
     ** Second, truncate long abbreviations.
     */
-    for (i = 0; i < sp->typecnt; ++i) {
+    for (int i = 0; i < sp->typecnt; ++i) {
 	const struct ttinfo * const ttisp = &sp->ttis[i];
 	char * cp = &sp->chars[ttisp->tt_abbrind];
 
@@ -399,8 +353,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
     const char * p;
     int	 i;
     int	 fid;
-    int	 stored;
-    int	 nread;
+    ssize_t nread;
     typedef union {
 	struct tzhead  tzhead;
 	char  buf[2 * sizeof(struct tzhead) + 
@@ -465,7 +418,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
     nread = read(fid, up->buf, sizeof up->buf);
     if (close(fid) < 0 || nread <= 0)
 	return -1;
-    for (stored = 4; stored <= 8; stored *= 2) {
+    for (int stored = 4; stored <= 8; stored *= 2) {
 	int  ttisstdcnt, ttisgmtcnt, timecnt;
 
 	ttisstdcnt = (int) detzcode(up->tzhead.tzh_ttisstdcnt);
@@ -492,12 +445,9 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    ttisgmtcnt)			  /* ttisgmts */
 	    return -1;
 	timecnt = 0;
-	for (i = 0; i < sp->timecnt; ++i) {
-	    int_fast64_t at
-		= stored == 4 ? detzcode(p) : detzcode64(p);
-	    sp->types[i] = ((TYPE_SIGNED(time_t)
-			     ? time_t_min <= at
-			     : 0 <= at)
+	for (int i = 0; i < sp->timecnt; ++i) {
+	    int_fast64_t at = stored == 4 ? detzcode(p) : detzcode64(p);
+	    sp->types[i] = ((TYPE_SIGNED(time_t) ? time_t_min <= at : 0 <= at)
 			    && at <= time_t_max);
 	    if (sp->types[i]) {
 		if (i && !timecnt && at != time_t_min) {
@@ -514,14 +464,14 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    p += stored;
 	}
 	timecnt = 0;
-	for (i = 0; i < sp->timecnt; ++i) {
+	for (int i = 0; i < sp->timecnt; ++i) {
 	    unsigned char typ = *p++;
 	    if (sp->typecnt <= typ) return -1;
 	    if (sp->types[i])
 		sp->types[timecnt++] = typ;
 	}
 	sp->timecnt = timecnt;
-	for (i = 0; i < sp->typecnt; ++i) {
+	for (int i = 0; i < sp->typecnt; ++i) {
 	    struct ttinfo * ttisp;
 
 	    ttisp = &sp->ttis[i];
@@ -538,7 +488,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	for (i = 0; i < sp->charcnt; ++i)
 	    sp->chars[i] = *p++;
 	sp->chars[i] = '\0';	/* ensure '\0' at end */
-	for (i = 0; i < sp->leapcnt; ++i) {
+	for (int i = 0; i < sp->leapcnt; ++i) {
 	    struct lsinfo * lsisp;
 
 	    lsisp = &sp->lsis[i];
@@ -547,7 +497,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    lsisp->ls_corr = detzcode(p);
 	    p += 4;
 	}
-	for (i = 0; i < sp->typecnt; ++i) {
+	for (int i = 0; i < sp->typecnt; ++i) {
 	    struct ttinfo * ttisp;
 
 	    ttisp = &sp->ttis[i];
@@ -559,7 +509,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 		    return -1;
 	    }
 	}
-	for (i = 0; i < sp->typecnt; ++i) {
+	for (int i = 0; i < sp->typecnt; ++i) {
 	    struct ttinfo * ttisp;
 
 	    ttisp = &sp->ttis[i];
@@ -577,7 +527,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	if (up->tzhead.tzh_version[0] == '\0')
 	    break;
 	nread -= p - up->buf;
-	for (i = 0; i < nread; ++i)
+	for (int i = 0; i < nread; ++i)
 	    up->buf[i] = p[i];
 	/*
 	** If this is a signed narrow time_t system, we're done.
@@ -595,9 +545,9 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	result = tzparse(&up->buf[1], &ts, FALSE);
 	if (result == 0 && ts.typecnt == 2 &&
 	    sp->charcnt + ts.charcnt <= TZ_MAX_CHARS) {
-	    for (i = 0; i < 2; ++i)
+	    for (int i = 0; i < 2; ++i)
 		ts.ttis[i].tt_abbrind += sp->charcnt;
-	    for (i = 0; i < ts.charcnt; ++i)
+	    for (int i = 0; i < ts.charcnt; ++i)
 		sp->chars[sp->charcnt++] = ts.chars[i];
 	    i = 0;
 	    while (i < ts.timecnt && ts.ats[i] <= sp->ats[sp->timecnt - 1])
@@ -605,7 +555,8 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    while (i < ts.timecnt &&
 		   sp->timecnt < TZ_MAX_TIMES) {
 		sp->ats[sp->timecnt] = ts.ats[i];
-		sp->types[sp->timecnt] = sp->typecnt + ts.types[i];
+		sp->types[sp->timecnt] = 
+		    (unsigned char)(sp->typecnt + ts.types[i]);
 		++sp->timecnt;
 		++i;
 	    }
@@ -614,13 +565,13 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	}
     }
     if (sp->timecnt > 1) {
-	for (i = 1; i < sp->timecnt; ++i)
+	for (int i = 1; i < sp->timecnt; ++i)
 	    if (typesequiv(sp, sp->types[i], sp->types[0]) &&
 		differ_by_repeat(sp->ats[i], sp->ats[0])) {
 		sp->goback = TRUE;
 		break;
 	    }
-	for (i = sp->timecnt - 2; i >= 0; --i)
+	for (int i = sp->timecnt - 2; i >= 0; --i)
 	    if (typesequiv(sp, sp->types[sp->timecnt - 1],
 			   sp->types[i]) &&
 		differ_by_repeat(sp->ats[sp->timecnt - 1],
@@ -663,9 +614,6 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    }
     }
     sp->defaulttype = i;
-#ifdef ALL_STATE
-    free(up);
-#endif /* defined ALL_STATE */
     return 0;
 }
 
@@ -894,7 +842,6 @@ transtime(const int year, const struct rule *const rulep,
 {
     int	leapyear;
     int_fast32_t value;
-    int	i;
     int	d, m1, yy0, yy1, yy2, dow;
 
     INITIALIZE(value);
@@ -949,7 +896,7 @@ transtime(const int year, const struct rule *const rulep,
 	d = rulep->r_day - dow;
 	if (d < 0)
 	    d += DAYSPERWEEK;
-	for (i = 1; i < rulep->r_week; ++i) {
+	for (int i = 1; i < rulep->r_week; ++i) {
 	    if (d + DAYSPERWEEK >=
 		mon_lengths[leapyear][rulep->r_mon - 1])
 		break;
@@ -960,7 +907,7 @@ transtime(const int year, const struct rule *const rulep,
 	** "d" is the day-of-month (zero-origin) of the day we want.
 	*/
 	value = d * SECSPERDAY;
-	for (i = 0; i < rulep->r_mon - 1; ++i)
+	for (int i = 0; i < rulep->r_mon - 1; ++i)
 	    value += mon_lengths[leapyear][i] * SECSPERDAY;
 	break;
     }
@@ -1066,7 +1013,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    sp->ttis[0] = sp->ttis[1] = zttinfo;
 	    sp->ttis[0].tt_gmtoff = -dstoffset;
 	    sp->ttis[0].tt_isdst = 1;
-	    sp->ttis[0].tt_abbrind = stdlen + 1;
+	    sp->ttis[0].tt_abbrind = (int)(stdlen + 1);
 	    sp->ttis[1].tt_gmtoff = -stdoffset;
 	    sp->ttis[1].tt_isdst = 0;
 	    sp->ttis[1].tt_abbrind = 0;
@@ -1098,7 +1045,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 		    if (increment_overflow_time
 			(&sp->ats[timecnt], starttime))
 			break;
-		    sp->types[timecnt++] = reversed;
+		    sp->types[timecnt++] = (unsigned char) reversed;
 		    sp->ats[timecnt] = janfirst;
 		    if (increment_overflow_time
 			(&sp->ats[timecnt], endtime))
@@ -1112,12 +1059,8 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    if (!timecnt)
 		sp->typecnt = 1;	/* Perpetual DST.  */
 	} else {
-	    int_fast32_t	theirstdoffset;
-	    int_fast32_t	theirdstoffset;
-	    int_fast32_t	theiroffset;
-	    int		isdst;
-	    int		i;
-	    int		j;
+	    int_fast32_t theirstdoffset, theirdstoffset, theiroffset;
+	    int	 isdst;
 
 	    if (*name != '\0')
 		return -1;
@@ -1125,8 +1068,8 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    ** Initial values of theirstdoffset and theirdstoffset.
 	    */
 	    theirstdoffset = 0;
-	    for (i = 0; i < sp->timecnt; ++i) {
-		j = sp->types[i];
+	    for (int i = 0; i < sp->timecnt; ++i) {
+		int j = sp->types[i];
 		if (!sp->ttis[j].tt_isdst) {
 		    theirstdoffset =
 			-sp->ttis[j].tt_gmtoff;
@@ -1134,8 +1077,8 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 		}
 	    }
 	    theirdstoffset = 0;
-	    for (i = 0; i < sp->timecnt; ++i) {
-		j = sp->types[i];
+	    for (int i = 0; i < sp->timecnt; ++i) {
+		int j = sp->types[i];
 		if (sp->ttis[j].tt_isdst) {
 		    theirdstoffset =
 			-sp->ttis[j].tt_gmtoff;
@@ -1151,9 +1094,9 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    ** Now juggle transition times and types
 	    ** tracking offsets as you do.
 	    */
-	    for (i = 0; i < sp->timecnt; ++i) {
-		j = sp->types[i];
-		sp->types[i] = sp->ttis[j].tt_isdst;
+	    for (int i = 0; i < sp->timecnt; ++i) {
+		int j = sp->types[i];
+		sp->types[i] = (unsigned char)sp->ttis[j].tt_isdst;
 		if (sp->ttis[j].tt_ttisgmt) {
 		    /* No adjustment to transition time */
 		} else {
@@ -1193,7 +1136,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    sp->ttis[0].tt_abbrind = 0;
 	    sp->ttis[1].tt_gmtoff = -dstoffset;
 	    sp->ttis[1].tt_isdst = TRUE;
-	    sp->ttis[1].tt_abbrind = stdlen + 1;
+	    sp->ttis[1].tt_abbrind = (int)(stdlen + 1);
 	    sp->typecnt = 2;
 	}
     } else {
@@ -1205,7 +1148,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	sp->ttis[0].tt_isdst = 0;
 	sp->ttis[0].tt_abbrind = 0;
     }
-    sp->charcnt = stdlen + 1;
+    sp->charcnt = (int)(stdlen + 1);
     if (dstlen != 0)
 	sp->charcnt += dstlen + 1;
     if ((size_t) sp->charcnt > sizeof sp->chars)
@@ -1228,8 +1171,8 @@ gmtload(struct state * const sp)
 	(void) tzparse(gmt, sp, TRUE);
 }
 
-static void
-tzsetwall(void)
+void
+R_tzsetwall(void)
 {
     if (lcl_is_set < 0) return;
     lcl_is_set = -1;
@@ -1245,7 +1188,7 @@ tzset(void)
 
     name = getenv("TZ");
     if (name == NULL) {
-	tzsetwall();
+	R_tzsetwall();
 	return;
     }
 
@@ -1282,14 +1225,13 @@ tzset(void)
 */
 
 /*ARGSUSED*/
-static struct tm *
-localsub(const time_t *const timep, const int_fast32_t offset,
-	 struct tm *const tmp)
+static stm *
+localsub(const time_t *const timep, const int_fast32_t offset, stm *const tmp)
 {
     struct state * sp;
     const struct ttinfo * ttisp;
     int i;
-    struct tm * result;
+    stm * result;
     const time_t t = *timep;
 
     sp = lclptr;
@@ -1319,7 +1261,7 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 	    if (t < sp->ats[0])
 		newy -= years;
 	    else	newy += years;
-	    tmp->tm_year = newy;
+	    tmp->tm_year = (int)newy;
 	    if (tmp->tm_year != newy)
 		return NULL;
 	}
@@ -1350,39 +1292,36 @@ localsub(const time_t *const timep, const int_fast32_t offset,
     result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
     tmp->tm_isdst = ttisp->tt_isdst;
     tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
-#ifdef TM_ZONE
-    tmp->TM_ZONE = &sp->chars[ttisp->tt_abbrind];
-#endif /* defined TM_ZONE */
+//#ifdef HAVE_TM_ZONE
+    tmp->tm_zone = &sp->chars[ttisp->tt_abbrind];
+//#endif
     return result;
 }
 
-struct tm * localtime(const time_t * const timep)
+stm * localtime(const time_t * const timep)
 {
     tzset();
     return localsub(timep, 0L, &tm);
 }
 
-#ifdef UNUSED
 /*
 ** Re-entrant version of localtime.
 */
 
-struct tm *
-localtime_r(const time_t *const timep, struct tm *tmp)
+stm *
+localtime_r(const time_t *const timep, stm *tmp)
 {
 	return localsub(timep, 0L, tmp);
 }
-#endif
 
 /*
 ** gmtsub is to gmtime as localsub is to localtime.
 */
 
-static struct tm *
-gmtsub(const time_t *const timep, const int_fast32_t offset,
-       struct tm *const tmp)
+static stm *
+gmtsub(const time_t *const timep, const int_fast32_t offset, stm *const tmp)
 {
-    struct tm * result;
+    stm * result;
 
     if (!gmt_is_set) {
 	gmt_is_set = TRUE;
@@ -1392,32 +1331,20 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
     return result;
 }
 
-struct tm * gmtime(const time_t * const	timep)
+stm * gmtime(const time_t * const timep)
 {
     return gmtsub(timep, 0L, &tm);
 }
 
-#ifdef UNUSED
 /*
 * Re-entrant version of gmtime.
 */
 
-struct tm *
-gmtime_r(const time_t *const timep, struct tm *tmp)
+stm *
+gmtime_r(const time_t *const timep, stm *tmp)
 {
     return gmtsub(timep, 0L, tmp);
 }
-
-#ifdef STD_INSPIRED
-
-struct tm *
-offtime(const time_t *const timep, const long offset)
-{
-    return gmtsub(timep, offset, &tm);
-}
-
-#endif /* defined STD_INSPIRED */
-#endif
 
 /*
 ** Return the number of leap years through the end of the given year
@@ -1430,10 +1357,9 @@ static int leaps_thru_end_of(const int y)
 		-(leaps_thru_end_of(-(y + 1)) + 1);
 }
 
-static struct tm *
+static stm *
 timesub(const time_t *const timep, const int_fast32_t offset,
-	const struct state *const sp,
-	struct tm *const tmp)
+	const struct state *const sp, stm *const tmp)
 {
     const struct lsinfo *	lp;
     time_t			tdays;
@@ -1481,7 +1407,7 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	if (! ((! TYPE_SIGNED(time_t) || INT_MIN <= tdelta)
 	       && tdelta <= INT_MAX))
 	    return NULL;
-	idelta = tdelta;
+	idelta = (int)tdelta;
 	if (idelta == 0)
 	    idelta = (tdays < 0) ? -1 : 1;
 	newy = y;
@@ -1496,14 +1422,14 @@ timesub(const time_t *const timep, const int_fast32_t offset,
     {
 	int_fast32_t	seconds;
 
-	seconds = tdays * SECSPERDAY;
+	seconds = (int_fast32_t)(tdays * SECSPERDAY);
 	tdays = seconds / SECSPERDAY;
 	rem += seconds - tdays * SECSPERDAY;
     }
     /*
     ** Given the range, we can now fearlessly cast...
     */
-    idays = tdays;
+    idays = (int)tdays;
     rem += offset - corr;
     while (rem < 0) {
 	rem += SECSPERDAY;
@@ -1552,9 +1478,9 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	idays -= ip[tmp->tm_mon];
     tmp->tm_mday = (int) (idays + 1);
     tmp->tm_isdst = 0;
-#ifdef TM_GMTOFF
-    tmp->TM_GMTOFF = offset;
-#endif /* defined TM_GMTOFF */
+//#ifdef HAVE_TM_GMTOFF
+    tmp->tm_gmtoff = offset;
+//#endif
     return tmp;
 }
 
@@ -1574,7 +1500,7 @@ ctime(const time_t *const timep)
 char *
 ctime_r(const time_t *const timep, char *buf)
 {
-    struct tm	mytm;
+    stm	mytm;
 
     return asctime_r(localtime_r(timep, &mytm), buf);
 }
@@ -1667,7 +1593,7 @@ normalize_overflow32(int_fast32_t *const tensptr, int *const unitsptr,
 }
 
 static int
-tmcomp(const struct tm * const atmp, const struct tm * const btmp)
+tmcomp(const stm * const atmp, const stm * const btmp)
 {
     int	result;
 
@@ -1682,26 +1608,23 @@ tmcomp(const struct tm * const atmp, const struct tm * const btmp)
 }
 
 static time_t
-time2sub(struct tm *const tmp,
-	 struct tm *(*const funcp)(const time_t *, int_fast32_t, struct tm *),
+time2sub(stm *const tmp,
+	 stm *(*const funcp)(const time_t *, int_fast32_t, stm *),
 	 const int_fast32_t offset,
 	 int *const okayp,
 	 const int do_norm_secs)
 {
-    const struct state *	sp;
-    int			dir;
-    int			i, j;
-    int			saved_seconds;
-    int_fast32_t			li;
-    time_t			lo;
-    time_t			hi;
-    int_fast32_t				y;
-    time_t				newt;
-    time_t				t;
-    struct tm			yourtm, mytm;
+    const struct state * sp;
+    int	dir;
+    int	i;
+    int	 saved_seconds;
+    int_fast32_t li;
+    time_t lo, hi;
+    int_fast32_t y;
+    time_t newt, t;
+    stm	yourtm = *tmp, mytm;
 
     *okayp = FALSE;
-    yourtm = *tmp;
     if (do_norm_secs) {
 	if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec, SECSPERMIN)) {
 	    errno = EOVERFLOW;
@@ -1796,7 +1719,7 @@ time2sub(struct tm *const tmp,
 	hi = lo - 1;
     } else {
 	lo = 1;
-	for (i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)
+	for (int i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)
 	    lo *= 2;
 	hi = -(lo + 1);
     }
@@ -1849,10 +1772,10 @@ time2sub(struct tm *const tmp,
 	*/
 	sp = (const struct state *)
 	    ((funcp == localsub) ? lclptr : gmtptr);
-	for (i = sp->typecnt - 1; i >= 0; --i) {
+	for (int i = sp->typecnt - 1; i >= 0; --i) {
 	    if (sp->ttis[i].tt_isdst != yourtm.tm_isdst)
 		continue;
-	    for (j = sp->typecnt - 1; j >= 0; --j) {
+	    for (int j = sp->typecnt - 1; j >= 0; --j) {
 		if (sp->ttis[j].tt_isdst == yourtm.tm_isdst)
 		    continue;
 		newt = t + sp->ttis[j].tt_gmtoff -
@@ -1886,8 +1809,8 @@ label:
 }
 
 static time_t
-time2(struct tm * const	tmp,
-      struct tm * (*const funcp)(const time_t *, int_fast32_t, struct tm *),
+time2(stm * const tmp,
+      stm * (*const funcp)(const time_t *, int_fast32_t, stm *),
       const int_fast32_t offset,
       int *const okayp)
 {
@@ -1903,19 +1826,15 @@ time2(struct tm * const	tmp,
 }
 
 static time_t
-time1(struct tm *const tmp,
-      struct tm *(*const funcp) (const time_t *, int_fast32_t, struct tm *),
+time1(stm *const tmp,
+      stm *(*const funcp) (const time_t *, int_fast32_t, stm *),
       const int_fast32_t offset)
 {
-    time_t			t;
-    const struct state *	sp;
-    int			samei, otheri;
-    int			sameind, otherind;
-    int			i;
-    int			nseen;
-    int				seen[TZ_MAX_TYPES];
-    int				types[TZ_MAX_TYPES];
-    int				okay;
+    time_t t;
+    const struct state *sp;
+    int	seen[TZ_MAX_TYPES];
+    int types[TZ_MAX_TYPES];
+    int okay;
 
     if (tmp == NULL) {
 	errno = EINVAL;
@@ -1924,19 +1843,8 @@ time1(struct tm *const tmp,
     if (tmp->tm_isdst > 1)
 	tmp->tm_isdst = 1;
     t = time2(tmp, funcp, offset, &okay);
-#ifdef PCTS
-    /*
-    ** PCTS code courtesy Grant Sullivan.
-    */
-    if (okay)
-	return t;
-    if (tmp->tm_isdst < 0)
-	tmp->tm_isdst = 0;	/* reset to std and try again */
-#endif /* defined PCTS */
-#ifndef PCTS
     if (okay || tmp->tm_isdst < 0)
 	return t;
-#endif /* !defined PCTS */
 
     /* R change.  This appears to be required by POSIX (it says
        the setting is used 'initially') and is documented for
@@ -1958,20 +1866,20 @@ time1(struct tm *const tmp,
     ** type they need.
     */
     sp = (const struct state *) ((funcp == localsub) ?  lclptr : gmtptr);
-    for (i = 0; i < sp->typecnt; ++i)
+    for (int i = 0; i < sp->typecnt; ++i)
 	seen[i] = FALSE;
-    nseen = 0;
-    for (i = sp->timecnt - 1; i >= 0; --i)
+    int nseen = 0;
+    for (int i = sp->timecnt - 1; i >= 0; --i)
 	if (!seen[sp->types[i]]) {
 	    seen[sp->types[i]] = TRUE;
 	    types[nseen++] = sp->types[i];
 	}
-    for (sameind = 0; sameind < nseen; ++sameind) {
-	samei = types[sameind];
+    for (int sameind = 0; sameind < nseen; ++sameind) {
+	int samei = types[sameind];
 	if (sp->ttis[samei].tt_isdst != tmp->tm_isdst)
 	    continue;
-	for (otherind = 0; otherind < nseen; ++otherind) {
-	    otheri = types[otherind];
+	for (int otherind = 0; otherind < nseen; ++otherind) {
+	    int otheri = types[otherind];
 	    if (sp->ttis[otheri].tt_isdst == tmp->tm_isdst)
 		continue;
 	    tmp->tm_sec += sp->ttis[otheri].tt_gmtoff -
@@ -1989,128 +1897,37 @@ time1(struct tm *const tmp,
     return WRONG;
 }
 
-time_t mktime(struct tm * const	tmp)
+time_t mktime(stm * const tmp)
 {
     tzset();
     return time1(tmp, localsub, 0L);
 }
 
-#ifdef STD_INSPIRED
-
 time_t
-timelocal(struct tm *const tmp)
-{
-    if (tmp != NULL)
-	tmp->tm_isdst = -1;	/* in case it wasn't initialized */
-    return mktime(tmp);
-}
-
-time_t
-timegm(struct tm *const tmp)
+R_timegm(stm *tmp)
 {
     if (tmp != NULL)
 	tmp->tm_isdst = 0;
     return time1(tmp, gmtsub, 0L);
 }
 
+#ifdef STD_INSPIRED
+
 time_t
-timeoff(struct tm *const tmp, const long offset)
+timelocal(stm *const tmp)
+{
+    if (tmp != NULL)
+	tmp->tm_isdst = -1;	/* in case it wasn't initialized */
+    return mktime(tmp);
+}
+
+
+time_t
+timeoff(stm *const tmp, const long offset)
 {
     if (tmp != NULL)
 	tmp->tm_isdst = 0;
     return time1(tmp, gmtsub, offset);
-}
-
-#endif /* defined STD_INSPIRED */
-
-#ifdef CMUCS
-
-/*
-** The following is supplied for compatibility with
-** previous versions of the CMUCS runtime library.
-*/
-
-long
-gtime(struct tm *const tmp)
-{
-    const time_t	t = mktime(tmp);
-
-    if (t == WRONG)
-	return -1;
-    return t;
-}
-
-#endif /* defined CMUCS */
-
-/*
-** XXX--is the below the right way to conditionalize??
-*/
-
-#ifdef STD_INSPIRED
-
-/*
-** IEEE Std 1003.1-1988 (POSIX) legislates that 536457599
-** shall correspond to "Wed Dec 31 23:59:59 UTC 1986", which
-** is not the case if we are accounting for leap seconds.
-** So, we provide the following conversion routines for use
-** when exchanging timestamps with POSIX conforming systems.
-*/
-
-static int_fast64_t
-leapcorr(time_t *timep)
-{
-    struct state *		sp;
-    struct lsinfo *	lp;
-    int			i;
-
-    sp = lclptr;
-    i = sp->leapcnt;
-    while (--i >= 0) {
-	lp = &sp->lsis[i];
-	if (*timep >= lp->ls_trans)
-	    return lp->ls_corr;
-    }
-    return 0;
-}
-
-time_t
-time2posix(time_t t)
-{
-    tzset();
-    return t - leapcorr(&t);
-}
-
-time_t
-posix2time(time_t t)
-{
-	time_t	x;
-	time_t	y;
-
-	tzset();
-	/*
-	** For a positive leap second hit, the result
-	** is not unique. For a negative leap second
-	** hit, the corresponding time doesn't exist,
-	** so we return an adjacent second.
-	*/
-	x = t + leapcorr(&t);
-	y = x - leapcorr(&x);
-	if (y < t) {
-		do {
-			x++;
-			y = x - leapcorr(&x);
-		} while (y < t);
-		if (t != y)
-			return x - 1;
-	} else if (y > t) {
-		do {
-			--x;
-			y = x - leapcorr(&x);
-		} while (y > t);
-		if (t != y)
-			return x + 1;
-	}
-	return x;
 }
 
 #endif /* defined STD_INSPIRED */

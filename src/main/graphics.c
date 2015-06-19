@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *  Copyright (C) 2002--2011  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -54,8 +54,8 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 	/* Avoid infinities */
 	if(*max > 308) *max = 308;
 	if(*min < -307) *min = -307;
-	*min = pow(10., *min);
-	*max = pow(10., *max);
+	*min = Rexp10(*min);
+	*max = Rexp10(*max);
 	GLPretty(min, max, n);
     }
     else GEPretty(min, max, n);
@@ -75,8 +75,8 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 	*min += eps;
 	*max -= eps;
 	if(log) {
-	    *min = pow(10., *min);
-	    *max = pow(10., *max);
+	    *min = Rexp10(*min);
+	    *max = Rexp10(*max);
 	}
 	*n = 1;
     }
@@ -113,8 +113,8 @@ static void GLPretty(double *ul, double *uh, int *n)
     }
     else { /* extra tickmarks --> CreateAtVector() in ./plot.c */
 	/* round to nice "1e<N>" */
-	*ul = pow(10., (double)p1);
-	*uh = pow(10., (double)p2);
+	*ul = Rexp10((double)p1);
+	*uh = Rexp10((double)p2);
 	if (p2 - p1 <= LPR_SMALL)
 	    *n = 3; /* Small range :	Use 1,2,5,10 times 10^k tickmarks */
 	else if (p2 - p1 <= LPR_MEDIUM)

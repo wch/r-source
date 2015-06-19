@@ -63,6 +63,7 @@
 	|| (defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64) \
 	|| (defined SLJIT_CONFIG_MIPS_32 && SLJIT_CONFIG_MIPS_32) \
 	|| (defined SLJIT_CONFIG_SPARC_32 && SLJIT_CONFIG_SPARC_32) \
+	|| (defined SLJIT_CONFIG_TILEGX && SLJIT_CONFIG_TILEGX) \
 	|| (defined SLJIT_CONFIG_AUTO && SLJIT_CONFIG_AUTO) \
 	|| (defined SLJIT_CONFIG_UNSUPPORTED && SLJIT_CONFIG_UNSUPPORTED))
 #error "An architecture must be selected"
@@ -76,6 +77,7 @@
 	+ (defined SLJIT_CONFIG_ARM_THUMB2 && SLJIT_CONFIG_ARM_THUMB2) \
 	+ (defined SLJIT_CONFIG_PPC_32 && SLJIT_CONFIG_PPC_32) \
 	+ (defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64) \
+	+ (defined SLJIT_CONFIG_TILEGX && SLJIT_CONFIG_TILEGX) \
 	+ (defined SLJIT_CONFIG_MIPS_32 && SLJIT_CONFIG_MIPS_32) \
 	+ (defined SLJIT_CONFIG_SPARC_32 && SLJIT_CONFIG_SPARC_32) \
 	+ (defined SLJIT_CONFIG_AUTO && SLJIT_CONFIG_AUTO) \
@@ -108,6 +110,8 @@
 #define SLJIT_CONFIG_MIPS_32 1
 #elif defined(__sparc__) || defined(__sparc)
 #define SLJIT_CONFIG_SPARC_32 1
+#elif defined(__tilegx__)
+#define SLJIT_CONFIG_TILEGX 1
 #else
 /* Unsupported architecture */
 #define SLJIT_CONFIG_UNSUPPORTED 1
@@ -221,6 +225,13 @@
 #define SLJIT_CACHE_FLUSH(from, to) \
 	sys_icache_invalidate((char*)(from), (char*)(to) - (char*)(from))
 
+#elif defined __ANDROID__
+
+/* Android lacks __clear_cache; instead, cacheflush should be used. */
+
+#define SLJIT_CACHE_FLUSH(from, to) \
+    cacheflush((long)(from), (long)(to), 0)
+
 #elif (defined SLJIT_CONFIG_PPC_32 && SLJIT_CONFIG_PPC_32) || (defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64)
 
 /* The __clear_cache() implementation of GCC is a dummy function on PowerPC. */
@@ -263,7 +274,9 @@ typedef signed int sljit_si;
 #define SLJIT_WORD_SHIFT 0
 typedef unsigned long int sljit_uw;
 typedef long int sljit_sw;
-#elif !(defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64) && !(defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64)
+#elif !(defined SLJIT_CONFIG_X86_64 && SLJIT_CONFIG_X86_64) \
+	&& !(defined SLJIT_CONFIG_PPC_64 && SLJIT_CONFIG_PPC_64) \
+	&& !(defined SLJIT_CONFIG_TILEGX && SLJIT_CONFIG_TILEGX)
 #define SLJIT_32BIT_ARCHITECTURE 1
 #define SLJIT_WORD_SHIFT 2
 typedef unsigned int sljit_uw;
@@ -417,6 +430,7 @@ typedef double sljit_d;
 #if (defined SLJIT_EXECUTABLE_ALLOCATOR && SLJIT_EXECUTABLE_ALLOCATOR)
 SLJIT_API_FUNC_ATTRIBUTE void* sljit_malloc_exec(sljit_uw size);
 SLJIT_API_FUNC_ATTRIBUTE void sljit_free_exec(void* ptr);
+SLJIT_API_FUNC_ATTRIBUTE void sljit_free_unused_memory_exec(void);
 #define SLJIT_MALLOC_EXEC(size) sljit_malloc_exec(size)
 #define SLJIT_FREE_EXEC(ptr) sljit_free_exec(ptr)
 #endif

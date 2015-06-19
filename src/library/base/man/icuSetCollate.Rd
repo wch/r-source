@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-9 R Core Team
+% Copyright 2008-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}

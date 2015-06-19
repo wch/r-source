@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2013-11-25 r64294) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.113   0.015   0.118 
+  0.117   0.013   0.119 

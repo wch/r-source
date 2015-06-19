@@ -1614,8 +1614,8 @@ SEXP asS4(SEXP s, Rboolean flag, int complete)
     if(flag == IS_S4_OBJECT(s))
 	return s;
     PROTECT(s);
-    if(NAMED(s) == 2)
-	s = duplicate(s);
+    if(MAYBE_SHARED(s))
+	s = shallow_duplicate(s);
     UNPROTECT(1);
     if(flag) SET_S4_OBJECT(s);
     else {

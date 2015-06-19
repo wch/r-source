@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001  R Core Team
+ *  Copyright (C) 2001-2014  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,11 +35,10 @@
 	    increase CPU time without increasing accuracy.  The
 	    truncation error is limited to a relative error of
 	    T=.5*10^(-NSIG).
-   ENTEN  = 10 ^ K, where K is the largest long such that
+   ENTEN  = 10 ^ K, where K is the largest int such that
 	    ENTEN is machine-representable in working precision
    ENSIG  = 10 ^ NSIG
-   RTNSIG = 10 ^ (-K) for the smallest long K such that
-	    K >= NSIG/4
+   RTNSIG = 10 ^ (-K) for the smallest int K such that K >= NSIG/4
    ENMTEN = Smallest ABS(X) such that X/4 does not underflow
    XINF	  = Largest positive machine number; approximately beta ^ maxexp
 	    == DBL_MAX (defined in  #include <float.h>)

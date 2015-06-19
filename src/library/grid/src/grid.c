@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-13 The R Core Team
+ *                2003-2013 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -314,6 +314,7 @@ SEXP doSetViewport(SEXP vp,
 SEXP L_setviewport(SEXP invp, SEXP hasParent)
 {
     SEXP vp;
+    SEXP pushedvp, fcall;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -322,13 +323,19 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
      * to modify it to hell and gone.
      */
     PROTECT(vp = duplicate(invp));
-    vp = doSetViewport(vp, !LOGICAL(hasParent)[0], TRUE, dd);
+    /* 
+     * Call R function pushedvp() 
+     */
+    PROTECT(fcall = lang2(install("pushedvp"),
+			  vp));
+    PROTECT(pushedvp = eval(fcall, R_gridEvalEnv)); 
+    pushedvp = doSetViewport(pushedvp, !LOGICAL(hasParent)[0], TRUE, dd);
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
      */
-    setGridStateElement(dd, GSS_VP, vp);
-    UNPROTECT(1);
+    setGridStateElement(dd, GSS_VP, pushedvp);
+    UNPROTECT(3);
     return R_NilValue;
 }
 

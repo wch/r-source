@@ -1,6 +1,6 @@
 % File src/library/stats/man/Weibull.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Weibull}
@@ -83,7 +83,7 @@ all.equal(dweibull(x, shape = 1), dexp(x))
 all.equal(pweibull(x, shape = 1, scale = pi), pexp(x, rate = 1/pi))
 ## Cumulative hazard H():
 all.equal(pweibull(x, 2.5, pi, lower.tail = FALSE, log.p = TRUE),
-          -(x/pi)^2.5, tol = 1e-15)
+          -(x/pi)^2.5, tolerance = 1e-15)
 all.equal(qweibull(x/11, shape = 1, scale = pi), qexp(x/11, rate = 1/pi))
 }
 \keyword{distribution}

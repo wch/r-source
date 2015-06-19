@@ -90,4 +90,4 @@ function(x, npcs = min(10, length(x$sdev)),
     invisible()
 }
 
-loadings <- function(x) x$loadings
+loadings <- function(x, ...) x$loadings

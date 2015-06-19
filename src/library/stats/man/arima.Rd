@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -11,20 +11,21 @@
   Fit an ARIMA model to a univariate time series.
 }
 \usage{
-arima(x, order = c(0, 0, 0),
-      seasonal = list(order = c(0, 0, 0), period = NA),
+arima(x, order = c(0L, 0L, 0L),
+      seasonal = list(order = c(0L, 0L, 0L), period = NA),
       xreg = NULL, include.mean = TRUE,
       transform.pars = TRUE,
       fixed = NULL, init = NULL,
-      method = c("CSS-ML", "ML", "CSS"),
-      n.cond, optim.method = "BFGS",
+      method = c("CSS-ML", "ML", "CSS"), n.cond,
+      SSinit = c("Gardner1980", "Rossignol2011"),
+      optim.method = "BFGS",
       optim.control = list(), kappa = 1e6)
 }
 \arguments{
   \item{x}{a univariate time series}
 
   \item{order}{A specification of the non-seasonal part of the ARIMA
-    model: the three components \eqn{(p, d, q)} are the AR order, the
+    model: the three integer components \eqn{(p, d, q)} are the AR order, the
     degree of differencing, and the MA order.}
 
   \item{seasonal}{A specification of the seasonal part of the ARIMA
@@ -41,9 +42,11 @@ arima(x, order = c(0, 0, 0),
     default is \code{TRUE} for undifferenced series, and it is ignored
     for ARIMA models with differencing.}
 
-  \item{transform.pars}{Logical.  If true, the AR parameters are
+  \item{transform.pars}{logical; if true, the AR parameters are
     transformed to ensure that they remain in the region of
-    stationarity.  Not used for \code{method = "CSS"}.}
+    stationarity.  Not used for \code{method = "CSS"}.  For
+    \code{method = "ML"}, it has been advantageous to set
+    \code{transform.pars = FALSE} in some cases, see also \code{fixed}.}
 
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only \code{NA} entries in
@@ -58,14 +61,18 @@ arima(x, order = c(0, 0, 0),
     regression coefficients.  Values already specified in \code{fixed}
     will be ignored.}
 
-  \item{method}{Fitting method: maximum likelihood or minimize
+  \item{method}{fitting method: maximum likelihood or minimize
     conditional sum-of-squares.  The default (unless there are missing
     values) is to use conditional-sum-of-squares to find starting
     values, then maximum likelihood.}
 
-  \item{n.cond}{Only used if fitting by conditional-sum-of-squares: the
+  \item{n.cond}{only used if fitting by conditional-sum-of-squares: the
     number of initial observations to ignore.  It will be ignored if
     less than the maximum lag of an AR term.}
+
+  \item{SSinit}{a string specifying the algorithm to compute the
+    state-space initialization of the likelihood; see
+    \code{\link{KalmanLike}} for details.}
 
   \item{optim.method}{The value passed as the \code{method} argument to
     \code{\link{optim}}.}
@@ -80,7 +87,8 @@ arima(x, order = c(0, 0, 0),
   Different definitions of ARMA models have different signs for the
   AR and/or MA coefficients.  The definition used here has
 
-  \deqn{X_t = a_1X_{t-1} + \cdots + a_pX_{t-p} + e_t + b_1e_{t-1} + \dots + b_qe_{t-q}}{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}
+  \deqn{X_t= a_1X_{t-1}+ \cdots+ a_pX_{t-p} + e_t + b_1e_{t-1}+\cdots+ b_qe_{t-q}
+  }{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}
 
   and so the MA coefficients differ in sign from those of S-PLUS.
   Further, if \code{include.mean} is true (the default for an ARMA
@@ -219,12 +227,12 @@ arima(lh, order = c(1,0,1))
 
 arima(lh, order = c(3,0,0), method = "CSS")
 
-arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
-arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
+arima(USAccDeaths, order = c(0,1,1), seasonal = list(order = c(0,1,1)))
+arima(USAccDeaths, order = c(0,1,1), seasonal = list(order = c(0,1,1)),
       method = "CSS") # drops first 13 observations.
 # for a model with as few years as this, we want full ML
 
-arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
+arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron) - 1920)
 
 ## presidents contains NAs
 ## graphs in example(acf) suggest order 1 or 3
@@ -233,5 +241,8 @@ require(graphics)
 tsdiag(fit1)
 (fit3 <- arima(presidents, c(3, 0, 0)))  # smaller AIC
 tsdiag(fit3)
+
+## An example of ARIMA forecasting:
+predict(fit3, 3)
 }
 \keyword{ts}

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,10 +38,10 @@ double qhyper(double p, double NR, double NB, double n,
     if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
 	ML_ERR_return_NAN;
 
-    NR = floor(NR + 0.5);
-    NB = floor(NB + 0.5);
+    NR = R_forceint(NR);
+    NB = R_forceint(NB);
     N = NR + NB;
-    n = floor(n + 0.5);
+    n = R_forceint(n);
     if (NR < 0 || NB < 0 || n < 0 || n > N)
 	ML_ERR_return_NAN;
 

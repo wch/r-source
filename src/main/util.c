@@ -422,7 +422,7 @@ SEXP attribute_hidden EnsureString(SEXP s)
     return s;
 }
 
-
+/* FIXME: ngettext reguires unsigned long, but %u would seem appropriate */
 void Rf_checkArityCall(SEXP op, SEXP args, SEXP call)
 {
     if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args)) {
@@ -942,7 +942,25 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+#ifdef USE_INTERNAL_MKTIME
+const char *getTZinfo(void)
+{
+    const char *p = getenv("TZ");
+    if(p) return p;
+#ifdef HAVE_REALPATH
+    // This works on Linux, OS X and *BSD: other known OSes set TZ.
+    static char abspath[PATH_MAX+1] = "";
+    if(abspath[0]) return abspath + 20;
+    if(realpath("/etc/localtime", abspath))
+	return abspath + 20; // strip prefix of /usr/share/zoneinfo/
 #endif
+    warning("system timezone name is unknown: set environment variable TZ");
+    return "unknown";
+}
+#endif
+
+#endif // not Win32
 
 
 /* encodeString(x, w, quote, justify) */
@@ -1607,8 +1625,12 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	ans *= fac;
     }
 
-// explicit overflow to infinity
-    if (ans > DBL_MAX) return (sign > 0) ? R_PosInf : R_NegInf;
+    /* explicit overflow to infinity */
+    if (ans > DBL_MAX) {
+	if (endptr) *endptr = (char *) p;
+	return (sign > 0) ? R_PosInf : R_NegInf;
+    }
+
 done:
     if (endptr) *endptr = (char *) p;
     return sign * (double) ans;
@@ -2244,10 +2266,10 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 			*/
 			double xxx = fabs(xx), X;
 			iex = (int)floor(log10(xxx) + 1e-12);
-			X = fround(xxx/pow(10.0, (double)iex) + 1e-12,
+			X = fround(xxx/Rexp10((double)iex) + 1e-12,
 				   (double)(dig-1));
 			if(iex > 0 &&  X >= 10) {
-			    xx = X * pow(10.0, (double)iex);
+			    xx = X * Rexp10((double)iex);
 			    iex++;
 			}
 			if(iex == -4 && fabs(xx)< 1e-4) {/* VERY rare case */

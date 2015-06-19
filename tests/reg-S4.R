@@ -613,3 +613,22 @@ setMethod("is.unsorted", "A", function(x, na.rm=FALSE, strictly=FALSE)
 
 stopifnot(!is.unsorted(a), # 11:16 *is* sorted
 	  is.unsorted(rev(a)))
+
+# getSrcref failed when rematchDefinition was used
+text <- '
+setClass("MyClass", representation(val = "numeric"))
+setMethod("plot", signature(x = "MyClass"), 
+    function(x, y, ...) { 
+        # comment
+	NULL
+    })
+setMethod("initialize", signature = "MyClass",
+    function(.Object, value) {
+	# comment
+	.Object@val <- value
+	return(.Object)
+    })
+'
+source(textConnection(text), keep.source = TRUE)
+getSrcref(getMethod("plot", "MyClass"))
+getSrcref(getMethod("initialize", "MyClass"))

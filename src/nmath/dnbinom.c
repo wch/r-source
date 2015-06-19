@@ -6,7 +6,7 @@
  *    dnbinom_mu(): Martin Maechler, June 2008
  *
  *  Merge in to R:
- *	Copyright (C) 2000--2008, The R Core Team
+ *	Copyright (C) 2000--2014, The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ double dnbinom(double x, double size, double prob, int give_log)
     if (x < 0 || !R_FINITE(x)) return R_D__0;
     /* limiting case as size approaches zero is point mass at zero */
     if (x == 0 && size==0) return R_D__1;
-    x = R_D_forceint(x);
+    x = R_forceint(x);
 
     ans = dbinom_raw(size, x+size, prob, 1-prob, give_log);
     p = ((double)size)/(size+x);
@@ -77,7 +77,7 @@ double dnbinom_mu(double x, double size, double mu, int give_log)
      */
     if (x == 0 && size==0) return R_D__1;
 
-    x = R_D_forceint(x);
+    x = R_forceint(x);
     if(x == 0)/* be accurate, both for n << mu, and n >> mu :*/
 	return R_D_exp(size * (size < mu ? log(size/(size+mu)) : log1p(- mu/(size+mu))));
     if(x < 1e-10 * size) { /* don't use dbinom_raw() but MM's formula: */

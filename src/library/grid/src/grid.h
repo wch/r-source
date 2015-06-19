@@ -82,19 +82,19 @@
 /* 
  * Additional structure of a pushedvp
  */
-#define PVP_GPAR 17
-#define PVP_TRANS 18
-#define PVP_WIDTHS 19
-#define PVP_HEIGHTS 20
-#define PVP_WIDTHCM 21
-#define PVP_HEIGHTCM 22
-#define PVP_ROTATION 23
-#define PVP_CLIPRECT 24
-#define PVP_PARENT 25
-#define PVP_CHILDREN 26
-#define PVP_DEVWIDTHCM 27
-#define PVP_DEVHEIGHTCM 28
-#define PVP_PARENTGPAR 29
+#define PVP_PARENTGPAR 17
+#define PVP_GPAR 18
+#define PVP_TRANS 19
+#define PVP_WIDTHS 20
+#define PVP_HEIGHTS 21
+#define PVP_WIDTHCM 22
+#define PVP_HEIGHTCM 23
+#define PVP_ROTATION 24
+#define PVP_CLIPRECT 25
+#define PVP_PARENT 26
+#define PVP_CHILDREN 27
+#define PVP_DEVWIDTHCM 28
+#define PVP_DEVHEIGHTCM 29
 
 /*
  * Structure of a layout

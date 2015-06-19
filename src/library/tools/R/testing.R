@@ -36,7 +36,12 @@ massageExamples <-
 
     lines <- c(paste0('pkgname <- "', pkg, '"'),
                'source(file.path(R.home("share"), "R", "examples-header.R"))',
-               if (use_gct) "gctorture(TRUE)",
+               if (use_gct) {
+                   gct_n <- as.integer(Sys.getenv("_R_CHECK_GCT_N_", 0))
+                   if(!is.na(gct_n) && gct_n > 0L)
+                       sprintf("gctorture2(%s)", gct_n)
+                   else "gctorture(TRUE)"
+               },
                "options(warn = 1)")
     cat(lines, sep = "\n", file = out)
     if(.Platform$OS.type == "windows")

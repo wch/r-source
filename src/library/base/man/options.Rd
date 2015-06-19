@@ -186,9 +186,10 @@ getOption(x, default = NULL)
     \item{\code{pager}:}{the command used for displaying text files by
       \code{\link{file.show}}.
 #ifdef unix
-      Defaults to \file{\var{\link{R_HOME}}/bin/pager},
-      which selects a pager via the \env{PAGER} environment variable
-      (and that usually defaults to \code{less}).
+      Defaults to \file{\var{\link{R_HOME}}/bin/pager}, which is a shell
+      script running the command-line specified by the environment
+      variable \env{PAGER} whose default is set at configuration,
+      usually to \command{less}.
 #endif
 #ifdef windows
       Defaults to \code{"internal"}, which uses a pager similar to the

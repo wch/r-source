@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -64,8 +64,8 @@
                 is_subdir(lp, lockdir)) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
-                    file.copy(lp, dirname(pkgdir), recursive = TRUE)
-                    Sys.setFileTime(pkgdir, file.info(lp)$mtime)
+                    file.copy(lp, dirname(pkgdir), recursive = TRUE,
+                              copy.date = TRUE)
                     unlink(lp, recursive = TRUE)
                 } else {
                     ## some shells require that they be run in a known dir
@@ -176,8 +176,6 @@
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
             "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
-	    ## "      --group-writable	set file permissions to group-writable,",
-	    ## "			such that group members can update.packages()",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -293,6 +291,19 @@
         ## Figure out whether this is a source or binary package.
         is_source_package <- is.na(desc["Built"])
 
+        if (is_source_package) {
+            ## Find out if C++11 is requested in DESCRIPTION file
+            sys_requires <- desc["SystemRequirements"]
+            if (!is.na(sys_requires)) {
+                sys_requires <- unlist(strsplit(sys_requires, ","))
+                if(any(grepl("^[[:space:]]*C[+][+]11[[:space:]]*$",
+                             sys_requires, ignore.case=TRUE))) {
+                    Sys.setenv("PKG_CXX_STD"="CXX11")
+                    on.exit(Sys.unsetenv("PKG_CXX_STD"))
+                }
+            }
+        }
+        
         if (!is_first_package) cat("\n")
 
         if (is_source_package)
@@ -456,16 +467,14 @@
                 file.copy(files, dest, overwrite = TRUE)
                 ## not clear if this is still necessary, but sh version did so
 		if (!WINDOWS)
-		    Sys.chmod(file.path(dest, files),
-			      if(group.writable) "775" else "755")
+		    Sys.chmod(file.path(dest, files), dmode)
 		## OS X does not keep debugging symbols in binaries
 		## anymore so optionally we can create dSYMs. This is
 		## important since we will blow away .o files so there
 		## is no way to create it later.
 
 		if (dsym && length(grep("^darwin", R.version$os)) ) {
-		    message(gettextf("generating debug symbols (%s)",
-                                     "dSYM"),
+		    message(gettextf("generating debug symbols (%s)", "dSYM"),
                             domain = NA)
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
                     for (file in dylib) system(paste0("dsymutil ", file))
@@ -491,9 +500,10 @@
                                "R CMD SHLIB ", paste(args, collapse = " "),
                                domain = NA)
             if (.shlib_internal(args) == 0L) {
-                if(WINDOWS) {
-                    files <- Sys.glob(paste0("*", SHLIB_EXT))
-                    if(!length(files)) return(TRUE)
+                if(WINDOWS && !file.exists("install.libs.R")
+                   && !length(Sys.glob("*.dll"))) {
+                    message("no DLL was created")
+                    return(TRUE)
                 }
                 shlib_install(instdir, arch)
                 return(FALSE)
@@ -593,15 +603,15 @@
             if (nzchar(lockdir)) {
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
-                    file.copy(instdir, lockdir, recursive = TRUE)
-                    Sys.setFileTime(file.path(lockdir, pkg_name),
-                                    file.info(instdir)$mtime)
+                    file.copy(instdir, lockdir, recursive = TRUE,
+                              copy.date = TRUE)
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
                     system(paste("mv", shQuote(instdir),
                                  shQuote(file.path(lockdir, pkg_name))))
                 else
-                    file.copy(instdir, lockdir, recursive = TRUE)
+                    file.copy(instdir, lockdir, recursive = TRUE,
+                              copy.date = TRUE)
             } else if (more_than_libs) unlink(instdir, recursive = TRUE)
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
@@ -1102,7 +1112,7 @@
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             if(deps_only) {
-                env <- setRlibs()
+                env <- setRlibs(LinkingTo = TRUE)
                 libs0 <- .libPaths()
 		env <- sub("^.*=", "", env[1L])
                 .libPaths(c(lib0, env))
@@ -1145,6 +1155,7 @@
 		dir.create(destdir <- file.path(instdir, "help", "figures"))
 		file.copy(Sys.glob(c(file.path(figdir, "*.png"),
 		                     file.path(figdir, "*.jpg"),
+		                     file.path(figdir, "*.jpeg"),
 				     file.path(figdir, "*.svg"),
 				     file.path(figdir, "*.pdf"))), destdir)
 	    }
@@ -1559,8 +1570,8 @@
 
     group.writable <- if(WINDOWS) FALSE else {
 	## install package group-writable  iff  in group-writable lib
-	m <- file.info(lib)$mode
-	(m & "020") == as.octmode("020") ## TRUE  iff  g-bit is "w"
+        d <-  as.octmode("020")
+	(file.info(lib)$mode & d) == d ## TRUE  iff  g-bit is "w"
     }
 
     if (libs_only) {
@@ -1839,6 +1850,19 @@
             use_cxx1x <- TRUE
             cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
             if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
+        }
+    } else if (!use_cxx1x) {
+        val <- Sys.getenv("USE_CXX1X", NA)
+        if(!is.na(val)) {
+            use_cxx1x <- TRUE
+            cxx1xstd <- if(nzchar(val)) val else "$(CXX1XSTD)"
+        }
+    }
+    if (!use_cxx1x) {
+        cxxstd <- Sys.getenv("PKG_CXX_STD")
+        if (cxxstd == "CXX11") {
+            use_cxx1x <- TRUE
+            cxx1xstd <- "$(CXX1XSTD)"
         }
     }
 

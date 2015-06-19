@@ -1,6 +1,6 @@
 % File src/library/base/man/cut.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cut.POSIXt}
@@ -48,7 +48,7 @@
   months, with the intervals beginning on January 1, April 1,
   July 1 or October 1, based upon \code{min(x)} as appropriate.
 
-  As vector \code{break} will be sorted before use: \code{labels} will
+  A vector \code{breaks} will be sorted before use: \code{labels} will
   then correspond to the sorted vector.  
 }
 \value{

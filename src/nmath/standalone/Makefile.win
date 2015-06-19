@@ -70,7 +70,7 @@ SOURCES_NMATH = \
 	sign.c fsign.c \
 	imax2.c imin2.c \
 	chebyshev.c log1p.c expm1.c lgammacor.c gammalims.c stirlerr.c bd0.c \
-	gamma.c lgamma.c gamma_cody.c beta.c lbeta.c polygamma.c \
+	gamma.c lgamma.c gamma_cody.c beta.c lbeta.c polygamma.c cospi.c \
 	bessel_i.c bessel_j.c bessel_k.c bessel_y.c \
 	choose.c \
 	snorm.c sexp.c \

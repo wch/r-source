@@ -29,7 +29,9 @@
 ### routine.  Unless it is "" or "ASCII", the RweaveLatex driver
 ### re-encodes the output back to 'encoding': the Rtangle driver
 ### leaves it in the encoding of the current locale and records what
-### that is in a comment.
+### that is in a comment.  The "UTF-8" encoding is preserved on
+### both input and output in RweaveLatex, but is handled like 
+### other encodings in Rtangle.
 ###
 ### SweaveReadFile first looks for a call to one of the LaTeX packages
 ### inputen[cx] and deduces the vignette encoding from that, falling
@@ -226,7 +228,9 @@ SweaveReadFile <- function(file, syntax, encoding = "")
                  " declares an encoding that Sweave does not know about",
                  domain = NA, call. = FALSE)
         }
-        if (enc != "UTF-8") {
+        if (enc == "UTF-8") 
+            Encoding(text) <- enc
+        else {
             if (nzchar(enc)) text <- iconv(text, enc, "") else enc <- "ASCII"
         }
     } else enc <- "bytes"

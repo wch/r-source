@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 ## Copyright (C) 1997-1999  Adrian Trapletti
-## Copyright (C) 1999-2010  The R Core Team
+## Copyright (C) 1999-2013  The R Core Team
 ## This version distributed under LGPL (version 2 or later)
 
 

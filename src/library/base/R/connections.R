@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@ isatty <- function(con) {
 }
 
 readLines <- function(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
-                      encoding = "unknown")
+                      encoding = "unknown", skipNul = FALSE)
 {
     if(is.character(con)) {
         con <- file(con, "r")
         on.exit(close(con))
     }
-    .Internal(readLines(con, n, ok, warn, encoding))
+    .Internal(readLines(con, n, ok, warn, encoding, skipNul))
 }
 
 
@@ -152,8 +152,13 @@ truncate.connection <- function(con, ...)
     .Internal(truncate(con))
 }
 
-pushBack <- function(data, connection, newLine = TRUE)
-    .Internal(pushBack(data, connection, newLine))
+pushBack <- function(data, connection, newLine = TRUE, encoding = c("", "bytes", "UTF-8")) {
+    # match.arg doesn't work on "" default
+    if (length(encoding) > 1) encoding <- encoding[1]
+    if (nchar(encoding)) encoding <- match.arg(encoding)
+    type <- match(encoding, c("", "bytes", "UTF-8"))
+    .Internal(pushBack(data, connection, newLine, type))
+}
 
 pushBackLength <- function(connection)
     .Internal(pushBackLength(connection))

@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -126,6 +126,10 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   If a time zone is needed and that specified is invalid on your system,
   what happens is system-specific but attempts to set it will probably
   be ignored.
+  
+  Conversion from character needs to find a suitable format unless one
+  is supplied (by trying common formats in turn): this can be slow for
+  long inputs.
 }
 \seealso{
   \link{DateTimeClasses} for details of the classes;
@@ -156,6 +160,15 @@ as.POSIXct(z, origin = "1960-01-01", tz = "GMT")    # in UTC
 ## SPSS dates (R-help 2006-02-16)
 z <- c(10485849600, 10477641600, 10561104000, 10562745600)
 as.Date(as.POSIXct(z, origin = "1582-10-14", tz = "GMT"))
+
+## Stata date-times: milliseconds since 1960-01-01 00:00:00 GMT
+## format %tc excludes leap-seconds, assumed here
+## For format %tC including leap seconds, see foreign::read.dta()
+z <- 1579598122120
+op <- options(digits.secs = 3)
+# avoid rounding down: milliseconds are not exactly representable
+as.POSIXct((z+0.1)/1000, origin = "1960-01-01")
+options(op)
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
 }

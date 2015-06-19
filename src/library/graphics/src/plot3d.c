@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2012  The R Core Team
+ *  Copyright (C) 1998--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -799,11 +799,15 @@ static double labelAngle(double x1, double y1, double x2, double y2) {
 	dy = y1 - y2;
     if (dx == 0) {
 	if (dy > 0)
-	    angle = 90;
+	    angle = 90.;
 	else
-	    angle = 270;
+	    angle = 270.;
     } else {
-	angle = (180 / M_PI) * atan2(dy, dx);
+#ifdef HAVE_ATAN2PI
+	angle = 180. * atan2(dy, dx);
+#else
+	angle = (180. / M_PI) * atan2(dy, dx);
+#endif
     }
     return angle;
 }

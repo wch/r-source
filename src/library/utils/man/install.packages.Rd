@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -53,7 +53,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{repos}{
     character vector, the base URL(s) of the repositories
     to use, e.g., the URL of a CRAN mirror such as
-    \code{"http://cran.us.r-project.org"}.
+    \code{"http://cran.us.r-project.org"}.  For more details on
+    supported URL schemes see \code{\link{url}}.
 
     Can be \code{NULL} to install from local files
     (with extension \file{.tar.gz} for source packages).
@@ -100,6 +101,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     this installs all the packages needed to run \code{pkgs}, their
     examples, tests and vignettes (if the package author specified them
     correctly).
+
+    In all of these, \code{"LinkingTo"} is omitted for binary packages.
   }
   \item{type}{character, indicating the type of package to download and
     install.

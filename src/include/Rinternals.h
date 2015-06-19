@@ -499,6 +499,13 @@ Rboolean (Rf_isObject)(SEXP s);
 	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
     } while (0)
 
+/* Macros for common NAMED and SET_NAMED idioms. */
+#define NAMEDMAX 2
+#define MAYBE_SHARED(x) (NAMED(x) > 1)
+#define NO_REFERENCES(x) (NAMED(x) == 0)
+#define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+#define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
+
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
    The function STRING_ELT is used as an argument to arrayAssign even
@@ -763,6 +770,8 @@ SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
+SEXP Rf_shallow_duplicate(SEXP);
+SEXP Rf_lazy_duplicate(SEXP);
 /* the next really should not be here and is also in Defn.h */
 SEXP Rf_duplicated(SEXP, Rboolean);
 Rboolean R_envHasNoSpecialSymbols(SEXP);
@@ -837,6 +846,8 @@ Rboolean Rf_isS4(SEXP);
 SEXP Rf_asS4(SEXP, Rboolean, int);
 SEXP Rf_S3Class(SEXP);
 int Rf_isBasicClass(const char *);
+
+Rboolean R_cycle_detected(SEXP s, SEXP child);
 
 typedef enum {
     CE_NATIVE = 0,
@@ -1142,6 +1153,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define lang5			Rf_lang5
 #define lang6			Rf_lang6
 #define lastElt			Rf_lastElt
+#define lazy_duplicate		Rf_lazy_duplicate
 #define lcons			Rf_lcons
 #define length(x)		Rf_length(x)
 #define lengthgets		Rf_lengthgets
@@ -1182,6 +1194,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define setAttrib		Rf_setAttrib
 #define setSVector		Rf_setSVector
 #define setVar			Rf_setVar
+#define shallow_duplicate	Rf_shallow_duplicate
 #define str2type		Rf_str2type
 #define StringBlank		Rf_StringBlank
 #define substitute		Rf_substitute
@@ -1265,6 +1278,7 @@ void Rf_unprotect(int);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
+SEXP R_FixupRHS(SEXP x, SEXP y);
 #ifdef BIGSEXP
 SEXP PTR_TO_SEXP(void *p);
 SEXPREC *SEXPPTR(SEXP x);

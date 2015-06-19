@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,7 @@
 #include <R_ext/Print.h>
 
 #if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
-/* This may not be 100% true (see the comment in rlocales.h),
+/* This may not be 100% true (see the comment in rlocale.h),
    but it seems true in normal locales */
 # define __STDC_ISO_10646__
 #endif
@@ -167,7 +167,6 @@ static void setId( SEXP expr, yyltype loc){
 static void	CheckFormalArgs(SEXP, SEXP, YYLTYPE *);
 static SEXP	FirstArg(SEXP, SEXP);
 static SEXP	GrowList(SEXP, SEXP);
-static SEXP	Insert(SEXP, SEXP);
 static void	IfPush(void);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
@@ -576,14 +575,10 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 
 static SEXP attachSrcrefs(SEXP val)
 {
-    SEXP t, srval;
-    int n;
+    SEXP srval;
 
     PROTECT(val);
-    t = CDR(SrcRefs);
-    PROTECT(srval = allocVector(VECSXP, length(t)));
-    for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
-	SET_VECTOR_ELT(srval, n, CAR(t));
+    PROTECT(srval = PairToVectorList(SrcRefs));
     
     setAttrib(val, R_SrcrefSymbol, srval);
     setAttrib(val, R_SrcfileSymbol, ParseState.SrcFile);
@@ -599,7 +594,7 @@ static SEXP attachSrcrefs(SEXP val)
 	wholeFile.last_parsed = ParseState.xxparseno;
 	setAttrib(val, R_WholeSrcrefSymbol, makeSrcref(&wholeFile, ParseState.SrcFile));
     }
-    REPROTECT(SrcRefs = NewList(), srindex);
+    REPROTECT(SrcRefs = R_NilValue, srindex);
     ParseState.didAttach = TRUE;
     UNPROTECT(2);
     return val;
@@ -609,7 +604,7 @@ static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
 {
     if (k > 2) {
 	if (ParseState.keepSrcRefs)
-	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, ParseState.SrcFile)), srindex);
+	    REPROTECT(SrcRefs = listAppend(SrcRefs, list1(makeSrcref(lloc, ParseState.SrcFile))), srindex);
 	UNPROTECT_PTR(v);
     }
     R_CurrentExpr = v;
@@ -682,7 +677,7 @@ static SEXP xxexprlist0(void)
 	PROTECT(ans = NewList());
 	if (ParseState.keepSrcRefs) {
 	    setAttrib(ans, R_SrcrefSymbol, SrcRefs);
-	    REPROTECT(SrcRefs = NewList(), srindex);
+	    REPROTECT(SrcRefs = R_NilValue, srindex);
 	}
     }
     else
@@ -697,8 +692,7 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
 	PROTECT(tmp = NewList());
 	if (ParseState.keepSrcRefs) {
 	    setAttrib(tmp, R_SrcrefSymbol, SrcRefs);
-	    REPROTECT(SrcRefs = NewList(), srindex);
-	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, ParseState.SrcFile)), srindex);
+	    REPROTECT(SrcRefs = list1(makeSrcref(lloc, ParseState.SrcFile)), srindex);
 	}
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT_PTR(tmp);
@@ -714,7 +708,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
     SEXP ans;
     if (GenerateCode) {
 	if (ParseState.keepSrcRefs)
-	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, ParseState.SrcFile)), srindex);
+	    REPROTECT(SrcRefs = listAppend(SrcRefs, list1(makeSrcref(lloc, ParseState.SrcFile))), srindex);
 	PROTECT(ans = GrowList(exprlist, expr));
     }
     else
@@ -1026,7 +1020,7 @@ static SEXP xxexprlist(SEXP a1, YYLTYPE *lloc, SEXP a2)
 	SETCAR(a2, a1);
 	if (ParseState.keepSrcRefs) {
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
-	    REPROTECT(SrcRefs = Insert(SrcRefs, makeSrcref(lloc, ParseState.SrcFile)), srindex);
+	    REPROTECT(SrcRefs = CONS(makeSrcref(lloc, ParseState.SrcFile), SrcRefs), srindex);
 	    PROTECT(ans = attachSrcrefs(a2));
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
 	    /* SrcRefs got NAMED by being an attribute... */
@@ -1084,18 +1078,6 @@ static SEXP GrowList(SEXP l, SEXP s)
     UNPROTECT(1);
     SETCDR(CAR(l), tmp);
     SETCAR(l, tmp);
-    return l;
-}
-
-/* Insert a new element at the head of a stretchy list */
-
-static SEXP Insert(SEXP l, SEXP s)
-{
-    SEXP tmp;
-    PROTECT(s);
-    tmp = CONS(s, CDR(l));
-    UNPROTECT(1);
-    SETCDR(l, tmp);
     return l;
 }
 
@@ -1390,7 +1372,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
     	    ParseState.keepSrcRefs = TRUE;
     	    REPROTECT(ParseState.SrcFile = NewEnvironment(R_NilValue, R_NilValue, R_EmptyEnv), ParseState.SrcFileProt);
 	    REPROTECT(ParseState.Original = ParseState.SrcFile, ParseState.OriginalProt);
-	    PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
+	    PROTECT_WITH_INDEX(SrcRefs = R_NilValue, &srindex);
 	}
     }
     ParseInit();
@@ -1447,7 +1429,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     
     if (isEnvironment(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
-	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
+	PROTECT_WITH_INDEX(SrcRefs = R_NilValue, &srindex);
     }
     
     for(i = 0; ; ) {
@@ -1579,7 +1561,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     
     if (isEnvironment(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
-	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
+	PROTECT_WITH_INDEX(SrcRefs = R_NilValue, &srindex);
     }
     
     for(i = 0; ; ) {
@@ -2211,6 +2193,9 @@ static int NumericValue(int c)
 /* The idea here is that if a string contains \u escapes that are not
    valid in the current locale, we should switch to UTF-8 for that
    string.  Needs Unicode wide-char support.
+
+   Defining __STDC_ISO_10646__ is done by the OS (nor to) in wchar.t.
+   Some (e.g. Solaris, FreeBSD) have Unicode wchar_t but do not define it.
 */
 
 #if defined(Win32) || defined(__STDC_ISO_10646__)
@@ -2274,11 +2259,7 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
     char s[nb];
     memset(s, 0, nb); /* safety */
 #ifdef WC_NOT_UNICODE
-    {
-	char *ss;
-	size_t res
-	for(ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
-    }
+    for(char *ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
 #else
     wcstoutf8(s, wcs, nb);
 #endif
@@ -2461,6 +2442,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		    break;
 		case '"':
 		case '\'':
+		case '`':
 		case ' ':
 		case '\n':
 		    break;

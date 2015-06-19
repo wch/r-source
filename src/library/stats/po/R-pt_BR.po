@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -352,6 +352,14 @@ msgstr "Parte MA do modelo não é inversível"
 msgid "seasonal MA part of model is not invertible"
 msgstr "Parte MA sazonal do modelo não é inversível"
 
+#, fuzzy
+msgid "NAs in '%s'"
+msgstr "NAs em 'x'"
+
+#, fuzzy
+msgid "invalid 'SSinit'"
+msgstr "'x' inválido"
+
 msgid "converting non-invertible initial MA values"
 msgstr "convertendo valores MA iniciais não-inversíveis"
 
@@ -399,6 +407,10 @@ msgstr "todas as observações estão no mesmo grupo"
 
 msgid "there must be at least 2 observations in each group"
 msgstr "deve haver ao menos duas observações em cada grupo"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "fórmula '%s' deve ser da forma '~expr'"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' deve ser inteiro e não negativo"
@@ -1291,10 +1303,6 @@ msgstr "'iter.max' deve ser positivo"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "deve ter o mesmo número de colunas em 'x' e 'centers'"
-
-#, fuzzy
-msgid "'formula' should be of the form response ~ group"
-msgstr "fórmula '%s' deve ser da forma '~expr'"
 
 msgid "not enough 'x' data"
 msgstr "insuficientes dados 'x'"

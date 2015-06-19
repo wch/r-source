@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/system.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -121,8 +121,10 @@ shell <- function(cmd, shell, flag = "/c", intern = FALSE,
 
 shell.exec <- function(file) .Internal(shell.exec(file))
 
-Sys.timezone <- function(location = FALSE)
+Sys.timezone <- function(location = TRUE)
 {
+    tz <- Sys.getenv("TZ", names = FALSE)
+    if(nzchar(tz)) return(tz)
     if(location) return(.Internal(tzone_name()))
     z <- as.POSIXlt(Sys.time())
     zz <- attr(z, "tzone")

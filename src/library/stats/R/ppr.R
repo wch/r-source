@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 2000-12 The R Core Team
+#  Copyright (C) 2000-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

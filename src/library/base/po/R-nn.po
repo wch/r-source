@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-02-13 14:10\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -69,6 +69,18 @@ msgstr "ugyldig versjonsstreng"
 
 msgid "target is %s, current is %s"
 msgstr "målet er «%s» og gjeldande er «%s»"
+
+#, fuzzy
+msgid "'tolerance' should be numeric"
+msgstr "«x» må vera numerisk"
+
+#, fuzzy
+msgid "'scale' should be numeric or NULL"
+msgstr "«arg» skal vera éin av %s"
+
+#, fuzzy
+msgid "'%s' must be logical"
+msgstr "«subset» må vera ein logisk vektor"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) må ha lengd større enn 0"
@@ -1248,7 +1260,8 @@ msgstr "treng større verdiar av «ncol» på grunn av pivotering"
 msgid "invalid NCOL(R)"
 msgstr "ugyldig NCOL(R)"
 
-msgid "'x' must be an atomic vector"
+#, fuzzy
+msgid "'x' must be a vector of an atomic type"
 msgstr "«x» må vera ein atomsk vektor"
 
 msgid "invalid 'rle' structure"

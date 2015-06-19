@@ -1,6 +1,6 @@
 % File src/library/base/man/reg.finalizer.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{reg.finalizer}
@@ -24,11 +24,16 @@
   \code{NULL}.
 }
 \note{
-  The purpose of this function is mainly to allow objects that refer to
+  The main purpose of this function is to allow objects that refer to
   external items (a temporary file, say) to perform cleanup actions when
   they are no longer referenced from within \R.  This only makes sense
   for objects that are never copied on assignment, hence the restriction
   to environments and external pointers.
+
+  Note that as \R's interpreter is not re-entrant and the finalizer may
+  be run in the middle of a computation.  So there are many functions
+  which it is not safe to call from \code{f}: one example which caused
+  trouble is \code{\link{options}}.
 }
 \seealso{
   \code{\link{gc}} and \code{\link{Memory}} for garbage collection and

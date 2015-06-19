@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2012   The R Core Team
+ *  Copyright (C) 1997-2013   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -514,7 +514,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* objects.  A full duplication is wasteful. */
 
     if (SEXP_EQL(x, y))
-	PROTECT(y = duplicate(y));
+	PROTECT(y = shallow_duplicate(y));
     else
 	PROTECT(y);
 
@@ -793,7 +793,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* objects.  A full duplication is wasteful. */
 
     if (SEXP_EQL(x, y))
-	PROTECT(y = duplicate(y));
+	PROTECT(y = shallow_duplicate(y));
     else
 	PROTECT(y);
 
@@ -1084,7 +1084,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* objects.  A full duplication is wasteful. */
 
     if (SEXP_EQL(x, y))
-	PROTECT(y = duplicate(y));
+	PROTECT(y = shallow_duplicate(y));
     else
 	PROTECT(y);
 
@@ -1287,7 +1287,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
 static SEXP listRemove(SEXP x, SEXP s, int ind)
 {
-    SEXP a, pa, px;
+    SEXP pv, px, val;
     int i, ii, *indx, ns, nx;
     R_xlen_t stretch=0;
     const void *vmax = vmaxget();
@@ -1308,27 +1308,30 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 	    if (ii != NA_INTEGER) indx[ii - 1] = 0;
 	}
     }
-    PROTECT(a = CONS(R_NilValue, R_NilValue));
+
     px = x;
-    pa = a;
+    pv = val = R_NilValue;
     for (i = 0; i < nx; i++) {
 	if (indx[i]) {
-	    SETCDR(pa, px);
-	    px = CDR(px);
-	    pa = CDR(pa);
-	    SETCDR(pa, R_NilValue);
+	    if (IS_R_NilValue(val))
+		val = px;
+	    pv = px;
 	}
 	else {
-	    px = CDR(px);
+	    if (! IS_R_NilValue(pv))
+		SETCDR(pv, CDR(px));
 	}
+	px = CDR(px);
     }
-    SET_ATTRIB(CDR(a), ATTRIB(x));
-    IS_S4_OBJECT(x) ?  SET_S4_OBJECT(CDR(a)) : UNSET_S4_OBJECT(CDR(a));
-    SET_OBJECT(CDR(a), OBJECT(x));
-    SET_NAMED(CDR(a), NAMED(x));
-    UNPROTECT(3);
+    if (! IS_R_NilValue(val)) {
+	SET_ATTRIB(val, ATTRIB(x));
+	IS_S4_OBJECT(x) ?  SET_S4_OBJECT(val) : UNSET_S4_OBJECT(val);
+	SET_OBJECT(val, OBJECT(x));
+	SET_NAMED(val, NAMED(x));
+    }
+    UNPROTECT(2);
     vmaxset(vmax);
-    return CDR(a);
+    return val;
 }
 
 
@@ -1411,16 +1414,17 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(args);
 
+    nsubs = SubAssignArgs(args, &x, &subs, &y);
+
     /* If there are multiple references to an object we must */
     /* duplicate it so that only the local version is mutated. */
     /* This will duplicate more often than necessary, but saves */
     /* over always duplicating. */
     /* Shouldn't x be protected?  It is (as args is)! */
 
-    if (NAMED(CAR(args)) == 2)
-	x = SETCAR(args, duplicate(CAR(args)));
+    if (MAYBE_SHARED(CAR(args)))
+	x = SETCAR(args, shallow_duplicate(CAR(args)));
 
-    nsubs = SubAssignArgs(args, &x, &subs, &y);
     S4 = IS_S4_OBJECT(x);
 
     oldtype = 0;
@@ -1569,8 +1573,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Ensure that the LHS is a local variable. */
     /* If it is not, then make a local copy. */
 
-    if (NAMED(x) == 2)
-	SETCAR(args, x = duplicate(x));
+    if (MAYBE_SHARED(x))
+	SETCAR(args, x = shallow_duplicate(x));
 
     xtop = xup = x; /* x will be the element which is assigned to */
 
@@ -1770,8 +1774,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
-	    if( NAMED(y) ) y = duplicate(y);
-	    SET_VECTOR_ELT(x, offset, y);
+	    SET_VECTOR_ELT(x, offset, R_FixupRHS(x, y));
 	    break;
 
 	case 2424:      /* raw <- raw */
@@ -1801,8 +1804,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     else if (isPairList(x)) {
-	/* if (NAMED(y)) */
-	y = duplicate(y);
+	y = R_FixupRHS(x, y);
 	PROTECT(y);
 	if (nsubs == 1) {
 	    if (isNull(y)) {
@@ -1906,18 +1908,18 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     PROTECT_WITH_INDEX(val, &pvalidx);
     S4 = IS_S4_OBJECT(x);
 
-    if (NAMED(x) == 2)
-	REPROTECT(x = duplicate(x), pxidx);
+    if (MAYBE_SHARED(x))
+	REPROTECT(x = shallow_duplicate(x), pxidx);
 
     /* If we aren't creating a new entry and NAMED>0
        we need to duplicate to prevent cycles.
        If we are creating a new entry we could duplicate
-       or increase NAMED. We duplicate if NAMED==1, but
-       not if NAMED==2 */
-    if (NAMED(val) == 2)
+       or increase NAMED. We duplicate if NAMED == 1, but
+       not if NAMED > 1 */
+    if (MAYBE_SHARED(val))
 	maybe_duplicate=TRUE;
     else if (NAMED(val)==1)
-	REPROTECT(val = duplicate(val), pvalidx);
+	REPROTECT(val = R_FixupRHS(x, val), pvalidx);
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
 	xS4 = x;
@@ -1929,7 +1931,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     if ((isList(x) || isLanguage(x)) && !isNull(x)) {
 	/* Here we do need to duplicate */
 	if (maybe_duplicate)
-	    REPROTECT(val = duplicate(val), pvalidx);
+	    REPROTECT(val = R_FixupRHS(x, val), pvalidx);
 	if (SEXP_EQL(TAG(x), nlist)) {
 	    if (IS_R_NilValue(val)) {
 		SET_ATTRIB(CDR(x), ATTRIB(x));
@@ -2032,7 +2034,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	    if (imatch >= 0) {
 		/* We are just replacing an element */
 		if (maybe_duplicate)
-		    REPROTECT(val = duplicate(val), pvalidx);
+		    REPROTECT(val = R_FixupRHS(x, val), pvalidx);
 		SET_VECTOR_ELT(x, imatch, val);
 	    }
 	    else {

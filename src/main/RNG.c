@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -468,7 +468,13 @@ static void RNGkind(RNGtype newkind)
 	error(_("RNGkind: unimplemented RNG kind %d"), newkind);
     }
     GetRNGstate();
-    RNG_Init(newkind, (Int32) (unif_rand() * UINT_MAX));
+    // precaution against corruption as per package randtoolbox
+    double u = unif_rand();
+    if (u < 0.0 || u > 1.0) {
+	warning("someone corrupted the random-number generator: re-initializing");
+	RNG_Init(newkind, TimeToSeed());
+    } else
+	RNG_Init(newkind, (Int32) (u * UINT_MAX));
     RNG_kind = newkind;
     PutRNGstate();
 }

@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Team
+ *	Copyright (C) 2000-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ double dpois(double x, double lambda, int give_log)
     if (x < 0 || !R_FINITE(x))
 	return R_D__0;
 
-    x = R_D_forceint(x);
+    x = R_forceint(x);
 
     return( dpois_raw(x,lambda,give_log) );
 }

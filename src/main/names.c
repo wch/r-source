@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *  Copyright (C) 2003, 2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -127,7 +127,7 @@ FUNTAB R_FunTab[] =
 /* .Internals */
 
 {"stop",	do_stop,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
-{"warning",	do_warning,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	  0}},
+{"warning",	do_warning,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
 {"gettext",	do_gettext,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"ngettext",	do_ngettext,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	  0}},
 {"bindtextdomain",do_bindtextdomain,0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
@@ -704,7 +704,7 @@ FUNTAB R_FunTab[] =
 {"radixsort",	do_radixsort,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"order",	do_order,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rank",	do_rank,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"scan",	do_scan,	0,	11,	18,	{PP_FUNCALL, PREC_FN,	0}},
+{"scan",	do_scan,	0,	11,	19,	{PP_FUNCALL, PREC_FN,	0}},
 {"t.default",	do_transpose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"aperm",	do_aperm,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"builtins",	do_builtins,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -748,7 +748,7 @@ FUNTAB R_FunTab[] =
 {"file.append",	do_fileappend,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.symlink",do_filesymlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.link",	do_filelink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"file.copy",	do_filecopy,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"file.copy",	do_filecopy,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"list.files",	do_listfiles,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"list.dirs",	do_listdirs,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.exists", do_fileexists,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -821,7 +821,7 @@ FUNTAB R_FunTab[] =
 {"stdout",	do_stdout,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},
 {"stderr",	do_stderr,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},
 {"isatty",	do_isatty,	0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"readLines",	do_readLines,	0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
+{"readLines",	do_readLines,	0,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeLines",	do_writelines,	0,      111,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"readBin",	do_readbin,	0,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeBin",	do_writebin,	0,      211,    5,      {PP_FUNCALL, PREC_FN,	0}},
@@ -843,7 +843,7 @@ FUNTAB R_FunTab[] =
 {"unz",		do_unz,		0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"seek",	do_seek,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"truncate",	do_truncate,	0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"pushBack",	do_pushback,	0,     111,     3,      {PP_FUNCALL, PREC_FN,	0}},
+{"pushBack",	do_pushback,	0,     111,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"clearPushBack",do_clearpushback,0,   111,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"pushBackLength",do_pushbacklength,0,  11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"rawConnection",do_rawconnection,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},

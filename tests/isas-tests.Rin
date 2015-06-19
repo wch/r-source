@@ -30,7 +30,7 @@ sink("isas-tests.R")
 
 cat(".proctime00 <- proc.time()\n",
     "isall.equal <- function(x,y)",
-    "typeof(x) == typeof(y) && is.logical(r <- all.equal(x,y, tol=0)) && r \n",
+    "typeof(x) == typeof(y) && is.logical(r <- all.equal(x,y, tolerance=0)) && r \n",
     sep="\n")
 
 cat("report <- function(x) {print(x); stopifnot(x)}\n")
@@ -49,7 +49,7 @@ for(x in ex.list) {
     for(r in root) {
         cat("res <- try(as.", r, "( x ), silent = TRUE)\n", sep="")
         cat("if(!inherits(res, 'try-error'))\n   report({if(is.",r,"(x)) { ",
-            "cat('IS: ');all.equal(x, res, tol=0)\n",
+            "cat('IS: ');all.equal(x, res, tolerance=0)\n",
             "   } else   !isall.equal(x, res)})\n", sep="")
     }
 

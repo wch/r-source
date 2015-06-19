@@ -1,6 +1,6 @@
 % File src/library/tools/man/update_pkg_po.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012-3 R Core Team
+% Copyright 2012-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update_pkg_po}

@@ -76,22 +76,19 @@ SEXP Invtrans(SEXP pG, SEXP x);
 
 SEXP ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max);
 
-SEXP KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT, SEXP sV,
-		SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast);
-SEXP KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT,
-		SEXP sV, SEXP sh, SEXP fast);
-SEXP KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
-		  SEXP sV, SEXP sh, SEXP sPn, SEXP sUP);
+SEXP KalmanLike(SEXP sy, SEXP mod, SEXP sUP, SEXP op, SEXP fast);
+SEXP KalmanFore(SEXP nahead, SEXP mod, SEXP fast);
+SEXP KalmanSmooth(SEXP sy, SEXP mod, SEXP sUP);
 SEXP ARIMA_undoPars(SEXP sin, SEXP sarma);
 SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans);
 SEXP ARIMA_Invtrans(SEXP in, SEXP sarma);
 SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma);
-SEXP ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta, SEXP sa,
-		SEXP sP, SEXP sPn, SEXP sUP, SEXP giveResid);
+SEXP ARIMA_Like(SEXP sy, SEXP mod, SEXP sUP, SEXP giveResid);
 SEXP ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta, SEXP sncond,
 	       SEXP giveResid);
 SEXP TSconv(SEXP a, SEXP b);
 SEXP getQ0(SEXP sPhi, SEXP sTheta);
+SEXP getQ0bis(SEXP sPhi, SEXP sTheta, SEXP sTol);
 
 SEXP acf(SEXP x, SEXP lmax, SEXP sCor);
 SEXP pacf1(SEXP acf, SEXP lmax);

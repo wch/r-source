@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/png.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -101,7 +101,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
 
 tiff <- function(filename = "Rplot%03d.tiff",
                  width = 480, height = 480, units = "px", pointsize = 12,
-                 compression = c("none", "rle", "lzw", "jpeg", "zip"),
+                 compression = c("none", "rle", "lzw", "jpeg", "zip",
+                                 "lzw+p", "zip+p"),
                  bg = "white", res = NA, ...,
                  type = c("cairo", "Xlib", "quartz"), antialias)
 {
@@ -113,7 +114,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, aa.cairo)
     comp <- switch( match.arg(compression),
-                   "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
+                   "none" = 1L, "rle" = 2L, "lzw" = 5L, "jpeg" = 7L, "zip" = 8L,
+                   "lzw+p" = 15L, "zip+p" = 18L)
     if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);

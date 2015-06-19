@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-11-28 r64338) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin13.0.0 (64-bit)
+R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -61,4 +61,15 @@ Type 'q()' to quit R.
 [1] "2040-07-01 12:00:00 EDT"
 > c(unclass(z))
 [1] 2224771200
+> 
+> ## PR15613: had day as > 24hrs.
+> as.POSIXlt(ISOdate(2071,1,13,0,0,tz="Etc/GMT-1"))$wday
+[1] 2
+> as.POSIXlt(ISOdate(2071,1,13,0,1,tz="Etc/GMT-1"))$wday
+[1] 2
+> 
+> 
+> ## Incorrect use of %d should work even though abbreviation does match
+> old <- Sys.setlocale("LC_TIME", "C") # to be sure
+> stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
 > 

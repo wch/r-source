@@ -1,16 +1,17 @@
 % File src/library/base/man/bindenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bindenv}
-\title{Binding and Environment Adjustments}
+\title{Binding and Environment Locking, Active Bindings}
 \usage{
 lockEnvironment(env, bindings = FALSE)
 environmentIsLocked(env)
 lockBinding(sym, env)
 unlockBinding(sym, env)
 bindingIsLocked(sym, env)
+
 makeActiveBinding(sym, fun, env)
 bindingIsActive(sym, env)
 }
@@ -25,8 +26,8 @@ bindingIsActive(sym, env)
 \arguments{
   \item{env}{an environment.}
   \item{bindings}{logical specifying whether bindings should be locked.}
-  \item{sym}{a name object or character string}
-  \item{fun}{a function taking zero or one arguments}
+  \item{sym}{a name object or character string.}
+  \item{fun}{a function taking zero or one arguments.}
 }
 \description{
   These functions represent an experimental interface for adjustments
@@ -48,16 +49,18 @@ bindingIsActive(sym, env)
   bindings may be removed from an environment unless the environment is
   locked.
 
-  \code{makeActiveBinding} installs \code{fun} so that getting the value
-  of \code{sym} calls \code{fun} with no arguments, and assigning to
-  \code{sym} calls \code{fun} with one argument, the value to be
-  assigned.  This allows the implementation of things like C variables
-  linked to \R variables and variables linked to databases.  It may also
-  be useful for making thread-safe versions of some system globals.
+  \code{makeActiveBinding} installs \code{fun} in environment \code{env}
+  so that getting the value of \code{sym} calls \code{fun} with no
+  arguments, and assigning to \code{sym} calls \code{fun} with one
+  argument, the value to be assigned.  This allows the implementation of
+  things like C variables linked to \R variables and variables linked to
+  databases, and is used to implement \code{\link{setRefClass}}.  It may
+  also be useful for making thread-safe versions of some system globals.
 }
 \value{
-  The \code{*isLocked} functions return a length-one logical vector.  The
-  remaining functions return \code{NULL}, invisibly.
+  The \code{bindingIsLocked} and \code{environmentIsLocked} return a
+  length-one logical vector.  The remaining functions return
+  \code{NULL}, invisibly.
 }
 \examples{
 # locking environments

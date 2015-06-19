@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/tk_select.list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tk_select.list}

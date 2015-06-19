@@ -214,7 +214,6 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
-
 R-admin.html: $(texiincludes) $(srcdir)/Rman.css
 R-data.html: $(texiincludes) $(srcdir)/Rman.css
 R-exts.html: $(texiincludes) $(srcdir)/Rman.css
@@ -224,9 +223,7 @@ R-lang.html: $(texiincludes) $(srcdir)/Rman.css
 R-FAQ.html: $(srcdir)/Rfaq.css
 
 ebooks: epub mobi
-
 epub: $(OBJECTS_EPUB)
-
 mobi: $(OBJECTS_MOBI)
 
 info: $(OBJECTS_INFO)

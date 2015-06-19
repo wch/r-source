@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-12  The R Core Team
+ *  first part Copyright (C) 2002-2013  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify

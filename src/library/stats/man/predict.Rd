@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict}
@@ -48,7 +48,8 @@ predict (object, \dots)
   \code{\link{predict.princomp}},
   \code{\link{predict.smooth.spline}}.
 
-  \link{SafePrediction} for prediction from polynomial and spline fits.
+  \link{SafePrediction} for prediction from (univariable) polynomial and
+  spline fits.
 
   For time-series prediction,
   \code{\link{predict.ar}},

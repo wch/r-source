@@ -15,7 +15,7 @@ stopifnot(m[,as.character(0:2)] == cbind(1,a,a*a),
                                         # latter were only approximate
           all.equal(unname(m[,"0.5"]),
                     sqrt(abs(a))*ifelse(a < 0, 1i, 1),
-                    tol= 20*Meps))
+                    tolerance = 20*Meps))
 
 ## 2.10.0-2.12.1 got z^n wrong in the !HAVE_C99_COMPLEX case
 z <- 0.2853725+0.3927816i

@@ -25,6 +25,8 @@
 #include <Defn.h>
 #include <Internal.h>
 
+#include <float.h> // for DBL_MAX
+
 #define R_MSG_type	_("invalid 'type' (%s) of argument")
 #define imax2(x, y) ((x < y) ? y : x)
 
@@ -118,7 +120,9 @@ static Rboolean rsum(double *x, R_xlen_t n, double *value, Rboolean narm)
 	    s += x[i];
 	}
     }
-    *value = (double) s;
+    if(s > DBL_MAX) *value = R_PosInf;
+    else if (s < -DBL_MAX) *value = R_NegInf;
+    else *value = (double) s;
 
     return updated;
 }
@@ -301,8 +305,10 @@ static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)
 	    return updated;
 	}
     }
-    // This could over/underflow (does in package POT), so we rely on the compiler.
-    *value = (double) s;
+    // This could over/underflow (does in package POT)
+    if(s > DBL_MAX) *value = R_PosInf;
+    else if (s < -DBL_MAX) *value = R_NegInf;
+    else *value = (double) s;
 
     return updated;
 }
@@ -318,7 +324,9 @@ static Rboolean rprod(double *x, R_xlen_t n, double *value, Rboolean narm)
 	    s *= x[i];
 	}
     }
-    *value = (double) s;
+    if(s > DBL_MAX) *value = R_PosInf;
+    else if (s < -DBL_MAX) *value = R_NegInf;
+    else *value = (double) s;
 
     return updated;
 }

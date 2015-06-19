@@ -73,7 +73,7 @@
 
 
 #ifndef VALGRIND_LEVEL
-#define VALGRIND_LEVEL 0
+# define VALGRIND_LEVEL 0
 #endif
 
 #define R_USE_SIGNALS 1
@@ -81,6 +81,7 @@
 #include <Internal.h>
 #include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEgetDevice */
 #include <R_ext/Rdynload.h>
+#include <Rmath.h> // R_pow_di
 
 #if defined(Win32) && defined(LEA_MALLOC)
 /*#include <stddef.h> */
@@ -1853,9 +1854,9 @@ SEXP attribute_hidden do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* reports memory use to profiler in eval.c */
 
-void attribute_hidden get_current_mem(unsigned long *smallvsize,
-				      unsigned long *largevsize,
-				      unsigned long *nodes)
+void attribute_hidden get_current_mem(size_t *smallvsize,
+				      size_t *largevsize,
+				      size_t *nodes)
 {
     *smallvsize = R_SmallVallocSize;
     *largevsize = R_LargeVallocSize;
@@ -2050,12 +2051,12 @@ char *R_alloc(size_t nelem, int eltsize)
 	/* 64-bit platform: previous version used REALSXPs */
 	if(dsize > R_XLEN_T_MAX)  /* currently 4096 TB */
 	    error(_("cannot allocate memory block of size %0.f Tb"),
-		  dsize/pow(1024.0, 4.0));
+		  dsize/R_pow_di(1024.0, 4));
 	s = allocVector(RAWSXP, size + 1);
 #else
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
 	    error(_("cannot allocate memory block of size %0.1f Gb"),
-		  dsize/pow(1024.0, 3.0));
+		  dsize/R_pow_di(1024.0, 3));
 	s = allocVector(RAWSXP, size + 1);
 #endif
 	ATTRIB0(s) = R_VStack;
@@ -3154,14 +3155,29 @@ int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }
 void (SET_S4_OBJECT)(SEXP x){ SET_S4_OBJECT(CHK(x)); }
 void (UNSET_S4_OBJECT)(SEXP x){ UNSET_S4_OBJECT(CHK(x)); }
 
+static int nvec[32] = {
+    0,1,1,1,1,1,1,1,  // does NILSXP really count?
+    1,0,0,1,1,0,0,0,
+    0,1,1,0,0,1,1,0,
+    0,1,1,1,1,1,1,1
+};
+
+static R_INLINE SEXP CHK2(SEXP x)
+{
+    x = CHK(x);
+    if(nvec[TYPEOF(x)])
+	error("LENGTH or similar applied to %s object", type2char(TYPEOF(x)));
+    return x;
+}
+ 
 /* Vector Accessors */
-int (LENGTH)(SEXP x) { return LENGTH(CHK(x)); }
-int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK(x)); }
-void (SETLENGTH)(SEXP x, int v) { SETLENGTH(CHK(x), v); }
-void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK(x), v); }
-R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK(x)); }
-R_xlen_t (XTRUELENGTH)(SEXP x) { return XTRUELENGTH(CHK(x)); }
-int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK(x)); }
+int (LENGTH)(SEXP x) { return LENGTH(CHK2(x)); }
+int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
+void (SETLENGTH)(SEXP x, int v) { SETLENGTH(CHK2(x), v); }
+void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK2(x), v); }
+R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK2(x)); }
+R_xlen_t (XTRUELENGTH)(SEXP x) { return XTRUELENGTH(CHK2(x)); }
+int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
 
 const char *(R_CHAR)(SEXP x) {
     if(TYPEOF(x) != CHARSXP)
@@ -3245,6 +3261,9 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));
     CHECK_OLD_TO_NEW(x, v);
+    if (i < 0 || i >= XLENGTH(x)) 
+	error(_("attempt to set index %lu/%lu in SET_STRING_ELT"),
+	      i, XLENGTH(x));
     STRING_ELT(x, i) = v;
 }
 
@@ -3257,6 +3276,9 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
     CHECK_OLD_TO_NEW(x, v);
+    if (i < 0 || i >= XLENGTH(x)) 
+	error(_("attempt to set index %lu/%lu in SET_VECTOR_ELT"), 
+	      i, XLENGTH(x));
     return VECTOR_ELT(x, i) = v;
 }
 
@@ -3529,7 +3551,7 @@ static void R_ReportAllocation(R_size_t size)
 {
     if (R_IsMemReporting) {
 	if(size > R_MemReportingThreshold) {
-	    fprintf(R_MemReportingOutfile, "%ld :", (unsigned long) size);
+	    fprintf(R_MemReportingOutfile, "%lu :", (unsigned long) size);
 	    R_OutputStackTrace(R_MemReportingOutfile);
 	}
     }

@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2013-11-25 r64294) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -502,6 +502,71 @@ s12   0.92099
 > 
 > IQR(rivers)
 [1] 370
+> 
+> 
+> 
+> cleanEx()
+> nameEx("KalmanLike")
+> ### * KalmanLike
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: KalmanLike
+> ### Title: Kalman Filtering
+> ### Aliases: KalmanLike KalmanRun KalmanSmooth KalmanForecast makeARIMA
+> ### Keywords: ts
+> 
+> ### ** Examples
+> 
+> ## an ARIMA fit
+> fit3 <- arima(presidents, c(3, 0, 0))
+> predict(fit3, 12)
+$pred
+         Qtr1     Qtr2     Qtr3     Qtr4
+1975 29.84194 34.41014 39.30815 43.02779
+1976 46.18808 48.56947 50.44866 51.86064
+1977 52.94295 53.75521 54.37019 54.83150
+
+$se
+         Qtr1     Qtr2     Qtr3     Qtr4
+1975  9.00655 11.25606 13.43389 14.51516
+1976 15.25538 15.65611 15.90158 16.03792
+1977 16.11764 16.16229 16.18785 16.20220
+
+> ## reconstruct this
+> pr <- KalmanForecast(12, fit3$model)
+> pr$pred + fit3$coef[4]
+ [1] 29.84194 34.41014 39.30815 43.02779 46.18808 48.56947 50.44866 51.86064
+ [9] 52.94295 53.75521 54.37019 54.83150
+> sqrt(pr$var * fit3$sigma2)
+ [1]  9.00655 11.25606 13.43389 14.51516 15.25538 15.65611 15.90158 16.03792
+ [9] 16.11764 16.16229 16.18785 16.20220
+> ## and now do it year by year
+> mod <- fit3$model
+> for(y in 1:3) {
++   pr <- KalmanForecast(4, mod, TRUE)
++   print(list(pred = pr$pred + fit3$coef["intercept"], 
++              se = sqrt(pr$var * fit3$sigma2)))
++   mod <- attr(pr, "mod")
++ }
+$pred
+[1] 29.84194 34.41014 39.30815 43.02779
+
+$se
+[1]  9.00655 11.25606 13.43389 14.51516
+
+$pred
+[1] 46.18808 48.56947 50.44866 51.86064
+
+$se
+[1] 15.25538 15.65611 15.90158 16.03792
+
+$pred
+[1] 52.94295 53.75521 54.37019 54.83150
+
+$se
+[1] 16.11764 16.16229 16.18785 16.20220
+
 > 
 > 
 > 
@@ -1144,7 +1209,7 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > ## and how you could have got their sum via SSbiexp():
 >   ySS <- SSbiexp(xx, 3.5, log(4), 1.5, log(1))
 >   ##                      ---          ---
->   stopifnot(all.equal(y1+y2, ySS, tol=1e-15))
+>   stopifnot(all.equal(y1+y2, ySS, tolerance = 1e-15))
 > 
 > 
 > 
@@ -1792,7 +1857,7 @@ L-M 10.000000  0.6465793 19.35342 0.0336262
 [1] TRUE
 > ## Cumulative hazard H():
 > all.equal(pweibull(x, 2.5, pi, lower.tail = FALSE, log.p = TRUE),
-+           -(x/pi)^2.5, tol = 1e-15)
++           -(x/pi)^2.5, tolerance = 1e-15)
 [1] TRUE
 > all.equal(qweibull(x/11, shape = 1, scale = pi), qexp(x/11, rate = 1/pi))
 [1] TRUE
@@ -3407,7 +3472,7 @@ s.e.  0.1414   0.1702   0.1473     0.0983
 
 sigma^2 estimated as 0.1905:  part log likelihood = -28.31
 > 
-> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
+> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order = c(0,1,1)))
 
 Call:
 arima(x = USAccDeaths, order = c(0, 1, 1), seasonal = list(order = c(0, 1, 1)))
@@ -3418,7 +3483,7 @@ Coefficients:
 s.e.   0.1228   0.1784
 
 sigma^2 estimated as 99347:  log likelihood = -425.44,  aic = 856.88
-> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
+> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order = c(0,1,1)),
 +       method = "CSS") # drops first 13 observations.
 
 Call:
@@ -3433,7 +3498,7 @@ s.e.   0.1366   0.1436
 sigma^2 estimated as 110330:  part log likelihood = -426.25
 > # for a model with as few years as this, we want full ML
 > 
-> arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
+> arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron) - 1920)
 
 Call:
 arima(x = LakeHuron, order = c(2, 0, 0), xreg = time(LakeHuron) - 1920)
@@ -3472,6 +3537,17 @@ s.e.  0.0936  0.1140   0.0946     4.2845
 
 sigma^2 estimated as 81.12:  log likelihood = -414.08,  aic = 838.16
 > tsdiag(fit3)
+> 
+> ## An example of ARIMA forecasting:
+> predict(fit3, 3)
+$pred
+         Qtr1     Qtr2     Qtr3
+1975 29.84194 34.41014 39.30815
+
+$se
+         Qtr1     Qtr2     Qtr3
+1975  9.00655 11.25606 13.43389
+
 > 
 > 
 > 
@@ -3679,7 +3755,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x349b5d0>
+<environment: 0x358ba20>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4642,7 +4718,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x3b61d40>
+<bytecode: 0x45ee2e8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7059,7 +7135,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x3f13ca8>
+<environment: 0x4987960>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8612,7 +8688,7 @@ List of 8
 >   ## might not do them the same way twice, and if seems serial MKL does not.
 >   lm.. <- .lm.fit(X,y)
 >   lm.w <- .lm.fit(X*sqrt(w), y*sqrt(w))
->   id <- function(x, y) all.equal(x, y, tol = 1e-15, scale = 1)
+>   id <- function(x, y) all.equal(x, y, tolerance = 1e-15, scale = 1)
 >   stopifnot(id(unname(lm.$coef), lm..$coef),
 + 	    id(unname(lmw$coef), lm.w$coef))
 > ## End Don't show
@@ -11543,14 +11619,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x48930c8>
-<environment: 0x48874e8>
+<bytecode: 0x3ef3c18>
+<environment: 0x3cd5220>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x48931e0>
-<environment: 0x48874e8>
+<bytecode: 0x3ef3d30>
+<environment: 0x3cd5220>
 
 > 
 > 
@@ -12328,7 +12404,7 @@ attr(,"constant")
 [1] 54.875
 > pt. <- predict(npk.aov, type = "terms", terms = termL[1:4])
 > stopifnot(all.equal(pt[,1:4], pt.,
-+                     check.attr = FALSE, tol = 1e-12))
++                     tolerance = 1e-12, check.attributes = FALSE))
 > 
 > 
 > 
@@ -13476,12 +13552,12 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > dim(R)  #  10 10  1000
 [1]   10   10 1000
 > mR <- apply(R, 1:2, mean)  # ~= E[ Wish(S, 20) ] = 20 * S
-> stopifnot(all.equal(mR, 20*S, tol = .009))
+> stopifnot(all.equal(mR, 20*S, tolerance = .009))
 > 
 > ## See Details, the variance is
 > Va <- 20*(S^2 + tcrossprod(diag(S)))
 > vR <- apply(R, 1:2, var)
-> stopifnot(all.equal(vR, Va, tol = 1/16))
+> stopifnot(all.equal(vR, Va, tolerance = 1/16))
 > 
 > 
 > 
@@ -13589,11 +13665,12 @@ Female 1st             0     4     1   140
 >  stopifnot(dim(format(ft)) == 4:5,
 + 	   dim(format(ftable(UCBAdmissions))) == c(6,9))
 >  meths <- c("non.compact", "row.compact", "col.compact", "compact")
->  dimform <- function(ft) sapply(meths, function(M) dim(format(ft, method=M)))
->  m.eq    <- function(M,m) all.equal(unname(M), m, tol=0)
+>  dimform <-
++     function(ft) sapply(meths, function(M) dim(format(ft, method = M)))
+>  m.eq    <- function(M,m) all.equal(unname(M), m, tolerance = 0)
 >  ## All format(..) w/o warnings:
 >  stopifnot(m.eq(print(dimform(ft22)),
-+ 		rbind(11:10, rep(7:6, each=2))),
++ 		rbind(11:10, rep(7:6, each = 2))),
 + 	   m.eq(print(dimform(ftable(Titanic, row.vars = integer()))),
 + 		rbind(rep(6:5,2), 33)))
      non.compact row.compact col.compact compact
@@ -14932,7 +15009,7 @@ Penalized Criterion: 0.4973656
 > 
 > ## Don't show: 
 > stopifnot(all.equal(predict(s02, xx),
-+ 		    predict(s02., xx), tol = 1e-15))
++ 		    predict(s02., xx), tolerance = 1e-15))
 > ## End Don't show
 > 
 > 
@@ -15318,8 +15395,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3acb9a8>
-<environment: 0x4cde0f8>
+<bytecode: 0x3665608>
+<environment: 0x31226f0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -16729,8 +16806,8 @@ search in [0,2]
  .. modified lower,upper: (      -0.000127,           4.54)
  .. modified lower,upper: (      -0.000255,            7.1)
  .. modified lower,upper: (      -0.000511,          12.22)
-> stopifnot(all.equal(u1$root, 11, tol = 1e-5),
-+           all.equal(u2$root, 12, tol = 6e-6))
+> stopifnot(all.equal(u1$root, 11, tolerance = 1e-5),
++           all.equal(u2$root, 12, tolerance = 6e-6))
 > 
 > ## The *danger* of interval extension:
 > ## No way to find a zero of a positive function, but
@@ -16780,7 +16857,7 @@ Asserted error: _NOT_ converged in 4 iterations
 > ru2 <- sapply(u, function(x)
 +    uniroot(froot, u=x, a=a, b=b, interval= c(0.01,  10),
 +            extendInt="yes")$root)
-> stopifnot(all.equal(ru, ru2, tol = 6e-6))
+> stopifnot(all.equal(ru, ru2, tolerance = 6e-6))
 > 
 > r1 <- uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.01, 10),
 +              extendInt="up")
@@ -17621,7 +17698,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.136 0.122 5.276 0 0 
+Time elapsed:  4.843 0.115 4.976 0 0 
 > grDevices::dev.off()
 null device 
           1 

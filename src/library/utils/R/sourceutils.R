@@ -60,7 +60,10 @@ getSrcDirectory <- function(x, unique=TRUE) {
 getSrcref <- function(x) {
     if (inherits(x, "srcref")) return(x)
     if (!is.null(srcref <- attr(x, "srcref"))) return(srcref)
-    if (is.function(x)) return(getSrcref(body(x)))
+    if (is.function(x) && !is.null(srcref <- getSrcref(body(x)))) 
+	return(srcref)
+    if (methods::is(x, "MethodDefinition")) 
+	return(getSrcref(unclass(methods::unRematchDefinition(x))))
     NULL
 }
 

@@ -247,4 +247,57 @@ predict(fit, interval = "confidence", scale = 1)
 ## failed in <= 3.0.2 with object 'w' not found
 
 
+## PR#15534 deparse() did not produce reparseable complex vectors
+assert.reparsable <- function(sexp) {
+  deparsed <- paste(deparse(sexp), collapse=" ")
+  reparsed <- tryCatch(eval(parse(text=deparsed)[[1]]), error = function(e) NULL)
+  if (is.null(reparsed))
+    stop(sprintf("Deparsing produced invalid syntax: %s", deparsed))
+  if(!identical(reparsed, sexp))
+    stop(sprintf("Deparsing produced change: value is not %s", reparsed))
+}
+
+assert.reparsable(1)
+assert.reparsable("string")
+assert.reparsable(2+3i)
+assert.reparsable(1:10)
+assert.reparsable(c(NA, 12, NA, 14))
+assert.reparsable(as.complex(NA))
+assert.reparsable(complex(real=Inf, i=4))
+assert.reparsable(complex(real=Inf, i=Inf))
+assert.reparsable(complex(real=Inf, i=-Inf))
+assert.reparsable(complex(real=3, i=-Inf))
+assert.reparsable(complex(real=3, i=NaN))
+assert.reparsable(complex(r=NaN, i=0))
+assert.reparsable(complex(real=NA, i=1))
+assert.reparsable(complex(real=1, i=NA))
+## last 7 all failed
+
+
+## PR#15621 backticks could not be escaped
+stopifnot(deparse(as.name("`"), backtick=TRUE) == "`\\``")
+assign("`", TRUE)
+`\``
+tools::assertError(parse("```"))
+##
+
+
+## We dcoument tanpi(0.5) etc to be NaN
+stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
+## That is not required for system implementations, and some give +/-Inf
+
+## PR#15642 segfault when parsing overflowing reals
+as.double("1e1000")
+
+ll <- ml <- list(1,2); dim(ml) <- 2:1
+ali <- all.equal(list( ), identity)# failed in R-devel for ~ 30 hours
+al1 <- all.equal(list(1), identity)# failed in R < 3.1.0
+stopifnot(length(ali) == 3, grepl("list", ali[1]),
+	  grepl("length", ali[2], ignore.case=TRUE),
+	  is.character(al1), length(al1) >= 2,
+	  all.equal(ml, ml),
+	  all.equal(ll, ml, check.attributes=FALSE))
+
+
+
 proc.time()

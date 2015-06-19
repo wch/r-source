@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -315,14 +315,14 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    cx = nthcdr(x, (int) offset);
 	    x = CAR(cx);
 	    if (dup && NAMED(x) > 1) {
-		x = duplicate(x);
+		x = shallow_duplicate(x);
 		SETCAR(cx, x);
 	    }
 	} else {
 	    cx = x;
 	    x = VECTOR_ELT(x, offset);
 	    if (dup && NAMED(x) > 1) {
-		x = duplicate(x);
+		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
 	    }
     	}

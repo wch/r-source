@@ -1,7 +1,7 @@
 #  File src/library/stats/R/Kalman.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-12 The R Core Team
+#  Copyright (C) 2002-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,46 +17,32 @@
 #  http://www.r-project.org/Licenses/
 
 
-KalmanLike <- function(y, mod, nit = 0, fast=TRUE)
+## There is a bare-bones version of this in StructTS.
+KalmanLike <- function(y, mod, nit = 0L, update = FALSE)
 {
-    ## next call changes objects a, P, Pn if fast==TRUE: beware!
-    x <- setNames(.Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-			mod$Pn, as.integer(nit), FALSE, fast=fast),
-		  c("ssq", "sumlog"))
-    s2 <- x[1L]/length(y)
-    list(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
-}
-
-KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
-{
-    ## next call changes objects a, P, Pn if fast==TRUE: beware!
-    z <- setNames(.Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-			mod$Pn, as.integer(nit), TRUE, fast=fast),
-		  c("values", "resid", "states"))
-    x <- z$values
-    s2 <- x[1L]/length(y)
-    z[[1L]] <- c(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
+    x <- .Call(C_KalmanLike, y, mod, nit, FALSE, update)
+    z <- list(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
+    if(update) attr(z, "mod") <- attr(x, "mod")
     z
 }
 
-KalmanForecast <- function(n.ahead = 10, mod, fast=TRUE)
+KalmanRun <- function(y, mod, nit = 0L, update = FALSE)
 {
-    a <- numeric(p <- length(mod$a))
-    P <- matrix(0, p, p)
-    a[] <- mod$a
-    P[] <- mod$P
-    ## next call changes objects a, P if fast==TRUE
-    setNames(.Call(C_KalmanFore, as.integer(n.ahead), mod$Z, a, P,
-		   mod$T, mod$V, mod$h, fast=fast),
-	     c("pred", "var"))
+    z <- .Call(C_KalmanLike, y, mod, nit, TRUE, update)
+    x <- z$values
+    z[[1L]] <- c(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
+    z
 }
 
-KalmanSmooth <- function(y, mod, nit = 0)
+## used by predict.Arima
+KalmanForecast <- function(n.ahead = 10L, mod, update = FALSE)
+    .Call(C_KalmanFore, as.integer(n.ahead), mod, update)
+
+
+KalmanSmooth <- function(y, mod, nit = 0L)
 {
-    z <- setNames(.Call(C_KalmanSmooth, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-			mod$Pn, as.integer(nit)),
-		  c("smooth", "var"))
+    z <- .Call(C_KalmanSmooth, y, mod, as.integer(nit))
     dn <- dim(z$smooth)
-    dim(z$var) <- dn[c(1, 2, 2)]
+    dim(z$var) <- dn[c(1L, 2L, 2L)]
     z
 }

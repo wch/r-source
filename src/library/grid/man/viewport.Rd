@@ -1,6 +1,6 @@
 % File src/library/grid/man/viewport.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Grid Viewports}
@@ -55,9 +55,9 @@ vpTree(parent, children)
     For back-compatibility, a logical value of \code{TRUE} corresponds
     to \code{"on"} and \code{FALSE} corresponds to \code{"inherit"}.}
   \item{xscale}{A numeric vector of length two indicating the minimum and
-    maximum on the x-scale.  The limits may not be identical. }
+    maximum on the x-scale.}
   \item{yscale}{A numeric vector of length two indicating the minimum
-    and maximum on the y-scale. The limits may not be identical. }
+    and maximum on the y-scale.}
   \item{angle}{A numeric value indicating the angle of rotation of the
     viewport.  Positive values indicate the amount of rotation, in
     degrees, anticlockwise from the positive x-axis.}

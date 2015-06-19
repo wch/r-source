@@ -1,6 +1,6 @@
 % File src/library/base/man/rle.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rle}
@@ -20,14 +20,16 @@ inverse.rle(x, \dots)
 \method{print}{rle}(x, digits = getOption("digits"), prefix = "", \dots)
 }
 \arguments{
-  \item{x}{an atomic vector for \code{rle()}; an object of class
-    \code{"rle"} for \code{inverse.rle()}.}
+  \item{x}{a vector (atomic, not a list) for \code{rle()};
+    an object of class \code{"rle"} for \code{inverse.rle()}.}
   \item{\dots}{further arguments; ignored here.}
   \item{digits}{number of significant digits for printing, see
     \code{\link{print.default}}.}
   \item{prefix}{character string, prepended to each printed line.}
 }
 \details{
+  \sQuote{vector} is used in the sense of \code{\link{is.vector}}.
+
   Missing values are regarded as unequal to the previous value, even if
   that is also missing.
 

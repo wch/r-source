@@ -1093,19 +1093,30 @@ containing the following variables: @code{R_PACKAGE_NAME} (the name of
 the package), @code{R_PACKAGE_SOURCE} (the path to the source directory
 of the package), @code{R_PACKAGE_DIR} (the path of the target
 installation directory of the package), @code{R_ARCH} (the
-arch-dependent part of the path), @code{SHLIB_EXT} (the extension of
-shared objects) and @code{WINDOWS} (@code{TRUE} on Windows, @code{FALSE}
-elsewhere).  Something close to the default behavior could be replicated
-with the following @file{src/install.libs.R} file:
+arch-dependent part of the path, often empty), @code{SHLIB_EXT} (the
+extension of shared objects) and @code{WINDOWS} (@code{TRUE} on Windows,
+@code{FALSE} elsewhere).  Something close to the default behavior could
+be replicated with the following @file{src/install.libs.R} file:
 
 @example
-files <- Sys.glob(paste("*", SHLIB_EXT, sep=''))
-libarch <- if (nzchar(R_ARCH)) paste('libs', R_ARCH, sep='') else 'libs'
-dest <- file.path(R_PACKAGE_DIR, libarch)
+files <- Sys.glob(paste0("*", SHLIB_EXT))
+dest <- file.path(R_PACKAGE_DIR, paste0('libs', R_ARCH))
 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
 file.copy(files, dest, overwrite = TRUE)
 if(file.exists("symbols.rds"))
     file.copy("symbols.rds", dest, overwrite = TRUE)
+@end example
+@noindent
+On the other hand, executable programs could be installed along the
+lines of
+@example
+execs <- c("one", "two", "three")
+if(WINDOWS) execs <- paste0(execs, ".exe")
+if ( any(file.exists(execs)) ) @{
+  dest <- file.path(R_PACKAGE_DIR,  paste0('bin', R_ARCH)
+  dir.create(dest, recursive = TRUE, showWarnings = FALSE)
+  file.copy(execs, dest, overwrite = TRUE)
+@}
 @end example
 
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
@@ -1198,10 +1209,11 @@ Perl, or Tcl.  This mechanism is currently used only by a very few
 packages.  NB: only files (and not directories) under @file{exec} are
 installed (and those with names starting with a dot are ignored), and
 they are all marked as executable (mode @code{755}, moderated by
-@samp{umask}) on POSIX platforms.  Note too that this may not be
-suitable for executable @emph{programs} since some platforms (including
-OS X and Windows) support multiple architectures using the same
-installed package directory.
+@samp{umask}) on POSIX platforms.  Note too that this is not suitable
+for executable @emph{programs} since some platforms (including OS X and
+Windows) support multiple architectures using the same installed package
+directory.  The suggestion is that programs are installed under
+@file{bin} in a sub-directory which depends on the architecture.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -2236,19 +2248,19 @@ cmi.o dmi.o: iface.o
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) on all known platforms.  However, all that
-can be assumed is approximate support for the C++98 standard (the widely
-use @command{g++} deviates considerably from the standard).  Some
-compilers have a concept of `C++03' (`essentially a bug fix') or `C++
-Technical Report 1', an optional addition to the `C++03' revision which
-was published in 2007.  Finally a revised standard was published in 2011
-and compilers with fairly complete implementations are becoming
+not necessarily installed) for all known @R{}platforms.  However, all
+that can be assumed is approximate support for the C++98 standard (the
+widely used @command{g++} deviates considerably from the standard).
+Some compilers have a concept of `C++03' (`essentially a bug fix') or
+`C++ Technical Report 1', an optional addition to the `C++03' revision
+which was published in 2007.  Finally a revised standard was published
+in 2011 and compilers with fairly complete implementations are becoming
 available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
-It may be possible to compile C++11 code with @command{g++} or
-@command{c++11} by including @option{-std=c++11} in
+It may be possible to compile C++11 code with recent versions of
+@command{g++} or @command{clang++} by including @option{-std=c++11} in
 @samp{PKG_CXXFLAGS}, and earlier versions support a flag
 @option{-std=c++0x}.
 
@@ -2265,21 +2277,29 @@ possible to select a different compiler @emph{via} personal
 @end ifset
 For example, on OS X 10.7 or later one could select @command{clang++}.
 
-As from @R{} 3.1.0 there may be another way to do this (currently
-experimental).  If the package's @file{Makevars} (or
-@file{Makevars.win}) file defines the macro @samp{USE_CXX1X},
-compilation and linking will be done with the compiler specified by the
-macro @samp{CXX1X}, which can be specified when @R{} is configured or in
-a personal or site @file{Makevars} file.  This defaults to the C++
-compiler with flag @option{-std=c++11} (@option{-std=c++0x} on Windows),
-but allows an incompatible alternative to be specified just for
-C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.  (C++
-compilers, even different versions, often differ in their ABI, so their
-outputs can rarely be mixed.)
+As from @R{} 3.1.0 there is another way to do this.  If the package's
+@file{Makevars} (or @file{Makevars.win}) file defines the macro
+@samp{USE_CXX1X}, compilation and linking will be done with the compiler
+specified by the macro @samp{CXX1X} with flag @samp{CXX1XSTD}, which can
+be specified@footnote{For details of these and related macros, see file
+@file{config.site} in the @R{} sources.} when @R{} is configured or in a
+personal or site @file{Makevars} file.  This defaults to the C++
+compiler with flag @option{-std=c++11} or @option{-std=c++0x} (the
+latter on Windows), but allows an incompatible alternative to be
+specified just for C++11--using packages, e.g.@: @command{g++ 4.8.x} on
+Solaris.  (C++ compilers, even different versions, often differ in their
+ABI, so their outputs can rarely be mixed.)
 
-If the macro @samp{CXX1X} is given a value this is appended to
-@samp{CXX1XFLAGS}.  This can be used to select a different standard, say
-@option{-std=c++1y} for those compilers which support it.
+If the macro @samp{USE_CXX1X} is given a value this is used to set
+@samp{CXX1XSTD} to select a different standard, for example
+@option{-std=gnu++11} or @option{-std=c++1y}.
+
+To make this easier to use with @command{R CMD SHLIB}, the environment
+variable @env{USE_CXX1X} will be consulted if there is no
+@file{Makevars} file (nor @file{Makevars.win} on Windows). Packages without
+a @file{Makevars} file may specify that they require C++11 by
+including @samp{C++11} in the @samp{SystemRequirements} field of the
+@file{DESCRIPTION} file.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -2562,8 +2582,13 @@ a set of these customizations similar to those used by @acronym{CRAN}
 can be selected by the option @option{--as-cran} (which works best if
 Internet access is available@footnote{Windows users behind proxies may
 want to set environment variable @env{R_WIN_INTERNET2} to a non-empty
-value, e.g.@: in @file{~/.R/check_environ}.  Some Windows users may need
-to set @env{R_WIN_NO_JUNCTIONS} to a non-empty value.}).
+value, e.g.@: in @file{~/.R/check_environ}.}).  Some Windows users may
+need to set environment variable @env{R_WIN_NO_JUNCTIONS} to a non-empty
+value.  The test of cyclic declarations@footnote{For example, in early
+2014 @pkg{gdata} declared @samp{Imports: gtools} and @pkg{gtools}
+declared @samp{Imports: gdata}.}in @file{DESCRIPTION} files needs
+repositories (including @acronym{CRAN}) set: do this in
+@file{~/.Rprofile}.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -4439,7 +4464,7 @@ used also to be a @samp{Translation} type.
 This is a rather general mechanism, designed for adding new front-ends
 such as the former @pkg{gnomeGUI} package (see the @file{Archive} area on
 @acronym{CRAN}).  If a @file{configure} file is found in the top-level
-directory of the package it is executed, and then if a @code{Makefile}
+directory of the package it is executed, and then if a @file{Makefile}
 is found (often generated by @file{configure}), @code{make} is called.
 If @code{R CMD INSTALL --clean} is used @code{make clean} is called.  No
 other action is taken.
@@ -5499,12 +5524,12 @@ expert form), the following could be used:
 @end example
 
 The files containing the figures should be stored in the directory
-@file{man/figures}.  Files with extensions @file{.jpg}, @file{.pdf},
-@file{.png} and @file{.svg} from that directory will be copied to the
-@file{help/figures} directory at install time. (Figures
-in PDF format will not display in most @HTML{} browsers, but
-might be the best choice in reference manuals.)  Specify the filename
-relative to @file{man/figures} in the @code{\figure} directive.
+@file{man/figures}.  Files with extensions @file{.jpg}, @file{.jpeg},
+@file{.pdf}, @file{.png} and @file{.svg} from that directory will be
+copied to the @file{help/figures} directory at install time. (Figures in
+PDF format will not display in most @HTML{} browsers, but might be the
+best choice in reference manuals.)  Specify the filename relative to
+@file{man/figures} in the @code{\figure} directive.
 
 @node Insertions, Indices, Figures, Writing R documentation files
 @section Insertions
@@ -6328,17 +6353,142 @@ Each sample counts as 0.01 seconds.
  16.67      0.39     0.07        0     0.00           nls_iter
   7.14      0.42     0.03        0     0.00           getListElement
 
-rm /path/to/R_HOME/library/stats/libs/stats.so.profile
+rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 ... to clean up ...
 @end example
 
 It is possible that root access is needed to create the directories used
 for the profile data.
 
-@subsubsection oprofile
+@subsubsection oprofile and operf
 
-@code{oprofile} works by running a daemon which collects information.
-The daemon must be started as root, e.g.
+The @command{oprofile} project has two modes of operation.  In what is
+now called `legacy' mode, it is uses a daemon to collect information on
+a process (see below).  Since version 0.9.8 (August 2012), the preferred
+mode is to use @command{operf}, so we discuss that first.  The modes
+differ in how the profiling data is collected: it is analysed by tools
+such as @command{opreport} and @command{oppannote} in both.
+
+Here is an example on @code{x86_64} Linux using @R{} 3.0.2.  File
+@file{pvec.R} contains the part of the examples from @code{pvec} in
+package @pkg{parallel}:
+@example
+library(parallel)
+N <- 1e6
+dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
+                 as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
+system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
+@end example
+with timings from the final step
+@example
+   user  system elapsed 
+  0.371   0.237   0.612 
+@end example
+
+@R{}-level profiling by @code{Rprof} shows
+@example
+                     self.time self.pct total.time total.pct
+"strptime"                1.70    41.06       1.70     41.06
+"as.POSIXct.POSIXlt"      1.40    33.82       1.42     34.30
+"sprintf"                 0.74    17.87       0.98     23.67
+...
+@end example
+so the conversion from character to @code{POSIXlt} takes most of the
+time.
+
+This can be run under @command{operf} and analysed by
+@example
+operf R -f pvec.R
+opreport
+opreport -l /path/to/R_HOME/bin/exec/R
+opannotate --source /path/to/R_HOME/bin/exec/R
+## And for the system time
+opreport -l /lib64/libc.so.6 
+@end example
+The first report shows where (which library etc) the time was spent:
+@example
+CPU_CLK_UNHALT...|
+  samples|      %|
+------------------
+   166761 99.9161 Rdev
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	    70586 42.3276 no-vmlinux
+	    56963 34.1585 libc-2.16.so
+	    36922 22.1407 R
+	     1584  0.9499 stats.so
+	      624  0.3742 libm-2.16.so
+...
+@end example
+
+@noindent
+The rest of the output is voluminous, and only extracts are shown below.
+
+Most of the time within @R{} is spent in
+@example
+samples  %        image name symbol name
+10397    28.5123  R           R_gc_internal
+5683     15.5848  R           do_sprintf
+3036      8.3258  R           do_asPOSIXct
+2427      6.6557  R           do_strptime
+2421      6.6392  R           Rf_mkCharLenCE
+1480      4.0587  R           w_strptime_internal
+1202      3.2963  R           Rf_qnorm5
+1165      3.1948  R           unif_rand
+675       1.8511  R           mktime0
+617       1.6920  R           makelt
+617       1.6920  R           validate_tm
+584       1.6015  R           day_of_the_week
+...
+@end example
+@command{opannotate} shows that 31% of the time in @R{} is spent in
+@file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
+The analysis for @file{libc} showed that calls to @code{wcsftime}
+dominated, so those calls were cached for @R{} 3.0.3: the time spent in
+@code{no-vmlinux} (the kernel) was the reduced dramatically.
+
+On platforms which support it, callgraphs can be produced by
+@command{opcontrol --callgraph} if collected via @command{operf
+--callgraph}.
+
+The profiling data is by default stored in sub-directory
+@file{oprofile_data} of the current directory, which can be removed at
+the end of the session.
+
+Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
+@code{sm.variogram} took a long time:
+@example
+system.time(example(sm.variogram))
+...
+   user  system elapsed
+  5.543   3.202   8.785  
+@end example
+
+@noindent
+including a lot of system time.  Profiling just the slow part, the
+second plot, showed
+
+@example
+  samples|      %|
+------------------
+   381845 99.9885 R
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	   187484 49.0995 sm.so
+	   169627 44.4230 no-vmlinux
+	    12636  3.3092 libgfortran.so.3.0.0
+	     6455  1.6905 R
+@end example
+
+@noindent
+so the system time was almost all in the Linux kernel.  It is possible
+to dig deeper if you have a matching uncompressed kernel with debug
+symbols to specify @emph{via} @option{--vmlinux}: we did not.
+
+In `legacy' mode @code{oprofile} works by running a daemon which
+collects information.  The daemon must be started as root, e.g.
 
 @example
 % su
@@ -6380,10 +6530,8 @@ samples  %        symbol name
 @end example
 
 Shutting down the profiler and clearing the records needs to be done as
-root.  You can use @command{opannotate} to annotate the source code with
-the times spent in each section, if the appropriate source code was
-compiled with debugging support, and @command{opreport -c} to generate a
-callgraph (if collection was enabled and the platform supports this).
+root.
+
 
 @node Solaris, OS X, Linux, Profiling compiled code
 @subsection Solaris
@@ -6875,14 +7023,14 @@ It is possible to run all the examples, tests and vignettes covered by
 The function @code{gctorture2} provides more refined control over the GC
 torture process.  Its arguments @code{step}, @code{wait} and
 @code{inhibit_release} are documented on its help page.  Environment
-variables can also be used to turn on GC torture: @env{R_GCTORTURE}
-corresponds to the @code{step} argument to @code{gctorture},
-@env{R_GCTORTURE_WAIT} to @code{wait}, and
+variables can also be used at the start of the @R{} session to turn on
+GC torture: @env{R_GCTORTURE} corresponds to the @code{step} argument to
+@code{gctorture2}, @env{R_GCTORTURE_WAIT} to @code{wait}, and
 @env{R_GCTORTURE_INHIBIT_RELEASE} to @code{inhibit_release}.
 
 If @R{} is configured with @option{--enable-strict-barrier} then a
 variety of tests for the integrity of the write barrier are enabled.  In
-addition tests to help detect protect issues are enabled as well:
+addition tests to help detect protect issues are enabled:
 
 @itemize @bullet
 
@@ -6903,6 +7051,11 @@ The address of the node and the old type are included in the error
 message.
 
 @end itemize
+
+@code{R CMD check --use-gct} can be set to use
+@code{gctorture2(@var(n))} rather than @code{gctorture(TRUE)} by
+environment variable @env{_R_CHECK_GCT_N_} to a positive integer value
+to be used as @code{@var{n}}.
 
 Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.
@@ -7126,7 +7279,7 @@ common is @code{y[x - 1]} forgetting that @code{x} might be
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
-The current set is (on a single line):
+The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,array-bounds,bool,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
@@ -7142,6 +7295,8 @@ said to be more reliable in @command{clang} than @command{gcc}.
 For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
+
+This option does not currently compile OpenMP code.
 
 @node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Using `Dr. Memory'
@@ -7867,7 +8022,7 @@ takes 5 arguments.  The first is the @code{DllInfo} object passed by
 information about the methods.  The remaining 4 arguments are arrays
 describing the routines for each of the 4 different interfaces:
 @code{.C}, @code{.Call}, @code{.Fortran} and @code{.External}.  Each
-argument is a @code{NULL}-terminated array of the element types given in
+argument is a @code{FIND}-terminated array of the element types given in
 the following table:
 
 @quotation
@@ -8122,10 +8277,11 @@ needs to declare them as a comma-separated list in the field
 that the @file{include} directories in the installed linked-to packages
 are added to the include paths for C and C++ code.
 
-It must also specify @samp{Imports}@footnote{with a corresponding
-@code{import} or @code{importFrom} entry in the @file{NAMESPACE} file.}
-or @samp{Depends} of those packages, for they have to be loaded prior to
-this one (so the path to their compiled code has been registered).
+It must specify@footnote{whether or not @samp{LinkingTo} is used.}
+@samp{Imports} or @samp{Depends} of those packages, for they have to be
+loaded@footnote{so there needs to be a corresponding @code{import} or
+@code{importFrom} entry in the @file{NAMESPACE} file.} prior to this one
+(so the path to their compiled code has been registered).
 
 
 A @acronym{CRAN} example of the use of this mechanism is package
@@ -8205,7 +8361,7 @@ will compile @file{test.c}!
 
 If the @file{src} subdirectory of an add-on package contains source code
 with one of the extensions listed above or a file @file{Makevars} but
-@strong{not} a file @code{Makefile}, @command{R CMD INSTALL} creates a
+@strong{not} a file @file{Makefile}, @command{R CMD INSTALL} creates a
 shared object (for loading into @R{} through @code{useDynlib} in the
 @file{NAMESPACE}, or in the @code{.onLoad} function of the package)
 using the @command{R CMD SHLIB} mechanism.  If file @file{Makevars}
@@ -8219,8 +8375,8 @@ If the @file{src} subdirectory of package contains a file
 any personal @file{Makevars} files (in that order).  The first target
 found in @file{src/Makefile} is used.
 
-It is better to make use of a @code{Makevars} file rather than a
-@code{Makefile}: the latter should be needed only exceptionally.
+It is better to make use of a @file{Makevars} file rather than a
+@file{Makefile}: the latter should be needed only exceptionally.
 
 @c Not so clearcut on case-insensitive file systems.
 @c Note that whereas @code{R CMD INSTALL} makes use of a @file{Makefile},
@@ -9989,7 +10145,9 @@ We then allocate space for the calculated derivative by
 @noindent
 The first argument to @code{allocMatrix} gives the @code{SEXPTYPE} of
 the matrix: here we want it to be @code{REALSXP}.  The other two
-arguments are the numbers of rows and columns.
+arguments are the numbers of rows and columns.  (Note that @code{LENGTH}
+is intended to be used for vectors: @code{length} is more generally
+applicable.)
 
 @example
 @group
@@ -10236,6 +10394,9 @@ It is probably not a good idea to allow an external pointer to be
 @code{save}d and then reloaded, but if this happens the pointer will be
 set to the C @code{NULL} pointer.
 
+Finalizers can be run at many places in the code base and much of it,
+including the @R{} interpreter, is not re-entrant.  So great care is
+needed in choosing the code to be run in a finalizer.
 
 @cindex weak reference
 Weak references are used to allow the programmer to maintain information
@@ -11188,14 +11349,24 @@ accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 @deftypefun double cospi (double @var{x})
 Computes @code{cos(pi * x)} (where @code{pi} is 3.14159...),
 accurately, notably for half integer @var{x}.
+
+This might be provided by your platform@footnote{It is an optional C11
+extension.}, in which case it is not included in @file{Rmath.h}, but is
+in @file{math.h} which @file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double sinpi (double @var{x})
 Computes @code{sin(pi * x)} accurately, notably for (half) integer @var{x}.
+
+This might be provided by your platform, in which case it is not included
+in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double tanpi (double @var{x})
 Computes @code{tan(pi * x)} accurately, notably for (half) integer @var{x}.
+
+This might be provided by your platform, in which case it is not included
+in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double logspace_add (double @var{logx}, double @var{logy})

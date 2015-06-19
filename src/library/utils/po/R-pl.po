@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2059,6 +2059,9 @@ msgstr "'ccaddress' musi być długości 1"
 # stop("no download method found")
 msgid "no download method found"
 msgstr "nie znaleziono metody pobierania"
+
+msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
+msgstr ""
 
 # utils/R/unix/download.file.R: 68
 # warning("download had nonzero exit status")

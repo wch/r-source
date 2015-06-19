@@ -1,7 +1,7 @@
 #  File src/library/stats/R/bartlett.test.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -84,6 +84,8 @@ function(formula, data, subset, na.action, ...)
         m$data <- as.data.frame(data)
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
+    if(length(mf) != 2L)
+        stop("'formula' should be of the form response ~ group")
     DNAME <- paste(names(mf), collapse = " by ")
     names(mf) <- NULL
     y <- do.call("bartlett.test", as.list(mf))

@@ -534,37 +534,61 @@ static struct {
     {21866, "koi8-u"}, /* Ukrainian (KOI8-U); Cyrillic (KOI8-U) */
     //{28591, "iso-8859-1"}, /* ISO 8859-1 Latin 1; Western European (ISO) */
     {28591, "iso8859-1"},
+    {28591, "iso_8859-1"},
+    {28591, "iso_8859_1"},
     {28592, "iso-8859-2"}, /* ISO 8859-2 Central European; Central European (ISO) */
     {28592, "iso8859-2"},
+    {28592, "iso_8859-2"},
+    {28592, "iso_8859_2"},
     /* latin2 etc are R additions */
     {28592, "latin2"},
     {28593, "iso-8859-3"}, /* ISO 8859-3 Latin 3 */
     {28593, "iso8859-3"},
+    {28593, "iso_8859-3"},
+    {28593, "iso_8859_3"},
     {28593, "latin3"},
     {28594, "iso-8859-4"}, /* ISO 8859-4 Baltic */
-    {28594, "iso8859-4"},
+    {28594, "iso8859-4"}, /* ISO 8859-4 Baltic */
+    {28594, "iso_8859-4"},
+    {28594, "iso_8859_4"},
     {28594, "latin4"},
     {28595, "iso-8859-5"}, /* ISO 8859-5 Cyrillic */
-    {28595, "iso8859-5"},
+    {28595, "iso8859-5"}, /* ISO 8859-5 Cyrillic */
+    {28595, "iso_8859-5"},
+    {28595, "iso_8859_5"},
     {28596, "iso-8859-6"}, /* ISO 8859-6 Arabic */
-    {28596, "iso8859-6"},
+    {28596, "iso8859-6"}, /* ISO 8859-6 Arabic */
+    {28596, "iso_8859-6"},
+    {28596, "iso_8859_6"},
     {28597, "iso-8859-7"}, /* ISO 8859-7 Greek */
-    {28597, "iso8859-7"},
+    {28597, "iso8859-7"}, /* ISO 8859-7 Greek */
+    {28597, "iso_8859-7"},
+    {28597, "iso_8859_7"},
     {28598, "iso-8859-8"}, /* ISO 8859-8 Hebrew; Hebrew (ISO-Visual) */
-    {28598, "iso8859-8"},
+    {28598, "iso8859-8"}, /* ISO 8859-8 Hebrew; Hebrew (ISO-Visual) */
+    {28598, "iso_8859-8"},
+    {28598, "iso_8859_8"},
     {28599, "iso-8859-9"}, /* ISO 8859-9 Turkish */
-    {28599, "iso8859-9"},
+    {28599, "iso8859-9"}, /* ISO 8859-9 Turkish */
+    {28599, "iso_8859-9"},
+    {28599, "iso_8859_9"},
     {28599, "latin5"},
     {28603, "iso-8859-13"}, /* ISO 8859-13 Estonian */
-    {28603, "iso8859-13"},
+    {28603, "iso8859-13"}, /* ISO 8859-13 Estonian */
+    {28603, "iso_8859-13"},
+    {28603, "iso_8859_13"},
     {28603, "latin7"},
     {28605, "iso-8859-15"}, /* ISO 8859-15 Latin 9 */
-    {28605, "iso8859-15"},
+    {28605, "iso8859-15"}, /* ISO 8859-15 Latin 9 */
+    {28605, "iso_8859-15"},
+    {28605, "iso_8859_15"},
     {28605, "latin9"},
     {28605, "latin-9"},
     {29001, "x-Europa"}, /* Europa 3 */
     {38598, "iso-8859-8-i"}, /* ISO 8859-8 Hebrew; Hebrew (ISO-Logical) */
     {38598, "iso8859-8-i"}, /* ISO 8859-8 Hebrew; Hebrew (ISO-Logical) */
+    {38598, "iso_8859-8-i"},
+    {38598, "iso_8859_8-i"},
     {50220, "iso-2022-jp"}, /* ISO 2022 Japanese with no halfwidth Katakana; Japanese (JIS) */
     {50221, "csISO2022JP"}, /* ISO 2022 Japanese with halfwidth Katakana; Japanese (JIS-Allow 1 byte Kana) */
     {50222, "iso-2022-jp"}, /* ISO 2022 Japanese JIS X 0201-1989; Japanese (JIS-Allow 1 byte Kana - SO/SI) */

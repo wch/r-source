@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -129,10 +129,11 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
                               conditionMessage(res)),
                      call. = FALSE, domain = NA)
             }
-        } else if (exists(".First.lib", envir = env, inherits = FALSE) &&
-                   nsname == Sys.getenv("R_INSTALL_PKG"))
-            warning(sprintf("ignoring .First.lib() for package %s",
-                            sQuote(nsname)), domain = NA, call. = FALSE)
+        }
+##         else if (exists(".First.lib", envir = env, inherits = FALSE) &&
+##                  nsname == Sys.getenv("R_INSTALL_PKG"))
+##             warning(sprintf("ignoring .First.lib() for package %s",
+##                             sQuote(nsname)), domain = NA, call. = FALSE)
     }
     runUserHook <- function(pkgname, pkgpath) {
         hook <- getHook(packageEvent(pkgname, "attach")) # might be list()

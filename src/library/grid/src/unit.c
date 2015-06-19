@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-8 The R Core Team
+ *                2003-2013 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -930,9 +930,7 @@ double transformLocation(double location, int unit, SEXP data,
     double result = location;
     switch (unit) {
     case L_NATIVE:
-	/* It is invalid to create a viewport with identical limits on scale
-         * so we are protected from divide-by-zero
-         */
+	// FIXME: can divide by zero
 	result = ((result - scalemin)/(scalemax - scalemin))*thisCM/2.54;
 	break;
     default:
@@ -1036,9 +1034,6 @@ double transformDimension(double dim, int unit, SEXP data,
     double result = dim;
     switch (unit) {
     case L_NATIVE:
-	/* It is invalid to create a viewport with identical limits on scale
-         * so we are protected from divide-by-zero
-         */
 	result = ((dim)/(scalemax - scalemin))*thisCM/2.54;
 	break;
     default:
@@ -1694,26 +1689,14 @@ double transformXYFromINCHES(double location, int unit,
 			     pGEDevDesc dd)
 {
     double result = location;
-    /* Special case if "thisCM == 0":
-     * If converting FROM relative unit, result will already be zero 
-     * so leave it there.
-     * If converting FROM absolute unit that is zero, ditto.
-     * Otherwise (converting FROM non-zero absolute unit), 
-     * converting to relative unit is an error.
-     */
-    if ((unit == L_NATIVE || unit == L_NPC) &&
-        thisCM < 1e-6) {
-        if (result != 0)
-            error(_("Viewport has zero dimension(s)"));
-    } else {
-        switch (unit) {
-        case L_NATIVE:
-            result = scalemin + (result/(thisCM/2.54))*(scalemax - scalemin);
-            break;        
-        default:
-            result = transformFromINCHES(location, unit, gc,
-                                         thisCM, otherCM, dd);
-        }
+    switch (unit) {
+    case L_NATIVE:
+	// FIXME: this can divide by 0
+	result = scalemin + (result/(thisCM/2.54))*(scalemax - scalemin);
+	break;
+    default:
+	result = transformFromINCHES(location, unit, gc,
+				     thisCM, otherCM, dd);
     }
     return result;
 }
@@ -1725,26 +1708,13 @@ double transformWidthHeightFromINCHES(double dimension, int unit,
 				      pGEDevDesc dd)
 {
     double result = dimension;
-    /* Special case if "thisCM == 0":
-     * If converting FROM relative unit, result will already be zero 
-     * so leave it there.
-     * If converting FROM absolute unit that is zero, ditto.
-     * Otherwise (converting FROM non-zero absolute unit), 
-     * converting to relative unit is an error.
-     */
-    if ((unit == L_NATIVE || unit == L_NPC) &&
-        thisCM < 1e-6) {
-        if (result != 0)
-            error(_("Viewport has zero dimension(s)"));
-    } else {
-        switch (unit) {
-        case L_NATIVE:       
-            result = (result/(thisCM/2.54))*(scalemax - scalemin);
-            break;
-        default:
-            result = transformFromINCHES(dimension, unit, gc,
-                                         thisCM, otherCM, dd);
-        }
+    switch (unit) {
+    case L_NATIVE:       
+	result = (result/(thisCM/2.54))*(scalemax - scalemin);
+	break;
+    default:
+	result = transformFromINCHES(dimension, unit, gc,
+				     thisCM, otherCM, dd);
     }
     return result;
 }

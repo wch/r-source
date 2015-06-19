@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -63,11 +63,11 @@ iconvlist()
 
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.
-  \samp{glibc} (as used on Linux) contains one.  Several platforms
+  Linux's C runtime \samp{glibc} contains one.  Several platforms
   supply GNU \samp{libiconv}, including OS X, FreeBSD and Cygwin, in
   some cases with additional encodings.  On Windows we use a version of
   Yukihiro Nakadaira's \samp{win_iconv}, which is based on Windows'
-  codepages.  (We have added several encoding names for compatibility
+  codepages.  (We have added many encoding names for compatibility
   with other systems.)  All three have \code{iconvlist}, ignore case in
   encoding names and support \samp{//TRANSLIT} (but with different
   results, and for \samp{win_iconv} currently a \sQuote{best fit}
@@ -113,6 +113,13 @@ iconvlist()
   The only reasonably portable name for the ISO 8859-15 encoding,
   commonly known as \sQuote{Latin 9}, is \code{"latin-9"}: some
   platforms support \code{"latin9"} but GNU \samp{libiconv} does not.
+  
+  Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
+  not portable.  \code{"utf8"} is converted to \code{"UTF-8"} for
+  \code{from} (as from \R 2.8.0) and \code{to} (as from \R 3.0.3).
+  \code{"macintosh"} is the official (and most widely supported) name
+  for \sQuote{Mac Roman}
+  (\url{http://en.wikipedia.org/wiki/Mac_OS_Roman}).
 }
 
 \seealso{

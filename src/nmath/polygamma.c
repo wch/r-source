@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2007 the R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *  Copyright (C) 2004-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -189,7 +189,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	/* use	Abramowitz & Stegun 6.4.7 "Reflection Formula"
 	 *	psi(k, x) = (-1)^k psi(k, 1-x)	-  pi^{n+1} (d/dx)^n cot(x)
 	 */
-	if (x == (long)x) {
+	if (x == round(x)) {
 	    /* non-positive integer : +Inf or NaN depends on n */
 	    for(j=0; j < m; j++) /* k = j + n : */
 		ans[j] = ((j+n) % 2) ? ML_POSINF : ML_NAN;
@@ -210,11 +210,11 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	if (n == 0)
 	    tt = cos(x)/sin(x);
 	else if (n == 1)
-	    tt = -1/pow(sin(x),2);
+	    tt = -1/R_pow_di(sin(x), 2);
 	else if (n == 2)
-	    tt = 2*cos(x)/pow(sin(x),3);
+	    tt = 2*cos(x)/R_pow_di(sin(x), 3);
 	else if (n == 3)
-	    tt = -2*(2*pow(cos(x),2) + 1)/pow(sin(x),4);
+	    tt = -2*(2*R_pow_di(cos(x), 2) + 1.)/R_pow_di(sin(x), 4);
 	else /* can not happen! */
 	    tt = ML_NAN;
 	/* end cheat */
@@ -274,7 +274,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	}
 	else {
 	    if (x < wdtol) {
-		ans[0] = pow(x, -n-1.0);
+		ans[0] = R_pow_di(x, -n-1);
 		if (mm != 1) {
 		    for(k = 1; k < mm ; k++)
 			ans[k] = ans[k-1] / x;
@@ -493,7 +493,7 @@ double psigamma(double x, double deriv)
 
     if(ISNAN(x))
 	return x;
-    deriv = floor(deriv + 0.5);
+    deriv = R_forceint(deriv);
     n = (int)deriv;
     if(n > n_max) {
 	MATHLIB_WARNING2(_("deriv = %d > %d (= n_max)\n"), n, n_max);

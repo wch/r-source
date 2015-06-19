@@ -1,6 +1,6 @@
 % File src/library/base/man/file.show.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.show}
@@ -38,11 +38,12 @@ file.show(\dots, header = rep("", nfiles),
   The basic Unix version concatenates the files (using the headers) to a
   temporary file, and displays it in the pager selected by the
   \code{pager} argument, which is a character vector specifying a system
-  command to run on the set of files.  The \sQuote{factory-fresh}
-  default is to use \file{R_HOME/bin/pager}, which is a shell script
-  running the command specified by the environment variable \env{PAGER}
-  whose default is set at configuration, usually to \command{less}.  On a
-  Unix-alike \command{more} is used if \code{pager} is empty.
+  command (a full path or a command found on the \env{PATH}) to run on
+  the set of files.  The \sQuote{factory-fresh} default is to use
+  \file{R_HOME/bin/pager}, which is a shell script running the command-line
+  specified by the environment variable \env{PAGER} whose default is set
+  at configuration, usually to \command{less}.  On a Unix-alike
+  \command{more} is used if \code{pager} is empty.
 
   Most GUI systems will use a separate pager window for each file, and
   let the user leave it up while \R continues running.  The selection of

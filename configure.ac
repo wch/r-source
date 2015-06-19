@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2013 R Core Team
+### Copyright (C) 1998-2014 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -431,6 +431,12 @@ AC_ARG_WITH([valgrind-instrumentation],
 [valgrind_level=${withval}],
 [valgrind_level=0])
 
+AC_ARG_WITH([internal-tzcode],
+[AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no@:>@])],
+[use_internal_tzcode=${withval}],
+[use_internal_tzcode=default])
+
+
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
 ## fully supports Fortran and C++.
@@ -624,7 +630,7 @@ else
 fi
 AC_SUBST(CXXCPP0)
 R_GCC4_VISIBILITY
-AC_GNU_SOURCE ## needed to libintl
+AC_GNU_SOURCE ## needed for libintl
 
 AC_PROG_OBJC
 ## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
@@ -796,7 +802,8 @@ AC_HEADER_SYS_WAIT
 ## sys/param.h is one way to get PATH_MAX.
 ## sched.h is POSIX, but we use it for Linux-specific features (affinity)
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h netdb.h netinet/in.h pwd.h sched.h strings.h \
+  fpu_control.h glob.h grp.h langinfo.h \
+  netdb.h netinet/in.h pwd.h sched.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h \
   sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
 ## </NOTE>
@@ -1726,20 +1733,8 @@ AC_SUBST(FW_VERSION)
 AC_SUBST(STATICR1)
 AC_SUBST(STATICR2)
 
-: ${CXX1X=${CXX}}
-: ${CXX1XFLAGS=${CXXFLAGS}}
-: ${CXX1XPICFLAGS=${CXXPICFLAGS}}
-: ${CXX1XSTD=-std=c++11}
-AC_SUBST(CXX1X)
-AC_SUBST(CXX1XFLAGS)
-AC_SUBST(CXX1XPICFLAGS)
-AC_SUBST(CXX1XSTD)
-if test -z "${SHLIB_CXX1XLD}"; then
-  SHLIB_CXX1XLD="\$(CXX1X)"
-fi
-AC_SUBST(SHLIB_CXX1XLD)
-: ${SHLIB_CXX1XLDFLAGS=${SHLIB_CXXLDFLAGS}}
-AC_SUBST(SHLIB_CXX1XLDFLAGS)
+## C++11 and later
+R_CXX1X
 
 ### OpenMP.
 
@@ -1843,6 +1838,20 @@ fi
 ## isblank should be a macro according to C99.  It was missing on Solaris 8
 AC_CHECK_FUNCS(isblank)
 
+## Solaris libsunmath
+AC_CHECK_HEADERS(sunmath.h)
+AC_CHECK_LIB(sunmath, cospi)
+
+## Functions from draft C11 extensions, some of which are already in glibc
+## For now, do not define _GNU_SOURCE here.
+## All but pown have long been in libsunmath
+AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi], 
+[#define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+#include <math.h>
+#ifdef HAVE_SUNMATH_H
+#include <sunmath.h>
+#endif])
+
 ## fseeko/ftello are POSIX, may be macros
 ## matherr is SVID, redefined in arithmetic.c if present
 AC_CHECK_FUNCS(fseeko ftello matherr)
@@ -1865,6 +1874,8 @@ if test "${ac_cv_have_decl_stat}" = "no"; then
 fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
+R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
+R_CHECK_FUNCS([nl_langinfo], [#include <langinfo.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
@@ -2000,6 +2011,44 @@ R_MKTIME_ERRNO
 R_FUNC_MKTIME
 
 R_C99_COMPLEX
+
+## BSD extensions
+AC_CACHE_CHECK([whether 'struct tm' includes tm_zone],
+                [r_cv_have_tm_zone],
+[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+// glibc needs this defined.
+#define _BSD_SOURCE
+#include <time.h>
+
+int main() {
+    struct tm x;
+    x.tm_zone = "";
+}
+]])],
+              [r_cv_have_tm_zone=yes],
+              [r_cv_have_tm_zone=no])])
+if test "x${r_cv_have_tm_zone}" = xyes; then
+  AC_DEFINE(HAVE_TM_ZONE, 1, [Define to 1 if your 'struct tm' has tm_zone.])
+fi
+
+AC_CACHE_CHECK([whether 'struct tm' includes tm_gmtoff],
+                [r_cv_have_tm_gmtoff],
+[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+// glibc needs this defined.
+#define _BSD_SOURCE
+#include <time.h>
+
+int main() {
+    struct tm x;
+    x.tm_gmtoff = +3600;
+}
+]])],
+              [r_cv_have_tm_gmtoff=yes],
+              [r_cv_have_tm_gmtoff=no])])
+if test "x${r_cv_have_tm_gmtoff}" = xyes; then
+  AC_DEFINE(HAVE_TM_GMTOFF, 1, [Define to 1 if your 'struct tm' has tm_gmtoff.])
+fi
+
 
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
@@ -2266,6 +2315,20 @@ if test ${valgrind_level} -eq 0; then
   AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
 fi
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
+
+if test x${use_internal_tzcode} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_tzcode=yes;
+     ;; 
+esac
+fi
+
+if test "x${use_internal_tzcode}" = xyes; then
+  AC_DEFINE(USE_INTERNAL_MKTIME, 1, [Define to use internal time-zone code])
+fi
+AM_CONDITIONAL(BUILD_TZONE, [test "x${use_internal_tzcode}" = xyes])
+
 
 ## KERN_USRSTACK support (BSD, Darwin, ...)
 R_KERN_USRSTACK
@@ -2612,6 +2675,7 @@ AC_CONFIG_FILES(
   src/extra/intl/Makefile
   src/extra/pcre/Makefile
   src/extra/tre/Makefile
+  src/extra/tzone/Makefile
   src/extra/xdr/Makefile
   src/extra/xz/Makefile
   src/extra/zlib/Makefile
@@ -2703,6 +2767,7 @@ AC_OUTPUT
 ## </NOTE>
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
+r_cxx1x_compiler="${CXX1X} ${CXX1XSTD} ${CXX1XFLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -2803,6 +2868,7 @@ R is now configured for ${host}
   Fortran 77 compiler:       ${r_f77_compiler}
 
   C++ compiler:              ${r_cxx_compiler}
+  C++ 11 compiler:           ${r_cxx1x_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 

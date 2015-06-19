@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -45,7 +45,6 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     (See also \sQuote{Details}.)
 #endif
   }
-
   \item{cacheOK}{logical.  Is a server-side cached value acceptable?
     Implemented for the \code{"internal"}, \code{"wget"} and
     \code{"curl"} methods.}
@@ -81,7 +80,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   Note that \samp{https://} URLs are
 #ifdef unix
-  not supported.
+  not supported by the internal method.
 #endif
 #ifdef windows
   only supported if \option{--internet2} or environment variable
@@ -156,7 +155,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \command{curl} (\url{http://curl.haxx.se/}) is installed on OS X and
   commonly on Unix-alikes.  Windows binaries are available at that URL.
 
-  \command{lynx} (\url{http://lynx.browser.org/} is of historical interest.
+  Use of \command{lynx} (\url{http://lynx.browser.org/} is of historical
+  interest and now deprecated.
 }
 \section{Setting Proxies}{
   This applies to the internal code only.

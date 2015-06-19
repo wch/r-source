@@ -232,9 +232,9 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
             r_prec /= powl(10.0, (long double) kp);
 #else
         else if (kp <= R_dec_min_exponent)
-            r_prec = (r_prec * 1e+303)/pow(10.0, (double)(kp+303));
+            r_prec = (r_prec * 1e+303)/Rexp10((double)(kp+303));
         else
-            r_prec /= pow(10.0, (double) kp);
+            r_prec /= Rexp10((double) kp);
 #endif
         if (r_prec < tbl[R_print.digits]) {
             r_prec *= 10.0;
@@ -256,9 +256,9 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
            is in range. Representation of 1e+303 has low error.
          */
         else if (kp <= R_dec_min_exponent)
-            r_prec = (r_prec * 1e+303)/pow(10.0, (double)(kp+303));
+            r_prec = (r_prec * 1e+303)/Rexp10((double)(kp+303));
         else
-            r_prec /= pow(10.0, (double)kp);
+            r_prec /= Rexp10((double)kp);
         if (r_prec < tbl[R_print.digits]) {
             r_prec *= 10.0;
             kp--;
@@ -292,7 +292,7 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
 	int rgt = R_print.digits - *kpower;
 	/* bound rgt by 0 and KP_MAX */
 	rgt = rgt < 0 ? 0 : rgt > KP_MAX ? KP_MAX : rgt;
-	double fuzz = 0.5/tbl[1 + rgt];
+	double fuzz = 0.5/(double)tbl[1 + rgt];
 	// kpower can be bigger than the table.	
 	*roundingwidens = *kpower > 0 && *kpower <= KP_MAX && r < tbl[*kpower + 1] - fuzz;
     }

@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2013 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2014 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,12 +32,12 @@
 
 #define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
-static void Y_bessel(double *x, double *alpha, long *nb,
-		     double *by, long *ncalc);
+static void Y_bessel(double *x, double *alpha, int *nb,
+		     double *by, int *ncalc);
 
 double bessel_y(double x, double alpha)
 {
-    long nb, ncalc;
+    int nb, ncalc;
     double na, *by;
 #ifndef MATHLIB_STANDALONE
     const void *vmax;
@@ -59,7 +59,7 @@ double bessel_y(double x, double alpha)
 	       ((alpha == na) ? 0 :
 		bessel_j(x, -alpha) * sinpi(alpha)));
     }
-    nb = 1+ (long)na;/* nb-1 <= alpha < nb */
+    nb = 1+ (int)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     by = (double *) calloc(nb, sizeof(double));
@@ -98,7 +98,7 @@ double bessel_y(double x, double alpha)
    allocating one. */
 double bessel_y_ex(double x, double alpha, double *by)
 {
-    long nb, ncalc;
+    int nb, ncalc;
     double na;
 
 #ifdef IEEE_754
@@ -117,7 +117,7 @@ double bessel_y_ex(double x, double alpha, double *by)
 	       ((alpha == na) ? 0 :
 		bessel_j_ex(x, -alpha, by) * sinpi(alpha)));
     }
-    nb = 1+ (long)na;/* nb-1 <= alpha < nb */
+    nb = 1+ (int)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
     Y_bessel(&x, &alpha, &nb, by, &ncalc);
     if(ncalc != nb) {/* error input */
@@ -134,8 +134,8 @@ double bessel_y_ex(double x, double alpha, double *by)
     return x;
 }
 
-static void Y_bessel(double *x, double *alpha, long *nb,
-		     double *by, long *ncalc)
+static void Y_bessel(double *x, double *alpha, int *nb,
+		     double *by, int *ncalc)
 {
 /* ----------------------------------------------------------------------
 
@@ -242,7 +242,7 @@ v for non-negative argument X, and non-negative order N+ALPHA.
 	    -.28387654227602353814,.92187029365045265648 };
 
     /* Local variables */
-    long i, k, na;
+    int i, k, na;
 
     double alfa, div, ddiv, even, gamma, term, cosmu, sinmu,
 	b, c, d, e, f, g, h, p, q, r, s, d1, d2, q0, pa,pa1, qa,qa1,
@@ -265,7 +265,7 @@ v for non-negative argument X, and non-negative order N+ALPHA.
 	    return;
 	}
 	xna = trunc(nu + .5);
-	na = (long) xna;
+	na = (int) xna;
 	if (na == 1) {/* <==>  .5 <= *alpha < 1	 <==>  -5. <= nu < 0 */
 	    nu -= xna;
 	}
@@ -412,7 +412,7 @@ L220:
 	       ---------------------------------------------------------- */
 	    na = 0;
 	    d1 = trunc(ex / fivpi);
-	    i = (long) d1;
+	    i = (int) d1;
 	    dmu = ex - 15. * d1 - d1 * pim5 - (*alpha + .5) * M_PI_2;
 	    if (i - (i / 2 << 1) == 0) {
 		cosmu = cos(dmu);

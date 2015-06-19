@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -25,8 +25,8 @@
     \code{\link{NaN}} or \code{\link{Inf}} values in the arguments are
     passed on to the foreign function.  If \code{FALSE}, the presence of
     \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
-  \item{DUP}{if \code{TRUE} then arguments are duplicated before
-    their address is passed to C or Fortran.}
+  \item{DUP}{if \code{TRUE} then arguments are duplicated if necessary
+    before their addresses are passed to C or Fortran.}
   \item{PACKAGE}{if supplied, confine the search for a character string
     \code{.NAME} to the DLL given by this argument (plus the
     conventional extension, \file{.so}, \file{.dll}, \dots).
@@ -44,7 +44,7 @@
   \code{\link{.External}} which are more flexible and have better
   performance.
 
-  These functions are both \link{primitive}, and \code{.NAME} is always
+  These functions are \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which should not be named).
   The other named arguments follow \code{\dots} and so cannot be
   abbreviated.  For clarity, should avoid using names in the arguments
@@ -136,8 +136,8 @@
   With \code{DUP = FALSE}, character vectors cannot be used, and single
   precision values will not be returned.
 
-  It is safe and useful to set \code{DUP = FALSE} if you do not change any
-  of the variables that might be affected, e.g.,
+  It is safe to set \code{DUP = FALSE} if you do not change any of the
+  variables that might be affected, e.g.,
 
   \code{.C("Cfunction", input = x, output = numeric(10))}.
 
@@ -145,6 +145,10 @@
   so it cannot cause trouble (but as from \R 2.15.1 it is not copied
   even with \code{DUP = TRUE}).  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
+
+  However, in recent versions of \R most unnecesary copying is avoided:
+  on the other hand using \code{DUP = FALSE} can omit \emph{necessary}
+  copying.
 }
 
 \section{Fortran symbol names}{

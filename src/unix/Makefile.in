@@ -64,8 +64,8 @@ maintainer-clean: distclean
 
 ## we need to build at install time to capture the correct 'rhome'
 install-Rscript:
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -DR_HOME='"$(rhome)"' -o Rscript \
-	  $(srcdir)/Rscript.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(LDFLAGS) -DR_HOME='"$(rhome)"' \
+	  -o Rscript $(srcdir)/Rscript.c
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(Rexecbindir)/Rscript"
 ## substitute at install time to allow 'prefix' to be overridden

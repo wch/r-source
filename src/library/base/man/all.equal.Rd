@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -13,7 +13,7 @@
 \alias{all.equal.formula}
 \alias{all.equal.list}
 \alias{all.equal.language}
-\alias{all.equal.POSIXct}
+\alias{all.equal.POSIXt}
 \alias{all.equal.raw}
 \alias{attr.all.equal}
 \concept{numerical equality}
@@ -23,11 +23,17 @@
 all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
-          tolerance = .Machine$double.eps ^ 0.5,
-          scale = NULL, check.attributes = TRUE, \dots)
+          tolerance = .Machine$double.eps ^ 0.5, scale = NULL,
+          \dots, check.attributes = TRUE)
 
-attr.all.equal(target, current,
-               check.attributes = TRUE, check.names = TRUE, \dots)
+\method{all.equal}{list}(target, current, \dots,
+          check.attributes = TRUE, use.names = TRUE)
+
+\method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale)
+
+
+attr.all.equal(target, current, \dots,
+               check.attributes = TRUE, check.names = TRUE)
 }
 \arguments{
   \item{target}{\R object.}
@@ -35,11 +41,16 @@ attr.all.equal(target, current,
   \item{\dots}{Further arguments for different methods, notably the
     following two, for numerical comparison:}
   \item{tolerance}{numeric \eqn{\ge} 0.  Differences smaller than
-    \code{tolerance} are not considered.}
+    \code{tolerance} are not reported.  The default value is close to
+    \code{1.5e-8}.}
   \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
+  \item{use.names}{logical indicating if \code{\link{list}} comparison
+    should report differing components by name (if matching) instead of
+    integer index.  Note that this comes after \code{\dots} and so must
+    be specified by its full name.}
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
     of \code{target} and \code{current} should be compared.}
 }
@@ -47,7 +58,7 @@ attr.all.equal(target, current,
     \code{all.equal(x, y)} is a utility to compare \R objects \code{x}
     and \code{y} testing \sQuote{near equality}.  If they are different,
     comparison is still made to some extent, and a report of the
-    differences is returned.    Don't use \code{all.equal} directly in
+    differences is returned.    Do not use \code{all.equal} directly in
     \code{if} expressions---either use \code{isTRUE(all.equal(....))} or
     \code{\link{identical}} if appropriate.
 }
@@ -57,7 +68,12 @@ attr.all.equal(target, current,
   \code{\link{methods}("all.equal")}, but note that the default method
   also does some dispatching, e.g. using the raw method for logical
   targets.
-
+  
+  Remember that arguments which follow \code{\dots} must be specified by
+  (unabbreviated) name: some of them were before \code{\dots} prior to
+  \R 3.1.0.  It is inadvisable to pass unnamed arguments in \code{\dots}
+  as these will match different arguments in different methods.
+  
   Numerical comparisons for \code{scale = NULL} (the default) are done
   by first computing the mean absolute difference of the two numerical
   vectors.  If this is smaller than \code{tolerance} or not finite,
@@ -71,8 +87,13 @@ attr.all.equal(target, current,
   difference is used: \code{all.equal.numeric} is called so arguments
   \code{tolerance} and \code{scale} are available.
 
-  The method for the date-time class \code{"\link{POSIXct}"} by default
-  allows a tolerance of \code{tolerance = 0.001} seconds.
+  The \code{\link{list}} method compares components of
+  \code{target} and \code{current} recursively, passing all other
+  arguments, as long as both are \dQuote{list-like}, i.e., fulfill
+  either \code{\link{is.vector}} or \code{\link{is.list}}.
+
+  The methods for the date-time classes by default allow a tolerance of
+  \code{tolerance = 0.001} seconds, and ignore \code{scale}.
 
   \code{attr.all.equal} is used for comparing
   \code{\link{attributes}}, returning \code{NULL} or a
@@ -99,7 +120,7 @@ d45 <- pi*(1/4 + 1:10)
 stopifnot(
 all.equal(tan(d45), rep(1, 10)))          # TRUE, but
 all      (tan(d45) == rep(1, 10))         # FALSE, since not exactly
-all.equal(tan(d45), rep(1, 10), tol = 0)  # to see difference
+all.equal(tan(d45), rep(1, 10), tolerance = 0)  # to see difference
 }
 \keyword{programming}% is.*
 \keyword{utilities}

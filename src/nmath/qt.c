@@ -126,7 +126,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	}
     }
     else if (ndf < 1 + eps) { /* df ~= 1  (df < 1 excluded above): Cauchy */
-	if(P == 1.) q = 0;
+	if(P == 1.) q = 0; // some versions of tanpi give Inf, some NaN
 	else if(P > 0)
 	    q = 1/tanpi(P/2.);/* == - tan((P+1) * M_PI_2) -- suffers for P ~= 0 */
 
@@ -146,7 +146,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
 	Rboolean P_ok1 = P > DBL_MIN || !log_p,  P_ok = P_ok1;
 	if(P_ok1) {
-	    y = pow(d * P, 2 / ndf);
+	    y = pow(d * P, 2.0 / ndf);
 	    P_ok = (y >= DBL_EPSILON);
 	}
 	if(!P_ok) {// log.p && P very.small  ||  (d*P)^(2/df) =: y < eps_c

@@ -22,7 +22,7 @@
 /**----------- DEBUGGING -------------
  *
  *	make CFLAGS='-DDEBUG_bratio  ...'
- *MM:
+ *MM (w/ Debug, w/o Optimization):
  (cd `R-devel-pbeta-dbg RHOME`/src/nmath ; gcc -I. -I../../src/include -I../../../R/src/include  -DHAVE_CONFIG_H -fopenmp -g -pedantic -Wall --std=gnu99 -DDEBUG_q -DDEBUG_bratio -Wcast-align -Wclobbered  -c ../../../R/src/nmath/toms708.c -o toms708.o; cd ../..; make R)
 */
 #ifdef DEBUG_bratio
@@ -142,16 +142,26 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     if (b == 0.0) goto L201;
 
     eps = max(eps, 1e-15);
-    if (max(a,b) < eps * .001) { /* procedure for a and b < 0.001 * eps */
-	/* L230: */
+    Rboolean a_lt_b = (a < b);
+    if (/* max(a,b) */ (a_lt_b ? b : a) < eps * .001) { /* procedure for a and b < 0.001 * eps */
+	// L230:  -- result *independent* of x (!)
+	// *w  = a/(a+b)  and  w1 = b/(a+b) :
 	if(log_p) {
-	    z = log(a + b);
-	    *w	= log(b) - z;
-	    *w1 = log(a) - z;
+	    if(a_lt_b) {
+		*w  = log1p(-a/(a+b)); // notably if a << b
+		*w1 = log  ( a/(a+b));
+	    } else { // b <= a
+		*w  = log  ( b/(a+b));
+		*w1 = log1p(-b/(a+b));
+	    }
 	} else {
 	    *w	= b / (a + b);
 	    *w1 = a / (a + b);
 	}
+
+#ifdef DEBUG_bratio
+	REprintf("a & b very small -> simple ratios (%g,%g)\n", *w,*w1);
+#endif
 	return;
     }
 
@@ -398,18 +408,12 @@ L140:
 L200:
     if (a == 0.0) { *ierr = 6;    return; }
     // else:
-L201:
-    *w  = R_D__0;
-    *w1 = R_D__1;
-    return;
+L201: *w  = R_D__0; *w1 = R_D__1; return;
 
 L210:
     if (b == 0.0) { *ierr = 7;    return; }
     // else:
-L211:
-    *w  = R_D__1;
-    *w1 = R_D__0;
-    return;
+L211: *w  = R_D__1; *w1 = R_D__0; return;
 
 L_end_from_w:
     if(log_p) {
@@ -683,10 +687,11 @@ static double bup(double a, double b, double x, double y, int n, double eps,
     }
 
     /* L10: */
-    ret_val = log_p
+    ret_val = give_log
 	? brcmp1(mu, a, b, x, y, TRUE) - log(a)
 	: brcmp1(mu, a, b, x, y, FALSE)  / a;
-    if (n == 1 || (log_p && ret_val == ML_NEGINF) || (!log_p && ret_val == 0.))
+    if (n == 1 ||
+	(give_log && ret_val == ML_NEGINF) || (!give_log && ret_val == 0.))
 	return ret_val;
 
     int nm1 = n - 1;
