@@ -155,12 +155,19 @@ function(pattern, fields = c("alias", "concept", "title"),
     if(!missing(help.db))
 	warning("argument 'help.db' is deprecated")
 
+    ## This duplicates expansion in hsearch_db(), but there is no simple
+    ## way to avoid this.
+    i <- pmatch(types, hsearch_db_types)
+    if (anyNA(i))
+	stop("incorrect type specification")
+    else
+	types <- hsearch_db_types[i]
+    
     ### Set up the hsearch db.
     db <- hsearch_db(package, lib.loc, types, verbose, rebuild,
                      use_UTF8)
-    ## Arguments types and lib.loc were expanded when building the
-    ## hsearch db, so get from there.
-    types <- attr(db, "Types")
+    ## Argument lib.loc was expanded when building the hsearch db, so
+    ## get from there.
     lib.loc <- attr(db, "LibPaths")
 
     ### Matching.
