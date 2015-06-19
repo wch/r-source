@@ -1613,7 +1613,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file
 @file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
-X 10.9 and later (Mavericks and Yosemite).
+X 10.9 and later (Mavericks, Yosemite, El Capitan, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}.
@@ -4711,15 +4711,15 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 @menu
-* Mavericks and Yosemite::      
+* Mavericks and later::         
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Mavericks and Yosemite, Tcl/Tk headers and libraries, OS X, OS X
-@subsection Mavericks and Yosemite
+@node Mavericks and later, Tcl/Tk headers and libraries, OS X, OS X
+@subsection Mavericks and later
 
 For these versions Apple makes available compilers based on
 @command{clang}, and C++ headers and runtime are from LLVM's
@@ -4727,10 +4727,10 @@ For these versions Apple makes available compilers based on
 called `Command Line Developer Tools').
 
 These tools can be (re-)installed by @command{xcode-select --install}.
-(If you have a fresh installation of Mavericks/Yosemite, running e.g.@:
-@command{make} in a terminal will offer the installation of the
-command-line tools, or perhaps use the versions from Xcode.  However,
-after an OS update, you are advised to re-install them.)
+(If you have a fresh installation, running e.g.@: @command{make} in a
+terminal will offer the installation of the command-line tools, or
+perhaps use the versions from Xcode.  However, after an OS update, you
+are advised to re-install them.)
 
 To use the compilers from the command-line tools with the recommended
 Fortran compiler, have in @file{config.site} something like
@@ -4769,7 +4769,7 @@ For some pre-compiled software, for example the GTK framework,
 @file{/opt/X11/include} may need to be added to the include paths.
 
 
-If you upgrade to Yosemite you should re-install any of XQuartz, the
+If you upgrade your OS you should re-install any of XQuartz, the
 `Command Line Tools' and Java which you have installed.  (Upgrading may
 partially remove previous versions which can be confusing.)
 
@@ -4778,7 +4778,7 @@ under Yosemite.  They give warnings and @command{gfortran-4.8} is
 reported to be unable to link packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mavericks and Yosemite, OS X
+@node Tcl/Tk headers and libraries, Java (OS X), Mavericks and later, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
