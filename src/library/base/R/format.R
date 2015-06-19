@@ -45,14 +45,18 @@ format.default <-
     } else {
 	switch(mode(x),
 	       NULL = "NULL",
-	       character = .Internal(format(x, trim, digits, nsmall, width,
-					    adj, na.encode, scientific)),
+	       character = .Internal(format(x, trim, digits, nsmall, width, adj,
+					    na.encode, scientific,
+					    NA_character_ ## to become decimal.mark
+					    )),
 	       call =, expression =, "function" =, "("  = deparse(x),
 	       raw = as.character(x),
            {
 	       ## else: logical, numeric, complex, .. :
-	       prettyNum(.Internal(format(x, trim, digits, nsmall, width,
-					  3L, na.encode, scientific)),
+	       prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,
+					  na.encode, scientific,
+					  NA_character_ ## to become decimal.mark
+					  )),
 			 big.mark = big.mark, big.interval = big.interval,
 			 small.mark = small.mark,
 			 small.interval = small.interval,
@@ -163,10 +167,10 @@ formatC <- function (x, digits = NULL, width = NULL,
     else if(digits < 0L)
 	digits <- 6L
     else {
-	maxDigits <- if(format != "f") 50L else ceiling(-(.Machine$double.neg.ulp.digits + .Machine$double.min.exp) / log2(10))
+	maxDigits <- if(format != "f") 50L else
+	    ceiling(-(.Machine$double.neg.ulp.digits + .Machine$double.min.exp) / log2(10))
 	if (digits > maxDigits) {
-            warning(gettextf("'digits' reduced to %d", maxDigits),
-                    domain = NA)
+            warning(gettextf("'digits' reduced to %d", maxDigits), domain = NA)
 	    digits <- maxDigits
 	}
     }
@@ -200,7 +204,7 @@ formatC <- function (x, digits = NULL, width = NULL,
                            i.strlen))
     if (some.special) r[!Ok] <- format.char(rQ, width = width, flag = flag)
 
-    if(nzchar(big.mark) || nzchar(small.mark) || nzchar(decimal.mark) ||
+    if(nzchar(big.mark) || nzchar(small.mark) || decimal.mark != "." ||
        !is.null(zero.print) || drop0trailing)
 	r <- prettyNum(r, big.mark = big.mark, big.interval = big.interval,
 		       small.mark = small.mark, small.interval = small.interval,
@@ -335,7 +339,7 @@ prettyNum <-
 	z.sp <- strsplit(sub("([0-9] *)([-+])( *[0-9])",
 			     "\\1::\\2::\\3", x), "::", fixed=TRUE)
 	## be careful, if x had an  "	NA":
-	i3 <- vapply(z.sp, length, 0L) == 3L # those are re + im *i
+	i3 <- lengths(z.sp) == 3L # those are re + im *i
 	if(any(i3)) {
 	    z.sp <- z.sp[i3]
 	    z.im <- vapply(z.sp, `[[`, "", 3L)
@@ -357,8 +361,6 @@ prettyNum <-
     }
     preserve.width <- match.arg(preserve.width)
     x.sp <- strsplit(x, ".", fixed=TRUE)
-    revStr <- function(cc)
-	vapply(lapply(strsplit(cc,NULL), rev), paste, "", collapse="")
     B. <- vapply(x.sp, `[`, "", 1L)	# Before "."
     A. <- vapply(x.sp, `[`, "", 2L)	# After  "." ; empty == NA
     if(any(iN <- is.na(A.))) A.[iN] <- ""
@@ -366,6 +368,8 @@ prettyNum <-
     if(nzchar(big.mark) &&
        length(i.big <- grep(paste0("[0-9]{", big.interval + 1L,",}"), B.))
        ) { ## add 'big.mark' in decimals before "." :
+        revStr <- function(cc)
+            vapply(lapply(strsplit(cc,NULL), rev), paste, "", collapse="")
 	B.[i.big] <-
 	    revStr(gsub(paste0("([0-9]{",big.interval,"})\\B"),
 			paste0("\\1",revStr(big.mark)), revStr(B.[i.big])))
