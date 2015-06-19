@@ -177,9 +177,8 @@ mm =  chr "Abc"
 +     gctorture() # <- for manual testing
 > x <- c("a", NA, "b")
 > fx <- factor(x, exclude="")
-> system.time(r <- replicate(20, capture.output(print(fx))))
-   user  system elapsed 
-  0.004   0.000   0.004 
+> ST <- if(interactive()) system.time else invisible
+> ST(r <- replicate(20, capture.output(print(fx))))
 > table(ok. <- r[2,] == "Levels: a b <NA>") # want all TRUE
 
 TRUE 
