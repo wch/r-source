@@ -68,7 +68,7 @@ httpd <- function(path, query, ...)
         } else if(identical(names(query), "results")) {
             utils:::.hsearch_results()
         } else {
-            fields <- types <- character()
+            fields <- types <- NULL
             args <- list(pattern = ".")
             for (i in seq_along(query))
             	switch(names(query)[i],
@@ -113,7 +113,7 @@ httpd <- function(path, query, ...)
         res <- res$matches
         title <- "Search Results"
         out <- c(HTMLheader(title),
-                 if ("pattern" %in% names(query))
+                 if ("pattern" %in% names(query) && nchar(query["pattern"]))
                      paste0('The search string was <b>"', query["pattern"], '"</b>'),
                  '<hr/>\n')
 
@@ -465,7 +465,7 @@ httpd <- function(path, query, ...)
 
     	url <- paste0("http://127.0.0.1:", httpdPort(),
                       "/doc/html/Search?package=",
-                      pkg, "&agrep=0&types.demo=1")
+                      pkg, "&agrep=0&types.demo=1&pattern=")
     	return(list(payload = paste0('Redirect to <a href="', url,
     				'">help.search()</a>'),
 		    		"content-type" = 'text/html',

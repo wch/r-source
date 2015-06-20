@@ -114,11 +114,13 @@
       \item \code{cmdscale()} gets new option \code{list.} for increased
       flexibility when a list should be returned.
     }
+  }   
+  \subsection{BUG FIXES}{
+    \itemize{
+    	  \item The HTML help page links to demo code failed due to a change
+    	  in \R 3.2.0.  (\PR{16432})
+    }
   }
-%%   \subsection{BUG FIXES}{
-%%     \itemize{
-%%     }
-%%   }
 }
 
 \section{\Rlogo CHANGES IN R 3.2.1}{
