@@ -5,6 +5,15 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.2.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The HTML help page links to demo code failed due to a change
+      in \R 3.2.0.  (\PR{16432})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.2.1}{
   \subsection{NEW FEATURES}{
     \itemize{
