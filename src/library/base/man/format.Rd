@@ -1,6 +1,6 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Copyright 2003-2013 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -20,10 +20,10 @@ format(x, \dots)
 \method{format}{default}(x, trim = FALSE, digits = NULL, nsmall = 0L,
        justify = c("left", "right", "centre", "none"),
        width = NULL, na.encode = TRUE, scientific = NA,
-       big.mark = "",   big.interval = 3L,
+       big.mark   = "",   big.interval = 3L,
        small.mark = "", small.interval = 5L,
-       decimal.mark = ".", zero.print = NULL,
-       drop0trailing = FALSE, \dots)
+       decimal.mark = getOption("OutDec"),
+       zero.print = NULL, drop0trailing = FALSE, \dots)
 
 \method{format}{data.frame}(x, \dots, justify = "none")
 
@@ -33,42 +33,42 @@ format(x, \dots)
 }
 \arguments{
   \item{x}{any \R object (conceptually); typically numeric.}
-  
+
   \item{trim}{logical; if \code{FALSE}, logical, numeric and complex
     values are right-justified to a common width: if \code{TRUE} the
     leading blanks for justification are suppressed.}
-  
+
   \item{digits}{how many significant digits are to be used for
     numeric and complex \code{x}.  The default, \code{NULL}, uses
     \code{\link{getOption}("digits")}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits, and also to satisfy \code{nsmall}.
     (For the interpretation for complex numbers see \code{\link{signif}}.)}
-  
+
   \item{nsmall}{the minimum number of digits to the right of the decimal
     point in formatting real/complex numbers in non-scientific formats.
     Allowed values are \code{0 <= nsmall <= 20}.}
-  
+
   \item{justify}{should a \emph{character} vector be left-justified (the
     default), right-justified, centred or left alone.  Can be abbreviated.}
-  
+
   \item{width}{\code{default} method: the \emph{minimum} field width or
     \code{NULL} or \code{0} for no restriction.
 
     \code{AsIs} method: the \emph{maximum} field width for non-character
     objects.  \code{NULL} corresponds to the default \code{12}.
   }
-  
+
   \item{na.encode}{logical: should \code{NA} strings be encoded?  Note
     this only applies to elements of character vectors, not to numerical,
     complex nor logical \code{NA}s, which are always encoded as \code{"NA"}.}
   % because Mr Gorjanc won't read, PR#12318
-  
+
   \item{scientific}{Either a logical specifying whether
     elements of a real or complex vector should be encoded in scientific
     format, or an integer penalty (see \code{\link{options}("scipen")}).
     Missing values correspond to the current default penalty.}
-  
+
   \item{\dots}{further arguments passed to or from other methods.}
 
   \item{big.mark, big.interval, small.mark,
@@ -113,7 +113,7 @@ format(x, \dots)
   Numeric vectors are encoded with the minimum number of decimal places
   needed to display all the elements to at least the \code{digits}
   significant digits.  However, if all the elements then have trailing
-  zeroes, the number of decimal places is reduced until 
+  zeroes, the number of decimal places is reduced until
   \code{nsmall} is reached or at least one
   element has a non-zero final digit; see also the argument
   documentation for \code{big.*}, \code{small.*} etc, above.  See the
@@ -121,7 +121,7 @@ format(x, \dots)
 
   Raw vectors are converted to their 2-digit hexadecimal representation
   by \code{\link{as.character}}.
-  
+
   The internal code respects the option
   \code{\link{getOption}("OutDec")} for the \sQuote{decimal mark}, so if
   this is set to something other than \code{"."} then it takes precedence

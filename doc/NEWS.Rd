@@ -103,7 +103,12 @@
       \item \code{options(OutDec = s)} now signals a warning (which will
       become an error in the future) when \code{s} is not a string with
       exactly one character, as that has been a documented requirement.
-      %% Move to R-patched after ...
+      %% Move to R-patched together with next one, after a while
+
+      \item \code{prettyNum()} gains a new option \code{input.d.mark}
+      which together with other changes, e.g., the default for
+      \code{decimal.mark}, fixes some \code{format()}ting variants with
+      non-default \code{getOption("OutDec")} such as in \PR{16411}.
     }
   }
 }
@@ -114,11 +119,11 @@
       \item \code{cmdscale()} gets new option \code{list.} for increased
       flexibility when a list should be returned.
     }
-  }   
+  }
   \subsection{BUG FIXES}{
     \itemize{
-    	  \item The HTML help page links to demo code failed due to a change
-    	  in \R 3.2.0.  (\PR{16432})
+      \item The HTML help page links to demo code failed due to a change
+      in \R 3.2.0.  (\PR{16432})
     }
   }
 }

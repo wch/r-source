@@ -1,16 +1,19 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
+\title{Formatting Using C-style Formats}
 \alias{formatC}
 \alias{prettyNum}
 \description{
-    Formatting numbers individually and flexibly, using \code{C} style
-    format specifications.
+  Formatting numbers individually and flexibly, \code{formatC()} using
+  \code{C} style format specifications.
+
+  \code{prettyNum()} is used for \dQuote{prettifying} (possibly
+  formatted) numbers, also in \code{\link{format.default}}.
 }
-\title{Formatting Using C-style Formats}
 \usage{
 formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL,
@@ -21,8 +24,8 @@ formatC(x, digits = NULL, width = NULL,
         drop0trailing = FALSE)
 
 prettyNum(x, big.mark = "",   big.interval = 3L,
-          small.mark = "", small.interval = 5L,
-          decimal.mark = ".",
+          small.mark  = "", small.interval = 5L,
+          decimal.mark = getOption("OutDec"), input.d.mark = ".",
           preserve.width = c("common", "individual", "none"),
           zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA,
           \dots)
@@ -93,6 +96,9 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \item{small.interval}{see \code{small.mark} above; defaults to 5.}
   \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}
+  \item{input.d.mark}{if \code{x} is \code{\link{character}}, the
+    character known to have been used as the numeric decimal point in
+    \code{x}.}
   \item{preserve.width}{string specifying if the string widths should
     be preserved where possible in those cases where marks
     (\code{big.mark} or \code{small.mark}) are added.  \code{"common"},
@@ -139,10 +145,10 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \code{x} can be complex (or \code{\link{format}(<complex>)}, here.  If
   \code{x} is not a character, \code{format(x[i], ...)} is applied to
   each element, and then it is left unchanged if all the other arguments
-  are at their defaults.  Note that \code{prettyNum(x)} may behave
-  unexpectedly if \code{x} is a \code{character} vector not resulting from
-  something like \code{format(<number>)}: in particular it assumes that
-  a period is a decimal mark.
+  are at their defaults.  Use the \code{input.d.mark} argument for
+  \code{prettyNum(x)} when \code{x} is a \code{character} vector not
+  resulting from something like \code{format(<number>)} with a period as
+  decimal mark.
 
   Because \code{\link{gsub}} is used to insert the \code{big.mark}
   and \code{small.mark}, special characters need escaping.  In particular,
@@ -150,17 +156,18 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 
   The C doubles used for \R numerical vectors have signed zeros, which
   \code{formatC} may output as \code{-0}, \code{-0.000} \dots.
-  
+
   There is a warning if \code{big.mark} and \code{decimal.mark} are the
   same: that would be confusing to those reading the output.
 }
 \note{
   Prior to \R 3.0.2 this copied the class of \code{x} to the return
   value and could easily create invalid objects.
-  
-  The default for \code{decimal.mark} was changed in \R 3.2.0: for use within
-  \code{\link{print}} methods in packages which might be used with
-  earlier versions: use \code{decimal.mark = getOption("OutDec")} explicitly.
+
+  The default for \code{decimal.mark} in \code{formatC()} was changed in
+  \R 3.2.0: for use within \code{\link{print}} methods in packages which might
+  be used with earlier versions: use \code{decimal.mark = getOption("OutDec")}
+  explicitly.
 }
 \author{
   \code{formatC} was originally written by Bill Dunlap for S-PLUS, later
