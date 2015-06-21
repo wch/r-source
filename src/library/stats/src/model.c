@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -214,8 +214,11 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!isNewList(ans) || length(ans) != length(data))
 	    error(_("invalid result from na.action"));
 	/* need to transfer _all but tsp and dim_ attributes, possibly lost
-	   by subsetting in na.action.  */
+	   by subsetting in na.action. */
+	/* But if data is unchanged, don't mess with it (PR#16436) */
+	
 	for ( i = length(ans) ; i-- ; )
+	    if (VECTOR_ELT(data, i) != VECTOR_ELT(ans, i))
 		copyMostAttribNoTs(VECTOR_ELT(data, i),VECTOR_ELT(ans, i));
 
 	UNPROTECT(3);
