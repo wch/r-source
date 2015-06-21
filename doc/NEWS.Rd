@@ -124,6 +124,9 @@
     \itemize{
       \item The HTML help page links to demo code failed due to a change
       in \R 3.2.0.  (\PR{16432})
+      
+      \item If \code{na.action} was used in \code{model.frame}, the 
+      original data could be modified. (\PR{16436})
     }
   }
 }

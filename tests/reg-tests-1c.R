@@ -789,7 +789,7 @@ iNA <- NA_integer_
 x <- c(iNA, 1L)
 stopifnot(identical(cummin(x), c(iNA, iNA)),
           identical(cummax(x), c(iNA, iNA)))
-## an initial NA was not propaged in R <= 3.2.0
+## an initial NA was not propagated in R <= 3.2.0
 
 
 ## summaryRprof failed for very short profile, PR#16395
@@ -822,3 +822,10 @@ options(op)# back to sanity
 op <- options(OutDec = ",")
 stopifnot(identical(fpi, format(pi, decimal.mark=".")))
 ## failed in R <= 3.2.1
+
+
+## model.frame() removed ts attributes on original data (PR#16436)
+orig <- class(EuStockMarkets)  
+mf <- model.frame(EuStockMarkets ~ 1, na.action=na.fail)
+stopifnot(identical(orig, class(EuStockMarkets)))  
+## ts class lost in R <= 3.2.1
