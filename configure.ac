@@ -319,7 +319,6 @@ AC_ARG_ENABLE([prebuilt-html],
 [want_prebuilt_html=no])
 AM_CONDITIONAL(BUILD_HTML, [test "x${want_prebuilt_html}" = xyes])
 
-
 AC_ARG_ENABLE([lto],
 [AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
 [want_lto="${enableval}"], [want_lto=no])
@@ -334,6 +333,11 @@ AC_SUBST(LTO)
 AC_SUBST(LTOALL)
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 
+AC_ARG_ENABLE([java],
+[AS_HELP_STRING([--enable-java],[enable Java @<:@yes@:>@])],
+[want_java="${enableval}"],
+[want_java=yes])
+AM_CONDITIONAL(WANT_JAVA, [test "x${want_java}" = xyes])
 
 ### ** Optional packages.
 
