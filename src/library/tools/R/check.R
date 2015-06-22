@@ -2790,7 +2790,10 @@ setRlibs <-
 
     run_vignettes <- function(desc)
     {
+        libpaths <- .libPaths()
+        .libPaths(c(libdir, libpaths))
         vigns <- pkgVignettes(dir = pkgdir)
+        .libPaths(libpaths)
         if (is.null(vigns) || !length(vigns$docs)) return()
 
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
