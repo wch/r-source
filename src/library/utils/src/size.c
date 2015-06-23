@@ -64,6 +64,7 @@ static R_size_t objectsize(SEXP s)
 	/* no charge for the environment */
 	break;
     case ENVSXP:
+	R_CheckStack(); /* in case attributes might lead to a cycle */
     case PROMSXP:
     case SPECIALSXP:
     case BUILTINSXP:

@@ -1188,6 +1188,10 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     check1arg(args, call, "x");
     namesattr = R_NilValue;
+
+    if (TYPEOF(CAR(args)) == ENVSXP)
+	R_CheckStack(); /* in case attributes might lead to a cycle */
+
     attrs = ATTRIB(CAR(args));
     nvalues = length(attrs);
     if (isList(CAR(args))) {
@@ -1382,6 +1386,9 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("'which' must be of mode character"));
     if (length(t) != 1)
 	errorcall(call, _("exactly one attribute 'which' must be given"));
+
+    if (TYPEOF(s) == ENVSXP)
+	R_CheckStack(); /* in case attributes might lead to a cycle */
 
     if(nargs == 3) {
 	exact = asLogical(CADDR(args));
