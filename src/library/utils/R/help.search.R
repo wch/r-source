@@ -559,9 +559,12 @@ function(package = NULL, lib.loc = NULL,
 	bad_IDs <-
 	    unlist(sapply(db,
 			  function(u)
-			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
+                              u[rowSums(is.na(nchar(u, "chars",
+                                                    allowNA = TRUE,
+                                                    keepNA = FALSE))) > 0,
+                                "ID"]))
         ## FIXME: drop this fallback
-	if(length(bad_IDs)) { ## try latin1
+	if(length(bad_IDs)) {           # try latin1
             for(i in seq_along(db)) {
                 ind <- db[[i]][, "ID"] %in% bad_IDs
                 db[[i]][ind, ] <- iconv(db[[i]][ind, ], "latin1", "")
@@ -569,7 +572,10 @@ function(package = NULL, lib.loc = NULL,
             bad_IDs <-
                 unlist(sapply(db,
                               function(u)
-                              u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
+                                  u[rowSums(is.na(nchar(u, "chars",
+                                                        allowNA = TRUE,
+                                                        keepNA = FALSE))) > 0,
+                                    "ID"]))
         }
 	## If there are any invalid multi-byte character data
 	## left, we simple remove all Rd objects with at least one
