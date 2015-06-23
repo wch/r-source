@@ -374,6 +374,10 @@ function(package = NULL, lib.loc = NULL,
             flush.console()
         }
 
+        want_type_help <- any(types == "help")
+        want_type_demo <- any(types == "demo")
+        want_type_vignette <- any(types == "vignette")
+
 	if(!is.null(package)) {
 	    packages_in_hsearch_db <- package
             package_paths <- NULL
@@ -431,6 +435,9 @@ function(package = NULL, lib.loc = NULL,
 	dbMat <- vector("list", length(packages_in_hsearch_db) * 4L)
 	dim(dbMat) <- c(length(packages_in_hsearch_db), 4L)
 
+        ## Empty hsearch index:
+        hDB0 <- tools:::.build_hsearch_index(NULL)
+
 	for(p in packages_in_hsearch_db) {
             if(incr && np %% incr == 0L) {
                 message(".", appendLF = FALSE, domain = NA)
@@ -455,40 +462,46 @@ function(package = NULL, lib.loc = NULL,
 	    ## We always load hsearch.rds to establish the format,
 	    ## sometimes vignette.rds.
 
-	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
-		hDB <- readRDS(hs_file)
-		if(!is.null(hDB)) {
-		    ## Fill up possibly missing information.
-		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
-			hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
-                    ## <FIXME>
-                    ## Transition fro old-style to new-style colnames.
-                    ## Remove eventually.
-                    for(i in seq_along(hDB)) {
-                        colnames(hDB[[i]]) <-
-                            tools:::hsearch_index_colnames[[i]]
+            hDB <- NULL
+            if(want_type_help) {
+                if(file.exists(hs_file <-
+                    file.path(path, "Meta", "hsearch.rds"))) {
+                    hDB <- readRDS(hs_file)
+                    if(!is.null(hDB)) {
+                        ## Fill up possibly missing information.
+                        if(is.na(match("Encoding", colnames(hDB[[1L]]))))
+                            hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
+                        ## <FIXME>
+                        ## Transition fro old-style to new-style colnames.
+                        ## Remove eventually.
+                        for(i in seq_along(hDB)) {
+                            colnames(hDB[[i]]) <-
+                                tools:::hsearch_index_colnames[[i]]
+                        }
+                        ## </FIXME>
+                    } else if(verbose >= 2L) {
+                        message(gettextf("package %s has empty hsearch data - strangely",
+                                         sQuote(p)),
+                                domain = NA)
+                        flush.console()
                     }
-                    ## </FIXME>
-		    nh <- NROW(hDB[[1L]])
-		    hDB[[1L]] <- cbind(hDB[[1L]],
-		                       Type = rep("help", nh))
-		    if (nh)
-		    	hDB[[1L]][, "LibPath"] <- path
-		    if ("vignette" %in% types)
-		    	hDB <- merge_vignette_index(hDB, path, p)
-		    if ("demo" %in% types)
-		    	hDB <- merge_demo_index(hDB, path, p)
-		    ## Put the hsearch index for the np-th package into the
-		    ## np-th row of the matrix used for aggregating.
-		    dbMat[np, seq_along(hDB)] <- hDB
-		} else if(verbose >= 2L) {
-		    message(gettextf("package %s has empty hsearch data - strangely",
-                                     sQuote(p)), domain = NA)
-                    flush.console()
-                }
-	    }
-	    else if(!is.null(package))
-                warning("no hsearch.rds meta data for package ", p, domain = NA)
+                } else if(!is.null(package))
+                      warning("no hsearch.rds meta data for package ", p,
+                              domain = NA)
+            }
+            if(is.null(hDB))
+                hDB <- hDB0
+            nh <- NROW(hDB[[1L]])
+            hDB[[1L]] <- cbind(hDB[[1L]], Type = rep("help", nh))
+            if(nh)
+                hDB[[1L]][, "LibPath"] <- path
+            if(want_type_vignette)
+                hDB <- merge_vignette_index(hDB, path, p)
+            if(want_type_demo)
+                hDB <- merge_demo_index(hDB, path, p)
+            ## Put the hsearch index for the np-th package into the
+            ## np-th row of the matrix used for aggregating.
+            dbMat[np, seq_along(hDB)] <- hDB
 	}
 
 	if(verbose >= 2L)  {
@@ -582,6 +595,16 @@ function(package = NULL, lib.loc = NULL,
 	## invalid entry, and warn.
         if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
+	    for(i in seq_along(db)) {
+		ind <- db[[i]][, "ID"] %in% bad_IDs
+		db[[i]] <- db[[i]][!ind, ]
+	    }
+	}
+
+        ## Drop entries without topic as these cannot be accessed.
+        ## (These come from help pages without \alias.)
+        bad_IDs <- db$Base[is.na(db$Base[, "Topic"]), "ID"]
+        if(length(bad_IDs)) {
 	    for(i in seq_along(db)) {
 		ind <- db[[i]][, "ID"] %in% bad_IDs
 		db[[i]] <- db[[i]][!ind, ]
