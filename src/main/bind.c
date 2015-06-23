@@ -731,7 +731,10 @@ SEXP attribute_hidden do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (DispatchOrEval(call, op, "c", args, env, &ans, 1, 1))
 	return(ans);
-    return do_c_dflt(call, op, ans, env);
+    PROTECT(ans);
+    SEXP res = do_c_dflt(call, op, ans, env);
+    UNPROTECT(1);
+    return res;
 }
 
 SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
