@@ -79,7 +79,7 @@ static void PrintLanguageEtc(SEXP, Rboolean, Rboolean);
 
 #define TAGBUFLEN 256
 #define TAGBUFLEN0 TAGBUFLEN + 6
-static char tagbuf[TAGBUFLEN0];
+static char tagbuf[TAGBUFLEN0 * 2]; /* over-allocate to allow overflow check */
 
 
 /* Used in X11 module for dataentry */
@@ -853,6 +853,9 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 
     a = ATTRIB(s);
     if (a != R_NilValue) {
+	/* guard against cycles through attributes on environments */
+	if (strlen(tagbuf) > TAGBUFLEN0)
+	    error(_("print buffer overflow"));
 	strcpy(save, tagbuf);
 	/* remove the tag if it looks like a list not an attribute */
 	if (strlen(tagbuf) > 0 &&
