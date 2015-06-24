@@ -1495,7 +1495,11 @@ setRlibs <-
             Rcmd <-
                 paste("options(warn=1)\n",
                       sprintf("tools:::.check_code_usage_in_package(package = \"%s\")\n", pkgname))
-            out3 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
+            out3 <- if(config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_",
+                                                        "false")))
+                R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            else
+                R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
 
         if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
