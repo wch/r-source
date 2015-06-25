@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   The R Core Team
+ *  Copyright (C) 1997-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -296,6 +296,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    SET_STRING_ELT(result, ij, NA_STRING);
 		    break;
 		case VECSXP:
+		case EXPRSXP:
 		    SET_VECTOR_ELT(result, ij, R_NilValue);
 		    break;
 		case RAWSXP:
@@ -325,6 +326,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    SET_STRING_ELT(result, ij, STRING_ELT(x, iijj));
 		    break;
 		case VECSXP:
+		case EXPRSXP:
 		    SET_VECTOR_ELT(result, ij, VECTOR_ELT_FIX_NAMED(x, iijj));
 		    break;
 		case RAWSXP:
@@ -475,6 +477,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		SET_STRING_ELT(result, i, NA_STRING);
 	    break;
 	case VECSXP:
+	case EXPRSXP:
 	    if (ii != NA_INTEGER)
 		SET_VECTOR_ELT(result, i, VECTOR_ELT_FIX_NAMED(x, ii));
 	    else

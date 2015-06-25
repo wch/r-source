@@ -68,6 +68,9 @@
 
       \item \code{as.raster(x)} now also accepts \code{\link{raw}}
       arrays \code{x} assuming values in \code{0:255}.
+      
+      \item Subscripting of matrix/array objects of type
+      \code{"expression"} is now supported.
     }
   }
 
