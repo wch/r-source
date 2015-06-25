@@ -1091,13 +1091,13 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     _new = CAR(args); args = CDR(args);
     x = CAR(args);
     n = XLENGTH(x);
-    if (!isString(old) || length(old) < 1 || STRING_ELT(old, 0) == NA_STRING)
+    if (!isString(old) || LENGTH(old) < 1 || STRING_ELT(old, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "old");
-    if (length(old) > 1)
+    if (LENGTH(old) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "old");
-    if (!isString(_new) || length(_new) < 1 || STRING_ELT(_new, 0) == NA_STRING)
+    if (!isString(_new) || LENGTH(_new) < 1 || STRING_ELT(_new, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "new");
-    if (length(_new) > 1)
+    if (LENGTH(_new) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "new");
     if (!isString(x)) error("invalid '%s' argument", "x");
 
@@ -1395,7 +1395,7 @@ SEXP attribute_hidden do_strtoi(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args); args = CDR(args);
     b = CAR(args);
 
-    if(!isInteger(b) || (length(b) < 1))
+    if(!isInteger(b) || (LENGTH(b) < 1))
 	error(_("invalid '%s' argument"), "base");
     base = INTEGER(b)[0];
     if((base != 0) && ((base < 2) || (base > 36)))

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2014  The R Core Team
+ *  Copyright (C) 2001-2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -150,19 +150,19 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case NILSXP:
 	return TRUE;
     case LGLSXP:
-	if (xlength(x) != xlength(y)) return FALSE;
+	if (XLENGTH(x) != XLENGTH(y)) return FALSE;
 	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)LOGICAL(x), (void *)LOGICAL(y),
 		      xlength(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case INTSXP:
-	if (xlength(x) != xlength(y)) return FALSE;
+	if (XLENGTH(x) != XLENGTH(y)) return FALSE;
 	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)INTEGER(x), (void *)INTEGER(y),
 		      xlength(x) * sizeof(int)) == 0 ? TRUE : FALSE;
     case REALSXP:
     {
-	R_xlen_t n = xlength(x);
-	if(n != xlength(y)) return FALSE;
+	R_xlen_t n = XLENGTH(x);
+	if(n != XLENGTH(y)) return FALSE;
 	else {
 	    double *xp = REAL(x), *yp = REAL(y);
 	    int ne_strict = NUM_EQ | (SINGLE_NA << 1);
@@ -173,8 +173,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     }
     case CPLXSXP:
     {
-	R_xlen_t n = xlength(x);
-	if(n != xlength(y)) return FALSE;
+	R_xlen_t n = XLENGTH(x);
+	if(n != XLENGTH(y)) return FALSE;
 	else {
 	    Rcomplex *xp = COMPLEX(x), *yp = COMPLEX(y);
 	    int ne_strict = NUM_EQ | (SINGLE_NA << 1);
@@ -187,8 +187,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     }
     case STRSXP:
     {
-	R_xlen_t i, n = xlength(x);
-	if(n != xlength(y)) return FALSE;
+	R_xlen_t i, n = XLENGTH(x);
+	if(n != XLENGTH(y)) return FALSE;
 	for(i = 0; i < n; i++) {
 	    /* This special-casing for NAs is not needed */
 	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
@@ -207,8 +207,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case VECSXP:
     case EXPRSXP:
     {
-	R_xlen_t i, n = xlength(x);
-	if(n != xlength(y)) return FALSE;
+	R_xlen_t i, n = XLENGTH(x);
+	if(n != XLENGTH(y)) return FALSE;
 	for(i = 0; i < n; i++)
 	    if(!R_compute_identical(VECTOR_ELT(x, i),VECTOR_ELT(y, i), flags))
 		return FALSE;
@@ -246,10 +246,10 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case EXTPTRSXP:
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:
-	if (xlength(x) != xlength(y)) return FALSE;
+	if (XLENGTH(x) != XLENGTH(y)) return FALSE;
 	/* Use memcmp (which is ISO C90) to speed up the comparison */
 	return memcmp((void *)RAW(x), (void *)RAW(y),
-		      xlength(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
+		      XLENGTH(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
 
 /*  case PROMSXP: args are evaluated, so will not be seen */
 	/* test for equality of the substituted expression -- or should

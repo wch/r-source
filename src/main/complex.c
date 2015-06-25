@@ -623,7 +623,7 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean naflag = FALSE;
 
     PROTECT(x = CAR(args));
-    n = xlength(x);
+    n = XLENGTH(x);
     PROTECT(y = allocVector(CPLXSXP, n));
 
     switch (PRIMVAL(op)) {

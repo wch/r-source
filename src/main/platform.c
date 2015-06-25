@@ -300,9 +300,9 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     dl = (Rboolean) asLogical(CAR(args)); args = CDR(args);
     pg = CAR(args);
     n = 0;			/* -Wall */
-    if (!isString(fn) || (n = length(fn)) < 1)
+    if (!isString(fn) || (n = LENGTH(fn)) < 1)
 	error(_("invalid filename specification"));
-    if (!isString(hd) || length(hd) != n)
+    if (!isString(hd) || LENGTH(hd) != n)
 	error(_("invalid '%s' argument"), "headers");
     if (!isString(tl))
 	error(_("invalid '%s' argument"), "title");
@@ -384,12 +384,13 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     int n, n1, n2;
 
     checkArity(op, args);
-    f1 = CAR(args); n1 = length(f1);
-    f2 = CADR(args); n2 = length(f2);
+    f1 = CAR(args);
+    f2 = CADR(args);
     if (!isString(f1))
 	error(_("invalid '%s' argument"), "file1");
     if (!isString(f2))
 	error(_("invalid '%s' argument"), "file2");
+    n1 = LENGTH(f1); n2 = LENGTH(f2);
     if (n1 < 1)
 	error(_("nothing to append to"));
     if (n2 < 1)
@@ -448,7 +449,7 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid filename argument"));
     show = asLogical(CADR(args));
     if (show == NA_LOGICAL) show = 0;
-    n = length(fn);
+    n = LENGTH(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	LOGICAL(ans)[i] = 0;
@@ -473,7 +474,7 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     f = CAR(args);
     if (!isString(f))
 	error(_("invalid first filename"));
-    n = length(f);
+    n = LENGTH(f);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	if (STRING_ELT(f, i) != NA_STRING) {
@@ -539,12 +540,13 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i;
 #endif
     checkArity(op, args);
-    f1 = CAR(args); n1 = length(f1);
-    f2 = CADR(args); n2 = length(f2);
+    f1 = CAR(args);
+    f2 = CADR(args);
     if (!isString(f1))
 	error(_("invalid first filename"));
     if (!isString(f2))
 	error(_("invalid second filename"));
+    n1 = LENGTH(f1); n2 = LENGTH(f2);
     if (n1 < 1)
 	error(_("nothing to link"));
     if (n2 < 1)
@@ -621,12 +623,13 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i;
 #endif
     checkArity(op, args);
-    f1 = CAR(args); n1 = length(f1);
-    f2 = CADR(args); n2 = length(f2);
+    f1 = CAR(args);
+    f2 = CADR(args);
     if (!isString(f1))
 	error(_("invalid first filename"));
     if (!isString(f2))
 	error(_("invalid second filename"));
+    n1 = LENGTH(f1); n2 = LENGTH(f2);
     if (n1 < 1)
 	error(_("nothing to link"));
     if (n2 < 1)
@@ -699,13 +702,14 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     checkArity(op, args);
-    f1 = CAR(args); n1 = length(f1);
-    f2 = CADR(args); n2 = length(f2);
+    f1 = CAR(args);
+    f2 = CADR(args);
     if (!isString(f1))
 	error(_("invalid '%s' argument"), "from");
     if (!isString(f2))
 	error(_("invalid '%s' argument"), "to");
-    if (n2 != n1)
+    n1 = LENGTH(f1); n2 = LENGTH(f2);
+   if (n2 != n1)
 	error(_("'from' and 'to' are of different lengths"));
     PROTECT(ans = allocVector(LGLSXP, n1));
     for (i = 0; i < n1; i++) {
@@ -794,7 +798,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     int extras = asInteger(CADR(args));
     if(extras == NA_INTEGER)
 	error(_("invalid '%s' argument"), "extra_cols");
-    int n = length(fn), ncols = 6;
+    int n = LENGTH(fn), ncols = 6;
     if(extras) {
 #ifdef UNIX_EXTRAS
 	ncols = 10;
@@ -973,7 +977,7 @@ SEXP attribute_hidden do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     if (!isString(fn))
 	error(_("invalid filename argument"));
-    int n = length(fn);
+    int n = LENGTH(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (int i = 0; i < n; i++) {
 #ifdef Win32
@@ -1134,9 +1138,9 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(d)) error(_("invalid '%s' argument"), "path");
     SEXP p = CAR(args); args = CDR(args);
     Rboolean pattern = FALSE;
-    if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != NA_STRING)
+    if (isString(p) && LENGTH(p) >= 1 && STRING_ELT(p, 0) != NA_STRING)
 	pattern = TRUE;
-    else if (!isNull(p) && !(isString(p) && length(p) < 1))
+    else if (!isNull(p) && !(isString(p) && LENGTH(p) < 1))
 	error(_("invalid '%s' argument"), "pattern");
     int allfiles = asLogical(CAR(args)); args = CDR(args);
     if (allfiles == NA_LOGICAL)
@@ -1297,7 +1301,7 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (!isString(file = CAR(args)))
 	error(_("invalid '%s' argument"), "file");
-    nfile = length(file);
+    nfile = LENGTH(file);
     ans = PROTECT(allocVector(LGLSXP, nfile));
     for (i = 0; i < nfile; i++) {
 	LOGICAL(ans)[i] = 0;
@@ -1355,7 +1359,7 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     if (!isString(fn))
 	error(_("invalid '%s' argument"), "names");
-    n = length(fn);
+    n = LENGTH(fn);
     mode = asInteger(CADR(args));
     if (mode < 0 || mode > 7) error(_("invalid '%s' argument"), "mode");
     modemask = 0;
@@ -1696,7 +1700,7 @@ SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP dr;
     checkArity(op, args);
     dr = CAR(args);
-    if(!isString(dr) || length(dr) != 1)
+    if(!isString(dr) || LENGTH(dr) != 1)
 	error(_("invalid '%s' argument"), "dir");
     chmod_one(translateChar(STRING_ELT(dr, 0)));
 
@@ -1904,7 +1908,7 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     if (!isString(fn))
 	error(_("invalid '%s' argument"), "path");
-    n = length(fn);
+    n = LENGTH(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
         SEXP tmp = STRING_ELT(fn, i);
@@ -2144,7 +2148,7 @@ SEXP attribute_hidden do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
     struct hostent *hp;
 
     checkArity(op, args);
-    if (!isString(CAR(args)) || length(CAR(args)) != 1)
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("'hostname' must be a character vector of length 1"));
     name = translateChar(STRING_ELT(CAR(args), 0));
 
@@ -2195,7 +2199,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     path = CAR(args);
-    if (!isString(path) || length(path) != 1)
+    if (!isString(path) || LENGTH(path) != 1)
 	error(_("invalid '%s' argument"), "path");
     if (STRING_ELT(path, 0) == NA_STRING) return ScalarLogical(FALSE);
     show = asLogical(CADR(args));
@@ -2255,7 +2259,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     path = CAR(args);
-    if (!isString(path) || length(path) != 1)
+    if (!isString(path) || LENGTH(path) != 1)
 	error(_("invalid '%s' argument"), "path");
     if (STRING_ELT(path, 0) == NA_STRING) return ScalarLogical(FALSE);
     show = asLogical(CADR(args));

@@ -1016,7 +1016,7 @@ SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP name, prim;
     checkArity(op, args);
     name = CAR(args);
-    if (!isString(name) || length(name) != 1 ||
+    if (!isString(name) || LENGTH(name) != 1 ||
 	STRING_ELT(name, 0) == R_NilValue)
 	errorcall(call, _("string argument required"));
     prim = R_Primitive(CHAR(STRING_ELT(name, 0)));

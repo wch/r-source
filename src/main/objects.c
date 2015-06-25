@@ -415,7 +415,7 @@ SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env
 	errorcall(call, _("there must be a 'generic' argument"));
     else
 	PROTECT(generic = eval(CAR(argList), env));
-    if(!isString(generic) || length(generic) != 1)
+    if(!isString(generic) || LENGTH(generic) != 1)
 	errorcall(call, _("'generic' argument must be a character string"));
 
 
@@ -635,7 +635,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("generic function not specified"));
     PROTECT(generic);
 
-    if (!isString(generic) || length(generic) != 1)
+    if (!isString(generic) || LENGTH(generic) != 1)
 	error(_("invalid generic argument to 'NextMethod'"));
 
     if (CHAR(STRING_ELT(generic, 0))[0] == '\0')
@@ -647,7 +647,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	group = R_BlankScalarString;
 	basename = generic;
     } else {
-	if (!isString(group) || length(group) != 1)
+	if (!isString(group) || LENGTH(group) != 1)
             error(_("invalid 'group' argument found in 'NextMethod'"));
 	if (CHAR(STRING_ELT(group, 0))[0] == '\0') basename = generic;
 	else basename = group;
@@ -666,13 +666,13 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (method != R_UnboundValue) {
 	if (!isString(method))
 	    error(_("wrong value for .Method"));
-	for(i = 0; i < length(method); i++) {
+	for(i = 0; i < LENGTH(method); i++) {
 	    b = translateChar(STRING_ELT(method, i));
 	    if (strlen(b)) break;
 	}
 	/* for binary operators check that the second argument's method
 	   is the same or absent */
-	for(j = i; j < length(method); j++) {
+	for(j = i; j < LENGTH(method); j++) {
 	    const char *bb = translateChar(STRING_ELT(method, j));
 	    if (strlen(bb) && strcmp(b,bb))
 		warning(_("Incompatible methods ignored"));
@@ -684,7 +684,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     sb = translateChar(STRING_ELT(basename, 0));
     Rboolean foundSignature = FALSE;
-    for (j = 0; j < length(klass); j++) {
+    for (j = 0; j < LENGTH(klass); j++) {
 	sk = translateChar(STRING_ELT(klass, j));
 	if (equalS3Signature(b, sb, sk)) { /* b == sb.sk */
 	    foundSignature = TRUE;
@@ -701,7 +701,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	   how many classes to drop. */
 
     sg = translateChar(STRING_ELT(generic, 0));
-    for (i = j ; i < length(klass); i++) {
+    for (i = j ; i < LENGTH(klass); i++) {
 	sk = translateChar(STRING_ELT(klass, i));
         nextfunSignature = installS3Signature(sg, sk);
 	nextfun = R_LookupMethod(nextfunSignature, env, callenv, defenv);
@@ -749,7 +749,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (method != R_UnboundValue) {
 	/* for Ops we need `method' to be a vector */
 	PROTECT(method = duplicate(method));
-	for(j = 0; j < length(method); j++) {
+	for(j = 0; j < LENGTH(method); j++) {
 	    if (strlen(CHAR(STRING_ELT(method,j))))
 		SET_STRING_ELT(method, j,  PRINTNAME(nextfunSignature));
 	}
@@ -827,9 +827,9 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 
     if(!isString(what))
 	error(_("'what' must be a character vector"));
-    int j, nwhat = length(what);
+    int j, nwhat = LENGTH(what);
 
-    if( !isLogical(which) || (length(which) != 1) )
+    if( !isLogical(which) || (LENGTH(which) != 1) )
 	error(_("'which' must be a length 1 logical vector"));
     int isvec = asLogical(which);
 
@@ -921,7 +921,7 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 	superCl = eval(_call, rho);
 	UNPROTECT(3); /* _call, classExts, classDef */
 	PROTECT(superCl);
-	for(i=0; i < length(superCl); i++) {
+	for(i=0; i < LENGTH(superCl); i++) {
 	    const char *s_class = CHAR(STRING_ELT(superCl, i));
 	    for (ans = 0; ; ans++) {
 		if (!strlen(valid[ans]))

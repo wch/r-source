@@ -1204,19 +1204,19 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0)); /* for now, like fopen */
     sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "block");
     enc = CADDDR(args);
-    if(!isString(enc) || length(enc) != 1 ||
+    if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
@@ -1363,9 +1363,9 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     scmd = CAR(args);
-    if(!isString(scmd) || length(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1)
 	error(_("invalid '%s' argument"), "description");
-    if(length(scmd) > 1)
+    if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
 #ifdef Win32
     if( !IS_ASCII(STRING_ELT(scmd, 0)) ) {
@@ -1379,11 +1379,11 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     file = translateChar(STRING_ELT(scmd, 0));
 #endif
     sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 ||
+    if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
 
@@ -1985,16 +1985,16 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
-    if(length(sfile) > 1)
+    if(LENGTH(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 ||
+    if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     if(type < 2) {
@@ -2655,12 +2655,12 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
     desc = translateChar(STRING_ELT(sfile, 0));
     sraw = CADR(args);
     sopen = CADDR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     if(strchr(open, 't'))
@@ -3049,12 +3049,12 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
     desc = translateChar(STRING_ELT(sfile, 0));
     stext = CADR(args);
     sopen = CADDR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     venv = CADDDR(args);
@@ -3078,7 +3078,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(OutTextData, ncon, venv);
 	if(stext == R_NilValue)
 	    con = Connections[ncon] = newouttext("NULL", stext, open, ncon);
-	else if(isString(stext) && length(stext) == 1)
+	else if(isString(stext) && LENGTH(stext) == 1)
 	    con = Connections[ncon] =
 		newouttext(translateChar(STRING_ELT(stext, 0)), stext,
 			   open, ncon);
@@ -3132,7 +3132,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 #ifdef HAVE_SOCKETS
     scmd = CAR(args);
-    if(!isString(scmd) || length(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1)
 	error(_("invalid '%s' argument"), "host");
     host = translateChar(STRING_ELT(scmd, 0));
     args = CDR(args);
@@ -3149,12 +3149,12 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "blocking");
     args = CDR(args);
     sopen = CAR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     args = CDR(args);
     enc = CAR(args);
-    if(!isString(enc) || length(enc) != 1 ||
+    if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     args = CDR(args);
@@ -3203,16 +3203,16 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 ||
+    if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
@@ -3264,7 +3264,7 @@ SEXP attribute_hidden do_open(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
     sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
@@ -3701,7 +3701,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rconnection con0;
 	do {
 	    con0 = getConnection(con_num);
-	    for(R_xlen_t i = 0; i < xlength(text); i++)
+	    for(R_xlen_t i = 0; i < XLENGTH(text); i++)
 		Rconn_printf(con0, "%s%s",
 			     useBytes ? CHAR(STRING_ELT(text, i)) :
 			     translateChar0(STRING_ELT(text, i)), ssep);
@@ -3709,7 +3709,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    con_num = getActiveSink(j++);
 	} while (con_num > 0);
     } else {
-	for(R_xlen_t i = 0; i < xlength(text); i++)
+	for(R_xlen_t i = 0; i < XLENGTH(text); i++)
 	    Rconn_printf(con, "%s%s",
 			 useBytes ? CHAR(STRING_ELT(text, i)) :
 			 translateChar0(STRING_ELT(text, i)), ssep);
@@ -3821,7 +3821,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 
     args = CDR(args);
     swhat = CAR(args); args = CDR(args);
-    if(!isString(swhat) || length(swhat) != 1)
+    if(!isString(swhat) || LENGTH(swhat) != 1)
 	error(_("invalid '%s' argument"), "what");
     what = CHAR(STRING_ELT(swhat, 0)); /* ASCII */
     n = asVecSize(CAR(args)); args = CDR(args);
@@ -4497,7 +4497,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	slen = 0;
     } else {
 	usesep = TRUE;
-	if (!isString(sep) || length(sep) != 1)
+	if (!isString(sep) || LENGTH(sep) != 1)
 	    error(_("invalid '%s' argument"), "sep");
 	if(useBytes)
 	    ssep = CHAR(STRING_ELT(sep, 0));
@@ -4681,7 +4681,7 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!con->text)
 	error(_("can only push back on text-mode connections"));
     nexists = con->nPushBack;
-    if((n = length(stext)) > 0) {
+    if((n = LENGTH(stext)) > 0) {
 	if(nexists > 0)
 	    q = (char **) realloc(con->PushBack, (n+nexists)*sizeof(char *));
 	else
@@ -4971,9 +4971,9 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     scmd = CAR(args);
-    if(!isString(scmd) || length(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1)
 	error(_("invalid '%s' argument"), "description");
-    if(length(scmd) > 1)
+    if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
     url = CHAR(STRING_ELT(scmd, 0)); /* ASCII */
 #ifdef Win32
@@ -5000,14 +5000,14 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
+    if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "block");
     enc = CADDDR(args);
-    if(!isString(enc) || length(enc) != 1 ||
+    if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     if(PRIMVAL(op) == 1) {
