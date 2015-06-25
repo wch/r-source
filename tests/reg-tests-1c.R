@@ -825,7 +825,14 @@ stopifnot(identical(fpi, format(pi, decimal.mark=".")))
 
 
 ## model.frame() removed ts attributes on original data (PR#16436)
-orig <- class(EuStockMarkets)  
+orig <- class(EuStockMarkets)
 mf <- model.frame(EuStockMarkets ~ 1, na.action=na.fail)
-stopifnot(identical(orig, class(EuStockMarkets)))  
+stopifnot(identical(orig, class(EuStockMarkets)))
 ## ts class lost in R <= 3.2.1
+
+
+##
+foo <- as.expression(1:3)
+matrix(foo, 3, 3) # always worked
+matrix(foo, 3, 3, byrow = TRUE)
+## failed in R <= 3.1.2
