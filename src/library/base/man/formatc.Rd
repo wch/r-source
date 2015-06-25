@@ -7,12 +7,16 @@
 \title{Formatting Using C-style Formats}
 \alias{formatC}
 \alias{prettyNum}
+\alias{.format.zeros}
 \description{
   Formatting numbers individually and flexibly, \code{formatC()} using
   \code{C} style format specifications.
 
   \code{prettyNum()} is used for \dQuote{prettifying} (possibly
   formatted) numbers, also in \code{\link{format.default}}.
+
+  \code{.format.zeros()}, an auxiliary function of \code{prettyNum()}
+  re-formats the zeros in a vector \code{x} of formatted numbers.
 }
 \usage{
 formatC(x, digits = NULL, width = NULL,
@@ -29,6 +33,8 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
           preserve.width = c("common", "individual", "none"),
           zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA,
           \dots)
+
+.format.zeros(x, zero.print, nx = suppressWarnings(as.numeric(x)))
 }
 \arguments{
   \item{x}{an atomic numerical or character object, possibly
@@ -116,6 +122,9 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     \code{\link{complex}} vector or not.  By default (\code{NA}),
     \code{x} is checked to \sQuote{look like} complex.}
   \item{\dots}{arguments passed to \code{format}.}
+
+  \item{nx}{numeric vector of the same length as \code{x}, typically the
+    numbers of which the character vector \code{x} is the pre-format.}
 }
 \value{
   A character object of same size and attributes as \code{x} (after
@@ -175,6 +184,9 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 
   It was first adapted for \R by Friedrich Leisch and since much
   improved by the R Core team.
+
+  %% The utilities \code{prettyNum()} and \code{.format.zeros()} are by
+  %% Martin Maechler
 }
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
