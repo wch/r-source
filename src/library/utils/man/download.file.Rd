@@ -149,7 +149,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   
   Method \code{"wget"} is mainly for historical compatibility, but it
   and \code{"curl"} can be used for URLs (e.g., \samp{https://} URLs or
-  those that use cookies) which the internal method does not support.
+  those that use cookies) which the internal method does not support
+  where the \code{"libcurl"} method is not available.
 
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
