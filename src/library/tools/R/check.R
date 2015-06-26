@@ -1319,7 +1319,7 @@ setRlibs <-
 
     check_R_code <- function()
     {
-        if (!is_base_pkg) {
+        ## if (!is_base_pkg) {
             checkingLog(Log, "dependencies in R code")
             if (do_install) {
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
@@ -1346,7 +1346,7 @@ setRlibs <-
                     ## wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
             }
-        }
+        ## }
 
         ## Check whether methods have all arguments of the corresponding
         ## generic.
