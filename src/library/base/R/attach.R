@@ -16,6 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## Abstraction for "The fastest way" to do this [no if(), no substr(), ...],
+## to be used in many places:
+.rmpkg <- function(pkg) sub("package:", "", pkg, fixed=TRUE)
+
 ## also used by library() :
 .maskedMsg <- function(same, pkg, by) {
     objs <- strwrap(paste(same, collapse=", "), indent = 4L, exdent = 4L)
@@ -124,18 +128,18 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
         return(invisible(.Internal(detach(pos))))
 
     ## From here down we are detaching a package.
-    pkgname <- sub("^package:", "", packageName)
+    pkgname <- .rmpkg(packageName)
     for(pkg in search()[-1L]) {
         if(grepl("^package:", pkg) &&
            exists(".Depends", pkg, inherits = FALSE) &&
            pkgname %in% get(".Depends", pkg, inherits = FALSE))
             if(force)
                 warning(gettextf("package %s is required by %s, which may no longer work correctly",
-                                 sQuote(pkgname), sQuote(sub("^package:", "", pkg))),
+				 sQuote(pkgname), sQuote(.rmpkg(pkg))),
                      call. = FALSE, domain = NA)
             else
                 stop(gettextf("package %s is required by %s so will not be detached",
-                              sQuote(pkgname), sQuote(sub("^package:", "", pkg))),
+			      sQuote(pkgname), sQuote(.rmpkg(pkg))),
                      call. = FALSE, domain = NA)
     }
     env <- as.environment(pos)

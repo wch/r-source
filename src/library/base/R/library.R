@@ -626,7 +626,7 @@ function(all.available = FALSE, lib.loc = NULL)
         return(unique(ans))
     } ## else
     s <- search()
-    return(invisible(substring(s[substr(s, 1L, 8L) == "package:"], 9)))
+    invisible(.rmpkg(s[substr(s, 1L, 8L) == "package:"]))
 }
 
 path.package <-
