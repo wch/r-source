@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-06-08
+@set FAQ_DATE @value{FAQ_YEAR}-06-26
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -532,7 +532,7 @@ install r-base-dev} to obtain the additional tools required for this.
 So-called ``backports'' of the current R packages for at least the
 @dfn{stable} distribution of Debian are provided by Johannes Ranke, and
 available from @CRAN{}.  See
-@url{http://CRAN.R-project.org/bin/linux/debian/README} for details on R
+@url{http://CRAN.R-project.org/bin/linux/debian/README.html} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
 provided by Michael Rutter.
@@ -895,7 +895,7 @@ software and documentation.  See
 
 R-Forge (@url{http://R-Forge.R-project.org/}) offers a central platform
 for the development of R packages, R-related software and further
-projects.  It is based on @url{http://www.gforge.org/, GForge} offering
+projects.  It is based on @url{https://en.wikipedia.org/wiki/GForge, GForge} offering
 easy access to the best in SVN, daily built and checked packages,
 mailing lists, bug tracking, message boards/forums, site hosting,
 permanent file archival, full backups, and total web-based
@@ -962,15 +962,15 @@ This is also called the ``@emph{White Book}'', and introduced S version
 @item
 John M. Chambers (1998), ``Programming with Data,'' New York: Springer,
 ISBN 0-387-98503-4
-(@url{http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/}).
+(@url{http://statweb.stanford.edu/~jmc4/Sbook/}).
 
 This ``@emph{Green Book}'' describes version 4 of S, a major revision of
 S designed by John Chambers to improve its usefulness at every stage of
 the programming process.
 @end itemize
 
-See @url{http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html}
-for further information on ``Stages in the Evolution of S''.
+See @url{http://statweb.stanford.edu/~jmc4/papers/96.7.ps}
+for further information on the ``Evolution of the S Language''.
 
 There is a huge amount of user-contributed code for S, available at the
 @url{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
@@ -1616,7 +1616,7 @@ the R interpreter inside Apache 2 (and beyond).  A tutorial and
 presentation are available from the project web page at
 @url{http://biostat.mc.vanderbilt.edu/@/twiki/@/bin/@/view/@/Main/@/RApacheProject}.
 
-@url{http://stats.math.uni-augsburg.de/Rserve/, Rserve} is a project
+@url{http://www.rforge.net/Rserve/, Rserve} is a project
 actively developed by Simon Urbanek.  It implements a TCP/IP server which
 allows other programs to use facilities of R.  Clients are available from
 the web site for Java and C++ (and could be written for other languages
@@ -1673,8 +1673,8 @@ server (exchange and storage of the data), @uref{http://rstudio.org/,
 Rstudio} (R code designing and testing, file management), CKEditor
 (@HTML{} Layer design), and PHP.
 
-See @url{http://rwiki.sciviews.org/doku.php?id=faq-r#web_interfaces} for
-additional information.
+@c See @url{http://rwiki.sciviews.org/doku.php?id=faq-r#web_interfaces} for
+@c additional information.
 
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
@@ -3266,10 +3266,11 @@ the data, is possible in R but is not recommended.  The basic approach
 for constructing such graphs is to use @code{par(new=TRUE)} (see
 @code{?par}); functions @code{twoord.plot()} (in the @CRANpkg{plotrix}
 package) and @code{doubleYScale()} (in the @CRANpkg{latticeExtra}
-package) automate the process somewhat.  See
-@url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
-for more information, including strong arguments against this sort of
-graph.
+package) automate the process somewhat.
+@c See
+@c @url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
+@c for more information, including strong arguments against this sort of
+@c graph.
 
 @node How do I access the source code for a function?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, How do I create a plot with two y-axes?, R Miscellanea
 @section How do I access the source code for a function?
