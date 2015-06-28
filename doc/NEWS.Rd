@@ -79,6 +79,12 @@
       \item \command{R CMD check} has a new option
       \option{--ignore-vignettes} for use with non-Sweave vignettes
       whose \samp{VignetteBuilder} package is not available.
+
+      \item \command{R CMD check --as-cran} now checks code usage (via
+      \CRANpkg{codetools}) with only the base package attached, so that
+      functions from default packages other than base which are used in
+      the package code but not imported are reported as undefined
+      globals.
     }
   }
 

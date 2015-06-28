@@ -4070,6 +4070,11 @@ package namespace without loading and attaching the package and its
 suggests and enhances.
 Default: true (and true for CRAN submission checks).
 
+@item _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_
+If set, check code usage (via @CRANpkg{codetools}) with only the base
+package attached.
+Default: false (but true for CRAN submission checks).
+
 @item _R_CHECK_EXIT_ON_FIRST_ERROR_
 If set to a true value, the check will exit on the first error.
 Default: false.
