@@ -42,5 +42,5 @@ mget <- function(x, envir = as.environment(-1L), mode = "any",
 
 ## DB's proposed name "getSlotOrComponent" is more precise but harder to type
 getElement <- function(object, name) {
-    if(isS4(object)) slot(object, name) else object[[name, exact=TRUE]]
+    if(isS4(object)) methods::slot(object, name) else object[[name, exact=TRUE]]
 }
