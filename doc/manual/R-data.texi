@@ -1749,7 +1749,7 @@ Packages @CRANpkg{hdf5}, @CRANpkg{h5r}, Bioconductor's @pkg{rhdf5},
 interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format, see
 @uref{http://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
 (network Common Data Form, see
-@uref{http://www.unidata.ucar.edu/packages/netcdf/}).
+@uref{http://www.unidata.ucar.edu/software/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
 ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
