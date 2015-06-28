@@ -774,7 +774,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP stz, x, ans;
     R_xlen_t n = 0, nlen[9];
     int isgmt = 0, settz = 0;
-    char oldtz[20] = "";
+    char oldtz[1001] = "";
     const char *tz = NULL;
     stm tm;
     double tmp;
@@ -866,7 +866,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t n = 0, m, N, nlen[9];
     int UseTZ, settz = 0;
     char buff[300];
-    char oldtz[20] = "";
+    char oldtz[1001] = "";
     stm tm;
 
     checkArity(op, args);
@@ -1033,7 +1033,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     int invalid, isgmt = 0, settz = 0, offset;
     stm tm, tm2, *ptm = &tm;
     const char *tz = NULL;
-    char oldtz[20] = "";
+    char oldtz[1001] = "";
     double psecs = 0.0;
     R_xlen_t n, m, N;
 
