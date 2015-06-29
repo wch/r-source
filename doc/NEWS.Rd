@@ -142,6 +142,10 @@
       
       \item \code{matrix(x, nr, nc, byrow = TRUE)} failed if \code{x}
       was an object of type \code{"expression"}.
+      
+      \item \code{strptime()} could overflow the C stack when the
+      timezone had a non-standard format much longer than the
+      standard formats. (Part of \PR{16328}.)
     }
   }
 }
