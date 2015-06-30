@@ -127,6 +127,9 @@
     \itemize{
       \item \code{cmdscale()} gets new option \code{list.} for increased
       flexibility when a list should be returned.
+
+      \item \command{configure} now supports \code{texinfo} version 6.0.
+      (Wish of \PR{16456}.)
     }
   }
   \subsection{BUG FIXES}{

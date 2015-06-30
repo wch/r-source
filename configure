@@ -5219,6 +5219,8 @@ texi2any_version_min=`echo ${texi2any_version} | \
 if test -z "${texi2any_version_maj}" \
      || test -z "${texi2any_version_min}"; then
   r_cv_prog_texi2any_v5=no
+elif test ${texi2any_version_maj} -gt 5; then
+  r_cv_prog_texi2any_v5=yes
 elif test ${texi2any_version_maj} -lt 5 \
      || test ${texi2any_version_min} -lt 1; then
   r_cv_prog_texi2any_v5=no
