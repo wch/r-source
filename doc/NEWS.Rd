@@ -6,6 +6,15 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.2.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{cmdscale()} gets new option \code{list.} for increased
+      flexibility when a list should be returned.
+
+      \item \command{configure} now supports \code{texinfo} version 6.0.
+      (Wish of \PR{16456}.)
+    }
+  }
   \subsection{BUG FIXES}{
     \itemize{
       \item The HTML help page links to demo code failed due to a change
