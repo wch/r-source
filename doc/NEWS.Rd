@@ -129,7 +129,7 @@
       flexibility when a list should be returned.
 
       \item \command{configure} now supports \code{texinfo} version 6.0,
-      which (unlike the change from 4.x to 5.0) is minor update.
+      which (unlike the change from 4.x to 5.0) is a minor update.
       (Wish of \PR{16456}.)
     }
   }
