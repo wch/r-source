@@ -1,5 +1,5 @@
 
-R version 3.2.1 RC (2015-06-10 r68510) -- "World-Famous Astronaut"
+R version 3.2.1 Patched (2015-07-01 r68614) -- "World-Famous Astronaut"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2058,7 +2058,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.03 0.012 1.042 0 0 
+Time elapsed:  1.044 0.018 1.061 0 0 
 > grDevices::dev.off()
 null device 
           1 
