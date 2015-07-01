@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -151,14 +151,14 @@
   attribute (e.g., by \code{c(x)}).
 
   Unfortunately, the conversion is complicated by the operation of time
-  zones and leap seconds (25 days have been 86401 seconds long so far:
-  the times of the extra seconds are in the object
-  \code{.leap.seconds}).  The details of this are entrusted to the OS
-  services where possible.  It seems that some rare systems used to use
-  leap seconds, but all known current platforms ignore them (as required
-  by POSIX).  This is detected and corrected for at build time, so
-  \code{"POSIXct"} times used by \R do not include leap seconds on any
-  platform.
+  zones and leap seconds (26 days have been 86401 seconds long so far,
+  the last at the time of writing being added in 2015: the times of the
+  extra seconds are in the object \code{.leap.seconds}).  The details of
+  this are entrusted to the OS services where possible.  It seems that
+  some rare systems used to use leap seconds, but all known current
+  platforms ignore them (as required by POSIX).  This is detected and
+  corrected for at build time, so \code{"POSIXct"} times used by \R do
+  not include leap seconds on any platform.
 
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone, and on \code{"POSIXct"} objects drops any
