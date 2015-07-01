@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-06-25 r68587) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-07-01 r68615) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -936,7 +936,7 @@ Female Yes                89  17 202 131  94  24
 > 
 > hist(.leap.seconds, "years", freq = TRUE)
 > hist(.leap.seconds,
-+      seq(ISOdate(1970, 1, 1), ISOdate(2015, 1, 1), "5 years"))
++      seq(ISOdate(1970, 1, 1), ISOdate(2020, 1, 1), "5 years"))
 > 
 > ## 100 random dates in a 10-week period
 > random.dates <- as.Date("2001/1/1") + 70*stats::runif(100)
@@ -2066,7 +2066,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x310be88>
+<bytecode: 0x1a06f50>
 <environment: namespace:graphics>
 > 
 > 
@@ -2936,7 +2936,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x2c213b0>
+<bytecode: 0x15b8e50>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3016,7 +3016,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.795 0.042 1.838 0 0 
+Time elapsed:  1.93 0.018 1.949 0 0 
 > grDevices::dev.off()
 null device 
           1 
