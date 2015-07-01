@@ -1,7 +1,7 @@
 #  File src/library/base/R/zdatetime.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@
           "1979-12-31", "1981-6-30", "1982-6-30", "1983-6-30",
           "1985-6-30", "1987-12-31", "1989-12-31", "1990-12-31",
           "1992-6-30", "1993-6-30", "1994-6-30","1995-12-31",
-          "1997-6-30", "1998-12-31", "2005-12-31", "2008-12-31", "2012-6-30")
+          "1997-6-30", "1998-12-31", "2005-12-31", "2008-12-31", 
+          "2012-6-30", "2015-6-30")
     .leap.seconds <- strptime(paste(.leap.seconds , "23:59:60"),
                               "%Y-%m-%d %H:%M:%S")
     c(as.POSIXct(.leap.seconds, "GMT")) # lose the timezone
