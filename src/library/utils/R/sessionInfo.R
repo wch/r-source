@@ -58,11 +58,14 @@ sessionInfo <- function(package = NULL)
                        ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
                        sprintf("OS X %s (%s)", ver,
                                switch(ver1,
+                                      "4" = "Tiger",
+                                      "5" = "Leopard",
                                       "6" = "Snow Leopard",
                                       "7" = "Lion",
                                       "8" = "Mountain Lion",
                                       "9" = "Mavericks",
                                       "10" = "Yosemite",
+                                      "11" = "El Capitan",
                                       "unknown"))
                    },
                    "SunOS" = {
