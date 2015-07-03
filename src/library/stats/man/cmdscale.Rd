@@ -28,7 +28,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   \item{x.ret}{indicates whether the doubly centred symmetric distance
     matrix should be returned.}
   \item{list.}{logical indicating if a \code{\link{list}} should be
-    retured or just the \eqn{n \times k}{n * k} matrix, see \sQuote{Value:}.}
+    returned or just the \eqn{n \times k}{n * k} matrix, see \sQuote{Value:}.}
 }
 \details{
   Multidimensional scaling takes a set of dissimilarities and returns a
