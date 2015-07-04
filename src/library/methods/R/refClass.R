@@ -973,6 +973,7 @@ setRefClass <- function(Class, fields = character(),
                         contains = character(),
                         methods = list(),
                         where = topenv(parent.frame()),
+                        inheritPackage = FALSE,
                         ...) {
     fields <- inferProperties(fields, "field")
 ##    theseMethods <- names(methods) # non-inherited, for processing later
@@ -998,7 +999,8 @@ setRefClass <- function(Class, fields = character(),
                     refMethods = as.environment(refMethods),
                     fieldPrototypes = as.environment(fieldPrototypes),
                     refSuperClasses = refSuperClasses)
-    .setObjectParent(classDef@refMethods, refSuperClasses, where)
+    .setObjectParent(classDef@refMethods,
+          if(inheritPackage) refSuperClasses else NULL, where)
     assignClassDef(Class, classDef, where)
     generator <- new("refGeneratorSlot")
     env <- as.environment(generator)

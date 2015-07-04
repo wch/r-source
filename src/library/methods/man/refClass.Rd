@@ -43,7 +43,7 @@ extend the interface.
 }
 \usage{
 setRefClass(Class, fields = , contains = , methods =,
-     where =, ...)
+     where =, inheritPackage =, ...)
 
 getRefClass(Class, where =)
 }
@@ -111,6 +111,11 @@ the package namespace or environment for code that is part of an \R{}
 package, and to the global environment for code sourced directly at
 the session top level.
 }
+  \item{inheritPackage}{
+Should objects from the new class inherit the package environment of a
+contained superclass?  Default \code{FALSE}.  See the Section \dQuote{Inter-Package Superclasses
+  and External Methods}.
+} 
   \item{\dots}{
 other arguments to be passed to \code{\link{setClass}}.
 }
@@ -275,7 +280,8 @@ The body of such methods works like any ordinary function.
 The methods are called like other methods (without the \code{.self}
 argument, which is supplied internally and always refers to the object
 itself).
-External methods exist so that reference classes can have superclasses
+External methods exist so that reference classes can inherit the
+package environment of superclasses
 in other packages; see the Section \dQuote{Inter-Package Superclasses
   and External Methods}.
 
@@ -509,13 +515,30 @@ which the reference class is defined.
 Computations in the method have access to all the objects in the
 package's namespace, exported or not.
 
-When the class becomes a superclass of a class in another package, the
-objects from the subclass must retain the same parent environment
-pattern, in order for the inherited methods to work.
-As a result, methods for the new class may need another mechanism in
-order to refer to non-exported objects in their own package's namespace.
+When defining a class that contains a reference superclass in another
+package, there is an ambiguity about which package namespace should
+have that role.
+The argument \code{inheritPackage} to \code{setRefClass()} controls
+whether the environment of new objects should inherit from an
+inherited class in another package or continue to inherit from the
+current package's namespace.
 
-The mechanism is the \emph{external method}.  An external method  is
+If the superclass is \dQuote{lean}, with few methods, or exists
+primarily to support a family of subclasses, then it may be better to
+continue to use the new package's environment.
+On the other hand, if the superclass was originally written as a
+standalone, this choice may invalidate existing superclass methods.
+For the superclass methods to continue to work, they must use only
+exported functions in their package and the new package must import
+these.
+
+Either way, some methods may need to be written that do \emph{not}
+assume the standard model for reference class methods, but behave
+essentially as ordinary functions would in dealing with reference
+class objects.
+
+The mechanism is to recognize \emph{external methods}.
+An external method  is
 written as a function in which the first argument, named \code{.self},
 stands for the reference class object.
 This function is supplied as the definition for a reference class method.
