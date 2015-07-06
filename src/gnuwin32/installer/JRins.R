@@ -15,9 +15,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-### JRins.R Rversion srcdir MDISDI HelpStyle Internet Producer ISDIR
+### JRins.R Rversion srcdir MDISDI HelpStyle Producer ISDIR
 
-.make_R.iss <- function(RW, srcdir, MDISDI=0, HelpStyle=1, Internet=0,
+.make_R.iss <- function(RW, srcdir, MDISDI=0, HelpStyle=1,
                        Producer = "R-core", ISDIR)
 {
     have32bit <- file_test("-d", file.path(srcdir, "bin", "i386"))
@@ -86,7 +86,6 @@
     lines <- readLines("code.iss")
     lines <- gsub("@MDISDI@", MDISDI, lines)
     lines <- gsub("@HelpStyle@", HelpStyle, lines)
-    lines <- gsub("@Internet@", Internet, lines)
     writeLines(lines, con)
 
     writeLines(c("", "", "[Files]"), con)

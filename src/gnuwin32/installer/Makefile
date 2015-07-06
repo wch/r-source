@@ -17,9 +17,6 @@ MDISDI = 0
 ## Default help style, 0=plain text, 1=HTML
 HelpStyle = 1
 
-## Default internet connection, 0=Standard, 1=Internet2
-Internet = 0
-
 ## Used to set Registry entries
 Producer = R-core
 
@@ -166,7 +163,7 @@ R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
   ../../../VERSION ../../../SVN-REVISION
 	../../../bin$(R_ARCH)/Rscript JRins.R \
 	  $(RPREFIX) $(RPREFIX) $(MDISDI) \
-	  $(HelpStyle) $(Internet) $(Producer) "$(ISDIR)"
+	  $(HelpStyle) $(Producer) "$(ISDIR)"
 
 $(RPREFIX)-win.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
@@ -209,5 +206,5 @@ myR:
 	  "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave)
 	../../../bin$(R_ARCH)/Rscript JRins.R \
 	  $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) \
-	  $(HelpStyle) $(Internet) $(Producer) "$(ISDIR)"
+	  $(HelpStyle) $(Producer) "$(ISDIR)"
 	"$(ISDIR)/iscc" R.iss > myR.log
