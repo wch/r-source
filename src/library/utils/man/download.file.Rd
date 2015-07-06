@@ -91,9 +91,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   not supported by the internal method.
 #endif
 #ifdef windows
-  only supported if \option{--internet2} or environment variable
+  supported by default.  (Prior to \R 3.2.2, this required that
+  option \option{--internet2} or environment variable
   \env{R_WIN_INTERNET2} was set or \code{\link{setInternet2}(TRUE)} was
-  used (to make use of Windows internal functions), and then only if the
+  used. The option and environment variable are now ignored.)  
+  However, \samp{https://} support only works if the
   certificate is considered to be valid.
 #endif
 
@@ -127,8 +129,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{mode = "wb"}.
 
   There is an alternative method \code{"wininet"}. (This selected for
-  \code{method = "internal"} if the command line flag
-  \option{--internet2}, was used or \code{\link{setInternet2}(TRUE)}
+  \code{method = "internal"} unless \code{\link{setInternet2}(FALSE)} is
   called.)  Then the \sQuote{Internet Options} of the system are used to
   choose proxies and so on; these are set in the Control Panel and are
   those used for Internet Explorer.  That version does not support
