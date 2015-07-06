@@ -159,9 +159,10 @@ envRefSetField <- function(object, field,
     classDef <- getClass(Class)
     objectParent <- classDef@refMethods$.objectParent
     if(is.null(objectParent)) {
-        warning(
-            gettextf("Class definition for Class \"%s\" doesn't have a parent environment for objects defined.  Bug??", Class))
-        objectParent <- .methodsNamespace
+        ## This warning would be reasonable if we required re-installing packages for R 3.3.0
+        ## warning(
+        ##     gettextf("Class definition for Class \"%s\" doesn't have a parent environment for objects defined.\n A package  may need to be re-installed", Class))
+        objectParent <- .NamespaceOrPackage(classDef@package)
     }
     selfEnv <- new.env(TRUE, objectParent)
     ## the parent environment will be used by field methods, to make
