@@ -136,8 +136,8 @@ isIncomplete(con)
   passed to \code{file}).  \code{method = "wininet"} is only available on
   Windows.
 #ifdef windows
-  (See \code{\link{setInternet2}}, which chooses whether \code{"default"}
-  means \code{"internal"} or \code{"wininet"}.)
+  (See \code{\link{setInternet2}}, which chooses whether the \code{"internal"}
+  method is equivalent to \code{"wininet"}.)
 #endif
 
   For \code{gzfile} the description is the path to a file compressed by
@@ -224,18 +224,11 @@ isIncomplete(con)
   \code{\link{URLdecode}} if necessary.
 
   Note that the \samp{https://} URL scheme is not supported by the
-  internal method except on Windows.  There it is only supported if
-  \option{--internet2} or
-#ifdef unix
-  \code{setInternet2(TRUE)}
-#endif
-#ifdef windows
-  \code{\link{setInternet2}(TRUE)}
-#endif
-  was used (to make use of Windows internal functions), and then only
-  if the certificate is considered to be valid.  With that option only,
-  the \samp{http://user:pass@site} notation for sites requiring
-  authentication is also accepted.
+  internal method except on Windows.  There it is supported by default, 
+  and the \samp{http://user:pass@site} notation for sites requiring
+  authentication is also accepted.  However, if the 
+  certificate is considered to be invalid, or if
+  \code{setInternet2(FALSE)} is run, neither of these will be accepted.
 
   Where supported, \code{url(method = "libcurl")} allows more schemes:
   exactly which schemes is platform-dependent (see

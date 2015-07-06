@@ -14,6 +14,11 @@
       \item \command{configure} now supports \code{texinfo} version 6.0,
       which (unlike the change from 4.x to 5.0) is minor update.
       (Wish of \PR{16456}.)
+      
+      \item (Windows only) \code{setInternet2(TRUE)} is now the default,
+      so \samp{https://} URLs should be readable.  The command line
+      option \command{--internet2} and the environment variable
+      \env{R_WIN_INTERNET2} are now ignored.
     }
   }
   \subsection{BUG FIXES}{
@@ -374,8 +379,8 @@
 	schemes it supports.
 
 	\item \code{curlGetHeaders()} retrieves the headers for
-	\code{http://}, \code{https://}, \code{ftp://} and
-	\code{ftps://} URLs: analysis of these headers can provide
+	\samp{http://}, \samp{https://}, \samp{ftp://} and
+	\samp{ftps://} URLs: analysis of these headers can provide
 	insights into the `existence' of a URL (it might for example be
 	permanently redirected) and is so used in \command{R CMD
 	  check --as-cran}.
@@ -1259,7 +1264,7 @@
       an error instead of a warning.
 
       \item \code{install.packages(repos = NULL)} now accepts
-      \code{http://} or \code{ftp://} URLs of package archives as well
+      \samp{http://} or \samp{ftp://} URLs of package archives as well
       as file paths, and will download as required.  In most cases
       \code{repos = NULL} can be deduced from the extension of the URL.
 
