@@ -6,7 +6,6 @@ var
   SelectOptionsPage: TInputOptionWizardPage;
   MDISDIPage: TInputOptionWizardPage;
   HelpStylePage: TInputOptionWizardPage;
-  InternetPage: TInputOptionWizardPage;
   INIFilename: String;
   
 function IsAdmin: boolean;
@@ -46,12 +45,6 @@ begin
   HelpStylePage.Add(CustomMessage('HelpStyle0'));
   HelpStylePage.Add(CustomMessage('HelpStyle1'));
    
-  InternetPage := CreateInputOptionPage(HelpStylePage.ID,
-    CustomMessage('Internett'), CustomMessage('Internetq'),
-    CustomMessage('Interneti'), True, False);
-  InternetPage.Add(CustomMessage('Internet0'));
-  InternetPage.Add(CustomMessage('Internet1'));    
-
   INIFilename := ExpandConstant('{param:LOADINF}');
   if INIFilename <> '' then INIFilename := ExpandFilename(INIFilename);
   
@@ -83,17 +76,6 @@ begin
   end;
   HelpStylePage.SelectedValueIndex := index;
   
-  option := GetPreviousData('Internet', '');
-  if INIFilename <> '' then
-    option := GetIniString('R', 'Internet', option, INIFilename);
-  case option of
-    'Standard':  index := 0;
-    'Internet2': index := 1;
-  else
-    index := @Internet@;
-  end;
-  InternetPage.SelectedValueIndex := index;
-    
   { Get the save name now, because the current dir might change }
   INIFilename := ExpandConstant('{param:SAVEINF}');
   if INIFilename <> '' then INIFilename := ExpandFilename(INIFilename);    
@@ -103,10 +85,8 @@ procedure RegisterPreviousData(PreviousDataKey: Integer);
 var
   MDISDI: String;
   HelpStyle: String;
-  Internet: String;
 begin
 
-  
   { Store the settings so we can restore them next time }
   case MDISDIPage.SelectedValueIndex of
     0: MDISDI := 'MDI';
@@ -124,13 +104,6 @@ begin
   if INIFilename <> '' then
     SetIniString('R', 'HelpStyle', HelpStyle, INIFilename);
   
-  case InternetPage.SelectedValueIndex of
-    0: Internet := 'Standard';
-    1: Internet := 'Internet2';
-  end;
-  SetPreviousData(PreviousDataKey, 'Internet', Internet);
-  if INIFilename <> '' then
-    SetIniString('R', 'Internet', Internet, INIFilename);
 end;
 
 function SetCommentMarker(var lines: TArrayOfString; option: String; active: boolean) : boolean;
@@ -173,17 +146,10 @@ begin
     SaveStringsToFile(filename, lines, False);
 end;
 
-function CmdParms(Param:String): String;
-begin
-  Result := '';
-  if InternetPage.SelectedValueIndex = 1 then
-    Result := '--internet2';
-end;
-
 function ShouldSkipPage(PageID: Integer): boolean;
 begin
   if PageID = NoAdminPage.ID then Result := IsAdmin
-  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) or (PageID = InternetPage.ID) then 
+  else if (PageID = MDISDIPage.ID) or (PageID = HelpStylePage.ID) then 
     Result := SelectOptionsPage.SelectedValueIndex = 1
   else Result := false;
 end;

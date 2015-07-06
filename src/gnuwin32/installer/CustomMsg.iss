@@ -24,11 +24,6 @@ en.HelpStyleq=Which form of help display do you prefer?
 en.HelpStylei=Please specify plain text or HTML help, then click Next.
 en.HelpStyle0=Plain text
 en.HelpStyle1=HTML help
-en.Internett=Internet Access
-en.Internetq=Do you want to use internet2.dll, to make use of Internet Explorer proxy settings?
-en.Interneti=Please specify Standard or Internet2, then click Next.
-en.Internet0=Standard
-en.Internet1=Internet2
 
 br.regentries=Entradas no registro:
 br.associate=&Associar arquivos .RData ao R
@@ -52,11 +47,6 @@ br.HelpStyleq=Que formato de exibição de ajuda você prefere?
 br.HelpStylei=Por favor especifique texto puro, ou ajuda em HTML, e então clique em Avançar.
 br.HelpStyle0=Texto puro
 br.HelpStyle1=Ajuda HTML
-br.Internett=Acesso à Internet
-br.Internetq=Você deseja usar a internet2.dll, para utilizar as configurações de proxy do Internet Explorer?
-br.Interneti=Por favor especifique Padrão ou Internet2, então clique em Avançar.
-br.Internet0=Padrão
-br.Internet1=Internet2
 
 dk.regentries=Indgange i registreringsdatabasen:
 dk.associate=&Associer R med .RData-filer
@@ -80,11 +70,6 @@ dk.HelpStyleq=Hvilken form for visning af hjælp foretrækker du?
 dk.HelpStylei=Angiv venligst klartekst eller HTML-hjælp og klik Næste.
 dk.HelpStyle0=Klartekst
 dk.HelpStyle1=HTML-hjælp
-dk.Internett=Internetadgang
-dk.Internetq=Ønsker du at bruge internet2.dll, for at gøre brug af Internet Explorers proxy-indstillinger?
-dk.Interneti=Angiv venligst Standard eller Internet2 og klik Næste.
-dk.Internet0=Standard
-dk.Internet1=Internet2
 
 es.regentries=Registro de entradas:
 es.associate=&Asociar archivos .RData con R
@@ -108,11 +93,6 @@ es.HelpStyleq=Que forma prefiere?
 es.HelpStylei=Por favor texto simple, o HTML, luego haga clic en Siguiente.
 es.HelpStyle0=Texto simple
 es.HelpStyle1=Ayuda HTML
-es.Internett=Acceso a Internet
-es.Internetq=Desea utilizar internet2.dll para la configuración proxi del Internet Explorer?
-es.Interneti=Por favor especifique Standard o Internet2, luego haga clic en Siguiente.
-es.Internet0=Standard
-es.Internet1=Internet2
 
 fr.regentries=Entrées dans le registre :
 fr.associate=&Associer R avec les fichiers .RData
@@ -136,11 +116,6 @@ fr.HelpStyleq=Quel format de l'aide préférez-vous ?
 fr.HelpStylei=Veuillez spécifier texte ou HTML, puis cliquez sur Suivant.
 fr.HelpStyle0=texte
 fr.HelpStyle1=HTML
-fr.Internett=Accès Internet
-fr.Internetq=Voulez-vous utiliser internet2.dll, afin d'employer les paramètres de proxy d'Internet Explorer ?
-fr.Interneti=Veuillez spécifier Standard ou Internet2, puis cliquez sur Suivant.
-fr.Internet0=Standard
-fr.Internet1=Internet2
 
 de.regentries=Einträge in der Windows-Registrierung:
 de.associate=&Verknüpfe R mit .RData Dateien
@@ -164,11 +139,6 @@ de.HelpStyleq=Welche Art der Hilfe-Anzeige ziehen Sie vor?
 de.HelpStylei=Bitte wählen Sie "reiner Text" oder "HTML Hilfe" und klicken dann "weiter".
 de.HelpStyle0=reiner Text
 de.HelpStyle1=HTML Hilfe
-de.Internett=Internetzugang
-de.Internetq=Möchten Sie die internet2.dll benutzen, um auf die Internet Explorer Proxyeinstellungen zuzugreifen?
-de.Interneti=Bitte wählen Sie "Standard2 oder "Internet2" und klicken dann "weiter".
-de.Internet0=Standard
-de.Internet1=Internet2
 
 it.regentries=Valori registri:
 it.associate=Associa R ai file .RData
@@ -192,11 +162,6 @@ it.HelpStyleq=Quale tipo di formato Aiuti preferisci?
 it.HelpStylei=Specificare testo semplice, aiuti HTML e poi premere Avanti
 it.HelpStyle0=testo semplice
 it.HelpStyle1=aiuti HTML
-it.Internett=Accesso ad Internet
-it.Internetq=Vuoi utilizzare internet2.dll per utilizzare le impostazioni proxy di Internet Explorer?
-it.Interneti=Specificare Stadard o Internet2 e poi premere Avanti
-it.Internet0=Standard
-it.Internet1=Internet2
 
 nl.regentries=Register entries:
 nl.associate=&R associëren met .RData bestanden
@@ -220,11 +185,6 @@ nl.HelpStyleq=Op welke manier verkiest u de hulp weer te geven?
 nl.HelpStylei=Kies tussen gewone tekst, of HTML hulp, en klik op Volgende.
 nl.HelpStyle0=Gewone tekst
 nl.HelpStyle1=HTML hulp
-nl.Internett=Internet-toegang
-nl.Internetq=Wenst u internet2.dll te gebruiken, om zo de Internet Explorer proxy-instellingen te gebruiken ?
-nl.Interneti=Kies Standaard of Internet2, en klik op Volgende.
-nl.Internet0=Standaard
-nl.Internet1=Internet2
 
 no.regentries=Registernøkler:
 no.associate=Knytt R til .RData-filer
@@ -248,11 +208,6 @@ no.HelpStyleq=Hva slags hjelpevisning foretrekker du?
 no.HelpStylei=Velg teksthjelp, eller HTML-hjelp, og klikk Neste.
 no.HelpStyle0=Teksthjelp
 no.HelpStyle1=HTML-hjelp
-no.Internett=Internett-tilgang
-no.Internetq=Ønsker du å bruke internet2.dll, for å benytte proxy-innstillingene til Internet Explorer?
-no.Interneti=Velg enten Standard eller Internet2, og klikk neste.
-no.Internet0=Standard
-no.Internet1=Internet2
 
 
 sl.regentries=Vnosi v registru:
@@ -286,11 +241,6 @@ po.HelpStyleq=Jaki typ pokazania pomocy wolisz?
 po.HelpStylei=Wybierz pomoc tekstową, lub pomoc HTML, i kliknij Dalej.
 po.HelpStyle0=Pomoc tekstowa
 po.HelpStyle1=pomoc HTML
-po.Internett=Dostęp do internetu
-po.Internetq=Czy chcesz używać internet2.dll, by wykorzystać nastawienie proxy z Internet Explorer?
-po.Interneti=Wybierz Standard lub Internet2, i kliknij Dalej.
-po.Internet0=Standard
-po.Internet1=Internet2
 
 
 ja.regentries=レジストリ項目:
@@ -315,11 +265,6 @@ ja.HelpStyleq=ヘルプはどのような表示方法にしますか？
 ja.HelpStylei=テキスト形式, HTMLヘルプのどれかを選び、「次へ」をクリックして下さい
 ja.HelpStyle0=テキスト形式
 ja.HelpStyle1=HTMLヘルプ
-ja.Internett=インターネット接続
-ja.Internetq=internet2.dll を使って、RがInternet Explorer のプロキシ設定を参照するようにしますか？
-ja.Interneti=「標準」か「Internet2」を選択し、「次へ」をクリックして下さい
-ja.Internet0=標準
-ja.Internet1=Internet2
 
 
 chs.regentries=登記冊记录項:
@@ -344,11 +289,6 @@ chs.HelpStyleq=你喜欢哪一种帮助显示？
 chs.HelpStylei=请选纯文本或HTML帮助，然后点击Next.
 chs.HelpStyle0=选纯文本
 chs.HelpStyle1=HTML帮助
-chs.Internett=互联网接入
-chs.Internetq=你想通过internet2.dll来使用Internet Explorer的代理设置吗？
-chs.Interneti=请指定标准或互联网2，然后再点击Next.
-chs.Internet0=标准
-chs.Internet1=互联网2
 
 ko.regentries=레지스트리 항목들:
 ko.associate=R을 .RData 파일들과 연결합니다
@@ -372,11 +312,6 @@ ko.HelpStyleq=어떤 형식의 도움말 기능을 당신은 선호하나요?
 ko.HelpStylei=일반 텍스트 기반의 도움말 혹은 HTML 기반의 도움말을 사용할 것인지 선택하신 뒤, Next 를 눌러주세요
 ko.HelpStyle0=일반 텍스트 기반
 ko.HelpStyle1=HTML 기반의 도움말
-ko.Internett=인터넷 접속
-ko.Internetq=인터넷 익스플로러 프락시 설정을 위해서 internet2.dll 을 사용하길 원하시나요?
-ko.Interneti=표준 혹은 Internet2 중 하나를 선택하신 후 Next 를 눌러주세요
-ko.Internet0=표준
-ko.Internet1=Internet2
 
 cht.regentries=登錄表項目:
 cht.associate=將資料檔副檔名 .R 關聯至 R
@@ -409,8 +344,4 @@ ru.HelpStyleq=Какой тип отображения помощи Вы пре�
 ru.HelpStylei=Пожалуйста, укажите "простой текст" или "помощь HTML", затем "Далее".
 ru.HelpStyle0=Простой текст
 ru.HelpStyle1=Помощь HTML (использовать браузер)
-ru.Internett=Доступ в Интернет
-ru.Internetq=Вы хотите использовать "internet2.dll" для того, чтобы были доступны настройки прокси-сервера из Internet Explorer?
-ru.Interneti=Пожалуйста, укажите "Стандартный" либо "Internet2", затем "Далее".
-ru.Internet0=Стандартный
-ru.Internet1=Internet2
+
