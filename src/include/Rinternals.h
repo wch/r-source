@@ -130,7 +130,7 @@ typedef unsigned int SEXPTYPE;
 #define S4SXP       25    /* S4, non-vector */
 
 /* used for detecting PROTECT issues in memory.c */
-#define NEWSXP      30    /* fresh node creaed in new page */
+#define NEWSXP      30    /* fresh node created in new page */
 #define FREESXP     31    /* node released by GC */
 
 #define FUNSXP      99    /* Closure or Builtin or Special */
@@ -825,6 +825,11 @@ Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
 SEXP Rf_nthcdr(SEXP, int);
+
+// ../main/character.c :
+typedef enum {Bytes, Chars, Width} nchar_type;
+int R_nchar(SEXP string, nchar_type type_,
+	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
 
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean);

@@ -12,9 +12,9 @@
       flexibility when a list should be returned.
 
       \item \command{configure} now supports \code{texinfo} version 6.0,
-      which (unlike the change from 4.x to 5.0) is minor update.
+      which (unlike the change from 4.x to 5.0) is a minor update.
       (Wish of \PR{16456}.)
-      
+
       \item (Windows only) \code{setInternet2(TRUE)} is now the default,
       so \samp{https://} URLs should be readable.  The command line
       option \command{--internet2} and the environment variable
@@ -25,19 +25,28 @@
     \itemize{
       \item The HTML help page links to demo code failed due to a change
       in \R 3.2.0.  (\PR{16432})
-      
-      \item If \code{na.action} was used in \code{model.frame()}, the 
+
+      \item If \code{na.action} was used in \code{model.frame()}, the
       original data could be modified. (\PR{16436})
-      
+
       \item \code{getGraphicsEvent()} could cause a crash if a graphics
       window was closed while it was in use. (\PR{16438})
-      
+
       \item \code{matrix(x, nr, nc, byrow = TRUE)} failed if \code{x}
       was an object of type \code{"expression"}.
-      
+
       \item \code{strptime()} could overflow the C stack when the
       timezone had a non-standard format much longer than the
       standard formats. (Part of \PR{16328}.)
+
+      \item \code{options(OutDec = s)} now signals a warning (which will
+      become an error in the future) when \code{s} is not a string with
+      exactly one character, as that has been a documented requirement.
+
+      \item \code{prettyNum()} gains a new option \code{input.d.mark}
+      which together with other changes, e.g., the default for
+      \code{decimal.mark}, fixes some \code{format()}ting variants with
+      non-default \code{getOption("OutDec")} such as in \PR{16411}.
     }
   }
 }
@@ -130,7 +139,7 @@
       correctly propagated from \code{.getRequiredPackages2()}.
 
       \item Under some circumstances using the internal PCRE when
-      building \R fron source would cause external libs such as
+      building \R from source would cause external libs such as
       \code{-llzma} to be omitted from the main link.
 
       \item The .Primitive default methods of the logic operators, i.e.,
@@ -155,7 +164,7 @@
 
       \item \code{slotNames(.)} is now correct for \code{"signature"}
       objects (mostly used internally in \pkg{methods}).
-      
+
       \item On some systems, the first string comparison after
       a locale change would result in \code{NA}.
     }

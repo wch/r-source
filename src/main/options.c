@@ -25,6 +25,7 @@
 #include "Defn.h"
 #include <Internal.h>
 #include "Print.h"
+#include <Rinternals.h>
 
 /* The global var. R_Expressions is in Defn.h */
 #define R_MIN_EXPRESSIONS_OPT	25
@@ -561,6 +562,10 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		static char sdec[11];
+		if(R_nchar(STRING_ELT(argi, 0), Chars,
+			   /* allowNA = */ FALSE, /* keepNA = */ FALSE,
+			   "OutDec") != 1) // will become an error
+		    warning(_("'OutDec' must be a string of one character"));
 		strncpy(sdec, CHAR(STRING_ELT(argi, 0)), 10);
 		sdec[10] = '\0';
 		OutDec = sdec;
