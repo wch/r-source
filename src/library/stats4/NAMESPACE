@@ -1,9 +1,13 @@
 export(mle) # exporting methods implicitly exports the generics
-importFrom("graphics", plot)
+
+importFrom("grDevices", dev.flush, dev.hold)
+importFrom("graphics", abline, lines, par, plot)
 importFrom("methods", new, show, slotNames)
-importFrom("stats", approx, optim, qchisq, qnorm, spline)
+importFrom("stats", approx, optim, pchisq, predict, qchisq, qnorm, spline)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
-importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile, update, vcov)
+importFrom("stats",
+	   AIC, BIC, coef, confint, logLik,
+	   na.omit, nobs, profile, update, vcov)
 
 ## S4
 exportClasses(mle, profile.mle, summary.mle)
