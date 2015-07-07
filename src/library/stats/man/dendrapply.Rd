@@ -1,6 +1,6 @@
 % File src/library/stats/man/dendrapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dendrapply}
@@ -30,8 +30,13 @@ dendrapply(X, FUN, ...)
   i.e., returning the node with some attributes added or changed.
 }
 \author{Martin Maechler}
-\note{this is still somewhat experimental, and suggestions for
-  enhancements (or nice examples of usage) are very welcome.}
+\note{
+  The implementation is somewhat experimental and suggestions for
+  enhancements (or nice examples of usage) are very welcome.  The
+  current implementation is \emph{recursive} and inefficient for
+  dendrograms with many non-leaves.  See the \sQuote{Warning} in
+  \code{\link{dendrogram}}.
+}
 \seealso{\code{\link{as.dendrogram}}, \code{\link{lapply}} for applying
   a function to each component of a \code{list}, \code{\link{rapply}}
   for doing so to each non-list component of a nested list.

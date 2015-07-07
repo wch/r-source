@@ -662,7 +662,8 @@ rev.dendrogram <- function(x) {
 
 ## This is cheap
 labels.dendrogram <- function(object, ...)
-    unlist(dendrapply(object, function(n) attr(n,"label")))
+		  rapply(object, function(n) attr(n,"label"))
+## was unlist(dendrapply(object, function(n) attr(n,"label")))
 
 merge.dendrogram <- function(x, y, ..., height,
                              adjust = c("auto", "add.max", "none"))

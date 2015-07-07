@@ -68,7 +68,7 @@
 
       \item \code{as.raster(x)} now also accepts \code{\link{raw}}
       arrays \code{x} assuming values in \code{0:255}.
-      
+
       \item Subscripting of matrix/array objects of type
       \code{"expression"} is now supported.
     }
@@ -131,7 +131,7 @@
       \item \command{configure} now supports \code{texinfo} version 6.0,
       which (unlike the change from 4.x to 5.0) is a minor update.
       (Wish of \PR{16456}.)
-      
+
       \item (Windows only) \code{setInternet2(TRUE)} is now the default,
       so \samp{https://} URLs should be readable.  The command line
       option \command{--internet2} and the environment variable
@@ -142,19 +142,23 @@
     \itemize{
       \item The HTML help page links to demo code failed due to a change
       in \R 3.2.0.  (\PR{16432})
-      
-      \item If \code{na.action} was used in \code{model.frame()}, the 
+
+      \item If \code{na.action} was used in \code{model.frame()}, the
       original data could be modified. (\PR{16436})
-      
+
       \item \code{getGraphicsEvent()} could cause a crash if a graphics
       window was closed while it was in use. (\PR{16438})
-      
+
       \item \code{matrix(x, nr, nc, byrow = TRUE)} failed if \code{x}
       was an object of type \code{"expression"}.
-      
+
       \item \code{strptime()} could overflow the C stack when the
       timezone had a non-standard format much longer than the
       standard formats. (Part of \PR{16328}.)
+
+      \item The \code{dendrogram} method of \code{labels()} is much more
+      efficient for large dendrograms, now using \code{rapply()}.
+      (Comment #15 of \PR{15215})
     }
   }
 }
