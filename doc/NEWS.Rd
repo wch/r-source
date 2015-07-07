@@ -108,16 +108,6 @@
 
       \item A \code{coef.maov()} method has been added to allow
       \code{vcov()} to work with multivariate results. (\PR{16380})
-
-      \item \code{options(OutDec = s)} now signals a warning (which will
-      become an error in the future) when \code{s} is not a string with
-      exactly one character, as that has been a documented requirement.
-      %% Move to R-patched together with next one, after a while
-
-      \item \code{prettyNum()} gains a new option \code{input.d.mark}
-      which together with other changes, e.g., the default for
-      \code{decimal.mark}, fixes some \code{format()}ting variants with
-      non-default \code{getOption("OutDec")} such as in \PR{16411}.
     }
   }
 }
@@ -159,6 +149,15 @@
       \item The \code{dendrogram} method of \code{labels()} is much more
       efficient for large dendrograms, now using \code{rapply()}.
       (Comment #15 of \PR{15215})
+
+      \item \code{options(OutDec = s)} now signals a warning (which will
+      become an error in the future) when \code{s} is not a string with
+      exactly one character, as that has been a documented requirement.
+
+      \item \code{prettyNum()} gains a new option \code{input.d.mark}
+      which together with other changes, e.g., the default for
+      \code{decimal.mark}, fixes some \code{format()}ting variants with
+      non-default \code{getOption("OutDec")} such as in \PR{16411}.
     }
   }
 }
