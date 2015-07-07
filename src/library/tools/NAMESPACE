@@ -1,5 +1,7 @@
 useDynLib(tools, .registration = TRUE)
 
+## Bootstrapping R ==> do _not_ import, rather use  ' :: '
+
 export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db", "Rdiff",
        "Rdindex", "SweaveTeXFilter", "add_datalist",

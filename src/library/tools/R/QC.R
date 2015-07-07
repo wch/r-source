@@ -3881,7 +3881,7 @@ function(package, lib.loc = NULL)
                    envir = compat)
         }
         if(.Platform$OS.type != "windows") {
-            assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
+            assign("bringToTop", function (which = grDevices::dev.cur(), stay = FALSE) {},
                    envir = compat)
             assign("choose.dir",
                    function (default = "", caption = "Select folder") {},
@@ -3915,7 +3915,7 @@ function(package, lib.loc = NULL)
                    function (filename = "Rplot",
                              type = c("wmf", "emf", "png", "jpeg", "jpg",
                                       "bmp", "ps", "eps", "pdf"),
-                             device = dev.cur(), restoreConsole = TRUE) {},
+                             device = grDevices::dev.cur(), restoreConsole = TRUE) {},
                    envir = compat)
             assign("win.graph",
                    function(width = 7, height = 7, pointsize = 12,
@@ -3963,7 +3963,7 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign(".install.winbinary",
                    function(pkgs, lib, repos = getOption("repos"),
-                            contriburl = contrib.url(repos),
+                            contriburl = utils::contrib.url(repos),
                             method, available = NULL, destdir = NULL,
                             dependencies = FALSE, libs_only = FALSE,
                             ...) {}, envir = compat)
