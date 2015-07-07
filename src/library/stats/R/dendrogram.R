@@ -660,10 +660,12 @@ rev.dendrogram <- function(x) {
     midcache.dendrogram( r )
 }
 
-## This is cheap
+## Using dendrapply() is "cheap" to program, but inefficient for large dendrograms
 labels.dendrogram <- function(object, ...)
-		  rapply(object, function(n) attr(n,"label"))
-## was unlist(dendrapply(object, function(n) attr(n,"label")))
+    unlist(dendrapply(object, function(n) attr(n,"label")))
+## this does not always work: object may _not_ be a list:
+## rapply(object, function(n) attr(n,"label"))
+
 
 merge.dendrogram <- function(x, y, ..., height,
                              adjust = c("auto", "add.max", "none"))
