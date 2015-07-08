@@ -47,6 +47,9 @@
       which together with other changes, e.g., the default for
       \code{decimal.mark}, fixes some \code{format()}ting variants with
       non-default \code{getOption("OutDec")} such as in \PR{16411}.
+      
+      \item \code{download.packages()} failed for \code{type} equal to
+      \code{"both"} or \code{"binary"}.  (Reported by Dan Tenenbaum.) 
     }
   }
 }

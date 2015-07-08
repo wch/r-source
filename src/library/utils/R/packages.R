@@ -673,6 +673,9 @@ download.packages <- function(pkgs, destdir, available = NULL,
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(nonlocalcran && !dir.exists(destdir))
         stop("'destdir' is not a directory")
+    
+    type <- resolvePkgType(type)
+    
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
@@ -739,11 +742,16 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval
 }
 
-contrib.url <- function(repos, type = getOption("pkgType"))
-{
+resolvePkgType <- function(type) {
     ## Not entirely clear this is optimal
     if(type == "both") type <- "source"
-    if(type == "binary") type <- .Platform$pkgType
+    else if(type == "binary") type <- .Platform$pkgType
+    type
+}
+
+contrib.url <- function(repos, type = getOption("pkgType"))
+{
+    type <- resolvePkgType(type)
     if(is.null(repos)) return(NULL)
     if("@CRAN@" %in% repos && interactive()) {
         cat(gettext("--- Please select a CRAN mirror for use in this session ---"),
