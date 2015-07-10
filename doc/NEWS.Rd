@@ -126,6 +126,9 @@
       so \samp{https://} URLs should be readable.  The command line
       option \command{--internet2} and the environment variable
       \env{R_WIN_INTERNET2} are now ignored.
+      
+      \item \code{chooseCRANmirror()} now offers HTTPS mirrors in
+      preference to HTTP mirrors.
     }
   }
   \subsection{BUG FIXES}{

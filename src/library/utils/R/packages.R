@@ -788,8 +788,14 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     m <- NULL
     if(!local.only) {
         ## Try to handle explicitly failure to connect to CRAN.
-        con <- url("http://cran.r-project.org/CRAN_mirrors.csv")
+        ## FIXME:  it would be better to test on our own internal ability to 
+        ##         handle https
+        con <- url("https://cran.r-project.org/CRAN_mirrors.csv")
         m <- try(open(con, "r"), silent = TRUE)
+        if (inherits(m, "try-error")) {
+            con <- url("http://cran.r-project.org/CRAN_mirrors.csv")
+            m <- try(open(con, "r"), silent = TRUE)
+        }
         if(!inherits(m, "try-error"))
             m <- try(read.csv(con, as.is = TRUE, encoding = "UTF-8"))
         close(con)
@@ -802,13 +808,28 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
 }
 
 
-chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL)
+chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL, 
+                             useHTTPS = getOption("useHTTPS", TRUE))
 {
     if(is.null(ind) && !interactive())
         stop("cannot choose a CRAN mirror non-interactively")
     m <- getCRANmirrors(all = FALSE, local.only = FALSE)
-    res <- if (length(ind)) as.integer(ind)[1L] else
-    menu(m[, 1L], graphics, "CRAN mirror")
+    if (length(ind)) 
+        res <- as.integer(ind)[1L] 
+    else {
+    	isHTTPS <- grepl("^https", m[, "URL"])
+    	if (useHTTPS) {
+    	    m2 <- m[isHTTPS,]
+    	    if (!nrow(m2))
+    	    	useHTTPS <- FALSE
+    	}
+    	if (useHTTPS) {
+    	    res <- menu(c(m2[, 1L], "(HTTP mirrors)"), graphics, "HTTPS CRAN mirror")
+    	    if (res > nrow(m2))
+    	    	res <- menu(m[!isHTTPS, 1L], graphics, "HTTP CRAN mirror")
+    	} else
+    	    res <- menu(m[!isHTTPS, 1L], graphics, "HTTP CRAN mirror")
+    }
     if(res > 0L) {
         URL <- m[res, "URL"]
         repos <- getOption("repos")
