@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-06-26
+@set FAQ_DATE @value{FAQ_YEAR}-07-11
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -1651,11 +1651,12 @@ any extra scripting or learn any new scripting techniques.
 The @CRANpkg{R.rsp} package by Henrik Bengtsson introduces ``R Server
 Pages''.  Analogous to Java Server Pages, an R server page is typically
 @HTML{} with embedded R code that gets evaluated when the page is
-requested.  The package includes an internal cross-platform HTTP server
-implemented in Tcl, so provides a good framework for including web-based
-user interfaces in packages.  The approach is similar to the use of the
-@CRANpkg{brew} package with @url{http://rapache.net/, Rapache} with the
-advantage of cross-platform support and easy installation.
+requested.  The package includes an internal cross-platform
+@acronym{HTTP} server implemented in Tcl, so provides a good framework
+for including web-based user interfaces in packages.  The approach is
+similar to the use of the @CRANpkg{brew} package with
+@url{http://rapache.net/, Rapache} with the advantage of cross-platform
+support and easy installation.
 
 The @CRANpkg{Rook} package by Jeffrey Horner provides a web server
 interface borrowing heavily from Ruby's Rack project.
@@ -2231,6 +2232,7 @@ dir /opt/R/src/unix
 * How do I access the source code for a function?::
 * Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::
 * Why is R apparently not releasing memory?::
+* How can I enable secure https downloads in R?::
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3321,7 +3323,7 @@ of the variance, is the model where @math{E[Y]=0} everywhere.  (If you
 don't know a priori that @math{E[Y]=0} when @math{x=0}, then you
 probably shouldn't be fitting a line through the origin.)
 
-@node Why is R apparently not releasing memory?,  , Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
+@node Why is R apparently not releasing memory?, How can I enable secure https downloads in R?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
 @section Why is R apparently not releasing memory?
 
 This question is often asked in different flavors along the lines of
@@ -3375,6 +3377,33 @@ Unix-like systems) it is possible to use the @code{mallinfo} system call
 (also see the @url{http://rforge.net/mallinfo, mallinfo} package) to
 query the allocator about the layout of the allocations, including the
 actually used memory as well as unused memory that cannot be released.
+
+@node How can I enable secure https downloads in R?,  , Why is R apparently not releasing memory?, R Miscellanea
+@section How can I enable secure https downloads in R?
+
+When R transfers files over @acronym{HTTP} (e.g., using the
+@code{install.packages()} or @code{download.file()} function), a
+download method is chosen based on the @option{download.file.method}
+option.  There are several methods available and the default behavior if
+no option is explicitly specified is to use R's internal @acronym{HTTP}
+implementation.  In many circumstances this internal method will not
+support @acronym{HTTPS} connections so you'll need to override the default.
+
+R versions 3.2.0 and greater include two download methods (@code{"libcurl"} and
+@code{"wininet"}) that both support @acronym{HTTPS} connections.  We
+recommend that you use these methods.  The requisite code to add to
+@file{.Rprofile} or @file{Rprofile.site} is as follows: 
+
+@example
+options(download.file.method = "wininet")     @r{(Windows)}
+options(download.file.method = "libcurl")     @r{(Linux and OS X)}
+@end example
+
+Note that if you built R from source the @code{"libcurl"} method may or
+may not have been compiled in.  In the case that it wasn't,
+i.e.. @code{capabilities("libcurl") == FALSE}, we recommend method
+@code{"wget"} on Linux and @code{"curl"} on OS X.
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
