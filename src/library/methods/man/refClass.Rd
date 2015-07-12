@@ -23,7 +23,10 @@
 \alias{SuperClassMethod-class}
 \alias{show,envRefClass-method}
 \alias{show,refMethodDef-method}
+\alias{show,externalRefMethod-method}
 \alias{show,refClassRepresentation-method}
+\alias{externalRefMethod}
+\alias{externalRefMethod-class}
 \description{
 The software described here supports reference classes whose objects have
 fields
@@ -40,7 +43,7 @@ extend the interface.
 }
 \usage{
 setRefClass(Class, fields = , contains = , methods =,
-     where =, ...)
+     where =, inheritPackage =, ...)
 
 getRefClass(Class, where =)
 }
@@ -108,6 +111,11 @@ the package namespace or environment for code that is part of an \R{}
 package, and to the global environment for code sourced directly at
 the session top level.
 }
+  \item{inheritPackage}{
+Should objects from the new class inherit the package environment of a
+contained superclass?  Default \code{FALSE}.  See the Section \dQuote{Inter-Package Superclasses
+  and External Methods}.
+} 
   \item{\dots}{
 other arguments to be passed to \code{\link{setClass}}.
 }
@@ -265,6 +273,17 @@ features and restrictions.
 The body of the function can contain calls to any other reference method,
 including those inherited from other reference classes and may refer
 to fields in the object by name.
+
+Alternatively, a method may be an \emph{external} method, a function
+whose first argument is \code{.self}.
+The body of such methods works like any ordinary function.
+The methods are called like other methods (without the \code{.self}
+argument, which is supplied internally and always refers to the object
+itself).
+External methods exist so that reference classes can inherit the
+package environment of superclasses
+in other packages; see the Section \dQuote{Inter-Package Superclasses
+  and External Methods}.
 
 Fields may be modified in a method by using the
 non-local assignment operator, \code{<<-}, as in the \code{$edit} and \code{$undo}
@@ -485,6 +504,67 @@ implementation may use such names for special purposes.
 
 }
 
+\section{Inter-Package Superclasses  and External Methods}{
+The environment of a method in a reference class is the object itself,
+as an environment.
+This allows the method to refer directly to fields and other methods,
+without using the whole object and the \code{"$"} %$
+operator.
+The parent of that environment is the namespace of the package in
+which the reference class is defined.
+Computations in the method have access to all the objects in the
+package's namespace, exported or not.
+
+When defining a class that contains a reference superclass in another
+package, there is an ambiguity about which package namespace should
+have that role.
+The argument \code{inheritPackage} to \code{setRefClass()} controls
+whether the environment of new objects should inherit from an
+inherited class in another package or continue to inherit from the
+current package's namespace.
+
+If the superclass is \dQuote{lean}, with few methods, or exists
+primarily to support a family of subclasses, then it may be better to
+continue to use the new package's environment.
+On the other hand, if the superclass was originally written as a
+standalone, this choice may invalidate existing superclass methods.
+For the superclass methods to continue to work, they must use only
+exported functions in their package and the new package must import
+these.
+
+Either way, some methods may need to be written that do \emph{not}
+assume the standard model for reference class methods, but behave
+essentially as ordinary functions would in dealing with reference
+class objects.
+
+The mechanism is to recognize \emph{external methods}.
+An external method  is
+written as a function in which the first argument, named \code{.self},
+stands for the reference class object.
+This function is supplied as the definition for a reference class method.
+The method will be called, automatically, with the first argument
+being the current object and the other arguments, if any, passed along
+from the actual call.
+
+Since an external method is an ordinary function in the source code
+for its package, it has access to all the objects in the namespace.
+Fields and methods in the reference class must be referred to in the
+form \code{.self$name}.%$
+
+If for some reason you do not want to use \code{.self} as the first
+argument, a function \code{f()} can be converted explicitly as
+\code{externalRefMethod(f)}, which returns an object of class
+\code{"externalRefMethod"} that can be supplied as a method for the
+class.
+The first argument will still correspond to the whole object.
+
+External methods can be supplied for any reference class, but there is no
+obvious advantage unless they are needed.
+They are more work to write, harder to read and (slightly) slower to
+execute.
+
+}
+
 \section{Reference Class Generators}{
 The call to \code{setRefClass} defines the specified class and
 returns a \dQuote{generator function} object for that class.
@@ -530,16 +610,19 @@ If no topic is given or if the topic is not a method name, the
 definition of the class is printed.
 }
 \item{\code{$methods(...)}}{ %$
-With no arguments, returns a list of the reference methods for this
+With no arguments, returns the names of the reference methods for this
 class.
+With one character string argument, returns the method of that name.
 
 Named arguments
 are method definitions, which will be
 installed in the class, as if they had been supplied in the
 \code{methods} argument to \code{setRefClass()}.
 Supplying methods in this way, rather than in the call to
-\code{setRefClass()}, is largely for the sake of clearer source code
-when many or large methods are being defined.
+\code{setRefClass()}, is recommended for the sake of clearer source
+code.
+See the section on \dQuote{Writing Reference Methods} for details.
+
 All methods for a class should be defined in the source code that
 defines the class, typically as part of a package.
 In particular, methods can not be redefined in a class in an attached

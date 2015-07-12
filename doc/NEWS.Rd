@@ -53,7 +53,13 @@
       
       \item \code{download.packages()} failed for \code{type} equal to
       \code{"both"} or \code{"binary"}.  (Reported by Dan Tenenbaum.) 
-    }
+
+      \item Reference classes that inherited from reference classes in
+      another package could invalidate methods of the inherited
+      class. Fixing this requires adding the ability for methods to be
+      \dQuote{external}, with the object supplied explicitly as the first
+      argument, named \code{.self}. See "Inter-Package Superclasses"
+      in the documentation.}
   }
 }
 
