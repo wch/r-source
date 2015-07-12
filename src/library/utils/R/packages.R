@@ -818,17 +818,25 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL,
         res <- as.integer(ind)[1L] 
     else {
     	isHTTPS <- grepl("^https", m[, "URL"])
+    	mHTTPS <- m[isHTTPS,]
+    	mHTTP <- m[!isHTTPS,]
     	if (useHTTPS) {
-    	    m2 <- m[isHTTPS,]
-    	    if (!nrow(m2))
+    	    m <- mHTTPS
+    	    if (!nrow(m)) {
     	    	useHTTPS <- FALSE
+    	    	m <- mHTTP
+    	    }
     	}
     	if (useHTTPS) {
-    	    res <- menu(c(m2[, 1L], "(HTTP mirrors)"), graphics, "HTTPS CRAN mirror")
-    	    if (res > nrow(m2))
-    	    	res <- menu(m[!isHTTPS, 1L], graphics, "HTTP CRAN mirror")
-    	} else
-    	    res <- menu(m[!isHTTPS, 1L], graphics, "HTTP CRAN mirror")
+    	    res <- menu(c(m[, 1L], "(HTTP mirrors)"), graphics, "HTTPS CRAN mirror")
+    	    if (res > nrow(m)) {
+    	    	m <- mHTTP
+    	    	res <- menu(m[, 1L], graphics, "HTTP CRAN mirror")
+    	    }
+    	} else {
+    	    m <- mHTTP
+    	    res <- menu(m[, 1L], graphics, "HTTP CRAN mirror")
+    	}
     }
     if(res > 0L) {
         URL <- m[res, "URL"]
