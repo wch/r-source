@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseCRANmirror.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chooseCRANmirror}
@@ -11,7 +11,8 @@
   Interact with the user to choose a CRAN mirror.
 }
 \usage{
-chooseCRANmirror(graphics = getOption("menu.graphics"), ind = NULL)
+chooseCRANmirror(graphics = getOption("menu.graphics"), ind = NULL,
+                 useHTTPS = getOption("useHTTPS", TRUE))
 
 getCRANmirrors(all = FALSE, local.only = FALSE)
 }
@@ -22,7 +23,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
     widget. Otherwise use a text \code{\link{menu}}.}
 
   \item{ind}{Optional numeric value giving which entry to select.}
-
+  \item{useHTTPS}{Whether to offer HTTPS mirrors.}
   \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
   \item{local.only}{Logical, try to get most recent list from CRAN or
     use file on local disk only.}
@@ -36,6 +37,12 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   This function was originally written to support a Windows GUI menu
   item, but is also called by \code{\link{contrib.url}} if it finds the
   initial dummy value of \code{\link{options}("repos")}.
+  
+  The \code{useHTTPS} argument defaults to \code{TRUE}.  With \code{useHTTPS=TRUE},
+  HTTPS mirrors will be offered in preference to HTTP mirrors.  If it
+  is set to \code{FALSE}, no HTTPS mirrors will be offered.  We recommend
+  that it be left at the default value, as this will help to ensure that
+  packages have not been tampered with in transit.
 }
 \value{
   None for \code{chooseCRANmirror()}, this function is invoked for its
