@@ -126,7 +126,7 @@
       so \samp{https://} URLs should be readable.  The command line
       option \command{--internet2} and the environment variable
       \env{R_WIN_INTERNET2} are now ignored.
-      
+
       \item \code{chooseCRANmirror()} now offers HTTPS mirrors in
       preference to HTTP mirrors.
     }
@@ -157,9 +157,13 @@
       which together with other changes, e.g., the default for
       \code{decimal.mark}, fixes some \code{format()}ting variants with
       non-default \code{getOption("OutDec")} such as in \PR{16411}.
-      
+
       \item \code{download.packages()} failed for \code{type} equal to
-      \code{"both"} or \code{"binary"}.  (Reported by Dan Tenenbaum.) 
+      \code{"both"} or \code{"binary"}.  (Reported by Dan Tenenbaum.)
+
+      \item The \code{dendrogram} method of \code{labels()} is much more
+      efficient for large dendrograms, now using \code{rapply()}.
+      (Comment #15 of \PR{15215})
     }
   }
 }
