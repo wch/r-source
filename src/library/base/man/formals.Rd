@@ -1,26 +1,25 @@
 % File src/library/base/man/formals.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formals}
+\title{Access to and Manipulation of the Formal Arguments}
 \alias{formals}
 \alias{formals<-}
-\title{Access to and Manipulation of the Formal Arguments}
 \description{
-  Get or set the formal arguments of a function.
+  Get or set the formal arguments of a \code{\link{function}}.
 }
 \usage{
 formals(fun = sys.function(sys.parent()))
 formals(fun, envir = environment(fun)) <- value
 }
 \arguments{
-  \item{fun}{a function object, or see \sQuote{Details}.}
-  \item{envir}{environment in which the function should be defined.}
-  \item{value}{a list (or pairlist) of \R expressions.}
+  \item{fun}{a \code{\link{function}}, or see \sQuote{Details}.}
+  \item{envir}{\code{\link{environment}} in which the function should be defined.}
+  \item{value}{a \code{\link{list}} (or \code{\link{pairlist}}) of \R expressions.}
 }
 \details{
-
   For the first form, \code{fun} can also be a character string naming
   the function to be manipulated, which is searched for from the parent
   frame.  If it is not specified, the function calling \code{formals} is
@@ -38,18 +37,34 @@ formals(fun, envir = environment(fun)) <- value
   environment of the function.
 }
 \seealso{
+  \code{\link{formalArgs}} (from \pkg{methods}), a shortcut for \code{names(formals(.))}.
   \code{\link{args}} for a human-readable version,
   \code{\link{alist}},
   \code{\link{body}},
   \code{\link{function}}.
 }
 \examples{
-require(stats); require(graphics)
-length(formals(lm))      # the number of formal arguments
-names(formals(boxplot))  # formal arguments names
+require(stats)
+formals(lm)
 
-f <- function(x) a+b
-formals(f) <- alist(a = , b = 3) # function(a, b = 3) a+b
+## If you just want the names of the arguments, use formalArgs instead.
+names(formals(lm))
+methods:: formalArgs(lm)     # same
+
+## formals returns a pairlist. Arguments with no default have type symbol (aka name).
+str(formals(lm))
+
+## formals returns NULL for primitive functions.  Use it in combination with
+## args for this case.
+is.primitive(`+`)
+formals(`+`)
+formals(args(`+`))
+
+## You can overwrite the formal arguments of a function (though this is
+## advanced, dangerous coding).
+f <- function(x) a + b
+formals(f) <- alist(a = , b = 3)
+f    # function(a, b = 3) a + b
 f(2) # result = 5
 }
 \keyword{programming}
