@@ -413,7 +413,6 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     if (trace)
         iv[port_cpos[["trace"]]] <- 1L
     scale <- 1
-    low <- upp <- NULL
     if (any(lower != -Inf) || any(upper != Inf)) {
         low <- rep_len(as.double(lower), length(par))
         upp <- rep_len(as.double(upper), length(par))
@@ -421,7 +420,9 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
             iv[1L] <- 300
 	    return(if(give.v) list(iv = iv, v = v[seq_len(18L)]) else iv)
         }
-    }
+    } else
+    	low <- upp <- numeric()
+    	
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
         .Call(C_port_nlsb, m,

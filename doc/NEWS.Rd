@@ -60,6 +60,10 @@
       \dQuote{external}, with the object supplied explicitly as the first
       argument, named \code{.self}. See "Inter-Package Superclasses"
       in the documentation.}
+
+      \item The \code{"port"} algorithm of \code{nls()} could give
+      spurious errors.  (Reported by Radford Neal.)
+    }
   }
 }
 
