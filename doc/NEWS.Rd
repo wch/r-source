@@ -164,6 +164,9 @@
       \item The \code{dendrogram} method of \code{labels()} is much more
       efficient for large dendrograms, now using \code{rapply()}.
       (Comment #15 of \PR{15215})
+      
+      \item The \code{"port"} algorithm of \code{nls()} could give
+      spurious errors.  (Reported by Radford Neal.)
     }
   }
 }
