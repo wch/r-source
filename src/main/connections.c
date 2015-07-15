@@ -3978,35 +3978,48 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(swap && size > 1)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {
-	    char buf[size];
 	    R_xlen_t s;
+	    union { 
+                signed char sch;
+                unsigned char uch;
+                signed short ssh;
+                unsigned short ush;
+                long l;
+                long long ll;
+                float f;
+#if HAVE_LONG_DOUBLE
+		long double ld;
+#endif
+            } u;
+            if (size > sizeof u)
+                error(_("size %d is unknown on this machine"), size);
 	    if(mode == 1) { /* integer result */
 		for(i = 0, m = 0; i < n; i++) {
-		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
-			: (int) con->read(buf, size, 1, con);
+		    s = isRaw ? rawRead((char*) &u, size, 1, bytes, nbytes, &np)
+			: (int) con->read((char*) &u, size, 1, con);
 		    if (s < 0) error("error reading from the connection");
 		    if(s) m++; else break;
-		    if(swap && size > 1) swapb(buf, size);
+		    if(swap && size > 1) swapb((char *) &u, size);
 		    switch(size) {
 		    case sizeof(signed char):
 			if(signd)
-			    INTEGER(ans)[i] = (int)*((signed char *)buf);
+			    INTEGER(ans)[i] = u.sch;
 			else
-			    INTEGER(ans)[i] = (int)*((unsigned char *)buf);
+			    INTEGER(ans)[i] = u.uch;
 			break;
 		    case sizeof(short):
 			if(signd)
-			    INTEGER(ans)[i] = (int)*((short *)buf);
+			    INTEGER(ans)[i] = u.ssh;
 			else
-			    INTEGER(ans)[i] = (int)*((unsigned short *)buf);
+			    INTEGER(ans)[i] = u.ush;
 			break;
 #if SIZEOF_LONG == 8
 		    case sizeof(long):
-			INTEGER(ans)[i] = (int)*((long *)buf);
+			INTEGER(ans)[i] = u.l;
 			break;
 #elif SIZEOF_LONG_LONG == 8
 		    case sizeof(_lli_t):
-			INTEGER(ans)[i] = (int)*((_lli_t *)buf);
+			INTEGER(ans)[i] = u.ll;
 			break;
 #endif
 		    default:
@@ -4015,18 +4028,18 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    } else if (mode == 2) { /* double result */
 		for(i = 0, m = 0; i < n; i++) {
-		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
-			: (int) con->read(buf, size, 1, con);
+		    s = isRaw ? rawRead((char*) &u, size, 1, bytes, nbytes, &np)
+			: (int) con->read((char*) &u, size, 1, con);
 		    if (s < 0) error("error reading from the connection");
 		    if(s) m++; else break;
-		    if(swap && size > 1) swapb(buf, size);
+		    if(swap && size > 1) swapb((char *) &u, size);
 		    switch(size) {
 		    case sizeof(float):
-			REAL(ans)[i] = (double)*((float *)buf);
+			REAL(ans)[i] = u.f;
 			break;
 #if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 		    case sizeof(long double):
-			REAL(ans)[i] = (double)*((long double *)buf);
+			REAL(ans)[i] = u.ld;
 			break;
 #endif
 		    default:
@@ -4039,10 +4052,8 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
-    if(m < n) {
-	PROTECT(ans = xlengthgets(ans, m));
-	UNPROTECT(1);
-    }
+    if(m < n)
+	ans = xlengthgets(ans, m);
     UNPROTECT(1);
     return ans;
 }

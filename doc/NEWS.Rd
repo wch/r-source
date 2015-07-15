@@ -167,6 +167,9 @@
       
       \item The \code{"port"} algorithm of \code{nls()} could give
       spurious errors.  (Reported by Radford Neal.)
+      
+      \item \code{readBin()} could fail on the SPARC architecture
+      due to alignment issues.  (Reported by Radford Neal.)
     }
   }
 }
