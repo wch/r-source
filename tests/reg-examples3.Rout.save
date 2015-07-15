@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-07-01 r68615) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-07-15 r68657) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -548,7 +548,7 @@ $NotFound
 character(0)
 
 $R
-[1] "R (>= 2.15.1)"
+[1] "R (>= 3.0.0)"
 
 attr(,"class")
 [1] "DependsList" "list"       
