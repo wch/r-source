@@ -660,9 +660,12 @@ rev.dendrogram <- function(x) {
     midcache.dendrogram( r )
 }
 
-## This is cheap
-labels.dendrogram <- function(object, ...)
-    unlist(dendrapply(object, function(n) attr(n,"label")))
+labels.dendrogram <- function(object, ...) {
+    if(is.list(object))
+        rapply(object, function(n) attr(n,"label"))
+    else # can "end" in a leaf here
+        attr(object, "label")
+}
 
 merge.dendrogram <- function(x, y, ..., height,
                              adjust = c("auto", "add.max", "none"))
