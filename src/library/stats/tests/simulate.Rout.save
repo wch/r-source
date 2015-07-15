@@ -1,5 +1,5 @@
 
-R version 3.2.1 Patched (2015-07-01 r68614) -- "World-Famous Astronaut"
+R version 3.2.1 Patched (2015-07-15 r68657) -- "World-Famous Astronaut"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -406,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.173   0.016   0.180 
+  0.165   0.018   0.175 
