@@ -185,8 +185,13 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d, int i_exact)
     if (isBlankString(endp)) {
 	z.r = x; z.i = 0;
     } else if (*endp == 'i')  {
-	z.r = 0; z.i = x;
-	endp++;
+	if (endp == nptr) {
+	    z.r = NA_REAL; z.i = NA_REAL;
+	}
+	else {
+	    z.r = 0; z.i = x;
+	    endp++;
+	}
     } else {
 	s = endp;
 	y = Strtod(s, &endp, NA, d, i_exact);
@@ -194,7 +199,7 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d, int i_exact)
 	    z.r = x; z.i = y;
 	    endp++;
 	} else {
-	    z.r = 0; z.i = 0;
+	    z.r = NA_REAL; z.i = NA_REAL;
 	    endp = (char *) nptr; /* -Wall */
 	}
     }

@@ -108,6 +108,9 @@
 
       \item A \code{coef.maov()} method has been added to allow
       \code{vcov()} to work with multivariate results. (\PR{16380})
+
+      \item \code{type.convert("i")} now returns a factor instead of a
+      complex value with missing imaginary part.
     }
   }
 }
