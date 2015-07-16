@@ -35,6 +35,8 @@ options(papersize = papersize,
         pager = file.path(R.home(), "bin", "pager"),
         pdfviewer = Sys.getenv("R_PDFVIEWER"),
         useFancyQuotes = TRUE)
+
+if(capabilities("libcurl")) options(download.file.method = "libcurl")
 })
 
 ## non standard settings for the R.app GUI of the Mac OS X port
