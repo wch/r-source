@@ -86,7 +86,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   By default only the \code{"libcurl"} and \code{"wget"} methods follow
   \samp{http://} redirections.  (For method \code{"curl"} use argument
-  \code{extra = "-L"}.)
+  \code{extra = "-L"}. To disable redirection in \command{wget}, use
+  \code{extra = "--max-redirect=0"}.)
 
   The remaining details apply to method \code{"internal"} only.
 
@@ -152,10 +153,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
    Files of more than 2GB are supported on 64-bit builds of \R; they
   may be truncated on some 32-bit builds.
   
-  Method \code{"wget"} is mainly for historical compatibility, but it
-  and \code{"curl"} can be used for URLs (e.g., \samp{https://} URLs or
-  those that use cookies) which the internal method does not support
-  where the \code{"libcurl"} method is not available.
+  Methods \code{"wget"} and \code{"curl"} are mainly for historical
+  compatibility, but can be used for URLs (e.g., \samp{https://} URLs or
+  those that use cookies or redirection) which the internal method does
+  not support where the \code{"libcurl"} method is not available.
 
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
