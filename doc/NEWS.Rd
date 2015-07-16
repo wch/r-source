@@ -127,6 +127,11 @@
       option \command{--internet2} and the environment variable
       \env{R_WIN_INTERNET2} are now ignored.
 
+      \item (Non-Windows only:) The default
+      \code{getOption("download.file.method")} is now set to
+      \code{"libcurl"} whenever that is available, so \samp{https://}
+      URLs can be accessed.
+
       \item \code{chooseCRANmirror()} now offers HTTPS mirrors in
       preference to HTTP mirrors.
     }
@@ -164,7 +169,7 @@
       \item The \code{dendrogram} method of \code{labels()} is much more
       efficient for large dendrograms, now using \code{rapply()}.
       (Comment #15 of \PR{15215})
-      
+
       \item The \code{"port"} algorithm of \code{nls()} could give
       spurious errors.  (Reported by Radford Neal.)
 
@@ -174,7 +179,7 @@
       \dQuote{external}, with the object supplied explicitly as the first
       argument, named \code{.self}. See "Inter-Package Superclasses"
       in the documentation.
-      
+
       \item \code{readBin()} could fail on the SPARC architecture
       due to alignment issues.  (Reported by Radford Neal.)
     }
