@@ -1,6 +1,6 @@
 % File src/library/base/man/Comparison.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Comparison}
@@ -45,7 +45,7 @@ x != y
   letter, after \code{z}.  In Welsh \code{ng} may or may not be a single
   sorting unit: if it is it follows \code{g}.  Some platforms may
   not respect the locale and always sort in numerical order of the bytes
-  in an 8-bit locale, or in Unicode point order for a UTF-8 locale (and
+  in an 8-bit locale, or in Unicode code-point order for a UTF-8 locale (and
   may not sort in the same order for the same language in different
   character sets).  Collation of non-letters (spaces, punctuation signs,
   hyphens, fractions and so on) is even more problematic.
@@ -53,6 +53,9 @@ x != y
   Character strings can be compared  with different marked encodings
   (see \code{\link{Encoding}}): they are translated to UTF-8 before
   comparison.
+
+  Raw vectors should not really be considered to have an order, but the
+  numeric order of the byte representation is used.
 
   At least one of \code{x} and \code{y} must be an atomic vector, but if
   the other is a list \R attempts to coerce it to the type of the atomic

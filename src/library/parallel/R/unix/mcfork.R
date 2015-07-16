@@ -22,17 +22,15 @@
 
 ## all not exported in parallel.
 
-mc_pids <- new.env()
-assign("pids", integer(), envir = mc_pids)
+## registered as finalizer in .onLoad() to kill all child processes
 clean_pids <- function(e)
-    if(length(pids <- get("pids", envir = e))) tools::pskill(pids, tools::SIGKILL)
+    if(length(pids <- sapply(children(), function(o) o$pid))) tools::pskill(pids, tools::SIGKILL)
 
-mcfork <- function() {
-    r <- .Call(C_mc_fork)
-    assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
-    structure(list(pid = r[1L], fd = r[2:3]),
-              class = c(if(r[1L]) "childProcess"
-                        else "masterProcess", "process"))
+mcfork <- function(estranged = FALSE) {
+    r <- .Call(C_mc_fork, estranged)
+    processClass <- if (!r[1L]) "masterProcess" else
+    		    if (is.na(r[2L])) "estrangedProcess" else "childProcess"
+    structure(list(pid = r[1L], fd = r[2:3]), class = c(processClass, "process"))
 }
 
 ## not used

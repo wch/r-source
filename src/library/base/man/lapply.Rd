@@ -155,8 +155,8 @@ simplify2array(x, higher = TRUE)
   \code{\link{match.call}} or if it is a primitive function that makes
   use of the call.  This means that it is often safer to call primitive
   functions with a wrapper, so that e.g. \code{lapply(ll, function(x)
-  is.numeric(x))} is required in \R 2.7.1 to ensure that method dispatch
-  for \code{is.numeric} occurs correctly.
+  is.numeric(x))} is required to ensure that method dispatch for
+  \code{is.numeric} occurs correctly.
 
   If \code{expr} is a function call, be aware of assumptions about where
   it is evaluated, and in particular what \code{\dots} might refer to.

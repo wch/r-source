@@ -33,7 +33,7 @@ libtre_a_SOURCES = $(SOURCES)
 libtre_a_OBJECTS = $(OBJECTS)
 
 
-all: R
+all: @BUILD_TRE_TRUE@ R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -44,9 +44,9 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile
-	@$(MAKE) Makedeps
-	@$(MAKE) $(noinst_LIBRARIES)
+R: Makefile @BUILD_TRE_TRUE@
+	@BUILD_TRE_TRUE@ @$(MAKE) Makedeps
+	@BUILD_TRE_TRUE@ @$(MAKE) $(noinst_LIBRARIES)
 
 libtre.a: $(libtre_a_OBJECTS)
 	rm -f $@

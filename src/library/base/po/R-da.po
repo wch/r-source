@@ -1,7 +1,7 @@
 # Danish translation R.
-# Copyright (c) 2013 R & nedenstående oversættere.
+# Copyright (c) 2014 R & nedenstående oversættere.
 # This file is distributed under the same license as the R package.
-# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2013.
+# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2013, 2014.
 #
 # coercing -> tvinger
 # unary -> unær
@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:10\n"
-"PO-Revision-Date: 2013-02-02 14:20+0200\n"
+"POT-Creation-Date: 2014-03-27 18:29\n"
+"PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -75,17 +75,14 @@ msgstr "forkert udformet versionsstreng"
 msgid "target is %s, current is %s"
 msgstr "mål er %s, aktuel er %s"
 
-#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr "'x' skal være numerisk"
+msgstr "'tolerance' skal være numerisk"
 
-#, fuzzy
 msgid "'scale' should be numeric or NULL"
-msgstr "'arg' skal være en af %s"
+msgstr "'scale' skal være numerisk eller NULL"
 
-#, fuzzy
 msgid "'%s' must be logical"
-msgstr "'subset' skal være logisk"
+msgstr "'%s' skal være logisk"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) skal have en positiv længde"
@@ -305,9 +302,8 @@ msgstr "erstatter element i ikkeeksisterende kolonne: %s"
 msgid "only a single element should be replaced"
 msgstr "kun et enkelt element skal erstattes"
 
-#, fuzzy
 msgid "Name partially matched in data frame"
-msgstr "variabel der ikke er numerisk i dataramme:"
+msgstr "Navn delvist matchet i dataramme"
 
 msgid "names do not match previous names"
 msgstr "navne matcher ikke tidligere navne"
@@ -318,16 +314,14 @@ msgstr "antal argumentkolonner svarer ikke overens"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "ugyldigt listeargument: alle variabler skal have den samme længde"
 
-msgid "data frame with 0 columns and %d rows"
-msgstr "dataramme med 0 kolonner og %d rækker"
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rækker> (eller 0-længde row.names)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "variabel der ikke er numerisk i dataramme:"
 
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr "kun defineret for lige store datarammer"
 
 msgid "list of length %d not meaningful"
@@ -470,9 +464,8 @@ msgstr "'from' skal være et »POSIXt«-objekt"
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' skal være et »POSIXt«-objekt"
 
-#, fuzzy
 msgid "no Olson database found"
-msgstr "ingen fil fundet"
+msgstr "ingen Olson-database fundet"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' skal være en tegnstreng eller forbindelse"
@@ -555,7 +548,8 @@ msgstr "ugyldige 'labels'; længde %d skal være 1 eller %d"
 msgid "number of levels differs"
 msgstr "niveauantal er forskelligt"
 
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr "ikke meningsfuldt for faktorer"
 
 msgid "level sets of factors are different"
@@ -624,7 +618,7 @@ msgid "using the first element of 'value' of type \"expression\""
 msgstr "bruger det første element for 'value' for type »expression«"
 
 msgid "class of 'x' was discarded"
-msgstr ""
+msgstr "klasse for 'x' blev fjernet"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' skal være »dobbelt« (»reel«), »heltal« eller »tegn«"
@@ -694,9 +688,8 @@ msgstr "skal have erstatninger for ikkematchninger"
 msgid "must have replacements for matches"
 msgstr "skal have erstatninger for matchninger"
 
-#, fuzzy
 msgid "No factors specified"
-msgstr "ingen DLL angivet"
+msgstr "Ingen faktorer angivet"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"
@@ -968,6 +961,9 @@ msgstr "'by' skal angive en eller flere kolonner som tal, navne eller logiske"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' og 'by.y' angiver forskellige antal kolonner"
 
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr ""
+
 msgid "additional arguments ignored in message()"
 msgstr "yderligere argumenter ignoreres i message()"
 
@@ -985,6 +981,8 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
+"navnerum %s er ikke tilgængelig og er blevet erstattet\n"
+"af .GlobalEnv når objekt %s behandles"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' er ikke et eksporteret objekt fra 'namespace:%s'"
@@ -1080,9 +1078,8 @@ msgstr "erstatter lokal værdi med import %s når %s indlæses"
 msgid "cannot import into a sealed namespace"
 msgstr "kan ikke importere til et forseglet navnerum"
 
-#, fuzzy
 msgid "replacing previous import by %s when loading %s"
-msgstr "erstatter tidligere import %s når %s indlæses"
+msgstr "erstatter tidligere import af %s når %s indlæses"
 
 msgid "invalid import target"
 msgstr "ugyldigt importmål"
@@ -1116,7 +1113,6 @@ msgstr "pakke %s har ikke en 'NAMESPACE'-fil"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "tomt navn i direktiv '%s' i 'NAMESPACE'-fil"
 
-#, fuzzy
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "duplikerede symbolnavne %s i useDynLib(\"%s\")"
 
@@ -1204,9 +1200,8 @@ msgstr "kræver større værdi af 'ncol' da pivotering opstod"
 msgid "invalid NCOL(R)"
 msgstr "ugyldig NCOL(R)"
 
-#, fuzzy
 msgid "'x' must be a vector of an atomic type"
-msgstr "'x' skal være en atomisk vektor"
+msgstr "'x' skal være en vektor af typen atomisk"
 
 msgid "invalid 'rle' structure"
 msgstr "ugyldig 'rle'-struktur"
@@ -1233,7 +1228,7 @@ msgid "either specify 'nmax' or 'n', but not both."
 msgstr "angiv enten 'nmax' eller 'n', men ikke begge."
 
 msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'from' kan ikke være NA, NaN eller infinite (uendelig)"
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "argument 'length.out' skal have længden 1"
@@ -1242,7 +1237,7 @@ msgid "first element used of 'length.out' argument"
 msgstr "første element brugt af 'length-out'-argument"
 
 msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'to' kan ikke være NA, NaN eller infinite (uendelig)"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "ugyldig (til - fra)/by i seq(.)"
@@ -1622,6 +1617,48 @@ msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] "leverede %d variabel til at erstatte %d variabler"
 msgstr[1] "leverede %d variabler til at erstatte %d variabler"
 
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "dataramme med 0 kolonner og %d rækker"
+msgstr[1] "dataramme med 0 kolonner og %d rækker"
+
+#, fuzzy
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"Det følgende objekt er maskeret %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"De følgende objekter er maskerede %s %s:\n"
+"\n"
+"%s\n"
+
+#, fuzzy
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"Det følgende objekt er maskeret %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"De følgende objekter er maskerede %s %s:\n"
+"\n"
+"%s\n"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "bibliotek %s indeholder ingen pakker"
@@ -1694,21 +1731,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
-
-#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
-#~ msgstr "'nu' skal være 0, nrow(x) eller ncol(x)"
-
-#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
-#~ msgstr "'nv' skal være 0, nrow(x) eller ncol(x)"
-
-#~ msgid "too many 'S3method' directives"
-#~ msgstr "for mange 'S3method'-direktiver"
-
-#~ msgid "non-square matrix in 'chol'"
-#~ msgstr "ikkekvadratisk matrix i 'chol'"
-
-#~ msgid "non-matrix argument to 'chol'"
-#~ msgstr "ikke-matrix argument for 'chol'"
-
-#~ msgid "matrix not positive definite"
-#~ msgstr "matrix er ikke positivt bestemt"

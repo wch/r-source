@@ -268,11 +268,11 @@ those you
 @enindex TMPDIR
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and scripts
-can be executed from) or points to a valid temporary directory (one from
-which execution of scripts is allowed) whose path does not contain
-spaces.@footnote{Most aspects will work with paths containing spaces,
-but external software used by @R{}, e.g.@: @command{texi2dvi} version
-@code{4.8}, may not.}
+can be executed from) or points to the absolute path to a valid
+temporary directory (one from which execution of scripts is allowed)
+which does not contain spaces.@footnote{Most aspects will work with
+paths containing spaces, but external software used by @R{}, e.g.@:
+@command{texi2dvi} version @code{4.8}, may not.}
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -956,7 +956,7 @@ Alternatively, the installed @R{} can be run, preferably with
 @enindex LC_COLLATE
 
 @example
-Sys.setenv(LC_COLLATE = "C", LANGUAGE = "en")
+Sys.setenv(LC_COLLATE = "C", LC_TIME = "C", LANGUAGE = "en")
 library("tools")
 testInstalledBasic("both")
 testInstalledPackages(scope = "base")
@@ -979,10 +979,10 @@ package-specific tests) by @code{testInstalledPackages} even if
 
 Note that the results may depend on the language set for times and
 messages: for maximal similarity to reference results you may want to
-try setting
+try setting (before starting the @R{} session)
 
 @example
-LANGUAGE=en LC_TIME=C LC_COLLATE=C
+LANGUAGE=en
 @end example
 
 @noindent
@@ -1112,13 +1112,13 @@ make rsync-recommended
 @end itemize
 
 The following additional items are normally installed by
-@file{Rtools30.exe}.  If instead you choose to do a completely manual
+@file{Rtools31.exe}.  If instead you choose to do a completely manual
 build you will also need
 
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools30.exe} and
+The Tcl/Tk support files are contained in @file{Rtools31.exe} and
 available as @file{.zip} files from
 @uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
@@ -1163,9 +1163,10 @@ Example:
 @subsection Building the core files
 
 @enindex TMPDIR
-Set the environment variable @env{TMPDIR} to point to a writable
-directory, with a path specified with forward slashes and no spaces.
-(The default is @file{/tmp}, which may not be useful on Windows.)
+Set the environment variable @env{TMPDIR} to the absolute path to a
+writable directory, with a path specified with forward slashes and no
+spaces.  (The default is @file{/tmp}, which may not be useful on
+Windows.)
 
 You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
@@ -1536,30 +1537,36 @@ Windows' CRLF line endings.
 @end macro
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
-X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it.  This runs on OS X 10.6 and later (Snow Leopard, Lion,
-Mountain Lion, Mavericks, @dots{}); it is a 64-bit (@cputype{x86_64})
-build which should run on all Macs from mid-2008 on.  For older Intel
-Macs and some older versions of the OS you can install @R{} from the
-sources.
+X'. Click on that, then download the file
+@file{R-@value{VERSIONno}-snowleopard.pkg} and install it.  This runs on
+OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
+@dots{}); it is a 64-bit (@cputype{x86_64}) build which should run on
+all Macs from mid-2008 on.  For older Intel Macs and some older versions
+of the OS you can install @R{} from the sources.
 
-It is important that if you use this binary package that your OS is
-fully updated: run `Software Update' from the Apple menu to be sure.
+There is a separate installer package,
+@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks only: the
+`Snow Leopard' installer package also works there and may have more
+binary packages available (but there are a few packages using C++11 and
+only available for the Mavericks build).
+
+It is important that if you use a binary installer package that your OS
+is fully updated: run `Software Update' from the Apple menu to be sure.
+(If using XQuartz, check that is current.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
-currently shows three components (`Package Name').  Everyone will need
-the `R Framework' component: the `R GUI' and `Tcl/Tk' components are
-optional (the latter being needed to use package @pkg{tcltk}).
+currently shows three components.  Everyone will need the `R Framework'
+component: the `R GUI' and `Tcl/Tk' components are optional (the latter
+being needed to use package @pkg{tcltk}).
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.
 
-On Mountain Lion and later with `GateKeeper' active you will need to
-right/control-click on any unsigned packages and select @samp{Open}:
-recent @acronym{CRAN} packages are signed.
+If you update your OS X version, you should re-install @R{}: the
+installer tailors the installation to the current version of the OS.
 
 For building @R{} from source, see @ref{OS X}.
 
@@ -1572,7 +1579,7 @@ For building @R{} from source, see @ref{OS X}.
 @node Running R under OS X, Uninstalling under OS X, Installing R under OS X, Installing R under OS X
 @section Running R under OS X
 
-There are two ways to run @R{} on OS X from the @acronym{CRAN} binary
+There are two ways to run @R{} on OS X from a @acronym{CRAN} binary
 distribution.
 
 There is a GUI console normally installed with the @R{} icon in
@@ -1600,24 +1607,23 @@ producing output in the console.  Here are three ways to avoid it:
 @itemize
 @item
 Ensure that the console is completely visible (or at least the activity
-indicator at the top right corner).
+indicator at the top right corner is visible).
 
 @item
 Call @samp{Get Info} on the application (e.g.@: from Finder). This will
 have two tick boxes in the `General' panel: click the one named `Prevent
-App Nap' if it is not already ticked.
+App Nap' if it is not already ticked.  (This only available for builds
+made prior to Mavericks.)
 
 @item
 In a Terminal, run
 @example
 defaults write org.R-project.R NSAppSleepDisabled -bool YES
 @end example
+
+@noindent
 (see @uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html}).
 @end itemize
-
-The current @acronym{CRAN} build was built before Mavericks: the advice
-for a build under Mavericks will differ (and the check box in the second
-option will not be present).
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
@@ -1626,7 +1632,7 @@ option will not be present).
 framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them into the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
-framework into the @file{/Library/Frameworks/R.frameweork} folder.  This
+framework into the @file{/Library/Frameworks/R.framework} folder.  This
 does leave some links in @file{/usr/bin}.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
@@ -1638,8 +1644,8 @@ rm -rf /Library/Frameworks/R.framework /Applications/R.app \
 @end example
 
 The installation consisted of three Apple packages:
-@code{org.r-project.R.Leopard.fw.pkg},
-@code{org.r-project.R.Leopard.GUI.pkg} and
+@code{org.r-project.R.x86_64.fw.pkg},
+@code{org.r-project.R.x86_64.GUI.pkg} and
 @code{org.r-project.x86_64.tcltk.x11} (not all of which need be
 installed). You can use @code{pkgutil --unlink} (not supported by Lion
 or later) to remove their files or @code{pkgutil --forget} if you want
@@ -1719,7 +1725,9 @@ its per-session temporary directory.  The environment variables
 first one which is set and points to a writable area is used.  If none
 do, the final default is @file{/tmp} on Unix-alikes and the value of
 @enindex R_USER
-@env{R_USER} on Windows.  The path should not contain spaces.
+@env{R_USER} on Windows.  The path should be an absolute path not
+containing spaces (and it is best to avoid non-alphanumeric characters
+such as @code{+}).
 
 Some Unix-alike systems are set up to remove files and directories
 periodically from @file{/tmp}, for example by a @command{cron} job
@@ -1853,8 +1861,8 @@ more than one library, of course.
 
 @enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
-@file{/tmp} exists and can be written in and executed from) or points to
-a valid temporary directory with a path not containing spaces.
+@file{/tmp} exists and can be written in and executed from) or is the
+absolute path to a valid temporary directory, not containing spaces.
 
 For most users it suffices to call
 @samp{install.packages(@var{pkgname})} or its GUI equivalent if the
@@ -2005,11 +2013,12 @@ downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
 
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there is an additional type @code{mac.binary} (the default
-in the @acronym{CRAN} distribution but not when compiling from source)
-that can be passed to @code{install.packages} in order to download and
-install binary packages from a suitable repository.  These OS X binary
-package files have the extension @samp{.tgz}.  The @Rapp{} GUI provides
-menus for installation of either binary or source packages, from
+in the @acronym{CRAN} distribution but not when compiling from source:
+@code{mac.binary.mavericks} for a Mavericks-only build) which can be
+passed to @code{install.packages} in order to download and install
+binary packages from a suitable repository.  These OS X binary package
+files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
+for installation of either binary or source packages, from
 @acronym{CRAN} or local files.
 
 Note that most binary packages including compiled code are tied to a
@@ -2018,7 +2027,9 @@ particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
 `Command-line Tools' for @command{Xcode} and compilers which match those
-used to build @R{}: see @ref{OS X}.
+used to build @R{}: see @ref{OS X}.  (Note that the Fortran compilers
+differ for the `Snow Leopard' and `Mavericks' binary installations of
+@R{}.)
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
@@ -2035,15 +2046,16 @@ framework installed from @uref{http://r.research.att.com/libs/}: the
 appropriate version at the time of writing was
 @uref{http://r.research.att.com/libs/GTK_2.24.17-X11.pkg}
 
-It is often possible to use other compilers with the @acronym{CRAN}
-distribution of @R{}, but the settings in the file
-@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} will need
-to be changed, either by editing that file or in a file such as
-@file{~/.R/Makevars} (see the next section).  Entries which may need to
-be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
-@samp{FLIBS} and the corresponding flags, and perhaps @samp{CXXCPP},
-@samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD}
-and @samp{SHLIB_LD}.
+The default compilers specified in
+@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
+the version of OS X under which @R{} was installed, and are appropriate
+to the latest version of the Xcode command-line tools for that version
+of OS X.  The settings can be changed, either by editing that file or in
+a file such as @file{~/.R/Makevars} (see the next section).  Entries
+which may need to be changed include @samp{CC}, @samp{CXX}, @samp{FC},
+@samp{F77}, @samp{FLIBS} and the corresponding flags, and perhaps
+@samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD},
+@samp{SHLIB_FCLD} and @samp{SHLIB_LD}.
 
 So for example you could select @command{clang} for both C and C++ with
 extensive checking by having in @file{~/.R/Makevars}
@@ -2055,7 +2067,6 @@ CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
 @noindent
-%(the first two are necessary if Xcode 5 was installed and Xcode 4.6 was not previously installed) 
 and for another version of @command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
@@ -2248,6 +2259,12 @@ wise to have a @file{src/contrib} area with a possibly empty
 @code{"mac.binary"}: located at
 @file{bin/macosx/contrib/@var{3.y}} for @R{} versions
 @var{3.y.z} and containing @file{.tgz} files.
+
+@item 
+@code{"mac.binary.mavericks"}: located at
+@file{bin/macosx/mavericks/contrib/@var{3.y}} for @R{} versions
+@var{3.1.z} to be run under OS X 10.9 (Mavericks) and containing
+@file{.tgz} files.
 
 @item 
 @code{"mac.binary.leopard"}: located at
@@ -3063,6 +3080,11 @@ is assumed by some @R{} packages. Neither are tested by
 compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
+Option @option{--with-system-tre} is also available: it needs a recent
+version of TRE. (The current sources are in the @command{git} repository
+at @url{https://github.com/laurikari/tre/}, but at the time of writing
+the resulting build will not pass its checks.).
+
 @code{liblzma} from @code{xz-utils} version 5.0.3 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
 configuring with @option{--with-system-xz=no}.  Systems differ in what
@@ -3394,8 +3416,8 @@ support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD Bulldozer).
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
-For Intel processors@footnote{and perhaps others} under Linux, there is
-Intel's Math Kernel Library
+For Intel processors, and perhaps others, and some distributions of
+Linux, there is Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.  There are also
@@ -3403,21 +3425,21 @@ versions of MKL for OS X and Windows, but they did not work with the
 standard compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
-following notes apply exactly only to version 10.3.
+following notes apply exactly only to version 10.3 but have been used
+with version 11.1.
 
-Version 10 of MKL supports two linking models: the default model, which
-is backward compatible with version 9 (see below), and the pure layered
-model.  The layered model gives the user fine-grained control over four
-different library layers: interface, threading, computation, and
-run-time library support. Some examples of linking to MKL using this
-layered model are given below. (These examples are for GCC compilers on
-@cputype{x86_64}.)  The choice of interface layer is important on
-@cputype{x86_64} since the Intel Fortran compiler returns complex values
-in different registers from the @acronym{GNU} Fortran compiler. You must
-therefore use the interface layer that matches your compiler
-(@code{mkl_intel*} or @code{mkl_gf*}).
+Versions 10 and later of MKL support two linking models: only the
+layered model is described here: it gives the user fine-grained control
+over four different library layers: interface, threading, computation,
+and run-time library support.  The choice of interface layer is
+important on @cputype{x86_64} since the Intel Fortran compiler returns
+complex values in different registers from the @acronym{GNU} Fortran
+compiler: you must therefore use the interface layer that matches your
+compiler (@code{mkl_intel*} or @code{mkl_gf*}).
 
-R can be linked to a sequential version of MKL by something like
+These examples are for GCC compilers on @cputype{x86_64}.
+
+@R{} can be linked to a sequential version of MKL by something like
 
 @example
 MKL_LIB_PATH=/opt/intel/mkl/10.311.339/lib/intel64/
@@ -3450,9 +3472,9 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
 @end example
 
 @noindent
-The default number of threads will be chosen by the OpenMP software,
-but can be controlled by setting @code{OMP_NUM_THREADS} or
-@code{MKL_NUM_THREADS}, and in recent versions seems to produce a
+The default number of threads will be chosen by the OpenMP software, but
+can be controlled by setting @code{OMP_NUM_THREADS} or
+@code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.
 
 Static threaded MKL may be used (GNU OpenMP) with something like
@@ -3464,28 +3486,16 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
                 $@{MKL_LIB_PATH@}/libmkl_gnu_thread.a     \
                 $@{MKL_LIB_PATH@}/libmkl_core.a           \
         -Wl,--end-group                                 \
-        -lgomp -lpthread"
+        -lgomp -ldl -lpthread"
 @end example
 
 @noindent
-(Thanks to Ei-ji Nakama).
+(Thanks to Ei-ji Nakama.  The @code{-ldl} was needed on a Centos 5
+systems and may not be needed everywhere.)
 
 The MKL documentation includes a `link line advisor' which will suggest
 appropriate incantations: an on-line version was available at
 @uref{http://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor/}
-
-The default linking model, which was also used by version 9 of MKL, can
-be used by
-
-@example
---with-blas="-lmkl -lguide -lpthread"
-@end example
-
-@noindent
-but this may not match your compiler on a 64-bit platform.  This is
-multi-threaded, but in version 9 the number of threads defaults to 1.
-It can be increased by setting @code{OMP_NUM_THREADS}.  (Thanks to Andy
-Liaw for the information.)
 
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
@@ -4361,7 +4371,7 @@ This has to be used in conjunction with a Fortran compiler: the
 which is needed for some versions of @command{gfortran}.
 
 The current default for @command{clang++} is to use the C++ runtime from
-the installed @command{g++}.  Using the runtime from the @code{libcxx}
+the installed @command{g++}.  Using the runtime from the @code{libc++}
 project (@url{http://libcxx.llvm.org/}) has also been tested: for some
 @R{} packages only the variant using @code{libcxxabi} was successful.
 
@@ -4448,15 +4458,15 @@ the configure flag @option{--disable-largefile} was needed (since
 
 You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
-with @option{--without-readline}).
+with @option{--without-readline}).  That and other binary components are
+available from @uref{http://r.research.att.com/libs}.
 
 You may also need to install an X sub-system (or you will need to
-configure with @option{--without-x}): X is part of the standard OS X
-distribution in versions prior to Mountain Lion, but not always
+configure using option @option{--without-x}): X is part of the standard
+OS X distribution in versions prior to Mountain Lion, but not always
 installed.  For Mountain Lion and later, see
-@uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
-on earlier versions of OS X instead of the Apple version.  (Note that
-XQuartz will likely need to be re-installed after an OS upgrade.)
+@uref{http://xquartz.macosforge.org/}.  (Note that XQuartz will likely
+need to be re-installed after an OS upgrade.)
 
 In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
 but this has not been tested recently: 10.6 (Snow Leopard) is the
@@ -4483,15 +4493,14 @@ library (see @code{?.libPaths()}).  Also use
 Tools (`Xcode') but nowadays need to be installed separately.  They can
 be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
 will need to register there: that allows you to download older versions
-available for your OS) or if you have a suitable version of Xcode
-installed (from the App Store or from
-@uref{http://developer.apple.com/devcenter/mac/}) you can install the
-command-line tools from within Xcode, from the @samp{Downloads} pane in
-the @samp{Preferences}.  For Mavericks, see the specific sub-section
+available for your OS) or some versions of Xcode (from the App Store or
+from @uref{http://developer.apple.com/devcenter/mac/}) you can install
+the command-line tools from within Xcode, from the @samp{Downloads} pane
+in the @samp{Preferences}.  For Mavericks, see the specific sub-section
 below.
 
-Various compilers can be used.  The current @acronym{CRAN} distribution
-of @R{} is built using
+Various compilers can be used.  The current @acronym{CRAN} `Snow
+Leopard' distribution of @R{} is built using
 
 @itemize
 @item @command{gcc}
@@ -4529,13 +4538,32 @@ build, use @code{-arch i386} for all compiler commands.)
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
-The alternative, @command{clang}, has no OpenMP support.
+
+The current @acronym{CRAN} `Mavericks' distribution of @R{} is built
+using
+
+@example
+CC=clang
+CXX=clang++
+F77=gfortran-4.8
+FC=$F77
+OBJC=clang
+@end example
+
+@noindent
+with @command{clang} and @command{clang++} from Xcode 5, and the Fortran
+compiler from
+@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
+is a tarball which needs to be unpacked in the Terminal by e.g.@:
+@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
+build of @command{clang} has no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
 most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
 (and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
-and useful for many packages.
+and useful for many packages: it will also be used if present when
+configuring the @code{X11()} device.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4546,11 +4574,11 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 @end example
 
 @noindent
-to provide higher-performance versions of the @acronym{BLAS} and LAPACK
-routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
-not work on Snow Leopard: it may work there without.)@footnote{It is
-reported that some non-Apple toolchains @code{CPPFLAGS} has needed to
-contain @code{-D__ACCELERATE__}.}
+to provide potentially higher-performance versions of the @acronym{BLAS}
+and LAPACK routines.  (Use of @code{Accelerate} with
+@option{--with-lapack} does not work on Snow Leopard: it may work there
+without.)@footnote{It is reported that for some non-Apple toolchains
+@code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -4560,11 +4588,11 @@ will show the compilers and configuration options used for the
 --with-system-zlib --enable-memory-profiling --disable-openmp
 @end example
 @noindent
-was used.
+was used for `Snow Leopard' and the first two for `Mavericks'.
 
 Configure option @option{--with-internal-tzcode} is the default, as a
 64-bit @code{time_t} is available but the system implementation of time
-zones does not work correctly for times after 2037.
+zones does not work correctly for times before 1902 or after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
@@ -4638,60 +4666,43 @@ be installed afterwards.
 @node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
 @subsection Mavericks
 
-Mavericks uses Xcode 5, but it does not behave in the same way as under
-Mountain Lion.  Our understanding is that Xcode is needed (not just the
-command-line tools) as parts of the toolchain are installed under the
-@file{Xcode.app} directory.  Compilers @command{clang} and
-@command{clang++} may be the same versions as Xcode 5 under Mountain
-Lion, but they utilize different SDKs (so different headers and
-libraries, and in the case of @command{clang++} very different ones from
-the @samp{libcxx} project).
+Xcode for Mavericks provides different compilers, headers and libraries from
+earlier versions.  In particular the compilers (even those called
+@command{gcc} and @command{g++}) are based on @command{clang}, and the 
+C++ headers and runtime are from LLVM's @samp{libc++} project).
 
 The command-line tools can be (re-)installed by @command{xcode-select
 --install}.  (If you have a fresh installation of Mavericks, running
 e.g.@: @command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
 after an update to Mavericks, you are advised to re-install them.)  They
-are no longer available under the @samp{Downloads} preference pane in
-Xcode.
+are not available under the @samp{Downloads} preference pane in Xcode.
 
-To use the compiler Xcode 5 provides together with the recommended
-Fortran compiler, have in @file{config.site} something like
+To use the compilers from the command-line tools for Xcode 5 with the
+recommended Fortran compiler, have in @file{config.site} something like
 
 @example
 CC=clang
 CXX=clang++
-F77="gfortran-4.2 -arch x86_64"
+F77=gfortran-4.8
 FC=$F77
 OBJC=clang
 @end example
-
-We have been experimenting with @command{gfortran} from GCC 4.8.2, which
-can be used by
-
+@noindent
+(@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
+the same compilers.)  Recent versions of the @acronym{CRAN} binary package
+installer for `Snow Leopard' change the settings in @file{etc/Makeconf}
+to
 @example
-F77=gfortran-4.8
-FC=$F77
-@end example
-
-See the comments under Mountain Lion about X11 and GTK.
-
-As far as we know the Xcode 4.6.3 compilers cannot be installed on
-Mavericks, but they will be present on an upgraded installation which
-previously had them.  They were able to compile @R{} and almost all
-packages when tested.
-
-There are compilers called @code{gcc} and @code{g++}, but despite their
-names they are variants of @code{clang} and @code{clang++}.  The
-@acronym{CRAN} binary package installer changes its settings in
-@file{etc/Makeconf} to
-@example
-CC="gcc -arch x86_64"
-CXX="g++ -arch x86_64"
-CXX=clang++
-F77="gfortran-4.2 -arch x86_64"
+CC = gcc -arch x86_64 -std=gnu99
+CXX g++ -arch x86_64
+F77 = gfortran-4.2 -arch x86_64
+OBJC = gcc -arch x86_64
+OBJCXX = g++ -arch x86_64
 @end example
 when installing on Mavericks.
+
+See the comments under Mountain Lion about X11 and GTK.
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4709,9 +4720,7 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this expects a fully-updated X11 installation: it was built
-against the Apple X11 from Snow Leopard, but XQuartz will work if recent
-enough (e.g.@: version 2.7.4).
+Note that this expects a fully-updated X11 installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
@@ -4889,9 +4898,9 @@ computations.
 The Solaris time-zone conversion services seem to be unreliable pre-1916
 in Europe (when daylight-savings time was first introduced): most often
 reporting in the non-existent DST variant.  Using @command{configure}
-option @option{--with-internal-tzcode} is recommended if such times are
-to be used.
-
+option @option{--with-internal-tzcode} is recommended, and required if
+you find time-zone abbreviations being given odd values (as has been
+seen on 64-bit builds without it).
 
 When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
@@ -5408,7 +5417,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
-named@footnote{for @R{} 2.15.3 and later.}  @file{Rtools30.exe},
+named@footnote{for @R{} 3.0.0 and later.}  @file{Rtools31.exe},
 available from @uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if

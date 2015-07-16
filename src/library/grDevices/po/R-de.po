@@ -1,10 +1,10 @@
 # Translation of  src/library/grDevices/po/R-grDevices.pot to German.
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2013-03-01 10:55+0100\n"
@@ -32,13 +32,13 @@ msgid "no proper 'z' matrix specified"
 msgstr "keine geeignete 'z' Matrix angegeben"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
-msgstr ""
+msgstr "Dimensionen von 'x', 'y' und 'z' passen nicht zueinander"
 
 msgid "'bias' must be positive"
 msgstr "'bias' muss positiv sein"
 
 msgid "'alpha' must be false if 'space' is specified"
-msgstr ""
+msgstr "'alpha' muss false sein, wenn 'space' angegeben ist"
 
 msgid "at least 3 columns needed"
 msgstr "zumindest 3 Spalten benötigt"
@@ -164,9 +164,8 @@ msgstr "unbekannte Familie '%s'"
 msgid "invalid 'family' argument"
 msgstr "ungültiges 'family' Argument"
 
-#, fuzzy
 msgid "invalid 'file' argument '%s'"
-msgstr "ungültiges 'family' Argument"
+msgstr "ungültiges 'file' Argument '%s'"
 
 msgid "invalid PDF version"
 msgstr "ungültige PDF Version"
@@ -253,9 +252,8 @@ msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
 msgid "argument is not of class %s"
 msgstr "Argument ist nicht von Klasse %s"
 
-#, fuzzy
 msgid "loading snapshot from a different session"
-msgstr "lade Snapshot einer anderen R Version"
+msgstr "lade Snapshot einer anderen R Sitzung"
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "'nbin' muss nummerisch mit Länge 1 oder 2 sein"

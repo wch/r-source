@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -449,13 +449,11 @@ msgid "non-generic function '%s' given to findMethods()"
 msgstr "função não-genérica '%s' fornecida para findMethods()"
 
 #, fuzzy
-msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
+msgid ""
+"only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
 "Somente 'FALSE' faz sentido para 'inherited', quando 'where' é fornecido "
 "(obtido"
-
-msgid "\""
-msgstr "\""
 
 #, fuzzy
 msgid "argument 'f' must be a generic function or %s"
@@ -628,6 +626,13 @@ msgstr ""
 
 #, fuzzy
 msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+"os nomes na assinatura do método (%s) não correspondem aos argumentos da "
+"função %s (%s)"
+
+#, fuzzy
+msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
 "seem to come from either a generic function or another 'callNextMethod'"
 msgstr ""
@@ -680,6 +685,9 @@ msgstr ""
 
 msgid "undefined slot classes in definition of %s: %s"
 msgstr "classes de slot não definidas na definição de \"%s\": %s"
+
+msgid "(class %s)"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -1356,7 +1364,7 @@ msgstr ""
 "um objeto de classe \"%s\""
 
 #, fuzzy
-msgid "invalid or unset methods table in generic function \""
+msgid "invalid or unset methods table in generic function %s"
 msgstr "Tentando encontrar uma tabela de métodos em uma função não-genérica"
 
 #, fuzzy
@@ -1985,6 +1993,9 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
+
+#~ msgid "\""
+#~ msgstr "\""
 
 #~ msgid "no class %s found as expected in removing subclass %s"
 #~ msgstr ""

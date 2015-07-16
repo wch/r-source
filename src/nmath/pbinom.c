@@ -33,7 +33,10 @@ double pbinom(double x, double n, double p, int lower_tail, int log_p)
     if (!R_FINITE(n) || !R_FINITE(p)) ML_ERR_return_NAN;
 
 #endif
-    if(R_nonint(n)) ML_ERR_return_NAN;
+    if(R_nonint(n)) {
+	MATHLIB_WARNING("non-integer n = %f", n);
+	ML_ERR_return_NAN;
+    }
     n = R_forceint(n);
     /* PR#8560: n=0 is a valid value */
     if(n < 0 || p < 0 || p > 1) ML_ERR_return_NAN;

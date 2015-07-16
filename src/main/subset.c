@@ -611,21 +611,23 @@ static R_INLINE
 int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 		    SEXP rho, SEXP *ans)
 {
+    SEXP prom = SEXP_INIT;
     if (! IS_R_NilValue(args) && ! SEXP_EQL(CAR(args), R_DotsSymbol)) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
 	if (! OBJECT(x)) {
-	    *ans = CONS(x, evalListKeepMissing(CDR(args), rho));
+	    *ans = CONS_NR(x, evalListKeepMissing(CDR(args), rho));
 	    UNPROTECT(1);
 	    return FALSE;
 	}
-	SEXP prom = mkPROMISE(CAR(args), R_GlobalEnv);
+	prom = mkPROMISE(CAR(args), R_GlobalEnv);
 	SET_PRVALUE(prom, x);
 	args = CONS(prom, CDR(args));
 	UNPROTECT(1);
     }
     PROTECT(args);
     int disp = DispatchOrEval(call, op, generic, args, rho, ans, 0, 0);
+    if (! IS_NULL_SEXP(prom)) DECREMENT_REFCNT(PRVALUE(prom));
     UNPROTECT(1);
     return disp;
 }
@@ -961,8 +963,24 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP thesub = CAR(subs);
 	int len = length(thesub);
 
-	if (len > 1)
+	if (len > 1) {
+#ifdef SWITCH_TO_REFCNT
+	    if (IS_GETTER_CALL(call)) {
+		/* this is (most likely) a getter call in a complex
+		   assighment so we duplicate as needed. The original
+		   x should have been duplicated if it might be
+		   shared */
+		if (MAYBE_SHARED(x))
+		    error("getter call used outside of a complex assignment.");
+		x = vectorIndex(x, thesub, 0, len-1, pok, call, TRUE);
+	    }
+	    else
+		x = vectorIndex(x, thesub, 0, len-1, pok, call, FALSE);
+#else
 	    x = vectorIndex(x, thesub, 0, len-1, pok, call, FALSE);
+#endif
+	    named_x = NAMED(x);
+	}
 	    
 	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
 			   xlength(x), pok, len > 1 ? len-1 : -1, call);

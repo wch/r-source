@@ -232,8 +232,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
   In addition, users can specify further options, either in the header
   of an individual code section or in a \samp{\\SweaveOpts\{\}} line in
-  the document. Prior to \R 2.14.0 unknown options were taken as
-  logical: now their type is set at first use.
+  the document. For unknown options, their type is set at first use.
 }
 
 \section{Custom Graphics Devices}{

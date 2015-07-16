@@ -217,6 +217,11 @@ INLINE_FUN R_xlen_t xlength(SEXP s)
     }
 }
 
+/* regular allocVector() as a special case of allocVector3() with no custom allocator */
+INLINE_FUN SEXP allocVector(SEXPTYPE type, R_xlen_t length)
+{
+    return allocVector3(type, length, NULL);
+}
 
 /* from list.c */
 /* Return a dotted pair with the given CAR and CDR. */
@@ -706,7 +711,6 @@ INLINE_FUN SEXP mkNamed(SEXPTYPE TYP, const char **names)
     return ans;
 }
 
-
 /* from gram.y */
 
 /* short cut for  ScalarString(mkChar(s)) : */
@@ -723,7 +727,7 @@ INLINE_FUN SEXP mkString(const char *s)
 /* duplicate RHS value of complex assignment if necessary to prevent cycles */
 INLINE_FUN SEXP R_FixupRHS(SEXP x, SEXP y)
 {
-    if( ! IS_R_NilValue(y) && NAMED(y) ) {
+    if( ! IS_R_NilValue(y) && MAYBE_REFERENCED(y) ) {
 	if (R_cycle_detected(x, y)) {
 #ifdef WARNING_ON_CYCLE_DETECT
 	    warning("cycle detected");

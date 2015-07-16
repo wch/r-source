@@ -43,10 +43,6 @@ pbirthday(n, classes = 365, coincident = 2)
  approximation is very good for moderate values of \code{prob} but less
  good for very small probabilities.
 }
-\note{
-  Prior to \R 2.14.0 the approximate formula was used even for
-  \code{coincident = 2}.
-}
 \references{
   Diaconis, P. and Mosteller F. (1989)
   Methods for studying coincidences.

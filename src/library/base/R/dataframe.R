@@ -788,7 +788,7 @@ data.frame <-
     new.cols <- NULL
     nvars <- length(x)
     nrows <- .row_names_info(x, 2L)
-    if(has.i) { # df[i, ] or df[i, j]
+    if(has.i && length(i)) { # df[i, ] or df[i, j]
         rows <- NULL  # indicator that it is not yet set
         if(anyNA(i))
             stop("missing values are not allowed in subscripted assignments of data frames")
@@ -1386,7 +1386,9 @@ print.data.frame <-
 {
     n <- length(row.names(x))
     if(length(x) == 0L) {
-        cat(gettextf("data frame with 0 columns and %d rows\n", n))
+        cat(sprintf(ngettext(n, "data frame with 0 columns and %d row",
+                             "data frame with 0 columns and %d rows",
+                             domain = "R-base"), n), "\n", sep = "")
     } else if(n == 0L) {
         ## FIXME: header format is inconsistent here
 	print.default(names(x), quote = FALSE)
@@ -1503,7 +1505,8 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	if(.row_names_info(e1) > 0L) rn <- attr(e1, "row.names")
 	cn <- names(e1)
 	if(any(dim(e2) != dim(e1)))
-	    stop(.Generic, " only defined for equally-sized data frames")
+	    stop(gettextf("%s only defined for equally-sized data frames",
+                          sQuote(.Generic)), domain = NA)
     } else if(lclass) {
 	## e2 is not a data frame, but e1 is.
         nr <- .row_names_info(e1, 2L)

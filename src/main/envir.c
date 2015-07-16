@@ -2683,7 +2683,7 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < k2; i++) {
 	INTEGER(ind)[0] = i+1;
 	SEXP tmp = eval(R_fcall, rho);
-	if (NAMED(tmp))
+	if (MAYBE_REFERENCED(tmp))
 	    tmp = lazy_duplicate(tmp);
 	SET_VECTOR_ELT(ans, i, tmp);
     }

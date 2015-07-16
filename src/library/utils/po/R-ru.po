@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
-"PO-Revision-Date: 2013-03-19 22:58-0600\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
+"PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -47,9 +47,6 @@ msgstr "ссылка на неизвестный фрагмент %s"
 
 msgid "no Sweave file with name %s found"
 msgstr "Sweave-файл с именем %s не найден"
-
-msgid "%d Sweave files for basename %s found"
-msgstr "%d Sweave-файлов с базовым именем %s найдено"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "найдено более одного указания на синтаксис, использую первое"
@@ -726,8 +723,9 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "files: %s"
 
+#, fuzzy
 msgid ""
-"installation of one of more packages failed,\n"
+"installation of one or more packages failed,\n"
 "  probably %s"
 msgstr ""
 "установка одного (или более) пакетов завершилась с ошибкой,\n"
@@ -980,7 +978,7 @@ msgid "file '%s' not found"
 msgstr "файл '%s' не найден"
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr ""
+msgstr "у файла '%s' нет прав на исполнение: исправлено"
 
 msgid "file size is limited to 8GB"
 msgstr "размер файла ограничен 8GB"
@@ -1001,9 +999,8 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr "миниатюра %s не найдена"
 
-#, fuzzy
 msgid "vignette %s has no PDF/HTML"
-msgstr "у миниатюры %s нет PDF"
+msgstr "у миниатюры %s нет PDF/HTML"
 
 #, fuzzy
 msgid "vignette %s has no R code"
@@ -1145,6 +1142,13 @@ msgstr "winDialog() нельзя использовать неинтерактивно"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() нельзя использовать неинтерактивно"
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "%d Sweave-файлов с базовым именем %s найдено"
+msgstr[1] "%d Sweave-файлов с базовым именем %s найдено"
+msgstr[2] "%d Sweave-файлов с базовым именем %s найдено"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
@@ -1314,11 +1318,11 @@ msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
-#~ msgid "broken installation, no CITATION file in the base package."
-#~ msgstr "нерабочая установка, в пакете base нет файла CITATION."
-
 #~ msgid "Created PDF document %s"
 #~ msgstr "Созданный документ PDF %s"
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "нерабочая установка, в пакете base нет файла CITATION."
 
 #~ msgid "file path is too long"
 #~ msgstr "путь к файлу слишком длинный"

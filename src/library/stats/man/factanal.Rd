@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{factanal}
 \alias{factanal}
@@ -93,17 +94,17 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   The fit is done by optimizing the log likelihood assuming multivariate
   normality over the uniquenesses.  (The maximizing loadings for given
   uniquenesses can be found analytically: Lawley & Maxwell (1971,
-  p. 27).)  All the starting values supplied in \code{start} are tried
+  p.\sspace{}27).)  All the starting values supplied in \code{start} are tried
   in turn and the best fit obtained is used.  If \code{start = NULL}
   then the first fit is started at the value suggested by
   \enc{Jöreskog}{Joreskog} (1963) and given by Lawley & Maxwell
-  (1971, p. 31), and then \code{control$nstart - 1} other values are
+  (1971, p.\sspace{}31), and then \code{control$nstart - 1} other values are
   tried, randomly selected as equal values of the uniquenesses.
 
   The uniquenesses are technically constrained to lie in \eqn{[0, 1]},
   but near-zero values are problematical, and the optimization is
   done with a lower bound of \code{control$lower}, default 0.005
-  (Lawley & Maxwell, 1971, p. 32).
+  (Lawley & Maxwell, 1971, p.\sspace{}32).
 
   Scores can only be produced if a data matrix is supplied and used.
   The first method is the regression method of Thomson (1951), the

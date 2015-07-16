@@ -22,8 +22,7 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
     model formula.  Cannot be zero-length.}
   \item{response}{character string, symbol or call giving the left-hand side of
     a model formula, or \code{NULL}.}
-  \item{intercept}{logical: should the formula have an intercept?  New
-    in \R 2.13.0.}
+  \item{intercept}{logical: should the formula have an intercept?}
   \item{dropx}{vector of positions of variables to drop from the
     right-hand side of the model.}
   \item{keep.response}{Keep the response in the resulting object?}

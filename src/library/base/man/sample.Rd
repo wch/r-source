@@ -55,9 +55,8 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   weights for obtaining the elements of the vector being sampled.  They
   need not sum to one, but they should be non-negative and not all zero.
   If \code{replace} is true, Walker's alias method (Ripley, 1987) is
-  used when there are more than 250 reasonably probable values: this
-  gives results incompatible with those from \R < 2.2.0, and there will
-  be a warning the first time this happens in a session.
+  used when there are more than 200 reasonably probable values: this
+  gives results incompatible with those from \R < 2.2.0.
 
   If \code{replace} is false, these probabilities are applied
   sequentially, that is the probability of choosing the next item is

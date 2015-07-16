@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3273,8 +3273,9 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [41] subset        summary       t             tail          transform    
 [46] unique        unstack       within       
 > meth2gen("dendrogram")
- [1] [[         as.hclust  cophenetic cut        labels     merge     
- [7] plot       print      reorder    rev        str       
+ [1] [[            as.dendrogram as.hclust     cophenetic    cut          
+ [6] labels        merge         plot          print         reorder      
+[11] rev           str          
 > ## --> the output may need somewhat frequent updating..
 > 
 > 
@@ -6402,15 +6403,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x31ba9c0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x407f2a0> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x31c90f0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4051460> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x31c90f0> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4051460> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -7331,4 +7332,99 @@ Error in fligner.test.formula(yield ~ block * N, data = npk) :
 > ## used the first factor with an incorrect description in R < 3.0.3
 > 
 > 
+> ## Misguided expectation of PR#15687
+> xx <- window(AirPassengers, start = 1960)
+> cbind(xx, xx)
+          xx  xx
+Jan 1960 417 417
+Feb 1960 391 391
+Mar 1960 419 419
+Apr 1960 461 461
+May 1960 472 472
+Jun 1960 535 535
+Jul 1960 622 622
+Aug 1960 606 606
+Sep 1960 508 508
+Oct 1960 461 461
+Nov 1960 390 390
+Dec 1960 432 432
+> op <- options(digits = 2)
+> cbind(xx, xx)
+          xx  xx
+Jan 1960 417 417
+Feb 1960 391 391
+Mar 1960 419 419
+Apr 1960 461 461
+May 1960 472 472
+Jun 1960 535 535
+Jul 1960 622 622
+Aug 1960 606 606
+Sep 1960 508 508
+Oct 1960 461 461
+Nov 1960 390 390
+Dec 1960 432 432
+> options(op)
+> ## 'digits' was applied to the time.
+> 
+> 
+> ## Related to PR#15190
+> difftime(
++     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 12:00:00"), tz="EST5EDT"),
++     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC"))
+Time differences in hours
+[1]  5 17
+> ## kept tzone from first arg.
+> 
+> 
+> ## PR#15706
+> x1 <- as.dendrogram(hclust(dist(c(i=1,ii=2,iii=3,v=5,vi=6,vii=7))))
+> attr(cophenetic(x1), "Labels")
+[1] "iii" "i"   "ii"  "vii" "v"   "vi" 
+> ## gave a matrix in 3.0.3
+> 
+> 
+> ## PR#15708
+> aa <- anova( lm(sr ~ ., data = LifeCycleSavings) )
+> op <- options(width = 50)
+> aa
+Analysis of Variance Table
+
+Response: sr
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+pop15      1 204.12 204.118 14.1157 0.0004922 ***
+pop75      1  53.34  53.343  3.6889 0.0611255 .  
+dpi        1  12.40  12.401  0.8576 0.3593551    
+ddpi       1  63.05  63.054  4.3605 0.0424711 *  
+Residuals 45 650.71  14.460                      
+---
+Signif. codes:  
+0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+> op <- options(width = 40)
+> aa ; options(op)
+Analysis of Variance Table
+
+Response: sr
+          Df Sum Sq Mean Sq F value
+pop15      1 204.12 204.118 14.1157
+pop75      1  53.34  53.343  3.6889
+dpi        1  12.40  12.401  0.8576
+ddpi       1  63.05  63.054  4.3605
+Residuals 45 650.71  14.460        
+             Pr(>F)    
+pop15     0.0004922 ***
+pop75     0.0611255 .  
+dpi       0.3593551    
+ddpi      0.0424711 *  
+Residuals              
+---
+Signif. codes:  
+  0 '***' 0.001 '**' 0.01 '*' 0.05
+  '.' 0.1 ' ' 1
+> ## did not line wrap "Signif. codes" previously
+> 
+> 
+> ## PR#15718
+> d <- data.frame(a=1)
+> d[integer(), "a"] <- 2
+> ## warned in 3.0.3.
 > 

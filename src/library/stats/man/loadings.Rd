@@ -47,6 +47,9 @@ loadings(x, ...)
   The \code{print} method for class \code{"\link{factanal}"} calls the
   \code{"loadings"} method to print the loadings, and so passes down
   arguments such as \code{cutoff} and \code{sort}.
+  
+  The signs of the loadings vectors are arbitrary for both factor
+  analysis and PCA.
 }
 
 \note{

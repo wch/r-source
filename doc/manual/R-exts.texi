@@ -711,9 +711,9 @@ includes it.
 Examples of standardized specifications include
 @example
 License: GPL-2
-License: GPL (>= 2) | BSD
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
+License: GPL (>= 2) | BSD_3_clause + file LICENSE
 License: Artistic-2.0 | AGPL-3 + file LICENSE
 @end example
 Please note in particular that ``Public domain'' is not a valid license,
@@ -925,7 +925,9 @@ requirement which is checked at installation.  (In earlier versions of
 Specifying a package in @samp{LinkingTo} suffices if these are C++
 headers containing source code or static linking is done at
 installation: the packages do not need to be (and usually should not be)
-listed in the @samp{Depends} or @samp{Imports} fields.
+listed in the @samp{Depends} or @samp{Imports} fields.  This includes
+CRAN packages @CRANpkg{BH} and almost all users of
+@CRANpkg{RcppArmadillo} and @CRANpkg{RcppEigen}.
 
 For another use of @samp{LinkingTo} see @ref{Linking to native routines
 in other packages}.
@@ -1198,10 +1200,11 @@ numbers will need to set the seed to obtain reproducible results (and it
 can be helpful to do so in all cases, to avoid occasional failures when
 tests are run).
 
-If @file{tests} has a subdirectory @file{Examples} containing a file
-@code{@var{pkg}-Ex.Rout.save}, this is compared to the output file for
-running the examples when the latter are checked.  Reference output
-should be produced without having the @option{--timings} option set.
+If directory @file{tests} has a subdirectory @file{Examples} containing
+a file @code{@var{pkg}-Ex.Rout.save}, this is compared to the output
+file for running the examples when the latter are checked.  Reference
+output should be produced without having the @option{--timings} option
+set (and note that @option{--as-cran} sets it).
 
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
@@ -1597,7 +1600,7 @@ pkg-config --list-all | sort
 * Using Makevars::              
 * Configure example::           
 * Using F95 code::              
-* Using C+11 code::             
+* Using C++11 code::            
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2189,7 +2192,7 @@ R CMD INSTALL \
 or by setting the environment variables @code{ODBC_INCLUDE} and
 @code{ODBC_LIBS}.
 
-@node Using F95 code, Using C+11 code, Configure example, Configure and cleanup
+@node Using F95 code, Using C++11 code, Configure example, Configure and cleanup
 @subsection Using F95 code
 
 @R{} assumes that source files with extension @file{.f} are FORTRAN 77,
@@ -2244,62 +2247,94 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C+11 code,  , Using F95 code, Configure and cleanup
+@node Using C++11 code,  , Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
-@R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) for all known @R{}platforms.  However, all
+@R{} can be built without a C++ compiler although one is available
+(but not necessarily installed) on all known @R{} platforms.  
+For full portability across platforms, all
 that can be assumed is approximate support for the C++98 standard (the
 widely used @command{g++} deviates considerably from the standard).
 Some compilers have a concept of `C++03' (`essentially a bug fix') or
-`C++ Technical Report 1', an optional addition to the `C++03' revision
+`C++ Technical Report 1' (TR1), an optional addition to the `C++03' revision
 which was published in 2007.  Finally a revised standard was published
 in 2011 and compilers with fairly complete implementations are becoming
 available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
-It may be possible to compile C++11 code with recent versions of
-@command{g++} or @command{clang++} by including @option{-std=c++11} in
-@samp{PKG_CXXFLAGS}, and earlier versions support a flag
-@option{-std=c++0x}.
+From version 3.1.0, @R{} provides support for C++11 in packages, in
+addition to C++98.  This support is not consistent across platforms as
+it depends on the capabilities of the compiler (see below).  When @R{}
+is configured, it will determine whether the C++ compiler supports C++11
+and which compiler flags, if any, are required to enable C++11 support.
+For example, recent versions of @command{g++} or @command{clang++}
+accept the compiler flag @option{-std=c++11}, and earlier versions
+support a flag @option{-std=c++0x}, but the latter only provides partial
+support for the C++11 standard.
 
-Note that the default compiler for OS X is based on GCC 4.2.1 and has no
-support for anything other than the GNU version of C++98 and GNU
-extensions (which include TR1).  The default compiler on Windows is GCC
-4.6.x and supports the @option{-std=c++0x} flag and some C++11 features
-(see @uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  It is
-possible to select a different compiler @emph{via} personal
-@file{Makevars} files.
+In order to use C++11 code in a package, the package's @file{Makevars}
+file (or @file{Makevars.win} on Windows) should include the line
+
+@example
+CXX_STD = CXX11
+@end example
+
+Compilation and linking will then be done with the C++11 compiler.  If
+any other value is given to the @samp{CXX_STD} macro it will be ignored.
+(Further options may become available in the future depending on the
+evolution of the C++ standard.)
+
+Packages without a @file{Makevars} file may specify that they require
+C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
+of the @file{DESCRIPTION} file, e.g.
+
+@example
+SystemRequirements: C++11
+@end example
+
+If a package does have a @file{Makevars[.win]} file then setting the
+make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
+SHLIB} to work correctly in the package's @file{src} directory.
+
+The C++11 compiler will be used systematically by R for all C++ code
+if the environment variable @env{USE_CXX1X} is defined (with any
+value). Hence this environment variable should be defined when invoking
+@command{R CMD SHLIB} in the absence of a @file{Makevars} file (or
+@file{Makevars.win} on Windows) if a C++11 compiler is required.
+
+Further control over compilation of C++11 code can be obtained by
+specifying the macros @samp{CXX1X} and @samp{CXX1XSTD} when @R{} is
+configured@footnote{For
+details of these and related macros, see file @file{config.site} in
+the @R{} sources.}, or in a personal or site @file{Makevars} file.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration},
+ R-admin,  R Installation and Administration}.
 @end ifset
-For example, on OS X 10.7 or later one could select @command{clang++}.
+If C++11 support is not available then these macros are both
+empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
+compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
+@option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).
+It is possible to specify @samp{CXX1X} to be a distinct compiler just
+for C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.
+Note however that different C++ compilers (and even different versions
+of the same compiler) often differ in their ABI so their outputs can
+rarely be mixed. By setting @samp{CXX1XSTD} it is also possible to
+choose a different dialect of the standard, such as
+@option{-std=gnu++11}, or enable experimental support for the next
+revision (tentatively planned for 2017) @option{-std=c++1y}.
 
-As from @R{} 3.1.0 there is another way to do this.  If the package's
-@file{Makevars} (or @file{Makevars.win}) file defines the macro
-@samp{USE_CXX1X}, compilation and linking will be done with the compiler
-specified by the macro @samp{CXX1X} with flag @samp{CXX1XSTD}, which can
-be specified@footnote{For details of these and related macros, see file
-@file{config.site} in the @R{} sources.} when @R{} is configured or in a
-personal or site @file{Makevars} file.  This defaults to the C++
-compiler with flag @option{-std=c++11} or @option{-std=c++0x} (the
-latter on Windows), but allows an incompatible alternative to be
-specified just for C++11--using packages, e.g.@: @command{g++ 4.8.x} on
-Solaris.  (C++ compilers, even different versions, often differ in their
-ABI, so their outputs can rarely be mixed.)
-
-If the macro @samp{USE_CXX1X} is given a value this is used to set
-@samp{CXX1XSTD} to select a different standard, for example
-@option{-std=gnu++11} or @option{-std=c++1y}.
-
-To make this easier to use with @command{R CMD SHLIB}, the environment
-variable @env{USE_CXX1X} will be consulted if there is no
-@file{Makevars} file (nor @file{Makevars.win} on Windows). Packages without
-a @file{Makevars} file may specify that they require C++11 by
-including @samp{C++11} in the @samp{SystemRequirements} field of the
-@file{DESCRIPTION} file.
+As noted above, support for C++11 varies across platforms.  The default
+compiler@footnote{OS X 10.7 and later have @command{clang++} but for
+10.7 and 10.8 it uses the @command{g++} 4.2.x headers.} for OS X (<=
+10.8) is based on GCC 4.2.1 and has no support for anything other than
+the GNU version of C++98 and GNU extensions (which include TR1).  The
+default compiler on Windows is GCC 4.6.x and supports the
+@option{-std=c++0x} flag and some C++11 features (see
+@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}).  On these
+platforms, it is necessary to select a different compiler for C++11,
+@emph{via} personal or site @file{Makevars} files.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -2585,7 +2620,7 @@ want to set environment variable @env{R_WIN_INTERNET2} to a non-empty
 value, e.g.@: in @file{~/.R/check_environ}.}).  Some Windows users may
 need to set environment variable @env{R_WIN_NO_JUNCTIONS} to a non-empty
 value.  The test of cyclic declarations@footnote{For example, in early
-2014 @pkg{gdata} declared @samp{Imports: gtools} and @pkg{gtools}
+2014 @CRANpkg{gdata} declared @samp{Imports: gtools} and @CRANpkg{gtools}
 declared @samp{Imports: gdata}.}in @file{DESCRIPTION} files needs
 repositories (including @acronym{CRAN}) set: do this in
 @file{~/.Rprofile}.
@@ -3787,9 +3822,10 @@ files.
 @end ifset
 
 Although there is a 2011 version of the C++ standard, it is not yet
-fully implemented@footnote{despite misleading claims by some compilers
-to be `feature complete'.} and portable C++ code needs to follow the
-1998 standard (and not use features from C99).
+fully implemented and partial implementations are not universally
+available. Portable C++ code needs to follow the 1998 standard (and not
+use features from C99). 
+See also @ref{Using C++11 code} to specify a C++11 compiler.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -3861,7 +3897,8 @@ Conflicts between symbols in DLLs are handled in very platform-specific
 ways.  Good ways to avoid trouble are to make as many symbols as
 possible static (check with @code{nm -pg}), and to use names which are
 clearly tied to your package (which also helps users if anything does go
-wrong).
+wrong).  Note that symbol names starting with @code{R_} are regarded as
+part of @R{}'s namespace and should not be used in packages.
 
 @item
 It is not portable to call compiled code in @R{} or other packages
@@ -3901,20 +3938,24 @@ Only test the accuracy of results if you have done a formal error
 analysis.  Things such as checking that probabilities numerically sum to
 one are silly: numerical tests should always have a tolerance.  That the
 tests on your platform achieve a particular tolerance says little about
-other platforms.  Most @R{} platforms use @cputype{ix86} or
+other platforms.  @R{} is configured by default to make use of long
+doubles where available, but they may not be available or be too slow
+for routine use.  Most @R{} platforms use @cputype{ix86} or
 @cputype{x86_64} CPUs: these use extended precision registers on some
 but not all of their FPU instructions.  Thus the achieved precision can
 depend on the compiler version and optimization flags---our experience
 is that 32-bit builds tend to be less precise than 64-bit ones.  But not
 all platforms use those CPUs, and not all@footnote{Not doing so is the
 default on Windows, overridden for the @R{} executables.  It is also the
-default on some Solaris compilers.}  which use them configure them allow
-the use of extended precision.
+default on some Solaris compilers.} which use them configure them to
+allow the use of extended precision.  In particular, ARM CPUs do not
+(currently) have extended precision nor long doubles.
 
 If you must try to establish a tolerance empirically, configure and
-build @R{} with @option{--disable-long-doubles} and use appropriate
-compiler flags (such as @option{-ffloat-store} for @command{gcc}) to
-mitigate the effects of extended-precision calculations.
+build @R{} with @option{--disable-long-double} and use appropriate
+compiler flags (such as @option{-ffloat-store} and
+@option{-fexcess-precision=standard} for @command{gcc}) to mitigate the
+effects of extended-precision calculations.
 
 @end itemize
 
@@ -5918,7 +5959,7 @@ including the information in the @file{DESCRIPTION} files.
 @code{R CMD Sweave} and @code{R CMD Stangle} process vignette-like
 documentation files (e.g. Sweave vignettes with extension
 @samp{.Snw} or @samp{.Rnw}, or other non-Sweave vignettes).
-@code{R CMD Stangle} is use to extract the @R{} code fragments.
+@code{R CMD Stangle} is used to extract the @R{} code fragments.
 
 The exact usage and a detailed list of available options for all of
 these commands can be obtained by running @code{R CMD @var{command}
@@ -6446,7 +6487,7 @@ samples  %        image name symbol name
 @file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
 The analysis for @file{libc} showed that calls to @code{wcsftime}
 dominated, so those calls were cached for @R{} 3.0.3: the time spent in
-@code{no-vmlinux} (the kernel) was the reduced dramatically.
+@code{no-vmlinux} (the kernel) was reduced dramatically.
 
 On platforms which support it, callgraphs can be produced by
 @command{opcontrol --callgraph} if collected via @command{operf
@@ -6979,10 +7020,6 @@ Note that memory access errors may be seen with LAPACK, BLAS and
 Java-using packages: some at least of these seem to be intentional, and
 some are related to passing characters to Fortran.
 
-There are other memory-access-checking tools available: GCC supports
-@command{mudflap} and `lightweight bounds checking' (`LBC') is
-promised as a plug-in.
-
 @menu
 * Using gctorture::             
 * Using valgrind::              
@@ -7053,7 +7090,7 @@ message.
 @end itemize
 
 @code{R CMD check --use-gct} can be set to use
-@code{gctorture2(@var(n))} rather than @code{gctorture(TRUE)} by
+@code{gctorture2(@var{n})} rather than @code{gctorture(TRUE)} by
 environment variable @env{_R_CHECK_GCT_N_} to a positive integer value
 to be used as @code{@var{n}}.
 
@@ -7064,10 +7101,12 @@ mechanism can be helpful in isolating memory protect problems.
 @node Using valgrind, Using Address Sanitizer, Using gctorture, Checking memory access
 @subsection Using valgrind
 
-If you have access to Linux on a common platform or (some versions of)
-OS X you can use @code{valgrind} (@uref{http://www.valgrind.org/},
-pronounced to rhyme with `tinned') to check for possible problems.  To
-run some examples under @code{valgrind} use something like
+If you have access to Linux on a common CPU type or OS X@footnote{at the
+time of writing mainly for 10.7 with some support for 10.8, none for the
+current 10.9.} you can use @code{valgrind}
+(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+check for possible problems.  To run some examples under @code{valgrind}
+use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
@@ -7087,9 +7126,6 @@ session.  Expect this to run around 20x slower than without
 versions of @code{valgrind} were not happy with some optimized BLASes
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
-
-@c On Mac OS 10.6 and later the valgrind session is liable to hang when
-@c @R{} terminates with @command{valgrind} prior to 3.8.1.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
@@ -7179,8 +7215,10 @@ non-empty value before the @command{INSTALL}.)
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{not including the versions distributed by Apple in
 @code{Xcode} 4.6 or 5, nor of @command{clang} in Fedora prior to an
-update in Fedora 19.} of @command{gcc} 4.8.0 or @command{clang} 3.1 and
-later on common Linux and OS X platforms.  See
+update in Fedora 19. On some platforms, e.g.@: Fedora, the runtime
+library, @pkg{libasan}, needs to be installed separately.} of
+@command{gcc} 4.8.0 or @command{clang} 3.1 and later on common Linux and
+OS X platforms.  See
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{http://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://code.google.com/p/address-sanitizer/}.
@@ -7193,9 +7231,9 @@ compilation times and uses substantially more memory, often 1--2GB, at
 run time.  By comparison with @command{valgrind}, it can detect misuse
 of stack and global variables but not the use of uninitialized memory.
 
-Most versions@footnote{@command{gcc} will from version 4.9.0.} do not
-return symbolic addresses for the location of the error.  One
-possibility is to use an external symbolizer such as
+@command{gcc} as from version 4.9.0 returns symbolic addresses for the
+location of the error, but most other version do not.  For the latter,
+one possibility is to use an external symbolizer such as
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
 @uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
@@ -7207,7 +7245,7 @@ The simplest way to make use of this is to build a version of @R{} with
 something like
 
 @example
-CC="gcc-4.8 -std=gnu99 -fsanitize=address"
+CC="gcc-4.9 -std=gnu99 -fsanitize=address"
 CFLAGS="-fno-omit-frame-pointer -O2 -Wall -pedantic -mtune=native"
 @end example
 
@@ -7216,10 +7254,10 @@ which will ensure that the @code{libasan} run-time library is compiled
 into the @R{} executable.  However this check can be enabled on a
 per-package basis by using a @file{~/.R/Makevars} file like
 @example
-CC = gcc-4.8 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
-CXX = g++-4.8 -fsanitize=address -fno-omit-frame-pointer
-F77 = gfortran-4.8 -fsanitize=address
-FC = gfortran-4.8 -fsanitize=address
+CC = gcc-4.9 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
+CXX = g++-4.9 -fsanitize=address -fno-omit-frame-pointer
+F77 = gfortran-4.9 -fsanitize=address
+FC = gfortran-4.9 -fsanitize=address
 @end example
 (Note that @code{-fsanitize=address} has to be part of the compiler
 specification to ensure it is used for linking.  These settings will not
@@ -7261,7 +7299,7 @@ compilation: see @uref{http://clang-analyzer.llvm.org/}.
 `UBSanitizer' is a tool for C/C++ source code selected by
 @samp{-fsanitize=undefined} (or with the address sanitizer by
 @samp{-fsanitize=undefined,address} where supported) in suitable builds
-of @command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in
+of @command{clang}, and GCC as from 4.9.0.  (It can be enabled in
 a similar way to the address sanitizer: see the previous subsection.)
 
 `Undefined behaviour' is where the language standard does not require
@@ -7287,7 +7325,19 @@ return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
 
 @noindent
-a subset of which could be combined with @code{address}.
+a subset of which could be combined with @code{address}, or use something
+like
+
+@example
+-fsanitize=undefined -fno-sanitize=float-divide-by-zero
+@end example
+
+@noindent
+A smaller selection is available for GCC, for 4.9.0
+@example
+-fsanitize=integer-divide-by-zero,null,return,shift,signed-integer-overflow,unreachable,vla-bound
+@end example
+
 
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
@@ -7772,11 +7822,6 @@ values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
 of these generates an error.  If it is true, these values are passed
 unchecked.
 
-Argument @code{DUP} can be used to suppress copying.  It is dangerous:
-see the on-line help for arguments against its use.  It is not possible
-to pass numeric vectors as @code{float *} or @code{REAL} if
-@code{DUP = FALSE}, and character vectors cannot be used.
-
 Argument @code{PACKAGE} confines the search for the symbol name to a
 specific shared object (or use @code{"base"} for code compiled into
 @R{}).  Its use is highly desirable, as there is no way to avoid two
@@ -7832,18 +7877,17 @@ storage mode before calling @code{.C}; mistakes in matching the types
 can lead to wrong results or hard-to-catch errors.
 
 Special care is needed in handling @code{character} vector arguments in
-C (or C++).  Since only @code{DUP = TRUE} is allowed, on entry the
-contents of the elements are duplicated and assigned to the elements of
-a @code{char **} array, and on exit the elements of the C array are
-copied to create new elements of a character vector.  This means that
-the contents of the character strings of the @code{char **} array can be
-changed, including to @code{\0} to shorten the string, but the strings
-cannot be lengthened.  It is possible@footnote{Note that this is then
-not checked for over-runs by option @code{CBoundsCheck = TRUE}.} to
-allocate a new string @emph{via} @code{R_alloc} and replace an entry in
-the @code{char **} array by the new string.  However, when character
-vectors are used other than in a read-only way, the @code{.Call}
-interface is much to be preferred.
+C (or C++).  On entry the contents of the elements are duplicated and
+assigned to the elements of a @code{char **} array, and on exit the
+elements of the C array are copied to create new elements of a character
+vector.  This means that the contents of the character strings of the
+@code{char **} array can be changed, including to @code{\0} to shorten
+the string, but the strings cannot be lengthened.  It is
+possible@footnote{Note that this is then not checked for over-runs by
+option @code{CBoundsCheck = TRUE}.} to allocate a new string @emph{via}
+@code{R_alloc} and replace an entry in the @code{char **} array by the
+new string.  However, when character vectors are used other than in a
+read-only way, the @code{.Call} interface is much to be preferred.
 
 Passing character strings to FORTRAN code needs even more care, and
 should be avoided where possible.  Only the first element of the
@@ -9539,9 +9583,12 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-Currently all arguments to a @code{.Call} call will have @code{NAMED}
-set to 2, and so users must assume that they need to be duplicated
-before alteration.
+This mechanism is likely to be replaced in future versions of @R{}.
+
+@c commented out as people misread this as general.
+@c Currently all arguments to a @code{.Call} call will have @code{NAMED}
+@c set to 2, and so users must assume that they need to be duplicated
+@c before alteration.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
@@ -10396,7 +10443,9 @@ set to the C @code{NULL} pointer.
 
 Finalizers can be run at many places in the code base and much of it,
 including the @R{} interpreter, is not re-entrant.  So great care is
-needed in choosing the code to be run in a finalizer.
+needed in choosing the code to be run in a finalizer. As from @R{} 3.0.3
+finalizers are marked to be run at garbage collection but only run at a
+somewhat safe point thereafter. 
 
 @cindex weak reference
 Weak references are used to allow the programmer to maintain information

@@ -420,6 +420,10 @@ AC_ARG_WITH([system-pcre],
 [AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(pcre)],
 [use_system_pcre=no])
+AC_ARG_WITH([system-tre],
+[AS_HELP_STRING([--with-system-tre],[use system tre library (if available) @<:@no@:>@])],
+[R_ARG_USE_SYSTEM(tre)],
+[use_system_tre=no])
 AC_ARG_WITH([system-xz],
 [AS_HELP_STRING([--with-system-xz],[use system xz (lzma) library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(xz)],
@@ -2285,6 +2289,9 @@ R_LZMA
 
 ## PCRE headers and libraries.
 R_PCRE
+
+## tre headers and libraries.
+R_TRE
 
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS

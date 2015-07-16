@@ -2838,3 +2838,38 @@ try(fligner.test (yield ~ block*N, data = npk))
 ## used the first factor with an incorrect description in R < 3.0.3
 
 
+## Misguided expectation of PR#15687
+xx <- window(AirPassengers, start = 1960)
+cbind(xx, xx)
+op <- options(digits = 2)
+cbind(xx, xx)
+options(op)
+## 'digits' was applied to the time.
+
+
+## Related to PR#15190
+difftime(
+    as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 12:00:00"), tz="EST5EDT"),
+    as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC"))
+## kept tzone from first arg.
+
+
+## PR#15706
+x1 <- as.dendrogram(hclust(dist(c(i=1,ii=2,iii=3,v=5,vi=6,vii=7))))
+attr(cophenetic(x1), "Labels")
+## gave a matrix in 3.0.3
+
+
+## PR#15708
+aa <- anova( lm(sr ~ ., data = LifeCycleSavings) )
+op <- options(width = 50)
+aa
+op <- options(width = 40)
+aa ; options(op)
+## did not line wrap "Signif. codes" previously
+
+
+## PR#15718
+d <- data.frame(a=1)
+d[integer(), "a"] <- 2
+## warned in 3.0.3.

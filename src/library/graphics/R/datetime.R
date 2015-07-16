@@ -132,9 +132,11 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 start$mday <- 1L
                 end <- as.POSIXlt(max(x, na.rm = TRUE))
                 end <- as.POSIXlt(end + (31 * 86400))
-                end$mday <- 1
-                end$isdst <- -1
-                breaks <- seq(start, end, "months") - 86400
+                end$mday <- 1L
+                end$isdst <- -1L
+                breaks <- seq(start, end, "months")
+                ind <- seq_along(breaks[-1L])
+                breaks[ind] <- breaks[ind] - 86400
             } else if(valid == 7L) { # "years"
                 start$mon <- 0L
                 start$mday <- 1L
@@ -142,8 +144,10 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 end <- as.POSIXlt(end + (366 * 86400))
                 end$mon <- 0L
                 end$mday <- 1L
-                end$isdst <- -1
-                breaks <- seq(start, end, "years") - 86400
+                end$isdst <- -1L
+                breaks <- seq(start, end, "years")
+                ind <- seq_along(breaks[-1L])
+                breaks[ind] <- breaks[ind] - 86400
             } else if(valid == 8L) { # "quarters"
                 qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
                 start$mon <- qtr[start$mon + 1L]
@@ -152,9 +156,11 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                 end <- as.POSIXlt(end + (93 * 86400))
                 end$mon <- qtr[end$mon + 1L]
                 end$mday <- 1L
-                end$isdst <- -1
-                breaks <- seq(start, end, "3 months") - 86400
-            } else { # "days" or "weeks"
+                end$isdst <- -1L
+                breaks <- seq(start, end, "3 months")
+                ind <- seq_along(breaks[-1L])
+                breaks[ind] <- breaks[ind] - 86400
+           } else { # "days" or "weeks"
                 maxx <- max(x, na.rm = TRUE)
                 breaks <- seq(start, maxx + incr, breaks)
                 breaks <- breaks[seq_len(1L + max(which(breaks < maxx)))]

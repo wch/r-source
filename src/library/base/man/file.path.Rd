@@ -1,6 +1,6 @@
 % File src/library/base/man/file.path.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.path}
@@ -23,6 +23,11 @@ file.path(\dots, fsep = .Platform$file.sep)
 
   It can also be used for environment paths such as \env{PATH} and
   \env{R_LIBS} with \code{fsep = .Platform$path.sep}.
+
+  Trailing path separators are invalid for Windows file paths apart from
+  \file{/} and \file{d:/} (although some functions/utilities do accept
+  them), so as from \R 3.1.0 a trailing \code{/} or \code{\\} is
+  removed.
 }
 \value{
   A character vector of the arguments concatenated term-by-term and
@@ -30,6 +35,7 @@ file.path(\dots, fsep = .Platform$file.sep)
   otherwise, an empty character vector (unlike \code{\link{paste}}).
 }
 \note{
-  The components are separated by \code{/} (not \code{\\}) on Windows.
+  The components are by default separated by \code{/}
+  (not \code{\\}) on Windows.
 }
 \keyword{file}

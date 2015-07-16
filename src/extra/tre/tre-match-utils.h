@@ -76,7 +76,7 @@
 	str_user_end = str_source->get_next_char(&next_c, &pos_add_next,      \
                                                  str_source->context);	      \
       }									      \
-  } while(/*CONSTCOND*/0)
+  } while(/*CONSTCOND*/(void)0,0)
 
 #else /* !TRE_MULTIBYTE */
 
@@ -107,7 +107,7 @@
 	str_user_end = str_source->get_next_char(&next_c, &pos_add_next,      \
                                                  str_source->context);	      \
       }									      \
-  } while(/*CONSTCOND*/0)
+  } while(/*CONSTCOND*/(void)0,0)
 
 #endif /* !TRE_MULTIBYTE */
 
@@ -132,7 +132,7 @@
 	str_user_end = str_source->get_next_char(&next_c, &pos_add_next,      \
 						 str_source->context);	      \
       }									      \
-  } while(/*CONSTCOND*/0)
+  } while(/*CONSTCOND*/(void)0,0)
 
 #endif /* !TRE_WCHAR */
 
@@ -161,11 +161,11 @@
 #define CHECK_CHAR_CLASSES(trans_i, tnfa, eflags)                             \
   (((trans_i->assertions & ASSERT_CHAR_CLASS)                                 \
        && !(tnfa->cflags & REG_ICASE)                                         \
-       && !tre_isctype((tre_cint_t)prev_c, trans_i->u.classt))                \
+       && !tre_isctype((tre_cint_t)prev_c, trans_i->u.class))                 \
     || ((trans_i->assertions & ASSERT_CHAR_CLASS)                             \
         && (tnfa->cflags & REG_ICASE)                                         \
-        && !tre_isctype(tre_tolower((tre_cint_t)prev_c),trans_i->u.classt)    \
-	&& !tre_isctype(tre_toupper((tre_cint_t)prev_c),trans_i->u.classt))       \
+        && !tre_isctype(tre_tolower((tre_cint_t)prev_c),trans_i->u.class)     \
+	&& !tre_isctype(tre_toupper((tre_cint_t)prev_c),trans_i->u.class))    \
     || ((trans_i->assertions & ASSERT_CHAR_CLASS_NEG)                         \
         && tre_neg_char_classes_match(trans_i->neg_classes,(tre_cint_t)prev_c,\
                                       tnfa->cflags & REG_ICASE)))

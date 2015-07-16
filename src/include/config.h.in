@@ -789,6 +789,12 @@
 /* Define to 1 if your 'struct tm' has tm_zone. */
 #undef HAVE_TM_ZONE
 
+/* Define if your system has tre. */
+#undef HAVE_TRE
+
+/* Define to 1 if you have the <tre/tre.h> header file. */
+#undef HAVE_TRE_TRE_H
+
 /* Define to 1 if you have the `tsearch' function. */
 #undef HAVE_TSEARCH
 

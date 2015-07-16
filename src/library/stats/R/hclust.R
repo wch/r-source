@@ -1,7 +1,7 @@
 #  File src/library/stats/R/hclust.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,28 +29,37 @@
 ##
 ## Clustering Methods:
 ##
-## 1. Ward's minimum variance or error sum of squares method.
+## 1. Ward's minimum variance or error sum of squares method (using raw d) -> "ward.D"
 ## 2. single linkage or nearest neighbor method.
 ## 3. complete linkage or diameter.
 ## 4. average linkage, group average, or UPGMA method.
 ## 5. McQuitty's or WPGMA method.
 ## 6. median, Gower's or WPGMC method.
 ## 7. centroid or UPGMC method (7).
+## 8. Ward's ... "correct" method using d^2 (in Fortran) -> "ward.D2"
 ##
 ## Original author: F. Murtagh, May 1992
 ## R Modifications: Ross Ihaka, Dec 1996
 ##		    Friedrich Leisch, Apr 1998, Jun 2000
+## "ward.D" and "ward.D2" from suggestions by Pierre Legendre,
+## by Martin Maechler, mostly in the Fortran part.
 
 hclust <- function(d, method="complete", members=NULL)
 {
-    METHODS <- c("ward", "single",
-                 "complete", "average", "mcquitty",
-                 "median", "centroid")
-    method <-  pmatch(method, METHODS)
-    if(is.na(method))
-	stop("invalid clustering method")
-    if(method == -1)
-	stop("ambiguous clustering method")
+    ## order of METHODS --> i.meth -> Fortran's  iOpt  codes
+    METHODS <- c("ward.D", "single", # 1, 2,
+                 "complete", "average", "mcquitty", # 3, 4, 5,
+                 "median", "centroid", "ward.D2") # 6, 7, 8
+    if(method == "ward") { # do not deprecate earlier than 2015!
+	message("The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\"")
+	method <- "ward.D"
+    }
+    i.meth <-  pmatch(method, METHODS)
+    if(is.na(i.meth))
+        ## TODO: use gettextf() [-> translation string change]
+	stop("invalid clustering method", paste("", method))
+    if(i.meth == -1)
+	stop("ambiguous clustering method", paste("", method))
 
     n <- as.integer(attr(d, "Size"))
     if(is.null(n))
@@ -72,7 +81,7 @@ hclust <- function(d, method="complete", members=NULL)
     hcl <- .Fortran(C_hclust,
 		    n = n,
 		    len = len,
-		    method = as.integer(method),
+		    method = as.integer(i.meth),
 		    ia = integer(n),
 		    ib = integer(n),
 		    crit = double(n),
@@ -89,19 +98,18 @@ hclust <- function(d, method="complete", members=NULL)
 		      n = n, # checked above.
 		      ia = hcl$ia,
 		      ib = hcl$ib,
-  		      order = integer(n),
+		      order = integer(n),
 		      iia = integer(n),
 		      iib = integer(n))
 
-    tree <- list(merge = cbind(hcass$iia[1L:(n-1)], hcass$iib[1L:(n-1)]),
-		 height = hcl$crit[1L:(n-1)],
-		 order = hcass$order,
-		 labels = attr(d, "Labels"),
-                 method = METHODS[method],
-                 call = match.call(),
-                 dist.method = attr(d, "method"))
-    class(tree) <- "hclust"
-    tree
+    structure(list(merge = cbind(hcass$iia[1L:(n-1)], hcass$iib[1L:(n-1)]),
+		   height = hcl$crit[1L:(n-1)],
+		   order = hcass$order,
+		   labels = attr(d, "Labels"),
+		   method = METHODS[i.meth],
+		   call = match.call(),
+		   dist.method = attr(d, "method")),
+	      class = "hclust")
 }
 
 plot.hclust <-
@@ -203,8 +211,8 @@ function(x)
     out <- matrix(0, nrow = nobs, ncol = nobs)
     for(i in 1 : (nobs - 1)) {
         inds <- x$merge[i,]
-        ids1 <- if(inds[1L] < 0) -inds[1L] else ilist[[inds[1L]]]
-        ids2 <- if(inds[2L] < 0) -inds[2L] else ilist[[inds[2L]]]
+        ids1 <- if(inds[1L] < 0L) -inds[1L] else ilist[[inds[1L]]]
+        ids2 <- if(inds[2L] < 0L) -inds[2L] else ilist[[inds[2L]]]
         ilist[[i]] <- c(ids1, ids2)
         out[cbind(rep.int(ids1, rep.int(length(ids2), length(ids1))),
                   rep.int(ids2, length(ids1)))] <- x$height[i]
@@ -243,10 +251,9 @@ function(x)
     ##    for(i in seq_along(inds))
     ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
     hi <- cumsum(lens)
-    lo <- c(0, hi[-length(hi)]) + 1
+    lo <- c(0L, hi[-length(hi)]) + 1L
     for(i in seq_along(x))
         m[lo[i] : hi[i], lo[i] : hi[i]] <- as.matrix(children[[i]])
-    rownames(m) <- colnames(m) <-
-        unlist(sapply(children, attr, "Labels"))
+    rownames(m) <- colnames(m) <- unlist(lapply(children, attr, "Labels"))
     as.dist(m)
 }

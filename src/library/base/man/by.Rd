@@ -1,6 +1,6 @@
 % File src/library/base/man/by.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{by}
@@ -20,7 +20,8 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
  \item{data}{an \R object, normally a data frame, possibly a matrix.}
  \item{INDICES}{a factor or a list of factors, each of length
    \code{nrow(data)}.}
- \item{FUN}{a function to be applied to data frame subsets of \code{data}.}
+ \item{FUN}{a function to be applied to (usually data-frame) subsets of
+   \code{data}.}
  \item{\dots}{further arguments to \code{FUN}.}
  \item{simplify}{logical: see \code{\link{tapply}}.}
 }
@@ -29,9 +30,10 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
   subsetted by the values of one or more factors, and function
   \code{FUN} is applied to each subset in turn.
 
-  Object \code{data} will be coerced to a data frame by the default
-  method, \emph{but} if this results in a 1-column data frame, the
-  objects passed to \code{FUN} are dropped to a subsets of that column.
+  For the default method, an object with dimensions (e.g., a matrix) is
+  coerced to a data frame and the data frame method applied.  Other
+  objects are also coerced to a data frame, but \code{FUN} is applied
+  separately to (subsets of) each column of the data frame.
 }
 \value{
   An object of class \code{"by"}, giving the results for each subset.

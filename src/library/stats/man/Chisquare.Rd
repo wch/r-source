@@ -71,7 +71,7 @@ rchisq(n, df, ncp = 0)
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and also \eqn{n = 0} which is relevant for
   non-centrality \eqn{\lambda > 0},
-  see Johnson et al. (1995, chapter 29).
+  see Johnson \emph{et al} (1995, chapter 29).
 
   Note that \code{ncp} values larger than about 1e5 may give inaccurate
   results with many warnings for \code{pchisq} and \code{qchisq}.
@@ -80,7 +80,7 @@ rchisq(n, df, ncp = 0)
   The central cases are computed via the gamma distribution.
 
   The non-central \code{dchisq} and \code{rchisq} are computed as a
-  Poisson mixture central of chi-squares (Johnson et al, 1995, p.436).
+  Poisson mixture central of chi-squares (Johnson \emph{et al}, 1995, p.436).
 
   The non-central \code{pchisq} is for \code{ncp < 80} computed from
   the Poisson mixture of central chi-squares and for larger \code{ncp}

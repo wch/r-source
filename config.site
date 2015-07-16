@@ -254,6 +254,6 @@
 
 ## Analogues for the C++11 compiler: default to the settings for C++
 ## CXX1XFLAGS=
-## CXXiXPICFLAGS=
+## CXX1XPICFLAGS=
 ## SHLIB_CXXIXLD=
 ## SHLIB_CXXiXLDFLAGS=

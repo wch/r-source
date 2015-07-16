@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -117,7 +117,9 @@ regexec(pattern, text, ignore.case = FALSE,
   \code{useBytes = TRUE}.
 
   \code{regexpr} and \code{gregexpr} with \code{perl = TRUE} allow
-    Python-style named captures, but not for \emph{long vector} inputs.  
+  Python-style named captures, but not for \emph{long vector} inputs.  
+    
+  Invalid inputs in the current locale are warned about up to 5 times.
 }
 
 \value{

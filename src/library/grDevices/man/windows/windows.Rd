@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/windows.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{windows}
@@ -160,9 +160,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   device is opened.
 
   There is support for semi-transparent colours of lines, fills and text
-  on the screen devices.  These work for saving (from the
-  \sQuote{File} menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if
-  saving to Metafile and PostScript.
+  on the screen devices.  These work for saving (from the \sQuote{File}
+  menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if saving
+  to Metafile and PostScript.  Limitations in the underlying Windows API
+  mean that a semi-transparent object must be contained strictly within
+  the device region (allowing for line widths and joins).
 }
 
 \section{Resizing options}{

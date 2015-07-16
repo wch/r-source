@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{crimtab}
 \alias{crimtab}
 \docType{data}
@@ -33,7 +35,8 @@
     I had endeavoured to do so empirically.  The material used was a
     correlation table containing the height and left middle finger
     measurements of 3000 criminals, from a paper by W. R. MacDonell
-    (\emph{Biometrika}, Vol. I., p. 219).  The measurements were written
+    (\emph{Biometrika}, Vol.\sspace{}I., p.\sspace{}219).  The
+    measurements were written 
     out on 3000 pieces of cardboard, which were then very thoroughly
     shuffled and drawn at random.  As each card was drawn its numbers
     were written down in a book, which thus contains the measurements of

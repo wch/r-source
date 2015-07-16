@@ -199,7 +199,7 @@ SEXP optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args); options = CAR(args);
     PROTECT(OS->R_fcall = lang2(fn, R_NilValue));
     PROTECT_WITH_INDEX(par = coerceVector(par, REALSXP), &par_index);
-    if (NAMED(par))
+    if (MAYBE_REFERENCED(par))
     	REPROTECT(par = duplicate(par), par_index);
     npar = LENGTH(par);
     dpar = vect(npar);

@@ -617,8 +617,8 @@ stopifnot(!is.unsorted(a), # 11:16 *is* sorted
 # getSrcref failed when rematchDefinition was used
 text <- '
 setClass("MyClass", representation(val = "numeric"))
-setMethod("plot", signature(x = "MyClass"), 
-    function(x, y, ...) { 
+setMethod("plot", signature(x = "MyClass"),
+    function(x, y, ...) {
         # comment
 	NULL
     })
@@ -632,3 +632,39 @@ setMethod("initialize", signature = "MyClass",
 source(textConnection(text), keep.source = TRUE)
 getSrcref(getMethod("plot", "MyClass"))
 getSrcref(getMethod("initialize", "MyClass"))
+
+
+## PR#15691
+setGeneric("fun", function(x, ...) standardGeneric("fun"))
+setMethod("fun", "character", identity)
+setMethod("fun", "numeric", function(x) {
+  x <- as.character(x)
+  callGeneric()
+})
+
+stopifnot(identical(fun(1), do.call(fun, list(1))))
+## failed in R < 3.1.0
+
+
+## PR#15680
+setGeneric("f", function(x, y) standardGeneric("f"))
+setMethod("f", c("numeric", "missing"), function(x, y) x)
+try(?f(1))
+
+## "..." is not handled
+setGeneric("f", function(...) standardGeneric("f"))
+setMethod("f", "numeric", function(...) c(...))
+try(?f(1,2))
+
+## defaults in the generic formal arguments are not considered
+setGeneric("f", function(x, y=0) standardGeneric("f"))
+setMethod("f", c("numeric", "numeric"), function(x, y) x+y)
+try(?f(1))
+
+## Objects with S3 classes fail earlier
+setGeneric("f", function(x) standardGeneric("f"))
+setMethod("f", "numeric", function(x) x)
+setOldClass(c("foo", "numeric"))
+n <- structure(1, class=c("foo", "numeric"))
+try(?f(n))
+## different failures in R < 3.1.0.

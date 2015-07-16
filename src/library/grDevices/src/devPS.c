@@ -53,6 +53,10 @@ extern int errno;
 
 #include "zlib.h"
 
+#ifndef max
+#define max(a,b) ((a > b) ? a : b)
+#endif
+
 /* from connections.o */
 extern gzFile R_gzopen (const char *path, const char *mode);
 extern char *R_gzgets(gzFile file, char *buf, int len);
@@ -3387,7 +3391,9 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->left = 72 * xoff;			/* left */
     dd->right = 72 * (xoff + pd->width);	/* right */
     dd->bottom = 72 * yoff;			/* bottom */
-    dd->top = 72 * (yoff + pd->height);	/* top */
+    dd->top = 72 * (yoff + pd->height);	        /* top */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     dd->cra[0] = 0.9 * pointsize;
     dd->cra[1] = 1.2 * pointsize;
@@ -4880,6 +4886,8 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->right = 72 * (xoff + pd->width);	/* right */
     dd->bottom = 72 * yoff;		/* bottom */
     dd->top = 72 * (yoff + pd->height);	/* top */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     dd->cra[0] = 0.9 * pointsize;
     dd->cra[1] = 1.2 * pointsize;
@@ -6161,6 +6169,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->right = 72 * (xoff + pd->width);	/* right */
     dd->bottom = 72 * yoff;			/* bottom */
     dd->top = 72 * (yoff + pd->height);	/* top */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     dd->cra[0] = 0.9 * pointsize;
     dd->cra[1] = 1.2 * pointsize;
@@ -7436,6 +7446,7 @@ static void PDF_Circle(double x, double y, double r,
 	       centre = (0.396, 0.347) * size
 	    */
 	    a = 2./0.722 * r;
+	    if (a < 0.01) return; // avoid 0 dims below.
 	    xx = x - 0.396*a;
 	    yy = y - 0.347*a;
 	    tr = (R_OPAQUE(gc->fill)) +
@@ -7744,7 +7755,7 @@ static void PDFSimpleText(double x, double y, const char *str,
     int face = gc->fontface;
     double a, b, bm, rot1;
 
-    if(!R_VIS(gc->col)) return;
+    if(!R_VIS(gc->col) || size <= 0) return;
 
     if(face < 1 || face > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), face);
@@ -7789,7 +7800,7 @@ static void PDF_Text0(double x, double y, const char *str, int enc,
 
     PDF_checkOffline();
 
-    if(!R_VIS(gc->col)) return;
+    if(!R_VIS(gc->col) || size <= 0) return;
 
     if(face < 1 || face > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), face);

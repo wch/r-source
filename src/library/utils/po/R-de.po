@@ -1,13 +1,13 @@
 # Translation of src/library/utils/po/R-utils.pot to German.
-# Copyright (C) 2008-2013 The R Foundation
+# Copyright (C) 2008-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -42,9 +42,6 @@ msgstr "Referenz auf unbekannten Abschnitt %s"
 msgid "no Sweave file with name %s found"
 msgstr "keine Sweave-Datei namens %s gefunden"
 
-msgid "%d Sweave files for basename %s found"
-msgstr "%d Sweave Dateien für Basisnamen %s gefunden"
-
 msgid "more than one syntax specification found, using the first one"
 msgstr "mehr als eine Syntaxspezifikation gefunden, benutze die erste"
 
@@ -71,7 +68,7 @@ msgid "Warning: unknown option %s"
 msgstr "Warnung: unbekannte Option %s"
 
 msgid "Output file:"
-msgstr ""
+msgstr "Ausgabedateien:"
 
 msgid "Compacting PDF document"
 msgstr "Komprimieren PDF Dokument"
@@ -146,10 +143,10 @@ msgid "bad argument"
 msgstr "unbrauchbares Argument"
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
+msgstr "'full.names' muss TRUE sein bei mehrfachen Pfaden."
 
 msgid "Timestamp file no longer exists."
-msgstr ""
+msgstr "Zeitstempel exisitiert nicht länger."
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -277,9 +274,8 @@ msgstr "'dump' gehört nicht zur Klasse %s"
 msgid "Message:"
 msgstr "Nachricht:"
 
-#, fuzzy
 msgid "'dump' is empty"
-msgstr "'dvipscmd'ist leer"
+msgstr "'dump' ist leer"
 
 msgid "Available environments had calls:"
 msgstr "Verfügbare Umgebungen hatte Aufrufe:"
@@ -725,10 +721,10 @@ msgid "files: %s"
 msgstr "files: %s"
 
 msgid ""
-"installation of one of more packages failed,\n"
+"installation of one or more packages failed,\n"
 "  probably %s"
 msgstr ""
-"Installation eines oder mehrer Pakete schlug fehl,\n"
+"Installation eines oder mehrerer Pakete schlug fehl,\n"
 " vermutlich %s"
 
 msgid ""
@@ -889,9 +885,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "kann 'x' nicht nach Roman unwandeln"
 
-#, fuzzy
 msgid "Could not create file %s, aborting"
-msgstr "konnte Typinformation nicht wieder herstellen"
+msgstr "Konnte Datei %s nicht erzeugen, abgebrochen"
 
 msgid "no valid packages were specified"
 msgstr "keine gültigen Pakete angegeben"
@@ -977,16 +972,16 @@ msgid "file '%s' not found"
 msgstr "File '%s' nicht gefunden"
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr ""
+msgstr "Datei '%s' hatte keine Ausführungsrechte: korrigiert"
 
 msgid "file size is limited to 8GB"
 msgstr "Dateigröße limitiert auf 8GB"
 
 msgid "invalid uid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr "ungültiger uid Wert durch den für 'nobody' ersetzt "
 
 msgid "invalid gid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr "ungültiger gid Wert durch den für 'nobody' ersetzt "
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -998,13 +993,11 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr "Vignette %s nicht gefunden"
 
-#, fuzzy
 msgid "vignette %s has no PDF/HTML"
-msgstr "Vignette %s enthält kein PDF"
+msgstr "Vignette %s enthält kein PDF/HTML"
 
-#, fuzzy
 msgid "vignette %s has no R code"
-msgstr "Vignette %s nicht gefunden"
+msgstr "Vignette %s hat keinen R Kode"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
@@ -1071,7 +1064,7 @@ msgid "no download method found"
 msgstr "keine Downloadmethode gefunden"
 
 msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr ""
+msgstr "Methode 'lynx' ist ugetestet und ab R 3.1.0 veraltet"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1139,6 +1132,12 @@ msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() kann nicht nicht-interaktiv genutzt werden"
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "%d Sweave Dateien für Basisnamen %s gefunden"
+msgstr[1] "%d Sweave Dateien für Basisnamen %s gefunden"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"

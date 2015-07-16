@@ -443,4 +443,4 @@ INSTFILES = README \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
 	  encodings.R utf8-regex.R \
-	  nanbug.rda WinUnicode.dat
+	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv

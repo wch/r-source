@@ -1409,7 +1409,6 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < n; i++) {
 	tmp = INTEGER(x)[i];
 	if(tmp == NA_INTEGER) continue;
-	if(tmp < 0) error(_("negative value in 'x'"));
 	if(xmax == NA_INTEGER || tmp > xmax) xmax = tmp;
 	if(xmin == NA_INTEGER || tmp < xmin) xmin = tmp;
     }

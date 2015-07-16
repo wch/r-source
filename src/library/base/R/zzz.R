@@ -194,6 +194,9 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
+    fx <- function(x, recursive = FALSE) UseMethod("anyNA")
+    environment(fx) <- .BaseNamespaceEnv
+    assign("anyNA", fx, envir = env)
     env
 })
 ### do these outside to get the base namespace as the environment.

@@ -5,59 +5,57 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
-"PO-Revision-Date: 2013-03-18 15:11+0100\n"
+"POT-Creation-Date: 2014-03-18 13:55+0000\n"
+"PO-Revision-Date: 2014-03-13 20:34+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-# utils/src/io.c: 310
+# utils/src/io.c: 328
 # error(_("invalid '%s' argument"), "comment.char")
-# utils/src/io.c: 314
+# utils/src/io.c: 332
 # error(_("invalid '%s' argument"), "comment.char")
-# utils/src/io.c: 324
+# utils/src/io.c: 342
 # error(_("invalid '%s' argument"), "sep")
-# utils/src/io.c: 538
+# utils/src/io.c: 571
 # error(_("invalid '%s' argument"), "na.strings")
-# utils/src/io.c: 719
+# utils/src/io.c: 752
 # error(_("invalid '%s' argument"), "choices")
-# utils/src/io.c: 770
+# utils/src/io.c: 805
 # error(_("invalid '%s' argument"), "nlines")
-# utils/src/io.c: 782
+# utils/src/io.c: 817
 # error(_("invalid '%s' argument"), "comment.char")
-# utils/src/io.c: 786
+# utils/src/io.c: 821
 # error(_("invalid '%s' argument"), "comment.char")
-# utils/src/io.c: 792
+# utils/src/io.c: 827
 # error(_("invalid '%s' argument"), "sep")
-# utils/src/io.c: 1007
+# utils/src/io.c: 828
+# error(_("invalid '%s' argument"), "skipNul")
+# utils/src/io.c: 1052
 # error(_("invalid '%s' argument"), "nr")
-# utils/src/io.c: 1008
+# utils/src/io.c: 1053
 # error(_("invalid '%s' argument"), "nc")
-# utils/src/io.c: 1010
+# utils/src/io.c: 1055
 # error(_("invalid '%s' argument"), "rnames")
-# utils/src/io.c: 1011
+# utils/src/io.c: 1056
 # error(_("invalid '%s' argument"), "sep")
-# utils/src/io.c: 1012
+# utils/src/io.c: 1057
 # error(_("invalid '%s' argument"), "eol")
-# utils/src/io.c: 1013
+# utils/src/io.c: 1058
 # error(_("invalid '%s' argument"), "na")
-# utils/src/io.c: 1014
+# utils/src/io.c: 1059
 # error(_("invalid '%s' argument"), "dec")
-# utils/src/io.c: 1015
+# utils/src/io.c: 1060
 # error(_("invalid '%s' argument"), "qmethod")
-# utils/src/stubs.c: 39
-#  _("invalid '%s' argument")
-# utils/src/stubs.c: 59
-#  _("invalid '%s' argument")
 # utils/src/windows/dialogs.c: 170
 # error(_("invalid '%s' argument"), "message")
 # utils/src/windows/dialogs.c: 195
@@ -74,14 +72,18 @@ msgstr ""
 # error(_("invalid '%s' argument"), "menuname")
 # utils/src/windows/dialogs.c: 322
 # error(_("invalid '%s' argument"), "itemname")
-# utils/src/windows/util.c: 111
-# error(_("invalid '%s' argument"), "path")
 # utils/src/windows/widgets.c: 78
 # error(_("invalid '%s' argument"), "choices")
 # utils/src/windows/widgets.c: 81
 # error(_("invalid '%s' argument"), "preselect")
 # utils/src/windows/widgets.c: 86
 # error(_("invalid '%s' argument"), "preselect")
+# utils/src/windows/util.c: 111
+# error(_("invalid '%s' argument"), "path")
+# utils/src/stubs.c: 48
+#  _("invalid '%s' argument")
+# utils/src/stubs.c: 68
+#  _("invalid '%s' argument")
 #: io.c:328 io.c:332 io.c:342 io.c:571 io.c:752 io.c:805 io.c:817 io.c:821
 #: io.c:827 io.c:828 io.c:1052 io.c:1053 io.c:1055 io.c:1056 io.c:1057
 #: io.c:1058 io.c:1059 io.c:1060 stubs.c:48 stubs.c:68 windows/dialogs.c:170
@@ -93,72 +95,73 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
-# utils/src/io.c: 333
+# utils/src/io.c: 351
 # error(_("invalid quote symbol set"))
-# utils/src/io.c: 779
+# utils/src/io.c: 814
 # error(_("invalid quote symbol set"))
 #: io.c:351 io.c:814
 msgid "invalid quote symbol set"
 msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 
-# utils/src/io.c: 345
+# utils/src/io.c: 363
 # error(_("cannot open the connection"))
-# utils/src/io.c: 800
+# utils/src/io.c: 837
 # error(_("cannot open the connection"))
-# utils/src/io.c: 995
+# utils/src/io.c: 1040
 # error(_("cannot open the connection"))
 #: io.c:363 io.c:837 io.c:1040
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
-# utils/src/io.c: 348
+# utils/src/io.c: 366
 # error(_("cannot read from this connection"))
-# utils/src/io.c: 352
+# utils/src/io.c: 370
 # error(_("cannot read from this connection"))
 #: io.c:366 io.c:370
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
-# utils/src/io.c: 396
-# error(_("string terminated by newline or EOF"))
-# utils/src/io.c: 414
-# error(_("string terminated by newline or EOF"))
+# utils/src/io.c: 417
+# error(_("quoted string on line %d terminated by EOF"), inquote)
+# utils/src/io.c: 435
+# error(_("quoted string on line %d terminated by EOF"), inquote)
 #: io.c:417 io.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "quoted string on line %d terminated by EOF"
-msgstr "łańcuch przerwany przez znak nowej linii lub znak końca pliku (EOF)"
+msgstr ""
+"cytowany łańcuch tekstowy w linii %d przerwany przez znak końca pliku (EOF)"
 
-# utils/src/io.c: 534
+# utils/src/io.c: 567
 # error(_("the first argument must be of mode character"))
 #: io.c:567
 msgid "the first argument must be of mode character"
 msgstr "pierwszy argument musi być trybu tekstowego"
 
-# utils/src/io.c: 721
-# sprintf(ConsolePrompt, _("Selection: "))
+# utils/src/io.c: 754
+#  _("Selection: ")
 #: io.c:754
 #, c-format
 msgid "Selection: "
 msgstr "Wybór: "
 
-# utils/src/io.c: 809
+# utils/src/io.c: 846
 # error(_("cannot allocate buffer in 'readTableHead'"))
-# utils/src/io.c: 822
+# utils/src/io.c: 860
 # error(_("cannot allocate buffer in 'readTableHead'"))
 #: io.c:846 io.c:860
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
-# utils/src/io.c: 833
+# utils/src/io.c: 871
 # error(_("\\ followed by EOF"))
 #: io.c:871
 msgid "\\ followed by EOF"
 msgstr "\\ a następnie EOF"
 
-# utils/src/io.c: 878
+# utils/src/io.c: 920
 # warning(_("incomplete final line found by readTableHeader on '%s'"),
 # 		    data.con->description)
-# utils/src/io.c: 881
+# utils/src/io.c: 923
 # error(_("incomplete final line found by readTableHeader on '%s'"),
 # 		  data.con->description)
 #: io.c:920 io.c:923
@@ -166,29 +169,31 @@ msgstr "\\ a następnie EOF"
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "niekompletna końcowa linia znaleziona przez 'readTableHeader' w '%s'"
 
+# utils/src/io.c: 980
+# error(_("index out of range"))
 #: io.c:980
 msgid "index out of range"
-msgstr ""
+msgstr "indeks poza zakresem"
 
-# utils/src/io.c: 988
+# utils/src/io.c: 1033
 # error(_("'file' is not a connection"))
 #: io.c:1033
 msgid "'file' is not a connection"
-msgstr "'file' nie jest połączeniem"
+msgstr "argument 'file' nie jest połączeniem"
 
-# utils/src/io.c: 991
+# utils/src/io.c: 1036
 # error(_("cannot write to this connection"))
 #: io.c:1036
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
-# utils/src/io.c: 1021
+# utils/src/io.c: 1066
 # error(_("'dec' must be a single character"))
 #: io.c:1066
 msgid "'dec' must be a single character"
-msgstr "'dec' musi być pojedynczym znakiem"
+msgstr "argument 'dec' musi być pojedynczym znakiem"
 
-# utils/src/io.c: 1048
+# utils/src/io.c: 1093
 # error(_("corrupt data frame -- length of column %d does not not match nrows"), j+1)
 #: io.c:1093
 #, c-format
@@ -196,56 +201,59 @@ msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
+# utils/src/io.c: 1123
+# error(_("column %s claims to be a factor but does not have numeric codes"), j+1)
 #: io.c:1123
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
+"kolumna %s twierdzi, że jest czynnikiem, ale nie posiada kodów liczbowych"
 
-# utils/src/io.c: 1096
+# utils/src/io.c: 1141
 # error(_("corrupt matrix -- dims not not match length"))
 #: io.c:1141
 msgid "corrupt matrix -- dims not not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
-# utils/src/stubs.c: 48
+# utils/src/stubs.c: 57
 #  _("'savehistory' can only be used in Rgui and Rterm")
 #: stubs.c:57
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
-# utils/src/stubs.c: 65
+# utils/src/stubs.c: 74
 #  _("'loadhistory' can only be used in Rgui and Rterm")
 #: stubs.c:74
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
-# utils/src/stubs.c: 76
+# utils/src/stubs.c: 86
 #  _("invalid timestamp")
 #: stubs.c:86
 msgid "invalid timestamp"
 msgstr "niepoprawna sygnatura czasu"
 
-# utils/src/stubs.c: 141
+# utils/src/stubs.c: 152
 # error(_("X11 dataentry cannot be loaded"))
-# utils/src/stubs.c: 149
+# utils/src/stubs.c: 160
 # error(_("X11 dataentry cannot be loaded"))
 #: stubs.c:152 stubs.c:160
 msgid "X11 dataentry cannot be loaded"
 msgstr "moduł X11 nie może zostać załadowany"
 
-# utils/src/stubs.c: 145
+# utils/src/stubs.c: 156
 # warning(_("X11 is not available"))
-# utils/src/stubs.c: 174
+# utils/src/stubs.c: 185
 # error(_("X11 is not available"))
-# utils/src/stubs.c: 180
+# utils/src/stubs.c: 191
 # error(_("X11 is not available"))
 #: stubs.c:156 stubs.c:185 stubs.c:191
 msgid "X11 is not available"
 msgstr "X11 nie jest dostępne"
 
-# utils/src/stubs.c: 237
+# utils/src/stubs.c: 249
 # error(_("invalid '%s' specification"), "editor")
-# utils/src/stubs.c: 240
+# utils/src/stubs.c: 252
 # error(_("invalid '%s' specification"), "filename")
 #: stubs.c:249 stubs.c:252
 #, c-format
@@ -256,7 +264,7 @@ msgstr "niepoprawne określenie '%s'"
 # error(_("'hostname' must be a character vector of length 1"))
 #: utils.c:83
 msgid "'hostname' must be a character vector of length 1"
-msgstr "'hostname' musi być wektorem tekstowym o długości 1"
+msgstr "argument 'hostname' musi być wektorem tekstowym o długości 1"
 
 # utils/src/utils.c: 89
 # warning(_("nsl() was unable to resolve host '%s'"), name)
@@ -269,7 +277,7 @@ msgstr "'nsl()' nie był w stanie nawiązać połączenia z hostem '%s'"
 # warning(_("unknown format returned by 'gethostbyname'"))
 #: utils.c:96
 msgid "unknown format returned by 'gethostbyname'"
-msgstr "nieznany format zwrócony przez 'gethostbyname'"
+msgstr "nieznany format zwrócony przez 'gethostbyname()'"
 
 # utils/src/utils.c: 105
 # warning(_("nsl() is not supported on this platform"))
@@ -297,22 +305,21 @@ msgid "menu functions can only be used in the GUI"
 msgstr "funkcje menu mogą być używane jedynie w GUI"
 
 # utils/src/windows/dialogs.c: 246
-# sprintf(msgbuf, _("unable to retrieve items for %s (%s)"),
-# 		translateChar(STRING_ELT(mname,0)), errmsg)
+#  _("unable to retrieve items for %s (%s)")
 #: windows/dialogs.c:246
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "nie można pobrać pozycji dla %s (%s)"
 
 # utils/src/windows/dialogs.c: 284
-# sprintf(msgbuf, _("unable to add menu (%s)"), errmsg)
+#  _("unable to add menu (%s)")
 #: windows/dialogs.c:284
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "nie można dodać menu (%s)"
 
 # utils/src/windows/dialogs.c: 296
-# sprintf(msgbuf, _("unable to add menu item (%s)"), errmsg)
+#  _("unable to add menu item (%s)")
 #: windows/dialogs.c:296
 #, c-format
 msgid "unable to add menu item (%s)"
@@ -325,7 +332,7 @@ msgid "menu does not exist"
 msgstr "menu nie istnieje"
 
 # utils/src/windows/dialogs.c: 326
-# sprintf(msgbuf, _("unable to delete menu item (%s)"), errmsg)
+#  _("unable to delete menu item (%s)")
 #: windows/dialogs.c:326
 #, c-format
 msgid "unable to delete menu item (%s)"
@@ -333,11 +340,11 @@ msgstr "nie można usunąć pozycji menu (%s)"
 
 # utils/src/windows/registry.c: 73
 # error(_("invalid '%s' value"),  "hive")
-# utils/src/windows/registry.c: 254
+# utils/src/windows/registry.c: 248
 # error(_("invalid '%s' value"),  "key")
-# utils/src/windows/registry.c: 257
+# utils/src/windows/registry.c: 251
 # error(_("invalid '%s' value"),  "hive")
-# utils/src/windows/registry.c: 260
+# utils/src/windows/registry.c: 254
 # error(_("invalid '%s' value"),  "maxdepth")
 #: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
 #: windows/registry.c:254
@@ -345,7 +352,7 @@ msgstr "nie można usunąć pozycji menu (%s)"
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
 
-# utils/src/windows/registry.c: 272
+# utils/src/windows/registry.c: 266
 # error(_("Registry key '%ls' not found"), key)
 #: windows/registry.c:266
 #, c-format
@@ -358,51 +365,51 @@ msgstr "Nie znaleziono klucza rejestru '%ls'"
 msgid "unsupported version of Windows"
 msgstr "niewspierana wersja systemu Windows"
 
-# utils/src/windows/util.c: 274
+# utils/src/windows/util.c: 275
 # error(_("argument must be a character vector or a raw vector"))
 #: windows/util.c:275
 msgid "argument must be a character vector or a raw vector"
-msgstr "argument musi być wektorem tekstowym lub pustym wektorem"
+msgstr "argument 'text' musi być wektorem tekstowym lub pustym wektorem"
 
-# utils/src/windows/util.c: 311
+# utils/src/windows/util.c: 312
 # warning(_("unable to open the clipboard"))
 #: windows/util.c:312
 msgid "unable to open the clipboard"
 msgstr "nie można otworzyć schowka"
 
-# utils/src/windows/util.c: 316
+# utils/src/windows/util.c: 317
 # warning(_("unable to write to the clipboard"))
 #: windows/util.c:317
 msgid "unable to write to the clipboard"
 msgstr "nie można zapisać do schowka"
 
-# utils/src/windows/util.c: 395
+# utils/src/windows/util.c: 397
 # error(_("'title' must be a character string"))
 #: windows/util.c:397
 msgid "'title' must be a character string"
-msgstr "'title' musi być łańcuchem tekstowym"
+msgstr "argument 'title' musi być łańcuchem tekstowym"
 
-# utils/src/windows/util.c: 404
+# utils/src/windows/util.c: 406
 # error(_("'text' must be a character string"))
 #: windows/util.c:406
 msgid "'text' must be a character string"
-msgstr "'text' musi być łańcuchem tekstowym"
+msgstr "argument 'text' musi być łańcuchem tekstowym"
 
-# utils/src/windows/util.c: 443
+# utils/src/windows/util.c: 445
 # error(_("'%s' must be length 1"), "which")
 #: windows/util.c:445
 #, c-format
 msgid "'%s' must be length 1"
-msgstr "'%s' musi mieć długość równą 1"
+msgstr "argument '%s' musi mieć długość równą 1"
 
-# utils/src/windows/util.c: 556
+# utils/src/windows/util.c: 558
 # error(_("'%s' must be a list"), "windows")
 #: windows/util.c:558
 #, c-format
 msgid "'%s' must be a list"
-msgstr "'%s' musi być listą"
+msgstr "argument '%s' musi być listą"
 
-# utils/src/windows/util.c: 560
+# utils/src/windows/util.c: 562
 # error(_("'%s' element %d is not a window handle"), "windows", i+1)
 #: windows/util.c:562
 #, c-format
@@ -425,7 +432,7 @@ msgstr "Wybierz jeden"
 # error(_("'default' must be a character string"))
 #: windows/widgets.c:182 windows/widgets.c:252
 msgid "'default' must be a character string"
-msgstr "'default' musi być łańcuchem tekstowym"
+msgstr "argument 'default' musi być łańcuchem tekstowym"
 
 # utils/src/windows/widgets.c: 184
 # error(_("'default' is overlong"))
@@ -433,7 +440,7 @@ msgstr "'default' musi być łańcuchem tekstowym"
 # error(_("'default' is overlong"))
 #: windows/widgets.c:184 windows/widgets.c:254
 msgid "'default' is overlong"
-msgstr "'default' jest wydłużone"
+msgstr "argument 'default' jest zbyt długi"
 
 # utils/src/windows/widgets.c: 188
 # error(_("'caption' must be a character string"))
@@ -441,28 +448,16 @@ msgstr "'default' jest wydłużone"
 # error(_("'caption' must be a character string"))
 #: windows/widgets.c:188 windows/widgets.c:258
 msgid "'caption' must be a character string"
-msgstr "'caption' musi być łańcuchem tekstowym"
+msgstr "argument 'caption' musi być łańcuchem tekstowym"
 
 # utils/src/windows/widgets.c: 190
 # error(_("'multi' must be a logical value"))
 #: windows/widgets.c:190
 msgid "'multi' must be a logical value"
-msgstr "'multi' musi być wartością logiczną"
+msgstr "argument 'multi' musi być wartością logiczną"
 
 # utils/src/windows/widgets.c: 192
 # error(_("'filterindex' must be an integer value"))
 #: windows/widgets.c:192
 msgid "'filterindex' must be an integer value"
-msgstr "'filterindex' musi być wartością całkowitą"
-
-#~ msgid "X11 module is not available under this GUI"
-#~ msgstr "Moduł X11 nie jest dostępny pod tym GUI"
-
-#~ msgid "md5 failed on file '%s'"
-#~ msgstr "md5 nie powiodło się na pliku '%s'"
-
-#~ msgid "psnice() is not supported on this platform"
-#~ msgstr "'psnice()' nie jest wspierany na tej platformie"
-
-#~ msgid "out of memory"
-#~ msgstr "brakło pamięci"
+msgstr "argument 'filterindex' musi być wartością całkowitą"

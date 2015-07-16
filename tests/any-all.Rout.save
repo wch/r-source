@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -100,8 +100,7 @@ Type 'q()' to quit R.
 +         }
 +     }
 +     lab <- deparse(substitute(L))
-+     for (i in seq_along(L)) {
-+         case <- L[[i]]
++     for (case in L) {
 +         do_check(case, any)
 +         do_check(case, all)
 +     }

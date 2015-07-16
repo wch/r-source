@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35\n"
+"POT-Creation-Date: 2014-03-11 19:17\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
 # compiler/noweb/compiler.nw: 4939
 # stop("not a proper evaluation environment")
@@ -25,7 +25,8 @@ msgstr ""
 # compiler/R/cmp.R: 105
 # stop("not a proper evaluation environment")
 msgid "not a proper evaluation environment"
-msgstr "nieodpowiednie środowisko obliczeniowe"
+msgstr ""
+"dostarczony argument 'env' nie jest odpowiednim środowiskiem obliczeniowym"
 
 # compiler/noweb/compiler.nw: 5006
 # stop("'ns' must be a namespace or a namespace imports environment")
@@ -246,7 +247,7 @@ msgstr "kompilowanie '%s'"
 # compiler/R/cmp.R: 2645
 # gettextf("saving to file \"%s\" ... ", outfile)
 msgid "saving to file \"%s\" ..."
-msgstr "zapisywanie do pliku \"%s\" ..."
+msgstr "zapisywanie do pliku '%s' ..."
 
 # compiler/noweb/compiler.nw: 4555
 # gettext("done")
@@ -316,6 +317,3 @@ msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "lokalne przypisanie do funkcji syntaktycznej:"
 msgstr[1] "lokalne przypisania do funkcji syntaktycznych:"
 msgstr[2] "lokalne przypisania do funkcji syntaktycznych:"
-
-#~ msgid "expected a single logical value for the S4 state flag"
-#~ msgstr "oczekiwano pojedynczej wartości logicznej dla flagi stanu S4"

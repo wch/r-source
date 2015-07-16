@@ -1,13 +1,13 @@
 # Translation of /src/library/stats/po/R-stats.pot to German
-# Copyright (C) 2008-2013 The R Foundation
+# Copyright (C) 2008-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2013-03-18 10:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -102,6 +102,9 @@ msgstr "x$lag muss mindestens 1 Spalte haben"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "kann ci.type=\"ma\" nur benutzen, wenn lag gleich 0 ist"
+
+msgid "Page [%d,%d]: i =%s; j =%s"
+msgstr ""
 
 msgid "univariate time series only"
 msgstr "nur univariate Zeitreihen"
@@ -279,7 +282,7 @@ msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' muss kleiner sein als 'n.used'"
 
 msgid "zero-variance series"
-msgstr ""
+msgstr "Serie mit Varianz Null"
 
 msgid "'n.ahead' must be at least 1"
 msgstr "'n.ahead' muss mindestens 1 sein"
@@ -345,13 +348,11 @@ msgstr "MA Teil des Modells ist nicht invertierbar"
 msgid "seasonal MA part of model is not invertible"
 msgstr "saisonaler MA Teil des Modells ist nicht invertierbar"
 
-#, fuzzy
 msgid "NAs in '%s'"
-msgstr "NAs in 'x'"
+msgstr "NAs in '%s'"
 
-#, fuzzy
 msgid "invalid 'SSinit'"
-msgstr "unzulässiges 'nb'"
+msgstr "unzulässiges 'SSinit'"
 
 msgid "converting non-invertible initial MA values"
 msgstr "konvertiere nicht-invertierbare initiale MA Werte"
@@ -398,9 +399,8 @@ msgstr "alle Beobachtungen sind in derselben Gruppe"
 msgid "there must be at least 2 observations in each group"
 msgstr "es müssen zumindest 2 Beobachtungen in jeder Gruppe sein"
 
-#, fuzzy
 msgid "'formula' should be of the form response ~ group"
-msgstr "Formel '%s' muss von der Form '~expr' sein"
+msgstr "'formul' sollte von der Art response ~ group sein"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' muss nicht-negativ und ganzzahlig sein"
@@ -916,21 +916,14 @@ msgstr "'circular' muss boole'sch und nicht NA sein"
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "Länge von 'init' muss der Länge von 'filter' entsprechen"
 
-msgid "'init' must have 1 column"
-msgstr "'init'  muss  1 Spalte haben"
-
-msgid "'init' must have 1 or %d columns"
-msgstr "'init' muss 1 oder %d Spalte(n) haben"
-
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' muss mindestens 2 Zeilen und Spalten haben"
 
 msgid "'x' has entries too large to be integer"
 msgstr "'x' enthält Einträge, die zu groß für ein Ingeger sind"
 
-#, fuzzy
 msgid "'x' has been rounded to integer: %s"
-msgstr "'x' wurde auf gerundet auf ganze Zahl: %d"
+msgstr "'x' wurde gerundet auf ganze Zahl: %s"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
 msgstr "Wenn 'x' keine Matrix ist, muss 'y' angegeben werden"
@@ -1132,6 +1125,10 @@ msgstr ""
 "Beobachtungen mit Gewicht 0 werden bei der Berechnung der Dispersion "
 "einbezogen"
 
+msgid ""
+"The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr ""
+
 msgid "invalid clustering method"
 msgstr "unzulässige Clustring-Methode"
 
@@ -1233,6 +1230,7 @@ msgstr "Anzahl der Clusterzentren muss zwischen 1 und nrow(x) liegen"
 
 msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
 msgstr ""
+"Anzahl Schritte in der Quick-TRANSfer Stufe überschreitet Maximum (= %d)"
 
 msgid "invalid nrow(x)"
 msgstr "unzulässige nrow(x)"
@@ -1319,6 +1317,11 @@ msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "Freiheitsgrade der Residuen legt nahe, dass es sich nicht um einen \"lm\" "
 "Fit handelt"
+
+#, fuzzy
+msgid "essentially perfect fit: summary may be unreliable"
+msgstr ""
+"ANOVA F-Tests auf einem im Wesentlichen perfekten Fit sind unzuverlässig"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"
@@ -1440,6 +1443,7 @@ msgstr "keine 'nobs' Methode verfügbar"
 
 msgid "'margin' must contain names or numbers corresponding to 'table'"
 msgstr ""
+"'margin' muss Namen oder Zahlen enthalten die mit 'table' korrespondieren"
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start' und 'table' müssen dieselbe Länge haben"
@@ -1622,24 +1626,23 @@ msgstr "f.lower = f(lower) ist NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper) ist NA"
 
-#, fuzzy
 msgid "invalid 'extendInt'; please report"
-msgstr "unzulässiges 'method' Argument"
+msgstr "unzulässiges 'extendInt'; bitte melden!"
 
-#, fuzzy
 msgid "no sign change found in %d iterations"
-msgstr "keine Konvergenz nach %d Schritt"
+msgstr "keine Vorzeichenwechsel nach %d Iterationen gefunden"
 
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+"kein Erfolg beim Erweitern der Intervallendpunkte für f(lower) * f(upper) <= "
+"0"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "Werte von f() and den Endpunkten haben gleiches Vorzeichen"
 
-#, fuzzy
 msgid "convergence problem in zero finding:"
-msgstr "evtl. Konvergenzproblem: optim lieferte Kode = %d"
+msgstr "Konvergenzproblem bei der Nullstellensuche:"
 
 msgid "'control' argument must be a named list"
 msgstr "'control' Argument muss eine benannte Liste sein"
@@ -2149,7 +2152,8 @@ msgstr "keine zulässige Treppenfunktion"
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr "'plot.stepfun' mit einem Argument 'x' vom falschen Typ aufgerufen"
 
-msgid "must be 0 or 1"
+#, fuzzy
+msgid "%s must be 0 or 1"
 msgstr "muss 0 oder 1 sein"
 
 msgid "only univariate series are allowed"
@@ -2449,6 +2453,12 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0] "kann von diesem Startwert aus nicht optimieren"
 msgstr[1] "kann von diesen Startwerten aus nicht optimieren"
 
+#, fuzzy
+msgid "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
+msgstr[0] "'init'  muss  1 Spalte haben"
+msgstr[1] "'init'  muss  1 Spalte haben"
+
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
 msgstr[0] "X Matrix hat Rang %d, aber nur %d Beobachtung"
@@ -2464,29 +2474,25 @@ msgid_plural "%d missing values deleted"
 msgstr[0] "%d fehlender Wert gelöscht"
 msgstr[1] "%d fehlende Werte gelöscht"
 
-#, fuzzy
 msgid "'X' matrix has %d case (row)"
 msgid_plural "'X' matrix has %d cases (rows)"
-msgstr[0] "Matrix 'X' hat %d Zielgröße"
-msgstr[1] "Matrix 'X' hat %d Zielgrößen"
+msgstr[0] "Matrix 'X' hat %d Beobachtung (Zeile)"
+msgstr[1] "Matrix 'X' hat %d Beobachtungen (Zeilen)"
 
-#, fuzzy
 msgid "'Y' has %d case (row)"
 msgid_plural "'Y' has %d cases (rows)"
-msgstr[0] "'Y' hat %d Anwort"
-msgstr[1] "'Y' hat %d Anworten"
+msgstr[0] "'Y' hat %d Beobachtung (Zeile)"
+msgstr[1] "'Y' hat %d Beobachtungen (Zeilen)"
 
-#, fuzzy
 msgid "only %d case"
 msgid_plural "only %d cases"
-msgstr[0] ", aber nur %d Variable"
-msgstr[1] ", aber nur %d Variablen"
+msgstr[0] "nur %d Beobachtung"
+msgstr[1] "nur %d Beobachtungen"
 
-#, fuzzy
 msgid "but %d variable"
 msgid_plural "but %d variables"
-msgstr[0] ", aber nur %d Variable"
-msgstr[1] ", aber nur %d Variablen"
+msgstr[0] "aber %d Variable"
+msgstr[1] "aber %d Variablen"
 
 msgid "medpolish() did not converge in %d iteration"
 msgid_plural "medpolish() did not converge in %d iterations"
@@ -2542,6 +2548,9 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' ist zu kurz: benötige %d Punkt"
 msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
+
+#~ msgid "'init' must have 1 or %d columns"
+#~ msgstr "'init' muss 1 oder %d Spalte(n) haben"
 
 #~ msgid "'deriv' must be between 0 and 2"
 #~ msgstr "'deriv' muss zwischen 0 und 2 liegen"

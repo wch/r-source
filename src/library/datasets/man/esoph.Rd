@@ -36,7 +36,7 @@
 }
 \source{
   Breslow, N. E. and Day, N. E. (1980)
-  \emph{Statistical Methods in Cancer Research. 1: The Analysis of
+  \emph{Statistical Methods in Cancer Research. Volume 1: The Analysis of
     Case-Control Studies.}  IARC Lyon / Oxford University Press.
 }
 \author{Thomas Lumley}

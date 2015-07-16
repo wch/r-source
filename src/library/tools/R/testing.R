@@ -250,7 +250,9 @@ testInstalledPackages <-
                 warning(gettextf("testing '%s' failed", pkgs[i]),
                         domain = NA, call. = FALSE, immediate. = TRUE)
             if (errorsAreFatal)
-                stop(gettextf("%d of the package tests failed", sum(res)),
+                stop(sprintf(ngettext(sum(res), "%d of the package tests failed",
+                                      "%d of the package tests failed",
+                                       domain = "R-tools"), sum(res)),
                      domain = NA, call. = FALSE)
         }
     } else {

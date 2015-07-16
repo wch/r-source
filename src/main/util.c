@@ -251,8 +251,10 @@ SEXP type2str(SEXPTYPE t)
 	if (TypeTable[i].type == t)
 	    return mkChar(TypeTable[i].str);
     }
-    error(_("type %d is unimplemented in '%s'"), t, "type2str");
-    return R_NilValue; /* for -Wall */
+    warning(_("type %d is unimplemented in '%s'"), t, "type2str");
+    char buf[50];
+    snprintf(buf, 50, "unknown type #%d", t);
+    return mkChar(buf);
 }
 
 const char *type2char(SEXPTYPE t)
@@ -263,8 +265,10 @@ const char *type2char(SEXPTYPE t)
 	if (TypeTable[i].type == t)
 	    return TypeTable[i].str;
     }
-    error(_("type %d is unimplemented in '%s'"), t, "type2char");
-    return ""; /* for -Wall */
+    warning(_("type %d is unimplemented in '%s'"), t, "type2char");
+    static char buf[50];
+    snprintf(buf, 50, "unknown type #%d", t);
+    return buf;
 }
 
 #ifdef UNUSED
@@ -1062,7 +1066,7 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     m = LENGTH(enc);
     if(m == 0)
 	error(_("'value' must be of positive length"));
-    if(NAMED(x)) x = duplicate(x);
+    if(MAYBE_REFERENCED(x)) x = duplicate(x);
     PROTECT(x);
     n = XLENGTH(x);
     for(i = 0; i < n; i++) {

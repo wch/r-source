@@ -61,12 +61,12 @@
         ## \AsIs is per-para.
         text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
         Encoding(text) <- "unknown"
-        if(f %in% c("Author", "Maintainer"))
+        if(f %in% c("Author", "Maintainer", "Contact"))
             text <- gsub("<([^@ ]+)@([^> ]+)>",
                          "}\\\\email{\\1@\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
-        if(f == "URL")
-            text <- gsub("(http://|ftp://)([^[:space:],]+)",
+        if(f %in% c("URL", "BugReports", "Contact"))
+            text <- gsub("(http://|ftp://|https://)([^[:space:],]+)",
                          "}\\\\url{\\1\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
         text <- paste0("\\AsIs{", text, "}")
@@ -677,9 +677,10 @@ setEncoding2, "
             "  -o, --output=FILE	write output to FILE",
             "      --force		overwrite output file if it exists",
             "      --title=NAME	use NAME as the title of the document",
-            "      --no-index	don't index output",
-            "      --no-description	don't typeset the description of a package",
+            "      --no-index	do not index output",
+            "      --no-description	do not typeset the description of a package",
             "      --internals	typeset 'internal' documentation (usually skipped)",
+            "      --build_dir=DIR	use DIR as the working directory",
             "",
             "The output papersize is set by the environment variable R_PAPERSIZE.",
             "The PDF previewer is set by the environment variable R_PDFVIEWER.",

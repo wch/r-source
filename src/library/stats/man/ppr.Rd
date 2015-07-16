@@ -8,6 +8,7 @@
 % copyright (C) 2000-3   The R Core Team
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{ppr}
 \alias{ppr}
@@ -169,7 +170,7 @@ method functions.
   Friedman, J. H. (1984)
   SMART User's Guide.
   Laboratory for Computational Statistics, Stanford University Technical
-  Report No. 1.
+  Report No.\sspace{}1.
 
   Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S.}  Springer.

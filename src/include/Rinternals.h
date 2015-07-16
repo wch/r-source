@@ -291,6 +291,17 @@ struct promsxp_struct {
 /* Every node must start with a set of sxpinfo flags and an attribute
    field. Under the generational collector these are followed by the
    fields used to maintain the collector's linked list structures. */
+
+/* Define SWITH_TO_REFCNT to use reference counting instead of the
+   'NAMED' mechanism. This uses the R-devel binary layout. The two
+   'named' field bits are used for the REFCNT, so REFCNTMAX is 3. */
+//#define SWITCH_TO_REFCNT
+
+#if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
+# define COMPUTE_REFCNT_VALUES
+#endif
+#define REFCNTMAX (4 - 1)
+
 #define SEXPREC_HEADER \
     struct sxpinfo_struct sxpinfo; \
     SEXP attrib; \
@@ -352,6 +363,21 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #endif
 #define SET_RTRACE(x,v)	((SEXPPTR(x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	((SEXPPTR(x)->sxpinfo.gp)=((unsigned short)v))
+
+#if defined(COMPUTE_REFCNT_VALUES)
+# define REFCNT(x) ((x)->sxpinfo.named)
+# define TRACKREFS(x) (TYPEOF(x) == CLOSXP ? TRUE : ! (x)->sxpinfo.spare)
+#else
+# define REFCNT(x) 0
+# define TRACKREFS(x) FALSE
+#endif
+
+#ifdef SWITCH_TO_REFCNT
+# undef NAMED
+# undef SET_NAMED
+# define NAMED(x) REFCNT(x)
+# define SET_NAMED(x, v) do {} while (0)
+#endif
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
@@ -493,18 +519,56 @@ Rboolean (Rf_isObject)(SEXP s);
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
 
+#define NAMEDMAX 2
 #define INCREMENT_NAMED(x) do {				\
 	SEXP __x__ = (x);				\
-	if (NAMED(__x__) != 2)				\
-	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
+	if (NAMED(__x__) != NAMEDMAX)			\
+	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
     } while (0)
 
-/* Macros for common NAMED and SET_NAMED idioms. */
-#define NAMEDMAX 2
-#define MAYBE_SHARED(x) (NAMED(x) > 1)
-#define NO_REFERENCES(x) (NAMED(x) == 0)
-#define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+#if defined(COMPUTE_REFCNT_VALUES)
+# define SET_REFCNT(x,v) (REFCNT(x) = (v))
+# if defined(EXTRA_REFCNT_FIELDS)
+#  define SET_TRACKREFS(x,v) (TRACKREFS(x) = (v))
+# else
+#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
+# endif
+# define DECREMENT_REFCNT(x) do {					\
+	SEXP drc__x__ = (x);						\
+	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
+	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
+    } while (0)
+# define INCREMENT_REFCNT(x) do {			      \
+	SEXP irc__x__ = (x);				      \
+	if (REFCNT(irc__x__) < REFCNTMAX)		      \
+	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
+    } while (0)
+#else
+# define SET_REFCNT(x,v) do {} while(0)
+# define SET_TRACKREFS(x,v) do {} while(0)
+# define DECREMENT_REFCNT(x) do {} while(0)
+# define INCREMENT_REFCNT(x) do {} while(0)
+#endif
+
+#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
+#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
+
+/* Macros for some common idioms. */
+#ifdef SWITCH_TO_REFCNT
+# define MAYBE_SHARED(x) (REFCNT(x) > 1)
+# define NO_REFERENCES(x) (REFCNT(x) == 0)
+# define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
+#else
+# define MAYBE_SHARED(x) (NAMED(x) > 1)
+# define NO_REFERENCES(x) (NAMED(x) == 0)
+# define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+#endif
 #define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
+
+/* Complex assignment support */
+/* temporary definition that will need to be refined to distinguish
+   getter from setter calls */
+#define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
 
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
@@ -582,6 +646,8 @@ SEXP SETCADR(SEXP x, SEXP y);
 SEXP SETCADDR(SEXP x, SEXP y);
 SEXP SETCADDDR(SEXP x, SEXP y);
 SEXP SETCAD4R(SEXP e, SEXP y);
+
+SEXP CONS_NR(SEXP a, SEXP b);
 
 /* Closure Access Functions */
 SEXP (FORMALS)(SEXP x);
@@ -741,6 +807,10 @@ double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
 
 
+#ifndef R_ALLOCATOR_TYPE
+#define R_ALLOCATOR_TYPE
+typedef struct R_allocator R_allocator_t;
+#endif
 
 /* Other Internally Used Functions, excluding those which are inline-able*/
 
@@ -751,9 +821,9 @@ SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocList(int);
 SEXP Rf_allocS4Object(void);
 SEXP Rf_allocSExp(SEXPTYPE);
-SEXP Rf_allocVector(SEXPTYPE, R_xlen_t);
-int  Rf_any_duplicated(SEXP x, Rboolean from_last);
-int  Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
+SEXP Rf_allocVector3(SEXPTYPE, R_xlen_t, R_allocator_t*);
+R_xlen_t Rf_any_duplicated(SEXP x, Rboolean from_last);
+R_xlen_t Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
@@ -888,6 +958,7 @@ void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
+void R_RunPendingFinalizers(void);
 
 /* Weak reference interface */
 SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit);
@@ -1063,6 +1134,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define allocS4Object		Rf_allocS4Object
 #define allocSExp		Rf_allocSExp
 #define allocVector		Rf_allocVector
+#define allocVector3		Rf_allocVector3
 #define any_duplicated		Rf_any_duplicated
 #define any_duplicated3		Rf_any_duplicated3
 #define applyClosure		Rf_applyClosure
@@ -1223,6 +1295,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
    It is *essential* that these do not appear in any other header file,
    with or without the Rf_ prefix.
 */
+SEXP     Rf_allocVector(SEXPTYPE, R_xlen_t);
 Rboolean Rf_conformable(SEXP, SEXP);
 SEXP	 Rf_elt(SEXP, int);
 Rboolean Rf_inherits(SEXP, const char *);

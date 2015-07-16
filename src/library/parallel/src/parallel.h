@@ -23,7 +23,7 @@
 #include <Rinternals.h>
 #ifdef ENABLE_NLS
 #include <libintl.h>
-#define _(String) dgettext ("tools", String)
+#define _(String) dgettext ("parallel", String)
 #else
 #define _(String) (String)
 #endif
@@ -39,7 +39,7 @@ SEXP mc_close_stdout(SEXP);
 SEXP mc_create_list(SEXP);
 SEXP mc_exit(SEXP);
 SEXP mc_fds(SEXP);
-SEXP mc_fork(void);
+SEXP mc_fork(SEXP);
 SEXP mc_is_child(void);
 SEXP mc_kill(SEXP, SEXP);
 SEXP mc_master_fd(void);

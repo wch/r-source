@@ -73,16 +73,6 @@ try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
       k. <- kmeans(r., 2)   # fine
 
 
-## regression test incorrectly in example(NA)
-xx <- c(0:4)
-is.na(xx) <- c(2, 4)
-LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
-L2 <- LL[c(1,3)]
-dN <- dd <- USJudgeRatings; dN[3,6] <- NA
-stopifnot(anyNA(xx), anyNA(LL), !anyNA(L2),
-          anyNA(dN), !anyNA(dd), !any(is.na(dd)),
-          all(c(3,6) == which(is.na(dN), arr.ind=TRUE)))
-
 ## PR#15376
 stem(c(1, Inf))
 ## hung in 3.0.1
@@ -282,16 +272,18 @@ tools::assertError(parse("```"))
 ##
 
 
-## We dcoument tanpi(0.5) etc to be NaN
+## We document tanpi(0.5) etc to be NaN
 stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
 ## That is not required for system implementations, and some give +/-Inf
+
 
 ## PR#15642 segfault when parsing overflowing reals
 as.double("1e1000")
 
+
 ll <- ml <- list(1,2); dim(ml) <- 2:1
-ali <- all.equal(list( ), identity)# failed in R-devel for ~ 30 hours
-al1 <- all.equal(list(1), identity)# failed in R < 3.1.0
+ali <- all.equal(list( ), identity)  # failed in R-devel for ~ 30 hours
+al1 <- all.equal(list(1), identity)  # failed in R < 3.1.0
 stopifnot(length(ali) == 3, grepl("list", ali[1]),
 	  grepl("length", ali[2], ignore.case=TRUE),
 	  is.character(al1), length(al1) >= 2,
@@ -299,5 +291,50 @@ stopifnot(length(ali) == 3, grepl("list", ali[1]),
 	  all.equal(ll, ml, check.attributes=FALSE))
 
 
+## PR#15699 aggregate failed when there were no grouping variables
+dat <- data.frame(Y = runif(10), X = sample(LETTERS[1:3], 10, TRUE))
+aggregate(Y ~ 1, FUN = mean, data = dat)
+
+
+## merge() with duplicated column names, similar to PR#15618
+X <- data.frame(Date = c("1967-02-01", "1967-02-02", "1967-02-03"),
+                Settle.x = c(NA, NA, NA), Settle.y = c(NA, NA, NA),
+                Settle = c(35.4, 35.15, 34.95))
+Y <- data.frame(Date = c("2013-12-10", "2013-12-11", "2013-12-12"),
+                Settle = c(16.44, 16.65, 16.77))
+merge(X, Y, by = "Date", all = TRUE)
+## failed in R < 3.1.0: now warns (correctly).
+
+
+## PR#15679
+badstructure <- function(depth, key)
+{
+    ch <- if (depth == 1L) list() else list(badstructure(depth-1,key))
+    r <- list()
+    r[[key]] <- ch
+    r
+}
+badstructure(20, "children")
+## overran, segfaulted for the original reporter.
+
+
+## PR#15702 and PR#15703
+d <- as.dendrogram(hclust(dist(sin(1:7))))
+(dl <- d[[c(2,1,2)]]) # single-leaf dendrogram
+stopifnot(inherits(dl, "dendrogram"), is.leaf(dl),
+	  identical(order.dendrogram(dl), as.vector(dl)),
+	  identical(d, as.dendrogram(d)))
+## as.dendrogram() was hidden;  order.*() failed for leaf
+
+
+## using *named* method
+hw <- hclust(dist(sqrt(1:5)), method=c(M = "ward"))
+## failed for 2 days in R-devel/-alpha
+
+
+## PR#15758
+my_env <- new.env(); my_env$one <- 1L
+save(one, file = tempfile(), envir = my_env)
+## failed in R < 3.1.1.
 
 proc.time()

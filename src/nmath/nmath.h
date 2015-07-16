@@ -53,8 +53,8 @@ double	Rf_gamma_cody(double);
 #else
 # define R_forceint(x)   round(x)
 #endif
-# define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7)
-
+//R >= 3.1.0: # define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7)
+# define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7*fmax2(1., fabs(x)))
 
 #ifndef MATHLIB_STANDALONE
 
@@ -195,7 +195,8 @@ double  attribute_hidden bd0(double, double);
 
 double	attribute_hidden dbinom_raw(double, double, double, double, int);
 double	attribute_hidden dpois_raw (double, double, int);
-double  attribute_hidden pnchisq_raw(double, double, double, double, double, int, Rboolean);
+double  attribute_hidden pnchisq_raw(double, double, double, double, double, 
+				     int, Rboolean, Rboolean);
 double  attribute_hidden pgamma_raw(double, double, int, int);
 double	attribute_hidden pbeta_raw(double, double, double, int, int);
 double  attribute_hidden qchisq_appr(double, double, double, int, int, double tol);

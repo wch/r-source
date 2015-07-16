@@ -30,9 +30,6 @@
   default), \code{predict.loess} will not extrapolate -- so points outside
   an axis-aligned hypercube enclosing the original data will have
   missing (\code{NA}) predictions and standard errors.
-
-  The default for \code{na.action} prior to \R 2.12.0 was
-  \code{\link{na.omit}}.
 }
 \value{
   If \code{se = FALSE}, a vector giving the prediction for each row of

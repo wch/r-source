@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{cophenetic}
 \alias{cophenetic}
@@ -49,7 +50,7 @@ cophenetic(x)
 \references{
   Sneath, P.H.A. and Sokal, R.R. (1973)
   \emph{Numerical Taxonomy: The Principles and Practice of Numerical
-    Classification}, p. 278 ff;
+    Classification}, p.\sspace{}278 ff;
   Freeman, San Francisco.
 }
 \author{Robert Gentleman}

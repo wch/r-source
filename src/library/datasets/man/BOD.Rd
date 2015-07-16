@@ -1,6 +1,6 @@
 % File src/library/datasets/man/BOD.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{BOD}
@@ -16,10 +16,10 @@
 \format{
   This data frame contains the following columns:
   \describe{
-    \item{Time}{
+    \item{\code{Time}}{
       A numeric vector giving the time of the measurement (days).
     }
-    \item{demand}{
+    \item{\code{demand}}{
       A numeric vector giving the biochemical oxygen demand (mg/l).
     }
   }

@@ -88,6 +88,21 @@
 #include <Internal.h>
 #include <R_ext/RS.h> /* for test of S4 objects */
 
+/* This version of SET_VECTOR_ELT does not increment the REFCNT for
+   the new vector->element link. It assumes that the old vector is
+   becoming garbage and so it's references become no longer
+   accessible. */
+static R_INLINE void SET_VECTOR_ELT_NR(SEXP x, R_xlen_t i, SEXP v)
+{
+#ifdef COMPUTE_REFCNT_VALUES
+    int ref = REFCNT(v);
+    SET_VECTOR_ELT(x, i, v);
+    SET_REFCNT(v, ref);
+#else
+    SET_VECTOR_ELT(x, i, v);
+#endif
+}
+
 /* EnlargeVector() takes a vector "x" and changes its length to "newlen".
    This allows to assign values "past the end" of the vector or list.
    Note that, unlike S, we only extend as much as is necessary.
@@ -141,7 +156,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     case EXPRSXP:
     case VECSXP:
 	for (i = 0; i < len; i++)
-	    SET_VECTOR_ELT(newx, i, VECTOR_ELT(x, i));
+	    SET_VECTOR_ELT_NR(newx, i, VECTOR_ELT(x, i));
 	for (i = len; i < newlen; i++)
 	    SET_VECTOR_ELT(newx, i, R_NilValue);
 	break;
@@ -1318,6 +1333,11 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 	    pv = px;
 	}
 	else {
+	    /* The current cell, to which px points, is removed and is
+	       no longer accessible, so we can decrement the reference
+	       count on it's fields. */
+	    DECREMENT_REFCNT(CAR(px));
+	    DECREMENT_REFCNT(CDR(px));
 	    if (! IS_R_NilValue(pv))
 		SETCDR(pv, CDR(px));
 	}
@@ -1365,21 +1385,23 @@ static R_INLINE
 int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 		    SEXP rho, SEXP *ans)
 {
+    SEXP prom = SEXP_INIT;
     if (! IS_R_NilValue(args) && ! SEXP_EQL(CAR(args), R_DotsSymbol)) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
 	if (! OBJECT(x)) {
-	    *ans = CONS(x, evalListKeepMissing(CDR(args), rho));
+	    *ans = CONS_NR(x, evalListKeepMissing(CDR(args), rho));
 	    UNPROTECT(1);
 	    return FALSE;
 	}
-	SEXP prom = mkPROMISE(CAR(args), R_GlobalEnv);
+	prom = mkPROMISE(CAR(args), R_GlobalEnv);
 	SET_PRVALUE(prom, x);
 	args = CONS(prom, CDR(args));
 	UNPROTECT(1);
     }
     PROTECT(args);
     int disp = DispatchOrEval(call, op, generic, args, rho, ans, 0, 0);
+    if (! IS_NULL_SEXP(prom)) DECREMENT_REFCNT(PRVALUE(prom));
     UNPROTECT(1);
     return disp;
 }
@@ -1507,7 +1529,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 	k = 0;
 	for (i = 0 ; i < n; i++)
 	    if(i != which)
-		SET_VECTOR_ELT(y, k++, VECTOR_ELT(x, i));
+		SET_VECTOR_ELT_NR(y, k++, VECTOR_ELT(x, i));
 	xnames = getAttrib(x, R_NamesSymbol);
 	if (! IS_R_NilValue(xnames)) {
 	    PROTECT(ynames = allocVector(STRSXP, n - 1));
@@ -1918,7 +1940,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
        not if NAMED > 1 */
     if (MAYBE_SHARED(val))
 	maybe_duplicate=TRUE;
-    else if (NAMED(val)==1)
+    else if (MAYBE_REFERENCED(val))
 	REPROTECT(val = R_FixupRHS(x, val), pvalidx);
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
@@ -2045,7 +2067,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		PROTECT(ans = allocVector(VECSXP, nx + 1));
 		PROTECT(ansnames = allocVector(STRSXP, nx + 1));
 		for (i = 0; i < nx; i++)
-		    SET_VECTOR_ELT(ans, i, VECTOR_ELT(x, i));
+		    SET_VECTOR_ELT_NR(ans, i, VECTOR_ELT(x, i));
 		if (isNull(names)) {
 		    for (i = 0; i < nx; i++)
 			SET_STRING_ELT(ansnames, i, R_BlankString);

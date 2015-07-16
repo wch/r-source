@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -882,8 +882,8 @@ Creating a generic function for 'is.unsorted' from package 'base' in the global 
 > # getSrcref failed when rematchDefinition was used
 > text <- '
 + setClass("MyClass", representation(val = "numeric"))
-+ setMethod("plot", signature(x = "MyClass"), 
-+     function(x, y, ...) { 
++ setMethod("plot", signature(x = "MyClass"),
++     function(x, y, ...) {
 +         # comment
 + 	NULL
 +     })
@@ -896,7 +896,7 @@ Creating a generic function for 'is.unsorted' from package 'base' in the global 
 + '
 > source(textConnection(text), keep.source = TRUE)
 > getSrcref(getMethod("plot", "MyClass"))
-function(x, y, ...) { 
+function(x, y, ...) {
         # comment
 	NULL
     }
@@ -906,4 +906,59 @@ function(.Object, value) {
 	.Object@val <- value
 	return(.Object)
     }
+> 
+> 
+> ## PR#15691
+> setGeneric("fun", function(x, ...) standardGeneric("fun"))
+[1] "fun"
+> setMethod("fun", "character", identity)
+[1] "fun"
+> setMethod("fun", "numeric", function(x) {
++   x <- as.character(x)
++   callGeneric()
++ })
+[1] "fun"
+> 
+> stopifnot(identical(fun(1), do.call(fun, list(1))))
+> ## failed in R < 3.1.0
+> 
+> 
+> ## PR#15680
+> setGeneric("f", function(x, y) standardGeneric("f"))
+[1] "f"
+> setMethod("f", c("numeric", "missing"), function(x, y) x)
+[1] "f"
+> try(?f(1))
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no documentation for function 'f' and signature 'x = "numeric", y = "missing"'
+> 
+> ## "..." is not handled
+> setGeneric("f", function(...) standardGeneric("f"))
+[1] "f"
+> setMethod("f", "numeric", function(...) c(...))
+[1] "f"
+> try(?f(1,2))
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no documentation for function 'f' and signature '... = "numeric"'
+> 
+> ## defaults in the generic formal arguments are not considered
+> setGeneric("f", function(x, y=0) standardGeneric("f"))
+[1] "f"
+> setMethod("f", c("numeric", "numeric"), function(x, y) x+y)
+[1] "f"
+> try(?f(1))
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no documentation for function 'f' and signature 'x = "numeric", y = "numeric"'
+> 
+> ## Objects with S3 classes fail earlier
+> setGeneric("f", function(x) standardGeneric("f"))
+[1] "f"
+> setMethod("f", "numeric", function(x) x)
+[1] "f"
+> setOldClass(c("foo", "numeric"))
+> n <- structure(1, class=c("foo", "numeric"))
+> try(?f(n))
+Error in .helpForCall(topicExpr, parent.frame()) : 
+  no documentation for function 'f' and signature 'x = "numeric"'
+> ## different failures in R < 3.1.0.
 > 

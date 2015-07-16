@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/forkCluster.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 makeForkCluster <- function(nnodes = getOption("mc.cores", 2L), ...)
 {
     if(nnodes < 1L) stop("'nnodes' must be >= 1")
+    .check_ncores(nnodes)
     cl <- vector("list", nnodes)
     for (i in seq_along(cl)) cl[[i]] <- newForkNode(..., rank = i)
     class(cl) <- c("SOCKcluster", "cluster")

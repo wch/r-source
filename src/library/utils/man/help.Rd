@@ -120,7 +120,7 @@ help(topic, package = NULL, lib.loc = NULL,
   otherwise the function of that name in the \code{utils} namespace (to
   which the first paragraph applies).  It should accept at least two
   arguments, the name of the LaTeX file to be typeset and the type
-  (which as from \R 2.15.0 is ignored).  It accepts a third argument,
+  (which is nowadays ignored).  It accepts a third argument,
   \code{texinputs}, which will give the graphics path when the help
   document contains figures, and will otherwise not be supplied.
 }

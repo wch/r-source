@@ -41,8 +41,7 @@ switch(EXPR, \dots)
   \code{2}.  If there is more than one match, the first matching element
   is used.  In the case of no match, if there is a unnamed element of
   \code{\dots} its value is returned.  (If there is more than one such
-  argument an error is returned.  Before \R 2.13.0 the first one would
-  have been used.)
+  argument an error is returned.)
 
   The first argument is always taken to be \code{EXPR}: if it is named
   its name must (partially) match.
@@ -51,10 +50,6 @@ switch(EXPR, \dots)
   its first argument and one other if one is selected.
 }
 \section{Warning}{
-  Before \R 2.11.0 it was necessary to avoid partial matching: an
-  alternative \code{E = foo} matched the first argument \code{EXPR}
-  unless that was named.
-
   It is possible to write calls to \code{switch} that can be confusing
   and may not work in the same way in earlier versions of \R.  For
   compatibility (and clarity), always have \code{EXPR} as the first

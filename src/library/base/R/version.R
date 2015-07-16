@@ -1,7 +1,7 @@
 #  File src/library/base/R/version.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -310,7 +310,8 @@ function(x, ...)
 }
 
 is.na.numeric_version <- function(x) is.na(.encode_numeric_version(x))
-anyNA.numeric_version <- function(x) anyNA(.encode_numeric_version(x))
+anyNA.numeric_version <-
+    function(x, recursive = FALSE) anyNA(.encode_numeric_version(x))
 
 print.numeric_version <-
 function(x, ...)

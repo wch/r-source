@@ -26,8 +26,8 @@ RweaveLatex <- function()
 }
 
 ## We definitely do not want '.' in here, to avoid misidentification
-## of file extensions.
-.SweaveValidFilenameRegexp <- "^[[:alnum:]#+-_]+$"
+## of file extensions.  Note that - is used literally here.
+.SweaveValidFilenameRegexp <- "^[[:alnum:]/#+_-]+$"
 
 RweaveLatexSetup <-
     function(file, syntax, output = NULL, quiet = FALSE, debug = FALSE,
@@ -177,7 +177,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 if (!is.null(options$label))
                     object$chunkout[[chunkprefix]] <- chunkout
                 if(!grepl(.SweaveValidFilenameRegexp, chunkout))
-                    warning("file name ", sQuote(chunkout), " is not portable",
+                    warning("file stem ", sQuote(chunkout), " is not portable",
                             call. = FALSE, domain = NA)
             }
         } else chunkout <- object$output
@@ -259,7 +259,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         if (length(devs)) {
             if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
-                warning("file name ", sQuote(chunkprefix), " is not portable",
+                warning("file stem ", sQuote(chunkprefix), " is not portable",
                         call. = FALSE, domain = NA)
             if (options$figs.only)
                 devs[[1L]](name = chunkprefix,
@@ -456,7 +456,13 @@ RweaveLatexWritedoc <- function(object, chunk)
                       cmdloc + attr(cmdloc, "match.length") - 1L)
         cmd <- sub(object$syntax$docexpr, "\\1", cmd)
         if (object$options$eval) {
-            val <- as.character(eval(parse(text = cmd), envir = .GlobalEnv))
+            val <- tryCatch(as.character(eval(parse(text = cmd), envir = .GlobalEnv)),
+		    error = function(e) {
+	               filenum <- attr(chunk, "srcFilenum")[pos[1L]]
+                       filename <- attr(chunk, "srcFilenames")[filenum]
+                       location <- paste0(basename(filename), ":", attr(chunk, "srclines")[pos[1L]])
+		       stop("at ",location, ", ", conditionMessage(e), call. = FALSE)
+		   })
             ## protect against character(), because sub() will fail
             if (length(val) == 0L) val <- ""
         }
@@ -712,7 +718,7 @@ RtangleRuncode <-  function(object, chunk, options)
 
     if (options$split) {
         if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
-            warning("file name ", sQuote(chunkprefix), " is not portable",
+            warning("file stem ", sQuote(chunkprefix), " is not portable",
                     call. = FALSE, domain = NA)
         outfile <- paste(chunkprefix, options$engine, sep = ".")
         if (!object$quiet) cat(options$chunknr, ":", outfile,"\n")

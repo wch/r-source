@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -289,6 +289,10 @@ msgstr "'hgap'的值必需是单元"
 
 msgid "'vgap' must be single unit"
 msgstr "'vgap'的值必需是单元"
+
+#, fuzzy
+msgid "'nrow' must be >= 1"
+msgstr "'l'必需为布局"
 
 #, fuzzy
 msgid "'ncol' must be >= 1"

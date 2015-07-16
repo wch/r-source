@@ -86,8 +86,9 @@ Sys.glob(paths, dirmark = FALSE)
   filename is OS-dependent.
 
   Character classes can include ranges such as \code{[A-Z]}: include
-  \code{-} as a character by having it first or last in a class.  (In the
-  current implementation ranges are in numeric order of Unicode points.)
+  \code{-} as a character by having it first or last in a class.  (In
+  the current implementation ranges are in the numeric order of Unicode
+  code points.)
 
   One can remove the special meaning of \code{?}, \code{*}  and
   \code{[} by preceding them by a backslash (except within a

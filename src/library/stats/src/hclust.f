@@ -23,16 +23,17 @@ C  F. Murtagh, ESA/ESO/STECF, Garching, February 1986.       C
 C  Modifications for R: Ross Ihaka, Dec 1996                 C
 C                       Fritz Leisch, Jun 2000               C
 C  all vars declared:   Martin Maechler, Apr 2001            C
-C							     C
+C                                                            C
 c- R Bug PR#4195 fixed "along" qclust.c, given in the report C
 C- Testing: --> "hclust" in ../../../../tests/reg-tests-1b.R C
+C  "ward.D2" (iOpt = 8): Martin Maechler, Mar 2014           C
 C------------------------------------------------------------C
       SUBROUTINE HCLUST(N,LEN,IOPT,IA,IB,CRIT,MEMBR,NN,DISNN,
      X                  FLAG,DISS)
 c Args
       INTEGER N, LEN, IOPT
       INTEGER IA(N),IB(N), NN(N)
-      LOGICAL FLAG(N)
+      LOGICAL FLAG(N), isWard
       DOUBLE PRECISION CRIT(N), MEMBR(N),DISS(LEN), DISNN(N)
 c Var
       INTEGER IM, JJ, JM, I, NCL, J, IND, I2, J2, K, IND1, IND2
@@ -58,6 +59,13 @@ C        MEMBR(I)=1.
          FLAG(I)=.TRUE.
       end do
       NCL=N
+
+      IF (iOpt .eq. 8) THEN ! Ward "D2" ---> using *squared* distances
+         do I=1,LEN
+            DISS(I)=DISS(I)*DISS(I)
+         end do
+      ENDIF
+
 C
 C  Carry out an agglomeration - first create list of NNs
 C  Note NN and DISNN are the nearest neighbour and its distance
@@ -96,6 +104,9 @@ C
       J2=MAX0(IM,JM)
       IA(N-NCL)=I2
       IB(N-NCL)=J2
+C     WARD'S "D1", or "D2" MINIMUM VARIANCE METHOD -- iOpt = 1 or 8.
+      isWard = (iOpt .eq. 1 .or. iOpt .eq. 8)
+      IF (iOpt .eq. 8) DMIN = dsqrt(DMIN)
       CRIT(N-NCL)=DMIN
       FLAG(J2)=.FALSE.
 C
@@ -116,9 +127,8 @@ C
             ENDIF
             D12=DISS(IOFFST(N,I2,J2))
 C
-C     WARD'S MINIMUM VARIANCE METHOD - IOPT=1.
-C
-            IF (IOPT.EQ.1) THEN
+C     WARD'S "D1", or "D2" MINIMUM VARIANCE METHOD - IOPT=8.
+            IF (isWard) THEN
                DISS(IND1)=(MEMBR(I2)+MEMBR(K))*DISS(IND1)+
      X              (MEMBR(J2)+MEMBR(K))*DISS(IND2) - MEMBR(K)*D12
                DISS(IND1)=DISS(IND1) / (MEMBR(I2)+MEMBR(J2)+MEMBR(K))

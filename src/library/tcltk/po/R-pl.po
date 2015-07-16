@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:37\n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
 # tcltk/R/Tk.R: 268
 # stop(gettextf("cannot handle object of mode '%s'",
@@ -38,97 +38,97 @@ msgstr "nie można ustawić długości tablicy Tcl"
 msgid "Tcl package '%s' not found"
 msgstr "Pakiet Tcl '%s' nie został znaleziony"
 
-# tcltk/R/tkGUI.R: 23
+# tcltk/R/tkGUI.R: 28
 # stop("The tkGUI is not available under Windows")
 msgid "The tkGUI is not available under Windows"
 msgstr "tkGUI nie jest dostępne w systemie Windows"
 
-# tcltk/R/tkGUI.R: 38
+# tcltk/R/tkGUI.R: 43
 # gettext("File")
 msgid "File"
 msgstr "Plik"
 
-# tcltk/R/tkGUI.R: 39
+# tcltk/R/tkGUI.R: 44
 # gettext("Demos")
 msgid "Demos"
 msgstr "Dema"
 
-# tcltk/R/tkGUI.R: 40
+# tcltk/R/tkGUI.R: 45
 # gettext("Packages")
 msgid "Packages"
 msgstr "Pakiety"
 
-# tcltk/R/tkGUI.R: 41
+# tcltk/R/tkGUI.R: 46
 # gettext("Help")
 msgid "Help"
 msgstr "Pomoc"
 
-# tcltk/R/tkGUI.R: 43
+# tcltk/R/tkGUI.R: 48
 # gettext("Source R code")
 msgid "Source R code"
 msgstr "Źródłowy kod R"
 
-# tcltk/R/tkGUI.R: 48
+# tcltk/R/tkGUI.R: 53
 # gettext("Quit")
 msgid "Quit"
 msgstr "Wyjście"
 
-# tcltk/R/tkGUI.R: 50
+# tcltk/R/tkGUI.R: 55
 # gettext("Save workspace")
 msgid "Save workspace"
 msgstr "Zapisz obszar roboczy"
 
-# tcltk/R/tkGUI.R: 52
+# tcltk/R/tkGUI.R: 57
 # gettext("Don't save workspace")
 msgid "Don't save workspace"
 msgstr "Nie zapisuj obszaru roboczego"
 
-# tcltk/R/tkGUI.R: 55
+# tcltk/R/tkGUI.R: 60
 # gettext("t test")
 msgid "t test"
 msgstr "test t-Studenta"
 
-# tcltk/R/tkGUI.R: 57
+# tcltk/R/tkGUI.R: 62
 # gettext("Density")
 msgid "Density"
 msgstr "Gęstość"
 
-# tcltk/R/tkGUI.R: 59
+# tcltk/R/tkGUI.R: 64
 # gettext("Interactive linear fitting")
 msgid "Interactive linear fitting"
 msgstr "Interaktywne dopasowanie liniowe"
 
-# tcltk/R/tkGUI.R: 61
+# tcltk/R/tkGUI.R: 66
 # gettext("R FAQ")
 msgid "R FAQ"
 msgstr "FAQ dla R"
 
-# tcltk/R/tkGUI.R: 78
+# tcltk/R/tkGUI.R: 83
 # gettext("Load")
 msgid "Load"
 msgstr "Załaduj"
 
-# tcltk/R/tkGUI.R: 96
+# tcltk/R/tkGUI.R: 101
 # gettext("Go get them!")
 msgid "Go get them!"
 msgstr "Bierz je!"
 
-# tcltk/R/tkGUI.R: 99
+# tcltk/R/tkGUI.R: 104
 # gettext("Load packages")
 msgid "Load packages"
 msgstr "Załaduj pakiety"
 
-# tcltk/R/tkGUI.R: 101
+# tcltk/R/tkGUI.R: 106
 # gettext("Install packages from CRAN")
 msgid "Install packages from CRAN"
 msgstr "Zainstaluj pakiety z repozytorium CRAN"
 
-# tcltk/R/tkGUI.R: 106
+# tcltk/R/tkGUI.R: 111
 # gettext("Help topic:")
 msgid "Help topic:"
 msgstr "Temat pomocy:"
 
-# tcltk/R/tkGUI.R: 132
+# tcltk/R/tkGUI.R: 137
 # gettext("Manuals in PDF format")
 msgid "Manuals in PDF format"
 msgstr "Podręczniki w formacie PDF"
@@ -168,9 +168,3 @@ msgstr "Obsługa Tcl/Tk nie jest dostępna dla tego systemu"
 # stop("Tcl/Tk support files were not installed", call.=FALSE)
 msgid "Tcl/Tk support files were not installed"
 msgstr "Pliki obsługujące Tcl/Tk nie zostały zainstalowane"
-
-#~ msgid "Loading Tcl/Tk interface ..."
-#~ msgstr "Ładowanie interfejsu Tcl/Tk ..."
-
-#~ msgid "done"
-#~ msgstr "wykonano"

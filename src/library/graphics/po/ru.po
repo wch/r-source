@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: 2013-03-19 19:40-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -195,8 +195,8 @@ msgstr "неправильный графический символ"
 msgid "invalid font specification"
 msgstr "неправильное указание шрифта"
 
-#: plot.c:276 plot.c:290 plot.c:481 plot.c:486 plot.c:2114 plot.c:2121
-#: plot.c:3143 plot.c:3145 plot.c:3147 plot.c:3302 plot3d.c:1163 plot3d.c:1167
+#: plot.c:276 plot.c:290 plot.c:481 plot.c:486 plot.c:2112 plot.c:2119
+#: plot.c:3141 plot.c:3143 plot.c:3145 plot.c:3300 plot3d.c:1163 plot3d.c:1167
 #: plot3d.c:1169 plot3d.c:1903
 #, c-format
 msgid "invalid '%s' value"
@@ -254,8 +254,8 @@ msgid "invalid type for axis labels"
 msgstr "неправильный тип меток осей"
 
 #: plot.c:765 plot.c:1298 plot.c:1621 plot.c:1686 plot.c:1761 plot.c:1827
-#: plot.c:1903 plot.c:1998 plot.c:2074 plot.c:2352 plot.c:2526 plot.c:2742
-#: plot.c:3284 plot.c:3411 plot.c:3487 plot.c:3653 plot.c:3933 plot3d.c:1872
+#: plot.c:1901 plot.c:1996 plot.c:2072 plot.c:2350 plot.c:2524 plot.c:2740
+#: plot.c:3282 plot.c:3409 plot.c:3485 plot.c:3651 plot.c:3931 plot3d.c:1872
 msgid "too few arguments"
 msgstr "слишком мало аргументов"
 
@@ -268,9 +268,9 @@ msgstr "неправильное количество осей %d"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' должен быть единичной длины"
 
-#: plot.c:873 plot.c:2086 plot.c:2363 plot.c:2369 plot.c:2376 plot.c:2384
-#: plot.c:2391 plot.c:2398 plot.c:2405 plot.c:2412 plot.c:2420 plot.c:2427
-#: plot.c:3150
+#: plot.c:873 plot.c:2084 plot.c:2361 plot.c:2367 plot.c:2374 plot.c:2382
+#: plot.c:2389 plot.c:2396 plot.c:2403 plot.c:2410 plot.c:2418 plot.c:2425
+#: plot.c:3148
 #, c-format
 msgid "zero-length '%s' specified"
 msgstr "указана нулевая длина '%s'"
@@ -302,7 +302,7 @@ msgstr "длины 'x' и 'y' в %s() различаются"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "тип графика '%s' будет обрезан до первого знака"
 
-#: plot.c:1331 plot.c:3004
+#: plot.c:1331 plot.c:3002
 msgid "invalid plot type"
 msgstr "неправильный тип графика"
 
@@ -331,143 +331,143 @@ msgstr "неправильный четвертый аргумент"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "не могу смешивать координаты нулевой длины с ненулевыми"
 
-#: plot.c:1833
+#: plot.c:1832
 msgid "Empty raster"
 msgstr ""
 
-#: plot.c:1916
+#: plot.c:1914
 msgid "invalid arrow head length"
 msgstr "неправильная длина наконечника стрелки"
 
-#: plot.c:1921
+#: plot.c:1919
 msgid "invalid arrow head angle"
 msgstr "неправильный угол наконечника стрелки"
 
-#: plot.c:1926
+#: plot.c:1924
 msgid "invalid arrow head specification"
 msgstr "неправильное определение наконечника стрелки"
 
-#: plot.c:2160
+#: plot.c:2158
 msgid "no coordinates were supplied"
 msgstr "не указаны координаты"
 
-#: plot.c:2783
+#: plot.c:2781
 msgid "invalid a=, b= specification"
 msgstr "неправильное указание a=, b="
 
-#: plot.c:2792
+#: plot.c:2790
 msgid "'a' and 'b' must be finite"
 msgstr "'a' и 'b' должны быть конечными"
 
-#: plot.c:2927 plot.c:4053 plot.c:4057 plot.c:4060 plot.c:4080 plot.c:4084
-#: plot.c:4087 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
+#: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
+#: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
 #: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
 #: stem.c:208 stem.c:209
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: plot.c:2999 plot.c:3139
+#: plot.c:2997 plot.c:3137
 #, c-format
 msgid "invalid number of points in %s"
 msgstr "неправильное количество точек в %s"
 
-#: plot.c:3141
+#: plot.c:3139
 msgid "incorrect argument type"
 msgstr "неправильный аргумент 'type'"
 
-#: plot.c:3153
+#: plot.c:3151
 msgid "different argument lengths"
 msgstr "различные длины аргументов"
 
-#: plot.c:3155
+#: plot.c:3153
 msgid "more 'labels' than points"
 msgstr "'labels' больше чем точек"
 
-#: plot.c:3204
+#: plot.c:3202
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "предупреждение: нет точки в пределах %.2f дюйма\n"
 
-#: plot.c:3210
+#: plot.c:3208
 msgid "warning: nearest point already identified\n"
 msgstr "предупреждение: ближайшая точка уже определена\n"
 
-#: plot.c:3295
+#: plot.c:3293
 msgid "invalid units"
 msgstr "неправильные единицы"
 
-#: plot.c:3471 plot.c:3578
+#: plot.c:3469 plot.c:3576
 msgid "invalid dendrogram input"
 msgstr "неправильный ввод дендрограммы"
 
-#: plot.c:3635
+#: plot.c:3633
 msgid "invalid symbol parameter vector"
 msgstr "неправильный вектор символьных параметров"
 
-#: plot.c:3658
+#: plot.c:3656
 msgid "invalid symbol coordinates"
 msgstr "неправильные символьные координаты"
 
-#: plot.c:3666
+#: plot.c:3664
 msgid "x/y/parameter length mismatch"
 msgstr "несоответствие длин x/y/параметров"
 
-#: plot.c:3685
+#: plot.c:3683
 msgid "invalid circles data"
 msgstr "неправильные данные о кругах"
 
-#: plot.c:3687 plot.c:3708 plot.c:3733 plot.c:3763
+#: plot.c:3685 plot.c:3706 plot.c:3731 plot.c:3761
 msgid "invalid symbol parameter"
 msgstr "неправильный символьный параметр"
 
-#: plot.c:3706
+#: plot.c:3704
 msgid "invalid squares data"
 msgstr "неправильные данные о квадратах"
 
-#: plot.c:3731
+#: plot.c:3729
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "неправильные данные о прямоугольниках (нужны 2 колонки)"
 
-#: plot.c:3761
+#: plot.c:3759
 msgid "invalid stars data"
 msgstr "неправильные данные о звездочках"
 
-#: plot.c:3803
+#: plot.c:3801
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "неправильные данные о градусниках (нужно 3 или 4 колонки)"
 
-#: plot.c:3806
+#: plot.c:3804
 #, c-format
 msgid "invalid 'thermometers[, %s]'"
 msgstr "неправильные 'thermometers[, %s]'"
 
-#: plot.c:3809
+#: plot.c:3807
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "'thermometers[, %s]' вне [0,1] -- может странно выглядеть"
 
-#: plot.c:3812
+#: plot.c:3810
 msgid "invalid 'thermometers[, 1:2]'"
 msgstr "неправильные 'thermometers[, 1:2]'"
 
-#: plot.c:3851
+#: plot.c:3849
 msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "неправильные данные о ящиках-с-усами (нужно 5 колонок)"
 
-#: plot.c:3860
+#: plot.c:3858
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "'boxplots[, 5]' вне [0,1] -- может странно выглядеть"
 
-#: plot.c:3862
+#: plot.c:3860
 msgid "invalid 'boxplots[, 1:4]'"
 msgstr "неправильные 'boxplots[, 1:4]'"
 
-#: plot.c:3908
+#: plot.c:3906
 msgid "invalid symbol type"
 msgstr "неправильный тип символа"
 
-#: plot.c:3946 plot.c:3948 plot.c:3953 plot.c:3955
+#: plot.c:3944 plot.c:3946 plot.c:3951 plot.c:3953
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"

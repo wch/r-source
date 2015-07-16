@@ -1,6 +1,6 @@
 % File src/library/datasets/man/longley.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{longley}
@@ -16,14 +16,14 @@
   A data frame with 7 economical variables, observed yearly from 1947 to
   1962 (\eqn{n=16}).
   \describe{
-    \item{GNP.deflator:}{GNP implicit price deflator (\eqn{1954=100})}
-    \item{GNP:}{Gross National Product.}
-    \item{Unemployed:}{number of unemployed.}
-    \item{Armed.Forces:}{number of people in the armed forces.}
-    \item{Population:}{\sQuote{noninstitutionalized} population
+    \item{\code{GNP.deflator}}{GNP implicit price deflator (\eqn{1954=100})}
+    \item{\code{GNP}}{Gross National Product.}
+    \item{\code{Unemployed}}{number of unemployed.}
+    \item{\code{Armed.Forces}}{number of people in the armed forces.}
+    \item{\code{Population}}{\sQuote{noninstitutionalized} population
       \eqn{\ge} 14 years of age.}
-    \item{Year:}{the year (time).}
-    \item{Employed:}{number of people employed.}
+    \item{\code{Year}}{the year (time).}
+    \item{\code{Employed}}{number of people employed.}
   }
 
   The regression \code{lm(Employed ~ .)} is known to be highly

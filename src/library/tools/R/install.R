@@ -298,12 +298,12 @@
                 sys_requires <- unlist(strsplit(sys_requires, ","))
                 if(any(grepl("^[[:space:]]*C[+][+]11[[:space:]]*$",
                              sys_requires, ignore.case=TRUE))) {
-                    Sys.setenv("PKG_CXX_STD"="CXX11")
-                    on.exit(Sys.unsetenv("PKG_CXX_STD"))
+                    Sys.setenv("R_PKG_CXX_STD"="CXX11")
+                    on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
                 }
             }
         }
-        
+
         if (!is_first_package) cat("\n")
 
         if (is_source_package)
@@ -333,8 +333,7 @@
             if (res)
                 errmsg(sprintf("packaging into %s failed", sQuote(filename)))
             message("packaged installation of ",
-                    sQuote(pkg_name), " as ",
-                    sQuote(paste0(filename, ".gz")),
+                    sQuote(pkg_name), " as ", sQuote(filename),
                     domain = NA)
             setwd(owd)
         }
@@ -1184,8 +1183,9 @@
 	}
 
 	## Install a dump of the parsed NAMESPACE file
-	if (install_R && file.exists("NAMESPACE") && !fake) {
-	    res <- try(.install_package_namespace_info(".", instdir))
+        ## For a fake install, use the modified NAMESPACE file we installed
+	if (install_R && file.exists("NAMESPACE")) {
+	    res <- try(.install_package_namespace_info(if(fake) instdir else ".", instdir))
 	    if (inherits(res, "try-error"))
 		errmsg("installing namespace metadata failed")
 	}
@@ -1834,35 +1834,38 @@
         lines <- readLines("Makevars.win", warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes = TRUE)))
             makeobjs <- ""
-        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+        if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE))) {
-            use_cxx1x <- TRUE
-            cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
-            if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
+            cxxstd <- gsub("^CXX_STD *=", "", ll)
+            cxxstd <- gsub(" *", "", cxxstd)
+            if (cxxstd == "CXX11") {
+                use_cxx1x <- TRUE
+            }
         }
     } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars", warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl = TRUE, useBytes = TRUE)))
             makeobjs <- ""
-        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+        if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE))) {
-            use_cxx1x <- TRUE
-            cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
-            if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
-        }
-    } else if (!use_cxx1x) {
-        val <- Sys.getenv("USE_CXX1X", NA)
-        if(!is.na(val)) {
-            use_cxx1x <- TRUE
-            cxx1xstd <- if(nzchar(val)) val else "$(CXX1XSTD)"
+            cxxstd <- gsub("^CXX_STD *=", "", ll)
+            cxxstd <- gsub(" *", "", cxxstd)
+            if (cxxstd == "CXX11") {
+                use_cxx1x <- TRUE
+            }
         }
     }
     if (!use_cxx1x) {
-        cxxstd <- Sys.getenv("PKG_CXX_STD")
-        if (cxxstd == "CXX11") {
+        val <- Sys.getenv("USE_CXX1X", NA)
+        if(!is.na(val)) {
             use_cxx1x <- TRUE
-            cxx1xstd <- "$(CXX1XSTD)"
+        }
+        else {
+            val <- Sys.getenv("R_PKG_CXX_STD")
+            if (val == "CXX11") {
+                use_cxx1x <- TRUE
+            }
         }
     }
 
@@ -1872,7 +1875,7 @@
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     } else if (with_cxx) {
         makeargs <- if (use_cxx1x)
-            c(sprintf("CXX='$(CXX1X) %s'", cxx1xstd),
+            c("CXX='$(CXX1X) $(CXX1XSTD)'",
               "CXXFLAGS='$(CXX1XFLAGS)'",
               "CXXPICFLAGS='$(CXX1XPICFLAGS)'",
               "SHLIB_LDFLAGS='$(SHLIB_CXX1XLDFLAGS)'",
@@ -2123,7 +2126,7 @@
     }
 
     dirname <- c("html", "latex", "R-ex")
-    ext <- c(".html", ".tex", ".R", ".html")
+    ext     <- c(".html", ".tex", ".R")
     names(dirname) <- names(ext) <- c("html", "latex", "example")
     mandir <- file.path(dir, "man")
     if (!file_test("-d", mandir)) return()
@@ -2156,10 +2159,7 @@
                    error = function(e) NULL)
     ## If not, we build the Rd db from the sources:
     if (is.null(db)) db <- Rd_db(dir = dir)
-
     if (!length(db)) return()
-
-    files <- names(db)
 
     .whandler <-  function(e) {
         .messages <<- c(.messages,
@@ -2175,11 +2175,13 @@
         withCallingHandlers(tryCatch(expr, error = .ehandler),
                             warning = .whandler)
 
-    for(f in files) {
+    files <- names(db) # not full file names
+    for(nf in files) {
         .messages <- character()
-        Rd <- db[[f]]
+        Rd <- db[[nf]]
         attr(Rd, "source") <- NULL
-        bf <- sub("\\.[Rr]d$", "", basename(f))
+	bf <- sub("\\.[Rr]d$", "", basename(nf)) # e.g. nf = "unix/Signals.Rd"
+	f <- attr(Rd, "Rdfile")# full file name
 
         shown <- FALSE
 

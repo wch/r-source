@@ -90,7 +90,7 @@ stl(x, s.window, s.degree = 0,
   STL:  A  Seasonal-Trend  Decomposition  Procedure Based on Loess.
   \emph{Journal of Official Statistics}, \bold{6}, 3--73.
 }
-\author{B.D. Ripley; Fortran code by Cleveland \emph{et al.} (1990) from
+\author{B.D. Ripley; Fortran code by Cleveland \emph{et al} (1990) from
   \file{netlib}.}
 
 \note{This is similar to but not identical to the \code{stl} function in

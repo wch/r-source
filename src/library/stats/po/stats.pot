@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11+0000\n"
+"POT-Creation-Date: 2014-03-27 18:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,10 +23,6 @@ msgstr ""
 
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
-msgstr ""
-
-#: approx.c:31 rcont.c:16
-msgid "stats"
 msgstr ""
 
 #: approx.c:102
@@ -98,29 +94,29 @@ msgstr ""
 msgid "invalid form in unary minus check"
 msgstr ""
 
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr ""
 
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr ""
 
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr ""
 
-#: deriv.c:655
+#: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr ""
 
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr ""
 
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr ""
 

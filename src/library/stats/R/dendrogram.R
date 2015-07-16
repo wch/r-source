@@ -111,27 +111,29 @@ as.hclust.dendrogram <- function(x, ...)
 
     height <- numeric(n.h);  inds <- vector("list",n.h);  j <- 0L
     xS <- SIMP(x)
-    ii <- sort.list(height)
+    ii <- sort.list(height) ## FIXME? - May only work if there are no 'inversion's !
 
     merge <- matrix(NA_integer_, 2L, n.h)
     for(k in seq_len(n.h)) {
 	if(k < n.h) { in.k <- inds[[ ii[k] ]] ; s <- xS[[in.k]] } else s <- xS
-	##cat(sprintf("ii[k=%2d]=%2d -> s=xS[[in.k]]=", k, ii[k])); str(s)
+	if(getOption("as.hclust.dendr", FALSE)) {
+	    cat(sprintf("ii[k=%2d]=%2d -> s=xS[[in.k]]=", k, ii[k]))
+	    str(s)
+	}
 	stopifnot(length(s) == 2L, all( vapply(s, is.integer, NA) ))# checking..
 	merge[,k] <- unlist(s)
 	if(k < n.h)
 	    xS[[in.k]] <- + k
     }
 
-    r <- list(merge = t(merge),
-	      height = height[ii],
-	      order = ord,
-	      labels = labs,
-	      call = match.call(),
-	      method = NA_character_,
-	      dist.method = NA_character_)
-    class(r) <- "hclust"
-    r
+    structure(list(merge = t(merge),
+		   height = height[ii],
+		   order = ord,
+		   labels = labs,
+		   call = match.call(),
+		   method = NA_character_,
+		   dist.method = NA_character_),
+	      class = "hclust")
 }
 
 ##' add the c(i1,i2,..) list indices to each non-leaf of a dendrogram
@@ -275,15 +277,10 @@ function (object, max.level = NA, digits.d = 3L, give.attr = FALSE,
 }
 
 
-## The ``generic'' method for "[["  (identical to e.g., "[[.POSIXct"):
-## --> subbranches are dendrograms as well!
-`[[.dendrogram` <- function(x, ..., drop = TRUE)
-{
-    cl <- class(x)
-    class(x) <- NULL
-    val <- NextMethod("[[")
-    class(val) <- cl
-    val
+## The ``generic'' method for "[["  (analogous to e.g., "[[.POSIXct"):
+## --> subbranches (including leafs!) are dendrograms as well!
+`[[.dendrogram` <- function(x, ..., drop = TRUE) {
+    structure(NextMethod("[["), class = "dendrogram")
 }
 
 
@@ -566,7 +563,10 @@ is.leaf <- function(object) (is.logical(L <- attr(object, "leaf"))) && L
 order.dendrogram <- function(x) {
     if( !inherits(x, "dendrogram") )
 	stop("'order.dendrogram' requires a dendrogram")
-    unlist(x)
+    if(is.list(x))
+	unlist(x)
+    else ## leaf
+	as.vector(x)
 }
 
 ##RG's first version -- for posterity

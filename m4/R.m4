@@ -3156,6 +3156,26 @@ fi
 AM_CONDITIONAL(BUILD_BZLIB, [test "x${have_bzlib}" = xno])
 ])# R_BZLIB
 
+## R_TRE
+## -------
+## Try finding tre library and headers.
+## We check that both are installed,
+AC_DEFUN([R_TRE],
+[if test "x${use_system_tre}" = xyes; then
+  AC_CHECK_LIB(tre, tre_regncompb, [have_tre=yes], [have_tre=no])
+  if test "${have_tre}" = yes; then
+    AC_CHECK_HEADERS(tre/tre.h, [have_tre=yes], [have_tre=no])
+  fi
+if test "x${have_tre}" = xyes; then
+  AC_DEFINE(HAVE_TRE, 1, [Define if your system has tre.])
+  LIBS="-ltre ${LIBS}"
+fi
+else
+  have_tre="no"
+fi
+AM_CONDITIONAL(BUILD_TRE, [test x${have_tre} != xyes])
+])# R_TRE
+
 ## R_LZMA
 ## -------
 ## Try finding liblzma library and headers.

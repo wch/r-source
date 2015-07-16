@@ -28,8 +28,7 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	testit.tex.save testit-Ex.R.save \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save \
-	test-system.R test-system.Rout.save test-system2.c \
-	arima.rda EmbeddedNuls.csv
+	test-system.R test-system.Rout.save test-system2.c
 
 SUBDIRS = Embedding Examples
 SUBDIRS_WITH_NO_BUILD = Pkgs

@@ -51,7 +51,7 @@
   imposes a limit of no more than 4Gb: it is often 3Gb.  Running
   32-bit executables on a 64-bit OS will have similar limits: 64-bit
   executables will have an essentially infinite system-specific limit
-  (e.g. 128Tb for Linux on x86_64 cpus).
+  (e.g., 128Tb for Linux on x86_64 cpus).
 
   See the OS/shell's help on commands such as \code{limit} or
   \code{ulimit} for how to impose limitations on the resources available

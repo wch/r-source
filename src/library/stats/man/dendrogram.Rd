@@ -1,7 +1,7 @@
 % File src/library/stats/man/dendrogram.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
-% Copyright 2002-2011 The R Foundation
+% Copyright 1995-2014 R Core Team
+% Copyright 2002-2014 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{dendrogram}
@@ -160,7 +160,10 @@ is.leaf(object)
 
   There are \code{\link{[[}}, \code{\link{print}}, and \code{\link{str}}
   methods for \code{"dendrogram"} objects where the first one
-  (extraction) ensures that selecting sub-branches keeps the class.
+  (extraction) ensures that selecting sub-branches keeps the class,
+  i.e., returns a dendrogram even if only a leaf.
+  On the other hand, \code{\link{[}} (\emph{single} bracket) extraction
+  returns the underlying list structure.%, useful, e.g., for inspection.
 
   Objects of class \code{"hclust"} can be converted to class
   \code{"dendrogram"} using method \code{as.dendrogram()}, and since R
@@ -234,6 +237,10 @@ par(op)
 d3 <- dend2$lower[[2]][[2]][[1]]
 stopifnot(identical(d3, dend2$lower[[2]][[c(2,1)]]))
 str(d3, last.str = "'")
+
+## to peak at the inner structure "if you must", use '[..]' indexing :
+str(d3[2][[1]]) ## or the full
+str(d3[])
 
 ## merge() to join dendrograms:
 (d13 <- merge(dend2$lower[[1]], dend2$lower[[3]]))

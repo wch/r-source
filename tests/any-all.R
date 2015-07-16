@@ -83,8 +83,7 @@ do_tests <- function(L)
         }
     }
     lab <- deparse(substitute(L))
-    for (i in seq_along(L)) {
-        case <- L[[i]]
+    for (case in L) {
         do_check(case, any)
         do_check(case, all)
     }

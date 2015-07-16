@@ -1,340 +1,267 @@
 # Korean translation for R graphics package
 # src/library/graphics/po/R-ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R graphics package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-07-20 09:37\n"
-"PO-Revision-Date: 2013-02-21 18:03-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"PO-Revision-Date: 2014-03-27 09:00-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
-# CHL20130308
 msgid "'a' is overridden by 'reg'"
 msgstr "'a'는 'reg'에 의하여 덮어씌워졌습니다"
 
-# CHL20130308
 msgid "only using the first two of %d regression coefficients"
 msgstr "%d개의 회귀계수들중에서 첫번째 두개만이 사용됩니다"
 
-# CHL20130308
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a'와 'b'가 'coef'에 의하여 덮어씌어졌습니다"
 
-# CHL20130308
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "'x1'와 'y1' 중 반드시 하나가 주어져야 합니다"
 
-# CHL20130308
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'는 반드시 2차원 분할표이어야 합니다"
 
-# CHL20130308
 msgid "all entries of 'x' must be nonnegative and finite"
 msgstr ""
 "'x'의 모든 항목들은 반드시 음수가 아니어야 하며, 유한한 값이어야 합니다"
 
-# CHL20130308
 msgid "at least one entry of 'x' must be positive"
 msgstr "'x'의 항목들 중 적어도 하나는 양수이어야 합니다"
 
-# CHL20130308
 msgid "incorrect 'col': must be length 2"
 msgstr "'col'의 값이 잘못되었습니다: 길이가 반드시 2 이어야 합니다"
 
-# CHL20130308
 msgid "only for 1-D table"
 msgstr "오로지 1차원에서만 이용가능합니다"
 
-# CHL20130308
 msgid "'side' must be in {1:4}"
 msgstr "'side'의 값은 반드시 {1:4}내에 있어야 합니다"
 
-# CHL20130308
 msgid "invalid 'axp'"
 msgstr "유효한 'axp'가 아닙니다"
 
-# CHL20130308
 msgid "invalid 'log'"
 msgstr "유효한 'log'가 아닙니다"
 
-# CHL20130308
 msgid "invalid positive 'axp[3]'"
 msgstr "유효한 'axp[3]'가 아닙니다"
 
-# CHL20130308
 msgid "invalid 'usr'"
 msgstr "유효한 'usr'이 아닙니다"
 
-# CHL20130308
 msgid "'height' must be a vector or a matrix"
 msgstr "'height'는 반드시 벡터 또는 행렬이어야 합니다"
 
-# CHL20130308
 msgid "Cannot use shading lines in bars when log scale is used"
 msgstr "로그 스케일이 사용될때에 bars에 shading lines을 사용할 수 없습니다"
 
-# CHL20130308
 msgid "log scale error: at least one 'height + offset' value <= 0"
 msgstr ""
 "로그스케일 에러: 'height + offset' 값들중 적어도 하나가 0 보다 작거나 같습니"
 "다"
 
-# CHL20130308
 msgid "log scale error: 'xlim' <= 0"
 msgstr "로그스케일 에러: 'xlim'의 값이 0 보다 작거나 같습니다"
 
-# CHL20130308
 msgid "log scale error: 'ylim' <= 0"
 msgstr "로그스케일 에러: 'ylim'가 0 보다 작거나 같습니다"
 
-# CHL20130308
 msgid "incorrect number of names"
 msgstr "names의 개수가 잘못되었습니다"
 
-# CHL20130308
 msgid "invalid first argument"
 msgstr "첫번째 인자가 잘못되었습니다"
 
-# CHL20130308
 msgid "'formula' missing or incorrect"
 msgstr "'formula'가 없거나 잘못되었습니다"
 
-# CHL20130308
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at'의 길이는 반드시 'z$n'와 같아야 합니다 (즉, %d이어야 합니다)"
 
-# CHL20130308
 msgid "invalid boxplot widths"
 msgstr "박스플롯의 너비들이 유효하지 않습니다"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr ""
 
-# CHL20130308
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula'는 반드시 두 변수들을 정확히 지정해야 합니다"
 
-# CHL20130308
 msgid "dependent variable should be a factor"
 msgstr "종속변수는 요인이어야 합니다"
 
-# CHL20130308
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
 "y 축은 누적확률스케일이므로 'ylim'의 값은 반드시 [0,1]내에 있어야 합니다"
 
-# CHL20130308
 msgid "no 'z' matrix specified"
 msgstr "지정된 'z'가 없습니다"
 
-# CHL20130308
 msgid "increasing 'x' and 'y' values expected"
 msgstr "'x'와 'y'의 값은 증가해야만 합니다"
 
-# CHL20130308
 msgid "no proper 'z' matrix specified"
 msgstr "적합한 'z' 행렬이 지정되지 않았습니다"
 
-# CHL20130308
 msgid "invalid conditioning formula"
 msgstr "유효하지 않은 conditioning formula입니다"
 
 msgid "incompatible variable lengths"
-msgstr ""
+msgstr "변수들의 길이가 일치하지 않습니다"
 
-# CHL20130308
 msgid "'number' must be integer >= 1"
 msgstr "'number'는 반드시 1 보다 크거나 같아야 합니다"
 
-# CHL20130308
 msgid "'overlap' must be < 1 (and typically >= 0)."
 msgstr ""
 "'overlap'은 반드시 1 보다 작아야 합니다 (일반적으로 0 보다 크거나 같습니다)."
 
-# CHL20130308
 msgid "invalid 'given.values'"
 msgstr "유효하지 않은 'given.values'입니다"
 
-# CHL20130308
 msgid "rows * columns too small"
 msgstr "rows * columns 의 값이 너무 작습니다"
 
-# CHL20130308
 msgid "Missing rows: %s"
 msgstr "누락된 행들: %s"
 
-# CHL20130308
 msgid "'expr' must be a function, or a call or an expression containing '%s'"
 msgstr ""
 "'expr'은 반드시 함수, 또는 호출, 또는 '%s'를 포함하는 표현식이어야 합니다"
 
-# CHL20130308
 msgid "'add' will be ignored as there is no existing plot"
 msgstr "존재하는 플롯이 없기 때문에 'add'는 무시되어질 것입니다"
 
-# CHL20130308
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from'와 'to'는 log=\"x\"이며 반드시 0 보다 커야 합니다"
 
 msgid "'expr' did not evaluate to an object of length 'n'"
 msgstr ""
 
-# CHL20130308
 msgid "wrong method"
 msgstr "잘못된 메소드입니다"
 
-# CHL20130308
 msgid "Must specify 'breaks' in hist(<POSIXt>)"
 msgstr "hist(<POSIXt>)내에 'breaks'는 반드시 지정되어야 합니다"
 
-# CHL20130308
 msgid "invalid specification of 'breaks'"
 msgstr "유효한 'breaks'의 지정이 아닙니다"
 
-# CHL20130308
 msgid "Must specify 'breaks' in hist(<Date>)"
 msgstr "hist(<Date>)내에 'breaks'는 반드시 지정되어야 합니다"
 
-# CHL20130308
 msgid "'x' must be a numeric vector or matrix"
 msgstr "'x'는 반드시 수치형 벡터 또는 행렬이어야 합니다"
 
-# CHL20130308
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x'는 벡터도 아니고 행렬도 아니므로 as.numeric(x)를 사용합니다"
 
-# CHL20130308
 msgid "'x' must be an array"
 msgstr "'x'는 반드시 배열이어야 합니다"
 
-# CHL20130308
 msgid "'x' must be 2- or 3-dimensional"
 msgstr "'x'는 반드시 2 또는 3차원이어야 합니다"
 
 msgid "table for each stratum must be 2 by 2"
-msgstr ""
+msgstr "각 스트라텀마다 테이블의 크기가 반드시 2행 2열이어야 합니다"
 
-# CHL20130308
 msgid "'conf.level' must be a single number between 0 and 1"
 msgstr "'conf.level'은 반드시 0과 1사이의 하나의 숫자로 주어져야 합니다"
 
-# CHL20130308
 msgid "incorrect 'margin' specification"
 msgstr "'margin' 지정이 잘못되었습니다"
 
-# CHL20130308
 msgid "incorrect geometry specification"
 msgstr "잘못된 gemetry 지정입니다"
 
-# CHL20130308
 msgid "'x' must be numeric"
 msgstr "'x'는 반드시 숫자이어야 합니다"
 
-# CHL20130308
 msgid "invalid length(x)"
 msgstr "유효한 length(x)가 아닙니다"
 
-# CHL20130308
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'breaks'가 지정되었을 때에는 'nclass'는 사용되지 않습니다"
 
-# CHL20130308
 msgid "'include.lowest' ignored as 'breaks' is not a vector"
 msgstr "'breaks'가 벡터가 아니므로 'include.lowest'는 무시됩니다"
 
-# CHL20130308
 msgid "unknown 'breaks' algorithm"
 msgstr "알수없는 'breaks' 알고리즘입니다"
 
-# CHL20130308
 msgid "invalid number of 'breaks'"
 msgstr "유효하지 않은 'breaks'의 개수입니다"
 
-# CHL20130308
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty() 에러, breaks=%s"
 
 msgid "Invalid breakpoints produced by 'breaks(x)': %s"
-msgstr ""
+msgstr "'breaks(x)'에 의해서 생성된 브레이크 포인트가 올바르지 않습니다: %s"
 
-# CHL20130308
 msgid "invalid length(breaks)"
 msgstr "유효하지 않은 length(breaks)입니다"
 
-# CHL20130308
 msgid "'breaks' are not strictly increasing"
 msgstr "'breaks'는 단조증가하지 않습니다"
 
-# CHL20130308
 msgid "'probability' is an alias for '!freq', however they differ."
 msgstr "'probability'은 '!freq'의 alias이지만, 이 둘은 다릅니다"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
+"일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하지 "
+"않은 것 같습니다"
 
-# CHL20130308
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "플랏내의 AREAS가 잘못되었으므로 'freq = FALSE'를 사용합니다"
 
-# CHL20130308
 msgid "'x' is wrongly structured"
 msgstr "'x'는 정확하게 구조화되어 있지 않습니다"
 
-# CHL20130308
 msgid "argument must be matrix-like"
 msgstr "인자는 반드시 행렬과 같은 것이어야 합니다"
 
-# CHL20130308
 msgid "'x' and 'y' values must be finite and non-missing"
 msgstr "'x'와 'y'의 값들은 반드시 유한해야 하며 누락되지 않아야 합니다"
 
-# CHL20130308
 msgid "'z' must be a matrix"
 msgstr "'z'는 반드시 행렬이어야 합니다"
 
-# CHL20130308
 msgid "invalid z limits"
 msgstr "유효하지 않은 z limits입니다"
 
-# CHL20130308
 msgid "must have one more break than colour"
 msgstr "break의 수는 반드시 colour의 수보다 하나 더 많아야 합니다"
 
-# CHL20130308
 msgid "'breaks' must all be finite"
 msgstr "'breaks'는 반드시 모두 유한해야 합니다"
 
-# CHL20130308
 msgid "unsorted 'breaks' will be sorted before use"
 msgstr "정렬되지 않은 'breaks'는 사용전에 자동으로 정렬될 것입니다"
 
 msgid "dimensions of z are not length(x)(-1) times length(y)(-1)"
-msgstr ""
+msgstr "z의 크기가 length(x)(-1)와 length(y)(-1)의 곱과 일치하지 않습니다"
 
-# CHL20130308
 msgid "%s can only be used with a regular grid"
 msgstr "%s는 regular grid와 함께 사용되어 질 수 있습니다"
 
 msgid "integer colors must be non-negative"
 msgstr ""
 
-# CHL20130308
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
 "'respect'는 반드시 논리적이거나 'mat'과 같은 크기를 가지는 행렬이어야 합니다"
@@ -344,25 +271,21 @@ msgid ""
 "to each of the values {1 ... %d}"
 msgstr ""
 
-# CHL20130308
 msgid "invalid 'title'"
 msgstr "유효하지 않은 'title'입니다"
 
-# CHL20130308
 msgid "'legend' is of length 0"
 msgstr "'legend'의 길이가 0입니다"
 
 msgid "invalid coordinate lengths"
-msgstr ""
+msgstr "축의 길이들이 올바르지 않습니다"
 
-# CHL20130308
 msgid "'text.width' must be numeric, >= 0"
 msgstr "'text.width'는 반드시 숫자이어야 하며 0 보다 크거나 같아야 합니다"
 
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr ""
 
-# CHL20130308
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr ""
 "'merge = TRUE'은 line segments가 그려지지 않았을 경우에는 아무런 영향을 가지"
@@ -371,95 +294,75 @@ msgstr ""
 msgid "not using pch[2..] since pch[1L] has multiple chars"
 msgstr ""
 
-# CHL20130308
 msgid "must specify at least one of 'x' and 'y'"
 msgstr "'x'와 'y'중 최소 한가지는 반드시 지정해야 합니다"
 
-# CHL20130308
 msgid "'x' and 'y' must have same number of rows"
 msgstr "'x'와 'y'는 반드시 같은 길이의 행을 가져야 합니다"
 
-# CHL20130308
 msgid "'x' and 'y' must have only 1 or the same number of columns"
 msgstr "'x'와 'y'는 반드시 1 또는 같은 길이의 열을 가져야 합니다"
 
-# CHL20130308
 msgid "default 'pch' is smaller than number of columns and hence recycled"
 msgstr "'pch'의 기본값이 열의 수보다 작기 때문에 리사이클 되었습니다"
 
-# CHL20130308
 msgid "missing values in contingency table"
 msgstr "분할표에 누락된 값들이 있습니다"
 
 msgid "'x' must not have 0 dimensionality"
-msgstr ""
+msgstr "'x'가 0차원을 가져서는 안됩니다"
 
-# CHL20130308
 msgid "invalid 'shade' specification"
 msgstr "유효하지 않은 'shade' 지정입니다"
 
-# CHL20130308
 msgid "length of 'sort' does not conform to 'dim(x)'"
 msgstr "'sort'의 길이가 'dim(x)'와 맞지 않습니다"
 
-# CHL20130308
 msgid "non-numeric argument to 'pairs'"
 msgstr "'pairs'에 숫자가 아닌 인자가 전달되었습니다"
 
 msgid "only one column in the argument to 'pairs'"
 msgstr ""
 
-# CHL20130308
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'함수가 새 플랏을 작성했습니다"
 
 msgid "surface extends beyond the box"
 msgstr ""
 
-# CHL20130308
 msgid "'x' values must be positive."
 msgstr "'x'의 값은 반드시 양수이어야 합니다"
 
-# CHL20130308
 msgid "invalid table 'x'"
 msgstr "유효하지 않은 테이블 'x'입니다"
 
-# CHL20130308
 msgid "cannot handle more than one 'x' coordinate"
 msgstr "한개 이상의 'x'좌표를 처리할 수 없습니다"
 
-# CHL20130308
 msgid "must have a response variable"
 msgstr "반드시 종속변수를 가져야 합니다"
 
-# CHL20130308
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame'이 데이터프레임이 아닌것에 적용되었습니다"
 
-# CHL20130308
 msgid "'y' must be a numeric vector"
 msgstr "'y'는 반드시 숫자형 벡터이어야 합니다"
 
-# CHL20130308
 msgid "'x' must be a data frame"
 msgstr "'x'는 반드시 데이터프레임이어야 합니다"
 
-# CHL20130308
 msgid "all columns/components of 'x' must be factors"
 msgstr "'x'의 모든 열/구성요소들은 반드시 요인이어야 합니다"
 
-# CHL20130308
 msgid "some levels of the factors are empty"
 msgstr "일부 인자들의 레벨들이 누락되어 있습니다"
 
-# CHL20130308
 msgid "'x' must be a dataframe or a formula"
 msgstr "'x'는 반드시 데이터프레임 또는 formula 이어야 합니다"
 
 msgid "a variable in 'y' is not numeric"
-msgstr ""
+msgstr "'y' 내의 변수가 수치형이 아닙니다"
 
-# CHL20130308
 msgid "there must be at least one numeric variable!"
 msgstr "최소한 한개의 수치형 변수가 필요합니다"
 
@@ -469,111 +372,86 @@ msgstr ""
 msgid "Invalid fill rule for graphics path"
 msgstr ""
 
-# CHL20130308
 msgid "invalid rectangle specification"
 msgstr "직사각형을 그리는데 유효한 지정이 아닙니다"
 
 msgid "some values will be clipped"
-msgstr ""
+msgstr "일부 값들이 잘려나갈 것입니다"
 
-# CHL20130308
 msgid "invalid screen number"
 msgstr "유효하지 않은 스크린 넘버입니다"
 
-# CHL20130308
 msgid "'figs' must be a vector or a matrix with 4 columns"
 msgstr "'figs'는 반드시 벡터이거나 4개의 열을 가진 행렬이어야 합니다"
 
-# CHL20130308
 msgid "'figs' must specify at least one screen"
 msgstr "'figs'는 최소 1개의 스크린을 반드시 지정해야 합니다"
 
-# CHL20130308
 msgid "'nrpoints' should be numeric scalar with value >= 0."
 msgstr ""
 "'nrpoints'는 반드시 0 보다 크거나 같은 숫자를 가지는 스칼라이어야 합니다"
 
-# CHL20130308
 msgid "a 2-way table has to be specified"
 msgstr "2원 분할표가 반드시 지정되어져야 합니다"
 
-# CHL20130308
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr ""
 "x 축이 누적확률스케일이므로 'xlim'의 값은 반드시 [0,1]사이에 있어야 합니다"
 
-# CHL20130308
 msgid "'x' must be a matrix or a data frame"
 msgstr "'x'는 반드시 행렬 또는 데이터 프레임입니다"
 
-# CHL20130308
 msgid "data in 'x' must be numeric"
 msgstr "'x'내의 데이터는 반드시 수치형이어야 합니다"
 
-# CHL20130308
 msgid "'nrow * ncol' is less than the number of observations"
 msgstr "'nrow * ncol'의 값이 관측치의 개수보다 적습니다"
 
 msgid "labels do not make sense for a single location"
-msgstr ""
+msgstr "하나의 지점에 대해서 여러개의 라벨들은 이해가 가지 않습니다"
 
-# CHL20130308
 msgid "'locations' must be a 2-column matrix."
 msgstr "'locations'은 반드시 2개의 열을 가지는 행렬입니다"
 
-# CHL20130308
 msgid "number of rows of 'locations' and 'x' must be equal."
 msgstr "'locations'과 'x'의 행의 길이가 반드시 같아야 합니다"
 
-# CHL20130308
 msgid "length of 'angles' must equal 'ncol(x)'"
 msgstr "'angles'의 길이는 반드시 'ncol(x)'와 같아야 합니다"
 
-# CHL20130308
-#, fuzzy
 msgid "no finite and non-missing values"
-msgstr "누락된 값들이 없습니다"
+msgstr "유한하지 않거나 누락된 값들이 있습니다"
 
-# CHL20130308
 msgid "'scale' must be positive"
 msgstr "'scale'는 반드시 양수이어야 합니다"
 
-# CHL20130308
 msgid "invalid plotting method"
 msgstr "유효하지 않은 플롯팅 메소드입니다"
 
-# CHL20130308
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at'는 반드시 그룹의 개수 %d와 동일한 길이를 가져야 합니다"
 
-# CHL20130308
 msgid "formula missing or incorrect"
 msgstr "formula가 누락되었거나 잘못되었습니다"
 
-# CHL20130308
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'x'와 'y'와 같이 'number' 역시 동일한 길이를 가져야 합니다"
 
-# CHL20130308
 msgid "exactly one symbol type must be specified"
 msgstr "반드시 하나의 심볼유형이 지정되어져야 합니다"
 
-# CHL20130308
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x log scale: xinch()는 넌센스입니다"
 
-# CHL20130308
 msgid "y log scale:  yinch() is nonsense"
 msgstr "y log scale:  yinch()는 넌센스입니다"
 
-# CHL20130308
 msgid "log scale:  xyinch() is nonsense"
 msgstr "log scale: xyinch()는 넌센스입니다"
 
-# CHL20130308
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
-msgstr[0] ""
+msgstr[0] "박스플랏 %2$d내에 이상값 (%1$s)가 그려지지 않았습니다"
 
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
@@ -581,4 +459,4 @@ msgstr[0] ""
 
 msgid "extra argument %s will be disregarded"
 msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] ""
+msgstr[0] "추가적인 인자들 %s은 무시되어질 것입니다"

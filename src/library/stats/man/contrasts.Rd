@@ -46,7 +46,7 @@ contrasts(x, how.many) <- value
   an identity matrix is returned.  Suitable functions have a first
   argument which is the character vector of levels, a named argument
   \code{contrasts} (always called with \code{contrasts = TRUE}) and
-  optionally from \R 2.10.0 a logical argument \code{sparse}.
+  optionally a logical argument \code{sparse}.
 
   If \code{value} supplies more than \code{how.many} contrasts, the
   first \code{how.many} are used.  If too few are supplied, a suitable

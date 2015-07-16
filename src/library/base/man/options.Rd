@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -237,14 +237,13 @@ getOption(x, default = NULL)
       % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
 #ifdef unix
     \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
-      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
-      This is the set of characters use to break the input line up into
+      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
+	
+      This is the set of characters use to break the input line into
       tokens for object- and file-name completion.  Those who do not use
       spaces around operators may prefer\cr
-      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&\{()\}"}%"
-      which was the default in \R 2.5.0.  (The default in pre-2.5.0
-      versions of \R was\cr
-      \code{" \\t\\n\\"\\\\'`@$><=;|&\{("}.)}%"
+      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&{()}"}%"
+      }
 #endif
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
@@ -553,13 +552,15 @@ getOption(x, default = NULL)
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
       Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.  Some OS X builds use \code{"mac.binary"}.
+      \code{"source"}.  Some OS X builds use \code{"mac.binary"} and
+      \code{"mac.binary.mavericks"}
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
-      CRAN OS X build) and \code{"mac.binary."}.  Windows
-      uses  \code{"win.binary"}.  (\code{"mac.binary.leopard"} and
-      \code{"mac.binary.universal"} are no longer in use.)
+      CRAN OS X build), \code{"mac.binary."} and
+      \code{"mac.binary.mavericks"}.  Windows uses  \code{"win.binary"}.
+      (\code{"mac.binary.leopard"} and \code{"mac.binary.universal"} are
+      no longer in use.)
 #endif
     }
 
@@ -572,7 +573,8 @@ getOption(x, default = NULL)
                    options(repos = r)})}.
 
       Note that you can add more repositories (Bioconductor and
-      Omegahat, notably) using \code{\link{setRepositories}()}.
+      Omegahat, R-Forge, Rforge.net \dots)
+      using \code{\link{setRepositories}}.
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 

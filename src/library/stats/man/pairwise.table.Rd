@@ -27,6 +27,6 @@ pairwise.table(compare.levels, level.names, p.adjust.method)
 \value{
   Table of p values in lower triangular form.
 }
-\seealso{ \code{\link{pairwise.t.test}}, et al.}
+\seealso{ \code{\link{pairwise.t.test}} }
 
 \keyword{htest}

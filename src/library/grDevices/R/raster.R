@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/raster.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ as.matrix.raster <- function(x, ...)
 }
 
 is.na.raster <- function(x) is.na(as.matrix(x))
-anyNA.raster <- function(x) anyNA(as.matrix(x))
+anyNA.raster <- function(x, recursive = FALSE) anyNA(as.matrix(x))
 
 # FIXME:
 # It would be useful to have conversion to array (rgb[a])

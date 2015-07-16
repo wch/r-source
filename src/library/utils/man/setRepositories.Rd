@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -31,7 +31,8 @@ setRepositories(graphics = getOption("menu.graphics"),
   in \file{\var{HOME}/.R/repositories} which will take precedence.
 
   A Bioconductor mirror can be selected by setting
-  \code{\link{options}("BioC_mirror")}: the default value is
+  \code{\link{options}("BioC_mirror")}, e.g. via
+  \code{\link{chooseBioCmirror}} the default value is
   \samp{"http://www.bioconductor.org"}.
 
   The items that are preselected are those that are currently in
@@ -63,7 +64,8 @@ setRepositories(graphics = getOption("menu.graphics"),
   \code{repos}) or \code{\link{NULL}} if no changes were applied.
 }
 \seealso{
-  \code{\link{chooseCRANmirror}}, \code{\link{install.packages}}.
+  \code{\link{chooseCRANmirror}}, \code{\link{chooseBioCmirror}},
+  \code{\link{install.packages}}.
 }
 \examples{\dontrun{
 setRepositories(addURLs =

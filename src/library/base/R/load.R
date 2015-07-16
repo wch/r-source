@@ -68,10 +68,10 @@ save <- function(..., list = character(),
     if (!is.null(version) && version < 2)
         warning("Use of save versions prior to 2 is deprecated", domain = NA)
 
-    if(missing(list) && !length(list(...)))
+    names <- as.character(substitute(list(...)))[-1L]
+     if(missing(list) && !length(names))
 	warning("nothing specified to be save()d")
-    names <- as.character( substitute(list(...)))[-1L]
-    list <- c(list, names)
+   list <- c(list, names)
     if (!is.null(version) && version == 1)
         .Internal(save(list, file, ascii, version, envir, eval.promises))
     else {

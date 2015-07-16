@@ -73,7 +73,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (realIndx) REAL(ind)[0] = (double)(i + 1);
 	else INTEGER(ind)[0] = (int)(i + 1);
 	tmp = eval(R_fcall, rho);
-	if (NAMED(tmp)) tmp = lazy_duplicate(tmp);
+	if (MAYBE_REFERENCED(tmp)) tmp = lazy_duplicate(tmp);
 	SET_VECTOR_ELT(ans, i, tmp);
     }
 
@@ -155,7 +155,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (realIndx) REAL(ind)[0] = (double)(i + 1);
 	    else INTEGER(ind)[0] = (int)(i + 1);
 	    val = eval(R_fcall, rho);
-	    if (NAMED(val))
+	    if (MAYBE_REFERENCED(val))
 		val = lazy_duplicate(val);
 	    PROTECT_WITH_INDEX(val, &indx);
 	    if (length(val) != commonLen)
@@ -273,7 +273,7 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	/* PROTECT(R_fcall = lang2(FUN, X)); */
 	PROTECT(R_fcall = lang3(FUN, X, R_DotsSymbol));
 	ans = eval(R_fcall, rho);
-	if (NAMED(ans))
+	if (MAYBE_REFERENCED(ans))
 	    ans = lazy_duplicate(ans);
 	UNPROTECT(1);
 	return(ans);

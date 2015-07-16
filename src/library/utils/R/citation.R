@@ -607,6 +607,11 @@ function(x, style = "text", .bibstyle = NULL,
         sapply(.bibentry_expand_crossrefs(x),
                function(y) {
                    rd <- tools::toRd(y, style = .bibstyle)
+                   ## <FIXME>
+                   ## Ensure a closing </p> via a final empty line for
+                   ## now (PR #15692).
+                   if(style == "html") rd <- paste(rd, "\n")
+                   ## </FIXME>
                    con <- textConnection(rd)
                    on.exit(close(con))
                    f(con, fragment = TRUE, out = out, ...)

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,21 +14,21 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
+# grDevices/R/unix/png.R: 42
+# stop("invalid 'filename'")
+# grDevices/R/unix/png.R: 77
+# stop("invalid 'filename'")
+# grDevices/R/unix/png.R: 109
+# stop("invalid 'filename'")
+# grDevices/R/unix/png.R: 142
+# stop("invalid 'filename'")
 # grDevices/R/cairo.R: 25
 # stop("invalid 'filename'")
 # grDevices/R/cairo.R: 38
 # stop("invalid 'filename'")
 # grDevices/R/cairo.R: 51
-# stop("invalid 'filename'")
-# grDevices/R/unix/png.R: 42
-# stop("invalid 'filename'")
-# grDevices/R/unix/png.R: 77
-# stop("invalid 'filename'")
-# grDevices/R/unix/png.R: 108
-# stop("invalid 'filename'")
-# grDevices/R/unix/png.R: 140
 # stop("invalid 'filename'")
 # grDevices/R/windows/cairo.R: 26
 # stop("invalid 'filename'")
@@ -44,12 +44,12 @@ msgstr ""
 # stop("invalid 'filename'")
 # grDevices/R/windows/png.R: 114
 # stop("invalid 'filename'")
-# grDevices/R/windows/png.R: 147
+# grDevices/R/windows/png.R: 148
 # stop("invalid 'filename'")
-# grDevices/R/windows/windows.R: 127
+# grDevices/R/windows/windows.R: 142
 # stop("invalid 'filename'")
 msgid "invalid 'filename'"
-msgstr "niepoprawna wartość 'filename'"
+msgstr "niepoprawny argument 'filename'"
 
 # grDevices/R/calc.R: 25
 # stop("'coef' must not be negative")
@@ -71,42 +71,47 @@ msgstr "oczekiwano rosnących wartości 'x' oraz 'y'"
 msgid "no proper 'z' matrix specified"
 msgstr "nie określono odpowiedniej macierzy 'z'"
 
+# grDevices/R/calc.R: 73
+# stop("dimensions of 'x', 'y' and 'z' do not match")
 msgid "dimensions of 'x', 'y' and 'z' do not match"
-msgstr ""
+msgstr "wymiary 'x', 'y' oraz 'z' nie zgadzają się"
 
-# grDevices/R/colorRamp.R: 33
+# grDevices/R/colorRamp.R: 35
 # stop("'bias' must be positive")
 msgid "'bias' must be positive"
-msgstr "wartość 'bias' musi być dodatnia"
+msgstr "argument 'bias' musi być dodatni"
 
+# grDevices/R/colorRamp.R: 37
+# stop("'alpha' must be false if 'space' is specified")
 msgid "'alpha' must be false if 'space' is specified"
 msgstr ""
+"argument 'alpha' musi mieć wartość FALSE, jeśli określono argument 'space'"
 
-# grDevices/R/colorstuff.R: 42
+# grDevices/R/colorstuff.R: 43
 # stop("at least 3 columns needed")
 msgid "at least 3 columns needed"
-msgstr "potrzeba co najmniej 3 kolumn"
+msgstr "przynajmniej 3 kolumny są potrzebne"
 
 # grDevices/man/rgb2hsv.Rd: 66
 # stop("rgb matrix must be numeric")
-# grDevices/R/colorstuff.R: 61
+# grDevices/R/colorstuff.R: 62
 # stop("rgb matrix must be numeric")
 msgid "rgb matrix must be numeric"
 msgstr "macierz RGB musi być liczbowa"
 
 # grDevices/man/rgb2hsv.Rd: 68
 # stop("rgb matrix must have 3 rows")
-# grDevices/R/colorstuff.R: 63
+# grDevices/R/colorstuff.R: 64
 # stop("rgb matrix must have 3 rows")
 msgid "rgb matrix must have 3 rows"
 msgstr "macierz RGB musi mieć 3 wiersze"
 
-# grDevices/R/colorstuff.R: 69
+# grDevices/R/colorstuff.R: 70
 # stop("rgb values must be in [0, maxColorValue]")
 msgid "rgb values must be in [0, maxColorValue]"
-msgstr "wartości RGB muszą być w przedziale [0, 'maxColorValue']"
+msgstr "argumenty 'r', 'g' oraz 'b' muszą być w przedziale [0, maxColorValue]"
 
-# grDevices/R/colorstuff.R: 94
+# grDevices/R/colorstuff.R: 95
 # stop("'start' and 'end' must be distinct and in [0, 1].")
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr ""
@@ -116,7 +121,7 @@ msgstr ""
 # grDevices/R/convertColor.R: 57
 # stop("'gamma' must be a scalar or 'sRGB'")
 msgid "'gamma' must be a scalar or 'sRGB'"
-msgstr "'gamma' musi być liczbą lub 'sRGB'"
+msgstr "argument 'gamma' musi być liczbą lub wartością 'sRGB'"
 
 # grDevices/R/convertColor.R: 70
 # gettextf("Color space converter: %s", x$name)
@@ -133,29 +138,31 @@ msgstr "Referencyjna biel: %s"
 msgid "display gamma = %s"
 msgstr "wyświetl gamma = %s"
 
-# grDevices/R/convertColor.R: 214
+# grDevices/R/convertColor.R: 216
 # stop("'from' must be a \"colorConverter\" object or a string")
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "'from' musi być obiektem klasy \"colorConverter\" lub łańcuchem"
+msgstr ""
+"argument 'from' musi być obiektem klasy \"colorConverter\" lub łańcuchem "
+"tekstowym"
 
-# grDevices/R/convertColor.R: 218
+# grDevices/R/convertColor.R: 220
 # stop("'to' must be a \"colorConverter\" object or a string")
 msgid "'to' must be a \"colorConverter\" object or a string"
 msgstr "'to' musi być obiektem klasy \"colorConverter\" lub łańcuchem"
 
-# grDevices/R/convertColor.R: 226
+# grDevices/R/convertColor.R: 228
 # stop(gettextf("'from.ref.white' disagrees with definition of %s",
 #                     from$name), domain = NA)
 msgid "'from.ref.white' disagrees with definition of %s"
 msgstr "'from.ref.white' nie zgadza się z definicją %s"
 
-# grDevices/R/convertColor.R: 232
+# grDevices/R/convertColor.R: 234
 # stop(gettextf("'to.ref.white' disagrees with definition of %s",
 #                     to$name), domain = NA)
 msgid "'to.ref.white' disagrees with definition of %s"
 msgstr "'to.ref.white' nie zgadza się z definicją %s"
 
-# grDevices/R/convertColor.R: 271
+# grDevices/R/convertColor.R: 273
 # warning("color spaces use different reference whites")
 msgid "color spaces use different reference whites"
 msgstr "przestrzenie kolorów używają różnych referencyjnych bieli"
@@ -163,7 +170,7 @@ msgstr "przestrzenie kolorów używają różnych referencyjnych bieli"
 # grDevices/R/device.R: 40
 # stop("'name' must be a character vector")
 msgid "'name' must be a character vector"
-msgstr "'name' musi być wektorem tekstowym"
+msgstr "argument 'name' musi być wektorem tekstowym"
 
 # grDevices/R/device.R: 100
 # stop("cannot shut down device 1 (the null device)")
@@ -188,31 +195,31 @@ msgstr "nie można kopiować do urządzenia 'null'"
 # grDevices/R/device.R: 116
 # stop("cannot copy device to itself")
 msgid "cannot copy device to itself"
-msgstr "nie można kopiować urządzenia do samego siebie"
+msgstr "nie można kopiować urządzenia na siebie samego"
 
 # grDevices/R/device.R: 121
 # stop("'device' should be a function")
 msgid "'device' should be a function"
 msgstr "'device' powinno być funkcją"
 
+# grDevices/R/unix/quartz.R: 165
+# stop("no device to print from")
 # grDevices/R/device.R: 135
 # stop("no device to print from")
 # grDevices/R/device.R: 195
 # stop("no device to print from")
 # grDevices/R/device.R: 221
 # stop("no device to print from")
-# grDevices/R/unix/quartz.R: 155
-# stop("no device to print from")
 msgid "no device to print from"
 msgstr "brak urządzenia z którego można drukować"
 
+# grDevices/R/unix/quartz.R: 166
+# stop("can only print from a screen device")
 # grDevices/R/device.R: 137
 # stop("can only print from a screen device")
 # grDevices/R/device.R: 197
 # stop("can only print from a screen device")
 # grDevices/R/device.R: 223
-# stop("can only print from a screen device")
-# grDevices/R/unix/quartz.R: 156
 # stop("can only print from a screen device")
 msgid "can only print from a screen device"
 msgstr "można drukować jedynie z ekranu urządzenia"
@@ -225,7 +232,7 @@ msgstr "potrzeba określić jeden z 'width' oraz 'height'"
 # grDevices/R/device.R: 254
 # stop("dev.control() called without an open graphics device")
 msgid "dev.control() called without an open graphics device"
-msgstr "'dev.control()' wywołane bez otwartego urządzenia graficznego"
+msgstr "funkcja 'dev.control()' wywołana bez otwartego urządzenia graficznego"
 
 # grDevices/R/device.R: 258
 # stop("argument is missing with no default")
@@ -235,7 +242,8 @@ msgstr "brakuje argumentu, a brak zdefiniowanej dla niego wartości domyślnej"
 # grDevices/R/device.R: 265
 # stop("dev.displaylist() called without an open graphics device")
 msgid "dev.displaylist() called without an open graphics device"
-msgstr "'dev.displaylist()' wywołane bez otwartego urządzenia graficznego"
+msgstr ""
+"funkcja 'dev.displaylist()' wywołana bez otwartego urządzenia graficznego"
 
 # grDevices/R/device.R: 283
 # stop("invalid setting for 'getOption(\"device\")'")
@@ -256,7 +264,7 @@ msgstr "brak odpowiedniej nieużywanej nazwy pliku dla 'pdf()'"
 # message(gettextf("dev.new(): using pdf(file=\"%s\")", tmp[!fe][1L]),
 #                     domain=NA)
 msgid "dev.new(): using pdf(file=\"%s\")"
-msgstr "dev.new(): 'używanie pdf(file=\"%s\")'"
+msgstr "dev.new(): używanie 'pdf(file=\"%s\")'"
 
 # grDevices/R/device.R: 311
 # stop("no suitable unused file name for postscript()")
@@ -272,10 +280,10 @@ msgstr "dev.new(): używanie 'postscript(file=\"%s\")'"
 # grDevices/R/postscript.R: 31
 # stop(gettextf("invalid arguments in '%s' (need named args)",
 #                       deparse(sys.call(sys.parent()))), domain = NA)
-# grDevices/R/postscript.R: 540
+# grDevices/R/postscript.R: 543
 # stop(gettextf("invalid arguments in '%s' (need named args)",
 #                               "postscriptFonts"), domain = NA)
-# grDevices/R/postscript.R: 594
+# grDevices/R/postscript.R: 597
 # stop(gettextf("invalid arguments in '%s' (need named args)",
 #                               "pdfFonts"), domain = NA)
 msgid "invalid arguments in '%s' (need named args)"
@@ -284,7 +292,7 @@ msgstr "niepoprawne argumenty w '%s' (potrzebne są nazwane argumenty)"
 # grDevices/R/postscript.R: 34
 # stop("'name.opt' must be character, name of an existing list")
 msgid "'name.opt' must be character, name of an existing list"
-msgstr "'name.opt' musi być tekstem, nazwą istniejącej listy"
+msgstr "argument 'name.opt' musi być tekstem, nazwą istniejącej listy"
 
 # grDevices/R/postscript.R: 40
 # stop(gettextf("cannot reset non-existent '%s'", name.opt),
@@ -323,124 +331,125 @@ msgstr ""
 
 # grDevices/R/postscript.R: 255
 # stop(gettextf("unknown family '%s'", family), domain = NA)
-# grDevices/R/postscript.R: 348
+# grDevices/R/postscript.R: 350
 # stop(gettextf("unknown family '%s'", family), domain = NA)
 msgid "unknown family '%s'"
 msgstr "nieznana rodzina '%s'"
 
 # grDevices/R/postscript.R: 258
 # stop("invalid 'family' argument")
-# grDevices/R/postscript.R: 351
+# grDevices/R/postscript.R: 353
 # stop("invalid 'family' argument")
 msgid "invalid 'family' argument"
 msgstr "niepoprawny argument 'family'"
 
-# grDevices/R/postscript.R: 258
-# stop("invalid 'family' argument")
-# grDevices/R/postscript.R: 351
-# stop("invalid 'family' argument")
-#, fuzzy
+# grDevices/R/postscript.R: 264
+# stop(gettextf("invalid 'file' argument '%s'", file), domain = NA)
+# grDevices/R/postscript.R: 287
+# stop(gettextf("invalid 'file' argument '%s'", file), domain = NA)
+# grDevices/R/postscript.R: 366
+# stop(gettextf("invalid 'file' argument '%s'", file), domain = NA)
 msgid "invalid 'file' argument '%s'"
-msgstr "niepoprawny argument 'family'"
+msgstr "niepoprawny argument 'file' '%s'"
 
-# grDevices/R/postscript.R: 360
+# grDevices/R/postscript.R: 362
 # stop("invalid PDF version")
 msgid "invalid PDF version"
 msgstr "niepoprawna wersja PDF"
 
-# grDevices/R/postscript.R: 429
+# grDevices/R/postscript.R: 432
 # stop("Invalid font type")
 msgid "Invalid font type"
 msgstr "Niepoprawny typ czcionki"
 
-# grDevices/R/postscript.R: 438
+# grDevices/R/postscript.R: 441
 # stop("invalid family name in font specification")
-# grDevices/R/postscript.R: 458
+# grDevices/R/postscript.R: 461
 # stop("invalid family name in font specification")
 msgid "invalid family name in font specification"
-msgstr "niepoprawna nazwa rodziny w specyfikacji czcionki"
+msgstr "niepoprawna rodzina czcionki w specyfikacji czcionki"
 
-# grDevices/R/postscript.R: 441
+# grDevices/R/postscript.R: 444
 # stop("invalid metric information in font specification")
-# grDevices/R/postscript.R: 461
+# grDevices/R/postscript.R: 464
 # stop("invalid metric information in font specification")
 msgid "invalid metric information in font specification"
 msgstr "niepoprawna informacja metryczna w specyfikacji czcionki"
 
-# grDevices/R/postscript.R: 446
+# grDevices/R/postscript.R: 449
 # stop("invalid encoding in font specification")
 msgid "invalid encoding in font specification"
 msgstr "niepoprawna strona kodowa w specyfikacji czcionki"
 
-# grDevices/R/postscript.R: 456
+# grDevices/R/postscript.R: 459
 # stop("Not a CID font")
 msgid "Not a CID font"
 msgstr "To nie jest czcionka CID"
 
-# grDevices/R/postscript.R: 466
+# grDevices/R/postscript.R: 469
 # stop("invalid CMap name in font specification")
 msgid "invalid CMap name in font specification"
 msgstr "niepoprawna nazwa 'CMap' w specyfikacji czcionki"
 
-# grDevices/R/postscript.R: 468
+# grDevices/R/postscript.R: 471
 # stop("invalid 'cmapEncoding' in font specification")
 msgid "invalid 'cmapEncoding' in font specification"
 msgstr "niepoprawne 'cmapEncoding' w specyfikacji czcionki"
 
-# grDevices/R/postscript.R: 470
+# grDevices/R/postscript.R: 473
 # stop("invalid PDF resource in font specification")
 msgid "invalid PDF resource in font specification"
 msgstr "niepoprawne źródło PDF w specyfikacji czcionki"
 
-# grDevices/R/postscript.R: 478
+# grDevices/R/postscript.R: 481
 # stop("Invalid font database name")
 msgid "Invalid font database name"
 msgstr "Niepoprawna nazwa bazy danych czcionek"
 
-# grDevices/R/postscript.R: 485
+# grDevices/R/postscript.R: 488
 # stop(gettextf("font %s already in use", i), domain = NA)
 msgid "font %s already in use"
 msgstr "czcionka '%s' jest już w użyciu"
 
-# grDevices/R/postscript.R: 534
+# grDevices/R/postscript.R: 537
 # stop(gettextf("invalid arguments in '%s' (must be font names)",
 #                               "postscriptFonts"), domain = NA)
-# grDevices/R/postscript.R: 588
+# grDevices/R/postscript.R: 591
 # stop(gettextf("invalid arguments in '%s' (must be font names)",
 #                               "pdfFonts"), domain = NA)
 msgid "invalid arguments in '%s' (must be font names)"
 msgstr "niepoprawne argumenty w '%s' (muszą być nazwy czcionek)"
 
-# grDevices/R/postscript.R: 617
+# grDevices/R/postscript.R: 620
 # stop("unknown font")
 msgid "unknown font"
 msgstr "nieznana czcionka"
 
-# grDevices/R/postscript.R: 619
+# grDevices/R/postscript.R: 622
 # stop(gettextf("font encoding mismatch '%s'/'%s'",
 #                       font$encoding, encoding), domain=NA)
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "niezgodność strony kodowej czcionki '%s'/'%s'"
 
-# grDevices/R/postscript.R: 951
-# stop("'file' must be a non-empty character string")
 # grDevices/R/unix/dev2bitmap.R: 25
 # stop("'file' must be a non-empty character string")
-# grDevices/R/unix/dev2bitmap.R: 86
+# grDevices/R/unix/dev2bitmap.R: 87
+# stop("'file' must be a non-empty character string")
+# grDevices/R/postscript.R: 959
 # stop("'file' must be a non-empty character string")
 # grDevices/R/windows/dev2bitmap.R: 25
 # stop("'file' must be a non-empty character string")
-# grDevices/R/windows/dev2bitmap.R: 88
+# grDevices/R/windows/dev2bitmap.R: 89
 # stop("'file' must be a non-empty character string")
 msgid "'file' must be a non-empty character string"
-msgstr "'file' musi być niepustym łańcuchem tekstowym"
+msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
 
-# grDevices/R/postscript.R: 960
+# grDevices/R/postscript.R: 968
 # stop("Invalid output format")
 msgid "Invalid output format"
-msgstr "Niepoprawny format wyjściowy"
+msgstr "niepoprawny format wyjściowy"
 
-# grDevices/R/postscript.R: 986
+# grDevices/R/postscript.R: 994
 # stop(gettextf("status %d in running command '%s'", ret, cmd),
 #              domain = NA)
 msgid "status %d in running command '%s'"
@@ -472,48 +481,46 @@ msgstr "tablica rastrowa musi mieć dokładnie 3 wymiary"
 msgid "a raster array must have exactly 3 or 4 planes"
 msgstr "tablica rastrowa musi mieć dokładnie 3 lub 4 płaszczyzny"
 
-# grDevices/R/raster.R: 115
+# grDevices/R/raster.R: 116
 # warning("'drop' is always implicitly FALSE in '[.raster'")
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' jest zawsze rozumiany jako FALSE w '[.raster'"
 
-# grDevices/R/raster.R: 124
+# grDevices/R/raster.R: 125
 # stop("invalid raster subsetting")
 msgid "invalid raster subsetting"
 msgstr "niepoprawny podzbiór rastra"
 
-# grDevices/R/raster.R: 139
+# grDevices/R/raster.R: 140
 # stop("invalid raster subassignment")
 msgid "invalid raster subassignment"
 msgstr "niepoprawny wymiana elementu rastra"
 
-# grDevices/R/raster.R: 153
+# grDevices/R/raster.R: 154
 # stop("operator not meaningful for raster objects")
 msgid "operator not meaningful for raster objects"
 msgstr "operator nie ma znaczenia dla obiektów rastrowych"
 
-# grDevices/R/recordplot.R: 27
+# grDevices/R/recordplot.R: 22
 # stop("no current device to record from")
 msgid "no current device to record from"
 msgstr "brak bieżącego urządzenia z którego można nagrywać"
 
-# grDevices/R/recordplot.R: 37
+# grDevices/R/recordplot.R: 32
 # stop(gettextf("argument is not of class %s", dQuote("recordedplot")),
 #              domain = NA)
 msgid "argument is not of class %s"
-msgstr "argument nie jest klasy %s"
+msgstr "argument nie jest obiektem klasy %s"
 
-# grDevices/R/recordplot.R: 44
-# warning(gettext("loading snapshot from different R version"),
-#                 " (", version, ")", domain = NA)
-#, fuzzy
+# grDevices/R/recordplot.R: 36
+# stop("loading snapshot from a different session")
 msgid "loading snapshot from a different session"
-msgstr "ładowanie zrzutu z innej wersji R"
+msgstr "ładowanie zrzutu z innej sesji"
 
 # grDevices/R/smooth2d.R: 29
 # stop("'nbin' must be numeric of length 1 or 2")
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr "'nbin' musi być liczbą o długości 1 lub 2"
+msgstr "argument 'nbin' musi być liczbą o długości 1 lub 2"
 
 # grDevices/R/smooth2d.R: 38
 # stop("'bandwidth' must be numeric")
@@ -523,12 +530,12 @@ msgstr "wartość 'bandwidth' musi być liczbą"
 # grDevices/R/smooth2d.R: 39
 # stop("'bandwidth' must be positive")
 msgid "'bandwidth' must be positive"
-msgstr "wartość 'bandwidth' musi być dodatnia"
+msgstr "argument 'bandwidth' musi być dodatni"
 
 # grDevices/R/utils.R: 32
 # stop("'r' must be a \"range\", hence of length 2")
 msgid "'r' must be a \"range\", hence of length 2"
-msgstr "'r' musi być typu 'range', więc o długości 2"
+msgstr "'r' musi być wynikiem funkcji 'range()', a więc o długości 2"
 
 # grDevices/R/xyz.coords.R: 33
 # stop("invalid first argument")
@@ -553,7 +560,7 @@ msgstr "niepoprawny pierwszy argument [niepoprawny obiekt języka]"
 # grDevices/R/xyz.coords.R: 139
 # stop("at least 2 columns needed")
 msgid "at least 2 columns needed"
-msgstr "potrzeba przynajmniej 2 kolumn"
+msgstr "przynajmniej 2 kolumny są potrzebne"
 
 # grDevices/R/xyz.coords.R: 172
 # stop("'x' is a list, but does not have components 'x', 'y'  and 'z'")
@@ -567,49 +574,49 @@ msgstr "długości zmiennych 'x', 'y' oraz 'z' różnią się"
 
 # grDevices/R/unix/dev2bitmap.R: 23
 # stop("'file' is missing with no default")
-# grDevices/R/unix/dev2bitmap.R: 84
+# grDevices/R/unix/dev2bitmap.R: 85
 # stop("'file' is missing with no default")
 # grDevices/R/windows/dev2bitmap.R: 23
 # stop("'file' is missing with no default")
-# grDevices/R/windows/dev2bitmap.R: 86
+# grDevices/R/windows/dev2bitmap.R: 87
 # stop("'file' is missing with no default")
 msgid "'file' is missing with no default"
-msgstr "brakuje wartości 'file', a nie ma określonej wartości domyślnej"
+msgstr "brakuje argumentu 'file', a brak zdefiniowanej wartości domyślnej"
 
-# grDevices/R/unix/dev2bitmap.R: 34
+# grDevices/R/unix/dev2bitmap.R: 35
 # stop("sorry, 'gs' cannot be found")
-# grDevices/R/unix/dev2bitmap.R: 94
+# grDevices/R/unix/dev2bitmap.R: 96
 # stop("sorry, 'gs' cannot be found")
 msgid "sorry, 'gs' cannot be found"
-msgstr "przykro mi, ale 'gs' nie może zostać znaleziony"
+msgstr "przykro mi, ale polecenie 'gs' nie może zostać znalezione"
 
-# grDevices/R/unix/dev2bitmap.R: 40
+# grDevices/R/unix/dev2bitmap.R: 41
 # warning("unrecognized format of gs -help")
-# grDevices/R/unix/dev2bitmap.R: 100
+# grDevices/R/unix/dev2bitmap.R: 102
 # warning("unrecognized format of gs -help")
-# grDevices/R/windows/dev2bitmap.R: 42
+# grDevices/R/windows/dev2bitmap.R: 43
 # warning("unrecognized format of gs -help")
-# grDevices/R/windows/dev2bitmap.R: 104
+# grDevices/R/windows/dev2bitmap.R: 106
 # warning("unrecognized format of gs -help")
 msgid "unrecognized format of gs -help"
 msgstr "nierozpoznany format 'gs -help'"
 
-# grDevices/R/unix/dev2bitmap.R: 45
+# grDevices/R/unix/dev2bitmap.R: 46
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-# grDevices/R/unix/dev2bitmap.R: 105
+# grDevices/R/unix/dev2bitmap.R: 107
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-# grDevices/R/windows/dev2bitmap.R: 47
+# grDevices/R/windows/dev2bitmap.R: 48
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-# grDevices/R/windows/dev2bitmap.R: 109
+# grDevices/R/windows/dev2bitmap.R: 111
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
@@ -617,22 +624,22 @@ msgstr "nierozpoznany format 'gs -help'"
 msgid "device '%s' is not available"
 msgstr "urządzenie '%s' nie jest dostępne"
 
-# grDevices/R/unix/dev2bitmap.R: 45
+# grDevices/R/unix/dev2bitmap.R: 46
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-# grDevices/R/unix/dev2bitmap.R: 105
+# grDevices/R/unix/dev2bitmap.R: 107
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-# grDevices/R/windows/dev2bitmap.R: 47
+# grDevices/R/windows/dev2bitmap.R: 48
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-# grDevices/R/windows/dev2bitmap.R: 109
+# grDevices/R/windows/dev2bitmap.R: 111
 # stop(gettextf("device '%s' is not available\n", type),
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
@@ -655,119 +662,113 @@ msgstr "Dostępne urządzenia to %s"
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "wartość 'res' musi być określona chyba, że 'units = \"px\"'"
 
-# grDevices/R/unix/quartz.R: 63
+# grDevices/R/unix/quartz.R: 72
 # stop("invalid 'title'")
-# grDevices/R/unix/x11.R: 74
+# grDevices/R/unix/x11.R: 83
 # stop("invalid 'title'")
 msgid "invalid 'title'"
-msgstr "niepoprawna wartość 'title'"
+msgstr "niepoprawny argument 'title'"
 
-# grDevices/R/postscript.R: 263
-# stop("invalid 'file'")
-# grDevices/R/postscript.R: 285
-# stop("invalid 'file'")
-# grDevices/R/postscript.R: 363
-# stop("invalid 'file'")
-# grDevices/R/unix/quartz.R: 64
+# grDevices/R/unix/quartz.R: 73
 # stop("invalid 'file'")
 msgid "invalid 'file'"
-msgstr "niepoprawna wartość 'file'"
+msgstr "niepoprawny argument 'file'"
 
-# grDevices/R/unix/quartz.R: 83
+# grDevices/R/unix/quartz.R: 92
 # stop("invalid Quartz font:  must be 4 strings")
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "niepoprawna czcionka 'Quartz': muszą być 4 łańcuchy"
 
-# grDevices/R/unix/quartz.R: 122
+# grDevices/R/unix/quartz.R: 131
 # stop("invalid arguments in 'quartzFonts' (must be font names)")
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
-msgstr "niepoprawne argumenty w 'quartzFonts' (muszą być nazwy czcionek)"
+msgstr "niepoprawne argumenty w 'quatzFonts' (muszą być nazwy czcionek)"
 
-# grDevices/R/unix/quartz.R: 127
+# grDevices/R/unix/quartz.R: 136
 # stop("invalid arguments in 'quartzFonts' (need named args)")
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr "niepoprawne argumenty w 'quartzFonts' (potrzeba są nazwane argumenty)"
+msgstr "niepoprawne argumenty w 'quatzFonts' (potrzebne są nazwane argumenty)"
 
-# grDevices/R/unix/x11.R: 78
+# grDevices/R/unix/x11.R: 87
 # warning("cairo-based types are not supported on this build - using \"Xlib\"")
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr ""
 "czcionki oparte o cairo nie są wspierane w tej kompilacji - używanie \"Xlib\""
 
-# grDevices/R/unix/x11.R: 88
+# grDevices/R/unix/x11.R: 97
 # stop('unknown family for X11(type = "XLib")')
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr "nieznana rodzina dla  X11(type = \"XLib\")"
+msgstr "nieznana rodzina dla  'X11(type = \"XLib\")'"
 
-# grDevices/R/unix/x11.R: 115
+# grDevices/R/unix/x11.R: 124
 # stop("invalid X11 font specification: ", errDesc)
 msgid "invalid X11 font specification:"
 msgstr "niepoprawne określenie czcionki X11:"
 
-# grDevices/R/unix/x11.R: 170
+# grDevices/R/unix/x11.R: 179
 # stop("invalid arguments in 'X11Fonts' (must be font names)")
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
 msgstr "niepoprawne argumenty w 'X11Fonts' (muszą być nazwy czcionek)"
 
-# grDevices/R/unix/x11.R: 175
+# grDevices/R/unix/x11.R: 184
 # stop("invalid arguments in 'X11Fonts' (need named args)")
 msgid "invalid arguments in 'X11Fonts' (need named args)"
 msgstr "niepoprawne argumenty w 'X11Fonts' (potrzebne są nazwane argumenty)"
 
-# grDevices/R/unix/x11.R: 205
+# grDevices/R/unix/x11.R: 214
 # stop("no such device")
-# grDevices/R/windows/windows.R: 171
+# grDevices/R/windows/windows.R: 186
 # stop("no such device")
 msgid "no such device"
 msgstr "brak takiego urządzenia"
 
-# grDevices/R/unix/x11.R: 208
+# grDevices/R/unix/x11.R: 217
 # stop("can only copy from 'X11(type=\"*cairo\")' devices")
 msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr "można kopiować jedynie z urządzeń 'X11(type=\"*cairo\")'"
 
-# grDevices/R/windows/windows.R: 90
+# grDevices/R/windows/windows.R: 97
 # stop("invalid value for 'rescale'")
 msgid "invalid value for 'rescale'"
 msgstr "niepoprawna wartość dla 'rescale'"
 
-# grDevices/R/windows/windows.R: 142
+# grDevices/R/windows/windows.R: 157
 # stop("can only bring windows devices to the front")
 msgid "can only bring windows devices to the front"
 msgstr "można jedynie przywołać urządzenia okien na wierzch"
 
-# grDevices/R/windows/windows.R: 154
+# grDevices/R/windows/windows.R: 169
 # stop("'type' not applicable to the R console")
 msgid "'type' not applicable to the R console"
 msgstr "'type' nie ma zastosowania w konsoli R"
 
-# grDevices/R/windows/windows.R: 157
+# grDevices/R/windows/windows.R: 172
 # stop("can only manipulate windows devices")
 msgid "can only manipulate windows devices"
 msgstr "można działać tylko z urządzeniami 'windows'"
 
-# grDevices/R/windows/windows.R: 173
+# grDevices/R/windows/windows.R: 188
 # stop("can only copy from 'windows' devices")
 msgid "can only copy from 'windows' devices"
 msgstr "można kopiować jedynie z urządzeń 'windows'"
 
-# grDevices/R/windows/windows.R: 198
+# grDevices/R/windows/windows.R: 213
 # stop("subscript out of range")
 msgid "subscript out of range"
-msgstr "indeks poza zakresem"
+msgstr "indeks jest poza zakresem"
 
-# grDevices/R/windows/windows.R: 217
+# grDevices/R/windows/windows.R: 232
 # stop("invalid Windows font:  must be a single font family name")
 msgid "invalid Windows font:  must be a single font family name"
 msgstr ""
 "niepoprawna czcionka Windows:  musi być nazwa pojedynczej rodziny czcionek"
 
-# grDevices/R/windows/windows.R: 255
+# grDevices/R/windows/windows.R: 270
 # stop("invalid arguments in 'windowsFonts' (must be font names)")
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "niepoprawne argumenty w 'windowsFonts' (muszą być nazwy czcionek)"
 
-# grDevices/R/windows/windows.R: 260
+# grDevices/R/windows/windows.R: 275
 # stop("invalid arguments in 'windowsFonts' (need named args)")
 msgid "invalid arguments in 'windowsFonts' (need named args)"
 msgstr ""
@@ -783,9 +784,9 @@ msgstr ""
 #                  domain = NA)
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
-msgstr[0] "niepoprawna nazwa argumentu %s w %s"
-msgstr[1] "niepoprawne nazwy argumentów %s w %s"
-msgstr[2] "niepoprawne nazwy argumentów %s w %s"
+msgstr[0] "niepoprawna nazwa argumentu %s w '%s'"
+msgstr[1] "niepoprawne nazwy argumentów %s w '%s'"
+msgstr[2] "niepoprawne nazwy argumentów %s w '%s'"
 
 # grDevices/R/postscript.R: 68
 # warning(paste(sQuote(paste0(fn, "(", names(prev[ii]), ")" )),
@@ -848,15 +849,3 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
-
-# grDevices/R/recordplot.R: 42
-# stop("loading snapshot from pre-3.0.0 R version")
-#~ msgid "loading snapshot from pre-3.0.0 R version"
-#~ msgstr "ładowanie zrzutu z wersji R przed 3.0.0"
-
-#~ msgid "can only print from screen device"
-#~ msgstr "można drukować jedynie z ekranu urządzenia"
-
-#~ msgid "'maxRasters' is no longer needed, and will be ignored"
-#~ msgstr ""
-#~ "parametr 'maxRasters' nie jest już dłużej potrzebny i zostanie zignorowany"

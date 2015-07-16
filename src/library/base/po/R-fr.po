@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:10\n"
-"PO-Revision-Date: 2013-03-18 21:58+0100\n"
+"POT-Creation-Date: 2014-03-27 18:29\n"
+"PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' est obsolète et retiré de R."
@@ -73,17 +73,14 @@ msgstr "chaîne de caractères de version incorrecte"
 msgid "target is %s, current is %s"
 msgstr "la cible est %s, l'actuel est %s"
 
-#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr "'x' doit être numérique"
+msgstr "'tolerance' doit être numérique"
 
-#, fuzzy
 msgid "'scale' should be numeric or NULL"
-msgstr "'arg' doit être un de %s"
+msgstr "'scale' doit être numérique ou NULL"
 
-#, fuzzy
 msgid "'%s' must be logical"
-msgstr "'subset' doit être une valeur logique"
+msgstr "'%s' doit être une valeur logique"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) doit avoir un longueur positive"
@@ -318,9 +315,8 @@ msgstr "remplacement d'élément dans une colonne non existante : %s"
 msgid "only a single element should be replaced"
 msgstr "seulement un élement devrait être remplacé"
 
-#, fuzzy
 msgid "Name partially matched in data frame"
-msgstr "variable non numérique dans le tableau de données :"
+msgstr "Nom sélectionné avec correspondance partielle dans le data frame"
 
 msgid "names do not match previous names"
 msgstr "les noms ne correspondent pas aux noms précédents"
@@ -333,16 +329,14 @@ msgstr ""
 "liste d'arguments incorrecte : toutes les variables doivent avoir la même "
 "longueur"
 
-msgid "data frame with 0 columns and %d rows"
-msgstr "tableau de données (data frame) avec 0 colonnes et %d lignes"
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 lignes> (ou 'row.names' de longueur nulle)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "variable non numérique dans le tableau de données :"
 
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr "seulement défini pour des tableaux de données de même taille"
 
 msgid "list of length %d not meaningful"
@@ -492,9 +486,8 @@ msgstr "'from' doit être un objet \"POSIXt\""
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' doit être un objet \"POSIXt\""
 
-#, fuzzy
 msgid "no Olson database found"
-msgstr "fichier introuvable"
+msgstr "aucune base de donnée Olson trouvée"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' doit être une chîne de caractères ou une connection"
@@ -582,7 +575,8 @@ msgstr "'labels' incorrect ; la longueur %d doit être 1 ou %d"
 msgid "number of levels differs"
 msgstr "le nombre de niveaux diffère"
 
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr "ceci n'est pas pertinent pour des variables facteurs"
 
 msgid "level sets of factors are different"
@@ -651,7 +645,7 @@ msgid "using the first element of 'value' of type \"expression\""
 msgstr "utilisation du premier élément de 'value' de type \"expression\""
 
 msgid "class of 'x' was discarded"
-msgstr ""
+msgstr "la classe de 'x' est éliminée"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
@@ -726,9 +720,8 @@ msgstr "des remplacements doivent être fournis pour les non-correspondances"
 msgid "must have replacements for matches"
 msgstr "des remplacements doivent être fournis pour les correspondances"
 
-#, fuzzy
 msgid "No factors specified"
-msgstr "aucune librarie partagée (DLL) n'est spécifiée"
+msgstr "Aucunes variables 'factor's spécifiées"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' utilise systématiquement 'exact = FALSE' pour l'instant"
@@ -1016,6 +1009,9 @@ msgstr ""
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' et 'by.y' spécifient des nombres différents de colonnes"
 
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr ""
+
 msgid "additional arguments ignored in message()"
 msgstr "arguments supplémentaires ignorés dans message()"
 
@@ -1033,6 +1029,8 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
+"l'espace de nom %s n'est pas disponible et a été remplacé\n"
+"par .GlobalEnv lors du traitement de l'objet %s"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' n'est pas un objet exporté depuis 'namespace:%s'"
@@ -1134,9 +1132,9 @@ msgstr ""
 msgid "cannot import into a sealed namespace"
 msgstr "impossible d'importer vers un espace de noms verrouillé"
 
-#, fuzzy
 msgid "replacing previous import by %s when loading %s"
-msgstr "remplacement de l'importation précédente %s lors du chargement de %s"
+msgstr ""
+"remplacement de l'importation précédente par %s lors du chargement de %s"
 
 msgid "invalid import target"
 msgstr "cible d'importation incorrecte"
@@ -1173,7 +1171,6 @@ msgstr "le package %s n'a aucun fichier 'NAMESPACE'"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "nom vide dans la directive '%s' dans le fichier 'NAMESPACE'"
 
-#, fuzzy
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "noms de symboles dupliqués %s dans useDynlib(\"%s\")"
 
@@ -1264,7 +1261,6 @@ msgstr ""
 msgid "invalid NCOL(R)"
 msgstr "NCOL(R) incorrecte"
 
-#, fuzzy
 msgid "'x' must be a vector of an atomic type"
 msgstr "'x' doit être un vecteur atomique"
 
@@ -1293,7 +1289,7 @@ msgid "either specify 'nmax' or 'n', but not both."
 msgstr "spécifiez soit 'nmax', soit 'n', mais pas les deux à la fois"
 
 msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'from' ne peut être NA, NaN ou infini"
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "l'argument 'length.out' doit être de longueur 1"
@@ -1302,7 +1298,7 @@ msgid "first element used of 'length.out' argument"
 msgstr "seul le premier élément de 'length.out' est utilisé"
 
 msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'to' ne peut être NA, NaN ou infini"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "(to - from) / by incorrect dans seq(.)"
@@ -1689,6 +1685,48 @@ msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] "%d variables sont fournies pour remplacer %d variables"
 msgstr[1] "%d variables sont fournies pour remplacer %d variables"
+
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "tableau de données (data frame) avec 0 colonnes et %d lignes"
+msgstr[1] "tableau de données (data frame) avec 0 colonnes et %d lignes"
+
+#, fuzzy
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"L'objet suivant est masqué %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"Les objets suivants sont masqués %s %s:\n"
+"\n"
+"%s\n"
+
+#, fuzzy
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"L'objet suivant est masqué %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"Les objets suivants sont masqués %s %s:\n"
+"\n"
+"%s\n"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"

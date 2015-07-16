@@ -135,6 +135,7 @@ function(x, y = NULL,
 
     ## compute rectangle positions on y axis
     yat <- rbind(0, apply(prop.table(tab, 1), 1L, cumsum))
+    yat[is.na(yat)] <- 1
 
     if(is.null(xlim)) xlim <- c(0, 1 + off * (nx-1L))
     else if(any(xlim < 0) || any(xlim > 1)) {

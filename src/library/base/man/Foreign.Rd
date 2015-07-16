@@ -118,13 +118,14 @@
   read-only, and all apart from vectors (including lists), functions and
   environments are now deprecated.
 }
-%%-- This note by Thomas Lumley, (minimally edited by MM,
-%%      edited by BDR for 1.2.0's non-moving garbage collector):
-\section{Warning}{
-  \emph{\code{DUP = FALSE} is dangerous.}
 
-  People concerned about memory usage are strongly recommended to use
-  the \code{\link{.Call}} interface instead of these interfaces.
+\section{Warning}{
+  \code{DUP = FALSE} \emph{is dangerous} and may be disabled in future
+  versions of \R.  It was deprecated in \R 3.1.0.
+
+  People concerned about performance and especially memory usage are
+  strongly recommended to use the \code{\link{.Call}} interface instead
+  of these interfaces.
 
   If you pass a local variable to \code{.C}/\code{.Fortran} with
   \code{DUP = FALSE}, your compiled code can alter the local variable and
@@ -136,17 +137,19 @@
   With \code{DUP = FALSE}, character vectors cannot be used, and single
   precision values will not be returned.
 
-  It is safe to set \code{DUP = FALSE} if you do not change any of the
-  variables that might be affected, e.g.,
+  It is safe to set \code{DUP = FALSE} provided you do not change any of
+  the variables that might be affected, e.g.,
 
   \code{.C("Cfunction", input = x, output = numeric(10))}.
 
   In this case the \code{output} variable did not exist before the call
-  so it cannot cause trouble (but as from \R 2.15.1 it is not copied
-  even with \code{DUP = TRUE}).  If the \code{input} variable is not
-  changed in the C code of \code{Cfunction} you are safe.
+  so is not copied (even with \code{DUP = TRUE}).  \emph{If} the
+  \code{input} variable is not changed in the C code of \code{Cfunction}
+  you would be safe.  Unfortunately, there is no automated check that
+  the C function does not change its argument, and authors have
+  frequently done so without realizing it.
 
-  However, in recent versions of \R most unnecesary copying is avoided:
+  However, in recent versions of \R most unnecessary copying is avoided:
   on the other hand using \code{DUP = FALSE} can omit \emph{necessary}
   copying.
 }

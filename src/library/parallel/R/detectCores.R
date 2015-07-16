@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/detectCores.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,3 +44,14 @@ detectCores <-
             NA_integer_
         }
     }
+
+## added in R 3.0.3
+.check_ncores <- function(nc)
+{
+    chk <- tolower(Sys.getenv("_R_CHECK_LIMIT_CORES_", ""))
+    if (nzchar(chk) && (chk != "false") && nc > 2L) {
+        msg <- sprintf("%d simultaneous processes spawned", nc)
+        if(chk == "warn") warning(msg, call. = FALSE, immediate. = TRUE)
+        else stop(msg, call. = TRUE)
+    }
+}

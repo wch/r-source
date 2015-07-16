@@ -804,12 +804,12 @@ beginning and end of the sequence, and if these are the only two
 arguments given the result is the same as the colon operator.  That is
 @code{seq(2,10)} is the same vector as @code{2:10}.
 
-Parameters to @code{seq()}, and to many other @R{} functions, can also
+Arguments to @code{seq()}, and to many other @R{} functions, can also
 be given in named form, in which case the order in which they appear is
-irrelevant.  The first two parameters may be named
+irrelevant.  The first two arguments may be named
 @code{from=@var{value}} and @code{to=@var{value}}; thus
 @code{seq(1,30)}, @code{seq(from=1, to=30)} and @code{seq(to=30,
-from=1)} are all the same as @code{1:30}.  The next two parameters to
+from=1)} are all the same as @code{1:30}.  The next two arguments to
 @code{seq()} may be named @code{by=@var{value}} and
 @code{length=@var{value}}, which specify a step size and a length for
 the sequence respectively.  If neither of these is given, the default
@@ -832,8 +832,8 @@ generates in @code{s3} the vector @code{c(-5.0, -4.8, -4.6, @dots{},
 @noindent
 generates the same vector in @code{s4}.
 
-The fifth parameter may be named @code{along=@var{vector}}, which if
-used must be the only parameter, and creates a sequence @code{1, 2,
+The fifth argument may be named @code{along=@var{vector}}, which is
+normally used as the only argument to create the sequence @code{1, 2,
 @dots{}, length(@var{vector})}, or the empty sequence if the vector is
 empty (as it can be).
 
@@ -991,7 +991,7 @@ concatenates them one by one into character strings.  Any numbers given
 among the arguments are coerced into character strings in the evident
 way, that is, in the same way they would be if they were printed.  The
 arguments are by default separated in the result by a single blank
-character, but this can be changed by the named parameter,
+character, but this can be changed by the named argument,
 @code{sep=@var{string}}, which changes it to @code{@var{string}},
 possibly empty.
 
@@ -1012,8 +1012,8 @@ Note particularly that recycling of short lists takes place here too;
 thus @code{c("X", "Y")} is repeated 5 times to match the sequence
 @code{1:10}.
 @footnote{@code{paste(..., collapse=@var{ss})} joins the
-arguments into a single character string putting @var{ss} in between.
-There are more tools for character manipulation, see the help
+arguments into a single character string putting @var{ss} in between, e.g.,
+@code{ss <- "|"}.  There are more tools for character manipulation, see the help
 for @code{sub} and @code{substring}.}
 
 @node Index vectors, Other types of objects, Character vectors, Simple manipulations numbers and vectors
@@ -5159,9 +5159,10 @@ To obtain the approximate standard errors (SE) of the estimates we do:
 > sqrt(diag(2*out$minimum/(length(y) - 2) * solve(out$hessian)))
 @end example
 
-The 2 in the line above represents the number of parameters.  A 95%
-confidence interval would be the parameter estimate @eqn{\pm, +/-} 1.96
-SE.  We can superimpose the least squares fit on a new plot:
+The @code{2} which is subtracted in the line above represents the number
+of parameters.  A 95% confidence interval would be the parameter
+estimate @eqn{\pm, +/-} 1.96 SE.  We can superimpose the least squares
+fit on a new plot:
 
 @example
 > plot(x, y)
@@ -6943,13 +6944,13 @@ parts @dots{}
 
 @item plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+",xlab="x", ylab="y")
 @itemx lines(z)
-@itemx All points are inside the unit circle, but the distribution is not
+All points are inside the unit circle, but the distribution is not
 uniform.
 
 @item w <- sqrt(runif(100))*exp(2*pi*runif(100)*1i)
 @itemx plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+", xlab="x", ylab="y")
 @itemx lines(z)
-@itemx The second method uses the uniform distribution.  The points should now
+The second method uses the uniform distribution.  The points should now
 look more evenly spaced over the disc.
 
 @item rm(th, w, z)

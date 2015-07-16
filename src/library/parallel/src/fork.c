@@ -99,6 +99,40 @@ static int rm_child_(int pid)
     return 0;
 }
 
+/* flag a child as terminated */
+static void terminated_child(int pid) {
+    child_info_t *ci = children;
+    while (ci) {
+	if (ci->pid == pid) {
+	    if (ci->pfd > 0) { close(ci->pfd); ci->pfd = -1; }
+            if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
+	    ci->pid = 0;
+	    break;
+	}
+	ci = ci->next;
+    }
+}
+
+/* remove all children that have a closed master descriptor */
+static void rm_closed() {
+    child_info_t *ci = children, *prev = 0;
+    while (ci) {
+	if (ci->pfd == -1) {
+	    child_info_t *next = ci->next;
+	    if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
+	    if (prev) prev->next = ci->next;
+            else children = ci->next;
+	    if (ci->pid)
+		kill(ci->pid, SIGUSR1); /* send USR1 to the child to make sure it exits */
+	    free(ci);
+	    ci = next;
+	} else {
+	    prev = ci;
+	    ci = ci->next;
+	}
+    }
+}
+
 #ifndef STDIN_FILENO
 #define STDIN_FILENO 0
 #endif
@@ -124,60 +158,119 @@ static void child_sig_handler(int sig)
     }
 }
 
+static void clean_zombies() {
+    int pid, wstat;
+    while ((pid = waitpid(-1, &wstat, WNOHANG)) > 0) {
+	/* did this child terminate? */
+	if (WIFEXITED(wstat) || WIFSIGNALED(wstat)) {
+#ifdef MC_DEBUG
+	    if (WIFEXITED(wstat))
+		Dprintf("child %d terminated with %d\n", pid, WEXITSTATUS(wstat));
+	    else
+		Dprintf("child %d terminated by signal %d\n", pid, WTERMSIG(wstat));
+#endif
+	    /* we can only flag at this point, since actually
+	       removing the child would cause re-entrance issues.
+	       So we let fork/collect clean up the child list. */
+	    terminated_child(pid);
+	}
+    }
+}
+
+/* this handler handles SIGCHLD to make sure
+   no zombies are left behind. Historically, zombies
+   were cleaned in mc_select_children(), but no one
+   will clean up detached processes and cleaning zombies
+   on signal makes this automatic as opposed to
+   requiring a poll.
+*/
+static void parent_sig_handler(int sig) {
+    /* clean up when a child terminates */
+    if (sig == SIGCHLD)
+	clean_zombies();
+}
+
 /* from Defn.h */
 extern Rboolean R_isForkedChild;
 
-SEXP mc_fork() 
+SEXP mc_fork(SEXP sEstranged)
 {
     int pipefd[2]; /* write end, read end */
     int sipfd[2];
     pid_t pid;
     SEXP res = allocVector(INTSXP, 3);
     int *res_i = INTEGER(res);
-    if (pipe(pipefd)) error(_("unable to create a pipe"));
-    if (pipe(sipfd)) {
-	close(pipefd[0]); close(pipefd[1]);
-	error(_("unable to create a pipe"));
-    }
+    int estranged = (asInteger(sEstranged) > 0);
+
+    if (!estranged) {
+	if (pipe(pipefd)) error(_("unable to create a pipe"));
+	if (pipe(sipfd)) {
+	    close(pipefd[0]); close(pipefd[1]);
+	    error(_("unable to create a pipe"));
+	}
 #ifdef MC_DEBUG
-    Dprintf("parent[%d] created pipes: comm (%d->%d), sir (%d->%d)\n",
-	    getpid(), pipefd[1], pipefd[0], sipfd[1], sipfd[0]);
+	Dprintf("parent[%d] created pipes: comm (%d->%d), sir (%d->%d)\n",
+		getpid(), pipefd[1], pipefd[0], sipfd[1], sipfd[0]);
 #endif
+    }
+
+    /* make sure we get SIGCHLD to clean up the child process */
+    signal(SIGCHLD, parent_sig_handler);
 
     pid = fork();
     if (pid == -1) {
-	close(pipefd[0]); close(pipefd[1]);
-	close(sipfd[0]); close(sipfd[1]);
+	if (!estranged) {
+	    close(pipefd[0]); close(pipefd[1]);
+	    close(sipfd[0]); close(sipfd[1]);
+	}
 	error(_("unable to fork, possible reason: %s"), strerror(errno));
     }
     res_i[0] = (int) pid;
     if (pid == 0) { /* child */
 	R_isForkedChild = 1;
-	close(pipefd[0]); /* close read end */
-	master_fd = res_i[1] = pipefd[1];
+	/* don't track any children of the child by default */
+	signal(SIGCHLD, SIG_DFL);
+	if (estranged)
+	    res_i[1] = res_i[2] = NA_INTEGER;
+	else {
+	    close(pipefd[0]); /* close read end */
+	    master_fd = res_i[1] = pipefd[1];
+	    res_i[2] = NA_INTEGER;
+	    /* re-map stdin */
+	    dup2(sipfd[0], STDIN_FILENO);
+	    close(sipfd[0]);
+	}
 	is_master = 0;
-	/* re-map stdin */
-	dup2(sipfd[0], STDIN_FILENO);
-	close(sipfd[0]);
 	/* master uses USR1 to signal that the child process can terminate */
 	child_exit_status = -1;
-	child_can_exit = 0;
-	signal(SIGUSR1, child_sig_handler);
+	if (estranged)
+	    child_can_exit = 1;
+	else {
+	    child_can_exit = 0;
+	    signal(SIGUSR1, child_sig_handler);
+	}
 #ifdef MC_DEBUG
 	Dprintf("child process %d started\n", getpid());
 #endif
     } else { /* master process */
 	child_info_t *ci;
+	if (estranged) { /* don't even register it */
+	    res_i[1] = res_i[2] = NA_INTEGER;
+	    return res;
+	}
+
 	close(pipefd[1]); /* close write end of the data pipe */
 	close(sipfd[0]);  /* close read end of the child-stdin pipe */
 	res_i[1] = pipefd[0];
 	res_i[2] = sipfd[1];
+
 #ifdef MC_DEBUG
 	Dprintf("parent registers new child %d\n", pid);
 #endif
 	/* register the new child and its pipes */
 	ci = (child_info_t*) malloc(sizeof(child_info_t));
 	if (!ci) error(_("memory allocation error"));
+	rm_closed(); /* clean up the list by removing closed entries */
 	ci->pid = pid;
 	ci->pfd = pipefd[0];
 	ci->sifd= sipfd[1];
@@ -302,10 +395,8 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	which = INTEGER(sWhich);
 	wlen = LENGTH(sWhich);
     }
-    { 
-	int wstat; 
-	while (waitpid(-1, &wstat, WNOHANG) > 0) ; /* check for zombies */
-    }
+    clean_zombies();
+
     FD_ZERO(&fs);
     while (ci && ci->pid) {
 	if (ci->pfd == -1) zombies++;
@@ -323,40 +414,30 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	}
 	ci = ci -> next;
     }
+    /* if there are any closed children, remove them - don't bother otherwise */
+    if (zombies) rm_closed();
+
 #ifdef MC_DEBUG
     Dprintf("select_children: maxfd=%d, wlen=%d, wcount=%d, zombies=%d, timeout=%d:%d\n", maxfd, wlen, wcount, zombies, (int)tv.tv_sec, (int)tv.tv_usec);
 #endif
-    if (zombies) { /* oops, this should never really happen - it did
-		    * while we had a bug in rm_child_ but hopefully
-		    * not anymore */
-	while (zombies) { /* this is rather more complicated than it
-			   * should be if we used pointers to delete,
-			   * but well ... */
-	    ci = children;
-	    while (ci) {
-		if (ci->pfd == -1) {
-#ifdef MC_DEBUG
-		    Dprintf("detected zombie: pid=%d, pfd=%d, sifd=%d\n", 
-			    ci->pid, ci->pfd, ci->sifd);
-#endif
-		    rm_child_(ci->pid);
-		    zombies--;
-		    break;
-		}
-		ci = ci->next;
-	    }
-	    if (!ci) break;
-	}
-    }
+
     if (maxfd == 0 || (wlen && !wcount)) 
 	return R_NilValue; /* NULL signifies no children to tend to */
+
     sr = select(maxfd + 1, &fs, 0, 0, tvp);
 #ifdef MC_DEBUG
     Dprintf("  sr = %d\n", sr);
 #endif
     if (sr < 0) {
+	/* we can land here when a child terminated due to arriving SIGCHLD.
+	   For simplicity we treat this as timeout. The alernative would be to
+	   go back to select, but potentially this could lead to a much longer
+	   total timeout */
+	if (errno == EINTR)
+	    return ScalarLogical(TRUE);
+
 	warning(_("error '%s' in select"), strerror(errno));
-	return ScalarLogical(0); /* FALSE on select error */
+	return ScalarLogical(FALSE); /* FALSE on select error */
     }
     if (sr < 1) return ScalarLogical(1); /* TRUE on timeout */
     ci = children;
@@ -503,22 +584,26 @@ SEXP mc_rm_child(SEXP sPid)
 
 SEXP mc_children() 
 {
-    unsigned int count = 0;
-    SEXP res;
-    int *pids;
+    rm_closed();
     child_info_t *ci = children;
+    unsigned int count = 0;
     while (ci && ci->pid > 0) {
 	count++;
 	ci = ci->next;
     }
-    res = allocVector(INTSXP, count);
+    SEXP res = allocVector(INTSXP, count);
     if (count) {
-	pids = INTEGER(res);
+	int *pids = INTEGER(res);
 	ci = children;
 	while (ci && ci->pid > 0) {
 	    (pids++)[0] = ci->pid;
 	    ci = ci->next;
 	}
+	/* in theory signals can flag a pid as closed in the
+	   meantime, we may end up with fewer children than
+	   expected - highly unlikely but possible */
+	if (pids - INTEGER(res) < LENGTH(res))
+	    SETLENGTH(res, (int)(pids - INTEGER(res)));
     }
     return res;
 }
@@ -553,7 +638,7 @@ SEXP mc_master_fd()
 
 SEXP mc_is_child() 
 {
-    return ScalarLogical(is_master?0:1);
+    return ScalarLogical(is_master ? FALSE : TRUE);
 }
 
 SEXP mc_kill(SEXP sPid, SEXP sSig) 

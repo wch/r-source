@@ -1,6 +1,6 @@
 % File src/library/utils/man/normalizePath.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{normalizePath}
@@ -23,7 +23,7 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 }
 \details{
   Tilde-expansion (see \code{\link{path.expand}}) is first done on
-  \code{paths} (as from \R 2.13.0).
+  \code{paths}.
 
   Where the Unix-alike platform supports it attempts to turn paths into
   absolute paths in their canonical form (no \samp{./}, \samp{../} nor

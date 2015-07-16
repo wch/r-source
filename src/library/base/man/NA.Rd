@@ -1,6 +1,6 @@
 % File src/library/base/man/NA.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NA}
@@ -28,36 +28,37 @@
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
 
-  The generic function \code{anyNA} with its default method implements
-  \code{any(is.na(x))} in a fast way, not dispatching methods for
-  \code{is.na} and \code{any}.
+  The generic function \code{anyNA} implements \code{any(is.na(x))} in a
+  possibly faster way (especially for atomic vectors).
 }
 \usage{
 NA
 is.na(x)
-anyNA(x)
+anyNA(x, recursive = FALSE)
+
 \method{is.na}{data.frame}(x)
 
 is.na(x) <- value
 }
 \arguments{
-  \item{x}{an \R object to be tested: the default method handles atomic
-    vectors, lists and pairlists.}
+  \item{x}{an \R object to be tested: the default method for
+    \code{is.na} handles atomic vectors, lists and pairlists: that for
+    \code{anyNA} also handles \code{NULL}.}
+  \item{recursive}{logical: should \code{anyNA} be applied recursively
+    to lists and pairlists?}
   \item{value}{a suitable index vector for use with \code{x}.}
 }
-%% Next par on character NAs taken from R-lang.texi:
+
 \details{
-  The \code{NA} of character type is distinct from the
-  string \code{"NA"}.  Programmers who need to specify an explicit
-  string \code{NA} should use \code{NA_character_} rather than
-  \code{"NA"}, or set elements to \code{NA} using \code{is.na<-}.
+  The \code{NA} of character type is distinct from the string
+  \code{"NA"}.  Programmers who need to specify an explicit missing
+  string should use \code{NA_character_} (rather than \code{"NA"}) or set
+  elements to \code{NA} using \code{is.na<-}.
 
-  \code{is.na(x)} works elementwise when \code{x} is a
-  \code{\link{list}}.  It is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.  A complex
-  value is regarded as \code{NA} if either its real or imaginary part is
-  \code{NA} or \code{NaN}.
-
+  \code{is.na} and \code{anyNA} are generic: you can write
+  methods to handle specific classes of objects, see
+  \link{InternalMethods}.
+  
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
 
@@ -66,28 +67,36 @@ is.na(x) <- value
   which case either might result.  Logical computations treat \code{NA}
   as a missing \code{TRUE/FALSE} value, and so may return \code{TRUE} or 
   \code{FALSE} if the expression does not depend on the \code{NA} operand.
+  
+  The default method for \code{anyNA} handles atomic vectors without a
+  class and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
+  classes and for \code{recursive = FALSE}, on lists and pairlists.
 }
 \value{
   The default method for \code{is.na} applied to an atomic vector
   returns a logical vector of the same length as its argument \code{x},
   containing \code{TRUE} for those elements marked \code{NA} or, for
-  numeric or complex vectors, \code{\link{NaN}} (!) and \code{FALSE}
-  otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
-  are preserved.
+  numeric or complex vectors, \code{\link{NaN}}, and \code{FALSE}
+  otherwise. (A complex value is regarded as \code{NA} if either its
+  real or imaginary part is \code{NA} or \code{\link{NaN}}.)
+  \code{dim}, \code{dimnames} and \code{names} attributes are copied to
+  the result.
 
-  The default methods also works for lists and pairlists:\cr
+  The default methods also work for lists and pairlists:\cr
   For \code{is.na}, elementwise the result is false unless that element
   is a length-one atomic vector and the single element of that vector is
   regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
-  methods for the class of the atomic vector is ignored).
-
-  For \code{anyNA}, such lists are treated \emph{recursively}, such
-  that the result is only false if there is no \code{NA} or \code{NaN} in any
-  element (which may be a list itself).
+  method for the class of the element is ignored).\cr
+  \code{anyNA(recursive = FALSE)} works the same way as \code{is.na};
+  \code{anyNA(recursive = TRUE)} applies \code{anyNA} (with method
+  dispatch) to each element.
 
   The data frame method for \code{is.na} returns a logical matrix
   with the same dimensions as the data frame, and with dimnames taken
   from the row and column names of the data frame.
+  
+  \code{anyNA(NULL)} is false: \code{is.na(NULL)} is \code{logical(0)}
+  with a warning.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -119,25 +128,25 @@ c(TRUE, FALSE) & NA
 c(TRUE, FALSE) | NA
 
 \donttest{
-## Measure speed difference in an extreme case:
+## Measure speed difference in a favourable case:
+## the difference depends on the platform, on most ca 3x.
+x <- 1:10000; x[5000] <- NaN  # coerces x to be double
 if(require("microbenchmark")) { # does not work reliably on all platforms
-  x <- c(NaN, 1:10000)
   print(microbenchmark(any(is.na(x)), anyNA(x)))
-} else { ## much less accurate
-  x <- c(NaN, 1e6)
+} else {
   nSim <- 2^13
   print(rbind(is.na = system.time(replicate(nSim, any(is.na(x)))),
               anyNA = system.time(replicate(nSim, anyNA(x)))))
 }
 }
 
-## anyNA() works recursively with list()s:
+## anyNA() can work recursively with list()s:
 LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
 L2 <- LL[c(1,3)]
-sapply(LL, anyNA); anyNA(LL)
-sapply(L2, anyNA); anyNA(L2)
+sapply(LL, anyNA); c(anyNA(LL), anyNA(LL, TRUE))
+sapply(L2, anyNA); c(anyNA(L2), anyNA(L2, TRUE))
 
-## ... lists, and hence data frames, too; no method needed:
+## ... lists, and hence data frames, too:
 dN <- dd <- USJudgeRatings; dN[3,6] <- NA
 anyNA(dd) # FALSE
 anyNA(dN) # TRUE

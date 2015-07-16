@@ -244,7 +244,7 @@ FUNTAB R_FunTab[] =
 {"duplicated",	do_duplicated,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"unique",	do_duplicated,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"anyDuplicated",do_duplicated,	2,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"anyNA",	do_anyNA,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"anyNA",	do_anyNA,	0,	1,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"which",	do_which,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"which.min",	do_first_min,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"pmin",	do_pmin,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -532,7 +532,8 @@ FUNTAB R_FunTab[] =
 {"regexpr",	do_regexpr,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"gregexpr",	do_regexpr,	1,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"regexec",	do_regexec,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"agrep",	do_agrep,	1,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
+{"agrep",	do_agrep,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
+{"agrepl",	do_agrep,	1,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"adist",	do_adist,	1,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"aregexec",	do_aregexec,	1,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"tolower",	do_tolower,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1032,7 +1033,17 @@ static void SymbolShortcuts(void)
     R_DollarSymbol = install("$");
     R_DotsSymbol = install("...");
     R_DropSymbol = install("drop");
+
+    /* The last value symbol is used by the interpreter for recording
+       the value of the most recently evaluated top level
+       expression. To avoid creating an additional reference that
+       would requires duplicating on modification this symbol does not
+       increment reference counts on its symbol value.  This is safe
+       since the symbol value corresponds to the base environment
+       where complex assignments are not allowed.  */
     R_LastvalueSymbol = install(".Last.value");
+    DISABLE_REFCNT(R_LastvalueSymbol);
+
     R_LevelsSymbol = install("levels");
     R_ModeSymbol = install("mode");
     R_NameSymbol  = install("name");

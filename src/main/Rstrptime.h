@@ -507,7 +507,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		    if (val % 100 >= 60) return NULL;
 		    val = (val / 100) * 100 + ((val % 100) * 50) / 30;
 		}
-		if (val > 1200) return NULL;
+		/* http://en.wikipedia.org/wiki/List_of_UTC_time_offsets */
+		if (val > 1400) return NULL;
 		off = ((val * 3600) / 100);
 		if (neg) off = -off;
 		*poffset = off;

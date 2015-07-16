@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *  Copyright (C) 2002--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -163,8 +163,8 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
 }
 
 
-/* The following functions are used to coerce arguments to */
-/* the appropriate type for inclusion in the returned value. */
+/* The following functions are used to coerce arguments to the
+ * appropriate type for inclusion in the returned value. */
 
 static void
 ListAnswer(SEXP x, int recurse, struct BindData *data, SEXP call)
@@ -206,18 +206,7 @@ ListAnswer(SEXP x, int recurse, struct BindData *data, SEXP call)
 	}
 	else {
 	    for (i = 0; i < XLENGTH(x); i++)
-#ifdef LAZY_DUPLICATE_OK
-		/* Using lazy_duplicate here is should be OK but it
-		   causes failures in several packages, including
-		   Matrix and lme4. Presumably these packages are
-		   assuming that certain operations produce duplicates
-		   that can safely be modified in C code, but this is
-		   no longer true if lazy_duplicate is used. But I
-		   have not verified this carefully. LT */
 		LIST_ASSIGN(lazy_duplicate(VECTOR_ELT(x, i)));
-#else
-		LIST_ASSIGN(duplicate(VECTOR_ELT(x, i)));
-#endif
 	}
 	break;
     case LISTSXP:

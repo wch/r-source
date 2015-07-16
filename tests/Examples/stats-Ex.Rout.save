@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3755,7 +3755,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x358ba20>
+<environment: 0x4609ba0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4718,7 +4718,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x45ee2e8>
+<bytecode: 0x4d20e60>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -5692,6 +5692,101 @@ NULL
      '--[dendrogram w/ 2 branches and 2 members at h = 13.3]
         |--leaf "Michigan" 
         '--leaf "Nevada" 
+> 
+> ## to peak at the inner structure "if you must", use '[..]' indexing :
+> str(d3[2][[1]]) ## or the full
+List of 2
+ $ :List of 2
+  ..$ : atomic [1:1] 13
+  .. ..- attr(*, "label")= chr "Illinois"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..$ : atomic [1:1] 32
+  .. ..- attr(*, "label")= chr "New York"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..- attr(*, "members")= int 2
+  ..- attr(*, "midpoint")= num 0.5
+  ..- attr(*, "height")= num 6.24
+ $ :List of 2
+  ..$ : atomic [1:1] 22
+  .. ..- attr(*, "label")= chr "Michigan"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..$ : atomic [1:1] 28
+  .. ..- attr(*, "label")= chr "Nevada"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..- attr(*, "members")= int 2
+  ..- attr(*, "midpoint")= num 0.5
+  ..- attr(*, "height")= num 13.3
+ - attr(*, "members")= int 4
+ - attr(*, "midpoint")= num 1.5
+ - attr(*, "height")= num 18.4
+> str(d3[])
+List of 2
+ $ :List of 2
+  ..$ : atomic [1:1] 8
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "label")= chr "Delaware"
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..$ :List of 2
+  .. ..$ : atomic [1:1] 1
+  .. .. ..- attr(*, "label")= chr "Alabama"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..$ : atomic [1:1] 18
+  .. .. ..- attr(*, "label")= chr "Louisiana"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..- attr(*, "members")= int 2
+  .. ..- attr(*, "midpoint")= num 0.5
+  .. ..- attr(*, "height")= num 15.5
+  ..- attr(*, "members")= int 3
+  ..- attr(*, "midpoint")= num 0.75
+  ..- attr(*, "height")= num 16.9
+ $ :List of 2
+  ..$ :List of 2
+  .. ..$ : atomic [1:1] 13
+  .. .. ..- attr(*, "label")= chr "Illinois"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..$ : atomic [1:1] 32
+  .. .. ..- attr(*, "label")= chr "New York"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..- attr(*, "members")= int 2
+  .. ..- attr(*, "midpoint")= num 0.5
+  .. ..- attr(*, "height")= num 6.24
+  ..$ :List of 2
+  .. ..$ : atomic [1:1] 22
+  .. .. ..- attr(*, "label")= chr "Michigan"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..$ : atomic [1:1] 28
+  .. .. ..- attr(*, "label")= chr "Nevada"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..- attr(*, "members")= int 2
+  .. ..- attr(*, "midpoint")= num 0.5
+  .. ..- attr(*, "height")= num 13.3
+  ..- attr(*, "members")= int 4
+  ..- attr(*, "midpoint")= num 1.5
+  ..- attr(*, "height")= num 18.4
+ - attr(*, "members")= int 7
+ - attr(*, "midpoint")= num 2.62
+ - attr(*, "height")= num 26.4
 > 
 > ## merge() to join dendrograms:
 > (d13 <- merge(dend2$lower[[1]], dend2$lower[[3]]))
@@ -7135,7 +7230,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x4987960>
+<environment: 0x4e9def0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7652,6 +7747,8 @@ Number of Fisher Scoring iterations: 3
 > 
 > require(graphics)
 > 
+> ### Example 1: Violent crime rates by US state
+> 
 > hc <- hclust(dist(USArrests), "ave")
 > plot(hc)
 > plot(hc, hang = -1)
@@ -7669,6 +7766,22 @@ Number of Fisher Scoring iterations: 3
 > opar <- par(mfrow = c(1, 2))
 > plot(hc,  labels = FALSE, hang = -1, main = "Original Tree")
 > plot(hc1, labels = FALSE, hang = -1, main = "Re-start from 10 clusters")
+> par(opar)
+> 
+> ### Example 2: Straight-line distances among 10 US cities
+> ##  Compare the results of algorithms "ward.D" and "ward.D2"
+> 
+> data(UScitiesD)
+> 
+> mds2 <- -cmdscale(UScitiesD)
+> plot(mds2, type="n", axes=FALSE, ann=FALSE)
+> text(mds2, labels=rownames(mds2), xpd = NA)
+> 
+> hcity.D  <- hclust(UScitiesD, "ward.D") # "wrong"
+> hcity.D2 <- hclust(UScitiesD, "ward.D2")
+> opar <- par(mfrow = c(1, 2))
+> plot(hcity.D,  hang=-1)
+> plot(hcity.D2, hang=-1)
 > par(opar)
 > 
 > 
@@ -9076,7 +9189,7 @@ resp 1           185.2867
 resp 2             7.8286
 Deg. of Freedom        12
 
-Residual standard error: 3.9294470.8077039
+Residual standard errors: 3.929447 0.8077039
 1 out of 13 effects not estimable
 Estimated effects are balanced
 > summary(npk2.aov)
@@ -9109,7 +9222,7 @@ resp 1           37.00167 306.29333
 resp 2            0.06988   2.88496
 Deg. of Freedom         1         4
 
-Residual standard error: 8.7506190.8492579
+Residual standard errors: 8.750619 0.8492579
 Estimated effects are balanced
 
 Stratum 2: Within
@@ -9124,7 +9237,7 @@ resp 1          185.28667
 resp 2            7.82863
 Deg. of Freedom        12
 
-Residual standard error: 3.9294470.8077039
+Residual standard errors: 3.929447 0.8077039
 Estimated effects are balanced
 > summary(npk2.aovE)
 
@@ -11619,14 +11732,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x3ef3c18>
-<environment: 0x3cd5220>
+<bytecode: 0x36669a0>
+<environment: 0x5c50c28>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x3ef3d30>
-<environment: 0x3cd5220>
+<bytecode: 0x36702e0>
+<environment: 0x5c50c28>
 
 > 
 > 
@@ -12828,7 +12941,7 @@ Importance of components:
 Standard deviation     1.5748783 0.9948694 0.5971291 0.41644938
 Proportion of Variance 0.6200604 0.2474413 0.0891408 0.04335752
 Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
-> loadings(pc.cr)  ## note that blank entries are small but not zero
+> loadings(pc.cr)  # note that blank entries are small but not zero
 
 Loadings:
          Comp.1 Comp.2 Comp.3 Comp.4
@@ -12841,6 +12954,7 @@ Rape     -0.543 -0.167  0.818
 SS loadings      1.00   1.00   1.00   1.00
 Proportion Var   0.25   0.25   0.25   0.25
 Cumulative Var   0.25   0.50   0.75   1.00
+> ## The signs of the columns are arbitrary
 > plot(pc.cr) # shows a screeplot.
 > biplot(pc.cr)
 > 
@@ -12880,8 +12994,8 @@ Standard deviations:
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: print.ts
-> ### Title: Printing Time-Series Objects
-> ### Aliases: print.ts
+> ### Title: Printing and Formatting of Time-Series Objects
+> ### Aliases: .preformat.ts print.ts
 > ### Keywords: ts
 > 
 > ### ** Examples
@@ -12890,6 +13004,18 @@ Standard deviations:
    p1 p2 p3 p4 p5 p6 p7
 12     1  2  3  4  5  6
 13  7  8  9 10         
+> 
+> print(sunsp.1 <- window(sunspot.month, end=c(1756, 12)))
+       Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+1749  58.0  62.6  70.0  55.7  85.0  83.5  94.8  66.3  75.9  75.5 158.6  85.2
+1750  73.3  75.9  89.2  88.3  90.0 100.0  85.4 103.0  91.2  65.7  63.3  75.4
+1751  70.0  43.5  45.3  56.4  60.7  50.7  66.3  59.8  23.5  23.2  28.5  44.0
+1752  35.0  50.0  71.0  59.3  59.7  39.6  78.4  29.3  27.1  46.6  37.6  40.0
+1753  44.0  32.0  45.7  38.0  36.0  31.7  22.0  39.0  28.0  25.0  20.0   6.7
+1754   0.0   3.0   1.7  13.7  20.7  26.7  18.8  12.3   8.2  24.1  13.2   4.2
+1755  10.2  11.2   6.8   6.5   0.0   0.0   8.6   3.2  17.8  23.7   6.8  20.0
+1756  12.5   7.1   5.4   9.4  12.5  12.9   3.6   6.4  11.8  14.3  17.0   9.4
+> m <- .preformat.ts(sunsp.1) # a character matrix
 > 
 > 
 > 
@@ -15395,8 +15521,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3665608>
-<environment: 0x31226f0>
+<bytecode: 0x42204a8>
+<environment: 0x477cfa8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15706,6 +15832,7 @@ Importance of components:
 Standard deviation     1.5748783 0.9948694 0.5971291 0.41644938
 Proportion of Variance 0.6200604 0.2474413 0.0891408 0.04335752
 Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
+> ## The signs of the loading columns are arbitrary
 > print(summary(princomp(USArrests, cor = TRUE),
 +               loadings = TRUE, cutoff = 0.2), digits = 2)
 Importance of components:
@@ -17698,7 +17825,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.843 0.115 4.976 0 0 
+Time elapsed:  4.681 0.104 4.8 0 0 
 > grDevices::dev.off()
 null device 
           1 

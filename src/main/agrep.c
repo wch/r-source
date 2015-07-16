@@ -246,6 +246,11 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     tre_regfree(&reg);
 
+    if (PRIMVAL(op)) {/* agrepl case */
+	UNPROTECT(1);
+	return ind;
+    }
+
     if(opt_value) {
 	PROTECT(ans = allocVector(STRSXP, nmatches));
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;

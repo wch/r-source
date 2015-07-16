@@ -39,12 +39,12 @@ iconvlist()
   encoding of the current locale), \code{"latin1"} and \code{"UTF-8"}.
   Generally case is ignored when specifying an encoding.
 
-  On many platforms, including Windows, \code{iconvlist} provides an
-  alphabetical list of the supported encodings.  On others, the
-  information is on the man page for \code{iconv(5)} or elsewhere in the
-  man pages (but beware that the system command \code{iconv} may not
-  support the same set of encodings as the C functions \R calls).
-  Unfortunately, the names are rarely valid across all platforms.
+  On most platforms \code{iconvlist} provides an alphabetical list of
+  the supported encodings.  On others, the information is on the man
+  page for \code{iconv(5)} or elsewhere in the man pages (but beware
+  that the system command \code{iconv} may not support the same set of
+  encodings as the C functions \R calls).  Unfortunately, the names are
+  rarely supported across all platforms.
 
   Elements of \code{x} which cannot be converted (perhaps because they
   are invalid or because they cannot be represented in the target
@@ -53,12 +53,12 @@ iconvlist()
   Most versions of \code{iconv} will allow transliteration by appending
   \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
 
-  Encoding \code{"ASCII"} is also accepted, and on most systems
-  \code{"C"} and \code{"POSIX"} are synonyms for ASCII.
+  Encoding \code{"ASCII"} is accepted, and on most systems \code{"C"}
+  and \code{"POSIX"} are synonyms for ASCII.
 
   Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
-  are ignored: they will always be translated as if from \code{from}
-  even if declared otherwise.
+  are ignored: they will always be translated as if from encoding
+  \code{from} even if declared otherwise.
 }
 
 \section{Implementation Details}{
@@ -98,9 +98,9 @@ iconvlist()
   conversion to a character vector).
 
   If \code{mark = TRUE} (the default) the elements of the result have a
-  declared encoding if \code{from} is \code{"latin1"} or \code{"UTF-8"},
-  or if \code{from = ""} and the current locale's encoding is detected
-  as Latin-1 or UTF-8.
+  declared encoding if \code{to} is \code{"latin1"} or \code{"UTF-8"},
+  or if \code{to = ""} and the current locale's encoding is detected as
+  Latin-1 (or its superset CP1252 on Windows) or UTF-8.
 
   If \code{toRaw = TRUE}, the value is a vector of the same length and
   the same attributes as \code{x} whose elements are either \code{NULL}

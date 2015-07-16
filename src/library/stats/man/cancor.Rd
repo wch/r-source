@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{cancor}
 \title{Canonical Correlations}
 \alias{cancor}
@@ -49,7 +51,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
 
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.
-  New York: Wiley, p. 506f.
+  New York: Wiley, p.\sspace{}506f.
 }
 \seealso{
   \code{\link{qr}}, \code{\link{svd}}.

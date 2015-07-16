@@ -95,22 +95,23 @@
     \item{\code{zone}}{(Optional.) The abbreviation for the time zone in
       force at that time: \code{""} if unknown (but \code{""} might also
       be used for UTC).}
-    \item{\code{gmtoff}}{(Optional.) The offset in minutes from GMT:
+    \item{\code{gmtoff}}{(Optional.) The offset in seconds from GMT:
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
-  (The last two components not present for times in UTC and are
+  (The last two components are not present for times in UTC and are
   platform-dependent: they are supported on platforms based on BSD or
-  \code{glibc}, including Linux and OS X, but are not necessarily set.).
-  Note that the internal list structure is somewhat hidden, as many
-  methods (including \code{\link{length}(x)}, \code{\link{print}()} and
-  \code{\link{str}}) apply to the abstract date-time vector, as for
-  \code{"POSIXct"}.  The classes correspond to the POSIX/C99 constructs
-  of \sQuote{calendar time} (the \code{time_t} data type) and
-  \sQuote{local time} (or broken-down time, the \code{struct tm} data
-  type), from which they also inherit their names.  The components of
-  \code{"POSIXlt"} are integer vectors, except \code{sec} and
-  \code{zone}.
+  \code{glibc} (including Linux and OS X) and those using the
+  \code{tzcode} implementation shipped with \R (including Windows). But
+  they are not necessarily set.).  Note that the internal list structure
+  is somewhat hidden, as many methods (including
+  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}})
+  apply to the abstract date-time vector, as for \code{"POSIXct"}.  The
+  classes correspond to the POSIX/C99 constructs of \sQuote{calendar
+  time} (the \code{time_t} data type) and \sQuote{local time} (or
+  broken-down time, the \code{struct tm} data type), from which they
+  also inherit their names.  The components of \code{"POSIXlt"} are
+  integer vectors, except \code{sec} and \code{zone}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.  A virtual class
@@ -192,9 +193,9 @@
   to billions of years), but such times can only be interpreted with
   reference to a time zone.
 
-  % http://www.timeanddate.com/calendar/julian-gregorian-switch.html The
-  concept of time zones was first adopted in the nineteenth century, and
-  the Gregorian calendar was introduced in 1582 but not universally
+  % http://www.timeanddate.com/calendar/julian-gregorian-switch.html
+  The concept of time zones was first adopted in the nineteenth century,
+  and the Gregorian calendar was introduced in 1582 but not universally
   adopted until 1927.  OS services almost invariably assume the
   Gregorian calendar and may assume that the time zone that was first
   enacted for the location was in force before that date.  (The earliest
