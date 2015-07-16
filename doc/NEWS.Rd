@@ -127,10 +127,9 @@
       option \command{--internet2} and the environment variable
       \env{R_WIN_INTERNET2} are now ignored.
 
-      \item (Non-Windows only:) The default
-      \code{getOption("download.file.method")} is now set to
-      \code{"libcurl"} whenever that is available, so \samp{https://}
-      URLs can be accessed.
+      \item (Non-Windows only:) \code{download.file()} with default
+      \code{method = "auto"} now chooses \code{"libcurl"} if that is
+      available and a \samp{https://} or \samp{fttps://} url is used.
 
       \item \code{chooseCRANmirror()} now offers HTTPS mirrors in
       preference to HTTP mirrors.
