@@ -788,17 +788,11 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     m <- NULL
     if(!local.only) {
         ## Try to handle explicitly failure to connect to CRAN.
-        ## FIXME:  it would be better to test on our own internal ability to 
-        ##         handle https
-        con <- url("https://cran.r-project.org/CRAN_mirrors.csv")
-        m <- try(open(con, "r"), silent = TRUE)
-        if (inherits(m, "try-error")) {
-            con <- url("http://cran.r-project.org/CRAN_mirrors.csv")
-            m <- try(open(con, "r"), silent = TRUE)
-        }
+        f <- tempfile()
+        m <- try(download.file("https://cran.r-project.org/CRAN_mirrors.csv", destfile = f))
         if(!inherits(m, "try-error"))
-            m <- try(read.csv(con, as.is = TRUE, encoding = "UTF-8"))
-        close(con)
+            m <- try(read.csv(f, as.is = TRUE, encoding = "UTF-8"))
+        unlink(f)
     }
     if(is.null(m) || inherits(m, "try-error"))
         m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
