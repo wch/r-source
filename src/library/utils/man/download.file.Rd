@@ -84,6 +84,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   attempt to get a copy directly from the site rather than from an
   intermediate cache.  It is used by \code{\link{available.packages}}.
 
+  By default only the \code{"libcurl"} and \code{"wget"} methods follow
+  \samp{http://} redirections.  (For method \code{"curl"} use argument
+  \code{extra = "-L"}.)
+
   The remaining details apply to method \code{"internal"} only.
 
   Note that \samp{https://} URLs are
