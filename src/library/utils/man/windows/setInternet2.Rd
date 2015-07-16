@@ -42,7 +42,7 @@ setInternet2(use = TRUE)
   unless command line option \option{--internet2} was used or
   environment variable \env{R_WIN_INTERNET2} was set. (The option and
   environment variable are now ignored.)  With this setting the 
-  \code{"internal"} method of \code{\link{download.files}} and 
+  \code{"internal"} method of \code{\link{download.file}} and 
   \code{\link{url}} uses internal functions for \samp{http://} access, and 
   \samp{https://} URLs are not supported.  The current default
   is equivalent to setting the method to \code{"wininet"}.
