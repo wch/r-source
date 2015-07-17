@@ -6745,7 +6745,8 @@ function(dir)
                                                           filters =
                                                               c("R_version",
                                                                 "duplicates"))
-                            }))
+                            }),
+                     error = identity)
         if(inherits(adb, "error")) {
             out$additional_repositories_analysis_failed_with <-
                 conditionMessage(adb)
