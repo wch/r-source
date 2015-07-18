@@ -188,6 +188,9 @@
 
       \item \code{readBin()} could fail on the SPARC architecture
       due to alignment issues.  (Reported by Radford Neal.)
+
+      \item \code{qt(*, df=Inf, ncp=.)} now uses the natural
+      \code{qnorm()} limit instead of returning \code{NaN}. (\PR{16475})
     }
   }
 }
