@@ -71,6 +71,13 @@
 
       \item Subscripting of matrix/array objects of type
       \code{"expression"} is now supported.
+
+      \item \code{type.convert("i")} now returns a factor instead of a
+      complex value with zero real part and missing imaginary part.
+      
+      \item Graphics devices \code{cairo_pdf()} and \code{cairo_ps()}
+      now allow non-default values of the cairographics \sQuote{fallback
+	resolution} to be set.
     }
   }
 
@@ -108,9 +115,6 @@
 
       \item A \code{coef.maov()} method has been added to allow
       \code{vcov()} to work with multivariate results. (\PR{16380})
-
-      \item \code{type.convert("i")} now returns a factor instead of a
-      complex value with missing imaginary part.
     }
   }
 }

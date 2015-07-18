@@ -21,12 +21,14 @@ svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
 cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
           width = 7, height = 7, pointsize = 12,
           onefile = FALSE, family = "sans", bg = "white",
-          antialias = c("default", "none", "gray", "subpixel"))
+          antialias = c("default", "none", "gray", "subpixel"),
+          fallback_resolution = 300)
 
 cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
          width = 7, height = 7, pointsize = 12,
          onefile = FALSE, family = "sans", bg = "white",
-         antialias = c("default", "none", "gray", "subpixel"))
+         antialias = c("default", "none", "gray", "subpixel"),
+         fallback_resolution = 300)
 }
 \arguments{
   \item{filename}{the name of the output file.
@@ -51,6 +53,9 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     par("bg").}
   \item{antialias}{string, the type of anti-aliasing (if any) to be used;
     defaults to \code{"default"}.}
+  \item{fallback_resolution}{numeric: the resolution in dpi used when
+    falling back to bitmap output.  Prior to \R 3.3.0 this depended on
+    the cairo implementation but was commonly 300.}
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
@@ -61,8 +66,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
   Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
-  and not vector graphics: the resolution may depend on the version of
-  cairo but typically 300dpi is used.  On the other hand, they can
+  and not vector graphics.  On the other hand, they can
   (on suitable platforms) include a much wider range of UTF-8 glyphs,
   and embed the fonts used.
 
