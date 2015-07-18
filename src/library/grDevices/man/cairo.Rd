@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/cairo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cairo}
@@ -56,14 +56,15 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
   See \url{http://www.w3.org/Graphics/SVG/}.  The output from \code{svg}
   is SVG version 1.1 for \code{onefile = FALSE} (the default), otherwise
-  SVG 1.2.  (Very few SVG viewers are capable of displaying multi-page
-  SVG files.)
+  SVG 1.2.  (Few SVG viewers are capable of displaying multi-page SVG
+  files.)
 
   Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
-  and not vector graphics: a resolution of 72dpi is used.  On the other
-  hand, they can (on suitable platforms) include a much wider range of
-  UTF-8 glyphs, and embed the fonts used.
+  and not vector graphics: the resolution may depend on the version of
+  cairo but typically 300dpi is used.  On the other hand, they can
+  (on suitable platforms) include a much wider range of UTF-8 glyphs,
+  and embed the fonts used.
 
   The output produced by \code{cairo_ps(onefile = FALSE)} will be
   encapsulated postscript on a platform with cairo >= 1.6.
@@ -77,8 +78,8 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \code{file} (or set \code{onefile = TRUE}) the file will contain the
   last page plotted.
 
-  There is full support of transparency, but using this is one of the
-  things liable to trigger bitmap output (and will always do so for
+  There is full support of semi-transparency, but using this is one of
+  the things liable to trigger bitmap output (and will always do so for
   \code{cairo_ps}).
 }
 
