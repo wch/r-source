@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/windows/png.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -48,13 +48,13 @@ png <-
         invisible(.External(C_devCairo, filename, 2L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"))
+                            if(nzchar(family)) family else "sans"), 300)
     } else if(match.arg(type) == "cairo-png") {
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 5L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"))
+                            if(nzchar(family)) family else "sans"), 300)
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -86,7 +86,7 @@ bmp <-
         invisible(.External(C_devCairo, filename,
                             9L, g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"))
+                            if(nzchar(family)) family else "sans"), 300)
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -117,7 +117,7 @@ jpeg <-
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 3L, g$width, height, pointsize,
                             bg, res, antialias, quality,
-                            if(nzchar(family)) family else "sans"))
+                            if(nzchar(family)) family else "sans"), 300)
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -156,7 +156,7 @@ tiff <-
         invisible(.External(C_devCairo, filename, 8L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, comp,
-                            if(nzchar(family)) family else "sans"))
+                            if(nzchar(family)) family else "sans"), 300)
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
