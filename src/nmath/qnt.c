@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2013 The R Core Team
+ *  Copyright (C) 2006-2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,8 +31,6 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(df) || ISNAN(ncp))
 	return p + df + ncp;
 #endif
-    if (!R_FINITE(df)) ML_ERR_return_NAN;
-
     /* Was
      * df = floor(df + 0.5);
      * if (df < 1 || ncp < 0) ML_ERR_return_NAN;
@@ -42,6 +40,9 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
     if(ncp == 0.0 && df >= 1.0) return qt(p, df, lower_tail, log_p);
 
     R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
+
+    if (!R_FINITE(df)) // df = Inf ==> limit N(ncp,1)
+	return qnorm(p, ncp, 1., lower_tail, log_p);
 
     p = R_DT_qIv(p);
 
