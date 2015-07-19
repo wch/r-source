@@ -97,12 +97,20 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item The included versions of \code{zlib}, \code{bzip2},
+      \item The previously included versions of \code{zlib}, \code{bzip2},
       \code{xz} and PCRE have been removed, so system versions are
-      required (see the \sQuote{R Installation and Administration} manual).
+      required (see the \sQuote{R Installation and Administration}
+      manual).
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item Support for very old versions of \command{valgrind}
+      (e.g. 3.3.0) was been removed.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
