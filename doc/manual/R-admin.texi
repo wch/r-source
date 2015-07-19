@@ -3850,12 +3850,14 @@ against, and this can lead to symbol conflicts.
 For maximally effective use of @command{valgrind}, @R{} should be
 compiled with valgrind instrumentation. The @command{configure} option
 is @option{--with-valgrind-instrumentation=@var{level}}, where
-@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add
-any anything.)  The system headers for @command{valgrind} can be
-requested by option @option{--with-system-valgrind-headers}: they will
-be used if present (on Linux they may be in a separate package such as
+@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add any
+anything.)  The system headers for @command{valgrind} can be requested
+by option @option{--with-system-valgrind-headers}: they will be used if
+present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
-code in @R{} will be compatible with future @command{valgrind} headers.
+code in @R{} will be compatible with very old@footnote{We believe that
+versions 3.4.0 to 3.10.1 are compatible.} or future @command{valgrind}
+headers.
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
