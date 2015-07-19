@@ -54,6 +54,7 @@ HEADERS = \
 	basedecl.h \
 	contour-common.h \
 	datetime.h \
+	duplicate.h \
 	gzio.h \
 	qsort-body.c \
 	rlocale_data.h \
