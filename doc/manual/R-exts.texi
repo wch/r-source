@@ -7468,7 +7468,7 @@ damage to the structures which @R{} itself has allocated may only become
 apparent at the next garbage collection (or even at later garbage
 collections after objects have been deleted).
 
-Note that memory access errors may be seen with LAPACK, BLAS and
+Note that memory access errors may be seen with LAPACK, BLAS, OpenMP and
 Java-using packages: some at least of these seem to be intentional, and
 some are related to passing characters to Fortran.
 
