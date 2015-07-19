@@ -7592,13 +7592,15 @@ of @R{} with extra instrumentation to help @code{valgrind} detect errors
 in the use of memory allocated from the @R{} heap.  The
 @command{configure} option is
 @option{--with-valgrind-instrumentation=@var{level}}, where @var{level}
-is 0, 1, 2 or 3.  Level 0 is the default and does not add any anything.
-Level 1 will detect some uses of uninitialised memory and has little
-impact on speed (compared to level 0). Levels 2 and 3@footnote{see the
-@R{} source file @file{src/main/memory.c} for precisely what these do.}
-will detect many other memory-use bugs but make @R{} much slower when
-running under @code{valgrind}.  Using this in conjunction with
-@code{gctorture} can be even more effective (and even slower).
+is 0, 1 or 2.  Level 0 is the default and does not add any anything.
+Level 1 will detect some uses@footnote{Those in some numeric, logical,
+integer, raw, complex vectors and in memory allocated by
+@code{R_alloc}.} of uninitialised memory and has little impact on speed
+(compared to level 0). Level 2 will detect many other memory-use
+bugs@footnote{including using the data sections of @R{} vectors after
+they are freed.}  but make @R{} much slower when running under
+@code{valgrind}.  Using this in conjunction with @code{gctorture} can be
+even more effective (and even slower).
 
 An example of @code{valgrind} output is
 @smallexample
@@ -7786,8 +7788,8 @@ variable
 ASAN_OPTIONS='detect_leaks=1'
 @end example
 @noindent
-However, this is the default on @command{clang} 3.5 and pre-releases of
-@command{gcc} 5.0.0.
+However, this was made the default for @command{clang} 3.5 and
+@command{gcc} 5.1.0.
 
 When LSan is enabled, leaks give the process a failure error status (by
 default @code{23}).  For an @R{} package this means the @R{} process,
@@ -7876,7 +7878,7 @@ return,shift,signed-integer-overflow,unreachable,vla-bound
 
 See
 @uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
-manual for your version of GCC).  GCC 5.1 adds
+manual for your version of GCC).  GCC 5.1.0 added
 @example
 -fsanitize=alignment,bounds,float-cast-overflow,object-size,
 nonnull-attribute,returns-nonnull-attribute,bool,enum,vptr
