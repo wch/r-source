@@ -199,6 +199,11 @@
 
       \item \code{qt(*, df=Inf, ncp=.)} now uses the natural
       \code{qnorm()} limit instead of returning \code{NaN}. (\PR{16475})
+
+      \item Auto-printing of S3 and S4 values now searches for
+      \code{print()} in the base namespace and \code{show()} in the
+      \pkg{methods} namespace instead of searching the global
+      environment.
     }
   }
 }

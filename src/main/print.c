@@ -977,31 +977,26 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 	  print(), so S4 methods for show() have precedence over those for
 	  print() to conform with the "green book", p. 332
 	*/
-	SEXP call, showS, prinfun;
+	SEXP call, prinfun;
 	SEXP xsym = install("x");
 	if(isMethodsDispatchOn() && IS_S4_OBJECT(s)) {
 	    /*
-	      Note that we cannot assume that show() is visible from
-	      'env', but we can assume there is a loaded "methods"
+	      Note that can assume there is a loaded "methods"
 	      namespace.  It is tempting to cache the value of show in
 	      the namespace, but the latter could be unloaded and
 	      reloaded in a session.
 	    */
-	    showS = findVar(install("show"), env);
-	    if(showS == R_UnboundValue) {
-		SEXP methodsNS = R_FindNamespace(mkString("methods"));
-		if(methodsNS == R_UnboundValue)
-		    error("missing methods namespace: this should not happen");
-		PROTECT(methodsNS);
-		showS = findVarInFrame3(methodsNS, install("show"), TRUE);
-		UNPROTECT(1);
-		if(showS == R_UnboundValue)
-		    error("missing show() in methods namespace: this should not happen");
-	    }
-	    prinfun = showS;
+	    SEXP methodsNS = R_FindNamespace(mkString("methods"));
+	    if(methodsNS == R_UnboundValue)
+		error("missing methods namespace: this should not happen");
+	    PROTECT(methodsNS);
+	    prinfun = findVarInFrame3(methodsNS, install("show"), TRUE);
+	    UNPROTECT(1);
+	    if(prinfun == R_UnboundValue)
+		error("missing show() in methods namespace: this should not happen");
 	}
 	else /* S3 */
-	    prinfun = install("print");
+	    prinfun = findVar(install("print"), R_BaseNamespace);
 
 	/* Bind value to a variable in a local environment, similar to
 	   a local({ x <- <value>; print(x) }) call. This avoids
