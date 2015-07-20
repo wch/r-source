@@ -48,13 +48,13 @@ png <-
         invisible(.External(C_devCairo, filename, 2L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"), 300)
+                            if(nzchar(family)) family else "sans", 300))
     } else if(match.arg(type) == "cairo-png") {
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 5L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"), 300)
+                            if(nzchar(family)) family else "sans", 300))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -86,7 +86,7 @@ bmp <-
         invisible(.External(C_devCairo, filename,
                             9L, g$width, g$height, pointsize,
                             bg, res, antialias, 100L,
-                            if(nzchar(family)) family else "sans"), 300)
+                            if(nzchar(family)) family else "sans", 300))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -117,7 +117,7 @@ jpeg <-
         antialias <- match(match.arg(antialias), aa.cairo)
         invisible(.External(C_devCairo, filename, 3L, g$width, height, pointsize,
                             bg, res, antialias, quality,
-                            if(nzchar(family)) family else "sans"), 300)
+                            if(nzchar(family)) family else "sans", 300))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
@@ -156,7 +156,7 @@ tiff <-
         invisible(.External(C_devCairo, filename, 8L,
                             g$width, g$height, pointsize,
                             bg, res, antialias, comp,
-                            if(nzchar(family)) family else "sans"), 300)
+                            if(nzchar(family)) family else "sans", 300))
     } else {
         new <- if (!missing(antialias)) {
             list(bitmap.aa.win = match.arg(antialias, aa.win))
