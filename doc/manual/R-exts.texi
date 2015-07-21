@@ -12574,7 +12574,7 @@ of @R{} which did not have this macro, use a construction such as
 
 @example
 @group
-#if defined(R_VERSION) && R_VERSION >= R_Version(1, 9, 0)
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 1, 0)
   ...
 #endif
 @end group
@@ -12583,7 +12583,29 @@ of @R{} which did not have this macro, use a construction such as
 More detailed information is available in the macros @code{R_MAJOR},
 @code{R_MINOR}, @code{R_YEAR}, @code{R_MONTH} and @code{R_DAY}: see the
 header file @file{Rversion.h} for their format.  Note that the minor
-version includes the patchlevel (as in @samp{9.0}).
+version includes the patchlevel (as in @samp{2.2}).
+
+Packages which use @code{alloca} need to ensure it is defined: as it is
+neither C99 nor POSIX there is no standard way to do so.  As from @R{}
+3.2.2 one can use
+
+@example
+#include <Rconfig.h> // for HAVE_ALLOCA_H
+#ifdef __GNUC__
+// this covers gcc, clang, icc
+# undef alloca
+# define alloca(x) __builtin_alloca((x))
+#elif defined(HAVE_ALLOCA_H)
+// needed for native compilers on Solaris and AIX
+# include <alloca.h>
+#endif
+@end example
+
+@noindent
+(and this should be included before standard C headers such as
+@file{stdlib.h}, since on some platforms these include @file{malloc.h}
+which may have a conflicting definition), which suffices for known @R{}
+platforms.
 
 @node Inlining C functions, Controlling visibility, Platform and version information, The R API
 @section Inlining C functions

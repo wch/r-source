@@ -244,6 +244,15 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Header \file{Rconfig.h} now defines \code{HAVE_ALLOCA_H} if
+      the platform has the \file{alloca.h} header (it is needed to
+      define \code{alloca} on Solaris and AIX, at least: see
+      \sQuote{Writing R Extensions} for how to use it).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{acf()} and \code{ccf()} now guarantee values strictly

@@ -1348,14 +1348,25 @@ extern const char *locale2charset(const char *);
 } while(0)
 
 
+/* 
+   alloca is neither C99 nor POSIX.
+
+   It might be better to try alloca.h first, see
+   https://www.gnu.org/software/autoconf/manual/autoconf-2.60/html_node/Particular-Functions.html
+*/
 #ifdef __GNUC__
+// This covers GNU, Clang and Intel compilers
+// The undef is needed in case some other header, e.g. malloc.h, already did this
 # undef alloca
 # define alloca(x) __builtin_alloca((x))
 #else
 # ifdef HAVE_ALLOCA_H
+// Needed for native compilers on Solaris and AIX
 #  include <alloca.h>
 # endif
+// it might have been defined via some other standard header, e.g. stdlib.h
 # if !HAVE_DECL_ALLOCA
+#  include <stddef.h> // for size_t
 extern void *alloca(size_t);
 # endif
 #endif
