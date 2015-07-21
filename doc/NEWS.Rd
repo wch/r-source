@@ -74,7 +74,7 @@
 
       \item \code{type.convert("i")} now returns a factor instead of a
       complex value with zero real part and missing imaginary part.
-      
+
       \item Graphics devices \code{cairo_pdf()} and \code{cairo_ps()}
       now allow non-default values of the cairographics \sQuote{fallback
 	resolution} to be set.
@@ -110,7 +110,7 @@
       (e.g. 3.3.0) has been removed.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
@@ -151,6 +151,16 @@
       preference to HTTP mirrors.
     }
   }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Header \file{Rconfig.h} now defines \code{HAVE_ALLOCA_H} if
+      the platform has the \file{alloca.h} header (it is needed to
+      define \code{alloca} on Solaris and AIX, at least: see
+      \sQuote{Writing R Extensions} for how to use it).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item The HTML help page links to demo code failed due to a change
@@ -241,15 +251,6 @@
       \item \code{as.character.srcref()} gains an argument to allow
       characters corresponding to a range of source references to be
       extracted.
-    }
-  }
-
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item Header \file{Rconfig.h} now defines \code{HAVE_ALLOCA_H} if
-      the platform has the \file{alloca.h} header (it is needed to
-      define \code{alloca} on Solaris and AIX, at least: see
-      \sQuote{Writing R Extensions} for how to use it).
     }
   }
 
