@@ -334,6 +334,10 @@ S3method("forceGrob", "default")
 S3method("forceGrob", "grob")
 S3method("forceGrob", "gTree")
 
+S3method("absolute.units", "unit")
+S3method("absolute.units", "unit.list")
+S3method("absolute.units", "unit.arithmetic")
+
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")
 S3method("depth", "vpList")
