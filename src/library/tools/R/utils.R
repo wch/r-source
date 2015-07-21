@@ -1175,7 +1175,7 @@ function(txt, lst, selective = TRUE)
     if(!missing(txt))
         lst <- scan(what = character(), text = txt, quiet = TRUE)
     lst <- sort(unique(lst))
-    nms <- lapply(lst, find)
+    nms <- lapply(lst, utils::find)
     ind <- sapply(nms, length) > 0L
     imp <- split(lst[ind], substring(unlist(nms[ind]), 9L))
     if(selective) {
