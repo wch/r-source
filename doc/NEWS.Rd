@@ -107,7 +107,7 @@
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item Support for very old versions of \command{valgrind}
-      (e.g. 3.3.0) was been removed.
+      (e.g. 3.3.0) has been removed.
     }
   }
   
@@ -121,8 +121,9 @@
       name \code{x} matches \code{colSums()} such that error messages
       are correct.
 
-      \item A \code{coef.maov()} method has been added to allow
-      \code{vcov()} to work with multivariate results. (\PR{16380})
+      \item A \code{coef()} method for class \code{"maov"} has been
+      added to allow \code{vcov()} to work with multivariate
+      results. (\PR{16380})
     }
   }
 }
