@@ -150,7 +150,7 @@ help.search("non-existent topic")
 
 ??utils::help  # All the topics matching "help" in the utils package
 
-\dontrun{
+\donttest{
 help.search("print")            # All help pages with topics or title
                                 # matching 'print'
 help.search(apropos = "print")  # The same

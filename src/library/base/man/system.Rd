@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system}
@@ -140,7 +140,7 @@ system(command, intern = FALSE,
   For GUIs, what happens to output sent to \file{stdout} or
   \file{stderr} if \code{intern = FALSE} is interface-specific, and it
   is unsafe to assume that such messages will appear on a GUI console
-  (they do on the Mac OS X console, but not on some others).
+  (they do on the OS X GUI's console, but not on some others).
 }
 #endif
 

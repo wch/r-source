@@ -1,6 +1,6 @@
 % File src/library/tools/man/buildVignettes.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{buildVignettes}
@@ -63,18 +63,6 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 \examples{
 gVigns <- pkgVignettes("grid")
 \donttest{str(gVigns)}% because it contains paths
-\dontshow{
- `\%=f=\%` <- function(a, b) normalizePath(a) == normalizePath(b)
- with(gVigns,
-      stopifnot(engines == "utils::Sweave",
-                pkgdir \%=f=\% system.file(package="grid"),
-                dir    \%=f=\% system.file(package="grid", "doc"),
-                (n. <- length(docs)) >= 12, # have 13 
-                n. == length(names), n. == length(engines),
-                length(msg) == 0) ) # as it is a 'base' package
-}
-stopifnot("grid" \%in\% gVigns$names,
-          inherits(gVigns, "pkgVignettes"))
 }
 \keyword{utilities}
 \keyword{documentation}

@@ -101,7 +101,6 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
         instPath <- file.path(lib, pkgname)
         if(identical(lock, "pkglock") || isTRUE(lock)) {
             ## This is code adapted from tools:::.install_packages
-            dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 	    lockdir <- if(identical(lock, "pkglock"))
                 file.path(lib, paste("00LOCK", pkgname, sep = "-"))
             else file.path(lib, "00LOCK")
@@ -227,8 +226,10 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     }
 
     if(is.null(contriburl)) {
-        for(i in seq_along(pkgs))
+        for(i in seq_along(pkgs)) {
+            if(is.na(pkgs[i])) next
             unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock, quiet)
+        }
         return(invisible())
     }
     tmpd <- destdir

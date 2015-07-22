@@ -67,7 +67,7 @@ endif
 
 R-DLLFLAGS=-mwindows
 ifdef USE_ICU
-LIBEXTRAS+= -licuin38 -licuuc38
+LIBEXTRAS+= -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
 endif
 
 R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
@@ -285,7 +285,7 @@ distclean: clean
 	$(RM) ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/NEWS.html \
-	../../doc/NEWS.rds ../../NEWS ../../NEWS.pdf \
+	../../doc/NEWS.rds ../../doc/NEWS ../../doc/NEWS.pdf \
 	../../doc/CHANGES.rds ../../doc/html/CHANGES.html
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \

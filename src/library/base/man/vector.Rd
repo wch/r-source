@@ -125,9 +125,8 @@ is.vector(x, mode = "any")
 }
 \examples{
 df <- data.frame(x = 1:3, y = 5:7)
-\dontrun{## Error:
-  as.vector(data.frame(x = 1:3, y = 5:7), mode = "numeric")
-}
+## Error:
+try(as.vector(data.frame(x = 1:3, y = 5:7), mode = "numeric"))
 
 x <- c(a = 1, b = 2)
 is.vector(x)

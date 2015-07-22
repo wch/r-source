@@ -39,7 +39,7 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
 \value{
   A invisible character string given the path to the file found.
 }
-\examples{\dontrun{
+\examples{\donttest{
 RShowDoc("R-lang")
 RShowDoc("FAQ", type = "html")
 RShowDoc("frame", package = "grid")

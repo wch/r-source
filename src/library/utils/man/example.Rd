@@ -42,7 +42,7 @@ example(topic, package = NULL, lib.loc = NULL,
     number generator state is saved, then initialized to a specified state,
     the example is run and the (saved) state is restored.
     \code{setRNG = TRUE} sets the same state as
-    \code{R CMD \link{check}} does for
+    \command{R CMD \link{check}} does for
     running a package's examples.  This is currently equivalent to
     \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
   \item{ask}{logical (or \code{"default"}) indicating if

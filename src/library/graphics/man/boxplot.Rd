@@ -3,8 +3,6 @@
 % Copyright 1995-2008 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
-
 \name{boxplot}
 \alias{boxplot}
 \alias{boxplot.default}

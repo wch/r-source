@@ -80,7 +80,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
 
 static void reset_stack_limit(void *data)
 {
-    unsigned int *limit = (unsigned int *) data;
+    uintptr_t *limit = (uintptr_t *) data;
     R_CStackLimit = *limit;
 }
 

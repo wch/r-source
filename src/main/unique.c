@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -543,7 +543,7 @@ static SEXP Duplicated(SEXP x, Rboolean from_last, int nmax)
 /* simpler version of the above : return 1-based index of first, or 0 : */
 R_xlen_t any_duplicated(SEXP x, Rboolean from_last)
 {
-    int result = 0;
+    R_xlen_t result = 0;
     int nmax = NA_INTEGER;
 
     if (!isVector(x)) error(_("'duplicated' applies only to vectors"));
@@ -554,12 +554,10 @@ R_xlen_t any_duplicated(SEXP x, Rboolean from_last)
 
     if(from_last) {
 	for (i = n-1; i >= 0; i--) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
 	}
     } else {
 	for (i = 0; i < n; i++) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
 	}
     }
@@ -631,7 +629,7 @@ R_xlen_t any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 			isDup = FALSE; break;		\
 		    }					\
 		if(isDup) {				\
-		    UNPROTECT(1);			\
+		    UNPROTECT(2);			\
 		    return ++i;				\
  	        }					\
 		/* else continue */			\
@@ -692,15 +690,20 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0)) {
-	if(PRIMVAL(op) == 2) /* return R's 1-based index :*/
-	    return ScalarInteger(any_duplicated3(x, incomp, fL));
-	else
+	if(PRIMVAL(op) == 2) {
+	    /* return R's 1-based index :*/
+	    R_xlen_t ind  = any_duplicated3(x, incomp, fL);
+	    if(ind > INT_MAX) return ScalarReal((double) ind);
+	    else return ScalarInteger((int)ind);
+	} else
 	    dup = duplicated3(x, incomp, fL, nmax);
     }
     else {
-	if(PRIMVAL(op) == 2)
-	    return ScalarInteger(any_duplicated(x, fL));
-	else
+	if(PRIMVAL(op) == 2) {
+	    R_xlen_t ind  = any_duplicated(x, fL);
+	    if(ind > INT_MAX) return ScalarReal((double) ind);
+	    else return ScalarInteger((int)ind);
+	} else
 	    dup = Duplicated(x, fL, nmax);
     }
     if (PRIMVAL(op) == 0) /* "duplicated()" */
@@ -1024,53 +1027,36 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     /* First pass, exact matching */
     R_xlen_t nexact = 0;
-    if(no_dups) {
-	for (R_xlen_t i = 0; i < n_input; i++) {
-	    const char *ss = in[i];
-	    if (strlen(ss) == 0) continue;
-	    for (int j = 0; j < n_target; j++) {
-		if (used[j]) continue;
-		if (strcmp(ss, tar[j]) == 0) {
-		    if(no_dups) used[j] = 1;
-		    ians[i] = j + 1;
-		    nexact++;
-		    break;
-		}
-	    }
-	}
+    /* Compromise when hashing used changed in 3.2.0 (PR#15697) */
+    if (n_input <= 100 || n_target <= 100) {
+        for (R_xlen_t i = 0; i < n_input; i++) {
+            const char *ss = in[i];
+            if (strlen(ss) == 0) continue;
+            for (int j = 0; j < n_target; j++) {
+                if (no_dups && used[j]) continue;
+                if (strcmp(ss, tar[j]) == 0) {
+                    ians[i] = j + 1;
+                    if (no_dups) used[j] = 1;
+                    nexact++;
+                    break;
+                }
+            }
+        }
     } else {
-	/* only worth hashing if enough lookups will be done:
-	   since the tradeoff involves memory as well as time
-	   it is not really possible to optimize there.
-	 */
-	if((n_target > 100) && (10*n_input > n_target)) {
-	    /* <FIXME>
-	       Currently no hashing when using bytes.
-	       </FIXME>
-	    */
-	    HashData data;
-	    HashTableSetup(target, &data, NA_INTEGER);
-	    data.useUTF8 = useUTF8;
-	    data.nomatch = 0;
-	    DoHashing(target, &data);
-	    for (R_xlen_t i = 0; i < n_input; i++) {
-		/* we don't want to lookup "" */
-		if (strlen(in[i]) == 0) continue;
-		ians[i] = Lookup(target, input, i, &data);
-		if(ians[i]) nexact++;
-	    }
-	} else {
-	    for (R_xlen_t i = 0; i < n_input; i++) {
-		const char *ss = in[i];
-		if (strlen(ss) == 0) continue;
-		for (int j = 0; j < n_target; j++)
-		    if (strcmp(ss, tar[j]) == 0) {
-			ians[i] = j + 1;
-			nexact++;
-			break;
-		    }
-	    }
-	}
+        HashData data;
+        HashTableSetup(target, &data, NA_INTEGER);
+        data.useUTF8 = useUTF8;
+        data.nomatch = 0;
+        DoHashing(target, &data);
+        for (R_xlen_t i = 0; i < n_input; i++) {
+            if (strlen(in[i]) == 0) /* don't look up "" */
+                continue;
+            int j = Lookup(target, input, i, &data);
+            if ((j == 0) || (no_dups && used[j - 1])) continue;
+            if (no_dups) used[j - 1] = 1;
+            ians[i] = j;
+            nexact++;
+        }
     }
 
     if(nexact < n_input) {
@@ -1710,7 +1696,7 @@ static void HashTableSetup1(SEXP x, HashData *d)
 }
 
 /* used in utils */
-SEXP csduplicated(SEXP x)
+SEXP Rf_csduplicated(SEXP x)
 {
     SEXP ans;
     int n;

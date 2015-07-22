@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@ SEXP asChar(SEXP x)
 	    case REALSXP:
 		PrintDefaults();
 		formatReal(REAL(x), 1, &w, &d, &e, 0);
-		return mkChar(EncodeReal(REAL(x)[0], w, d, e, OutDec));
+		return mkChar(EncodeReal0(REAL(x)[0], w, d, e, OutDec));
 	    case CPLXSXP:
 		PrintDefaults();
 		formatComplex(COMPLEX(x), 1, &w, &d, &e, &wi, &di, &ei, 0);
@@ -569,14 +569,14 @@ static void isort_with_index(int *x, int *indx, int n)
 */
 SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP xi, yi, ansx, ansy, ans, x_lone, y_lone;
-    int nx = 0, ny = 0, i, j, k, nans = 0, nx_lone = 0, ny_lone = 0;
+    SEXP xi, yi, ansx, ansy, ans;
+    int nx = 0, ny = 0, i, j, k, nx_lone = 0, ny_lone = 0;
     int all_x = 0, all_y = 0, ll = 0/* "= 0" : for -Wall */;
-    int *ix, *iy, tmp, nnx, nny, i0, j0;
-    const char *nms[] = {"xi", "yi", "x.alone", "y.alone", ""};
+    int nnx, nny;
 
     checkArity(op, args);
     xi = CAR(args);
+    // NB: long vectors are not supported for input
     if ( !isInteger(xi) || !(nx = LENGTH(xi)) )
 	error(_("invalid '%s' argument"), "xinds");
     yi = CADR(args);
@@ -588,8 +588,8 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'all.y' must be TRUE or FALSE"));
 
     /* 0. sort the indices */
-    ix = (int *) R_alloc((size_t) nx, sizeof(int));
-    iy = (int *) R_alloc((size_t) ny, sizeof(int));
+    int *ix = (int *) R_alloc((size_t) nx, sizeof(int));
+    int *iy = (int *) R_alloc((size_t) ny, sizeof(int));
     for(i = 0; i < nx; i++) ix[i] = i+1;
     for(i = 0; i < ny; i++) iy[i] = i+1;
     isort_with_index(INTEGER(xi), ix, nx);
@@ -598,45 +598,50 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* 1. determine result sizes */
     for (i = 0; i < nx; i++) if (INTEGER(xi)[i] > 0) break; nx_lone = i;
     for (i = 0; i < ny; i++) if (INTEGER(yi)[i] > 0) break; ny_lone = i;
+    double dnans = 0;
     for (i = nx_lone, j = ny_lone; i < nx; i = nnx, j = nny) {
-	tmp = INTEGER(xi)[i];
+	int tmp = INTEGER(xi)[i];
 	for(nnx = i; nnx < nx; nnx++) if(INTEGER(xi)[nnx] != tmp) break;
 	/* the next is not in theory necessary,
 	   since we have the common values only */
 	for(; j < ny; j++) if(INTEGER(yi)[j] >= tmp) break;
 	for(nny = j; nny < ny; nny++) if(INTEGER(yi)[nny] != tmp) break;
 	/* printf("i %d nnx %d j %d nny %d\n", i, nnx, j, nny); */
-	nans += (nnx-i)*(nny-j);
+	dnans += ((double)(nnx-i))*(nny-j);
     }
+    if (dnans > R_XLEN_T_MAX)
+	error(_("number of rows in the result exceeds maximum vector length"));
+    R_xlen_t nans = (int) dnans;
 
 
     /* 2. allocate and store result components */
 
-    PROTECT(ans = mkNamed(VECSXP, nms));
+    const char *nms[] = {"xi", "yi", "x.alone", "y.alone", ""};
+    ans = PROTECT(mkNamed(VECSXP, nms));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
 
     if(all_x) {
-	x_lone = allocVector(INTSXP, nx_lone);
+	SEXP x_lone = allocVector(INTSXP, nx_lone);
 	SET_VECTOR_ELT(ans, 2, x_lone);
 	for (i = 0, ll = 0; i < nx_lone; i++)
 	    INTEGER(x_lone)[ll++] = ix[i];
     }
 
     if(all_y) {
-	y_lone = allocVector(INTSXP, ny_lone);
+	SEXP y_lone = allocVector(INTSXP, ny_lone);
 	SET_VECTOR_ELT(ans, 3, y_lone);
 	for (i = 0, ll = 0; i < ny_lone; i++)
 	    INTEGER(y_lone)[ll++] = iy[i];
     }
 
     for (i = nx_lone, j = ny_lone, k = 0; i < nx; i = nnx, j = nny) {
-	tmp = INTEGER(xi)[i];
+	int tmp = INTEGER(xi)[i];
 	for(nnx = i; nnx < nx; nnx++) if(INTEGER(xi)[nnx] != tmp) break;
 	for(; j < ny; j++) if(INTEGER(yi)[j] >= tmp) break;
 	for(nny = j; nny < ny; nny++) if(INTEGER(yi)[nny] != tmp) break;
-	for(i0 = i; i0 < nnx; i0++)
-	    for(j0 = j; j0 < nny; j0++) {
+	for(int i0 = i; i0 < nnx; i0++)
+	    for(int j0 = j; j0 < nny; j0++) {
 		INTEGER(ansx)[k]   = ix[i0];
 		INTEGER(ansy)[k++] = iy[j0];
 	    }
@@ -904,7 +909,7 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	path = translateChar(STRING_ELT(paths, i));
 	char *res = realpath(path, abspath);
-	if (res) 
+	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(abspath));
 	else {
 	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
@@ -1016,7 +1021,7 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(na || ! IS_NA_STRING(s)) {
 	    cetype_t ienc = getCharCE(s);
 	    if(ienc == CE_UTF8) {
-		const char *ss = EncodeString(s, w-1000000, quote, 
+		const char *ss = EncodeString(s, w-1000000, quote,
 					      (Rprt_adj) justify);
 		SET_STRING_ELT(ans, i, mkCharCE(ss, ienc));
 	    } else {
@@ -1506,8 +1511,8 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
     else return 0;
 }
 
-double R_strtod5(const char *str, char **endptr, char dec, 
-		 Rboolean NA, Rboolean exact)
+double R_strtod5(const char *str, char **endptr, char dec,
+		 Rboolean NA, int exact)
 {
     LDOUBLE ans = 0.0, p10 = 10.0, fac = 1.0;
     int n, expn = 0, sign = 1, ndigits = 0, exph = -1;
@@ -1554,11 +1559,19 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    else break;
 	    if (exph >= 0) exph += 4;
 	}
-	if (exact && ans > 9e15) { // lost accuracy
-	    ans = NA_REAL;
-	    p = str; /* back out */
-	    goto done;
+#define strtod_EXACT_CLAUSE						\
+	if(exact && ans > 0x1.fffffffffffffp52) {			\
+	    if(exact == NA_LOGICAL)					\
+		warning(_(						\
+		"accuracy loss in conversion from \"%s\" to numeric"),	\
+			str);						\
+	    else {							\
+		ans = NA_REAL;						\
+		p = str; /* back out */					\
+		goto done;						\
+	    }								\
 	}
+	strtod_EXACT_CLAUSE;
 	if (*p == 'p' || *p == 'P') {
 	    int expsign = 1;
 	    double p2 = 2.0;
@@ -1592,12 +1605,7 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	p = str; /* back out */
 	goto done;
     }
-    if (exact && ans > 9e15) { // lost accuracy
-//	error("lost accuracy in '%s'\n", str);
-	ans = NA_REAL;
-	p = str; /* back out */
-	goto done;
-    }
+    strtod_EXACT_CLAUSE;
 
     if (*p == 'e' || *p == 'E') {
 	int expsign = 1;
@@ -1672,20 +1680,20 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = CAR(args);
     for (i = 0; i < XLENGTH(ans); i++) {
 	el = STRING_ELT(ans, i);
-	if (IS_NA_STRING(el)) { /* do nothing */ }
-	else if(PRIMVAL(op) && !known_to_be_utf8) { /* enc2utf8 */
-	    if(!IS_UTF8(el) && !IS_ASCII(el)) {
-		if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
-		SET_STRING_ELT(ans, i, 
-			       mkCharCE(translateCharUTF8(el), CE_UTF8));
-	    }
-	} else { /* enc2native */
-	    if((known_to_be_latin1 && IS_UTF8(el)) ||
-	       (known_to_be_utf8 && IS_LATIN1(el)) ||
-	       ENC_KNOWN(el)) {
-		if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
+	if (IS_NA_STRING(el)) continue;
+	if (PRIMVAL(op) || known_to_be_utf8) { /* enc2utf8 */
+	    if (IS_UTF8(el) || IS_ASCII(el) || IS_BYTES(el)) continue;
+	    if (!duped) { ans = PROTECT(duplicate(ans)); duped = TRUE; }
+	    SET_STRING_ELT(ans, i, 
+			   mkCharCE(translateCharUTF8(el), CE_UTF8));
+	} else if (ENC_KNOWN(el)) { /* enc2native */
+	    if (IS_ASCII(el) || IS_BYTES(el)) continue;
+	    if (known_to_be_latin1 && IS_LATIN1(el)) continue;
+	    if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
+	    if (known_to_be_latin1)
+		SET_STRING_ELT(ans, i, mkCharCE(translateChar(el), CE_LATIN1));
+	    else
 		SET_STRING_ELT(ans, i, mkChar(translateChar(el)));
-	    }
 	}
     }
     if(duped) UNPROTECT(1);
@@ -1828,9 +1836,10 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (collator) ucol_close(collator);
 	    uloc_setDefault(s, &status);
 	    if(U_FAILURE(status))
-		error("failed to set ICU locale");
+		error("failed to set ICU locale %s (%d)", s, status);
 	    collator = ucol_open(NULL, &status);
-	    if (U_FAILURE(status)) error("failed to open ICU collator");
+	    if (U_FAILURE(status)) 
+		error("failed to open ICU collator (%d)", status);
 	} else {
 	    int i, at = -1, val = -1;
 	    for (i = 0; ATtable[i].str; i++)
@@ -1872,9 +1881,10 @@ int Scollate(SEXP a, SEXP b)
 	/* do better later */
 	uloc_setDefault(setlocale(LC_COLLATE, NULL), &status);
 	if(U_FAILURE(status))
-	    error("failed to set ICU locale");
+	    error("failed to set ICU locale (%d)", status);
 	collator = ucol_open(NULL, &status);
-	if (U_FAILURE(status)) error("failed to open ICU collator");
+	if (U_FAILURE(status)) 
+	    error("failed to open ICU collator (%d)", status);
     }
     if (collator == NULL)
 	return strcoll(translateChar(a), translateChar(b));
@@ -1942,7 +1952,7 @@ SEXP attribute_hidden do_crc64(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString(ans);
 }
 
-static void 
+static void
 bincode(double *x, R_xlen_t n, double *breaks, int nb,
 	int *code, int right, int include_border)
 {
@@ -2009,7 +2019,7 @@ SEXP attribute_hidden do_tabulate(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t n = XLENGTH(in);
     /* FIXME: could in principle be a long vector */
     int nb = asInteger(nbin);
-    if (nb == NA_INTEGER || nb < 0) 
+    if (nb == NA_INTEGER || nb < 0)
 	error(_("invalid '%s' argument"), "nbin");
     SEXP ans = allocVector(INTSXP, nb);
     int *x = INTEGER(in), *y = INTEGER(ans);
@@ -2037,7 +2047,7 @@ SEXP attribute_hidden do_findinterval(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n == NA_INTEGER) error(_("invalid '%s' argument"), "vec");
     R_xlen_t nx = XLENGTH(x);
     int sr = asLogical(right), si = asLogical(inside);
-    if (sr == NA_INTEGER) 
+    if (sr == NA_INTEGER)
 	error(_("invalid '%s' argument"), "rightmost.closed");
     if (si == NA_INTEGER)
 	error(_("invalid '%s' argument"), "all.inside");
@@ -2071,10 +2081,10 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     int n = asInteger(CAR(args)); args = CDR(args);
     if (n == NA_INTEGER || n < 0) error(_("invalid '%s' argument"), "n");
     int min_n = asInteger(CAR(args)); args = CDR(args);
-    if (min_n == NA_INTEGER || min_n < 0 || min_n > n) 
+    if (min_n == NA_INTEGER || min_n < 0 || min_n > n)
 	error(_("invalid '%s' argument"), "min.n");
     double shrink = asReal(CAR(args)); args = CDR(args);
-    if (!R_FINITE(shrink) || shrink <= 0.) 
+    if (!R_FINITE(shrink) || shrink <= 0.)
 	error(_("invalid '%s' argument"), "shrink.sml");
     PROTECT(hi = coerceVector(CAR(args), REALSXP)); args = CDR(args);
     double z;
@@ -2083,7 +2093,7 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!R_FINITE(z = REAL(hi)[1]) || z < 0.)
 	error(_("invalid '%s' argument"), "u5.bias");
     int eps = asInteger(CAR(args)); /* eps.correct */
-    if (eps == NA_INTEGER || eps < 0 || eps > 2) 
+    if (eps == NA_INTEGER || eps < 0 || eps > 2)
 	error(_("'eps.correct' must be 0, 1, or 2"));
     R_pretty(&l, &u, &n, min_n, shrink, REAL(hi), eps, 1);
     PROTECT(ans = allocVector(VECSXP, 3));
@@ -2100,7 +2110,7 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /*
-    r <- .Internal(formatC(x, as.character(mode), width, digits, 
+    r <- .Internal(formatC(x, as.character(mode), width, digits,
                    as.character(format), as.character(flag), i.strlen))
 */
 
@@ -2314,7 +2324,7 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 		} /* if(do_fg) for(i..) */
 	    else
 		for (R_xlen_t i = 0; i < n; i++)
-		    snprintf(result[i], strlen(result[i]) + 1, 
+		    snprintf(result[i], strlen(result[i]) + 1,
 			     form, width, dig, ((double *)x)[i]);
 	} else
 	    error("'type' must be \"real\" for this format");

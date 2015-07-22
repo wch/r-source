@@ -1,21 +1,30 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
 \alias{file.info}
+\alias{file.mode}
+\alias{file.mtime}
+\alias{file.size}
 \title{Extract File Information}
 \description{
   Utility function to extract information about files on the user's
   file systems.
 }
 \usage{
-file.info(\dots)
+file.info(\dots, extra_cols = TRUE)
+
+file.mode(\dots)
+file.mtime(\dots)
+file.size(\dots)
 }
 \arguments{
   \item{\dots}{character vectors containing file paths.  Tilde-expansion
     is done: see \code{\link{path.expand}}.}
+  \item{extra_cols}{Logical: return all cols rather than just the
+    first six.}
 }
 \details{
   What constitutes a \sQuote{file} is OS-dependent but includes
@@ -48,7 +57,7 @@ file.info(\dots)
 #endif
 }
 \value{
-  A data frame with row names the file names and columns
+  For \code{file.info}, data frame with row names the file names and columns
   \item{size}{double: File size in bytes.}
   \item{isdir}{logical: Is the file a directory?}
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
@@ -70,6 +79,10 @@ file.info(\dots)
     bits but not executable in this sense.}
 #endif
 
+  If \code{extra_cols} is false, only the first six columns are
+  returned: as these can all be found from a single C system call this
+  can be faster.
+  
   Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
   The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
@@ -87,6 +100,9 @@ file.info(\dots)
   some systems.  However, many file systems only record times in
   seconds, and some (e.g. modification time on FAT systems) are recorded
   in increments of 2 or more seconds.
+  
+  \code{file.mode}, \code{file.mtime} and \code{file.mode} are
+  convenience wrappers returning just one of the columns.
 }
 #ifdef unix
 \note{
@@ -107,8 +123,9 @@ file.info(\dots)
 }
 \examples{
 ncol(finf <- file.info(dir()))  # at least six
-\dontrun{finf # the whole list}
+\donttest{finf # the whole list}
 ## Those that are more than 100 days old :
+finf <- file.info(dir(), extra_cols = FALSE)
 finf[difftime(Sys.time(), finf[,"mtime"], units = "days") > 100 , 1:4]
 
 file.info("no-such-file-exists")

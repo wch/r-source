@@ -31,6 +31,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr
 "France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"Universite Paris 1 Pantheon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr
+"France (Strasbourg)",France,Strasbourg,http://cran.cardse.net,"Cardse llc.","Sergey Kutserey <s.kutserey # gmail.com>",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
 "Germany (Bonn)",Germany,Bonn,http://cran.r-mirror.de/,"Stefan Drees, Bonn","stefan # drees.name",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
@@ -56,7 +57,6 @@ Lebanon,Lebanon,Byblos,http://rmirror.lau.edu.lb/,"Lebanese American University,
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no
-Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","edward.p.santos # Up.edu.ph",1,ph
 Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl
 Portugal,Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",1,pt
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
@@ -73,6 +73,7 @@ Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 Turkey,Turkey,Denizli,http://cran.pau.edu.tr,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr
 "UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>",1,uk
+"UK (Cambridge)",UK,"Cambridge",http://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk
 "UK (London)",UK,London,http://cran.ma.imperial.ac.uk/,"Imperial College London","s.rochford # imperial.ac.uk",1,uk
 "UK (London)",UK,"London",http://mirror.mdx.ac.uk/R/,"Middlesex University London","Louis Slabbert <l.slabbert # mdx.ac.uk>",1,uk
 "UK (St Andrews)",UK,"St Andrews",http://star-www.st-andrews.ac.uk/cran/,"St Andrews University","Lee Kelvin <lsk9 # St-andrews.ac.uk>",1,uk

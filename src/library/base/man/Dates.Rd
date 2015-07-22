@@ -63,7 +63,7 @@
 
   \code{\link{DateTimeClasses}} for date-time classes.
 }
-\examples{\dontrun{
+\examples{\donttest{
 (today <- Sys.Date())
 format(today, "\%d \%b \%Y")  # with month as a word
 (tenweeks <- seq(today, length.out=10, by="1 week")) # next ten weeks

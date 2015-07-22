@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -26,16 +26,17 @@ enc2utf8(x)
   \item{value}{A character vector of positive length.}
 }
 \details{
-  Character strings in \R can be declared to be in \code{"latin1"} or
-  \code{"UTF-8"} or \code{"bytes"}.  These declarations can be read by
-  \code{Encoding}, which will return a character vector of values
-  \code{"latin1"}, \code{"UTF-8"} \code{"bytes"} or \code{"unknown"}, or
-  set, when \code{value} is recycled as needed and other values are
-  silently treated as \code{"unknown"}.  ASCII strings will never be
-  marked with a declared encoding, since their representation is the
-  same in all supported encodings.  Strings marked as \code{"bytes"} are
-  intended to be non-ASCII strings which should be manipulated as bytes,
-  and never converted to a character encoding.
+  Character strings in \R can be declared to be encoded in
+  \code{"latin1"} or \code{"UTF-8"} or as \code{"bytes"}.  These
+  declarations can be read by \code{Encoding}, which will return a
+  character vector of values \code{"latin1"}, \code{"UTF-8"}
+  \code{"bytes"} or \code{"unknown"}, or set, when \code{value} is
+  recycled as needed and other values are silently treated as
+  \code{"unknown"}.  ASCII strings will never be marked with a declared
+  encoding, since their representation is the same in all supported
+  encodings.  Strings marked as \code{"bytes"} are intended to be
+  non-ASCII strings which should be manipulated as bytes, and never
+  converted to a character encoding.
 
   \code{enc2native} and \code{enc2utf8} convert elements of character
   vectors to the native encoding or UTF-8 respectively, taking any
@@ -48,7 +49,7 @@ enc2utf8(x)
   \code{\link{read.table}}, \code{\link{readLines}}, and
   \code{\link{parse}} have an \code{encoding} argument that is used to
   declare encodings, \code{\link{iconv}} declares encodings from its
-  \code{from} argument, and console input in suitable locales is also
+  \code{to} argument, and console input in suitable locales is also
   declared.  \code{\link{intToUtf8}} declares its output as
   \code{"UTF-8"}, and output text connections (see
   \code{\link{textConnection}}) are marked if running in a
@@ -83,6 +84,9 @@ enc2utf8(x)
 }
 \value{
   A character vector.
+
+  For \code{enc2utf8} encodings are always marked: they are for
+  \code{enc2native} in UTF-8 and Latin-1 locales.
 }
 \examples{
 ## x is intended to be in latin1

@@ -30,6 +30,9 @@ function(given = NULL, family = NULL, middle = NULL,
     args <- list(given = given, family = family, middle = middle,
                  email = email, role = role, comment = comment,
 		 first = first, last = last)
+    if(all(sapply(args, is.null))) {
+        return(structure(list(), class = "person"))
+    }
     args <- lapply(args, .listify)
     args_length <- sapply(args, length)
     if(!all(args_length_ok <- args_length %in% c(1L, max(args_length))))
@@ -116,6 +119,9 @@ function(given = NULL, family = NULL, middle = NULL,
         ## Canonicalize 0-length character arguments to NULL.
         if(any(ind <- (sapply(rval, length) == 0L)))
             rval[ind] <- vector("list", length = sum(ind))
+        ## Give nothing if there is nothing.
+        if(all(sapply(rval, is.null)))
+            rval <- NULL
 
         return(rval)
     }
@@ -128,12 +134,15 @@ function(given = NULL, family = NULL, middle = NULL,
                             middle = middle[[i]], email = email[[i]],
                             role = role[[i]], comment = comment[[i]],
                             first = first[[i]], last = last[[i]])))
-    class(rval) <- "person"
 
     ## <COMMENT Z>
     ## Should we check that for each person there is at least one
     ## non-NULL entry?
     ## </COMMENT>
+    ## Yes!
+    rval <- rval[!sapply(rval, is.null)]
+
+    class(rval) <- "person"
 
     rval
 }
@@ -173,7 +182,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    print(format(x, ...))
+    if(length(x)) print(format(x, ...))
     invisible(x)
 }
 
@@ -264,6 +273,8 @@ function(x)
 
     x <- as.character(x)
 
+    if(!length(x)) return(person())
+
     ## Need to split the strings into individual person components.
     ## We used to split at ',' and 'and', but of course these could be
     ## contained in roles or comments as well.
@@ -302,6 +313,8 @@ function(x)
     x <- do.call("c",
                  regmatches(x, gregexpr(pattern, y), invert = TRUE))
     x <- x[!sapply(x, .is_not_nonempty_text)]
+
+    if(!length(x)) return(person())
 
     ## Step C.
     as_person1 <- function(x) {
@@ -366,6 +379,8 @@ function(x,
          ...
          )
 {
+    if(!length(x)) return(character())
+    
     args <- c("given", "family", "email", "role", "comment")
     include <- sapply(include, match.arg, args)
 
@@ -595,6 +610,8 @@ function(x, style = "text", .bibstyle = NULL,
          citation.bibtex.max = getOption("citation.bibtex.max", 1),
          sort = FALSE, ...)
 {
+    if(!length(x)) return(character())
+    
     style <- .bibentry_match_format_style(style)
 
     if(sort) x <- sort(x, .bibstyle = .bibstyle)
@@ -614,7 +631,7 @@ function(x, style = "text", .bibstyle = NULL,
                    ## </FIXME>
                    con <- textConnection(rd)
                    on.exit(close(con))
-                   f(con, fragment = TRUE, out = out, ...)
+                   f(con, fragment = TRUE, out = out, permissive = TRUE, ...)
                    paste(readLines(out), collapse = "\n")
                })
     }

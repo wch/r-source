@@ -184,7 +184,7 @@ static SEXP SetOption(SEXP tag, SEXP value)
     if (IS_R_NilValue(value)) {
 	for ( ; ! IS_R_NilValue(t) ; t = CDR(t))
 	    if (SEXP_EQL(TAG(CDR(t)), tag)) {
-		old = CAR(t);
+		old = CAR(CDR(t));
 		SETCDR(t, CDDR(t));
 		return old;
 	    }
@@ -544,10 +544,12 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "OutDec")) {
-		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 1 ||
-		    strlen(CHAR(STRING_ELT(argi, 0))) !=1)
+		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		OutDec = CHAR(STRING_ELT(argi, 0))[0];
+		static char sdec[11];
+		strncpy(sdec, CHAR(STRING_ELT(argi, 0)), 10);
+		sdec[10] = '\0';
+		OutDec = sdec;
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
 	    else if (streql(CHAR(namei), "max.contour.segments")) {

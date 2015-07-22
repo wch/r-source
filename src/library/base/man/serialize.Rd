@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{serialize}
@@ -21,9 +21,8 @@ unserialize(connection, refhook = NULL)
   \item{connection}{an open \link{connection} or (for \code{serialize})
     \code{NULL} or (for \code{unserialize}) a raw vector
     (see \sQuote{Details}).}
-  \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
-    written; otherwise binary one.  The default is \code{TRUE} for a
-    text-mode connection and \code{FALSE} otherwise.
+  \item{ascii}{a logical.  If \code{TRUE} or \code{NA}, an ASCII
+    representation is written; otherwise (default) a binary one.
     See also the comments in the help for \code{\link{save}}.}
   \item{xdr}{a logical: if a binary representation is used, should a
     big-endian one (XDR) be used?}

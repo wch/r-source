@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2013  The R Core Team
+ *  Copyright (C) 1997-2014  The R Core Team
  *  Copyright (C) 2003-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -302,10 +302,12 @@ SEXP attribute_hidden StringFromInteger(int x, int *warn)
     else return mkChar(EncodeInteger(x, w));
 }
 
-static const char* dropTrailing0(char *s, char cdec)
+#if OLD
+// moved to printutils.c
+static const char* dropTrailing0(char *s, const char *dec)
 {
     /* Note that  's'  is modified */
-    char *p = s;
+    char *p = s, cdec = dec[0];
     for (p = s; *p; p++) {
 	if(*p == cdec) {
 	    char *replace = p++;
@@ -331,10 +333,11 @@ SEXP attribute_hidden StringFromReal(double x, int *warn)
 	 * destructively; this is harmless here (in a sequential
 	 * environment), as mkChar() creates a copy */
 	/* Do it this way to avoid (3x) warnings in gcc 4.2.x */
-	char * tmp = (char *)EncodeReal(x, w, d, e, OutDec);
+	char * tmp = (char *) EncodeReal(x, w, d, e, OutDec);
 	return mkChar(dropTrailing0(tmp, OutDec));
     }
 }
+#endif
 
 SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
 {
@@ -395,6 +398,8 @@ SEXP VectorToPairList(SEXP x)
     named = (! IS_R_NilValue(xnames));
     xptr = xnew;
     for (i = 0; i < len; i++) {
+	if (NAMED(x) > NAMED(VECTOR_ELT(x, i)))
+	    SET_NAMED(VECTOR_ELT(x, i), NAMED(x));
 	SETCAR(xptr, VECTOR_ELT(x, i));
 	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0') /* ASCII */
 	    SET_TAG(xptr, installTrChar(STRING_ELT(xnames, i)));
@@ -1339,7 +1344,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	v = u;
 	/* this duplication may appear not to be needed in all cases,
 	   but beware that other code relies on it.
-	   (E.g  we clear attributes in do_asvector and do_ascharacter.)
+	   (E.g  we clear attributes in do_asvector and do_asatomic.)
 
 	   Generally coerceVector will copy over attributes.
 	*/
@@ -1392,9 +1397,7 @@ SEXP asCharacterFactor(SEXP x)
 }
 
 
-/* the "ascharacter" name is a historical anomaly: as.character used to be the
- * only primitive;  now, all these ops are : */
-SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x;
 

@@ -226,6 +226,16 @@ function(object, filename = NULL, name = NULL)
 
     ## Construct the format.
     if(is.data.frame(x)) {
+
+        make_item_tag <- function(s) {
+            ## For syntactic names, use \code; otherwise, use \samp.
+            if(grepl("^([[:alpha:]]|[.][[:alpha:]._])[[:alnum:]._]*$", s)) {
+                paste0("\\code{", s, "}")
+            } else {
+                paste0("\\samp{", gsub("([%{}])", "\\\\\\1", s), "}")
+            }
+        }
+        
         fmt <- c("\\format{",
                  paste("  A data frame with",
                        nrow(x),
@@ -238,7 +248,7 @@ function(object, filename = NULL, name = NULL)
             xi <- x[[i]]
             fmt <-
                 c(fmt,
-                  paste0("    \\item{\\code{", i, "}}{",
+                  paste0("    \\item{", make_item_tag(i), "}{",
                          if(inherits(xi, "ordered")) {
                              paste("an", data.class(xi),
                                    "factor with levels",
@@ -279,7 +289,7 @@ function(object, filename = NULL, name = NULL)
              description = c("\\description{",
              "%%  ~~ A concise (1-5 lines) description of the dataset. ~~",
              "}"),
-             usage = paste0("\\usage{data(", name, ")}"),
+             usage = paste0("\\usage{data(\"", name, "\")}"),
              format = fmt,
              details = c("\\details{",
              paste("%%  ~~ If necessary, more details than the",
@@ -314,17 +324,15 @@ promptPackage <-
 function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 {
     ## Most of this should not be translated -- PR#11191
-    ## need to do this as packageDescription and library(help=) have
-    ## different conventions
-    if (is.null(lib.loc)) lib.loc <- .libPaths()
+    
+    ## lib.loc is not used any more
+    ## if (is.null(lib.loc)) lib.loc <- .libPaths()
 
     insert1 <- function(field, new) {
     	prev <- Rdtxt[[field]]
     	Rdtxt[[field]] <<- c(prev[-length(prev)], new, prev[length(prev)])
     }
     insert2 <- function(field, new) insert1(field, paste("~~", new, "~~"))
-    tabular <- function(col1, col2)
-        c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
 
     if(missing(name))
 	name <- paste0(package, "-package")
@@ -334,8 +342,8 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 
     Rdtxt <-
     	    list(name = paste0("\\name{", name, "}"),
-#                 version = "\\Rdversion{1.1}",
-    	         aliases = paste0("\\alias{", name, "}"),
+#                version = "\\Rdversion{1.1}",
+    	         aliases = c(paste0("\\alias{", name, "}"), c(paste0("\\alias{", package, "}"))),
     	         docType = "\\docType{package}",
     	         title = c("\\title{", "}"),
     	         description = c("\\description{","}"),
@@ -346,59 +354,32 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     	         keywords = c("\\keyword{ package }")
     	     )
 
-    desc <- packageDescription(package, lib.loc)
-
-    if (length(desc) > 1) {
-    	info <- library(help = package, lib.loc = lib.loc,
-                        character.only = TRUE)
-
-    	if (!length(grep(paste0("^", package, " "), info$info[[2L]])))
-    	    Rdtxt$aliases <- c(Rdtxt$aliases, paste0("\\alias{", package, "}"))
-
-        insert1("title", desc$Title)
-	insert1("description", desc$Description)
-	insert1("author", c(desc$Author, "",
-                            paste(identity("Maintainer:"),desc$Maintainer)))
-
-	desc <- desc[!(names(desc) %in%
-                       c("Title", "Description", "Author", "Maintainer"))]
-
-	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
-
-	if (!is.null(info$info[[2L]]))
-	    insert1("details",  c("", identity("Index:"), "\\preformatted{",
-	                          info$info[[2L]], "}"))
-	if (!is.null(info$info[[3L]]))
-	    insert1("details",
-                    c("",
-        identity("Further information is available in the following vignettes:"),
-                      tabular(paste0("\\code{", info$info[[3L]][,1], "}"),
-                              info$info[[3L]][,2])))
-    }
+    insert1("title", paste0("\\packageTitle{", package,"}"))
+    insert1("description", paste0("\\packageDescription{", package,"}"))
+    insert1("author", c(paste0("\\packageAuthor{", package,"}"), "",
+			paste("Maintainer:",paste0("\\packageMaintainer{", package,"}"))))
+    insert1("details", c("", "The DESCRIPTION file:"))
+    insert1("details", paste0("\\packageDESCRIPTION{", package, "}"))
+    insert1("details", paste0("\\packageIndices{", package, "}"))
 
     if (!final) {
-        insert2("title", identity("package title"))
-        insert2("description",
-                identity("A concise (1-5 lines) description of the package"))
         insert2("details",
-                strwrap(identity("An overview of how to use the package, including the most important functions")))
-        insert2("author",
-                identity("The author and/or maintainer of the package"))
+                strwrap("An overview of how to use the package, including the most important functions"))
         Rdtxt$references <-
             c("\\references{",
               paste("~~",
-                    identity("Literature or other references for background information"),
+                    "Literature or other references for background information",
                     "~~"),
               "}")
         Rdtxt$seealso <- c("\\seealso{", "}")
         insert2("seealso",
-                c(identity("Optional links to other man pages, e.g."),
+                c("Optional links to other man pages, e.g.",
                   "\\code{\\link[<pkg>:<pkg>-package]{<pkg>}}"))
         Rdtxt$examples <- c("\\examples{","}")
         insert2("examples",
-                identity("simple examples of the most important functions"))
+                "simple examples of the most important functions")
         insert2("keywords",
-                strwrap(identity("Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory")))
+                strwrap("Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"))
     }
 
     if(is.na(filename)) return(Rdtxt)
@@ -412,3 +393,58 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 
     invisible(filename)
 }
+
+promptImport <- function(object, filename = NULL, name = NULL, importedFrom = NULL, 
+                         importPage = name, ...)
+{
+    if(missing(name))
+        name <-
+            if(is.character(object))
+                object
+            else {
+                name <- substitute(object)
+                if(is.name(name))
+                    as.character(name)
+                else if (is.language(name) && length(name) == 3 && identical(name[[1]], as.name("::")))
+                    as.character(name[[3]])
+                else
+                    stop("cannot determine a usable name")
+            }
+    if(is.null(filename))
+        filename <- paste0(name, ".Rd")
+       
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
+    
+    if(is.null(importedFrom)) {
+	if (is.function(x))
+	    importedFrom <- getNamespaceName(environment(x))
+	else
+	    stop("cannot determine import name")
+    }
+    
+    Rdtxt <-
+        list(name = paste0("\\name{", name, "}"),
+             aliases = paste0("\\alias{", name, "}"),
+             docType = "\\docType{import}",
+             title = paste0("\\title{Import from package \\pkg{", importedFrom, "}}"),
+             description = c("\\description{",
+               paste0("The \\code{", name, "} object is imported from package \\pkg{", importedFrom, "}."),
+               paste0("Help is available here:  \\code{\\link[", importedFrom, ":", importPage, "]{", 
+                      importedFrom, "::", importPage, "}}."),
+               "}"))
+
+    if(is.na(filename)) return(Rdtxt)
+
+    cat(unlist(Rdtxt), file = filename, sep = "\n")
+
+    message(gettextf("Created file named %s.", sQuote(filename)),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)    
+}
+

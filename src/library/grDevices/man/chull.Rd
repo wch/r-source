@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/chull.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chull}
@@ -19,8 +19,10 @@ chull(x, y = NULL)
   set of points specified.
 }
 \details{
-  \code{\link{xy.coords}} is used to interpret the
-  specification of the points. The algorithm is that given by Eddy (1977).
+  \code{\link{xy.coords}} is used to interpret the specification of the
+  points. Infinite, missing and \code{NaN} values are not allowed.
+
+  The algorithm is that given by Eddy (1977).
 }
 \value{
   An integer vector giving the indices of the unique points lying on the

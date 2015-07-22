@@ -435,4 +435,5 @@ html-non-svn: ../html/resources.html
 
 ../html/resources.html: $(srcdir)/resources.texi
 	@$(ECHO) "creating doc/html/resources.html"
-	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi -o $@
+	@$(MAKEINFO) --html --no-split --no-headers \
+	  --css-include=$(top_srcdir)/doc/html/R.css $(srcdir)/resources.texi -o $@

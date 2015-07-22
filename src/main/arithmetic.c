@@ -316,26 +316,9 @@ static SEXP lcall;
    we can worry about writing alternate code when the need arises.
    To be safe, we signal a compiler error if int is not 32 bits. */
 # error code requires that int have 32 bits
-#else
-/* Just to be on the safe side, configure ought to check that the
-   mashine uses two's complement. A define like
-#define USES_TWOS_COMPLEMENT (~0 == (unsigned) -1)
-   might work, but at least one compiler (CodeWarrior 6) chokes on it.
-   So for now just assume it is true.
-*/
-#define USES_TWOS_COMPLEMENT 1
+#endif
 
-#if USES_TWOS_COMPLEMENT
-# define OPPOSITE_SIGNS(x, y) ((x < 0) ^ (y < 0))
-# define GOODISUM(x, y, z) (((x) > 0) ? ((y) < (z)) : ! ((y) < (z)))
-# define GOODIDIFF(x, y, z) (!(OPPOSITE_SIGNS(x, y) && OPPOSITE_SIGNS(x, z)))
-#else
-# define GOODISUM(x, y, z) ((double) (x) + (double) (y) == (z))
-# define GOODIDIFF(x, y, z) ((double) (x) - (double) (y) == (z))
-#endif
-#define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
 #define INTEGER_OVERFLOW_WARNING _("NAs produced by integer overflow")
-#endif
 
 #define CHECK_INTEGER_OVERFLOW(call, ans, naflag) do {		\
 	if (naflag) {						\
@@ -345,38 +328,39 @@ static SEXP lcall;
 	}							\
     } while(0)
 
+#define R_INT_MAX  INT_MAX
+#define R_INT_MIN -INT_MAX
+// .. relying on fact that NA_INTEGER is outside of these
+
 static R_INLINE int R_integer_plus(int x, int y, Rboolean *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
 	return NA_INTEGER;
-    else {
-	int z = x + y;
-	if (GOODISUM(x, y, z) && z != NA_INTEGER)
-	    return z;
-	else {
-	    if (pnaflag != NULL)
-		*pnaflag = TRUE;
-	    return NA_INTEGER;
-	}
+
+    if (((y > 0) && (x > (R_INT_MAX - y))) ||
+	((y < 0) && (x < (R_INT_MIN - y)))) {
+	if (pnaflag != NULL)
+	    *pnaflag = TRUE;
+	return NA_INTEGER;
     }
+    return x + y;
 }
 
 static R_INLINE int R_integer_minus(int x, int y, Rboolean *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
 	return NA_INTEGER;
-    else {
-	int z = x - y;
-	if (GOODIDIFF(x, y, z) && z != NA_INTEGER)
-	    return z;
-	else {
-	    if (pnaflag != NULL)
-		*pnaflag = TRUE;
-	    return NA_INTEGER;
-	}
+
+    if (((y < 0) && (x > (R_INT_MAX + y))) ||
+	((y > 0) && (x < (R_INT_MIN + y)))) {
+	if (pnaflag != NULL)
+	    *pnaflag = TRUE;
+	return NA_INTEGER;
     }
+    return x - y;
 }
 
+#define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
 static R_INLINE int R_integer_times(int x, int y, Rboolean *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
@@ -1288,8 +1272,10 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	    x : allocVector(INTSXP, n);
 	PROTECT(s);
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
-	for(i = 0 ; i < n ; i++)
-	    INTEGER(s)[i] = abs(INTEGER(x)[i]);
+	for(i = 0 ; i < n ; i++) {
+            int xi = INTEGER(x)[i];
+	    INTEGER(s)[i] = (xi == NA_INTEGER) ? xi : abs(xi);
+        }
     } else if (TYPEOF(x) == REALSXP) {
 	R_xlen_t i, n = XLENGTH(x);
 	PROTECT(s = NO_REFERENCES(x) ? x : allocVector(REALSXP, n));

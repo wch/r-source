@@ -1648,8 +1648,10 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 			      recursed ? len-1 : -1, R_NilValue);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
-		if(recursed) SET_VECTOR_ELT(xup, off, x);
-		else xtop = x;
+		if(recursed) {
+		    if(isVectorList(xup)) SET_VECTOR_ELT(xup, off, x);
+		    else xup = SimpleListAssign(call, xup, subs, x, len-2);
+		} else xtop = x;
 		UNPROTECT(1);
 		return xtop;
 	    }
@@ -1843,7 +1845,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(indx)[i] = (int)
-		    get1index(CAR(subs), CAR(names),
+		    get1index(CAR(subs), VECTOR_ELT(names, i),
 			      INTEGER(dims)[i],
 			      /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);

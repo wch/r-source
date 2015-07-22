@@ -3,8 +3,6 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{print}
 \title{Print Values}
 \usage{
@@ -24,6 +22,7 @@ print(x, \dots)
 \alias{print.htest}
 \alias{print.listof}
 \alias{print.simple.list}
+\alias{print.Dlist}
 \alias{print.table}
 \description{
   \code{print} prints its argument and returns it \emph{invisibly} (via
@@ -63,7 +62,7 @@ print(x, \dots)
   \code{\link{ordered}} factors as well.
 
   \code{print.table} for printing \code{\link{table}}s allows other
-  customization. As of R 3.0.0, it only prints a description in case of a table 
+  customization. As of R 3.0.0, it only prints a description in case of a table
   with 0-extents (this can happen if a classifier has no valid data).
 
   See \code{\link{noquote}} as an example of a class whose main

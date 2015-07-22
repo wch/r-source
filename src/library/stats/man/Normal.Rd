@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -46,11 +46,15 @@ rnorm(n, mean = 0, sd = 1)
   
   The length of the result is determined by \code{n} for
   \code{rnorm}, and is the maximum of the lengths of the
-  numerical parameters for the other functions.  
+  numerical arguments for the other functions.  
   
-  The numerical parameters other than \code{n} are recycled to the
+  The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
-  parameters are used.
+  arguments are used.
+  
+  For \code{sd = 0} this gives the limit as \code{sd} decreases to 0, a
+  point mass at \code{mu}.
+  \code{sd < 0} is an error and returns \code{NaN}.
 }
 \details{
   If \code{mean} or \code{sd} are not specified they assume the default
@@ -64,9 +68,6 @@ rnorm(n, mean = 0, sd = 1)
   }
   where \eqn{\mu} is the mean of the distribution and
   \eqn{\sigma} the standard deviation.
-
-  \code{qnorm} is based on Wichura's algorithm AS 241 which provides
-  precise results up to about 16 digits.
 }
 \seealso{
   \link{Distributions} for other standard distributions, including
@@ -85,6 +86,8 @@ rnorm(n, mean = 0, sd = 1)
   Wichura, M. J. (1988)
   Algorithm AS 241: The percentage points of the normal distribution.
   \emph{Applied Statistics}, \bold{37}, 477--484.
+
+  which provides precise results up to about 16 digits.
 
   For \code{rnorm}, see \link{RNG} for how to select the algorithm and
   for references to the supplied methods.

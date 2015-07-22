@@ -121,12 +121,15 @@ svnonly:
 	  fi \
 	fi
 
-libR_la = lib/libR$(DYLIB_EXT)
+@WANT_R_STATIC_FALSE@libR_la = libR$(DYLIB_EXT)
+@WANT_R_STATIC_TRUE@libR_la = libR.a
 install-libR:
-	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
+	@if test -f lib$(R_ARCH)/$(libR_la); then $(MAKE) install-libR-exists; fi
 install-libR-exists:
 	@$(MKINSTALLDIRS) "$(DESTDIR)${libdir}"
-	@$(INSTALL_DATA) -m755 $(libR_la) "$(DESTDIR)${libdir}"
+	@$(INSTALL_DATA) -m755 lib$(R_ARCH)/$(libR_la) "$(DESTDIR)${libdir}"
+uninstall-libR: 
+	@rm -f "$(DESTDIR)${libdir}/$(libR_la)"
 
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)"

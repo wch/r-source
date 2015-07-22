@@ -180,6 +180,7 @@ static R_INLINE void register_bad_sexp_type(SEXP s, int line)
 }
 
 /* also called from typename() in inspect.c */
+attribute_hidden
 const char *sexptype2char(SEXPTYPE type) {
     switch (type) {
     case NILSXP:	return "NILSXP";
@@ -2357,6 +2358,21 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     return s;
 }
 
+SEXP R_mkEVPROMISE(SEXP expr, SEXP val)
+{
+    SEXP prom = mkPROMISE(expr, R_NilValue);
+    SET_PRVALUE(prom, val);
+    return prom;
+}
+
+SEXP R_mkEVPROMISE_NR(SEXP expr, SEXP val)
+{
+    SEXP prom = mkPROMISE(expr, R_NilValue);
+    DISABLE_REFCNT(prom);
+    SET_PRVALUE(prom, val);
+    return prom;
+}
+
 /* support for custom allocators that allow vectors to be allocated
    using non-standard means such as COW mmap() */
 
@@ -2897,16 +2913,16 @@ static void R_gc_internal(R_size_t size_needed)
     /* sanity check on logical scalar values */
     if (! IS_NULL_SEXP(R_TrueValue) && LOGICAL(R_TrueValue)[0] != TRUE) {
 	LOGICAL(R_TrueValue)[0] = TRUE;
-	warning("internal TRUE value has been modified");
+	error("internal TRUE value has been modified");
     }
     if (! IS_NULL_SEXP(R_FalseValue) && LOGICAL(R_FalseValue)[0] != FALSE) {
 	LOGICAL(R_FalseValue)[0] = FALSE;
-	warning("internal FALSE value has been modified");
+	error("internal FALSE value has been modified");
     }
     if (! IS_NULL_SEXP(R_LogicalNAValue) &&
 	LOGICAL(R_LogicalNAValue)[0] != NA_LOGICAL) {
 	LOGICAL(R_LogicalNAValue)[0] = NA_LOGICAL;
-	warning("internal logical NA value has been modified");
+	error("internal logical NA value has been modified");
     }
 }
 
@@ -3275,6 +3291,7 @@ int (TYPEOF)(SEXP x) { return TYPEOF(CHK(x)); }
 int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
 int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
+int (REFCNT)(SEXP x) { return REFCNT(x); }
 
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
@@ -3786,7 +3803,8 @@ void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
 
     if(buf->data == NULL) {
 	buf->data = (char *) malloc(blen);
-	buf->data[0] = '\0';
+	if(buf->data)
+	    buf->data[0] = '\0';
     } else
 	buf->data = (char *) realloc(buf->data, blen);
     buf->bufsize = blen;

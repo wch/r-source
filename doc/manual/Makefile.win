@@ -191,7 +191,8 @@ maintainer-clean: distclean
 ../RESOURCES: resources.texi
 	@$(TEXI2TEXT) -o $@ $<
 ../html/resources.html: resources.texi
-	@$(TEXI2HTML) --no-headers -o $@ $<
+	@$(MAKEINFO) --html --no-split --no-headers \
+	  --css-include=$(top_srcdir)/doc/html/R.css -o $@ $<
 
 ## Run from src/gnuwin32/fixed/Makefile
 svnonly: ../FAQ ../RESOURCES ../html/resources.html

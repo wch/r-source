@@ -199,24 +199,24 @@ Rd2HTML <-
 
     inEqn <- FALSE		# Should we do edits needed in an eqn?
     sectionLevel <- 0L		# How deeply nested within section/subsection
-    inPara <- FALSE		# Are we in a <P> paragraph? If NA, we're not, but we're not allowed to be
+    inPara <- FALSE		# Are we in a <p> paragraph? If NA, we're not, but we're not allowed to be
 
 
 ### These correspond to HTML wrappers
-    HTMLTags <- c("\\bold"="B",
-    	          "\\cite"="CITE",
+    HTMLTags <- c("\\bold"="b",
+    	          "\\cite"="cite",
                   "\\code"="code",
-                  "\\command"="CODE",
-                  "\\dfn"="DFN",
-                  "\\emph"="EM",
-                  "\\kbd"="KBD",
-                  "\\preformatted"="PRE",
-#                  "\\special"="PRE",
-                  "\\strong"="STRONG",
-                  "\\var"="VAR",
-                  "\\verb"="PRE")
+                  "\\command"="code",
+                  "\\dfn"="dfn",
+                  "\\emph"="em",
+                  "\\kbd"="kbd",
+                  "\\preformatted"="pre",
+#                  "\\special"="pre",
+                  "\\strong"="strong",
+                  "\\var"="var",
+                  "\\verb"="pre")
     # These have simple substitutions
-    HTMLEscapes <- c("\\R"='<font face="Courier New,Courier" color="#666666"><b>R</b></font>',
+    HTMLEscapes <- c("\\R"='<span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>',
     		     "\\cr"="<br>",
     		     "\\dots"="...",
     		     "\\ldots"="...")
@@ -272,7 +272,7 @@ Rd2HTML <-
     }
 
     writeWrapped <- function(tag, block, doParas) {
-    	if (!doParas || HTMLTags[tag] == "PRE")
+    	if (!doParas || HTMLTags[tag] == "pre")
             leavePara(NA)
         else
             enterPara()
@@ -404,7 +404,7 @@ Rd2HTML <-
     }
 
     writeBlock <- function(block, tag, blocktag) {
-        doParas <- !(blocktag %in% c("\\command", "\\tabular"))
+        doParas <- !(blocktag %in% c("\\tabular"))
 	switch(tag,
                UNKNOWN =,
                VERB = of1(vhtmlify(block, inEqn)),
@@ -494,7 +494,7 @@ Rd2HTML <-
                "\\deqn" = {
                    inEqn <<- TRUE
                    leavePara(TRUE)
-                   of1('<p align="center"><i>')
+                   of1('<p style="text-align: center;"><i>')
                    block <- block[[length(block)]];
                    writeContent(block, tag)
                    of0('</i>')
@@ -518,7 +518,18 @@ Rd2HTML <-
 		       writeContent(block[[length(block)]], tag)
 		       of1('"')
 		   }
-                   of1(' />')
+                   ## <FIXME>
+                   ## We currently generate HTML 4.01 transitional.
+                   ## When using
+                   ##   <img ...... />
+                   ## W3C Markup Validator warns
+                   ##   NET-enabling start-tag requires SHORTTAG YES
+                   ## Hence use
+                   ##   <img ......  >
+                   ## for now, and change if/when moving to XHTML.
+                   of1(' >')
+                   ##   of1(' />')
+                   ## </FIXME>
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
@@ -570,7 +581,7 @@ Rd2HTML <-
                     stopRd(table, Rdfile,
                            "Only ", length(format),
                            " columns allowed in this table")
-            	of0('<td align="', format[col], '">')
+            	of0('<td style="text-align: ', format[col], ';">')
             	newcol <- FALSE
             }
             switch(tags[i],
@@ -771,7 +782,10 @@ Rd2HTML <-
 	name <- htmlify(Rd[[2L]][[1L]])
 
 	of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-	    '<html><head><title>')
+            '<html><head><title>')
+        ## of0('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+        ##     '<html xmlns="http://www.w3.org/1999/xhtml">',
+	##     '<head><title>')
 	headtitle <- strwrap(.Rd_format_title(.Rd_get_title(Rd)),
 	                     width=65, initial="R: ")
 	if (length(headtitle) > 1) headtitle <- paste0(headtitle[1], "...")
@@ -790,7 +804,7 @@ Rd2HTML <-
 	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')
 	else
 	    of0('"><tr><td>',name)
-	of0('</td><td align="right">R Documentation</td></tr></table>\n\n')
+	of0('</td><td style="text-align: right;">R Documentation</td></tr></table>\n\n')
 
 	of1("<h2>")
 	inPara <- NA
@@ -806,7 +820,7 @@ Rd2HTML <-
 	    version <- paste0('Package <em>',package,'</em> version ',version,' ')
 	of0('\n')
 	if (version != "")
-	    of0('<hr><div align="center">[', version,
+	    of0('<hr><div style="text-align: center;">[', version,
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
 	of0('\n',

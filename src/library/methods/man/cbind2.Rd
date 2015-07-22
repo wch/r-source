@@ -4,8 +4,6 @@
 % Copyright 2001-2011 The R Foundation
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{cbind2}
 \alias{cbind2}
 \alias{rbind2}

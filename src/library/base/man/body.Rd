@@ -1,6 +1,6 @@
 % File src/library/base/man/body.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{body}
@@ -17,7 +17,7 @@ body(fun, envir = environment(fun)) <- value
 \arguments{
   \item{fun}{a function object, or see \sQuote{Details}.}
   \item{envir}{environment in which the function should be defined.}
-  \item{value}{an object, usually a language object: see section
+  \item{value}{an object, usually a \link{language object}: see section
     \sQuote{Value}.}
 }
 \details{
@@ -32,8 +32,9 @@ body(fun, envir = environment(fun)) <- value
 }
 \value{
   \code{body} returns the body of the function specified.  This is
-  normally a language object, most often a call to \code{\{}, but it can
-  also be an object (e.g. \code{pi}) to be the return value of the function.
+  normally a \link{language object}, most often a call to \code{\{}, but
+  it can also be an object (e.g. \code{pi}) to be the return value of
+  the function.
 
   The replacement form sets the body of a function to the
   object on the right hand side, and (potentially) resets the

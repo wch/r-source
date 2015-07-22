@@ -178,10 +178,15 @@ getOption(x, default = NULL)
       to something in the order of (and typically slightly less than)
       \code{max.print} \emph{entries}.}
 
-    \item{\code{OutDec}:}{character string containing a single-byte
-      character.  The character to be used as the decimal point in output
-      conversions, that is in printing, plotting and \code{as.character}
-      but not deparsing.}
+    \item{\code{OutDec}:}{character string containing a single
+      character.  The preferred character to be used as the decimal
+      point in output conversions, that is in printing, plotting,
+      \code{\link{format}} and \code{\link{as.character}} but not when
+      deparsing nor by \code{\link{sprintf}} nor \code{\link{formatC}}
+      (which are sometimes used prior to printing.
+
+      Only single-byte characters were supported prior to \R 3.2.0.
+    }
 
     \item{\code{pager}:}{the command used for displaying text files by
       \code{\link{file.show}}.

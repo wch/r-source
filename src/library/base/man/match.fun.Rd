@@ -63,9 +63,7 @@ match.fun(FUN, descend = TRUE)
 match.fun("*")
 # Overwrite outer with a vector
 outer <- 1:5
-\dontrun{
-match.fun(outer, descend = FALSE) #-> Error:  not a function
-}
+try(match.fun(outer, descend = FALSE)) #-> Error:  not a function
 match.fun(outer) # finds it anyway
 is.function(match.fun("outer")) # as well
 }

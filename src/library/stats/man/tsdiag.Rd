@@ -39,7 +39,7 @@ tsdiag(object, gof.lag, \dots)
 }
 
 \examples{
-\dontrun{require(graphics)
+\donttest{require(graphics)
 
 fit <- arima(lh, c(1,0,0))
 tsdiag(fit)

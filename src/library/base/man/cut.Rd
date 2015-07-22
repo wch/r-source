@@ -1,6 +1,6 @@
 % File src/library/base/man/cut.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cut}
@@ -47,20 +47,24 @@ cut(x, \dots)
   is a constant vector, equal-length intervals are created, one of
   which includes the single value.)
 
-  If a \code{labels} parameter is specified, its values are used
-  to name the factor levels.  If none is specified, the factor
-  level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
-  etc. for \code{right = TRUE} and as \code{"[b1, b2)"}, \ldots if
-  \code{right = FALSE}.
-  In this case, \code{dig.lab} indicates the minimum number  of digits
+  If a \code{labels} parameter is specified, its values are used to name
+  the factor levels.  If none is specified, the factor level labels are
+  constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"} etc. for
+  \code{right = TRUE} and as \code{"[b1, b2)"}, \ldots if \code{right =
+    FALSE}.
+  In this case, \code{dig.lab} indicates the minimum number of digits
   should be used in formatting the numbers \code{b1}, \code{b2}, \ldots.
   A larger value (up to 12) will be used if needed to distinguish
-  between any pair of  endpoints: if this fails labels such as
-  \code{"Range3"} will be used.
+  between any pair of endpoints: if this fails labels such as
+  \code{"Range3"} will be used.  Formatting is done by
+  \code{\link{formatC}}.
 
   The default method will sort a numeric vector of \code{breaks}, but
   other methods are not required to and \code{labels} will correspond to
   the intervals after sorting.
+  
+  As from \R 3.2.0, \code{getOption("OutDec")} is consulted when labels
+  are constructed for \code{labels = NULL}.
 }
 \value{
   A \code{\link{factor}} is returned, unless \code{labels = FALSE} which

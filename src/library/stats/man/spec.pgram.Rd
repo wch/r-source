@@ -3,8 +3,6 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
-
 \name{spec.pgram}
 \alias{spec.pgram}
 \title{Estimate Spectral Density of a Time Series by a Smoothed

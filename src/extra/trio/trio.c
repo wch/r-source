@@ -6285,7 +6285,7 @@ TRIO_ARGS4((self, target, flags, width),
 {
   int i;
   int j;
-  int size;
+  int size = 0;
   int amount = 0;
   trio_wchar_t wch;
   char buffer[MB_LEN_MAX + 1];
@@ -6373,7 +6373,7 @@ TRIO_ARGS4((self, target, flags, width),
       i += size;
     }
   if (target)
-    target[i] = WCONST('\0');
+    target[i] = L'\0';
   return TRUE;
 }
 #endif /* TRIO_FEATURE_WIDECHAR */

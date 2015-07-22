@@ -23,13 +23,13 @@ function(topic, package = NULL, lib.loc = NULL,
          help_type = getOption("help_type"))
 {
     types <- c("text", "html", "pdf")
-    if(!missing(package))
+    if(!missing(package)) # Don't check for NULL; may be nonstandard eval
         if(is.name(y <- substitute(package)))
             package <- as.character(y)
 
     ## If no topic was given ...
     if(missing(topic)) {
-        if(!missing(package)) {         # "Help" on package.
+        if(!is.null(package)) {	# "Help" on package.
             help_type <- if(!length(help_type)) "text"
             else match.arg(tolower(help_type), types)
             ## Carter Butts and others misuse 'help(package=)' in startup
@@ -48,7 +48,7 @@ function(topic, package = NULL, lib.loc = NULL,
             } else return(library(help = package, lib.loc = lib.loc,
                                   character.only = TRUE))
         }
-        if(!missing(lib.loc))           # text "Help" on library.
+        if(!is.null(lib.loc))           # text "Help" on library.
             return(library(lib.loc = lib.loc))
         ## ultimate default is to give help on help()
         topic <- "help"; package <- "utils"; lib.loc <- .Library
@@ -71,13 +71,14 @@ function(topic, package = NULL, lib.loc = NULL,
 
     help_type <- if(!length(help_type)) "text"
     else match.arg(tolower(help_type), types)
-
+    
     paths <- index.search(topic,
-                          find.package(package, lib.loc, verbose = verbose))
+                          find.package(if (is.null(package)) loadedNamespaces() else package, 
+			               lib.loc, verbose = verbose))
     tried_all_packages <- FALSE
     if(!length(paths)
        && is.logical(try.all.packages) && !is.na(try.all.packages)
-       && try.all.packages && missing(package) && missing(lib.loc)) {
+       && try.all.packages && is.null(package) && is.null(lib.loc)) {
         ## Try all the remaining packages.
         for(lib in .libPaths()) {
             packages <- .packages(TRUE, lib)

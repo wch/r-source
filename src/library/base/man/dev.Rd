@@ -1,6 +1,6 @@
 % File src/library/base/man/dev.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Device}
@@ -23,5 +23,9 @@
   entries as the maximal number of graphics devices which have been
   simultaneously active.  If a device has been removed, its entry will be
   \code{""} until the device number is reused.
+
+  Devices may add attributes to the character vector: for example
+  devices which write to a file may record its path in attribute
+  \code{"filepath"}.
 }
 \keyword{device}

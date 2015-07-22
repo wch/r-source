@@ -70,7 +70,7 @@
 .haveRds <- function(dir)
 {
     ## either source package or pre-2.10.0 installed package
-    if (file_test("-d", file.path(dir, "man"))) return(TRUE)
+    if (dir.exists(file.path(dir, "man"))) return(TRUE)
     file.exists((file.path(dir, "help", "paths.rds")))
 }
 
@@ -106,7 +106,7 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
@@ -118,7 +118,7 @@ function(package, dir, lib.loc = NULL)
 
         code_env <- new.env(hash = TRUE)
         code_dir <- file.path(dir, "R")
-        if(file_test("-d", code_dir)) {
+        if(dir.exists(code_dir)) {
             dfile <- file.path(dir, "DESCRIPTION")
             meta <- if(file_test("-f", dfile))
                 .read_description(dfile)
@@ -148,7 +148,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the data sets to work on.
     data_dir <- file.path(dir, "data")
-    data_objs <- if(file_test("-d", data_dir))
+    data_objs <- if(dir.exists(data_dir))
 	unlist(.try_quietly(list_data_in_pkg(dataDir = data_dir)),
 	       use.names = FALSE)
     else
@@ -323,7 +323,7 @@ function(package, dir, lib.loc = NULL,
         dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -360,13 +360,13 @@ function(package, dir, lib.loc = NULL,
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -409,7 +409,7 @@ function(package, dir, lib.loc = NULL,
 
     ## Find the data sets to work on.
     data_dir <- file.path(dir, "data")
-    data_sets_in_code <- if(file_test("-d", data_dir))
+    data_sets_in_code <- if(dir.exists(data_dir))
         names(.try_quietly(list_data_in_pkg(dataDir = data_dir)))
     else
         character()
@@ -921,7 +921,7 @@ function(package, lib.loc = NULL)
     if(length(package) != 1L)
         stop("argument 'package' must be of length 1")
     dir <- find.package(package, lib.loc)
-    if(!file_test("-d", file.path(dir, "R")))
+    if(!dir.exists(file.path(dir, "R")))
         stop(gettextf("directory '%s' does not contain R code", dir),
              domain = NA)
     if(!.haveRds(dir))
@@ -1125,6 +1125,51 @@ function(package, lib.loc = NULL)
 
     names(db) <- .Rd_get_names_from_Rd_db(db)
 
+    .get_var_names_from_item_tags <- function(s, nice = TRUE) {
+        if(!length(s)) return(character())
+
+        nms <- character()
+        ## Handle trailing colons and leading/trailing white space.
+        s <- sub("^ *", "", sub("( *:)? *$", "", s))
+        ## Handle \samp entries: need to match until the first unescaped
+        ## rbrace.
+        re <- "\\\\samp\\{(([^\\}]|[\\].)*)\\}( *, *)?"
+        m <- gregexpr(re, s)
+        if(any(unlist(m) > -1)) {
+            nms <- sub(re, "\\1", unlist(regmatches(s, m)))
+            ## Unescape Rd escapes.
+            nms <- gsub("\\\\([{}%])", "\\1", nms)
+            regmatches(s, m) <- ""
+        }
+        ## Handle \code entries, assuming that they can be taken literally
+        ## (no escaping or quoting to obtain valid R syntax).
+        re <- "\\\\code\\{([^}]*)\\}( *, *)?"
+        m <- gregexpr(re, s)
+        add <- regmatches(s, m)
+        lens <- sapply(add, length)
+        add <- sub(re, "\\1", unlist(add))
+        ## The old code base simply dropped the \code markup via
+        ##   gsub("\\\\code\\{(.*)\\}:?", "\\1", s)
+        ## unescaped underscores and stripped whitespace.
+        ## Let us be nice about such whitespace inside a single \code (by
+        ## default), as this should always render ok in the manual, but not
+        ## about escaped underscores e.g.,
+        ##   ElemStatLearn/man/marketing.Rd: Dual\_Income
+        ## and comma-separated lists inside
+        ## \code, e.g.,
+        ##   prefmod/man/trdel.Rd: \code{V1,V2,V3,V4,V5,V6,V7,V8,V9,V10}
+        ## as these will not render correctly.
+        if(nice) {
+            ind <- rep.int(lens == 1L, lens)
+            add[ind] <- tools:::.strip_whitespace(add[ind])
+        }
+        nms <- c(nms, add)
+        regmatches(s, m) <- ""
+        ## Handle rest.
+        nms <- c(nms, unlist(strsplit(s, " *, *")))
+        nms
+    }
+
     .get_data_frame_var_names <- function(x) {
         ## Make sure that there is exactly one format section:
         ## using .Rd_get_section() would get the first one.
@@ -1143,16 +1188,9 @@ function(package, lib.loc = NULL)
         ## Should this allow for several \describe blocks?
         x <- .Rd_get_section(x, "describe")
         ## Get the \item tags inside \describe.
-        txt <- .Rd_get_item_tags(x)
-        if(!length(txt)) return(character())
-        txt <- gsub("(.*):$", "\\1", as.character(txt))
-        txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", txt)
-        ## Argh.  Of course, variable names can have a '_', which needs
-        ## to be escaped if not in \code{}, and the prompt() default is
-        ## not to put variable names inside \code{}.
-        txt <- gsub("\\\\_", "_", txt)
-        txt <- unlist(strsplit(txt, ", *"))
-        .strip_whitespace(txt)
+        x <- .Rd_get_item_tags(x)
+        ## And extract the variable names from these.
+        .get_var_names_from_item_tags(x)
     }
 
     Rd_var_names <- lapply(db, .get_data_frame_var_names)
@@ -1167,7 +1205,7 @@ function(package, lib.loc = NULL)
     data_env <- new.env(hash = TRUE)
     data_dir <- file.path(dir, "data")
     ## with lazy data we have data() but don't need to use it.
-    has_data <- file_test("-d", data_dir) &&
+    has_data <- dir.exists(data_dir) &&
         !file_test("-f", file.path(data_dir, "Rdata.rdb"))
     data_exts <- .make_file_exts("data")
 
@@ -1252,7 +1290,7 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
@@ -1509,7 +1547,7 @@ function(package, dir, lib.loc = NULL)
         else
             character()
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -1546,13 +1584,13 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -1783,7 +1821,7 @@ function(package, dir, file, lib.loc = NULL,
         pkg <- pkgDLL <- basename(dir)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -1812,7 +1850,7 @@ function(package, dir, file, lib.loc = NULL,
     else if(!missing(dir)) {
         have_registration <- FALSE
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
@@ -1830,7 +1868,7 @@ function(package, dir, file, lib.loc = NULL,
             has_namespace <- length(nm$dynlibs) > 0L
         }
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -2252,7 +2290,7 @@ function(package, dir, lib.loc = NULL)
         dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -2281,13 +2319,13 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -2487,7 +2525,7 @@ function(package, dir, lib.loc = NULL)
         dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -2513,13 +2551,13 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -2638,23 +2676,23 @@ function(package, dir, file, lib.loc = NULL)
         if(file.exists(code_file))      # could be data-only
             code_files <- code_file
         example_dir <- file.path(dir, "R-ex")
-        if(file_test("-d", example_dir)) {
+        if(dir.exists(example_dir)) {
             code_files <- c(code_files,
                             list_files_with_exts(example_dir, "R"))
         }
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(file_test("-d", code_dir))   # could be data-only
+        if(dir.exists(code_dir))   # could be data-only
             code_files <- list_files_with_type(code_dir, "code")
         docs_dir <- file.path(dir, "man")
-        if(file_test("-d", docs_dir))
+        if(dir.exists(docs_dir))
             docs_files <- list_files_with_type(docs_dir, "docs")
     }
     else if(!missing(file)) {
@@ -2814,6 +2852,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
     lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
     ## NB: no one checks version for 'Enhances'.
     lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
+    ## VignetteBuilder packages are needed to ascertain what is a vignette.
+    VB <- .get_requires_from_package_db(db, "VignetteBuilder")
 
     depends <- sapply(ldepends, `[[`, 1L)
     imports <- sapply(limports, `[[`, 1L)
@@ -2883,6 +2923,18 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             m <- setdiff(sapply(lsuggests, `[[`, 1L), installed)
             if(length(m))
                 bad_depends$suggests_but_not_installed <- m
+        }
+        if (length(VB)) {
+            ## These need both to be declared and installed
+            ## If people explicitly state 'utils' they ought really to
+            ## declare it, but skip for now.
+            bad <- VB[! VB %in% c(package_name, "utils", depends, imports, suggests)]
+            if(length(bad))
+                bad_depends$required_for_checking_but_not_declared <- bad
+            bad2 <- VB[! VB %in% c(package_name, installed)]
+            bad2 <- setdiff(bad2, bad)
+            if(length(bad2))
+                bad_depends$required_for_checking_but_not_installed <- bad2
         }
     }
     ## FIXME: is this still needed now we do dependency analysis?
@@ -2995,6 +3047,16 @@ function(x, ...)
       } else if(length(bad)) {
           c(sprintf("Package which this enhances but not available for checking: %s", sQuote(bad)),
             "")
+      },
+      if(length(bad <- x$required_for_checking_but_not_declared) > 1L) {
+          c(.pretty_format2("VignetteBuilder packages not declared:", bad), "")
+      } else if(length(bad)) {
+          c(sprintf("VignetteBuilder package not declared: %s", sQuote(bad)), "")
+      },
+      if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
+          c(.pretty_format2("VignetteBuilder packages required for checking but not installed:", bad), "")
+      } else if(length(bad)) {
+          c(sprintf("VignetteBuilder package required for checking but installed: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
@@ -3280,7 +3342,6 @@ function(dfile)
     have_src <- TRUE # dummy
     if(length(llinks)) {
         ## This is pointless unless there is compilable code
-        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         have_src <- dir.exists(file.path(dirname(dfile), "src"))
 
         ## See if this is installable under 3.0.1:
@@ -4329,7 +4390,7 @@ function(dir, doDelete = FALSE)
         if(basename(dir) %in% c("R", "man"))
             for(os in OS_subdirs) {
                 os_dir <- file.path(dir, os)
-                if(file_test("-d", os_dir))
+                if(dir.exists(os_dir))
                     d <- c(d,
                            file.path(os,
                                      list.files(os_dir,
@@ -4339,7 +4400,7 @@ function(dir, doDelete = FALSE)
         d[file_test("-f", file.path(dir, d))]
     }
 
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
     else
         dir <- file_path_as_absolute(dir)
@@ -4348,7 +4409,7 @@ function(dir, doDelete = FALSE)
                          demo = character(), `inst/doc` = character())
 
     code_dir <- file.path(dir, "R")
-    if(file_test("-d", code_dir)) {
+    if(dir.exists(code_dir)) {
         all_files <- mydir(code_dir)
         ## Under Windows, need a Makefile.win for methods.
         R_files <- c("sysdata.rda", "Makefile.win",
@@ -4366,7 +4427,7 @@ function(dir, doDelete = FALSE)
     }
 
     man_dir <- file.path(dir, "man")
-    if(file_test("-d", man_dir)) {
+    if(dir.exists(man_dir)) {
         all_files <- mydir(man_dir)
         man_files <- list_files_with_type(man_dir, "docs",
                                           full.names = FALSE,
@@ -4379,7 +4440,7 @@ function(dir, doDelete = FALSE)
     }
 
     demo_dir <- file.path(dir, "demo")
-    if(file_test("-d", demo_dir)) {
+    if(dir.exists(demo_dir)) {
         all_files <- mydir(demo_dir)
         demo_files <- list_files_with_type(demo_dir, "demo",
                                            full.names = FALSE)
@@ -4434,14 +4495,14 @@ function(x, ...)
 function(dir, respect_quotes = FALSE)
 {
     OS_subdirs <- c("unix", "windows")
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
     else
         dir <- file_path_as_absolute(dir)
 
     code_dir <- file.path(dir, "R")
     wrong_things <- character()
-    if(file_test("-d", code_dir)) {
+    if(dir.exists(code_dir)) {
         R_files <- list_files_with_type(code_dir, "code",
                                         full.names = FALSE,
                                         OS_subdirs = OS_subdirs)
@@ -4460,7 +4521,7 @@ function(dir, respect_quotes = FALSE)
 .check_package_code_syntax <-
 function(dir)
 {
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
     else
         dir <- file_path_as_absolute(dir)
@@ -5062,7 +5123,7 @@ function(package, dir, lib.loc = NULL)
         dir <- find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         code_dir <- file.path(dir, "R")
-        if(!file_test("-d", code_dir))
+        if(!dir.exists(code_dir))
             stop(gettextf("directory '%s' does not contain R code",
                           dir),
                  domain = NA)
@@ -5085,7 +5146,7 @@ function(package, dir, lib.loc = NULL)
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
@@ -5096,7 +5157,7 @@ function(package, dir, lib.loc = NULL)
         if(file.exists(nsfile))
            ns <- parseNamespaceFile(basename(dir), dirname(dir))
         code_dir <- file.path(dir, "R")
-        if(file_test("-d", code_dir)) {
+        if(dir.exists(code_dir)) {
             file <- tempfile()
             on.exit(unlink(file))
             if(!file.create(file)) stop("unable to create ", file)
@@ -5621,7 +5682,7 @@ function(package, dir, lib.loc = NULL)
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
         ## FIXME: not yet supported by .createExdotR.
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir), domain = NA)
         else
             dir <- file_path_as_absolute(dir)
@@ -5652,7 +5713,7 @@ function(dir, lib.loc = NULL)
 {
     ## Argument handling.
     ## Using sources from directory @code{dir} ...
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
     else
         dir <- file_path_as_absolute(dir)
@@ -5784,7 +5845,7 @@ function(package, dir, lib.loc = NULL)
         dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
         if(!packageHasNamespace(basename(dir), dirname(dir))
-           && file_test("-d", code_dir)) {
+           && dir.exists(code_dir)) {
             code_env <- new.env(hash = TRUE)
             dfile <- file.path(dir, "DESCRIPTION")
             meta <- if(file_test("-f", dfile))
@@ -5810,7 +5871,7 @@ function(package, dir, lib.loc = NULL)
 .get_example_texts_from_example_dir <-
 function(dir)
 {
-    if(!file_test("-d", dir)) return(NULL)
+    if(!dir.exists(dir)) return(NULL)
     files <- list_files_with_exts(dir, "R")
     texts <- lapply(files,
                     function(f) paste(readLines(f, warn = FALSE),
@@ -5822,7 +5883,7 @@ function(dir)
 .get_example_texts_from_source_dir <-
 function(dir)
 {
-    if(!file_test("-d", file.path(dir, "man"))) return(NULL)
+    if(!dir.exists(file.path(dir, "man"))) return(NULL)
     sapply(Rd_db(dir = dir), .Rd_get_example_code)
 }
 
@@ -5911,7 +5972,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             stop("you must specify 'package' or 'dir'")
         dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(file_test("-d", code_dir)) {
+        if(dir.exists(code_dir)) {
             code_env <- new.env(hash = TRUE)
             dfile <- file.path(dir, "DESCRIPTION")
             meta <- if(file_test("-f", dfile))
@@ -6190,7 +6251,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
             stop("you must specify 'package' or 'dir'")
         dir <- file_path_as_absolute(dir)
         code_dir <- file.path(dir, "R")
-        if(file_test("-d", code_dir)) {
+        if(dir.exists(code_dir)) {
             code_env <- new.env(hash = TRUE)
             dfile <- file.path(dir, "DESCRIPTION")
             meta <- if(file_test("-f", dfile))
@@ -6287,9 +6348,14 @@ function(dir)
                           function(p) {
                               fp <- file.path(dir, p)
                               if(file_test("-f", fp)) {
+                                  lines <- readLines(fp, warn = FALSE)
                                   ## Should this use the package
                                   ## encoding?
-                                  c(p, readLines(fp, warn = FALSE))
+                                  pos <- grep("[^[:blank:]]", lines)
+                                  c(p, if(len <- length(pos)) {
+                                      lines[seq(from = pos[1L],
+                                                to = pos[len])]
+                                  })
                               } else NULL
                           }))
     }
@@ -6498,6 +6564,66 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
+    ## Does this have Suggests or Enhances not in mainstream
+    ## repositories?
+
+    suggests_or_enhances <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Suggests"]),
+                         .extract_dependency_package_names(meta["Enhances"]))),
+                c(.get_standard_package_names()$base, db[, "Package"]))
+    if(length(suggests_or_enhances)) {
+        out$suggests_or_enhances_not_in_mainstream_repositories <-
+            suggests_or_enhances
+        if(!is.na(aurls <- meta["Additional_repositories"])) {
+            aurls <- unique(unlist(strsplit(aurls, ", *")))
+            adb <-
+                tryCatch(utils::available.packages(utils::contrib.url(aurls,
+                                                                      "source"),
+                                                   filters =
+                                                   c("R_version",
+                                                     "duplicates")))
+            if(inherits(adb, "error")) {
+                out$additional_repositories_analysis_failed_with <-
+                    conditionMessage(adb)
+            } else {
+                pos <- match(suggests_or_enhances, rownames(adb), nomatch =
+                             0L)
+                ind <- (pos > 0L)
+                tab <- matrix(character(), nrow = 0L, ncol = 3L)
+                if(any(ind))
+                    tab <- rbind(tab,
+                                 cbind(suggests_or_enhances[ind],
+                                       "yes",
+                                       adb[pos[ind], "Repository"]))
+                ind <- !ind
+                if(any(ind))
+                    tab <- rbind(tab,
+                                 cbind(suggests_or_enhances[ind],
+                                       "no",
+                                       ""))
+                ## Map Repository fields to URLs, and determine unused
+                ## URLs.
+                ## Note that available.packages() possibly adds Path
+                ## information in the Repository field, so matching
+                ## given contrib URLs to these fields is not trivial.
+                unused <- character()
+                for(u in aurls) {
+                    cu <- utils::contrib.url(u, "source")
+                    ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                    if(any(ind)) {
+                        tab[ind, 3L] <- u
+                    } else {
+                        unused <- c(unused, u)
+                    }
+                }
+                if(length(unused))
+                    tab <- rbind(tab, cbind("", "", unused))
+                dimnames(tab) <- NULL
+                out$additional_repositories_analysis_results <- tab
+            }
+        }
+    }
+
     uses <- character()
     BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
@@ -6522,6 +6648,27 @@ function(dir)
             vds <- readRDS(vds)[, "File"]
     }
 
+    ## Check for missing build/{partial.rdb,pkgname.pdf}
+    ## copy code from build.R
+    Rdb <- .build_Rd_db(dir, stages = NULL,
+                        os = c("unix", "windows"), step = 1)
+    if(length(Rdb)) {
+        names(Rdb) <-
+            substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
+        containsBuildSexprs <-
+            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)["build"])))
+        if(containsBuildSexprs &&
+           !file.exists(file.path(dir, "build", "partial.rdb")))
+            out$missing_manual_rdb <- TRUE
+        needRefMan <-
+            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
+        if(needRefMan &&
+           !file.exists(file.path(dir, "build",
+                                  paste0( meta[["Package"]], ".pdf"))))
+            out$missing_manual_pdf <- TRUE
+    }
+
+
     ## Check for vignette source (only) in old-style 'inst/doc' rather
     ## than 'vignettes'.
     vign_dir <- file.path(dir, "vignettes")
@@ -6537,7 +6684,7 @@ function(dir)
     }
 
     if(length(sources)) {
-        out$have_vignettes_dir <- file_test("-d", vign_dir)
+        out$have_vignettes_dir <- dir.exists(vign_dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
@@ -6725,6 +6872,24 @@ function(x, ...)
 	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
+      if(length(y <-
+                x$suggests_or_enhances_not_in_mainstream_repositories)) {
+          c("Suggests or Enhances not in mainstream repositories:",
+            strwrap(paste(y, collapse = ", "),
+                    indent = 2L, exdent = 4L),
+            if(length(y <-
+                      x$additional_repositories_analysis_failed_with)) {
+                c("Using Additional_repositories specification failed with:",
+                  paste(" ", y))
+            } else if(length(y <-
+                             x$additional_repositories_analysis_results)) {
+                c("Availability using Additional_repositories specification:",
+                  sprintf("  %s   %s   %s",
+                          format(y[, 1L], justify = "left"),
+                          format(y[, 2L], justify = "right"),
+                          format(y[, 3L], justify = "left")))
+            })
+      },
       if (length(y <- x$uses)) {
           paste(if(length(y) > 1L)
 		"Uses the superseded packages:" else
@@ -6750,6 +6915,12 @@ function(x, ...)
       },
       if(length(y <- x$missing_vignette_index)) {
           "Package has a VignetteBuilder field but no prebuilt vignette index."
+      },
+      if(length(y <- x$missing_manual_rdb)) {
+          "Package has help file(s) containing build-stage \\Sexpr{} expresssons but no build/partial.rdb."
+      },
+      if(length(y <- x$missing_manual_pdf)) {
+          "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
       }
       )
 }
@@ -6782,7 +6953,7 @@ function(package, dir, lib.loc = NULL)
             return(out)
         }
     } else {
-        if(file_test("-d", file.path(dir, "man"))) {
+        if(dir.exists(file.path(dir, "man"))) {
             db <- Rd_db(dir = dir)
             files <- basename(names(db))
             names <- sapply(db, .Rd_get_metadata, "name")
@@ -6860,7 +7031,7 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else

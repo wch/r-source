@@ -1,9 +1,7 @@
 % File src/library/grDevices/man/rgb.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
-
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{rgb}
 \title{RGB Color Specification}
@@ -54,6 +52,9 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 
   Most other graphics devices plot semi-transparent colors as fully
   transparent, usually with a warning when first encountered.
+  
+  \code{NA} values are not allowed for any of \code{red}, \code{blue}, 
+  \code{green} or \code{alpha}.
 }
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}

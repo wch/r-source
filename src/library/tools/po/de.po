@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10+0000\n"
+"POT-Creation-Date: 2014-06-03 11:51+0100\n"
 "PO-Revision-Date: 2013-03-11 11:27+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -53,81 +53,81 @@ msgstr "nicht erkannte Formatspezifikation '%s'"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "höchstens ein Stern '*' in jeder Konversionsspezifikation unterstützt"
 
-#: gramLatex.y:678 gramRd.y:1300
+#: gramLatex.y:685 gramRd.y:1307
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "kann keinen Buffer für lange Zeichenkette in Zeile %d allokieren"
 
-#: gramLatex.y:915 gramRd.y:1788 gramRd.y:1794
+#: gramLatex.y:922 gramRd.y:1795 gramRd.y:1801
 #, c-format
 msgid "invalid '%s' value"
 msgstr "unzulässiger '%s' Wert"
 
-#: gramRd.y:295 gramRd.y:298
+#: gramRd.y:302 gramRd.y:305
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "schlechte Auszeichnung (Leerstelle zuviel?) bei %s:%d:%d"
 
-#: gramRd.y:534
+#: gramRd.y:541
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Makro '%s' bereits definiert."
 
-#: gramRd.y:543
+#: gramRd.y:550
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Höchstens 4 Argumente für benutzerdefinierte Makros erlaubt."
 
-#: gramRd.y:577
+#: gramRd.y:584
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Keine Makrodefinition für '%s'."
 
-#: gramRd.y:729 gramRd.y:733
+#: gramRd.y:736 gramRd.y:740
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "Zeilenumbruch innerhalb einer Zeichenkette bei %s:%d"
 
-#: gramRd.y:752
+#: gramRd.y:759
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "kann keinen Buffer für langes Makro in Zeile %d allokieren"
 
-#: gramRd.y:782
+#: gramRd.y:789
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "Makros zu tief verschachtelt: unendliche Rekursion?"
 
-#: gramRd.y:1165
+#: gramRd.y:1172
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Kann Makro %s nicht finden"
 
-#: gramRd.y:1360
+#: gramRd.y:1367
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Unerwartetes Ende der Eingabe (in %c Zeichenkette bei %s:%d:%d)"
 
-#: gramRd.y:1799
+#: gramRd.y:1806
 msgid "cannot open the connection"
 msgstr "kann Verbindung nicht öffnen"
 
-#: gramRd.y:1806
+#: gramRd.y:1813
 msgid "cannot read from this connection"
 msgstr "kann aus dieser Verbindung nicht lesen"
 
-#: gramRd.y:1814
+#: gramRd.y:1821
 msgid "invalid Rd file"
 msgstr "ungültige Rd Datei"
 
-#: gramRd.y:1833
+#: gramRd.y:1840
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' unterstützt nur das Deparsing von Zeichenkettenelementen"
 
-#: gramRd.y:1836
+#: gramRd.y:1843
 msgid "bad state"
 msgstr "schlechter Zustand"
 
-#: gramRd.y:1849
+#: gramRd.y:1856
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "schlechter Textmode %d in 'deparseRd'"

@@ -295,6 +295,23 @@ SEXP Random3(SEXP args)
     return x;
 }
 
+static void FixupProb(double *p, int n)
+{
+    double sum = 0.0;
+    int npos = 0;
+    for (int i = 0; i < n; i++) {
+	if (!R_FINITE(p[i]))
+	    error(_("NA in probability vector"));
+	if (p[i] < 0.0)
+	    error(_("negative probability"));
+	if (p[i] > 0.0) {
+	    npos++;
+	    sum += p[i];
+	}
+    }
+    if (npos == 0) error(_("no positive probabilities"));
+    for (int i = 0; i < n; i++) p[i] /= sum;
+}
 
 SEXP Rmultinom(SEXP args)
 {
@@ -314,7 +331,7 @@ SEXP Rmultinom(SEXP args)
     if (MAYBE_REFERENCED(prob)) prob = duplicate(prob);/*as `do_sample' -- need this line? */
     PROTECT(prob);
     /* check and make sum = 1: */
-    FixupProb(REAL(prob), k, /*require_k = */ 0, TRUE);
+    FixupProb(REAL(prob), k);
     GetRNGstate();
     PROTECT(ans = allocMatrix(INTSXP, k, n));/* k x n : natural for columnwise store */
     for(i=ik = 0; i < n; i++, ik += k) {

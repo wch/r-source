@@ -80,6 +80,8 @@ function(e1, e2)
 			return(.helpForCall(topicExpr, parent.frame(), FALSE))
 		    e2
 		}
+	    if (type == "package")
+	    	package <- topic
             h <- .tryHelp(topicName(type, topic), package = package)
             if(is.null(h)) {
 		if(is.language(topicExpr))

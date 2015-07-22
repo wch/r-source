@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-22 05:27+0200 \n"
 "Last-Translator: sakamotoki  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -316,6 +316,14 @@ msgstr " 'pairs' へ数値でない引数が与えられました "
 
 msgid "only one column in the argument to 'pairs'"
 msgstr " 'pairs' の引数はただ一つの列しか持ちません "
+
+#, fuzzy
+msgid "invalid argument 'horInd'"
+msgstr " 最初の引数が無効です "
+
+#, fuzzy
+msgid "invalid argument 'verInd'"
+msgstr " 最初の引数が無効です "
 
 msgid "the 'panel' function made a new plot"
 msgstr " 'panel' 関数は新規のプロットを行いました "

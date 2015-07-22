@@ -467,7 +467,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    w = imax2(w, wd);
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
-		strp = EncodeReal(REAL(x)[i], w, d, e, OutDec);
+		strp = EncodeReal0(REAL(x)[i], w, d, e, OutDec);
 		SET_STRING_ELT(y, i, mkChar(strp));
 	    }
 	    break;

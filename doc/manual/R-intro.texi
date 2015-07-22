@@ -1035,7 +1035,7 @@ Such index vectors can be any of four distinct types.
 @enumerate
 
 @item
-@strong{A logical vector}.  In this case the index vector must be of the
+@strong{A logical vector}.  In this case the index vector is recycled to the
 same length as the vector from which elements are to be selected.
 Values corresponding to @code{TRUE} in the index vector are selected and
 those corresponding to @code{FALSE} are omitted.  For example

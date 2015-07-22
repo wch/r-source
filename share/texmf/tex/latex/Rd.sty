@@ -1,6 +1,6 @@
 %%% Rd.sty ... Style for printing the R manual
 %%% Part of the R package, http://www.R-project.org
-%%% Copyright (C) 2003-2013 The R Foundation
+%%% Copyright (C) 2003-2014 The R Foundation
 %%% Distributed under GPL 2 or later
 %%%
 %%% Modified 1998/01/05 by Friedrich Leisch
@@ -58,7 +58,7 @@
 \newcommand{\R}{{\normalfont\textsf{R}}{}}
 \newcommand{\Rdash}{-}
 
-\def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
+% \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
 \newcommand{\vneed}[1]{%
   \penalty-1000\vskip#1 plus 10pt minus #1\penalty-1000\vspace{-#1}}
@@ -191,8 +191,10 @@
 {\newcommand{\link}[1]{#1\index{#1@\texttt{#1}}}}
 
 \ifthenelse{\boolean{Rd@use@hyper}}
-{\newcommand{\Rhref}[2]{\href{#1}{#2}}}
-{\newcommand{\Rhref}[2]{#2\footnote{\url{#1}}}}
+{\newcommand*{\Rhref}{\begingroup\@makeother\#\@Rhref}
+  \newcommand*{\@Rhref}[2]{\href{#1}{#2}\endgroup}}
+{\newcommand*{\Rhref}{\begingroup\@makeother\#\@Rhref}
+  \newcommand*{\@Rhref}[2]{#2\footnote{\url{#1}}\endgroup}}
 
 %% as from R 2.10.0 set \email in monospaced font (like \url)
 %\newcommand{\email}[1]{$\langle$\texttt{#1}$\rangle$}
@@ -266,8 +268,11 @@
   \usepackage[T1]{fontenc}}{}
 \ifthenelse{\boolean{Rd@use@beramono}}{%
   \usepackage[scaled=.8]{beramono}}{}
+%% it appears that all versions of zi4.sty support [noupquote],
+%% whereas only those since 2013/06/09 of inconsolata.sty do: such
+%% installations should also have zi4.sty
 \ifthenelse{\boolean{Rd@use@inconsolata}}{%
- \IfFileExists{inconsolata.sty}{\usepackage{inconsolata}}{\usepackage{zi4}}}{}
+ \IfFileExists{zi4.sty}{\usepackage[noupquote]{zi4}}{\usepackage{inconsolata}}}{}
 
 %% needs to come after \code is defined
 %% inspired by an earlier version of upquote.sty

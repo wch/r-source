@@ -23,23 +23,13 @@ function(file, encoding = "unknown")
 {
     ## <FIXME>
     ## This used to work only for a given Rd file.
-    ## We now also allow for passing a parsed Rd object.
-    ## Is the Rd file case still needed?
+    ## now only for a parsed Rd object.
 
     if(inherits(file, "Rd")) {
         Rd <- file
         description <- attr(attr(Rd, "srcref"), "srcfile")$filename
-    } else {
-        if(is.character(file)) {
-            file <- file(file)
-            on.exit(close(file))
-        }
-        if(!inherits(file, "connection"))
-            stop("argument 'file' must be a character string or connection")
-        description <- summary(file)$description
-        Rd <- prepare_Rd(file, encoding = encoding,
-                         defines = .Platform$OS.type)
-    }
+    } else
+        stop("Rd object required")
 
     aliases <- .Rd_get_metadata(Rd, "alias")
     concepts <- .Rd_get_metadata(Rd, "concept")
@@ -234,11 +224,11 @@ function(RdFiles, outFile = "", type = NULL,
     ##
     ## called from R CMD build
 
-    if((length(RdFiles) == 1L) && file_test("-d", RdFiles)) {
+    if((length(RdFiles) == 1L) && dir.exists(RdFiles)) {
         ## Compatibility code for the former @code{R CMD Rdindex}
         ## interface.
         docsDir <- RdFiles
-        if(file_test("-d", file.path(docsDir, "man")))
+        if(dir.exists(file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
         RdFiles <- list_files_with_type(docsDir, "docs")
     }
@@ -334,7 +324,7 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
@@ -365,10 +355,12 @@ function(x, ...)
 function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
          stages = c("build", "install"), os = .OStype(), step = 3L, built_file = NULL)
 {
+    macros <- file.path(R.home("share"), "Rd", "macros", "system.Rd")
     if(!is.null(dir)) {
         dir <- file_path_as_absolute(dir)
+        macros <- loadPkgRdMacros(dir, macros)
         man_dir <- file.path(dir, "man")
-        if(!file_test("-d", man_dir))
+        if(!dir.exists(man_dir))
             return(structure(list(), names = character()))
         if(is.null(files))
             files <- list_files_with_type(man_dir, "docs", OS_subdirs=os)
@@ -382,7 +374,8 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
         Rd <- prepare_Rd(f, encoding = encoding,
                          defines = os,
                          stages = stages, warningCalls = FALSE,
-                         stage2 = step > 1L, stage3 = step > 2L)
+                         stage2 = step > 1L, stage3 = step > 2L,
+                         macros = macros)
         structure(Rd, prepared = step)
     }
 
@@ -476,7 +469,7 @@ function(package, dir, lib.loc = NULL)
         ## </NOTE>
     }
     else {
-        if(file_test("-d", file.path(dir, "man"))) {
+        if(dir.exists(file.path(dir, "man"))) {
             db <- Rd_db(dir = dir)
             aliases <- lapply(db, .Rd_get_metadata, "alias")
             if(length(aliases))
@@ -841,6 +834,63 @@ function(filebase, key = NULL)
         invisible(res)
 }
 
+# The macros argument can be TRUE, in which case a new environment is created with an empty parent,
+# or the result of a previous call to this function, in which case it becomes the parent,
+# or a filename, in which case that file is loaded first, then the new file into a child environment.
+
+# It is not safe to save this environment, as changes to the parser may invalidate its contents.
+
+loadRdMacros <- function(file, macros = TRUE) {
+    # New macros are loaded into a clean environment
+    if (is.logical(macros) && !macros)
+    	stop("'macros' must be TRUE or must specify existing macros")
+    Rd <- parse_Rd(file, fragment = TRUE, macros = macros, warningCalls = FALSE)
+    for(entry in Rd) {
+        bad <- TRUE
+	if (is.list(entry)) break
+	tag <- attr(entry, "Rd_tag")
+	switch(tag,
+	    TEXT = if (any(grepl("[^[:space:]]", entry, perl = TRUE, useBytes=TRUE)))
+		      break
+		   else
+		      bad <- FALSE,
+	    USERMACRO =,
+	    "\\newcommand" =,
+	    "\\renewcommand" =,
+	    COMMENT = bad <- FALSE,
+	    break
+	)
+    }
+    if (bad)
+	warning(gettextf("Macro file %s should only contain Rd macro definitions and comments",
+	                 file))
+    attr(Rd, "macros")
+}
+
+
+loadPkgRdMacros <- function(pkgdir, macros) {
+    others <- try(.read_description(file.path(pkgdir, "DESCRIPTION"))["RdMacros"], silent=TRUE)
+    if (inherits(others, "try-error"))
+    	others <- .read_description(file.path(pkgdir, "DESCRIPTION.in"))["RdMacros"]
+
+    if (!is.na(others)) {
+    	others <- .strip_whitespace(unlist(strsplit(others, ",")))
+    	
+    	for (p in others) {
+    	    if (dir.exists(system.file("help/macros", package = p))) 
+    	    	macros <- loadPkgRdMacros(system.file(package = p), macros)
+    	    else
+    	    	warning(gettextf("No Rd macros in package '%s'.", p), call. = FALSE)
+        }
+    }
+    files <- c(list.files(file.path(pkgdir, "man", "macros"), pattern = "\\.Rd$", full.names = TRUE),
+               list.files(file.path(pkgdir, "help", "macros"), pattern = "\\.Rd$", full.names = TRUE))
+        
+    for (f in files) 
+    	macros <- loadRdMacros(f, macros)
+    
+    macros
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***

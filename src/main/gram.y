@@ -121,7 +121,7 @@ static void setId( SEXP expr, yyltype loc){
 # define YYLTYPE yyltype
 # define YYLLOC_DEFAULT(Current, Rhs, N)				\
     do	{ 								\
-	if (YYID (N)){							\
+	if (N){								\
 	    (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;	\
 	    (Current).first_column = YYRHSLOC (Rhs, 1).first_column;	\
 	    (Current).first_byte   = YYRHSLOC (Rhs, 1).first_byte;	\
@@ -148,7 +148,7 @@ static void setId( SEXP expr, yyltype loc){
 	  (Current).last_byte = (Current).first_byte - 1;		\
 	  (Current).id = NA_INTEGER;                                    \
 	} 								\
-    } while (YYID (0))
+    } while (0)
 
 		
 # define YY_LOCATION_PRINT(Loc)					\
@@ -1289,6 +1289,8 @@ static void ParseInit(void)
 static void initData(void)
 {
     ParseState.data_count = 0 ;
+    for (int i = 1; i <= ID_COUNT; i++)
+	ID_ID( i ) = 0;
 }
 
 
@@ -1885,18 +1887,6 @@ static void yyerror(const char *s)
     static char const yyunexpected[] = "syntax error, unexpected ";
     static char const yyexpecting[] = ", expecting ";
     char *expecting;
-//Small refactoring in order to remove partial messages -> see next changes below
-//No change in final functionality
-// #if 0
- /* these are just here to trigger the internationalization */
-//    _("input");
-//    _("end of input");
-//    _("string constant");
-//    _("numeric constant");
-//    _("symbol");
-//    _("assignment");
-//    _("end of line");
-//#endif
 
     R_ParseError     = yylloc.first_line;
     R_ParseErrorCol  = yylloc.first_column;
@@ -2165,9 +2155,7 @@ static int NumericValue(int c)
 		    warning(_("integer literal %s contains decimal; using numeric value"), yytext);
 		else {
 		    /* hide the L for the warning message */
-		    *(yyp-2) = '\0';
 		    warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
-		    *(yyp-2) = (char)c;
 		}
 	    }
 	    asNumeric = 1;

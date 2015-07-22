@@ -1,6 +1,6 @@
 % File src/library/base/man/dump.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dump}
@@ -14,7 +14,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   This function takes a vector of names of \R objects and produces
   text representations of the objects on a file or connection.
   A \code{dump} file can usually be \code{\link{source}}d into another
-  \R (or S) session.
+  \R session.
 }
 \arguments{
   \item{list}{character.  The names of one or more \R objects to be dumped.}
@@ -49,7 +49,8 @@ dump(list, file = "dumpdata.R", append = FALSE,
   A \code{dump} file can be \code{\link{source}}d into another \R (or
   perhaps S) session, but the function \code{\link{save}} is designed to
   be used for transporting \R data, and will work with \R objects that
-  \code{dump} does not handle.
+  \code{dump} does not handle.  For maximal reproducibility use
+  \code{control = c("all", "hexNumeric")}.
 
   To produce a more readable representation of an object, use
   \code{control = NULL}.  This will skip attributes, and will make other
@@ -61,7 +62,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
     "warnIncomplete", "keepNA")}.  This will lose all formatting and
   comments, but may be useful in those cases where the saved source is
   no longer correct.
-
+  
   Promises will normally only be encountered by users as a result of
   lazy-loading (when the default \code{evaluate = TRUE} is essential)
   and after the use of \code{\link{delayedAssign}},
@@ -83,7 +84,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
 
   Currently environments, external pointers, weak references and objects
   of type \code{S4} are not deparsed in a way that can be
-  \code{source}d.  In addition, language objects are deparsed in a
+  \code{source}d.  In addition, \link{language objects} are deparsed in a
   simple way whatever the value of \code{control}, and this includes not
   dumping their attributes (which will result in a warning).
 }

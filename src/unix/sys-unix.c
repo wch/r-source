@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2011  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -169,8 +169,6 @@ SEXP attribute_hidden do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 # endif
 
 static double clk_tck, StartTime;
-
-extern double currentTime(void); /* from datetime.c */
 
 void R_setStartTime(void)
 {

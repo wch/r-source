@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ function(dir, outDir)
 	paste0("R ",
 	       paste(R.version[c("major", "minor")], collapse = "."),
 	       "; ",
-	       if(file_test("-d", file.path(dir, "src"))) OStype else "",
+	       if(dir.exists(file.path(dir, "src"))) OStype else "",
 	       "; ",
 	       ## Prefer date in ISO 8601 format, UTC.
 	       format(Sys.time(), tz = "UTC", usetz = TRUE),
@@ -93,7 +93,7 @@ function(dir, outDir)
     .write_description(db, file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")
-    if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
+    if(!dir.exists(outMetaDir) && !dir.create(outMetaDir))
          stop(gettextf("cannot open directory '%s'",
                        outMetaDir),
               domain = NA)
@@ -165,7 +165,7 @@ function(dir, packages)
 
     for(p in unlist(strsplit(packages, "[[:space:]]+"))) {
         meta_dir <- file.path(dir, p, "Meta")
-        if(!file_test("-d", meta_dir) && !dir.create(meta_dir))
+        if(!dir.exists(meta_dir) && !dir.create(meta_dir))
             stop(gettextf("cannot open directory '%s'", meta_dir))
         package_info_dcf_file <- file.path(dir, p, "DESCRIPTION")
         package_info_rds_file <- file.path(meta_dir, "package.rds")
@@ -205,7 +205,7 @@ function(lib.loc = NULL)
 .install_package_code_files <-
 function(dir, outDir)
 {
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir),
              domain = NA)
     dir <- file_path_as_absolute(dir)
@@ -230,7 +230,7 @@ function(dir, outDir)
     db <- .read_description(file.path(dir, "DESCRIPTION"))
 
     codeDir <- file.path(dir, "R")
-    if(!file_test("-d", codeDir)) return(invisible())
+    if(!dir.exists(codeDir)) return(invisible())
 
     codeFiles <- list_files_with_type(codeDir, "code", full.names = FALSE)
 
@@ -281,11 +281,11 @@ function(dir, outDir)
 
     codeFiles <- file.path(codeDir, codeFiles)
 
-    if(!file_test("-d", outDir) && !dir.create(outDir))
+    if(!dir.exists(outDir) && !dir.create(outDir))
         stop(gettextf("cannot open directory '%s'", outDir),
              domain = NA)
     outCodeDir <- file.path(outDir, "R")
-    if(!file_test("-d", outCodeDir) && !dir.create(outCodeDir))
+    if(!dir.exists(outCodeDir) && !dir.create(outCodeDir))
         stop(gettextf("cannot open directory '%s'", outCodeDir),
              domain = NA)
     outFile <- file.path(outCodeDir, db["Package"])
@@ -342,10 +342,10 @@ function(dir, outDir)
 function(dir, outDir)
 {
     options(warn = 1)                   # to ensure warnings get seen
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir),
              domain = NA)
-    if(!file_test("-d", outDir))
+    if(!dir.exists(outDir))
         stop(gettextf("directory '%s' does not exist", outDir),
              domain = NA)
 
@@ -360,7 +360,7 @@ function(dir, outDir)
                  domain = NA)
 
     outMetaDir <- file.path(outDir, "Meta")
-    if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
+    if(!dir.exists(outMetaDir) && !dir.create(outMetaDir))
          stop(gettextf("cannot open directory '%s'", outMetaDir),
               domain = NA)
     .install_package_Rd_indices(dir, outDir)
@@ -387,25 +387,25 @@ function(dir, outDir)
     packageName <- basename(outDir)
     ## </FIXME>
 
-    allRd <- if(file_test("-d", docsDir))
+    allRd <- if(dir.exists(docsDir))
         list_files_with_type(docsDir, "docs") else character()
     ## some people have man dirs without any valid .Rd files
     if(length(allRd)) {
         ## we want the date of the newest .Rd file we will install
-        newestRd <- max(file.info(allRd)$mtime)
+        newestRd <- max(file.mtime(allRd))
         ## these files need not exist, which gives NA.
         indices <- c(file.path("Meta", "Rd.rds"),
                      file.path("Meta", "hsearch.rds"),
                      file.path("Meta", "links.rds"),
                      "INDEX")
-        upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
-        if(file_test("-d", dataDir)
+        upToDate <- file.mtime(file.path(outDir, indices)) >= newestRd
+        if(dir.exists(dataDir)
            && length(dataFiles <- list.files(dataDir))) {
             ## Note that the data index is computed from both the package's
             ## Rd files and the data sets actually available.
-            newestData <- max(file.info(dataFiles)$mtime)
+            newestData <- max(file.mtime(dataFiles))
             upToDate <- c(upToDate,
-                          file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
+                          file.mtime(file.path(outDir, "Meta", "data.rds")) >=
                           max(newestRd, newestData))
         }
         ## Note that this is not quite good enough: an Rd file or data file
@@ -456,7 +456,7 @@ function(dir, outDir)
                  file.path(outDir, "Meta", "links.rds"))
 
     }
-    if(file_test("-d", dataDir))
+    if(dir.exists(dataDir))
         saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     invisible()
@@ -470,7 +470,7 @@ function(dir, outDir, encoding = "")
 {
     dir <- file_path_as_absolute(dir)
     subdirs <- c("vignettes", file.path("inst", "doc"))
-    ok <- file_test("-d", file.path(dir, subdirs))
+    ok <- dir.exists(file.path(dir, subdirs))
     ## Create a vignette index only if the vignette dir exists.
     if (!any(ok))
        return(invisible())
@@ -482,7 +482,7 @@ function(dir, outDir, encoding = "")
     packageName <- basename(outDir)
     outVignetteDir <- file.path(outDir, "doc")
     ## --fake  and --no-inst installs do not have a outVignetteDir.
-    if(!file_test("-d", outVignetteDir)) return(invisible())
+    if(!dir.exists(outVignetteDir)) return(invisible())
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
@@ -596,7 +596,7 @@ function(dir, outDir, encoding = "")
     ## Create a vignette index only if the vignette dir exists.
     if (!ok)
        return(invisible())
-       
+
     ## Copy the index to Meta
     file.copy(indexname, file.path(outDir, "Meta"))
 
@@ -622,7 +622,7 @@ function(dir, outDir, encoding = "")
 function(dir, outDir)
 {
     demoDir <- file.path(dir, "demo")
-    if(!file_test("-d", demoDir)) return(invisible())
+    if(!dir.exists(demoDir)) return(invisible())
     demoIndex <- .build_demo_index(demoDir)
     saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))
@@ -660,7 +660,7 @@ function(dir, outDir, keep.source = TRUE)
 
     outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
-    if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
+    if(!dir.exists(outVignetteDir) && !dir.create(outVignetteDir))
         stop(gettextf("cannot open directory '%s'", outVignetteDir),
              domain = NA)
 
@@ -680,7 +680,7 @@ function(dir, outDir, keep.source = TRUE)
     if (is.null(cwd))
         stop("current working directory cannot be ascertained")
     buildDir <- file.path(cwd, ".vignettes")
-    if(!file_test("-d", buildDir) && !dir.create(buildDir))
+    if(!dir.exists(buildDir) && !dir.create(buildDir))
         stop(gettextf("cannot create directory '%s'", buildDir), domain = NA)
     on.exit(setwd(cwd))
     setwd(buildDir)
@@ -740,7 +740,7 @@ function(dir, outDir, keep.source = TRUE)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!
     ## This also creates the .R files
-    .install_package_vignettes2(dir, outDir)    
+    .install_package_vignettes2(dir, outDir)
     invisible()
 }
 
@@ -756,7 +756,7 @@ function(dir, outDir)
     if(file_test("-nt", nsInfoFilePath, nsFile)) return(invisible())
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     outMetaDir <- file.path(outDir, "Meta")
-    if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
+    if(!dir.exists(outMetaDir) && !dir.create(outMetaDir))
         stop(gettextf("cannot open directory '%s'", outMetaDir),
              domain = NA)
     saveRDS(nsInfo, nsInfoFilePath)
@@ -788,13 +788,19 @@ function(dir, outDir, encoding = "unknown")
 {
     dir <- file_path_as_absolute(dir)
     mandir <- file.path(dir, "man")
-    manfiles <- if(!file_test("-d", mandir)) character()
+    manfiles <- if(!dir.exists(mandir)) character()
     else list_files_with_type(mandir, "docs")
     manOutDir <- file.path(outDir, "help")
     dir.create(manOutDir, FALSE)
     db_file <- file.path(manOutDir,
                          paste0(basename(outDir), ".rdx"))
     built_file <- file.path(dir, "build", "partial.rdb")
+    macro_files <- list.files(file.path(dir, "man", "macros"), pattern = "\\.Rd$", full.names = TRUE)
+    if (length(macro_files)) {
+    	macroDir <- file.path(manOutDir, "macros")
+    	dir.create(macroDir, FALSE)
+    	file.copy(macro_files, macroDir, overwrite = TRUE)
+    }
     ## Avoid (costly) rebuilding if not needed.
     ## Actually, it seems no more costly than these tests, which it also does
     pathsFile <- file.path(manOutDir, "paths.rds")
@@ -821,11 +827,11 @@ function(dir, outDir)
 {
     ## NB: we no longer install 00Index
     demodir <- file.path(dir, "demo")
-    if(!file_test("-d", demodir)) return()
+    if(!dir.exists(demodir)) return()
     demofiles <- list_files_with_type(demodir, "demo", full.names = FALSE)
     if(!length(demofiles)) return()
     demoOutDir <- file.path(outDir, "demo")
-    if(!file_test("-d", demoOutDir)) dir.create(demoOutDir)
+    if(!dir.exists(demoOutDir)) dir.create(demoOutDir)
     file.copy(file.path(demodir, demofiles), demoOutDir,
               overwrite = TRUE)
 }
@@ -920,7 +926,7 @@ function(dir)
 
 checkRdaFiles <- function(paths)
 {
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir)) {
+    if(length(paths) == 1L && dir.exists(paths)) {
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
         ## Exclude .RData, which this may or may not match
@@ -932,7 +938,7 @@ checkRdaFiles <- function(paths)
     res <- res[rep_len(1L, length(paths)), ]
     row.names(res) <- paths
     keep <- file.exists(paths)
-    res$size[keep] <- file.info(paths)$size[keep]
+    res$size[keep] <- file.size(paths)[keep]
     for(p in paths[keep]) {
         magic <- readBin(p, "raw", n = 5)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
@@ -957,7 +963,7 @@ resaveRdaFiles <- function(paths,
                            compress = c("auto", "gzip", "bzip2", "xz"),
                            compression_level)
 {
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
+    if(length(paths) == 1L && dir.exists(paths))
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
     compress <- match.arg(compress)
@@ -965,22 +971,20 @@ resaveRdaFiles <- function(paths,
         compression_level <- switch(compress, "gzip" = 6, 9)
     for(p in paths) {
         env <- new.env(hash = TRUE) # probably small, need not be
-#        sink(tempfile()) ## suppress startup messages to stdout, for BARD
         suppressPackageStartupMessages(load(p, envir = env))
-#        sink()
         if(compress == "auto") {
             f1 <- tempfile()
             save(file = f1, list = ls(env, all.names = TRUE), envir = env)
             f2 <- tempfile()
             save(file = f2, list = ls(env, all.names = TRUE), envir = env,
                  compress = "bzip2")
-            ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
+            ss <- file.size(c(f1, f2)) * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all.names = TRUE), envir = env,
                      compress = "xz")
-                ss <- c(ss, file.info(f3)$size)
+                ss <- c(ss, file.size(f3))
 		names(ss) <- c(f1, f2, f3)
             }
             nm <- names(ss)
@@ -1005,7 +1009,7 @@ compactPDF <-
     gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
     use_gs <- if(gs_quality != "none") nzchar(gs_cmd <- find_gs_cmd(gs_cmd)) else FALSE
     if (!use_gs && !use_qpdf) return()
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
+    if(length(paths) == 1L && dir.exists(paths))
         paths <- Sys.glob(file.path(paths, "*.pdf"))
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
@@ -1034,7 +1038,7 @@ compactPDF <-
                                    p, tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
-            old <- file.info(p)$size; new <-  file.info(tf)$size
+            old <- file.size(p); new <-  file.size(tf)
             if(new/old < 0.9 && new < old - 1e4) {
                 file.copy(tf, p, overwrite = TRUE)
                 ans[p, ] <- c(old, new)
@@ -1077,8 +1081,7 @@ add_datalist <- function(pkgpath, force = FALSE)
 {
     dlist <- file.path(pkgpath, "data", "datalist")
     if (!force && file.exists(dlist)) return()
-    fi <- file.info(Sys.glob(file.path(pkgpath, "data", "*")))
-    size <- sum(fi$size)
+    size <- sum(file.size(Sys.glob(file.path(pkgpath, "data", "*"))))
     if(size <= 1024^2) return()
     z <- suppressPackageStartupMessages(list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
     if(!length(z)) return()

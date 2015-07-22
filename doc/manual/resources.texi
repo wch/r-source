@@ -23,13 +23,6 @@
 @ifhtml
 @lowersections
 @html
-<HTML>
-<HEAD>
-<TITLE>R: Resources</TITLE>
-<LINK REL=STYLESHEET TYPE="text/css" HREF="R.css">
-</HEAD>
-
-<BODY>
 <h1>Other Resources
 <img class="toplogo" src="logo.jpg" alt="[R logo]">
 </h1>

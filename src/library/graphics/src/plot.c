@@ -638,7 +638,7 @@ SEXP labelformat(SEXP labels)
 	formatReal(REAL(labels), n, &w, &d, &e, 0);
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
-	    strp = EncodeReal(REAL(labels)[i], 0, d, e, OutDec);
+	    strp = EncodeReal0(REAL(labels)[i], 0, d, e, OutDec);
 	    SET_STRING_ELT(ans, i, mkChar(strp));
 	}
 	UNPROTECT(1);

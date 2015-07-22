@@ -104,7 +104,7 @@ dnl  AC_REQUIRE([AM_PO_SUBDIRS])dnl
     AC_REQUIRE([AM_ICONV_LINKFLAGS_BODY])
   ])
 
-  dnl Sometimes, on MacOS X, libintl requires linking with CoreFoundation.
+  dnl Sometimes, on OS X, libintl requires linking with CoreFoundation.
   gt_INTL_MACOSX
 
   dnl Set USE_NLS.
@@ -373,11 +373,11 @@ return * gettext ("")$gt_expression_test_code + _nl_msg_cat_cntr + *_nl_expand_a
 ])
 
 
-dnl Checks for special options needed on MacOS X.
+dnl Checks for special options needed on OS X.
 dnl Defines INTL_MACOSX_LIBS.
 AC_DEFUN([gt_INTL_MACOSX],
 [
-  dnl Check for API introduced in MacOS X 10.2.
+  dnl Check for API introduced in OS X 10.2.
   AC_CACHE_CHECK([for CFPreferencesCopyAppValue],
     gt_cv_func_CFPreferencesCopyAppValue,
     [gt_save_LIBS="$LIBS"
@@ -389,9 +389,9 @@ AC_DEFUN([gt_INTL_MACOSX],
      LIBS="$gt_save_LIBS"])
   if test $gt_cv_func_CFPreferencesCopyAppValue = yes; then
     AC_DEFINE([HAVE_CFPREFERENCESCOPYAPPVALUE], 1,
-      [Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in the CoreFoundation framework. (For intl)])
+      [Define to 1 if you have the OS X function CFPreferencesCopyAppValue in the CoreFoundation framework. (For intl)])
   fi
-  dnl Check for API introduced in MacOS X 10.3.
+  dnl Check for API introduced in OS X 10.3.
   AC_CACHE_CHECK([for CFLocaleCopyCurrent], gt_cv_func_CFLocaleCopyCurrent,
     [gt_save_LIBS="$LIBS"
      LIBS="$LIBS -Wl,-framework -Wl,CoreFoundation"
@@ -401,7 +401,7 @@ AC_DEFUN([gt_INTL_MACOSX],
      LIBS="$gt_save_LIBS"])
   if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
     AC_DEFINE([HAVE_CFLOCALECOPYCURRENT], 1,
-      [Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the CoreFoundation framework. (For intl)])
+      [Define to 1 if you have the OS X function CFLocaleCopyCurrent in the CoreFoundation framework. (For intl)])
   fi
   INTL_MACOSX_LIBS=
   if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes; then
@@ -1194,7 +1194,7 @@ AC_DEFUN([gl_LOCK_BODY],
               LTLIBTHREAD=
             fi
           fi
-          # OSF/1 4.0 and MacOS X 10.1 lack the pthread_rwlock_t type and the
+          # OSF/1 4.0 and OS X 10.1 lack the pthread_rwlock_t type and the
           # pthread_rwlock_* functions.
           AC_CHECK_TYPE([pthread_rwlock_t],
             [AC_DEFINE([HAVE_PTHREAD_RWLOCK], 1,

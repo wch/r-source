@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -122,7 +122,8 @@ RweaveRdOptions <- function(options)
     options
 }
 
-tagged <- function(x, tag) structure(x, Rd_tag=tag)
+tagged <- function(x, tag, srcref = NULL) 
+    structure(x, Rd_tag = tag, srcref = srcref)
 
 evalWithOpt <- function(expr, options, env)
 {
@@ -183,7 +184,7 @@ setDynamicFlags <- function(block, flags) {  # flags in format coming from getDy
     block
 }
 
-processRdChunk <- function(code, stage, options, env, Rdfile)
+processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 {
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
     codesrcref <- attr(code, "srcref")
@@ -267,9 +268,9 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    writeLines(res, tmpcon, useBytes = TRUE)
 	    parseFragment <- function(cond) {
 	    	               seek(tmpcon, 0)
-	    	               parse_Rd(tmpcon, fragment=TRUE)
+	    	               parse_Rd(tmpcon, fragment=TRUE, macros = macros)
 	    	            }
-	    res <- tryCatch(parse_Rd(tmpcon, fragment=FALSE),
+	    res <- tryCatch(parse_Rd(tmpcon, fragment=FALSE, macros = macros),
 	    	            warning = parseFragment, error = parseFragment,
 	    	            finally = close(tmpcon))
 	    # Now remove that extra newline added by the writeLines
@@ -368,7 +369,7 @@ processRdIfdefs <- function(blocks, defines)
 
 processRdSexprs <-
     function(block, stage, options = RweaveRdDefaults,
-             env = new.env(hash = TRUE, parent = globalenv()))
+             env = new.env(hash = TRUE, parent = globalenv()), macros)
 {
     recurse <- function(block) {
     	if (!any(getDynamicFlags(block)[stage])) return(block)
@@ -376,7 +377,7 @@ processRdSexprs <-
         if (is.list(block)) {
             if (!is.null(tag <- attr(block, "Rd_tag"))) {
         	if (tag == "\\Sexpr")
-            	    block <- processRdChunk(block, stage, options, env)
+            	    block <- processRdChunk(block, stage, options, env, macros=macros)
             	else if (tag == "\\RdOpts")
     	    	    options <<-
                         utils:::SweaveParseOptions(block, options, RweaveRdOptions)
@@ -415,12 +416,12 @@ prepare_Rd <-
 	pratt <- attr(Rd, "prepared")
 	if (is.null(pratt)) pratt <- 0L
 	if ("build" %in% stages)
-	    Rd <- processRdSexprs(Rd, "build", options)
+	    Rd <- processRdSexprs(Rd, "build", options, macros=attr(Rd, "macros"))
 	if (!is.null(defines))
 	    Rd <- processRdIfdefs(Rd, defines)
 	for (stage in c("install", "render"))
 	    if (stage %in% stages)
-		Rd <- processRdSexprs(Rd, stage, options)
+		Rd <- processRdSexprs(Rd, stage, options, macros=attr(Rd, "macros"))
 	if (pratt < 2L && stage2)
 	    Rd <- prepare2_Rd(Rd, Rdfile)
 	meta <- attr(Rd, "meta")
@@ -490,7 +491,7 @@ prepare2_Rd <- function(Rd, Rdfile)
             ## Some people have \docType{ package } and similar.
             docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
             if (! docTypes[i] %in%
-                c("data", "package", "methods", "class"))
+                c("data", "package", "methods", "class", "import"))
                 warnRd(dt[i], Rdfile, "docType ", sQuote(docTypes[i]),
                        " is unrecognized")
          }

@@ -39,11 +39,6 @@
 #include <R_ext/Applic.h>
 #include <R_ext/Print.h> /* Rprintf */
 
-static void timer(double * ttime)
-{
-    *ttime = 0.0;
-}
-
 #define FALSE_ 0
 #define TRUE_ 1
 #ifndef max
@@ -56,15 +51,6 @@ static void timer(double * ttime)
  * unless the F77_CALL(d....) headers were changed too */
 static int c__1 = 1;
 static int c__11 = 11;
-
-/*
-extern double F77_NAME(ddot)(int *, double *, int *, double *, int *);
-extern void F77_NAME(dscal)(int *, double *, double *, int *);
-extern void F77_NAME(dcopy)(int *, double *, int *, double *, int *);
-extern void F77_NAME(daxpy)(int *, double *, double *, int *, double *, int *);
-extern void F77_NAME(dpofa)(double *, int *, int *, int *);
-extern void F77_NAME(dtrsl)(double *, int *, int *, double *, int *, int *);
-*/
 
 static void active(int, double *, double *, int *, double *, int *,
 		   int, int *, int *, int *);
@@ -82,15 +68,11 @@ static void cmprlb(int, int, double *,
 		   int *);
 static void dcsrch(double *, double *, double *,
 		   double, double, double,
-		   double, double,
-		   char *, int *, double *);
+		   double, double, char *);
 static void dcstep(double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, int *, double *,
 		   double *);
-#ifdef NOT_USING_DBL_EPSILON
- static double dpmeps(void);
-#endif
 static void errclb(int, int, double,
 		   double *, double *, int *, char *, int *, int *);
 static void formk(int, int *, int *, int *, int *, int *, int *,
@@ -108,14 +90,14 @@ static void lnsrlb(int, double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, int *, int *,
 		   int *, int *, int *, char *, int *, int *,
-		   char *, int *, double *);
+		   char *);
 static void mainlb(int, int, double *,
 		   double *, double *, int *, double *, double *,
 		   double, double *, double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, int *, int *, int *, char *,
-		   int, char *, int *, int *, double *);
+		   int, char *, int *);
 static void matupd(int, int, double *, double *, double *,
 		   double *, double *, double *, int *, int *,
 		   int *, int *, double *, double *, double *,
@@ -144,8 +126,7 @@ static void prn3lb(int n, double *x, double *f, char *task, int iprint,
 static
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
-	    double *wa, int * iwa, char *task, int iprint,
-	    int *lsave, int *isave, double *dsave)
+	    double *wa, int * iwa, char *task, int iprint, int *isave)
 {
 /*     ************
 
@@ -236,6 +217,8 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 
        csave is a working string of characters of length 60.
 
+       *** These are all Fortan 1-based indices.
+       *** now only used local to mainlb.
        lsave is a logical working array of dimension 4.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -245,6 +228,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	   If lsave(3) = .true. then  each variable has upper and lower
 				      bounds;
 
+       *** re-arranged to be of size 21, reduce indices by 21.
        isave is an integer working array of dimension 44.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -272,6 +256,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	   isave(41) = the number of variables entering the set of active
 			   constraints in the current iteration.
 
+       *** re-arranged to be of size 16, no longer exported.
        dsave is a double precision working array of dimension 29.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -332,52 +317,34 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
     char csave[60];
 
     /* Local variables */
-    int lsnd, ld, lr, lt;
-    int lz, lwa, lwn, lss, lws, lwt, lsy, lwy;
+    static int lsnd, ld, lr, lt, lz, lwa, lwn, lss, lws, lwt, lsy, lwy;
 
     /* make sure csave is initialized */
     csave[0] = '\0';
     
     /* Parameter adjustments */
     --wa;
-    --isave;
 
-    /* Function Body */
     if (strncmp(task, "START", 5) == 0) {
-	isave[1] = m * n;
-	isave[2] = m * m;
-	isave[3] = m * m << 2;
-	isave[4] = 1;
-	isave[5] = isave[4] + isave[1];
-	isave[6] = isave[5] + isave[1];
-	isave[7] = isave[6] + isave[2];
-	isave[8] = isave[7] + isave[2];
-	isave[9] = isave[8];
-	isave[10] = isave[9] + isave[2];
-	isave[11] = isave[10] + isave[3];
-	isave[12] = isave[11] + isave[3];
-	isave[13] = isave[12] + n;
-	isave[14] = isave[13] + n;
-	isave[15] = isave[14] + n;
-	isave[16] = isave[15] + n;
+	lws = 1;
+	lwy = lws + m * n;
+	lsy = lwy + m * n;
+	lss = lsy + m * m;
+	lwt = lss + m * m;
+	lwn = lwt + m * m;
+	lsnd = lwn + (m * m << 2);
+	lz = lsnd + (m * m << 2);
+	lr = lz + n;
+	ld = lr + n;
+	lt = ld + n;
+	lwa = lt + n;
     }
-    lws = isave[4];
-    lwy = isave[5];
-    lsy = isave[6];
-    lss = isave[7];
-    lwt = isave[9];
-    lwn = isave[10];
-    lsnd = isave[11];
-    lz = isave[12];
-    lr = isave[13];
-    ld = isave[14];
-    lt = isave[15];
-    lwa = isave[16];
+
     mainlb(n, m, x, l, u, nbd, f, g, factr, pgtol,
 	   &wa[lws], &wa[lwy], &wa[lsy],&wa[lss], &wa[lwt],&wa[lwn],
 	   &wa[lsnd], &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa],
 	   iwa, &iwa[n], &iwa[n << 1], task, iprint,
-	   csave, lsave, &isave[22], dsave);
+	   csave, isave);
     return;
 } /* setulb */
 /* ======================= The end of setulb ============================= */
@@ -389,7 +356,7 @@ static void mainlb(int n, int m, double *x,
 		   double *snd, double *z, double *r, double *d,
 		   double *t, double *wa, int *indx, int *iwhere,
 		   int *indx2, char *task, int iprint,
-		   char *csave, int *lsave, int *isave, double *dsave)
+		   char *csave, int *isave)
 {
 /*     ************
        Subroutine mainlb
@@ -517,12 +484,7 @@ static void mainlb(int n, int m, double *x,
 
        csave is a working string of characters of length 60.
 
-       lsave is a logical working array of dimension 4.
-
-       isave is an integer working array of dimension 23.
-
-       dsave is a double precision working array of dimension 29.
-
+       isave is an integer working array of dimension 21.
 
        Subprograms called
 
@@ -571,44 +533,17 @@ static void mainlb(int n, int m, double *x,
 
     /* System generated locals */
     int ws_offset=0, wy_offset=0, sy_offset=0, ss_offset=0, wt_offset=0,
-	wn_offset=0, snd_offset=0, i__1;
+	wn_offset=0, snd_offset=0;
     double d__1, d__2;
 
     /* Local variables */
-    int head;
-    double fold;
-    int nact;
     double ddum;
-    int info;
-    int nfgv, ifun, iter, nint;
     char word[4]; /* allow for terminator */
-    int i, iback, k = 0; /* -Wall */
-    double gdold;
-    int nfree;
-    int boxed;
-    int itail;
-    double theta;
-    double dnorm;
-    int nskip, iword;
-    double xstep = 0.0, stpmx; /* xstep is printed before being used */
-    double gd, dr, rr;
-    int ileave;
-    int itfile;
-    double cachyt, epsmch;
-    int updatd;
-    double sbtime;
-    int prjctd;
-    int iupdat;
-    int cnstnd;
-    double sbgnrm;
-    int nenter;
-    double lnscht;
-    int nintol;
-    double dtd;
-    int col;
-    double tol;
+    int k = 0; /* -Wall */
+    double xstep = 0.0; /* printed before being used */
+    double dr, rr;
     int wrk;
-    double stp, cpu1, cpu2;
+
 
     /* Parameter adjustments */
     --indx2;
@@ -624,21 +559,21 @@ static void mainlb(int n, int m, double *x,
     --l;
     --x;
     --wa;
-    --lsave;
-    --isave;
-    --dsave;
+    // formerly lsave
+    static int prjctd, cnstnd, boxed, updatd;
+    // in isave
+    static int nintol, iback, nskip, head, col, itail, iter, iupdat,
+	nint, nfgv, info, ifun, iword, nfree, nact, ileave, nenter;
+    // formerly dsave
+    static double theta, fold, tol, dnorm, epsmch, gd, stpmx, sbgnrm, 
+	stp, gdold, dtd;
 
     /* Function Body */
     if (strncmp(task, "START", 5) == 0) {
 /*	  Generate the current machine precision. */
-#ifdef NOT_USING_DBL_EPSILON
-	epsmch = dpmeps();
-#else
 	epsmch = DBL_EPSILON;
-#endif
 	fold = 0.;
 	dnorm = 0.;
-	cpu1 = 0.;
 	gd = 0.;
 	sbgnrm = 0.;
 	stp = 0.;
@@ -669,21 +604,15 @@ static void mainlb(int n, int m, double *x,
 	nfree = n;
 /*	     for stopping tolerance: */
 	tol = factr * epsmch;
-/*	     for measuring running time: */
-	cachyt = 0.;
-	sbtime = 0.;
-	lnscht = 0.;
 /*	     'word' records the status of subspace solutions. */
 	strcpy(word, "---");
 /*	     'info' records the termination information. */
 	info = 0;
-	itfile = 0;
 /*	  Check the input arguments for errors. */
 	errclb(n, m, factr, &l[1], &u[1], &nbd[1], task, &info, &k);
 	if (strncmp(task, "ERROR", 5) == 0) {
-	    prn3lb(n, x+1, f, task, iprint, info,
-		   iter, nfgv, nintol, nskip, nact, sbgnrm,
-		   nint, word, iback, stp, xstep, k);
+	    prn3lb(n, x+1, f, task, iprint, info, iter, nfgv, nintol, nskip,
+		   nact, sbgnrm, nint, word, iback, stp, xstep, k);
 	    return;
 	}
 
@@ -694,46 +623,6 @@ static void mainlb(int n, int m, double *x,
 		&cnstnd, &boxed);
 /*	  The end of the initialization. */
     } else {
-/*	    restore local variables. */
-	prjctd = lsave[1];
-	cnstnd = lsave[2];
-	boxed = lsave[3];
-	updatd = lsave[4];
-
-	nintol = isave[1];
-	itfile = isave[3];
-	iback = isave[4];
-	nskip = isave[5];
-	head = isave[6];
-	col = isave[7];
-	itail = isave[8];
-	iter = isave[9];
-	iupdat = isave[10];
-	nint = isave[12];
-	nfgv = isave[13];
-	info = isave[14];
-	ifun = isave[15];
-	iword = isave[16];
-	nfree = isave[17];
-	nact = isave[18];
-	ileave = isave[19];
-	nenter = isave[20];
-
-	theta = dsave[1];
-	fold = dsave[2];
-	tol = dsave[3];
-	dnorm = dsave[4];
-	epsmch = dsave[5];
-	cpu1 = dsave[6];
-	cachyt = dsave[7];
-	sbtime = dsave[8];
-	lnscht = dsave[9];
-	gd = dsave[11];
-	stpmx = dsave[12];
-	sbgnrm = dsave[13];
-	stp = dsave[14];
-	gdold = dsave[15];
-	dtd = dsave[16];
 /*	After returning from the driver go to the point where execution */
 /*	is to resume. */
 	if (strncmp(task, "FG_LN", 5) == 0)	goto L666;
@@ -785,7 +674,6 @@ L222:
 /*     Compute the Generalized Cauchy Point (GCP). */
 
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
-    timer(&cpu1);
     cauchy(n, &x[1], &l[1], &u[1], &nbd[1], &g[1], &indx2[1], &iwhere[1], &t[
 	    1], &d[1], &z[1], m, &wy[wy_offset], &ws[ws_offset], &sy[
 	    sy_offset], &wt[wt_offset], &theta, &col, &head, &wa[1], &wa[(m
@@ -802,12 +690,8 @@ L222:
 	theta = 1.;
 	iupdat = 0;
 	updatd = FALSE_;
-	timer(&cpu2);
-	cachyt = cachyt + cpu2 - cpu1;
 	goto L222;
     }
-    timer(&cpu2);
-    cachyt = cachyt + cpu2 - cpu1;
     nintol += nint;
 /*     Count the entering and leaving variables for iter > 0; */
 /*     find the index set of free and active variables at the GCP. */
@@ -825,17 +709,15 @@ L333:
 /*     Subspace minimization. */
 
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
-    timer(&cpu1);
 /*     Form  the LEL^T factorization of the indefinite */
 /*	 matrix	   K = [-D -Y'ZZ'Y/theta     L_a'-R_z'	] */
 /*		       [L_a -R_z	   theta*S'AA'S ] */
 /*	 where	   E = [-I  0] */
 /*		       [ 0  I] */
-    if (wrk) {
+    if (wrk)
 	formk(n, &nfree, &indx[1], &nenter, &ileave, &indx2[1], &iupdat, &
 		updatd, &wn[wn_offset], &snd[snd_offset], m, &ws[ws_offset], &
 		wy[wy_offset], &sy[sy_offset], &theta, &col, &head, &info);
-    }
     if (info != 0) {
 /*	    nonpositive definiteness in Cholesky factorization; */
 /*	    refresh the lbfgs memory and restart the iteration. */
@@ -849,18 +731,15 @@ L333:
 	theta = 1.;
 	iupdat = 0;
 	updatd = FALSE_;
-	timer(&cpu2);
-	sbtime = sbtime + cpu2 - cpu1;
 	goto L222;
     }
 /*	  compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x) */
 /*						     from 'cauchy'). */
-    cmprlb(n, m, &x[1], &g[1], &ws[ws_offset], &wy[wy_offset], &sy[sy_offset]
-	    , &wt[wt_offset], &z[1], &r[1], &wa[1], &indx[1], &theta, &
-	    col, &head, &nfree, &cnstnd, &info);
-    if (info != 0) {
+    cmprlb(n, m, &x[1], &g[1], &ws[ws_offset], &wy[wy_offset], 
+	   &sy[sy_offset], &wt[wt_offset], &z[1], &r[1], &wa[1], &indx[1],
+	   &theta, &col, &head, &nfree, &cnstnd, &info);
+    if (info != 0)
 	goto L444;
-    }
 /*	 call the direct method. */
     subsm(n, m, &nfree, &indx[1], &l[1], &u[1], &nbd[1], &z[1], &r[1], &
 	    ws[ws_offset], &wy[wy_offset], &theta, &col, &head, &iword, &wa[1]
@@ -878,12 +757,8 @@ L444:
 	theta = 1.;
 	iupdat = 0;
 	updatd = FALSE_;
-	timer(&cpu2);
-	sbtime = sbtime + cpu2 - cpu1;
 	goto L222;
     }
-    timer(&cpu2);
-    sbtime = sbtime + cpu2 - cpu1;
 L555:
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
 
@@ -891,17 +766,13 @@ L555:
 
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
 /*     Generate the search direction d:=z-x. */
-    i__1 = n;
-    for (i = 1; i <= i__1; ++i) {
+    for (int i = 1; i <= n; ++i)
 	d[i] = z[i] - x[i];
-/* L40: */
-    }
-    timer(&cpu1);
 L666:
     lnsrlb(n, &l[1], &u[1], &nbd[1], &x[1], f, &fold, &gd, &gdold, &g[1], &
 	    d[1], &r[1], &t[1], &z[1], &stp, &dnorm, &dtd, &xstep, &
 	    stpmx, &iter, &ifun, &iback, &nfgv, &info, task, &boxed, &cnstnd,
-	    csave, &isave[22], &dsave[17]);
+	    csave);
     if (info != 0 || iback >= 20) {
 /*	    restore the previous iterate. */
 	F77_CALL(dcopy)(&n, &t[1], &c__1, &x[1], &c__1);
@@ -924,9 +795,8 @@ L666:
 	    if (iprint >= 1)
 		Rprintf("%s\n%s\n", "Bad direction in the line search;",
 		    "   refresh the lbfgs memory and restart the iteration.");
-	    if (info == 0) {
+	    if (info == 0)
 		--nfgv;
-	    }
 	    info = 0;
 	    col = 0;
 	    head = 1;
@@ -934,8 +804,6 @@ L666:
 	    iupdat = 0;
 	    updatd = FALSE_;
 	    strcpy(task, "RESTART_FROM_LNSRCH");
-	    timer(&cpu2);
-	    lnscht = lnscht + cpu2 - cpu1;
 	    goto L222;
 	}
     } else if (strncmp(task, "FG_LN", 5) == 0) {
@@ -943,8 +811,6 @@ L666:
 	goto L1000;
     } else {
 /*	    calculate and print out the quantities related to the new X. */
-	timer(&cpu2);
-	lnscht = lnscht + cpu2 - cpu1;
 	++iter;
 /*	  Compute the infinity norm of the projected (-)gradient. */
 	projgr(n, &l[1], &u[1], &nbd[1], &x[1], &g[1], &sbgnrm);
@@ -961,8 +827,8 @@ L777:
 	goto L999;
     }
 /* Computing MAX */
-    d__1 = fabs(fold), d__2 = fabs(*f), d__1 = max(d__1,d__2);
-    ddum = max(d__1,1.);
+    d__1 = fabs(fold), d__2 = fabs(*f), d__1 = max(d__1, d__2);
+    ddum = max(d__1, 1.);
     if (fold - *f <= tol * ddum) {
 /*					  terminate the algorithm. */
 	strcpy(task, "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH");
@@ -971,11 +837,8 @@ L777:
 	goto L999;
     }
 /*     Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's. */
-    i__1 = n;
-    for (i = 1; i <= i__1; ++i) {
+    for (int i = 1; i <= n; ++i)
 	r[i] = g[i] - r[i];
-/* L42: */
-    }
     rr = F77_CALL(ddot)(&n, &r[1], &c__1, &r[1], &c__1);
     if (stp == 1.) {
 	dr = gd - gdold;
@@ -1034,46 +897,27 @@ L888:
 L999:
 L1000:
 /*     Save local variables. */
-    lsave[1] = prjctd;
-    lsave[2] = cnstnd;
-    lsave[3] = boxed;
-    lsave[4] = updatd;
-    isave[1] = nintol;
-    isave[3] = itfile;
-    isave[4] = iback;
-    isave[5] = nskip;
-    isave[6] = head;
-    isave[7] = col;
-    isave[8] = itail;
-    isave[9] = iter;
-    isave[10] = iupdat;
-    isave[12] = nint;
-    isave[13] = nfgv;
-    isave[14] = info;
-    isave[15] = ifun;
-    isave[16] = iword;
-    isave[17] = nfree;
-    isave[18] = nact;
-    isave[19] = ileave;
-    isave[20] = nenter;
-    dsave[1] = theta;
-    dsave[2] = fold;
-    dsave[3] = tol;
-    dsave[4] = dnorm;
-    dsave[5] = epsmch;
-    dsave[6] = cpu1;
-    dsave[7] = cachyt;
-    dsave[8] = sbtime;
-    dsave[9] = lnscht;
-    dsave[11] = gd;
-    dsave[12] = stpmx;
-    dsave[13] = sbgnrm;
-    dsave[14] = stp;
-    dsave[15] = gdold;
-    dsave[16] = dtd;
-    prn3lb(n, x+1, f, task, iprint, info,
-	   iter, nfgv, nintol, nskip, nact, sbgnrm,
-	   nint, word, iback, stp, xstep, k);
+//    isave[1-1] = nintol;
+//    isave[3-1] = itfile;
+//    isave[4-1] = iback;
+//    isave[5-1] = nskip;
+//    isave[6-1] = head;
+//    isave[7-1] = col;
+//    isave[8-1] = itail;
+//    isave[9-1] = iter;
+//    isave[10-1] = iupdat;
+//    isave[12-1] = nint;
+    isave[13-1] = nfgv;
+//    isave[14-1] = info;
+//    isave[15-1] = ifun;
+//    isave[16-1] = iword;
+//    isave[17-1] = nfree;
+//    isave[18-1] = nact;
+//    isave[19-1] = ileave;
+//    isave[20-1] = nenter;
+  
+    prn3lb(n, x+1, f, task, iprint, info, iter, nfgv, nintol, nskip, nact,
+	   sbgnrm, nint, word, iback, stp, xstep, k);
     return;
 } /* mainlb */
 /* ======================= The end of mainlb ============================= */
@@ -1110,7 +954,7 @@ static void active(int n, double *l, double *u,
 */
 
     /* Local variables */
-    int nbdd, i;
+    int nbdd;
 
     /* Parameter adjustments */
     --iwhere;
@@ -1127,7 +971,7 @@ static void active(int n, double *l, double *u,
     *cnstnd = FALSE_;
     *boxed = TRUE_;
 /*     Project the initial x to the easible set if necessary. */
-    for (i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
 	if (nbd[i] > 0) {
 	    if (nbd[i] <= 2 && x[i] <= l[i]) {
 		if (x[i] < l[i]) {
@@ -1146,10 +990,9 @@ static void active(int n, double *l, double *u,
     }
 
 /*     Initialize iwhere and assign values to cnstnd and boxed. */
-    for (i = 1; i <= n; ++i) {
-	if (nbd[i] != 2) {
+    for (int i = 1; i <= n; ++i) {
+	if (nbd[i] != 2)
 	    *boxed = FALSE_;
-	}
 	if (nbd[i] == 0) {
 /*				  this variable is always free */
 	    iwhere[i] = -1;
@@ -1159,9 +1002,8 @@ static void active(int n, double *l, double *u,
 	    if (nbd[i] == 2 && u[i] - l[i] <= 0.) {
 /*		     this variable is always fixed */
 		iwhere[i] = 3;
-	    } else {
+	    } else
 		iwhere[i] = 0;
-	    }
 	}
     }
     if (iprint >= 0) {
@@ -1242,8 +1084,7 @@ static void bmv(int m, double *sy, double *wt,
 
 
     /* Local variables */
-    int i, k;
-    int i2;
+    int i2, k;
     double sum;
 
     /* Parameter adjustments */
@@ -1266,14 +1107,12 @@ static void bmv(int m, double *sy, double *wt,
  */
     Col = *col;
     p[*col + 1] = v[*col + 1];
-    for (i = 2; i <= Col; ++i) {
+    for (int i = 2; i <= Col; ++i) {
 	i2 = *col + i;
 	sum = 0.;
-	for (k = 1; k <= i - 1; ++k) {
+	for (int k = 1; k <= i - 1; ++k)
 	    sum += sy[i + k * sy_dim1] * v[k] / sy[k + k * sy_dim1];
-	}
 	p[i2] = v[i2] + sum;
-/* L20: */
     }
 /*     Solve the triangular system */
     F77_CALL(dtrsl)(&wt[wt_offset], &m, col, &p[*col + 1], &c__11, info);
@@ -1281,30 +1120,28 @@ static void bmv(int m, double *sy, double *wt,
 	return;
     }
 /*	 solve D^(1/2)p1=v1. */
-    for (i = 1; i <= Col; ++i) {
+    for (int i = 1; i <= Col; ++i)
 	p[i] = v[i] / sqrt(sy[i + i * sy_dim1]);
-    }
 
 /*	PART II: solve [ -D^(1/2)   D^(-1/2)*L'	 ] [ p1 ] = [ p1 ]
  *		       [  0	    J'		 ] [ p2 ]   [ p2 ].
  *	solve J^Tp2=p2.
  */
     F77_CALL(dtrsl)(&wt[wt_offset], &m, col, &p[*col + 1], &c__1, info);
-    if (*info != 0) {
+    if (*info != 0)
 	return;
-    }
+
 /*	 compute p1=-D^(-1/2)(p1-D^(-1/2)L'p2) */
 /*		   =-D^(-1/2)p1 + D^(-1)L'p2. */
-    for (i = 1; i <= Col; ++i) {
+    for (int i = 1; i <= Col; ++i) {
 	p[i] = -p[i] / sqrt(sy[i + i * sy_dim1]);
     }
-    for (i = 1; i <= Col; ++i) {
+    for (int i = 1; i <= Col; ++i) {
 	sum = 0.;
 	for (k = i + 1; k <= Col; ++k) {
 	    sum += sy[k + i * sy_dim1] * p[*col + k] / sy[i + i * sy_dim1];
 	}
 	p[i] += sum;
-/* L60: */
     }
     return;
 } /* bmv */
@@ -1498,7 +1335,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     double bkmin, dibp, dibp2, zibp, neggi, tsum;
     double f1, f2, f2_org__, dt, tj, tj0, tl= 0.0, tu=0.0, dtm, wmc, wmp, wmw;
 
-    int i, j, ibp, iter, bnded, nfree, nleft, nbreak, ibkmin, pointr;
+    int ibp, iter, bnded, nfree, nleft, nbreak, ibkmin, pointr;
     int xlower, xupper, col2;
 
     /* Parameter adjustments */
@@ -1544,14 +1381,14 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 	Rprintf("\n---------------- CAUCHY entered-------------------\n\n");
 
 /*     We set p to zero and build it up as we determine d. */
-    for (i = 1; i <= col2; ++i)
+    for (int i = 1; i <= col2; ++i)
 	p[i] = 0.;
 
 /*     In the following loop we determine for each variable its bound */
 /*	  status and its breakpoint, and update p accordingly. */
 /*	  Smallest breakpoint is identified. */
 
-    for (i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
 	neggi = -g[i];
 	if (iwhere[i] != 3 && iwhere[i] != -1) {
 /*	       if x(i) is not a constant and has bounds, */
@@ -1590,7 +1427,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 	    f1 -= neggi * neggi;
 /*	       calculate p := p - W'e_i* (g_i). */
 	    i__2 = *col;
-	    for (j = 1; j <= i__2; ++j) {
+	    for (int j = 1; j <= i__2; ++j) {
 		p[j] += wy[i + pointr * wy_dim1] * neggi;
 		p[*col + j] += ws[i + pointr * ws_dim1] * neggi;
 		pointr = pointr % m + 1;
@@ -1620,7 +1457,6 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 		    bnded = FALSE_;
 	    }
 	}
-/* L50: */
     } /* for(i = 1:n) */
 
 /*     The indices of the nonzero components of d are now stored */
@@ -1636,13 +1472,13 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 /*		    is a zero vector, return with the initial xcp as GCP. */
 	if (iprint > 100) {
 	    Rprintf("Cauchy X =  ");
-	    for(i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
+	    for (int i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
 	    Rprintf("\n");
 	}
 	return;
     }
 /*     Initialize c = W'(xcp - x) = 0. */
-    for (j = 1; j <= col2; ++j)
+    for (int j = 1; j <= col2; ++j)
 	c[j] = 0.;
 
 /*     Initialize derivative f2. */
@@ -1743,7 +1579,7 @@ L777:
 /*	     choose wbp, */
 /*	     the row of W corresponding to the breakpoint encountered. */
 	pointr = *head;
-	for (j = 1; j <= *col; ++j) {
+	for (int j = 1; j <= *col; ++j) {
 	    wbp[j] = wy[ibp + pointr * wy_dim1];
 	    wbp[*col + j] = *theta * ws[ibp + pointr * ws_dim1];
 	    pointr = pointr % m + 1;
@@ -1799,7 +1635,7 @@ L999:
     }
     if (iprint >= 100) {
 	Rprintf("Cauchy X =  ");
-	for(i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
+	for (int i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
 	Rprintf("\n");
     }
 
@@ -1844,7 +1680,7 @@ static void cmprlb(int n, int m, double *x,
 	    wt_dim1, wt_offset, Col, n_f;
 
     /* Local variables */
-    int i, j, k;
+    int k;
     double a1, a2;
     int pointr;
 
@@ -1871,12 +1707,12 @@ static void cmprlb(int n, int m, double *x,
     /* Function Body */
     Col = *col;
     if (! (*cnstnd) && Col > 0) {
-	for (i = 1; i <= n; ++i)
+	for (int i = 1; i <= n; ++i)
 	    r[i] = -g[i];
     }
     else {
 	n_f = *nfree;
-	for (i = 1; i <= n_f; ++i) {
+	for (int i = 1; i <= n_f; ++i) {
 	    k = indx[i];
 	    r[i] = -(*theta) * (z[k] - x[k]) - g[k];
 	}
@@ -1887,10 +1723,10 @@ static void cmprlb(int n, int m, double *x,
 	    return;
 	}
 	pointr = *head;
-	for (j = 1; j <= Col; ++j) {
+	for (int j = 1; j <= Col; ++j) {
 	    a1 = wa[j];
 	    a2 = *theta * wa[Col + j];
-	    for (i = 1; i <= n_f; ++i) {
+	    for (int i = 1; i <= n_f; ++i) {
 		k = indx[i];
 		r[i] += wy[k + pointr * wy_dim1] * a1 +
 			ws[k + pointr * ws_dim1] * a2;
@@ -1922,9 +1758,6 @@ static void errclb(int n, int m, double factr, double *l, double *u,
 	************
 */
 
-    /* Local variables */
-    int i;
-
     /* Parameter adjustments */
     --nbd;
     --u;
@@ -1940,7 +1773,7 @@ static void errclb(int n, int m, double factr, double *l, double *u,
 	strcpy(task, "ERROR: FACTR .LT. 0");
 
 /*     Check the validity of the arrays nbd(i), u(i), and l(i). */
-    for (i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
 	if (nbd[i] < 0 || nbd[i] > 3) {
 /*						     return */
 	    strcpy(task, "ERROR: INVALID NBD");
@@ -2090,14 +1923,14 @@ p
 
     /* System generated locals */
     int wn_dim1, wn_offset, wn1_dim1, wn1_offset, ws_dim1, ws_offset,
-	    wy_dim1, wy_offset, sy_dim1, sy_offset, i__1, i__2;
+	    wy_dim1, wy_offset, sy_dim1, sy_offset;
 
     /* Local variables */
     int dend, pend;
     int upcl;
     double temp1, temp2, temp3, temp4;
-    int i, k;
-    int ipntr, jpntr, k1, m2, dbegin, is, js, iy, jy, pbegin, is1, js1,
+//    int i, k;
+    int ipntr, jpntr, k1, m2, dbegin, is, js, iy, pbegin, is1, js1,
 	    col2;
 
     /* Parameter adjustments */
@@ -2129,10 +1962,9 @@ p
 
     if (*updatd) {
 	if (*iupdat > m) {/*		shift old part of WN1. */
-	    i__1 = m - 1;
-	    for (jy = 1; jy <= i__1; ++jy) {
+	    for (int jy = 1; jy <= m - 1; ++jy) {
 		js = m + jy;
-		i__2 = m - jy;
+		int i__2 = m - jy;
 		F77_CALL(dcopy)(&i__2, &wn1[jy + 1 + (jy + 1)* wn1_dim1], &c__1,
 				       &wn1[jy + jy * wn1_dim1], &c__1);
 		F77_CALL(dcopy)(&i__2, &wn1[js + 1 + (js + 1)* wn1_dim1], &c__1,
@@ -2140,7 +1972,6 @@ p
 		i__2 = m - 1;
 		F77_CALL(dcopy)(&i__2, &wn1[m + 2 + (jy + 1) * wn1_dim1], &c__1,
 				       &wn1[m + 1 + jy * wn1_dim1], &c__1);
-/* L10: */
 	    }
 	}
 /*	    put new rows in blocks (1,1), (2,1) and (2,2). */
@@ -2155,19 +1986,18 @@ p
 	    ipntr -= m;
 	}
 	jpntr = *head;
-	i__1 = *col;
-	for (jy = 1; jy <= i__1; ++jy) {
+	for (int jy = 1; jy <= *col; ++jy) {
 	    js = m + jy;
 	    temp1 = 0.;
 	    temp2 = 0.;
 	    temp3 = 0.;
 /*	       compute element jy of row 'col' of Y'ZZ'Y */
-	    for (k = pbegin; k <= pend; ++k) {
+	    for (int k = pbegin; k <= pend; ++k) {
 		k1 = ind[k];
 		temp1 += wy[k1 + ipntr * wy_dim1] * wy[k1 + jpntr * wy_dim1];
 	    }
 /*	       compute elements jy of row 'col' of L_a and S'AA'S */
-	    for (k = dbegin; k <= dend; ++k) {
+	    for (int k = dbegin; k <= dend; ++k) {
 		k1 = ind[k];
 		temp2 += ws[k1 + ipntr * ws_dim1] * ws[k1 + jpntr * ws_dim1];
 		temp3 += ws[k1 + ipntr * ws_dim1] * wy[k1 + jpntr * wy_dim1];
@@ -2176,27 +2006,24 @@ p
 	    wn1[is + js * wn1_dim1] = temp2;
 	    wn1[is + jy * wn1_dim1] = temp3;
 	    jpntr = jpntr % m + 1;
-/* L20: */
 	}
 /*	    put new column in block (2,1). */
-	jy = *col;
+	int jy = *col;
 	jpntr = *head + *col - 1;
 	if (jpntr > m) {
 	    jpntr -= m;
 	}
 	ipntr = *head;
-	i__1 = *col;
-	for (i = 1; i <= i__1; ++i) {
+	for (int i = 1; i <= *col; ++i) {
 	    is = m + i;
 	    temp3 = 0.;
 /*	       compute element i of column 'col' of R_z */
-	    for (k = pbegin; k <= pend; ++k) {
+	    for (int k = pbegin; k <= pend; ++k) {
 		k1 = ind[k];
 		temp3 += ws[k1 + ipntr * ws_dim1] * wy[k1 + jpntr * wy_dim1];
 	    }
 	    ipntr = ipntr % m + 1;
 	    wn1[is + jy * wn1_dim1] = temp3;
-/* L30: */
 	}
 	upcl = *col - 1;
     } else {
@@ -2205,21 +2032,21 @@ p
 /*	 modify the old parts in blocks (1,1) and (2,2) due to changes */
 /*	 in the set of free variables. */
     ipntr = *head;
-    for (iy = 1; iy <= upcl; ++iy) {
+    for (int iy = 1; iy <= upcl; ++iy) {
 	is = m + iy;
 	jpntr = *head;
-	for (jy = 1; jy <= iy; ++jy) {
+	for (int jy = 1; jy <= iy; ++jy) {
 	    js = m + jy;
 	    temp1 = 0.;
 	    temp2 = 0.;
 	    temp3 = 0.;
 	    temp4 = 0.;
-	    for (k = 1; k <= *nenter; ++k) {
+	    for (int k = 1; k <= *nenter; ++k) {
 		k1 = indx2[k];
 		temp1 += wy[k1 + ipntr * wy_dim1] * wy[k1 + jpntr * wy_dim1];
 		temp2 += ws[k1 + ipntr * ws_dim1] * ws[k1 + jpntr * ws_dim1];
 	    }
-	    for (k = *ileave; k <= n; ++k) {
+	    for (int k = *ileave; k <= n; ++k) {
 		k1 = indx2[k];
 		temp3 += wy[k1 + ipntr * wy_dim1] * wy[k1 + jpntr * wy_dim1];
 		temp4 += ws[k1 + ipntr * ws_dim1] * ws[k1 + jpntr * ws_dim1];
@@ -2227,23 +2054,21 @@ p
 	    wn1[iy + jy * wn1_dim1] = wn1[iy + jy * wn1_dim1] + temp1 - temp3;
 	    wn1[is + js * wn1_dim1] = wn1[is + js * wn1_dim1] - temp2 + temp4;
 	    jpntr = jpntr % m + 1;
-/* L40: */
 	}
 	ipntr = ipntr % m + 1;
-/* L45: */
     }
 /*	 modify the old parts in block (2,1). */
     ipntr = *head;
-    for (is = m + 1; is <= m + upcl; ++is) {
+    for (int is = m + 1; is <= m + upcl; ++is) {
 	jpntr = *head;
-	for (jy = 1; jy <= upcl; ++jy) {
+	for (int jy = 1; jy <= upcl; ++jy) {
 	    temp1 = 0.;
 	    temp3 = 0.;
-	    for (k = 1; k <= *nenter; ++k) {
+	    for (int k = 1; k <= *nenter; ++k) {
 		k1 = indx2[k];
 		temp1 += ws[k1 + ipntr * ws_dim1] * wy[k1 + jpntr * wy_dim1];
 	    }
-	    for (k = *ileave; k <= n; ++k) {
+	    for (int k = *ileave; k <= n; ++k) {
 		k1 = indx2[k];
 		temp3 += ws[k1 + ipntr * ws_dim1] * wy[k1 + jpntr * wy_dim1];
 	    }
@@ -2253,36 +2078,28 @@ p
 		wn1[is + jy * wn1_dim1] += -temp1 + temp3;
 	    }
 	    jpntr = jpntr % m + 1;
-/* L55: */
 	}
 	ipntr = ipntr % m + 1;
-/* L60: */
     }
 /*     Form the upper triangle of WN = [D+Y' ZZ'Y/theta	  -L_a'+R_z' ] */
 /*				       [-L_a +R_z	 S'AA'S*theta] */
     m2 = m << 1;
-    i__1 = *col;
-    for (iy = 1; iy <= i__1; ++iy) {
+    for (int iy = 1; iy <= *col; ++iy) {
 	is = *col + iy;
 	is1 = m + iy;
-	i__2 = iy;
-	for (jy = 1; jy <= i__2; ++jy) {
+	for (int jy = 1; jy <= iy;  ++jy) {
 	    js = *col + jy;
 	    js1 = m + jy;
 	    wn[jy + iy * wn_dim1] = wn1[iy + jy * wn1_dim1] / *theta;
 	    wn[js + is * wn_dim1] = wn1[is1 + js1 * wn1_dim1] * *theta;
-/* L65: */
 	}
-	i__2 = iy - 1;
-	for (jy = 1; jy <= i__2; ++jy) {
+	for (int jy = 1; jy <= iy - 1; ++jy) {
 	    wn[jy + is * wn_dim1] = -wn1[is1 + jy * wn1_dim1];
 	}
-	i__2 = *col;
-	for (jy = iy; jy <= i__2; ++jy) {
+	for (int  jy = iy; jy <= *col; ++jy) {
 	    wn[jy + is * wn_dim1] = wn1[is1 + jy * wn1_dim1];
 	}
 	wn[iy + iy * wn_dim1] += sy[iy + iy * sy_dim1];
-/* L70: */
     }
 /*     Form the upper triangle of */
 /*	    WN= [  LL'		  L^-1(-L_a'+R_z')] */
@@ -2296,19 +2113,18 @@ p
     }
 /*	  then form L^-1(-L_a'+R_z') in the (1,2) block. */
     col2 = *col << 1;
-    for (js = *col + 1; js <= col2; ++js) {
+    for (int js = *col + 1; js <= col2; ++js) {
 	F77_CALL(dtrsl)(&wn[wn_offset], &m2, col,
 			&wn[js * wn_dim1 + 1], &c__11, info);
     }
 /*     Form S'AA'S*theta + (L^-1(-L_a'+R_z'))'L^-1(-L_a'+R_z') in the */
 /*	  upper triangle of (2,2) block of wn. */
-    for (is = *col + 1; is <= col2; ++is) {
-	for (js = is; js <= col2; ++js) {
+    for (int is = *col + 1; is <= col2; ++is) {
+	for (int js = is; js <= col2; ++js) {
 	    wn[is + js * wn_dim1] +=
 		F77_CALL(ddot)(col, &wn[is * wn_dim1 + 1], &c__1,
 			       &wn[js * wn_dim1 + 1], &c__1);
 	}
-/* L72: */
     }
 /*     Cholesky factorization of (2,2) block of wn. */
     F77_CALL(dpofa)(&wn[*col + 1 + (*col + 1) * wn_dim1], &m2, col, info);
@@ -2350,12 +2166,11 @@ static void formt(int m, double *wt, double *sy, double *ss,
 */
 
     /* System generated locals */
-    int wt_dim1, wt_offset, sy_dim1, sy_offset, ss_dim1, ss_offset, i__1;
+    int wt_dim1, wt_offset, sy_dim1, sy_offset, ss_dim1, ss_offset;
 
     /* Local variables */
     double ddum;
-    int i, j, k;
-    int k1;
+    int k, k1;
 
     /* Parameter adjustments */
     ss_dim1 = m;
@@ -2372,12 +2187,10 @@ static void formt(int m, double *wt, double *sy, double *ss,
 
 /*     Form the upper half of  T = theta*SS + L*D^(-1)*L', */
 /*	  store T in the upper triangle of the array wt. */
-    i__1 = *col;
-    for (j = 1; j <= i__1; ++j) {
+    for (int j = 1; j <= *col; ++j)
 	wt[j * wt_dim1 + 1] = *theta * ss[j * ss_dim1 + 1];
-    }
-    for (i = 2; i <= i__1; ++i) {
-	for (j = i; j <= i__1; ++j) {
+    for (int i = 2; i <= *col; ++i) {
+	for (int j = i; j <= *col; ++j) {
 	    k1 = min(i,j) - 1;
 	    ddum = 0.;
 	    for (k = 1; k <= k1; ++k) {
@@ -2386,7 +2199,6 @@ static void formt(int m, double *wt, double *sy, double *ss,
 	    }
 	    wt[i + j * wt_dim1] = ddum + *theta * ss[i + j * ss_dim1];
 	}
-/* L55: */
     }
 /*     Cholesky factorize T to J*J' with */
 /*	  J' stored in the upper triangle of wt. */
@@ -2441,11 +2253,8 @@ static void freev(int n, int *nfree, int *indx,
 	************
 */
 
-    /* System generated locals */
-    int i__1;
-
     /* Local variables */
-    int iact, i, k;
+    int iact, k;
 
     /* Parameter adjustments */
     --iwhere;
@@ -2456,8 +2265,7 @@ static void freev(int n, int *nfree, int *indx,
     *nenter = 0;
     *ileave = n + 1;
     if (*iter > 0 && *cnstnd) {/* count the entering and leaving variables. */
-	i__1 = *nfree;
-	for (i = 1; i <= i__1; ++i) {
+	for (int i = 1; i <= *nfree; ++i) {
 	    k = indx[i];
 	    if (iwhere[k] > 0) {
 		--(*ileave);
@@ -2466,9 +2274,8 @@ static void freev(int n, int *nfree, int *indx,
 		    Rprintf("Variable %d leaves the set of free variables\n",
 			    k);
 	    }
-/* L20: */
 	}
-	for (i = *nfree + 1; i <= n; ++i) {
+	for (int i = *nfree + 1; i <= n; ++i) {
 	    k = indx[i];
 	    if (iwhere[k] <= 0) {
 		++(*nenter);
@@ -2477,7 +2284,6 @@ static void freev(int n, int *nfree, int *indx,
 		    Rprintf("Variable %d enters the set of free variables\n",
 			    k);
 	    }
-/* L22: */
          if (iprint >= 100)
 	     Rprintf("%d variables leave; %d variables enter\n",
 		     n + 1 - *ileave, *nenter);
@@ -2487,7 +2293,7 @@ static void freev(int n, int *nfree, int *indx,
 /*     Find the index set of free and active variables at the GCP. */
     *nfree = 0;
     iact = n + 1;
-    for (i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
 	if (iwhere[i] <= 0) {
 	    ++(*nfree);
 	    indx[*nfree] = i;
@@ -2550,7 +2356,7 @@ static void hpsolb(int n, double *t, int *iorder, int iheap)
 
     /* Local variables */
     double ddum;
-    int i, j, k, indxin, indxou;
+    int i, j, indxin, indxou;
     double out;
 
     /* Parameter adjustments */
@@ -2560,7 +2366,7 @@ static void hpsolb(int n, double *t, int *iorder, int iheap)
     /* Function Body */
     if (iheap == 0) {
 /*	  Rearrange the elements t(1) to t(n) to form a heap. */
-	for (k = 2; k <= n; ++k) {
+	for (int k = 2; k <= n; ++k) {
 	    ddum = t[k];
 	    indxin = iorder[k];
 /*	     Add ddum to the heap. */
@@ -2577,7 +2383,6 @@ h_loop:
 	    }
 	    t[i] = ddum;
 	    iorder[i] = indxin;
-/* L20: */
 	}
     }
 /*     Assign to 'out' the value of t(1), the least member of the heap, */
@@ -2620,7 +2425,7 @@ static void lnsrlb(int n, double *l, double *u,
 		   double *dnorm, double *dtd, double *xstep,
 		   double *stpmx, int *iter, int *ifun, int *iback, int *nfgv,
 		   int *info, char *task, int *boxed, int *cnstnd,
-		   char *csave, int *isave, double *dsave)
+		   char *csave)
 {
 /*     **********
 
@@ -2659,7 +2464,6 @@ static void lnsrlb(int n, double *l, double *u,
     double d1;
 
     /* Local variables */
-    int i;
     double a1, a2;
 
     /* Parameter adjustments */
@@ -2685,7 +2489,7 @@ static void lnsrlb(int n, double *l, double *u,
 	if (*iter == 0) {
 	    *stpmx = 1.;
 	} else {
-	    for (i = 1; i <= n; ++i) {
+	    for (int i = 1; i <= n; ++i) {
 		a1 = d[i];
 		if (nbd[i] != 0) {
 		    if (a1 < 0. && nbd[i] <= 2) {
@@ -2704,7 +2508,6 @@ static void lnsrlb(int n, double *l, double *u,
 			}
 		    }
 		}
-/* L43: */
 	    }
 	}
     }
@@ -2731,10 +2534,7 @@ L556:
 	    return;
 	}
     }
-    dcsrch(f, gd, stp,
-	   ftol, gtol, xtol,
-	   stpmin, *stpmx,
-	   csave, isave, dsave);
+    dcsrch(f, gd, stp, ftol, gtol, xtol, stpmin, *stpmx, csave);
     *xstep = *stp * *dnorm;
     if (strncmp(csave, "CONV", 4) != 0 && strncmp(csave, "WARN", 4) != 0) {
 	strcpy(task, "FG_LNSRCH");
@@ -2744,7 +2544,7 @@ L556:
 	if (*stp == 1.) {
 	    F77_CALL(dcopy)(&n, &z[1], &c__1, &x[1], &c__1);
 	} else {
-	    for (i = 1; i <= n; ++i) {
+	    for (int i = 1; i <= n; ++i) {
 		x[i] = *stp * d[i] + t[i];
 	    }
 	}
@@ -2787,10 +2587,9 @@ static void matupd(int n, int m, double *ws,
 
     /* System generated locals */
     int ws_dim1, ws_offset, wy_dim1, wy_offset, sy_dim1, sy_offset,
-	    ss_dim1, ss_offset, i__1, i__2;
+	ss_dim1, ss_offset;
 
     /* Local variables */
-    int j;
     int pointr;
 
     /* Parameter adjustments */
@@ -2829,27 +2628,23 @@ static void matupd(int n, int m, double *ws,
 /*					   and the lower triangle of SY: */
     if (*iupdat > m) {
 /*				move old information */
-	i__1 = *col - 1;
-	for (j = 1; j <= i__1; ++j) {
+	for (int j = 1; j <= *col - 1; ++j) {
 	    F77_CALL(dcopy)(&j, &ss[(j + 1) * ss_dim1 + 2], &c__1,
 			    &ss[j * ss_dim1 + 1], &c__1);
-	    i__2 = *col - j;
+	    int i__2 = *col - j;
 	    F77_CALL(dcopy)(&i__2, &sy[j + 1 + (j + 1) * sy_dim1], &c__1,
 			    &sy[j + j * sy_dim1], &c__1);
-/* L50: */
 	}
     }
 /*	  add new information: the last row of SY */
 /*					       and the last column of SS: */
     pointr = *head;
-    i__1 = *col - 1;
-    for (j = 1; j <= i__1; ++j) {
+    for (int j = 1; j <= *col - 1; ++j) {
 	sy[*col + j * sy_dim1] =
 	    F77_CALL(ddot)(&n, &d[1], &c__1, &wy[pointr * wy_dim1 + 1], &c__1);
 	ss[j + *col * ss_dim1] =
 	    F77_CALL(ddot)(&n, &ws[pointr * ws_dim1 + 1], &c__1, &d[1], &c__1);
 	pointr = pointr % m + 1;
-/* L51: */
     }
     if (*stp == 1.) {
 	ss[*col + *col * ss_dim1] = *dtd;
@@ -2882,11 +2677,10 @@ static void projgr(int n, double *l, double *u,
 
 	************
 */
-    int i;
     double gi, d__1;
 
     *sbgnrm = 0.;
-    for (i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
 	gi = g[i];
 	if (nbd[i] != 0) {
 	    if (gi < 0.) {
@@ -3066,7 +2860,7 @@ static void subsm(int n, int m, int *nsub, int *ind,
 
     /* Local variables */
     double alpha, dk, temp1, temp2;
-    int i, j, k, m2, js, jy, pointr, ibd = 0, col2, ns;
+    int k, m2, js, pointr, ibd = 0, col2, ns;
 
     /* Parameter adjustments */
     --d;
@@ -3090,10 +2884,10 @@ static void subsm(int n, int m, int *nsub, int *ind,
 
 /*     Compute wv = W'Zd. */
     pointr = *head;
-    for (i = 1; i <= *col; ++i) {
+    for (int i = 1; i <= *col; ++i) {
 	temp1 = 0.;
 	temp2 = 0.;
-	for (j = 1; j <= ns; ++j) {
+	for (int j = 1; j <= ns; ++j) {
 	    k = ind[j];
 	    temp1 += wy[k + pointr * n] * d[j];
 	    temp2 += ws[k + pointr * n] * d[j];
@@ -3101,7 +2895,6 @@ static void subsm(int n, int m, int *nsub, int *ind,
 	wv[i] = temp1;
 	wv[*col + i] = *theta * temp2;
 	pointr = pointr % m + 1;
-/* L20: */
     }
 /*     Compute wv:=K^(-1)wv. */
     m2 = m << 1;
@@ -3110,7 +2903,7 @@ static void subsm(int n, int m, int *nsub, int *ind,
     if (*info != 0) {
 	return;
     }
-    for (i = 1; i <= *col; ++i)
+    for (int i = 1; i <= *col; ++i)
 	wv[i] = -wv[i];
 
     F77_CALL(dtrsl)(&wn[wn_offset], &m2, &col2, &wv[1], &c__1, info);
@@ -3119,24 +2912,23 @@ static void subsm(int n, int m, int *nsub, int *ind,
     }
 /*     Compute d = (1/theta)d + (1/theta**2)Z'W wv. */
     pointr = *head;
-    for (jy = 1; jy <= *col; ++jy) {
+    for (int jy = 1; jy <= *col; ++jy) {
 	js = *col + jy;
-	for (i = 1; i <= ns; ++i) {
+	for (int i = 1; i <= ns; ++i) {
 	    k = ind[i];
 	    d[i] += (wy[k + pointr * n] * wv[jy] / *theta +
 		       ws[k + pointr * n] * wv[js]);
 	}
 	pointr = pointr % m + 1;
-/* L40: */
     }
 
-    for (i = 1; i <= ns; ++i)
+    for (int i = 1; i <= ns; ++i)
 	d[i] /= *theta;
 
 /*     Backtrack to the feasible region. */
     alpha = 1.;
     temp1 = alpha;
-    for (i = 1; i <= ns; ++i) {
+    for (int i = 1; i <= ns; ++i) {
 	k = ind[i];
 	dk = d[i];
 	if (nbd[k] != 0) {
@@ -3160,7 +2952,6 @@ static void subsm(int n, int m, int *nsub, int *ind,
 		ibd = i;
 	    }
 	}
-/* L60: */
     }
     if (alpha < 1.) {
 	dk = d[ibd];
@@ -3173,7 +2964,7 @@ static void subsm(int n, int m, int *nsub, int *ind,
 	    d[ibd] = 0.;
 	}
     }
-    for (i = 1; i <= ns; ++i)
+    for (int i = 1; i <= ns; ++i)
 	x[ind[i]] += alpha * d[i];
 
     *iword = (alpha < 1.) ? 1 : 0;
@@ -3185,8 +2976,7 @@ static void subsm(int n, int m, int *nsub, int *ind,
 static void dcsrch(double *f, double *g, double *stp,
 		   /*Chgd: the next five are no longer pointers:*/
 		   double ftol, double gtol, double xtol,
-		   double stpmin, double stpmax,
-		   char *task, int *isave, double *dsave)
+		   double stpmin, double stpmax, char *task)
 {
 /*	**********
 
@@ -3235,8 +3025,7 @@ static void dcsrch(double *f, double *g, double *stp,
 
      The subroutine statement is
 
-	subroutine dcsrch(f,g,stp,ftol,gtol,xtol,stpmin,stpmax,
-			  task,isave,dsave)
+	subroutine dcsrch(f,g,stp,ftol,gtol,xtol,stpmin,stpmax task)
      where
 
 	f is a double precision variable.
@@ -3303,10 +3092,6 @@ static void dcsrch(double *f, double *g, double *stp,
 	  On exit with convergence, a warning or an error, the
 	     variable task contains additional information.
 
-	isave is an integer work array of dimension 2.
-
-	dsave is a double precision work array of dimension 13.
-
      Subprograms called
 
 	MINPACK-2 ... dcstep
@@ -3324,15 +3109,10 @@ static void dcsrch(double *f, double *g, double *stp,
 */
 
     /* Local variables */
-    int stage;
-    double finit, ginit, width, ftest, gtest, stmin, stmax, width1, fm,
-	    gm, fx, fy, gx, gy;
-    int brackt;
-    double fxm, fym, gxm, gym, stx, sty;
-
-    /* Parameter adjustments */
-    --dsave;
-    --isave;
+    static int stage, brackt;
+    static double ginit, gtest, gx, gy, finit, fx, fy, stx, sty,
+	stmin, stmax, width, width1;
+    double ftest, fm, gm, fxm, fym, gxm, gym;
 
     /* Function Body */
 
@@ -3371,35 +3151,13 @@ static void dcsrch(double *f, double *g, double *stp,
 	stmin = 0.;
 	stmax = *stp + *stp * 4.;
 	strcpy(task, "FG");
-	goto L1000;
-    } else {
-/*	  Restore local variables. */
-	if (isave[1] == 1) {
-	    brackt = TRUE_;
-	} else {
-	    brackt = FALSE_;
-	}
-	stage = isave[2];
-	ginit = dsave[1];
-	gtest = dsave[2];
-	gx = dsave[3];
-	gy = dsave[4];
-	finit = dsave[5];
-	fx = dsave[6];
-	fy = dsave[7];
-	stx = dsave[8];
-	sty = dsave[9];
-	stmin = dsave[10];
-	stmax = dsave[11];
-	width = dsave[12];
-	width1 = dsave[13];
+	return;
     }
 /*      If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the */
 /*      algorithm enters the second stage. */
     ftest = finit + *stp * gtest;
-    if (stage == 1 && *f <= ftest && *g >= 0.) {
+    if (stage == 1 && *f <= ftest && *g >= 0.)
 	stage = 2;
-    }
 /*	Test for warnings. */
     if (brackt && (*stp <= stmin || *stp >= stmax))
 	strcpy(task, "WARNING: ROUNDING ERRORS PREVENT PROGRESS");
@@ -3414,7 +3172,7 @@ static void dcsrch(double *f, double *g, double *stp,
 	strcpy(task, "CONVERGENCE");
 /*	Test for termination. */
     if (strncmp(task, "WARN", 4) == 0 || strncmp(task, "CONV", 4) == 0)
-	goto L1000;
+	return;
 
 /*     A modified function is used to predict the step during the */
 /*     first stage if a lower function value has been obtained but */
@@ -3468,27 +3226,6 @@ static void dcsrch(double *f, double *g, double *stp,
     }
 /*     Obtain another function and derivative. */
     strcpy(task, "FG");
-L1000:
-/*     Save local variables. */
-    if (brackt) {
-	isave[1] = 1;
-    } else {
-	isave[1] = 0;
-    }
-    isave[2] = stage;
-    dsave[1] = ginit;
-    dsave[2] = gtest;
-    dsave[3] = gx;
-    dsave[4] = gy;
-    dsave[5] = finit;
-    dsave[6] = fx;
-    dsave[7] = fy;
-    dsave[8] = stx;
-    dsave[9] = sty;
-    dsave[10] = stmin;
-    dsave[11] = stmax;
-    dsave[12] = width;
-    dsave[13] = width1;
     return;
 } /* dcsrch */
 /* ====================== The end of dcsrch ============================== */
@@ -3765,9 +3502,8 @@ static void dcstep(double *stx, double *fx, double *dx,
 
 static void pvector(char *title, double *x, int n)
 {
-    int i;
     Rprintf("%s ", title);
-    for (i = 0; i < n; i++) Rprintf("%g ", x[i]);
+    for (int i = 0; i < n; i++) Rprintf("%g ", x[i]);
     Rprintf("\n");
 }
 
@@ -3832,132 +3568,3 @@ static void prn3lb(int n, double *x, double *f, char *task, int iprint,
     }
 }
 
-
-
-
-#ifdef NOT_USING_DBL_EPSILON
-
-static double dpmeps(void)
-{
-/*     **********
-
-     Subroutine dpeps
-
-     This subroutine computes the machine precision parameter
-     dpmeps as the smallest floating point number such that
-     1 + dpmeps differs from 1.
-
-     This subroutine is based on the subroutine machar described in
-
-     W. J. Cody,
-     MACHAR: A subroutine to dynamically determine machine parameters,
-     ACM Trans. Math. Soft., 14, 1988, pages 303-311.
-
-     The subroutine statement is:
-
-       subroutine dpeps(dpmeps)
-
-     where
-
-       dpmeps is a double precision variable.
-	 On entry dpmeps need not be specified.
-	 On exit dpmeps is the machine precision.
-
-     MINPACK-2 Project. February 1991.
-     Argonne National Laboratory and University of Minnesota.
-     Brett M. Averick.
-
-     ******* */
-
-    /* Initialized data */
-
-    static double zero = 0.;
-    static double one = 1.;
-    static double two = 2.;
-
-    /* System generated locals */
-    int i__1;
-    double ret_val;
-
-    /* Local variables */
-    double beta;
-    int irnd;
-    double temp, temp1, a, b;
-    int i;
-    double betah;
-    int ibeta, negep;
-    double tempa;
-    int itemp, it;
-    double betain;
-
-/*     determine ibeta, beta ala malcolm. */
-    a = one;
-    b = one;
-L10:
-    a += a;
-    temp = a + one;
-    temp1 = temp - a;
-    if (temp1 - one == zero) {
-	goto L10;
-    }
-L20:
-    b += b;
-    temp = a + b;
-    itemp = (int) (temp - a);
-    if (itemp == 0) {
-	goto L20;
-    }
-    ibeta = itemp;
-    beta = (double) ibeta;
-/*     determine it, irnd. */
-    it = 0;
-    b = one;
-L30:
-    ++it;
-    b *= beta;
-    temp = b + one;
-    temp1 = temp - b;
-    if (temp1 - one == zero) {
-	goto L30;
-    }
-    irnd = 0;
-    betah = beta / two;
-    temp = a + betah;
-    if (temp - a != zero) {
-	irnd = 1;
-    }
-    tempa = a + beta;
-    temp = tempa + betah;
-    if (irnd == 0 && temp - tempa != zero) {
-	irnd = 2;
-    }
-/*     determine dpmeps. */
-    negep = it + 3;
-    betain = one / beta;
-    a = one;
-    i__1 = negep;
-    for (i = 1; i <= i__1; ++i) {
-	a *= betain;
-    }
-L50:
-    temp = one + a;
-    if (temp - one != zero) {
-	goto L60;
-    }
-    a *= beta;
-    goto L50;
-L60:
-    ret_val = a;
-    if (ibeta == 2 || irnd == 0) {
-	goto L70;
-    }
-    a = a * (one + a) / two;
-    temp = one + a;
-    if (temp - one != zero) {
-	ret_val = a;
-    }
-L70:
-    return ret_val;
-} /* dpmeps */
-
-#endif

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -4063,6 +4063,9 @@ msgstr "próba wygładzenia wartości NA"
 # stop("invalid 'endrule' argument")
 msgid "invalid 'endrule' argument"
 msgstr "niepoprawny argument 'endrule'"
+
+msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+msgstr ""
 
 # stats/R/smspline.R: 49
 # stop("invalid 'control.spar'")

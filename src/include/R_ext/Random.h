@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2011    The R Core Team
+ *  Copyright (C) 1998-2014    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -65,8 +65,6 @@ int * user_unif_nseed(void);
 int * user_unif_seedloc(void);
 
 double * user_norm_rand(void);
-
-void FixupProb(double *, int, int, Rboolean);
 
 #ifdef  __cplusplus
 }

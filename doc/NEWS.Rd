@@ -1,7 +1,5 @@
 % -*- coding: utf-8 -*-
-\newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
 \title{R News}
@@ -11,51 +9,294 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
-    }
-  }
-  %% \subsection{BUG FIXES}{
-  %%   \itemize{
-  %%   }
-  %% }
-}
 
-\section{\Rlogo CHANGES IN R 3.1.0 patched}{
-  \subsection{NEW FEATURES}{
-    \itemize{
-      \item \command{configure} option \option{--with-internal-tzcode}
-      can now be used with variable \code{rsharedir}.
+      \item When \code{x} is missing and \code{names} is not false
+      (including the default value), \code{Sys.getenv(x, names)} returns
+      an object of class \code{"Dlist"} and hence prints tidily.
 
-      \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
-      with \code{clean = FALSE} no longer remove any created files.
-      \code{buildvignette()} gains a \code{keep} argument for more
-      cleaning customization. 
+      \item (Windows.)  \code{shell()} no longer consults the
+      environment variable \env{SHELL}: too many systems have been
+      encountered where it was set incorrectly (usually to a path where
+      software was compiled, not where it was installed).
+      \env{R_SHELL}, the preferred way to select a non-default shell,
+      can be used instead.
 
-      \item The Bioconductor \sQuote{version} used by
-      \code{setRepositories()} can now be set by environment variable
-      \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
-      (It has been stated that Bioconductor will switch from version
-      2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
+      \item \code{embedFonts()} now defaults to \code{format =
+      "ps2write"} for \file{.ps} and \file{.eps} files.  This is
+      available in Ghostscript 9.x (since 2010) whereas the previous
+      default, \code{format = "pswrite"}, was removed in 9.10.
+
+      \item Some unusual arguments to \code{embedFonts()} can now be
+      specified as character vectors, and the defaults have changed
+      accordingly.
+
+      \item Functions in the \code{Summary} group duplicate less.
+      (\PR{15798})
+
+      \item (Unix-alikes.) \code{system(cmd, input = )} now uses
+      \sQuote{shell-execution-environment} redirection, which will be
+      more natural if \code{cmd} is not a single command (but requires a
+      POSIX-compliant shell). (\PR{15508})
+
+      \item \code{read.fwf()} and \code{read.DIF()} gain a
+      \code{fileEncoding} argument, for convenience.
+
+      \item Graphics devices can add attributes to their description in
+      \code{.Device} and \code{.Devices}.  Several of those included with
+      \R use a \code{"filepath"} attribute.
+
+      \item \code{pmatch()} uses hashing in more cases and so is faster
+      at the expense of using more memory. (\PR{15697})
+
+      \item \code{pairs()} gains new arguments to select sets of
+      variables to be plotted against each other.
+
+      \item \code{file.info(, extra_cols = FALSE)} allows a minimal set
+      of columns to be computed: on some systems this can be
+      significantly faster with large file lists.
+
+      \item New function \code{dir.exists()} in \pkg{base} to test
+      efficiently whether one or more paths exist and are directories.
+
+      \item \code{dput()} and friends gain new controls
+      \samp{"hexNumeric"} and \samp{"digits17"} which output double and
+      complex quantities as, respectively, binary fractions (exactly,
+      see \code{sprintf("\%a")}) and as decimals with up to 17
+      significant digits.
+
+      \item \code{save()}, \code{saveRDS()} and \code{serialize()} now
+      support \code{ascii = NA} which writes ASCII files using the
+      \code{sprintf("\%a")}) for double/complex quantities.  This is
+      read-compatible with \code{ascii = TRUE} but avoids
+      binary->decimal->binary conversions with potential loss of
+      precision.  Unfortunately Windows' lack of C99 compliance means
+      that the format can be written but not read correctly there in \R
+      before 3.2.0.
+
+      \item The default for \code{formatC(decimal.mark =)} has been
+      changed to be \code{getOption("OutDec")}; this makes it more
+      consistent with \code{format()} and suitable for use in print
+      methods.
+
+      \item The print methods for classes \code{"density"},
+      \code{"ecdf"}, \code{"kmeans"}, \code{"stepfun"} and
+      \code{"summary.lm"} now consult \code{getOption("OutDec")} even
+      where \code{formatC()} or \code{sprintf()} is used.
+
+      Similarly when \code{cut()}, \code{dendrogram()}, \code{plot.ts()}
+      and \code{quantile()} construct labels, and for the report from
+      \code{legend(trace = TRUE)}.
+
+      (In part, wish of \PR{15819}.)
+
+      \item \code{printNum()} and hence \code{format()} and
+      \code{formatC()} give a warning if \code{big.mark} and
+      \code{decimal.mark} are set to the same value (period and comma
+      are not uncommonly used for each, and this is a check that
+      conventions have not got mixed).
+
+      \item \code{merge()} can create a result which uses long vectors
+      on 64-bit platforms.
+
+      \item \code{dget()} gains a new argument \code{keep.source} which
+      defaults to \code{FALSE} for speed (\code{dput()} and
+      \code{dget()} are most often used for data objects where this can
+      make \code{dget()} many times faster).
+
+      \item Packages may now use a file of common macro definitions in
+      their help files, and may import definitions from other packages.
+
+      \item A number of macros have been added in the new
+      \file{share/Rd} directory for use in package overview help pages,
+      and \code{promptPackage()} now makes use of them.
+
+      \item \code{capabilities()} now reports if ICU is used for collation.
+
+      % TODO: Port to 3.1.1 patched
+      \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
+      \code{[dp]lnorm(sdlog = 0)} also model a point mass at \code{exp(mulog)}.
+
+      \item \code{prettyNum(x, zero.print = *)} now also works when
+      \code{x} contains \code{NA}s.
       
-      \item Error messages from bugs in embedded \samp{Sexpr} code
-      in Sweave documents now report the source location.
+      \item \code{tools::parse_Rd()} gains a new \code{permissive}
+      argument which converts unrecognized macros into text.  This is
+      used by \code{utils:::format.bibentry} to allow LaTeX markup to be
+      ignored.
+  
+      \item \code{options(OutDec=)} can now specify a multi-byte
+      character, e.g. \code{options(OutDec = "\u00b7")} in a UTF-8 locale.
     }
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item The included version of PCRE has been updated to 8.35.
+      \item When building \R as a shared library, the
+      \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
+      link commands used during installation and when packages are
+      installed: this helps ensure that the current build has priority if
+      an \R shared library has already been installed by e.g.
+      \command{install-libR} in a library mentioned in \env{LDFLAGS}
+      (and not in \sQuote{your system's library directory} as
+      documented). (Wish of \PR{15790}.)
+
+      \item LaTeX package \pkg{upquote} is no longer required for \R's
+      use of \pkg{inconsolata}.
+
+      \item The \code{\\donttest} sections of \R's help files can be
+      tested by\cr
+      \command{make check TEST_DONTTEST=TRUE}.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item There is some support for testing the \code{\\dontrun} and
+      \code{\\donttest} parts of examples in packages.
+
+      \code{tools::testInstalledPackage()} accepts new arguments
+      \code{commentDontrun = FALSE} and \code{commentDonttest = FALSE}.
+
+      \command{R CMD check} gains \option{--run-dontrun} and
+      \option{--run-donttest} options.
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item New C API utility \code{logspace_sum(logx[], n)}.
+
+      \item Entry points \code{rbinom_mu}, \code{rnbinom_mu} and
+      \code{rmultinom} are remapped (by default).  This requires
+      packages using them to be re-installed.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item When \code{attach()} notices conflicts, it does so
-      compatibly with \code{library()}, using \code{message()}.
+      \item Fixed two obscure bugs in pairlist subassignment, reported by
+      Radford Neal as part of pqR issue 16.
+    }
+  }
+}
+\section{\Rlogo CHANGES IN R 3.1.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{dmultinom()} did not handle non-finite probabilities
+      correctly. 
+    }
+  }
+}
 
-      \item \command{R CMD Sweave} no longer cleans any files,
-      compatibly with versions of \R prior to 3.1.0.
+\section{\Rlogo CHANGES IN R 3.1.1}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item When \code{attach()} reports conflicts, it does so
+      compatibly with \code{library()} by using \code{message()}.
 
-      \item \code{dbinom(x,n)}, \code{pbinom()}, \code{dpois()}, etc,
+      \item \command{R CMD Sweave} no longer cleans any files by
+      default, compatibly with versions of \R prior to 3.1.0.  There are
+      new options \option{--clean}, \option{--clean=default} and
+      \option{--clean=keepOuts}.
+
+      \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
+      with \code{clean = FALSE} no longer remove any created files.
+      \code{buildvignette()} gains a \code{keep} argument for more
+      cleaning customization.
+
+      \item The Bioconductor \sQuote{version} used by
+      \code{setRepositories()} can now be set by environment variable
+      \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
+      (It has been stated that Bioconductor will switch from
+      \sQuote{version} 2.14 to \sQuote{version} 3.0 during the lifetime
+      of the \R 3.1 series.)
+
+      \item Error messages from bugs in embedded \samp{Sexpr} code
+      in Sweave documents now report the source location.
+
+      \item \code{type.convert()}, \code{read.table()} and similar
+      \code{read.*()} functions get a new \code{numerals} argument,
+      specifying how numeric input is converted when its conversion to
+      double precision loses accuracy.  The default value,
+      \code{"allow.loss"} allows accuracy loss, as in \R versions before
+      3.1.0.
+
+      \item For some compilers, integer addition could overflow without
+      a warning.  \R's internal code for both integer addition and
+      subtraction is more robust now.  (\PR{15774})
+
+      \item The function determining the default number of knots for
+      \code{smooth.spline()} is now exported, as \code{.nknots.smspl()}.
+
+      \item \code{dbeta(, a,b)}, \code{pbeta()}, \code{qbeta()} and
+      \code{rbeta()} are now defined also for \eqn{a = 0}, \eqn{b = 0},
+      or infinite \eqn{a} and \eqn{b} (where they typically returned
+      \code{NaN} before).
+
+      \item Many package authors report that the RStudio graphics device
+      does not work correctly with their package's use of
+      \code{dev.new()}.  The new option \code{dev.new(noRStudioGD =
+      TRUE)} replaces the RStudio override by the default device as
+      selected by \R itself, still respecting environment variables
+      \env{R_INTERACTIVE_DEVICE} and \env{R_DEFAULT_DEVICE}.
+
+      \item \code{readRDS()} now returns visibly.
+
+      \item Modifying internal logical scalar constants now results in
+      an error instead of a warning.
+
+      \item \code{install.packages(repos = NULL)} now accepts
+      \code{http://} or \code{ftp://} URLs of package archives as well
+      as file paths, and will download as required.  In most cases
+      \code{repos = NULL} can be deduced from the extension of the URL.
+
+      \item The warning when using partial matching with the \code{$}
+      operator on data frames is now only given when
+      \code{options("warnPartialMatchDollar")} is \code{TRUE}.
+
+      \item Package help requests like \code{package?foo} now
+      try the package \code{foo} whether loaded or not.
+
+      \item General help requests now default to trying all loaded
+      packages, not just those on the search path.
+
+      \item Added a new function \code{promptImport()}, to generate a
+      help page for a function that was imported from another package
+      (and presumably re-exported, or help would not be needed).
+    }
+  }
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item \command{configure} option \option{--with-internal-tzcode}
+      can now be used with variable \code{rsharedir}.
+
+      \item The included version of PCRE has been updated to 8.35.
+
+      \item There is a new target \command{make uninstall-libR} to
+      remove an installed shared/static \file{libR}.
+
+      \command{make install-libR} now works if a sub-architecture is
+      used, although the user will need to specify \code{libdir}
+      differently for different sub-architectures.
+
+      \item There is more extensive advice on which LaTeX packages are
+      required to install \R or to make package manuals (as done by
+      \command{R CMD check}) in the \sQuote{Writing R Extensions}
+      manual.
+
+      \item Compilers/linkers were handling the visibility controls in
+      \file{src/extra/xz} inconsistently (and apparently in some cases
+      incorrectly), so it has been simplified.  (\PR{15327})
+
+      \item (Windows)  There is updated support for the use of ICU for
+      collation: see the \sQuote{R Installation and Administration Manual}.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{dbinom(x, n)}, \code{pbinom()}, \code{dpois()}, etc,
       are slightly less restrictive in checking if \code{n} is
       integer-valued.  (Wish of \PR{15734}.)
 
@@ -63,23 +304,140 @@
       no longer underflows for small \code{x} and \code{ncp < 80}, e.g,
       for \code{pchisq(1e-5, df = 100, ncp = 1, log = TRUE)}.
       (Based on \PR{15635} and a suggestion by Roby Joehanes.)
-      
-      \item The \code{s} (\dQuote{step into}) command in the debugger 
+
+      \item The \code{s} (\dQuote{step into}) command in the debugger
       would cause \R to step into expressions evaluated there,
       not just into functions being debugged.  (\PR{15770})
 
-      \item The third-party code used by \code{strptime()} rejected
-      time-zone offsets of more than \code{+1200}. (\PR{15768})
+      \item The C code used by \code{strptime()} rejected time-zone
+      offsets of more than \code{+1200} (\code{+1245}, \code{+1300} and
+      \code{+1400} can occur).  (\PR{15768})
 
       \item (Windows only.)
       \code{png(type = "cairo", antialias = "gray")}
       was not accepted.  (\PR{15760})
-      
+
       \item Use of \code{save(..., envir=)} with named objects could
       fail.  (\PR{15758})
-      
+
       \item \code{Sweave()} mis-parsed \samp{Sexpr} expressions that
       contained backslashes.  (\PR{15779})
+
+      \item The return value from \code{options(foo = NULL)} was not
+      the previous value of the option.  (\PR{15781})
+
+      \item \code{enc2utf8()} and \code{enc2native()} did not always
+      mark the encoding of the return values when it was known.
+
+      \item \code{dnbinom(x, size = <large>, mu, log = TRUE)} no longer
+      underflows to -Inf for large \code{mu}, thanks to a suggestion
+      from Alessandro Mammana (MPI MolGen, Berlin).
+
+      \item \code{pbeta(x, a, b, log = TRUE)} no longer behaves
+      discontinuously (in a small x-region) because of denormalized
+      numbers.  Also, \code{pbeta(1-1e-12, 1e30, 1.001, log=TRUE)} now
+      terminates \dQuote{in real time}.
+
+      \item The \code{"CRAN"} filter (see \code{available.packages()})
+      no longer removes duplicates other than of packages on CRAN, and
+      does not fail if there is no CRAN repository in
+      \code{getOption("repos")}.
+
+      \item The device listing from \code{dev2bitmap()} and
+      \code{bitmap()} was truncated to 1000 characters: modern versions
+      of GhostScript on most platforms have many more devices.
+
+      \item (Windows.)  Commands such as \code{Sys.which()} and
+      \code{pipe()} which needed to find the full path to a command
+      could segfault if the \sQuote{long} path name was much longer than
+      the \sQuote{short} path name (which \code{Sys.which()} returns),
+      as the behaviour of the Windows API call had changed.
+
+      \item \command{R CMD build} will fail with an error if one of the
+      packages specified in the \samp{VignetteBuilder} field is not
+      installed.  (Without loading those packages it cannot be
+      ascertained which files are intended to be vignettes. This means
+      that the \samp{VignetteBuilder} packages have to be installed for
+      package checking too.)
+      (Wish of \PR{15775}.)
+
+      \item Misguided attempts to use \code{chull()} with non-finite
+      points now give an error (related to \PR{15777}).
+
+      \item For a formula with exactly 32 variables the 32nd variable
+      was aliased to the intercept in some C-level computations of
+      terms, so that for example attempting to remove it would remove
+      the intercept instead (and leave a corrupt internal structure).
+      (\PR{15735})
+
+      \item \code{anyDuplicated()} silently returned wrong values when
+      the first duplicate was at an index which was too large to be
+      stored in an integer vector (although a lot of RAM and patience
+      would have been needed to encounter this).
+
+      \item \code{tools::Rd2ex(commentDontrun = FALSE)} failed if the
+      block had only one line.
+
+      \item Hexadecimal constants such as \code{0x110p-5L} which were
+      incorrectly qualified by \code{L} were parsed incorrectly since \R
+      3.0.0, with a slightly garbled warning. (\PR{15753})
+
+      \item \code{system()} returned success on some platforms even if
+      the system was unable to launch a process. (\PR{15796})
+
+      \item (Windows \command{Rgui} console.)  Unbuffered output was
+      sometimes not output immediately if the prompt was not on the last
+      line of the console.
+
+      \item The built-in help server did not declare the encoding for
+      the \file{DESCRIPTION} or other text files to be the package
+      encoding, so non-ASCII characters could be displayed incorrectly.
+
+      \item \R{} is now trying harder to not cleanup child processes
+      that were not spawned by \code{mcparallel()} on platforms that
+      provide information about the source process of the \code{SIGCHLD}
+      signal. This allows 3rd party libraries to manage the exit status
+      of children that they spawn without \R{} interfering.
+
+      \item \code{mcmapply()} was only parallelizing if the number of
+      jobs was bigger than the number of cores. It now parallelizes if
+      the number of jobs is more than one.
+
+      \item Auto-printing would re-evaluate its argument when trying to
+      dispatch to a print method.  This is now avoided when possible.
+
+      \item Unserializing (including \code{load()} and \code{readRDS()})
+      could silently return incorrect numeric values from ASCII saves if
+      there was a read error.
+
+      \item \code{getParseData()} could return incorrect values for
+      the parents of some elements. (Reported by Andrew Redd.)
+
+      \item Attempting to use data frames of 2^31 or more rows with
+      \code{merge()} or to create a merged data frame of that size now
+      gives a clearer error message.
+
+      \item \code{parse()} did not check its \code{file} argument was a
+      connection if it was not a character string, so
+      e.g. \code{parse(FALSE)} attempted to read from \code{stdin}.
+
+      Nor did \code{dump()} and \code{dput()}.
+
+      \item The \code{"help.try.all.packages"} option was ignored when
+      the shortcut syntax for help was used, e.g. \code{?foo}.
+
+      \item A potential segfault in string allocation has been fixed.
+      (Found by Radford Neal.)
+
+      \item Potential memory protection errors in \code{sort()} and
+      \code{D()} have been fixed. (Found by Radford Neal.)
+
+      \item Fixed a lack of error checking in graphics event functions.
+      (Found by Radford Neal; a different patch used here than the
+      one in pqR.)
+
+      \item \code{numericDeriv()} sometimes miscalculated the gradient.
+      (\PR{15849}, reported originally by Radford Neal)
     }
   }
 }
@@ -194,9 +552,9 @@
       errors and so not used on OS X.)
 
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
-      Unix-alike 64-bit platforms: however it several cases the
-      time-zone database is 32-bit.  On \R for Windows it is 64-bit (for
-      both architectures as from this version).
+      Unix-alike 64-bit platforms: however in several cases the
+      time-zone database is 32-bit.  For \R for Windows it is 64-bit
+      (for both architectures as from this version).
 
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
@@ -2712,13 +3070,13 @@
 }
 
 \section{CHANGES in previous versions}{
-   \itemize{
-     \item
-     Older news can be found in text format in files
-     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
-     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
-     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for
-     \R  versions from 2.10.0 to 2.15.3 is in
-     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
-   }
- }
+  \itemize{
+    \item Older news can be found in text format in files
+    \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
+      and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
+      \file{NEWS.2}}
+    in the \file{doc} directory.  News in HTML format for
+    \R versions from 2.10.0 to 2.15.3 is in
+    \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
+  }
+}

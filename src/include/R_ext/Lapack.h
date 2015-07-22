@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-13 The R Core Team.
+ *  Copyright (C) 2003-14 The R Core Team.
  *  Copyright (C) 2008   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -361,7 +361,7 @@ F77_NAME(dgesvd)(const char* jobu, const char* jobvt, const int* m,
 /* DGESVX - use the LU factorization to compute the solution to a */
 /* real system of linear equations  A * X = B, */
 La_extern void
-F77_NAME(dgesvx)(const int* fact, const char* trans, const int* n,
+F77_NAME(dgesvx)(const char* fact, const char* trans, const int* n,
 		 const int* nrhs, double* a, const int* lda,
 		 double* af, const int* ldaf, int* ipiv,
 		 char *equed, double* r, double* c,

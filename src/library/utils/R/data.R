@@ -48,7 +48,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
     paths <- unique(paths[file.exists(paths)])
 
     ## Find the directories with a 'data' subdirectory.
-    paths <- paths[file_test("-d", file.path(paths, "data"))]
+    paths <- paths[dir.exists(file.path(paths, "data"))]
 
     dataExts <- tools:::.make_file_exts("data")
 

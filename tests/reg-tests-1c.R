@@ -337,4 +337,86 @@ my_env <- new.env(); my_env$one <- 1L
 save(one, file = tempfile(), envir = my_env)
 ## failed in R < 3.1.1.
 
+
+## Conversion to numeric in boundary case
+ch <- "0x1.ffa0000000001p-1"
+rr <- type.convert(ch, numerals = "allow.loss")
+rX <- type.convert(ch, numerals = "no.loss")
+stopifnot(is.numeric(rr), identical(rr, rX),
+          all.equal(rr, 0.999267578125),
+	  all.equal(type.convert(ch,	      numerals = "warn"),
+		    type.convert("0x1.ffap-1",numerals = "warn"), tol = 5e-15))
+## type.convert(ch) was not numeric in R 3.1.0
+##
+ch <- "1234567890123456789"
+rr <- type.convert(ch, numerals = "allow.loss")
+rX <- type.convert(ch, numerals = "no.loss")
+rx <- type.convert(ch, numerals = "no.loss", as.is = TRUE)
+tools::assertWarning(r. <- type.convert(ch, numerals = "warn.loss"))
+stopifnot(is.numeric(rr), identical(rr, r.), all.equal(rr, 1.234567890e18),
+	  is.factor(rX),  identical(rx, ch))
+
+
+## PR#15764: integer overflow could happen without a warning or giving NA
+tools::assertWarning(ii <- 1980000020L + 222000000L)
+stopifnot(is.na(ii))
+tools::assertWarning(ii <- (-1980000020L) + (-222000000L))
+stopifnot(is.na(ii))
+tools::assertWarning(ii <- (-1980000020L) - 222000000L)
+stopifnot(is.na(ii))
+tools::assertWarning(ii <- 1980000020L - (-222000000L))
+stopifnot(is.na(ii))
+## first two failed for some version of clang in R < 3.1.1
+
+
+## PR#15735: formulae with exactly 32 variables
+myFormula <- as.formula(paste(c("y ~ x0", paste0("x", 1:30)), collapse = "+"))
+ans <- update(myFormula, . ~ . - w1)
+stopifnot(identical(ans, myFormula))
+
+updateArgument <-
+    as.formula(paste(c(". ~ . ", paste0("w", 1:30)), collapse = " - "))
+ans2 <- update(myFormula, updateArgument)
+stopifnot(identical(ans2, myFormula))
+
+
+## PR#15753
+0x110p-5L
+stopifnot(.Last.value == 8.5)
+## was 272 with a garbled message in R 3.0.0 - 3.1.0.
+
+
+## Bugs reported by Radford Neal
+x <- pairlist(list(1,2))
+x[[c(1,2)]] <- NULL   # wrongly gave an error, referring to misuse
+                      # of the internal SET_VECTOR_ELT procedure
+stopifnot(identical(x, pairlist(list(1))))
+
+a <- pairlist(10,20,30,40,50,60)
+dim(a) <- c(2,3)
+dimnames(a) <- list(c("a","b"),c("x","y","z"))
+# print(a)              # doesn't print names, not fixed
+a[["a","x"]] <- 0
+stopifnot(a[["a","x"]] == 0)
+## First gave a spurious error, second caused a seg.fault
+
+
+## numericDeriv failed to duplicate variables in
+## the expression before modifying them.  PR#15849
+x <- 10; y <- 10
+d1 <- numericDeriv(quote(x+y),c("x","y"))
+x <- y <- 10
+d2 <- numericDeriv(quote(x+y),c("x","y"))
+stopifnot(identical(d1,d2))
+## The second gave the wrong answer
+
+
+## prettyNum(x, zero.print = .) failed when x had NAs
+pp <- sapply(list(TRUE, FALSE, ".", " "), function(.)
+	     prettyNum(c(0:1,NA), zero.print = . ))
+stopifnot(identical(pp[1,], c("0", " ", ".", " ")),
+	  pp[2:3,] == c("1","NA"))
+## all 4 prettyNum() would error out
+
+
 proc.time()

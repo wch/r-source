@@ -3,8 +3,6 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{connections}
 \alias{connections}
 \alias{connection}
@@ -385,6 +383,11 @@ isIncomplete(con)
   explicitly, e.g. by \code{writeChar("\ufeff", con, eos = NULL)} or
   \code{writeBin(as.raw(c(0xef, 0xbb, 0xff)), binary_con)}
 
+  Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
+  not portable, and not supported on all current \R platforms.
+  \code{"UTF-8"} is portable and \code{"macintosh"} is the official
+  (and most widely supported) name for \sQuote{Mac Roman}.
+
   Requesting a conversion that is not supported is an error, reported
   when the connection is opened.  Exactly what happens when the
   requested translation cannot be done for invalid input is in general
@@ -559,7 +562,7 @@ cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
 close(Tfile)
 
-\donttest{## fifo example -- may fail even with OS support for fifos
+\dontrun{## fifo example -- may hang even with OS support for fifos
 if(capabilities("fifo")) {
   zz <- fifo("foo-fifo", "w+")
   writeLines("abc", zz)
@@ -593,7 +596,8 @@ zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
 cat(format(round(stats::rnorm(48), 4)), fill = 70, file = zz)
 close(zz)
 file.show("outfile", delete.file = TRUE)
-
+}
+\dontrun{
 ## example for a machine running a finger daemon
 
 con <- socketConnection(port = 79, blocking = TRUE)

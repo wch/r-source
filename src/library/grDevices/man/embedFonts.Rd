@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/embedFonts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{embedFonts}
@@ -12,17 +12,18 @@
   embed all fonts in the file.
 }
 \usage{
-embedFonts(file, format, outfile = file, fontpaths = "",
-           options = "")
+embedFonts(file, format, outfile = file,
+           fontpaths = character(), options = character())
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}
-  \item{format}{either \code{"pswrite"} or \code{"pdfwrite"}.
+  \item{format}{the format for the new file (with fonts embedded) given as
+    the name of a ghostscript output device.
     If not specified, it is guessed from the suffix of \code{file}.}
   \item{outfile}{the name of the new file (with fonts embedded).}
   \item{fontpaths}{a character vector giving directories that
     Ghostscript will search for fonts.}
-  \item{options}{a character string containing further options to
+  \item{options}{a character vector containing further options to
     Ghostscript.}
 }
 \details{
@@ -45,6 +46,14 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   of the environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
 
+  The \code{format} is by default \code{"ps2write"}, when the original
+  file has a \code{.ps} or \code{.eps} suffix, or \code{"pdfwrite"} when
+  the original file has a \code{.pdf} suffix.  For earlier versions of
+  Ghostscript (prior to 9.10), \code{format = "pswrite"} or \code{format
+  = "epswrite"} can be used: as from 9.14 \code{format = "eps2write"} is
+  available.  If an invalid device is given, the error message will list
+  the available devices.
+  
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.
 

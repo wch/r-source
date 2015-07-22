@@ -135,7 +135,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     RSS <- numeric(ns+1)
     names(dfs) <- names(RSS) <- c("<none>", scope)
     add.rhs <- paste(scope, collapse = "+")
-    add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
+    add.rhs <- eval(parse(text = paste("~ . +", add.rhs), keep.source = FALSE))
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     if(is.null(x)) {
@@ -245,7 +245,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
     dfs <- dev <- score <- numeric(ns+1)
     names(dfs) <- names(dev) <- names(score) <- c("<none>", scope)
     add.rhs <- paste(scope, collapse = "+")
-    add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
+    add.rhs <- eval(parse(text = paste("~ . +", add.rhs), keep.source = FALSE))
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     y <- object$y

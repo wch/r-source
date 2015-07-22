@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/junctions.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@ Sys.junction <- function(from, to)
 {
     if (!(nf <- length(from))) return(logical())
     if (!(nt <- length(to)))   stop("no files to link to")
-    if (nt == 1 && isTRUE(file.info(to)$isdir))
-        to <- file.path(to, basename(from))
+    if (nt == 1 && dir.exists(to)) to <- file.path(to, basename(from))
     else if (nf > nt) stop("more 'from' files than 'to' files")
     else if (nf < nt) stop("fewer 'from' files than 'to' files")
 

@@ -7,9 +7,6 @@
 % copyright (C) 1995-8 B. D. Ripley
 % copyright (C) 2000-3   The R Core Team
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
-
 \name{ppr}
 \alias{ppr}
 \alias{ppr.default}

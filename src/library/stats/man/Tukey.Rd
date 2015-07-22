@@ -39,8 +39,8 @@ qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
   inverse, the quantile function.
   
   The length of the result is the maximum of the lengths of the
-  numerical parameters.  The other numerical parameters are recycled
-  to that length.  Only the first elements of the logical parameters
+  numerical arguments.  The other numerical arguments are recycled
+  to that length.  Only the first elements of the logical arguments
   are used.  
 }
 \note{

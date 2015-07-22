@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-27 09:00-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -323,6 +323,14 @@ msgstr "'pairs'에 숫자가 아닌 인자가 전달되었습니다"
 
 msgid "only one column in the argument to 'pairs'"
 msgstr ""
+
+#, fuzzy
+msgid "invalid argument 'horInd'"
+msgstr "첫번째 인자가 잘못되었습니다"
+
+#, fuzzy
+msgid "invalid argument 'verInd'"
+msgstr "첫번째 인자가 잘못되었습니다"
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'함수가 새 플랏을 작성했습니다"

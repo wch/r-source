@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/pairs.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #  Some parts  Copyright (C) 1999 Dr. Jens Oehlschlaegel-Akiyoshi
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
 
 pairs.default <-
 function (x, labels, panel = points, ...,
+          horInd = 1:nc, verInd = 1:nc,
           lower.panel = panel, upper.panel = panel,
           diag.panel = NULL, text.panel = textPanel,
           label.pos = 0.5 + has.diag/3, line.main = 3,
@@ -97,7 +98,11 @@ function (x, labels, panel = points, ...,
     }
 
     nc <- ncol(x)
-    if (nc < 2) stop("only one column in the argument to 'pairs'")
+    if (nc < 2L) stop("only one column in the argument to 'pairs'")
+    if(!all(horInd >= 1L && horInd <= nc))
+        stop("invalid argument 'horInd'")
+    if(!all(verInd >= 1L && verInd <= nc))
+        stop("invalid argument 'verInd'")
     if(doText) {
 	if (missing(labels)) {
 	    labels <- colnames(x)
@@ -109,15 +114,16 @@ function (x, labels, panel = points, ...,
     main <- if("main" %in% nmdots) dots$main
     if (is.null(oma))
 	oma <- c(4, 4, if(!is.null(main)) 6 else 4, 4)
-    opar <- par(mfrow = c(nc, nc), mar = rep.int(gap/2, 4), oma = oma)
+    opar <- par(mfrow = c(length(horInd), length(verInd)),
+                mar = rep.int(gap/2, 4), oma = oma)
     on.exit(par(opar))
     dev.hold(); on.exit(dev.flush(), add = TRUE)
 
     xl <- yl <- logical(nc)
     if (is.numeric(log)) xl[log] <- yl[log] <- TRUE
     else {xl[] <- grepl("x", log); yl[] <- grepl("y", log)}
-    for (i in if(row1attop) 1L:nc else nc:1L)
-        for (j in 1L:nc) {
+    for (i in if(row1attop) verInd else rev(verInd))
+        for (j in horInd) {
             l <- paste0(ifelse(xl[j], "x", ""), ifelse(yl[i], "y", ""))
             localPlot(x[, j], x[, i], xlab = "", ylab = "",
                       axes = FALSE, type = "n", ..., log = l)

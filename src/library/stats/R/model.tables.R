@@ -376,7 +376,8 @@ print.tables_aov <- function(x, digits = 4L, ...)
 		    c(list(format(c(rownames(table), rep.int("rep", dim.t[1L])))),
                       dimnames(table)[-1L])
 		ctable <- eval(parse(text = paste(
-				     "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))", paste(rep.int(", ", d - 2), collapse = " "), "]")))
+				     "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))", paste(rep.int(", ", d - 2), collapse = " "), "]"),
+                                     keep.source = FALSE))
 		names(dimnames(ctable)) <- names(dimnames(table))
 		class(ctable) <- "mtable"
 		print.mtable(ctable, digits = digits, ...)

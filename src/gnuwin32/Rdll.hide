@@ -125,9 +125,6 @@
  R_OpenSiteFile
  R_OpenSysInitFile
  R_OutputCon
- R_PPStack
- R_PPStackSize
- R_PPStackTop
  R_Parse1Buffer
  R_Parse1File
  R_ParseBuffer
@@ -229,7 +226,6 @@
  R_newsock
  R_newunz
  R_newurl
- R_num_math_threads
  R_nwarnings
  R_osDynSymbol
  R_possible_dispatch
@@ -237,8 +233,6 @@
  R_restore_globals
  R_run_onexits
  R_seemsOldStyleS4Object
- R_serialize
- R_serializeb
  R_strftime
  R_subset3_dflt
  R_syscall
@@ -319,6 +313,7 @@
  Rf_StringFromInteger
  Rf_StringFromLogical
  Rf_StringFromReal
+ Rf_TimeToSeed
  Rf_VectorIndex
  Rf_WarningMessage
  Rf_allocCharsxp
@@ -381,6 +376,7 @@
  Rf_regfree
  Rf_setIVector
  Rf_setRVector
+ Rf_sexptype2char
  Rf_ssort
  Rf_stirlerr
  Rf_strmat2intmat
@@ -422,7 +418,6 @@
  SET_PRIMOFFSET
  SET_UTF8
  Sys_TempDir
- TimeToSeed
  UNLOCK_BINDING
  UNIMPLEMENTED_TYPEt
  UTF8in
@@ -563,8 +558,8 @@
  do_asPOSIXct
  do_asPOSIXlt
  do_as_environment
+ do_asatomic
  do_ascall
- do_ascharacter
  do_asfunction
  do_assign
  do_asvector
@@ -633,6 +628,7 @@
  do_dimnamesgets
  do_dirchmod
  do_dircreate
+ do_direxists
  do_dirname
  do_disassemble
  do_dllversion
@@ -1316,6 +1312,7 @@
  pcre_malloc
  pcre_refcount
  pcre_stack_free
+ pcre_stack_guard
  pcre_stack_malloc
  pcre_study
  pcre_version
@@ -1437,14 +1434,28 @@
  trio_asprintfv
  trio_fprintf
  trio_fprintfv
+ trio_fscanf
+ trio_fscanfv
  trio_printf
  trio_printfv
+ trio_scanf
+ trio_scanfv
+ trio_snprintf
  trio_snprintfv
+ trio_sprintf
  trio_sprintfv
+ trio_sscanf
+ trio_sscanfv
+ trio_strerror
  trio_vaprintf
  trio_vasprintf
  trio_vfprintf
+ trio_vfscanf
  trio_vprintf
+ trio_vscanf
+ trio_vsnprintf
+ trio_vsprintf
+ trio_vsscanf
  tzname
  tzset
  unregisterBase

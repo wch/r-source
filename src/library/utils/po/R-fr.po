@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -67,6 +67,10 @@ msgstr ""
 "erreur d'interprétation ou option vide dans\n"
 "%s"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "Avis : option inconnue %s"
+
 msgid "Warning: unknown option %s"
 msgstr "Avis : option inconnue %s"
 
@@ -81,6 +85,12 @@ msgstr "le chemin vers %s contient des espaces,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "le fichier en sortie '%s' a disparu"
@@ -347,9 +357,6 @@ msgstr "fichier d'aide introuvable pour %s"
 
 msgid "%s has a help file but no examples"
 msgstr "%s a un fichier d'aide associé, mais pas d'exemples"
-
-msgid "test '%s' is not available"
-msgstr "le test '%s' n'est pas disponible"
 
 msgid "Line number missing"
 msgstr "Numéro de ligne manquant"
@@ -682,8 +689,12 @@ msgstr "impossible d'installer les packages"
 msgid "unable to create %s"
 msgstr "impossible de créer %s"
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "supposition de 'repos = NULL' à partir du nom de fichier"
+
+msgid "unable to create temporary directory %s"
+msgstr "impossible de créer le répertoire temporaire %s"
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -729,9 +740,6 @@ msgstr "system (cmd0) : %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "l'installation du package %s a eu un statut de sortie non nul"
-
-msgid "unable to create temporary directory %s"
-msgstr "impossible de créer le répertoire temporaire %s"
 
 msgid "foundpkgs: %s"
 msgstr "foundpkgs : %s"
@@ -1321,6 +1329,9 @@ msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
 
+#~ msgid "test '%s' is not available"
+#~ msgstr "le test '%s' n'est pas disponible"
+
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr ""
 #~ "installation incomplète, pas de fichier CITATION dans le package base"
@@ -1394,9 +1405,6 @@ msgstr[1] ""
 
 #~ msgid "not found"
 #~ msgstr "introuvable"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr "HTTPUserAgent"

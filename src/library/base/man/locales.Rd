@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -127,7 +127,7 @@ Sys.getlocale("LC_TIME")
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
 Sys.setlocale("LC_TIME", "de_DE.utf8")   # Modern Linux etc.
 Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # ditto
-Sys.setlocale("LC_TIME", "de_DE")  # Mac OS X, in UTF-8
+Sys.setlocale("LC_TIME", "de_DE")  # OS X, in UTF-8
 Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set

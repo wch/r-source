@@ -211,8 +211,6 @@ setRlibs <-
                 else out
             }
 
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     td0 <- Inf # updated below
     print_time <- function(t1, t2, Log)
     {
@@ -552,11 +550,11 @@ setRlibs <-
         ##                                 full.names = TRUE, recursive = TRUE)
         ##                 allfiles <- sub("^./", "", allfiles)
         if(length(allfiles)) {
-            mode <- file.info(allfiles)$mode
+            mode <- file.mode(allfiles)
             bad_files <- allfiles[(mode & "400") < as.octmode("400")]
         }
         if(length(alldirs <- unique(dirname(allfiles)))) {
-            mode <- file.info(alldirs)$mode
+            mode <- file.mode(alldirs)
             bad_files <- c(bad_files,
                            alldirs[(mode & "700") < as.octmode("700")])
         }
@@ -574,7 +572,7 @@ setRlibs <-
         bad_files <- character()
         for (f in c("configure", "cleanup")) {
             if (!file.exists(f)) next
-            mode <- file.info(f)$mode
+            mode <- file.mode(f)
             if ((mode & "500") < as.octmode("500"))
                 bad_files <- c(bad_files, f)
         }
@@ -802,7 +800,9 @@ setRlibs <-
             if(is.null(topfiles0)) {
                 topfiles <- dir()
                 ## Now check if any of these were created since we started
-                topfiles <- topfiles[file.info(topfiles)$ctime <= .unpack.time]
+                topfiles <-
+                    topfiles[file.info(topfiles, extra_cols = FALSE)$ctime
+                             <= .unpack.time]
             } else topfiles <- topfiles0
             known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
                        "LICENCE.note", "LICENSE.note",
@@ -1116,7 +1116,7 @@ setRlibs <-
                 c("Meta", "R", "data", "demo", "exec", "libs",
                   "man", "help", "html", "latex", "R-ex", "build")
             allfiles <- dir("inst", full.names = TRUE)
-            alldirs <- allfiles[file.info(allfiles)$isdir]
+            alldirs <- allfiles[dir.exists(allfiles)]
             suspect <- basename(alldirs) %in% R_system_subdirs
             if (any(suspect)) {
                 ## check they are non-empty
@@ -2059,7 +2059,7 @@ setRlibs <-
         files <- grep("^src/[Ww]in", files, invert = TRUE, value = TRUE)
         bad_files <- character()
         for(f in files) {
-            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
+            contents <- readChar(f, file.size(f), useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                 bad_files <- c(bad_files, f)
         }
@@ -2079,7 +2079,7 @@ setRlibs <-
                 full.names = TRUE, recursive = TRUE)
         for(f in all_files) {
             if (!file.exists(f)) next
-            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
+            contents <- readChar(f, file.size(f), useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                 bad_files <- c(bad_files, f)
         }
@@ -2430,7 +2430,9 @@ setRlibs <-
         if (!do_examples) resultLog(Log, "SKIPPED")
         else {
             pkgtopdir <- file.path(libdir, pkgname)
-            cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s)', pkgname, pkgtopdir, use_gct, do_timings)
+            cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s, commentDontrun = %s, commentDontest = %s)',
+                           pkgname, pkgtopdir, use_gct, do_timings,
+                           !run_dontrun, !run_donttest)
             Rout <- tempfile("Rout")
             ## any arch will do here
             status <- R_runR(cmd, R_opts2, "LC_ALL=C",
@@ -2694,7 +2696,7 @@ setRlibs <-
                 printLog(Log,
                          "  Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
             }
-            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
+            contents <- readChar(f, file.size(f), useBytes = TRUE)
             if(any(grepl("\r", contents, fixed = TRUE, useBytes = TRUE))) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -3042,7 +3044,8 @@ setRlibs <-
                 for(fp in  c("foreign/tests/datefactor.dta",
                              "msProcess/inst/data[12]/.*.txt",
                              "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid",
-                             "bayesLife/inst/ex-data/bayesLife.output/predictions/traj_country104.rda" # file 5.16
+                             "bayesLife/inst/ex-data/bayesLife.output/predictions/traj_country104.rda", # file 5.16
+                             "alm/inst/vign/cache/signposts1_c96f55a749822dd089b636087766def2.rdb" # Sparc Solaris, file 5.16
                              ) )
                     known <- known | grepl(fp, pexecs)
                 execs <- execs[!known]
@@ -3259,9 +3262,30 @@ setRlibs <-
                 warn_re <- c(warn_re,
                              ": warning: .* \\[-Wreturn-type-c-linkage\\]")
 
+                ## gcc and clang warnings about sequencing
+
+                ## gcc warnings
+                warn_re <- c(warn_re,
+                             ": warning: pointer of type .* used in arithmetic",
+                             ": warning: .* \\[-Wformat-contains-nul\\]",
+                             ": warning: .* \\[-Wformat-zero-length\\]",
+                             ": warning: .* \\[-Wpointer-to-int-cast\\]",
+                             ": warning: .* \\[-Wsequence-point\\]")
+
+                ## clang warnings
+                warn_re <- c(warn_re,
+                             ": warning: .* GNU extension",
+                             ": warning: .* \\[-Wdeprecated-register\\]",
+                             ": warning: .* \\[-Wformat-extra-args\\]", # also gcc
+                             ": warning: .* \\[-Wformat-security\\]",
+                             ": warning: .* \\[-Wheader-guard\\]",
+                             ": warning: .* \\[-Wpointer-arith\\]",
+                             ": warning: .* \\[-Wunsequenced\\]")
+
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
+
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
@@ -3695,11 +3719,9 @@ setRlibs <-
                     !(file.exists("Makefile.in") && spec_install)) {
                     ## Recognized extensions for sources or headers.
                     srcfiles <- dir(".", all.files = TRUE)
-                    fi <- file.info(srcfiles)
-                    srcfiles <- srcfiles[!fi$isdir]
+                    srcfiles <- srcfiles[!dir.exists(srcfiles)]
                     srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def|^install\\.libs\\.R$)",
-                                     srcfiles,
-                                     invert = TRUE, value = TRUE)
+                                     srcfiles, invert = TRUE, value = TRUE)
                     if (length(srcfiles)) {
                         if (!any) warningLog(Log)
                         any <- TRUE
@@ -3756,8 +3778,6 @@ setRlibs <-
         } else resultLog(Log, "OK")
     }
 
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
     env_path <- function(...) {
@@ -3796,6 +3816,8 @@ setRlibs <-
             "      --no-manual       do not produce the PDF manual",
             "      --no-vignettes    do not run R code in vignettes",
             "      --no-build-vignettes    do not build vignette outputs",
+            "      --run-dontrun     do run \\dontrun sections in the Rd files",
+            "      --run-donttest    do run \\donttest sections in the Rd files",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
@@ -3875,6 +3897,8 @@ setRlibs <-
     multiarch <- NA
     force_multiarch <- FALSE
     as_cran <- FALSE
+    run_dontrun <- FALSE
+    run_donttest <- FALSE
 
     libdir <- ""
     outdir <- ""
@@ -3929,6 +3953,10 @@ setRlibs <-
         } else if (a == "--no-latex") {
             stop("'--no-latex' is defunct: use '--no-manual' instead",
                  call. = FALSE, domain = NA)
+        } else if (a == "--run-dontrun") {
+            run_dontrun  <- TRUE
+        } else if (a == "--run-donttest") {
+            run_donttest  <- TRUE
         } else if (a == "--use-gct") {
             use_gct  <- TRUE
         } else if (a == "--use-valgrind") {
@@ -4299,7 +4327,7 @@ setRlibs <-
                 do_exit(1L)
             }
             desc <- desc[1L, ]
-            if (desc["Priority"] == "base") {
+            if (identical(desc["Priority"], c(Priority = "base"))) {	# Priority might be missing
                 messageLog(Log, "looks like ", sQuote(pkgname0),
                            " is a base package")
                 messageLog(Log, "skipping installation test")
@@ -4312,7 +4340,7 @@ setRlibs <-
         if (!is_base_pkg) {
             desc <- check_description()
             pkgname <- desc["Package"]
-            is_rec_pkg <- desc["Priority"] %in% "recommended"
+            is_rec_pkg <- identical(desc["Priority"], c(Priority = "recommended"))
 
             ## Check if we have any hope of installing
             OS_type <- desc["OS_type"]
@@ -4636,12 +4664,12 @@ function(x, ...)
 CRAN_check_results <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    ## This allows for partial local mirrors, or to
+    ## look at a more-freqently-updated mirror
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/check_results.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     results <- readRDS(rds)
     close(rds)
 
@@ -4651,12 +4679,10 @@ function()
 CRAN_check_details <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/check_details.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     details <- readRDS(rds)
     close(rds)
 
@@ -4666,12 +4692,10 @@ function()
 CRAN_memtest_notes <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/memtest_notes.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     mtnotes <- readRDS(rds)
     close(rds)
 

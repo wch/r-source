@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-07-06 r66082) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6403,15 +6403,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x407f2a0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2d58560> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4051460> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2a6dcd8> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4051460> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2a6dcd8> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -7427,4 +7427,95 @@ Signif. codes:
 > d <- data.frame(a=1)
 > d[integer(), "a"] <- 2
 > ## warned in 3.0.3.
+> 
+> 
+> ## PR#15781
+> options(foo = 1)
+> print(options(foo = NULL))
+$foo
+[1] 1
+
+> ## printed wrong value in 3.1.0
+> 
+> 
+> ## getParseData bug reported by Andrew Redd
+> raw <- "
++ function( a   # parameter 1
++          , b=2 # parameter 2
++          ){a+b}"
+> p <- parse(text = raw)
+> getParseData(p)
+   line1 col1 line2 col2 id parent          token
+31     2    1     4   15 31      0           expr
+3      2    1     2    8  3     31       FUNCTION
+4      2    9     2    9  4     31            '('
+5      2   11     2   11  5     31 SYMBOL_FORMALS
+6      2   15     2   27  6     31        COMMENT
+8      3   10     3   10  8     31            ','
+10     3   12     3   12 10     31 SYMBOL_FORMALS
+11     3   13     3   13 11     31     EQ_FORMALS
+12     3   14     3   14 12     13      NUM_CONST
+13     3   14     3   14 13     31           expr
+14     3   16     3   28 14     31        COMMENT
+16     4   10     4   10 16     31            ')'
+28     4   11     4   15 28     31           expr
+18     4   11     4   11 18     28            '{'
+25     4   12     4   14 25     28           expr
+19     4   12     4   12 19     21         SYMBOL
+21     4   12     4   12 21     25           expr
+20     4   13     4   13 20     25            '+'
+22     4   14     4   14 22     24         SYMBOL
+24     4   14     4   14 24     25           expr
+23     4   15     4   15 23     28            '}'
+   terminal          text
+31    FALSE              
+3      TRUE      function
+4      TRUE             (
+5      TRUE             a
+6      TRUE # parameter 1
+8      TRUE             ,
+10     TRUE             b
+11     TRUE             =
+12     TRUE             2
+13    FALSE              
+14     TRUE # parameter 2
+16     TRUE             )
+28    FALSE              
+18     TRUE             {
+25    FALSE              
+19     TRUE             a
+21    FALSE              
+20     TRUE             +
+22     TRUE             b
+24    FALSE              
+23     TRUE             }
+> ## Got some parents wrong
+> 
+> 
+> ## wish of PR#15819
+> set.seed(123); x <- runif(10); y <- rnorm(10)
+> op <- options(OutDec = ",")
+> fit <- lm(y ~ x)
+> summary(fit)
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1,62155 -0,33471  0,05238  0,55227  1,19742 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   0,8994     0,6282   1,432    0,190
+x            -1,3275     0,9780  -1,357    0,212
+
+Residual standard error: 0,8648 on 8 degrees of freedom
+Multiple R-squared:  0,1872,	Adjusted R-squared:  0,08557 
+F-statistic: 1,842 on 1 and 8 DF,  p-value: 0,2117
+
+> options(op)
+> ## those parts using formatC still used a decimal point.
+> 
+> 
 > 

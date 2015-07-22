@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -62,6 +62,10 @@ msgstr ""
 "解析出错或是\n"
 "%s里有空白的选项"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "警告：没有%s这样的选项"
+
 msgid "Warning: unknown option %s"
 msgstr "警告：没有%s这样的选项"
 
@@ -76,6 +80,12 @@ msgstr "指向%s的路径里不能有空格,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "这可能会对运行LaTeX里产生问题"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "输出文件'%s'不见了"
@@ -329,9 +339,6 @@ msgstr "找不到与%s有关的帮助文件"
 
 msgid "%s has a help file but no examples"
 msgstr "%s含帮助文件但没有示范文件"
-
-msgid "test '%s' is not available"
-msgstr "没有'%s'这种测试"
 
 msgid "Line number missing"
 msgstr "缺少行数"
@@ -642,8 +649,12 @@ msgstr "无法安装程序包"
 msgid "unable to create %s"
 msgstr "无法建立%s"
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "从文件名字推断'repos = NULL'"
+
+msgid "unable to create temporary directory %s"
+msgstr "无法建立临时目录%s"
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -684,9 +695,6 @@ msgstr "系统(cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "安装程序包%s时退出狀態的值不是0"
-
-msgid "unable to create temporary directory %s"
-msgstr "无法建立临时目录%s"
 
 msgid "foundpkgs: %s"
 msgstr "foundpkgs: %s"
@@ -1209,6 +1217,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
+#~ msgid "test '%s' is not available"
+#~ msgstr "没有'%s'这种测试"
+
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr "安装出错，基本程序包里没有CITATION这一文件。"
 
@@ -1284,9 +1295,6 @@ msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
 #~ msgid "not found"
 #~ msgstr "找不到"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr "HTTPUserAgent"

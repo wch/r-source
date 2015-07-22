@@ -44,11 +44,11 @@ rhyper(nn, m, n, k)
 
   The length of the result is determined by \code{n} for
   \code{rhyper}, and is the maximum of the lengths of the
-  numerical parameters for the other functions.  
+  numerical arguments for the other functions.  
   
-  The numerical parameters other than \code{n} are recycled to the
+  The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
-  parameters are used.
+  arguments are used.
 }
 \details{
   The hypergeometric distribution is used for sampling \emph{without}

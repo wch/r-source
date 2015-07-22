@@ -1,9 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
-#
-# NB: also copyright date in Usage.
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -103,9 +101,6 @@ get_exclude_patterns <- function()
     Ssystem <- function(command, args = character(), ...)
         system2(command, args, stdout = NULL, stderr = NULL, ...)
 
-
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
     env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
@@ -196,6 +191,7 @@ get_exclude_patterns <- function()
 	    printLog(Log, "ERROR: package installation failed\n")
 	    do_exit(1)
 	}
+	Sys.setenv("R_BUILD_TEMPLIB" = libdir)
 	TRUE
     }
 
@@ -219,13 +215,13 @@ get_exclude_patterns <- function()
 
         libdir <- tempfile("Rinst")
 
-        ensure_installed <- function() {
+        ensure_installed <- function()
 	    if (!pkgInstalled) {
 		messageLog(Log,
 			   "installing the package to build vignettes")
 		pkgInstalled <<- temp_install_pkg(pkgdir, libdir)
 	    }
-	}
+
         pkgInstalled <- build_Rd_db(pkgdir, libdir, desc)
 
         if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
@@ -237,8 +233,13 @@ get_exclude_patterns <- function()
         }
         if (vignettes &&
             parse_description_field(desc, "BuildVignettes", TRUE)) {
-	    if (nchar(parse_description_field(desc, "VignetteBuilder", "")))
-		ensure_installed()
+## this is not a logical field
+##	    if (nchar(parse_description_field(desc, "VignetteBuilder", "")))
+##		ensure_installed()
+            ## PR#15775: check VignetteBuilder packages are installed
+            ## This is a bit wasteful: we do not need them in this process
+            loadVignetteBuilder(pkgdir, TRUE)
+
             ## Look for vignette sources
             vigns <- pkgVignettes(dir = '.', check = TRUE)
             if (!is.null(vigns) && length(vigns$docs)) {
@@ -562,8 +563,7 @@ get_exclude_patterns <- function()
         ## dir(recursive = TRUE) did not include directories, so
         ## we needed to do this recursively
         files <- dir(d, all.files = TRUE, full.names = TRUE)
-        isdir <- file.info(files)$isdir
-        for (dd in files[isdir]) {
+        for (dd in files[dir.exists(files)]) {
             if (grepl("/\\.+$", dd)) next
             find_empty_dirs(dd)
         }
@@ -694,7 +694,7 @@ get_exclude_patterns <- function()
                     con <- gzfile(nm3[1L], "wb", compression = 9L); writeLines(x, con); close(con)
                     con <- bzfile(nm3[2L], "wb", compression = 9L); writeLines(x, con); close(con)
                     con <- xzfile(nm3[3L], "wb", compression = 9L); writeLines(x, con); close(con)
-                    sizes <- file.info(nm3)$size * c(0.9, 1, 1)
+                    sizes <- file.size(nm3) * c(0.9, 1, 1)
                     ind <- which.min(sizes)
                     if(ind > 1) OK <<- FALSE
                     unlink(c(nm, nm3[-ind]))
@@ -896,7 +896,7 @@ get_exclude_patterns <- function()
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
                                        ignore.case = TRUE)
 
-        isdir <- file_test("-d", allfiles)
+        isdir <- dir.exists(allfiles)
         ## old (pre-2.10.0) dirnames
         exclude <- exclude | (isdir & (bases %in%
                                        c("check", "chm", .vc_dir_names)))
@@ -957,7 +957,7 @@ get_exclude_patterns <- function()
                recursive = TRUE)
 
         ## work on 'data' directory if present
-        if(file_test("-d", file.path(pkgname, "data")) ||
+        if(dir.exists(file.path(pkgname, "data")) ||
            file_test("-f", file.path(pkgname, "R", "sysdata.rda"))) {
             messageLog(Log, "looking to see if a 'data/datalist' file should be added")
             ## in some cases data() needs the package installed as

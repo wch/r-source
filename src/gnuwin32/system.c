@@ -885,7 +885,7 @@ int cmdlineoptions(int ac, char **av)
 	ms.dwLength = sizeof(MEMORYSTATUSEX);
 	GlobalMemoryStatusEx(&ms); /* Win2k or later */
 	Virtual = ms.ullTotalVirtual; /* uint64 = DWORDLONG */
-#ifdef WIN64
+#ifdef _WIN64
 	R_max_memory = ms.ullTotalPhys;
 #else
 	R_max_memory = min(Virtual - 512*Mega, ms.ullTotalPhys);

@@ -50,7 +50,6 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
 
     unpackPkg <- function(pkg, pkgname, lib, lock = FALSE)
     {
-        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
@@ -143,8 +142,10 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         ## there is no guarantee we have got the package name right:
         ## foo.zip might contain package bar or Foo or FOO or ....
         ## but we can't tell without trying to unpack it.
-        for(i in seq_along(pkgs))
+        for(i in seq_along(pkgs)) {
+            if(is.na(pkgs[i])) next
             unpackPkg(pkgs[i], pkgnames[i], lib, lock = lock)
+        }
         return(invisible())
     }
     tmpd <- destdir

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-17 11:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -2085,6 +2085,9 @@ msgstr "tentative de lisser des valeurs NA"
 
 msgid "invalid 'endrule' argument"
 msgstr "argument 'endrule' incorrect"
+
+msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+msgstr ""
 
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' incorrect"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -75,6 +75,9 @@ msgstr "nie określono odpowiedniej macierzy 'z'"
 # stop("dimensions of 'x', 'y' and 'z' do not match")
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "wymiary 'x', 'y' oraz 'z' nie zgadzają się"
+
+msgid "finite coordinates are needed"
+msgstr ""
 
 # grDevices/R/colorRamp.R: 35
 # stop("'bias' must be positive")
@@ -444,9 +447,13 @@ msgstr "niezgodność strony kodowej czcionki '%s'/'%s'"
 msgid "'file' must be a non-empty character string"
 msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
 
+msgid "GhostScript was not found"
+msgstr ""
+
 # grDevices/R/postscript.R: 968
 # stop("Invalid output format")
-msgid "Invalid output format"
+#, fuzzy
+msgid "invalid output format"
 msgstr "niepoprawny format wyjściowy"
 
 # grDevices/R/postscript.R: 994
@@ -583,13 +590,6 @@ msgstr "długości zmiennych 'x', 'y' oraz 'z' różnią się"
 msgid "'file' is missing with no default"
 msgstr "brakuje argumentu 'file', a brak zdefiniowanej wartości domyślnej"
 
-# grDevices/R/unix/dev2bitmap.R: 35
-# stop("sorry, 'gs' cannot be found")
-# grDevices/R/unix/dev2bitmap.R: 96
-# stop("sorry, 'gs' cannot be found")
-msgid "sorry, 'gs' cannot be found"
-msgstr "przykro mi, ale polecenie 'gs' nie może zostać znalezione"
-
 # grDevices/R/unix/dev2bitmap.R: 41
 # warning("unrecognized format of gs -help")
 # grDevices/R/unix/dev2bitmap.R: 102
@@ -644,7 +644,10 @@ msgstr "urządzenie '%s' nie jest dostępne"
 #                  gettextf("Available devices are %s",
 #                           paste(gsdevs, collapse = "\n")),
 #                  domain = NA)
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "Dostępne urządzenia to %s"
 
 # grDevices/R/unix/png.R: 23
@@ -849,3 +852,10 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+
+# grDevices/R/unix/dev2bitmap.R: 35
+# stop("sorry, 'gs' cannot be found")
+# grDevices/R/unix/dev2bitmap.R: 96
+# stop("sorry, 'gs' cannot be found")
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "przykro mi, ale polecenie 'gs' nie może zostać znalezione"

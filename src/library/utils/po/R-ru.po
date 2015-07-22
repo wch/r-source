@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -70,6 +70,10 @@ msgstr ""
 "ошибка разбора или пустая опция в\n"
 "%s"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "Предупреждение: неизвестная опция %s"
+
 msgid "Warning: unknown option %s"
 msgstr "Предупреждение: неизвестная опция %s"
 
@@ -84,6 +88,12 @@ msgstr "путь у %s содержит пробелы,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "файл вывода '%s' пропал :("
@@ -341,9 +351,6 @@ msgstr "в %s не найдено помощи"
 
 msgid "%s has a help file but no examples"
 msgstr "у %s есть файл помощи, но нет примеров"
-
-msgid "test '%s' is not available"
-msgstr "тест '%s' недоступен"
 
 msgid "Line number missing"
 msgstr "Пропущен номер строки"
@@ -669,8 +676,12 @@ msgstr "не могу установить пакеты"
 msgid "unable to create %s"
 msgstr "не удалось создать %s"
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "выставляю 'repos = NULL' на основе имени файла"
+
+msgid "unable to create temporary directory %s"
+msgstr "не могу создать временную директорию %s"
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -713,9 +724,6 @@ msgstr "system (cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "установка пакета %s имеет ненулевой статус выхода"
-
-msgid "unable to create temporary directory %s"
-msgstr "не могу создать временную директорию %s"
 
 msgid "foundpkgs: %s"
 msgstr "foundpkgs: %s"
@@ -1318,6 +1326,9 @@ msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
+#~ msgid "test '%s' is not available"
+#~ msgstr "тест '%s' недоступен"
+
 #~ msgid "Created PDF document %s"
 #~ msgstr "Созданный документ PDF %s"
 
@@ -1390,9 +1401,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "not found"
 #~ msgstr "не найден"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr "HTTPUserAgent"

@@ -54,7 +54,7 @@ load <- function (file, envir = parent.frame(), verbose = FALSE)
 save <- function(..., list = character(),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
-                 compress = !ascii, compression_level,
+                 compress = isTRUE(!ascii), compression_level,
                  eval.promises = TRUE, precheck = TRUE)
 {
     opts <- getOption("save.defaults")

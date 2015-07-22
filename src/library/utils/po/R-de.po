@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -64,6 +64,10 @@ msgstr ""
 "Parsing-Fehler oder leere Option in\n"
 "%s"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "Warnung: unbekannte Option %s"
+
 msgid "Warning: unknown option %s"
 msgstr "Warnung: unbekannte Option %s"
 
@@ -78,6 +82,12 @@ msgstr "Pfad zu %s enthält Leerstellen."
 
 msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "Die Ausgabedatei '%s' ist verschwunden"
@@ -336,9 +346,6 @@ msgstr "kein Hilfe für %s gefunden"
 
 msgid "%s has a help file but no examples"
 msgstr "%s hat eine Hilfe, aber keine Beispiele"
-
-msgid "test '%s' is not available"
-msgstr "test '%s' ist nicht verfügbar"
 
 msgid "Line number missing"
 msgstr "Zeilennummer fehlt"
@@ -665,8 +672,12 @@ msgstr "kann keine Pakete installieren"
 msgid "unable to create %s"
 msgstr "kann %s nicht erzeugen"
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
+
+msgid "unable to create temporary directory %s"
+msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -710,9 +721,6 @@ msgstr "System (cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "Installation des Pakets %s hatte Exit-Status ungleich 0"
-
-msgid "unable to create temporary directory %s"
-msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "foundpkgs: %s"
 msgstr "foundpkgs: %s"
@@ -1283,6 +1291,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
 
+#~ msgid "test '%s' is not available"
+#~ msgstr "test '%s' ist nicht verfügbar"
+
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr "defekte installation, keine Datei CITATION im Base-Paket"
 
@@ -1355,9 +1366,6 @@ msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
 
 #~ msgid "not found"
 #~ msgstr " nicht gefunden"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr "HTTPUserAgent"

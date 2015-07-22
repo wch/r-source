@@ -13,14 +13,20 @@ INSTFILES = \
 
 ECHO = echo
 
-R_EXE = $(R_HOME)/$(BINDIR)/Rterm --slave --vanilla LANGUAGE=en LC_TIME=C
+## R_LIBS_SITE has to be non-empty or it is ignored
+## Note that this does not set LC_COLLATE.  The collation of examples
+## is done in C order in massageExamples(), but we want to test the
+## orderings users use.
+R_EXE = $(R_HOME)/$(BINDIR)/Rterm --slave --vanilla \
+  LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE=nothing
 
 all: test-Examples-Base
 
 test-Examples: test-Examples-Base
 
+TEST_DONTTEST = FALSE
 test-Examples-Base:
-	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples', commentDonttest=!$(TEST_DONTTEST))" | $(R_EXE)
 
 
 ## nlme suggests 'Hmisc'

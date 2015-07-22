@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -581,6 +581,30 @@ msgstr "argument nieliczbowy przekazywany do 'pairs'"
 # stop("only one column in the argument to 'pairs'")
 msgid "only one column in the argument to 'pairs'"
 msgstr "tylko jedna kolumna w argumencie przekazywanym do 'pairs'"
+
+# graphics/src/plot.c: 1576
+# error(_("invalid first argument"))
+# graphics/R/stripchart.R: 36
+# stop("invalid first argument")
+# graphics/R/boxplot.R: 35
+# stop("invalid first argument")
+# graphics/R/boxplot.R: 186
+# stop("invalid first argument")
+#, fuzzy
+msgid "invalid argument 'horInd'"
+msgstr "niepoprawny pierwszy argument"
+
+# graphics/src/plot.c: 1576
+# error(_("invalid first argument"))
+# graphics/R/stripchart.R: 36
+# stop("invalid first argument")
+# graphics/R/boxplot.R: 35
+# stop("invalid first argument")
+# graphics/R/boxplot.R: 186
+# stop("invalid first argument")
+#, fuzzy
+msgid "invalid argument 'verInd'"
+msgstr "niepoprawny pierwszy argument"
 
 # graphics/R/pairs.R: 153
 # stop("the 'panel' function made a new plot")

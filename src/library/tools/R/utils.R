@@ -58,6 +58,8 @@ function(x, compression = FALSE)
 
 ### ** file_test
 
+## exported/documented copy is in utils.
+
 file_test <-
 function(op, x, y)
 {
@@ -67,13 +69,13 @@ function(op, x, y)
     ## directory (the GNU variant tests for being a regular file).
     ## Note: vectorized in x and y.
     switch(op,
-           "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-           "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
-           "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
-                    & !is.na(mt.y <- file.info(y)$mtime)
+           "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
+           "-d" = dir.exists(x),
+           "-nt" = (!is.na(mt.x <- file.mtime(x))
+                    & !is.na(mt.y <- file.mtime(y))
                     & (mt.x > mt.y)),
-           "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
-                    & !is.na(mt.y <- file.info(y)$mtime)
+           "-ot" = (!is.na(mt.x <- file.mtime(x))
+                    & !is.na(mt.y <- file.mtime(y))
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
            stop(gettextf("test '%s' is not available", op),
@@ -129,7 +131,7 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
     if(type %in% c("code", "docs")) {
         for(os in OS_subdirs) {
             os_dir <- file.path(dir, os)
-            if(file_test("-d", os_dir)) {
+            if(dir.exists(os_dir)) {
                 os_files <- list_files_with_exts(os_dir, exts,
                                                  all.files = all.files,
                                                  full.names = FALSE)
@@ -793,7 +795,8 @@ function(dir, installed = FALSE)
 
 .get_requires_from_package_db <-
 function(db,
-         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"))
+         category = c("Depends", "Imports", "LinkingTo", "VignetteBuilder",
+         "Suggests", "Enhances"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -812,7 +815,8 @@ function(db,
 
 .get_requires_with_version_from_package_db <-
 function(db,
-         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"))
+         category = c("Depends", "Imports", "LinkingTo", "VignetteBuilder",
+         "Suggests", "Enhances"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -1040,6 +1044,7 @@ function()
                "Revision",
                "RcmdrModels",
                "RcppModules",
+               "Roxygen",
                "biocViews")
              ))
 }
@@ -1375,7 +1380,7 @@ function(packages = NULL, FUN, ...)
 .parse_code_file <-
 function(file, encoding = NA)
 {
-    if(!file.info(file)$size) return()
+    if(!file.size(file)) return()
     suppressWarnings({
         if(!is.na(encoding) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {

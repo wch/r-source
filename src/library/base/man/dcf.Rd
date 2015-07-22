@@ -1,6 +1,6 @@
 % File src/library/base/man/dcf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dcf}
@@ -102,18 +102,28 @@ write.dcf(x, file = "", append = FALSE,
 
 \references{
   \url{http://www.debian.org/doc/debian-policy/ch-controlfields.html}.
+  
   Note that \R does not require encoding in UTF-8, which is a recent
-  Debian requirement.  Nor is it using the Debian-specific sub-format
+  Debian requirement.  Nor does it use the Debian-specific sub-format
   which allows comment lines starting with \samp{#}.
 }
 \seealso{
   \code{\link{write.table}}.
+
+  \code{\link{available.packages}}, which uses \code{read.dcf} to read
+  the indices of package repositories.
 }
-\examples{\dontrun{
-## Create a reduced version of the 'CONTENTS' file in package 'splines'
-x <- read.dcf(file = system.file("CONTENTS", package = "splines"),
-              fields = c("Entry", "Description"))
+\examples{\donttest{
+## Create a reduced version of the DESCRIPTION file in package 'splines'
+x <- read.dcf(file = system.file("DESCRIPTION", package = "splines"),
+              fields = c("Package", "Version", "Title"))
 write.dcf(x)
+
+## An online DCF file with multiple records
+con <- url("http://cran.r-project.org/src/contrib/PACKAGES")
+y <- read.dcf(con, all = TRUE)
+close(con)
+utils::str(y)
 }}
 \keyword{print}
 \keyword{file}

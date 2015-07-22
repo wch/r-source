@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-06-03 11:50+0100\n"
 "PO-Revision-Date: 2013-03-18 22:07+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,75 +18,75 @@ msgstr ""
 "Plural-Forms: nplurals=2;plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.5\n"
 
-#: fork.c:206 fork.c:209
+#: fork.c:254 fork.c:257
 msgid "unable to create a pipe"
 msgstr "impossible de créer un canal (pipe)"
 
-#: fork.c:226
+#: fork.c:274
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "impossible de créer une nouvelle branche, raison possible : %s"
 
-#: fork.c:272
+#: fork.c:320
 msgid "memory allocation error"
 msgstr "erreur d'allocation mémoire"
 
-#: fork.c:325
+#: fork.c:373
 msgid "only children can send data to the master process"
 msgstr ""
 "seuls des processus enfants peuvent envoyer des données à un processus maître"
 
-#: fork.c:327
+#: fork.c:375
 msgid "there is no pipe to the master process"
 msgstr "aucun canal vers le processus maître"
 
-#: fork.c:329
+#: fork.c:377
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "le contenu à envoyer doit être RAW, utilisez serialize() si nécessaire"
 
-#: fork.c:338 fork.c:345 fork.c:667
+#: fork.c:386 fork.c:393 fork.c:715
 msgid "write error, closing pipe to the master"
 msgstr "erreur d'écriture, fermeture du canal vers le processus maître"
 
-#: fork.c:358
+#: fork.c:406
 msgid "only the master process can send data to a child process"
 msgstr ""
 "seul le processus maître peut envoyer des données vers un processus fils"
 
-#: fork.c:365
+#: fork.c:413
 #, c-format
 msgid "child %d does not exist"
 msgstr "le processus fils %d n'existe pas"
 
-#: fork.c:371
+#: fork.c:419
 msgid "write error"
 msgstr "erreur d'écriture"
 
-#: fork.c:439 fork.c:561
+#: fork.c:487 fork.c:609
 #, c-format
 msgid "error '%s' in select"
 msgstr "erreur '%s' lors de la sélection"
 
-#: fork.c:649
+#: fork.c:697
 msgid "'mckill' failed"
 msgstr "'mckill' a échoué"
 
-#: fork.c:659
+#: fork.c:707
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' peut seulement être utilisé avec un processus fils"
 
-#: fork.c:680
+#: fork.c:728
 msgid "'mcexit' failed"
 msgstr "'mcexit' a échoué"
 
-#: fork.c:710 fork.c:719
+#: fork.c:758 fork.c:767
 msgid "invalid CPU affinity specification"
 msgstr "spécification d'affinité CPU incorrecte"
 
-#: fork.c:730
+#: fork.c:778
 msgid "requested CPU set is too large for this system"
 msgstr "le set de CPU demandé est trop large pour ce système"
 
-#: fork.c:753
+#: fork.c:801
 msgid "retrieving CPU affinity set failed"
 msgstr "la récupération de l'affinité CPU a échoué"

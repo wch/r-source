@@ -339,6 +339,8 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     PROTECT(tval); /* against Rconn_printf */
+    if(!inherits(CADR(args), "connection"))
+	error(_("'file' must be a character string or connection"));
     ifile = asInteger(CADR(args));
 
     wasopen = 1;
@@ -387,6 +389,8 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     names = CAR(args);
     file = CADR(args);
+    if(!inherits(file, "connection"))
+	error(_("'file' must be a character string or connection"));
     if(!isString(names))
 	error( _("character arguments expected"));
     nobjs = length(names);
@@ -397,7 +401,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "envir");
     opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */
-    if(opts == NA_INTEGER || opts < 0 || opts > 256)
+    if(opts == NA_INTEGER || opts < 0 || opts > 1024)
 	errorcall(call, _("'opts' should be small non-negative integer"));
     evaluate = asLogical(CAD4R(args));
     if (!evaluate) opts |= DELAYPROMISES;
@@ -1265,8 +1269,8 @@ static const char *EncodeNonFiniteComplexElement(Rcomplex x, char* buff)
     char Re[NB];
     char Im[NB];
 
-    strcpy(Re, EncodeReal(x.r, w, d, e, '.'));
-    strcpy(Im, EncodeReal(x.i, wi, di, ei, '.'));
+    strcpy(Re, EncodeReal0(x.r, w, d, e, "."));
+    strcpy(Im, EncodeReal0(x.i, wi, di, ei, "."));
     
     snprintf(buff, NB, "complex(real=%s, imaginary=%s)", Re, Im);
     buff[NB-1] = '\0';
@@ -1277,7 +1281,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 {
     int tlen, i, quote;
     const char *strp;
-    char *buff = 0;
+    char *buff = 0, hex[64]; // 64 is more than enough
     Rboolean surround = FALSE, allNA, addL = TRUE;
 
     tlen = length(vector);
@@ -1416,6 +1420,36 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		vmaxset(vmax);
 	    } else if (TYPEOF(vector) == RAWSXP) {
 		strp = EncodeRaw(RAW(vector)[i], "0x");
+	    } else if (TYPEOF(vector) == REALSXP && (d->opts & HEXNUMERIC)) {
+		double x = REAL(vector)[i];
+		// Windows warns here, but incorrectly as this is C99
+		// and the snprintf used from trio is compliant.
+		if (R_FINITE(x)) {
+		    snprintf(hex, 32, "%a", x);
+		    strp = hex;
+		} else
+		    strp = EncodeElement(vector, i, quote, '.');
+	    } else if (TYPEOF(vector) == REALSXP && (d->opts & DIGITS16)) {
+		double x = REAL(vector)[i];
+		if (R_FINITE(x)) {
+		    snprintf(hex, 32, "%.17g", x);
+		    strp = hex;
+		} else
+		    strp = EncodeElement(vector, i, quote, '.');
+	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & HEXNUMERIC)) {
+		Rcomplex z =  COMPLEX(vector)[i];
+		if (R_FINITE(z.r) && R_FINITE(z.i)) {
+		    snprintf(hex, 64, "%a + %ai", z.r, z.i);
+		    strp = hex;
+		} else
+		    strp = EncodeElement(vector, i, quote, '.');
+	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & DIGITS16)) {
+		Rcomplex z =  COMPLEX(vector)[i];
+		if (R_FINITE(z.r) && R_FINITE(z.i)) {
+		    snprintf(hex, 64, "%.17g + %17gi", z.r, z.i);
+		    strp = hex;
+		} else
+		    strp = EncodeElement(vector, i, quote, '.');
 	    } else
 		strp = EncodeElement(vector, i, quote, '.');
 	    print2buff(strp, d);

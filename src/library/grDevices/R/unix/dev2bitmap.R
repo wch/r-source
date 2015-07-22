@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/dev2bitmap.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
+dev2bitmap <- function(file, type = "png16m", height = 7, width = 7, res = 72,
                        units = "in", pointsize, ...,
                        method = c("postscript", "pdf"), taa = NA, gaa = NA)
 {
@@ -27,27 +27,9 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
     width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
-    ## consider using tools::find_gs_cmd() here
-    gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || !nzchar(gsexe)) {
-        gsexe <- "gs"
-        rc <- system(paste(shQuote(gsexe), "-help > /dev/null"))
-        if(rc != 0) stop("sorry, 'gs' cannot be found")
-    }
-    gshelp <- system(paste(gsexe, "-help"), intern = TRUE)
-    st <- grep("^Available", gshelp)
-    en <- grep("^Search", gshelp)
-    if(!length(st) || !length(en))
-        warning("unrecognized format of gs -help")
-    else {
-        gsdevs <- gshelp[(st+1):(en-1)]
-        devs <- c(strsplit(gsdevs, " "), recursive = TRUE)
-        if(match(type, devs, 0) == 0)
-            stop(gettextf("device '%s' is not available\n", type),
-                 gettextf("Available devices are %s",
-                          paste(gsdevs, collapse = "\n")),
-                 domain = NA)
-    }
+    gsexe <- tools::find_gs_cmd()
+    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    check_gs_type(gsexe, type)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     tmp <- tempfile("Rbit")
     on.exit(unlink(tmp))
@@ -88,27 +70,9 @@ bitmap <- function(file, type = "png16m", height = 7, width = 7, res = 72,
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
     width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
-    ## consider using tools::find_gs_cmd() here
-    gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || !nzchar(gsexe)) {
-        gsexe <- "gs"
-        rc <- system(paste(gsexe, "-help > /dev/null"))
-        if(rc != 0) stop("sorry, 'gs' cannot be found")
-    }
-    gshelp <- system(paste(gsexe, "-help"), intern = TRUE)
-    st <- grep("^Available", gshelp)
-    en <- grep("^Search", gshelp)
-    if(!length(st) || !length(en))
-        warning("unrecognized format of gs -help")
-    else {
-        gsdevs <- gshelp[(st+1):(en-1)]
-        devs <- c(strsplit(gsdevs, " "), recursive = TRUE)
-        if(match(type, devs, 0) == 0)
-            stop(gettextf("device '%s' is not available\n", type),
-                 gettextf("Available devices are %s",
-                          paste(gsdevs, collapse = "\n")),
-                 domain = NA)
-    }
+    gsexe <- tools::find_gs_cmd()
+    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    check_gs_type(gsexe, type)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     extra <- ""
     if (!is.na(taa)) extra <- paste0(" -dTextAlphaBits=", taa)
@@ -123,4 +87,27 @@ bitmap <- function(file, type = "png16m", height = 7, width = 7, res = 72,
     postscript(file = cmd, width = width, height = height,
                pointsize = pointsize, paper = "special", horizontal = FALSE, ...)
     invisible()
+}
+
+
+## unexported
+check_gs_type <- function(gsexe, type)
+{
+    gshelp <- system(paste(gsexe, "-help"), intern = TRUE)
+    st <- grep("^Available", gshelp)
+    en <- grep("^Search", gshelp)
+    if(!length(st) || !length(en))
+        warning("unrecognized format of gs -help")
+    else {
+        gsdevs <- gshelp[(st+1L):(en-1L)]
+        devs <- c(strsplit(gsdevs, " "), recursive = TRUE)
+        if(match(type, devs, 0L) == 0L) {
+            op <- options(warning.length = 8000L)
+            on.exit(options(op))
+            stop(gettextf("device '%s' is not available\n", type),
+                 gettextf("Available devices are:\n%s",
+                          paste(gsdevs, collapse = "\n")),
+                 domain = NA)
+        }
+    }
 }

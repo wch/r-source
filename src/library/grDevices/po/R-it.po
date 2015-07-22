@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -34,6 +34,9 @@ msgid "no proper 'z' matrix specified"
 msgstr "nessuna matrice 'z' opportuna specificata"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
+
+msgid "finite coordinates are needed"
 msgstr ""
 
 msgid "'bias' must be positive"
@@ -235,7 +238,10 @@ msgstr ""
 msgid "'file' must be a non-empty character string"
 msgstr "'file' deve essere una stringa carattere non vuota"
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+msgid "invalid output format"
 msgstr ""
 
 msgid "status %d in running command '%s'"
@@ -321,16 +327,16 @@ msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
 msgid "'file' is missing with no default"
 msgstr "'file' manca senza valore di default"
 
-msgid "sorry, 'gs' cannot be found"
-msgstr "spiacente, ma non trovo 'gs'"
-
 msgid "unrecognized format of gs -help"
 msgstr ""
 
 msgid "device '%s' is not available"
 msgstr "device '%s' non disponibile"
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "I dispositivi disponibili sono %s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -432,6 +438,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "spiacente, ma non trovo 'gs'"
 
 #, fuzzy
 #~ msgid "loading snapshot from pre-3.0.0 R version"

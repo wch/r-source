@@ -1,6 +1,3 @@
-\newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{CHANGES}
 \title{Windows-specific changes to R}
 \encoding{UTF-8}

@@ -3,8 +3,6 @@
 % Copyright 2013 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{vignetteEngine}
 \alias{vignetteEngine}
 \title{Set or Get a Vignette Processing Engine}

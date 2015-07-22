@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2013 R Core Team
+% Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -67,14 +67,14 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   Modern GNU flavours of \command{tar} will support compressed archives,
   and since 1.15 are able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
-  version 1.22 for \command{xz} compression using LZMA2.  Mac OS 10.6
-  and later (and FreeBSD and some other OSes) have a \command{tar} also
-  known as \command{bsdtar} from the \samp{libarchive} project used by
-  Mac OS 10.6 and later which can also detect \command{gzip} and
-  \command{bzip2} compression automatically.  For other flavours of
-  \command{tar}, environment variable \env{R_GZIPCMD} gives the command
-  to decompress \command{gzip} and \command{compress} files, and
-  \command{R_BZIPCMD} for \command{bzip2} files.
+  version 1.22 for \command{xz} compression using LZMA2.  OS X 10.6 and
+  later (and FreeBSD and some other OSes) have a \command{tar} (also
+  known as \command{bsdtar}) from the \samp{libarchive} project which
+  can also detect \command{gzip} and \command{bzip2} compression
+  automatically.  For other flavours of \command{tar}, environment
+  variable \env{R_GZIPCMD} gives the command to decompress
+  \command{gzip} and \command{compress} files, and \command{R_BZIPCMD}
+  for \command{bzip2} files.
 
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.

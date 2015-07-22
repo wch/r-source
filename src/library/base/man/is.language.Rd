@@ -1,10 +1,12 @@
 % File src/library/base/man/is.language.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.language}
 \alias{is.language}
+\alias{language object}
+\alias{language objects}
 \title{Is an Object a Language Object?}
 \usage{
 is.language(x)

@@ -120,7 +120,7 @@ Sys.glob(paths, dirmark = FALSE)
   \link{Quotes} for handling backslashes in character strings.
 }
 \examples{
-\dontrun{
+\donttest{
 Sys.glob(file.path(R.home(), "library", "*", "R", "*.rdx"))
 }}
 \keyword{utilities}

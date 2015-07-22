@@ -3,7 +3,7 @@
 set.seed(1)
 if(.Platform$OS.type == "windows") options(pager = "console")
 
-pdf("reg-examples1.pdf", encoding = "ISOLatin1.enc")
+pdf("reg-examples-1.pdf", encoding = "ISOLatin1.enc")
 
 
 ## base
@@ -64,5 +64,23 @@ example(Rdutils)
 example(fileutils)
 ## results are location- and OS-specific
 example(parseLatex) # charset-specific
+example(loadRdMacros) # collation-specific
+
+## part of example(buildVignettes) at one time
+gVigns <- pkgVignettes("grid")
+str(gVigns) # contains paths
+
+vind <- system.file(package = "grid", "doc", "index.html")
+if(nzchar(vind)) { # so vignettes have been installed
+    `%=f=%` <- function(a, b) normalizePath(a) == normalizePath(b)
+    with(gVigns,
+         stopifnot(engines == "utils::Sweave",
+                   pkgdir %=f=% system.file(package="grid"),
+                   dir    %=f=% system.file(package = "grid", "doc"),
+                   (n. <- length(docs)) >= 12, # have 13
+                   n. == length(names), n. == length(engines),
+                   length(msg) == 0) ) # as it is a 'base' package
+    stopifnot("grid" %in% gVigns$names, inherits(gVigns, "pkgVignettes"))
+}
 
 proc.time()

@@ -54,8 +54,9 @@ as.stepfun(x, \dots)
   The value of the constant \eqn{c_i}{c[i]} above depends on the
   \sQuote{continuity} parameter \code{f}.
   For the default, \code{right = FALSE, f = 0},
-  \code{fn} is a \emph{cadlag} function, i.e., continuous at right,
-  limit (\sQuote{the point}) at left.
+  \code{fn} is a \emph{cadlag} function, i.e., continuous from the right,
+  limits from the left, so that the function is piecewise constant on
+  intervals that include their \emph{left} endpoint.
   In general, \eqn{c_i}{c[i]} is interpolated in between the
   neighbouring \eqn{y} values,
   \eqn{c_i= (1-f) y_i + f\cdot y_{i+1}}{c[i] = (1-f)*y[i] + f*y[i+1]}.

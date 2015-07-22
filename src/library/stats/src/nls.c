@@ -5,7 +5,7 @@
  *  Copyright 1999-2001 Douglas M. Bates
  *                      Saikat DebRoy
  *
- *  Copyright 2005--2013  The R Core Team
+ *  Copyright 2005--2014  The R Core Team
  *  Copyright 2006	  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -318,6 +318,9 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 	    error(_("variable '%s' is integer, not numeric"), name);
 	if(!isReal(temp))
 	    error(_("variable '%s' is not numeric"), name);
+	if (MAYBE_SHARED(temp)) /* We'll be modifying the variable, so need to make sure it's unique PR#15849 */
+	    defineVar(install(name), temp = duplicate(temp), rho);
+	MARK_NOT_MUTABLE(temp);
 	SET_VECTOR_ELT(pars, i, temp);
 	lengthTheta += LENGTH(VECTOR_ELT(pars, i));
     }

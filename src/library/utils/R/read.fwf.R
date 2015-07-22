@@ -1,7 +1,7 @@
 #  File src/library/utils/R/read.fwf.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
 
 read.fwf <-
 function(file, widths, header = FALSE, sep = "\t",
-         skip = 0, row.names, col.names, n = -1, buffersize = 2000, ...)
+         skip = 0L, row.names, col.names, n = -1L, buffersize = 2000,
+         fileEncoding = "", ...)
 {
     doone <- function(x) {
         x <- substring(x, first, last)
@@ -40,20 +41,21 @@ function(file, widths, header = FALSE, sep = "\t",
     FILENAME <- tempfile("Rfwf.")
     on.exit(unlink(FILENAME))
     FILE <- file(FILENAME,"a")
-    on.exit(close(FILE),add=TRUE)
+    on.exit(close(FILE), add = TRUE)
 
     if (is.character(file)) {
-        file <- file(file, "rt")
-        on.exit(close(file), add=TRUE)
+        file <- if(nzchar(fileEncoding))
+            file(file, "rt", encoding = fileEncoding) else file(file, "rt")
+        on.exit(close(file), add = TRUE)
     } else if (!isOpen(file)) {
         open(file, "rt")
-        on.exit(close(file), add=TRUE)
+        on.exit(close(file), add = TRUE)
     }
 
-    if (skip) readLines(file, n=skip)
+    if (skip) readLines(file, n = skip)
     if (header) {
-        headerline <- readLines(file, n=1L)
-        cat(file=FILE, headerline, "\n")
+        headerline <- readLines(file, n = 1L)
+        cat(file = FILE, headerline, "\n")
     }
 
     repeat({
@@ -61,7 +63,7 @@ function(file, widths, header = FALSE, sep = "\t",
         if (n == -1L)
             thisblock <- buffersize
         else
-            thisblock <- min(buffersize,n*recordlength)
+            thisblock <- min(buffersize, n*recordlength)
 
         raw <- readLines(file, n = thisblock)
         nread <- length(raw)
@@ -73,15 +75,15 @@ function(file, widths, header = FALSE, sep = "\t",
                             nread %% recordlength), domain = NA)
         }
         if (recordlength > 1L) {
-            raw <- matrix(raw, nrow=recordlength)
-            raw <- apply(raw, 2L, paste, collapse="")
+            raw <- matrix(raw, nrow = recordlength)
+            raw <- apply(raw, 2L, paste, collapse = "")
         }
 
         st <- c(1L, 1L+cumsum(widths))
         first <- st[-length(st)][!drop]
         last <- cumsum(widths)[!drop]
         cat(file = FILE, sapply(raw, doone),
-            sep = c(rep_len(sep, length(first)-1L), "\n"))
+            sep = c(rep_len(sep, length(first) - 1L), "\n"))
 
         if (nread < thisblock) break
         if (n > 0L) n <- n - length(raw)

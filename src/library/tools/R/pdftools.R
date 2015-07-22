@@ -1,7 +1,7 @@
 #  File src/library/tools/R/pdftools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ function(file, cache = TRUE)
         ## there a way to get the connection closed when the doc object
         ## gets removed?
         ##   if(cache) {
-        ##       .bytes <- readBin(file, "raw", file.info(file)$size)
+        ##       .bytes <- readBin(file, "raw", file.size(file))
         ##       con <- rawConnection(.bytes)
         ##       keep <- TRUE
         ##   }
@@ -1825,7 +1825,7 @@ function(con)
 raw_connection_to_bytes_in_file <-
 function(file)
 {
-    bytes <- readBin(file, "raw", file.info(file)$size)
+    bytes <- readBin(file, "raw", file.size(file))
     rawConnection(bytes)
 }
 

@@ -1727,7 +1727,9 @@ SEXP termsform(SEXP args)
     a = CDR(a);
 
     nvar = length(varlist) - 1;
-    nwords = (int)((nvar - 1) / WORDSIZE + 1);
+    /* in allocating words need to allow for intercept term */
+    nwords = (int)(nvar/ WORDSIZE + 1);
+//    printf("nvar = %d, nwords = %d\n", nvar, nwords);
 
     /* Step 2: Recode the model terms in binary form */
     /* and at the same time, expand the model formula. */
@@ -1803,9 +1805,9 @@ SEXP termsform(SEXP args)
 	PROTECT(pattern = allocVector(VECSXP, nterm));
 	PROTECT(sCounts = allocVector(INTSXP, nterm));
 	counts = INTEGER(sCounts);
-	for (call = formula, n = 0; ! IS_R_NilValue(call); call = CDR(call)) {
+	for (call = formula, n = 0; ! IS_R_NilValue(call); call = CDR(call), n++) {
 	    SET_VECTOR_ELT(pattern, n, CAR(call));
-	    counts[n++] = BitCount(CAR(call));
+	    counts[n] = BitCount(CAR(call));
 	}
 	for (n = 0; n < nterm; n++)
 	    if(counts[n] > bitmax) bitmax = counts[n];

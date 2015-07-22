@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-27 13:33-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -2005,6 +2005,9 @@ msgstr ""
 
 msgid "invalid 'endrule' argument"
 msgstr "유효하지 않은 'endrule'인자입니다"
+
+msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+msgstr ""
 
 msgid "invalid 'control.spar'"
 msgstr "유효하지 않은 'control.spar'입니다"

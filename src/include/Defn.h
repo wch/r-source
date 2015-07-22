@@ -259,6 +259,9 @@ extern int putenv(char *string);
 /* seems this is now defined by MinGW to be 259, whereas FILENAME_MAX
    and MAX_PATH are 260.  It is not clear that this really is in bytes,
    but might be chars for the Unicode interfaces.
+
+   260 is d:\ plus 256 chars plus nul.  Some but not all API calls
+   allow filepaths of the form \\?\D:\very_long_path .
 */
 #    define PATH_MAX 260
 #  else
@@ -705,7 +708,7 @@ extern0   Rboolean WinUTF8out  INI_as(FALSE);  /* Use UTF-8 for output */
 extern0   void WinCheckUTF8(void);
 #endif
 
-extern char OutDec	INI_as('.');  /* decimal point used for output */
+extern char* OutDec	INI_as(".");  /* decimal point used for output */
 extern0 Rboolean R_DisableNLinBrowser	INI_as(FALSE);
 extern0 char R_BrowserLastCommand	INI_as('n');
 
@@ -801,6 +804,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define ComplexFromReal	Rf_ComplexFromReal
 # define ComplexFromString	Rf_ComplexFromString
 # define copyMostAttribNoTs	Rf_copyMostAttribNoTs
+# define currentTime		Rf_currentTime
 # define CustomPrintValue	Rf_CustomPrintValue
 # define DataFrameClass		Rf_DataFrameClass
 # define ddfindVar		Rf_ddfindVar
@@ -812,7 +816,9 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define DispatchOrEval		Rf_DispatchOrEval
 # define DispatchAnyOrEval      Rf_DispatchAnyOrEval
 # define dynamicfindVar		Rf_dynamicfindVar
+# define EncodeChar             Rf_EncodeChar
 # define EncodeRaw              Rf_EncodeRaw
+# define EncodeReal2            Rf_EncodeReal2
 # define EncodeString           Rf_EncodeString
 # define EnsureString 		Rf_EnsureString
 # define endcontext		Rf_endcontext
@@ -894,6 +900,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define RealFromLogical	Rf_RealFromLogical
 # define RealFromString		Rf_RealFromString
 # define Seql			Rf_Seql
+# define sexptype2char		Rf_sexptype2char
 # define Scollate		Rf_Scollate
 # define sortVector		Rf_sortVector
 # define SrcrefPrompt		Rf_SrcrefPrompt
@@ -906,6 +913,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define StrToInternal		Rf_StrToInternal
 # define strmat2intmat		Rf_strmat2intmat
 # define substituteList		Rf_substituteList
+# define TimeToSeed		Rf_TimeToSeed
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
 # define type2symbol		Rf_type2symbol
@@ -968,6 +976,8 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define DELAYPROMISES 		32
 #define KEEPNA			64
 #define S_COMPAT       		128
+#define HEXNUMERIC             	256
+#define DIGITS16             	512
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
 #define DEFAULTDEPARSE		65 /* KEEPINTEGER | KEEPNA, used for calls */
@@ -997,6 +1007,7 @@ void check_stack_balance(SEXP op, int save);
 void CleanEd(void);
 void copyMostAttribNoTs(SEXP, SEXP);
 void CustomPrintValue(SEXP, SEXP);
+double currentTime(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
@@ -1058,6 +1069,8 @@ SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 SEXP mkFalse(void);
 SEXP mkPRIMSXP (int, int);
 SEXP mkPROMISE(SEXP, SEXP);
+SEXP R_mkEVPROMISE(SEXP, SEXP);
+SEXP R_mkEVPROMISE_NR(SEXP, SEXP);
 SEXP mkQUOTE(SEXP);
 SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkTrue(void);
@@ -1107,6 +1120,7 @@ void ssort(SEXP*,int);
 int StrToInternal(const char *);
 SEXP strmat2intmat(SEXP, SEXP, SEXP);
 SEXP substituteList(SEXP, SEXP);
+unsigned int TimeToSeed(void);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2symbol(SEXPTYPE);

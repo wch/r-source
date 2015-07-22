@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -2123,6 +2123,9 @@ msgstr "tentativo di allisciare valori NA"
 #, fuzzy
 msgid "invalid 'endrule' argument"
 msgstr "argomento 'data' non valido"
+
+msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+msgstr ""
 
 msgid "invalid 'control.spar'"
 msgstr "'control.spar' non valido"

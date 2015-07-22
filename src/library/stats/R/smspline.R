@@ -1,7 +1,7 @@
 #  File src/library/stats/R/smspline.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## Namespace-hidden but at least available to programmeRs:
-n.knots <- function(n) {
+.nknots.smspl <- function(n) {
     ## Number of inner knots
     if(n < 50L) n
     else trunc({
@@ -31,10 +30,14 @@ n.knots <- function(n) {
         else  200 + (n-3200)^0.2
     })
 }
+n.knots <- function(n) {
+    message(".nknots.smspl() is now exported; use it instead of n.knots()")
+    .nknots.smspl(n)
+}
 
 smooth.spline <-
     function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
-             all.knots = FALSE, nknots = NULL, keep.data = TRUE,
+             all.knots = FALSE, nknots = .nknots.smspl, keep.data = TRUE,
              df.offset = 0, penalty = 1, control.spar = list(),
              tol = 1e-6 * IQR(x))
 {
@@ -56,7 +59,7 @@ smooth.spline <-
     n <- length(x)
     if(is.na(n)) stop("invalid number of points")
     w <-
-	if(is.null(w)) rep(1, n)
+	if(is.null(w)) rep_len(1, n)
 	else {
 	    if(n != length(w)) stop("lengths of 'x' and 'w' must match")
 	    if(any(w < 0)) stop("all weights should be non-negative")
@@ -99,19 +102,20 @@ smooth.spline <-
     r.ux <- ux[nx] - ux[1L]
     xbar <- (ux - ux[1L])/r.ux           # scaled to [0,1]
     if(all.knots) {
-        if(!is.null(nknots))
+        if(!missing(nknots) && !is.null(nknots))
             warning("'all.knots' is TRUE; 'nknots' specification is disregarded")
         nknots <- nx
-    } else {
-	## was knot <- sknotl(xbar, nknots)
-        if(is.null(nknots))
-            nknots <- n.knots(nx)
-        else if(!is.numeric(nknots))
-            stop("'nknots' must be numeric (in {1,..,n})")
-        else if(nknots < 1)
-            stop("'nknots' must be at least 1")
-        else if(nknots > nx)
-            stop("cannot use more inner knots than unique 'x' values")
+    } else if(is.null(nknots))# <- for back compatibility
+	nknots <- .nknots.smspl(nx)
+    else {
+	if(is.function(nknots))
+	    nknots <- nknots(nx)
+	else if(!is.numeric(nknots))
+	    stop("'nknots' must be numeric (in {1,..,n})")
+	if(nknots < 1)
+	    stop("'nknots' must be at least 1")
+	else if(nknots > nx)
+	    stop("cannot use more inner knots than unique 'x' values")
     }
     knot <- c(rep(xbar[1 ], 3),
               if(all.knots) xbar else xbar[seq.int(1, nx, length.out = nknots)],
@@ -140,8 +144,7 @@ smooth.spline <-
 	    dofoff <- df
 	} else warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
     }
-    iparms <- setNames(as.integer(c(icrit,ispar, contr.sp$maxit)),
-		       c("icrit", "ispar", "iter"))
+    iparms <- c(icrit=icrit, ispar=ispar, iter=as.integer(contr.sp$maxit))
 
     keep.stuff <- FALSE ## << to become an argument in the future
     ans.names <- c("coef","ty","lev","spar","parms","crit","iparms","ier",

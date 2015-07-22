@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.5.  */
+/* A Bison parser, made by GNU Bison 2.6.1.  */
 
 /* Bison implementation for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.5"
+#define YYBISON_VERSION "2.6.1"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -58,14 +58,11 @@
 /* Pull parsers.  */
 #define YYPULL 1
 
-/* Using locations.  */
-#define YYLSP_NEEDED 1
 
 
 
 /* Copy the first part of user declarations.  */
-
-/* Line 268 of yacc.c  */
+/* Line 336 of yacc.c  */
 #line 2 "gramLatex.y"
 
 /*
@@ -137,7 +134,7 @@ typedef struct yyltype
 # define YYLTYPE yyltype
 # define YYLLOC_DEFAULT(Current, Rhs, N)				\
     do									\
-      if (YYID (N))							\
+	if (N)								\
 	{								\
 	  (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;	\
 	  (Current).first_column = YYRHSLOC (Rhs, 1).first_column;	\
@@ -155,7 +152,7 @@ typedef struct yyltype
 	  (Current).first_byte   = (Current).last_byte =		\
 	    YYRHSLOC (Rhs, 0).last_byte;				\
 	}								\
-    while (YYID (0))
+    while (0)
 
 /* Useful defines so editors don't get confused ... */
 
@@ -215,14 +212,16 @@ static int      mkVerbEnv();
 #define YYSTYPE		SEXP
 
 
+/* Line 336 of yacc.c  */
+#line 217 "gramLatex.c"
 
-/* Line 268 of yacc.c  */
-#line 214 "gramLatex.c"
-
-/* Enabling traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
+# ifndef YY_NULL
+#  if defined __cplusplus && 201103L <= __cplusplus
+#   define YY_NULL nullptr
+#  else
+#   define YY_NULL 0
+#  endif
+# endif
 
 /* Enabling verbose error messages.  */
 #ifdef YYERROR_VERBOSE
@@ -232,11 +231,17 @@ static int      mkVerbEnv();
 # define YYERROR_VERBOSE 0
 #endif
 
-/* Enabling the token table.  */
-#ifndef YYTOKEN_TABLE
-# define YYTOKEN_TABLE 0
+/* In a future release of Bison, this section will be replaced
+   by #include "".  */
+#ifndef YY_
+# define YY_
+/* Enabling traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
 #endif
-
+#if YYDEBUG
+extern int yydebug;
+#endif
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -254,7 +259,6 @@ static int      mkVerbEnv();
      VERB = 265
    };
 #endif
-
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -277,12 +281,28 @@ typedef struct YYLTYPE
 # define YYLTYPE_IS_TRIVIAL 1
 #endif
 
+extern YYSTYPE yylval;
+extern YYLTYPE yylloc;
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void *YYPARSE_PARAM);
+#else
+int yyparse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void);
+#else
+int yyparse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
+
+#endif /* !YY_  */
 
 /* Copy the second part of user declarations.  */
 
-
-/* Line 343 of yacc.c  */
-#line 279 "gramLatex.c"
+/* Line 353 of yacc.c  */
+#line 306 "gramLatex.c"
 
 #ifdef short
 # undef short
@@ -388,6 +408,7 @@ YYID (yyi)
 #    if ! defined _ALLOCA_H && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 #     include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
+      /* Use EXIT_SUCCESS as a witness for stdlib.h.  */
 #     ifndef EXIT_SUCCESS
 #      define EXIT_SUCCESS 0
 #     endif
@@ -481,20 +502,20 @@ union yyalloc
 #endif
 
 #if defined YYCOPY_NEEDED && YYCOPY_NEEDED
-/* Copy COUNT objects from FROM to TO.  The source and destination do
+/* Copy COUNT objects from SRC to DST.  The source and destination do
    not overlap.  */
 # ifndef YYCOPY
 #  if defined __GNUC__ && 1 < __GNUC__
-#   define YYCOPY(To, From, Count) \
-      __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
+#   define YYCOPY(Dst, Src, Count) \
+      __builtin_memcpy (Dst, Src, (Count) * sizeof (*(Src)))
 #  else
-#   define YYCOPY(To, From, Count)		\
-      do					\
-	{					\
-	  YYSIZE_T yyi;				\
-	  for (yyi = 0; yyi < (Count); yyi++)	\
-	    (To)[yyi] = (From)[yyi];		\
-	}					\
+#   define YYCOPY(Dst, Src, Count)              \
+      do                                        \
+        {                                       \
+          YYSIZE_T yyi;                         \
+          for (yyi = 0; yyi < (Count); yyi++)   \
+            (Dst)[yyi] = (Src)[yyi];            \
+        }                                       \
       while (YYID (0))
 #  endif
 # endif
@@ -577,13 +598,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   159,   159,   160,   161,   164,   165,   166,   167,   169,
-     170,   172,   173,   174,   175,   176,   177,   179,   179,   183,
-     185,   186
+       0,   166,   166,   167,   168,   171,   172,   173,   174,   176,
+     177,   179,   180,   181,   182,   183,   184,   186,   186,   190,
+     192,   193
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
+#if YYDEBUG || YYERROR_VERBOSE || 0
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
@@ -591,7 +612,7 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "END_OF_INPUT", "ERROR", "MACRO", "TEXT",
   "COMMENT", "BEGIN", "END", "VERB", "'{'", "'}'", "'$'", "$accept",
   "Init", "Items", "nonMath", "Item", "environment", "$@1", "math",
-  "block", 0
+  "block", YY_NULL
 };
 #endif
 
@@ -728,17 +749,18 @@ static const yytype_uint8 yystos[] =
 
 #define YYRECOVERING()  (!!yyerrstatus)
 
-#define YYBACKUP(Token, Value)					\
-do								\
-  if (yychar == YYEMPTY && yylen == 1)				\
-    {								\
-      yychar = (Token);						\
-      yylval = (Value);						\
-      YYPOPSTACK (1);						\
-      goto yybackup;						\
-    }								\
-  else								\
-    {								\
+#define YYBACKUP(Token, Value)                                  \
+do                                                              \
+  if (yychar == YYEMPTY)                                        \
+    {                                                           \
+      yychar = (Token);                                         \
+      yylval = (Value);                                         \
+      YYPOPSTACK (yylen);                                       \
+      yystate = *yyssp;                                         \
+      goto yybackup;                                            \
+    }                                                           \
+  else                                                          \
+    {                                                           \
       yyerror (YY_("syntax error: cannot back up")); \
       YYERROR;							\
     }								\
@@ -748,31 +770,32 @@ while (YYID (0))
 #define YYTERROR	1
 #define YYERRCODE	256
 
-
 /* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
    If N is 0, then set CURRENT to the empty location which ends
    the previous symbol: RHS[0] (always defined).  */
 
-#define YYRHSLOC(Rhs, K) ((Rhs)[K])
 #ifndef YYLLOC_DEFAULT
-# define YYLLOC_DEFAULT(Current, Rhs, N)				\
-    do									\
-      if (YYID (N))                                                    \
-	{								\
-	  (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;	\
-	  (Current).first_column = YYRHSLOC (Rhs, 1).first_column;	\
-	  (Current).last_line    = YYRHSLOC (Rhs, N).last_line;		\
-	  (Current).last_column  = YYRHSLOC (Rhs, N).last_column;	\
-	}								\
-      else								\
-	{								\
-	  (Current).first_line   = (Current).last_line   =		\
-	    YYRHSLOC (Rhs, 0).last_line;				\
-	  (Current).first_column = (Current).last_column =		\
-	    YYRHSLOC (Rhs, 0).last_column;				\
-	}								\
+# define YYLLOC_DEFAULT(Current, Rhs, N)                                \
+    do                                                                  \
+      if (YYID (N))                                                     \
+        {                                                               \
+          (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;        \
+          (Current).first_column = YYRHSLOC (Rhs, 1).first_column;      \
+          (Current).last_line    = YYRHSLOC (Rhs, N).last_line;         \
+          (Current).last_column  = YYRHSLOC (Rhs, N).last_column;       \
+        }                                                               \
+      else                                                              \
+        {                                                               \
+          (Current).first_line   = (Current).last_line   =              \
+            YYRHSLOC (Rhs, 0).last_line;                                \
+          (Current).first_column = (Current).last_column =              \
+            YYRHSLOC (Rhs, 0).last_column;                              \
+        }                                                               \
     while (YYID (0))
 #endif
+
+#define YYRHSLOC(Rhs, K) ((Rhs)[K])
+
 
 
 /* YY_LOCATION_PRINT -- Print the location on the stream.
@@ -843,6 +866,8 @@ yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp)
     YYLTYPE const * const yylocationp;
 #endif
 {
+  FILE *yyo = yyoutput;
+  YYUSE (yyo);
   if (!yyvaluep)
     return;
   YYUSE (yylocationp);
@@ -1099,12 +1124,12 @@ static int
 yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                 yytype_int16 *yyssp, int yytoken)
 {
-  YYSIZE_T yysize0 = yytnamerr (0, yytname[yytoken]);
+  YYSIZE_T yysize0 = yytnamerr (YY_NULL, yytname[yytoken]);
   YYSIZE_T yysize = yysize0;
   YYSIZE_T yysize1;
   enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
   /* Internationalized format string. */
-  const char *yyformat = 0;
+  const char *yyformat = YY_NULL;
   /* Arguments of yyformat. */
   char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
   /* Number of reported tokens (one for the "unexpected", one per
@@ -1164,7 +1189,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                     break;
                   }
                 yyarg[yycount++] = yytname[yyx];
-                yysize1 = yysize + yytnamerr (0, yytname[yyx]);
+                yysize1 = yysize + yytnamerr (YY_NULL, yytname[yyx]);
                 if (! (yysize <= yysize1
                        && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
                   return 2;
@@ -1251,50 +1276,40 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 
   switch (yytype)
     {
-      case 5: /* "MACRO" */
-
-/* Line 1391 of yacc.c  */
-#line 155 "gramLatex.y"
+      case 5: /* MACRO */
+/* Line 1381 of yacc.c  */
+#line 162 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
-
-/* Line 1391 of yacc.c  */
-#line 1255 "gramLatex.c"
+/* Line 1381 of yacc.c  */
+#line 1285 "gramLatex.c"
 	break;
-      case 6: /* "TEXT" */
-
-/* Line 1391 of yacc.c  */
-#line 155 "gramLatex.y"
+      case 6: /* TEXT */
+/* Line 1381 of yacc.c  */
+#line 162 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
-
-/* Line 1391 of yacc.c  */
-#line 1264 "gramLatex.c"
+/* Line 1381 of yacc.c  */
+#line 1292 "gramLatex.c"
 	break;
-      case 7: /* "COMMENT" */
-
-/* Line 1391 of yacc.c  */
-#line 155 "gramLatex.y"
+      case 7: /* COMMENT */
+/* Line 1381 of yacc.c  */
+#line 162 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
-
-/* Line 1391 of yacc.c  */
-#line 1273 "gramLatex.c"
+/* Line 1381 of yacc.c  */
+#line 1299 "gramLatex.c"
 	break;
-      case 8: /* "BEGIN" */
-
-/* Line 1391 of yacc.c  */
-#line 155 "gramLatex.y"
+      case 8: /* BEGIN */
+/* Line 1381 of yacc.c  */
+#line 162 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
-
-/* Line 1391 of yacc.c  */
-#line 1282 "gramLatex.c"
+/* Line 1381 of yacc.c  */
+#line 1306 "gramLatex.c"
 	break;
-      case 9: /* "END" */
-
-/* Line 1391 of yacc.c  */
-#line 155 "gramLatex.y"
+      case 9: /* END */
+/* Line 1381 of yacc.c  */
+#line 162 "gramLatex.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
-
-/* Line 1391 of yacc.c  */
-#line 1291 "gramLatex.c"
+/* Line 1381 of yacc.c  */
+#line 1313 "gramLatex.c"
 	break;
 
       default:
@@ -1303,20 +1318,6 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 }
 
 
-/* Prevent warnings from -Wmissing-prototypes.  */
-#ifdef YYPARSE_PARAM
-#if defined __STDC__ || defined __cplusplus
-int yyparse (void *YYPARSE_PARAM);
-#else
-int yyparse ();
-#endif
-#else /* ! YYPARSE_PARAM */
-#if defined __STDC__ || defined __cplusplus
-int yyparse (void);
-#else
-int yyparse ();
-#endif
-#endif /* ! YYPARSE_PARAM */
 
 
 /* The lookahead symbol.  */
@@ -1367,7 +1368,7 @@ yyparse ()
        `yyvs': related to semantic values.
        `yyls': related to locations.
 
-       Refer to the stacks thru separate pointers, to allow yyoverflow
+       Refer to the stacks through separate pointers, to allow yyoverflow
        to reallocate them elsewhere.  */
 
     /* The state stack.  */
@@ -1438,7 +1439,6 @@ yyparse ()
   yylloc.first_line   = yylloc.last_line   = 1;
   yylloc.first_column = yylloc.last_column = 1;
 #endif
-
   goto yysetstate;
 
 /*------------------------------------------------------------.
@@ -1622,150 +1622,129 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-
-/* Line 1806 of yacc.c  */
-#line 159 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 166 "gramLatex.y"
     { xxsavevalue((yyvsp[(1) - (2)]), &(yyloc)); return 0; }
     break;
 
   case 3:
-
-/* Line 1806 of yacc.c  */
-#line 160 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 167 "gramLatex.y"
     { xxsavevalue(R_NULL_SEXP, &(yyloc)); return 0; }
     break;
 
   case 4:
-
-/* Line 1806 of yacc.c  */
-#line 161 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 168 "gramLatex.y"
     { PROTECT(parseState.Value = R_NilValue);  YYABORT; }
     break;
 
   case 5:
-
-/* Line 1806 of yacc.c  */
-#line 164 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 171 "gramLatex.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); }
     break;
 
   case 6:
-
-/* Line 1806 of yacc.c  */
-#line 165 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 172 "gramLatex.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); }
     break;
 
   case 7:
-
-/* Line 1806 of yacc.c  */
-#line 166 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 173 "gramLatex.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); }
     break;
 
   case 8:
-
-/* Line 1806 of yacc.c  */
-#line 167 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 174 "gramLatex.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); }
     break;
 
   case 9:
-
-/* Line 1806 of yacc.c  */
-#line 169 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 176 "gramLatex.y"
     { (yyval) = xxnewlist((yyvsp[(1) - (1)])); }
     break;
 
   case 10:
-
-/* Line 1806 of yacc.c  */
-#line 170 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 177 "gramLatex.y"
     { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); }
     break;
 
   case 11:
-
-/* Line 1806 of yacc.c  */
-#line 172 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 179 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); }
     break;
 
   case 12:
-
-/* Line 1806 of yacc.c  */
-#line 173 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 180 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); }
     break;
 
   case 13:
-
-/* Line 1806 of yacc.c  */
-#line 174 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 181 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), MACRO, &(yyloc)); }
     break;
 
   case 14:
-
-/* Line 1806 of yacc.c  */
-#line 175 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 182 "gramLatex.y"
     { (yyval) = xxtag((yyvsp[(1) - (1)]), VERB, &(yyloc)); }
     break;
 
   case 15:
-
-/* Line 1806 of yacc.c  */
-#line 176 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 183 "gramLatex.y"
     { (yyval) = (yyvsp[(1) - (1)]); }
     break;
 
   case 16:
-
-/* Line 1806 of yacc.c  */
-#line 177 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 184 "gramLatex.y"
     { (yyval) = (yyvsp[(1) - (1)]); }
     break;
 
   case 17:
-
-/* Line 1806 of yacc.c  */
-#line 179 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 186 "gramLatex.y"
     { xxSetInVerbEnv((yyvsp[(3) - (4)])); }
     break;
 
   case 18:
-
-/* Line 1806 of yacc.c  */
-#line 180 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 187 "gramLatex.y"
     { (yyval) = xxenv((yyvsp[(3) - (10)]), (yyvsp[(6) - (10)]), (yyvsp[(9) - (10)]), &(yyloc));
                                                   UNPROTECT_PTR((yyvsp[(1) - (10)])); UNPROTECT_PTR((yyvsp[(7) - (10)])); }
     break;
 
   case 19:
-
-/* Line 1806 of yacc.c  */
-#line 183 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 190 "gramLatex.y"
     { (yyval) = xxmath((yyvsp[(2) - (3)]), &(yyloc)); }
     break;
 
   case 20:
-
-/* Line 1806 of yacc.c  */
-#line 185 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 192 "gramLatex.y"
     { (yyval) = xxblock((yyvsp[(2) - (3)]), &(yyloc)); }
     break;
 
   case 21:
-
-/* Line 1806 of yacc.c  */
-#line 186 "gramLatex.y"
+/* Line 1787 of yacc.c  */
+#line 193 "gramLatex.y"
     { (yyval) = xxblock(R_NULL_SEXP, &(yyloc)); }
     break;
 
 
-
-/* Line 1806 of yacc.c  */
-#line 1762 "gramLatex.c"
+/* Line 1787 of yacc.c  */
+#line 1748 "gramLatex.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1959,7 +1938,7 @@ yyabortlab:
   yyresult = 1;
   goto yyreturn;
 
-#if !defined(yyoverflow) || YYERROR_VERBOSE
+#if !defined yyoverflow || YYERROR_VERBOSE
 /*-------------------------------------------------.
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
@@ -2001,9 +1980,8 @@ yyreturn:
 }
 
 
-
-/* Line 2067 of yacc.c  */
-#line 188 "gramLatex.y"
+/* Line 2048 of yacc.c  */
+#line 195 "gramLatex.y"
 
 
 static SEXP xxnewlist(SEXP item)

@@ -37,7 +37,7 @@ browseVignettes(package = NULL, lib.loc = NULL, all = TRUE)
 \seealso{
   \code{\link{browseURL}}, \code{\link{vignette}}
 }
-\examples{\dontrun{
+\examples{\donttest{
 ## List vignettes from all *attached* packages
 browseVignettes(all = FALSE)
 

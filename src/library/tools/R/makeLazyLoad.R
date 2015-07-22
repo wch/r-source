@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 	# avoid builddir != srcdir problems -- assume package has been installed
         lib.loc <- c(dirname(pkgpath), .libPaths())
     }
-    if(file_test("-d", dataDir)) {
+    if(dir.exists(dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
         } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
@@ -102,7 +102,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         op <- options(encoding=enc)
         on.exit(options(encoding=op[[1L]]))
     }
-    if(file_test("-d", dataDir)) {
+    if(dir.exists(dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")) &&
 	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
 	    file.exists(file.path(dataDir, paste(package, "rdb", sep="."))) ){
@@ -151,6 +151,11 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                            variables)
 {
+    ## pre-empt any problems with interpretation of 'ascii'
+    ascii <- as.logical(ascii)
+    if (is.na(ascii)) stop("'ascii' must be TRUE or FALSE", domain = NA)
+    ascii <- as.integer(ascii)
+
     envlist <- function(e)
         .Internal(getVarsFromFrame(ls(e, all.names = TRUE), e, FALSE))
 
@@ -271,7 +276,7 @@ makeLazyLoading <-
         warning("package contains no R code")
         return(invisible())
     }
-    if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
+    if (file.size(codeFile) == file.size(loaderFile))
         warning("package seems to be using lazy loading already")
     else {
         code2LazyLoadDB(package, lib.loc = lib.loc,

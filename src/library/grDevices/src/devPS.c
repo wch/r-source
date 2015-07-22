@@ -62,6 +62,9 @@ extern gzFile R_gzopen (const char *path, const char *mode);
 extern char *R_gzgets(gzFile file, char *buf, int len);
 extern int R_gzclose (gzFile file);
 
+extern void GEaddDevice2f(pGEDevDesc gdd, const char *name, const char *file);
+
+
 #define INVALID_COL 0xff0a0b0c
 
 /* Define this to use hyphen except in -[0-9] */
@@ -8255,7 +8258,7 @@ SEXP PostScript(SEXP args)
 	    error(_("unable to start %s() device"), "postscript");
 	}
 	gdd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, "postscript");
+	GEaddDevice2f(gdd, "postscript", file);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -8322,7 +8325,7 @@ SEXP XFig(SEXP args)
 	    error(_("unable to start %s() device"), "xfig");
 	}
 	gdd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, "xfig");
+	GEaddDevice2f(gdd, "xfig", file);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -8421,7 +8424,7 @@ SEXP PDF(SEXP args)
 	    error(_("unable to start %s() device"), "pdf");
 	}
 	gdd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, "pdf");
+	GEaddDevice2f(gdd, "pdf", file);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;

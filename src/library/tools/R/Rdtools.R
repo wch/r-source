@@ -19,7 +19,8 @@
 
 RdTextFilter <-
 function(ifile, encoding = "unknown", keepSpacing = TRUE,
-         drop = character(), keep = character())
+         drop = character(), keep = character(),
+         macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
 {
     if(inherits(ifile, "srcfile"))
         ifile <- ifile$filename
@@ -29,7 +30,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	p <- ifile[ order(srcrefs[1,], srcrefs[2,]) ]
 	class(p) <- class(ifile)
     } else
-    	p <- parse_Rd(ifile, encoding = encoding)
+    	p <- parse_Rd(ifile, encoding = encoding, macros = macros)
 
     tags <- RdTags(p)
 
@@ -37,7 +38,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	encoding <- p[[which.max(tags == "\\encoding")]][[1L]]
 	if (encoding %in% c("UTF-8", "utf-8", "utf8")) encoding <- "UTF-8"
 	if (!inherits(ifile, "Rd"))
-	    p <- parse_Rd(ifile, encoding=encoding)
+	    p <- parse_Rd(ifile, encoding=encoding, macros = macros)
     } else
 	encoding <- ""
 

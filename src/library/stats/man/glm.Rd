@@ -3,9 +3,6 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
-
 \name{glm}
 \title{Fitting Generalized Linear Models}
 \alias{glm}
@@ -339,7 +336,7 @@ glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
 anova(glm.D93)
 \donttest{summary(glm.D93)}
 
-\dontrun{## an example with offsets from Venables & Ripley (2002, p.189)
+\donttest{## an example with offsets from Venables & Ripley (2002, p.189)
 utils::data(anorexia, package = "MASS")
 
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),

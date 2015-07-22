@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/postscript.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -947,52 +947,40 @@ pdfFonts(Japan1 = CIDFont("KozMinPro-Regular-Acro", "EUC-H", "EUC-JP",
 }
 
 # Call ghostscript to process postscript or pdf file to embed fonts
-# (could also be used to convert ps or pdf to any supported  format)
+# (could also be used to convert ps or pdf to any supported format)
 embedFonts <- function(file, # The ps or pdf file to convert
                        format, # Default guessed from file suffix
                        outfile = file, # By default overwrite file
-                       fontpaths = "",
-                       options = "" # Additional options to ghostscript
+                       fontpaths = character(),
+                       options = character() # Additional options to ghostscript
                        )
 {
     if(!is.character(file) || length(file) != 1L || !nzchar(file))
         stop("'file' must be a non-empty character string")
+    gsexe <- tools::find_gs_cmd()
+    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
     suffix <- gsub(".+[.]", "", file)
-    if (missing(format)) {
+    if (missing(format))
         format <- switch(suffix,
-                         ps = ,
-                         eps = "pswrite",
+                         ps = , eps = "ps2write",
                          pdf = "pdfwrite")
-    }
-    if (!is.character(format)) {
-        stop("Invalid output format")
-    }
-    gsexe <- Sys.getenv("R_GSCMD")
-    if(.Platform$OS.type == "windows" && !nzchar(gsexe))
-        gsexe <- Sys.getenv("GSC")
-    if(is.null(gsexe) || !nzchar(gsexe)) {
-        gsexe <- switch(.Platform$OS.type,
-                        unix = "gs",
-                        windows = {
-                            poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
-                            poss <- poss[nzchar(poss)]
-                            if(length(poss)) poss else "gswin32c.exe"
-                        })
-    } else if(.Platform$OS.type == "windows" &&
-              length(grep(" ", gsexe, fixed=TRUE)))
-        gsexe <- shortPathName(gsexe)
+    if (!is.character(format)) stop("invalid output format")
+    check_gs_type(gsexe, format)
     tmpfile <- tempfile("Rembed")
     if (length(fontpaths))
         fontpaths <-
-            shQuote(paste0("-sFONTPATH=",
-                           paste(fontpaths, collapse =.Platform$path.sep)))
-    cmd <- paste0(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
-                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
-                  options, " ", shQuote(file))
-    ret <- system(cmd)
+            paste0("-sFONTPATH=",
+                   shQuote(paste(fontpaths, collapse = .Platform$path.sep)))
+    args <- c(paste0("-dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format),
+              paste0(" -sOutputFile=", tmpfile),
+              fontpaths, options, shQuote(file))
+    ret <- system2(gsexe, args)
     if(ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
              domain = NA)
+    if(outfile != file) args[2] <- paste0(" -sOutputFile=", shQuote(outfile))
+    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
     file.copy(tmpfile, outfile, overwrite = TRUE)
     invisible(cmd)
 }

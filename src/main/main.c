@@ -410,6 +410,7 @@ static RETSIGTYPE handleInterrupt(int dummy)
  */
 
 #ifndef Win32
+// controlled by the internal http server in the internet module
 int R_ignore_SIGPIPE = 0;
 
 static RETSIGTYPE handlePipe(int dummy)
@@ -671,8 +672,6 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 
 int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
-unsigned int TimeToSeed(void); /* datetime.c */
-
 const char* get_workspace_name();  /* from startup.c */
 
 void attribute_hidden BindDomain(char *R_Home)
@@ -686,7 +685,7 @@ void attribute_hidden BindDomain(char *R_Home)
     else snprintf(localedir, PATH_MAX+20, "%s/library/translations", R_Home);
     bindtextdomain(PACKAGE, localedir); // PACKAGE = DOMAIN = "R"
     bindtextdomain("R-base", localedir);
-# ifdef WIN32
+# ifdef _WIN32
     bindtextdomain("RGui", localedir);
 # endif
 #endif
@@ -1582,7 +1581,11 @@ void attribute_hidden dummy12345(void)
     F77_CALL(intpr)("dummy", &i, &i, &i);
 }
 
-/* Used in unix/system.c, avoid inlining */
+/* Used in unix/system.c, avoid inlining by using an extern there.
+
+   This is intended to return a local address.  
+   Use -Wno-return-local-addr when compiling.
+ */
 uintptr_t dummy_ii(void)
 {
     int ii;

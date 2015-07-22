@@ -1,10 +1,11 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files2}
 \alias{dir.create}
+\alias{dir.exists}
 \alias{Sys.chmod}
 \alias{Sys.umask}
 \concept{directory}
@@ -16,6 +17,7 @@
   file system.
 }
 \usage{
+dir.exists(paths)
 dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
 Sys.chmod(paths, mode = "0777", use_umask = TRUE)
 Sys.umask(mode = NA)
@@ -102,6 +104,9 @@ Sys.umask(mode = NA)
   FAT/FAT32 or network-mounted file system.
 }
 \value{
+  \code{dir.exists} returns a logical vector of \code{TRUE} or
+  \code{FALSE} values (without names).
+  
   \code{dir.create} and \code{Sys.chmod} return invisibly a logical vector
   indicating if the operation succeeded for each of the files attempted.
   Using a missing value for a path name will always be regarded as a

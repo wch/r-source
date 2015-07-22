@@ -1,7 +1,7 @@
 #  File src/library/stats/R/kmeans.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,9 @@
 #  http://www.r-project.org/Licenses/
 
 kmeans <-
-function(x, centers, iter.max = 10, nstart = 1,
-	 algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"), trace=FALSE)
+function(x, centers, iter.max = 10L, nstart = 1L,
+	 algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"),
+         trace = FALSE)
 {
     do_one <- function(nmeth) {
         switch(nmeth,
@@ -63,19 +64,19 @@ function(x, centers, iter.max = 10, nstart = 1,
 	if(m23 <- any(nmeth == c(2L, 3L))) {
 	    if(any(Z$nc == 0))
 		warning("empty cluster: try a better set of initial centers",
-			call.=FALSE)
+			call. = FALSE)
 	}
 	if(Z$iter > iter.max) {
 	    warning(sprintf(ngettext(iter.max,
 				     "did not converge in %d iteration",
 				     "did not converge in %d iterations"),
-			    iter.max), call.=FALSE, domain = NA)
+			    iter.max), call. = FALSE, domain = NA)
 	    if(m23) Z$ifault <- 2L
 	}
         if(nmeth %in% c(2L, 3L)) {
             if(any(Z$nc == 0))
                 warning("empty cluster: try a better set of initial centers",
-                        call.=FALSE)
+                        call. = FALSE)
         }
 	Z
     }
@@ -87,17 +88,17 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(missing(centers))
 	stop("'centers' must be a number or a matrix")
     nmeth <- switch(match.arg(algorithm),
-                    "Hartigan-Wong" = 1,
-                    "Lloyd" = 2, "Forgy" = 2,
-                    "MacQueen" = 3)
+                    "Hartigan-Wong" = 1L,
+                    "Lloyd" = 2L, "Forgy" = 2L,
+                    "MacQueen" = 3L)
     storage.mode(x) <- "double"
     if(length(centers) == 1L) {
-	if (centers == 1) nmeth <- 3
+	if (centers == 1) nmeth <- 3L
 	k <- centers
         ## we need to avoid duplicates here
-        if(nstart == 1)
+        if(nstart == 1L)
             centers <- x[sample.int(m, k), , drop = FALSE]
-        if(nstart >= 2 || any(duplicated(centers))) {
+        if(nstart >= 2L || any(duplicated(centers))) {
             cn <- unique(x)
             mm <- nrow(cn)
             if(mm < k)
@@ -116,13 +117,13 @@ function(x, centers, iter.max = 10, nstart = 1,
     k <- as.integer(k)
     if(is.na(k)) stop("'invalid value of 'k'")
     iter.max <- as.integer(iter.max)
-    if(is.na(iter.max) || iter.max < 1) stop("'iter.max' must be positive")
+    if(is.na(iter.max) || iter.max < 1L) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in 'x' and 'centers'")
     storage.mode(centers) <- "double"
     Z <- do_one(nmeth)
     best <- sum(Z$wss)
-    if(nstart >= 2 && !is.null(cn))
+    if(nstart >= 2L && !is.null(cn))
 	for(i in 2:nstart) {
 	    centers <- cn[sample.int(mm, k), , drop=FALSE]
 	    ZZ <- do_one(nmeth)
@@ -148,18 +149,19 @@ function(x, centers, iter.max = 10, nstart = 1,
 print.kmeans <- function(x, ...)
 {
     cat("K-means clustering with ", length(x$size), " clusters of sizes ",
-        paste(x$size, collapse=", "), "\n", sep="")
+        paste(x$size, collapse = ", "), "\n", sep = "")
     cat("\nCluster means:\n")
     print(x$centers, ...)
     cat("\nClustering vector:\n")
     print(x$cluster, ...)
     cat("\nWithin cluster sum of squares by cluster:\n")
     print(x$withinss, ...)
-    cat(sprintf(" (between_SS / total_SS = %5.1f %%)\n",
-		100 * x$betweenss/x$totss),
-	"Available components:\n", sep="\n")
+    ratio <- sprintf(" (between_SS / total_SS = %5.1f %%)\n",
+                     100 * x$betweenss/x$totss)
+    cat(sub(".", getOption("OutDec"), ratio, fixed = TRUE),
+	"Available components:\n", sep = "\n")
     print(names(x))
-    if(!is.null(x$ifault) && x$ifault == 2)
+    if(!is.null(x$ifault) && x$ifault == 2L)
 	cat("Warning: did *not* converge in specified number of iterations\n")
     invisible(x)
 }
@@ -167,7 +169,7 @@ print.kmeans <- function(x, ...)
 fitted.kmeans <- function(object, method = c("centers", "classes"), ...)
 {
 	method <- match.arg(method)
-	if (method == "centers") object$centers[object$cl, , drop=FALSE]
+	if (method == "centers") object$centers[object$cl, , drop = FALSE]
 	else object$cl
 }
 

@@ -275,10 +275,12 @@ function(db)
     dups <- packages[duplicated(packages)]
     drop <- integer()
     CRAN <- getOption("repos")["CRAN"]
+    ## do nothing if there is no CRAN repos on the list
+    if(is.na(CRAN)) return(db)
     for(d in dups) {
         pos <- which(packages == d)
-        drop <- c(drop, pos[substring(db[pos, "Repository"], 1,
-                                      nchar(CRAN)) != CRAN])
+        ind <- substring(db[pos, "Repository"], 1, nchar(CRAN)) != CRAN
+        if(!all(ind)) drop <- c(drop, pos[ind])
     }
     if(length(drop)) db[-drop, , drop = FALSE] else db
 }
@@ -570,7 +572,7 @@ installed.packages <-
             enc <- sprintf("%d_%s", nchar(base), .Call(C_crc64, base))
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
             if(file.exists(dest) &&
-               file.info(dest)$mtime > file.info(lib)$mtime &&
+               file.mtime(dest) > file.mtime(lib) &&
                (val <- readRDS(dest))$base == base)
                 ## use the cache file
                 retval <- rbind(retval, val$value)
@@ -650,10 +652,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
                               contriburl = contrib.url(repos, type),
                               method, type = getOption("pkgType"), ...)
 {
-    dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
-    if(nonlocalcran && !dirTest(destdir))
+    if(nonlocalcran && !dir.exists(destdir))
         stop("'destdir' is not a directory")
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)

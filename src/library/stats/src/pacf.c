@@ -359,7 +359,7 @@ static void dotrans(Starma G, double *raw, double *new, int trans)
     }
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 extern double atanh(double);
 #endif
 
