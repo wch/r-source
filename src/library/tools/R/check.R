@@ -1498,7 +1498,6 @@ setRlibs <-
             if(config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_",
                                                 "false"))) {
                 out3 <-  R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
-                saveRDS(out3, "~/tmp/out3.rds")
                 if(length(pos <-
                           grep("^Undefined global functions or variables:",
                                out3))) {
