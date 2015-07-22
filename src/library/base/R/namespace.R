@@ -192,6 +192,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
                            partial = FALSE, versionCheck = NULL)
 {
+    libpath <- attr(package, "LibPath")
     package <- as.character(package)[[1L]]
 
     loading <- dynGet("__NameSpacesLoading__", NULL)
@@ -336,7 +337,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         ## find package and check it has a namespace
-        pkgpath <- find.package(package, lib.loc, quiet = TRUE)
+        pkgpath <- find.package(package, c(libpath, lib.loc), quiet = TRUE)
         if (length(pkgpath) == 0L)
             stop(gettextf("there is no package called %s", sQuote(package)),
                  domain = NA)
