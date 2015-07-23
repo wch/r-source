@@ -847,3 +847,13 @@ stopifnot(
               list("C", list("A", "B"), "C")))
 ## dendrapply(D, labels) failed in R-devel for a day or two
 
+
+## poly() / polym() predict()ion
+library(datasets)
+alm <- lm(stack.loss ~ poly(Air.Flow, Water.Temp, degree=3), stackloss)
+f20 <- fitted(alm)[1:20] # "correct" prediction values [1:20]
+stopifnot(all.equal(unname(f20[1:4]), c(39.7703378, 39.7703378, 35.8251359, 21.5661761)),
+	  all.equal(f20, predict(alm, stackloss) [1:20] , tolerance = 1e-14),
+	  all.equal(f20, predict(alm, stackloss[1:20, ]), tolerance = 1e-14))
+## the second prediction went off in  R <= 3.2.1
+

@@ -1,6 +1,6 @@
 % File src/library/stats/man/poly.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{poly}
@@ -10,8 +10,8 @@
 \alias{makepredictcall.poly}
 \title{Compute Orthogonal Polynomials}
 \usage{
-poly(x, \dots, degree = 1, coefs = NULL, raw = FALSE)
-polym(\dots, degree = 1, raw = FALSE)
+poly(x, \dots, degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
+polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
 
 \method{predict}{poly}(object, newdata, \dots)
 }
@@ -29,6 +29,9 @@ polym(\dots, degree = 1, raw = FALSE)
    number of unique points if \code{raw = TRUE}.}
  \item{coefs}{for prediction, coefficients from a previous fit.}
  \item{raw}{if true, use raw and not orthogonal polynomials.}
+ \item{simple}{logical indicating if a simple matrix (with no further
+   \code{\link{attributes}} but \code{\link{dimnames}}) should be
+   returned.  For speedup only.}
  \item{object}{an object inheriting from class \code{"poly"}, normally
    the result of a call to \code{poly} with a single vector argument.}
  \item{\dots}{\code{poly}, \code{polym}: further vectors.\cr
@@ -36,21 +39,23 @@ polym(\dots, degree = 1, raw = FALSE)
  }
 }
 \value{
-  For \code{poly} with a single vector argument:\cr
+  For \code{poly} and \code{polym()} (when \code{simple=FALSE} and
+  \code{coefs=NULL} as per default):\cr
   A matrix with rows corresponding to points in \code{x} and columns
   corresponding to the degree, with attributes \code{"degree"} specifying
   the degrees of the columns and (unless \code{raw = TRUE})
   \code{"coefs"} which contains the centering and normalization
-  constants used in constructing the orthogonal polynomials.  The matrix
-  has given class \code{c("poly", "matrix")}.
+  constants used in constructing the orthogonal polynomials and
+  class \code{c("poly", "matrix")}.
 
-  For \code{poly} and \code{polym} with more than one input, and
-  \code{predict.poly}: a matrix.
+  For \code{poly(*, simple=TRUE)}, \code{polym(*, coefs=<non-NULL>)},
+  and \code{predict.poly()}: a matrix.
 }
 \details{
   Although formally \code{degree} should be named (as it follows
   \code{\dots}), an unnamed second argument of length 1 will be
-  interpreted as the degree.
+  interpreted as the degree, such that \code{poly(x, 3)} can be used in
+  formulas.
 
   The orthogonal polynomial is summarized by the coefficients, which can
   be used to evaluate it via the three-term recursion given in Kennedy
@@ -88,8 +93,10 @@ od <- options(digits = 3) # avoid too much visual clutter
 predict(z, seq(2, 4, 0.5))
 zapsmall(poly(seq(4, 6, 0.5), 3, coefs = attr(z, "coefs")))
 
-zapsmall(polym(1:4, c(1, 4:6), degree = 3)) # or just poly()
-zapsmall(poly(cbind(1:4, c(1, 4:6)), degree = 3))
+ zm <- zapsmall(polym (    1:4, c(1, 4:6),  degree = 3)) # or just poly():
+(z1 <- zapsmall(poly(cbind(1:4, c(1, 4:6)), degree = 3)))
+## they are the same :
+stopifnot(all.equal(zm, z1, tol = 1e-15))
 options(od)
 }
 \keyword{math}
