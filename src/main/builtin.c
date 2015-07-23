@@ -118,7 +118,7 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isEnvironment(aenv)) error(_("invalid '%s' argument"), "assign.env");
 
     for(i = 0; i < XLENGTH(names); i++) {
-	SEXP name = install(CHAR(STRING_ELT(names, i)));
+	SEXP name = installChar(STRING_ELT(names, i));
 	PROTECT(val = eval(VECTOR_ELT(values, i), eenv));
 	PROTECT(expr0 = duplicate(expr));
 	SETCAR(CDR(expr0), val);
@@ -132,13 +132,14 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
-    SEXP code, oldcode, tmp, ap, argList;
+    SEXP code, oldcode, tmp, argList;
     int addit = 0;
+    static SEXP do_onexit_formals = SEXP_INIT;
 
-    PROTECT(ap = list2(R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("expr"));
-    SET_TAG(CDR(ap), install("add"));
-    PROTECT(argList =  matchArgs(ap, args, call));
+    if (IS_NULL_SEXP(do_onexit_formals))
+        do_onexit_formals = allocFormalsList2(install("expr"), install("add"));
+
+    PROTECT(argList =  matchArgs(do_onexit_formals, args, call));
     if (IS_R_MissingArg(CAR(argList))) code = R_NilValue;
     else code = CAR(argList);
     if (! IS_R_MissingArg(CADR(argList))) {
@@ -179,7 +180,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    ctxt->conexit = code;
     }
-    UNPROTECT(2);
+    UNPROTECT(1);
     return R_NilValue;
 }
 

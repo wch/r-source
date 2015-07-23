@@ -68,9 +68,6 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   or CR (as used on classic Mac OS).  The final line can be incomplete,
   that is missing the final EOL marker.
 
-  See \code{\link{source}} for the limits on the size of functions
-  that can be parsed (by default).
-
   When input is taken from the console, \code{n = NULL} is equivalent to
   \code{n = 1}, and \code{n < 0} will read until an EOF character is
   read.  (The EOF character is Ctrl-Z for the Windows front-ends.)  The

@@ -68,10 +68,10 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \code{"sgi"} and \code{"pict"}.
 
   The \code{file} argument is used for off-screen drawing.  The actual
-  file is only created when the device is closed (e.g. using
+  file is only created when the device is closed (e.g., using
   \code{dev.off()}).  For the bitmap devices, the page number is
   substituted if a C integer format is included in the character string,
-  e.g. \code{Rplot\%03d.png}.  (The result must be less than
+  e.g.\sspace{}\code{Rplot\%03d.png}.  (The result must be less than
   \code{PATH_MAX} characters long, and may be truncated if not. See
   \code{\link{postscript}} for further details.)  If a \code{file}
   argument is not supplied, the default is \code{Rplots.pdf} or
@@ -91,7 +91,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   \code{canvas} colour and then the current background colour (which can
   be transparent or semi-transparent).  Off-screen devices have no
   canvas colour, and so start with a transparent background where
-  possible (e.g. \code{type = "png"} and \code{type = "tiff"}) --
+  possible (e.g., \code{type = "png"} and \code{type = "tiff"}) --
   otherwise it appears that a solid white canvas is assumed in the
   Quartz code.  PNG and TIFF files are saved with a dark grey matte
   which will show up in some viewers, including \command{Preview}.
@@ -135,9 +135,10 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   
   A fairly common Mac problem is no text appearing on plots due to
   corrupted or duplicated fonts on your system.  You may be able to
-  confirm this by using another font family, e.g. \code{family =
-  "serif"}.  Open the \code{Font Book} application (in
-  \code{Applications}) and check the fonts that you are using.
+  confirm this by using another font family,
+  e.g.\sspace{}\code{family = "serif"}.
+  Open the \code{Font Book} application (in \code{Applications}) and
+  check the fonts that you are using.
 }
 \seealso{
   \code{\link{quartzFonts}}, \code{\link{Devices}}.

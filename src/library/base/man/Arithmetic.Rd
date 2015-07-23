@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -104,7 +104,7 @@ x \%/\% y
   given if this is detected.
 
   \code{\%\%} and \code{x \%/\% y} can be used for non-integer \code{y},
-  e.g. \code{1 \%/\% 0.2}, but the results are subject to representation
+  e.g.\sspace{}\code{1 \%/\% 0.2}, but the results are subject to representation
   error and so may be platform-dependent.  Because the IEC 60059
   representation of \code{0.2} is a binary fraction slightly larger than
   \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
@@ -147,6 +147,10 @@ x \%/\% y
   zero \code{x}.
 }
 \note{
+  The binary operators are sometimes called as functions as e.g.
+  \code{`&`(x, y)}: see the description of how argument-matching is done
+  in \code{\link[base]{Ops}}.
+
   \code{**} is translated in the parser to \code{^}, but this was
   undocumented for many years.  It appears as an index entry in Becker
   \emph{et al} (1988), pointing to the help for \code{Deprecated} but

@@ -24,9 +24,3 @@
 SEXP R_getTaskCallbackNames(void);
 SEXP R_removeTaskCallback(SEXP);
 SEXP R_addTaskCallback(SEXP, SEXP, SEXP, SEXP);
-
-#ifdef BC_PROFILING
-SEXP R_getbcprofcounts(void);
-SEXP R_startbcprof(void);
-SEXP R_stopbcprof(void);
-#endif

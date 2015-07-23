@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:51+0100\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2014-03-26 21:20-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -56,81 +56,81 @@ msgstr "알 수 없는 포맷 지정 '%s'입니다"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.y:685 gramRd.y:1307
+#: gramLatex.y:685 gramRd.y:1321
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "라인 %d에 있는 긴 문자열에 대한 버퍼를 할당할 수 없습니다"
 
-#: gramLatex.y:922 gramRd.y:1795 gramRd.y:1801
+#: gramLatex.y:922 gramRd.y:1810 gramRd.y:1816
 #, c-format
 msgid "invalid '%s' value"
 msgstr "유효하지 않은 '%s' 값입니다"
 
-#: gramRd.y:302 gramRd.y:305
+#: gramRd.y:303 gramRd.y:306
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "%s:%d:%d에 잘못된 마크업이 있습니다"
 
-#: gramRd.y:541
+#: gramRd.y:543
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "매크로 '%s'는 이전에 정의되었습니다"
 
-#: gramRd.y:550
+#: gramRd.y:553
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "사용자 정의된 매크로에서는 최대 4개의 인자들이 허용됩니다"
 
-#: gramRd.y:584
+#: gramRd.y:587
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "'%s'에 주어진 매크로 정의가 없습니다."
 
-#: gramRd.y:736 gramRd.y:740
+#: gramRd.y:739 gramRd.y:743
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "%s:%d에 있는 따옴표 처리된 문자열 내에 새로운 행이 있습니다"
 
-#: gramRd.y:759
+#: gramRd.y:762
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "라인 %d에 있는 긴 매크로에 대해서 버퍼를 할당할 수 없습니다"
 
-#: gramRd.y:789
+#: gramRd.y:792
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "매크로들이 너무 깊게 중첩되어 있습니다:  무한 반복을 하나요?"
 
-#: gramRd.y:1172
+#: gramRd.y:1186
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "매크로 %s를 찾을 수 없습니다"
 
-#: gramRd.y:1367
+#: gramRd.y:1381
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "입력을 끝을 알 수 없습니다 (in %c quoted string opened at %s:%d:%d)"
 
-#: gramRd.y:1806
+#: gramRd.y:1823
 msgid "cannot open the connection"
 msgstr "커넥션을 열 수 없습니다"
 
-#: gramRd.y:1813
+#: gramRd.y:1830
 msgid "cannot read from this connection"
 msgstr "이 커넥션으로부터 읽을 수 없습니다"
 
-#: gramRd.y:1821
+#: gramRd.y:1838
 msgid "invalid Rd file"
 msgstr "유효한 Rd 파일이 아닙니다"
 
-#: gramRd.y:1840
+#: gramRd.y:1857
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 
-#: gramRd.y:1843
+#: gramRd.y:1860
 msgid "bad state"
 msgstr "잘못된 상태입니다"
 
-#: gramRd.y:1856
+#: gramRd.y:1873
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "'deparseRd'에 잘못된 텍스트 모드 %d가 있습니다"

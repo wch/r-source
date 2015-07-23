@@ -43,7 +43,6 @@
 #define R_MSG_NONNUM_MATH _("non-numeric argument to mathematical function")
 
 #include <Rmath.h>
-extern double Rf_gamma_cody(double);
 
 #include <R_ext/Itermacros.h>
 
@@ -1527,8 +1526,9 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap, call2;
+    SEXP res, call2;
     int n, nprotect = 2;
+    static SEXP do_Math2_formals = SEXP_INIT;
 
     if (length(args) >= 2 &&
 	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
@@ -1555,11 +1555,11 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* If named, do argument matching by name */
 	    if (! IS_R_NilValue(TAG(args)) || ! IS_R_NilValue(TAG(CDR(args)))) {
-		PROTECT(ap = CONS(R_NilValue, list1(R_NilValue)));
-		SET_TAG(ap,  install("x"));
-		SET_TAG(CDR(ap), install("digits"));
-		PROTECT(args = matchArgs(ap, args, call));
-		nprotect +=2;
+	        if (IS_NULL_SEXP(do_Math2_formals))
+                    do_Math2_formals = allocFormalsList2(install("x"),
+							 install("digits"));
+		PROTECT(args = matchArgs(do_Math2_formals, args, call));
+		nprotect++;
 	    }
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid second argument of length 0"));
@@ -1595,57 +1595,92 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
     return res;
 }
 
+#ifdef M_E
+# define DFLT_LOG_BASE M_E
+#else
+# define DFLT_LOG_BASE exp(1.)
+#endif
 
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap = args, call2;
-    int n = length(args), nprotect = 2;
-
-    if (n >= 2 && isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
-#ifdef M_E
-	double e = M_E;
-#else
-	double e = exp(1.);
-#endif
-	PROTECT(args = list2(CAR(args), ScalarReal(e))); nprotect++;
-    }
     PROTECT(args = evalListKeepMissing(args, env));
-    PROTECT(call2 = lang2(CAR(call), R_NilValue));
-    SETCDR(call2, args);
+    int n = length(args);
+    SEXP res;
 
-    if (! DispatchGroup("Math", call2, op, args, env, &res)) {
-	switch (n) {
-	case 1:
+    if (n == 1 && IS_R_NilValue(TAG(args))) {
+	/* log(x) is handled here */
+	SEXP x = CAR(args);
+	if (! IS_R_MissingArg(x) && ! OBJECT(x)) {
+	    if (isComplex(x))
+		res = complex_math1(call, op, args, env);
+	    else
+		res = math1(x, R_log, call);
+	    UNPROTECT(1);
+	    return res;
+	}
+    }
+    else if (n == 2 &&
+	     IS_R_NilValue(TAG(args)) &&
+	     (IS_R_NilValue(TAG(CDR(args))) ||
+	      SEXP_EQL(TAG(CDR(args)), R_baseSymbol))) {
+	/* log(x, y) or log(x, base = y) are handled here */
+	SEXP x = CAR(args);
+	SEXP y = CADR(args);
+	if (! IS_R_MissingArg(x) && ! IS_R_MissingArg(y) &&
+	    ! OBJECT(x) && ! OBJECT(y)) {
+	    if (isComplex(x) || isComplex(y))
+		res = complex_math2(call, op, args, env);
+	    else
+		res = math2(x, y, logbase, call);
+	    UNPROTECT(1);
+	    return res;
+	}
+    }
+
+    static SEXP do_log_formals = SEXP_INIT;
+    static SEXP R_x_Symbol = SEXP_INIT;
+    if (IS_NULL_SEXP(do_log_formals)) {
+	R_x_Symbol = install("x");
+	do_log_formals = allocFormalsList2(R_x_Symbol, R_baseSymbol);
+    }
+
+    if (n == 1) {
+	if (IS_R_MissingArg(CAR(args)) ||
+	    (! IS_R_NilValue(TAG(args)) && ! SEXP_EQL(TAG(args), R_x_Symbol)))
+	    error(_("argument \"%s\" is missing, with no default"), "x");
+
+	if (! DispatchGroup("Math", call, op, args, env, &res)) {
 	    if (isComplex(CAR(args)))
 		res = complex_math1(call, op, args, env);
 	    else
 		res = math1(CAR(args), R_log, call);
-	    break;
-	case 2:
-	{
-	    /* match argument names if supplied */
-	    PROTECT(ap = list2(R_NilValue, R_NilValue));
-	    SET_TAG(ap, install("x"));
-	    SET_TAG(CDR(ap), install("base"));
-	    PROTECT(args = matchArgs(ap, args, call));
-	    nprotect += 2;
+	}
+	UNPROTECT(1);
+	return res;
+    }
+    else {
+	/* match argument names if supplied */
+	/* will signal an error unless there are one or two arguments */
+	/* after the match, length(args) will be 2 */
+	PROTECT(args = matchArgs(do_log_formals, args, call));
+
+	if(IS_R_MissingArg(CAR(args)))
+	    error(_("argument \"%s\" is missing, with no default"), "x");
+	if (IS_R_MissingArg(CADR(args)))
+	    SETCADR(args, ScalarReal(DFLT_LOG_BASE));
+
+	if (! DispatchGroup("Math", call, op, args, env, &res)) {
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid argument 'base' of length 0"));
 	    if (isComplex(CAR(args)) || isComplex(CADR(args)))
 		res = complex_math2(call, op, args, env);
 	    else
 		res = math2(CAR(args), CADR(args), logbase, call);
-	    break;
 	}
-	default:
-        error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments", 
-		       "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
-              n, "log");
-	}
+	UNPROTECT(2);
+	return res;
     }
-    UNPROTECT(nprotect);
-    return res;
 }
 
 

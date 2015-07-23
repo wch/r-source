@@ -15,12 +15,12 @@ Sys.info()
 }
 \value{
   A character vector with fields
-  \item{sysname}{The operating system.}
+  \item{sysname}{The operating system name.}
   \item{release}{The OS release.}
   \item{version}{The OS version.}
   \item{nodename}{A name by which the machine is known on the network (if
     any).}
-  \item{machine}{A concise description of the hardware.}
+  \item{machine}{A concise description of the hardware, often the CPU type.}
   \item{login}{The user's login name, or \code{"unknown"} if it cannot be
     ascertained.}
   \item{user}{The name of the real user ID, or \code{"unknown"} if it
@@ -44,7 +44,10 @@ Sys.info()
 
   \code{Sys.info()} returns details of the platform \R is running on,
   whereas \code{\link{R.version}} gives details of the platform \R was
-  built on: they may well be different.
+  built on: the \code{release} and \code{version} may well be different.
+
+  Note that OS names might not be what you expect: for example OS X
+  identifies itself as \samp{Darwin} and Solaris as \samp{SunOS}.
 }
 \note{
   The meaning of OS \sQuote{release} and \sQuote{version} is
@@ -56,7 +59,7 @@ Sys.info()
   The use of alternatives such as \code{system("whoami")} is not
   portable: the POSIX command \code{system("id")} is much more portable
   on Unix-alikes, provided only the POSIX options are used (and not the
-  many GNU extensions).
+  many BSD and GNU extensions).
 }
 
 \seealso{

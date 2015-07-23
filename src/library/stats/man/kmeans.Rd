@@ -85,9 +85,9 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{withinss}{Vector of within-cluster sum of squares,
     one component per cluster.}
   \item{tot.withinss}{Total within-cluster sum of squares,
-    i.e., \code{sum(withinss)}.}
+    i.e.\sspace{}\code{sum(withinss)}.}
   \item{betweenss}{The between-cluster sum of squares,
-    i.e. \code{totss-tot.withinss}.}
+    i.e.\sspace{}\code{totss-tot.withinss}.}
   \item{size}{The number of points in each cluster.}
   \item{iter}{The number of (outer) iterations.}
   \item{ifault}{integer: indicator of a possible algorithm problem

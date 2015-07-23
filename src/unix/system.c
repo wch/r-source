@@ -143,8 +143,6 @@ extern void * __libc_stack_end;
 
 int R_running_as_main_program = 0;
 
-extern void BindDomain(char *R_Home);
-
 /* In src/main/main.c, to avoid inlining */
 extern uintptr_t dummy_ii(void);
 

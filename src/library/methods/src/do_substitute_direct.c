@@ -17,13 +17,13 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <R.h>
-#include <Rdefines.h>
-#define NewEnvironment		Rf_NewEnvironment
-#define substitute		Rf_substitute
-#include "methods.h"
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+#define NO_NLS
+#include <Defn.h>
 
-extern SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho);
+#include "methods.h"
 
 /* substitute in an _evaluated_ object, with an explicit list as
    second arg (although old-style lists and environments are allowed).

@@ -80,15 +80,15 @@ isIncomplete(con)
 \arguments{
   \item{description}{character string.  A description of the connection:
     see \sQuote{Details}.}
-  \item{open}{character.  A description of how to open the connection
+  \item{open}{character string.  A description of how to open the connection
     (if it should be opened initially).  See section \sQuote{Modes} for
     possible values.}
   \item{blocking}{logical.  See the \sQuote{Blocking} section.}
-  \item{encoding}{The name of the encoding to be used.  See the
+  \item{encoding}{The name of the encoding to be assumed.  See the
     \sQuote{Encoding} section.}
   \item{raw}{logical.  If true, a \sQuote{raw} interface is used which
     will be more suitable for arguments which are not regular files,
-    e.g. character devices.  This suppresses the check for a compressed
+    e.g.\sspace{}character devices.  This suppresses the check for a compressed
     file when opening for text-mode reading, and asserts that the
     \sQuote{file} may not be seekable.}
   \item{compression}{integer in 0--9.  The amount of compression to be
@@ -100,12 +100,12 @@ isIncomplete(con)
     zero: however the POSIX standard requires values up to 31 days to be
     supported.}
   \item{filename}{a filename within a zip file.}
-  \item{host}{character.  Host name for port.}
+  \item{host}{character string.  Host name for the port.}
   \item{port}{integer.  The TCP port number.}
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{con}{a connection.}
-  \item{type}{character.  Currently ignored.}
-  \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
+  \item{type}{character string.  Currently ignored.}
+  \item{rw}{character string.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
   \item{\dots}{arguments passed to or from other methods.}
 }
@@ -238,7 +238,7 @@ isIncomplete(con)
 
   \code{close} returns either \code{NULL} or an integer status,
   invisibly. The status is from when the connection was last closed and
-  is available only for some types of connections (e.g. pipes, files and
+  is available only for some types of connections (e.g., pipes, files and
   fifos): typically zero values indicate success.
   
   \code{isOpen} returns a logical value, whether the connection is
@@ -281,8 +281,7 @@ isIncomplete(con)
   for example \code{\link{pushBack}} is text-oriented and is only
   allowed on connections open for reading in text mode, and binary
   operations such as \code{\link{readBin}}, \code{\link{load}} and
-  \code{\link{save}} operations can only be done on binary-mode
-  connections.
+  \code{\link{save}} can only be done on binary-mode connections.
 
   The mode of a connection is determined when actually opened, which is
   deferred if \code{open = ""} is given (the default for all but socket
@@ -298,9 +297,9 @@ isIncomplete(con)
   Append modes need to be considered carefully for compressed-file
   connections.  They do \strong{not} produce a single compressed stream
   on the file, but rather append a new compressed stream to the file.
-  Readers (including \R) may or may not read beyond end of the first
-  stream: currently \R does so for \code{gzfile}, \code{bzfile} and
-  \code{xzfile} connections, but earlier versions did not.
+  Readers may or may not read beyond end of the first stream: currently
+  \R does so for \code{gzfile}, \code{bzfile} and \code{xzfile}
+  connections.
 }
 
 \section{Compression}{
@@ -310,13 +309,13 @@ isIncomplete(con)
   2.10.0.
 
   For reading, the type of compression (if any) can be determined from
-  the first few bytes of the file, and this is exploited as from \R
-  2.10.0.  Thus for \code{file(raw = FALSE)} connections, if \code{open} is
-  \code{""}, \code{"r"} or \code{"rt"} the connection can read any of
-  the compressed file types as well as uncompressed files.  (Using
-  \code{"rb"} will allow compressed files to be read byte-by-byte.)
-  Similarly, \code{gzfile} connections can read any of the forms of
-  compression and uncompressed files in any read mode.
+  the first few bytes of the file.  Thus for \code{file(raw = FALSE)}
+  connections, if \code{open} is \code{""}, \code{"r"} or \code{"rt"}
+  the connection can read any of the compressed file types as well as
+  uncompressed files.  (Using \code{"rb"} will allow compressed files to
+  be read byte-by-byte.)  Similarly, \code{gzfile} connections can read
+  any of the forms of compression and uncompressed files in any read
+  mode.
 
   (The type of compression is determined when the connection is created
   if \code{open} is unspecified and a file of that name exists.  If the
@@ -332,7 +331,7 @@ isIncomplete(con)
   \code{compress} correspond to adding the \command{xz} argument
   \option{-e}: this takes more time (double?) to compress but may
   achieve (slightly) better compression.  The default (\code{6}) has
-  good compression and modest (100Mb memory usage): but if you are using
+  good compression and modest (100Mb memory) usage: but if you are using
   \code{xz} compression you are probably looking for high compression.
 
   Choosing the type of compression involves tradeoffs: \command{gzip},
@@ -360,28 +359,30 @@ isIncomplete(con)
 
   Re-encoding only works for connections in text mode: reading from a
   connection with re-encoding specified in binary mode will read the
-  stream of bytes, but mixing text and binary mode reads (e.g. mixing
+  stream of bytes, but mixing text and binary mode reads (e.g., mixing
   calls to \code{\link{readLines}} and \code{\link{readChar}}) is likely
   to lead to incorrect results.
 
   The encodings \code{"UCS-2LE"} and \code{"UTF-16LE"} are treated
   specially, as they are appropriate values for Windows \sQuote{Unicode}
   text files.  If the first two bytes are the Byte Order Mark
-  \code{0xFFFE} then these are removed as some implementations of
+  \code{0xFEFF} then these are removed as some implementations of
   \code{\link{iconv}} do not accept BOMs.  Note that whereas most
   implementations will handle BOMs using encoding \code{"UCS-2"} and
   choose the appropriate byte order, some (including earlier versions of
   \code{glibc}) will not.  There is a subtle distinction between
   \code{"UTF-16"} and \code{"UCS-2"} (see
-  \url{http://en.wikipedia.org/wiki/UTF-16/UCS-2}: the use of surrogate
-  pairs is very rare so \code{"UCS-2LE"} is an appropriate first choice.
+  \url{http://en.wikipedia.org/wiki/UTF-16}: the use of characters in
+  the \sQuote{Supplementary Planes} which need surrogate pairs is very
+  rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
+  widely implemented).
 
   As from \R 3.0.0 the encoding \code{"UTF-8-BOM"} is accepted for
   reading and will remove a Byte Order Mark if present (which it often
   is for files and webpages generated by Microsoft applications).  If it
   is required (it is not recommended) when writing it should be written
-  explicitly, e.g. by \code{writeChar("\ufeff", con, eos = NULL)} or
-  \code{writeBin(as.raw(c(0xef, 0xbb, 0xff)), binary_con)}
+  explicitly, e.g.\sspace{}by \code{writeChar("\ufeff", con, eos = NULL)} or
+  \code{writeBin(as.raw(c(0xef, 0xbb, 0xbf)), binary_con)}
 
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable, and not supported on all current \R platforms.
@@ -401,7 +402,7 @@ isIncomplete(con)
 
 \section{Blocking}{
   Whether or not the connection blocks can be specified for file, url
-  (default yes) fifo and socket connections (default not).
+  (default yes), fifo and socket connections (default not).
 
   In blocking mode, functions using the connection do not return to the
   \R evaluator until the read/write is complete.  In non-blocking mode,
@@ -457,7 +458,7 @@ isIncomplete(con)
   When writing to the clipboard, the output is copied to the clipboard
   only when the connection is closed or flushed.  There is a 32Kb limit
   on the text to be written to the clipboard.  This can be raised by
-  using e.g. \code{file("clipboard-128")} to give 128Kb.
+  using e.g.\sspace{}\code{file("clipboard-128")} to give 128Kb.
 
   The clipboard works in Unicode wide characters, so encodings might
   not work as one might expect.

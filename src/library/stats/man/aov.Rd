@@ -66,7 +66,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
   of class \code{c("maov", "aov", "mlm", "lm")} or for multiple error
-  strata of class \code{"aovlist"}.  There are
+  strata of class \code{c("aovlist", "\link{listof}")}.  There are
   \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
 \references{

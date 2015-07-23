@@ -384,6 +384,13 @@ and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @uref{http://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html} which always
 has the version for the latest release of @R{}).
 
+Note: if you already have @R{} installed, check that where you installed
+@R{} replaces or comes earlier in your path than the previous
+installation.  Some systems are set up to have @file{/usr/bin} (the
+standard place for a system installation) ahead of @file{/usr/local/bin}
+(the default place for installation of @R{}) in their default path, and
+some do not have @file{/usr/local/bin} on the default path.
+
 @node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
 @section Help options
 
@@ -620,16 +627,18 @@ the option @option{--prefix}, as in
 This causes @command{make install} to install the @R{} script to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
-displayed at the end of @command{configure}.  You can install into
-another directory tree by using
+displayed at the end of @command{configure}.  The installation may need
+to be done by the owner of @file{@var{prefix}}, often a root account.
+
+You can install into another directory tree by using
 
 @example
 make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} @command{make} (and current Solaris and
-FreeBSD @command{make}, but not some older Unix makes).
+at least with @acronym{GNU} @command{make} (and current Solaris
+@command{make}, but not some older Unix makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -694,8 +703,8 @@ supported, stripped libraries in directories @file{lib} and
 @file{modules} and in the standard packages.
 
 Note that installing @R{} into a directory whose path contains spaces is
-not supported, and at least some aspects (such as installing source
-packages) will not work.
+not supported, and some aspects (such as installing source packages)
+will not work.
 @c The main problem is the Makefile include in etc/Makeconf
 
 @cindex Manuals, installing
@@ -1295,6 +1304,9 @@ at @url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
 Depending on the build, it may be necessary to edit the macro
 @code{ICU_LIBS}.
 
+Unlike on a Unix-alike, it is currently necessary to call
+@code{icuSetCollate} to set a locale before ICU is actually used for
+collation.
 
 @node Checking the build, Building the manuals, Building the cairo devices files, Building from source
 @subsection Checking the build
@@ -1601,7 +1613,8 @@ To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
 currently shows three components.  Everyone will need the `R Framework'
 component: the `R GUI' and `Tcl/Tk' components are optional (the latter
-being needed to use package @pkg{tcltk}).
+being needed to use package @pkg{tcltk}, and requires an X sub-system to
+be installed: @pxref{OS X}).
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
@@ -1612,6 +1625,7 @@ If you update your OS X version, you should re-install @R{}: the
 installer tailors the installation to the current version of the OS.
 
 For building @R{} from source, see @ref{OS X}.
+
 
 @menu
 * Running R under OS X::        
@@ -1637,7 +1651,7 @@ can be viewed from  @Rapp{}'s `Help' menu.
 You can run command-line @R{} from a Terminal like any other Unix-alike:
 see the next chapter of this manual.  There are some small differences
 which may surprise users of @R{} on other platforms, notably the default
-personal library directory (under @file{~/Library/R},
+location of the personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.1/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
@@ -1653,7 +1667,7 @@ Ensure that the console is completely visible (or at least the activity
 indicator at the top right corner is visible).
 
 @item
-Call @samp{Get Info} on the application (e.g.@: from Finder). This will
+Call @samp{Get Info} on the application (e.g.@: from Finder). This may
 have two tick boxes in the `General' panel: click the one named `Prevent
 App Nap' if it is not already ticked.  (This only available for builds
 made prior to Mavericks.)
@@ -1667,6 +1681,11 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 @noindent
 (see @uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html}).
 @end itemize
+
+Using the @code{X11} device or the X11-based versions of @code{View()}
+and @code{edit} for data frames and matrices (the latter are the default
+for command-line @R{} but not @Rapp{}) requires an X sub-system to be
+installed: see @ref{OS X}.  (So do some third-party packages.)
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
@@ -1915,7 +1934,7 @@ available.@footnote{If a proxy needs to be set, see
 will allow packages to be selected from a list box (typically with
 several thousand items).
 
-To install packages from source on a Unix-alike use
+To install packages from source on a Unix-alike use in a terminal
 
 @example
 R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
@@ -1931,9 +1950,9 @@ to see the current list.
 
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within
-@R{}.  First set the option @code{CRAN} to your nearest @acronym{CRAN}
-mirror using @command{chooseCRANmirror()}.  Then download
-and install packages @pkg{pkg1} and @pkg{pkg2} by
+@R{}.  First choose your nearest @acronym{CRAN} mirror using
+@command{chooseCRANmirror()}.  Then download and install packages
+@pkg{pkg1} and @pkg{pkg2} by
 
 @example
 > install.packages(c("pkg1", "pkg2"))
@@ -1955,9 +1974,9 @@ that are not already installed, use e.g.
 @end example
 
 @code{install.packages} can install a source package from a local
-@file{.tar.gz} file by setting argument @code{repos} to @code{NULL}:
-this will be selected automatically if the name given is a single
-@file{.tar.gz} file.
+@file{.tar.gz} file (or a URL to such a file) by setting argument
+@code{repos} to @code{NULL}: this will be selected automatically if the
+name given is a single @file{.tar.gz} file.
 
 @code{install.packages} can look in several repositories, specified as a
 character vector by the argument @code{repos}: these can include a
@@ -1983,13 +2002,13 @@ although optionally it will also download and install a source package
 by setting the @code{type} argument.
 
 On Windows @code{install.packages} can also install a binary package
-from a local @file{zip} file by setting argument @code{repos} to
-@code{NULL}.   @code{Rgui.exe} has a menu @code{Packages} with a GUI
-interface to @code{install.packages}, @code{update.packages} and
-@code{library}.
+from a local @file{zip} file (or the URL of such a file) by setting
+argument @code{repos} to @code{NULL}.  @code{Rgui.exe} has a menu
+@code{Packages} with a GUI interface to @code{install.packages},
+@code{update.packages} and @code{library}.
 
 Windows binary packages for @R{} are distributed as a single binary
-containing either or both architectures.
+containing either or both architectures (32- and 64-bit).
 
 A few of the binary packages need other software to be installed on your
 system: see for example
@@ -1997,16 +2016,17 @@ system: see for example
 For 64-bit builds, packages using Gtk+ (@CRANpkg{Cairo},
 @CRANpkg{RGtk2}, @CRANpkg{cairoDevice} and those that depend on them)
 need the @file{bin} directory of a bundled distribution from
-@uref{http://www.gtk.org/@/download-windows-64bit.html} in the path: it
-should work to have both 32- and 64-bit Gtk+ @file{bin} directories in
-the path on a 64-bit version of @R{}.
+@uref{http://www.gtk.org/@/download/@/win32.php} or
+@uref{http://www.gtk.org/@/download/@/win64.php} in the path: it should
+work to have both 32- and 64-bit Gtk+ @file{bin} directories in the path
+on a 64-bit version of @R{}.
 
 @command{R CMD INSTALL} works in Windows to install source packages.  No
 additional tools are needed if the package does not contain compiled
 code, and @code{install.packages(type="source")} will work for such
 packages (and for those with compiled code if the tools (see @ref{The
 Windows toolset}) are in the path).  We have seen occasional permission
-problems after unpacking source packages on some Vista/Windows 7/Server
+problems after unpacking source packages on some Windows 7 and Server
 2008 systems: these have been circumvented by setting the environment
 variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 @enindex R_INSTALL_TAR
@@ -2034,9 +2054,9 @@ in the package's @file{DESCRIPTION} file.} option
 will only succeed if both installs succeed.)
 
 If you have a package without compiled code and no Windows-specific
-help, you can zip up an installation on another OS and install from the
-that zip file on Windows.  However, such a package can be installed from
-the sources on Windows without any additional tools.
+help, you can zip up an installation on another OS and install from that
+zip file on Windows.  However, such a package can be installed from the
+sources on Windows without any additional tools.
 
 
 @enindex LOCAL_SOFT
@@ -2110,7 +2130,7 @@ CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
 @noindent
-and for another version of @command{gfortran-4.2} we needed
+and for a version of @command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
 @end example
@@ -2176,8 +2196,8 @@ where there is an @file{configure} script, or a file @file{src/Makefile}.
 where there is a non-empty @file{configure.win} script, or a file
 @file{src/Makefile.win} (with some exceptions where the package is known
 to have an architecture-independent @file{configure.win}, or if
-@option{--force-biarch} or a field in the @file{DESCRIPTION} file is
-used to assert so).
+@option{--force-biarch} or field @samp{Biarch} in the @file{DESCRIPTION}
+file is used to assert so).
 
 @end table
 
@@ -2524,10 +2544,10 @@ make this easier for users. See
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
-if it defaults to @samp{C} (as it sometimes does when logging it
-remotely and in batch jobs: note whether @command{Terminal} sets the
-@env{LANG} environment variable is an (advanced) option, but the
-default).
+if it defaults to @samp{C} (as it sometimes does when logging in
+remotely and for batch jobs: note whether @command{Terminal} sets the
+@env{LANG} environment variable is an (advanced) preference, but does so
+by default).
 
 Internally OS X uses a form similar to Linux: the main difference from
 other Unix-alikes is that where a character set is not specified it is
@@ -4777,16 +4797,17 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this expects a fully-updated X11 installation.
+Note that this requires a fully-updated X11 installation (XQuartz for
+Mountain Lion and later).
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
-conflicting event loops, but for those only using command-line @R{} this
-provides a much more intuitive interface to Tk for experienced Mac
-users. Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not current versions of Tcl/Tk (8.5.9 in Mountain Lion and
-Mavericks).  It is better to install Tcl/Tk 8.6.x or 8.5.x from the
-sources or the binary distribution at
+conflicts over the OS X menu, but for those only using command-line @R{}
+this provides a much more intuitive interface to Tk for experienced Mac
+users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
+are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mountain
+Lion and Mavericks).  It is better to install Tcl/Tk 8.6.x or 8.5.x from
+the sources or a binary distribution from
 @uref{http://www.activestate.com/activetcl/downloads}.  Configure @R{}
 with
 @example
@@ -4797,6 +4818,12 @@ with
 @noindent
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
+
+If you need to find out which version of Tk in use at run time, use
+@example
+library(tcltk)
+tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
+@end example
 
 @node Java (OS X), Frameworks, Tcl/Tk headers and libraries, OS X
 @subsection Java
@@ -4813,7 +4840,7 @@ installed at first use. Check if a JRE is installed by running
 installed this should prompt you to install it.
 
 However, you may want/need to install the latest Java from Oracle
-(currently Java 7 from
+(currently Java 7 or 8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is for Lion and later.
 

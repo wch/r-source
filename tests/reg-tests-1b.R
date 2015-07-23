@@ -2069,7 +2069,7 @@ stopifnot(!is.na(z$tension))
 
 
 ## recursive listing of directories
-p <- file.path(R.home(), "share","texmf") # always exists, readable
+p <- file.path(R.home("share"),"texmf") # always exists, readable
 lfri <- list.files(p, recursive=TRUE, include.dirs=TRUE)
 subdirs <- c("bibtex", "tex")
 lfnd <- setdiff(list.files(p, all.files=TRUE, no..=TRUE), ".svn")
@@ -2094,5 +2094,24 @@ assertError( aperm(a, "A"))
 ## enc2utf8 failed on NA in non-UTF-8 locales PR#15201
 stopifnot(identical(NA_character_, enc2utf8(NA_character_)))
 ## gave "NA" instead of NA_character_
+
+
+## checking all.equal() with externalptr
+library(methods) # getClass()'s versionKey is an e.ptr
+cA <- getClass("ANY")
+stopifnot(all.equal(cA, cA),
+          is.character(all.equal(cA, getClass("S4"))))
+# both all.equal() failed in R <= 3.1.1
+
+
+## as.hexmode(x), as.octmode(x)  when x is double
+x <- c(NA, 1)
+stopifnot(identical(x == x,
+		    as.hexmode(x) == as.octmode(x)))
+p <- c(1, pi)
+assertError(as.hexmode(p))
+assertError(as.octmode(p))
+## where all "wrong" in R <= 3.1.1
+
 
 proc.time()

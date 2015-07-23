@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-10 R Core Team
+% Copyright 2008-14 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
@@ -15,8 +15,8 @@
 \usage{
 parse_Rd(file, srcfile = NULL, encoding = "unknown",
          verbose = FALSE, fragment = FALSE, warningCalls = TRUE,
-	 macros = file.path(R.home("share"), "Rd", "macros",
-                  "system.Rd"), permissive = FALSE)
+	 macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"),
+         permissive = FALSE)
 \method{print}{Rd}(x, deparse = FALSE, \dots)
 \method{as.character}{Rd}(x, deparse = FALSE, \dots)
 }
@@ -64,7 +64,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
   
   The \code{permissive} argument allows text to be parsed that is
   not completely in Rd format.  Typically it would be LaTeX code,
-  used in an Rd fragment, e.g. in a \code{\link{bibentry}}.  
+  used in an Rd fragment, e.g.\sspace{}in a \code{\link{bibentry}}.  
   With \code{permissive = TRUE}, this will be passed through as plain 
   text.  Since \code{parse_Rd} doesn't know how many arguments
   belong in LaTeX macros, it will guess based on the presence

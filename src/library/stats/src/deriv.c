@@ -849,7 +849,7 @@ static SEXP DerivAssign(SEXP name, SEXP expr)
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
     PROTECT(newname = ScalarString(name));
-    SETCADR(ans, lang4(install("["), install(".grad"), R_MissingArg, newname));
+    SETCADR(ans, lang4(R_BracketSymbol, install(".grad"), R_MissingArg, newname));
     UNPROTECT(2);
     return ans;
 }
@@ -859,7 +859,7 @@ static SEXP HessAssign1(SEXP name, SEXP expr)
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
     PROTECT(newname = ScalarString(name));
-    SETCADR(ans, lang5(install("["), install(".hessian"), R_MissingArg,
+    SETCADR(ans, lang5(R_BracketSymbol, install(".hessian"), R_MissingArg,
 		       newname, newname));
     UNPROTECT(2);
     return ans;
@@ -871,9 +871,9 @@ static SEXP HessAssign2(SEXP name1, SEXP name2, SEXP expr)
     PROTECT(newname1 = ScalarString(name1));
     PROTECT(newname2 = ScalarString(name2));
     /* this is overkill, but PR#14772 found an issue */
-    PROTECT(tmp1 = lang5(install("["), install(".hessian"), R_MissingArg,
+    PROTECT(tmp1 = lang5(R_BracketSymbol, install(".hessian"), R_MissingArg,
 			 newname1, newname2));
-    PROTECT(tmp2 = lang5(install("["), install(".hessian"), R_MissingArg,
+    PROTECT(tmp2 = lang5(R_BracketSymbol, install(".hessian"), R_MissingArg,
 			 newname2, newname1));
     PROTECT(tmp3 = lang3(install("<-"), tmp2, expr));
     ans = lang3(install("<-"), tmp1, tmp3);
@@ -923,7 +923,7 @@ SEXP deriv(SEXP args)
 
     args = CDR(args);
     InitDerivSymbols();
-    PROTECT(exprlist = LCONS(install("{"), R_NilValue));
+    PROTECT(exprlist = LCONS(R_BraceSymbol, R_NilValue));
     /* expr: */
     if (isExpression(CAR(args)))
 	PROTECT(expr = VECTOR_ELT(CAR(args), 0));

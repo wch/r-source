@@ -667,16 +667,27 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     ldy = length(ydims);
 
     if (ldx != 2 && ldy != 2) {		/* x and y non-matrices */
-	if (PRIMVAL(op) == 0) {
-	    nrx = 1;
-	    ncx = LENGTH(x);
+	// for crossprod, allow two cases: n x n ==> (1,n) x (n,1);  1 x n = (n, 1) x (1, n)
+	if (PRIMVAL(op) == 1 && LENGTH(x) == 1) {
+	    nrx = ncx = nry = 1;
+	    ncy = LENGTH(y);
 	}
 	else {
-	    nrx = LENGTH(x);
-	    ncx = 1;
+	    nry = LENGTH(y);
+	    ncy = 1;
+	    if (PRIMVAL(op) == 0) {
+		nrx = 1;
+		ncx = LENGTH(x);
+		if(ncx == 1) {	        // y as row vector
+		    ncy = nry;
+		    nry = 1;
+		}
+	    }
+	    else {
+		nrx = LENGTH(x);
+		ncx = 1;
+	    }
 	}
-	nry = LENGTH(y);
-	ncy = 1;
     }
     else if (ldx != 2) {		/* x not a matrix */
 	nry = INTEGER(ydims)[0];
@@ -731,11 +742,20 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (LENGTH(y) == nrx) {	/* y is a col vector */
 		nry = nrx;
 		ncy = 1;
+	    } else if (nrx == 1) {	// y as row vector
+		nry = 1;
+		ncy = LENGTH(y);
 	    }
 	}
-	else { /* tcrossprod --		y is a col vector */
-	    nry = LENGTH(y);
-	    ncy = 1;
+	else { // tcrossprod
+	    if (nrx == 1) {		// y as row vector
+		nry = 1;
+		ncy = LENGTH(y);
+	    }
+	    else {			// y is a col vector
+		nry = LENGTH(y);
+		ncy = 1;
+	    }
 	}
     }
     else {				/* x and y matrices */
@@ -1501,9 +1521,24 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case VECSXP:
     case EXPRSXP:
+#ifdef SWITCH_TO_REFCNT
 	if (nans && lendat)
 	    for (i = 0; i < nans; i++)
 		SET_VECTOR_ELT(ans, i, VECTOR_ELT(vals, i % lendat));
+#else
+	if (nans && lendat) {
+	    /* Need to guard against possible sharing of values under
+	       NAMED.  This is not needed with reference
+	       coutning. (PR#15919) */
+	    Rboolean needsmark = (lendat < nans || MAYBE_REFERENCED(vals));
+	    for (i = 0; i < nans; i++) {
+		SEXP elt = VECTOR_ELT(vals, i % lendat);
+		if (needsmark || MAYBE_REFERENCED(elt))
+		    MARK_NOT_MUTABLE(elt);
+		SET_VECTOR_ELT(ans, i, elt);
+	    }
+	}
+#endif
 	break;
     default:
 	// excluded above
@@ -1544,7 +1579,7 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (mn > 0 && LENGTH(x) == 0)
 	error(_("'x' must have positive length"));
 
- #ifndef LONG_VECTOR_SUPPORT
+#ifndef LONG_VECTOR_SUPPORT
    if ((double)nr * (double)nc > INT_MAX)
 	error(_("too many elements specified"));
 #endif

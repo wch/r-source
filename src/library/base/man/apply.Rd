@@ -32,7 +32,7 @@ apply(X, MARGIN, FUN, \dots)
   (e.g., a data frame) or via \code{as.array}.
 
   \code{FUN} is found by a call to \code{\link{match.fun}} and typically
-  is either a function or a symbol (e.g. a backquoted name) or a
+  is either a function or a symbol (e.g., a backquoted name) or a
   character string specifying a function to be searched for from the
   environment of the call to \code{apply}.
 

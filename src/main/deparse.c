@@ -582,8 +582,7 @@ static Rboolean hasAttributes(SEXP s)
     SEXP a = ATTRIB(s);
     if (length(a) > 2) return(TRUE);
     while(!isNull(a)) {
-	if(! SEXP_EQL(TAG(a), R_SrcrefSymbol)
-	   && (TYPEOF(s) != CLOSXP || ! SEXP_EQL(TAG(a), R_SourceSymbol)))
+	if(! SEXP_EQL(TAG(a), R_SrcrefSymbol))
 	    return(TRUE);
 	a = CDR(a);
     }
@@ -603,8 +602,7 @@ static void attr2(SEXP s, LocalParseData *d)
     if(hasAttributes(s)) {
 	SEXP a = ATTRIB(s);
 	while(!isNull(a)) {
-	    if(! SEXP_EQL(TAG(a), R_SourceSymbol) &&
-	       ! SEXP_EQL(TAG(a), R_SrcrefSymbol)) {
+	    if(! SEXP_EQL(TAG(a), R_SrcrefSymbol)) {
 		print2buff(", ", d);
 		if(SEXP_EQL(TAG(a), R_DimSymbol)) {
 		    print2buff(".Dim", d);

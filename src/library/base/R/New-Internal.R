@@ -279,6 +279,10 @@ setSessionTimeLimit <- function(cpu = Inf, elapsed = Inf)
     .Internal(setSessionTimeLimit(cpu, elapsed))
 
 icuSetCollate <- function(...) .Internal(icuSetCollate(...))
+icuGetCollate <- function(type = c("actual", "valid")) {
+    type <- match.arg(type)
+    .Internal(icuGetCollate(match(type, c("actual", "valid"))))
+}
 
 ## base has no S4 generics
 .noGenerics <- TRUE

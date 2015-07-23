@@ -29,7 +29,7 @@
 }
 \note{
   Some binary distributions of \R have \code{LINK} in a separate
-  bundle, e.g. an \code{R-devel} RPM.
+  bundle, e.g.\sspace{}an \code{R-devel} RPM.
   
   This is not available on Windows.
 }

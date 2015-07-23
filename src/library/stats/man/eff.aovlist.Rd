@@ -35,7 +35,7 @@ eff.aovlist(aovlist)
   are done.
 
   The calculation used requires orthogonal contrasts for each term, and
-  will throw an error if non-orthogonal contrasts (e.g. treatment
+  will throw an error if non-orthogonal contrasts (e.g., treatment
   contrasts or an unbalanced design) are detected.
 }
 \value{

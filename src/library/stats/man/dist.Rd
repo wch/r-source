@@ -67,7 +67,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
       Terms with zero numerator and denominator are omitted from the sum
       and treated as if the values were missing.
 
-      This is intended for non-negative values (e.g. counts): taking the
+      This is intended for non-negative values (e.g., counts): taking the
       absolute value of the denominator is a 1998 \R modification to
       avoid negative distances.
     }

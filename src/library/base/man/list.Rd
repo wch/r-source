@@ -25,7 +25,7 @@ list(\dots)
 pairlist(\dots)
 
 as.list(x, \dots)
-\method{as.list}{environment}(x, all.names = FALSE, \dots)
+\method{as.list}{environment}(x, all.names = FALSE, sorted = FALSE, \dots)
 as.pairlist(x)
 
 is.list(x)
@@ -38,6 +38,9 @@ alist(\dots)
   \item{x}{object to be coerced or tested.}
   \item{all.names}{a logical indicating whether to copy all values or
     (default) only those whose names do not begin with a dot.}
+  \item{sorted}{a logical indicating whether the \code{\link{names}} of
+    the resulting list should be sorted (increasingly).  Note that this
+    is somewhat costly, but may be useful for comparison of environments.}
 }
 \details{
   Almost all lists in \R internally are \emph{Generic Vectors}, whereas
@@ -74,7 +77,8 @@ alist(\dots)
   The \code{"\link{environment}"} method for \code{as.list} copies the
   name-value pairs (for names not beginning with a dot) from an
   environment to a named list.  The user can request that all named
-  objects are copied.  The list is in no particular order (the order
+  objects are copied.  Unless \code{sorted = TRUE}, the list is in no
+  particular order (the order
   depends on the order of creation of objects and whether the
   environment is hashed).  No enclosing environments are searched.
   (Objects copied are duplicated so this can be an expensive operation.)

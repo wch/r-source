@@ -33,7 +33,7 @@ For a complete list of functions, use \code{ls("package:tcltk")}.
 Note that Tk will not be initialized if there is no \code{DISPLAY}
 variable set, but Tcl can still be used.  This is most useful to allow
 the loading of a package which depends on \pkg{tcltk} in a session that
-does not actually use it (e.g. during installation).
+does not actually use it (e.g., during installation).
 #endif
 }
 \author{

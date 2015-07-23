@@ -62,9 +62,6 @@ extern gzFile R_gzopen (const char *path, const char *mode);
 extern char *R_gzgets(gzFile file, char *buf, int len);
 extern int R_gzclose (gzFile file);
 
-extern void GEaddDevice2f(pGEDevDesc gdd, const char *name, const char *file);
-
-
 #define INVALID_COL 0xff0a0b0c
 
 /* Define this to use hyphen except in -[0-9] */
@@ -707,7 +704,7 @@ pserror:
 }
 
 
-extern int Ri18n_wcwidth(wchar_t c);
+#include <rlocale.h> /* for Ri18n_wcwidth */
 
 
 static double

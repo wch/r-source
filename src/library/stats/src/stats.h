@@ -48,4 +48,9 @@ F77_SUB(kmns)(double *a, int *m, int *n, double *c, int *k,
 void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
 	    double *fact, int *jwork, int *matrix);
 
+double R_zeroin2(double ax, double bx, double fa, double fb, 
+		 double (*f)(double x, void *info), void *info, 
+		 double *Tol, int *Maxit);
+
+
 #endif

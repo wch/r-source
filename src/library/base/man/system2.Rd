@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system2}
@@ -12,8 +12,8 @@
 \usage{
 system2(command, args = character(),
         stdout = "", stderr = "", stdin = "", input = NULL,
-        env = character(),
-        wait = TRUE, minimized = FALSE, invisible = TRUE)
+        env = character(), wait = TRUE,
+        minimized = FALSE, invisible = TRUE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a character string.}
@@ -52,13 +52,14 @@ system2(command, args = character(),
 
   For details of how \code{command} is found see \code{\link{system}}.
 
-  On Windows, \code{env} is currently only supported for commands such
-  as \command{R} and \command{make} which accept environment variables on
+  On Windows, \code{env} is only supported for commands such as
+  \command{R} and \command{make} which accept environment variables on
   their command line.
 
-  Some Unix commands (such as \code{ls}) change their output depending
-  on whether they think it is redirected: \code{stdout = TRUE} uses a
-  pipe whereas \code{stdout = "some_file_name"} uses redirection.
+  Some Unix commands (such as some implementations of \code{ls}) change
+  their output if they consider it to be piped or redirected:
+  \code{stdout = TRUE} uses a pipe whereas \code{stdout =
+  "some_file_name"} uses redirection.
 
   Because of the way it is implemented, on a Unix-alike \code{stderr =
     TRUE} implies \code{stdout = TRUE}: a warning is given if this is
@@ -73,17 +74,17 @@ system2(command, args = character(),
   could not be run an \R error is generated.  If \code{command} runs but
   gives a non-zero exit status this will be reported with a warning and
   in the attribute \code{"status"} of the result: an attribute
-  \code{"errmsg"} may also be available
+  \code{"errmsg"} may also be available.
 
   In other cases, the return value is an error code (\code{0}
-  for success), given the invisible attribute (so needs to be printed
+  for success), given the \link{invisible} attribute (so needs to be printed
   explicitly).  If the command could not be run for any reason, the
   value is \code{127}.  Otherwise if \code{wait = TRUE} the value is the
   exit status returned by the command, and if \code{wait = FALSE} it is
   \code{0} (the conventional success value).
 #ifdef windows
   Some Windows commands return out-of-range status values
-  (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
+  (e.g., \code{-1}) and so only the bottom 16 bits of the value are used.
 #endif
 }
 

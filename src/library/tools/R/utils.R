@@ -602,7 +602,7 @@ function(x, dir)
 .find_calls <-
 function(x, predicate = NULL, recursive = FALSE)
 {
-    x <- as.list(x)
+    x <- if(is.call(x)) list(x) else as.list(x)
 
     f <- if(is.null(predicate))
         function(e) is.call(e)
@@ -997,8 +997,10 @@ function()
                "Built",
                "ByteCompile",
                "Classification/ACM",
+               "Classification/ACM-2012",
                "Classification/JEL",
                "Classification/MSC",
+               "Classification/MSC-2010",
                "Collate",
                "Collate.unix",
                "Collate.windows",
@@ -1060,6 +1062,46 @@ function(texi = NULL)
     lines <- readLines(texi)
     re <- "^@c DESCRIPTION field "
     sort(unique(sub(re, "", lines[grepl(re, lines)])))
+}
+
+### ** .gsub_with_transformed_matches
+
+.gsub_with_transformed_matches <-
+function(pattern, replacement, x, trafo, count, ...)
+{
+    ## gsub() with replacements featuring transformations of matches.
+    ##
+    ## Character string (%s) conversion specifications in 'replacement'
+    ## will be replaced by applying the respective transformations in
+    ## 'trafo' to the respective matches (parenthesized subexpressions of
+    ## 'pattern') specified by 'count'.
+    ##
+    ## Argument 'trafo' should be a single unary function, or a list of
+    ## such functions.
+    ## Argument 'count' should be a vector of with the numbers of
+    ## parenthesized subexpressions to be transformed (0 gives the whole
+    ## match).
+
+    replace <- function(yi) {
+        do.call(sprintf,
+                c(list(replacement),
+                  Map(function(tr, co) tr(yi[co]),
+                      trafo, count + 1L)))
+    }
+
+    if(!is.list(trafo)) trafo <- list(trafo)
+    m <- gregexpr(pattern, x, ...)
+    v <- lapply(regmatches(x, m),
+                function(e) {
+                    y <- regmatches(e, regexec(pattern, e, ...))
+                    unlist(Map(function(ei, yi) {
+                        sub(pattern, replace(yi), ei, ...)
+                    },
+                               e,
+                               y))
+                })
+    regmatches(x, m) <- v
+    x
 }
 
 ### ** .is_ASCII
@@ -1536,6 +1578,23 @@ function(x)
     y
 }
 
+### ** .replace_chars_by_hex_subs
+
+.replace_chars_by_hex_subs <-
+function(x, re) {
+    char_to_hex_sub <- function(s) {
+        paste0("<", charToRaw(s), ">", collapse = "")
+    }
+    vapply(strsplit(x, ""),
+           function(e) {
+               pos <- grep(re, e, perl = TRUE)
+               if(length(pos))
+                   e[pos] <- vapply(e[pos], char_to_hex_sub, "")
+               paste(e, collapse = "")
+           },
+           "")
+}
+
 ### ** .source_assignments
 
 .source_assignments <-
@@ -1630,6 +1689,14 @@ function(x)
 }
 
 ### ** .strip_whitespace
+
+## <NOTE>
+## Other languages have this as strtrim() (or variants for left or right
+## trimming only), but R has a different strtrim().
+## So perhaps strstrip()?
+## Could more generally do
+##   strstrip(x, pattern, which = c("both", "left", "right"))
+## </NOTE>
 
 .strip_whitespace <-
 function(x)

@@ -1312,8 +1312,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
  * Unserialize Code
  */
 
-int R_ReadItemDepth = 0;
-int R_InitReadItemDepth;
+attribute_hidden int R_ReadItemDepth = 0, R_InitReadItemDepth;
 static char lastname[8192];
 
 #define INITIAL_REFREAD_TABLE_SIZE 128
@@ -1554,7 +1553,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
         R_ReadItemDepth++;
 	PROTECT(s = ReadItem(ref_table, stream)); /* print name */
 	R_ReadItemDepth--;
-	s = install(CHAR(s));
+	s = installChar(s);
 	AddReadRef(ref_table, s);
 	UNPROTECT(1);
 	return s;
@@ -2753,7 +2752,7 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     len = LENGTH(vars);
     PROTECT(val = allocVector(VECSXP, len));
     for (i = 0; i < len; i++) {
-	sym = install(CHAR(STRING_ELT(vars, i)));
+	sym = installChar(STRING_ELT(vars, i));
 
 	tmp = findVarInFrame(env, sym);
 	if (IS_R_UnboundValue(tmp)) {

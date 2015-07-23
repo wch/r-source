@@ -30,7 +30,7 @@ find_gs_cmd(gs_cmd = "")
   \code{gs_cmd} then from the environment variables \env{R_GSCMD} and
   \env{GSC}.  If neither of those produces a suitable command name,
   \command{gswin64c} and \command{gswin32c} are tried in turn.  In all
-  cases the command is looked for on the system \env{PATH},
+  cases the command is looked for on the system \env{PATH}.
 
   Note that on Windows (and some other OSes) there are separate
   GhostScript executables to display Postscript/PDF files and to

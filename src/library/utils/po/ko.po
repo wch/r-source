@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41+0100\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2014-03-26 23:03-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -20,115 +20,115 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: io.c:328 io.c:332 io.c:342 io.c:573 io.c:773 io.c:826 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1073 io.c:1074 io.c:1076 io.c:1077 io.c:1078
-#: io.c:1079 io.c:1080 io.c:1081 stubs.c:48 stubs.c:68 windows/dialogs.c:170
-#: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
-#: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
-#: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
+#: io.c:324 io.c:328 io.c:338 io.c:569 io.c:769 io.c:822 io.c:834 io.c:838
+#: io.c:844 io.c:845 io.c:1068 io.c:1069 io.c:1071 io.c:1072 io.c:1073
+#: io.c:1074 io.c:1075 io.c:1076 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
+#: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
+#: windows/dialogs.c:321 windows/util.c:111 windows/widgets.c:78
 #: windows/widgets.c:81 windows/widgets.c:86
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s' 인자가 잘못되었습니다"
 
-#: io.c:351 io.c:835
+#: io.c:347 io.c:831
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:363 io.c:858 io.c:1061
+#: io.c:359 io.c:854 io.c:1056
 msgid "cannot open the connection"
 msgstr "연결을 열 수 없습니다"
 
-#: io.c:366 io.c:370
+#: io.c:362 io.c:366
 msgid "cannot read from this connection"
 msgstr "이 연결로부터 읽을 수 없습니다"
 
-#: io.c:417 io.c:435
+#: io.c:413 io.c:431
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr ""
 
-#: io.c:569
+#: io.c:565
 msgid "the first argument must be of mode character"
 msgstr "첫번째 인자는 반드시 문자형이어야 합니다"
 
-#: io.c:599
+#: io.c:595
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr ""
 
-#: io.c:775
+#: io.c:771
 #, c-format
 msgid "Selection: "
 msgstr "선택: "
 
-#: io.c:867 io.c:881
+#: io.c:863 io.c:877
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "'readTableHead' 내에서 버퍼를 할당할 수 없습니다"
 
-#: io.c:892
+#: io.c:888
 msgid "\\ followed by EOF"
 msgstr "\\ 가 EOF 뒤에 놓였습니다"
 
-#: io.c:941 io.c:944
+#: io.c:937 io.c:940
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 "'%s'에서 readTableHeader에 의하여 발견된 완성되지 않은 마지막 라인입니다"
 
-#: io.c:1001
+#: io.c:997
 msgid "index out of range"
 msgstr "범위밖의 인덱스입니다"
 
-#: io.c:1054
+#: io.c:1049
 msgid "'file' is not a connection"
 msgstr "'file'은 연결이 아닙니다"
 
-#: io.c:1057
+#: io.c:1052
 msgid "cannot write to this connection"
 msgstr "이 연결에 쓰기를 할 수 없습니다"
 
-#: io.c:1087
+#: io.c:1082
 msgid "'dec' must be a single character"
 msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
 
-#: io.c:1114
+#: io.c:1108
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니"
 "다"
 
-#: io.c:1145
+#: io.c:1139
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1164
+#: io.c:1157
 msgid "corrupt matrix -- dims not not match length"
 msgstr "행렬이 손상되었습니다 -- dims 가 길이가 일치하지 않습니다"
 
-#: stubs.c:57
+#: stubs.c:56
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory'는 오로지 Rgui 와 Rterm에서만 사용될 수 있습니다"
 
-#: stubs.c:74
+#: stubs.c:73
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory'는 오로지 Rgui 와 Rterm에서만 사용될 수 있습니다"
 
-#: stubs.c:86
+#: stubs.c:85
 msgid "invalid timestamp"
 msgstr "잘못된 타임스탬프입니다"
 
-#: stubs.c:152 stubs.c:160
+#: stubs.c:151 stubs.c:159
 msgid "X11 dataentry cannot be loaded"
 msgstr "X11 데이터엔트리가 로드될 수 없습니다"
 
-#: stubs.c:156 stubs.c:185 stubs.c:191
+#: stubs.c:155 stubs.c:184 stubs.c:190
 msgid "X11 is not available"
 msgstr "X11이 사용가능하지 않습니다"
 
-#: stubs.c:249 stubs.c:252
+#: stubs.c:248 stubs.c:251
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "유효하지 않은 '%s' 지정입니다"
@@ -150,35 +150,35 @@ msgstr "알수없는 형식이 'gethostbyname'에 의해서 반환되었습니�
 msgid "nsl() is not supported on this platform"
 msgstr "이 플랫폼에서는 nsl()는 지원되지 않습니다"
 
-#: windows/dialogs.c:182
+#: windows/dialogs.c:181
 msgid "unknown type"
 msgstr "알수없는 유형입니다"
 
-#: windows/dialogs.c:214 windows/dialogs.c:238 windows/dialogs.c:276
-#: windows/dialogs.c:311
+#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
+#: windows/dialogs.c:310
 msgid "menu functions can only be used in the GUI"
 msgstr "메뉴 함수들은 GUI내에서만 사용할 수 있습니다"
 
-#: windows/dialogs.c:246
+#: windows/dialogs.c:245
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "%s (%s)대한 항목들을 불러올 수 없습니다"
 
-#: windows/dialogs.c:284
+#: windows/dialogs.c:283
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "메뉴 %s를 추가할 수 없습니다"
 
-#: windows/dialogs.c:296
+#: windows/dialogs.c:295
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "메뉴항목 %s을 추가할 수 없습니다"
 
-#: windows/dialogs.c:319
+#: windows/dialogs.c:318
 msgid "menu does not exist"
 msgstr "메뉴가 존재하지 않습니다"
 
-#: windows/dialogs.c:326
+#: windows/dialogs.c:325
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "메뉴항목 %s를 삭제할 수 없습니다"
@@ -210,25 +210,25 @@ msgstr "클립보드를 열 수 없습니다"
 msgid "unable to write to the clipboard"
 msgstr "클립보드에 쓸 수 없습니다"
 
-#: windows/util.c:397
+#: windows/util.c:396
 msgid "'title' must be a character string"
 msgstr "'title'은 반드시 문자열이어야 합니다"
 
-#: windows/util.c:406
+#: windows/util.c:405
 msgid "'text' must be a character string"
 msgstr "'text'는 반드시 문자열이어야 합니다"
 
-#: windows/util.c:445
+#: windows/util.c:444
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "'%s'는 반드시 길이가 1이어야 합니다"
 
-#: windows/util.c:558
+#: windows/util.c:557
 #, c-format
 msgid "'%s' must be a list"
 msgstr "'%s'은 반드시 리스트이어야 합니다"
 
-#: windows/util.c:562
+#: windows/util.c:561
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s'의 구성요소 %d는 윈도우 핸들이 아닙니다"

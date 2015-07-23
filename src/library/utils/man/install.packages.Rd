@@ -165,8 +165,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     a logical value: should the \option{--libs-only} option be used to
     install only additional sub-architectures?  (See also
     \code{INSTALL_opts}.)  This can also be used on Windows to install
-    just the DLL(s) from a binary package, e.g. to add 64-bit DLLs to a
-    32-bit install.
+    just the DLL(s) from a binary package, e.g.\sspace{}to add 64-bit
+    DLLs to a 32-bit install.
   }
   \item{INSTALL_opts}{
     an optional character vector of additional option(s) to be passed to
@@ -228,7 +228,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
   When installing a binary package, \code{install.packages} will abort
   the install if it detects that the package is already installed and is
-  currently in use.  In some circumstances (e.g. multiple instances of
+  currently in use.  In some circumstances (e.g., multiple instances of
   \R running at the same time and sharing a library) it will not detect a
   problem, but the installation may fail.
 #endif
@@ -305,7 +305,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 #ifdef unix
 \note{
   Some binary distributions of \R have \code{INSTALL} in a separate
-  bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
+  bundle, e.g.\sspace{}an \code{R-devel} RPM.  \code{install.packages} will
   give an error if called with \code{type = "source"} on such a system.
 
   Some binary Linux distributions of \R can be installed on a machine

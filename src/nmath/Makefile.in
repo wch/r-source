@@ -50,7 +50,7 @@ SOURCES = \
 ## </NOTE>
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = bessel.h dpq.h nmath.h
+HEADERS = bessel.h dpq.h nmath.h nmath2.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win $(SOURCES) $(HEADERS)

@@ -78,6 +78,16 @@ function(x)
         ## Simplify eventually ...
         structure(x, class = c(class(x), "numeric_version"))
     }
+    else if(is.list(x) && all(vapply(x, is.integer, NA))) {
+        bad <- vapply(x,
+                      function(e) anyNA(e) || any(e < 0L),
+                      NA)
+        if(any(bad)) {
+            x[bad] <- rep.int(list(integer()), sum(bad))
+        }
+        class(x) <- "numeric_version"
+        x
+    }
     else numeric_version(x)
 }
 
@@ -118,54 +128,87 @@ function()
 
 ## Workhorses.
 
-## <NOTE>
-## Could use this for or as as.double.numeric_version() ...
-## </NOTE>
-
 .encode_numeric_version <-
-function(x, base = NULL)
+function(x, width = NULL, maxlen = NULL)
 {
     if(!is.numeric_version(x)) stop("wrong class")
-    if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
+    if(is.null(width))
+        width <- floor(log(max(unlist(x), 1L, na.rm = TRUE),
+                           base = 8L)) + 1L
     classes <- class(x)
     nms <- names(x)
     x <- unclass(x)
-    lens <- vapply(x, length, 1L)
-    ## We store the lengths so that we know when to stop when decoding.
-    ## Alternatively, we need to be smart about trailing zeroes.  One
-    ## approach is to increment all numbers in the version specs and
-    ## base by 1, and when decoding only retain the non-zero entries and
-    ## decrement by 1 one again.
-    x <- vapply(x, function(t)
-		sum(t / base^seq.int(0, length.out = length(t))), 1.)
-    structure(ifelse(lens > 0L, x, NA_real_),
-              base = base, lens = lens, .classes = classes, names = nms)
+    lens <- vapply(x, length, 0L)
+    if(is.null(maxlen))
+        maxlen <- max(lens, 0L)
+    fmt <- sprintf("%%0%io", width)
+    x <- vapply(Map(c, x, lapply(maxlen - lens, integer)), 
+                function(e) paste(sprintf(fmt, e), collapse = ""),
+                "")
+    structure(ifelse(lens > 0L, x, NA_character_),
+              width = width, lens = lens, .classes = classes, names = nms)
 }
+
+## .encode_numeric_version <-
+## function(x, base = NULL)
+## {
+##     if(!is.numeric_version(x)) stop("wrong class")
+##     if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
+##     classes <- class(x)
+##     nms <- names(x)
+##     x <- unclass(x)
+##     lens <- vapply(x, length, 1L)
+##     ## We store the lengths so that we know when to stop when decoding.
+##     ## Alternatively, we need to be smart about trailing zeroes.  One
+##     ## approach is to increment all numbers in the version specs and
+##     ## base by 1, and when decoding only retain the non-zero entries and
+##     ## decrement by 1 one again.
+##     x <- vapply(x, function(t)
+## 		sum(t / base^seq.int(0, length.out = length(t))), 1.)
+##     structure(ifelse(lens > 0L, x, NA_real_),
+##               base = base, lens = lens, .classes = classes, names = nms)
+## }
 
 ## <NOTE>
 ## Currently unused.
-## Is there any point in having a 'base' argument?
 ## </NOTE>
+
 .decode_numeric_version <-
-function(x, base = NULL)
+function(x)
 {
-    if(is.null(base)) base <- attr(x, "base")
-    if(!is.numeric(base)) stop("wrong argument")
-    lens <- attr(x, "lens")
-    y <- vector("list", length = length(x))
-    for(i in seq_along(x)) {
-        n <- lens[i]
-        encoded <- x[i]
-        decoded <- integer(n)
-        for(k in seq_len(n)) {
-            decoded[k] <- encoded %/% 1
-            encoded <- base * (encoded %% 1)
-        }
-        y[[i]] <- as.integer(decoded)
-    }
-    class(y) <- unique(c(attr(x, ".classes"), "numeric_version"))
+    width <- attr(x, "width")
+    y <- Map(function(elt, len) {
+        if(is.na(elt)) return(integer())
+        first <- seq(from = 1L, length.out = len, by = width)
+        last <- seq(from = width, length.out = len, by = width)
+        strtoi(substring(elt, first, last), 8L)
+    },
+             x, attr(x, "lens"))
+    names(y) <- names(x)
+    class(y) <-  unique(c(attr(x, ".classes"), "numeric_version"))
     y
 }
+
+## .decode_numeric_version <-
+## function(x)
+## {
+##     base <- attr(x, "base")
+##     if(!is.numeric(base)) stop("wrong argument")
+##     lens <- attr(x, "lens")
+##     y <- vector("list", length = length(x))
+##     for(i in seq_along(x)) {
+##         n <- lens[i]
+##         encoded <- x[i]
+##         decoded <- integer(n)
+##         for(k in seq_len(n)) {
+##             decoded[k] <- encoded %/% 1
+##             encoded <- base * (encoded %% 1)
+##         }
+##         y[[i]] <- as.integer(decoded)
+##     }
+##     class(y) <- unique(c(attr(x, ".classes"), "numeric_version"))
+##     y
+## }
 
 ## Methods.
 
@@ -180,6 +223,28 @@ function(x, i, j)
     bad <- vapply(y, function(t) is.null(t) || anyNA(t), NA)
     if(any(bad))
         y[bad] <- rep.int(list(integer()), length(bad))
+    class(y) <- class(x)
+    y
+}
+
+`[<-.numeric_version` <-
+function(x, i, j, value)
+{
+    y <- unclass(x)
+    if(missing(j))
+        y[i] <- unclass(as.numeric_version(value))
+    else {
+        ## Listify value as needed and validate.
+        if(!is.list(value)) value <- list(value)
+        value <- lapply(value, as.integer)
+        if(any(vapply(value,
+                      function(e) anyNA(e) || any(e < 0L),
+                      NA)))
+            stop("invalid 'value'")
+        ## Listify j as needed.
+        if(!is.list(j)) j <- list(j)
+        y[i] <- Map(`[<-`, y[i], j, value)
+    }
     class(y) <- class(x)
     y
 }
@@ -218,7 +283,6 @@ function(x, ..., value)
    structure(z, class = oldClass(x))
 }
 
-
 Ops.numeric_version <-
 function(e1, e2)
 {
@@ -232,9 +296,16 @@ function(e1, e2)
                       .Generic), domain = NA)
     if(!is.numeric_version(e1)) e1 <- as.numeric_version(e1)
     if(!is.numeric_version(e2)) e2 <- as.numeric_version(e2)
-    base <- max(unlist(e1), unlist(e2), 0) + 1
-    e1 <- .encode_numeric_version(e1, base = base)
-    e2 <- .encode_numeric_version(e2, base = base)
+    ## base <- max(unlist(e1), unlist(e2), 0) + 1
+    ## e1 <- .encode_numeric_version(e1, base = base)
+    ## e2 <- .encode_numeric_version(e2, base = base)
+    width <- floor(log(max(unlist(e1), unlist(e2), 1L, na.rm = TRUE),
+                       base = 8L)) + 1L
+    maxlen <- max(vapply(unclass(e1), length, 0L),
+                  vapply(unclass(e2), length, 0L),
+                  0L)
+    e1 <- .encode_numeric_version(e1, width = width, maxlen = maxlen)
+    e2 <- .encode_numeric_version(e2, width = width, maxlen = maxlen)
     NextMethod(.Generic)
 }
 
@@ -246,7 +317,7 @@ function(..., na.rm)
         stop(gettextf("%s not defined for \"numeric_version\" objects",
                       .Generic), domain = NA)
     x <- do.call("c", lapply(list(...), as.numeric_version))
-    v <- .encode_numeric_version(x)
+    v <- xtfrm(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {
         y <- x[pos[1L]]
         if(as.character(.Generic) == "range")
@@ -309,9 +380,26 @@ function(x, ...)
     y
 }
 
-is.na.numeric_version <- function(x) is.na(.encode_numeric_version(x))
+is.na.numeric_version <-
+function(x)
+    is.na(.encode_numeric_version(x))
+
+`is.na<-.numeric_version` <-
+function(x, value)
+{
+    x[value] <- rep.int(list(integer()), length(value))
+    x
+}
+
 anyNA.numeric_version <-
-    function(x, recursive = FALSE) anyNA(.encode_numeric_version(x))
+function(x, recursive = FALSE)
+{
+    ## <NOTE>
+    ## Assuming *valid* numeric_version objects, we could simply do:
+    ##   any(vapply(unclass(x), length, 0L) == 0L)
+    ## </NOTE>
+    anyNA(.encode_numeric_version(x))
+}
 
 print.numeric_version <-
 function(x, ...)
@@ -334,7 +422,10 @@ function(x, incomparables = FALSE, ...)
 
 xtfrm.numeric_version <-
 function(x)
-    .encode_numeric_version(x)
+{
+    x <- .encode_numeric_version(x)
+    NextMethod("xtfrm")
+}
 
 ## <NOTE>
 ## Versions of R prior to 2.6.0 had only a package_version class.

@@ -160,7 +160,7 @@ setRlibs <-
       " R_LIBS_SITE='no_such_dir'")
 }
 
-###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
+###- The main function for "R CMD check"
 .check_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -819,7 +819,7 @@ setRlibs <-
                        "R", "data", "demo", "exec", "inst", "man",
                        "po", "src", "tests", "vignettes",
                        "build", # used by R CMD build
-                       "java", "tools") # common dirs in packages.
+                       "java", "tools", "noweb") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
                 topfiles <- setdiff(topfiles, "AUTHORS")
@@ -1982,6 +1982,7 @@ setRlibs <-
         ## Now look for TeX leftovers (and soiltexture, Amelia ...).
         bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj|drv|ins)$",
                      files, ignore.case = TRUE)
+        bad <- bad | (files %in% c("Rplots.ps", "Rplots.pdf"))
         if (any(bad)) {
             if(!any) noteLog(Log)
             any <- TRUE
@@ -2162,8 +2163,10 @@ setRlibs <-
             ## If we have named objects then we have symbols.rds and
             ## will not be picking up symbols just in system libraries.
             haveObjs <- any(grepl("^ *Object", out))
-            if(haveObjs && any(grepl("(abort|assert|exit)", out)) &&
-               !pkgname %in% c("multicore", "parallel")) # these need to call exit
+            pat <- paste("possibly from",
+                         sQuote("(abort|assert|exit|_exit|_Exit)"))
+            if(haveObjs && any(grepl(pat, out)) &&
+               !pkgname %in% c("parallel", "fork")) # need _exit in forked child
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -2173,11 +2176,12 @@ setRlibs <-
                 if(haveObjs)
                     c("Compiled code should not call entry points which",
                       "might terminate R nor write to stdout/stderr instead",
-                      "of to the console.\n")
+                      "of to the console, nor the C RNG.\n")
                 else
                     c("Compiled code should not call entry points which",
                       "might terminate R nor write to stdout/stderr instead",
-                      "of to the console.  The detected symbols are linked",
+                      "of to the console, nor the C RNG.",
+                      "The detected symbols are linked",
                       "into the code but might come from libraries",
                       "and not actually be called.\n")
             } else character()
@@ -2413,7 +2417,8 @@ setRlibs <-
             }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
-                times <- read.table(tfile, header = TRUE, row.names = 1L, colClasses = c("character", rep("numeric", 3)))
+		times <- read.table(tfile, header = TRUE, row.names = 1L,
+				    colClasses = c("character", rep("numeric", 3)))
                 o <- order(times[[1]]+times[[2]], decreasing = TRUE)
                 times <- times[o, ]
                 keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
@@ -3111,7 +3116,7 @@ setRlibs <-
                   grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", dots) |
                   grepl("vignettes/[.]Rinstignore$", dots) |
                   grepl("^src.*/[.]deps$", dots)
-               if (all(known))
+		if (all(known))
                     printLog(Log, "\nCRAN-pack knows about all of these\n")
                 else if (any(!known)) {
                     printLog(Log, "\nCRAN-pack does not know about\n")
@@ -3537,7 +3542,19 @@ setRlibs <-
         res <- .check_package_CRAN_incoming(pkgdir)
         if(length(res)) {
             out <- format(res)
-            if(length(res$bad_package)) {
+            if((length(out) == 1L) &&
+               grepl("^Maintainer: ", out)) {
+                ## Special-case when there is only the maintainer
+                ## address to note (if at all).
+                maintainer <- res$Maintainer
+                if(nzchar(maintainer) &&
+                   identical(maintainer,
+                             Sys.getenv("_R_CHECK_MAINTAINER_ADDRESS_"))) {
+                    resultLog(Log, "OK")
+                    out <- character()
+                }
+                else resultLog(Log, "Note_to_CRAN_maintainers")
+            } else if(length(res$bad_package)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
@@ -3592,6 +3609,23 @@ setRlibs <-
                          wrapLog(msg_NAMESPACE)
                          do_exit(1L)
                      })
+            OK <- TRUE
+            ## Look for empty importFrom
+            imp <- ns$imports
+            lens <- sapply(imp, length)
+            imp <- imp[lens == 2L]
+            nm <- sapply(imp, "[[", 1)
+            lens <- sapply(imp, function(x) length(x[[2]]))
+            bad <- nm[lens == 0L]
+            if(length(bad)) {
+                OK <- FALSE
+                msg <- if(length(bad) == 1L)
+                    sprintf("  Namespace with empty importFrom: %s", sQuote(bad))
+                else
+                    paste("  Namespaces with empty importFrom:",
+                          .pretty_format(sort(bad)), sep = "\n")
+                noteLog(Log, msg)
+            }
             nS3methods <- nrow(ns$S3methods)
             if (nS3methods > 500L) {
                 ## check that this is installable in R 3.0.1
@@ -3615,13 +3649,13 @@ setRlibs <-
                     if(status != 0L)  break
                 }
                 if (status == 0L) {
+                    OK <- FALSE
                     msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
                                    nS3methods)
                     noteLog(Log, msg)
-                } else
-                    resultLog(Log, "OK")
-            } else
-                resultLog(Log, "OK")
+                }
+            }
+            if(OK) resultLog(Log, "OK")
         }
 
         checkingLog(Log, "package dependencies")
@@ -4130,6 +4164,7 @@ setRlibs <-
         if(is.na(prev)) Sys.setenv("_R_CHECK_LIMIT_CORES_" = "TRUE")
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
+        Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -4486,6 +4521,7 @@ setRlibs <-
                 }
             }
         }
+        messageLog(Log, "DONE")
         if ((Log$warnings > 0L) || (Log$notes > 0L)) {
             message(""); summaryLog(Log)
         }
@@ -4503,204 +4539,13 @@ setRlibs <-
 
     } ## end for (pkg in pkgs)
 
-} ## end{ .check_packages }
+}
+###--- end{ .check_packages }
 
 .format_lines_with_indent <-
 function(x)
     paste0("  ", x, collapse = "\n")
     ## Hard-wire indent of 2 for now.
-
-
-summarize_CRAN_check_status <-
-function(package, results = NULL, details = NULL, mtnotes = NULL)
-{
-    if(is.null(results))
-        results <- CRAN_check_results()
-    results <-
-        results[!is.na(match(results$Package, package)) & !is.na(results$Status), ]
-
-    if(!NROW(results)) {
-        s <- character(length(package))
-        names(s) <- package
-        return(s)
-    }
-
-    if(any(results$Status != "OK")) {
-        if(is.null(details))
-            details <- CRAN_check_details()
-        details <- details[!is.na(match(details$Package, package)), ]
-        ## Remove trailing white space from outputs ... remove eventually
-        ## when this is done on CRAN.
-        details$Output <- sub("[[:space:]]+$", "", details$Output)
-
-    } else {
-        ## Create empty details directly to avoid the cost of reading
-        ## and subscripting the actual details db.
-        details <- as.data.frame(matrix(character(), ncol = 7L),
-                                 stringsAsFactors = FALSE)
-        names(details) <-
-            c("Package", "Version", "Flavor", "Check", "Status", "Output",
-              "Flags")
-    }
-
-    if(is.null(mtnotes))
-        mtnotes <- CRAN_memtest_notes()
-
-
-    summarize_results <- function(p, r) {
-        if(!NROW(r)) return(character())
-        tab <- table(r$Status)[c("ERROR", "WARN", "NOTE", "OK")]
-        tab <- tab[!is.na(tab)]
-        paste(c(sprintf("Current CRAN status: %s",
-                        paste(sprintf("%s: %s", names(tab), tab),
-                              collapse = ", ")),
-                sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
-                        p)),
-              collapse = "\n")
-    }
-
-    summarize_details <- function(p, d) {
-        if(!NROW(d)) return(character())
-        pos <- which(names(d) == "Flavor")
-        txt <- apply(d[-pos], 1L, paste, collapse = "\r")
-        ## Outputs from checking "installed package size" will vary
-        ## according to system.
-        ind <- d$Check == "installed package size"
-        if(any(ind)) {
-            pos <- c(pos, which(names(d) == "Output"))
-            txt[ind] <- apply(d[ind, -pos], 1L, paste, collapse = "\r")
-        }
-
-        ## Regularize fancy quotes.
-        ## Could also try using iconv(to = "ASCII//TRANSLIT"))
-        txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
-                    perl = TRUE, useBytes = TRUE)
-        txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
-                    perl = TRUE, useBytes = TRUE)
-        out <-
-            lapply(split(seq_len(NROW(d)), match(txt, unique(txt))),
-                   function(e) {
-                       tmp <- d[e[1L], ]
-                       flags <- tmp$Flags
-                       flavors <- d$Flavor[e]
-                       c(sprintf("Version: %s", tmp$Version),
-                         if(nzchar(flags)) sprintf("Flags: %s", flags),
-                         sprintf("Check: %s, Result: %s", tmp$Check, tmp$Status),
-                         sprintf("  %s",
-                                 gsub("\n", "\n  ", tmp$Output,
-                                      perl = TRUE, useBytes = TRUE)),
-                         sprintf("See: %s",
-                                 paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
-                                               flavors,
-                                               p),
-                                       collapse = ",\n     ")))
-                   })
-        paste(unlist(lapply(out, paste, collapse = "\n")),
-              collapse = "\n\n")
-    }
-
-    summarize_mtnotes <- function(p, m) {
-        if(!length(m)) return(character())
-        tests <- m[, "Test"]
-        paths <- m[, "Path"]
-        isdir <- !grepl("-Ex.Rout$", paths)
-        if(any(isdir))
-            paths[isdir] <- sprintf("%s/", paths[isdir])
-        paste(c(paste("Memtest notes:",
-                      paste(unique(tests), collapse = " ")),
-                sprintf("See: %s",
-                        paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
-                                      tests,
-                                      paths),
-                              collapse = ",\n     "))),
-              collapse = "\n")
-    }
-
-    summarize <- function(p, r, d, m) {
-        paste(c(summarize_results(p, r),
-                summarize_mtnotes(p, m),
-                summarize_details(p, d)),
-              collapse = "\n\n")
-    }
-
-    s <- if(length(package) == 1L) {
-        summarize(package, results, details, mtnotes[[package]])
-    } else {
-        results <- split(results, factor(results$Package, package))
-        details <- split(details, factor(details$Package, package))
-        unlist(lapply(package,
-                      function(p) {
-                          summarize(p,
-                                    results[[p]],
-                                    details[[p]],
-                                    mtnotes[[p]])
-                      }))
-    }
-
-    names(s) <- package
-    class(s) <- "summarize_CRAN_check_status"
-    s
-}
-
-format.summarize_CRAN_check_status <-
-function(x, header = NA, ...)
-{
-    if(is.na(header)) header <- (length(x) > 1L)
-    if(header) {
-        s <- sprintf("Package: %s", names(x))
-        x <- sprintf("%s\n%s\n\n%s", s, gsub(".", "*", s), x)
-    }
-    x
-}
-
-print.summarize_CRAN_check_status <-
-function(x, ...)
-{
-    writeLines(paste(format(x, ...), collapse = "\n\n"))
-    invisible(x)
-}
-
-
-CRAN_check_results <-
-function()
-{
-    ## This allows for partial local mirrors, or to
-    ## look at a more-freqently-updated mirror
-    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-                             "web/checks/check_results.rds"),
-                     open = "rb"))
-    results <- readRDS(rds)
-    close(rds)
-
-    results
-}
-
-CRAN_check_details <-
-function()
-{
-    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-                             "web/checks/check_details.rds"),
-                     open = "rb"))
-    details <- readRDS(rds)
-    close(rds)
-
-    details
-}
-
-CRAN_memtest_notes <-
-function()
-{
-    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-                             "web/checks/memtest_notes.rds"),
-                     open = "rb"))
-    mtnotes <- readRDS(rds)
-    close(rds)
-
-    mtnotes
-}
 
 ### Local variables:
 ### mode: R

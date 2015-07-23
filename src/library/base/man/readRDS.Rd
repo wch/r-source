@@ -56,8 +56,8 @@ readRDS(file, refhook = NULL)
 
   Compression is handled by the connection opened when \code{file} is a
   file name, so is only possible when \code{file} is a connection if
-  handled by the connection.  So e.g. \code{\link{url}} connections will
-  needed to be wrapped in a call to \code{\link{gzcon}}.
+  handled by the connection.  So e.g.\sspace{}\code{\link{url}}
+  connections will need to be wrapped in a call to \code{\link{gzcon}}.
 
   If a connection is supplied it will be opened (in binary mode) for the
   duration of the function if not already open: if it is already open it

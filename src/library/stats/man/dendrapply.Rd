@@ -27,7 +27,7 @@ dendrapply(X, FUN, ...)
   Usually a dendrogram of the same (graph) structure as \code{X}.
   For that, the function must be conceptually of the form
   \code{FUN <- function(X) { attributes(X) <- .....;  X }},
-  i.e. returning the node with some attributes added or changed.
+  i.e., returning the node with some attributes added or changed.
 }
 \author{Martin Maechler}
 \note{this is still somewhat experimental, and suggestions for

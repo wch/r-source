@@ -100,7 +100,7 @@ extern void F77_NAME(dv7dfl)(const int *Alg, const int *Lv, double v[]);
 /**
  * Supply default values for elements of the iv and v arrays
  *
- * @param alg algorithm specification (1 <= alg <= 4)
+ * @param alg algorithm specification (1 <= alg <= 2)  (was alg <= 4, but reduced to work around gcc bug; see PR#15914)
  * @param iv integer working vector
  * @param liv length of iv
  * @param lv length of v
@@ -146,7 +146,7 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
     F77_CALL(dv7dfl)(&alg1, &lv, &v[1]);
     //       ------
     iv[1] = 12;
-    if (alg > 2) iv[DRADPR] = 1;
+    if (alg > 2) error(_("port algorithms 3 or higher are not supported"));
     iv[IVNEED] = 0;
     iv[LASTIV] = miv;
     iv[LASTV] = mv;
@@ -235,7 +235,8 @@ double F77_NAME(dv2nrm)(int *n, const double x[])
 /* dv7cpy.... copy src to dest */
 void F77_NAME(dv7cpy)(int *n, double dest[], const double src[])
 {
-    memcpy(dest, src, *n * sizeof(double));
+    /* Was memcpy, but overlaps seen */
+    memmove(dest, src, *n * sizeof(double));
 }
 
 /* dv7ipr... applies forward permutation to vector.  */

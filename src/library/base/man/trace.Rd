@@ -9,6 +9,7 @@
 \alias{untrace}
 \alias{tracingState}
 \alias{.doTrace}
+\alias{returnValue}
 \description{
   A call to \code{trace} allows you to insert debugging code (e.g., a
   call to \code{\link{browser}} or \code{\link{recover}}) at chosen
@@ -24,6 +25,7 @@ untrace(what, signature = NULL, where = topenv(parent.frame()))
 
 tracingState(on = NULL)
 .doTrace(expr, msg)
+returnValue(default = NULL)
 }
 \arguments{
   \item{what}{The name (quoted or not) of a function to be traced or
@@ -85,6 +87,10 @@ tracingState(on = NULL)
     \code{browser()}, and \code{msg} is a string identifying the
     place where the trace action occurs.
   }
+  \item{default}{If \code{returnValue} finds no return value (e.g.
+    a function exited because of an error, not a normal exit), it
+    will return \code{default} instead.
+  }
 }
 \details{
   The \code{trace} function operates by constructing a revised version
@@ -132,10 +138,17 @@ tracingState(on = NULL)
 
   Using \code{\link{setBreakpoint}} (from package \pkg{utils}) may be an
   alternative, calling \code{trace(...., at, ...)}.
+  
+  The \code{exit} argument is called during \code{\link{on.exit}}
+  processing.  In an \code{on.exit} expression, the experimental \code{returnValue()}
+  function may be called to obtain the value about to be returned by
+  the function. Calling this function in other circumstances will give
+  undefined results.  
 
   An intrinsic limitation in the \code{exit} argument is that it won't
-  work if the function itself uses \code{on.exit}, since the existing
-  calls will override the one supplied by \code{trace}.
+  work if the function itself uses \code{on.exit} with \code{add=
+  FALSE} (the default), since the existing calls will override the one
+  supplied by \code{trace}.
 
   Tracing does not nest.  Any call to \code{trace} replaces previously
   traced versions of that function or method (except for edited
@@ -197,9 +210,19 @@ tracingState(on = NULL)
   list.
 }
 \value{
-  In the simple version (just the first argument), invisible \code{NULL}.
+  In the simple version (just the first argument), \code{trace} returns
+  an invisible \code{NULL}.
   Otherwise, the traced function(s) name(s).  The relevant consequence is the
   assignment that takes place.
+  
+  \code{untrace} returns the function name invisibly.
+  
+  \code{tracingState} returns the current global tracing state, and possibly
+  changes it.
+  
+  When called during \code{on.exit} processing, \code{returnValue} returns
+  the value about to be returned by the exiting function.  Behaviour in 
+  other circumstances is undefined.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

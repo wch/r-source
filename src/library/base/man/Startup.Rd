@@ -64,7 +64,7 @@
 
   Note that when the site and user profile files are sourced only the
   \pkg{base} package is loaded, so objects in other packages need to be
-  referred to by e.g. \code{utils::dump.frames} or after explicitly
+  referred to by e.g.\sspace{}\code{utils::dump.frames} or after explicitly
   loading the package concerned.
 
   \R then loads a saved image of the user workspace from \file{.RData}
@@ -131,8 +131,8 @@
   On systems with sub-architectures (mainly Windows), the
   files \file{Renviron.site} and \file{Rprofile.site} are looked for
   first in architecture-specific directories,
-  e.g. \file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.
-  And e.g. \file{.Renviron.i386} will be used in preference
+  e.g.\sspace{}\file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.
+  And e.g.\sspace{}\file{.Renviron.i386} will be used in preference
   to \file{.Renviron}.
 }
 \note{
@@ -155,7 +155,7 @@
 #ifdef windows
   The startup options are for \command{Rgui}, \command{Rterm} and
   \code{R} but not for \command{Rcmd}: attempting to use
-  e.g. \option{--vanilla} with the latter will give a warning or error.
+  e.g.\sspace{}\option{--vanilla} with the latter will give a warning or error.
 
   Unix versions of \R have a file \file{\var{\link{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains

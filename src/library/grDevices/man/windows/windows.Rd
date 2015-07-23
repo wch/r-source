@@ -200,7 +200,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   two ways.  The file \code{R_HOME\\etc\\\link{Rdevga}} can be used to
   specify mappings for \code{par(font =)} (or the \pkg{grid} equivalent).
   Alternatively, a font family can be specified by a non-empty
-  \code{family} argument (or by e.g. \code{par(family =)} in the graphics
+  \code{family} argument (or by e.g.\sspace{}\code{par(family =)} in the graphics
   package) and this will be used for fonts 1:4 via the Windows font
   database (see \code{\link{windowsFonts}}).
 

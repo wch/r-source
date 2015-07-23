@@ -27,6 +27,8 @@
 # include "config.h"
 #endif
 
+#include <Defn.h> // for TimeToSeed
+
 #include <errno.h>
 #ifndef __set_errno
 # define __set_errno(Val) errno = (Val)
@@ -95,8 +97,6 @@
 /* These are the characters used in temporary filenames.  */
 static const char letters[] =
 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-extern unsigned int Rf_TimeToSeed(void); // times.c
 
 /* Generate a temporary file name based on TMPL.  TMPL must match the
    rules for mk[s]temp (i.e. end in "XXXXXX").  The name constructed

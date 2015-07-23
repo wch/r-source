@@ -75,13 +75,14 @@ file.size(\dots)
   \item{exe}{character: what sort of executable is this?  Possible
     values are \code{"no"}, \code{"msdos"}, \code{"win16"},
     \code{"win32"}, \code{"win64"} and \code{"unknown"}.  Note that a
-    file (e.g. a script file) can be executable according to the mode
+    file (e.g., a script file) can be executable according to the mode
     bits but not executable in this sense.}
 #endif
 
   If \code{extra_cols} is false, only the first six columns are
   returned: as these can all be found from a single C system call this
-  can be faster.
+  can be faster.  (However, properly configured systems will use a
+  \sQuote{name service cache daemon} to speed up the name lookups.)
   
   Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
@@ -98,7 +99,7 @@ file.size(\dots)
 
   The times are reported to an accuracy of seconds, and perhaps more on
   some systems.  However, many file systems only record times in
-  seconds, and some (e.g. modification time on FAT systems) are recorded
+  seconds, and some (e.g., modification time on FAT systems) are recorded
   in increments of 2 or more seconds.
   
   \code{file.mode}, \code{file.mtime} and \code{file.mode} are

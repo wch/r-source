@@ -528,7 +528,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     if(is.null(mnames) || !all(nzchar(mnames)))
         stop("arguments to methods() must be named, or one named list")
     ## look for methods to remove (new definition is NULL)
-    removeThese <- sapply(methodDefs, is.null)
+    removeThese <- vapply(methodDefs, is.null, NA)
     if(any(removeThese)) {
         rmNames <- mnames[removeThese]
         mnames <- mnames[!removeThese]
@@ -666,19 +666,17 @@ class method modifies a field.
 
 .makeCall <- function(name, x) {
     n <- length(argls <- formals(x))
-    noDeflt <- if(n > 0) sapply(argls,function(x)  !is.name(x) || nzchar(as.character(x)))
+    noDeflt <- if(n > 0) vapply(argls, function(x) !is.name(x) || nzchar(as.character(x)), NA)
     if (n) {
         arg.names <- arg.n <- names(argls)
     }
     Call <- paste0("$", name, "(")
     for (i in seq_len(n)) {
-        Call <- paste0(Call, arg.names[i], if (noDeflt[[i]]) " = "
-            )
+        Call <- paste0(Call, arg.names[i], if (noDeflt[[i]]) " = ")
         if (i != n)
             Call <- paste0(Call, ", ")
     }
-    Call <- paste0(Call, ")\n")
-    Call
+    paste0(Call, ")\n")
 }
 
 
@@ -778,15 +776,15 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                                                        dQuote(class(what))),
                                               domain = NA)
                                  })
-        missingDefs <- sapply(superClassDefs, is.null)
+        missingDefs <- vapply(superClassDefs, is.null, NA)
         if(any(missingDefs))
             stop(gettextf("no definition found for inherited class: %s",
                           paste0('"',contains[missingDefs], '"', collapse = ", ")),
                  domain = NA)
         superClasses <- unlist(lapply(superClassDefs,
                           function(def) def@className), FALSE)
-        isRefSuperClass <- sapply(superClassDefs, function(def)
-                              is(def, "refClassRepresentation"))
+        isRefSuperClass <- vapply(superClassDefs, function(def)
+				  is(def, "refClassRepresentation"), NA)
     }
     else {
         superClassDefs <- list()
@@ -1260,7 +1258,7 @@ getMethodsAndAccessors <- function(Class) {
         stop(gettextf("%s is not a reference class",
              dQuote(def@className)))
     ff <- def@fieldPrototypes
-    accs <- sapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction"))
+    accs <- vapply(ff, function(what) is(what, "activeBindingFunction") && !is(what, "defaultBindingFunction"), NA)
     c(as.list(def@refMethods), as.list(ff)[accs])
 }
 

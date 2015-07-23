@@ -29,8 +29,7 @@
 #include <IOStuff.h>
 #include <Parse.h>
 #include <Rconnections.h>
-
-extern IoBuffer R_ConsoleIob;
+#include <IOStuff.h> // for R_ConsoleIob;
 
 SEXP attribute_hidden getParseContext(void)
 {

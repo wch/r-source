@@ -80,6 +80,16 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		     DllReference *dll);
 static SEXP pkgtrim(SEXP args, DllReference *dll);
 
+static R_INLINE Rboolean isNativeSymbolInfo(SEXP op)
+{
+    /* was: inherits(op, "NativeSymbolInfo")
+     * inherits() is slow because of string comparisons, so use
+     * structural check instead. */
+    return (TYPEOF(op) == VECSXP &&
+	    LENGTH(op) >= 2 &&
+	    TYPEOF(VECTOR_ELT(op, 1)) == EXTPTRSXP);
+}
+
 /*
   Called from resolveNativeRoutine (and itself).
 
@@ -101,11 +111,16 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
     if (isValidString(op)) return;
 
     if(TYPEOF(op) == EXTPTRSXP) {
+	static SEXP native_symbol = SEXP_INIT;
+	static SEXP registered_native_symbol = SEXP_INIT;
+	if (IS_NULL_SEXP(native_symbol)) {
+	    native_symbol = install("native symbol");
+	    registered_native_symbol = install("registered native symbol");
+	}
 	char *p = NULL;
-	if(SEXP_EQL(R_ExternalPtrTag(op), install("native symbol")))
+	if(SEXP_EQL(R_ExternalPtrTag(op), native_symbol))
 	   *fun = R_ExternalPtrAddrFn(op);
-	else if(SEXP_EQL(R_ExternalPtrTag(op),
-			 install("registered native symbol"))) {
+	else if(SEXP_EQL(R_ExternalPtrTag(op), registered_native_symbol)) {
 	   R_RegisteredNativeSymbol *tmp;
 	   tmp = (R_RegisteredNativeSymbol *) R_ExternalPtrAddr(op);
 	   if(tmp) {
@@ -151,7 +166,7 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
 
 	return;
     }
-    else if(inherits(op, "NativeSymbolInfo")) {
+    else if(isNativeSymbolInfo(op)) {
 	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun, symbol, buf);
 	return;
     }
@@ -182,9 +197,9 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     DllReference dll;
     /* This is used as shorthand for 'all' in R_FindSymbol, but
        should never be supplied */
-    strcpy(dll.DLLname, ""); 
+    strcpy(dll.DLLname, "");
     dll.dll = NULL; dll.obj = R_NULL_SEXP; dll.type = NOT_DEFINED;
-    
+
     op = CAR(args);  // value of .NAME =
     /* NB, this sets fun, symbol and buf and is not just a check! */
     checkValidSymbolId(op, call, fun, symbol, buf);
@@ -224,7 +239,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     if (dll.type == FILENAME && strcmp(dll.DLLname, "base")) {
 	if(strlen(ns) && strcmp(dll.DLLname, ns) &&
 	   !(streql(dll.DLLname, "BioC_graph") && streql(ns, "graph")))
-	    warningcall(call, 
+	    warningcall(call,
 			"using PACKAGE = \"%s\" from namespace '%s'",
 			dll.DLLname, ns);
     }
@@ -250,7 +265,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	   from the namespace defining the function */
 	*fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol, env2);
 	if (*fun) return args;
-	errorcall(call, "\"%s\" not resolved from current namespace (%s)", 
+	errorcall(call, "\"%s\" not resolved from current namespace (%s)",
 		  buf, ns);
     }
 
@@ -352,14 +367,14 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 	    /* SETCDR(prev, s = CDR(s)); */
 	    if(dupused++ == 1) warning(_("'%s' used more than once"), "DUP");
 	} else if(SEXP_EQL(TAG(s), PkgSymbol)) {
-	    dll->obj = CAR(s);  // really? 
+	    dll->obj = CAR(s);  // really?
 	    if(TYPEOF(CAR(s)) == STRSXP) {
 		p = translateChar(STRING_ELT(CAR(s), 0));
 		if(strlen(p) > PATH_MAX - 1)
 		    error(_("DLL name is too long"));
 		dll->type = FILENAME;
 		strcpy(dll->DLLname, p);
-		if(pkgused++ > 1) 
+		if(pkgused++ > 1)
 		    warning(_("'%s' used more than once"), "PACKAGE");
 		/* More generally, this should allow us to process
 		   any additional arguments and not insist that PACKAGE
@@ -376,7 +391,7 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		    strcpy(dll->DLLname,
 			   translateChar(STRING_ELT(VECTOR_ELT(CAR(s), 1), 0)));
 		    dll->dll = (HINSTANCE) R_ExternalPtrAddr(VECTOR_ELT(s, 4));
-		} else 
+		} else
 		    error("incorrect type (%s) of PACKAGE argument\n",
 			  type2char(TYPEOF(CAR(s))));
 	    }
@@ -424,14 +439,14 @@ static SEXP pkgtrim(SEXP args, DllReference *dll)
 	   this is the last one (which will only happen for one arg),
 	   and remove it */
 	if(IS_R_NilValue(ss) && SEXP_EQL(TAG(s), PkgSymbol)) {
-	    if(pkgused++ == 1) 
+	    if(pkgused++ == 1)
 		warning(_("'%s' used more than once"), "PACKAGE");
 	    setDLLname(s, dll->DLLname);
 	    dll->type = FILENAME;
 	    return R_NilValue;
 	}
 	if(SEXP_EQL(TAG(ss), PkgSymbol)) {
-	    if(pkgused++ == 1) 
+	    if(pkgused++ == 1)
 		warning(_("'%s' used more than once"), "PACKAGE");
 	    setDLLname(ss, dll->DLLname);
 	    dll->type = FILENAME;
@@ -1332,7 +1347,7 @@ Rf_getCallingDLL(void)
 */
 static DL_FUNC
 R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
-			  R_RegisteredNativeSymbol *symbol, 
+			  R_RegisteredNativeSymbol *symbol,
 			  SEXP env)
 {
     int numProtects = 0;
@@ -1492,7 +1507,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef LONG_VECTOR_SUPPORT
 	if (isVector(s) && IS_LONG_VEC(s))
-	    error(_("long vectors (argument %d) are not supported in %s"), 
+	    error(_("long vectors (argument %d) are not supported in %s"),
 		  na + 1, Fort ? ".C" : ".Fortran");
 #endif
 	SEXPTYPE t = TYPEOF(s);
@@ -1660,20 +1675,20 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	case BUILTINSXP:
 	case SPECIALSXP:
 	case ENVSXP:
-	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
+	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"),
 			    type2char(t), na + 1);
 	    cargs[na] =  (void*) SEXP_TO_PTR(s);
 	    break;
 	case NILSXP:
-	    error(_("invalid mode (%s) to pass to C or Fortran (arg %d)"), 
+	    error(_("invalid mode (%s) to pass to C or Fortran (arg %d)"),
 		  type2char(t), na + 1);
 	    cargs[na] =  (void*) SEXP_TO_PTR(s);
 	    break;
 	default:
 	    /* Includes pairlists from R 2.15.0 */
-	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"), 
+	    if (Fort) error(_("invalid mode (%s) to pass to Fortran (arg %d)"),
 			    type2char(t), na + 1);
-	    warning("passing an object of type '%s' to .C (arg %d) is deprecated", 
+	    warning("passing an object of type '%s' to .C (arg %d) is deprecated",
 		    type2char(t), na + 1);
 	    if (t == LISTSXP)
 		warning(_("pairlists are passed as SEXP as from R 2.15.0"));
@@ -2301,13 +2316,13 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			ptr += n * sizeof(Rbyte);
 			for (int i = 0; i < NG; i++)
 			    if(*ptr++ != FILL)
-				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				error("array over-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 			ptr = (unsigned char *) p;
 			for (int i = 0; i < NG; i++)
 			    if(*--ptr != FILL)
-				error("array under-run in %s(\"%s\") in %s argument %d\n", 
+				error("array under-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 		    }
@@ -2320,13 +2335,13 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			ptr += n * sizeof(int);
 			for (int i = 0; i < NG; i++)
 			    if(*ptr++ != FILL)
-				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				error("array over-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 			ptr = (unsigned char *) p;
 			for (int i = 0; i < NG; i++)
 			    if(*--ptr != FILL)
-				error("array under-run in %s(\"%s\") in %s argument %d\n", 
+				error("array under-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 		    }
@@ -2343,13 +2358,13 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			ptr += n * sizeof(int);
 			for (int i = 0; i < NG;  i++)
 			    if(*ptr++ != FILL)
-				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				error("array over-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 			ptr = (unsigned char *) p;
 			for (int i = 0; i < NG; i++)
 			    if(*--ptr != FILL)
-				error("array under-run in %s(\"%s\") in %s argument %d\n", 
+				error("array under-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 		    } else {
@@ -2366,7 +2381,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			s = allocVector(REALSXP, n);
 			if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 			    float *sptr = (float*) p;
-			    for(R_xlen_t i = 0 ; i < n ; i++) 
+			    for(R_xlen_t i = 0 ; i < n ; i++)
 				REAL(s)[i] = (double) sptr[i];
 			} else {
 			    unsigned char *ptr = (unsigned char *) p;
@@ -2374,13 +2389,13 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			    ptr += n * sizeof(double);
 			    for (int i = 0; i < NG; i++)
 				if(*ptr++ != FILL)
-				    error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				    error("array over-run in %s(\"%s\") in %s argument %d\n",
 					  Fort ? ".Fortran" : ".C",
 					  symName, type2char(type), na+1);
 			    ptr = (unsigned char *) p;
 			    for (int i = 0; i < NG; i++)
 				if(*--ptr != FILL)
-				    error("array under-run in %s(\"%s\") in %s argument %d\n", 
+				    error("array under-run in %s(\"%s\") in %s argument %d\n",
 					  Fort ? ".Fortran" : ".C",
 					  symName, type2char(type), na+1);
 			}
@@ -2388,26 +2403,26 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 			    s = allocVector(REALSXP, n);
 			    float *sptr = (float*) p;
-			    for(int i = 0 ; i < n ; i++) 
+			    for(int i = 0 ; i < n ; i++)
 				REAL(s)[i] = (double) sptr[i];
 			}
 		    }
-		    break;			
+		    break;
 		case CPLXSXP:
 		    if (copy) {
 			s = allocVector(type, n);
 			unsigned char *ptr = (unsigned char *) p;
 			memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
 			ptr += n * sizeof(Rcomplex);
-			for (int i = 0; i < NG;  i++) 
+			for (int i = 0; i < NG;  i++)
 			    if(*ptr++ != FILL)
-				error("array over-run in %s(\"%s\") in %s argument %d\n", 
+				error("array over-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 			ptr = (unsigned char *) p;
 			for (int i = 0; i < NG; i++)
 			    if(*--ptr != FILL)
-				error("array under-run in %s(\"%s\") in %s argument %d\n", 
+				error("array under-run in %s(\"%s\") in %s argument %d\n",
 				      Fort ? ".Fortran" : ".C",
 				      symName, type2char(type), na+1);
 		    }
@@ -2432,18 +2447,18 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 				    const char *z = translateChar(STRING_ELT(ss, i));
 				for (int j = 0; j < NG; j++)
 				    if(*--ptr != FILL)
-					error("array under-run in .C(\"%s\") in character argument %d, element %d", 
+					error("array under-run in .C(\"%s\") in character argument %d, element %d",
 					      symName, na+1, (int)(i+1));
 				ptr = (unsigned char *) cptr[i];
 				ptr += strlen(z) + 1;
-				for (int j = 0; j < NG;  j++) 
+				for (int j = 0; j < NG;  j++)
 				    if(*ptr++ != FILL) {
 					 // force termination
 					unsigned char *p = ptr;
 					for (int k = 1; k < NG - j; k++, p++)
 					    if (*p == FILL) *p = '\0';
-					error("array over-run in .C(\"%s\") in character argument %d, element %d\n'%s'->'%s'\n", 
-					      symName, na+1, (int)(i+1), 
+					error("array over-run in .C(\"%s\") in character argument %d, element %d\n'%s'->'%s'\n",
+					      symName, na+1, (int)(i+1),
 					      z, cptr[i]);
 				    }
 			    }
@@ -2505,7 +2520,7 @@ static int string2type(char *s)
 }
 
 /* This is entirely legacy, with no known users (Mar 2012).
-   So we freeze the code involved. 
+   So we freeze the code involved.
  */
 
 static void *RObjToCPtr2(SEXP s)

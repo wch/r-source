@@ -41,7 +41,7 @@ getLoadedDLLs()
   Note that the class \code{DLLInfo} has an overloaded method for
   \code{$} which can be used to resolve native symbols within that
   DLL.  Therefore, one must access the R-level elements described
-  above using \code{[[}, e.g. \code{x[["name"]]} or \code{x[["handle"]]}.
+  above using \code{[[}, e.g.\sspace{}\code{x[["name"]]} or \code{x[["handle"]]}.
 }
 \author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}.}
 \note{

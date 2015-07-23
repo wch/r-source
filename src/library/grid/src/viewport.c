@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-5 The R Core Team
+ *                2003-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 
 #include "grid.h"
 #include <string.h>
-
-extern int gridRegisterIndex;
 
 /* Some access methods for viewports */
 SEXP viewportX(SEXP vp) {

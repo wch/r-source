@@ -73,8 +73,6 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 static int ParseBrowser(SEXP, SEXP);
 
 
-extern void InitDynload(void);
-
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
 static void R_ReplFile(FILE *fp, SEXP rho)
@@ -461,7 +459,6 @@ static void win32_segv(int signum)
    2005-12-17 BDR */
 
 static unsigned char ConsoleBuf[CONSOLE_BUFFER_SIZE];
-extern void R_CleanTempDir(void);
 
 static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 {
@@ -796,6 +793,8 @@ void setup_Rmainloop(void)
     InitOptions();
     InitEd();
     InitGraphics();
+    InitTypeTables(); /* must be before InitS3DefaultTypes */
+    InitS3DefaultTypes();
     
     R_Is_Running = 1;
     R_check_locale();
@@ -824,6 +823,7 @@ void setup_Rmainloop(void)
     R_Toplevel.restartstack = R_RestartStack;
     R_Toplevel.srcref = R_NilValue;
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
+    R_ExitContext = NULL;
 
     R_Warnings = R_NilValue;
 
@@ -873,7 +873,7 @@ void setup_Rmainloop(void)
 #endif
     /* At least temporarily unlock some bindings used in graphics */
     R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
-    R_unLockBinding(install(".Devices"), R_BaseEnv);
+    R_unLockBinding(R_DevicesSymbol, R_BaseEnv);
     R_unLockBinding(install(".Library.site"), R_BaseEnv);
 
     /* require(methods) if it is in the default packages */

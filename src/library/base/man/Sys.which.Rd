@@ -42,7 +42,7 @@ Sys.which(names)
 }
 \note{
   Except on Windows this calls the system command \command{which}: since
-  that is not part of e.g. the POSIX standards, exactly what it does is
+  that is not part of e.g.\sspace{}the POSIX standards, exactly what it does is
   OS-dependent.  It will usually do tilde-expansion and it may make use
   of \command{csh} aliases.
 

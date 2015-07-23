@@ -18,7 +18,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -242,14 +241,66 @@ SEXPTYPE str2type(const char *s)
     return (SEXPTYPE) -1;
 }
 
+static struct {
+    const char *cstrName;
+    SEXP rcharName;
+    SEXP rstrName;
+    SEXP rsymName;
+} Type2Table[MAX_NUM_SEXPTYPE];
 
-SEXP type2str(SEXPTYPE t)
+
+static int findTypeInTypeTable(SEXPTYPE t)
+ {
+    for (int i = 0; TypeTable[i].str; i++)
+	if (TypeTable[i].type == t) return i;
+
+    return -1;
+}
+
+// called from main.c
+attribute_hidden 
+void InitTypeTables(void) {
+
+    /* Type2Table */
+    for (int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
+        int j = findTypeInTypeTable(type);
+
+        if (j != -1) {
+            const char *cstr = TypeTable[j].str;
+            SEXP rchar = PROTECT(mkChar(cstr));
+            SEXP rstr = ScalarString(rchar);
+            MARK_NOT_MUTABLE(rstr);
+            R_PreserveObject(rstr);
+            UNPROTECT(1); /* rchar */
+            SEXP rsym = install(cstr);
+
+            Type2Table[type].cstrName = cstr;
+            Type2Table[type].rcharName = rchar;
+            Type2Table[type].rstrName = rstr;
+            Type2Table[type].rsymName = rsym;
+        } else {
+            Type2Table[type].cstrName = NULL;
+            Type2Table[type].rcharName = R_NULL_SEXP;
+            Type2Table[type].rstrName = R_NULL_SEXP;
+            Type2Table[type].rsymName = R_NULL_SEXP;
+        }
+    }
+}
+
+SEXP type2str_nowarn(SEXPTYPE t) /* returns a CHARSXP */
 {
-    int i;
+    if (t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        SEXP res = Type2Table[t].rcharName;
+        if (! IS_NULL_SEXP(res)) return res;
+    }
+    return R_NilValue;
+}
 
-    for (i = 0; TypeTable[i].str; i++) {
-	if (TypeTable[i].type == t)
-	    return mkChar(TypeTable[i].str);
+SEXP type2str(SEXPTYPE t) /* returns a CHARSXP */
+{
+    SEXP s = type2str_nowarn(t);
+    if (! IS_R_NilValue(s)) {
+        return s;
     }
     warning(_("type %d is unimplemented in '%s'"), t, "type2str");
     char buf[50];
@@ -257,13 +308,22 @@ SEXP type2str(SEXPTYPE t)
     return mkChar(buf);
 }
 
-const char *type2char(SEXPTYPE t)
+SEXP type2rstr(SEXPTYPE t) /* returns a STRSXP */
 {
-    int i;
+    if (t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        SEXP res = Type2Table[t].rstrName;
+        if (! IS_NULL_SEXP(res)) return res;
+    }
+    error(_("type %d is unimplemented in '%s'"), t, 
+	  "type2ImmutableScalarString");
+    return R_NilValue; /* for -Wall */
+}
 
-    for (i = 0; TypeTable[i].str; i++) {
-	if (TypeTable[i].type == t)
-	    return TypeTable[i].str;
+const char *type2char(SEXPTYPE t) /* returns a char* */
+{
+    if (t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        const char * res = Type2Table[t].cstrName;
+        if (res != NULL) return res;
     }
     warning(_("type %d is unimplemented in '%s'"), t, "type2char");
     static char buf[50];
@@ -274,13 +334,11 @@ const char *type2char(SEXPTYPE t)
 #ifdef UNUSED
 SEXP type2symbol(SEXPTYPE t)
 {
-    int i;
-    /* for efficiency, a hash table set up to index TypeTable, and
-       with TypeTable pointing to both the
-       character string and to the symbol would be better */
-    for (i = 0; TypeTable[i].str; i++) {
-	if (TypeTable[i].type == t)
-	    return install((const char *)&TypeTable[i].str);
+    if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        SEXP res = Type2Table[t].rsymName;
+        if (res != NULL) {
+            return res;
+        }
     }
     error(_("type %d is unimplemented in '%s'"), t, "type2symbol");
     return R_NilValue; /* for -Wall */
@@ -1772,8 +1830,20 @@ void uiter_setUTF8(UCharIterator *iter, const char *s, int32_t length);
 
 void uloc_setDefault(const char* localeID, UErrorCode* status);
 
+typedef enum {
+    ULOC_ACTUAL_LOCALE = 0,
+    ULOC_VALID_LOCALE = 1,
+    ULOC_DATA_LOCALE_TYPE_LIMIT = 3
+} ULocDataLocaleType ;
+
+
+const char* ucol_getLocaleByType(const UCollator *coll,
+				 ULocDataLocaleType type,
+				 UErrorCode *status);
+
 #define U_ZERO_ERROR 0
 #define U_FAILURE(x) ((x)>U_ZERO_ERROR)
+#define ULOC_ACTUAL_LOCALE 0
 
 #else
 #include <unicode/utypes.h>
@@ -1784,11 +1854,14 @@ void uloc_setDefault(const char* localeID, UErrorCode* status);
 
 static UCollator *collator = NULL;
 
+static Rboolean collationLocaleSet = FALSE;
+
 /* called from platform.c */
 void attribute_hidden resetICUcollator(void)
 {
     if (collator) ucol_close(collator);
     collator = NULL;
+    collationLocaleSet = FALSE;
 }
 
 static const struct {
@@ -1817,6 +1890,36 @@ static const struct {
     { NULL,  0 }
 };
 
+#ifdef Win32
+#define BUFFER_SIZE 512
+typedef int (WINAPI *PGSDLN)(LPWSTR, int);
+
+static const char *getLocale(void)
+{
+    const char *p = getenv("R_ICU_LOCALE");
+    if (p && p[0]) return p;
+
+    // This call is >= Vista/Server 2008
+    // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ
+    PGSDLN pGSDLN = (PGSDLN)
+	GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
+		       "GetSystemDefaultLocaleName");
+    if(pGSDLN) {
+	WCHAR wcBuffer[BUFFER_SIZE];
+	pGSDLN(wcBuffer, BUFFER_SIZE);
+	static char locale[BUFFER_SIZE];
+	WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
+			    locale, BUFFER_SIZE, NULL, NULL);
+	return locale;
+    } else return "root";
+}
+#else
+static const char *getLocale(void)
+{
+    const char *p = getenv("R_ICU_LOCALE");
+    return (p && p[0]) ? p : setlocale(LC_COLLATE, NULL);
+}
+#endif
 
 SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1833,13 +1936,23 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid '%s' argument"), this);
 	s = CHAR(STRING_ELT(x, 0));
 	if (streql(this, "locale")) {
-	    if (collator) ucol_close(collator);
-	    uloc_setDefault(s, &status);
-	    if(U_FAILURE(status))
-		error("failed to set ICU locale %s (%d)", s, status);
-	    collator = ucol_open(NULL, &status);
-	    if (U_FAILURE(status)) 
-		error("failed to open ICU collator (%d)", status);
+	    if (collator) {
+		ucol_close(collator);
+		collator = NULL;
+	    }
+	    if(strcmp(s, "none")) {
+		if(streql(s, "default")) 
+		    uloc_setDefault(getLocale(), &status);
+		else uloc_setDefault(s, &status);
+		if(U_FAILURE(status))
+		    error("failed to set ICU locale %s (%d)", s, status);
+		collator = ucol_open(NULL, &status);
+		if (U_FAILURE(status)) {
+		    collator = NULL;
+		    error("failed to open ICU collator (%d)", status);
+		}
+	    }
+	    collationLocaleSet = TRUE;
 	} else {
 	    int i, at = -1, val = -1;
 	    for (i = 0; ATtable[i].str; i++)
@@ -1865,34 +1978,60 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    const char *ans = "unknown", *res;
+    checkArity(op, args);
+
+    if(collator) {
+	UErrorCode  status = U_ZERO_ERROR;
+	int type = asInteger(CAR(args));
+	if (type < 1 || type > 2)
+	    error(_("invalid '%s' value"), "type");
+	
+	res = ucol_getLocaleByType(collator, 
+				   type == 1 ? ULOC_ACTUAL_LOCALE : ULOC_VALID_LOCALE, 
+				   &status);
+	if(!U_FAILURE(status) && res) ans = res;
+    } else ans = "ICU not in use";
+    return mkString(ans);
+}
 
 /* Caller has to manage the R_alloc stack */
 /* NB: strings can have equal collation weight without being identical */
 attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
-    int result = 0;
-    UErrorCode  status = U_ZERO_ERROR;
-    UCharIterator aIter, bIter;
-    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
-    int len1 = (int) strlen(as), len2 = (int) strlen(bs);
-
-    if (collator == NULL && strcmp("C", setlocale(LC_COLLATE, NULL)) ) {
-	/* do better later */
-	uloc_setDefault(setlocale(LC_COLLATE, NULL), &status);
-	if(U_FAILURE(status))
-	    error("failed to set ICU locale (%d)", status);
-	collator = ucol_open(NULL, &status);
-	if (U_FAILURE(status)) 
-	    error("failed to open ICU collator (%d)", status);
+    if (!collationLocaleSet) {
+	collationLocaleSet = TRUE;
+#ifndef Win32
+	if (strcmp("C", getLocale()) ) {
+#else
+	const char *p = getenv("R_ICU_LOCALE");
+        if(p && p[0]) {
+#endif
+	    UErrorCode status = U_ZERO_ERROR;
+	    uloc_setDefault(getLocale(), &status);
+	    if(U_FAILURE(status))
+		error("failed to set ICU locale (%d)", status);
+	    collator = ucol_open(NULL, &status);
+	    if (U_FAILURE(status)) {
+		collator = NULL;
+		error("failed to open ICU collator (%d)", status);
+	    }
+	}
     }
     if (collator == NULL)
 	return strcoll(translateChar(a), translateChar(b));
 
+    UCharIterator aIter, bIter;
+    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
+    int len1 = (int) strlen(as), len2 = (int) strlen(bs);
     uiter_setUTF8(&aIter, as, len1);
     uiter_setUTF8(&bIter, bs, len2);
-    result = ucol_strcollIter(collator, &aIter, &bIter, &status);
-    if (U_FAILURE(status)) error("could not collate");
+    UErrorCode status = U_ZERO_ERROR;
+    int result = ucol_strcollIter(collator, &aIter, &bIter, &status);
+    if (U_FAILURE(status)) error("could not collate using ICU");
     return result;
 }
 
@@ -1902,6 +2041,12 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     warning(_("ICU is not supported on this build"));
     return R_NilValue;
+}
+
+SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return mkString("ICU not in use");
 }
 
 void attribute_hidden resetICUcollator(void) {}

@@ -18,7 +18,7 @@ palette(value)
 }
 \details{
   The color palette and referring to colors by number (see
-  e.g. \code{\link{par}}) was provided for compatibility with S: in \R
+  e.g.\sspace{}\code{\link{par}}) was provided for compatibility with S: in \R
   it is almost always better to specify colours by name.
 
   If \code{value} has length 1, it is taken to be the name of a built-in

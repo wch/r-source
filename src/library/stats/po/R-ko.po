@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-27 13:33-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -764,8 +764,9 @@ msgstr "'rate' 또는 'scale' 중 하나만 지정해야 합니다"
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[]와 prob[]는 반드시 같은 길이를 가지는 벡터이어야 합니다"
 
-msgid "probabilities cannot be negative nor all 0"
-msgstr "확률값은 음의 값을 가질 수 없고 모두 0일 수도 없습니다"
+#, fuzzy
+msgid "probabilities must be finite, non-negative and not all 0"
+msgstr "확률은 반드시 음의 값을 가져서는 안됩니다"
 
 msgid "'x' must be non-negative"
 msgstr "'x'는 반드시 음수가 아니어야 합니다"
@@ -2508,6 +2509,9 @@ msgstr[0] "NA, NaNs 그리고/또는 Infs를 가지는 %d개의 관측치들은 
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "probabilities cannot be negative nor all 0"
+#~ msgstr "확률값은 음의 값을 가질 수 없고 모두 0일 수도 없습니다"
 
 #~ msgid "'init' must have 1 or %d columns"
 #~ msgstr "'init'는 반드시 1개 또는 %d개의 열을 가지고 있어야 합니다"

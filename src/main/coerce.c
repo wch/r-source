@@ -302,42 +302,7 @@ SEXP attribute_hidden StringFromInteger(int x, int *warn)
     else return mkChar(EncodeInteger(x, w));
 }
 
-#if OLD
-// moved to printutils.c
-static const char* dropTrailing0(char *s, const char *dec)
-{
-    /* Note that  's'  is modified */
-    char *p = s, cdec = dec[0];
-    for (p = s; *p; p++) {
-	if(*p == cdec) {
-	    char *replace = p++;
-	    while ('0' <= *p  &&  *p <= '9')
-		if(*(p++) != '0')
-		    replace = p;
-	    if(replace != p)
-		while((*(replace++) = *(p++)))
-		    ;
-	    break;
-	}
-    }
-    return s;
-}
-
-SEXP attribute_hidden StringFromReal(double x, int *warn)
-{
-    int w, d, e;
-    formatReal(&x, 1, &w, &d, &e, 0);
-    if (ISNA(x)) return NA_STRING;
-    else {
-	/* Note that we recast EncodeReal()'s value to possibly modify it
-	 * destructively; this is harmless here (in a sequential
-	 * environment), as mkChar() creates a copy */
-	/* Do it this way to avoid (3x) warnings in gcc 4.2.x */
-	char * tmp = (char *) EncodeReal(x, w, d, e, OutDec);
-	return mkChar(dropTrailing0(tmp, OutDec));
-    }
-}
-#endif
+// dropTrailing0 and StringFromReal moved to printutils.c
 
 SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
 {
@@ -442,7 +407,7 @@ static SEXP coerceToSymbol(SEXP v)
 	UNIMPLEMENTED_TYPE("coerceToSymbol", v);
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
-    ans = install(CHAR(ans));
+    ans = installChar(ans);
     UNPROTECT(1);
     return ans;
 }
@@ -1290,7 +1255,7 @@ SEXP CreateTag(SEXP x)
 	&& length(STRING_ELT(x, 0)) >= 1) {
 	x = installTrChar(STRING_ELT(x, 0));
     } else
-	x = install(CHAR(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0)));
+	x = installChar(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0));
     return x;
 }
 
@@ -1384,7 +1349,7 @@ SEXP asCharacterFactor(SEXP x)
 	error(_("attempting to coerce non-factor"));
 
     R_xlen_t i, n = XLENGTH(x);
-    SEXP labels = getAttrib(x, install("levels"));
+    SEXP labels = getAttrib(x, R_LevelsSymbol);
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
       int ii = INTEGER(x)[i];
@@ -1756,11 +1721,11 @@ Rcomplex asComplex(SEXP x)
 SEXP attribute_hidden do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    return ScalarString(type2str(TYPEOF(CAR(args))));
+    return type2rstr(TYPEOF(CAR(args)));
 }
 
 /* Define many of the <primitive> "is.xxx" functions :
-   Note that  isNull, isNumeric, etc are defined in util.c or Rinlinedfuns.h
+   Note that  isNull, isNumeric, etc are defined in util.c or ../include/Rinlinedfuns.h
 */
 SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1892,9 +1857,10 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case DOTSXP:
 	case ANYSXP:
 	case EXPRSXP:
-	case EXTPTRSXP:
-	case BCODESXP:
-	case WEAKREFSXP:
+	// Not recursive, as long as not subsettable (on the R level)
+	// case EXTPTRSXP:
+	// case BCODESXP:
+	// case WEAKREFSXP:
 	    LOGICAL(ans)[0] = 1;
 	    break;
 	default:
@@ -2193,6 +2159,7 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
+    static SEXP do_anyNA_formals = SEXP_INIT;
 
     if (length(args) < 1 || length(args) > 2)
 	errorcall(call, "anyNA takes 1 or 2 arguments");
@@ -2207,15 +2174,13 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* This is a primitive, so we manage argument matching ourselves.
 	   But this takes a little time.
 	 */
-	SEXP ap, tmp;
-	PROTECT(ap = CONS(R_NilValue, CONS(R_NilValue, R_NilValue)));
-	tmp = ap;
-	SET_TAG(tmp, install("x")); tmp = CDR(tmp);
-	SET_TAG(tmp, install("recursive"));
-	PROTECT(args = matchArgs(ap, args, call));
+	if (IS_NULL_SEXP(do_anyNA_formals))
+	    do_anyNA_formals = allocFormalsList2(install("x"),
+						 R_RecursiveSymbol);
+	PROTECT(args = matchArgs(do_anyNA_formals, args, call));
 	if(IS_R_MissingArg(CADR(args))) SETCADR(args, ScalarLogical(FALSE));
 	ans = ScalarLogical(anyNA(call, op, args, rho));
-	UNPROTECT(2);
+	UNPROTECT(1);
     }
     return ans;
 }
@@ -2602,13 +2567,15 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 /* This is a primitive SPECIALSXP */
 SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ap, argList, env, s, t;
+    SEXP argList, env, s, t;
+    static SEXP do_substitute_formals = SEXP_INIT;
+
+    if (IS_NULL_SEXP(do_substitute_formals))
+        do_substitute_formals = allocFormalsList2(install("expr"),
+						  install("env"));
 
     /* argument matching */
-    PROTECT(ap = list2(R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("expr"));
-    SET_TAG(CDR(ap), install("env"));
-    PROTECT(argList = matchArgs(ap, args, call));
+    PROTECT(argList = matchArgs(do_substitute_formals, args, call));
 
     /* set up the environment for substitution */
     if (IS_R_MissingArg(CADR(argList)))
@@ -2627,7 +2594,7 @@ SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(env);
     PROTECT(t = CONS(duplicate(CAR(argList)), R_NilValue));
     s = substituteList(t, env);
-    UNPROTECT(4);
+    UNPROTECT(3);
     return CAR(s);
 }
 
@@ -2638,7 +2605,7 @@ SEXP attribute_hidden do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
     check1arg(args, call, "expr");
     SEXP val = CAR(args);
     /* Make sure expression has NAMED == 2 before being returning
-       in to avoid modification of source code */
+       in order to avoid modification of source code */
     if (NAMED(val) != 2) SET_NAMED(val, 2);
     return(val);
 }

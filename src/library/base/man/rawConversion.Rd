@@ -42,7 +42,7 @@ packBits(x, type = c("raw", "integer"))
   \code{0}).  (Note that a single character string could contain
   embedded nuls; only trailing nulls are allowed and will be removed.)
   In either case it is possible to create a result which is invalid in a
-  multibyte locale, e.g. one using UTF-8. \link{Long vectors} are
+  multibyte locale, e.g.\sspace{}one using UTF-8. \link{Long vectors} are
   allowed if \code{multiple} is true.
 
   \code{rawShift(x, n)} shift the bits in \code{x} by \code{n} positions
@@ -63,7 +63,7 @@ packBits(x, type = c("raw", "integer"))
 #ifdef unix
 
   Note that \sQuote{bytes} are not necessarily the same as characters,
-  e.g. in UTF-8 locales.
+  e.g.\sspace{}in UTF-8 locales.
 #endif
 }
 \examples{

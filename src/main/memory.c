@@ -29,6 +29,7 @@
 
 #define USE_RINTERNALS
 
+#include <stdarg.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -47,7 +48,7 @@
 
    level 0 is no additional instrumentation
    level 1 marks uninitialized numeric, logical, integer, raw, 
-          complex vectors and R_alloc memory
+           complex vectors and R_alloc memory
    level 2 marks the data section of vector nodes as inaccessible
            when they are freed.
    level 3 marks the first three bytes of sxpinfo and the ATTRIB
@@ -1635,7 +1636,7 @@ static void RunGenCollect(R_size_t size_needed)
 
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
 
-    for (SEXP *sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
+    for (R_bcstack_t *sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
 	FORWARD_NODE(*sp);
 
     /* main processing loop */
@@ -2059,7 +2060,8 @@ void attribute_hidden InitMemory()
     ATTRIB0(R_NilValue) = R_NilValue;
     MARK_NOT_MUTABLE(R_NilValue);
 
-    R_BCNodeStackBase = (SEXP *) malloc(R_BCNODESTACKSIZE * sizeof(SEXP));
+    R_BCNodeStackBase =
+	(R_bcstack_t *) malloc(R_BCNODESTACKSIZE * sizeof(R_bcstack_t));
     if (R_BCNodeStackBase == NULL)
 	R_Suicide("couldn't allocate node stack");
 #ifdef BC_INT_STACK
@@ -2749,6 +2751,49 @@ SEXP allocS4Object(void)
    return s;
 }
 
+SEXP allocFormalsList(int nargs, ...) {
+    SEXP res = R_NilValue;
+    SEXP n;
+    int i;
+    va_list(syms);
+    va_start(syms, nargs);
+
+    for(i = 0; i < nargs; i++) {
+        res = CONS(R_NilValue, res);
+    }
+    R_PreserveObject(res);
+
+    n = res;
+    for(i = 0; i < nargs; i++) {
+        SET_TAG(n, (SEXP) va_arg(syms, SEXP));
+        MARK_NOT_MUTABLE(n);
+        n = CDR(n);
+    }
+    va_end(syms);
+
+    return res;
+}
+
+
+SEXP allocFormalsList2(SEXP sym1, SEXP sym2) {
+    return allocFormalsList(2, sym1, sym2);
+}
+
+SEXP allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3) {
+    return allocFormalsList(3, sym1, sym2, sym3);
+}
+
+SEXP allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4) {
+    return allocFormalsList(4, sym1, sym2, sym3, sym4);
+}
+
+SEXP allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5) {
+    return allocFormalsList(5, sym1, sym2, sym3, sym4, sym5);
+}
+
+SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6) {
+    return allocFormalsList(6, sym1, sym2, sym3, sym4, sym5, sym6);
+}
 
 /* "gc" a mark-sweep or in-place generational garbage collector */
 
@@ -2762,9 +2807,6 @@ static void R_gc_full(R_size_t size_needed)
     num_old_gens_to_collect = NUM_OLD_GENERATIONS;
     R_gc_internal(size_needed);
 }
-
-extern double R_getClockIncrement(void);
-extern void R_getProcTime(double *data);
 
 static double gctimes[5], gcstarttimes[5];
 static Rboolean gctime_enabled = FALSE;
@@ -3562,6 +3604,7 @@ void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
 /* These are only needed with the write barrier on */
 #ifdef TESTING_WRITE_BARRIER
 /* Primitive Accessors */
+/* not hidden since needed in some base packages */
 int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
 attribute_hidden
 void (SET_PRIMOFFSET)(SEXP x, int v) { SET_PRIMOFFSET(x, v); }
@@ -3647,15 +3690,24 @@ void attribute_hidden
 void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
 void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}
 
+attribute_hidden
 void (SET_BASE_SYM_CACHED)(SEXP b) { SET_BASE_SYM_CACHED(b); }
+attribute_hidden
 void (UNSET_BASE_SYM_CACHED)(SEXP b) { UNSET_BASE_SYM_CACHED(b); }
+attribute_hidden
 Rboolean (BASE_SYM_CACHED)(SEXP b) { return BASE_SYM_CACHED(b); }
 
+attribute_hidden
 void (SET_SPECIAL_SYMBOL)(SEXP b) { SET_SPECIAL_SYMBOL(b); }
+attribute_hidden
 void (UNSET_SPECIAL_SYMBOL)(SEXP b) { UNSET_SPECIAL_SYMBOL(b); }
+attribute_hidden
 Rboolean (IS_SPECIAL_SYMBOL)(SEXP b) { return IS_SPECIAL_SYMBOL(b); }
+attribute_hidden
 void (SET_NO_SPECIAL_SYMBOLS)(SEXP b) { SET_NO_SPECIAL_SYMBOLS(b); }
+attribute_hidden
 void (UNSET_NO_SPECIAL_SYMBOLS)(SEXP b) { UNSET_NO_SPECIAL_SYMBOLS(b); }
+attribute_hidden
 Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b) { return NO_SPECIAL_SYMBOLS(b); }
 
 /* R_FunTab accessors, only needed when write barrier is on */

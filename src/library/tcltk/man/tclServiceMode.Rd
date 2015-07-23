@@ -8,7 +8,7 @@
 \title{ Allow Tcl events to be serviced or not }
 \description{
 This function controls or reports on the Tcl service mode,
-i.e. whether Tcl will respond to events.
+i.e., whether Tcl will respond to events.
 }
 \usage{
 tclServiceMode(on = NULL)

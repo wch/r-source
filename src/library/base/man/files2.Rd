@@ -49,7 +49,7 @@ Sys.umask(mode = NA)
   as for the system function \code{mkdir}.  What modes can be set is
   OS-dependent, and it is unsafe to assume that more than three octal
   digits will be used.  For more details see your OS's documentation on the
-  system call \code{mkdir}, e.g. \command{man 2 mkdir} (and not that on
+  system call \code{mkdir}, e.g.\sspace{}\command{man 2 mkdir} (and not that on
   the command-line utility of that name).
 #endif
 
@@ -68,7 +68,7 @@ Sys.umask(mode = NA)
   See the comments for \code{dir.create} for how modes are interpreted.
   Changing mode on a symbolic link is unlikely to work (nor be
   necessary).  For more details see your OS's documentation on the
-  system call \code{chmod}, e.g. \command{man 2 chmod} (and not that on
+  system call \code{chmod}, e.g.\sspace{}\command{man 2 chmod} (and not that on
   the command-line utility of that name).  Whether this changes the
   permission of a symbolic link or its target is OS-dependent (although
   to change the target is more common, and POSIX does not support modes
@@ -80,7 +80,7 @@ Sys.umask(mode = NA)
   file.  So \R interprets \code{mode} to mean set read-only if and only
   if \code{(mode & 0200) == 0} (interpreted in octal).  Windows has a much
   more extensive system of file permissions on some file systems
-  (e.g. versions of NTFS) which are unrelated to this system call.
+  (e.g., versions of NTFS) which are unrelated to this system call.
 #endif
 
   \code{Sys.umask} sets the \code{umask} and returns the previous value:
@@ -88,7 +88,7 @@ Sys.umask(mode = NA)
 #ifdef unix
   It may not be supported (when a warning is issued and \code{"0"}
   is returned).  For more details see your OS's documentation on the
-  system call \code{umask}, e.g. \command{man 2 umask}.
+  system call \code{umask}, e.g.\sspace{}\command{man 2 umask}.
 #endif
 #ifdef windows
   All files on Windows are regarded as readable, and files being
@@ -112,7 +112,7 @@ Sys.umask(mode = NA)
   Using a missing value for a path name will always be regarded as a
   failure.  \code{dir.create} indicates failure if the directory already
   exists.  If \code{showWarnings = TRUE}, \code{dir.create} will give a
-  warning for an unexpected failure (e.g. not for a missing value nor
+  warning for an unexpected failure (e.g., not for a missing value nor
   for an already existing component for \code{recursive = TRUE}).
 
   \code{Sys.umask} returns the previous value of the \code{umask},

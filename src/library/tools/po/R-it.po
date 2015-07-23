@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -446,9 +446,8 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "argument 'file' must be a character string or connection"
+msgid "Rd object required"
 msgstr ""
-"argomento 'file' deve essere una stringa di caratteri o una connessione"
 
 #, fuzzy
 msgid "missing/empty %s field in '%s'"
@@ -483,6 +482,15 @@ msgstr "non posso lavorare con oggetti Rd con nomi mancanti/vuoti"
 #, fuzzy
 msgid "No help on %s found in RdDB %s"
 msgstr "non può essere usato per il pacchetto 'base'"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+msgid "No Rd macros in package '%s'."
+msgstr ""
 
 msgid "more than one \\examples section, using the first"
 msgstr ""
@@ -521,6 +529,9 @@ msgid "invalid value for '%s' : %s"
 msgstr ""
 
 msgid "Only one Rd section per %s is supported."
+msgstr ""
+
+msgid "DESCRIPTION file is for package '%s', not '%s'"
 msgstr ""
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
@@ -1342,6 +1353,10 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr ""
+#~ "argomento 'file' deve essere una stringa di caratteri o una connessione"
 
 #, fuzzy
 #~ msgid "Failed to locate the"

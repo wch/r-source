@@ -630,7 +630,8 @@ static SEXP s_dot_S3Class = SEXP_INIT;
 static SEXP R_S4_extends_table = SEXP_INIT;
 
  
-static SEXP cache_class(const char *class, SEXP klass) {
+static SEXP cache_class(const char *class, SEXP klass)
+{
     if(IS_NULL_SEXP(R_S4_extends_table)) {
 	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	R_PreserveObject(R_S4_extends_table);
@@ -673,6 +674,79 @@ static SEXP S4_extends(SEXP klass)
     return(val);
 }
 
+/* pre-allocated default class attributes */
+static struct {
+    SEXP vector;
+    SEXP matrix;
+    SEXP array;
+} Type2DefaultClass[MAX_NUM_SEXPTYPE];
+
+
+static SEXP createDefaultClass(SEXP part1, SEXP part2, SEXP part3)
+{
+    int size = 0;
+    if (! IS_R_NilValue(part1)) size++;
+    if (! IS_R_NilValue(part2)) size++;
+    if (! IS_R_NilValue(part3)) size++;
+
+    if (size == 0 || IS_R_NilValue(part2)) return R_NilValue;
+
+    SEXP res = allocVector(STRSXP, size);
+    R_PreserveObject(res);
+
+    int i = 0;
+    if (! IS_R_NilValue(part1)) SET_STRING_ELT(res, i++, part1);
+    if (! IS_R_NilValue(part2)) SET_STRING_ELT(res, i++, part2);
+    if (! IS_R_NilValue(part3)) SET_STRING_ELT(res, i, part3);
+
+    MARK_NOT_MUTABLE(res);
+    return res;
+}
+
+attribute_hidden
+void InitS3DefaultTypes()
+{
+    for(int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
+        SEXP part2 = R_NilValue;
+        SEXP part3 = R_NilValue;
+        int nprotected = 0;
+
+        switch(type) {
+            case CLOSXP:
+            case SPECIALSXP:
+            case BUILTINSXP:
+	        part2 = PROTECT(mkChar("function"));
+	        nprotected++;
+	        break;
+            case INTSXP:
+	    case REALSXP:
+	        part2 = PROTECT(type2str_nowarn(type));
+	        part3 = PROTECT(mkChar("numeric"));
+	        nprotected += 2;
+	        break;
+	    case LANGSXP:
+	        /* part2 remains R_NilValue: default type cannot be
+		   pre-allocated, as it depends on the object value */
+	        break;
+            case SYMSXP:
+                part2 = PROTECT(mkChar("name"));
+                nprotected++;
+                break;
+	    default:
+	        part2 = PROTECT(type2str_nowarn(type));
+	        nprotected++;
+	}
+
+	Type2DefaultClass[type].vector =
+	    createDefaultClass(R_NilValue, part2, part3);
+	Type2DefaultClass[type].matrix = 
+	    createDefaultClass(mkChar("matrix"), part2, part3);
+	Type2DefaultClass[type].array = 
+	    createDefaultClass(mkChar("array"), part2, part3);
+	UNPROTECT(nprotected);
+    }
+}
+
 /* Version for S3-dispatch */
 SEXP attribute_hidden R_data_class2 (SEXP obj)
 {
@@ -684,56 +758,39 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 	    return klass;
       }
       else { /* length(klass) == 0 */
-	SEXPTYPE t;
-	SEXP value, class0 = R_NilValue, dim = getAttrib(obj, R_DimSymbol);
-	int n = length(dim);
-	if(n > 0) {
-	    if(n == 2)
-		class0 = mkChar("matrix");
-	    else
-		class0 = mkChar("array");
-	}
-	PROTECT(class0);
-	switch(t = TYPEOF(obj)) {
-	case CLOSXP: case SPECIALSXP: case BUILTINSXP:
-	    klass = mkChar("function");
-	    break;
-	case INTSXP:
-	case REALSXP:
-	    if(isNull(class0)) {
-		PROTECT(value = allocVector(STRSXP, 2));
-		SET_STRING_ELT(value, 0, type2str(t));
-		SET_STRING_ELT(value, 1, mkChar("numeric"));
-		UNPROTECT(2);
-	    }
-	    else {
-		PROTECT(value = allocVector(STRSXP, 3));
-		SET_STRING_ELT(value, 0, class0);
-		SET_STRING_ELT(value, 1, type2str(t));
-		SET_STRING_ELT(value, 2, mkChar("numeric"));
-		UNPROTECT(2);
-	    }
-	    return value;
-	    break;
-	case SYMSXP:
-	    klass = mkChar("name");
-	    break;
-	case LANGSXP:
-	    klass = lang2str(obj, t);
-	    break;
-	default:
-	    klass = type2str(t);
-	}
-	PROTECT(klass);
-	if(isNull(class0)) {
-	    value = ScalarString(klass);
-	} else {
-	    value = allocVector(STRSXP, 2);
-	    SET_STRING_ELT(value, 0, class0);
-	    SET_STRING_ELT(value, 1, klass);
-	}
-	UNPROTECT(2);
-	return value;
+
+        SEXP dim = getAttrib(obj, R_DimSymbol);
+        int n = length(dim);
+        SEXPTYPE t = TYPEOF(obj);
+        SEXP defaultClass;
+        switch(n) {
+            case 0: defaultClass = Type2DefaultClass[t].vector; break;
+            case 2: defaultClass = Type2DefaultClass[t].matrix; break;
+            default: defaultClass = Type2DefaultClass[t].array; break;
+        }
+
+        if (! IS_R_NilValue(defaultClass)) {
+            return defaultClass;
+        }
+
+        /* now t == LANGSXP, but check to make sure */
+	if (t != LANGSXP)
+	    error("type must be LANGSXP at this point");
+        if (n == 0) {
+            return ScalarString(lang2str(obj, t));
+        }
+        SEXP part1;
+        if (n == 2) {
+            part1 = mkChar("matrix");
+        } else {
+            part1 = mkChar("array");
+        }
+        PROTECT(part1);
+        defaultClass = PROTECT(allocVector(STRSXP, 2));
+        SET_STRING_ELT(defaultClass, 0, part1);
+        SET_STRING_ELT(defaultClass, 1, lang2str(obj, t));
+        UNPROTECT(2); /* part1, defaultClass */
+        return defaultClass;
     }
 }
 
@@ -1273,21 +1330,22 @@ fairly minor.  LT */
 
 SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ap, argList, s, t, tag = R_NilValue, alist, ans;
+    SEXP argList, s, t, tag = R_NilValue, alist, ans;
     const char *str;
     int nargs = length(args), exact = 0;
     enum { NONE, PARTIAL, PARTIAL2, FULL } match = NONE;
+    static SEXP do_attr_formals = SEXP_INIT;
+
+    if (IS_NULL_SEXP(do_attr_formals))
+        do_attr_formals = allocFormalsList3(install("x"), install("which"),
+					    R_ExactSymbol);
+
+    argList = matchArgs(do_attr_formals, args, call);
 
     if (nargs < 2 || nargs > 3)
 	errorcall(call, "either 2 or 3 arguments are required");
 
     /* argument matching */
-    PROTECT(ap = list3(R_NilValue, R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("x"));
-    SET_TAG(CDR(ap), install("which"));
-    SET_TAG(CDDR(ap), install("exact"));
-    argList = matchArgs(ap, args, call);
-    UNPROTECT(1); /* ap */
     PROTECT(argList);
     s = CAR(argList);
     t = CADR(argList);
@@ -1399,7 +1457,8 @@ static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env)
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /*  attr(x, which = "<name>")  <-  value  */
-    SEXP obj, name, ap, argList;
+    SEXP obj, name, argList;
+    static SEXP do_attrgets_formals = SEXP_INIT;
 
     checkArity(op, args);
 
@@ -1441,12 +1500,10 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(obj);
 
     /* argument matching */
-    PROTECT(ap = list3(R_NilValue, R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("x"));
-    SET_TAG(CDR(ap), install("which"));
-    SET_TAG(CDDR(ap), install("value"));
-    argList = matchArgs(ap, args, call);
-    UNPROTECT(1); /* ap */
+    if (IS_NULL_SEXP(do_attrgets_formals))
+        do_attrgets_formals = allocFormalsList3(install("x"), install("which"),
+						install("value"));
+    argList = matchArgs(do_attrgets_formals, args, call);
     PROTECT(argList);
 
     name = CADR(argList);
@@ -1578,7 +1635,7 @@ int R_has_slot(SEXP obj, SEXP name) {
 	error(_("invalid type or length for slot name"));		\
     if(IS_NULL_SEXP(s_dot_Data))					\
 	init_slot_handling();						\
-    if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)))
+    if(isString(name)) name = installChar(STRING_ELT(name, 0))
 
     R_SLOT_INIT;
     if(SEXP_EQL(name, s_dot_Data) && TYPEOF(obj) != S4SXP)

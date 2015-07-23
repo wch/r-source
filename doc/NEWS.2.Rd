@@ -28,7 +28,7 @@
       to the reference index (\file{refman.pdf}).
 
       \item \code{untar(tar = "internal")} has some support for
-      \code{pax} headers as produced by e.g. \command{gnutar --posix}
+      \code{pax} headers as produced by e.g.\sspace{}\command{gnutar --posix}
       (which seems prevalent on OpenSUSE 12.2) or
       \command{bsdtar --format pax}, including long path and link names.
 
@@ -44,7 +44,7 @@
       unloading.
 
       The Tcl/Tk event loop is inhibited in a forked child from package
-      \pkg{parallel} (as in e.g. \code{mclapply()}).
+      \pkg{parallel} (as in e.g.\sspace{}\code{mclapply()}).
 
       \item \code{parallel::makeCluster()} recognizes the value
       \samp{random} for the environment variable \env{R_PARALLEL_PORT}:
@@ -97,7 +97,7 @@
       C++ now work on Mac OS 10.8 with Xcode 4.5.2 (\PR{15107}).
 
       \item The cairo-based versions of \code{X11()} now work with
-      current versions of cairographics (e.g. 1.12.10).  (\PR{15168})
+      current versions of cairographics (e.g., 1.12.10).  (\PR{15168})
 
       A workaround for earlier versions of \R is to use
       \code{X11.options(type = "nbcairo")}.
@@ -713,7 +713,7 @@
       information. (Other values are supported as well; see
       \code{?options}.)
 
-      \item The NA warning messages from e.g. \code{pchisq()} now report
+      \item The NA warning messages from e.g.\sspace{}\code{pchisq()} now report
       the call to the closure and not that of the \code{.Internal}.
 
       \item Added Polish translations by Łukasz Daniel.
@@ -925,7 +925,7 @@
       elsewhere.)
 
       \item The evaluator now keeps track of source references outside
-      of functions, e.g. when \code{source()} executes a script.
+      of functions, e.g.\sspace{}when \code{source()} executes a script.
 
       \item The replacement method for \code{window()} now works
       correctly for multiple time series of class \code{"mts"}.
@@ -948,7 +948,7 @@
       (\PR{14931})
 
       \item The string \code{"infinity"} allowed by C99 was not accepted
-      as a numerical string value by e.g. \code{scan()} and
+      as a numerical string value by e.g.\sspace{}\code{scan()} and
       \code{as.numeric()}.  (\PR{14933})
 
       \item In \code{legend()}, setting some entries of \code{lwd} to
@@ -1764,7 +1764,7 @@
 
       \item Labeling of the p-values in various anova tables has been
       rationalized to be either \code{"Pr(>F)"} or \code{"Pr(>Chi)"}
-      (i.e. the \code{"Pr(F)"}, \code{"Pr(Chi)"} and \code{"P(>|Chi|)"}
+      (i.e., the \code{"Pr(F)"}, \code{"Pr(Chi)"} and \code{"P(>|Chi|)"}
       variants have been eliminated).  Code which extracts the p value
       \emph{via} indexing by name may need adjustment.
 
@@ -1794,7 +1794,7 @@
       already available in the \sQuote{R-devel} version of \R).
 
       \item Building PDF manuals (for \R itself or packages,
-      e.g. \emph{via} \command{R CMD check}) by default requires the
+      e.g.\sspace{}\emph{via} \command{R CMD check}) by default requires the
       LaTeX package \samp{inconsolata}: see the section on
       \sQuote{Making the manuals} in the \sQuote{R Installation and
 	Administration Manual}.
@@ -2381,8 +2381,8 @@
 	tem} some exceptions to the warning.)
 
       \item A dependency on SVN revision is allowed for \code{R},
-      e.g. \code{R (>= r56550)}.  This should be used in conjunction with a
-      version number, e.g. \code{R (>= 2.14.0), R (>= r56550)} to
+      e.g.\sspace{}\code{R (>= r56550)}.  This should be used in conjunction with a
+      version number, e.g.\sspace{}\code{R (>= 2.14.0), R (>= r56550)} to
       distinguish between R-patched and R-devel versions with the same
       SVN revision.
 
@@ -2633,7 +2633,7 @@
       (\PR{14690})
 
       \item \code{loess()} is better protected against misuse,
-      e.g. zero-length \code{span}.  (\PR{14691})
+      e.g.\sspace{}zero-length \code{span}.  (\PR{14691})
 
       \item \code{HoltWinters()} checks that the optimization
       succeeded. (\PR{14694})
@@ -2670,7 +2670,7 @@
 
       \item The revised HTML search system now generates better
       hyperlinks to help topics found: previously it gave problems with
-      help pages with names containing e.g. spaces and slashes.
+      help pages with names containing e.g.\sspace{}spaces and slashes.
 
       \item A late change in \R 2.13.2 broke \samp{\Sexpr} expressions
       in Rd files.
@@ -2860,7 +2860,7 @@
       assuming the box is a bounding box). (\PR{202})
 
       \item \code{RShowDoc()} can now display the licences shipped with
-      \R, e.g. \code{RShowDoc("GPL-3")}.
+      \R, e.g.\sspace{}\code{RShowDoc("GPL-3")}.
 
       \item New wrapper function \code{showNonASCIIfile()} in package
       \pkg{tools}.
@@ -3601,7 +3601,7 @@
 
       After re-building vignettes the default clean-up operation will
       remove any directories (and not just files) created during the
-      process: e.g. one package created a \file{.R_cache} directory.
+      process: e.g., one package created a \file{.R_cache} directory.
 
       Empty directories are now removed unless the option
       \option{--keep-empty-dirs} is given (and a few packages do
@@ -3907,8 +3907,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{max()} and \code{min()} work harder to ensure that
-      \code{NA} has precedence over \code{NaN}, so e.g. \code{min(NaN,
-	NA)} is \code{NA}.  (This was not previously documented except
+      \code{NA} has precedence over \code{NaN},
+      so e.g.\sspace{}\code{min(NaN, NA)} is \code{NA}.
+      (This was not previously documented except
       for within a single numeric vector, where compiler optimizations
       often defeated the code.)
     }
@@ -4105,7 +4106,7 @@
       \item \code{ccf(na.action = na.pass)} was not implemented.
 
       \item The parser accepted some incorrect numeric constants,
-      e.g. \code{20x2}.  (Reported by Olaf Mersmann.)
+      e.g.\sspace{}\code{20x2}.  (Reported by Olaf Mersmann.)
 
       \item \code{format(*, zero.print)} did not always replace the full
       zero parts.
@@ -4381,7 +4382,7 @@
        objects now insert linebreaks in long calls in the same way that
        the \code{print()} methods for \code{"summary.[g]lm"} objects
        have long done.  This does change the layout of the examples for
-       a number of packages, e.g. \CRANpkg{MASS}.  (\PR{14250})
+       a number of packages, e.g.\sspace{}\CRANpkg{MASS}.  (\PR{14250})
 
       \item \code{constrOptim()} can now be used with method
       \code{"SANN"}.  (\PR{14245})
@@ -4426,7 +4427,7 @@
        and uses \code{list2env()} as list method.
 
       \item There are several small changes to output which \sQuote{zap}
-       small numbers, e.g. in printing quantiles of residuals in
+       small numbers, e.g.\sspace{}in printing quantiles of residuals in
        summaries from \code{"lm"} and \code{"glm"} fits, and in test
        statistics in \code{print.anova()}.
 
@@ -4881,12 +4882,13 @@
        \code{as()}.
 
       \item The densities of non-central chi-squared are now more accurate
-       in some cases in the extreme tails, e.g. \code{dchisq(2000, 2,
-       1000)}, as a series expansion was truncated too early.
+       in some cases in the extreme tails,
+       e.g.\sspace{}\code{dchisq(2000, 2, 1000)},
+       as a series expansion was truncated too early.
        (\PR{14105})
 
       \item \code{pt()} is more accurate in the left tail for \code{ncp}
-       large, e.g. \code{pt(-1000, 3, 200)}.  (\PR{14069})
+       large, e.g.\sspace{}\code{pt(-1000, 3, 200)}.  (\PR{14069})
 
       \item The default C function (\code{R_binary}) for binary ops now
        sets the S4 bit in the result if either argument is an S4 object.
@@ -5534,7 +5536,7 @@
       to \code{NA} outputs.
 
       \item \code{file()} has a new argument \code{raw} which may help
-       if it is used with something other than a regular file, e.g. a
+       if it is used with something other than a regular file, e.g.\sspace{}a
        character device.
 
       \item New function \code{strtoi()}, a wrapper for the C function
@@ -5551,7 +5553,7 @@
        \code{"hexmode"} gain a \code{width} argument.
 
       \item \code{seq.int()} returns an integer result in some further cases
-       where \code{seq()} does, e.g. \code{seq.int(1L, 9L, by = 2L)}.
+       where \code{seq()} does, e.g.\sspace{}\code{seq.int(1L, 9L, by = 2L)}.
 
       \item Added \samp{\subsection\{\}\{\}} macro to Rd syntax, for
        subsections within sections.
@@ -5983,7 +5985,7 @@
        memory (which also slowed them down).
 
       \item \command{R CMD SHLIB} could fail if used with paths that
-       were not alphanumeric, e.g. contained \code{+}.  (\PR{14168})
+       were not alphanumeric, e.g.\sspace{}contained \code{+}.  (\PR{14168})
 
       \item \code{sprintf()} was not re-entrant, which potentially
        caused problems if an \code{as.character()} method called it.
@@ -6076,7 +6078,7 @@
 
       \item A Bioconductor mirror can be set for use by
       \code{setRepositories()} \emph{via} the option \code{"BioC_mirror"},
-      e.g. the European mirror can be selected by
+      e.g.\sspace{}the European mirror can be selected by
       \code{options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")}.
 
       \item Double-clicking in a \code{tk_select.list()} list box now
@@ -6145,8 +6147,8 @@
       package/namespace is no longer needed.
 
       \item There have been small fixes to the rendering of help,
-      e.g. \code{\\command} is now rendered verbatim (so e.g. \code{--}
-      is not interpreted, \PR{14045}).
+      e.g.\sspace{}\code{\\command} is now rendered verbatim
+      (so e.g.\sspace{}\code{--} is not interpreted, \PR{14045}).
 
       Also, there are many small changes to help files where the new
       converters were not rendering them in the same way as before.
@@ -6717,7 +6719,7 @@
       \item It is possible to ask for static HTML pages to be prebuilt
        \emph{via} the configure option \option{--enable-prebuilt-html}.  This
        may be useful for those who wish to make HTML help available
-       outside R, e.g. on a local web site.
+       outside R, e.g.\sspace{}on a local web site.
 
       \item An experimental tag \code{\\Sexpr} has been added to Rd
        files, to evaluate expressions at build, install, or render time.

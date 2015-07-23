@@ -19,7 +19,7 @@ Recall(\dots)
 }
 \note{
   \code{Recall} will not work correctly when passed as a function
-  argument, e.g. to the \code{apply} family of functions.
+  argument, e.g.\sspace{}to the \code{apply} family of functions.
 }
 \seealso{
   \code{\link{do.call}} and \code{\link{call}}.

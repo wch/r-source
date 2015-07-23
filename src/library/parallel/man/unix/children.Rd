@@ -85,7 +85,7 @@ mckill(process, signal = 2L)
   \code{readChildren}).
 
   \code{selectChildren} returns \code{TRUE} is the timeout was reached,
-  \code{FALSE} if an error occurred (e.g. if the master process was
+  \code{FALSE} if an error occurred (e.g., if the master process was
   interrupted) or an integer vector of process IDs with children that
   have data available, or \code{NULL} if there are no children.
 

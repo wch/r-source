@@ -17,13 +17,17 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+#define NO_NLS
+#include <Defn.h>
 #include "tcltk.h" /* declarations of our `public' interface */
 
 #ifndef Win32
 #include <R_ext/eventloop.h>
 #endif
 
-#include <R.h>
 #include <stdlib.h>
 
 #ifdef ENABLE_NLS
@@ -32,10 +36,6 @@
 #else
 #define _(String) (String)
 #endif
-
-extern int (*R_timeout_handler)();
-extern long R_timeout_val;
-
 
 /* R event structure */
 typedef struct {
@@ -60,7 +60,7 @@ static void TclSpinLoop(void *data)
     while (Tcl_DoOneEvent(TCL_DONT_WAIT)) ;
 }
 
-extern Rboolean R_isForkedChild;
+//extern Rboolean R_isForkedChild;
 static void TclHandler(void)
 {
     if (!R_isForkedChild && !Tcl_lock 

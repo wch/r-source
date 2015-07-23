@@ -83,4 +83,6 @@ if(nzchar(vind)) { # so vignettes have been installed
     stopifnot("grid" %in% gVigns$names, inherits(gVigns, "pkgVignettes"))
 }
 
+## This might leave collation changed, so do not put other things after it.
+example(icuSetCollate)
 proc.time()

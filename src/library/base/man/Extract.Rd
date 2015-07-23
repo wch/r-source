@@ -123,7 +123,7 @@ x$i <- value
   than once the latest assigned value for an index will result.
 
   It is an error to apply any of these operators to an object which is
-  not subsettable (e.g. a function).
+  not subsettable (e.g., a function).
 }
 
 \section{Atomic vectors}{

@@ -686,11 +686,11 @@
       what
     else {
 	eligible <-
-	    sapply(contains,
+	    vapply(contains,
 		   if(simpleOnly)
 		   function(x) (is.logical(x) && x) || x@simple
 		   else # eliminate conditional inheritance
-		   function(x) (is.logical(x) && x) || x@simple || identical(body(x@test), TRUE))
+		   function(x) (is.logical(x) && x) || x@simple || identical(body(x@test), TRUE), NA)
 	what[eligible]
     }
 }
@@ -748,7 +748,7 @@
   if(length(methods) == 1L)
     return(methods[[1L]]) # the method
   else if(length(methods) == 0L) {
-    cnames <- paste0("\"", sapply(classes, as.character), "\"",
+    cnames <- paste0("\"", vapply(classes, as.character, ""), "\"",
 		     collapse = ", ")
     stop(gettextf("unable to find an inherited method for function %s for signature %s",
                   sQuote(fdef@generic),
@@ -901,9 +901,9 @@
   }
   ## prefer partially direct methods
   if(length(which) > 1) {
-    direct <- sapply(methods[which], function(x, target)
+    direct <- vapply(methods[which], function(x, target)
                      (is(x, "MethodDefinition") && any(target == x@defined)),
-                     target = target)
+		     NA, target = target)
     if(any(direct) && !all(direct)) {
       which <- which[direct]
       note <- c(note, sprintf(ngettext(length(which),
@@ -1051,7 +1051,7 @@
     labels <- objects(envir=table, all.names = TRUE)
     if(!is.null(classes) && length(labels)) {
 	sigL <- strsplit(labels, split = "#")
-	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
+	keep <- !vapply(sigL, function(x, y) all(is.na(match(x, y))), NA, y=classes)
 	labels <- labels[keep]
     }
     if(length(labels) == 0L) {
@@ -1496,7 +1496,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
   ## in testInheritedMethods as a marker to warn about undefined subclasses
   .relevantClasses <- function(classes, excludeVirtual, where, doinheritance) {
     classDefs <- lapply(classes, getClassDef, where)
-    undefs <- sapply(classDefs, is.null)
+    undefs <- vapply(classDefs, is.null, NA)
     if(any(undefs)) {
       .undefClasses <<- unique(c(.undefClasses, classes[undefs]))
       classes <- classes[!undefs]
@@ -1526,7 +1526,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       classDefs[[iAny]] <- getClassDef(".Other")
     }
     if(excludeVirtual)
-      classes <- classes[sapply(classDefs, function(def) identical(def@virtual, FALSE))]
+      classes <- classes[vapply(classDefs, function(def) identical(def@virtual, FALSE), NA)]
     unique(c(classes, allSubs))
   }
   ## end of .relevantClasses
@@ -1620,9 +1620,9 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
           nsig
       }
       else if(is.null(x))
-        rep("<NONE>", length(sig))
+        rep_len("<NONE>", length(sig))
       else # primitive
-        rep("ANY", length(sig))
+        rep_len("ANY", length(sig))
     }
     signatures <- lapply(signatures, doSelect)
   }

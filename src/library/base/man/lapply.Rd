@@ -79,7 +79,7 @@ simplify2array(x, higher = TRUE)
 }
 \details{
   \code{FUN} is found by a call to \code{\link{match.fun}} and typically
-  is specified as a function or a symbol (e.g. a backquoted name) or a
+  is specified as a function or a symbol (e.g., a backquoted name) or a
   character string specifying a function to be searched for from the
   environment of the call to \code{lapply}.
 
@@ -109,7 +109,7 @@ simplify2array(x, higher = TRUE)
 
   Users of S4 classes should pass a list to \code{lapply} and
   \code{vapply}: the internal coercion is done by the \code{as.list} in
-  the base namespace and not one defined by a user (e.g. by setting S4
+  the base namespace and not one defined by a user (e.g., by setting S4
   methods on the base function).
   %% rather should really use  as(x, "list")  iff  isS4(x)
 
@@ -147,14 +147,14 @@ simplify2array(x, higher = TRUE)
   equivalent to \code{lapply(*)}.
 
   For historical reasons, the calls created by \code{lapply} are
-  unevaluated, and code has been written (e.g. \code{bquote}) that
+  unevaluated, and code has been written (e.g., \code{bquote}) that
   relies on this.  This means that the recorded call is always of the
   form \code{FUN(X[[i]], ...)}, with \code{i} replaced by the current
   (integer or double) index.  This is not normally a problem, but it can
   be if \code{FUN} uses \code{\link{sys.call}} or
   \code{\link{match.call}} or if it is a primitive function that makes
   use of the call.  This means that it is often safer to call primitive
-  functions with a wrapper, so that e.g. \code{lapply(ll, function(x)
+  functions with a wrapper, so that e.g.\sspace{}\code{lapply(ll, function(x)
   is.numeric(x))} is required to ensure that method dispatch for
   \code{is.numeric} occurs correctly.
 

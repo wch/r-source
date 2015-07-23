@@ -60,5 +60,13 @@ as.hexmode(x)
   converting integers to hex, \code{\link{strtoi}} to convert hex
   strings to integers.
 }
+\examples{
+i <- as.hexmode("7fffffff")
+i; class(i)
+identical(as.integer(i), .Machine$integer.max)
+
+hm <- as.hexmode(c(NA, 1)); hm
+as.integer(hm)
+}
 \keyword{utilities}
 \keyword{print}

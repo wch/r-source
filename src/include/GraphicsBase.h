@@ -41,4 +41,6 @@ void unregisterBase(void); /* used in devices.c */
 
 void Rf_setBaseDevice(Rboolean val, pGEDevDesc dd); /* used in graphics.c */
 
+int baseRegisterIndex;
+
 #endif /* R_GRAPHICSBASE_ */

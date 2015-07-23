@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1632,11 +1632,11 @@ msgstr "określ 'rate' lub 'scale', ale nie oba jednocześnie"
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "argumenty 'x' oraz 'prob' muszą być wektorami o jednakowej długości"
 
-# stats/R/distn.R: 157
-# stop("probabilities cannot be negative nor all 0")
-msgid "probabilities cannot be negative nor all 0"
-msgstr ""
-"prawdopodobieństwa nie mogą być ujemne ani wszyskie jednocześnie być równe 0"
+# stats/R/chisq.test.R: 110
+# stop("probabilities must be non-negative.")
+#, fuzzy
+msgid "probabilities must be finite, non-negative and not all 0"
+msgstr "prawdopodobieństwa muszą być nieujemne."
 
 # stats/R/distn.R: 161
 # stop("'x' must be non-negative")
@@ -5104,6 +5104,13 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktu"
 msgstr[1] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
 msgstr[2] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
+
+# stats/R/distn.R: 157
+# stop("probabilities cannot be negative nor all 0")
+#~ msgid "probabilities cannot be negative nor all 0"
+#~ msgstr ""
+#~ "prawdopodobieństwa nie mogą być ujemne ani wszyskie jednocześnie być "
+#~ "równe 0"
 
 # stats/R/filter.R: 57
 # stop(gettextf("'init' must have 1 or %d columns", nser),

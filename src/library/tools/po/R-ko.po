@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -482,8 +482,8 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "argument 'file' must be a character string or connection"
-msgstr "인자 'file'은 반드시 문자열 또는 연결이어야 합니다"
+msgid "Rd object required"
+msgstr ""
 
 msgid "missing/empty %s field in '%s'"
 msgstr "'%2$s'내에 %1$s 항목이 없습니다"
@@ -512,6 +512,16 @@ msgstr "이름이 없는 Rd 객체들은 다루어질 수 없습니다"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "RdDB %2$s 로부터 %1$s와 관계된 도움말을 찾을 수 없습니다"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr "패키지 %s에 대한 문서를 찾을 수 없습니다"
 
 msgid "more than one \\examples section, using the first"
 msgstr "한 개이상의 \\examples 섹션이 발견되었으며, 이중 첫번째것을 사용합니다"
@@ -551,6 +561,9 @@ msgid "invalid value for '%s' : %s"
 msgstr "'%s'에 대한 값이 잘못되었습니다 : %s"
 
 msgid "Only one Rd section per %s is supported."
+msgstr ""
+
+msgid "DESCRIPTION file is for package '%s', not '%s'"
 msgstr ""
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
@@ -1324,6 +1337,9 @@ msgstr[0] "객체 %s는 하나 이상의 데이터 호출로부터 생성되었�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr "인자 'file'은 반드시 문자열 또는 연결이어야 합니다"
 
 #~ msgid "Sweave"
 #~ msgstr "Sweave"

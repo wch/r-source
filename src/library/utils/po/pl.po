@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41+0100\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2014-03-13 20:34+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -84,12 +84,12 @@ msgstr ""
 #  _("invalid '%s' argument")
 # utils/src/stubs.c: 68
 #  _("invalid '%s' argument")
-#: io.c:328 io.c:332 io.c:342 io.c:573 io.c:773 io.c:826 io.c:838 io.c:842
-#: io.c:848 io.c:849 io.c:1073 io.c:1074 io.c:1076 io.c:1077 io.c:1078
-#: io.c:1079 io.c:1080 io.c:1081 stubs.c:48 stubs.c:68 windows/dialogs.c:170
-#: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
-#: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
-#: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
+#: io.c:324 io.c:328 io.c:338 io.c:569 io.c:769 io.c:822 io.c:834 io.c:838
+#: io.c:844 io.c:845 io.c:1068 io.c:1069 io.c:1071 io.c:1072 io.c:1073
+#: io.c:1074 io.c:1075 io.c:1076 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
+#: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
+#: windows/dialogs.c:321 windows/util.c:111 windows/widgets.c:78
 #: windows/widgets.c:81 windows/widgets.c:86
 #, c-format
 msgid "invalid '%s' argument"
@@ -99,7 +99,7 @@ msgstr "niepoprawny argument '%s'"
 # error(_("invalid quote symbol set"))
 # utils/src/io.c: 814
 # error(_("invalid quote symbol set"))
-#: io.c:351 io.c:835
+#: io.c:347 io.c:831
 msgid "invalid quote symbol set"
 msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 
@@ -109,7 +109,7 @@ msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 # error(_("cannot open the connection"))
 # utils/src/io.c: 1040
 # error(_("cannot open the connection"))
-#: io.c:363 io.c:858 io.c:1061
+#: io.c:359 io.c:854 io.c:1056
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
@@ -117,7 +117,7 @@ msgstr "nie można otworzyć połączenia"
 # error(_("cannot read from this connection"))
 # utils/src/io.c: 370
 # error(_("cannot read from this connection"))
-#: io.c:366 io.c:370
+#: io.c:362 io.c:366
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
@@ -125,7 +125,7 @@ msgstr "nie można czytać z tego połączenia"
 # error(_("quoted string on line %d terminated by EOF"), inquote)
 # utils/src/io.c: 435
 # error(_("quoted string on line %d terminated by EOF"), inquote)
-#: io.c:417 io.c:435
+#: io.c:413 io.c:431
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr ""
@@ -133,18 +133,18 @@ msgstr ""
 
 # utils/src/io.c: 567
 # error(_("the first argument must be of mode character"))
-#: io.c:569
+#: io.c:565
 msgid "the first argument must be of mode character"
 msgstr "pierwszy argument musi być trybu tekstowego"
 
-#: io.c:599
+#: io.c:595
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
 msgstr ""
 
 # utils/src/io.c: 754
 #  _("Selection: ")
-#: io.c:775
+#: io.c:771
 #, c-format
 msgid "Selection: "
 msgstr "Wybór: "
@@ -153,13 +153,13 @@ msgstr "Wybór: "
 # error(_("cannot allocate buffer in 'readTableHead'"))
 # utils/src/io.c: 860
 # error(_("cannot allocate buffer in 'readTableHead'"))
-#: io.c:867 io.c:881
+#: io.c:863 io.c:877
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
 # utils/src/io.c: 871
 # error(_("\\ followed by EOF"))
-#: io.c:892
+#: io.c:888
 msgid "\\ followed by EOF"
 msgstr "\\ a następnie EOF"
 
@@ -169,38 +169,38 @@ msgstr "\\ a następnie EOF"
 # utils/src/io.c: 923
 # error(_("incomplete final line found by readTableHeader on '%s'"),
 # 		  data.con->description)
-#: io.c:941 io.c:944
+#: io.c:937 io.c:940
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "niekompletna końcowa linia znaleziona przez 'readTableHeader' w '%s'"
 
 # utils/src/io.c: 980
 # error(_("index out of range"))
-#: io.c:1001
+#: io.c:997
 msgid "index out of range"
 msgstr "indeks poza zakresem"
 
 # utils/src/io.c: 1033
 # error(_("'file' is not a connection"))
-#: io.c:1054
+#: io.c:1049
 msgid "'file' is not a connection"
 msgstr "argument 'file' nie jest połączeniem"
 
 # utils/src/io.c: 1036
 # error(_("cannot write to this connection"))
-#: io.c:1057
+#: io.c:1052
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
 # utils/src/io.c: 1066
 # error(_("'dec' must be a single character"))
-#: io.c:1087
+#: io.c:1082
 msgid "'dec' must be a single character"
 msgstr "argument 'dec' musi być pojedynczym znakiem"
 
 # utils/src/io.c: 1093
 # error(_("corrupt data frame -- length of column %d does not not match nrows"), j+1)
-#: io.c:1114
+#: io.c:1108
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
@@ -208,7 +208,7 @@ msgstr ""
 
 # utils/src/io.c: 1123
 # error(_("column %s claims to be a factor but does not have numeric codes"), j+1)
-#: io.c:1145
+#: io.c:1139
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
@@ -216,25 +216,25 @@ msgstr ""
 
 # utils/src/io.c: 1141
 # error(_("corrupt matrix -- dims not not match length"))
-#: io.c:1164
+#: io.c:1157
 msgid "corrupt matrix -- dims not not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
 # utils/src/stubs.c: 57
 #  _("'savehistory' can only be used in Rgui and Rterm")
-#: stubs.c:57
+#: stubs.c:56
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
 # utils/src/stubs.c: 74
 #  _("'loadhistory' can only be used in Rgui and Rterm")
-#: stubs.c:74
+#: stubs.c:73
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
 # utils/src/stubs.c: 86
 #  _("invalid timestamp")
-#: stubs.c:86
+#: stubs.c:85
 msgid "invalid timestamp"
 msgstr "niepoprawna sygnatura czasu"
 
@@ -242,7 +242,7 @@ msgstr "niepoprawna sygnatura czasu"
 # error(_("X11 dataentry cannot be loaded"))
 # utils/src/stubs.c: 160
 # error(_("X11 dataentry cannot be loaded"))
-#: stubs.c:152 stubs.c:160
+#: stubs.c:151 stubs.c:159
 msgid "X11 dataentry cannot be loaded"
 msgstr "moduł X11 nie może zostać załadowany"
 
@@ -252,7 +252,7 @@ msgstr "moduł X11 nie może zostać załadowany"
 # error(_("X11 is not available"))
 # utils/src/stubs.c: 191
 # error(_("X11 is not available"))
-#: stubs.c:156 stubs.c:185 stubs.c:191
+#: stubs.c:155 stubs.c:184 stubs.c:190
 msgid "X11 is not available"
 msgstr "X11 nie jest dostępne"
 
@@ -260,7 +260,7 @@ msgstr "X11 nie jest dostępne"
 # error(_("invalid '%s' specification"), "editor")
 # utils/src/stubs.c: 252
 # error(_("invalid '%s' specification"), "filename")
-#: stubs.c:249 stubs.c:252
+#: stubs.c:248 stubs.c:251
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "niepoprawne określenie '%s'"
@@ -292,7 +292,7 @@ msgstr "'nsl()' nie jest obsługiwany na tej platformie"
 
 # utils/src/windows/dialogs.c: 182
 #  _("unknown type")
-#: windows/dialogs.c:182
+#: windows/dialogs.c:181
 msgid "unknown type"
 msgstr "nieznany typ"
 
@@ -304,41 +304,41 @@ msgstr "nieznany typ"
 #  _("menu functions can only be used in the GUI")
 # utils/src/windows/dialogs.c: 311
 #  _("menu functions can only be used in the GUI")
-#: windows/dialogs.c:214 windows/dialogs.c:238 windows/dialogs.c:276
-#: windows/dialogs.c:311
+#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
+#: windows/dialogs.c:310
 msgid "menu functions can only be used in the GUI"
 msgstr "funkcje menu mogą być używane jedynie w GUI"
 
 # utils/src/windows/dialogs.c: 246
 #  _("unable to retrieve items for %s (%s)")
-#: windows/dialogs.c:246
+#: windows/dialogs.c:245
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "nie można pobrać pozycji dla %s (%s)"
 
 # utils/src/windows/dialogs.c: 284
 #  _("unable to add menu (%s)")
-#: windows/dialogs.c:284
+#: windows/dialogs.c:283
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "nie można dodać menu (%s)"
 
 # utils/src/windows/dialogs.c: 296
 #  _("unable to add menu item (%s)")
-#: windows/dialogs.c:296
+#: windows/dialogs.c:295
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "nie można dodać pozycji menu (%s)"
 
 # utils/src/windows/dialogs.c: 319
 #  _("menu does not exist")
-#: windows/dialogs.c:319
+#: windows/dialogs.c:318
 msgid "menu does not exist"
 msgstr "menu nie istnieje"
 
 # utils/src/windows/dialogs.c: 326
 #  _("unable to delete menu item (%s)")
-#: windows/dialogs.c:326
+#: windows/dialogs.c:325
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "nie można usunąć pozycji menu (%s)"
@@ -390,33 +390,33 @@ msgstr "nie można zapisać do schowka"
 
 # utils/src/windows/util.c: 397
 # error(_("'title' must be a character string"))
-#: windows/util.c:397
+#: windows/util.c:396
 msgid "'title' must be a character string"
 msgstr "argument 'title' musi być łańcuchem tekstowym"
 
 # utils/src/windows/util.c: 406
 # error(_("'text' must be a character string"))
-#: windows/util.c:406
+#: windows/util.c:405
 msgid "'text' must be a character string"
 msgstr "argument 'text' musi być łańcuchem tekstowym"
 
 # utils/src/windows/util.c: 445
 # error(_("'%s' must be length 1"), "which")
-#: windows/util.c:445
+#: windows/util.c:444
 #, c-format
 msgid "'%s' must be length 1"
 msgstr "argument '%s' musi mieć długość równą 1"
 
 # utils/src/windows/util.c: 558
 # error(_("'%s' must be a list"), "windows")
-#: windows/util.c:558
+#: windows/util.c:557
 #, c-format
 msgid "'%s' must be a list"
 msgstr "argument '%s' musi być listą"
 
 # utils/src/windows/util.c: 562
 # error(_("'%s' element %d is not a window handle"), "windows", i+1)
-#: windows/util.c:562
+#: windows/util.c:561
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "element %2$d '%1$s' nie jest uchwytem okna"

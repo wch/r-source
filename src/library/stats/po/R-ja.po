@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-26 10:17+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -749,8 +749,9 @@ msgstr " 'rate' または 'scale' のどちらか一方を指定してくださ�
 msgid "x[] and prob[] must be equal length vectors."
 msgstr " x[] と prob[] は等しい長さのベクトルでなければなりません "
 
-msgid "probabilities cannot be negative nor all 0"
-msgstr " 確率は負になれませんし、全てが 0 にはなり得ません "
+#, fuzzy
+msgid "probabilities must be finite, non-negative and not all 0"
+msgstr " 確率は非負でなければなりません "
 
 msgid "'x' must be non-negative"
 msgstr " 'x' は非負でなければなりません "
@@ -2494,6 +2495,9 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "probabilities cannot be negative nor all 0"
+#~ msgstr " 確率は負になれませんし、全てが 0 にはなり得ません "
 
 #~ msgid "'init' must have 1 or %d columns"
 #~ msgstr " 'init' は 1列もしくは%d 列でなければなりません "

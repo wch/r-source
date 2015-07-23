@@ -3575,9 +3575,9 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
-        depr <- c("Modified BSD License", "BSD")
-        if(any(status$components %in% depr)) {
-            status$deprecated <- intersect(status$components, depr)
+        patt <- "(^Modified BSD License$|^BSD$|^CC BY.* [23][.]0)"
+        if(any(ind <- grepl(patt, status$component))) {
+            status$deprecated <- status$components[ind]
             ok <- FALSE
         }
         ## Components with extensions but not extensible:
@@ -3761,25 +3761,30 @@ function(x, ...)
 function(package, lib.loc = NULL)
 {
     is_base <- package == "base"
+
+    check_without_loading <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_",
+                                         "TRUE"))
+
     if(!is_base) {
-        .load_package_quietly(package, lib.loc)
-
-        .eval_with_capture({
-            ## avoid warnings about code in other packages the package
-            ## uses
-            desc <- readRDS(file.path(find.package(package, NULL),
-                                       "Meta", "package.rds"))
-            pkgs1 <- sapply(desc$Suggests, "[[", "name")
-            pkgs2 <- sapply(desc$Enhances, "[[", "name")
-            for(pkg in unique(c(pkgs1, pkgs2)))
-                ## tcltk warns if no DISPLAY variable
-		##, errors if not compiled in
-                suppressWarnings(suppressMessages(try(require(pkg,
-                                                              character.only = TRUE,
-                                                              quietly = TRUE),
-                                                      silent = TRUE)))
-        }, type = "output")
-
+        if(!check_without_loading) {
+            .load_package_quietly(package, lib.loc)
+            .eval_with_capture({
+                ## avoid warnings about code in other packages the package
+                ## uses
+                desc <- readRDS(file.path(find.package(package, NULL),
+                                          "Meta", "package.rds"))
+                pkgs1 <- sapply(desc$Suggests, "[[", "name")
+                pkgs2 <- sapply(desc$Enhances, "[[", "name")
+                for(pkg in unique(c(pkgs1, pkgs2)))
+                    ## tcltk warns if no DISPLAY variable
+                    ##, errors if not compiled in
+                    suppressWarnings(suppressMessages(try(require(pkg,
+                                                                  character.only = TRUE,
+                                                                  quietly = TRUE),
+                                                          silent = TRUE)))
+            }, type = "output")
+        }
         runif(1) # create .Random.seed
         compat <- new.env(hash=TRUE)
         if(.Platform$OS.type != "unix") {
@@ -3889,6 +3894,7 @@ function(package, lib.loc = NULL)
         }
         attach(compat, name="compat", pos = length(search()),
                warn.conflicts = FALSE)
+        on.exit(detach("compat"))
     }
 
     ## A simple function for catching the output from the codetools
@@ -3935,15 +3941,22 @@ function(package, lib.loc = NULL)
                    config_val_to_logical)
     }
     ## look for globalVariables declaration in package
-    .glbs <- utils::globalVariables(,package)
+    .glbs <- suppressMessages(utils::globalVariables(,package))
     if(length(.glbs))
         ## codetools doesn't allow adding to its default
         args$suppressUndefined <-
             c(codetools:::dfltSuppressUndefined, .glbs)
 
-    args <- c(list(package, report = foo), args)
-    suppressMessages(do.call(codetools::checkUsagePackage, args))
-    suppressMessages(do.call(checkMethodUsagePackage, args))
+    if(check_without_loading) {
+        env <- getNamespace(package)
+        args <- c(list(env, report = foo), args)
+        suppressMessages(do.call(codetools::checkUsageEnv, args))
+        suppressMessages(do.call(checkMethodUsageEnv, args))
+    } else {
+        args <- c(list(package, report = foo), args)
+        suppressMessages(do.call(codetools::checkUsagePackage, args))
+        suppressMessages(do.call(checkMethodUsagePackage, args))
+    }
 
     out <- unique(out)
     class(out) <- "check_code_usage_in_package"
@@ -4042,8 +4055,7 @@ function(package, dir, lib.loc = NULL)
         config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_",
                                          FALSE))
     if(use_aliases_from_CRAN) {
-        CRAN <- .get_standard_repository_URLs()[1L]
-        CRAN_aliases_db <- NULL
+        aliases_db <- NULL
     }
 
     for (pkg in unique(thispkg[have_anchor])) {
@@ -4067,16 +4079,11 @@ function(package, dir, lib.loc = NULL)
             } else FALSE
             db[this, "bad"] <- !good & !suspect
         } else if(use_aliases_from_CRAN) {
-            if(is.null(CRAN_aliases_db)) {
+            if(is.null(aliases_db)) {
                 ## Not yet read in.
-                ## message("Reading in aliases db ...")
-                con <- gzcon(url(sprintf("%s/src/contrib/Meta/aliases.rds",
-                                         CRAN),
-                                 "rb"))
-                CRAN_aliases_db <- readRDS(con)
-                close(con)
+                aliases_db <- CRAN_aliases_db()
             }
-            aliases <- CRAN_aliases_db[[pkg]]
+            aliases <- aliases_db[[pkg]]
             if(is.null(aliases)) {
                 unknown <- c(unknown, pkg)
                 next
@@ -4925,7 +4932,7 @@ function(x, ...)
               unlist(Map(.fmt_entries_for_file, x, names(x)),
                      use.names = FALSE),
               if(has_bad_wrong_args)
-              strwrap(gettextf("Package detach functions should have one arguments with names starting with %s.", sQuote("lib")),
+              strwrap(gettextf("Package detach functions should have one argument with name starting with %s.", sQuote("lib")),
                       exdent = 2L),
               if(length(call))
               strwrap(gettextf("Package detach functions should not call %s.",
@@ -5178,25 +5185,26 @@ function(package, dir, lib.loc = NULL)
         setdiff(.get_standard_package_names()$base,
                 c("methods", "stats4"))
     ## It helps to know if non-default standard packages are require()d
-    default_package_names<-
-        setdiff(standard_package_names,
-                c("grid", "splines", "tcltk", "tools"))
+    ## but safer to list them: compiler & parallel got included for years
+    ## Some people depend on 'base'!
+    default_package_names <-
+        c("base", "datasets", "grDevices", "graphics", "stats", "utils")
     depends_suggests <- c(depends, suggests, enhances, pkg_name, default_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
-    common_names <- c("pkg", "pkgName", "package", "pos")
+    common_names <- c("pkg", "pkgName", "package", "pos", "dep_name")
 
-    bad_exprs <- character()
+    bad_exprs <- bad_deps <- bad_imps <- character()
     bad_imports <- all_imports <- imp2 <- imp2f <- imp3 <- imp3f <- character()
-    bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
-            if((Call %in% c("library", "require")) &&
-               (length(e) >= 2L)) {
+            if((Call %in%
+                c("library", "require", "loadNamespace", "requireNamespace"))
+               && (length(e) >= 2L)) {
                 ## We need to rempve '...': OTOH the argument could be NULL
                 keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                 mc <- match.call(get(Call, baseenv()), e[keep])
@@ -5215,11 +5223,20 @@ function(package, dir, lib.loc = NULL)
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
                     if(!dunno) {
-                        pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
-                        if(! pkg %in% c(depends_suggests, common_names))
-                            bad_exprs <<- c(bad_exprs, pkg)
-                        if(pkg %in% depends)
-                            bad_deps <<- c(bad_deps, pkg)
+                        if (Call %in% c("loadNamespace", "requireNamespace")) {
+                            if (identical(class(pkg), "character")) {
+                                pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                                if(! pkg %in%
+                                   c(imports, depends_suggests, common_names))
+                                    bad_imps <<- c(bad_imps, pkg)
+                            }
+                       } else {
+                           pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                            if(! pkg %in% c(depends_suggests, common_names))
+                                bad_exprs <<- c(bad_exprs, pkg)
+                            if(pkg %in% depends)
+                                bad_deps <<- c(bad_deps, pkg)
+                        }
                     }
                 }
             } else if(Call %in% "::") {
@@ -5287,7 +5304,6 @@ function(package, dir, lib.loc = NULL)
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
-    depends_not_import <- character()
     if(length(ns)) {
         imp <- c(ns$imports, ns$importClasses, ns$importMethods)
         if (length(imp)) {
@@ -5296,7 +5312,9 @@ function(package, dir, lib.loc = NULL)
         }
     } else imp <- character()
     bad_imp <- setdiff(imports0, all_imports)
-    depends_not_import <- setdiff(depends, c(imp, standard_package_names))
+
+    ## All the non-default packages need to be imported from.
+    depends_not_import <- setdiff(depends, c(imp, default_package_names))
 
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
@@ -5348,7 +5366,10 @@ function(package, dir, lib.loc = NULL)
             } else NULL
             if (!inherits(value, "error")) {
                 exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
-                             all.names = TRUE), extras[[p]])
+                             all.names = TRUE),
+                          ls(envir = getNamespaceInfo(p, "lazydata"),
+                             all.names = TRUE),
+                          extras[[p]])
                 this2 <- setdiff(this, exps)
                 if(length(this2))
                     imp2un <- c(imp2un, paste(p, this2, sep = "::"))
@@ -5414,6 +5435,7 @@ function(package, dir, lib.loc = NULL)
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
+                imps = unique(bad_imps),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
@@ -5451,6 +5473,15 @@ function(x, ...)
                 .pretty_format(sort(xx)))
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$imps)) {
+          if(length(xx) > 1L) {
+              c(gettext("'loadNamespace' or 'requireNamespace' calls not declared from:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("'loadNamespace' or 'requireNamespace' call not declared from: %s",
                        sQuote(xx))
           }
       },
@@ -5590,7 +5621,8 @@ function(db, files)
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
             if(length(e) >= 2L) pkg <- deparse(e[[2L]])
-            if(Call %in% c("library", "require")) {
+            if(Call %in%
+               c("library", "require", "loadNamespace", "requireNamespace")) {
                 if(length(e) >= 2L) {
                     ## We need to rempve '...': OTOH the argument could be NULL
                     keep <- sapply(e, function(x) deparse(x)[1L] != "...")
@@ -6351,10 +6383,12 @@ function(dir)
                                   lines <- readLines(fp, warn = FALSE)
                                   ## Should this use the package
                                   ## encoding?
-                                  pos <- grep("[^[:blank:]]", lines)
+                                  ## (no, as we have LICENSE files with
+                                  ## copyright signs in ASCII packages)
+                                  pos <- grep("[^[:blank:]]", lines,
+                                              useBytes = TRUE)
                                   c(p, if(len <- length(pos)) {
-                                      lines[seq(from = pos[1L],
-                                                to = pos[len])]
+                                      lines[seq(from = pos[1L], to = pos[len])]
                                   })
                               } else NULL
                           }))
@@ -6522,13 +6556,8 @@ function(dir)
         }
     }
 
-    ## For now, information about the CRAN package archive is provided
-    ## in CRAN's src/contrib/Meta/archive.rds.
-    con <- gzcon(url(sprintf("%s/src/contrib/Meta/archive.rds", CRAN),
-                     "rb"))
-    CRAN_archive_db <- readRDS(con)
-    close(con)
-    packages_in_CRAN_archive <- names(CRAN_archive_db)
+    archive_db <- CRAN_archive_db()
+    packages_in_CRAN_archive <- names(archive_db)
 
     ## Package names must be unique within standard repositories when
     ## ignoring case.
@@ -6628,7 +6657,7 @@ function(dir)
     BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
         p <- strsplit(meta[field], " *, *")[[1L]]
-        p2 <- grep("^(multicore|snow|igraph0)( |\\(|$)", p, value = TRUE)
+        p2 <- grep("^(multicore|snow|igraph0|doSNOW)( |\\(|$)", p, value = TRUE)
         uses <- c(uses, p2)
         p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS)( |\\(|$)", p, value = TRUE)
         BUGS <- c(BUGS, p2)
@@ -6688,6 +6717,29 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
+    ## Check for Java files without sources (in the right place)
+    ## NB: this is only a basic check: that directory need
+    ## not contain all (or any) of the sources.
+    ## We might in due course want to prompt looking into it.
+    if (foss && !dir.exists(file.path(dir, "java"))) {
+        allfiles <- list.files(file.path(dir, "inst"),
+                               full.names = TRUE, recursive = TRUE)
+        allfiles <- c(allfiles,  # misused by ndtv, sisus
+                      list.files(file.path(dir, "exec"), full.names = TRUE))
+        javafiles <- grep(".*[.](class|jar)$", allfiles, value = TRUE)
+        if(length(javafiles)) out$javafiles <- javafiles
+    }
+
+    ## Check for installing Java source files
+    {
+        dotjava <- list.files(file.path(dir, "inst"), pattern = ".*[.]java$",
+                              full.names = TRUE, recursive = TRUE)
+        dotjava <- c(dotjava,  # misused by ndtv
+                     list.files(file.path(dir, "exec"), pattern = ".*[.]java$",
+                                full.names = TRUE))
+        if(length(dotjava)) out$dotjava <- dotjava
+    }
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -6699,7 +6751,7 @@ function(dir)
             out$CRAN_archive <- TRUE
             v_m <- package_version(meta["Version"])
             v_a <- sub("^.*_(.*)\\.tar.gz$", "\\1",
-                       basename(rownames(CRAN_archive_db[[package]])))
+                       basename(rownames(archive_db[[package]])))
             v_a <- max(package_version(v_a, strict = FALSE),
                        na.rm = TRUE)
             if(v_m <= v_a)
@@ -6726,16 +6778,13 @@ function(dir)
         out$version_with_jump_in_minor <- list(v_m, v_d)
 
     ## Check submission recency and frequency.
-    con <- gzcon(url(sprintf("%s/src/contrib/Meta/current.rds", CRAN),
-                     "rb"))
-    CRAN_current_db <- readRDS(con)
-    close(con)
-    mtimes <- c(CRAN_current_db[match(package,
+    current_db <- CRAN_current_db()
+    mtimes <- c(current_db[match(package,
                                       sub("_.*", "",
-                                          rownames(CRAN_current_db)),
+                                          rownames(current_db)),
                                       nomatch = 0L),
                                 "mtime"],
-                CRAN_archive_db[[package]]$mtime)
+                archive_db[[package]]$mtime)
     if(length(mtimes)) {
         deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
         ## Number of days since last update.
@@ -6751,9 +6800,7 @@ function(dir)
     ## Watch out for maintainer changes.
     ## Note that we cannot get the maintainer info from the PACKAGES
     ## files.
-    con <- gzcon(url(sprintf("%s/web/packages/packages.rds", CRAN), "rb"))
-    db <- tryCatch(readRDS(con), error = identity)
-    close(con)
+    db <- tryCatch(CRAN_package_db(), error = identity)
     if(inherits(db, "error")) return(out)
 
     m_m <- as.vector(meta["Maintainer"]) # drop name
@@ -6921,6 +6968,12 @@ function(x, ...)
       },
       if(length(y <- x$missing_manual_pdf)) {
           "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
+      },
+      if(length(y <- x$dotjava)) {
+          "Package installs .java files."
+      },
+      if(length(y <- x$javafiles)) {
+          "Package has FOSS license, installs .class/.jar but has no 'java' directory."
       }
       )
 }

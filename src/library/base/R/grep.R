@@ -234,9 +234,9 @@ function(x, m, invert = FALSE)
             Encoding(x[ind]) <- "bytes"
     }
 
-    ## What should we do about NA matches (from matching a non-NA
-    ## pattern on an NA string)?  For now, let us always "drop" them so
-    ## that extracting direct and inverse matches always gives nothing.
+    ## For NA matches (from matching a non-NA pattern on an NA string),
+    ## direct matches give nothing and inverse matches give NA (as
+    ## nothing was matched).
 
     if(!ili && !invert) {
         so <- m[ind <- (!is.na(m) & (m > -1L))]
@@ -247,8 +247,8 @@ function(x, m, invert = FALSE)
     y <- if(invert) {
         Map(function(u, so, ml) {
             if((n <- length(so)) == 1L) {
-                if(is.na(so))
-                    return(character())
+                if(is.na(so) )
+                    return(NA_character_) # Or u ...
                 else if(so == -1L)
                     return(u)
             }

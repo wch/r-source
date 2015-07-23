@@ -51,7 +51,7 @@ forwardsolve(l, x, k = ncol(l), upper.tri = FALSE,
   Wadsworth & Brooks/Cole.
 
   Dongarra, J. J., Bunch, J. R.,  Moler, C. B. and  Stewart, G. W. (1978)
-  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
+  \emph{LINPACK Users Guide}.  Philadelphia: SIAM Publications.
 }
 \seealso{
   \code{\link{chol}},

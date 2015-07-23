@@ -58,7 +58,7 @@ get.gpar(names = NULL)
   }
   For more details of many of these, see the help for the corresponding
   graphical parameter \code{\link{par}} in base graphics.  (This may
-  have a slightly different name, e.g. \code{lend}, \code{ljoin},
+  have a slightly different name, e.g.\sspace{}\code{lend}, \code{ljoin},
   \code{lmitre}, \code{family}.)
 
   Colours can be specified in one of the forms returned by

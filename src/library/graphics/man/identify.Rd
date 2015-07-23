@@ -98,7 +98,7 @@ identify(x, \dots)
   device in an undefined state, with points labelled but labels not
   recorded in the display list.  Copying a device in that state
 #ifdef windows
-  (e.g. saving the plot from the window's menu)
+  (e.g., saving the plot from the window's menu)
 #endif
   will give unpredictable results.
 }
@@ -127,7 +127,7 @@ identify(x, \dots)
   the text is placed \code{offset} units above the point, and
   for those placed below, the baseline is placed so that the top
   of the string's box is approximately \code{offset} units below the
-  point.  If you want more precise placement (e.g. centering) use
+  point.  If you want more precise placement (e.g., centering) use
   \code{plot = FALSE} and plot via \code{\link{text}} or
   \code{\link{points}}: see the examples.
 }

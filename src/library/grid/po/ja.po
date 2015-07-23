@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2014-03-26 10:02+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -18,53 +18,53 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
 
-#: grid.c:214
+#: grid.c:212
 msgid "cannot clip to rotated viewport"
 msgstr " rotated viewport のクリップは出来ません "
 
-#: grid.c:691 grid.c:696 grid.c:785 grid.c:790
+#: grid.c:689 grid.c:694 grid.c:783 grid.c:788
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 " トップレベルの viewport は pop することが出来ません ('grid' と 'graphics' の"
 "出力を混同していませんか?) "
 
-#: grid.c:970
+#: grid.c:968
 msgid "attempt to plot on null device"
 msgstr " ナルデバイスにプロットしようとしています "
 
-#: grid.c:1302
+#: grid.c:1300
 msgid "there is no layout defined"
 msgstr " レイアウトが定義されていません "
 
-#: grid.c:1522
+#: grid.c:1520
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr " 多角形の頂点が見付かりません (幅もしくは高さがゼロ？) "
 
-#: grid.c:1531
+#: grid.c:1529
 msgid "polygon edge not found"
 msgstr " 多角形の頂点が見付かりません "
 
-#: grid.c:1685
+#: grid.c:1683
 msgid "require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
-#: grid.c:2001
+#: grid.c:1999
 msgid "non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:2866
+#: grid.c:2864
 msgid "non-finite x or y in graphics path"
 msgstr " グラフィックパスに有限でない x か y があります "
 
-#: grid.c:2907
+#: grid.c:2905
 msgid "Empty raster"
 msgstr " ラスターが空です "
 
-#: grid.c:3359
+#: grid.c:3357
 msgid "invalid plotting symbol"
 msgstr " 不正なプロット記号です "
 
-#: grid.c:3445
+#: grid.c:3443
 msgid "unable to clip to rotated rectangle"
 msgstr " 回転された矩形へクリップ出来ません "
 
@@ -114,7 +114,7 @@ msgstr " 単位 ('units') は文字型でなければなりません "
 msgid "'units' must be of length > 0"
 msgstr " 単位 ('units') の長さは 0 より大きくなければなりません "
 
-#: viewport.c:317
+#: viewport.c:315
 msgid "non-finite location and/or size for viewport"
 msgstr ""
 " 有限でない location かつ/または 有限でない viewport に対するサイズです "

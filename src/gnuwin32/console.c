@@ -48,7 +48,7 @@ extern void R_WaitEvent(void);
 #include "consolestructs.h"
 #include "rui.h"
 #include "getline/wc_history.h"
-#include "Startup.h" /* for UImode */
+#include "Startup.h" /* for CharacterMode */
 #include <Fileio.h>
 
 #include <stdint.h>
@@ -69,8 +69,6 @@ extern void R_WaitEvent(void);
 # undef alloca
 # define alloca(x) __builtin_alloca((x))
 #endif
-
-extern UImode  CharacterMode;
 
 static void performCompletion(control c);
 

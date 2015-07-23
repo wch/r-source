@@ -68,7 +68,7 @@ print.noquote <- function(x, ...) {
     print(x, quote = FALSE, ...)
 }
 
-## for alias:
+## for alias.lm, aov
 print.listof <- function(x, ...)
 {
     nn <- names(x)
@@ -91,6 +91,7 @@ print.simple.list <- function(x, ...)
 print.function <- function(x, useSource = TRUE, ...)
     .Internal(print.function(x, useSource, ...))
 
+## used for getenv()
 print.Dlist <- function(x, ...)
 {
     if(!is.list(x) && !is.matrix(x) && is.null(names(x))) ## messed up Dlist

@@ -49,9 +49,14 @@ system(command, intern = FALSE,
 #endif
 }
 \details{
-  \code{command} is parsed as a command plus arguments separated by spaces.
-  So if the path to the command (or an argument) contains
-  spaces, it must be quoted e.g. by \code{\link{shQuote}}.
+  This interface has become rather complicated over the years: see
+  \code{\link{system2}} for a more portable and flexible interface
+  which is recommended for new code.
+  
+  \code{command} is parsed as a command plus arguments separated by
+  spaces.  So if the path to the command (or a single argument such as a
+  file path) contains spaces, it must be quoted e.g.\sspace{}by
+  \code{\link{shQuote}}.
 #ifdef windows
   Only double quotes are allowed on Windows: see the examples.  (Note: a
   Windows path name cannot contain a double quote, so we do not need to
@@ -114,7 +119,7 @@ system(command, intern = FALSE,
   \code{0} (the conventional success value).
 #ifdef windows
   Some Windows commands return out-of-range status values
-  (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
+  (e.g., \code{-1}) and so only the bottom 16 bits of the value are used.
 
   If \code{intern = FALSE, wait = TRUE, show.output.on.console = TRUE} the
   \file{stdout} and \file{stderr} (unless \code{ignore.stdout = TRUE} or
@@ -215,8 +220,6 @@ system(command, intern = FALSE,
   }
 }
 \seealso{
-  \code{\link{system2}}.
-  
 #ifdef windows
   \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
   interface.

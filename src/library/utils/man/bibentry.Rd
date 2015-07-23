@@ -1,6 +1,6 @@
 % File src/library/utils/man/bibentry.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibentry}
@@ -133,6 +133,10 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{booktitle:}{Title of a book, part of which is being cited.}
     \item{chapter:}{A chapter (or section or whatever) number.}
 
+    \item{doi:}{The DOI
+      (\url{http://en.wikipedia.org/wiki/Digital_Object_Identifier})
+      for the reference.}
+
     \item{editor:}{Name(s) of editor(s), same format as \code{author}.}
 
     \item{institution:}{The publishing institution of a technical report.}
@@ -155,6 +159,10 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 
     \item{title:}{The work's title.}
 
+    \item{url:}{A URL for the reference.
+      (If the URL is an expanded DOI, we recommend to use the \samp{doi}
+      field with the unexpanded DOI instead.)}
+
     \item{volume:}{The volume of a journal or multi-volume book.}
 
     \item{year:}{The year of publication.}
@@ -171,7 +179,7 @@ rref <- bibentry(
    author = person("R Core Team"),
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
-   year = 2013,
+   year = 2014,
    url = "http://www.R-project.org/")
 
 ## Different printing styles

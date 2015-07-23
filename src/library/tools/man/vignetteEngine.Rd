@@ -8,7 +8,7 @@
 \title{Set or Get a Vignette Processing Engine}
 \description{
 Vignettes are normally processed by \code{\link{Sweave}}, but package
-writers may choose to use a different engine (e.g. one provided by the
+writers may choose to use a different engine (e.g., one provided by the
 \CRANpkg{knitr}, \CRANpkg{noweb} or \CRANpkg{R.rsp} packages).  This function
 is used by those packages to register their engines, and internally by
 \R{} to retrieve them.

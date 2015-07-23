@@ -20,7 +20,8 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
-PKG_CPPFLAGS = @TCLTK_CPPFLAGS@
+PKG_CPPFLAGS = @TCLTK_CPPFLAGS@ \
+  -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
 PKG_LIBS = @TCLTK_LIBS@ @LIBM@
 
 all: Makedeps

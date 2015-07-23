@@ -17,7 +17,7 @@
   floating-point constants.
 
   \code{\link{Inf}} and \code{\link{NaN}} are numeric constants (with
-  \code{\link{typeof}(.) "double"}).  In text input (e.g. in
+  \code{\link{typeof}(.) "double"}).  In text input (e.g., in
   \code{\link{scan}} and \code{\link{as.double}}), these are recognized
   ignoring case as is \code{infinity} as an alternative to \code{Inf}.
   \code{\link{NA_real_}} and \code{\link{NA_integer_}} are constants of

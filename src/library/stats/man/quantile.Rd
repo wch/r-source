@@ -48,7 +48,7 @@ quantile(x, \dots)
   Note that as this is in a namespace, the copy of \code{sort} in
   \pkg{base} will be used, not some S4 generic of that name.  Also note
   that that is no check on the \sQuote{correctly}, and so
-  e.g. \code{quantile} can be applied to complex vectors which (apart
+  e.g.\sspace{}\code{quantile} can be applied to complex vectors which (apart
   from ties) will be ordered on their real parts.
 
   There is a method for the date-time classes (see

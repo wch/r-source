@@ -498,12 +498,13 @@ typedef struct RCNTXT {
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
-    SEXP *nodestack;
+    R_bcstack_t *nodestack;
 #ifdef BC_INT_STACK
     IStackval *intstack;
 #endif
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;     /* should browser finish this context without stopping */
+    SEXP returnValue;			/* only set during on.exit calls */
 } RCNTXT, *context;
 
 /* The Various Context Types.
@@ -630,6 +631,7 @@ extern0 RCNTXT R_Toplevel;	      /* Storage for the toplevel context */
 extern0 RCNTXT* R_ToplevelContext;  /* The toplevel context */
 LibExtern RCNTXT* R_GlobalContext;    /* The global context */
 extern0 RCNTXT* R_SessionContext;   /* The session toplevel context */
+extern0 RCNTXT* R_ExitContext;      /* The active context for on.exit processing */
 #endif
 extern Rboolean R_Visible;	    /* Value visibility flag */
 extern0 int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
@@ -730,7 +732,7 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 void resetTimeLimits(void);
 
 #define R_BCNODESTACKSIZE 100000
-extern0 SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
+extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 #ifdef BC_INT_STACK
 # define R_BCINTSTACKSIZE 10000
 extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
@@ -794,6 +796,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define allocCharsxp		Rf_allocCharsxp
 # define asVecSize		Rf_asVecSize
 # define begincontext		Rf_begincontext
+# define BindDomain		Rf_BindDomain
 # define check_stack_balance	Rf_check_stack_balance
 # define check1arg		Rf_check1arg
 # define CheckFormals		Rf_CheckFormals
@@ -847,7 +850,9 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
 # define InitStringHash		Rf_InitStringHash
+# define InitS3DefaultTypes	Rf_InitS3DefaultTypes
 # define InitTempDir		Rf_InitTempDir
+# define InitTypeTables		Rf_InitTypeTables
 # define initStack		Rf_initStack
 # define IntegerFromComplex	Rf_IntegerFromComplex
 # define IntegerFromLogical	Rf_IntegerFromLogical
@@ -1049,7 +1054,9 @@ void InitOptions(void);
 void InitStringHash(void);
 void Init_R_Variables(SEXP);
 void InitTempDir(void);
+void InitTypeTables(void);
 void initStack(void);
+void InitS3DefaultTypes(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);
@@ -1198,6 +1205,9 @@ void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
+int Rf_AdobeSymbol2ucs2(int n);
+double R_strtod5(const char *str, char **endptr, char dec,
+		 Rboolean NA, int exact);
 
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
@@ -1222,7 +1232,26 @@ Rboolean utf8Valid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
 
+SEXP fixup_NaRm(SEXP args); /* summary.c */
+void invalidate_cached_recodings(void);  /* from sysutils.c */
+void resetICUcollator(void); /* from util.c */
+void dt_invalidate_locale(); /* from Rstrptime.h */
+int R_OutputCon; /* from connections.c */
+int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
+void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
+unsigned long get_duplicate_counter(void);  /* from duplicate.c */
+void reset_duplicate_counter(void);  /* from duplicate.c */
+void BindDomain(char *); /* from main.c */
+Rboolean LoadInitFile;  /* from startup.c */
+
+// Unix and Windows versions
+double R_getClockIncrement(void);
+void R_getProcTime(double *data);
+void InitDynload(void);
+void R_CleanTempDir(void);
+
 #ifdef Win32
+Rboolean UseInternet2;
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
@@ -1255,22 +1284,23 @@ extern const char *locale2charset(const char *);
 
 /* Localization */
 
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#ifdef Win32
-#define _(String) libintl_gettext (String)
-#undef gettext /* needed for graphapp */
-#else
-#define _(String) gettext (String)
+#ifndef NO_NLS
+# ifdef ENABLE_NLS
+#  include <libintl.h>
+#  ifdef Win32
+#   define _(String) libintl_gettext (String)
+#   undef gettext /* needed for graphapp */
+#  else
+#   define _(String) gettext (String)
+#  endif
+#  define gettext_noop(String) String
+#  define N_(String) gettext_noop (String)
+#  else /* not NLS */
+#  define _(String) (String)
+#  define N_(String) String
+#  define ngettext(String, StringP, N) (N > 1 ? StringP: String)
+# endif
 #endif
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-#else /* not NLS */
-#define _(String) (String)
-#define N_(String) String
-#define ngettext(String, StringP, N) (N > 1 ? StringP: String)
-#endif
-
 
 /* Macros for suspending interrupts: also in GraphicsDevice.h */
 #define BEGIN_SUSPEND_INTERRUPTS do { \

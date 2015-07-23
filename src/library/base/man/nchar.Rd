@@ -42,7 +42,7 @@ nzchar(x)
   }
   These will often be the same, and almost always will be in single-byte
   locales.  There will be differences between the first two with
-  multibyte character sequences, e.g. in UTF-8 locales.
+  multibyte character sequences, e.g.\sspace{}in UTF-8 locales.
 
   The internal equivalent of the default method of
   \code{\link{as.character}} is performed on \code{x} (so there is no

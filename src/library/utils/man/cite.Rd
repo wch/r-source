@@ -37,7 +37,7 @@ Additional arguments to pass to the \code{cite()} function for the
 default style.
 }
   \item{textual}{
-Produce a \dQuote{textual} style of citation, i.e. what \code{\\citet} would
+Produce a \dQuote{textual} style of citation, i.e.\sspace{}what \code{\\citet} would
 produce in LaTeX.
 }
   \item{before}{

@@ -91,7 +91,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   that can be used to select only more serious messages.  (This is set
   to \code{-1} in \command{R CMD check}.)
 
-  Possible fatal errors are those from running the parser (e.g. a
+  Possible fatal errors are those from running the parser (e.g., a
   non-existent file, unclosed quoted string, non-ASCII input without a
   specified encoding) or from \code{prepare_Rd} (multiple
   \verb{\Rdversion} declarations, invalid \verb{\encoding} or

@@ -67,7 +67,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     makes an internal call to \code{available.packages}.
   }
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
-    major.minor version of \R (e.g. \code{3.1}) is considered to be
+    major.minor version of \R (e.g., \code{3.1}) is considered to be
     \sQuote{old}.}
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers

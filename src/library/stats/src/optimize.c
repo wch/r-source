@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2003-2004  The R Foundation
- *  Copyright (C) 1998--2013  The R Core Team
+ *  Copyright (C) 1998--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,12 +23,15 @@
 #include <config.h>
 #endif
 
+#define NO_NLS
 #include <Defn.h>
 #include <float.h>		/* for DBL_MAX */
 #include <R_ext/Applic.h>	/* for optif9, fdhess */
 #include <R_ext/RS.h>	       	/* for Memcpy */
 
 #include "statsR.h"
+#include "stats.h" // R_zeroin2
+
 #undef _
 #ifdef ENABLE_NLS
 #include <libintl.h>
@@ -288,12 +291,6 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 // One Dimensional Root Finding --  just wrapper code for
 // Brent's "zeroin"
 // ---------------
-
-extern double 
-R_zeroin2(double ax, double bx, double fa, double fb, 
-	  double (*f)(double x, void *info), void *info, 
-	  double *Tol, int *Maxit);
-
 
 static double fcn2(double x, struct callinfo *info)
 {

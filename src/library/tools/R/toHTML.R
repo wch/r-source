@@ -136,7 +136,8 @@ function(x, ...)
                             c(vheaders[i],
                               Map(function(h, t)
                                   c(h, print_items(t$Text)),
-                                  sprintf("<h3>%s</h3>", names(cchunks)),
+                                  sprintf("<h3>%s</h3>",
+                                          htmlify2(names(cchunks))),
                                   cchunks))
                         } else {
                             c(vheaders[i],
@@ -189,10 +190,10 @@ makeVignetteTable <- function(vignettes, depth=2) {
 
 makeDemoTable <- function(demos, depth=2) {
     out <- c('<table width="100%">',
-	      '<col width="22%">',
-	      '<col width="2%">',
-	      '<col width="54%">',
-	      '<col width="20%">')
+             '<col style="width: 22%;" />',
+             '<col style="width:  2%;" />',
+             '<col style="width: 54%;" />',
+             '<col style="width: 20%;" />')             
     for (i in seq_len(nrow(demos))) {
 	topic <- demos[i, "topic"]
 	pkg <- demos[i, "Package"]

@@ -53,8 +53,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \env{BSTINPUTS} settings.
 
   MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
-  installation that we know of does, so emulation is used on e.g. TeXLive
-  installations on Windows.
+  installation that we know of does, so emulation is used on
+  e.g.\sspace{}TeXLive installations on Windows.
 
   Occasionally indices contain special characters which cause indexing
   to fail (particularly when using the \samp{hyperref} LaTeX package)

@@ -38,7 +38,7 @@ object.size(x)
   The calculation is of the size of the object, and excludes the space
   needed to store its name in the symbol table.
 
-  Associated space (e.g. the environment of a function and what the
+  Associated space (e.g., the environment of a function and what the
   pointer in a \code{EXTPTRSXP} points to) is not included in the
   calculation.
 

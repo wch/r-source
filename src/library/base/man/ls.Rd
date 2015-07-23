@@ -1,6 +1,6 @@
 % File src/library/base/man/ls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ls}
@@ -9,9 +9,9 @@
 \title{List Objects}
 \usage{
 ls(name, pos = -1L, envir = as.environment(pos),
-   all.names = FALSE, pattern)
+   all.names = FALSE, pattern, sorted = TRUE)
 objects(name, pos= -1L, envir = as.environment(pos),
-        all.names = FALSE, pattern)
+        all.names = FALSE, pattern, sorted = TRUE)
 }
 \arguments{
   \item{name}{which environment to use in listing the available objects.
@@ -29,6 +29,9 @@ objects(name, pos= -1L, envir = as.environment(pos),
   \item{pattern}{an optional \link{regular expression}.  Only names
     matching \code{pattern} are returned.  \code{\link{glob2rx}} can be
     used to convert wildcard patterns to regular expressions.}
+  \item{sorted}{logical indicating if the resulting
+    \code{\link{character}} should be sorted alphabetically.  Note that
+    this is the part of \code{ls()} which may take most of the time.}
 }
 \description{
   \code{ls} and \code{objects} return a vector of character strings

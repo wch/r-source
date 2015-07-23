@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -783,8 +783,8 @@ msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] e prob[] devem ser vetores de comprimento igual."
 
 #, fuzzy
-msgid "probabilities cannot be negative nor all 0"
-msgstr "probabilidades não podem ser negativas, nem todas 0."
+msgid "probabilities must be finite, non-negative and not all 0"
+msgstr "probabilidades devem ser não-negativas."
 
 msgid "'x' must be non-negative"
 msgstr "'x' deve ser não-negativo"
@@ -2629,6 +2629,10 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "probabilities cannot be negative nor all 0"
+#~ msgstr "probabilidades não podem ser negativas, nem todas 0."
 
 #, fuzzy
 #~ msgid "'init' must have 1 or %d columns"

@@ -3289,7 +3289,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     SEXP ans, sav_expr = expr;
     if(GenerateCode) {
 	if (isString(expr))
-	    expr = install(CHAR(STRING_ELT(expr, 0)));
+	    expr = installChar(STRING_ELT(expr, 0));
 	PROTECT(expr);
 	if (length(CDR(args)) == 1 && IS_R_MissingArg(CADR(args)) && IS_R_NilValue(TAG(CDR(args))) )
 	    ans = lang1(expr);
