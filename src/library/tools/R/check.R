@@ -1505,7 +1505,7 @@ setRlibs <-
                         sprintf("writeLines(strwrap(tools:::imports_for_undefined_globals(\"%s\"), exdent = 11))\n",
                                 paste(utils::tail(out3, -pos),
                                       collapse = " "))
-                    miss <- R_runR2(Rcmd)
+                    miss <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
                     if(length(miss)) 
                         out3 <- c(out3,
                                   c("Consider adding",
