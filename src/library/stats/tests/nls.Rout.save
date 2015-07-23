@@ -1,5 +1,5 @@
 
-R version 3.2.1 Patched (2015-07-15 r68657) -- "World-Famous Astronaut"
+R version 3.2.1 Patched (2015-07-21 r68718) -- "World-Famous Astronaut"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -697,4 +697,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.117   0.026   1.132 
+  1.101   0.023   1.117 

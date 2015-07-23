@@ -1,5 +1,5 @@
 
-R version 3.2.1 Patched (2015-07-15 r68657) -- "World-Famous Astronaut"
+R version 3.2.1 Patched (2015-07-21 r68718) -- "World-Famous Astronaut"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.057 0.021 1.078 0 0 
+Time elapsed:  1.051 0.017 1.07 0 0 
 > 
