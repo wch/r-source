@@ -275,7 +275,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(is.character(pos)) {
                 npos <- match(pos, search())
                 if(is.na(npos)) {
-                    warning(gettextf("%s not found on search path, using pos = 2", sQuote(pos)), domain = NA)
+                    warning(gettextf("%s not found on search path, using pos = 2",
+                                     sQuote(pos)), domain = NA)
                     pos <- 2
                 } else pos <- npos
             }
@@ -287,18 +288,19 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
 		if (isNamespaceLoaded(package)) {
-                    # Already loaded.  Does the version match?
+                    ## Already loaded.  Does the version match?
                     newversion <- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
                     oldversion <- as.numeric_version(getNamespaceVersion(package))
                     if (newversion != oldversion) {
-                    	# No, so try to unload the previous one
+                    	## No, so try to unload the previous one
                     	res <- try(unloadNamespace(package))
                     	if (inherits(res, "try-error"))
-                    	    stop(gettextf("Package %s version %s cannot be unloaded", sQuote(package), oldversion, domain = "R-base"))
+                    	    stop(gettextf("Package %s version %s cannot be unloaded",
+					  sQuote(package), oldversion), domain=NA)
                     }
                 }
                 tt <- try({
-                    attr(package, "LibPath") <- which.lib.loc          
+                    attr(package, "LibPath") <- which.lib.loc
                     ns <- loadNamespace(package, lib.loc)
                     env <- attachNamespace(ns, pos = pos, deps)
                 })
@@ -438,7 +440,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     if (logical.return)
 	TRUE
     else invisible(.packages())
-}
+} ## {library}
 
 format.libraryIQR <-
 function(x, ...)

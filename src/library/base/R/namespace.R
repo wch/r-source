@@ -564,7 +564,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                         msg <-
                             ngettext(length(bad),
                                      "Function found when exporting methods from the namespace %s which is not S4 generic: %s",
-                                     "Functions found when exporting methods from the namespace %s which are not S4 generic: %s", domain = "R-base")
+                                     "Functions found when exporting methods from the namespace %s which are not S4 generic: %s")
                         stop(sprintf(msg, sQuote(package),
                                      paste(sQuote(bad), collapse = ", ")),
                              domain = NA, call. = FALSE)
