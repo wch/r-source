@@ -175,9 +175,9 @@
       \item \code{matrix(x, nr, nc, byrow = TRUE)} failed if \code{x}
       was an object of type \code{"expression"}.
 
-      \item \code{strptime()} could overflow the C stack when the
-      timezone had a non-standard format much longer than the
-      standard formats. (Part of \PR{16328}.)
+      \item \code{strptime()} could overflow the allocated storage on
+      the C stack when the timezone had a non-standard format much
+      longer than the standard formats. (Part of \PR{16328}.)
 
       \item \code{options(OutDec = s)} now signals a warning (which will
       become an error in the future) when \code{s} is not a string with
@@ -189,7 +189,8 @@
       non-default \code{getOption("OutDec")} such as in \PR{16411}.
 
       \item \code{download.packages()} failed for \code{type} equal to
-      \code{"both"} or \code{"binary"}.  (Reported by Dan Tenenbaum.)
+      either \code{"both"} or \code{"binary"}.  (Reported by Dan
+      Tenenbaum.)
 
       \item The \code{dendrogram} method of \code{labels()} is much more
       efficient for large dendrograms, now using \code{rapply()}.

@@ -4430,12 +4430,12 @@ A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 `overloading ambiguity' may be reported.
 
 @item
-Function @code{fabs} is defined for only for floating-point types,
-except in C++11 which has overloads in @file{<cmath>} for integer types.
-Function @code{abs} is defined in C99's @file{<stdlib.h>} for @code{int}
-and in C++98's @file{<cstdlib>} for integer types, overloaded in
-@file{<cmath>} for floating-point types.  C++11 has additional overloads
-for @code{abs} in @file{<cmath>} for integer types.
+Function @code{fabs} is defined only for floating-point types, except in
+C++11 which has overloads in @file{<cmath>} for integer types.  Function
+@code{abs} is defined in C99's @file{<stdlib.h>} for @code{int} and in
+C++98's @file{<cstdlib>} for integer types, overloaded in @file{<cmath>}
+for floating-point types.  C++11 has additional overloads for @code{abs}
+in @file{<cmath>} for integer types.
 
 @item
 Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
