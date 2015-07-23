@@ -72,6 +72,10 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
   \code{contr.poly}: it does not attempt to orthogonalize to
   machine accuracy.
 }
+\author{
+  R Core Team.  Keith Jewell (Campden BRI Group, UK) contributed
+  improvements for correct prediction on subsets.
+}
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S}.
