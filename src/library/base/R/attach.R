@@ -102,7 +102,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
         checkConflicts(value)
     }
     if (length(names(value)) && .isMethodsDispatchOn() )
-        methods:::cacheMetaData(value, TRUE)
+        methods::cacheMetaData(value, TRUE)
     invisible(value)
 }
 
@@ -191,7 +191,7 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
         }
     } else {
         if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
-            methods:::cacheMetaData(env, FALSE)
+            methods::cacheMetaData(env, FALSE)
         .Internal(lazyLoadDBflush(paste0(libpath, "/R/", pkgname, ".rdb")))
     }
     invisible()
