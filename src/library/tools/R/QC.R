@@ -7320,7 +7320,7 @@ function(x, ...)
       },
       if(length(y) && any(nzchar(y$CRAN))) {
           c("\n  The canonical URL of the CRAN page for a package is ",
-            "  http://cran.r-project.org/package=pkgname")
+            "  https://cran.r-project.org/package=pkgname")
       },
       if(length(y) && any(nzchar(y$Spaces))) {
           "\n  Spaces in an http[s] URL should probably be replaced by %20"
