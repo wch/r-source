@@ -31,7 +31,7 @@ DISTFILES = \
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
 
-Rblas_la = libRblas$(DYLIB_EXT)
+Rblas_la = libRblas$(R_DYLIB_EXT)
 Rblas_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ -flat_namespace -undefined suppress
 
 all: R

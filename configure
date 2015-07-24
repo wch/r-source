@@ -901,6 +901,7 @@ CXX1XFLAGS
 CXX1XSTD
 CXX1X
 HAVE_CXX11
+R_DYLIB_EXT
 STATICR2
 STATICR1
 FW_VERSION
@@ -4966,10 +4967,6 @@ test -n "$TAR" || TAR=""""
 
 ## TeXMF stuff
 
-## PDFTEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
-## PDFLATEX and MAKEINDEX in the emulation mode of tools::texi2dvi
-## TEXI2DVICMD sets default for R_TEXI2DVICMD, used for options('texi2dvi')
-## TEX AND LATEX are no longer used
 for ac_prog in ${TEX} tex
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -7831,8 +7828,6 @@ if test $r_cv_visibility_attribute = yes; then
 $as_echo "#define HAVE_VISIBILITY_ATTRIBUTE 1" >>confdefs.h
 
 fi
-## test if visibility flag is accepted: NB Solaris compilers do and ignore,
-## so only make use of this if HAVE_VISIBILITY_ATTRIBUTE is true.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS -fvisibility=hidden"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC accepts -fvisibility" >&5
@@ -7866,9 +7861,6 @@ if test "${r_cv_prog_cc_vis}" = yes; then
     C_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-## Need to exclude Intel compilers, where this does not work.
-## The flag is documented, and is effective but also hides
-## unsatisfied references. We cannot test for GCC, as icc passes that test.
 case  "${CC}" in
   ## Intel compiler: note that -c99 may have been appended
   *icc*)
@@ -7914,7 +7906,6 @@ if test "${r_cv_prog_f77_vis}" = yes; then
     F77_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-## need to exclude Intel compilers.
 case  "${F77}" in
   ## Intel compiler
   *ifc|*ifort)
@@ -8413,9 +8404,6 @@ $as_echo "trying some possibilities" >&6; }
 if test -n "${OBJCXX}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${OBJCXX} can compile ObjC++" >&5
 $as_echo_n "checking whether ${OBJCXX} can compile ObjC++... " >&6; }
-## we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
-## (the test program is from the gcc test suite)
-## but it needed an #undef (PR#15107)
 cat << \EOF > conftest.mm
 #undef __OBJC2__
 #include <objc/Object.h>
@@ -8455,9 +8443,6 @@ fi
 if test -z "${OBJCXX}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CXX} can compile ObjC++" >&5
 $as_echo_n "checking whether ${CXX} can compile ObjC++... " >&6; }
-## we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
-## (the test program is from the gcc test suite)
-## but it needed an #undef (PR#15107)
 cat << \EOF > conftest.mm
 #undef __OBJC2__
 #include <objc/Object.h>
@@ -8492,9 +8477,6 @@ $as_echo "no" >&6; }
    if test -z "${OBJC}"; then
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${OBJC} can compile ObjC++" >&5
 $as_echo_n "checking whether ${OBJC} can compile ObjC++... " >&6; }
-## we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
-## (the test program is from the gcc test suite)
-## but it needed an #undef (PR#15107)
 cat << \EOF > conftest.mm
 #undef __OBJC2__
 #include <objc/Object.h>
@@ -9059,13 +9041,13 @@ if ${lt_cv_nm_interface+:} false; then :
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:9062: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:9044: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:9065: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:9047: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:9068: output\"" >&5)
+  (eval echo "\"\$as_me:9050: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -11888,10 +11870,6 @@ _lt_linker_boilerplate=`cat conftest.err`
 $RM -r conftest*
 
 
-## CAVEAT EMPTOR:
-## There is no encapsulation within the following macros, do not change
-## the running order or otherwise move them around unless you know exactly
-## what you are doing...
 if test -n "$compiler"; then
 
 lt_prog_compiler_no_builtin_flag=
@@ -11917,11 +11895,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11920: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11898: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11924: \$? = $ac_status" >&5
+   echo "$as_me:11902: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -12256,11 +12234,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12259: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12237: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12263: \$? = $ac_status" >&5
+   echo "$as_me:12241: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -12361,11 +12339,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12364: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12342: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12368: \$? = $ac_status" >&5
+   echo "$as_me:12346: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12416,11 +12394,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12419: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12397: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12423: \$? = $ac_status" >&5
+   echo "$as_me:12401: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14783,7 +14761,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 14786 "configure"
+#line 14764 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14879,7 +14857,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 14882 "configure"
+#line 14860 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -16828,11 +16806,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16831: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16809: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16835: \$? = $ac_status" >&5
+   echo "$as_me:16813: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16927,11 +16905,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16930: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16908: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16934: \$? = $ac_status" >&5
+   echo "$as_me:16912: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16979,11 +16957,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16982: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16960: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16986: \$? = $ac_status" >&5
+   echo "$as_me:16964: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18359,11 +18337,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18362: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18340: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18366: \$? = $ac_status" >&5
+   echo "$as_me:18344: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -18458,11 +18436,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18461: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18439: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:18465: \$? = $ac_status" >&5
+   echo "$as_me:18443: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18510,11 +18488,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18513: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18491: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:18517: \$? = $ac_status" >&5
+   echo "$as_me:18495: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -21817,7 +21795,6 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 done
 fi
 
-## size_t works on Windows but is unsigned and int is correct
 case "${host_os}" in
   cygwin*|mingw*|windows*|winnt)
     r_cv_type_socklen=int
@@ -22661,15 +22638,6 @@ if ${r_cv_prog_cc_m+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   echo "#include <math.h>" > conftest.c
-## No real point in using AC_LANG_* and ${ac_ext}, as we need to create
-## hard-wired suffix rules.
-## Another obvious candidate to try is '${MAKEDEPEND-makedepend} -f-'.
-## However, this does not work out of the box when srcdir and builddir
-## are different, as it creates dependencies of the form
-##   ${srcdir}/foo.o: /path/to/bar.h
-## Could be made to work, of course ...
-## Note also that it does not create a 'conftest.o: conftest.c' line.
-## For gcc 3.2 or better, we want to use '-MM' in case this works.
 cc_minus_MM=false
 if test "${GCC}" = yes; then
   case "${CC_VERSION}" in
@@ -22724,8 +22692,6 @@ if ${r_cv_prog_cc_c_o_lo+:} false; then :
 else
   test -d TMP || mkdir TMP
 echo "int some_variable = 0;" > conftest.c
-## No real point in using AC_LANG_* and ${ac_ext}, as we need to create
-## hard-wired suffix rules.
 ac_try='${CC} ${CFLAGS} -c conftest.c -o TMP/conftest.lo 1>&5'
 if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
   (eval $ac_try) 2>&5
@@ -22836,15 +22802,6 @@ $as_echo "$ac_cv_prog_c_openmp" >&6; }
 
 
 if test -z "${FLIBS}"; then
-##
-## Currently (Autoconf 2.50 or better, it seems) FLIBS also contains all
-## elements of LIBS when AC_F77_LIBRARY_LDFLAGS is run.  This is because
-## _AC_PROG_F77_V_OUTPUT() uses 'eval $ac_link' for obtaining verbose
-## linker output, and AC_LANG(Fortran 77) sets up ac_link to contain
-## LIBS.  Most likely a bug, and a nuisance in any case ...
-## But we cannot simply eliminate the elements in FLIBS duplicated from
-## LIBS (e.g. '-lm' should be preserved).  Hence, we try to call
-## AC_F77_LIBRARY_LDFLAGS() with LIBS temporarily set to empty.
 r_save_LIBS="${LIBS}"
 LIBS=
 ac_ext=f
@@ -23239,7 +23196,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:23242: \"$ac_link\") >&5
+(eval echo $as_me:23199: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -23314,7 +23271,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:23317: \"$ac_link\") >&5
+(eval echo $as_me:23274: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -23486,43 +23443,6 @@ else
   CLIBS=
 fi
 LIBS="${r_save_LIBS}"
-## Currently g77 on Darwin links against '-lcrt1.o' (and for GCC 3.1 or
-## better also against '-lcrtbegin.o'), which (unlike '-lcrt0.o') are
-## not stripped by AC_F77_LIBRARY_LDFLAGS.  This in particular causes
-## R_PROG_F77_CC_COMPAT to fail.  Hence, we make sure all -lcrt*.o are
-## removed. In Addition, -lmx and -lSystem are implicit and their
-## manual inclusion leads to ordering problems (remove when autoconf
-## is fixed - supposedly the CVS version is, but 2.6.0 is not).
-##
-## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
-## when using gcc for linking.  The '-l:' construction is similar to
-## plain '-l' except that search order (archive/shared) given by '-a'
-## is not important.  We escape such flags via '-Wl,' in case of gcc.
-## Note that the current Autoconf CVS uses _AC_LINKER_OPTION for a
-## similar purpose when computing FLIBS: this uses '-Xlinker' escapes
-## for gcc and does nothing otherwise.  Note also that we cannot simply
-## unconditionally escape with '${wl}' from libtool as on HPUX we need
-## SHLIB_LD=ld for native C compilers (problem with non-PIC 'crt0.o',
-## see 'Individual platform overrides' in section 'DLL stuff' in file
-## 'configure.ac'.
-##
-## Using the Intel Fortran compiler (ifc) one typically gets incorrect
-## flags, as the output from _AC_PROG_F77_V_OUTPUT() contains double
-## quoted options, e.g. "-mGLOB_options_string=......", see also e.g.
-## http://www.octave.org/octave-lists/archive/octave-maintainers.2002/msg00038.html.
-## One possible solution is to change AC_F77_LIBRARY_LDFLAGS() to remove
-## double quotes for ifc, as it already does for the Cray cft90.  As we
-## prefer not to overload Autoconf code, we try to fix things here ...
-##
-## As of 2.1.0 we try to tidy this up a bit.
-## 1) -lfrtbegin and -lgfortranbegin are used by g77/gfortran only for a
-## Fortran main program, which we do not have.
-## 2) g77 also tends to duplicate paths via ../../.., so we canonicalize
-## paths and remove duplicates.
-## 3) We do not need -L/lib etc, nor those in LDFLAGS
-## 4) We exclude path with CC will include when linking.
-##
-## First try to fathom out what -Lfoo commands are unnecessary.
 case "${host_os}" in
   linux*)
     r_libpath_default="/usr/lib64 /lib64 /usr/lib /lib"
@@ -23933,9 +23853,6 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-## DANGER!  We really needs the results of _AC_F77_NAME_MANGLING as
-## stored in the cache var ac_cv_f77_mangling which is not documented
-## and hence may change ...
 case "${ac_cv_f77_mangling}" in
   "upper "*)
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Fortran compiler uses uppercase external names" >&5
@@ -24019,7 +23936,6 @@ else
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
-## Yes we need to double quote this ...
 cat > conftest.c <<EOF
 #include <math.h>
 #include <stdlib.h>
@@ -24091,7 +24007,6 @@ else
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
-## Yes we need to double quote this ...
 cat > conftest.c <<EOF
 #include <math.h>
 #include <stdlib.h>
@@ -24181,7 +24096,6 @@ c a few tests of constructs that are sometimes missing
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
-## Yes we need to double quote this ...
 cat > conftest.c <<EOF
 #include <math.h>
 #include <stdlib.h>
@@ -24351,9 +24265,6 @@ if ${r_cv_prog_cxx_m+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   echo "#include <math.h>" > conftest.cc
-## No real point in using AC_LANG_* and ${ac_ext}, as we need to create
-## hard-wired suffix rules.  We could be a bit more careful as we
-## actually only test suffix '.cc'.
 if test -n "`${CXX} -M conftest.cc 2>/dev/null | grep conftest`"; then
   r_cv_prog_cxx_m=yes
 else
@@ -26034,10 +25945,6 @@ case "${host_os}" in
     R_SYSTEM_ABI="?"
     ;;
 esac
-## Compiler types
-## C: AC_PROG_CC does
-##   If using the GNU C compiler, set shell variable `GCC' to `yes'.
-##   Alternatively, could use ac_cv_c_compiler_gnu (undocumented).
 if test "${GCC}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gcc"
 else
@@ -26050,9 +25957,6 @@ case "${host_os}" in
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
 esac
 fi
-## C++: AC_PROG_CXX does
-##   If using the GNU C++ compiler, set shell variable `GXX' to `yes'.
-##   Alternatively, could use ac_cv_cxx_compiler_gnu (undocumented).
 if test "${GXX}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gxx"
 else
@@ -26064,11 +25968,6 @@ case "${host_os}" in
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
 esac
 fi
-## Fortran 77: AC_PROG_F77 does
-##   If using `g77' (the GNU Fortran 77 compiler), then set the shell
-##   variable `G77' to `yes' (and also seems to do so for gfortran, which
-##   is what we really need).
-##   Alternatively, could use ac_cv_f77_compiler_gnu (undocumented).
 if test "${G77}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
 else
@@ -26080,9 +25979,6 @@ case "${host_os}" in
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
 esac
 fi
-## Fortran 90/95: AC_PROG_FC does not seem to set a shell variable
-##   indicating the GNU Fortran 90/95 compiler.
-##   Hence, need to use ac_cv_fc_compiler_gnu (undocumented).
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
 else
@@ -26683,6 +26579,7 @@ dylib_ldflags="${SHLIB_LDFLAGS}"
 LIBR_LDFLAGS=""
 RLAPACK_LDFLAGS=""
 RBLAS_LDFLAGS=""
+R_DYLIB_VERSION_SUFFIX=""
 case "${host_os}" in
   aix*)
     ## Not needed for -brtl linking
@@ -26709,13 +26606,18 @@ case "${host_os}" in
     fi
     ;;
   openbsd*)
-    PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/\.//" -e "s/\..*$//"`
-    PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/.*\.\([^.][^.]*$\)/\1/"`
-    DYLIB_EXT=".so.${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
+    if test -z "${R_DYLIB_VERSION}"; then
+      PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
+        sed -e "s/\.//" -e "s/\..*$//"`
+      PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
+        sed -e "s/.*\.\([^.][^.]*$\)/\1/"`
+      R_DYLIB_VERSION="${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
+    fi
+    R_DYLIB_VERSION_SUFFIX=".${R_DYLIB_VERSION}"
     ;;
 esac
+
+R_DYLIB_EXT="${DYLIB_EXT}${R_DYLIB_VERSION_SUFFIX}"
 
 if test -z "${DYLIB_LD}"; then
   dylib_ld_was_given=no
@@ -26780,6 +26682,7 @@ else
   USE_EXPORTFILES_TRUE='#'
   USE_EXPORTFILES_FALSE=
 fi
+
 
 
 
@@ -29636,7 +29539,6 @@ fi
 acx_blas_save_LIBS="${LIBS}"
 LIBS="${FLIBS} ${LIBS}"
 
-## First, check BLAS_LIBS environment variable
 if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
@@ -29674,7 +29576,6 @@ $as_echo "${acx_blas_ok}" >&6; }
   fi
 fi
 
-## BLAS linked to by default?  (happens on some supercomputers)
 if test "${acx_blas_ok}" = no; then
   as_ac_var=`$as_echo "ac_cv_func_${dgemm}" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "${dgemm}" "$as_ac_var"
@@ -29684,7 +29585,6 @@ fi
 
 fi
 
-## BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
 if test "${acx_blas_ok}" = no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ATL_xerbla in -latlas" >&5
 $as_echo_n "checking for ATL_xerbla in -latlas... " >&6; }
@@ -29786,7 +29686,6 @@ fi
 
 fi
 
-## BLAS in PhiPACK libraries?  (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
@@ -29939,25 +29838,8 @@ fi
 
 fi
 
-## <COMMENT>
-## ## BLAS in Alpha CXML library?
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(cxml, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-lcxml"])
-## fi
-## </COMMENT>
 
-## <COMMENT>
-## # BLAS in Alpha DXML library? (now called CXML, see above)
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(dxml, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-ldxml"])
-## fi
-## </COMMENT>
 
-## BLAS in Sun Performance library?
-## Some versions require -xlic_lib=sunperf: -lsunperf will not work
-## Not sure whether -lsunmath is required, but it helps anyway
 if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lsunperf" >&5
@@ -30007,23 +29889,8 @@ $as_echo "${acx_blas_ok}" >&6; }
   fi
 fi
 
-## <COMMENT>
-## ## BLAS in SCSL library?  (SGI/Cray Scientific Library)
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(scs, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-lscs"])
-## fi
-## </COMMENT>
 
-## <COMMENT>
-## ## BLAS in SGIMATH library?
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(complib.sgimath, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-lcomplib.sgimath"])
-## fi
-## </COMMENT>
 
-## BLAS in IBM ESSL library? (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
@@ -30127,7 +29994,6 @@ fi
 
 fi
 
-## Generic BLAS library?
 if test "${acx_blas_ok}" = no; then
   as_ac_Lib=`$as_echo "ac_cv_lib_blas_${dgemm}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${dgemm} in -lblas" >&5
@@ -30181,9 +30047,6 @@ fi
 
 fi
 
-## Now check if zdotu works (fails on AMD64 with the wrong compiler;
-## also fails on OS X with Accelerate/vecLib and gfortran;
-## but in that case we have a work-around using USE_VECLIB_G95FIX)
 
 if test "${acx_blas_ok}" = yes; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether double complex BLAS can be used" >&5
@@ -30215,7 +30078,6 @@ c Goto's BLAS at least needs a XERBLA
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
-## Yes we need to double quote this ...
 cat > conftest.c <<EOF
 #include <stdlib.h>
 #include "confdefs.h"
@@ -30596,7 +30458,6 @@ fi
 acx_lapack_save_LIBS="${LIBS}"
 LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
-## LAPACK linked to by default?  (Could be in the BLAS libs.)
 if test "${acx_lapack_ok}" = no; then
   as_ac_var=`$as_echo "ac_cv_func_${lapack}" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "${lapack}" "$as_ac_var"
@@ -30606,7 +30467,6 @@ fi
 
 fi
 
-## Next, check LAPACK_LIBS environment variable
 if test "${acx_lapack_ok}" = no; then
   if test "x${LAPACK_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${LAPACK_LIBS} ${LIBS}"
@@ -30651,10 +30511,7 @@ $as_echo "${acx_lapack_ok}" >&6; }
   fi
 fi
 
-## LAPACK in Sun Performance library?
-## No longer test here as will be picked up by the default test.
 
-## Generic LAPACK library?
 if test "${acx_lapack_ok}" = no; then
   as_ac_Lib=`$as_echo "ac_cv_lib_lapack_${lapack}" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ${lapack} in -llapack" >&5
@@ -30741,7 +30598,6 @@ fi
 
 done
 
-## need to ignore cache for this as it may set LIBS
 unset ac_cv_func_iconv
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for iconv" >&5
 $as_echo_n "checking for iconv... " >&6; }
@@ -30915,7 +30771,6 @@ $as_echo "$r_cv_iconv_latin1" >&6; }
     as_fn_error $? "a suitable iconv is essential" "$LINENO" 5
   fi
 fi
-## if the iconv we are using was in libiconv we have already included -liconv
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for iconvlist" >&5
 $as_echo_n "checking for iconvlist... " >&6; }
 if ${ac_cv_func_iconvlist+:} false; then :
@@ -31143,7 +30998,6 @@ _ACEOF
 ## check sufficient support for MBCS
 
 want_mbcs_support=yes
-## Wide character support -- first test for headers (which are assumed in code)
 for ac_header in wchar.h wctype.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
@@ -31165,8 +31019,6 @@ for ac_header in wchar wctype; do
   fi
 done
 if test "$want_mbcs_support" = yes ; then
-## Solaris 8 is missing iswblank, but we can make it from iswctype.
-## These are all C99, but Cygwin lacks wcsftime & wcstod
   for ac_func in mbrtowc wcrtomb wcscoll wcsftime wcstod
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -31328,9 +31180,6 @@ done
     fi
   done
 fi
-## it seems IRIX once had wctrans but not wctrans_t: we check this when we
-## know we have the headers and wctrans().
-## Also Solaris 2.6 (very old) seems to be missing mbstate_t
 if test "$want_mbcs_support" = yes ; then
   ac_fn_c_check_type "$LINENO" "wctrans_t" "ac_cv_type_wctrans_t" "#include <wchar.h>
        #include <wctype.h>
@@ -34947,7 +34796,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -35001,7 +34850,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -35033,7 +34882,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -35086,7 +34935,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -35118,7 +34967,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -36514,11 +36363,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36517: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36366: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36521: \$? = $ac_status" >&5
+   echo "$as_me:36370: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36613,11 +36462,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36616: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36465: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36620: \$? = $ac_status" >&5
+   echo "$as_me:36469: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36665,11 +36514,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36668: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36517: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36672: \$? = $ac_status" >&5
+   echo "$as_me:36521: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

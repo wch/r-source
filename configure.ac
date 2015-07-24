@@ -1663,6 +1663,7 @@ dylib_ldflags="${SHLIB_LDFLAGS}"
 LIBR_LDFLAGS=""
 RLAPACK_LDFLAGS=""
 RBLAS_LDFLAGS=""
+R_DYLIB_VERSION_SUFFIX=""
 case "${host_os}" in
   aix*)
     ## Not needed for -brtl linking
@@ -1689,13 +1690,18 @@ case "${host_os}" in
     fi
     ;;
   openbsd*)
-    PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/\.//" -e "s/\..*$//"`
-    PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/.*\.\([[^.]][[^.]]*$\)/\1/"`
-    DYLIB_EXT=".so.${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
+    if test -z "${R_DYLIB_VERSION}"; then
+      PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
+        sed -e "s/\.//" -e "s/\..*$//"`
+      PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
+        sed -e "s/.*\.\([[^.]][[^.]]*$\)/\1/"`
+      R_DYLIB_VERSION="${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
+    fi
+    R_DYLIB_VERSION_SUFFIX=".${R_DYLIB_VERSION}"
     ;;
 esac
+
+R_DYLIB_EXT="${DYLIB_EXT}${R_DYLIB_VERSION_SUFFIX}"
 
 if test -z "${DYLIB_LD}"; then
   dylib_ld_was_given=no
@@ -1739,6 +1745,7 @@ AC_SUBST(LAPACK_LDFLAGS)
 AC_SUBST(FW_VERSION)
 AC_SUBST(STATICR1)
 AC_SUBST(STATICR2)
+AC_SUBST(R_DYLIB_EXT)
 
 ## C++11 and later
 R_CXX1X

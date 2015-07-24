@@ -34,7 +34,7 @@ DISTFILES = \
 	cmplx.f dlapack.f dlamch.f
 
 lapack_la = lapack$(SHLIB_EXT)
-Rlapack_la = libRlapack$(DYLIB_EXT)
+Rlapack_la = libRlapack$(R_DYLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
 ## Used for passing '+s' to SHLIB_LINK on HP-UX.
 lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
@@ -111,7 +111,7 @@ mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
-	  lapack$(SHLIB_EXT) libRlapack$(DYLIB_EXT)
+	  $(lapack_la) $(Rlapack_la)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

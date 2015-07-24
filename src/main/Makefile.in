@@ -108,7 +108,7 @@ R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -lR @BLAS_SHLIB_TRUE@-lRblas
 @BUILD_LTO_FALSE@R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
-libR_la = libR$(DYLIB_EXT)
+libR_la = libR$(R_DYLIB_EXT)
 libR_la_OBJECTS = $(OBJECTS)
 libR_la_LIBADD =  $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
 libR_la_DEPENDENCIES = $(STATIC_LIBS) $(R_TZONE) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
@@ -221,14 +221,14 @@ install-strip-static: installdirs
 	fi
 uninstall:
 	@rm -f "$(DESTDIR)$(Rexecbindir)/exec/$(R_ARCH)/R" "$(DESTDIR)$(Rexecbindir)/R.bin"
-	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR$(DYLIB_EXT)"
+	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR$(R_DYLIB_EXT)"
 	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR.a"
 
 mostlyclean: clean
 clean:
 	@-rm -f $(top_builddir)/etc/R.exp
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
+	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(R_DYLIB_EXT) \
 	  $(R_binary) libR.a
 distclean: clean
 	@-rm -f Makefile
