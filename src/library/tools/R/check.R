@@ -3047,7 +3047,7 @@ setRlibs <-
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
                     noteLog(Log)
-                    out <- utils::tail(out, 25)
+                    out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 25)))
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
