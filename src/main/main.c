@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2013   The R Core Team
+ *  Copyright (C) 1998-2014   The R Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -715,6 +715,7 @@ void setup_Rmainloop(void)
 	char *p, Rlocale[1000]; /* Windows' locales can be very long */
 	p = getenv("LC_ALL");
 	strncpy(Rlocale, p ? p : "", 1000);
+        Rlocale[1000 - 1] = '\0';
 	if(!(p = getenv("LC_CTYPE"))) p = Rlocale;
 	/* We'd like to use warning, but need to defer.
 	   Also cannot translate. */
@@ -1092,13 +1093,14 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 }
 
 
-/* browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L) */
+/* browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
+ * ------- but also called from ./eval.c */
 SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
     RCNTXT thiscontext, returncontext, *cptr;
-    int savestack, browselevel, tmp;
+    int savestack, browselevel;
     SEXP ap, topExp, argList;
 
     /* argument matching */
@@ -1106,7 +1108,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(ap,  install("text"));
     SET_TAG(CDR(ap), install("condition"));
     SET_TAG(CDDR(ap), install("expr"));
-    SET_TAG(CDR(CDDR(ap)), install("skipCalls"));
+    SET_TAG(CDDDR(ap), install("skipCalls"));
     argList = matchArgs(ap, args, call);
     UNPROTECT(1);
     PROTECT(argList);
@@ -1118,7 +1120,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(IS_R_MissingArg(CADDR(argList)))
 	SETCAR(CDDR(argList), ScalarLogical(1));
     if(IS_R_MissingArg(CADDDR(argList)))
-	SETCAR(CDR(CDDR(argList)), ScalarInteger(0));
+	SETCAR(CDDDR(argList), ScalarInteger(0));
 
     /* return if 'expr' is not TRUE */
     if( !asLogical(CADDR(argList)) ) {
@@ -1142,7 +1144,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 		&& cptr->callflag )
 	    cptr = cptr->nextcontext;
 	Rprintf("Called from: ");
-	tmp = asInteger(GetOption(install("deparse.max.lines"), R_BaseEnv));
+	int tmp = asInteger(GetOption(install("deparse.max.lines"), R_BaseEnv));
 	if(tmp != NA_INTEGER && tmp > 0) R_BrowseLines = tmp;
         if( cptr != R_ToplevelContext ) {
 	    PrintValueRec(cptr->call, rho);

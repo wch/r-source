@@ -667,6 +667,11 @@ buildVignette <-
     ##     f <- f[file_test("-f", f)]
     ##     file.remove(f)
     ## #}
+
+    if((is.na(clean) || clean) && file.exists(".build.timestamp")) {
+        file.remove(".build.timestamp")
+    }
+
     unique(keep)
 }
 
@@ -1011,7 +1016,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
     })
 
     if(length(output) == 1L) {
-        res <- tryCatch({
+        tryCatch({
             source(output, echo = TRUE)
         }, error = function(e) {
             cat("\n  When sourcing ", sQuote(output), ":\n", sep="")

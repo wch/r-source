@@ -4,6 +4,9 @@ require(methods)
 assertError <- tools::assertError # "import"
 ##too fragile: showMethods(where = "package:methods")
 
+## Needs cached primitive generic for '$'
+new("envRefClass")# failed in R <= 3.2.0
+
 ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
 setClass("test1", representation(date="POSIXct"))
 x <- new("test1", date=as.POSIXct("2003-10-09"))

@@ -1,6 +1,6 @@
 % File src/library/base/man/cut.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cut.POSIXt}
@@ -26,8 +26,9 @@
     \code{"hour"}, \code{"day"}, \code{"DSTday"}, \code{"week"},
     \code{"month"}, \code{"quarter"} or \code{"year"}, optionally
     preceded by an integer and a space, or followed by \code{"s"}.
-    For \code{"Date"} objects only \code{"day"}, \code{"week"},
-    \code{"month"}, \code{"quarter"} and \code{"year"} are allowed.
+    (For \code{"Date"} objects only interval specifications using
+    \code{"day"}, \code{"week"}, \code{"month"}, \code{"quarter"} and
+    \code{"year"} are allowed.)
   }
   \item{labels}{
     labels for the levels of the resulting category.  By default,
@@ -41,19 +42,23 @@
   \item{right, \dots}{arguments to be passed to or from other methods.}
 }
 \details{
-  Using both \code{right = TRUE} and \code{include.lowest = TRUE}
-  will include both ends of the range of dates.
+  Note that the default for \code{right} differs from the
+  \link[=cut.default]{default method}.  Using \code{include.lowest =
+    TRUE} will include both ends of the range of dates.
 
   Using \code{breaks = "quarter"} will create intervals of 3 calendar
   months, with the intervals beginning on January 1, April 1,
-  July 1 or October 1, based upon \code{min(x)} as appropriate.
+  July 1 or October 1 (based upon \code{min(x)}) as appropriate.
 
-  A vector \code{breaks} will be sorted before use: \code{labels} will
-  then correspond to the sorted vector.  
+  A vector of \code{breaks} will be sorted before use: \code{labels} should
+  correspond to the sorted vector.
 }
 \value{
   A factor is returned, unless \code{labels = FALSE} which returns
   the integer level codes.
+  
+  Values which fall outside the range of \code{breaks} are coded as
+  \code{NA}, as are and \code{NA} values.
 }
 \seealso{
   \code{\link{seq.POSIXt}}, \code{\link{seq.Date}}, \code{\link{cut}}

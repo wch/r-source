@@ -1022,8 +1022,8 @@ function(package, lib.loc = NULL)
             docSlots <-
                 docSlots[is.na(match(docSlots, c("...", "\\dots")))]
         ## was if(!identical(slots_in_code, slots_in_docs)) {
-        if(!all(d.in.c <- docSlots %in% codeSlots) ||
-           !all(c.in.d <- (setdiff(codeSlots, superSlots)) %in% docSlots) ) {
+        if(!all(docSlots %in% codeSlots) ||
+           !all(setdiff(codeSlots, superSlots) %in% docSlots) ) {
             bad_Rd_objects[[db_names[ii]]] <-
                 list(name = cl,
                      code = codeSlots,
@@ -1433,9 +1433,6 @@ function(package, dir, lib.loc = NULL)
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
         if(!length(grep("-deprecated$", aliases))) {
-            functions <-
-                setdiff(functions,
-                        .functions_with_no_useful_S3_method_markup())
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -1512,9 +1509,7 @@ function(x, ...)
 
     y <- as.character(unlist(lapply(names(x), .fmt)))
 
-    if(!identical(as.logical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_")),
-                  FALSE)
-       && length(bad_lines <- attr(x, "bad_lines"))) {
+    if(length(bad_lines <- attr(x, "bad_lines")))
         y <- c(y,
                unlist(lapply(names(bad_lines),
                              function(nm) {
@@ -1523,7 +1518,6 @@ function(x, ...)
                                    paste(" ", bad_lines[[nm]]))
                              })),
                "")
-    }
 
     y
 }
@@ -1533,7 +1527,7 @@ function(x, ...)
 checkDocStyle <-
 function(package, dir, lib.loc = NULL)
 {
-    has_namespace <- auto_namespace <- FALSE
+    has_namespace <- FALSE
 
     ## Argument handling.
     if(!missing(package)) {
@@ -1569,10 +1563,6 @@ function(package, dir, lib.loc = NULL)
         ## auto-generated.
         if(packageHasNamespace(package, dirname(dir))) {
             has_namespace <- TRUE
-            ns <- readLines(file.path(dir, "NAMESPACE"), warn = FALSE)
-            auto_namespace <-
-                grepl("# Default NAMESPACE created by R", ns[1L],
-                      useBytes = TRUE)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
@@ -1920,8 +1910,6 @@ function(package, dir, file, lib.loc = NULL,
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
 
-    allowed <- character()
-
     check_registration <- function(e, fr) {
     	sym <- e[[2L]]
     	name <- deparse(sym, nlines = 1L)
@@ -2059,7 +2047,7 @@ function(package, dir, file, lib.loc = NULL,
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 if(registration) check_registration(e, fr)
                 dup <- e[["DUP"]]
-                if(identical(dup, FALSE))
+                if(!is.null(dup) && !identical(dup, TRUE))
                     dup_false <<- c(dup_false, e)
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
@@ -2261,8 +2249,8 @@ function(x, ...)
     z3 <- attr(x, "dup_false")
      if (length(z3)) {
     	msg <- ngettext(length(z3),
-    		        "Call with DUP = FALSE:",
-    		        "Calls with DUP = FALSE:",
+    		        "Call with DUP:",
+    		        "Calls with DUP:",
     		        domain = NA)
         res <- c(res, msg)
         for (i in seq_along(z3)) {
@@ -2798,8 +2786,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             ## given a package, find its recursive dependencies.
             ## We want the dependencies of the current package,
             ## not of a version on the repository.
-            pkg <- db[["Package"]]
-            this <- db[dependencies]; names(this) <- dependencies;
+##            pkg <- db[["Package"]]
+            this <- db[dependencies]; names(this) <- dependencies
             known <- setdiff(utils:::.clean_up_dependencies(this), "R")
             info <- available[, dependencies, drop = FALSE]
             rn <- rownames(info)
@@ -3940,15 +3928,17 @@ function(package, lib.loc = NULL)
             lapply(sub(".*=[[:space:]]*", "", opts),
                    config_val_to_logical)
     }
+    if(check_without_loading)
+        env <- suppressWarnings(suppressMessages(getNamespace(package)))
     ## look for globalVariables declaration in package
-    .glbs <- suppressMessages(utils::globalVariables(,package))
+    ## (This loads the namespace if not already loaded.)
+    .glbs <- suppressMessages(utils::globalVariables(, package))
     if(length(.glbs))
         ## codetools doesn't allow adding to its default
         args$suppressUndefined <-
             c(codetools:::dfltSuppressUndefined, .glbs)
 
     if(check_without_loading) {
-        env <- getNamespace(package)
         args <- c(list(env, report = foo), args)
         suppressMessages(do.call(codetools::checkUsageEnv, args))
         suppressMessages(do.call(checkMethodUsageEnv, args))
@@ -4208,7 +4198,8 @@ function(pkgDir)
     non_ASCII <- where <- character()
     latin1 <- utf8 <- bytes <- 0L
     ## avoid messages about loading packages that started with r48409
-    suppressPackageStartupMessages({
+    ## (and some more ...)
+    suppressMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
             check_one(get(ds, envir = dataEnv), ds)
     })
@@ -4905,9 +4896,9 @@ function(x, ...)
 
         has_bad_wrong_args <-
             "bad_arg_names" %in% unlist(lapply(y, names))
-        calls <-
-            unique(unlist(lapply(y,
-                                 function(e) e[["bad_calls"]][["names"]])))
+##        calls <-
+##            unique(unlist(lapply(y,
+##                                 function(e) e[["bad_calls"]][["names"]])))
         .fmt_entries_for_file <- function(e, f) {
             c(gettextf("File %s:", sQuote(f)),
               unlist(Map(.fmt_entries_for_function, e, names(e))),
@@ -5741,7 +5732,7 @@ function(package, dir, lib.loc = NULL)
 ### * .check_packages_used_in_tests
 
 .check_packages_used_in_tests <-
-function(dir, lib.loc = NULL)
+function(dir, testdir, lib.loc = NULL)
 {
     ## Argument handling.
     ## Using sources from directory @code{dir} ...
@@ -5752,7 +5743,7 @@ function(dir, lib.loc = NULL)
     dfile <- file.path(dir, "DESCRIPTION")
     db <- .read_description(dfile)
 
-    testsrcdir <- file.path(dir, "tests")
+    testsrcdir <- file.path(dir, testdir)
     od <- setwd(testsrcdir)
     on.exit(setwd(od))
     Rinfiles <- dir(".", pattern="\\.Rin$") # only trackOjs has *.Rin
@@ -6258,6 +6249,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
     }
 
 
+    ## FIXME: these are set but not used.
     bad_S4methods <- list()
     bad_refs <- character()
     if(!missing(package)) {
@@ -6604,7 +6596,7 @@ function(dir)
         out$suggests_or_enhances_not_in_mainstream_repositories <-
             suggests_or_enhances
         if(!is.na(aurls <- meta["Additional_repositories"])) {
-            aurls <- unique(unlist(strsplit(aurls, ", *")))
+            aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
             adb <-
                 tryCatch(utils::available.packages(utils::contrib.url(aurls,
                                                                       "source"),
@@ -7104,11 +7096,6 @@ function(package, dir, lib.loc = NULL)
     if(any(ind))                        # exclude them
         db <- db[!ind]
 
-    check_offending_autogenerated_content <-
-        !identical(as.logical(Sys.getenv("_R_CHECK_RD_CONTENTS_AUTO_")),
-                   FALSE)
-    offending_autogenerated_content <- NULL
-
     for(nm in names(db)) {
         rd <- db[[nm]]
 
@@ -7119,9 +7106,8 @@ function(package, dir, lib.loc = NULL)
                       1L]
 
         ## Autogenerated Rd content which needs editing.
-        if(check_offending_autogenerated_content)
-            offending_autogenerated_content <-
-                .Rd_get_offending_autogenerated_content(rd)
+        offending_autogenerated_content <-
+            .Rd_get_offending_autogenerated_content(rd)
 
         if(length(arguments_with_no_description)
            || length(offending_autogenerated_content)) {
@@ -7353,27 +7339,6 @@ function(package_name)
       if(package_name == "utils") "?",
       if(package_name == "methods") "@")
 }
-
-### ** .functions_with_no_useful_S3_method_markup
-
-## <FIXME>
-## Remove eventually ...
-.functions_with_no_useful_S3_method_markup <-
-function()
-{
-    ## Once upon a time ... there was no useful markup for S3 methods
-    ## for subscripting/subassigning and binary operators.
-
-    c(if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
-                   FALSE))
-      c("[", "[[", "$", "[<-", "[[<-", "$<-"),
-      if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_BINOPS_")),
-                   FALSE))
-      c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=", "==", "%%",
-        "%/%", "&", "|"),
-      "!")
-}
-## </FIXME>
 
 ### ** get_S4_generics_with_methods
 
@@ -7721,8 +7686,8 @@ function(x)
 ## * one of $ [ [[
 ## * one of the binary operators
 ##   + - * / ^ < <= > >= != == | & %something%
+## * unary !
 ## (as supported by Rdconv).
-## See also .functions_with_no_useful_S3_method_markup.
 ## CLASS can be a syntactic name (we could be more precise about the
 ## fact that these must start with a letter or '.'), or anything quoted
 ## by backticks (not containing backticks itself for now).  Arguably,

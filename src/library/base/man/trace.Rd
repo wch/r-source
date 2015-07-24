@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright (C) 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -32,12 +32,12 @@ returnValue(default = NULL)
     untraced.  For \code{untrace} or for \code{trace} with more than one
     argument, more than one name can be given in the quoted form, and
     the same action will be applied to each one.}
-  \item{tracer}{Either a function or an unevaluated expression.  The
+  \item{tracer}{either a \link{function} or an unevaluated expression.  The
     function will be called or the expression will be evaluated either
     at the beginning of the call, or before those steps in the call
     specified by the argument \code{at}.
     See the details section.}
-  \item{exit}{ Either a function or an unevaluated expression.  The
+  \item{exit}{either a \code{\link{function}} or an unevaluated expression.  The
     function will be called or the expression will be evaluated on
     exiting the function.
     See the details section.}
@@ -138,12 +138,12 @@ returnValue(default = NULL)
 
   Using \code{\link{setBreakpoint}} (from package \pkg{utils}) may be an
   alternative, calling \code{trace(...., at, ...)}.
-  
+
   The \code{exit} argument is called during \code{\link{on.exit}}
   processing.  In an \code{on.exit} expression, the experimental \code{returnValue()}
   function may be called to obtain the value about to be returned by
   the function. Calling this function in other circumstances will give
-  undefined results.  
+  undefined results.
 
   An intrinsic limitation in the \code{exit} argument is that it won't
   work if the function itself uses \code{on.exit} with \code{add=
@@ -200,28 +200,34 @@ returnValue(default = NULL)
   include a \sQuote{destructive} browser for \R.)
 }
 \note{
+  Using \code{trace()} is conceptually a generalization of
+  \code{\link{debug}}, implemented differently, by calling
+  \code{\link{browser}} via its \code{tracer} or \code{exit} argument.
+  %% On the other hand, it sometimes triggers less consistently
+  %% ?? lacks features of debug()- (which ??)
+
   The version of function tracing that includes any of the arguments
   except for the function name requires the \pkg{methods} package
   (because it uses special classes of objects to store and restore
   versions of the traced functions).
 
   If methods dispatch is not currently on, \code{trace} will load the
-  methods namespace, but will not put the methods package on the search
-  list.
+  methods namespace, but will not put the methods package on the
+  \code{\link{search}} list.
 }
 \value{
   In the simple version (just the first argument), \code{trace} returns
   an invisible \code{NULL}.
   Otherwise, the traced function(s) name(s).  The relevant consequence is the
   assignment that takes place.
-  
+
   \code{untrace} returns the function name invisibly.
-  
+
   \code{tracingState} returns the current global tracing state, and possibly
   changes it.
-  
+
   When called during \code{on.exit} processing, \code{returnValue} returns
-  the value about to be returned by the exiting function.  Behaviour in 
+  the value about to be returned by the exiting function.  Behaviour in
   other circumstances is undefined.
 }
 \references{

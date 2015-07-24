@@ -96,7 +96,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   numbers!
 
   Character strings will be compared as byte sequences if any input is
-  marked as \code{"bytes"}.
+  marked as \code{"bytes"} (see \code{\link{Encoding}}).
 
   Except for factors, logical and raw vectors the default \code{nmax = NA} is
   equivalent to \code{nmax = length(x)}.  Since a hash table of size

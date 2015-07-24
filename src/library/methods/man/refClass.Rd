@@ -1,6 +1,6 @@
 % File src/library/methods/man/refClass.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010-2 R Core Team
+% Copyright 2010-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ReferenceClasses}
@@ -73,7 +73,7 @@ used by accessor functions.
 
 Note that fields are distinct from
 the slots, if any, in the object.  Slots are, as always, handled by
-standard \R{} object management.  
+standard \R{} object management.
 It is not generally a good idea to mix slots and fields in the same
 class; this confuses the distinction in behavior between reference
 classes and regular S4 classes.  See the comments in the
@@ -160,18 +160,18 @@ To override an inherited value for a locked field, the new value must
 be one of the named arguments in the initializing call.
 A later assignment of the field will result in an error.
 
-For technical reasons, the
-default method does not currently appear explicitly, but can be
-invoked by \code{$callSuper(...)} %$
-from a method for \code{$initialize()}. %$
-Initialization methods need some care in design, as they do for S4
-classes.
-In particular, remember that others may subclass your class and pass
-through field assignments or other arguments.  Therefore, your method
-should normally include \dots as an argument, all other arguments
-should have defaults or check for missingness, and your method should
-pass all initialized values on via \code{$callSuper()} or \code{$initFields()} if
-you know that your superclasses have no initialization methods.
+Initialization methods need some care in design.
+The generator
+for a reference class will be called with no arguments, for example
+when copying the object.
+To ensure that these calls do not fail, the method must have defaults
+for all arguments or check for \code{missing()}.
+The method
+should include \code{\dots} as an argument and
+pass this on via \code{$callSuper()} (or \code{$initFields()} if
+you know that your superclasses have no initialization methods).
+This allows future class definitions that subclass this class, with
+additional fields.
 
 \code{getRefClass()} also returns the generator function for the
 class.  Note that the package slot in the value is the correct package
@@ -284,6 +284,10 @@ used to access fields and other methods.
 In particular, methods should not use non-exported entries in the
 package's namespace, because the methods may be inherited by a
 reference class in another package.
+
+Methods for \code{$initialize()} %$
+have special requirements.  See the comments in the \dQuote{Value}
+section.
 
 Reference methods can not themselves be generic functions; if you want
 additional function-based method dispatch, write a separate generic
@@ -629,7 +633,7 @@ In a method for this class, the field can be accessed by the name
 \code{data}.
 A field that is not locked can be set by an expression of the form
 \code{x$data <- value}.%$
-Inside a method, a field can be assigned by an expresion of the form
+Inside a method, a field can be assigned by an expression of the form
 \code{x <<- value}.
 Note the \link[=assignOps]{non-local assignment} operator.
 The standard \R interpretation of this operator works to assign it in

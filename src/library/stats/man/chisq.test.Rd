@@ -121,7 +121,7 @@ chisq.test(x, y = NULL, correct = TRUE,
 
 ## From Agresti(2007) p.39
 M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
-dimnames(M) <- list(gender = c("M","F"),
+dimnames(M) <- list(gender = c("F", "M"),
                     party = c("Democrat","Independent", "Republican"))
 (Xsq <- chisq.test(M))  # Prints test summary
 Xsq$observed   # observed counts (same as M)

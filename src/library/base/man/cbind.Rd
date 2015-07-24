@@ -20,6 +20,7 @@
 \usage{
 cbind(\dots, deparse.level = 1)
 rbind(\dots, deparse.level = 1)
+\method{rbind}{data.frame}(\dots, deparse.level = 1, make.row.names = TRUE)
 }
 \arguments{
   \item{\dots}{vectors or matrices.  These can be given as named
@@ -32,6 +33,9 @@ rbind(\dots, deparse.level = 1)
     \code{deparse.level = 0} constructs no labels; the default,\cr
     \code{deparse.level = 1 or 2} constructs labels from the argument
     names, see the \sQuote{Value} section below.}
+  \item{make.row.names}{(only for data frame method:) logical
+    indicating if unique and valid \code{\link{row.names}} should be
+    constructed from the arguments.}
 }
 \details{
   The functions \code{cbind} and \code{rbind} are S3 generic, with
@@ -165,6 +169,26 @@ dd <- 10
 rbind(1:4, c = 2, "a++" = 10, dd, deparse.level = 0) # middle 2 rownames
 rbind(1:4, c = 2, "a++" = 10, dd, deparse.level = 1) # 3 rownames (default)
 rbind(1:4, c = 2, "a++" = 10, dd, deparse.level = 2) # 4 rownames
+
+## cheap row names:
+b0 <- gl(3,4, labels=letters[1:3])
+bf <- setNames(b0, paste0("o", seq_along(b0)))
+df  <- data.frame(a = 1, B = b0, f = gl(4,3))
+df. <- data.frame(a = 1, B = bf, f = gl(4,3))
+new <- data.frame(a = 8, B ="B", f = "1")
+(df1  <- rbind(df , new))
+(df.1 <- rbind(df., new))
+stopifnot(identical(df1, rbind(df,  new, make.row.names=FALSE)),
+          identical(df1, rbind(df., new, make.row.names=FALSE)))
+\dontshow{
+## Testing a semi-official use:
+d2 <- rbind.data.frame(as.list(df), as.list(new))
+d3 <- rbind.data.frame(as.list(df), as.list(new), make.row.names=FALSE)
+stopifnot(identical(.row_names_info(d3), -13L),
+          attr(d2, "row.names")[c(1,13)] == c("13", "131"))
+row.names(d2) <- attr(d3, "row.names")# = 1:13
+stopifnot(identical(d2, d3))
+}
 }
 \keyword{array}
 \keyword{manip}

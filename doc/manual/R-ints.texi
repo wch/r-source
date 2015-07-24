@@ -1915,7 +1915,7 @@ indicating if the serialized objects were compressed: compression is
 always used nowadays. We later added the values @code{compressed = 2}
 and @code{3} for @command{bzip2} and @command{xz} compression (with the
 possibility of future expansion to other methods): these formats add a
-fifth byte to the header for the type of compression, and stores
+fifth byte to the header for the type of compression, and store
 serialized objects uncompressed if compression expands them.
 
 The loader for a lazy-load database of code or data is function
@@ -1932,6 +1932,16 @@ entries is done by calls to @code{.Call("R_lazyLoadDBinsertValue",
 Lazy-load databases of less than 10MB are cached in memory at first use:
 this was found necessary when using file systems with high latency
 (removable devices and network-mounted file systems on Windows).
+
+Lazy-load databases are loaded into the exports for a package, but not
+into the namespace environment itself.  Thus they are visible when the
+package is @emph{attached}, and also @emph{via} the @code{::} operator.
+This was a deliberate design decision, as packages mostly make datasets
+available for use by the end user (or other packages), and they should
+not be found preferentially from functions in the package, surprising
+users who expected the normal search path to be used.  (There is an
+alternative mechanism, @file{sysdata.rda}, for `system datasets' that
+are intended primarily to be used within the package.)
 
 The same database mechanism is used to store parsed @file{Rd} files.
 One or all of the parsed objects is fetched by a call to
@@ -3970,8 +3980,9 @@ with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
 links@footnote{see the previous footnote.} to the installed copies of
 all the Depends/Imports and (for the second only) Suggests packages
-which are not in @code{.Library}.  Default: false (but
-@env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN checks).
+which are not in @code{.Library}.  (As an exception, packages in a
+@samp{VignetteBuilder} field are always made available.)
+Default: false (but @env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN checks).
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
@@ -4359,8 +4370,7 @@ to 2^48 on unserialization.
 The type @code{R_xlen_t} is made available to packages in C header
 @file{Rinternals.h}: this should be fine in C code since C99 is
 required.  People do try to use @R{} internals in C++, but C++98
-compilers are not required to support these types (and there are
-currently no C++11 compilers).
+compilers are not required to support these types.
 
 @item
 Indexing can be done via the use of doubles.  The internal indexing code
@@ -4438,9 +4448,9 @@ See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 @section Large matrices
 
 Matrices are stored as vectors and so were also limited to 2^31-1
-elements.  Now longer vectors are allowed, matrices with more elements
-are supported provided that each of the dimensions is no more than
-2^31-1.  However, not all applications can be supported.
+elements.  Now longer vectors are allowed on 64-bit platforms, matrices
+with more elements are supported provided that each of the dimensions is
+no more than 2^31-1.  However, not all applications can be supported.
 
 The main problem is linear algebra done by FORTRAN code compiled
 with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all

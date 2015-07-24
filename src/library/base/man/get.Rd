@@ -1,12 +1,13 @@
 % File src/library/base/man/get.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{get}
+\title{Return the Value of a Named Object}
 \alias{get}
 \alias{mget}
-\title{Return the Value of a Named Object}
+\alias{dynGet}
 \description{
   Search by name for an object (\code{get}) or zero or more objects
   (\code{mget}).
@@ -17,6 +18,8 @@ get(x, pos = -1, envir = as.environment(pos), mode = "any",
 
 mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
      inherits = FALSE)
+
+dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
 }
 \arguments{
   \item{x}{For \code{get}, an object name (given as a character
@@ -30,8 +33,13 @@ mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
     \sQuote{Details} section.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
-  \item{ifnotfound}{A \code{\link{list}} of values to be used if the item is
-    not found: it will be coerced to a list if necessary.}
+  \item{ifnotfound}{For \code{mget}, a \code{\link{list}} of values to
+    be used if the item is not found: it will be coerced to a list if
+    necessary.\cr
+    For \code{dynGet} any \R object, e.g., a call to
+    \code{\link{stop}()}.}
+  \item{minframe}{integer specifying the minimal frame number to look
+    into.}
 }
 \details{
   The \code{pos} argument can specify the environment in which to look
@@ -66,6 +74,10 @@ mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
   the requested item is not found or a function of one argument which
   will be called if the item is not found, with argument the name of the
   item being requested.
+
+  \code{dynGet()} is somewhat experimental and to be used \emph{inside}
+  another function.  It looks for an object in the callers, i.e.,
+  the \code{\link{sys.frame}()}s of the function.  Use with caution.
 }
 \value{
   For \code{get}, the object found.  If no object is found an error results.
@@ -75,7 +87,7 @@ mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
 }
 \note{
   The reverse of \code{a <- get(nam)} is \code{\link{assign}(nam, a)}.
-  
+
   \code{inherits = TRUE} is the default for \code{get} in \R
   but not for S where it had a different meaning.
 }

@@ -921,6 +921,7 @@ FUNTAB R_FunTab[] =
 {"rowsum_df",	do_rowsum, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"setS4Object",	do_setS4Object, 0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"traceOnOff",	do_traceOnOff, 	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"debugOnOff",	do_traceOnOff, 	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"La_qr_cmplx",	do_lapack,     	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_rs",	do_lapack,     	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -944,7 +945,7 @@ FUNTAB R_FunTab[] =
 {"qr_qy_real",	do_lapack,     	301,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"det_ge_real",	do_lapack,     	302,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"qr_coef_cmplx",do_lapack,    	303,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"qr_qy_cmpl",	do_lapack,     	304,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"qr_qy_cmplx",	do_lapack,     	304,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"La_svd",	do_lapack,     	400,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_svd_cmplx",do_lapack,     	401,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1076,6 +1077,7 @@ static void SymbolShortcuts(void)
     R_WholeSrcrefSymbol = install("wholeSrcref");
     R_TmpvalSymbol = install("*tmp*");
     R_UseNamesSymbol = install("use.names");
+    R_ColonSymbol = install(":");
     R_DoubleColonSymbol = install("::");
     R_TripleColonSymbol = install(":::");
     R_ConnIdSymbol = install("conn_id");
@@ -1150,6 +1152,8 @@ void attribute_hidden InitNames()
     R_print.na_string = NA_STRING;
     /* R_BlankString */
     R_BlankString = mkChar("");
+    R_BlankScalarString = ScalarString(R_BlankString);
+    MARK_NOT_MUTABLE(R_BlankScalarString);
 
     /* Initialize the symbol Table */
     for (int i = 0; i < HSIZE; i++) R_SymbolTable[i] = R_NilValue;

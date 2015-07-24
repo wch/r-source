@@ -851,19 +851,17 @@ names(.indirectAbnormalClasses) <- .AbnormalTypes
   supers <- names(classDef@contains)
   allNeeded <- get(".NeedPrimitiveMethods", envir = .methodsNamespace)
   specials <- names(allNeeded)
-  needed <- match(specials, supers, 0) > 0
+  needed <- match(specials, supers, 0L) > 0L
   if(any(needed)) {
     generics <- unique(allNeeded[needed])
-    packages <- character()
-    for(g in generics) {
-      def <- getGeneric(g)
-      packages <- c(packages, def@package) # must be "methods" ?
-      cacheGenericsMetaData(g, def, TRUE, where, def@package)
-    }
-    if(exists(".requireCachedGenerics",  where, inherits = FALSE))
-      previous <- get(".requireCachedGenerics",  where)
-    else
-      previous <- character()
+    packages <- vapply(generics, function(g) {
+        def <- getGeneric(g)
+        pkg <- def@package # must be "methods" ?
+        cacheGenericsMetaData(g, def, TRUE, where, pkg)
+        pkg
+    }, character(1))
+    previous <- if(exists(".requireCachedGenerics", where, inherits = FALSE))
+		      get(".requireCachedGenerics", where) else character()
     packages <- c(attr(previous, "package"), packages)
     gg <- c(previous, generics)
     attr(gg, "package") <- packages

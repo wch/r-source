@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-08-31 r66499) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-11 r66959) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -61,8 +61,6 @@ Score (logrank) test = 48.44  on 2 df,   p=3.032e-11
 > x   <- rbind(x1, x2)
 > 
 > dcols <- densCols(x)
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
 > graphics::plot(x, col = dcols, pch = 20, main = "n = 1000")
 > 
 > 
@@ -183,7 +181,7 @@ factor> of <- ordered(ff)
 factor> stopifnot(identical(range(of, rev(of)), of[3:2]),
 factor+ 	  identical(max(of), of[2]))
 
-factor> ## End Don't show
+factor> ## End(Don't show)
 factor> 
 factor> ## suppose you want "NA" as a level, and to allow missing values.
 factor> (x <- factor(c(1, 2, NA), exclude = NULL))

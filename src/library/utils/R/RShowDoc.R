@@ -84,7 +84,14 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     }
     if(what == "FAQ") what <- "R-FAQ"
     if(what == "NEWS") {
-        if(type == "pdf") type <- "html"
+	if(type == "pdf") {
+	    path <- file.path(R.home("doc"), paste.(what, "pdf"))
+	    if(file.exists(path)) {
+		pdf_viewer(path)
+		return(invisible(path))
+	    }
+	    type <- "html"
+	}
         if(type == "html") {
             path <- file.path(R.home("doc"), "html", paste.(what, "html"))
             if(file.exists(path)) {

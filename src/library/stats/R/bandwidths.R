@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1994-2001 W. N. Venables and B. D. Ripley
-#  Copyright (C) 2001-2012 The R Core Team
+#  Copyright (C) 2001-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,11 +51,10 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
     method <- match.arg(method)
 
     fSD <- function(h) ( c1 / SDh(alph2 * h^(5/7)) )^(1/5) - h
-    SDh <- function(h) .Call(C_bw_phi4, n, d, cnt, as.double(h))
-    TDh <- function(h) .Call(C_bw_phi6, n, d, cnt, as.double(h))
+    SDh <- function(h) .Call(C_bw_phi4, n, d, cnt, h)
+    TDh <- function(h) .Call(C_bw_phi6, n, d, cnt, h)
 
-    Z <- .Call(C_bw_den, nb, x)
-    d <- Z[[1L]]; cnt <- Z[[2L]]
+    Z <- .Call(C_bw_den, nb, x); d <- Z[[1L]]; cnt <- Z[[2L]]
     scale <- min(sd(x), IQR(x)/1.349)
     a <- 1.24 * scale * n^(-1/7)
     b <- 1.23 * scale * n^(-1/9)
@@ -102,7 +101,7 @@ bw.ucv <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
 
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     Z <- .Call(C_bw_den, nb, x); d <- Z[[1L]]; cnt <- Z[[2L]]
-    fucv <- function(h) .Call(C_bw_ucv, n, d, cnt, as.double(h))
+    fucv <- function(h) .Call(C_bw_ucv, n, d, cnt, h)
     h <- optimize(fucv, c(lower, upper), tol = tol)$minimum
     if(h < lower+tol | h > upper-tol)
         warning("minimum occurred at one end of the range")
@@ -122,7 +121,7 @@ bw.bcv <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
 
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     Z <- .Call(C_bw_den, nb, x); d <- Z[[1L]]; cnt <- Z[[2L]]
-    fbcv <- function(h) .Call(C_bw_bcv, n, d, cnt, as.double(h))
+    fbcv <- function(h) .Call(C_bw_bcv, n, d, cnt, h)
     h <- optimize(fbcv, c(lower, upper), tol = tol)$minimum
     if(h < lower+tol | h > upper-tol)
         warning("minimum occurred at one end of the range")

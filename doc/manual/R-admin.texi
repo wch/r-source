@@ -598,7 +598,8 @@ make install
 
 @noindent
 A parallel make can be used (but run @command{make} before @command{make
-install}).
+install}).  Those using GNU @command{make} 4.0 or later may want to use
+@command{make -j @var{n} -O} to avoid interleaving of output.
 
 This will install to the following directories:
 
@@ -1066,6 +1067,7 @@ try to select a @samp{C} locale; Windows may not honour this).
 * Building the core files::     
 * Building the bitmap files::   
 * Building the cairo devices files::  
+* Using ICU for collation::     
 * Checking the build::          
 * Building the manuals::        
 * Building the Inno Setup installer::  
@@ -1259,7 +1261,7 @@ Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
 @file{Rbitmap.dll} and install it under
 @file{@var{R_HOME}/library/grDevices/libs}.
 
-@node Building the cairo devices files, Checking the build, Building the bitmap files, Building from source
+@node Building the cairo devices files, Using ICU for collation, Building the bitmap files, Building from source
 @subsection Building the cairo devices
 @cindex winCairo.dll
 
@@ -1277,12 +1279,8 @@ the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
 tarball unpacks with a top-level directory @file{src/}:
 @samp{CAIRO_HOME} needs to include that directory in its path.)
 
-@menu
-* Using ICU for collation::     
-@end menu
-
-@node Using ICU for collation,  , Building the cairo devices files, Building the cairo devices files
-@subsubsection Using ICU for collation
+@node Using ICU for collation, Checking the build, Building the cairo devices files, Building from source
+@subsection Using ICU for collation
 
 It is possible (and even recommended) to build @R{} to use ICU
 (International Components for Unicode,
@@ -1308,7 +1306,7 @@ Unlike on a Unix-alike, it is currently necessary to call
 @code{icuSetCollate} to set a locale before ICU is actually used for
 collation.
 
-@node Checking the build, Building the manuals, Building the cairo devices files, Building from source
+@node Checking the build, Building the manuals, Using ICU for collation, Building from source
 @subsection Checking the build
 
 You can test a build by running
@@ -1595,15 +1593,15 @@ The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file
 @file{R-@value{VERSIONno}-snowleopard.pkg} and install it.  This runs on
 OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
-@dots{}); it is a 64-bit (@cputype{x86_64}) build which should run on
-all Macs from mid-2008 on.  For older Intel Macs and some older versions
-of the OS you can install @R{} from the sources.
+Yosemite, @dots{}); it is a 64-bit (@cputype{x86_64}) build which should
+run on all Macs from mid-2008 on.  For older Intel Macs and some older
+versions of the OS you can install @R{} from the sources.
 
 There is a separate installer package,
-@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks only: the
-`Snow Leopard' installer package also works there and may have more
-binary packages available (but there are a few packages using C++11 and
-only available for the Mavericks build).
+@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks and
+Yosemite: the `Snow Leopard' installer package also works there and may
+have more binary packages available (but there are a few packages using
+C++11 and only available for the Mavericks build).
 
 It is important that if you use a binary installer package that your OS
 is fully updated: run `Software Update' from the Apple menu to be sure.
@@ -1655,8 +1653,13 @@ location of the personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.1/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
-Users of @Rapp{} under Mavericks need to be aware of its `App Nap'
-feature
+%% https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
+It has been reported that running @Rapp{} under Yosemite may fail if no
+preferences are stored, so if it fails when launched for the very first
+time, try it again (the first attempt will store some preferences).
+
+Users of @Rapp{} under Mavericks and later need to be aware of the `App
+Nap' feature
 (@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
 producing output in the console.  Here are three ways to avoid it:
@@ -2077,7 +2080,7 @@ downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there is an additional type @code{mac.binary} (the default
 in the @acronym{CRAN} distribution but not when compiling from source:
-@code{mac.binary.mavericks} for a Mavericks-only build) which can be
+@code{mac.binary.mavericks} for a Mavericks build) which can be
 passed to @code{install.packages} in order to download and install
 binary packages from a suitable repository.  These OS X binary package
 files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
@@ -2086,6 +2089,10 @@ for installation of either binary or source packages, from
 
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
+
+You should not attempt to mix-and-match binary packages built for the
+`Snow Leopard' and `Mavericks' @acronym{CRAN} distributions: doing so is
+likely to lead to crashes or failures to load.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -2096,7 +2103,7 @@ differ for the `Snow Leopard' and `Mavericks' binary installations of
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
-Tk.  For Mountain Lion and Mavericks see @ref{OS X} and @ref{Java (OS X)}.
+Tk.  For Mountain Lion and later see @ref{OS X} and @ref{Java (OS X)}.
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer.  These are required by a number
@@ -2326,7 +2333,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 @item 
 @code{"mac.binary.mavericks"}: located at
 @file{bin/macosx/mavericks/contrib/@var{3.y}} for @R{} versions
-@var{3.1.z} to be run under OS X 10.9 (Mavericks) and containing
+@var{3.1.z} to be run under OS X 10.9 (Mavericks) and later, containing
 @file{.tgz} files.
 
 @item 
@@ -3365,7 +3372,9 @@ problems, and you may want to disable profiling if you use a
 multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
 @acronym{BLAS} can result in taking more @acronym{CPU} time and even
 more elapsed time (occasionally dramatically so) than using a similar
-single-threaded @acronym{BLAS}.
+single-threaded @acronym{BLAS}.  On a machine running other tasks, there
+can be contention for CPU caches that reduces the effectiveness of the
+optimization of cache use by a @acronym{BLAS} implementation.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
@@ -3376,9 +3385,17 @@ such as @CRANpkg{quantreg} will need to be re-installed.
 @R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
 external @acronym{BLAS}.  This can be broken if for example the code
 assumes that terms with a zero factor are always zero and do not need to
-be computed---whereas @code{x*0} can be @code{NaN}. This is checked in
+be computed---whereas @code{x*0} can be @code{NaN}.  This is checked in
 the test suite.
 
+External @acronym{BLAS} implementations often make less use of
+extended-precision floating-point registers and will almost certainly
+re-order computations.  This can result in less accuracy than using the
+internal @acronym{BLAS}, and may result in different solutions, e.g.@:
+different signs in SVD and eigendecompositions.
+
+The URIs for several of these BLAS are subject to frequent gratuitous
+changes, so you will need to search for their current locations.
 
 @menu
 * ATLAS::                       
@@ -3393,7 +3410,7 @@ the test suite.
 
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 @acronym{BLAS} that runs on a wide range of Unix-alike platforms.
-Unfortunately it is usually built as a static library that on some
+Unfortunately it is built by default as a static library that on some
 platforms cannot be used with shared objects such as are used in @R{}
 packages.  Be careful when using pre-built versions of ATLAS (they seem
 to work on @cputype{ix86} platforms, but not always on @cputype{x86_64}
@@ -3425,17 +3442,15 @@ multi-threaded version of ATLAS, by specifying
 --with-blas="-lptf77blas -lpthread -latlas"
 @end example
 
-Consult its file @file{INSTALL.txt} for how to build ATLAS with
-position-independent code: that file also describes how to build ATLAS
-as a shared library.
+Consult its installation guide for how to build ATLAS with
+position-independent code, and as a shared library.
 
 @node ACML, Goto and OpenBLAS, ATLAS, BLAS
 @subsubsection ACML
 
-@c : there used to be Solaris 10, but it seems no more.
-For @cputype{x86_64} and @cputype{i686} processors under Linux there is
-the AMD Core Math Library (ACML) @uref{http://www.amd.com/@/acml}.  For
-the @command{gcc} version we could use
+For @cputype{x86_64} processors@footnote{and @cputype{i686} for earlier
+versions.}  under Linux there is the AMD Core Math Library (ACML).
+For the @command{gcc} version we could use
 
 @example
 --with-blas="-lacml"
@@ -3466,12 +3481,9 @@ handling of @code{NA}s.
 @node Goto and OpenBLAS, MKL, ACML, BLAS
 @subsubsection Goto and OpenBLAS
 
-Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is available
-for several processors and OSes.  The final version is known as
+Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors and
+OSes,  which was  frozen in  mid-2010.  The  final version  is  known as
 GotoBLAS2, and was re-released under a much less restrictive licence.
-Source code can be obtained from
-@uref{http://www.tacc.utexas.edu/@/tacc-projects/@/gotoblas2/}
-
 Once it is built and installed, it can be used by configuring @R{} with
 
 @example
@@ -3481,33 +3493,38 @@ Once it is built and installed, it can be used by configuring @R{} with
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
-Our understanding is that this project is now frozen and so will not be
-updated for CPUs released since mid-2010.  However, OpenBLAS
-(@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project with
-support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD Bulldozer).
+OpenBLAS (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant
+project with support for some current CPUs (e.g.@: Intel Sandy Bridge).
+Once installed it can be used by something like
+
+@example
+--with-blas="-lopenblas"
+@end example
+
+@noindent
+or as a shared BLAS.
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors, and perhaps others, and some distributions of
-Linux, there is Intel's Math Kernel Library
-(@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
-strongly encouraged to read the MKL User's Guide, which is installed
-with the library, before attempting to link to MKL.  There are also
-versions of MKL for OS X and Windows, but they did not work with the
-standard compilers used for @R{} on those platforms.
+Linux, there is Intel's Math Kernel Library.  You are strongly
+encouraged to read the MKL User's Guide, which is installed with the
+library, before attempting to link to MKL.  There are also versions of
+MKL for OS X and Windows, but they did not work with the standard
+compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
 following notes apply exactly only to version 10.3 but have been used
 with version 11.1.
 
-Versions 10 and later of MKL support two linking models: only the
-layered model is described here: it gives the user fine-grained control
-over four different library layers: interface, threading, computation,
-and run-time library support.  The choice of interface layer is
-important on @cputype{x86_64} since the Intel Fortran compiler returns
-complex values in different registers from the @acronym{GNU} Fortran
-compiler: you must therefore use the interface layer that matches your
-compiler (@code{mkl_intel*} or @code{mkl_gf*}).
+Versions 10 and later of MKL support two linking models.  Only the
+layered model is described here as it gives the user fine-grained
+control over four different library layers: interface, threading,
+computation, and run-time library support.  The choice of interface
+layer is important on @cputype{x86_64} since the Intel Fortran compiler
+returns complex values in different registers from the @acronym{GNU}
+Fortran compiler: you must therefore use the interface layer that
+matches your compiler (@code{mkl_intel*} or @code{mkl_gf*}).
 
 These examples are for GCC compilers on @cputype{x86_64}.
 
@@ -3566,8 +3583,7 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
 systems and may not be needed everywhere.)
 
 The MKL documentation includes a `link line advisor' which will suggest
-appropriate incantations: an on-line version was available at
-@uref{http://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor/}
+appropriate incantations.
 
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
@@ -3622,9 +3638,9 @@ mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
 ln -s /opt/acml5.1.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 will change the @acronym{BLAS} in use to multithreaded ACML.  A similar
-link works for some versions of the Goto @acronym{BLAS} and perhaps
-for MKL (provided the appropriate @file{lib} directory is in the
-run-time library path or @command{ld.so} cache).
+link works for some versions of Goto @acronym{BLAS}, OpenBLAS and MKL
+(provided the appropriate @file{lib} directory is in the run-time
+library path or @command{ld.so} cache).
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -3718,7 +3734,7 @@ BLAS used, so it may be simpler to use CLAPACK built to use CBLAS and
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this has
 meant that on Sun Sparc using the native compilers the flag
-@option{-dalign} is needed so @code{sunperf} can be used.
+@option{-dalign} is needed if @code{sunperf} is to be used.
 
 On some systems it is necessary that an external @acronym{BLAS}/LAPACK
 was built with the same FORTRAN compiler used to build @R{}: known
@@ -3794,6 +3810,18 @@ such packages cannot be used from an @R{} system built in the default
 way.  Also, because packages are linked against @R{} they are on some
 OSes also linked against the dynamic libraries @R{} itself is linked
 against, and this can lead to symbol conflicts.
+
+For maximally effective use of @command{valgrind}, @R{} should be
+compiled with valgrind instrumentation. The @command{configure} option
+is @option{--with-valgrind-instrumentation=@var{level}}, where
+@var{level} is 0, 1, 2 or 3.  (Level 0 is the default and does not add
+any anything.)  The system headers for @command{valgrind} can be
+requested by option @option{--with-system-valgrind-headers}: they will
+be used if present (on Linux they may be in a separate package such as
+@pkg{valgrind-devel}).  Note though that there is no guarantee that the
+code in @R{} will be compatible with future @command{valgrind} headers.
+(An incompatible change was made in a version 3.3.0 and currently level
+3 does not work with recent headers.)
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
@@ -4568,8 +4596,8 @@ will need to register there: that allows you to download older versions
 available for your OS) or some versions of Xcode (from the App Store or
 from @uref{http://developer.apple.com/devcenter/mac/}) you can install
 the command-line tools from within Xcode, from the @samp{Downloads} pane
-in the @samp{Preferences}.  For Mavericks, see the specific sub-section
-below.
+in the @samp{Preferences}.  For Mavericks and later, see the specific
+sub-section below.
 
 Various compilers can be used.  The current @acronym{CRAN} `Snow
 Leopard' distribution of @R{} is built using
@@ -4628,7 +4656,7 @@ compiler from
 @uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
-build of @command{clang} has no OpenMP support.
+builds of @command{clang} currently have little or no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
@@ -4684,6 +4712,7 @@ take this up to about 1GB).  @samp{TeX Live Utility} (available
 * Lion::                        
 * Mountain Lion::               
 * Mavericks::                   
+* Yosemite::                    
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
@@ -4740,7 +4769,7 @@ If you install the command-line tools for Xcode 4.6.3 you will get the
 compilers used for the CRAN binary distribution: those for Xcode 5 can
 be installed afterwards.
 
-@node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
+@node Mavericks, Yosemite, Mountain Lion, OS X
 @subsection Mavericks
 
 Xcode for Mavericks provides different compilers, headers and libraries from
@@ -4755,8 +4784,9 @@ command-line tools, or perhaps use the versions from Xcode.  However,
 after an update to Mavericks, you are advised to re-install them.)  They
 are not available under the @samp{Downloads} preference pane in Xcode.
 
-To use the compilers from the command-line tools for Xcode 5 with the
-recommended Fortran compiler, have in @file{config.site} something like
+To use the compilers from the command-line tools for Xcode 5 or 6 with
+the recommended Fortran compiler, have in @file{config.site} something
+like
 
 @example
 CC=clang
@@ -4781,7 +4811,17 @@ when installing on Mavericks.
 
 See the comments under Mountain Lion about X11 and GTK.
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
+@node Yosemite, Tcl/Tk headers and libraries, Mavericks, OS X
+@subsection Yosemite
+
+See the comments under `Mavericks'.
+
+Note that if you upgrade to Yosemite you should re-install any of
+XQuartz, the `Command-line Tools for Xcode' and Java which you have
+installed.
+
+
+@node Tcl/Tk headers and libraries, Java (OS X), Yosemite, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4833,14 +4873,14 @@ no longer supporting Java (and what it does support is Java 6, which has
 reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
 runtime (JRE).
 
-Mountain Lion and Mavericks do not come with an installed JRE, and an
-upgrade to either removes one if already installed: it is intended to be
-installed at first use. Check if a JRE is installed by running
-@command{java -version} in a @command{Terminal} window: if Java is not
-installed this should prompt you to install it.
+Mountain Lion and later do not come with an installed JRE, and an OS X
+upgrade removes one if already installed: it is intended to be installed
+at first use.  Check if a JRE is installed by running @command{java
+-version} in a @command{Terminal} window: if Java is not installed this
+should prompt you to install it.
 
-However, you may want/need to install the latest Java from Oracle
-(currently Java 7 or 8 from
+You may want/need to install the latest Java from Oracle (currently Java
+8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is for Lion and later.
 
@@ -4872,7 +4912,7 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
@@ -5458,7 +5498,8 @@ Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
 @acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
 Studio compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
-@command{gcc}'s @option{-ffast-math} has given incorrect results.
+@command{gcc}'s @option{-ffast-math} and @command{clang}'s
+@option{-Ofast} have given incorrect results.
 
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.

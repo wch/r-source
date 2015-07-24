@@ -1,20 +1,20 @@
 R would not be what it is today without the invaluable help of these
 people, who contributed by donating code, bug fixes and documentation:
 
-Valerio Aimale, Thomas Baier, Henrik Bengtsson, Roger Bivand, 
-Ben Bolker, David Brahm, Goran Brostrom, Patrick Burns, Vince Carey,
-Saikat DebRoy, Brian D'Urso, Lyndon Drake, Dirk Eddelbuettel, 
-Claus Ekstrom, Sebastian Fischmeister, John Fox, Paul Gilbert, 
+Valerio Aimale, Thomas Baier, Henrik Bengtsson, Roger Bivand,
+Ben Bolker, David Brahm, G"oran Brostr"om, Patrick Burns, Vince Carey,
+Saikat DebRoy, Brian D'Urso, Lyndon Drake, Dirk Eddelbuettel,
+Claus Ekstrom, Sebastian Fischmeister, John Fox, Paul Gilbert,
 Yu Gong, Gabor Grothendieck, Frank E Harrell Jr, Torsten Hothorn,
-Robert King, Kjetil Kjernsmo, Roger Koenker, Philippe Lambert, 
-Jan de Leeuw, Jim Lindsey, Patrick Lindsey, Catherine Loader, 
-Gordon Maclean, John Maindonald, David Meyer, Ei-ji Nakama, 
-Jens Oehlschaegel, Steve Oncley, Richard O'Keefe, Hubert Palme, 
+Robert King, Kjetil Kjernsmo, Roger Koenker, Philippe Lambert,
+Jan de Leeuw, Jim Lindsey, Patrick Lindsey, Catherine Loader,
+Gordon Maclean, John Maindonald, David Meyer, Ei-ji Nakama,
+Jens Oehlschaegel, Steve Oncley, Richard O'Keefe, Hubert Palme,
 Roger D. Peng, Jose' C. Pinheiro, Tony Plate, Anthony Rossini,
 Jonathan Rougier, Petr Savicky, Guenther Sawitzki, Marc Schwartz,
-Detlef Steuer, Bill Simpson, Gordon Smyth, Adrian Trapletti, 
-Terry Therneau, Rolf Turner, Bill Venables, Gregory R. Warnes, 
-Andreas Weingessel, Morten Welinder, James Wettenhall, Simon Wood and
+Detlef Steuer, Bill Simpson, Gordon Smyth, Adrian Trapletti,
+Terry Therneau, Rolf Turner, Bill Venables, Gregory R. Warnes,
+Andreas Weingessel, Morten Welinder, James Wettenhall, Simon Wood, and
 Achim Zeileis.
 
 Others have written code that has been adopted by R and is
@@ -60,7 +60,8 @@ email addresses to contributors to the R Project (even without making them
 members of the R Foundation) when in the view of the R Foundation this
 would help advance the R project.
 
-The R Core Group, Roger Bivand, John Fox and Bill Venables are the
-ordinary members of the R Foundation.  In addition, Dirk Eddelbuettel,
-Torsten Hothorn, David Meyer, Simon Wood, and Achim Zeileis are also
-e-addressable by <Firstname>.<Lastname>@R-project.org.
+The R Core Group, Roger Bivand, Dirk Eddelbuettel, John Fox, Torsten
+Hothorn, Stefano Iacus, Marc Schwartz, Bill Venables, Hadley Wickham
+and Achim Zeileis are the ordinary members of the R Foundation.  In
+addition, David Meyer and Simon Wood are also e-addressable by
+<Firstname>.<Lastname>@R-project.org.

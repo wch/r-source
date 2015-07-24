@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2012-02-29 14:00+0000\n"
 "Last-Translator: Fei Chen <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -43,6 +43,10 @@ msgstr "群集不对"
 
 msgid "unknown cluster type"
 msgstr "未知的集群类型"
+
+#, fuzzy
+msgid "numeric 'names' must be >= 1"
+msgstr "'nnodes'必需>=1"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "pid是%2$d的在主机%1$s上插座集群的节点"

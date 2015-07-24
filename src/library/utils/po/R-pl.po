@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -875,10 +875,10 @@ msgstr "'help.start()' wymaga aby serwer HTTP był uruchomiony"
 
 msgid ""
 "If nothing happens, you should open\n"
-"'%s' yourself"
+"%s yourself"
 msgstr ""
 "Jeśli nic się nie stanie, powinieneś otworzyć\n"
-"'%s' samemu"
+"%s samemu"
 
 # utils/R/help.start.R: 44
 # gettextf("If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window.",
@@ -2077,13 +2077,6 @@ msgstr "argument 'ccaddress' musi być długości 1"
 msgid "no download method found"
 msgstr "nie znaleziono metody pobierania"
 
-# utils/R/unix/download.file.R: 63
-# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
-# utils/R/windows/download.file.R: 62
-# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
-msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr "metoda 'lynx()' jest nieprzetestowana i jest przestarzała od R 3.1.0"
-
 # utils/R/unix/download.file.R: 70
 # warning("download had nonzero exit status")
 # utils/R/windows/download.file.R: 72
@@ -2170,13 +2163,6 @@ msgstr "funkcja 'memory.limit()' jest specyficzna dla systemów Windows"
 # stop("method 'mailx' is Unix-only")
 msgid "method 'mailx' is Unix-only"
 msgstr "metoda 'mailx' jest tylko dla systemów Unix"
-
-msgid ""
-"If nothing happens, you should open\n"
-"%s yourself"
-msgstr ""
-"Jeśli nic się nie stanie, powinieneś otworzyć\n"
-"%s samemu"
 
 # utils/R/windows/install.packages.R: 30
 # stop(gettextf("zip file %s not found",
@@ -2511,6 +2497,12 @@ msgstr[0] "niepoprawna rzymska numeracja: %s"
 msgstr[1] "niepoprawne rzymskie numeracje: %s"
 msgstr[2] "niepoprawne rzymskie numeracje: %s"
 
+msgid "is"
+msgid_plural "are"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 # utils/R/windows/install.packages.R: 220
 # warning(sprintf(ngettext(sum(inuse),
 #                 "package %s is in use and will not be installed",
@@ -2522,6 +2514,21 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+# utils/R/unix/download.file.R: 63
+# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
+# utils/R/windows/download.file.R: 62
+# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
+#~ msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
+#~ msgstr ""
+#~ "metoda 'lynx()' jest nieprzetestowana i jest przestarzała od R 3.1.0"
+
+#~ msgid ""
+#~ "If nothing happens, you should open\n"
+#~ "'%s' yourself"
+#~ msgstr ""
+#~ "Jeśli nic się nie stanie, powinieneś otworzyć\n"
+#~ "'%s' samemu"
 
 # utils/R/filetest.R: 39
 # stop(gettextf("test '%s' is not available", op),

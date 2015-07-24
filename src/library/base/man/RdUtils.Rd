@@ -6,6 +6,8 @@
 \name{RdUtils}
 \alias{Rdconv}
 \alias{Rd2pdf}
+\alias{RD2PDF_INPUTENC}
+
 \title{Utilities for Processing Rd Files}
 \description{
   Utilities for converting files in R documentation (Rd) format to other

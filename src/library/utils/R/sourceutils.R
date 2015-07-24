@@ -24,6 +24,7 @@ removeSource <- function(fn) {
     attr(body(fn), "srcfile") <- NULL
 
     recurse <- function(part) {
+        if (is.name(part)) return(part)  # handles missing arg, PR#15957
         attr(part, "srcref") <- NULL
         if (is.language(part) && is.recursive(part)) {
             for (i in seq_along(part))

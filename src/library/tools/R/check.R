@@ -107,9 +107,19 @@ setRlibs <-
         }
     }
 
+    sug <- if (suggests)  names(pi$Suggests)
+    else {
+        ## we always need to be able to recognise 'vignettes'
+        VB <- unname(pi$DESCRIPTION["VignetteBuilder"])
+        if(is.na(VB)) character()
+        else {
+            VB <- unlist(strsplit(VB, ","))
+            unique(gsub('[[:space:]]', '', VB))
+        }
+    }
     deps <- unique(c(names(pi$Depends), names(pi$Imports),
                      if(LinkingTo) names(pi$LinkingTo),
-                     if(suggests) names(pi$Suggests)))
+                     sug))
     if(length(libdir) && self2) flink(file.path(libdir, thispkg), tmplib)
     ## .Library is not necessarily canonical, but the .libPaths version is.
     lp <- .libPaths()
@@ -357,7 +367,11 @@ setRlibs <-
         }
 
         ## Run the package-specific tests.
-        tests_dir <- file.path(pkgdir, "tests")
+        tests_dir <- file.path(pkgdir, test_dir)
+	if (test_dir != "tests" && !dir.exists(tests_dir)) {
+	    warningLog(Log)
+	    printLog(Log, "directory ", sQuote(test_dir), " not found\n")
+	}
         if (dir.exists(tests_dir) && # trackObjs has only *.Rin
             length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
             run_tests()
@@ -1351,9 +1365,8 @@ setRlibs <-
                             "They are not part of the API,",
                             "for use only by R itself",
                             "and subject to change without notice.")
-                else if(any(grepl("with DUP = FALSE:", out)))
-                    wrapLog("DUP = FALSE is deprecated and may be",
-                            "disabled in future versions of R.")
+                else if(any(grepl("with DUP:", out)))
+                    wrapLog("DUP is no longer supported and will be ignored.")
                 else
                     wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")
@@ -2400,21 +2413,6 @@ setRlibs <-
             any <- any || bad
             if (!any) resultLog(Log, "OK")
 
-            ## Try to compare results from running the examples to
-            ## a saved previous version.
-            exsave <- file.path(pkgdir, "tests", "Examples",
-                                paste0(pkgname, "-Ex.Rout.save"))
-            if (file.exists(exsave)) {
-                checkingLog(Log, "differences from ",
-                            sQuote(basename(exout)),
-                            " to ", sQuote(basename(exsave)))
-                cmd <- paste0("invisible(tools::Rdiff('",
-                              exout, "', '", exsave, "',TRUE,TRUE))")
-                out <- R_runR(cmd, R_opts2)
-                if(length(out))
-                    printLog0(Log, paste(c("", out, ""), collapse = "\n"))
-                resultLog(Log, "OK")
-            }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
 		times <- read.table(tfile, header = TRUE, row.names = 1L,
@@ -2428,6 +2426,23 @@ setRlibs <-
                     printLog0(Log, paste(times, collapse = "\n"), "\n")
                 }
             }
+
+            ## Try to compare results from running the examples to
+            ## a saved previous version.
+            exsave <- file.path(pkgdir, test_dir, "Examples",
+                                paste0(pkgname, "-Ex.Rout.save"))
+            if (file.exists(exsave)) {
+                checkingLog(Log, "differences from ",
+                            sQuote(basename(exout)),
+                            " to ", sQuote(basename(exsave)))
+                cmd <- paste0("invisible(tools::Rdiff('",
+                              exout, "', '", exsave, "',TRUE,TRUE))")
+                out <- R_runR(cmd, R_opts2)
+                resultLog(Log, "OK")
+                if(length(out))
+                    printLog0(Log, paste(c("", out, ""), collapse = "\n"))
+            }
+
             TRUE
         }
 
@@ -2499,9 +2514,9 @@ setRlibs <-
     run_tests <- function()
     {
         if (!extra_arch && !is_base_pkg) {
-            checkingLog(Log, "for unstated dependencies in tests")
+            checkingLog(Log, "for unstated dependencies in ", sQuote(test_dir))
             Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
-                          sprintf("tools:::.check_packages_used_in_tests(\"%s\")\n", pkgdir))
+                          sprintf("tools:::.check_packages_used_in_tests(\"%s\", \"%s\")\n", pkgdir, test_dir))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
@@ -2511,10 +2526,14 @@ setRlibs <-
             } else resultLog(Log, "OK")
         }
 
-        checkingLog(Log, "tests")
+        if (test_dir == "tests")
+	    checkingLog(Log, "tests")
+	else
+	    checkingLog(Log, "tests in ", sQuote(test_dir))
+	    
         run_one_arch <- function(arch = "")
         {
-            testsrcdir <- file.path(pkgdir, "tests")
+            testsrcdir <- file.path(pkgdir, test_dir)
             testdir <- file.path(pkgoutdir, "tests")
             if(nzchar(arch)) testdir <- paste(testdir, arch, sep = "_")
             if(!dir.exists(testdir)) dir.create(testdir, mode = "0755")
@@ -2556,7 +2575,7 @@ setRlibs <-
                     ## (13? why not?).
                     file <- bad_files[1L]
                     lines <- readLines(file, warn = FALSE)
-                    file <- file.path("tests", sub("out\\.fail", "", file))
+                    file <- file.path(test_dir, sub("out\\.fail", "", file))
                     ll <- length(lines)
                     lines <- lines[max(1, ll-12):ll]
                     if (R_check_suppress_RandR_message)
@@ -2750,7 +2769,6 @@ setRlibs <-
 
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
-            problems <- list()
             res <- character()
             cat("\n")
             def_enc <- desc["Encoding"]
@@ -3201,7 +3219,7 @@ setRlibs <-
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
-                    env <- ""
+##                    env <- ""
                     ## Normal use of R CMD INSTALL
                     t1 <- proc.time()
                     install_error <- run_Rcmd(args, outfile)
@@ -3243,6 +3261,7 @@ setRlibs <-
                              ## clang warning about invalid returns.
                              "warning: void function",
                              "warning: control reaches end of non-void function",
+                             "warning: control may reach end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
@@ -3285,12 +3304,26 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-security\\]",
                              ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
-                             ": warning: .* \\[-Wunsequenced\\]")
+                             ": warning: .* \\[-Wunsequenced\\]",
+                             ": warning: .* \\[-Wvla-extension\\]",
+                             ": warning: format string contains '[\\]0'",
+                             ": warning: .* \\[-Wc[+][+]11-long-long\\]",
+                             ": warning: empty macro arguments are a C99 feature"
+                             )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
+                ## skip for now some c++11-long-long warnings.
+                ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
+                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
+                              useBytes = TRUE)
+
+                ## and GNU extensions in system headers
+                ex_re <- "^ *(/usr/|/opt/).*GNU extension"
+                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
+                              useBytes = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
@@ -3856,6 +3889,7 @@ setRlibs <-
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
             "      --install-args=	command-line args to be passed to INSTALL",
+	    "      --test-dir=       look in this subdirectory for test scripts (default tests)",	    
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
@@ -3925,6 +3959,7 @@ setRlibs <-
     use_valgrind <- FALSE
     do_timings <- FALSE
     install_args <- NULL
+    test_dir <- "tests"
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
     extra_arch <- FALSE
     spec_install <- FALSE
@@ -3999,6 +4034,8 @@ setRlibs <-
             do_timings  <- TRUE
         } else if (substr(a, 1, 15) == "--install-args=") {
             install_args <- substr(a, 16, 1000)
+	} else if (substr(a, 1, 11) == "--test-dir=") {
+	    test_dir <- substr(a, 12, 1000)
         } else if (substr(a, 1, 16) == "--check-subdirs=") {
             check_subdirs <- substr(a, 17, 1000)
         } else if (a == "--extra-arch") {
@@ -4505,7 +4542,7 @@ setRlibs <-
 
         if (!is_base_pkg && check_incoming && no_examples &&
             dir.exists(file.path(pkgdir, "R"))) {
-           tests_dir <- file.path(pkgdir, "tests")
+            tests_dir <- file.path(pkgdir, test_dir)
             if (dir.exists(tests_dir) &&
                 length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
                 no_examples <- FALSE

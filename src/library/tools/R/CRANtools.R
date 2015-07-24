@@ -87,12 +87,9 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
                       1L, paste, collapse = "\r")
         }
 
-        ## Regularize fancy quotes.
+        ## Canonicalize fancy quotes.
         ## Could also try using iconv(to = "ASCII//TRANSLIT"))
-        txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
-                    perl = TRUE, useBytes = TRUE)
-        txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
-                    perl = TRUE, useBytes = TRUE)
+        txt <- .canonicalize_quotes(txt)
         out <-
             lapply(split(seq_len(NROW(d)), match(txt, unique(txt))),
                    function(e) {
@@ -238,14 +235,28 @@ function(cran, path)
 }
 
 CRAN_check_results <- 
-function()
-    read_CRAN_object(CRAN_baseurl_for_web_area(),
-                     "web/checks/check_results.rds")
+function(flavors = NULL)
+{
+    db <- read_CRAN_object(CRAN_baseurl_for_web_area(),
+                           "web/checks/check_results.rds")
+    if(!is.null(flavors))
+        db <- db[!is.na(match(db$Flavor, flavors)), ]
+    db
+}
 
 CRAN_check_details <-
-function()
-    read_CRAN_object(CRAN_baseurl_for_web_area(),
-                     "web/checks/check_details.rds")
+function(flavors = NULL)
+{
+    db <- read_CRAN_object(CRAN_baseurl_for_web_area(),
+                           "web/checks/check_details.rds")
+    if(!is.null(flavors))
+        db <- db[!is.na(match(db$Flavor, flavors)), ]
+    ## <FIXME>
+    ## Remove eventually ...
+    class(db) <- c("CRAN_check_details", "check_details", "data.frame")
+    ## </FIXME>
+    db
+}
 
 CRAN_memtest_notes <-
 function()

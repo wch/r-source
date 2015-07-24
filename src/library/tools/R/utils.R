@@ -534,6 +534,19 @@ function(val) {
     }
 }
 
+
+### ** .canonicalize_quotes
+
+.canonicalize_quotes <-
+function(txt)
+{
+    txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
+                perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
+                perl = TRUE, useBytes = TRUE)
+    txt
+}
+
 ### ** .eval_with_capture
 
 .eval_with_capture <-
@@ -588,11 +601,14 @@ function(file1, file2)
 ### ** .file_path_relative_to_dir
 
 .file_path_relative_to_dir <-
-function(x, dir)
+function(x, dir, add = FALSE)
 {
     if(any(ind <- (substring(x, 1L, nchar(dir)) == dir))) {
         ## Assume .Platform$file.sep is a single character.
-        x[ind] <- substring(x, nchar(dir) + 2L)
+        x[ind] <- if(add)
+            file.path(basename(dir), substring(x[ind], nchar(dir) + 2L))
+        else
+            substring(x[ind], nchar(dir) + 2L)
     }
     x
 }

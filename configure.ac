@@ -434,9 +434,14 @@ AC_ARG_WITH([system-xz],
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
-[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
+[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2/3) @<:@0@:>@])],
 [valgrind_level=${withval}],
 [valgrind_level=0])
+
+AC_ARG_WITH([system-valgrind-headers],
+[AS_HELP_STRING([--with-system-valgrind-headers],[use system valgrind headers (if available) @<:@no@:>@])],
+[R_ARG_USE_SYSTEM(valgrind)],
+[use_system_valgrind=no])
 
 AC_ARG_WITH([internal-tzcode],
 [AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no@:>@])],
@@ -808,12 +813,15 @@ AC_HEADER_SYS_WAIT
 ## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
 ## sys/param.h is one way to get PATH_MAX.
 ## sched.h is POSIX, but we use it for Linux-specific features (affinity)
+## stdalign.h is C11.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h glob.h grp.h langinfo.h \
   netdb.h netinet/in.h pwd.h sched.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h \
   sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
 ## </NOTE>
+## stdalign.h is C11.
+AC_CHECK_HEADERS(stdalign.h)
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
@@ -2060,12 +2068,6 @@ if test "x${r_cv_have_tm_gmtoff}" = xyes; then
   AC_DEFINE(HAVE_TM_GMTOFF, 1, [Define to 1 if your 'struct tm' has tm_gmtoff.])
 fi
 
-
-## check for vecLib framework (potentially to be used for BLAS)
-## in theory vecLib is platform-independent, in practice only
-## Apple's OS X is known to provide it
-R_CHECK_FRAMEWORK(cblas_cdotu_sub, vecLib)
-
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
@@ -2329,8 +2331,11 @@ AC_FUNC_FSEEKO
 ## Valgrind instrumentation
 if test ${valgrind_level} -eq 0; then
   AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
+elif test "${use_system_valgrind}" = yes; then
+  AC_CHECK_HEADERS([valgrind/memcheck.h])
 fi
-AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
+
+AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1, 2 or 3 to specify levels of Valgrind instrumentation])
 
 if test x${use_internal_tzcode} = xdefault; then
 case "${host_os}" in
@@ -2803,10 +2808,14 @@ if test "${acx_blas_ok}" = "yes"; then
   ## Try to figure out which BLAS was used.
   case "${BLAS_LIBS0}" in
     *-latlas*) r_blas=ATLAS ;;
+    *-lgoto*) r_blas=Goto ;;
+    *-lopenblas*) r_blas=OpenBLAS ;;
+    *-lacml*) r_blas=ACML ;;
+    *-lmkl*) r_blas=MKL ;;
     *-lsgemm*) r_blas=PhiPack ;;
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
-    *vecLib*)  r_blas=vecLib ;;
+    *Accelerate*)  r_blas=Accelerate ;;
     "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac

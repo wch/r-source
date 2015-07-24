@@ -1,8 +1,7 @@
 
-R version 2.13.0 Under development (unstable) (2010-11-15 r53605)
-Copyright (C) 2010 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+R Under development (unstable) (2014-11-11 r66959) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -274,6 +273,8 @@ stderr 1
 stderr 1
 Warning: running command 'test-system2 6' had status 6
 [1] "stdout 1"
+attr(,"status")
+[1] 6
 > print(system2("test-system2", "7"))
 stdout 1
 stderr 1
@@ -282,4 +283,6 @@ stderr 1
 stderr 1
 Warning: running command ''test-system2' 8' had status 8
 [1] "stdout 1"
+attr(,"status")
+[1] 8
 > 

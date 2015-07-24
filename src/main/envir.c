@@ -98,7 +98,7 @@
 #define FAST_BASE_CACHE_LOOKUP  /* Define to enable fast lookups of symbols */
                                 /*    in global cache from base environment */
 
-#define IS_USER_DATABASE(rho)  OBJECT((rho)) && inherits((rho), "UserDefinedDatabase")
+#define IS_USER_DATABASE(rho)  (OBJECT((rho)) && inherits((rho), "UserDefinedDatabase"))
 
 /* various definitions of macros/functions in Defn.h */
 
@@ -1095,6 +1095,72 @@ SEXP findVarInFrame(SEXP rho, SEXP symbol)
     return findVarInFrame3(rho, symbol, TRUE);
 }
 
+/*----------------------------------------------------------------------
+
+  readS3VarsFromFrame
+
+  Reads the S3 meta-variables from a given (single) frame.
+  R_UnboundValue marks that respective variable is not present.
+  This function is optimized to be fast in the common case when the
+  S3 meta-variables are in the expected order and that the frame is
+  represented by a pairlist.
+*/
+
+attribute_hidden
+void readS3VarsFromFrame(SEXP rho,
+    SEXP *dotGeneric, SEXP *dotGroup, SEXP *dotClass, SEXP *dotMethod,
+    SEXP *dotGenericCallEnv, SEXP *dotGenericDefEnv) {
+
+    if (TYPEOF(rho) == NILSXP ||
+        IS_R_BaseNamespace(rho) || IS_R_BaseEnv(rho) || IS_R_EmptyEnv(rho) ||
+        IS_USER_DATABASE(rho) || ! IS_R_NilValue(HASHTAB(rho))) goto slowpath;
+
+    SEXP frame = FRAME(rho);
+
+    /*
+    This code speculates there is a specific order of S3 meta-variables.  It
+    holds in most (perhaps all non-fabricated) cases.  If at any time this
+    ceased to hold, this code will fall back to the slowpath, which may be
+    slow but still correct.
+    */
+
+    for(; ! SEXP_EQL(TAG(frame), R_dot_Generic); frame = CDR(frame))
+        if (IS_R_NilValue(frame)) goto slowpath;
+    *dotGeneric = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (! SEXP_EQL(TAG(frame), R_dot_Class)) goto slowpath;
+    *dotClass = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (! SEXP_EQL(TAG(frame), R_dot_Method)) goto slowpath;
+    *dotMethod = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (! SEXP_EQL(TAG(frame), R_dot_Group)) goto slowpath;
+    *dotGroup = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (! SEXP_EQL(TAG(frame), R_dot_GenericCallEnv)) goto slowpath;
+    *dotGenericCallEnv = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (! SEXP_EQL(TAG(frame), R_dot_GenericDefEnv)) goto slowpath;
+    *dotGenericDefEnv = BINDING_VALUE(frame);
+
+    return;
+
+slowpath:
+    /* fall back to the slow but general implementation */
+
+    *dotGeneric = findVarInFrame3(rho, R_dot_Generic, TRUE);
+    *dotClass = findVarInFrame3(rho, R_dot_Class, TRUE);
+    *dotMethod = findVarInFrame3(rho, R_dot_Method, TRUE);
+    *dotGroup = findVarInFrame3(rho, R_dot_Group, TRUE);
+    *dotGenericCallEnv = findVarInFrame3(rho, R_dot_GenericCallEnv, TRUE);
+    *dotGenericDefEnv = findVarInFrame3(rho, R_dot_GenericDefEnv, TRUE);
+}
+
 
 /*----------------------------------------------------------------------
 
@@ -1480,6 +1546,61 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 
 /*----------------------------------------------------------------------
 
+  addMissingVarsToNewEnv
+
+  Add given variables (addVars - list) to given environment (env) unless
+  they are already there.  Env is a "new" environment, created by
+  NewEnvironment, as in applyClosure (so it list-based).  Slots for vars are
+  re-used.  The addVars list itself can have duplicit variables.
+
+  The implementation is performance optimized towards the common case that
+  the variables from addVars are not present in env and that addVars does
+  not have duplicit variables.
+*/
+
+attribute_hidden
+void addMissingVarsToNewEnv(SEXP env, SEXP addVars)
+{
+    if (IS_R_NilValue(addVars)) return;
+
+    /* temporary sanity check */
+    if (TYPEOF(addVars) == ENVSXP)
+	error("additional variables should now be passed as a list, "
+	      "not in an environment");
+
+    /* append variables from env after addVars */
+    SEXP aprev = addVars;
+    SEXP a = CDR(addVars);
+    while (! IS_R_NilValue(a)) {
+        aprev = a;
+        a = CDR(a);
+    }
+    SETCDR(aprev, FRAME(env));
+    SET_FRAME(env, addVars);
+
+    /* remove duplicates - a variable listed later has precedence over a
+       variable listed sooner */
+    SEXP end;
+    for(end = CDR(addVars); ! IS_R_NilValue(end); end = CDR(end)) {
+        SEXP endTag = TAG(end);
+        SEXP sprev = R_NilValue;
+        SEXP s;
+        for(s = addVars; ! SEXP_EQL(s, end); s = CDR(s)) {
+            if (SEXP_EQL(TAG(s), endTag)) {
+                /* remove variable s from the list, because it is overriden by "end" */
+                if (IS_R_NilValue(sprev)) {
+                    addVars = CDR(s);
+                    SET_FRAME(env, addVars);
+                } else
+                    SETCDR(sprev, CDR(s));
+            } else
+                sprev = s;
+        }
+    }
+}
+
+/*----------------------------------------------------------------------
+
   setVarInFrame
 
   Assign a new value to an existing symbol in a frame.
@@ -1653,13 +1774,13 @@ SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = LENGTH(x);
     xnms = getAttrib(x, R_NamesSymbol);
-    if (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n)
+    if (n && (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n))
 	error(_("names(x) must be a character vector of the same length as x"));
     envir = CADR(args);
     if (TYPEOF(envir) != ENVSXP)
 	error(_("'envir' argument must be an environment"));
 
-    for(int i = 0; i < LENGTH(x) ; i++) {
+    for(int i = 0; i < n; i++) {
 	SEXP name = installTrChar(STRING_ELT(xnms, i));
 	defineVar(name, VECTOR_ELT(x, i), envir);
     }
@@ -2633,6 +2754,10 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	FrameNames(FRAME(env), all, names, &k);
 
+    if(k == 0) { // no sorting, keep NULL names
+	UNPROTECT(2);
+	return(ans);
+    }
     if(sort_nms) {
 	// return list with *sorted* names
 	SEXP sind = PROTECT(allocVector(INTSXP, k));

@@ -122,8 +122,6 @@ formatC <- function (x, digits = NULL, width = NULL,
 	format.default(x, width=width,
 		       justify = if(flag=="-") "left" else "right")
     }
-     blank.chars <- function(no)
- 	vapply(no+1L, function(n) paste(character(n), collapse=" "), "")
 
     if (!(n <- length(x))) return("")
     if (is.null(mode))	  mode <- storage.mode(x)

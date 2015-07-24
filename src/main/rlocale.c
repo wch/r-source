@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2013   The R Core Team
+ *  Copyright (C) 2005-2014   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,6 +121,7 @@ int Ri18n_wcwidth(wchar_t c)
 
     if (0 != strcmp(setlocale(LC_CTYPE, NULL), lc_cache)) {
 	strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str));
+        lc_str[sizeof(lc_str) - 1] = '\0';
 	for (i = 0, j = (int) strlen(lc_str); i < j && i < sizeof(lc_str); i++)
 	    lc_str[i] = (char) toupper(lc_str[i]);
 	for (i = 0; i < (sizeof(cjk_locale_name)/sizeof(cjk_locale_name_t));
@@ -206,6 +207,7 @@ extern const char *locale2charset(const char *);
   size_t  rc ;							     \
 								     \
   strncpy(fromcode, locale2charset(NULL), sizeof(fromcode));         \
+  fromcode[sizeof(fromcode) - 1] = '\0';                             \
   if(0 == strcmp(fromcode, "UTF-8"))				     \
        return wcsearch(wc,table_w ## ISWNAME , table_w ## ISWNAME ## _count);\
   memset(mb_buf, 0, sizeof(mb_buf));				     \

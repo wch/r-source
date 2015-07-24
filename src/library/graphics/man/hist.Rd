@@ -34,7 +34,7 @@ hist(x, \dots)
     In the last three cases the number is a suggestion only; the
      breakpoints will be set to \code{\link{pretty}} values.  If
      \code{breaks} is a function, the \code{x} vector is supplied to it
-     as the only argument. 
+     as the only argument.
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
@@ -110,6 +110,7 @@ hist(x, \dots)
   and \code{include.lowest} means \sQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
+  (for more than four bins, otherwise the median is substituted)
   is applied when counting entries on the edges of bins.  This is not
   included in the reported \code{breaks} nor (as from \R 2.11.0) in the
   calculation of \code{density}.

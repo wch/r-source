@@ -14,6 +14,7 @@
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
 \alias{merge.dendrogram}
+\alias{nobs.dendrogram}
 \alias{plot.dendrogram}
 \alias{print.dendrogram}
 \alias{rev.dendrogram}
@@ -28,7 +29,7 @@
 }
 \usage{
 as.dendrogram(object, \dots)
-\method{as.dendrogram}{hclust}(object, hang = -1, \dots)
+\method{as.dendrogram}{hclust}(object, hang = -1, check = TRUE, \dots)
 
 \method{as.hclust}{dendrogram}(x, \dots)
 
@@ -42,7 +43,10 @@ as.dendrogram(object, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
-\method{merge}{dendrogram}(x, y, \dots, height)
+\method{merge}{dendrogram}(x, y, \dots, height,
+      adjust = c("auto", "add.max", "none"))
+
+\method{nobs}{dendrogram}(object, \dots)
 
 \method{print}{dendrogram}(x, digits, \dots)
 
@@ -63,6 +67,11 @@ is.leaf(object)
   \item{hang}{numeric scalar indicating how the \emph{height} of leaves
     should be computed from the heights of their parents; see
     \code{\link{plot.hclust}}.}
+  \item{check}{logical indicating if \code{object} should be checked for
+    validity.  This check is not necessary when \code{x} is known to be
+    valid such as when it is the direct result of \code{hclust()}.  The
+    default is \code{check=TRUE}, e.g. for protecting against memory
+    explosion with invalid inputs.}
   \item{type}{type of plot.}
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
     respect to the leaves in the branch.  Otherwise (default), plot them
@@ -98,9 +107,16 @@ is.leaf(object)
   \item{frame.plot}{logical indicating if a box around the plot should
     be drawn, see \code{\link{plot.default}}.}
   \item{h}{height at which the tree is cut.}
-  \item{height}{height at which the two dendrogram should be merged.  If not
+  \item{height}{height at which the two dendrograms should be merged.  If not
     specified (or \code{NULL}), the default is ten percent larger than
     the (larger of the) two component heights.}
+  \item{adjust}{a string determining if the leaf values should be
+    adjusted.  The default, \code{"auto"}, checks if the (first) two
+    dendrograms both start at \code{1}; if they do, code{"add.max"} is
+    chosen, which adds the maximum of the previous dendrogram leaf
+    values to each leaf of the \dQuote{next} dendrogram.  Specifying
+    \code{adjust} to another value skips the check and hence is a tad
+    more efficient.}
   \item{xlim, ylim}{optional x- and y-limits of the plot, passed to
     \code{\link{plot.default}}.  The defaults for these show the full
     dendrogram.}
@@ -172,9 +188,14 @@ is.leaf(object)
   \code{rev.dendrogram} simply returns the dendrogram \code{x} with
   reversed nodes, see also \code{\link{reorder.dendrogram}}.
 
-  The \code{\link{merge}(x, y, ...)} method which merges two or more
+  The \code{\link{merge}(x, y, ...)} method merges two or more
   dendrograms into a new one which has \code{x} and \code{y} (and
-  optional further arguments) as branches.
+  optional further arguments) as branches.  Note that before \R 3.1.2,
+  \code{adjust = "none"} was used implicitly, which is invalid when,
+  e.g., the dendrograms are from \code{\link{as.dendrogram}(hclust(..))}.
+
+  \code{\link{nobs}(object)} returns the total number of leaves (the
+  \code{members} attribute, see above).
 
   \code{is.leaf(object)} returns logical indicating if \code{object} is a
   leaf (the most simple dendrogram).
@@ -238,7 +259,7 @@ d3 <- dend2$lower[[2]][[2]][[1]]
 stopifnot(identical(d3, dend2$lower[[2]][[c(2,1)]]))
 str(d3, last.str = "'")
 
-## to peak at the inner structure "if you must", use '[..]' indexing :
+## to peek at the inner structure "if you must", use '[..]' indexing :
 str(d3[2][[1]]) ## or the full
 str(d3[])
 

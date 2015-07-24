@@ -91,12 +91,16 @@ static void getParseFilename(char* buffer, size_t buflen)
     	if (isEnvironment(R_ParseErrorFile)) {
 	    SEXP filename;
 	    PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
-	    if (isString(filename) && length(filename))
+	    if (isString(filename) && length(filename)) {
 	        strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen - 1);
+                buffer[buflen - 1] = '\0';
+            }
 	    UNPROTECT(1);
-        } else if (isString(R_ParseErrorFile) && length(R_ParseErrorFile)) 
+        } else if (isString(R_ParseErrorFile) && length(R_ParseErrorFile)) {
             strncpy(buffer, CHAR(STRING_ELT(R_ParseErrorFile, 0)), buflen - 1);
-    }           
+            buffer[buflen - 1] = '\0';
+        }
+    }
 }
 
 static SEXP tabExpand(SEXP strings)

@@ -86,6 +86,7 @@ extern0 SEXP	R_RecursiveSymbol;  /* "recursive" */
 extern0 SEXP	R_WholeSrcrefSymbol;   /* "wholeSrcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
+extern0 SEXP	R_ColonSymbol;         /* ":" */
 extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
 extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
 extern0 SEXP    R_ConnIdSymbol;  /* "conn_id" */
@@ -466,7 +467,34 @@ Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
 
 #endif /* USE_RINTERNALS */
 
+#define TYPED_STACK
+#ifdef TYPED_STACK
+/* The typed stack's entries consist of a tag and a union. An entry
+   can represent a standard SEXP value (tag = 0) or an unboxed scalar
+   value. For now real, integer, and logical values are supported. It
+   would in principle be possible to support complex scalars and short
+   scalar strings, but it isn't clear if this is worth while.
+
+   In addition to unboxed values the typed stack can hold partially
+   evaluated or incomplete allocated values. For now this is only used
+   for holding a short representation of an integer sequence as produce
+   by the colon operator, seq_len, or seq_along, and as consumed by
+   compiled 'for' loops. This could be used more extensively in the
+   future.
+*/
+typedef struct {
+    int tag;
+    union {
+	int ival;
+	double dval;
+	SEXP sxpval;
+    } u;
+} R_bcstack_t;
+# define PARTIALSXP_MASK (~255)
+# define IS_PARTIAL_SXP_TAG(x) ((x) & PARTIALSXP_MASK)
+#else
 typedef SEXP R_bcstack_t;
+#endif
 #ifdef BC_INT_STACK
 typedef union { void *p; int i; } IStackval;
 #endif
@@ -807,6 +835,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 # define ComplexFromReal	Rf_ComplexFromReal
 # define ComplexFromString	Rf_ComplexFromString
 # define copyMostAttribNoTs	Rf_copyMostAttribNoTs
+# define createS3Vars		Rf_createS3Vars
 # define currentTime		Rf_currentTime
 # define CustomPrintValue	Rf_CustomPrintValue
 # define DataFrameClass		Rf_DataFrameClass
@@ -1011,6 +1040,7 @@ void R_check_locale(void);
 void check_stack_balance(SEXP op, int save);
 void CleanEd(void);
 void copyMostAttribNoTs(SEXP, SEXP);
+SEXP createS3Vars(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 void CustomPrintValue(SEXP, SEXP);
 double currentTime(void);
 void DataFrameClass(SEXP);
@@ -1044,6 +1074,7 @@ void InitFunctionHashing(void);
 void InitBaseEnv(void);
 void InitGlobalEnv(void);
 Rboolean R_current_trace_state(void);
+Rboolean R_current_debug_state(void);
 Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, Rboolean);

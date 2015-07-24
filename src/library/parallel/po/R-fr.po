@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2013-03-18 22:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -46,6 +46,10 @@ msgstr "groupe de processus invalide"
 
 msgid "unknown cluster type"
 msgstr "groupe de processus de type inconnu"
+
+#, fuzzy
+msgid "numeric 'names' must be >= 1"
+msgstr "'nnodes' doit être >= 1"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "noeud d'un groupe de processus socket sur l'hôte %s avec le pid %d"

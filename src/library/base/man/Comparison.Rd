@@ -93,7 +93,8 @@ x != y
   For numerical and complex values, remember \code{==} and \code{!=} do
   not allow for the finite representation of fractions, nor for rounding
   error.  Using \code{\link{all.equal}} with \code{identical} is almost
-  always preferable.  See the examples.
+  always preferable.  See the examples.  (This also applies to the other
+  comparison operators.)
   
   These operators are sometimes called as functions as e.g.
   \code{`<`(x, y)}: see the description of how argument-matching is done

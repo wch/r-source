@@ -20,19 +20,20 @@ as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 
 as.dendrogram.dendrogram <- function(object, ...) object
 
-as.dendrogram.hclust <- function (object, hang = -1, ...)
+as.dendrogram.hclust <- function (object, hang = -1, check = TRUE, ...)
 ## hang = 0.1  is default for plot.hclust
 {
-    stopifnot(length(object$order) > 0L)
-    if (is.null(object$labels))
+    nolabels <- is.null(object$labels)
+    merge <- object$merge
+    if(check && !isTRUE(msg <- .validity.hclust(object, merge, order=nolabels)))
+	stop(msg)
+    if(nolabels)
 	object$labels <- seq_along(object$order)
     z <- list()
     nMerge <- length(oHgt <- object$height)
-    if (nMerge != nrow(object$merge))
-	stop("'merge' and 'height' do not fit!")
     hMax <- oHgt[nMerge]
     for (k in 1L:nMerge) {
-	x <- object$merge[k, ]# no sort() anymore!
+	x <- merge[k, ]# no sort() anymore!
 	if (any(neg <- x < 0))
 	    h0 <- if (hang < 0) 0 else max(0, oHgt[k] - hang * hMax)
 	if (all(neg)) {			# two leaves
@@ -77,9 +78,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	attr(zk, "height") <- oHgt[k]
 	z[[as.character(k)]] <- zk
     }
-    z <- z[[as.character(k)]]
-    class(z) <- "dendrogram"
-    z
+    structure(z[[as.character(k)]], class = "dendrogram")
 }
 
 ## Reversing the above (as much as possible)
@@ -87,12 +86,17 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 as.hclust.dendrogram <- function(x, ...)
 {
     stopifnot(is.list(x), length(x) == 2)
-    n <- length(ord <- unlist(x))
+    n <- length(ord <- as.integer(unlist(x)))
+    iOrd <- sort.list(ord)
+    if(!identical(ord[iOrd], seq_len(n)))
+	stop(gettextf(
+	    "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to \"hclust\"",
+	    n), domain=NA)
     stopifnot(n == attr(x, "members"))
     n.h <- n - 1L
     ## labels: not sure, if we'll use this; there should be a faster way!
     labsu <- unlist(labels(x))
-    labs <- labsu[sort.list(ord)]
+    labs <- labsu[iOrd]
     x <- .add.dendrInd(x)
 
     SIMP <- function(d) {
@@ -280,9 +284,11 @@ function (object, max.level = NA, digits.d = 3L, give.attr = FALSE,
 ## The ``generic'' method for "[["  (analogous to e.g., "[[.POSIXct"):
 ## --> subbranches (including leafs!) are dendrograms as well!
 `[[.dendrogram` <- function(x, ..., drop = TRUE) {
-    structure(NextMethod("[["), class = "dendrogram")
+    if(!is.null(r <- NextMethod("[[")))
+        structure(r, class = "dendrogram")
 }
 
+nobs.dendrogram <- function(object, ...) attr(object, "members")
 
 ## FIXME: need larger par("mar")[1L] or [4L] for longish labels !
 ## {probably don't change, just print a warning ..}
@@ -626,12 +632,26 @@ rev.dendrogram <- function(x) {
 labels.dendrogram <- function(object, ...)
     unlist(dendrapply(object, function(n) attr(n,"label")))
 
-merge.dendrogram <- function(x, y, ..., height) {
+merge.dendrogram <- function(x, y, ..., height,
+                             adjust = c("auto", "add.max", "none"))
+{
     stopifnot(inherits(x,"dendrogram"), inherits(y,"dendrogram"))
+    if((adjust <- match.arg(adjust)) == "auto")
+        adjust <-
+            ## dendrograms as from hclust(), have entries {1,2,..,n}; "cheap" check:
+            if(min(unlist(x)) == 1 && min(unlist(y)) == 1)
+                "add.max"
+            else # for now, can imagine more:
+                "none"
+    if(adjust == "add.max") {
+        add.ifleaf <- function(i, add) if(is.leaf(i)) i + add else i
+        add <- max(unlist(x))
+        y <- dendrapply(y, add.ifleaf, add=add)
+    }
     r <- list(x,y)
     if(length(xtr <- list(...))) {
-	xpr <- substitute(c(...))
 	if(!all(is.d <- vapply(xtr, inherits, NA, what="dendrogram"))) {
+	    xpr <- substitute(c(...))
 	    nms <- sapply(xpr[-1][!is.d], deparse, nlines = 1L)
             ## do not simplify: xgettext needs this form
             msg <- ngettext(length(nms),
@@ -639,6 +659,13 @@ merge.dendrogram <- function(x, y, ..., height) {
                             "extra arguments %s are not of class \"%s\"s")
 	    stop(sprintf(msg, paste(nms, collapse=", "), "dendrogram"),
                  domain = NA)
+	}
+	if(adjust == "add.max") {
+	    add <- max(add, unlist(y))
+	    for(i in seq_along(xtr)) {
+		if(i > 1L) add <- max(add, unlist(xtr[i-1L]))
+		xtr[[i]] <- dendrapply(xtr[[i]], add.ifleaf, add=add)
+	    }
 	}
 	r <- c(r, xtr)
     }

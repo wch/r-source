@@ -133,7 +133,10 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   A sometimes important distinction is that the second approach places
   objects in the namespace but the first does not.  So if it is important
   that the function sees \code{mytable} as an object from the package,
-  it is system data and the second approach should be used.
+  it is system data and the second approach should be used.  In the
+  unusual case that a package uses a lazy-loaded dataset as a default
+  argument to a function, that needs to be specified by \code{\link{::}},
+  e.g., \code{survival::survexp.us}.
 }
 \note{
   One can take advantage of the search order and the fact that a

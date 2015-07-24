@@ -209,16 +209,20 @@ transformMethod <- function(i, blocks, Rdfile) {
 		   generic)) {
         ## Binary operators and unary '!'.
 	findOpen(i)
-	chars[char] <- ""
-	blocks <- rewriteBlocks()
 
 	if (generic != "!") {
+            chars[char] <- ""
+            blocks <- rewriteBlocks()
 	    findComma(j)
 	    chars[char] <- paste0(" ", generic, " ")
 	    # Delete blanks after the comma
 	    deleteBlanks()
 	    blocks <- rewriteBlocks()
-	}
+	} else {
+            chars[char] <- "!"
+	    blocks <- rewriteBlocks()
+        }
+
 	findClose(j)
 	chars[char] <- ""
 	blocks[j] <- editblock(blocks[[j]],
@@ -467,13 +471,6 @@ Rd2txt <-
     trim <- function(x) {
         x <- psub1("^\\s*", "", x)
         psub1("\\s*$", "", x)
-    }
-
-    striptitle <- function(text) {
-        text <- fsub("\\", "", text)
-        text <- fsub("---", "_", text)
-        text <- fsub("--", "-", text)
-        text
     }
 
     ## underline via backspacing

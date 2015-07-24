@@ -166,3 +166,12 @@ testit(agrep(x, x, max.distance=0.5))
 
 ## this is used in QC to check dependencies and was broken intermittently by TRE changes
 stopifnot(isTRUE(grepl('^[[:space:]]*(R|[[:alpha:]][[:alnum:].]*[[:alnum:]])([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?[[:space:]]*$', ' R (>= 2.13.0) ')))
+
+## Bad sub() and gsub() with some regexprs PR#16009
+x <- c(NA, "  abc", "a b c    ", "a  b c")
+(y <- gsub("\\s{2,}", " ", x))
+stopifnot(y[-1] == c(" abc", "a b c ", "a b c"))
+x <- c("\ue4", "  abc", "a b c    ", "a  b c")
+(y <- gsub("\\s{2,}", " ", x))
+stopifnot(y == c(x[1], " abc", "a b c ", "a b c"))
+## results were c(x[1], " ", " ", " ") in both cases in R 3.1.1

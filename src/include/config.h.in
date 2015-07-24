@@ -665,6 +665,9 @@
 /* Define to 1 if you have the `stat' function. */
 #undef HAVE_STAT
 
+/* Define to 1 if you have the <stdalign.h> header file. */
+#undef HAVE_STDALIGN_H
+
 /* Define to 1 if you have the <stdarg.h> header file. */
 #undef HAVE_STDARG_H
 
@@ -830,14 +833,14 @@
 /* Define to 1 if you have the <utime.h> header file. */
 #undef HAVE_UTIME_H
 
+/* Define to 1 if you have the <valgrind/memcheck.h> header file. */
+#undef HAVE_VALGRIND_MEMCHECK_H
+
 /* Define to 1 if you have the `vasprintf' function. */
 #undef HAVE_VASPRINTF
 
 /* Define to 1 if you have the `va_copy' function. */
 #undef HAVE_VA_COPY
-
-/* Defined if framework vecLib is present */
-#undef HAVE_VECLIB_FW
 
 /* Define to 1 or 0, depending whether the compiler supports simple visibility
    declarations. (For intl) */
@@ -1119,7 +1122,7 @@
 /* Define according to your operating system type. */
 #undef Unix
 
-/* Define as 1 or 2 to specify levels of Valgrind instrumentation */
+/* Define as 1, 2 or 3 to specify levels of Valgrind instrumentation */
 #undef VALGRIND_LEVEL
 
 /* Version number of package */

@@ -8,6 +8,13 @@
 \alias{.Options}
 \alias{getOption}
 \alias{option} % so help files can do 'set \link{} \code{"foo"}'
+
+\alias{MC_CORES}
+\alias{R_C_BOUNDS_CHECK}
+\alias{R_DEFAULT_DEVICE}
+\alias{R_KEEP_PKG_SOURCE}
+\alias{R_INTERACTIVE_DEVICE}
+
 \title{Options Settings}
 \description{
   Allow the user to set and examine a variety of global \emph{options}
@@ -506,11 +513,10 @@ getOption(x, default = NULL)
     \item{\code{demo.ask}:}{default for the \code{ask} argument of
       \code{\link{demo}}.}
 
-    \item{\code{editor}:}{a non-empty string, or a function that is
-      called with a file path as argument.  Sets the default text
-      editor, e.g., for \code{\link{edit}}.  Set from the environment
-      variable \env{EDITOR} on UNIX, or if unset \env{VISUAL} or
-      \command{vi}.}
+    \item{\code{editor}:}{a non-empty string or a function that sets the
+      default text editor, e.g., for \code{\link{edit}}.  Set from the
+      environment variable \env{EDITOR} on UNIX, or if unset
+      \env{VISUAL} or \command{vi}.}
 
     \item{\code{example.ask}:}{default for the \code{ask} argument of
       \code{\link{example}}.}

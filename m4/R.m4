@@ -2641,8 +2641,9 @@ if test "${acx_blas_ok}" = no; then
 fi
 
 ## Now check if zdotu works (fails on AMD64 with the wrong compiler;
-## also fails on OS X with vecLib and gfortran; but in that case we
-## have a work-around using USE_VECLIB_G95FIX)
+## also fails on OS X with Accelerate/vecLib and gfortran; 
+## but in that case we have a work-around using USE_VECLIB_G95FIX)
+
 if test "${acx_blas_ok}" = yes; then
   AC_MSG_CHECKING([whether double complex BLAS can be used])
   AC_CACHE_VAL([r_cv_zdotu_is_usable],
@@ -2712,18 +2713,18 @@ fi
   if test -n "${r_cv_zdotu_is_usable}"; then
     AC_MSG_RESULT([yes])
   else
-    ## NB: this lot is not cached
-    if test "${r_cv_check_fw_vecLib}" != "no"; then
-      AC_MSG_RESULT([yes])
-      ## for vecLib we have a work-around by using cblas_..._sub
-      use_veclib_g95fix=yes
-      ## The fix may not work with internal lapack, but
-      ## is more likely to in R >= 2.15.2.
-    else
-      AC_MSG_RESULT([no])
-      BLAS_LIBS=
-      acx_blas_ok="no"
-    fi
+    case "${BLAS_LIBS}" in
+      *Accelerate* | *vecLib*)
+        ## for vecLib we have a work-around by using cblas_..._sub
+        AC_MSG_RESULT([yes])
+        use_veclib_g95fix=yes
+        ;;
+      *)  
+        AC_MSG_RESULT([no])
+        BLAS_LIBS=
+        acx_blas_ok="no"
+        ;;
+    esac
   fi
 fi
 if test "${acx_blas_ok}" = yes; then

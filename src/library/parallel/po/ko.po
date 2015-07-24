@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-09-21 07:12+0100\n"
 "PO-Revision-Date: 2014-03-26 20:57-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -20,74 +20,74 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: fork.c:251 fork.c:254
+#: fork.c:253 fork.c:256
 msgid "unable to create a pipe"
 msgstr "파이프를 생성할 수 없습니다"
 
-#: fork.c:271
+#: fork.c:274
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "포크할 수 없습니다. 가능한 이유는 다음과 같습니다: %s"
 
-#: fork.c:317
+#: fork.c:320
 msgid "memory allocation error"
 msgstr "메모리 할당 에러입니다"
 
-#: fork.c:370
+#: fork.c:373
 msgid "only children can send data to the master process"
 msgstr "오로지  자식들만이 데이터를 마스터 프로세스에 보낼 수 있습니다"
 
-#: fork.c:372
+#: fork.c:375
 msgid "there is no pipe to the master process"
 msgstr "마스터 프로세스로 연결된 파이프가 없습니다"
 
-#: fork.c:374
+#: fork.c:377
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
 
-#: fork.c:383 fork.c:390 fork.c:712
+#: fork.c:386 fork.c:393 fork.c:715
 msgid "write error, closing pipe to the master"
 msgstr "쓰기 에러입니다.  마스에 연결된 파이프를 닫습니다"
 
-#: fork.c:403
+#: fork.c:406
 msgid "only the master process can send data to a child process"
 msgstr "오로지 마스터 프로세스만이 데이터를 자식프로세스에 보낼 수 있습니다"
 
-#: fork.c:410
+#: fork.c:413
 #, c-format
 msgid "child %d does not exist"
 msgstr "child %d는 존재하지 않습니다"
 
-#: fork.c:416
+#: fork.c:419
 msgid "write error"
 msgstr "쓰기 에러입니다"
 
-#: fork.c:484 fork.c:606
+#: fork.c:487 fork.c:609
 #, c-format
 msgid "error '%s' in select"
 msgstr "선택중 에러 '%s'가 발생했습니다"
 
-#: fork.c:694
+#: fork.c:697
 msgid "'mckill' failed"
 msgstr "'mckill' 실패했습니다"
 
-#: fork.c:704
+#: fork.c:707
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit'는 오로지 자식 프로세스에서만 사용됩니다"
 
-#: fork.c:725
+#: fork.c:728
 msgid "'mcexit' failed"
 msgstr "'mcexit' 실패했습니다"
 
-#: fork.c:755 fork.c:764
+#: fork.c:758 fork.c:767
 msgid "invalid CPU affinity specification"
 msgstr "유효하지 않은 CPU affinity 지정입니다"
 
-#: fork.c:775
+#: fork.c:778
 msgid "requested CPU set is too large for this system"
 msgstr "요청된 CPU 셋은 이 시스템에 너무 큽니다"
 
-#: fork.c:798
+#: fork.c:801
 msgid "retrieving CPU affinity set failed"
 msgstr "CPU affiniy 셋을 검색하는데 실패했습니다"

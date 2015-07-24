@@ -123,9 +123,9 @@ R_size_t R_Decode2Long(char *p, int *ierr)
 const char *EncodeLogical(int x, int w)
 {
     static char buff[NB];
-    if(x == NA_LOGICAL) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
-    else if(x) snprintf(buff, NB, "%*s", w, "TRUE");
-    else snprintf(buff, NB, "%*s", w, "FALSE");
+    if(x == NA_LOGICAL) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
+    else if(x) snprintf(buff, NB, "%*s", min(w, (NB-1)), "TRUE");
+    else snprintf(buff, NB, "%*s", min(w, (NB-1)), "FALSE");
     buff[NB-1] = '\0';
     return buff;
 }
@@ -133,7 +133,7 @@ const char *EncodeLogical(int x, int w)
 const char *EncodeInteger(int x, int w)
 {
     static char buff[NB];
-    if(x == NA_INTEGER) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+    if(x == NA_INTEGER) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
     else snprintf(buff, NB, "%*d", min(w, (NB-1)), x);
     buff[NB-1] = '\0';
     return buff;
@@ -185,10 +185,10 @@ const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
-	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
-	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
-	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
-	else snprintf(buff, NB, "%*s", w, "-Inf");
+	if(ISNA(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", min(w, (NB-1)), "Inf");
+	else snprintf(buff, NB, "%*s", min(w, (NB-1)), "-Inf");
     }
     else if (e) {
 	if(d) {
@@ -228,10 +228,10 @@ static const char
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
-	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
-	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
-	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
-	else snprintf(buff, NB, "%*s", w, "-Inf");
+	if(ISNA(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", min(w, (NB-1)), "Inf");
+	else snprintf(buff, NB, "%*s", min(w, (NB-1)), "-Inf");
     }
     else if (e) {
 	if(d) {
@@ -294,10 +294,10 @@ const char *EncodeReal2(double x, int w, int d, int e)
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
-	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
-	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
-	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
-	else snprintf(buff, NB, "%*s", w, "-Inf");
+	if(ISNA(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", min(w, (NB-1)), "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", min(w, (NB-1)), "Inf");
+	else snprintf(buff, NB, "%*s", min(w, (NB-1)), "-Inf");
     }
     else if (e) {
 	if(d) {
@@ -336,7 +336,7 @@ const char
     if (ISNA(x.r) || ISNA(x.i)) {
 	snprintf(buff, NB,
 		 "%*s", /* was "%*s%*s", R_print.gap, "", */
-		 wr+wi+2, CHAR(R_print.na_string));
+		 min(wr+wi+2, (NB-1)), CHAR(R_print.na_string));
     } else {
 	/* formatComplex rounded, but this does not, and we need to
 	   keep it that way so we don't get strange trailing zeros.

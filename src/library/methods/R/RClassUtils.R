@@ -1596,8 +1596,11 @@ setDataPart <- function(object, value, check = TRUE) {
     toSlots <- names(toDef@slots)
     sameSlots <- (length(fromSlots) == length(toSlots) &&
 		  !any(is.na(match(fromSlots, toSlots))))
-    if(!isVirtualClass(toDef))
-        toClass <- class(new(toDef)) # get it with the package slot correct
+    if(is.null(packageSlot(toClass))) {
+        toClass <- toDef@className
+        if(is.null(packageSlot(toClass))) # is this possible?
+            packageSlot(toClass) <- toDef@package
+    }
     if(sameSlots)
 	substitute({class(from) <- CLASS; from}, list(CLASS = toClass))
     else if(length(toSlots) == 0L) {

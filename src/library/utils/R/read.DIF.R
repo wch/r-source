@@ -120,7 +120,6 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     first <- data[1L, ]
     if (first[1L] == "") first <- first[-1L]
 
-    col1 <- if(missing(col.names)) length(first) else length(col.names)
     cols <- ncol
 
     ##	basic column counting and header determination;

@@ -412,9 +412,10 @@ sentences, but only one paragraph.
 
 @c DESCRIPTION field Title
 The mandatory @samp{Title} field should give a short description of the
-package. Some package listings may truncate the title to 65 characters.
-It should be capitalized, not use any markup, not have any continuation
-lines, and not end in a period.
+package.  Some package listings may truncate the title to 65 characters.
+It should use @emph{title case} (that is, use capitals for the principal
+words), not use any markup, not have any continuation lines, and not end
+in a period.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
@@ -428,7 +429,7 @@ the sole (and maybe not even the main) author.
 
 @c DESCRIPTION field Maintainer
 The mandatory @samp{Maintainer} field should give a @emph{single} name
-followed a @emph{valid} (RFC 2822) email address in angle brackets.  It
+followed by a @emph{valid} (RFC 2822) email address in angle brackets.  It
 should not end in a period or comma.  This field is what is reported by
 the @code{maintainer} function and used by @code{bug.report}.  For a
 @acronym{CRAN} package it should be a @emph{person}, not a mailing list
@@ -483,7 +484,7 @@ be found.  These @acronym{URL}s are converted to active hyperlinks in
 @c DESCRIPTION field BugReports
 The @samp{BugReports} field may contain a single
 @acronym{URL} to which bug reports about the package should be
-submitted.  This @acronym{URL} will be used by @code{bug.reports}
+submitted.  This @acronym{URL} will be used by @code{bug.report}
 instead of sending an email to the maintainer.
 
 @c DESCRIPTION field Priority
@@ -974,6 +975,10 @@ visible (and if it is, it need not be the one from that namespace:
 give an error if the suggested package is not available, simply use
 e.g.@: @code{rgl::plot3d}.
 
+As noted above, packages in @samp{Enhances} @emph{must} be used
+conditionally and hence objects within them should always be accessed
+@emph{via} @code{::}.
+
 @node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
 @cindex INDEX file
@@ -1019,7 +1024,7 @@ provided that the objects created do not depend on those packages except
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of one or more @R{} objects: please
 use suitable compression as suggested by @code{tools::resaveRdaFiles},
-an see also @samp{SysDataCompression} @file{DESCRIPTION} field.)  this
+and see also @samp{SysDataCompression} @file{DESCRIPTION} field.)  this
 will be lazy-loaded into the namespace environment -- this is intended
 for system datasets that are not intended to be user-accessible
 @emph{via} @code{data}.  Also, files ending in @samp{.in} will be
@@ -1288,7 +1293,7 @@ grown up to use directory @file{inst/extdata} for such files.
 Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab},
 @file{.txt}, or @file{.csv}, see @code{?data} for the file formats, and
-note that @file{.csv} is @strong{not} the standard@footnote{e.g@:
+note that @file{.csv} is @strong{not} the standard@footnote{e.g.@:
 @uref{http://tools.ietf.org/@/html/@/rfc4180}.} CSV format), or
 @code{save()} images (@file{.RData} or @file{.rda}).  The files should
 not be hidden (have names starting with a dot).  Note that @R{} code
@@ -1955,8 +1960,8 @@ and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
 SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
 (@pxref{Platform and version information}) or @code{_OPENMP}: note that
-some toolchains used for @R{} (e.g.@: @command{clang}) have no OpenMP
-support at all, not even @file{omp.h}.
+some toolchains used for @R{} (including most of those using
+@command{clang}) have no OpenMP support at all, not even @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -1969,13 +1974,13 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  The compilers used on OS X 10.6 (`Snow Leopard')
-had partial support for OpenMP 2.5, but this is not enabled in the
-@acronym{CRAN} build of @R{}. (Apple have discontinued support for those
-compilers, and their alternative as from OS X 10.9, @command{clang}, has
-no OpenMP support.  A project to add it has been announced at
-@uref{http://clang-omp.github.io/}, but it is unknown when or even if
-the Apple builds will incorporate it.)
+have recent versions.  The compilers used on earlier versions of OS X
+had partial support for OpenMP 2.5, but this was not enabled in the
+@acronym{CRAN} build of @R{}.  As from OS X 10.9 @command{clang} is
+used, and the Apple builds currently@footnote{Projects to add it has
+been announced at @uref{http://clang-omp.github.io/} and
+@uref{http://openmp.llvm.org/}, but it is unknown when or even if the
+Apple builds will incorporate it.} have no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and the Apple OS X (where available) implementations have
@@ -2402,6 +2407,11 @@ default compiler on Windows is GCC 4.6.x and supports the
 platforms, it is necessary to select a different compiler for C++11,
 @emph{via} personal or site @file{Makevars} files.
 
+There is no guarantee that C++11 can be used in a package in combination
+with any other compiled language (even C), as the C++11 compiler may be
+incompatible with the native compilers for the platform.  (There are
+known problems mixing C++11 with Fortran.)
+
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
 
@@ -2625,7 +2635,14 @@ specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
 @file{.Rout.save}.)  Please note that the comparison will be done in the
 end user's locale, so the target output files should be @acronym{ASCII}
-if at all possible.
+if at all possible.  (The command line option @code{--test-dir=foo} may
+be used to specify tests in a non-standard location.  For example, 
+unusually slow tests could be placed in @file{inst/slowTests} and then
+@code{R CMD check --test-dir=inst/slowTests} would be used to run them.
+Other names that have been suggested are, for example, 
+@file{inst/testWithOracle} for tests that require Oracle to be installed,
+@file{inst/randomTests} for tests which use random values and may
+occasionally fail by chance, etc.)
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
@@ -2690,10 +2707,24 @@ value.  The test of cyclic declarations@footnote{For example, in early
 2014 @CRANpkg{gdata} declared @samp{Imports: gtools} and @CRANpkg{gtools}
 declared @samp{Imports: gdata}.}in @file{DESCRIPTION} files needs
 repositories (including @acronym{CRAN}) set: do this in
-@file{~/.Rprofile}, by e.g@:
+@file{~/.Rprofile}, by e.g.@:
 @example
 options(repos = c(CRAN="http://cran.r-project.org"))
 @end example
+
+One check customization which can be revealing is
+@example
+_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
+@end example
+@noindent
+which reports unused local assignments.  Not only does this point out
+computations which are unnecessary because their results are unused, it
+also can show errors.  (Two such are to intend to update an object by
+assigning a value but mistype its name or assign in the wrong scope,
+for example using @code{<-} where @code{<<-} was intended.)  This can
+give false positives, most commonly because of non-standard evaluation
+for formulae and because the intention is to return objects in the
+environment of a function for later use.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -2721,9 +2752,9 @@ to check the primary sub-architecture, and then to use something like
 @command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
 @command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
 additional sub-architecture just the checks@footnote{loading, examples,
-tests, vignettes} which differ by sub-architecture.  (This approach is
-required for packages which are installed by @command{R CMD INSTALL
---merge-multiarch}.)
+tests, running vignette code} which differ by sub-architecture.  (This
+approach is required for packages which are installed by @command{R CMD
+INSTALL --merge-multiarch}.)
 
 Where packages need additional commands to install all the
 sub-architectures these can be supplied by e.g.@:
@@ -3221,10 +3252,15 @@ conditional processing of @code{if} statements is implemented.
 
 Packages are loaded and attached to the search path by calling
 @code{library} or @code{require}.  Only the exported variables are
-placed in the attached frame.  Loading a package that imports
-variables from other packages will cause these other packages to be
-loaded as well (unless they have already been loaded), but they will
-@emph{not} be placed on the search path by these implicit loads.
+placed in the attached frame.  Loading a package that imports variables
+from other packages will cause these other packages to be loaded as well
+(unless they have already been loaded), but they will @emph{not} be
+placed on the search path by these implicit loads.  Thus code in the
+package can only depend on objects in its own namespace and its imports
+(including the @pkg{base} namespace) being visible@footnote{Note that
+lazy-loaded datasets are @emph{not} in the package's namespace so need
+to be accessed @emph{via} @code{::}, e.g.@:
+@code{survival::survexp.us}.}.
 
 Namespaces are @emph{sealed} once they are loaded.  Sealing means that
 imports and exports cannot be changed and that internal variable
@@ -3241,6 +3277,7 @@ then the normal search path.
 Prior to @R{} 2.14.0, namespaces were optional in packages: a default
 namespace was generated on installation in 2.14.x and 2.15.x.  As from
 3.0.0 a namespace is mandatory.
+
 
 @menu
 * Specifying imports and exports::  
@@ -3540,13 +3577,17 @@ type of the parameters.  Using the @code{.registration} argument of
 following registration information for a DLL named @code{myDLL}:
 
 @example
-R_CMethodDef cMethods[] = @{
-   @{"foo", (DL_FUNC) &foo, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+static R_NativePrimitiveArgType foo_t[] = @{
+    REALSXP, INTSXP, STRSXP, LGLSXP
+@};
+
+static R_CMethodDef cMethods[] = @{
+   @{"foo", (DL_FUNC) &foo, 4, foo_t@},
    @{"bar_sym", (DL_FUNC) &bar, 0@},
    @{NULL, NULL, 0@}
 @};
 
-R_CallMethodDef callMethods[] = @{
+static R_CallMethodDef callMethods[] = @{
    @{"R_call_sym", (DL_FUNC) &R_call, 4@},
    @{"R_version_sym", (DL_FUNC) &R_version, 0@},
    @{NULL, NULL, 0@}
@@ -3806,8 +3847,8 @@ repository such as @acronym{CRAN}).
 @end menu
 
 Portable packages should have simple file names: use only alphanumeric
-@acronym{ASCII} characters and @code{.}, and avoid those names not
-allowed under Windows which are mentioned above.
+@acronym{ASCII} characters and period (@code{.}), and avoid those names
+not allowed under Windows which are mentioned above.
 
 Many of the graphics devices are platform-specific: even @code{X11()}
 (aka @code{x11()}) which although emulated on Windows may not be
@@ -3896,11 +3937,10 @@ files.
  R-admin,  R Installation and Administration},
 @end ifset
 
-Although there is a 2011 version of the C++ standard, it is not yet
-fully implemented and partial implementations are not universally
-available. Portable C++ code needs to follow the 1998 standard (and not
-use features from C99). 
-See also @ref{Using C++11 code} to specify a C++11 compiler.
+Although there is a 2011 version of the C++ standard, even partial
+implementations are not universally available.  Portable C++ code needs
+to follow the 1998 standard (and not use features from C99).  See also
+@ref{Using C++11 code} to specify a C++11 compiler.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -3952,10 +3992,14 @@ package authors are often mistaken about that.
 
 @item
 Compiled code should not call the system random number generators such
-as @code{rand}, @code{drand48} and @code{random}, but rather use the
+as @code{rand}, @code{drand48} and @code{random}@footnote{This and
+@code{srandom} are in any case not portable.  They are in POSIX but not
+in the C99 standard, and not available on Windows.}, but rather use the
 interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
 particular, if more than one package initializes the system RNG (e.g.@:
 @emph{via} @code{srand}), they will interfere with each other.
+
+Nor should the C++11 random number library be used.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -3999,10 +4043,15 @@ If you do not yourself have a Windows system, consider submitting your
 source package to WinBuilder (@uref{http://win-builder.r-project.org/})
 before distribution.
 
+@item
+It is bad practice for package code to alter the search path using
+@code{library}, @code{require} or @code{attach} and this often does not
+work as intended.  For alternatives, see @ref{Suggested packages} and
+@code{with}.
 @end itemize
 
-Do be careful in what your tests actually test.  Bad practice seen in
-distributed packages include:
+Do be careful in what your tests (and examples) actually test.  Bad
+practice seen in distributed packages include:
 
 @itemize
 
@@ -4013,8 +4062,19 @@ you can test a ratio of times, and even that is fraught with
 difficulties.
 
 @item
-Do not test the exact format of @R{} error messages: they change, and
+Do not test the exact format of @R{} error messages: They change, and
 they can be translated.
+
+Worse, packages have tested the exact format of system error messages,
+which are platform-dependent and perhaps locale-dependent.
+
+@item
+If you use functions such as @code{View}, remember that in testing there
+is no one to look at the output.  It is better to use something like one of
+@example
+if(interactive()) View(obj) else print(head(obj))
+if(interactive()) View(obj) else str(obj)
+@end example
 
 @item
 Only test the accuracy of results if you have done a formal error
@@ -4038,8 +4098,11 @@ was 64-bit on HP/PA Linux.
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-double} and use appropriate
 compiler flags (such as @option{-ffloat-store} and
-@option{-fexcess-precision=standard} for @command{gcc}) to mitigate the
-effects of extended-precision calculations.
+@option{-fexcess-precision=standard} for @command{gcc}, depending on the
+CPU type) to mitigate the effects of extended-precision calculations.
+
+Tests which involve random inputs or non-deterministic algorithms should
+normally set a seed or be tested for many seeds.
 
 @end itemize
 
@@ -4212,9 +4275,10 @@ Mathematical functions such as @code{sqrt} are defined in C++ for
 floating-point arguments.  It is legitimate in C++ to overload these
 with versions for types @code{float}, @code{double}, @code{long double}
 and possibly more.  This means that calling @code{sqrt} on an integer
-type may have `overloading ambiguity' as it could be promoted to any of the
-supported floating-point types: this is commonly seen on Solaris.
-(C++11 requires additional overloads for integer types.)
+type may have `overloading ambiguity' as it could be promoted to any of
+the supported floating-point types: this is commonly seen on Solaris,
+but for @code{pow} also seen on OS X.  (C++11 requires additional
+overloads for integer types.)
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
@@ -4241,7 +4305,7 @@ It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
 
 @item
-Including C headers in C++ code is not portable.  Including the C99
+Including C headers in C++ code is not portable.  Including the C
 header @file{math.h} in C++ code often causes conflicts with
 @file{cmath} which may be included by other headers.  This is
 particularly problematic with C++11 compilers, as functions like
@@ -4252,6 +4316,23 @@ particularly problematic with C++11 compilers, as functions like
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++
 compilers in use with @R{} on some platforms.
+
+@item
+Be careful to include the headers which define the functions you use.
+Some compilers (notably the GCC family) include other system headers in
+their headers which are not required by the standards, and so code may
+compile on such compilers and not on others.  (A prominent example is
+the C++11 header @code{<random>} which is indirectly included by
+@code{<algorithm>} by @command{g++}.)
+
+@item
+For C++ code, be careful to specify namespaces where needed.  Many
+functions are defined by the standards to be in the @code{std}
+namespace, but @command{g++} puts many such also in the C++ main
+namespace.  One way to do so is to use declarations such as
+@example
+using std::floor;
+@end example
 
 @item
 Macros defined by the compiler/OS can cause problems.  Macros starting
@@ -4292,10 +4373,11 @@ makefiles, watch out in particular for dependencies on the toolchain's
 runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
 @file{libgcc_s}.
 
-For OS X, using @code{R CMD otool -L} on the package's shared object(s) in
-the @file{libs} directory will show what they depend on: watch for any
-dependencies in @file{/usr/local/lib}, notably
-@file{libgfortran.2.dylib} or @file{libgfortran.3.dylib}.
+For OS X, using @code{R CMD otool -L} on the package's shared object(s)
+in the @file{libs} directory will show what they depend on: watch for
+any dependencies in @file{/usr/local/lib}, notably
+@file{libgfortran.2.dylib}, @file{libgfortran.3.dylib} or
+@file{libquadmath.0.dylib}.
 
 Many people (including the @acronym{CRAN} package repository) will not
 accept source packages containing binary files as the latter are a
@@ -7289,8 +7371,8 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on a common CPU type or supported versions
-of OS X@footnote{at the time of writing mainly for 10.7 with some
-support for 10.8, none for the current 10.9.} you can use
+of OS X@footnote{at the time of writing mainly for 10.9 with some
+support for 10.8, none for the current 10.10.} you can use
 @code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
 with `tinned') to check for possible problems.  To run some examples
 under @code{valgrind} use something like
@@ -7309,22 +7391,23 @@ maximal information use a build with debugging symbols.  We know there
 will be some small memory leaks from @code{readline} and @R{} itself ---
 these are memory areas that are in use right up to the end of the @R{}
 session.  Expect this to run around 20x slower than without
-@code{valgrind}, and in some cases even slower than that.  Several
+@code{valgrind}, and in some cases much slower than that.  Several
 versions of @code{valgrind} were not happy with some optimized BLASes
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
-On platforms supported by @code{valgrind} you can build a version of
-@R{} with extra instrumentation to help @code{valgrind} detect errors in
-the use of memory allocated from the @R{} heap.  The @command{configure}
-option is @option{--with-valgrind-instrumentation=@var{level}}, where
-@var{level} is 0, 1, 2 or 3.  Level 0 is the default and does not add
-any anything.  Level 1 will detect use of uninitialised memory and has
-little impact on speed. Levels 2 and 3@footnote{see the @R{} source file
-@file{src/main/memory.c} for precisely what these do.} will detect many
-other memory-use bugs but make @R{} much slower when running under
-@code{valgrind}.  Using this in conjunction with @code{gctorture} can be
-even more effective (and even slower).
+On platforms where @code{valgrind} is installed you can build a version
+of @R{} with extra instrumentation to help @code{valgrind} detect errors
+in the use of memory allocated from the @R{} heap.  The
+@command{configure} option is
+@option{--with-valgrind-instrumentation=@var{level}}, where @var{level}
+is 0, 1, 2 or 3.  Level 0 is the default and does not add any anything.
+Level 1 will detect some uses of uninitialised memory and has little
+impact on speed (compared to level 0). Levels 2 and 3@footnote{see the
+@R{} source file @file{src/main/memory.c} for precisely what these do.}
+will detect many other memory-use bugs but make @R{} much slower when
+running under @code{valgrind}.  Using this in conjunction with
+@code{gctorture} can be even more effective (and even slower).
 
 An example of @code{valgrind} output is
 @smallexample
@@ -7396,14 +7479,19 @@ as the @file{R.framework}) and can be slow.  Installing packages with
 also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
 non-empty value before the @command{INSTALL}.)
 
+This section has described the use of @command{memtest}, the default
+(and most useful) of @code{valgrind}'s tools.  There are others
+described in its documentation: @command{helgrind} can be useful for
+threaded programs.
+
 @node Using Address Sanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Checking memory access
 @subsection Using the Address Sanitizer
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
-builds@footnote{not including the versions distributed by Apple in
-@code{Xcode} 4.6 or 5, nor of @command{clang} in Fedora prior to an
-update in Fedora 19. On some platforms, e.g.@: Fedora, the runtime
+builds@footnote{currently only on @cputype{ix86}/@cputype{x86_64} Linux
+and OS X, not including the versions distributed by Apple in
+@code{Xcode} 4.6 or 5. On some platforms, e.g.@: Fedora, the runtime
 library, @pkg{libasan}, needs to be installed separately. OS X users can
 install a suitable @command{clang} from the sources or possibly
 distributions such as MacPorts or Homebrew.} of @command{gcc} 4.8.0 or
@@ -7477,26 +7565,53 @@ For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
 @uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
 With @command{gcc} additional control is available @emph{via} the
-@option{--params} flag: see its @command{man} page.  For some builds on
-@code{x86_64} Linux this includes enabling the leak sanitizer
-(@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}),
-which might even be enabled by default@footnote{it was the @command{gcc}
-trunk in mid-2014.} when any leaks give the process a failure error
-status (by default @code{23}).  To disable both this and some strict
-checking use
+@option{--params} flag: see its @command{man} page.
 
-@example
-setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
-@end example
-
-For more detailed information @R{} can be run under a debugger with a
-breakpoint set before the address sanitizer report is produced: for
-@command{gdb} or @command{lldb} you could use
+For more detailed information on an error, @R{} can be run under a
+debugger with a breakpoint set before the address sanitizer report is
+produced: for @command{gdb} or @command{lldb} you could use
 @example
 break __asan_report_error
 @end example
 (See
 @uref{http://code.google.com/p/address-sanitizer/wiki/AddressSanitizer#gdb}.)
+
+@menu
+* Using Leak Sanitizer::        
+@end menu
+
+@node Using Leak Sanitizer,  , Using Address Sanitizer, Using Address Sanitizer
+@subsubsection Using the Leak Sanitizer
+
+For @code{x86_64} Linux there is a leak sanitizer, `LSan': see
+@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}.
+This is available on recent versions of @code{gcc} and @code{clang}, and
+where available is compiled in as part of ASan.
+
+One way to invoke this from an ASan-enabled build is by the environment
+variable
+
+@example
+ASAN_OPTIONS='detect_leaks=1'
+@end example
+@noindent
+However, this is the default on @command{clang} 3.5 and pre-releases of
+@command{gcc} 5.0.0.
+
+When LSan is enabled, leaks give the process a failure error status (by
+default @code{23}).  For an @R{} package this means the @R{} process,
+and as the parser retains some memory to the end of the process, if @R{}
+itself was built against ASan, all runs will have a failure error status
+(and that includes running @R{} as part of building @R{} itself).
+
+To disable both this and some strict checking use
+
+@example
+setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
+@end example
+
+LSan also has a `stand-alone' mode where it is compiled in using
+@option{-fsanitize=leak} and avoids the run-time overhead of ASan.
 
 @node Using Undefined Behaviour Sanitizer, Other analyses with `clang', Using Address Sanitizer, Checking memory access
 @subsection Using the Undefined Behaviour Sanitizer
@@ -7519,8 +7634,8 @@ GCC as from 4.9.0.  Its runtime library is linked into each package's
 DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
 
 Some versions have greatly increased compilation times on a few files
-(e.g. @file{src/extra/bzip2/decompress.c} in the @R{} sources with
-@command{clang} 3.5rc1).
+(e.g.@: @file{src/extra/bzip2/decompress.c} in the @R{} sources with
+@command{clang} 3.5).
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address}.
@@ -7532,7 +7647,8 @@ The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bounds,bool,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
-return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
+return,returns-nonnull-attribute,shift,signed-integer-overflow,
+unreachable,vla-bound,vptr
 @end example
 
 @noindent
@@ -7551,7 +7667,7 @@ In addition,
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
-Pre-release versions of @command{clang} 3.5 need
+@command{clang} 3.5 needs
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
@@ -7560,10 +7676,10 @@ Pre-release versions of @command{clang} 3.5 need
 @noindent
 for C++ code (in @code{CXX} and @code{CXX1X}).
 
-A smaller selection is available for GCC, currently defaulting to
+A smaller selection is available for GCC, for 4.9.x defaulting to
 @example
--fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,return,shift,
-signed-integer-overflow,unreachable,vla-bound
+-fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,
+return,shift,signed-integer-overflow,unreachable,vla-bound
 @end example
 
 @noindent
@@ -7573,18 +7689,29 @@ with
 @end example
 
 @noindent
-as a separate option not enabled by @code{-fsanitize=undefined}.  See 
-@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html}
+as a separate option not enabled by @code{-fsanitize=undefined} (and not
+desirable for @R{} uses).  See
+@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
+manual for your version of GCC).  GCC 5.0.0 (under development) can
+detect alignment errors.
 
 Other useful flags include
 @example
--no-fsanitize=recover
+-no-fsanitize-recover
 @end example
 
 @noindent
 which causes the first report to be fatal (it always is for the
-@code{unreachable} and @code{return} suboptions).
-
+@code{unreachable} and @code{return} suboptions).  For more detailed
+information on where the runtime error occurs, @R{} can be run under a
+debugger with a breakpoint set before the sanitizer report is produced:
+for @command{gdb} or @command{lldb} you could use
+@example
+break __ubsan_handle_float_cast_overflow
+break __ubsan_handle_float_cast_overflow_abort
+@end example
+@noindent
+or similar (there are handlers for each type of undefined behaviour).
 
 There are also the compiler flags @option{-fcatch-undefined-behavior}
 and @option{-ftrapv}, said to be more reliable in @command{clang} than
@@ -7595,34 +7722,29 @@ For more details on the topic see
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
-This option does not currently compile OpenMP code.
+This option may not compile OpenMP code.
+
+
 
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
+Recent versions of @command{clang} on @cputype{x86_64} Linux have
+`ThreadSanitizer' (@uref{https://code.google.com/p/thread-sanitizer/}),
+a `data race detector for C/C++ programs', and `MemorySanitizer'
+(@uref{http://clang.llvm.org/docs/MemorySanitizer.html},
+@uref{https://code.google.com/p/memory-sanitizer/wiki/MemorySanitizer})
+for the detection of uninitialized memory.  Both are based on and
+provide similar functionality to tools in @command{valgrind}.
 
-@command{clang} has a `Static Analyser' run on the source files during
-compilation: see @uref{http://clang-analyzer.llvm.org/}.
-
-Some versions of @command{clang} have a (currently experimental) memory
-sanitizer invoked by @option{-fsanitize=memory} which detects uses of
-uninitialized memory. See
-@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.  
-
-For @code{x86_64} Linux there is a leak sanitizer: see
-@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}:
-one way to invoke this from an ASAN-enabled build is by the environment
-variable
-
-@example
-ASAN_OPTIONS='detect_leaks=1'
-@end example
+@command{clang} has a `Static Analyser' which can be run on the source
+files during compilation: see @uref{http://clang-analyzer.llvm.org/}.
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
 @subsection Using `Dr. Memory'
 
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
-for (currently) 32-bit Windows and Linux with similar aims to
+for (currently) 32-bit Windows, Linux and OS X with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
 and detects memory access errors, uninitialized reads and memory leaks.
@@ -8363,7 +8485,7 @@ SEXP myCall(SEXP a, SEXP b, SEXP c);
 we would describe this as
 
 @example
-R_CallMethodDef callMethods[]  = @{
+static R_CallMethodDef callMethods[]  = @{
   @{"myCall", (DL_FUNC) &myCall, 3@},
   @{NULL, NULL, 0@}
 @};
@@ -8408,8 +8530,12 @@ void myC(double *x, int *n, char **names, int *status);
 We would register it as
 
 @example
-R_CMethodDef cMethods[] = @{
-   @{"myC", (DL_FUNC) &myC, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+static R_NativePrimitiveArgType myC_t[] = @{
+    REALSXP, INTSXP, STRSXP, LGLSXP
+@};
+
+static R_CMethodDef cMethods[] = @{
+   @{"myC", (DL_FUNC) &myC, 4, myC_t@}
    @{NULL, NULL, 0@}
 @};
 @end example
@@ -11026,6 +11152,7 @@ has full control (and responsibility).
 @node Transient storage allocation, User-controlled memory, Memory allocation, Memory allocation
 @subsection Transient storage allocation
 @findex R_alloc
+@findex R_allocLD
 @findex S_alloc
 @findex S_realloc
 @findex vmaxget
@@ -11101,7 +11228,16 @@ just under 16Gb.
 
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
-needs more (e.g.@: @code{(long double *)} on some platforms).
+needs more. As from @R{} 3.2.0 there is also
+
+@example
+long double *R_allocLD(size_t @var{n})
+@end example
+
+@noindent
+which is guaranteed to have the 16-byte alignment needed for @code{long
+double} pointers on some platforms.
+
 
 These functions should only be used in code called by @code{.C} etc,
 never from front-ends.  They are not thread-safe.

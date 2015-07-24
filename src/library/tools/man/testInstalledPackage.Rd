@@ -7,6 +7,8 @@
 \alias{testInstalledPackage}
 \alias{testInstalledPackages}
 \alias{testInstalledBasic}
+\alias{TEST_MC_CORES}
+
 \title{Test Installed Packages}
 \description{
   These functions allow an installed package to be tested, or all base

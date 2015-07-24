@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-12   The R Core Team.
+ *  Copyright (C) 2000-2014   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -217,9 +217,9 @@ static Rconnection in_R_newurl(const char *description, const char * const mode)
 
 
 #ifndef Win32
-static void putdots(int *pold, int new)
+static void putdots(DLsize_t *pold, DLsize_t new)
 {
-    int i, old = *pold;
+    DLsize_t i, old = *pold;
     *pold = new;
     for(i = old; i < new; i++) {
 	REprintf(".");
@@ -240,7 +240,7 @@ static void putdashes(int *pold, int new)
 
 /* note, ALL the possible structures have the first two elements */
 typedef struct {
-    int length;
+    DLsize_t length;
     char *type;
     void *ctxt;
 } inetconn;
@@ -361,10 +361,13 @@ static SEXP in_do_download(SEXP args)
 
 	FILE *out;
 	void *ctxt;
-	int len, total, guess, nbytes = 0;
+	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
-	int ndots = 0;
+	int ndashes = 0;
+	DLsize_t ndots = 0;
+#else
+	int factor = 1;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
@@ -385,6 +388,7 @@ static SEXP in_do_download(SEXP args)
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
+	    if (guess > 1e9) factor = guess/1e6;
 	    R_FlushConsole();
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
@@ -393,7 +397,7 @@ static SEXP in_do_download(SEXP args)
 	    } else strcat(buf, url);
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
@@ -412,9 +416,10 @@ static SEXP in_do_download(SEXP args)
 		if(!quiet) {
 		    if(nbytes > guess) {
 			guess *= 2;
-			setprogressbarrange(pbar.pb, 0, guess);
+			if (guess > 1e9) factor = guess/1e6;
+			setprogressbarrange(pbar.pb, 0, guess/factor);
 		    }
-		    setprogressbar(pbar.pb, nbytes);
+		    setprogressbar(pbar.pb, nbytes/factor);
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
@@ -427,7 +432,7 @@ static SEXP in_do_download(SEXP args)
 #else
 		if(!quiet) {
 		    if(guess <= 0) putdots(&ndots, nbytes/1024);
-		    else putdashes(&ndots, 50*nbytes/guess);
+		    else putdashes(&ndashes, (int)(50*nbytes/guess));
 		}
 #endif
 	    }
@@ -437,12 +442,12 @@ static SEXP in_do_download(SEXP args)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n",
+		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", (int) nbytes/1024, url);
 		else
-		    REprintf("downloaded %d bytes\n\n", nbytes, url);
+		    REprintf("downloaded %d bytes\n\n", (int) nbytes, url);
 	    }
 #ifdef Win32
 	    R_FlushConsole();
@@ -452,8 +457,8 @@ static SEXP in_do_download(SEXP args)
 	    }
 #endif
 	    if (total > 0 && total != nbytes)
-		warning(_("downloaded length %d != reported length %d"),
-			nbytes, total);
+		warning(_("downloaded length %0.f != reported length %0.f"),
+			(double)nbytes, (double)total);
 	}
 	fclose(out);
 	R_Busy(0);
@@ -463,10 +468,13 @@ static SEXP in_do_download(SEXP args)
 
 	FILE *out;
 	void *ctxt;
-	int len, total, guess, nbytes = 0;
+	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
-	int ndots = 0;
+	int ndashes = 0;
+	DLsize_t ndots = 0;
+#else
+	int factor = 1;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
@@ -487,6 +495,7 @@ static SEXP in_do_download(SEXP args)
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
+	    if (guess > 1e9) factor = guess/1e6;
 	    R_FlushConsole();
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
@@ -495,7 +504,7 @@ static SEXP in_do_download(SEXP args)
 	    } else strcat(buf, url);
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
@@ -517,9 +526,10 @@ static SEXP in_do_download(SEXP args)
 		if(!quiet) {
 		    if(nbytes > guess) {
 			guess *= 2;
-			setprogressbarrange(pbar.pb, 0, guess);
+			if (guess > 1e9) factor = guess/1e6;
+			setprogressbarrange(pbar.pb, 0, guess/factor);
 		    }
-		    setprogressbar(pbar.pb, nbytes);
+		    setprogressbar(pbar.pb, nbytes/factor);
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
@@ -532,7 +542,7 @@ static SEXP in_do_download(SEXP args)
 #else
 		if(!quiet) {
 		    if(guess <= 0) putdots(&ndots, nbytes/1024);
-		    else putdashes(&ndots, 50*nbytes/guess);
+		    else putdashes(&ndashes, (int)(50*nbytes/guess));
 		}
 #endif
 	    }
@@ -542,12 +552,12 @@ static SEXP in_do_download(SEXP args)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n",
+		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", (int) nbytes/1024, url);
 		else
-		    REprintf("downloaded %d bytes\n\n", nbytes, url);
+		    REprintf("downloaded %d bytes\n\n", (int) nbytes, url);
 	    }
 #ifdef Win32
 	    R_FlushConsole();
@@ -557,8 +567,8 @@ static SEXP in_do_download(SEXP args)
 	    }
 #endif
 	    if (total > 0 && total != nbytes)
-		warning(_("downloaded length %d != reported length %d"),
-			nbytes, total);
+		warning(_("downloaded length %0.f != reported length %0.f"),
+			(double)nbytes, (double)total);
 	}
 	R_Busy(0);
 	fclose(out);
@@ -580,7 +590,7 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
     inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption1(install("timeout")));
-    int len = -1;
+    DLsize_t len = -1;
     char *type = NULL;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
@@ -600,12 +610,14 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 	    if(!IDquiet){
 		REprintf("Content type '%s'", type ? type : "unknown");
 		if(len > 1024*1024)
-		    REprintf(" length %d bytes (%0.1f Mb)\n", len,
+		    // might be longer than long, and is on 64-bit windows
+		    REprintf(" length %0.0f bytes (%0.1f MB)\n", (double)len,
 			len/1024.0/1024.0);
 		else if(len > 10240)
-		    REprintf(" length %d bytes (%d Kb)\n", len, len/1024);
+		    REprintf(" length %d bytes (%d KB)\n", 
+			     (int)len, (int)(len/1024));
 		else if(len >= 0)
-		    REprintf(" length %d bytes\n", len);
+		    REprintf(" length %d bytes\n", (int)len);
 		else REprintf(" length unknown\n", len);
 #ifdef Win32
 		R_FlushConsole();
@@ -640,7 +652,7 @@ static void *in_R_FTPOpen(const char *url)
     inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption1(install("timeout")));
-    int len = 0;
+    DLsize_t len = 0;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     RxmlNanoFTPTimeout(timeout);
@@ -649,7 +661,7 @@ static void *in_R_FTPOpen(const char *url)
     if(!IDquiet) {
 	len = RxmlNanoFTPContentLength(ctxt);
 	if(len >= 0)
-	    REprintf("ftp data connection made, file length %d bytes\n", len);
+	    REprintf("ftp data connection made, file length %ld bytes\n", len);
 	else
 	    REprintf("ftp data connection made, file length unknown\n");
 #ifdef Win32
@@ -839,13 +851,14 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     wictxt->type = strdup(buf);
     if(!IDquiet) {
 	if(status > 1024*1024)
-	    REprintf("Content type '%s' length %d bytes (%0.1f Mb)\n",
-		     buf, status, status/1024.0/1024.0);
+	    // might be longer than long, and is on 64-bit windows
+	    REprintf("Content type '%s' length %0.0f bytes (%0.1f MB)\n",
+		     buf, (double) status, status/1024.0/1024.0);
 	else if(status > 10240)
-	    REprintf("Content type '%s' length %d bytes (%d Kb)\n",
-		     buf, status, status/1024);
+	    REprintf("Content type '%s' length %d bytes (%d KB)\n",
+		     buf, (int) status, (int) (status/1024));
 	else
-	    REprintf("Content type '%s' length %d bytes\n", buf, status);
+	    REprintf("Content type '%s' length %d bytes\n", buf, (int) status);
 	R_FlushConsole();
     }
 

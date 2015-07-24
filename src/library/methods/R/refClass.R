@@ -1,7 +1,7 @@
 #  File src/library/methods/R/refClass.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -164,10 +164,7 @@ envRefSetField <- function(object, field,
             if(is(fp, "defaultBindingFunction")) {
                 ## ensure an initial value
                 class <- fieldClasses[[field]]
-                if(isVirtualClass(class))
-                    value <- NULL
-                else
-                    value <- new(class)
+		value <- if(!isVirtualClass(class)) new(class) # else NULL
                 assign(.bindingMetaName(field), value, envir = selfEnv)
             }
         }
@@ -201,8 +198,6 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...)
 
 initRefFields <- function(.Object, classDef, selfEnv, args) {
     if(length(args)) {
-        fieldDefs <- classDef@fieldClasses
-        fieldNames <- names(fieldDefs)
         snames <- allNames(args)
         which <- nzchar(snames)
         elements <- args[which]
@@ -260,6 +255,7 @@ initRefFields <- function(.Object, classDef, selfEnv, args) {
     invisible(x)
 }
 
+utils::globalVariables(".envRefMethods")# (codetools analysis)
 .envRefMethods <-
     list(
          export = function(Class) {
@@ -374,16 +370,20 @@ that class itself, but then you could just overrwite the object).
          untrace = function(..., classMethod = FALSE) {
              ' Untrace the method given as the first argument.
 '
-             .TraceWithMethods(..., untrace = TRUE,  where = .self, classMethod = classMethod)
+             .TraceWithMethods(..., untrace=TRUE, where = .self, classMethod=classMethod)
          },
          show = function() {
-             cat('Reference class object of class ', classLabel(class(.self)),
-        '\n', sep = "")
-             fields <- names(.refClassDef@fieldClasses)
-             for(fi in fields) {
-                 cat('Field "', fi, '":\n', sep = "")
-                 methods::show(field(fi))
-             }
+	     if(is.null(cl <- tryCatch(class(.self), error=function(e)NULL))) {
+		 cat('Prototypical reference class object\n')
+	     } else {
+		 cat('Reference class object of class ', classLabel(cl), '\n',
+		     sep = "")
+		 fields <- names(.refClassDef@fieldClasses)
+		 for(fi in fields) {
+		     cat('Field "', fi, '":\n', sep = "")
+		     methods::show(field(fi))
+		 }
+	     }
          },
          usingMethods = function(...) {
              ' Reference methods used by this method are named as the arguments
@@ -428,7 +428,8 @@ makeEnvRefMethods <- function() {
     setClassUnion("refClass", where = envir)
     ## the union of all reference objects
     ## (including those not belonging to refClass)
-    setClassUnion("refObject", c("environment", "externalptr", "name",                                "refClass"), where = envir)
+    setClassUnion("refObject", c("environment", "externalptr", "name", "refClass"),
+		  where = envir)
     ## a class for field methods, with a slot for their dependencies,
     ## allowing installation of all required instance methods
     setClassUnion("SuperClassMethod", "character")
@@ -456,10 +457,11 @@ makeEnvRefMethods <- function() {
     assignClassDef("envRefClass", def, where = envir)
     setMethod("initialize", "envRefClass", methods:::.initForEnvRefClass,
               where = envir)
-    ## NOTE:  "$" method requires setting in methods:::.InitStructureMethods
+    ## NOTE:  "$" method requires setting in .InitStructureMethods()
     setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
     setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
-    setMethod("show", "envRefClass", function(object) object$show())
+    setMethod("show", "envRefClass",
+              function(object) object$show())
     setClass("refGeneratorSlot") # a temporary virtual class to allow the next definition
     ## the refClassGenerator class
     setClass("refObjectGenerator", representation(generator ="refGeneratorSlot"),
@@ -829,13 +831,12 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                     .makeDefaultBinding(thisName, thisField, where = where))
             else
                 fieldPrototypes[[thisName]] <-
-    new("uninitializedField", field = thisName,
+		    new("uninitializedField", field = thisName,
                         className = "ANY")
         }
         else if(is.function(thisField)) {
             fieldClasses[[i]] <- "activeBindingFunction"
-            fieldPrototypes[[thisName]] <-
-                .makeActiveBinding(thisField)
+	    fieldPrototypes[[thisName]] <- .makeActiveBinding(thisField)
         }
         else
             stop(gettextf("field %s was supplied as an object of class %s; must be a class name or a binding function",
@@ -937,16 +938,12 @@ setRefClass <- function(Class, fields = character(),
     ## Note:  the classGeneratorFunction has the class name, not the explicit definition
     classFun <- setClass(Class, contains = superClasses,
              where = where, ...)
-    ## kludge: as.environment fails on an empty list
-    asEnv <- function(x) {
-        if(length(x)) as.environment(x) else new.env(FALSE)
-    }
     ## now, override the class definiton with the complete definition
     classDef <- new("refClassRepresentation",
                     getClassDef(Class, where = where),
                     fieldClasses = fieldClasses,
-                    refMethods = asEnv(refMethods),
-                    fieldPrototypes = asEnv(fieldPrototypes),
+                    refMethods = as.environment(refMethods),
+                    fieldPrototypes = as.environment(fieldPrototypes),
                     refSuperClasses = refSuperClasses)
     assignClassDef(Class, classDef, where)
     generator <- new("refGeneratorSlot")
@@ -1014,17 +1011,20 @@ showClassMethod <- function(object) {
     cat(sprintf(" for method %s()\n", object@name))
     show(as(object, "function"))
     if(length(object@mayCall))
-        .printNames("Methods used: ", object@mayCall)
+        .printNames("\nMethods used: ", object@mayCall)
 }
 
 .printNames <- function(header, names, separateLine = TRUE) {
-    if(separateLine)
-        cat("\n",header,"\n    ")
-    else
-        cat(header,": ",sep="")
-    cat(paste0('"', names, '"'), sep = ", ", fill = TRUE)
-    cat("\n")
+    names <- paste0('"', names, '"')
+    if(separateLine) {
+        cat(header, "\n", sep = "")
+        cat(names, sep = ", ", fill = TRUE, labels = "    ")
+    } else {
+        cat(header, ": ", sep = "")
+        cat(names, sep = ", ", fill = TRUE)
     }
+    cat("\n")
+}
 
 showRefClassDef <- function(object, title = "Reference Class") {
     cat(title," \"", object@className,"\":\n", sep="")
@@ -1039,7 +1039,7 @@ showRefClassDef <- function(object, title = "Reference Class") {
         cat("\nNo fields defined\n")
     methods <- objects(object@refMethods, all.names = TRUE)
     if(length(methods))
-        .printNames("Class Methods: ", methods)
+        .printNames("\nClass Methods: ", methods)
     else
         cat ("\nNo Class Methods\n")
     supers <- object@refSuperClasses

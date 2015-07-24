@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -100,11 +100,7 @@ quantile.default <-
     if(is.character(lx))
         qs <- factor(qs, levels = seq_along(lx), labels = lx, ordered = TRUE)
     if(names && np > 0L) {
-	dig <- max(2L, getOption("digits"))
-	names(qs) <- paste0(## formatC is slow for long probs
-                            if(np < 100) formatC(100*probs, format = "fg", width = 1, digits = dig)
-                            else format(100 * probs, trim = TRUE, digits = dig),
-                            "%")
+	names(qs) <- format_perc(probs)
     }
     if(na.p) { # do this more elegantly (?!)
         o.pr[p.ok] <- qs
@@ -112,6 +108,20 @@ quantile.default <-
         names(o.pr)[p.ok] <- names(qs)
         o.pr
     } else qs
+}
+
+##' Formatting() percentages the same way as quantile(*, names=TRUE).
+##' Should be exported
+##' (and format.pval() moved to stats; both documented on same page)
+format_perc <- function(x, digits = max(2L, getOption("digits")),
+			probability = TRUE, use.fC = length(x) < 100, ...)
+{
+    if(length(x)) {
+	if(probability) x <- 100 * x
+	paste0(if(use.fC) ## formatC is slow for long x
+		   formatC(x, format = "fg", width = 1, digits=digits)
+	       else format(x, trim = TRUE, digits=digits, ...), "%")
+    } else character(0)
 }
 
 IQR <- function (x, na.rm = FALSE, type = 7)

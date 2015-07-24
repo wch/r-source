@@ -2836,7 +2836,8 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
 	REPROTECT(val = R_decompress2(val, &err), vpi);
     else if (compressed)
 	REPROTECT(val = R_decompress1(val, &err), vpi);
-    if (err) error("lazy-load database '%s' is corrupt", file);
+    if (err) error("lazy-load database '%s' is corrupt",
+		   CHAR(STRING_ELT(file, 0)));
     val = R_unserialize(val, hook);
     if (TYPEOF(val) == PROMSXP) {
 	REPROTECT(val, vpi);

@@ -1639,16 +1639,18 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    default: ;
 	    }
 	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
-	    expn += expsign * n;
-	    if(exph > 0) expn -= exph;
-	    if (expn < 0) {
-		for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2)
-		    if (n & 1) fac *= p2;
-		ans /= fac;
-	    } else {
-		for (n = expn, fac = 1.0; n; n >>= 1, p2 *= p2)
-		    if (n & 1) fac *= p2;
-		ans *= fac;
+	    if (ans != 0.0) { /* PR#15976:  allow big exponents on 0 */
+		expn += expsign * n;
+		if(exph > 0) expn -= exph;
+		if (expn < 0) {
+		    for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2)
+			if (n & 1) fac *= p2;
+		    ans /= fac;
+		} else {
+		    for (n = expn, fac = 1.0; n; n >>= 1, p2 *= p2)
+			if (n & 1) fac *= p2;
+		    ans *= fac;
+		}
 	    }
 	}
 	goto done;
@@ -1689,7 +1691,7 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	for (n = -expn, fac = 1.0; n; n >>= 1, p10 *= p10)
 	    if (n & 1) fac *= p10;
 	ans /= fac;
-    } else {
+    } else if (ans != 0.0) { /* PR#15976:  allow big exponents on 0, e.g. 0E4933 */
 	for (n = expn, fac = 1.0; n; n >>= 1, p10 *= p10)
 	    if (n & 1) fac *= p10;
 	ans *= fac;

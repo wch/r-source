@@ -13,7 +13,7 @@ function(title="R", logo=TRUE,
          outputEncoding = "UTF-8")
 {
     result <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
-        '<html xmlns="http://www.w3.org/1999/xhtml">',        
+        '<html xmlns="http://www.w3.org/1999/xhtml">',
 	paste0('<head><title>', headerTitle, '</title>'),
 	paste0('<meta http-equiv="Content-Type" content="text/html; charset=',
 	       mime_canonical_encoding(outputEncoding), '" />'),
@@ -193,7 +193,7 @@ makeDemoTable <- function(demos, depth=2) {
              '<col style="width: 22%;" />',
              '<col style="width:  2%;" />',
              '<col style="width: 54%;" />',
-             '<col style="width: 20%;" />')             
+             '<col style="width: 20%;" />')
     for (i in seq_len(nrow(demos))) {
 	topic <- demos[i, "topic"]
 	pkg <- demos[i, "Package"]
@@ -230,7 +230,6 @@ makeHelpTable <- function(help, depth=2) {
                    "library/", pkg, "/html/")
     topic <- help[, "topic"]
     Title <- help[, "title"]
-    name <- help[, "name"]
     links <- paste0('<a href="', root, topic, '.html">',
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')

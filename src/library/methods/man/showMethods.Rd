@@ -1,6 +1,6 @@
 % File src/library/methods/man/showMethods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{showMethods}
@@ -118,12 +118,11 @@ showMethods(class = "Matrix")# everything
 showMethods(Matrix:::isDiagonal) # a non-exported generic
 }%end{dontrun}
 
-%% FIXME: This should be an example of showing methods from a loaded,
-%% but not attached namespace. Except it doesn't work.
-%% Much simpler situation of attach()ing when needed:
-not.there <- !any("package:stats4" == search())
-if(not.there) library(stats4)
-showMethods(classes = "mle")
-if(not.there) detach("package:stats4")
+%% An example of showing methods from a loaded,
+%% but not attached namespace.
+if(no4 <- is.na(match("stats4", loadedNamespaces())))
+   loadNamespace("stats4")
+showMethods(classes = "mle") # -> a method for show()
+if(no4) unloadNamespace("stats4")
 }
 \keyword{methods}

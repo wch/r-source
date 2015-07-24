@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsListClass.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -273,14 +273,14 @@
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .__H__.rbind(deparse.level = 0, x) )
 
-    setGeneric("kronecker", where = envir)
+    setGeneric("kronecker", where = envir)# <- unneeded?
 
     setMethod("kronecker", signature(X = "ANY", Y = "ANY"),
 	      function(X, Y, FUN = "*", make.dimnames = FALSE, ...)
               .kronecker(X, Y, FUN = FUN, make.dimnames = make.dimnames, ...))
 
     .InitStructureMethods(envir)
-### Uncomment next line if we want special initialize methods for basic classes
+    ## we want special initialize methods for basic classes:
     .InitBasicClassMethods(envir)
 }
 

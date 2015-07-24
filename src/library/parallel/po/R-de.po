@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2013-03-01 16:31+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
@@ -44,6 +44,10 @@ msgstr "kein zulässiger Cluster"
 
 msgid "unknown cluster type"
 msgstr "unbekannter Clustertyp"
+
+#, fuzzy
+msgid "numeric 'names' must be >= 1"
+msgstr "'nnodes' muss >= 1 sein"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "Knoten des Socketclusters auf System %s mit PID %d"

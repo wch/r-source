@@ -65,7 +65,7 @@ static double gsumln(double, double);
 
 /*      ALGORITHM 708, COLLECTED ALGORITHMS FROM ACM.
  *      This work published in  Transactions On Mathematical Software,
- *      vol. 18, no. 3, September 1992, pp. 360-373z.
+ *      vol. 18, no. 3, September 1992, pp. 360-373.
  */
 
 /* Changes by R Core Team :

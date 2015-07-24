@@ -718,6 +718,7 @@ tre_copy_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 		if (*result == NULL)
 		  status = REG_ESPACE;
 
+                ((tre_literal_t*)(*result)->obj)->u.class = lit->u.class;  
 		if (pos > *max_pos)
 		  *max_pos = pos;
 		break;

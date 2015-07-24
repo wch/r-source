@@ -91,6 +91,8 @@ so_symbol_names_table <-
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
       "linux, C, gcc, rand, rand",
+      "linux, C, gcc, random, random",
+      "linux, C, gcc, rand_r, rand_r",
       "linux, C, gcc, srand, srand",
       "linux, C, gcc, srandom, srandom",
       "linux, C, gcc, srand48, srand48",
@@ -117,6 +119,8 @@ so_symbol_names_table <-
       "osx, C++, gxx, std::cout, __ZSt4cout",
       "osx, C++, gxx, std::cerr, __ZSt4cerr",
       "osx, C, gcc, rand, _rand",
+      "osx, C, gcc, random, _random",
+      "osx, C, gcc, rand_r, _rand_r",
       "osx, C, gcc, srand, _srand",
       "osx, C, gcc, srandom, _srandom",
       "osx, C, gcc, srand48, _srand48",
@@ -143,6 +147,7 @@ so_symbol_names_table <-
       "freebsd, C++, gxx, std::cout, _ZSt4cout",
       "freebsd, C++, gxx, std::cerr, _ZSt4cerr",
       "freebsd, C, gcc, rand, rand",
+      "freebsd, C, gcc, random, random",
       "freebsd, C, gcc, srand, srand",
       "freebsd, C, gcc, srandom, srandom",
       "freebsd, C, gcc, srand48, srand48",
@@ -163,10 +168,12 @@ so_symbol_names_table <-
       "solaris, C, solcc, vprintf, vprintf",
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
-      "solaris, C, gcc, rand, rand",
-      "solaris, C, gcc, srand, srand",
-      "solaris, C, gcc, srandom, srandom",
-      "solaris, C, gcc, srand48, srand48",
+      "solaris, C, solcc, random, random",
+      "solaris, C, solcc, rand, rand",
+      "solaris, C, solcc, rand_r, rand_r",
+      "solaris, C, solcc, srand, srand",
+      "solaris, C, solcc, srandom, srandom",
+      "solaris, C, solcc, srand48, srand48",
       "solaris, Fortran, solf95, print, __f90_eslw",
       "solaris, Fortran, solf95, write, __f90_eslw",
       "solaris, Fortran, solf95, print, __f90_esfw",
@@ -196,9 +203,10 @@ so_symbol_names_table <-
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
       "windows, C, gcc, vprintf, vprintf",
+      ## Windows does not have (s)random
       "windows, C, gcc, rand, rand",
+      "windows, C, gcc, rand_r, rand_r",
       "windows, C, gcc, srand, srand",
-      "windows, C, gcc, srandom, srandom",
       "windows, C, gcc, srand48, srand48",
       "windows, Fortran, gfortran, stop, exit"
       )
@@ -457,7 +465,7 @@ if(.Platform$OS.type == "windows") {
             so <- attr(x, "file")
             osnames_in_objects <- unique(as.character(unlist(symbols)))
             x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
-            attr(x, "file") <- so
+            attr(x, "file") <- .file_path_relative_to_dir(so, dir, TRUE)
 
             attr(x, "objects") <-
                 split(rep.int(names(symbols), sapply(symbols, length)),
@@ -485,7 +493,10 @@ if(.Platform$OS.type == "windows") {
         } else NULL
         nAPIs <- lapply(lapply(so_files, check_so_symbols, rarch = "i386"),
                         function(x) if(length(z <- attr(x, "nonAPI")))
-                        structure(z, file = attr(x, "file"),
+                        structure(z,
+                                  file =
+                                  .file_path_relative_to_dir(attr(x, "file"),
+                                                             dir, TRUE),
                                   class = "check_nonAPI_calls"))
 
         bad <- c(bad, Filter(length, nAPIs))
@@ -508,7 +519,10 @@ if(.Platform$OS.type == "windows") {
         } else NULL
         nAPIs <- lapply(lapply(so_files, check_so_symbols, rarch = "x64"),
                         function(x) if(length(z <- attr(x, "nonAPI")))
-                        structure(z, file = attr(x, "file"),
+                        structure(z,
+                                  file =
+                                  .file_path_relative_to_dir(attr(x, "file"),
+                                                             dir, TRUE),
                                   class = "check_nonAPI_calls"))
 
         bad2 <- c(bad2, Filter(length, nAPIs))
@@ -543,7 +557,7 @@ if(.Platform$OS.type == "windows") {
             ## for class "check_so_symbols".)
             osnames_in_objects <- unique(as.character(unlist(symbols)))
             x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
-            attr(x, "file") <- so
+            attr(x, "file") <- .file_path_relative_to_dir(so, dir, TRUE)
             attr(x, "objects") <-
                 split(rep.int(names(symbols), sapply(symbols, length)),
                       unlist(symbols))
@@ -570,7 +584,10 @@ if(.Platform$OS.type == "windows") {
             cat("Note: information on .o files is not available\n")
         nAPIs <- lapply(lapply(so_files, check_so_symbols),
                         function(x) if(length(z <- attr(x, "nonAPI")))
-                        structure(z, file = attr(x, "file"),
+                        structure(z,
+                                  file =
+                                  .file_path_relative_to_dir(attr(x, "file"),
+                                                             dir, TRUE),
                                   class = "check_nonAPI_calls"))
 
         bad <- c(bad, Filter(length, nAPIs))

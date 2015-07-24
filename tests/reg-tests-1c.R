@@ -17,7 +17,7 @@ stopifnot(z == c(101, 204, 309, 104, 210, 318))
 ## https://stat.ethz.ch/pipermail/r-devel/2013-January/065700.html
 x <- 1:6
 y <- split(x, 1:2)
-class(x) <- "A"
+class(x) <- "ABC" ## class(x) <- "A" creates an invalid object
 yy <- split(x, 1:2)
 stopifnot(identical(y, yy))
 ## were different in R < 3.0.0
@@ -68,7 +68,7 @@ ftable(m)
 ## Artificial example [was "infinite loop" on x86_64; PR#15364]
 rr <- c(rep(-0.4, 5), rep(-0.4- 1.11e-16, 14), -.5)
 r. <- signif(rr, 12)
-try ( k3 <- kmeans(rr, 3, trace=2) ) ## Warning: Quick-Transfer.. steps exceed
+k3 <- kmeans(rr, 3, trace=2) ## Warning: Quick-Transfer.. steps exceed
 try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
       k. <- kmeans(r., 2)   # fine
 
@@ -441,5 +441,144 @@ stopifnot(identical(crossprod(2, v), t(2) %*% v),
           identical(tcrossprod(m, 1:2), m %*% 1:2) )
 ## gave error "non-conformable arguments" in R <= 3.2.0
 
+
+## list <--> environment
+L0 <- list()
+stopifnot(identical(L0, as.list(as.environment(L0))))
+## as.env..() did not work, and as.list(..) gave non-NULL names in R <= 3.1.1
+
+## all.equal() for environments and refClass()es
+RR <- setRefClass("Ex", fields = list(nr = "numeric"))
+m1 <- RR$new(); m2 <- RR$new(); m3 <- RR$new(nr = pi); m4 <- RR$new(nr=3.14159)
+ee <- emptyenv(); e2 <- new.env()
+stopifnot(all.equal(ee,ee), identical(ee,ee), !identical(ee,e2), all.equal(ee,e2),
+	  identical(m3,m3), !identical(m1,m2),
+	  all.equal(m1,m2), !isTRUE(all.equal(m1,m3)), !isTRUE(all.equal(m1,m4)),
+	  all.equal(m3,m4, tol=1e-6), grepl("relative difference", all.equal(m3,m4)),
+	  TRUE)
+## did not work in R <= 3.1.1
+e3 <- new.env()
+e3$p <- "p"; e2$p <- "p"; ae.p <- all.equal(e2,e3)
+e3$q <- "q";              ae.q <- all.equal(e2,e3)
+e2$q <- "Q";              ae.Q <- all.equal(e2,e3)
+stopifnot(ae.p, grepl("^Length", ae.q), grepl("string mismatch", ae.Q))
+e2$q <- "q"; e2$r <- pi; e3$r <- 3.14159265
+stopifnot(all.equal(e2,e3),
+	  grepl("relative difference", all.equal(e2,e3, tol=1e-10)))
+g <- globalenv() # so it now contains itself
+l <- list(e = g)
+stopifnot(all.equal(g,g),
+	  all.equal(l,l))
+## these ran into infinite recursion error.
+
+
+## 0-length consistency of options(), PR#15979
+stopifnot(identical(options(list()), options(NULL)))
+## options(list()) failed in R <= 3.1.1
+
+
+## merge.dendrogram(), PR#15648
+mkDend <- function(n, lab, rGen = function(n) 1+round(16*abs(rnorm(n)))) {
+    stopifnot(is.numeric(n), length(n) == 1, n >= 1, is.character(lab))
+    a <- matrix(rGen(n*n), n, n)
+    colnames(a) <- rownames(a) <- paste0(lab, 1:n)
+    as.dendrogram(hclust(as.dist(a + t(a))))
+}
+set.seed(7)
+da <- mkDend(4, "A")
+db <- mkDend(3, "B")
+d.ab <- merge(da, db)
+hcab <- as.hclust(d.ab)
+stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
+	  hcab$labels == c(paste0("A", 1:4), paste0("B", 1:3)))
+## was wrong in R <= 3.1.1
+
+
+## envRefClass prototypes are a bit special -- broke all.equal() for baseenv()
+rc <- getClass("refClass")
+rp <- rc@prototype
+str(rp) ## failed
+rp ## show() failed ..
+(ner <- new("envRefClass")) # show() failed
+stopifnot(all.equal(rp,rp), all.equal(ner,ner))
+be <- baseenv()
+system.time(stopifnot(all.equal(be,be)))## <- takes a few sec's
+stopifnot(
+    grepl("not identical.*character", print(all.equal(rp, ner))),
+    grepl("not identical.*character", print(all.equal(ner, rp))))
+system.time(stopifnot(all.equal(globalenv(), globalenv())))
+## Much of the above failed in  R <= 3.2.0
+
+
+## while did not protect its argument, which caused an error
+## under gctorture, PR#15990
+gctorture()
+suppressWarnings(while(c(FALSE, TRUE)) 1)
+gctorture(FALSE)
+## gave an error because the test got released when the warning was generated.
+
+
+## hist(x, breaks=*) with too large bins, PR#15988
+set.seed(5); x <- runif(99)
+Hist <- function(x, b) hist(x, breaks=b, plot=FALSE)$counts
+for(k in 1:5) {
+    b0 <- seq_len(k-1)/k
+    H.ok <- Hist(x, c(-10, b0, 10))
+    for(In in c(1000, 1e9, Inf))
+	stopifnot(identical(Hist(x, c(-In, b0, In)), H.ok),
+		  identical(Hist(x, c( 0,  b0, In)), H.ok))
+}
+## "wrong" results for k in {2,3,4} in R <= 3.1.1
+
+
+## bw.SJ() and similar with NA,Inf values, PR#16024
+try(bw.SJ (c(NA,2,3)))
+try(bw.bcv(c(-Inf,2,3)))
+try(bw.ucv(c(1,NaN,3,4)))
+## seg.faulted  in  3.0.0 <= R <= 3.1.1
+
+
+## as.dendrogram() with wrong input
+x <- rbind(c( -6, -9), c(  0, 13),
+	   c(-15,  6), c(-14,  0), c(12,-10))
+dx <- dist(x,"manhattan")
+hx <- hclust(dx)
+hx$merge <- matrix(c(-3, 1, -2, 3,
+                     -4, -5, 2, 3), 4,2)
+tools::assertError(as.dendrogram(hx))
+## 8 member dendrogram and memory explosion for larger examples in R <= 3.1.2
+
+
+## abs with named args failed, PR#16047
+abs(x=1i)
+## Complained that the arg should be named z
+
+
+## Big exponents overflowed, PR#15976
+x <- 0E4933
+y <- 0x0p100000
+stopifnot(x == 0, y == 0)
+##
+
+
+## drop.terms() dropped some attributes, PR#16029
+test <- model.frame(Employed ~ Year + poly(GNP,3) + Population, data=longley)
+mterm <- terms(test)
+mterm2 <- drop.terms(mterm, 3)
+predvars <- attr(mterm2, "predvars")
+dataClasses <- attr(mterm2, "dataClasses")
+factors <- attr(mterm2, "factors")
+stopifnot(is.language(predvars), length(predvars) == length(dataClasses)+1,
+          all(names(dataClasses) == rownames(factors)))
+## Previously dropped predvars and dataClasses
+
+
+## prompt() did not escape percent signs properly
+fn <- function(fmt = "%s") {}
+f <- tempfile(fileext = ".Rd")
+prompt(fn, filename = f)
+rd <- tools::parse_Rd(f)
+## Gave syntax errors because the percent sign in Usage 
+## was taken as the start of a comment.
 
 proc.time()

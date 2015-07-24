@@ -83,6 +83,13 @@ signif(x, digits = 6)
   \code{round} and \code{signif} are members of the
   \code{\link[=S4groupGeneric]{Math2}} group generic.
 }
+\section{Warning}{
+  The realities of computer arithmetic can cause unexpected results,
+  especially with \code{floor} and \code{ceiling}.  For example, we
+  \sQuote{know} that \code{floor(log(x, base = 8))} for \code{x = 8} is
+  \code{1}, but \code{0} has been seen on an \R platform.  It is
+  normally necessary to use a tolerance.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.  Wadsworth & Brooks/Cole.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -454,8 +454,8 @@ msgstr "help.start()需要用HTTP服务器"
 
 msgid ""
 "If nothing happens, you should open\n"
-"'%s' yourself"
-msgstr "如果什么都不发生的话，你应该自己打开'%s'"
+"%s yourself"
+msgstr "如果什么都不发生的话，你应该自己打开%s"
 
 msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
@@ -1040,9 +1040,6 @@ msgstr "'ccaddress'的长度必需为一"
 msgid "no download method found"
 msgstr "没有下载方法"
 
-msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr ""
-
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
 
@@ -1089,11 +1086,6 @@ msgstr "'memory.limit()'只在Windows上有用"
 
 msgid "method 'mailx' is Unix-only"
 msgstr "'mailx'只在Unix上有用"
-
-msgid ""
-"If nothing happens, you should open\n"
-"%s yourself"
-msgstr "如果什么都不发生的话，你应该自己打开%s"
 
 msgid "zip file %s not found"
 msgstr "找不到%s这一zip文件"
@@ -1217,9 +1209,18 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字不对：%s"
 
+msgid "is"
+msgid_plural "are"
+msgstr[0] ""
+
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid ""
+#~ "If nothing happens, you should open\n"
+#~ "'%s' yourself"
+#~ msgstr "如果什么都不发生的话，你应该自己打开'%s'"
 
 #~ msgid "test '%s' is not available"
 #~ msgstr "没有'%s'这种测试"

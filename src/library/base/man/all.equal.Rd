@@ -9,6 +9,8 @@
 \alias{all.equal.default}
 \alias{all.equal.numeric}
 \alias{all.equal.character}
+\alias{all.equal.environment}
+\alias{all.equal.envRefClass}
 \alias{all.equal.factor}
 \alias{all.equal.formula}
 \alias{all.equal.list}
@@ -28,6 +30,8 @@ all.equal(target, current, \dots)
 
 \method{all.equal}{list}(target, current, \dots,
           check.attributes = TRUE, use.names = TRUE)
+
+\method{all.equal}{environment}(target, current, all.names=TRUE, \dots)
 
 \method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale)
 
@@ -51,6 +55,8 @@ attr.all.equal(target, current, \dots,
     should report differing components by name (if matching) instead of
     integer index.  Note that this comes after \code{\dots} and so must
     be specified by its full name.}
+  \item{all.names}{logical passed to \code{\link{ls}} indicating if
+    \dQuote{hidden} objects should also be considered in the environments.}
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
     of \code{target} and \code{current} should be compared.}
 }
@@ -68,12 +74,12 @@ attr.all.equal(target, current, \dots,
   \code{\link{methods}("all.equal")}, but note that the default method
   also does some dispatching, e.g.\sspace{}using the raw method for logical
   targets.
-  
+
   Remember that arguments which follow \code{\dots} must be specified by
   (unabbreviated) name: some of them were before \code{\dots} prior to
   \R 3.1.0.  It is inadvisable to pass unnamed arguments in \code{\dots}
   as these will match different arguments in different methods.
-  
+
   Numerical comparisons for \code{scale = NULL} (the default) are done
   by first computing the mean absolute difference of the two numerical
   vectors.  If this is smaller than \code{tolerance} or not finite,
@@ -91,6 +97,10 @@ attr.all.equal(target, current, \dots,
   \code{target} and \code{current} recursively, passing all other
   arguments, as long as both are \dQuote{list-like}, i.e., fulfill
   either \code{\link{is.vector}} or \code{\link{is.list}}.
+
+  The \code{\link{environment}} method works via the \code{list} method,
+  and is also used for reference classes (unless a specific
+  \code{all.equal} method is defined).
 
   The methods for the date-time classes by default allow a tolerance of
   \code{tolerance = 0.001} seconds, and ignore \code{scale}.
@@ -121,6 +131,13 @@ stopifnot(
 all.equal(tan(d45), rep(1, 10)))          # TRUE, but
 all      (tan(d45) == rep(1, 10))         # FALSE, since not exactly
 all.equal(tan(d45), rep(1, 10), tolerance = 0)  # to see difference
+
+## advanced: equality of environments
+ae <- all.equal(as.environment("package:stats"),
+                asNamespace("stats"))
+stopifnot(is.character(ae), length(ae) > 10,
+          ## were incorrectly "considered equal" in R <= 3.1.1
+          all.equal(asNamespace("stats"), asNamespace("stats")))
 }
 \keyword{programming}% is.*
 \keyword{utilities}

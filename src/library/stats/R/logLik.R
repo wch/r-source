@@ -123,7 +123,9 @@ nobs.nls <- function(object, ...)
 nobs.default <- function(object, use.fallback = FALSE, ...)
 {
     ## MASS::loglm  and MASS::polr fits have an 'nobs' component
-    if(is.list(object) && !is.null(n <- object[["nobs"]])) n
+    if((is.L <- is.list(object)) && !is.null(n <- object[["nobs"]])) n
+    ## cov.wt() unfortunately uses 'n.obs':
+    else if(is.L && !is.null(n <- object[["n.obs"]])) n
     else if(use.fallback) {
         if(!is.null(w <- object[["weights"]])) sum(w != 0)
         else if("residuals" %in% names(object))

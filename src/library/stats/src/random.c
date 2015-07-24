@@ -107,13 +107,15 @@ static R_INLINE SEXP random1(SEXP sn, SEXP sa, ran1 fn, SEXPTYPE type)
 	if (type == INTSXP) {
 	    double rx;
 	    int *ix = INTEGER(x);
+	    
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na]);
-		if (ISNAN(rx)) {
+		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN ) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
-		} else ix[i] = (int) rx;
+		}
+		else ix[i] = (int) rx;
 	    }
 	} else {
 	    double *rx = REAL(x);
@@ -181,7 +183,7 @@ static R_INLINE SEXP random2(SEXP sn, SEXP sa, SEXP sb, ran2 fn, SEXPTYPE type)
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na], rb[i % nb]);
-		if (ISNAN(rx)) {
+		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
 		} else ix[i] = (int) rx;
@@ -265,7 +267,7 @@ static R_INLINE SEXP random3(SEXP sn, SEXP sa, SEXP sb, SEXP sc, ran3 fn,
 	    for (R_xlen_t i = 0; i < n; i++) {
 //	        if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na], rb[i % nb], rc[i % nc]);
-		if (ISNAN(rx)) {
+		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
 		} else ix[i] = (int) rx;

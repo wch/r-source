@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.object.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{terms.object}
@@ -21,8 +21,11 @@
     appear in which terms.  The entries are 0 if the variable does not
     occur in the term, 1 if it does occur and should be coded by
     contrasts, and 2 if it occurs and should be coded via dummy
-    variables for all levels (as when an intercept or lower-order term
-    is missing).  If there are no terms other than an intercept and offsets,
+    variables for all levels (as when a lower-order term
+    is missing).  Note that variables in main effects always receive 1,
+    even if the intercept is missing (in which case the first one
+    should be coded with dummy variables).
+    If there are no terms other than an intercept and offsets,
     this is \code{numeric(0)}.}
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model, except for offsets.  Note that these are
@@ -48,6 +51,8 @@
     \code{variables} attribute which contain these special functions.}
   \item{dataClasses}{optional.  A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
+  \item{predvars}{optional.  An expression to help in computing 
+    predictions at new covariate values; see \code{\link{makepredictcall}}.}
 
   The object has class \code{c("terms", "formula")}.
 }

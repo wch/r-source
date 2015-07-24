@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2014-10-08 08:09\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -55,6 +55,9 @@ msgstr "2分配出了错"
 
 msgid "invalid function in complex assignment"
 msgstr "复杂分配里的函数不对"
+
+msgid "is not a registered math1 function"
+msgstr ""
 
 msgid "missing arguments are not allowed"
 msgstr "不允许缺少参数"
@@ -106,6 +109,10 @@ msgstr "没有'%s'这样的编译器选项"
 
 msgid "function is not compiled"
 msgstr "函数没有被编制"
+
+#, fuzzy
+msgid "cannot compile this expression"
+msgstr "不能编译代码中的承诺文字"
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
