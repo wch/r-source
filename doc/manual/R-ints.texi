@@ -3811,8 +3811,8 @@ interactively.
 Default: true.
 @item _R_CHECK_VIGNETTES_NLINES_
 Maximum number of lines to show at the bottom of the output when reporting
-errors in running vignettes.
-Default: 10.
+errors in running or re-building vignettes.
+Default: 10 for running, 25 for re-building.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
 Default: true.
