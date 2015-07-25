@@ -847,7 +847,7 @@ FUNTAB R_FunTab[] =
 {"isSeekable",	do_isseekable,	0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"close",	do_close,	0,      111,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"flush",	do_flush,	0,      111,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"file",	do_url,		1,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
+{"file",	do_url,		1,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"url",		do_url,		0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"pipe",	do_pipe,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"fifo",	do_fifo,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},

@@ -78,6 +78,9 @@
       \item Graphics devices \code{cairo_pdf()} and \code{cairo_ps()}
       now allow non-default values of the cairographics \sQuote{fallback
 	resolution} to be set.
+
+      \item \code{file()} now also gets an explicit \code{method}
+      argument instead of implicitly using \code{getOption("url.method")}.
     }
   }
 

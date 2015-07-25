@@ -4962,7 +4962,7 @@ R_newCurlUrl(const char *description, const char * const mode, int type);
 
 
 /* op = 0: .Internal( url(description, open, blocking, encoding, method))
-   op = 1: .Internal(file(description, open, blocking, encoding, raw   ))
+   op = 1: .Internal(file(description, open, blocking, encoding, method, raw))
 */
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -4976,6 +4976,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
+    // --------- description
     scmd = CAR(args);
     if(!isString(scmd) || LENGTH(scmd) != 1)
 	error(_("invalid '%s' argument"), "description");
@@ -5000,52 +5001,53 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef HAVE_INTERNET
     UrlScheme type = HTTPsh;	/* -Wall */
-    if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
-    else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
-    else if (strncmp(url, "https://", 8) == 0) type = HTTPSsh;
+    Rboolean inet = TRUE;
+    if (strncmp(url, "http://", 7) == 0)
+	type = HTTPsh;
+    else if (strncmp(url, "ftp://", 6) == 0)
+	type = FTPsh;
+    else if (strncmp(url, "https://", 8) == 0)
+	type = HTTPSsh;
     // ftps:// is available via most libcurl.
-    else if (strncmp(url, "ftps://", 7) == 0) type = FTPSsh;
+    else if (strncmp(url, "ftps://", 7) == 0)
+	type = FTPSsh;
+    else
+	inet = FALSE;
 #endif
 
+    // --------- open
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
+    // --------- blocking
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "block");
+	error(_("invalid '%s' argument"), "blocking");
+    // --------- encoding
     enc = CADDDR(args);
     if(!isString(enc) || LENGTH(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    if(PRIMVAL(op) == 1) {
-	raw = asLogical(CAD4R(args));
+
+    // --------- method
+    const char *cmeth = CHAR(asChar(CAD4R(args)));
+    meth = streql(cmeth, "libcurl"); // 1 if "libcurL", else 0
+    if (streql(cmeth, "wininet")) {
+#ifdef Win32
+	urlmeth = 1;
+#else
+	error(_("method = \"wininet\" is only supported on Windows"));
+#endif
+    }
+#ifdef Win32
+    else if (streql(cmeth, "internal")) urlmeth = 0;
+#endif
+
+    if(PRIMVAL(op) == 1) { // file() -- has extra  'raw'  argument
+	raw = asLogical(CAD4R(CDR(args)));
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
-    }
-
-    if(PRIMVAL(op) == 0) {
-	const char *cmeth = CHAR(asChar(CAD4R(args)));
-	meth = streql(cmeth, "libcurl");
-	if (streql(cmeth, "wininet")) {
-#ifdef Win32
-	    urlmeth = 1;
-#else
-	    error(_("method = \"wininet\" is only supported on Windows"));
-#endif
-	}
-#ifdef Win32
-	else if (streql(cmeth, "internal")) urlmeth = 0;
-#endif
-    } else { // file(), look at option.
-	SEXP opt = GetOption1(install("url.method"));
-	if (isString(opt) && LENGTH(opt) >= 1) {
-	    const char *val = CHAR(STRING_ELT(opt, 0));
-	    if (streql(val, "libcurl")) meth = 1;
-#ifdef Win32
-	    if (streql(val, "wininet")) urlmeth = 1;
-#endif
-	}
     }
 
     if(!meth) {
@@ -5096,10 +5098,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	class2 = "file";
 #ifdef HAVE_INTERNET
 	// we could pass others to libcurl.
-    } else if (strncmp(url, "http://", 7) == 0 ||
-	       strncmp(url, "https://", 8) == 0 ||
-	       strncmp(url, "ftp://", 6) == 0 ||
-	       strncmp(url, "ftps://", 7) == 0) {
+    } else if (inet) {
 	if(meth) {
 # ifdef HAVE_CURL_CURL_H
 	    con = R_newCurlUrl(url, strlen(open) ? open : "r", 0);
