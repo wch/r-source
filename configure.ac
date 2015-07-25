@@ -2316,7 +2316,8 @@ R_TRE
 ## and check the version directly rather than by curl-config --checkfor
 AC_PATH_PROG(CURL_CONFIG, curl-config)
 if test -n "${CURL_CONFIG}"; then
-  echo `${CURL_CONFIG} --version`
+  echo "checking libcurl version ..." \
+    `${CURL_CONFIG} --version | sed -e 's,^[[^0-9]]*,,'`
   if test -z "${CURL_CPPFLAGS}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
