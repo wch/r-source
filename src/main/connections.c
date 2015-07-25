@@ -4015,11 +4015,11 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #if SIZEOF_LONG == 8
 		    case sizeof(long):
-			INTEGER(ans)[i] = u.l;
+			INTEGER(ans)[i] = (int) u.l;
 			break;
 #elif SIZEOF_LONG_LONG == 8
 		    case sizeof(_lli_t):
-			INTEGER(ans)[i] = u.ll;
+			INTEGER(ans)[i] = (int) u.ll;
 			break;
 #endif
 		    default:
@@ -4039,13 +4039,11 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 		    case sizeof(long double):
-			REAL(ans)[i] = u.ld;
+			REAL(ans)[i] = (double) u.ld;
 			break;
 #endif
 		    default:
-			error(
-				  _("size %d is unknown on this machine"),
-				  size);
+			error(_("size %d is unknown on this machine"), size);
 		    }
 		}
 	    }
