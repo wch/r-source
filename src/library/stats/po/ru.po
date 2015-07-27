@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48+0000\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -451,7 +451,7 @@ msgstr "'rho' должно быть окружением"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' не является числовым вектором вектор правильной длины длина"
 
-#: nls.c:311 nls.c:344
+#: nls.c:311 nls.c:346
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr ""
 "Пропущенное значение или неопределенность получено при вычислении модели"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,6 +12,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
+
+msgid "Reading %s failed with message: %s"
+msgstr ""
+
+msgid "Checking %s"
+msgstr ""
 
 msgid "argument 'package' must be of length 1"
 msgstr "argument »package« skal være af længde 1"
@@ -232,8 +238,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 
 msgid "Malformed Authors@R field:"
@@ -296,9 +301,7 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Tildelinger i \\usage i dokumentationsobjekt »%s«:"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 
 msgid "File %s:"
@@ -366,6 +369,12 @@ msgstr ""
 
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
+msgstr ""
+
+msgid "'library' or 'require' calls in package code:"
+msgstr ""
+
+msgid "'library' or 'require' call to %s in package code."
 msgstr ""
 
 msgid "Namespaces in Imports field not imported from:"
@@ -544,6 +553,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "kan ikke oprette"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr ""
 
@@ -572,9 +584,6 @@ msgid "file '%s' not found"
 msgstr ""
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
-
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"

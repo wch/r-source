@@ -1,7 +1,7 @@
 #  File src/library/base/R/dput.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ dput <-
     ##        but we are missing a C-level slotNames()
     ## Fails e.g. if an S3 list-like object has S4 components
     if(isS4(x)) {
-        clx <- class(x)
+	clx <- class(x)
 	cat('new("', clx,'"\n', file = file, sep = "")
-	for(n in .slotNames(clx)) {
+	for(n in methods::.slotNames(clx)) {
 	    cat("    ,", n, "= ", file = file)
-	    dput(slot(x, n), file = file, control = control)
+	    dput(methods::slot(x, n), file = file, control = control)
 	}
 	cat(")\n", file = file)
 	invisible()

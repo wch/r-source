@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012     the R Core Team
+ *  Copyright (C) 2012-2014     the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #ifndef _WIN32
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP do_bmVersion(void);
 
 SEXP X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -34,6 +35,10 @@ SEXP X11(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP savePlot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return do_saveplot(call, op, CDR(args), env);
+}
+SEXP bmVersion(void)
+{
+    return do_bmVersion();
 }
 #endif
 

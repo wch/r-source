@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -121,6 +121,10 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
+  Knuth, D. E. (1998)
+  \emph{The Art of Computer Programming, Volume 3: Sorting and
+    Searching.} 2nd ed. Addison-Wesley.
+  
   Sedgewick, R. (1986)
   A new upper bound for Shell sort.
   \emph{J. Algorithms} \bold{7}, 159--173.

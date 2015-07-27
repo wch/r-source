@@ -34,7 +34,8 @@ person(given = NULL, family = NULL, middle = NULL,
                      role = c("[", "]"), comment = c("(", ")")),
        collapse = list(given = " ", family = " ", email = ", ",
                        role = ", ", comment = ", "),
-       ...
+       ...,
+       style = c("text", "R")
        )
 }
 \arguments{
@@ -62,6 +63,8 @@ person(given = NULL, family = NULL, middle = NULL,
   \item{braces}{a list of characters (see \bold{Details}).}
   \item{collapse}{a list of characters (see \bold{Details}).}
   \item{\dots}{currently not used.}
+  \item{style}{a character string specifying the print style, with 
+    \code{"R"} yielding formatting as R code.}
 }
 \value{
   \code{person()} and \code{as.person()} return objects of class

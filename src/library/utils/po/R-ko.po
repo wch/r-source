@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:39\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -664,6 +664,10 @@ msgid ""
 "skipping dependencies"
 msgstr ""
 
+#, fuzzy
+msgid "type 'binary' is not supported on this platform"
+msgstr "이 플랫폼에서는 오로지 'html = TRUE'만이 지원됩니다"
+
 msgid "no packages were specified"
 msgstr "아무런 패키지들도 지정되지 않았습니다"
 
@@ -688,12 +692,6 @@ msgid ""
 msgstr ""
 "type == \"both\"는 오로지 윈도우즈에서만 사용되거나 Mac OS X에 대한 CRAN 빌드"
 "입니다"
-
-msgid ""
-"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
-msgstr ""
-"type == \"both\" 은 만약 'available' 또는 'contriburl'이 지정되지 않았다면 사"
-"용할 수 없습니다"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\"은 'repos = NULL'과 함께 사용될 수 없습니다"
@@ -1184,8 +1182,9 @@ msgstr[0] ""
 "패키지(들)을 %s으로부터 제거합니다\n"
 "(왜냐하면 %s가 지정되지 않았기 때문입니다)"
 
-msgid "package %s is not available (for %s)"
-msgid_plural "packages %s are not available (for %s)"
+#, fuzzy
+msgid "package %s is not available (%s)"
+msgid_plural "packages %s are not available (%s)"
 msgstr[0] "패키지 %s (들)은 사용가능하지 않습니다 (그 이유는 %s 입니다)"
 
 msgid "dependency %s is not available"
@@ -1215,13 +1214,16 @@ msgid_plural ""
 "There are binary versions available but the source versions are later"
 msgstr[0] ""
 
-msgid "Do you want to install from sources the package which need compilation?"
+#, fuzzy
+msgid ""
+"Do you want to install from sources the package which needs compilation?"
 msgid_plural ""
 "Do you want to install from sources the packages which need compilation?"
 msgstr[0] "컴파일이 필요한 패키지를 소스로부터 직접 설치하기를 원하시나요?"
 
+#, fuzzy
 msgid ""
-"Package which are only available in source form, and may need compilation of "
+"Package which is only available in source form, and may need compilation of "
 "C/C++/Fortran"
 msgid_plural ""
 "Packages which are only available in source form, and may need compilation "
@@ -1263,6 +1265,13 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+
+#~ msgid ""
+#~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "
+#~ "specified"
+#~ msgstr ""
+#~ "type == \"both\" 은 만약 'available' 또는 'contriburl'이 지정되지 않았다"
+#~ "면 사용할 수 없습니다"
 
 #~ msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
 #~ msgstr "메소드 'lynx'는 테스트되지 않았고 R 3.1.0에서는 지원되지 않습니다"

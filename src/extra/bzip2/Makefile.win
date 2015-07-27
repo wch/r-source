@@ -6,7 +6,7 @@ all: makeMakedeps libbz2.a
 
 CPPFLAGS=-I../../include
 
-CSOURCES= blocksort.c huffman.c crctable.c randtable.c bzcompress.c \
+CSOURCES= blocksort.c huffman.c crctable.c randtable.c compress.c \
           decompress.c bzlib.c
 OBJS=$(CSOURCES:.c=.o)
 

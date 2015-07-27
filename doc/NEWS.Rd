@@ -154,8 +154,75 @@
       with a default such that \code{example(..)} in help examples will
       run \code{\\dontcheck} code only if used interactively.
 
-      \item \code{rbind.data.frame()} gets optional argument
+      \item \code{rbind.data.frame()} gains an optional argument
       \code{make.row.names}, for potential speedup.
+
+      \item New function \code{extSoftVersion()} to report on the
+      versions of third-party software in use in this session.
+      Currently reports versions of \code{zlib}, \code{bzlib}, the
+      \code{liblzma} from \code{xz}, PCRE, ICU, TRE and the \code{iconv}
+      implementation.
+
+      A similar function \code{grSoftVersion()} in package \pkg{grDevices}
+      reports on third-party graphics software.
+
+      Function \code{tcltk::tclVersion()} reports the Tcl/Tk version.
+
+      \item Calling \code{callGeneric()} without arguments now works
+      with primitive generics to some extent.
+
+      \item \code{vapply(x, FUN, FUN.VALUE)} is more efficient notably
+      for large \code{length(FUN.VALUE)}; as extension of \PR{16061}.
+
+      \item \code{as.table()} now allows tables with one or more
+      dimensions of length 0 (such as \code{as.table(integer())}).
+
+      \item \code{names(x) <- NULL} now clears the names of call
+      and \code{\dots} objects.
+
+      \item \code{library()} will report a warning when an insufficient
+      dependency version is masking a sufficient one later on the
+      library search path.
+
+      \item A new \code{plot.raster()} method has been added.
+
+      \item New \code{check_packages_in_dir_changes()} function in
+      package \pkg{tools} for conveniently analyzing how changing
+      sources impacts the check results of their reverse dependencies.
+
+      \item Speed-up from Peter Haverty for \code{ls()} and
+      \code{methods:::.requirePackage()} speeding up package loading.
+      (\PR{16133})
+
+      \item New (somewhat experimental) \code{get0()} function, combining
+      \code{exists()} and \code{get()} in one call.
+
+      \item \code{match.call()} gains an \code{envir} argument for
+      specifying the environment from which to retrieve
+      the \code{\dots} in the call, if any; this environment was wrong
+      (or at least undesirable) when the \code{definition} argument was
+      a function.
+            
+      \item Work in progress on optional use of \code{libcurl} (version
+      7.28.0 or later) for Internet access (including on Windows):
+      \itemize{
+	\item \code{capabilities("libcurl")} reports if this is
+	available.
+
+	\item \code{libcurlVersion()} reports the version in use, and
+	other details.
+
+	\item \code{curlGetHeaders()} retrieves the headers for
+	\code{http://}, \code{https://} and \code{ftp://} URLs: analysis
+	of these headers can provide insights into the `existence' of a
+	URL (it might for example be permanently redirected) and will be
+	so used in \command{R CMD check}.
+
+	\item \code{download.file()} has a new built-in method
+	\code{"libcurl"} which will handle \code{https://} URLs and
+	follow redirections.
+      }
+
     }
   }
 
@@ -163,17 +230,35 @@
     \itemize{
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
-      \command{make check TEST_DONTTEST=TRUE}.
+      \command{make check TEST_DONTTEST=TRUE} .
 
       \item It is possible to request the use of system
-      \command{valgrind} headers \emph{via} option
-      \option{--with-system-valgrind-headers}: note the possible
+      \command{valgrind} headers \emph{via} \command{configure} option
+      \option{--with-system-valgrind-headers}: note the possible future
       incompatibility of such headers discussed in the 'R Installation
-      and Administration' manual. (Wish of \PR{16808}.)
+      and Administration' manual. (Wish of \PR{16068}.)
 
-      \item The included version of \code{lzmautils} has been updated to
+      \item The included version of \code{liblzma} has been updated to
       \code{xz-utils} 5.0.7 (minor bug fixes from 5.0.5).
-    }
+
+      \item \command{configure} options \option{--with-system-zlib},
+       \option{--with-system-bzlib} and \option{--with-system-pcre} are
+       now the default.  For the time being there is fallback to the
+       versions included in the \R sources if no system versions are
+       found or (unlikely) if they are too old.
+
+       Linux users should check that the \code{-devel} or \code{-dev}
+       versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
+       \code{pcre} (or similar names) are installed.
+
+       \item \command{configure} requires the \command{texi2any} script
+       from \pkg{texinfo} 5.1 or later, replacing the \command{makeinfo}
+       program.  (\command{makeinfo} is a link to the Perl script
+       \command{texi2any} in \pkg{texinfo} 5.x.)
+
+       \item \command{R CMD INSTALL} gets option \code{--built-timestamp=STAMP}
+       allowing 100\% reproducible package building, thanks to Dirk Eddelbuettel.
+     }
   }
 
   \subsection{UTILITIES}{
@@ -191,13 +276,28 @@
       \code{tools::toHTML()} methods is now
       \sQuote{\acronym{XHTML} 1.0 Strict}.
 
-      \item The compiler utility function \code{setCompilerOptions()}
-      now returns the old values invisibly. The initial optimization
-      level can also be set with the environment variable
-      \env{R_COMPILER_OPTIMIZE}.
+      \item The \pkg{compiler} package has a new utility function
+      \code{setCompilerOptions()} now returns the old values
+      invisibly. The initial optimization level can also be set with the
+      environment variable \env{R_COMPILER_OPTIMIZE}.
 
-      \item \command{R CMD check} gains option \option{--test-dir=} to
+      \item \command{R CMD check} gains option \option{--test-dir} to
       specify an alternative set of tests to run.
+
+      \item \command{R CMD check} will now by default continue with
+      testing after many types of errors, and will output a summary
+      count of errors at the end if any have occurred.
+
+      \item \command{R CMD check --as-cran} checks a \file{README.md}
+      file can be processed: this needs \command{pandoc} installed.
+
+      \item \command{R CMD build} adds a \samp{NeedsCompilation} field
+      if one is not already present in the DESCRIPTION file.
+
+      \item \command{R CMD check} notes uses of \code{library()} and
+      \code{require()} in package code: see the section
+      \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
+      good practice.
     }
   }
 
@@ -206,8 +306,8 @@
       \item New C API utility \code{logspace_sum(logx[], n)}.
 
       \item Entry points \code{rbinom_mu}, \code{rnbinom_mu} and
-      \code{rmultinom} are remapped (by default).  This requires
-      packages using them to be re-installed.
+      \code{rmultinom} are remapped (by default) to \code{Rf_rbinom_mu}
+      etc.  This requires packages using them to be re-installed.
 
       \item \code{.C(DUP = FALSE)} and \code{.Fortran(DUP = FALSE)} are
       now ignored, so arguments are duplicated if \code{DUP = TRUE}
@@ -217,12 +317,62 @@
       \item New entry point \code{R_allocLD}, like \code{R_alloc} but
       guaranteed to have sufficient alignment for \code{long double}
       pointers.
+
+      \item \code{isPairList()} now returns \code{TRUE} for DOTSXP.
+    }
+  }
+
+  \subsection{WINDOWS BUILD CHANGES}{
+    A number of changes to the Windows build system are in development.
+    The following are currently in place.
+    \itemize{
+      \item Installation using external binary distributions
+      of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
+      \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
+      and the build instructions have been revised.
+
+      \item A new \command{make} target \code{rsync-extsoft} has been
+      added to obtain copies of the external libraries from \acronym{CRAN}.
+
+      \item Building the manuals now requires \command{texi2any} from
+      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds
+      include the manuals, but by default builds from source will not, and
+      they will be accessed from \acronym{CRAN}. See the comments in
+      \file{src/gnuwin32/MkRules.dist} for how to specify the location
+      of \command{texi2any}.
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item  (Windows) The use of macro \code{ZLIB_LIBS} in file
+      \file{src/Makevars.win} (which has not been documented for a long
+      time) now requires an external \file{libz.a} to be available (it is
+      part of the \sQuote{goodies} used to compile Windows binary
+      packages).  It would be simpler to use \code{-lz} instead.
+
+      \item The default for option \code{pkgType} on platforms using
+      binary packages is now \code{"both"}, so source packages will be
+      tried if binary versions are not available or not up to date.
+
+      There are options for what \code{install.packages(type = "both")}
+      will do if compilation of a source package is desirable: see
+      \code{?options} (under \pkg{utils}).
     }
   }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{download.file(method = "lynx")} is defunct.
+
+      \item Use of the included versions of \code{zlib}, \code{bzip2},
+      \code{xz} and PCRE is deprecated: these are essentially frozen and
+      will eventually be removed.
+
+      \item The \command{configure} option
+      \option{--with-valgrind-instrumentation=3} has been withdrawn, as
+      it did not work with recent \command{valgrind} headers: it is now
+      treated as level \code{2}.
     }
   }
 
@@ -237,9 +387,24 @@
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
 
-      \item \code{nlm()} no longer modifies the callback argument in place (a
-      new vector is allocated for each invocation, which mimics the
-      implicit duplication that occurred in R < 3.1.0). (\PR{15958})
+      \item \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
+      avoid corruption of S4 class information by the S3 methods.
+
+      \item \code{callNextMethod()} should now work within a \code{.local}
+      call when \code{\dots} is absent from \code{formals(.local)}.
+
+      \item \code{dput(pairlist(x))} generates a call to the \code{pairlist}
+      constructor, instead of the \code{list} constructor.
+
+      \item Fix \code{missing()} when arguments are propagated through
+      \code{\dots}; see \PR{15707}.
+
+      \item \code{eigen(m)} now defaults to \code{symmetric=TRUE} even when
+      the dimnames are asymmetric if the matrix is otherwise symmetric;
+      \PR{16151}.
+
+      \item Fix issues with forwarding \code{\dots} through
+      \code{callGeneric} and \code{callNextMethod}; see \PR{16141}.
     }
   }
 }
@@ -253,15 +418,77 @@
 
       \item \code{kruskal.test()} warns on more types of suspicious input.
 
-      \item The \code{as.dendrogram} method for \code{"hclust"} objects
-      gets a \code{check} argument protecting against memory explosion for
-      invalid inputs.
+      \item The \code{as.dendrogram()} method for \code{"hclust"}
+      objects gains a \code{check} argument protecting against memory
+      explosion for invalid inputs.
+
+      \item \code{capabilities()} has a new item \code{long.double}
+      which indicates if the build uses a \code{long double} type which
+      is longer than \code{double}.
+
+      \item \code{nlm()} no longer modifies the callback argument in
+      place (a new vector is allocated for each invocation, which mimics
+      the implicit duplication that occurred in R < 3.1.0); note that
+      this is a change from the previously documented
+      behavior. (\PR{15958})
+
+      \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
+      which uses the basic C function \code{strcmp} and so collates
+      strings byte-by-byte in numerical order.
+
+      \item \code{sessionInfo()} tries to report the OS version in use
+      (not just that compiled under, and including details of Linux
+      distributions).
+
+      \item \code{model.frame()} (used by \code{lm()} and many other
+      modelling functions) now warns when it drops contrasts
+      from factors.  (Wish of \PR{16119})
+
+      \item \code{install.packages()} and friends now accept the value
+      \code{type = "binary"} as a synonym for the native binary type on
+      the platform (if it has one).
+
+      \item Single source or binary files can be supplied for
+      \code{install.packages(type = "both")} and the approporiate type
+      and \code{repos = NULL} will be inferred.
+
+      \item New function \code{pcre_config()} to report on some of the
+      configuration options of the version of PCRE in use.  In
+      particular, this reports if regular expressions using
+      \samp{\p{xx}} are supported.
     }
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.36.
+
+      \item \command{configure} accepts \samp{MAKEINFO=texi2any} as
+      another way to ensure \pkg{texinfo} 5.x is used when both 5.x and
+      4.x are installed.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now checks the packages used in
+      \code{\\donttest} sections of the examples are specified in the
+      \file{DESCRIPTION} file.
+      (These are needed to run the examples interactively.)
+
+      \item \command{R CMD check} checks for the undeclared use of GNU
+      extensions in Makefiles, and for Makefiles with a missing final
+      linefeed.
+
+      \command{R CMD build} will correct line endings in all Makefiles,
+      not just those in the \file{src} directory.
+    }
+  }
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The \command{configure} option
+      \option{--with-valgrind-instrumentation=3} is deprecated and will
+      be removed in \R 3.2.0.
     }
   }
 
@@ -292,25 +519,65 @@
       \item Extremely large exponents on zero expressed in scientific
       notation (e.g. \code{0.0e50000}) could give \code{NaN}.  (\PR{15976})
 
-      \item \code{nlm()} no longer modifies the callback argument in place (a
-      new vector is allocated for each invocation, which mimics the
-      implicit duplication that occurred in R < 3.1.0). (\PR{15958})
-
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
-      
+
       \item \code{prompt()} did not escape percent signs in the
       automatically generated usage section of help files.
-      
+
       \item \code{drop.terms()} dropped some of the attributes of the
-      object it was working with.  (\PR{16029})      
+      object it was working with.  (\PR{16029})
 
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  (\PR{15791})
-      
-      \item (Windows.) The \code{choose.files()} command returned a 
+
+      \item (Windows.) The \code{choose.files()} command returned a
       blank string when the user asked for a single file but cancelled
       the request.  (\PR{16074})
+
+      \item \code{Math2} S4 group generics failed to correctly dispatch
+      \code{"structure"}- and \code{"nonStructure"}-derived classes.
+
+      \item \code{loadNamespace()} imposed undocumented restrictions
+      on the \code{versionCheck} parameter.  (Reported by Geoff Lee.)
+
+      \item Rare over-runs detected by AddressSanitizer in
+      \code{substr()} and its replacement version have been avoided.
+
+      \item Loading packages incorrectly defining an S4 generic followed
+      by a function of the same name caused an erroneous cyclic
+      namespace dependency error.
+
+      \item Declared vignette encodings are now always passed to the
+      vignette engine.
+
+      \item Port Tomas Kalibera's fix from R-devel that restores the
+      loadMethod fast path, effectively doubling the speed of S4
+      dispatch.
+
+      \item \code{power.t.test()} and \code{power.prop.test()} now make
+      use of the \code{extendInt} option of \code{uniroot()} and hence
+      work in more extreme cases.  (\PR{15792})
+
+      \item If a package was updated and attached when its namespace was
+      already loaded, it could end up with parts from one version and
+      parts from the other.  (\PR{16120})
+
+      \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
+      to a typo.  (\PR{16121})
+
+      \item Unix-alike builds without a suitable \command{makeinfo} were
+      documented to link the missing HTML manuals to CRAN, but did not.
+
+      \item \code{save(*, ascii=TRUE)} and \code{load()} now correctly
+      deal with \code{NaN}'s.  (\PR{16137})
+
+      \item \code{split.Date()} retains fractional representations while
+      avoiding incomplete class propagation.
+      
+      \item \file{R_ext/Lapack.h} had not been updated for changes to
+      the argument lists of the (largely internal) functions
+      \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
     }
   }
 }
@@ -355,8 +622,8 @@
       collation locale in use (if any).
 
       \item \code{utils::URLencode()} was updated to use unreserved and
-      reserved characters from RFC 3986,
-      \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
+      reserved characters from RFC 3986
+      (\url{http://tools.ietf.org/html/rfc3986}) instead of RFC 1738.
 
       \item \code{unique(warnings())} and \code{c(warnings())} are now
       supported.
@@ -365,6 +632,11 @@
       \code{setRepositories()} now defaults to \code{3.0}. (It can be
       set at runtime \emph{via} environment variable
       \env{R_BIOC_VERSION}.)
+
+      \item Omegahat is no longer listed as providing Windows binary
+      packages, e.g. by \code{setRepositories()}.  It has no binary
+      packages available for \R 3.1.x and those for earlier versions
+      were 32-bit only.
     }
   }
 
@@ -387,9 +659,9 @@
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
 
-      \item (Windows only) If both 32 and 64 bit versions of \R are
+      \item (Windows only) If both 32- and 64-bit versions of \R are
       installed, the \file{bin/R.exe} and \file{bin/Rscript.exe} executables
-      now run 64 bit \R.  (To run 32 bit \R, overwrite these files
+      now run 64-bit \R.  (To run 32-bit \R, overwrite these files
       with copies of \file{bin/i386/Rfe.exe}.)
      }
   }
@@ -1346,7 +1618,7 @@
       the control characters.  (Reported by Hadley Wickham.)
 
       \item \code{getGraphicsEvent()} caused 100\% usage of one CPU in
-      Windows. (PR#15500)
+      Windows. (\PR{15500})
 
       \item \code{nls()} with no \code{start} argument may now work
       inside another function (scoping issue).

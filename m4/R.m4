@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2014 R Core Team
+### Copyright (C) 1998-2015 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -183,7 +183,7 @@ AC_SUBST(R_RD4PDF)
 ## R_PROG_MAKEINFO
 ## ---------------
 AC_DEFUN([R_PROG_MAKEINFO],
-[AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
+[AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} texi2any])
 if test -n "${MAKEINFO}"; then
   _R_PROG_MAKEINFO_VERSION
   AC_PATH_PROGS(INSTALL_INFO,
@@ -196,7 +196,7 @@ if test -n "${MAKEINFO}"; then
   fi
   AC_SUBST(INSTALL_INFO)
 fi
-if test "${r_cv_prog_makeinfo_v4}" != yes; then
+if test "${r_cv_prog_texi2any_v5}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
   MAKEINFO=""
@@ -207,29 +207,27 @@ fi
 
 ## _R_PROG_MAKEINFO_VERSION
 ## ------------------------
-## Building the R Texinfo manuals requires Makeinfo v4.7 or better.
-## Set shell variable r_cv_prog_makeinfo_v4 to 'yes' if a recent
+## Building the R Texinfo manuals requires texinfo v5.1 or later.
+## Set shell variable r_cv_prog_texi2any_v5 to 'yes' if a recent
 ## enough Makeinfo is found, and to 'no' otherwise.
 ## If you change the minimum version here, also change it in
 ## doc/manual/Makefile.in and doc/manual/R-admin.texi.
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
-[AC_CACHE_CHECK([whether makeinfo version is at least 4.7],
-                [r_cv_prog_makeinfo_v4],
-[makeinfo_version=`${MAKEINFO} --version | \
-  grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
-makeinfo_version_maj=`echo ${makeinfo_version} | cut -f1 -d.`
-makeinfo_version_min=`echo ${makeinfo_version} | \
+[AC_CACHE_CHECK([whether texi2any version is at least 5.1],
+                [r_cv_prog_texi2any_v5],
+[texi2any_version=`${MAKEINFO} --version | \
+  grep -E '^(makeinfo|texi2any)' | sed 's/[[^)]]*) \(.*\)/\1/'`
+texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
+texi2any_version_min=`echo ${texi2any_version} | \
   cut -f2 -d. | tr -dc '0123456789.' `
-if test -z "${makeinfo_version_maj}" \
-     || test -z "${makeinfo_version_min}"; then
-  r_cv_prog_makeinfo_v4=no
-elif test ${makeinfo_version_maj} -ge 5; then
-  r_cv_prog_makeinfo_v4=yes
-elif test ${makeinfo_version_maj} -lt 4 \
-     || test ${makeinfo_version_min} -lt 7; then
-  r_cv_prog_makeinfo_v4=no
+if test -z "${texi2any_version_maj}" \
+     || test -z "${texi2any_version_min}"; then
+  r_cv_prog_texi2any_v5=no
+elif test ${texi2any_version_maj} -lt 5 \
+     || test ${texi2any_version_min} -lt 1; then
+  r_cv_prog_texi2any_v5=no
 else
-  r_cv_prog_makeinfo_v4=yes
+  r_cv_prog_texi2any_v5=yes
 fi])
 ])# _R_PROG_MAKEINFO_VERSION
 
@@ -3058,12 +3056,14 @@ caddr_t hello() {
               [r_cv_zlib_mmap=yes])])
 ])# _R_ZLIB_MMAP
 
+## Notes on PCRE2 support (in the future).
+## The header is pcre2.h, and the 8-bit lib is libpcre2-8.
+## There is a pcre2-config script, and a pkgconfig file.
 ## R_PCRE
 ## ------
 ## If selected, try finding system pcre library and headers.
 ## RedHat put the headers in /usr/include/pcre.
-## R (2.15.3, 3.0.0) includes 8.32: there are problems < 8.10 and
-## distros are often slow to update.
+## There are known problems < 8.10.
 AC_DEFUN([R_PCRE],
 [if test "x${use_system_pcre}" = xyes; then
   AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
@@ -3078,7 +3078,9 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-AC_CACHE_CHECK([if PCRE version >= 8.10], [r_cv_have_pcre810],
+r_save_LIBS="${LIBS}"
+LIBS="-lpcre ${LIBS}"
+AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3090,9 +3092,13 @@ AC_CACHE_CHECK([if PCRE version >= 8.10], [r_cv_have_pcre810],
 int main() {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
-  exit(0);
+  exit(1);
 #elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
-  exit(0);
+{
+    int ans;
+    int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
+    if (res || ans != 1) exit(1); else exit(0);
+}
 #else
   exit(1);
 #endif
@@ -3102,8 +3108,9 @@ int main() {
 }
 ]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
 fi
-if test "x${r_cv_have_pcre810}" = xyes; then
-  LIBS="-lpcre ${LIBS}"
+if test "x${r_cv_have_pcre810}" != xyes; then
+  have_pcre=no
+  LIBS="${r_save_LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
 if test "x${r_cv_have_pcre810}" = xyes; then

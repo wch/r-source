@@ -963,7 +963,8 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 		      -info, "dpstrf");
 	}
 	setAttrib(ans, install("pivot"), piv);
-	setAttrib(ans, install("rank"), ScalarInteger(rank));
+	SEXP s_rank = install("rank");
+	setAttrib(ans, s_rank, ScalarInteger(rank));
 	SEXP cn, dn = getAttrib(ans, R_DimNamesSymbol);
 	if (!isNull(dn) && !isNull(cn = VECTOR_ELT(dn, 1))) {
 	    // need to pivot the colnames
@@ -1287,7 +1288,8 @@ static SEXP det_ge_real(SEXP Ain, SEXP logarithm)
     SET_STRING_ELT(nm, 1, mkChar("sign"));
     setAttrib(val, R_NamesSymbol, nm);
     SET_VECTOR_ELT(val, 0, ScalarReal(modulus));
-    setAttrib(VECTOR_ELT(val, 0), install("logarithm"), ScalarLogical(useLog));
+    SEXP s_logarithm = install("logarithm");
+    setAttrib(VECTOR_ELT(val, 0), s_logarithm, ScalarLogical(useLog));
     SET_VECTOR_ELT(val, 1, ScalarInteger(sign));
     setAttrib(val, R_ClassSymbol, ScalarString(mkChar("det")));
     UNPROTECT(3);

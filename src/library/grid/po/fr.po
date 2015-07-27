@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-11-20 11:48+0000\n"
 "PO-Revision-Date: 2014-03-17 10:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -22,49 +22,49 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "impossible de couper une vue pivotée"
 
-#: grid.c:689 grid.c:694 grid.c:783 grid.c:788
+#: grid.c:696 grid.c:701 grid.c:790 grid.c:795
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "impossible de rendre la vue de plus haut niveau active (sorties 'grid' et "
 "'graphics' mixées ?)"
 
-#: grid.c:968
+#: grid.c:975
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1300
+#: grid.c:1307
 msgid "there is no layout defined"
 msgstr "aucune mise en page définie"
 
-#: grid.c:1520
+#: grid.c:1527
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1529
+#: grid.c:1536
 msgid "polygon edge not found"
 msgstr "extrémités de polygone non trouvés"
 
-#: grid.c:1683
+#: grid.c:1690
 msgid "require at least two points to draw arrow"
 msgstr "il faut au moins deux points pour tracer une flèche"
 
-#: grid.c:1999
+#: grid.c:2006
 msgid "non-finite control point in Xspline"
 msgstr "point de contrôle non fini dans Xspline"
 
-#: grid.c:2864
+#: grid.c:2871
 msgid "non-finite x or y in graphics path"
 msgstr "x ou y infinis dans le chemin graphique"
 
-#: grid.c:2905
+#: grid.c:2912
 msgid "Empty raster"
 msgstr "graphique raster vide"
 
-#: grid.c:3357
+#: grid.c:3364
 msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
-#: grid.c:3443
+#: grid.c:3450
 msgid "unable to clip to rotated rectangle"
 msgstr "impossible de couper au rectangle pivoté"
 

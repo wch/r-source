@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48+0000\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -446,7 +446,7 @@ msgstr "'rho'必需为环境"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'这个数字向量的长度不对"
 
-#: nls.c:311 nls.c:344
+#: nls.c:311 nls.c:346
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "在计算模型的时候产生了缺省值或无限值"
 

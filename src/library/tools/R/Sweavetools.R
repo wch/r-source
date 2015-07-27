@@ -23,17 +23,29 @@ function(ifile, encoding = "unknown")
     if(inherits(ifile, "srcfile"))
         ifile <- ifile$filename
 
-    lines <- readLines(ifile, encoding = encoding, warn = FALSE)
-
     syntax <- utils:::SweaveGetSyntax(ifile)
+
+    ## Read in an re-encode as needed.
+    ## Alternatively, could use utils:::SweaveReadFile() ...
+    lines <- readLines(ifile, warn = FALSE)
+    if(encoding != "unknown") {
+        if(encoding == "UTF-8")
+            Encoding(lines) <- "UTF-8"
+        else
+            lines <- iconv(lines, encoding, "", sub = "byte")
+    }
 
     TEXT <- 1L
     CODE <- 0L
 
-    recs <- rbind( data.frame(line = grep(syntax$doc, lines),
-                              type = TEXT),
-                   data.frame(line = grep(syntax$code, lines),
-                              type = CODE))
+    dpos <- grep(syntax$doc, lines)
+    cpos <- grep(syntax$code, lines)
+
+    recs <- rbind(data.frame(line = dpos,
+                             type = rep.int(TEXT, length(dpos))),
+                  data.frame(line = cpos,
+                             type = rep.int(CODE, length(cpos)))
+                  )
     recs <- recs[order(recs$line),]
     last <- 0L
     state <- TEXT

@@ -78,8 +78,9 @@ isTRUE(x)
   length as \code{x}: names, dims and dimnames are copied from \code{x},
   and all other attributes (including class) if no coercion is done.
 
-  For \code{|}, \code{&} and \code{xor} a logical or raw vector. The
-  elements of shorter vectors are recycled as necessary (with a
+  For \code{|}, \code{&} and \code{xor} a logical or raw vector.  If
+  involving a zero-length vector the result has length zero.  Otherwise,
+  the elements of shorter vectors are recycled as necessary (with a
   \code{\link{warning}} when they are recycled only \emph{fractionally}).
   The rules for determining the attributes of the result are rather
   complicated.  Most attributes are taken from the longer argument, the

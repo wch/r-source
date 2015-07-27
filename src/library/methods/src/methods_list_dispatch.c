@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2013   The R Core Team.
+ *  Copyright (C) 2001-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -272,27 +272,36 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
     mtable = findVarInFrame(genericEnv, R_allmtable);
     if(IS_R_UnboundValue(mtable) || TYPEOF(mtable) != ENVSXP)
 	return R_NilValue;
+    PROTECT(mtable);
     object = findVarInFrame(genericEnv, R_siglength);
-    if(IS_R_UnboundValue(object))
+    if(IS_R_UnboundValue(object)) {
+	UNPROTECT(1); /* mtable */
 	return R_NilValue;
+    }
     switch(TYPEOF(object)) {
     case REALSXP:
 	if(LENGTH(object) > 0)
 	    nsig = (int) REAL(object)[0];
-	else
+	else {
+	    UNPROTECT(1); /* mtable */
 	    return R_NilValue;
+	}
 	break;
     case INTSXP:
 	if(LENGTH(object) > 0)
 	    nsig = (int) INTEGER(object)[0];
-	else
+	else {
+	    UNPROTECT(1); /* mtable */
 	    return R_NilValue;
+	}
 	break;
     default:
+	UNPROTECT(1); /* mtable */
 	return R_NilValue;
     }
     buf[0] = '\0'; ptr = buf;
     nargs = 0;
+    nprotect = 1; /* mtable */
     while(!isNull(args) && nargs < nsig) {
 	object = CAR(args); args = CDR(args);
 	if(TYPEOF(object) == PROMSXP) {
@@ -652,27 +661,16 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 {
-    SEXP e, val, args, argsp, this_sym, op;
+    SEXP e, val, args, this_sym, op;
     int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
-    Rboolean prim_case, dotsDone;
+    Rboolean prim_case;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
     */
     op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
     if(IS_R_UnboundValue(op))
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
-    /* If "..." is an argument, need to pass it down to next method;
-     * (this was motivated by issues with match.call; are these still
-     * valid in rev. 2.12 ? )*/
-    dotsDone = IS_R_UnboundValue((findVarInFrame3(ev, R_DotsSymbol, TRUE)));
     {PROTECT(e = duplicate(matched_call)); nprotect++;}
-    if(!dotsDone) {
-	SEXP ee = e, dots;
-	PROTECT(dots = allocVector(LANGSXP, 1)); nprotect++;
-	SETCAR(dots, R_DotsSymbol);
-	for(ee = e; ! IS_R_NilValue(CDR(ee)); ee = CDR(ee));
-	SETCDR(ee, dots); /* append ... symbol, with NULL CDR() */
-    }
     prim_case = isPrimitive(op);
     if(prim_case) {
 	/* retain call to primitive function, suppress method
@@ -682,21 +680,15 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     }
     else
 	SETCAR(e, R_dot_nextMethod); /* call .nextMethod instead */
-    args = CDR(e); argsp = e;
+    args = CDR(e);
     /* e is a copy of a match.call, with expand.dots=FALSE.  Turn each
     <TAG>=value into <TAG> = <TAG>, except  ...= is skipped (if it
     appears) in which case ... was appended. */
     for(i=0; i<nargs; i++) {
 	this_sym = TAG(args);
-	if(SEXP_EQL(this_sym, R_DotsSymbol)) {
-	    /* skip this; will have been appended */
-	    if(dotsDone)
-		error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"));
-	    SETCDR(argsp, CDR(args));
-	}
-	else if(! IS_R_MissingArg(CAR(args))) /* "missing" only possible in primitive */
+        if(! IS_R_MissingArg(CAR(args))) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
-	argsp = args; args = CDR(args);
+	args = CDR(args);
     }
     if(prim_case) {
 	val = R_tryEvalSilent(e, ev, &error_flag);
@@ -741,15 +733,15 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
 	}
     }
     defineVar(R_dot_Method, def, ev);
-    UNPROTECT(1);
 
     if(found < length(attrib)) {
         /* this shouldn't be needed but check the generic being
            "loadMethod", which would produce a recursive loop */
-        if(strcmp(CHAR(asChar(fname)), "loadMethod") == 0)
+        if(strcmp(CHAR(asChar(fname)), "loadMethod") == 0) {
+	    UNPROTECT(1);
             return def;
+	}
 	SEXP e, val;
-	PROTECT(def);
 	PROTECT(e = allocVector(LANGSXP, 4));
 	SETCAR(e, R_loadMethod_name); val = CDR(e);
 	SETCAR(val, def); val = CDR(val);
@@ -759,7 +751,10 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
 	UNPROTECT(2);
 	return val;
     }
-    else return def;
+    else {
+	UNPROTECT(1);
+	return def;
+    }
 }
 
 static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {

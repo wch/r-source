@@ -35,7 +35,8 @@ SOURCES_C = \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	times.c \
 	unique.c util.c \
-	version.c vfonts.c
+	version.c \
+	g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 
 SOURCES_F =  xxxpr.f
 
@@ -58,7 +59,9 @@ HEADERS = \
 	rlocale_data.h \
 	unzip.h \
 	valid_utf8.h \
-	xspline.c
+	xspline.c \
+	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
+
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \
@@ -76,8 +79,10 @@ XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 @BUILD_XDR_FALSE@XDR_CPPFLAGS = @TIRPC_CPPFLAGS@
 XZ_CPPFLAGS = @BUILD_XZ_TRUE@  -I$(top_srcdir)/src/extra/xz/api
 
+## platform.c needs $(CURL_CPPFLAGS).
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
-  $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(XZ_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
+  $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(XZ_CPPFLAGS) $(R_XTRA_CPPFLAGS) \
+  $(CURL_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
 

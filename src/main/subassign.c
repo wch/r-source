@@ -1857,7 +1857,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = (ndims - 1); i > 0; i--)
 		offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
 	    offset += INTEGER(indx)[0];
-	    SETCAR(nthcdr(x, (int) offset), duplicate(y));
+	    SEXP slot = nthcdr(x, (int) offset);
+	    SETCAR(slot, duplicate(y));
 	    /* FIXME: add name */
 	    UNPROTECT(1);
 	}

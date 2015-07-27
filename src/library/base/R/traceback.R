@@ -19,8 +19,8 @@
 traceback <-
 function(x = NULL, max.lines = getOption("deparse.max.lines"))
 {
-    if(is.null(x) && (exists(".Traceback", envir = baseenv())))
-	x <- get(".Traceback", envir = baseenv())
+    if(is.null(x) && !is.null(x <- get0(".Traceback", envir = baseenv())))
+	{}
     else if (is.numeric(x))
     	x <- .Internal(traceback(x))
     n <- length(x)

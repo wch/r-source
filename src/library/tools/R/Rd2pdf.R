@@ -386,8 +386,8 @@
             else stop("-t option without value", call. = FALSE)
         } else if (substr(a, 1, 7) == "--type=") {
             type <- substr(a, 8, 1000)
-        } else if (substr(a, 1, 10) == "--encoding=") {
-            enc <- substr(a, 11, 1000)
+        } else if (substr(a, 1, 11) == "--encoding=") {
+            enc <- substr(a, 12, 1000)
         } else if (substr(a, 1, 10) == "--package=") {
             pkg <- substr(a, 11, 1000)
         } else if (a == "-o") {

@@ -43,6 +43,7 @@ src/main/engine.c
 src/main/envir.c
 src/main/errors.c
 src/main/eval.c
+src/main/g_alab_her.c
 src/main/gevents.c
 src/main/gram.y
 src/main/graphics.c
@@ -86,7 +87,6 @@ src/main/sysutils.c
 src/main/unique.c
 src/main/util.c
 src/main/version.c
-src/main/vfonts.c
 src/main/xspline.c
 src/modules/X11/dataentry.c
 src/modules/X11/devX11.c
@@ -98,7 +98,6 @@ src/modules/internet/sockconn.c
 src/modules/lapack/Lapack.c
 src/modules/lapack/init_win.c
 src/modules/lapack/vecLibg95c.c
-src/modules/vfonts/g_alab_her.c
 src/nmath/bessel_i.c
 src/nmath/bessel_j.c
 src/nmath/bessel_k.c

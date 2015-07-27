@@ -156,6 +156,7 @@ pGEDevDesc GEcurrentDevice(void)
 		*/
 		SEXP ns = findVarInFrame(R_NamespaceRegistry,
 					 install("grDevices"));
+		PROTECT(ns);
 		if(! IS_R_UnboundValue(ns) &&
 		   ! IS_R_UnboundValue(findVar(devName, ns))) {
 		    PROTECT(defdev = lang1(devName));
@@ -163,6 +164,7 @@ pGEDevDesc GEcurrentDevice(void)
 		    UNPROTECT(1);
 		} else
 		    error(_("no active or default device"));
+		UNPROTECT(1);
 	    }
 	} else if(TYPEOF(defdev) == CLOSXP) {
 	    PROTECT(defdev = lang1(defdev));
@@ -459,7 +461,10 @@ void GEaddDevice2(pGEDevDesc gdd, const char *name)
 void GEaddDevice2f(pGEDevDesc gdd, const char *name, const char *file)
 {
     SEXP f = PROTECT(mkString(name));
-    if(file) setAttrib(f, install("filepath"), mkString(file));
+    if(file) {
+      SEXP s_filepath = install("filepath");
+      setAttrib(f, s_filepath, mkString(file));
+    }
     gsetVar(R_DeviceSymbol, f, R_BaseEnv);
     UNPROTECT(1);
     GEaddDevice(gdd);

@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -32,15 +32,16 @@
   (\emph{do remember that backslashes need to be doubled when entering \R
     character strings}, e.g.\sspace{}from the keyboard).
 
-  Do not assume that long regular expressions will be accepted: the
-  POSIX standard only requires up to 256 \emph{bytes}.
+  Long regular expressions may or may not be accepted: the POSIX
+  standard only requires up to 256 \emph{bytes}.
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed in the default
   mode of \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.  They use an implementation of the
   POSIX 1003.2 standard: that allows some scope for interpretation and
-  the interpretations here are those currently used by \R.
+  the interpretations here are those currently used by \R.  The
+  implementation supports some extensions to the standard.
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller
@@ -51,9 +52,9 @@
   a single character.  Most characters, including all letters and
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
-  a backslash.  The metacharacters in EREs are \samp{. \\
-  | ( ) [ \{ ^ $ * + ?}, but note that whether these have a special
-  meaning depends on the context.
+  a backslash.  The metacharacters in extended regular expressions are
+  \samp{. \\ | ( ) [ \{ ^ $ * + ?}, but note that whether these have a
+  special meaning depends on the context.
 
   Escaping non-metacharacters with a backslash is
   implementation-dependent.  The current implementation interprets
@@ -70,11 +71,11 @@
   \samp{[^abc]} matches anything except the characters \samp{a},
   \samp{b} or \samp{c}.  A range of characters may be specified by
   giving the first and last characters, separated by a hyphen.  (Because
-  their interpretation is locale- and implementation-dependent, they are
-  best avoided.)  The only portable way to specify all ASCII letters is
-  to list them all as the character class\cr
-  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.\cr
-  (The current implementation uses numerical order of the encoding.)
+  their interpretation is locale- and implementation-dependent,
+  character ranges are best avoided.)  The only portable way to specify
+  all ASCII letters is to list them all as the character class\cr
+  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.\cr (The
+  current implementation uses numerical order of the encoding.)
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
@@ -134,9 +135,10 @@
 
   The period \samp{.} matches any single character.  The symbol
   \samp{\\w} matches a \sQuote{word} character (a synonym for
-  \samp{[[:alnum:]_]}) and \samp{\\W} is its negation.  Symbols
-  \samp{\\d}, \samp{\\s}, \samp{\\D} and \samp{\\S} denote the digit and
-  space classes and their negations.
+  \samp{[[:alnum:]_]}, an extension) and \samp{\\W} is its negation
+  (\samp{[^[:alnum:]_]}).  Symbols \samp{\\d}, \samp{\\s}, \samp{\\D}
+  and \samp{\\S} denote the digit and space classes and their negations
+  (these are all extensions).
 
   The caret \samp{^} and the dollar sign \samp{$} are metacharacters
   that respectively match the empty string at the beginning and end of a
@@ -145,7 +147,7 @@
   empty string at either edge of a word, and \samp{\\B} matches the
   empty string provided it is not at an edge of a word.  (The
   interpretation of \sQuote{word} depends on the locale and
-  implementation.)
+  implementation: these are all extensions.)
 
   A regular expression may be followed by one of several repetition
   quantifiers:
@@ -198,13 +200,13 @@
   The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},
   \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit} switches
   to the PCRE library that implements regular expression pattern
-  matching using the same syntax and semantics as Perl 5.10,
+  matching using the same syntax and semantics as Perl 5.x,
   with just a few differences.
 
   For complete details please consult the man pages for PCRE, especially
   \command{man pcrepattern} and \command{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 8.12 as described here.
+  from the sources within \R, the PCRE version is 8.36 as described here.
 
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
@@ -282,12 +284,14 @@
   and \samp{\\X} matches any number of Unicode characters that form an
   extended Unicode sequence.
 
-  In UTF-8 mode, some Unicode properties are supported via
-  \samp{\\p\{xx\}} and \samp{\\P\{xx\}} which match
-  characters with and without property \samp{xx} respectively.
-  For a list of supported properties see the PCRE documentation, but for
-  example \samp{Lu} is \sQuote{upper case letter} and \samp{Sc} is
-  \sQuote{currency symbol}.
+  In UTF-8 mode, some Unicode properties may be supported via
+  \samp{\p{xx}} and \samp{\P{xx}} which match characters with and
+  without property \samp{xx} respectively.  For a list of supported
+  properties see the PCRE documentation, but for example \samp{Lu} is
+  \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}.
+  (This support depends on the PCRE library being compiled with
+  \sQuote{Unicode property support}: an external library might not be.
+  It can be checked \emph{via} \code{\link{pcre_config}}.)
 
   The sequence \samp{(?#} marks the start of a comment which continues
   up to the next closing parenthesis.  Nested parentheses are not
@@ -318,9 +322,8 @@
   and recursive patterns are not covered here.
 }
 \author{
-  This help page is based on the documentation of GNU grep 2.4.2, the
-  TRE documentation and the POSIX standard, and the \code{pcrepattern}
-  man page from PCRE 8.0.
+  This help page is based on the TRE documentation and the POSIX
+  standard, and the \code{pcrepattern} man page from PCRE 8.36.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
@@ -331,10 +334,10 @@
   \url{http://laurikari.net/tre/documentation/regex-syntax/}).
 
   The POSIX 1003.2 standard at
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09}
+  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}
 
-  The \code{pcrepattern} can be found as part of
-  \url{http://www.pcre.org/pcre.txt}, and details of Perl's own
+  The \code{pcrepattern} \command{man} page (found as part of
+  \url{http://www.pcre.org/original/pcre.txt}), and details of Perl's own
   implementation at \url{http://perldoc.perl.org/perlre.html}.
 }
 \keyword{character}

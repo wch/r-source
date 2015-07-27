@@ -1,16 +1,16 @@
 % File src/library/stats/man/stepfun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stepfun}
+\title{Step Functions - Creation and Class}
 \alias{stepfun}
 \alias{is.stepfun}
 \alias{as.stepfun}
 \alias{print.stepfun}
 \alias{summary.stepfun}
 \alias{knots}
-\title{Step Function Class}
 \usage{
 stepfun(x, y, f = as.numeric(right), ties = "ordered",
         right = FALSE)
@@ -62,7 +62,8 @@ as.stepfun(x, \dots)
   \eqn{c_i= (1-f) y_i + f\cdot y_{i+1}}{c[i] = (1-f)*y[i] + f*y[i+1]}.
   Therefore, for non-0 values of \code{f}, \code{fn} may no longer be a proper
   step function, since it can be discontinuous from both sides, unless
-  \code{right = TRUE, f = 1} which is right-continuous.
+  \code{right = TRUE, f = 1} which is left-continuous (i.e., constant
+  pieces contain their right endpoint).
 }
 \value{
   A function of class \code{"stepfun"}, say \code{fn}.

@@ -26,18 +26,15 @@
 extern "C" {
 #endif
 
-/* valid from gcc 2.95.3, at least.
-   Suggested by Anton Korobeynikov.
- */
 #if defined(__GNUC__) && __GNUC__ >= 3
-void Rf_error(const char *, ...) __attribute__((noreturn));
-void UNIMPLEMENTED(const char *) __attribute__((noreturn));
-void WrongArgCount(const char *) __attribute__((noreturn));
+#define NORET __attribute__((noreturn))
 #else
-void Rf_error(const char *, ...);
-void UNIMPLEMENTED(const char *);
-void WrongArgCount(const char *);
+#define NORET
 #endif
+
+void NORET Rf_error(const char *, ...);
+void NORET UNIMPLEMENTED(const char *);
+void NORET WrongArgCount(const char *);
 
 void	Rf_warning(const char *, ...);
 void 	R_ShowMessage(const char *s);

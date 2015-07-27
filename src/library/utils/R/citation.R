@@ -376,10 +376,15 @@ function(x,
          collapse =
          list(given = " ", family = " ", email = ", ",
               role = ", ", comment = ", "),
-         ...
+         ...,
+         style = c("text", "R")
          )
 {
     if(!length(x)) return(character())
+
+    style <- match.arg(style)
+
+    if(style == "R") return(.format_person_as_R_code(x))
 
     args <- c("given", "family", "email", "role", "comment")
     include <- sapply(include, match.arg, args)
@@ -1043,6 +1048,7 @@ function(...)
 readCitationFile <-
 function(file, meta = NULL)
 {
+    meta <- as.list(meta)
     exprs <- tools:::.parse_CITATION_file(file, meta$Encoding)
 
     rval <- list()
@@ -1081,9 +1087,14 @@ function(package = "base", lib.loc = NULL, auto = NULL)
 {
     ## Allow citation(auto = meta) in CITATION files to include
     ## auto-generated package citation.
-    if(inherits(auto, "packageDescription")) {
+    if(!is.null(auto) &&
+       !is.logical(auto) &&
+       !any(is.na(match(c("Package", "Version", "Title"),
+                        names(meta <- as.list(auto))))) &&
+       !all(is.na(match(c("Authors@R", "Author"),
+                        names(meta))))
+       ) {
         auto_was_meta <- TRUE
-        meta <- auto
         package <- meta$Package
     } else {
         auto_was_meta <- FALSE

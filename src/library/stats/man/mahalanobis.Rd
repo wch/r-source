@@ -1,6 +1,6 @@
 % File src/library/stats/man/mahalanobis.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright (C) 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mahalanobis}
@@ -12,7 +12,8 @@ mahalanobis(x, center, cov, inverted = FALSE, ...)
 \arguments{
   \item{x}{vector or matrix of data with, say, \eqn{p} columns.}
   \item{center}{mean vector of the distribution or second data vector of
-    length \eqn{p}.}
+    length \eqn{p} or recyclable to that length.  If set to
+    \code{\link{FALSE}}, the centering step is skipped.}
   \item{cov}{covariance matrix (\eqn{p \times p}{p x p}) of the distribution.}
   \item{inverted}{logical.  If \code{TRUE}, \code{cov} is supposed to
     contain the \emph{inverse} of the covariance matrix.}

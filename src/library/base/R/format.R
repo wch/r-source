@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ format.default <-
 		      small.mark = small.mark, small.interval = small.interval,
 		      decimal.mark = decimal.mark, zero.print = zero.print,
 		      drop0trailing = drop0trailing, ...)
-	sapply(res, paste, collapse = ", ")
+	vapply(res, paste, "", collapse = ", ")
     } else {
 	switch(mode(x),
 	       NULL = "NULL",
@@ -225,7 +225,7 @@ format.data.frame <- function(x, ..., justify = "none")
     rval <- vector("list", nc)
     for(i in seq_len(nc))
 	rval[[i]] <- format(x[[i]], ..., justify = justify)
-    lens <- sapply(rval, NROW)
+    lens <- vapply(rval, NROW, 1)
     if(any(lens != nr)) { # corrupt data frame, must have at least one column
 	warning("corrupt data frame: columns will be truncated or padded with NAs")
 	for(i in seq_len(nc)) {
@@ -290,7 +290,7 @@ prettyNum <-
 {
     if(!is.character(x)) {
         is.cmplx <- is.complex(x)
-	x <- sapply(X = x, FUN = format, ...)
+	x <- vapply(x, format, "", ...)
     }
     ## be fast in trivial case (when all options have their default):
     nMark <- big.mark== "" && small.mark== "" && decimal.mark== "."
@@ -338,11 +338,11 @@ prettyNum <-
 	i3 <- vapply(z.sp, length, 0L) == 3L # those are re + im *i
 	if(any(i3)) {
 	    z.sp <- z.sp[i3]
-	    z.im <- sapply(z.sp, `[[`, 3L)
+	    z.im <- vapply(z.sp, `[[`, "", 3L)
 	    ## drop ending 'i' (and later re-add it)
 	    has.i <- grep("i$", z.im)
 	    z.im[has.i] <- sub("i$", '', z.im[has.i])
-	    r <- lapply(list(sapply(z.sp, `[[`, 1L), z.im),
+	    r <- lapply(list(vapply(z.sp, `[[`, "", 1L), z.im),
 			function(.)
 			prettyNum(.,
 				  big.mark=big.mark, big.interval=big.interval,
@@ -351,16 +351,16 @@ prettyNum <-
 				  zero.print=zero.print, drop0trailing=drop0trailing,
 				  is.cmplx=FALSE, ...))
 	    r[[2]][has.i] <- paste0(r[[2]][has.i], "i")
-	    x[i3] <- paste0(r[[1]], sapply(z.sp, `[[`, 2L), r[[2]])
+	    x[i3] <- paste0(r[[1]], vapply(z.sp, `[[`, "", 2L), r[[2]])
 	}
 	return(x)
     }
     preserve.width <- match.arg(preserve.width)
     x.sp <- strsplit(x, ".", fixed=TRUE)
     revStr <- function(cc)
-	sapply(lapply(strsplit(cc,NULL), rev), paste, collapse="")
-    B. <- sapply(x.sp, `[`, 1L)	    # Before "."
-    A. <- sapply(x.sp, `[`, 2)	    # After  "." ; empty == NA
+	vapply(lapply(strsplit(cc,NULL), rev), paste, "", collapse="")
+    B. <- vapply(x.sp, `[`, "", 1L)	# Before "."
+    A. <- vapply(x.sp, `[`, "", 2L)	# After  "." ; empty == NA
     if(any(iN <- is.na(A.))) A.[iN] <- ""
 
     if(nzchar(big.mark) &&
@@ -396,9 +396,9 @@ prettyNum <-
 		   "individual" = {
 		       ## drop initial blanks preserving original width
 		       ## where possible:
-		       A.[ii] <- sapply(which(ii), function(i)
+		       A.[ii] <- vapply(which(ii), function(i)
 					sub(sprintf("^ {1,%d}", d.len[i]), "",
-					    A.[i]))
+					    A.[i]), "")
 		   },
 		   "common" = {
 		       A. <- format(A., justify = "right")

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2013  The R Core Team
+ *  Copyright (C) 2000-2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 /* .Internal(lapply(X, FUN)) */
 
 /* This is a special .Internal, so has unevaluated arguments.  It is
-   called from a closure wrapper, so X and FUN are promises. 
+   called from a closure wrapper, so X and FUN are promises.
 
    FUN must be unevaluated for use in e.g. bquote .
 */
@@ -53,7 +53,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
        allocation and not PROTECT the result (LCONS does memory
        protection of its args internally), but not both of them,
        since the computation of one may destroy the other */
-    
+
     SEXP ind = PROTECT(allocVector(realIndx ? REALSXP : INTSXP, 1));
     SEXP tmp;
     /* The R level code has ensured that XX is a vector.
@@ -112,6 +112,12 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (commonLen > 1 && n > INT_MAX)
 	error(_("long vectors are not supported for matrix/array results"));
     commonType = TYPEOF(value);
+    // check once here
+    if (commonType != CPLXSXP && commonType != REALSXP &&
+	commonType != INTSXP  && commonType != LGLSXP &&
+	commonType != RAWSXP  && commonType != STRSXP &&
+	commonType != VECSXP)
+	error(_("type '%s' is not supported"), type2char(commonType));
     dim_v = getAttrib(value, R_DimSymbol);
     array_value = (TYPEOF(dim_v) == INTSXP && LENGTH(dim_v) >= 1);
     PROTECT(ans = allocVector(commonType, n*commonLen));
@@ -148,7 +154,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 				LCONS(X, LCONS(ind, R_NilValue))));
 	PROTECT(R_fcall = LCONS(FUN,
 				LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
-
+	int common_len_offset = 0;
 	for(i = 0; i < n; i++) {
 	    SEXP val; SEXPTYPE valType;
 	    PROTECT_INDEX indx;
@@ -156,7 +162,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else INTEGER(ind)[0] = (int)(i + 1);
 	    val = eval(R_fcall, rho);
 	    if (MAYBE_REFERENCED(val))
-		val = lazy_duplicate(val);
+		val = lazy_duplicate(val); // Need to duplicate? Copying again anyway
 	    PROTECT_WITH_INDEX(val, &indx);
 	    if (length(val) != commonLen)
 	    	error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
@@ -177,21 +183,47 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    /* Take row names from the first result only */
 	    if (i == 0 && useNames && isNull(rowNames))
-	    	REPROTECT(rowNames = getAttrib(val,
+		REPROTECT(rowNames = getAttrib(val,
 					       array_value ? R_DimNamesSymbol : R_NamesSymbol),
 			  index);
-	    for (int j = 0; j < commonLen; j++) {
-	    	switch (commonType) {
-	    	case CPLXSXP: COMPLEX(ans)[i*commonLen + j] = COMPLEX(val)[j]; break;
-	    	case REALSXP: REAL(ans)[i*commonLen + j] = REAL(val)[j]; break;
-	    	case INTSXP:  INTEGER(ans)[i*commonLen + j] = INTEGER(val)[j]; break;
-	    	case LGLSXP:  LOGICAL(ans)[i*commonLen + j] = LOGICAL(val)[j]; break;
-	    	case RAWSXP:  RAW(ans)[i*commonLen + j] = RAW(val)[j]; break;
-	    	case STRSXP:  SET_STRING_ELT(ans, i*commonLen + j, STRING_ELT(val, j)); break;
-	    	case VECSXP:  SET_VECTOR_ELT(ans, i*commonLen + j, VECTOR_ELT(val, j)); break;
-	    	default:
-	    	    error(_("type '%s' is not supported"), type2char(commonType));
-	    	}
+	    // two cases - only for efficiency
+	    if(commonLen == 1) { // common case
+		switch (commonType) {
+		case CPLXSXP: COMPLEX(ans)[i] = COMPLEX(val)[0]; break;
+		case REALSXP: REAL(ans)   [i] = REAL   (val)[0]; break;
+		case INTSXP:  INTEGER(ans)[i] = INTEGER(val)[0]; break;
+		case LGLSXP:  LOGICAL(ans)[i] = LOGICAL(val)[0]; break;
+		case RAWSXP:  RAW(ans)    [i] = RAW    (val)[0]; break;
+		case STRSXP:  SET_STRING_ELT(ans, i, STRING_ELT(val, 0)); break;
+		case VECSXP:  SET_VECTOR_ELT(ans, i, VECTOR_ELT(val, 0)); break;
+		}
+	    } else { // commonLen > 1 (typically, or == 0) :
+		switch (commonType) {
+		case REALSXP:
+		    memcpy(REAL(ans) + common_len_offset,
+			   REAL(val), commonLen * sizeof(double)); break;
+		case INTSXP:
+		    memcpy(INTEGER(ans) + common_len_offset,
+			   INTEGER(val), commonLen * sizeof(int)); break;
+		case LGLSXP:
+		    memcpy(LOGICAL(ans) + common_len_offset,
+			   LOGICAL(val), commonLen * sizeof(int)); break;
+		case RAWSXP:
+		    memcpy(RAW(ans) + common_len_offset,
+			   RAW(val), commonLen * sizeof(Rbyte)); break;
+		case CPLXSXP:
+		    memcpy(COMPLEX(ans) + common_len_offset,
+			   COMPLEX(val), commonLen * sizeof(Rcomplex)); break;
+		case STRSXP:
+		    for (int j = 0; j < commonLen; j++)
+			SET_STRING_ELT(ans, common_len_offset + j, STRING_ELT(val, j));
+		    break;
+		case VECSXP:
+		    for (int j = 0; j < commonLen; j++)
+			SET_VECTOR_ELT(ans, common_len_offset + j, VECTOR_ELT(val, j));
+		    break;
+		}
+		common_len_offset += commonLen;
 	    }
 	    UNPROTECT(1);
 	}

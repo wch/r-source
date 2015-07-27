@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -85,12 +85,12 @@ getNamespaceUsers <- function(ns) {
 getExportedValue <- function(ns, name) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
-        if (exists(name, envir = exports, inherits = FALSE))
-            get(get(name, envir = exports, inherits = FALSE), envir = ns)
+	if (!is.null(oNam <- get0(name, envir = exports, inherits = FALSE)))
+	    get(oNam, envir = ns)
         else {
             ld <- getNamespaceInfo(ns, "lazydata")
-            if (exists(name, envir = ld, inherits = FALSE))
-                get(name, envir = ld, inherits = FALSE)
+	    if (!is.null(obj <- get0(name, envir = ld, inherits = FALSE)))
+		obj
             else
                 stop(gettextf("'%s' is not an exported object from 'namespace:%s'",
                               name, getNamespaceName(ns)),
@@ -119,8 +119,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
 {
     ## only used to run .onAttach
     runHook <- function(hookname, env, libname, pkgname) {
-        if (exists(hookname, envir = env, inherits = FALSE)) {
-            fun <- get(hookname, envir = env, inherits = FALSE)
+        if (!is.null(fun <- get0(hookname, envir = env, inherits = FALSE))) {
             res <- tryCatch(fun(libname, pkgname), error = identity)
             if (inherits(res, "error")) {
                 stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
@@ -198,19 +197,19 @@ loadNamespace <- function (package, lib.loc = NULL,
 
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
     if (! is.null(ns)) {
-        if(length(z <- versionCheck) == 3L) {
+        if(!is.null(zop <- versionCheck[["op"]]) &&
+           !is.null(zversion <- versionCheck[["version"]])) {
             current <- getNamespaceVersion(ns)
-            if(!do.call(z$op, list(as.numeric_version(current), z$version)))
+            if(!do.call(zop, list(as.numeric_version(current), zversion)))
                 stop(gettextf("namespace %s %s is already loaded, but %s %s is required",
-                              sQuote(package), current, z$op, z$version),
+                              sQuote(package), current, zop, zversion),
                      domain = NA)
         }
         ns
     } else {
         ## only used here for .onLoad
         runHook <- function(hookname, env, libname, pkgname) {
-            if (exists(hookname, envir = env, inherits = FALSE)) {
-                fun <- get(hookname, envir = env, inherits = FALSE)
+	    if (!is.null(fun <- get0(hookname, envir = env, inherits = FALSE))) {
                 res <- tryCatch(fun(libname, pkgname), error = identity)
                 if (inherits(res, "error")) {
                     stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
@@ -378,10 +377,11 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
             if(dependsMethods) loadNamespace("methods")
-            if(length(z <- versionCheck) == 3L &&
-               !do.call(z$op, list(as.numeric_version(version), z$version)))
+            if(!is.null(zop <- versionCheck[["op"]]) &&
+               !is.null(zversion <- versionCheck[["version"]]) &&
+               !do.call(zop, list(as.numeric_version(version), zversion)))
                 stop(gettextf("namespace %s %s is being loaded, but %s %s is required",
-                              sQuote(package), version, z$op, z$version),
+                              sQuote(package), version, zop, zversion),
                      domain = NA)
         }
         ns <- makeNamespace(package, version = version, lib = package.lib)
@@ -535,7 +535,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## check for generic functions corresponding to exported methods
             addGenerics <- expMethods[is.na(match(expMethods, exports))]
             if(length(addGenerics)) {
-                nowhere <- sapply(addGenerics, function(what) !exists(what, mode = "function", envir = ns))
+                nowhere <- vapply(addGenerics, function(what) !exists(what, mode = "function", envir = ns),
+                                  NA, USE.NAMES=FALSE)
                 if(any(nowhere)) {
                     warning(gettextf("no function found corresponding to methods exports from %s for: %s",
                                      sQuote(package),
@@ -545,10 +546,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                 }
                 if(length(addGenerics)) {
                     ## skip primitives
-                    addGenerics <- addGenerics[sapply(addGenerics, function(what) ! is.primitive(get(what, mode = "function", envir = ns)))]
+                    addGenerics <- addGenerics[vapply(addGenerics, function(what)
+                        !is.primitive(get(what, mode = "function", envir = ns)), NA)]
                     ## the rest must be generic functions, implicit or local
                     ## or have been cached via a DEPENDS package
-                    ok <- sapply(addGenerics, methods:::.findsGeneric, ns)
+		    ok <- vapply(addGenerics, methods:::.findsGeneric, 1L, ns)
                     if(!all(ok)) {
                         bad <- sort(unique(addGenerics[!ok]))
                         msg <-
@@ -701,8 +703,7 @@ unloadNamespace <- function(ns)
 {
     ## only used to run .onUnload
     runHook <- function(hookname, env, ...) {
-        if (exists(hookname, envir = env, inherits = FALSE)) {
-            fun <- get(hookname, envir = env, inherits = FALSE)
+	if (!is.null(fun <- get0(hookname, envir = env, inherits = FALSE))) {
             res <- tryCatch(fun(...), error=identity)
             if (inherits(res, "error")) {
                 warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
@@ -866,12 +867,11 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-
 	}
     }
     for (n in impnames)
-	if (exists(n, envir = impenv, inherits = FALSE)) {
+	if (!is.null(genImp <- get0(n, envir = impenv, inherits = FALSE))) {
 	    if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
 		## warn only if generic overwrites a function which
 		## it was not derived from
 		genNs <- genericPackage(get(n, envir = ns))
-                genImp <- get(n, envir = impenv)
                 if(identical(genNs, genericPackage(genImp))) next # same generic
 		genImpenv <- environmentName(environment(genImp))
                 ## May call environment() on a non-function--an undocumented
@@ -933,8 +933,7 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
             }
         }
         if(g %in% vars && !exists(g, envir = self, inherits = FALSE)) {
-            if(exists(g, envir = ns) &&
-               methods:::is(get(g, envir = ns), "genericFunction")) {
+	    if(!is.null(f <- get0(g, envir = ns)) && methods:::is(f, "genericFunction")) {
                 allVars <- c(allVars, g)
                 generics <- c(generics, g)
                 packages <- c(packages, p)
@@ -1035,8 +1034,7 @@ namespaceExport <- function(ns, vars) {
     newMethods <- new[substr(new, 1L, nchar(mm, type = "c")) == mm]
     nsimports <- parent.env(ns)
     for(what in newMethods) {
-        if(exists(what, envir = nsimports, inherits = FALSE)) {
-            m1 <- get(what, envir = nsimports)
+	if(!is.null(m1 <- get0(what, envir = nsimports, inherits = FALSE))) {
             m2 <- get(what, envir = ns)
             assign(what, envir = ns, methods:::mergeMethods(m1, m2))
         }
@@ -1323,10 +1321,11 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
         if (typeof(genfun) == "closure") environment(genfun)
 	else .BaseNamespaceEnv
     }
-    if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
-        assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
-               envir = defenv)
-    table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
+    if (is.null(table <- get0(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))) {
+	table <- new.env(hash = TRUE, parent = baseenv())
+	assign(".__S3MethodsTable__.", table, envir = defenv)
+    }
+
     if (is.character(method)) {
         assignWrapped <- function(x, method, home, envir) {
             method <- method            # force evaluation
@@ -1371,19 +1370,18 @@ registerS3methods <- function(info, package, env)
         ## group generics).
         defenv <- if(!is.na(w <- .knownS3Generics[genname])) asNamespace(w)
         else {
-            if(!exists(genname, envir = parent.env(envir)))
-                stop(gettextf("object '%s' not found whilst loading namespace '%s'",
-                              genname, package), call. = FALSE, domain = NA)
-            genfun <- get(genname, envir = parent.env(envir))
+	    if(is.null(genfun <- get0(genname, envir = parent.env(envir))))
+		stop(gettextf("object '%s' not found whilst loading namespace '%s'",
+			      genname, package), call. = FALSE, domain = NA)
             if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction"))
 		genfun <- genfun@default  # nearly always, the S3 generic
             if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
-        if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
-            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
-                   envir = defenv)
-        table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
+	if (is.null(table <- get0(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))) {
+	    table <- new.env(hash = TRUE, parent = baseenv())
+	    assign(".__S3MethodsTable__.", table, envir = defenv)
+	}
 	assignWrapped(nm, method, home = envir, envir = table)
     }
 
@@ -1437,12 +1435,11 @@ registerS3methods <- function(info, package, env)
 .mergeImportMethods <- function(impenv, expenv, metaname)
 {
     expMethods <- get(metaname, envir = expenv)
-    if(exists(metaname, envir = impenv, inherits = FALSE)) {
-        impMethods <- get(metaname, envir = impenv)
-        assign(metaname,
-               methods:::.mergeMethodsTable2(impMethods,
-                                             expMethods, expenv, metaname),
-               envir = impenv)
-        impMethods
-    } else NULL
+    if(!is.null(impMethods <- get0(metaname, envir = impenv, inherits = FALSE))) {
+	assign(metaname,
+	       methods:::.mergeMethodsTable2(impMethods,
+					     expMethods, expenv, metaname),
+	       envir = impenv)
+	impMethods
+    } ## else NULL
 }

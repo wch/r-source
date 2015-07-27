@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-26 13:57+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -773,6 +773,13 @@ msgstr " %s は有効なインストール済みパッケージではありま�
 msgid "%s not found on search path, using pos = 2"
 msgstr " %s は検索パス上には見つかりませんでした。pos = 2 を使用します "
 
+msgid "version"
+msgstr ""
+
+#, fuzzy
+msgid "cannot be unloaded."
+msgstr " %s 名前空間はアンロード出来ません "
+
 msgid "package or namespace load failed for %s"
 msgstr " %s に対するパッケージもしくは名前空間のロードが失敗しました "
 
@@ -868,16 +875,11 @@ msgstr " パッケージ %s のドキュメント "
 msgid "package %s required by %s could not be found"
 msgstr " パッケージ %s が %s によって要求されましたが、見つけられませんでした "
 
-msgid "package %s %s was found, but %s %s is required by %s"
+msgid "version %s of %s masked by %s in %s"
 msgstr ""
-" パッケージ %s %s はありましたが、%s %s が %s によって要求されています "
 
 msgid "package %s could not be loaded"
 msgstr " パッケージ %s をロードできませんでした "
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr ""
-" パッケージ %s %s はロードされましたが、%s %s が %s によって要求されています "
 
 msgid "empty (zero-byte) input file"
 msgstr " 空の (0 バイトの) 入力ファイルです "
@@ -1720,6 +1722,15 @@ msgstr[0] " %s は TRUE ではありません "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ: \n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr ""
+#~ " パッケージ %s %s はありましたが、%s %s が %s によって要求されています "
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr ""
+#~ " パッケージ %s %s はロードされましたが、%s %s が %s によって要求されていま"
+#~ "す "
 
 #~ msgid "wrong argument"
 #~ msgstr " 間違った引数です "

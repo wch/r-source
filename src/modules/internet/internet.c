@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,6 +38,9 @@ static void  in_R_HTTPClose(void *ctx);
 static void *in_R_FTPOpen(const char *url);
 static int   in_R_FTPRead(void *ctx, char *dest, int len);
 static void  in_R_FTPClose(void *ctx);
+SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 
 #include <Rmodules/Rinternet.h>
@@ -72,17 +75,18 @@ static Rboolean url_open(Rconnection con)
     }
 
     switch(type) {
+    case HTTPsh:
 #ifdef USE_WININET
     case HTTPSsh:
 #endif
-    case HTTPsh:
     {
 	SEXP sheaders, agentFun;
 	const char *headers;
+	SEXP s_makeUserAgent = install("makeUserAgent");
 #ifdef USE_WININET
-	PROTECT(agentFun = lang2(install("makeUserAgent"), ScalarLogical(0)));
+	PROTECT(agentFun = lang2(s_makeUserAgent, ScalarLogical(0)));
 #else
-	PROTECT(agentFun = lang1(install("makeUserAgent")));
+	PROTECT(agentFun = lang1(s_makeUserAgent));
 #endif
 	PROTECT(sheaders = eval(agentFun, R_FindNamespace(mkString("utils"))));
 
@@ -131,11 +135,12 @@ static void url_close(Rconnection con)
     UrlScheme type = ((Rurlconn)(con->private))->type;
     switch(type) {
     case HTTPSsh:
-    case HTTPsh:
 	in_R_HTTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     case FTPsh:
 	in_R_FTPClose(((Rurlconn)(con->private))->ctxt);
+	break;
+    default:
 	break;
     }
     con->isopen = FALSE;
@@ -149,12 +154,14 @@ static int url_fgetc_internal(Rconnection con)
     size_t n = 0; /* -Wall */
 
     switch(type) {
-    case HTTPSsh:
     case HTTPsh:
+    case HTTPSsh:
 	n = in_R_HTTPRead(ctxt, (char *)&c, 1);
 	break;
     case FTPsh:
 	n = in_R_FTPRead(ctxt, (char *)&c, 1);
+	break;
+    default:
 	break;
     }
     return (n == 1) ? c : R_EOF;
@@ -168,12 +175,14 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     size_t n = 0; /* -Wall */
 
     switch(type) {
-    case HTTPSsh:
     case HTTPsh:
+    case HTTPSsh:
 	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     case FTPsh:
 	n = in_R_FTPRead(ctxt, ptr, (int)(size*nitems));
+	break;
+    default:
 	break;
     }
     return n/size;
@@ -1090,6 +1099,10 @@ R_init_internet(DllInfo *info)
 
     tmp->HTTPDCreate = in_R_HTTPDCreate;
     tmp->HTTPDStop = in_R_HTTPDStop;
+
+    tmp->curlVersion = in_do_curlVersion;
+    tmp->curlGetHeaders = in_do_curlGetHeaders;
+    tmp->curlDownload = in_do_curlDownload;
 
     R_setInternetRoutines(tmp);
 }

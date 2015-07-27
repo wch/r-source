@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -313,7 +313,7 @@ Summary.ordered <- function(..., na.rm)
     levl <- lapply(args, levels)
     levset <- levl[[1]]
     if (!all(vapply(args, is.ordered, NA)) ||
-	!all(sapply(levl, identical, levset)))
+	!all(vapply(levl, identical, NA, levset)))
 	stop(gettextf("'%s' is only meaningful for ordered factors if all arguments have the same level sets",
 		      .Generic))
     codes <- lapply(args, as.integer)

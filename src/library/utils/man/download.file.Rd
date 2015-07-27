@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -24,10 +24,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \item{destfile}{A character string with the name where the downloaded
     file is saved.  Tilde-expansion is performed.}
 
-  \item{method}{Method to be used for downloading files.  Currently
-    download methods \code{"internal"}, \code{"wget"} and \code{"curl"},
-    and there is a value \code{"auto"}: see \sQuote{Details} and
-    \sQuote{Note}.
+  \item{method}{Method to be used for downloading files.  Current
+    download methods are \code{"internal"}, \code{"libcurl"},
+    \code{"wget"} and \code{"curl"}, and there is a value \code{"auto"}:
+    see \sQuote{Details} and \sQuote{Note}.
 
     The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.
@@ -67,7 +67,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   If \code{method = "auto"} is chosen (the default), the internal method
   is used on Windows.
 #endif
-
+  
+  Support for method \code{"libcurl"} is optional: use
+  \code{\link{capabilities}("libcurl")} to see if it is supported on
+  your build.  It provides (non-blocking) access to \samp{https://} and
+  \samp{ftps://} URLs.  If \code{quiet = FALSE} there is a progress bar
+  similar to the \command{curl} command-line tool.
+  
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
   installed on your system and be in the search path for executables.
@@ -157,16 +163,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   This applies to the internal code only.
 
   Proxies can be specified via environment variables.
-  Setting \env{"no_proxy"} to \code{"*"} stops any proxy being tried.
-  Otherwise the setting of \env{"http_proxy"} or \env{"ftp_proxy"}
+  Setting \env{no_proxy} to \code{*} stops any proxy being tried.
+  Otherwise the setting of \env{http_proxy} or \env{ftp_proxy}
   (or failing that, the all upper-case version) is consulted and if
   non-empty used as a proxy site.  For FTP transfers, the username
-  and password on the proxy can be specified by \env{"ftp_proxy_user"}
-  and \env{"ftp_proxy_password"}.  The form of \env{"http_proxy"}
-  should be \code{"http://proxy.dom.com/"} or
-  \code{"http://proxy.dom.com:8080/"} where the port defaults to
+  and password on the proxy can be specified by \env{ftp_proxy_user}
+  and \env{ftp_proxy_password}.  The form of \env{http_proxy}
+  should be \code{http://proxy.dom.com/} or
+  \code{http://proxy.dom.com:8080/} where the port defaults to
   \code{80} and the trailing slash may be omitted. For
-  \env{"ftp_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
+  \env{ftp_proxy} use the form \code{ftp://proxy.dom.com:3128/}
   where the default port is \code{21}.  These environment variables
   must be set before the download code is first used: they cannot be
   altered later by calling \code{\link{Sys.setenv}}.
@@ -174,16 +180,36 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Usernames and passwords can be set for HTTP proxy transfers via
   environment variable \env{http_proxy_user} in the form
   \code{user:passwd}.  Alternatively, \env{http_proxy} can be of the
-  form \code{"http://user:pass@proxy.dom.com:8080/"} for compatibility
+  form \code{http://user:pass@proxy.dom.com:8080/} for compatibility
   with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
   supported.
 #ifdef windows
-  Under Windows, if \env{http_proxy_user} is set to \code{"ask"} then
+  Under Windows, if \env{http_proxy_user} is set to \code{ask} then
   a dialog box will come up for the user to enter the username and
   password.  \bold{NB:} you will be given only one opportunity to enter this,
   but if proxy authentication is required and fails there will be one
   further prompt per download.
 #endif
+
+  Much the same scheme is supported by \code{method = "libcurl"}, including
+  \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
+  two a contents of \code{[user:password@]machine[:port]} where the
+  parts in brackets are optional.  See
+  \url{http://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
+}
+\section{Secure URLs}{
+  Methods which access \samp{https://} and \samp{ftps://} URLs usually
+  try to verify their certificates. This is usually done using the CA
+  root certifcates installed by the OS (although we have seen instances
+  in which these got removed rather than updated).
+
+  This is an issue for \code{method = "libcurl"} on Windows, where the
+  OS does not provide a suitable CA certificate bundle, so by default on
+  Windows certificates are not verified.  To turn verification on, set
+  environment variable \env{CURL_CA_BUNDLE} to the path to a certificate
+  bundle file, usually named \file{ca-bundle.crt} or
+  \file{curl-ca-bundle.crt}.  (This is normally done for a binary
+  installation of \R, which installs \file{etc/curl-ca-bundle.crt}.)
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for

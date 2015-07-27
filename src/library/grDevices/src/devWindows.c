@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-2013   The R Core Team
+ *  Copyright (C) 2004-2014   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -301,7 +301,25 @@ static Rboolean GA_NewFrameConfirm(pDevDesc);
 	/* end of list of required device driver actions	*/
 	/********************************************************/
 
-#include "rbitmap.h"
+//#include "rbitmap.h"
+extern int 
+R_SaveAsPng(void  *d, int width, int height,
+	    unsigned int (*gp)(void *, int, int),
+	    int bgr, FILE *fp, unsigned int transparent, int res);
+extern int
+R_SaveAsJpeg(void  *d, int width, int height,
+	     unsigned int (*gp)(void *, int, int),
+	     int bgr, int quality, FILE *outfile, int res);
+extern int
+R_SaveAsTIFF(void  *d, int width, int height,
+	     unsigned int (*gp)(void *, int, int),
+	     int bgr, const char *outfile, int res, int compression);
+extern int
+R_SaveAsBmp(void  *d, int width, int height,
+	    unsigned int (*gp)(void *, int, int), int bgr, FILE *fp, int res);
+const char * R_pngVersion(void);
+const char * R_jpegVersion(void);
+const char * R_tiffVersion(void);
 
 	/* Support Routines */
 
@@ -309,7 +327,6 @@ static double pixelHeight(drawing  d);
 static double pixelWidth(drawing d);
 static void SetColor(int, double, gadesc*);
 static void SetFont(pGEcontext, double, gadesc*);
-//static int Load_Rbitmap_Dll();
 static void SaveAsPng(pDevDesc dd, const char *fn);
 static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn);
 static void SaveAsBmp(pDevDesc dd, const char *fn);
@@ -1798,10 +1815,6 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	if(strlen(dsp+4) >= 512) error(_("filename too long in %s() call"),
 				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, R_ExpandFileName(dsp+4));
-	if (!Load_Rbitmap_Dll()) {
-	    warning("unable to load Rbitmap.dll");
-	    return FALSE;
-	}
 
 	if (w < 20 && h < 20)
 	    warning(_("'width=%d, height=%d' are unlikely values in pixels"),
@@ -1833,10 +1846,6 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->bg = dd->startfill = canvascolor;
 	xd->kind = JPEG;
 	if (!p) return FALSE;
-	if (!Load_Rbitmap_Dll()) {
-	    warning("unable to load Rbitmap.dll");
-	    return FALSE;
-	}
 	*p = '\0';
 	xd->quality = atoi(&dsp[5]);
 	*p = ':' ;
@@ -1867,10 +1876,6 @@ static Rboolean GA_Open(pDevDesc dd, gadesc *xd, const char *dsp,
 	xd->bg = dd->startfill = canvascolor;
 	xd->kind = TIFF;
 	if (!p) return FALSE;
-	if (!Load_Rbitmap_Dll()) {
-	    warning("unable to load Rbitmap.dll");
-	    return FALSE;
-	}
 	*p = '\0';
 	xd->quality = atoi(&dsp[5]);
 	*p = ':' ;
@@ -3507,7 +3512,6 @@ static void SaveAsPng(pDevDesc dd, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) return;
     if ((fp = R_fopen(fn, "wb")) == NULL) {
 	char msg[MAX_PATH+32];
 
@@ -3537,7 +3541,6 @@ static void SaveAsJpeg(pDevDesc dd, int quality, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) return;
     if ((fp = R_fopen(fn,"wb")) == NULL) {
 	char msg[MAX_PATH+32];
 	strcpy(msg, "Impossible to open ");
@@ -3567,7 +3570,6 @@ static void SaveAsBmp(pDevDesc dd, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) return;
     if ((fp = R_fopen(fn, "wb")) == NULL) {
 	char msg[MAX_PATH+32];
 
@@ -3597,10 +3599,6 @@ static void SaveAsTiff(pDevDesc dd, const char *fn)
     unsigned char *data;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    if (!Load_Rbitmap_Dll()) {
-	R_ShowMessage(_("Impossible to load Rbitmap.dll"));
-	return;
-    }
     r = ggetcliprect(xd->bm);
     gsetcliprect(xd->bm, r2 = getrect(xd->bm));
 
@@ -3817,9 +3815,15 @@ static void GA_eventHelper(pDevDesc dd, int code)
 }
 
 
+#define WIN32_LEAN_AND_MEAN 1
+#include <windows.h>
+typedef int (*R_SaveAsBitmap)(/* variable set of args */);
 static R_SaveAsBitmap R_devCairo;
 static int RcairoAlreadyLoaded = 0;
 static HINSTANCE hRcairoDll;
+
+typedef SEXP (*R_cairoVersion_t)(void);
+static R_cairoVersion_t R_cairoVersion = NULL;
 
 static int Load_Rcairo_Dll()
 {
@@ -3833,6 +3837,8 @@ static int Load_Rcairo_Dll()
 	    ((R_devCairo =
 	      (R_SaveAsBitmap)GetProcAddress(hRcairoDll, "in_Cairo"))
 	     != NULL)) {
+	    R_cairoVersion = (R_cairoVersion_t)
+		GetProcAddress(hRcairoDll, "in_CairoVersion");
 	    RcairoAlreadyLoaded = 1;
 	} else {
 	    if (hRcairoDll != NULL) FreeLibrary(hRcairoDll);
@@ -3854,4 +3860,25 @@ SEXP devCairo(SEXP args)
 	error("unable to load winCairo.dll: was it built?");
     else (R_devCairo)(args);
     return R_NilValue;
+}
+
+SEXP cairoVersion(void)
+{
+    if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
+    else return (R_cairoVersion)();
+}
+
+SEXP bmVersion(void)
+{
+    SEXP ans = PROTECT(allocVector(STRSXP, 3)),
+	nms = PROTECT(allocVector(STRSXP, 3));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("libpng"));
+    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
+    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
+    SET_STRING_ELT(ans, 0, mkChar((R_pngVersion)()));
+    SET_STRING_ELT(ans, 1, mkChar((R_jpegVersion)()));
+    SET_STRING_ELT(ans, 2, mkChar((R_tiffVersion)()));
+    UNPROTECT(2);
+    return ans;
 }

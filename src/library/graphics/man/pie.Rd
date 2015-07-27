@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pie.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pie}
@@ -94,5 +94,9 @@ text(0, 1, "init.angle = 90", col = "red")
 n <- 200
 pie(rep(1, n), labels = "", col = rainbow(n), border = NA,
     main = "pie(*, labels=\"\", col=rainbow(n), border=NA,..")
+
+## Another case showing pie() is rather fun than science; original by Daniel Lakens
+pie(c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5),
+    init.angle = 315, col = c("deepskyblue", "yellow", "yellow3"), border = FALSE)
 }
 \keyword{hplot}

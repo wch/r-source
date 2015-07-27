@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -16,6 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"编译TeX文件%s失败，消息为:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "%s…"
 
 msgid "argument 'package' must be of length 1"
 msgstr "参数'package'的长度必需为一"
@@ -227,9 +237,9 @@ msgid ""
 "already be known to R."
 msgstr "R必需知道带'base'，'recommended'或'defunct-base'优先权的程辑包."
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
@@ -294,9 +304,8 @@ msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs
 msgid "Missing link or links in documentation object '%s':"
 msgstr "使用手冊对象'%s'缺少联结:"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "请参考'如何写R附加软件'说明书中'交叉引用'这一段。"
 
 msgid "File %s:"
@@ -370,6 +379,14 @@ msgstr "'library'或'require'调用没有被声明:"
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr "'library'或'require'调用没有被声明: %s"
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "'library'或'require'调用没有被声明:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "'library'或'require'调用没有被声明:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
@@ -556,6 +573,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "无法建立临时目录%s"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 #, fuzzy
 msgid "Running"
 msgstr "执行%s"
@@ -591,10 +611,6 @@ msgstr "找不到'%s'这个文件"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "非标准执照规格"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s'简介里'%s'和'%s'的名字是一样的"
@@ -1318,6 +1334,10 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "非标准执照规格"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "参数'document'必需是字符串或联结"

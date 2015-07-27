@@ -1,19 +1,25 @@
 The changes for R are all to do with portability:
 
+Only files which are needed for the interface used are included.
+File compress.c was renamed to bzcompress.c to avoid clashes.
+
 __inline__ is not portable.  We make use of static inlining in the 
 file bzlib.c and decompress.c to avoid issues with semantics of 
 'extern inline'.
 
-fdopen is POSIX but not C89
-Solaris' cc objects to inlining functions with names starting with 'main'.
+fdopen is POSIX but not C89 nor C99.
+Solaris' cc at one time objected to inlining functions with names 
+starting with 'main'.
 C character strings are limited to ca 500 chars.
 Various casts were missing.
+Solaris cc complained about unused code, hence the use of UNREACHED.
+The shifts on signed ints are undefined behaviour (this has been
+reported upstream with no response).
 
-*** further changes made in November 2006 were not documented ***
 
-diff -u bzip2-1.0.4/blocksort.c bzip2/blocksort.c
---- bzip2-1.0.4/blocksort.c	2007-01-03 02:00:55.000000000 +0000
-+++ bzip2/blocksort.c	2007-05-07 12:56:52.000000000 +0100
+diff -ru bzip2-1.0.6/blocksort.c bzip2/blocksort.c
+--- bzip2-1.0.6/blocksort.c	2010-09-10 23:37:02.000000000 +0100
++++ bzip2/blocksort.c	2014-11-22 22:18:15.000000000 +0000
 @@ -28,7 +28,7 @@
  
  /*---------------------------------------------*/
@@ -23,56 +29,35 @@ diff -u bzip2-1.0.4/blocksort.c bzip2/blocksort.c
  void fallbackSimpleSort ( UInt32* fmap, 
                            UInt32* eclass, 
                            Int32   lo, 
-@@ -342,9 +342,10 @@
+@@ -202,9 +202,10 @@
+       bhtab [ 0 .. 2+(nblock/32) ] destroyed
+ */
+ 
+-#define       SET_BH(zz)  bhtab[(zz) >> 5] |= (1 << ((zz) & 31))
+-#define     CLEAR_BH(zz)  bhtab[(zz) >> 5] &= ~(1 << ((zz) & 31))
+-#define     ISSET_BH(zz)  (bhtab[(zz) >> 5] & (1 << ((zz) & 31)))
++// R_change: these shifts on signed ints are undefined behaviour.
++#define       SET_BH(zz)  bhtab[(zz) >> 5] |= (1U << ((zz) & 31))
++#define     CLEAR_BH(zz)  bhtab[(zz) >> 5] &= ~(1U << ((zz) & 31))
++#define     ISSET_BH(zz)  (bhtab[(zz) >> 5] & (1U << ((zz) & 31)))
+ #define      WORD_BH(zz)  bhtab[(zz) >> 5]
+ #define UNALIGNED_BH(zz)  ((zz) & 0x01f)
+ 
+@@ -342,8 +343,12 @@
  /*---------------------------------------------*/
  
  /*---------------------------------------------*/
 +/* Solaris cc objects to inlining functions whose names start with `main' */
++#ifdef __SUNPRO_C
++# define mainGtU BZmainGtU
++#endif
  static
 -__inline__
--Bool mainGtU ( UInt32  i1, 
 +R_INLINE
-+Bool BZmainGtU ( UInt32  i1, 
+ Bool mainGtU ( UInt32  i1, 
                 UInt32  i2,
                 UChar*  block, 
-                UInt16* quadrant,
-@@ -355,7 +356,7 @@
-    UChar  c1, c2;
-    UInt16 s1, s2;
- 
--   AssertD ( i1 != i2, "mainGtU" );
-+   AssertD ( i1 != i2, "BZmainGtU" );
-    /* 1 */
-    c1 = block[i1]; c2 = block[i2];
-    if (c1 != c2) return (c1 > c2);
-@@ -511,7 +512,7 @@
-          if (i > hi) break;
-          v = ptr[i];
-          j = i;
--         while ( mainGtU ( 
-+         while ( BZmainGtU ( 
-                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
-                  ) ) {
-             ptr[j] = ptr[j-h];
-@@ -525,7 +526,7 @@
-          if (i > hi) break;
-          v = ptr[i];
-          j = i;
--         while ( mainGtU ( 
-+         while ( BZmainGtU ( 
-                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
-                  ) ) {
-             ptr[j] = ptr[j-h];
-@@ -539,7 +540,7 @@
-          if (i > hi) break;
-          v = ptr[i];
-          j = i;
--         while ( mainGtU ( 
-+         while ( BZmainGtU ( 
-                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
-                  ) ) {
-             ptr[j] = ptr[j-h];
-@@ -579,7 +580,7 @@
+@@ -579,7 +584,7 @@
  }
  
  static 
@@ -81,9 +66,9 @@ diff -u bzip2-1.0.4/blocksort.c bzip2/blocksort.c
  UChar mmed3 ( UChar a, UChar b, UChar c )
  {
     UChar t;
-diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
---- bzip2-1.0.4/bzlib.c	2007-01-03 02:00:55.000000000 +0000
-+++ bzip2/bzlib.c	2007-05-07 12:56:52.000000000 +0100
+diff -ru bzip2-1.0.6/bzlib.c bzip2/bzlib.c
+--- bzip2-1.0.6/bzlib.c	2010-09-10 23:38:23.000000000 +0100
++++ bzip2/bzlib.c	2014-11-23 07:43:39.000000000 +0000
 @@ -53,8 +53,9 @@
        BZ2_bzlibVersion()
     );
@@ -171,19 +156,16 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
     if (s == NULL) return BZ_MEM_ERROR;
     s->strm                  = strm;
     strm->state              = s;
-@@ -683,7 +684,10 @@
+@@ -684,7 +685,7 @@
  
  
  /*---------------------------------------------------*/
 -__inline__ Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
-+#ifndef __cplusplus
-+R_INLINE 
-+#endif
 +Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
  {
     Int32 nb, na, mid;
     nb = 0;
-@@ -809,7 +813,7 @@
+@@ -810,7 +811,7 @@
     Bool    corrupt;
     DState* s;
     if (strm == NULL) return BZ_PARAM_ERROR;
@@ -192,7 +174,19 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
     if (s == NULL) return BZ_PARAM_ERROR;
     if (s->strm != strm) return BZ_PARAM_ERROR;
  
-@@ -862,7 +866,7 @@
+@@ -852,9 +853,11 @@
+       }
+    }
+ 
++#ifdef UNREACHED
+    AssertH ( 0, 6001 );
+ 
+    return 0;  /*NOTREACHED*/
++#endif
+ }
+ 
+ 
+@@ -863,7 +866,7 @@
  {
     DState* s;
     if (strm == NULL) return BZ_PARAM_ERROR;
@@ -201,7 +195,7 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
     if (s == NULL) return BZ_PARAM_ERROR;
     if (s->strm != strm) return BZ_PARAM_ERROR;
  
-@@ -933,7 +937,7 @@
+@@ -934,7 +937,7 @@
     if (ferror(f))
        { BZ_SETERR(BZ_IO_ERROR); return NULL; };
  
@@ -210,7 +204,7 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
     if (bzf == NULL)
        { BZ_SETERR(BZ_MEM_ERROR); return NULL; };
  
-@@ -981,7 +985,7 @@
+@@ -982,7 +985,7 @@
        { BZ_SETERR(BZ_OK); return; };
  
     bzf->strm.avail_in = len;
@@ -219,7 +213,7 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
  
     while (True) {
        bzf->strm.avail_out = BZ_MAX_UNUSED;
-@@ -1106,7 +1110,7 @@
+@@ -1107,7 +1110,7 @@
     if (ferror(f))
        { BZ_SETERR(BZ_IO_ERROR); return NULL; };
  
@@ -228,7 +222,7 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
     if (bzf == NULL) 
        { BZ_SETERR(BZ_MEM_ERROR); return NULL; };
  
-@@ -1178,7 +1182,7 @@
+@@ -1179,7 +1182,7 @@
        { BZ_SETERR(BZ_OK); return 0; };
  
     bzf->strm.avail_out = len;
@@ -237,7 +231,17 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
  
     while (True) {
  
-@@ -1378,6 +1382,15 @@
+@@ -1213,7 +1216,9 @@
+       
+    }
+ 
++#ifdef UNREACHED
+    return 0; /*not reached*/
++#endif
+ }
+ 
+ 
+@@ -1379,6 +1384,15 @@
  #else
  #   define SET_BINARY_MODE(file)
  #endif
@@ -253,7 +257,7 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
  static
  BZFILE * bzopen_or_bzdopen
                 ( const char *path,   /* no use when bzdopen */
-@@ -1424,7 +1437,7 @@
+@@ -1425,7 +1439,7 @@
          fp = fopen(path,mode2);
        }
     } else {
@@ -262,32 +266,37 @@ diff -u bzip2-1.0.4/bzlib.c bzip2/bzlib.c
        fp = NULL;
  #else
        fp = fdopen(fd,mode2);
-@@ -1513,10 +1526,9 @@
+@@ -1513,11 +1527,11 @@
+ /*---------------------------------------------------*/
  void BZ_API(BZ2_bzclose) (BZFILE* b)
  {
++   if (b==NULL) return;
++
     int bzerr;
 -   FILE *fp;
 +   FILE *fp = ((bzFile *)b)->handle;
     
-    if (b==NULL) {return;}
+-   if (b==NULL) {return;}
 -   fp = ((bzFile *)b)->handle;
     if(((bzFile*)b)->writing){
        BZ2_bzWriteClose(&bzerr,b,0,NULL,NULL);
        if(bzerr != BZ_OK){
-diff -u bzip2-1.0.4/bzlib_private.h bzip2/bzlib_private.h
---- bzip2-1.0.4/bzlib_private.h	2007-01-03 02:00:55.000000000 +0000
-+++ bzip2/bzlib_private.h	2007-05-07 12:56:51.000000000 +0100
-@@ -22,6 +22,7 @@
+diff -ru bzip2-1.0.6/bzlib_private.h bzip2/bzlib_private.h
+--- bzip2-1.0.6/bzlib_private.h	2010-09-10 23:41:55.000000000 +0100
++++ bzip2/bzlib_private.h	2011-03-30 14:00:46.000000000 +0100
+@@ -22,6 +22,9 @@
  #ifndef _BZLIB_PRIVATE_H
  #define _BZLIB_PRIVATE_H
  
 +#include <config.h> /* for R_INLINE */
++#undef HAVE_FDOPEN  /* we may have, but this re-declares it and
++		       we don't use BZ2_bzdopen */
  #include <stdlib.h>
  
  #ifndef BZ_NO_STDIO
-diff -u bzip2-1.0.4/compress.c bzip2/compress.c
---- bzip2-1.0.4/compress.c	2007-01-03 02:00:55.000000000 +0000
-+++ bzip2/compress.c	2007-05-07 12:56:50.000000000 +0100
+diff -ru bzip2-1.0.6/compress.c bzip2/compress.c
+--- bzip2-1.0.6/compress.c	2014-11-21 10:38:37.000000000 +0000
++++ bzip2/compress.c	2011-03-30 14:00:46.000000000 +0100
 @@ -69,7 +69,7 @@
  
  /*---------------------------------------------------*/
@@ -297,9 +306,9 @@ diff -u bzip2-1.0.4/compress.c bzip2/compress.c
  void bsW ( EState* s, Int32 n, UInt32 v )
  {
     bsNEEDW ( n );
-diff -u bzip2-1.0.4/decompress.c bzip2/decompress.c
---- bzip2-1.0.4/decompress.c	2007-01-03 02:00:55.000000000 +0000
-+++ bzip2/decompress.c	2007-05-07 12:56:50.000000000 +0100
+diff -ru bzip2-1.0.6/decompress.c bzip2/decompress.c
+--- bzip2-1.0.6/decompress.c	2010-09-10 23:43:17.000000000 +0100
++++ bzip2/decompress.c	2011-03-30 14:00:46.000000000 +0100
 @@ -209,13 +209,13 @@
        s->blockSize100k -= BZ_HDR_0;
  

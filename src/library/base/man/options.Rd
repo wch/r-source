@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -546,9 +546,30 @@ getOption(x, default = NULL)
       the character string \code{"pkgloack"}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
-      printed on URL downloads etc.  Default is 2, for failure causes.
-      Set to 1 or 0 to get more information.}
+      printed on URL downloads etc, using the \code{"internal"} method.
+      Default is 2, for failure causes.  Set to 1 or 0 to get more
+      detailed information.
+  
+      For methods based on \code{libcurl} a value less than 2 (the
+      default) selects verbose output.
+    }
 
+    \item{\code{install.packages.check.source}:}{Used by
+      \code{\link{install.packages}} on platforms which support binary
+      packages.  Possible values \code{"yes"} and \code{"no"}, with
+      unset being equivalent to \code{"yes"}.}
+
+    \item{\code{install.packages.compile.from.source}:}{Used by
+      \code{\link{install.packages}(type = "both")} on platforms which
+      support binary packages.  Possible values are \code{"never"},
+      \code{"interactive"} (which means ask in interactive use and
+      \code{"never"} in batch use) and \code{"always"}.  The default is
+      taken from environment variable
+      \env{R_COMPILE_AND_INSTALL_PACKAGES}, with default
+      \code{"interactive"} if unset.  However, \code{install.packages}
+      uses \code{"never"} unless a \command{make} program is found,
+      consulting the environment variable \env{MAKE}.}
+    
     \item{\code{mailer}:}{default emailing method used by
       \code{\link{create.post}} and hence \code{\link{bug.report}} and
       \code{\link{help.request}}.}
@@ -562,17 +583,22 @@ getOption(x, default = NULL)
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
-      Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.  Some OS X builds use \code{"mac.binary"} and
-      \code{"mac.binary.mavericks"}
+      Possible values are \code{"win.binary"}, \code{"source"} and
+      \code{"both"} (the default).  Some OS X builds use
+      \code{"mac.binary"} and \code{"mac.binary.mavericks"}.
 #endif
 #ifdef unix
-      Possible values are \code{"source"} (the default except under the
-      CRAN OS X build), \code{"mac.binary."} and
-      \code{"mac.binary.mavericks"}.  Windows uses  \code{"win.binary"}.
-      (\code{"mac.binary.leopard"} and \code{"mac.binary.universal"} are
-      no longer in use.)
+      Possible values are \code{"source"} (the default except under a
+      CRAN OS X build), \code{"mac.binary."},
+      \code{"mac.binary.mavericks"} and \code{"both"} (the default for
+      CRAN OS X builds).  Windows uses
+      \code{"win.binary"}. (\code{"mac.binary.leopard"} and
+      \code{"mac.binary.universal"} are no longer in use.)
 #endif
+      Value \code{"binary"} is a synonym for the native binary type (if
+      there is one); \code{"both"} is used by
+      \code{\link{install.packages}} to choose between source and binary
+      installs.
     }
 
     \item{\code{repos}:}{URLs of the repositories for use by
@@ -587,10 +613,12 @@ getOption(x, default = NULL)
       Omegahat, R-Forge, Rforge.net \dots)
       using \code{\link{setRepositories}}.
     }
-    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
+    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
+      see \code{\link{Sweave}}.
+    }
 
-    \item{\code{unzip}:}{a character string, the path of the command
-      used for unzipping help files, or \code{"internal"}.
+    \item{\code{unzip}:}{a character string used by \code{\link{unzip}}:
+      the path of the external program \command{unzip} or \code{"internal"}.
 #ifdef unix
       Defaults to the value of \env{R_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during

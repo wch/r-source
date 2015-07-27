@@ -46,8 +46,8 @@ browseEnv(envir = .GlobalEnv, pattern,
   Only allows one level of recursion into object structures.
 
   It can be generalized.  See sources for details.
-  Most probably, this should rather work through using the \file{tkWidget}
-  package (from \url{www.Bioconductor.org}).
+  Most probably, this should rather work through using the \pkg{tkWidget}
+  package (from \url{http://www.bioconductor.org}).
 }
 \seealso{
   \code{\link{str}}, \code{\link{ls}}.

@@ -1,6 +1,6 @@
 % File src/library/base/man/sum.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sum}
@@ -60,5 +60,20 @@ sum(\dots, na.rm = FALSE)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
+}
+\examples{% for beginners
+## Pass a vector to sum, and it will add the elements together.
+sum(1:5)
+
+## Pass several numbers to sum, and it also adds the elements.
+sum(1, 2, 3, 4, 5)
+
+## In fact, you can pass vectors into several arguments, and everything gets added.
+sum(1:2, 3:5)
+
+## If there are missing values, the sum is unknown, i.e., also missing, ....
+sum(1:5, NA)
+## ... unless  we exclude missing values explicitly:
+sum(1:5, NA, na.rm = TRUE)
 }
 \keyword{arith}

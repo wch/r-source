@@ -127,7 +127,7 @@ urlify <- function(x) {
     chars <- unlist(strsplit(x, ""))
     hex <- vapply(chars,
                   function(x)
-                  paste0("%", as.character(charToRaw(x)),
+                  paste0("%", toupper(as.character(charToRaw(x))),
                          collapse = ""),
                   "")
     todo <- paste0("[^",

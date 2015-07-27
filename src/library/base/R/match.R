@@ -20,8 +20,15 @@ match <- function(x, table, nomatch = NA_integer_, incomparables = NULL)
     .Internal(match(x, table, nomatch, incomparables))
 
 match.call <-
-    function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)
-    .Internal(match.call(definition,call,expand.dots))
+    function(definition=sys.function(sys.parent()),
+             call=sys.call(sys.parent()), expand.dots=TRUE,
+             envir=parent.frame(2L))
+{
+    if (!missing(definition) && is.null(definition)) {
+        definition <- sys.function(sys.parent())
+    }
+    .Internal(match.call(definition,call,expand.dots,envir))
+}
 
 pmatch <- function(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
     .Internal(pmatch(as.character(x), as.character(table), nomatch,

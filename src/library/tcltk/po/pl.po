@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "parse error in R expression"
 msgstr "Błąd składni w wyrażeniu R"
 
-#: tcltk.c:169 tcltk.c:246
+#: tcltk.c:171 tcltk.c:248
 msgid "tcl error.\n"
 msgstr "błąd 'tcl'.\n"
 
@@ -30,7 +30,7 @@ msgstr "błąd 'tcl'.\n"
 # error(_("invalid argument"))
 # tcltk/src/tcltk.c: 742
 # error(_("invalid argument"))
-#: tcltk.c:198 tcltk.c:743
+#: tcltk.c:200 tcltk.c:745
 msgid "invalid argument"
 msgstr "niepoprawny argument"
 
@@ -44,13 +44,13 @@ msgstr "niepoprawny argument"
 # error(_("invalid tclObj -- perhaps saved from another session?"))
 # tcltk/src/tcltk.c: 507
 # error(_("invalid tclObj -- perhaps saved from another session?"))
-#: tcltk.c:302 tcltk.c:320 tcltk.c:393 tcltk.c:456 tcltk.c:508
+#: tcltk.c:304 tcltk.c:322 tcltk.c:395 tcltk.c:458 tcltk.c:510
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "niepoprawny obiekt typu 'tclObj' -- być może zapisany z innej sesji?"
 
 # tcltk/src/tcltk.c: 617
 # error(_("argument list is too long in tcltk internal function 'callback_closure'"))
-#: tcltk.c:618
+#: tcltk.c:620
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "lista argumentów jest zbyt długa w wewnętrznej funkcji tcltk "
@@ -58,13 +58,13 @@ msgstr ""
 
 # tcltk/src/tcltk.c: 650
 # error(_("argument is not of correct type"))
-#: tcltk.c:651
+#: tcltk.c:653
 msgid "argument is not of correct type"
 msgstr "argument nie jest poprawnego typu"
 
 # tcltk/src/tcltk.c: 701
 # warning(_("no DISPLAY variable so Tk is not available"))
-#: tcltk.c:702
+#: tcltk.c:704
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "brak zmiennej 'DISPLAY' więc Tk nie jest dostępne"
 

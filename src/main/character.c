@@ -220,19 +220,21 @@ static void substr(char *buf, const char *str, int ienc, int sa, int so)
     int i, j, used;
 
     if (ienc == CE_UTF8) {
-	for (i = 0; i < so; i++) {
+	const char *end = str + strlen(str);
+	for (i = 0; i < so && str < end; i++) {
 	    int used = utf8clen(*str);
-	    if (i < sa - 1) { str+= used; continue; }
+	    if (i < sa - 1) { str += used; continue; }
 	    for (j = 0; j < used; j++) *buf++ = *str++;
 	}
     } else if (ienc == CE_LATIN1 || ienc == CE_BYTES) {
 	for (str += (sa - 1), i = sa; i <= so; i++) *buf++ = *str++;
     } else {
 	if (mbcslocale && !strIsASCII(str)) {
+	    const char *end = str + strlen(str);
 	    mbstate_t mb_st;
 	    mbs_init(&mb_st);
 	    for (i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
-	    for (i = sa; i <= so; i++) {
+	    for (i = sa; i <= so && str < end; i++) {
 		used = (int) Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
 		for (j = 0; j < used; j++) *buf++ = *str++;
 	    }
@@ -304,7 +306,7 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 
     if (ienc == CE_UTF8) {
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
-	for (i = sa; i <= so; i++) {
+	for (i = sa; i <= so && in < strlen(str); i++) {
 	    in +=  utf8clen(str[in]);
 	    out += utf8clen(buf[out]);
 	    if (!str[in]) break;
@@ -320,7 +322,7 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 	if (mbcslocale) {
 	    for (i = 1; i < sa; i++) buf += Mbrtowc(NULL, buf, MB_CUR_MAX, NULL);
 	    /* now work out how many bytes to replace by how many */
-	    for (i = sa; i <= so; i++) {
+	    for (i = sa; i <= so && in < strlen(str); i++) {
 		in += (int) Mbrtowc(NULL, str+in, MB_CUR_MAX, NULL);
 		out += (int) Mbrtowc(NULL, buf+out, MB_CUR_MAX, NULL);
 		if (!str[in]) break;

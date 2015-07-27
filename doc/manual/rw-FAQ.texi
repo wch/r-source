@@ -128,7 +128,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 60Mb.
+installer @samp{@RWVER@-win.exe} of about 60MB.
 
 There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of
@@ -142,8 +142,7 @@ release.
 
 Current binary versions of R run on Windows XP or later, including on
 64-bit versions: @xref{Can I use R on 64-bit Windows?}. The last version
-known to run on Windows 2000 was 2.12.2 and the last version supporting
-95/98/ME/NT4 was 2.6.1.
+known to run on Windows 2000 was 2.12.2.
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 went end of life 2014-04-08
@@ -153,8 +152,7 @@ mainly 64-bit Windows 7 and Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A installation takes
-75--105Mb of disk space (up to 145Mb if ICU was included in the build,
-which is not currently the default).
+75--110MB of disk space (up to 155MB if ICU was included in the build)
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path

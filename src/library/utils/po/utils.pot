@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-11-20 11:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,15 +235,15 @@ msgstr ""
 msgid "Select one"
 msgstr ""
 
-#: windows/widgets.c:182 windows/widgets.c:252
+#: windows/widgets.c:182 windows/widgets.c:247
 msgid "'default' must be a character string"
 msgstr ""
 
-#: windows/widgets.c:184 windows/widgets.c:254
+#: windows/widgets.c:184 windows/widgets.c:249
 msgid "'default' is overlong"
 msgstr ""
 
-#: windows/widgets.c:188 windows/widgets.c:258
+#: windows/widgets.c:188 windows/widgets.c:253
 msgid "'caption' must be a character string"
 msgstr ""
 

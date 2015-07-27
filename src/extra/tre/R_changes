@@ -5,7 +5,7 @@ We have remapped the POSIX entry points with a tre_ suffix: without
 it there was confusion with entry points in OS libraries on some OSes
 (e.g. Mac OS X).
 
-Pro tem alloca has been disabled: the declarations used do not work on
+alloca has been disabled: the declarations used do not work on
 Windows, and most likely not on FreeBSD.
 
 The way we compile it, TRE works internally in one of three modes
@@ -49,3 +49,5 @@ Nov 2011: incorporated minor fixes from https://github.com/GerHobbelt/libtre
 
 Oct 2014: fixed R bug PR#16009 by copying the class member of a LITERAL
 in tre_copy_ast.
+
+Nov 2014: changed tre_version() to report this is a modified version.

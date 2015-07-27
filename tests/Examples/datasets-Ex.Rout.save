@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2014-11-11 r66959) -- "Unsuffered Consequences"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-01-14 r67463) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2651,7 +2651,6 @@ Model 2: Speed ~ Run + Expt
 > ### ** Examples
 > 
 > 
-> base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > cleanEx()
 > nameEx("occupationalStatus")
 > ### * occupationalStatus
@@ -3459,7 +3458,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.34 0.027 1.372 0 0 
+Time elapsed:  1.337 0.024 1.362 0 0 
 > grDevices::dev.off()
 null device 
           1 

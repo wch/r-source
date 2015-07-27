@@ -550,8 +550,10 @@ static SEXP read_child_ci(child_info_t *ci)
 	PROTECT(rv);
 	{
 	    SEXP pa = allocVector(INTSXP, 1);
+	    PROTECT(pa);
 	    INTEGER(pa)[0] = ci->pid;
 	    setAttrib(rv, install("pid"), pa);
+	    UNPROTECT(1);
 	}
 	UNPROTECT(1);
 	return rv;
@@ -698,7 +700,7 @@ SEXP mc_kill(SEXP sPid, SEXP sSig)
     return ScalarLogical(1);
 }
 
-SEXP mc_exit(SEXP sRes) 
+SEXP NORET mc_exit(SEXP sRes)
 {
     int res = asInteger(sRes);
 #ifdef MC_DEBUG
@@ -726,7 +728,6 @@ SEXP mc_exit(SEXP sRes)
 #endif
     _exit(res);
     error(_("'mcexit' failed"));
-    return R_NilValue;
 }
 
 /* NA = query, TRUE/FALSE = set R_Interactive accordingly */

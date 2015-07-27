@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Reading %s failed with message: %s"
+msgstr ""
+
+msgid "Checking %s"
+msgstr ""
 
 msgid "argument 'package' must be of length 1"
 msgstr ""
@@ -223,8 +229,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 
 msgid "Malformed Authors@R field:"
@@ -286,9 +291,7 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr ""
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 
 msgid "File %s:"
@@ -356,6 +359,12 @@ msgstr ""
 
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
+msgstr ""
+
+msgid "'library' or 'require' calls in package code:"
+msgstr ""
+
+msgid "'library' or 'require' call to %s in package code."
 msgstr ""
 
 msgid "Namespaces in Imports field not imported from:"
@@ -532,6 +541,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr ""
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr ""
 
@@ -560,9 +572,6 @@ msgid "file '%s' not found"
 msgstr ""
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
-
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"

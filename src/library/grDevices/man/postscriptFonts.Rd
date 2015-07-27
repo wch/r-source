@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscriptFonts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscriptFonts}
@@ -111,7 +111,7 @@ pdfFonts(\dots)
     CNS1 (PS) \tab \code{MOESung-Regular}\cr \tab Ken Lunde's CJKV resources\cr
     CNS1 (PDF) \tab \code{MSungStd-Light-Acro}\cr  \tab from Adobe Reader 7.0 Traditional Chinese Font Pack\cr
   }
-  \code{Baekmuk-Batang} can be found at \url{ftp://ftp.mizi.com/pub/baekmuk/}.
+%  \code{Baekmuk-Batang} Can be found at \url{ftp://ftp.mizi.com/pub/baekmuk/}.
   \code{BousungEG-Light-GB} can be found at
   \url{ftp://ftp.gnu.org/pub/non-gnu/chinese-fonts-truetype/}.
   Ken Lunde's CJKV resources are at
@@ -137,7 +137,7 @@ pdfFonts(\dots)
 }
 \author{
   Support for Computer Modern fonts is based on a contribution by
-  Brian D'Urso \email{durso@hussle.harvard.edu}.
+  Brian D'Urso.% formerly \email{durso@hussle.harvard.edu}.
 }
 \examples{
 postscriptFonts()

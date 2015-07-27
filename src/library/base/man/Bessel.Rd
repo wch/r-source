@@ -37,7 +37,7 @@ besselY(x, nu)
 \value{
   Numeric vector with the (scaled, if \code{expon.scaled = TRUE})
   values of the corresponding Bessel function.
-  
+
   The length of the result is the maximum of the lengths of the
   parameters.  All parameters are recycled to that length.
 }
@@ -52,11 +52,46 @@ besselY(x, nu)
 \source{
   The C code is a translation of Fortran routines from
   \url{http://www.netlib.org/specfun/ribesl}, \samp{../rjbesl}, etc.
+  The four source code files for bessel[IJKY] each contain a paragraph
+  \dQuote{Acknowledgement} and \dQuote{References}, a short summary of
+  which is
+  \describe{
+    \item{besselI}{based on (code) by David J. Sookne, see Sookne (1973)\dots
+      Modifications\dots An earlier version was published in Cody (1983).}
+    \item{besselJ}{as \code{besselI}}
+    \item{besselK}{based on (code) by J. B. Campbell (1980)\dots Modifications\dots}
+    \item{besselY}{draws heavily on Temme's Algol program for
+      \eqn{Y}\dots and on Campbell's programs for \eqn{Y_\nu(x)}
+      \dots. \dots heavily modified.}
+  }
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} Dover, New York;
   Chapter 9: Bessel Functions of Integer Order.
+
+  In order of \dQuote{Source} citation above:
+
+  Sockne, David J. (1973)
+  Bessel Functions of Real Argument and Integer Order.
+  \emph{NBS Jour. of Res. B.} \bold{77B}, 125--132.
+
+  Cody, William J. (1983)
+  Algorithm 597: Sequence of modified Bessel functions of the first kind.
+  \emph{ACM Transactions on Mathematical Software} \bold{9}(2), 242--245.% TOMS
+
+  Campbell, J.B. (1980)
+  On Temme's algorithm for the modified Bessel function of the third kind.
+  \emph{ACM Transactions on Mathematical Software} \bold{6}(4), 581--586.
+
+  Campbell, J.B. (1979)
+  Bessel functions J_nu(x) and Y_nu(x) of float order and float argument.
+  \emph{Comp. Phy. Comm.} \bold{18}, 133--142.
+
+  Temme, Nico M. (1976)
+  On the numerical evaluation of the ordinary Bessel function of the second kind.
+  \emph{J. Comput. Phys.} \bold{21}, 343--350.
+
 }
 \seealso{
   Other special mathematical functions, such as

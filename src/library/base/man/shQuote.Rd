@@ -1,6 +1,6 @@
 % File src/library/base/man/shQuote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shQuote}
@@ -57,7 +57,8 @@ shQuote(string, type = c("sh", "csh", "cmd"))
   Loukides, M. \emph{et al} (2002)
   \emph{Unix Power Tools} Third Edition.  O'Reilly.  Section 27.12.
 
-  \url{http://www.mhuffman.com/notes/dos/bash_cmd.htm}
+% gone in Jan 2015  
+% \url{http://www.mhuffman.com/Notes/dos/bash_cmd.htm}
 }
 \seealso{
   \code{Quotes} for quoting \R code.

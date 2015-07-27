@@ -1,31 +1,40 @@
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
---- pcre-7.9/pcre_internal.h	2009-04-11 09:21:17.000000000 +0100
-+++ ./pcre_internal.h	2009-06-13 10:45:35.000000000 +0100
-@@ -81,6 +81,24 @@
- #endif
+diff -ur pcre-8.36/pcre_internal.h ./pcre_internal.h
+--- pcre-8.36/pcre_internal.h	2014-05-27 19:20:05.000000000 +0100
++++ ./pcre_internal.h	2014-11-11 21:44:03.000000000 +0000
+@@ -46,6 +46,33 @@
+ #ifndef PCRE_INTERNAL_H
+ #define PCRE_INTERNAL_H
  
- 
-+/* Get the definitions provided by running "configure" */
-+
 +#include <config.h>
 +
 +/* and those that are not in R's configure */
+/* and those that are not in R's configure:
+   LINK_SIZE is set on the command line */
 +#define HAVE_MEMMOVE 1
-+#ifndef LINK_SIZE
-+#define LINK_SIZE 2
 +#define MATCH_LIMIT 10000000
 +#define MATCH_LIMIT_RECURSION MATCH_LIMIT
 +#define MAX_NAME_COUNT 10000
 +#define MAX_NAME_SIZE 32
 +#define NEWLINE 10
++#define PARENS_NEST_LIMIT 250
 +#define POSIX_MALLOC_THRESHOLD 10
-+#define SUPPORT_UTF8
 +#define SUPPORT_UCP
++#define SUPPORT_UTF
++
++/* See http://sourceforge.net/p/predef/wiki/Architectures/
++   SPARC_32 support added in 8.32, 'experimental'.
++
++   At least i386 support did not compile on Solaris Studio.
++ */
++#ifndef __SUNPRO_C
++#if defined(WIN32) || defined(__i386__) || defined(__i386) || defined(__x86_64__) || defined(__ppc64__) || defined(__powerpc64__) || defined(__ppc__) || defined(__powerpc__) || defined(__sparc__)
++# define SUPPORT_JIT
++#endif
 +#endif
 +
- /* Standard C headers plus the external interface definition. The only time
- setjmp and stdarg are used is when NO_RECURSE is set. */
-
-
+ /* Define PCRE_DEBUG to get debugging output on stdout. */
+ 
+ #if 0

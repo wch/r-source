@@ -176,7 +176,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 \seealso{
   \code{\link{format}}.
 
-  \code{\link{sprintf}} for more general C like formatting.
+  \code{\link{sprintf}} for more general C-like formatting.
 }
 \examples{
 xx  <- pi * 10^(-5:4)
@@ -219,7 +219,7 @@ cbind(ff <- format(1.2345 + 10^(0:5), width = 11, big.mark = "'"))
 fc <- formatC(1.234 + 10^(0:8), format = "fg", width = 11, big.mark = "'")
 cbind(fc)
 ## Powers of two, stored exactly, formatted individually:
-pow.2 <- formatC(2^-(1:32), digits=24, width=1, format="fg")
+pow.2 <- formatC(2^-(1:32), digits = 24, width = 1, format = "fg")
 ## nicely printed (the last line showing 5^32 exactly):
 noquote(cbind(pow.2))
 

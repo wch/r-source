@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
- *  Copyright (C) 2003, 2004  The R Foundation
+ *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 2003--2015  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -236,6 +236,7 @@ FUNTAB R_FunTab[] =
 {"comment",	do_comment,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"comment<-",	do_commentgets,	0,	11,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"get",		do_get,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"get0",	do_get,		2,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"mget",	do_mget,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"exists",	do_get,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"assign",	do_assign,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
@@ -253,7 +254,7 @@ FUNTAB R_FunTab[] =
 {"match",	do_match,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"pmatch",	do_pmatch,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"charmatch",	do_charmatch,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"match.call",	do_matchcall,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"match.call",	do_matchcall,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"crossprod",	do_matprod,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"tcrossprod",	do_matprod,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 
@@ -524,6 +525,7 @@ FUNTAB R_FunTab[] =
 {"strsplit",	do_strsplit,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"abbreviate",	do_abbrev,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"make.names",	do_makenames,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"pcre_config", do_pcre_config,	1,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"grep",	do_grep,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"grepl",	do_grep,	1,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"grepRaw",	do_grepraw,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
@@ -839,7 +841,7 @@ FUNTAB R_FunTab[] =
 {"close",	do_close,	0,      111,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"flush",	do_flush,	0,      111,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"file",	do_url,		1,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
-{"url",		do_url,		0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
+{"url",		do_url,		0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"pipe",	do_pipe,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"fifo",	do_fifo,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"gzfile",	do_gzfile,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
@@ -954,6 +956,11 @@ FUNTAB R_FunTab[] =
 {"bcprofcounts",do_bcprofcounts,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"bcprofstart",	do_bcprofstart,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"bcprofstop",	do_bcprofstop,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+
+{"eSoftVersion",do_eSoftVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"curlVersion", do_curlVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"curlGetHeaders",do_curlGetHeaders,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"curlDownload",do_curlDownload, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };

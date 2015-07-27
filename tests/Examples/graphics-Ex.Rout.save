@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2014-11-11 r66959) -- "Unsuffered Consequences"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-01-14 r67463) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1753,6 +1753,10 @@ armed.forces
 > pie(rep(1, n), labels = "", col = rainbow(n), border = NA,
 +     main = "pie(*, labels=\"\", col=rainbow(n), border=NA,..")
 > 
+> ## Another case showing pie() is rather fun than science; original by Daniel Lakens
+> pie(c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5),
++     init.angle = 315, col = c("deepskyblue", "yellow", "yellow3"), border = FALSE)
+> 
 > 
 > 
 > cleanEx()
@@ -1959,6 +1963,41 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
+> nameEx("plot.raster")
+> ### * plot.raster
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.raster
+> ### Title: Plotting Raster Images
+> ### Aliases: plot.raster
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> require(grDevices)
+> r <- as.raster(c(0.5, 1, 0.5))
+> plot(r)
+> # additional arguments to rasterImage()
+> plot(r, interpolate=FALSE)
+> # distort
+> plot(r, asp=NA)
+> # fill page
+> op <- par(mar=rep(0, 4))
+> plot(r, asp=NA)
+> par(op)
+> # normal annotations work
+> plot(r, asp=NA)
+> box()
+> title(main="This is my raster")
+> # add to existing plot
+> plot(1)
+> plot(r, add=TRUE)
+> 
+> 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
 > nameEx("plot.table")
 > ### * plot.table
 > 
@@ -2026,7 +2065,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x18c0e80>
+<bytecode: 0xea7340>
 <environment: namespace:graphics>
 > 
 > 
@@ -2428,7 +2467,6 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > ### ** Examples
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("spineplot")
 > ### * spineplot
@@ -2897,7 +2935,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x2a76ca0>
+<bytecode: 0x23417f8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2977,7 +3015,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.884 0.032 1.921 0 0 
+Time elapsed:  1.874 0.032 1.908 0 0 
 > grDevices::dev.off()
 null device 
           1 

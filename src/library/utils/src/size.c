@@ -53,6 +53,7 @@ static R_size_t objectsize(SEXP s)
     case LISTSXP:
     case LANGSXP:
     case BCODESXP:
+    case DOTSXP:
 	cnt += objectsize(TAG(s));
 	cnt += objectsize(CAR(s));
 	cnt += objectsize(CDR(s));
@@ -94,7 +95,6 @@ static R_size_t objectsize(SEXP s)
 	}
 	isVec = TRUE;
 	break;
-    case DOTSXP:
     case ANYSXP:
 	/* we don't know about these */
 	break;

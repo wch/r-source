@@ -13,16 +13,16 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win
 
-SUBDIRS = X11 internet lapack vfonts
+SUBDIRS = X11 internet lapack
 
-MODULES = internet lapack vfonts @BUILD_X11_TRUE@X11
+MODULES = internet lapack @BUILD_X11_TRUE@X11
 
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile make.internet make.lapack make.vfonts @BUILD_X11_TRUE@make.X11
+R: Makefile make.internet make.lapack @BUILD_X11_TRUE@make.X11
 
 make.X11: Makefile
 	@(cd X11 && $(MAKE))
@@ -32,9 +32,6 @@ make.internet: Makefile
 
 make.lapack: Makefile
 	@(cd lapack && $(MAKE))
-
-make.vfonts: Makefile
-	@(cd vfonts && $(MAKE))
 
 install install-strip:
 	@for d in $(MODULES); do \

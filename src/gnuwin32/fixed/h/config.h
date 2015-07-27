@@ -153,6 +153,11 @@
 /* Define to 1 if you have the `ctan' function. */
 #define HAVE_CTAN 1
 
+/* Define to 1 if you have the <curl/curl.h> header file.
+   Set on the command line where supported.
+*/
+/* #undef HAVE_CURL_CURL_H */
+
 /* Define to 1 if you have the `ctanh' function. */
 #define HAVE_CTANH 1
 

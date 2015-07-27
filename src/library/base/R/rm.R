@@ -1,7 +1,7 @@
 #  File src/library/base/R/rm.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@ rm <-
 {
     dots <- match.call(expand.dots=FALSE)$...
     if(length(dots) &&
-       !all(sapply(dots, function(x) is.symbol(x) || is.character(x))))
+       !all(vapply(dots, function(x) is.symbol(x) || is.character(x), NA, USE.NAMES=FALSE)))
        stop("... must contain names or character strings")
-    names <- sapply(dots, as.character)
+    names <- vapply(dots, as.character, "")
     if (length(names) == 0L) names <- character()
     list <- .Primitive("c")(list, names)
     .Internal(remove(list, envir, inherits))

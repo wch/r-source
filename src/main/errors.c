@@ -36,13 +36,6 @@
 #define min(a, b) (a<b?a:b)
 #endif
 
-#if defined(__GNUC__) && __GNUC__ >= 3
-#define NORET __attribute__((noreturn))
-#else
-#define NORET
-#endif
-
-
 /* Total line length, in chars, before splitting in warnings/errors */
 #define LONGWARN 75
 
@@ -84,7 +77,7 @@ static void reset_stack_limit(void *data)
     R_CStackLimit = *limit;
 }
 
-void R_SignalCStackOverflow(intptr_t usage)
+void NORET R_SignalCStackOverflow(intptr_t usage)
 {
     /* We do need some stack space to process error recovery, so
        temporarily raise the limit.  We have 5% head room because we
@@ -286,7 +279,7 @@ void warning(const char *format, ...)
 
 static void vsignalError(SEXP call, const char *format, va_list ap);
 static void vsignalWarning(SEXP call, const char *format, va_list ap);
-static void invokeRestart(SEXP, SEXP);
+static void NORET invokeRestart(SEXP, SEXP);
 
 static void reset_inWarning(void *data)
 {
@@ -423,7 +416,7 @@ void warningcall_immediate(SEXP call, const char *format, ...)
 
     immediateWarning = 1;
     va_start(ap, format);
-    vwarningcall_dflt(call, format, ap);
+    vsignalWarning(call, format, ap);
     va_end(ap);
     immediateWarning = 0;
 }
@@ -562,17 +555,19 @@ void PrintWarnings(void)
 
 static SEXP GetSrcLoc(SEXP srcref)
 {
-    SEXP sep, line, result;
-    SEXP srcfile = R_GetSrcFilename(srcref);
+    SEXP sep, line, result, srcfile;
     if (TYPEOF(srcref) != INTSXP || length(srcref) < 4)
 	return ScalarString(mkChar(""));
+
+    PROTECT(srcref);
+    PROTECT(srcfile = R_GetSrcFilename(srcref));
     SEXP e2 = PROTECT(lang2( install("basename"), srcfile));
     PROTECT(srcfile = eval(e2, R_BaseEnv ) );
     PROTECT(sep = ScalarString(mkChar("#")));
     PROTECT(line = ScalarInteger(INTEGER(srcref)[0]));
     SEXP e = PROTECT(lang4( install("paste0"), srcfile, sep, line ));
     result = eval(e, R_BaseEnv );
-    UNPROTECT(5);
+    UNPROTECT(7);
     return result;
 }
 
@@ -922,7 +917,7 @@ static void jump_to_top_ex(Rboolean traceback,
     */
 }
 
-void jump_to_toplevel()
+void NORET jump_to_toplevel()
 {
     /* no traceback, no user error option; for now, warnings are
        printed here and console is reset -- eventually these should be
@@ -1132,7 +1127,7 @@ static SEXP findCall(void)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden NORET do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 /* error(.) : really doesn't return anything; but all do_foo() must be SEXP */
     SEXP c_call;
@@ -1152,7 +1147,7 @@ SEXP attribute_hidden do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else
       errorcall(c_call, "");
-    /* never called: */return c_call;
+    /* never called: */
 }
 
 SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1192,13 +1187,13 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Error recovery for incorrect argument count error. */
 attribute_hidden
-void WrongArgCount(const char *s)
+void NORET WrongArgCount(const char *s)
 {
     error(_("incorrect number of arguments to \"%s\""), s);
 }
 
 
-void UNIMPLEMENTED(const char *s)
+void NORET UNIMPLEMENTED(const char *s)
 {
     error(_("unimplemented feature in %s"), s);
 }
@@ -1233,7 +1228,7 @@ WarningDB[] = {
 
 
 attribute_hidden
-void ErrorMessage(SEXP call, int which_error, ...)
+void NORET ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
     char buf[BUFSIZE];
@@ -1303,7 +1298,7 @@ void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart)
     }
 }
 
-void R_JumpToToplevel(Rboolean restart)
+void NORET R_JumpToToplevel(Rboolean restart)
 {
     RCNTXT *c;
 
@@ -1555,7 +1550,7 @@ static void vsignalWarning(SEXP call, const char *format, va_list ap)
     else vwarningcall_dflt(call, format, ap);
 }
 
-static void gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
+static void NORET gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
 {
     SEXP rho = ENTRY_TARGET_ENVIR(entry);
     SEXP result = ENTRY_RETURN_RESULT(entry);
@@ -1730,11 +1725,11 @@ R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
     UNPROTECT(1);
     PROTECT(name = mkString(browser ? "browser" : "tryRestart"));
     PROTECT(entry = allocVector(VECSXP, 2));
-    PROTECT(SET_VECTOR_ELT(entry, 0, name));
+    SET_VECTOR_ELT(entry, 0, name);
     SET_VECTOR_ELT(entry, 1, R_MakeExternalPtr(cptr, R_NilValue, R_NilValue));
     setAttrib(entry, R_ClassSymbol, mkString("restart"));
     R_RestartStack = CONS(entry, R_RestartStack);
-    UNPROTECT(3);
+    UNPROTECT(2);
 }
 
 SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1753,7 +1748,7 @@ SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP attribute_hidden do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden NORET do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     const char *msg;
     SEXP ecall;
@@ -1766,7 +1761,6 @@ SEXP attribute_hidden do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
     ecall = CADR(args);
 
     errorcall_dflt(ecall, "%s", msg);
-    return R_NilValue; /* not reached */
 }
 
 
@@ -1789,11 +1783,11 @@ SEXP attribute_hidden do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/**** need to pre-allocate */
 	SEXP name, entry;
 	PROTECT(name = mkString("abort"));
-	entry = allocVector(VECSXP, 2);
+	PROTECT(entry = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(entry, 0, name);
 	SET_VECTOR_ELT(entry, 1, R_NilValue);
 	setAttrib(entry, R_ClassSymbol, mkString("restart"));
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return entry;
     }
     else return R_NilValue;
@@ -1816,7 +1810,7 @@ SEXP attribute_hidden do_addRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define RESTART_EXIT(r) VECTOR_ELT(r, 1)
 
-static void invokeRestart(SEXP r, SEXP arglist)
+static void NORET invokeRestart(SEXP r, SEXP arglist)
 {
     SEXP exit = RESTART_EXIT(r);
 
@@ -1839,12 +1833,11 @@ static void invokeRestart(SEXP r, SEXP arglist)
     }
 }
 
-SEXP attribute_hidden do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden NORET do_invokeRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     CHECK_RESTART(CAR(args));
     invokeRestart(CAR(args), CADR(args));
-    return R_NilValue; /* not reached */
 }
 
 SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)

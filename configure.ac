@@ -30,7 +30,7 @@ m4_define([R_VERSION],
           m4_bpatsubst(m4_esyscmd([cat VERSION]),
                        [\([0-9.]*\)\(\w\|\W\)*],
                        [\1]))
-AC_INIT([R],[R_VERSION],[http://bugs.r-project.org],[R],[http://www.r-project.org])
+AC_INIT([R],[R_VERSION],[https://bugs.r-project.org],[R],[https://www.r-project.org])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
 
@@ -412,17 +412,17 @@ AC_ARG_WITH([libtiff],
 [R_ARG_USE(libtiff)],
 [use_libtiff=yes])
 AC_ARG_WITH([system-zlib],
-[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(zlib)],
-[use_system_zlib=no])
+[use_system_zlib=yes])
 AC_ARG_WITH([system-bzlib],
-[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(bzlib)],
-[use_system_bzlib=no])
+[use_system_bzlib=yes])
 AC_ARG_WITH([system-pcre],
-[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(pcre)],
-[use_system_pcre=no])
+[use_system_pcre=yes])
 AC_ARG_WITH([system-tre],
 [AS_HELP_STRING([--with-system-tre],[use system tre library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(tre)],
@@ -434,7 +434,7 @@ AC_ARG_WITH([system-xz],
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
-[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2/3) @<:@0@:>@])],
+[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
 [valgrind_level=${withval}],
 [valgrind_level=0])
 
@@ -1021,7 +1021,7 @@ case "${host_os}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
 	## pre-processor to increase the size of an internal table.  It
-	## seems that src/modules/vfonts/g_her_glyph.c contains a line
+	## seems that src/main/vfonts/g_her_glyph.c contains a line
 	## that is too long for the pre-processor without this flag.
 	R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-Wp,-H16000])
 	;;
@@ -2304,6 +2304,53 @@ R_PCRE
 ## tre headers and libraries.
 R_TRE
 
+## libcurl
+AC_PATH_PROG(CURL_CONFIG, curl-config)
+if test -n "${CURL_CONFIG}"; then
+  if test -z "${CURL_CPPFLAGS}"; then
+    CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
+  fi
+  ## This in particular may be wrong for a static library,
+  ## and OpenCSW has in the past copied the static answer over the dynamic one.
+  if test -z "${CURL_LIBS}"; then
+    CURL_LIBS=`${CURL_CONFIG} --libs`
+  fi
+fi
+r_save_CPPFLAGS="${CPPLAGS}"
+CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
+r_save_LIBS="${LIBS}"
+LIBS="${CURL_LIBS} ${LIBS}"
+AC_CACHE_CHECK([if libcurl version >= 7.28.0], [r_cv_have_curl728],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <curl/curl.h>
+int main() 
+{
+#ifdef LIBCURL_VERSION_MAJOR
+#if LIBCURL_VERSION_MAJOR > 7
+  exit(1);
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+  exit(0);
+#else
+  exit(1);
+#endif
+#else
+  exit(1);
+#endif
+}
+]])], [r_cv_have_curl728=yes], [r_cv_have_curl728=no], [r_cv_have_curl728=no])])
+if test "x${r_cv_have_curl728}" != xyes; then
+  ac_cv_have_curl_curl_h=0
+  CURL_CPPFLAGS=
+  CURL_LIBS=
+else
+  AC_CHECK_HEADERS(curl/curl.h)
+fi
+CPPFLAGS="${r_save_CPPFLAGS}"
+LIBS="${r_save_LIBS}"
+AC_SUBST(CURL_CPPFLAGS)
+AC_SUBST(CURL_LIBS)
+
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
 
@@ -2335,7 +2382,7 @@ elif test "${use_system_valgrind}" = yes; then
   AC_CHECK_HEADERS([valgrind/memcheck.h])
 fi
 
-AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1, 2 or 3 to specify levels of Valgrind instrumentation])
+AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
 if test x${use_internal_tzcode} = xdefault; then
 case "${host_os}" in
@@ -2752,7 +2799,6 @@ AC_CONFIG_FILES(
   src/modules/X11/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile
-  src/modules/vfonts/Makefile
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
@@ -2830,8 +2876,23 @@ if test "${acx_lapack_ok}" = "yes"; then
   esac
   R_SH_VAR_ADD(r_external_libs, [LAPACK(${r_lapack})], [, ])
 fi
+if test "${have_zlib}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [zlib], [, ])
+fi
+if test "${have_bzlib}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [bzlib], [, ])
+fi
 if test "${have_lzma}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [lzma], [, ])
+fi
+if test "${have_pcre}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [PCRE], [, ])
+fi
+if test "${have_tre}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [tre], [, ])
+fi
+if test "x$ac_cv_header_curl_curl_h" = xyes; then
+  R_SH_VAR_ADD(r_external_libs, [curl], [, ])
 fi
 
 r_capabilities=

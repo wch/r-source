@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/utils.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -229,3 +229,5 @@ tk_messageBox <-
     if(nzchar(default)) args <- c(args, default=default)
     tclvalue(do.call("tcl", args))
 }
+
+tclVersion <- function() as.character(tcl("info", "patchlevel"))

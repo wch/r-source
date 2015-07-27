@@ -1964,8 +1964,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    PROTECT(ans = allocVector(LGLSXP, 16));
-    PROTECT(ansnames = allocVector(STRSXP, 16));
+    PROTECT(ans = allocVector(LGLSXP, 18));
+    PROTECT(ansnames = allocVector(STRSXP, 18));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -2113,6 +2113,17 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("long.double"));
+    LOGICAL(ans)[i++] = sizeof(LDOUBLE) > sizeof(double);
+
+    SET_STRING_ELT(ansnames, i, mkChar("libcurl"));
+#ifdef HAVE_CURL_CURL_H
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
 
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
@@ -2981,6 +2992,98 @@ SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarLogical(bOK != 0);
 }
 #endif
+
+#include <zlib.h>
+#include <bzlib.h>
+#include <lzma.h>
+#ifdef HAVE_PCRE_PCRE_H
+# include <pcre/pcre.h>
+#else
+# include <pcre.h>
+#endif
+
+#ifdef USE_ICU
+# ifndef USE_ICU_APPLE
+#  include <unicode/uversion.h>
+# else
+#  define U_MAX_VERSION_LENGTH 4
+#  define U_MAX_VERSION_STRING_LENGTH 20
+typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
+void u_versionToString(const UVersionInfo versionArray, char *versionString);
+void u_getVersion(UVersionInfo versionArray);
+# endif
+#endif
+
+#include <iconv.h>
+#if defined(__GLIBC__)
+# include <gnu/libc-version.h>
+#endif
+
+SEXP attribute_hidden
+do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP ans = PROTECT(allocVector(STRSXP, 7));
+    SEXP nms = PROTECT(allocVector(STRSXP, 7));
+    setAttrib(ans, R_NamesSymbol, nms);
+    unsigned int i = 0;
+    char p[256];
+    snprintf(p, 256, "%s", zlibVersion());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("zlib"));
+    snprintf(p, 256, "%s", BZ2_bzlibVersion());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("bzlib"));
+    snprintf(p, 256, "%s", lzma_version_string());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("xz"));
+    snprintf(p, 256, "%s", pcre_version());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("PCRE"));
+#ifdef USE_ICU
+    UVersionInfo icu;
+    char pu[U_MAX_VERSION_STRING_LENGTH];
+    u_getVersion(icu);
+    u_versionToString(icu, pu);
+    SET_STRING_ELT(ans, i, mkChar(pu));
+#else
+    SET_STRING_ELT(ans, i, mkChar(""));
+#endif
+    SET_STRING_ELT(nms, i++, mkChar("ICU"));
+    snprintf(p, 256, "%s", tre_version());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("TRE"));
+#ifdef _LIBICONV_VERSION
+    {
+	int ver = _libiconv_version;
+	snprintf(p, 256, "GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
+    }
+#elif defined(_WIN32)
+    snprintf(p, 256, "%s", "win_iconv");
+#elif defined(__GLIBC__)
+    snprintf(p, 256, "glibc %s", gnu_get_libc_version());
+#else
+    snprintf(p, 256, "%s", "unknown");
+#endif
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("iconv"));
+    UNPROTECT(2);
+    return ans;
+}
+
+/* platform-specific */
+extern void Rsleep(double timeint);
+
+SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    double time = asReal(CAR(args));
+    if (ISNAN(time) || time < 0.)
+	errorcall(call, _("invalid '%s' value"), "time");
+    Rsleep(time);
+    return R_NilValue;
+}
+
 
 /* Formerly src/appl/machar.c:
  * void machar()  -- computes ALL `machine constants' at once.

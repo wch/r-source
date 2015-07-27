@@ -121,6 +121,10 @@ regexec(pattern, text, ignore.case = FALSE,
   Python-style named captures, but not for \emph{long vector} inputs.  
     
   Invalid inputs in the current locale are warned about up to 5 times.
+  
+  Caseless matching with \code{PERL = TRUE} for non-ASCII characters
+  depends on the PCRE library being compiled with \sQuote{Unicode
+  property support}: an external library might not be.
 }
 
 \value{

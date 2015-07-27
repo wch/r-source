@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2013   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
        A subset can be accessed using R_ext/Connections.h but read
        the warning in that file for details. */
 
-typedef enum {HTTPsh, FTPsh, HTTPSsh} UrlScheme;
+typedef enum {HTTPsh, FTPsh, HTTPSsh, FTPSsh} UrlScheme;
 
 /* used in internet module */
 typedef struct urlconn {

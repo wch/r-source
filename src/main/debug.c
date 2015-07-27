@@ -122,9 +122,10 @@ Rboolean R_current_trace_state() { return GET_TRACE_STATE; }
 /* memory tracing */
 /* report when a traced object is duplicated */
 
+#ifdef R_MEMORY_PROFILING
+
 SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-#ifdef R_MEMORY_PROFILING
     SEXP object;
     char buffer[21];
 
@@ -150,16 +151,10 @@ SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_RTRACE(object, 1);
     snprintf(buffer, 21, "<%p>", (void *) object);
     return mkString(buffer);
-#else
-    errorcall(call, _("R was not compiled with support for memory profiling"));
-    return R_NilValue;
-#endif
 }
-
 
 SEXP attribute_hidden do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-#ifdef R_MEMORY_PROFILING
     SEXP object;
 
     checkArity(op, args);
@@ -173,12 +168,22 @@ SEXP attribute_hidden do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (RTRACE(object))
 	SET_RTRACE(object, 0);
-#else
-    errorcall(call, _("R was not compiled with support for memory profiling"));
-#endif
     return R_NilValue;
 }
 
+#else
+
+SEXP attribute_hidden NORET do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    errorcall(call, _("R was not compiled with support for memory profiling"));
+}
+
+SEXP attribute_hidden NORET do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    errorcall(call, _("R was not compiled with support for memory profiling"));
+}
+
+#endif /* R_MEMORY_PROFILING */
 
 #ifndef R_MEMORY_PROFILING
 void memtrace_report(void* old, void *_new) {

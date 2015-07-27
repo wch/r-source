@@ -1067,7 +1067,8 @@ static SEXP processEscapes(SEXP x)
 
     PROTECT( pattern = mkString("(?<!\\\\)((\\\\\\\\)*)\"") );
     PROTECT( replacement = mkString("\\1\\\\\"") );
-    PROTECT( expr = lang5(install("gsub"), ScalarLogical(1), pattern, replacement, x) );
+    SEXP s_gsub = install("gsub");
+    PROTECT( expr = lang5(s_gsub, ScalarLogical(1), pattern, replacement, x) );
     SET_TAG( CDR(expr), install("perl") );
 
     PROTECT( newval = eval(expr, R_BaseEnv) );
@@ -1149,8 +1150,10 @@ static void closerect(DEstruct DE)
 		if (newcol && warn) {
 		    /* change mode to character */
 		    SEXP tmp = coerceVector(cvec, STRSXP);
+		    PROTECT(tmp);
 		    SET_STRING_ELT(tmp, wrow - 1, mkChar(buf));
 		    SET_VECTOR_ELT(DE->work, wcol - 1, tmp);
+		    UNPROTECT(1);
 		}
 	    } else {
 		if (TYPEOF(cvec) == STRSXP)
@@ -1873,10 +1876,9 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
 }
 
 
-static int R_X11IOErr(Display *dsp)
+static int NORET R_X11IOErr(Display *dsp)
 {
     error("X11 fatal IO error: please save work and shut down R");
-    return 0; /* but should never get here */
 }
 
 /* set up the window, print the grid and column/row labels */

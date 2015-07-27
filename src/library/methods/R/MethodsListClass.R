@@ -353,7 +353,7 @@
               function(x, digits) {
                   value <- x
                   x <- x@.Data
-                  value@Data  <- callGeneric()
+                  value@.Data  <- callGeneric()
                   value
               })
     ## some methods for nonStructure, ensuring that the class and slots

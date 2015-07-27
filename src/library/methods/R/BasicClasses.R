@@ -299,16 +299,37 @@
              representation(names = "character", row.names = "data.frameRowLabels"),
              contains = "list", prototype = unclass(data.frame()), where = envir) # the S4 version
     setOldClass("data.frame", S4Class = "data.frame", where = envir)
-    ## the S3 method for $<- does some stupid things to class()
+    ## the S3 methods for $<-, [[<- and [<- do some stupid things to class()
     ## This buffers the effect from S4 classes
     setMethod("$<-", "data.frame", where = envir,
               function(x, name, value) {
-                  x@.Data <- as.list(`$<-.data.frame`(structure(x@.Data, names = x@names,
-                         row.names = x@row.names, class = "data.frame"),
-                     name, value))
-                  ## Assert:  the only slot/attribute that can change
-                  ## in $<-.data.frame is "names", and the assignment
-                  ## of the .Data "slot" copies in the new names
+                  S3Part(x) <- `$<-.data.frame`(S3Part(x, TRUE), name, value)
+                  x
+              })
+    callBracketReplaceGeneric <- function() {
+        call <- sys.call(sys.parent())
+        which.ij <- if (length(call) > 4L) 3:4 else 3L
+        ij <- as.list(call[which.ij])
+        present <- logical(length(ij))
+        for (a in seq_along(ij)) {
+            arg <- ij[[a]]
+            present[a] <- !missing(arg)
+        }
+        ij[present] <- head(c(quote(i), quote(j)), length(ij))[present]
+        call <- as.call(c(call[[1L]], quote(x3), ij, quote(...),
+                          value=quote(value)))
+        eval(call, parent.frame())
+    }
+    setMethod("[<-", "data.frame", where = envir,
+              function (x, i, j, ..., value) {
+                  x3 <- S3Part(x, TRUE)
+                  S3Part(x) <- callBracketReplaceGeneric()
+                  x
+              })
+    setMethod("[[<-", "data.frame", where = envir,
+              function (x, i, j, ..., value) {
+                  x3 <- S3Part(x, TRUE)
+                  S3Part(x) <- callBracketReplaceGeneric()
                   x
               })
     ## methods to go from S4 to S3; first, using registered class; second, general S4 object
@@ -552,11 +573,10 @@
 )
 
 .InitSpecialTypesAndClasses <- function(where) {
-    if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {
+    if(is.null(S3table <- get0(".S3MethodsClasses", envir = where, inherits = FALSE))) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
     }
-    else S3table <- get(".S3MethodsClasses", envir = where)
     specialClasses <- .indirectAbnormalClasses
     specialTypes <- .AbnormalTypes # only part matching classes used
     for(i in seq_along(specialClasses)) {

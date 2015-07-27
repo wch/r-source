@@ -70,7 +70,7 @@
    (2) we can be arrived here from a button or menuitem callback maybe
    in a different thread from the one where R runs.
 */
-static void my_png_error(png_structp png_ptr, png_const_charp msg)
+static void NORET my_png_error(png_structp png_ptr, png_const_charp msg)
 {
     R_ShowMessage((char *) msg);
 #if PNG_LIBPNG_VER < 10400
@@ -325,7 +325,7 @@ typedef struct my_error_mgr * my_error_ptr;
  * Here's the routine that will replace the standard error_exit method:
 */
 
-static void my_error_exit (j_common_ptr cinfo)
+static void NORET my_error_exit (j_common_ptr cinfo)
 {
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_ptr myerr = (my_error_ptr) cinfo->err;
@@ -704,4 +704,36 @@ int R_SaveAsBmp(void  *d, int width, int height,
 	}
     }
     return 1;
+}
+
+const char * in_R_pngVersion(void)
+{
+#ifdef HAVE_PNG
+    return png_get_header_ver(NULL /*ignored*/);
+#else
+    return "";
+#endif
+}
+const char * in_R_jpegVersion(void)
+{
+#ifdef HAVE_JPEG
+    static char ans[10];
+#ifdef JPEG_LIB_VERSION_MAJOR
+    sprintf(ans, "%d.%d", JPEG_LIB_VERSION_MAJOR, JPEG_LIB_VERSION_MINOR);
+#else
+    sprintf(ans, "%d.%d", JPEG_LIB_VERSION/10, JPEG_LIB_VERSION%10);
+#endif
+    return ans;
+#else
+    return "";
+#endif
+}
+
+const char * in_R_tiffVersion(void)
+{
+#ifdef HAVE_TIFF
+    return TIFFGetVersion();
+#else
+    return "";
+#endif
 }

@@ -300,7 +300,9 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXP methodsNS = R_FindNamespace(mkString("methods"));
 	    if(IS_R_UnboundValue(methodsNS))
 		error("missing methods namespace: this should not happen");
+	    PROTECT(methodsNS);
 	    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
+	    UNPROTECT(1);
 	    if(IS_R_UnboundValue(showS))
 		error("missing show() in methods namespace: this should not happen");
 	}
@@ -901,7 +903,9 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		    SEXP methodsNS = R_FindNamespace(mkString("methods"));
 		    if(IS_R_UnboundValue(methodsNS))
 			error("missing methods namespace: this should not happen");
+		    PROTECT(showS);
 		    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
+		    UNPROTECT(1);
 		    if(IS_R_UnboundValue(showS))
 			error("missing show() in methods namespace: this should not happen");
 		}
@@ -982,7 +986,9 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 		SEXP methodsNS = R_FindNamespace(mkString("methods"));
 		if(IS_R_UnboundValue(methodsNS))
 		    error("missing methods namespace: this should not happen");
+		PROTECT(methodsNS);
 		showS = findVarInFrame3(methodsNS, install("show"), TRUE);
+		UNPROTECT(1);
 		if(IS_R_UnboundValue(showS))
 		    error("missing show() in methods namespace: this should not happen");
 	    }
@@ -1095,7 +1101,7 @@ int F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 /* Fortran-callable error routine for lapack */
 
-void F77_NAME(xerbla)(const char *srname, int *info)
+void NORET F77_NAME(xerbla)(const char *srname, int *info)
 {
    /* srname is not null-terminated.  It should be 6 characters. */
     char buf[7];

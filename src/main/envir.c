@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2012  The R Core Team.
+ *  Copyright (C) 1999-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1907,11 +1907,10 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
   argument.  It needs the environment of the calling function as a
   default.
 
-      get(x, envir, mode, inherits)
-      exists(x, envir, mode, inherits)
-
+      exists (x, envir, mode, inherits)
+      get    (x, envir, mode, inherits)
+      get0   (x, envir, mode, inherits, value_if_not_exists)
 */
-
 
 SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1952,10 +1951,10 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
 
     if (isString(CADDR(args))) {
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)), "function")) /* ASCII */
+	if (!strcmp(CHAR(STRING_ELT(CADDR(args), 0)), "function")) /* ASCII */
 	    gmode = FUNSXP;
 	else
-	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
+	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
     } else {
 	error(_("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
@@ -1967,36 +1966,45 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Search for the object */
     rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
+    if (IS_R_MissingArg(rval))
+	error(_("argument \"%s\" is missing, with no default"),
+	      CHAR(PRINTNAME(t1)));
 
-    if (PRIMVAL(op)) { /* have get(.) */
-	if (IS_R_MissingArg(rval))
-	    error(_("argument \"%s\" is missing, with no default"),
-		  CHAR(PRINTNAME(t1)));
+    switch (PRIMVAL(op) ) {
+    case 0: // exists(.) :
+    return ScalarLogical(! IS_R_UnboundValue(rval));
+	break;
+
+    case 1: // have get(.)
 	if (IS_R_UnboundValue(rval)) {
 	    if (gmode == ANYSXP)
 		error(_("object '%s' not found"), EncodeChar(PRINTNAME(t1)));
 	    else
 		error(_("object '%s' of mode '%s' was not found"),
 		      CHAR(PRINTNAME(t1)),
-		      CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
+		      CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
 	}
 
-	/* We need to evaluate if it is a promise */
-	if (TYPEOF(rval) == PROMSXP)
-	    rval = eval(rval, genv);
+#     define GET_VALUE(rval)				\
+	/* We need to evaluate if it is a promise */	\
+	if (TYPEOF(rval) == PROMSXP)			\
+	    rval = eval(rval, genv);			\
+							\
+	if (!ISNULL(rval) && NAMED(rval) == 0)		\
+	    SET_NAMED(rval, 1)
 
-	if (!ISNULL(rval) && NAMED(rval) == 0)
-	    SET_NAMED(rval, 1);
-	return rval;
-    }
-    else { /* exists(.) */
+	GET_VALUE(rval);
+	break;
+
+    case 2: // get0(.)
 	if (IS_R_UnboundValue(rval))
-	    ginherits = 0;
-	else
-	    ginherits = 1;
-	return ScalarLogical(ginherits);
+	    return CAD4R(args);// i.e.  value_if_not_exists
+	GET_VALUE(rval);
+	break;
     }
+    return rval;
 }
+#undef GET_VALUE
 
 static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
 		  SEXP ifnotfound, int inherits, SEXP enclos)
@@ -2080,10 +2088,10 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for(int i = 0; i < nvals; i++) {
 	SEXPTYPE gmode;
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode)), "function"))
+	if (!strcmp(CHAR(STRING_ELT(CADDR(args), i % nmode)), "function"))
 	    gmode = FUNSXP;
 	else {
-	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode)));
+	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), i % nmode)));
 	    if(gmode == (SEXPTYPE) (-1))
 		error(_("invalid '%s' argument"), "mode");
 	}
@@ -2113,6 +2121,15 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 
   It is also called in arithmetic.c. for e.g. do_log
 */
+
+static SEXP findRootPromise(SEXP p) {
+    if (TYPEOF(p) == PROMSXP) {
+        while(TYPEOF(PREXPR(p)) == PROMSXP) {
+            p = PREXPR(p);
+        }
+    }
+    return p;
+}
 
 int attribute_hidden
 R_isMissing(SEXP symbol, SEXP rho)
@@ -2149,6 +2166,7 @@ R_isMissing(SEXP symbol, SEXP rho)
 	    return 1;
 	if (IS_ACTIVE_BINDING(vl))
 	    return 0;
+        SETCAR(vl, findRootPromise(CAR(vl)));
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    IS_R_UnboundValue(PRVALUE(CAR(vl))) &&
 	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP) {
@@ -2224,6 +2242,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return rval;
     }
 
+    t = findRootPromise(t);
     if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
     else LOGICAL(rval)[0] = R_isMissing(PREXPR(t), PRENV(t));
     return rval;
@@ -2493,48 +2512,74 @@ SEXP attribute_hidden do_search(SEXP call, SEXP op, SEXP args, SEXP env)
   functions.  [ ls(envir, all.names, sorted) ]
 
 */
+#define NONEMPTY_(_FRAME_) \
+    CHAR(PRINTNAME(TAG(_FRAME_)))[0] != '.' && ! IS_R_UnboundValue(CAR(_FRAME_))
 
 static int FrameSize(SEXP frame, int all)
 {
     int count = 0;
-    while (! IS_R_NilValue(frame)) {
-	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
-	    ! IS_R_UnboundValue(CAR(frame)))
+    if (all) {
+	while (! IS_R_NilValue(frame)) {
 	    count += 1;
-	frame = CDR(frame);
+	    frame = CDR(frame);
+	}
+    } else {
+	while (! IS_R_NilValue(frame)) {
+	    if (NONEMPTY_(frame))
+		count += 1;
+	    frame = CDR(frame);
+	}
     }
     return count;
 }
 
 static void FrameNames(SEXP frame, int all, SEXP names, int *indx)
 {
-    while (! IS_R_NilValue(frame)) {
-	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
-	    ! IS_R_UnboundValue(CAR(frame))) {
+    if (all) {
+	while (! IS_R_NilValue(frame)) {
 	    SET_STRING_ELT(names, *indx, PRINTNAME(TAG(frame)));
 	    (*indx)++;
+	    frame = CDR(frame);
 	}
-	frame = CDR(frame);
+    } else {
+	while (! IS_R_NilValue(frame)) {
+	    if (NONEMPTY_(frame)) {
+		SET_STRING_ELT(names, *indx, PRINTNAME(TAG(frame)));
+		(*indx)++;
+	    }
+	    frame = CDR(frame);
+	}
     }
 }
 
 static void FrameValues(SEXP frame, int all, SEXP values, int *indx)
 {
-    while (! IS_R_NilValue(frame)) {
-	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
-	    ! IS_R_UnboundValue(CAR(frame))) {
-	    SEXP value = CAR(frame);
-	    if (TYPEOF(value) == PROMSXP) {
-		PROTECT(value);
-		value = eval(value, R_GlobalEnv);
-		UNPROTECT(1);
-	    }
-	    SET_VECTOR_ELT(values, *indx, lazy_duplicate(value));
-	    (*indx)++;
+    if (all) {
+	while (! IS_R_NilValue(frame)) {
+#         define DO_FrameValues						\
+	    SEXP value = CAR(frame);					\
+	    if (TYPEOF(value) == PROMSXP) {				\
+		PROTECT(value);						\
+		value = eval(value, R_GlobalEnv);			\
+		UNPROTECT(1);						\
+	    }								\
+	    SET_VECTOR_ELT(values, *indx, lazy_duplicate(value));	\
+	    (*indx)++
+
+	    DO_FrameValues;
+	    frame = CDR(frame);
 	}
-	frame = CDR(frame);
+    } else {
+	while (! IS_R_NilValue(frame)) {
+	    if (NONEMPTY_(frame)) {
+		DO_FrameValues;
+	    }
+	    frame = CDR(frame);
+	}
     }
 }
+#undef DO_FrameValues
+#undef NONEMPTY_
 
 static int HashTableSize(SEXP table, int all)
 {
@@ -3369,7 +3414,8 @@ SEXP R_FindPackageEnv(SEXP info)
 {
     SEXP expr, val;
     PROTECT(info);
-    PROTECT(expr = LCONS(install("findPackageEnv"), LCONS(info, R_NilValue)));
+    SEXP s_findPackageEnv = install("findPackageEnv");
+    PROTECT(expr = LCONS(s_findPackageEnv, LCONS(info, R_NilValue)));
     val = eval(expr, R_GlobalEnv);
     UNPROTECT(2);
     return val;
@@ -3382,7 +3428,9 @@ Rboolean R_IsNamespaceEnv(SEXP rho)
     else if (TYPEOF(rho) == ENVSXP) {
 	SEXP info = findVarInFrame3(rho, R_NamespaceSymbol, TRUE);
 	if (! IS_R_UnboundValue(info) && TYPEOF(info) == ENVSXP) {
+	    PROTECT(info);
 	    SEXP spec = findVarInFrame3(info, install("spec"), TRUE);
+	    UNPROTECT(1);
 	    if (! IS_R_UnboundValue(spec) &&
 		TYPEOF(spec) == STRSXP && LENGTH(spec) > 0)
 		return TRUE;
@@ -3411,7 +3459,9 @@ SEXP R_NamespaceEnvSpec(SEXP rho)
     else if (TYPEOF(rho) == ENVSXP) {
 	SEXP info = findVarInFrame3(rho, R_NamespaceSymbol, TRUE);
 	if (! IS_R_UnboundValue(info) && TYPEOF(info) == ENVSXP) {
+	    PROTECT(info);
 	    SEXP spec = findVarInFrame3(info, install("spec"), TRUE);
+	    UNPROTECT(1);
 	    if (! IS_R_UnboundValue(spec) &&
 		TYPEOF(spec) == STRSXP && LENGTH(spec) > 0)
 		return spec;
@@ -3427,7 +3477,8 @@ SEXP R_FindNamespace(SEXP info)
 {
     SEXP expr, val;
     PROTECT(info);
-    PROTECT(expr = LCONS(install("getNamespace"), LCONS(info, R_NilValue)));
+    SEXP s_getNamespace = install("getNamespace");
+    PROTECT(expr = LCONS(s_getNamespace, LCONS(info, R_NilValue)));
     val = eval(expr, R_GlobalEnv);
     UNPROTECT(2);
     return val;

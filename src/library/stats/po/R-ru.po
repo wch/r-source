@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-11-20 11:48\n"
 "PO-Revision-Date: 2014-03-11 10:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1261,6 +1261,12 @@ msgstr "'iter.max' должен быть положительным"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "в 'x' и 'centers' нужно одно количество колонок"
+
+msgid "'x' is a list, so ignoring argument 'g'"
+msgstr ""
+
+msgid "some elements of 'x' are not numeric and will be coerced to numeric"
+msgstr ""
 
 msgid "not enough 'x' data"
 msgstr "недостаточно данных 'x'"

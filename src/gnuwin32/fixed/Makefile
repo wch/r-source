@@ -2,6 +2,9 @@ include ../MkRules
 
 R_HOME = ../../..
 
+# FIXME:  Should find a make where $(abspath ...) works and avoid this...
+LOCAL_SOFT := $(shell ../Rpwd.exe $(LOCAL_SOFT))
+
 all: profiles fixhtml fixetc fixdoc svnonly
 
 profiles: $(R_HOME)/library/base/R/Rprofile

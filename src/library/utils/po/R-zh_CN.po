@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:39\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -637,6 +637,10 @@ msgstr ""
 "不知道'lib'元素里如何安装依赖程序\n"
 "因此略过不装"
 
+#, fuzzy
+msgid "type 'binary' is not supported on this platform"
+msgstr "本平台只支持'html = TRUE'"
+
 msgid "no packages were specified"
 msgstr "没有设定程序包"
 
@@ -659,11 +663,6 @@ msgstr "无法建立临时目录%s"
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
 msgstr "type == \"both\"只适用在Windows上或在为Mac OS X的CRAN构建上"
-
-msgid ""
-"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
-msgstr ""
-"如果已经设定了'available'或'contriburl'的话，不能再设定type == \"both\""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "设定了'repos = NULL'后就不能再设定type == \"both\""
@@ -1141,8 +1140,9 @@ msgstr[0] ""
 "从%s中删除程序包\n"
 "(因为没有指定%s)"
 
-msgid "package %s is not available (for %s)"
-msgid_plural "packages %s are not available (for %s)"
+#, fuzzy
+msgid "package %s is not available (%s)"
+msgid_plural "packages %s are not available (%s)"
 msgstr[0] "没有%s这个程序包(给%s用)"
 
 msgid "dependency %s is not available"
@@ -1172,13 +1172,16 @@ msgid_plural ""
 "There are binary versions available but the source versions are later"
 msgstr[0] "有二进制版本的，但源代码版本是后来的"
 
-msgid "Do you want to install from sources the package which need compilation?"
+#, fuzzy
+msgid ""
+"Do you want to install from sources the package which needs compilation?"
 msgid_plural ""
 "Do you want to install from sources the packages which need compilation?"
 msgstr[0] "你想从源代码安装的需要编译的程序包？"
 
+#, fuzzy
 msgid ""
-"Package which are only available in source form, and may need compilation of "
+"Package which is only available in source form, and may need compilation of "
 "C/C++/Fortran"
 msgid_plural ""
 "Packages which are only available in source form, and may need compilation "
@@ -1216,6 +1219,12 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid ""
+#~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "
+#~ "specified"
+#~ msgstr ""
+#~ "如果已经设定了'available'或'contriburl'的话，不能再设定type == \"both\""
 
 #~ msgid ""
 #~ "If nothing happens, you should open\n"

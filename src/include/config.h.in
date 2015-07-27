@@ -153,6 +153,9 @@
 /* Define to 1 if you have the `ctanh' function. */
 #undef HAVE_CTANH
 
+/* Define to 1 if you have the <curl/curl.h> header file. */
+#undef HAVE_CURL_CURL_H
+
 /* define if the compiler supports basic C++11 syntax */
 #undef HAVE_CXX11
 
@@ -1122,7 +1125,7 @@
 /* Define according to your operating system type. */
 #undef Unix
 
-/* Define as 1, 2 or 3 to specify levels of Valgrind instrumentation */
+/* Define as 1 or 2 to specify levels of Valgrind instrumentation */
 #undef VALGRIND_LEVEL
 
 /* Version number of package */

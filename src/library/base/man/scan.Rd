@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -51,14 +51,15 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     (or \code{scan}'s \code{fileEncoding} argument).
   }
 
-  \item{what}{the type of \code{what} gives the type of data to be read.
-    The supported types are \code{logical}, \code{integer}, \code{numeric},
-    \code{complex}, \code{character}, \code{raw} and \code{\link{list}}.
-    If \code{what} is a list, it is assumed that the lines of the data file
-    are records each containing \code{length(what)} items
-    (\sQuote{fields}) and the list components should have elements which
-    are one of the first six types listed or \code{NULL}, see section
-    \sQuote{Details} below.}
+  \item{what}{the \link{type} of \code{what} gives the type of data to
+    be read.  (Here \sQuote{type} is used in the sense of
+    \code{\link{typeof}}.)  The supported types are \code{logical},
+    \code{integer}, \code{numeric}, \code{complex}, \code{character},
+    \code{raw} and \code{\link{list}}.  If \code{what} is a list, it is
+    assumed that the lines of the data file are records each containing
+    \code{length(what)} items (\sQuote{fields}) and the list components
+    should have elements which are one of the first six (\link{atomic})
+    types listed or \code{NULL}, see section \sQuote{Details} below.}
 
   \item{nmax}{integer: the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
@@ -183,8 +184,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \sQuote{White space} is defined for the purposes of this function as
   one or more contiguous characters from the set space, horizontal tab,
   carriage return and line feed.  It does not include form feed nor
-  vertical tab, but in Latin-1 and Windows 8-bit locales 'space'
-  includes non-breaking space.
+  vertical tab, but in Latin-1 and Windows 8-bit locales (but not UTF-8)
+  'space' includes the non-breaking space \samp{"\xa0"}.
 
   Empty numeric fields are always regarded as missing values.
   Empty character fields are scanned as empty character vectors, unless

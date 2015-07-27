@@ -21,14 +21,13 @@ OBJECTS = $(SOURCES_C:.c=.o) ../../../gnuwin32/dllversion.o
 SHLIB = $(pkg).dll
 RESFLAGS = -I $(R_HOME)/include
 
-XZ_CPPFLAGS = -DLZMA_API_STATIC -I../../../extra/xz/api
+XZ_CPPFLAGS = -DLZMA_API_STATIC -I$(LOCAL_SOFT)/include
 
-PKG_CPPFLAGS=-I$(R_HOME)/src/include -DHAVE_CONFIG_H \
+PKG_CPPFLAGS = -I$(R_HOME)/src/include -DHAVE_CONFIG_H \
   -I$(R_HOME)/src/main -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra \
   -I$(R_HOME)/src/library/grDevices/src $(XZ_CPPFLAGS)
 
-PKG_LIBS=-lRgraphapp -lVersion
-
+PKG_LIBS = -lRgraphapp -lVersion -L"$(EXT_LIBS)"/lib$(R_ARCH) -llzma
 
 all: makeMakedeps shlib
 

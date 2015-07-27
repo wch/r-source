@@ -285,7 +285,13 @@ static int R_gzread (gzFile file, voidp buf, unsigned len)
 
     if (s == NULL || s->mode != 'r') return Z_STREAM_ERROR;
 
-    if (s->z_err == Z_DATA_ERROR || s->z_err == Z_ERRNO) return -1;
+    if (s->z_err == Z_DATA_ERROR) {
+	warning("invalid or incomplete compressed data");
+	return -1;
+    } else if(s->z_err == Z_ERRNO) {
+	warning("error reading the file");
+	return -1;
+    }
     if (s->z_err == Z_STREAM_END) return 0;  /* EOF */
 
     next_out = (Byte*) buf;
@@ -340,6 +346,7 @@ static int R_gzread (gzFile file, voidp buf, unsigned len)
             start = s->stream.next_out;
 
             if (getLong(s) != s->crc) {
+		warning("invalid or incomplete compressed data");
                 s->z_err = Z_DATA_ERROR;
             } else {
                 (void)getLong(s);
@@ -359,8 +366,13 @@ static int R_gzread (gzFile file, voidp buf, unsigned len)
     s->crc = crc32(s->crc, start, (uInt) (s->stream.next_out - start));
 
     if (len == s->stream.avail_out &&
-        (s->z_err == Z_DATA_ERROR || s->z_err == Z_ERRNO))
-        return -1;
+        (s->z_err == Z_DATA_ERROR || s->z_err == Z_ERRNO)) {
+	if(s->z_err == Z_DATA_ERROR)
+	    warning("invalid or incomplete compressed data");
+	else if(s->z_err == Z_ERRNO)
+	    warning("error reading the file");
+	return -1;
+    }
     return (int)(len - s->stream.avail_out);
 }
 

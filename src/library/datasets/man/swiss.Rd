@@ -1,6 +1,6 @@
 % File src/library/datasets/man/swiss.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{swiss}
@@ -64,8 +64,7 @@
 }
 \note{
   Files for all 182 districts in 1888 and other years have been available at
-  \url{http://opr.princeton.edu/archive/eufert/switz.html} or
-  \url{http://opr.princeton.edu/archive/pefp/switz.asp}.
+  \url{https://opr.princeton.edu/archive/pefp/switz.aspx}.
 
   They state that variables \code{Examination} and \code{Education}
   are averages for 1887, 1888 and 1889.

@@ -146,8 +146,12 @@ get_exclude_patterns <- function()
             "Report bugs at bugs.r-project.org .", sep = "\n")
     }
 
-    add_build_stamp_to_description_file <- function(ldpath) {
+    add_build_stamp_to_description_file <- function(ldpath, pkgdir)
+    {
         db <- .read_description(ldpath)
+        if(is.na(db["NeedsCompilation"]))
+            db["NeedsCompilation"] <-
+                if(dir.exists(file.path(pkgdir, "src"))) "yes" else "no"
         ## this is an optional function, so could fail
         user <- Sys.info()["user"]
         if(user == "unknown") user <- Sys.getenv("LOGNAME")
@@ -553,10 +557,18 @@ get_exclude_patterns <- function()
     }
     fix_nonLF_in_make_files <- function(pkgname, Log) {
         fix_nonLF_in_files(pkgname,
-                           paste0("^",c("Makefile", "Makefile.in", "Makefile.win",
+                           paste0("^(",
+                                  paste(c("Makefile", "Makefile.in", "Makefile.win",
                                        "Makevars", "Makevars.in", "Makevars.win"),
-                                 "$"), Log)
-    }
+                                        collapse = "|"), ")$"), Log)
+        ## Other Makefiles
+        makes <- dir(pkgname, pattern = "^Makefile$",
+                     full.names = TRUE, recursive = TRUE)
+        for (ff in makes) {
+            lines <- readLines(ff, warn = FALSE)
+            writeLinesNL(lines, ff)
+        }
+   }
 
     find_empty_dirs <- function(d)
     {
@@ -928,8 +940,8 @@ get_exclude_patterns <- function()
         ## Not restricted by umask.
 	if (!WINDOWS) .Call(dirchmod, pkgname, group.writable=FALSE)
         ## Add build stamp to the DESCRIPTION file.
-        add_build_stamp_to_description_file(file.path(pkgname,
-                                                      "DESCRIPTION"))
+        add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"),
+                                            pkgdir)
         ## Add expanded R fields to the DESCRIPTION file.
         add_expanded_R_fields_to_description_file(file.path(pkgname,
                                                             "DESCRIPTION"))

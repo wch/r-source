@@ -29,6 +29,8 @@ typedef int    (*R_SockSelectRoutine)(int nsock, int *insockfd, int *ready, int 
 typedef int    (*R_HTTPDCreateRoutine)(const char *ip, int port);
 typedef void   (*R_HTTPDStopRoutine)();
 
+typedef SEXP (*R_CurlRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
+
 typedef struct {
     R_DownloadRoutine download;
     R_NewUrlRoutine   newurl;
@@ -53,6 +55,10 @@ typedef struct {
 
     R_HTTPDCreateRoutine  HTTPDCreate;
     R_HTTPDStopRoutine    HTTPDStop;
+
+    R_CurlRoutine curlVersion;
+    R_CurlRoutine curlGetHeaders;
+    R_CurlRoutine curlDownload;
 } R_InternetRoutines;
 
 R_InternetRoutines *R_setInternetRoutines(R_InternetRoutines *routines);

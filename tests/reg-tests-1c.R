@@ -578,7 +578,57 @@ fn <- function(fmt = "%s") {}
 f <- tempfile(fileext = ".Rd")
 prompt(fn, filename = f)
 rd <- tools::parse_Rd(f)
-## Gave syntax errors because the percent sign in Usage 
+## Gave syntax errors because the percent sign in Usage
 ## was taken as the start of a comment.
+
+
+## missing() did not propagate through '...', PR#15707
+check <- function(x,y,z) c(missing(x), missing(y), missing(z))
+check1 <- function(...) check(...)
+check2 <- function(...) check1(...)
+stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
+## missing() was unable to handle recursive promises
+
+
+## power.t.test() failure for very large n (etc): PR#15792
+(ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
+(ppt <- power.prop.test(p1 = .5, p2 = .501, sig.level=.001, power=0.90, tol=1e-8))
+stopifnot(all.equal(ptt$n, 192297000, tol = 1e-5),
+          all.equal(ppt$n,  10451937, tol = 1e-7))
+## call to uniroot() did not allow n > 1e7
+
+
+## save(*, ascii=TRUE):  PR#16137
+x0 <- x <- c(1, NA, NaN)
+save(x, file=(sf <- tempfile()), ascii = TRUE)
+load(sf)
+stopifnot(identical(x0, x))
+## x had 'NA' instead of 'NaN'
+
+
+## eigen(*, symmetric = <default>) with asymmetric dimnames,  PR#16151
+m <- matrix(c(83,41), 5, 4,
+	    dimnames=list(paste0("R",1:5), paste0("C",1:4)))[-5,] + 3*diag(4)
+stopifnot( all.equal(eigen(m, only.values=TRUE) $ values,
+		     c(251, 87, 3, 3), tol=1e-14) )
+## failed, using symmetric=FALSE and complex because of the asymmetric dimnames()
+
+
+## match.call() re-matching '...'
+test <- function(x, ...) test2(x, 2, ...)
+test2 <- function(x, ...) match.call(test2, sys.call())
+stopifnot(identical(test(1, 3), quote(test2(x=x, 2, 3))))
+## wrongly gave test2(x=x, 2, 2, 3) in R <= 3.1.2
+
+## callGeneric not forwarding dots in call (PR#16141)
+setGeneric("foo", function(x, ...) standardGeneric("foo"))
+setMethod("foo", "character",
+          function(x, capitalize=FALSE) if (capitalize) toupper(x) else x)
+setMethod("foo", "factor",
+          function(x, capitalize=FALSE) { x <- as.character(x);  callGeneric() })
+toto1 <- function(x, ...) foo(x, ...)
+stopifnot(identical(toto1(factor("a"), capitalize=TRUE), "A"))
+## wrongly did not capitalize in R <= 3.1.2
+
 
 proc.time()

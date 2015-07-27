@@ -465,23 +465,20 @@ static size_t unz_read(void *ptr, size_t size, size_t nitems,
     return unzReadCurrentFile(uf, ptr, (unsigned int)(size*nitems))/size;
 }
 
-static int null_vfprintf(Rconnection con, const char *format, va_list ap)
+static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error(_("printing not enabled for this connection"));
-    return 0; /* -Wall */
 }
 
-static size_t null_write(const void *ptr, size_t size, size_t nitems,
+static size_t NORET null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     error(_("write not enabled for this connection"));
-    return 0; /* -Wall */
 }
 
-static double null_seek(Rconnection con, double where, int origin, int rw)
+static double NORET null_seek(Rconnection con, double where, int origin, int rw)
 {
     error(_("seek not enabled for this connection"));
-    return 0; /* -Wall */
 }
 
 static int null_fflush(Rconnection con)

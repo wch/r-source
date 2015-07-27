@@ -7,10 +7,11 @@
 \docType{data}
 \alias{eurodist}
 \alias{UScitiesD}
-\title{Distances Between European and US Cities, respectively}
+\title{Distances Between European Cities and Between US Cities}
 \description{
-  The \code{eurodist} data give the road distances (in km) between 21 cities in Europe.
-  The data are taken from a table in \emph{The Cambridge Encyclopaedia}.
+  The \code{eurodist} gives the road distances (in km) between 21
+  cities in Europe.  The data are taken from a table in \emph{The
+  Cambridge Encyclopaedia}.
 
   \code{UScitiesD} gives \dQuote{straight line} distances between 10
   cities in the US.

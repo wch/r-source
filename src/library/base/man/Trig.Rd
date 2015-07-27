@@ -1,6 +1,6 @@
 % File src/library/base/man/Trig.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Trig}
@@ -9,9 +9,9 @@
 \alias{cos}
 \alias{sin}
 \alias{tan}
-\alias{acos}
-\alias{asin}
-\alias{atan}
+\alias{acos}\alias{arccos}
+\alias{asin}\alias{arcsin}
+\alias{atan}\alias{arctan}
 \alias{atan2}
 \alias{cospi}
 \alias{sinpi}
@@ -49,10 +49,10 @@ tanpi(x)
   Angles are in radians, not degrees, for the standard versions (i.e., a
   right angle is \eqn{\pi/2}), and in \sQuote{half-rotations} for
   \code{cospi} etc.
-  
+
   \code{cospi(x)}, \code{sinpi(x)}, and \code{tanpi(x)} are accurate
   for \code{x} which are multiples of a half.
-   
+
   All except \code{atan2} are \link{internal generic} \link{primitive}
   functions: methods can be defined for them individually or via the
   \code{\link[=S3groupGeneric]{Math}} group generic.

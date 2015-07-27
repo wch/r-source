@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"компиляция TeX файла %s не удалась с сообщением:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "проверяю %s..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"
@@ -241,9 +251,9 @@ msgstr ""
 "Пакеты с привилегиями 'base' или 'recommended' или 'defunct-base' должны "
 "быть уже известны R."
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
 "руководства 'Writing R Extensions'."
@@ -311,9 +321,8 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Пропущенная связь или связи с объектом документации '%s':"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "См. информацию в секции 'Cross-references' руководства 'Writing R "
 "Extensions'."
@@ -394,6 +403,14 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr "не объявлен вызов 'library' или 'require' из %s"
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "не объявлены вызовы 'library' или 'require' из:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "не объявлены вызовы 'library' или 'require' из:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
@@ -582,6 +599,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "не могу создать временную папку %s"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr "Запускаю"
 
@@ -616,10 +636,6 @@ msgstr "файл '%s' не найден"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "Нестандартная лицензия:"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Среди миниатюр '%s' '%s' и '%s' имеют одинаковые имена"
@@ -1410,6 +1426,10 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "Нестандартная лицензия:"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"

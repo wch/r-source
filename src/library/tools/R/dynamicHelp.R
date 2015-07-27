@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,32 +66,45 @@ httpd <- function(path, query, ...)
         res <- if(identical(names(query), "category"))
             help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
         else {
-            fields = c("alias", "concept", "title")
+            fields <- types <- character()
             args <- list(pattern = ".")
             for (i in seq_along(query))
             	switch(names(query)[i],
-            		pattern = args$pattern <- query[i],
-            		title = if (!bool(query[i])) fields <- setdiff(fields, "title"),
-            		keyword = if (bool(query[i])) fields <- union(fields, "keyword"),
-            		alias = if (!bool(query[i])) fields <- setdiff(fields, "alias"),
-            		concept = if (!bool(query[i])) fields <- setdiff(fields, "concept"),
-            		name = if (bool(query[i])) fields <- union(fields, "name"),
-            		agrep = {
-            		    args$agrep <- as.logical(query[i])
-            		    if (is.na(args$agrep))
-            		    	args$agrep <- as.numeric(query[i])
-            		    if (is.na(args$agrep))
-            		     	args$agrep <- query[i]
-            		},
-            		ignore.case = args$ignore.case <- bool(query[i]),
-            		types = args$types <- strsplit(query[i], ";")[[1L]],
-            		package = args$package <- strsplit(query[i], ";")[[1L]],
-            		lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
-            		warning("Unrecognized search field: ", names(query)[i],
-                                domain = NA)
+                       pattern = args$pattern <- query[i],
+                       fields.alias =
+                           if(bool(query[i]))
+                               fields <- c(fields, "alias"),
+                       fields.title =
+                           if(bool(query[i]))
+                               fields <- c(fields, "title"),
+                       fields.concept =
+                           if(bool(query[i]))
+                               fields <- c(fields, "concept"),
+                       fields.keyword =
+                           if(bool(query[i]))
+                               fields <- c(fields, "keyword"),
+                       ignore.case =
+                           args$ignore.case <- bool(query[i]),
+                       agrep = 
+                           args$agrep <- bool(query[i]),
+                       types.help =
+                           if(bool(query[i]))
+                               types <- c(types, "help"),
+                       types.vignette =
+                           if(bool(query[i]))
+                               types <- c(types, "vignette"),
+                       types.demo =
+                           if(bool(query[i]))
+                               types <- c(types, "demo"),
+                       ## Not sure how to get these ...
+                       package = args$package <- strsplit(query[i], ";")[[1L]],
+                       lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
+                       warning("Unrecognized search field: ", names(query)[i],
+                               domain = NA)
                        )
             args$fields <- fields
             args$use_UTF8 <- TRUE
+            args$types <- types
             do.call(help.search, args)
         }
         types <- res$types
@@ -182,7 +195,8 @@ httpd <- function(path, query, ...)
     }
 
     charsetSetting <- function(pkg) {
-    	encoding <-read.dcf(system.file("DESCRIPTION", package=pkg), "Encoding")
+    	encoding <- read.dcf(system.file("DESCRIPTION", package=pkg),
+                             "Encoding")
 	if (is.na(encoding))
 	    ""
         else
@@ -378,7 +392,7 @@ httpd <- function(path, query, ...)
                                        up))
             else if (exists)
                 return(list(file = file, "content-type" = mime_type(rest)))
-            else 
+            else
             	return(error_page(gettextf("URL %s was not found", mono(path))))
         } else {
             ## request to list <pkg>/doc
@@ -389,7 +403,7 @@ httpd <- function(path, query, ...)
     } else if (grepl(demoRegexp, path)) {
     	pkg <- sub(demoRegexp, "\\1", path)
 
-    	url <- paste0("http://127.0.0.1:", httpdPort,
+    	url <- paste0("http://127.0.0.1:", httpdPort(),
                       "/doc/html/Search?package=",
                       pkg, "&agrep=FALSE&types=demo")
     	return(list(payload = paste0('Redirect to <a href="', url,
@@ -456,10 +470,41 @@ httpd <- function(path, query, ...)
         ## remake as needed
         utils::make.packages.html(temp = TRUE)
         list(file = file.path(tempdir(), ".R", path))
+    } else if(path == "/doc/html/rw-FAQ.html") {
+        file <- file.path(R.home("doc"), sub("^/doc", "", path))
+        if(file.exists(file))
+            list(file = file, "content-type" = mime_type(path))
+        else {
+            url <- "http://cran.r-project.org/bin/windows/base/rw-FAQ.html"
+	    return(list(payload = paste0('Redirect to <a href="', url, '">"',
+                                         url, '"</a>'),
+	    		"content-type" = 'text/html',
+	    		header = paste0('Location: ', url),
+	    		"status code" = 302L)) # temporary redirect
+         }
     } else if(grepl("doc/html/.*html$" , path) &&
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
         ## use updated version, e.g. of packages.html
         list(file = tmp)
+    } else if(grepl("doc/manual/.*html$" , path)) {
+        file <- file.path(R.home("doc"), sub("^/doc", "", path))
+        if(file.exists(file))
+            list(file = file, "content-type" = mime_type(path))
+        else if(file.exists(file <- sub("/manual/", "/html/", file))) {
+            ## tarball has pre-built version of R-admin.html
+            list(file = file, "content-type" = mime_type(path))
+        } else {
+            ## url <- "http://cran.r-project.org/manuals.html"
+            version <-
+                if(grepl("unstable", R.version$status)) "r-devel" else "r-patched"
+            url <- file.path("http://cran.r-project.org/doc/manuals",
+                             version, basename(path))
+	    return(list(payload = paste0('Redirect to <a href="', url, '">"',
+                                         url, '"</a>'),
+	    		"content-type" = 'text/html',
+	    		header = paste0('Location: ', url),
+	    		"status code" = 302L)) # temporary redirect
+        }
     } else {
         if(grepl("^/doc/", path)) {
             ## /doc/AUTHORS and so on.
@@ -473,26 +518,31 @@ httpd <- function(path, query, ...)
 }
 
 ## 0 = untried, < 0 = failed to start,  > 0 = actual port
-httpdPort <- 0L
+httpdPort <- local({
+    port <- 0L
+    function(new) {
+        if(!missing(new))
+            port <<- new
+        else
+            port
+    }
+})
 
 startDynamicHelp <- function(start=TRUE)
 {
-    env <- environment(startDynamicHelp)
     if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
-        unlockBinding("httpdPort", env)
-        httpdPort <<- -1L
-        lockBinding("httpdPort", env)
+        httpdPort(-1L)
         warning("httpd server disabled by R_DISABLE_HTTPD", immediate. = TRUE)
         utils::flush.console()
-        return(httpdPort)
+        return(invisible(httpdPort()))
     }
-    if (start && httpdPort) {
-        if(httpdPort > 0) stop("server already running")
+    port <- httpdPort()
+    if (start && port) {
+        if(port > 0L) stop("server already running")
         else stop("server could not be started on an earlier attempt")
     }
-    if(!start && httpdPort <= 0L)
+    if(!start && (port <= 0L))
         stop("no running server to stop")
-    unlockBinding("httpdPort", env)
     if (start) {
         message("starting httpd help server ...", appendLF = FALSE)
         utils::flush.console()
@@ -513,7 +563,7 @@ startDynamicHelp <- function(start=TRUE)
 	    status <- .Call(startHTTPD, "127.0.0.1", ports[i])
 	    if (status == 0L) {
                 OK <- TRUE
-                httpdPort <<- ports[i]
+                httpdPort(ports[i])
                 break
             }
             if (status != -2L) break
@@ -526,15 +576,14 @@ startDynamicHelp <- function(start=TRUE)
         } else {
             warning("failed to start the httpd server", immediate. = TRUE)
             utils::flush.console()
-            httpdPort <<- -1L
+            httpdPort(-1L)
         }
     } else {
         ## Not really tested
         .Call(stopHTTPD)
-    	httpdPort <<- 0L
+    	httpdPort(0L)
     }
-    lockBinding("httpdPort", env)
-    invisible(httpdPort)
+    invisible(httpdPort())
 }
 
 ## environment holding potential custom httpd handlers

@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/TclInterface.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TclInterface}
@@ -51,6 +51,7 @@
 \alias{.TkRoot}
 \alias{addTclPath}
 \alias{tclRequire}
+\alias{tclVersion}
 \description{
   These functions and variables provide the basic glue between \R and the
   Tcl interpreter and Tk GUI toolkit. Tk
@@ -110,6 +111,7 @@ is.tclObj(x)
 
 addTclPath(path = ".")
 tclRequire(package, warn = TRUE)
+tclVersion()
 }
 \arguments{
   \item{objv}{a named vector of Tcl objects}
@@ -252,6 +254,9 @@ tclRequire(package, warn = TRUE)
   if it succeeds, or \code{FALSE} if it fails (when a warning is
   issued).  To see the current search path as an \R character vector, use
 \preformatted{strsplit(tclvalue('auto_path'), " ")[[1]]}.
+
+  The Tcl version (including patchlevel) is returned as a character
+  string (such as \code{"8.6.3"}).
 }
 \note{
   Strings containing unbalanced braces are currently not handled
@@ -266,6 +271,8 @@ tclRequire(package, warn = TRUE)
   compiled into this build of \R.
 }
 \examples{
+tclVersion()
+
 \dontrun{
 ## These cannot be run by example() but should be OK when pasted
 ## into an interactive R session with the tcltk package loaded

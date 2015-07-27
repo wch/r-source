@@ -671,3 +671,18 @@ setOldClass(c("foo", "numeric"))
 n <- structure(1, class=c("foo", "numeric"))
 try(?f(n))
 ## different failures in R < 3.1.0.
+
+
+## identical() did not look at S4 bit:
+a <- 1:5
+b <- setClass("B", "integer")(a)
+stopifnot(is.character(all.equal(a, b)))
+attributes(a) <- attributes(b)
+if(!isS4(a)) { # still (unfortunately)
+    message("'a' is not S4 yet")
+    if(identical(a,b)) stop("identical() not looking at S4 bit")
+    ## set S4 bit manually:
+    a <- asS4(a)
+}
+stopifnot(identical(a, b), isS4(a))
+## failed in R <= 3.1.1

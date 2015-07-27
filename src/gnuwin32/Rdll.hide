@@ -70,6 +70,7 @@
  R_ChooseFile
  R_CollectWarnings
  R_Collected
+ R_ColonSymbol
  R_CommentSymbol
  R_ConnIdSymbol
  R_ConsoleIob
@@ -103,6 +104,7 @@
  R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
+ R_Interactive
  R_IoBufferFree
  R_IoBufferGetc
  R_IoBufferInit
@@ -128,6 +130,7 @@
  R_OpenSiteFile
  R_OpenSysInitFile
  R_OutputCon
+ R_PPStackSize
  R_Parse1Buffer
  R_Parse1File
  R_ParseBuffer
@@ -185,7 +188,6 @@
  R_compress1
  R_compress2
  R_compress3
- R_current_trace_state
  R_data_class2
  R_dec_min_exponent
  R_decompress1
@@ -230,6 +232,7 @@
  R_newsock
  R_newunz
  R_newurl
+ R_num_math_threads
  R_nwarnings
  R_osDynSymbol
  R_possible_dispatch
@@ -270,6 +273,7 @@
  Rf_DispatchOrEval
  Rf_EncodeEnvironment
  Rf_EncodeRaw
+ Rf_EncodeReal2
  Rf_EncodeString
  Rf_EnsureString
  Rf_ErrorMessage
@@ -323,6 +327,7 @@
  Rf_TimeToSeed
  Rf_VectorIndex
  Rf_WarningMessage
+ Rf_addMissingVarsToNewEnv
  Rf_allocCharsxp
  Rf_asVecSize
  Rf_bd0
@@ -331,6 +336,7 @@
  Rf_check1arg
  Rf_check_stack_balance
  Rf_convertToC
+ Rf_createS3Vars
  Rf_d1mach
  Rf_ddfindVar
  Rf_deparse1s
@@ -347,6 +353,8 @@
  Rf_get1index
  Rf_i1mach
  Rf_initStack
+ Rf_installDDVAL
+ Rf_installS3Signature
  Rf_isValidName
  Rf_lfastchoose
  Rf_lgammacor
@@ -367,6 +375,7 @@
  Rf_onsigusr1
  Rf_onsigusr2
  Rf_osDynSymbol
+ Rf_patchArgsByActuals
  Rf_pbeta_raw
  Rf_printArray
  Rf_printComplexVector
@@ -377,6 +386,7 @@
  Rf_printVector
  Rf_promiseArgs
  Rf_qchisq_appr
+ Rf_readS3VarsFromFrame
  Rf_regcomp
  Rf_regerror
  Rf_regexec
@@ -386,6 +396,7 @@
  Rf_sexptype2char
  Rf_ssort
  Rf_stirlerr
+ Rf_stringSuffix
  Rf_strmat2intmat
  Rf_substituteList
  Rf_tsConform
@@ -439,6 +450,8 @@
  WinCheckUTF8
  WinUTF8out
  WrongArgCount
+ _controlify
+ _hershey_font_info
  _nl_explode_name
  _nl_find_domain
  _nl_find_msg
@@ -450,6 +463,8 @@
  _nl_make_l10nflist
  _nl_msg_cat_cntr
  _nl_normalize_codeset
+ _occidental_hershey_glyphs
+ _oriental_hershey_glyphs
  _pcre_OP_lengths
  _pcre_default_tables
  _pcre_find_bracket
@@ -559,6 +574,7 @@
  do_addRestart
  do_addTryHandlers
  do_addhistory
+ do_address
  do_adist
  do_agrep
  do_allnames
@@ -656,6 +672,8 @@
  do_duplicated
  do_dynload
  do_dynunload
+ do_eSoftVersion
+ do_eSoftVersion
  do_eapply
  do_emptyenv
  do_enablejit
@@ -783,6 +801,7 @@
  do_lockEnv
  do_log
  do_log1arg
+ do_log_builtin
  do_logic
  do_logic2
  do_logic3
@@ -841,6 +860,7 @@
  do_parse
  do_paste
  do_pathexpand
+ do_pcre_config
  do_pipe
  do_pmatch
  do_pmin
@@ -884,6 +904,7 @@
  do_readtablehead
  do_recall
  do_recordGraphics
+ do_refcnt
  do_regFinaliz
  do_regNS
  do_regexec
@@ -899,6 +920,7 @@
  do_restart
  do_retracemem
  do_return
+ do_returnValue
  do_rowscols
  do_rowsum
  do_sample
@@ -977,12 +999,12 @@
  do_sysbrowser
  do_syschmod
  do_sysgetpid
+ do_sysimplementation
  do_sysinfo
  do_syssleep
  do_system
  do_systime
  do_sysumask
- do_syswhich
  do_tabulate
  do_tempdir
  do_tempfile

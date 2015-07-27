@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2014-11-11 r66959) -- "Unsuffered Consequences"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R Under development (unstable) (2015-01-14 r67463) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -285,7 +285,6 @@ lm2  6 336.3417
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("Exponential")
 > ### * Exponential
@@ -2522,7 +2521,6 @@ Frequency = 1
 > ### ** Examples
 > 
 > 
-> base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > cleanEx()
 > nameEx("anova.glm")
 > ### * anova.glm
@@ -3757,7 +3755,6 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("asOneSidedFormula")
 > ### * asOneSidedFormula
@@ -3773,7 +3770,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3ddd3d8>
+<environment: 0x538bd68>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4736,7 +4733,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x3f87c88>
+<bytecode: 0x52c3600>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7248,7 +7245,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x4386c30>
+<environment: 0x4b07c60>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -9987,7 +9984,6 @@ b4                    3  0  0  0  0  3
 > ### ** Examples
 > 
 > 
-> base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > cleanEx()
 > nameEx("monthplot")
 > ### * monthplot
@@ -11729,14 +11725,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x40fe910>
-<environment: 0x4107f28>
+<bytecode: 0x3d68ba0>
+<environment: 0x3cc9e00>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x40fe7f8>
-<environment: 0x4107f28>
+<bytecode: 0x3d67920>
+<environment: 0x3cc9e00>
 
 > 
 > 
@@ -11819,7 +11815,7 @@ NOTE: n is number in each group
 > 
 > ### ** Examples
 > 
->  power.prop.test(n = 50, p1 = .50, p2 = .75)
+> power.prop.test(n = 50, p1 = .50, p2 = .75)      ## => power = 0.740
 
      Two-sample comparison of proportions power calculation 
 
@@ -11832,7 +11828,7 @@ NOTE: n is number in each group
 
 NOTE: n is number in *each* group
 
->  power.prop.test(p1 = .50, p2 = .75, power = .90)
+> power.prop.test(p1 = .50, p2 = .75, power = .90) ## =>     n = 76.7
 
      Two-sample comparison of proportions power calculation 
 
@@ -11845,7 +11841,7 @@ NOTE: n is number in *each* group
 
 NOTE: n is number in *each* group
 
->  power.prop.test(n = 50, p1 = .5, power = .90)
+> power.prop.test(n = 50, p1 = .5, power = .90)    ## =>    p2 = 0.8026
 
      Two-sample comparison of proportions power calculation 
 
@@ -11858,6 +11854,34 @@ NOTE: n is number in *each* group
 
 NOTE: n is number in *each* group
 
+> power.prop.test(n = 50, p1 = .5, p2 = 0.9, power = .90, sig.level=NULL)
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 50
+             p1 = 0.5
+             p2 = 0.9
+      sig.level = 0.001318068
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+>                                                  ## => sig.l = 0.00131
+> power.prop.test(p1 = .5, p2 = 0.501, sig.level=.001, power=0.90)
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 10451937
+             p1 = 0.5
+             p2 = 0.501
+      sig.level = 0.001
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+>                                                  ## => n = 10451937
 > 
 > 
 > 
@@ -15494,7 +15518,7 @@ treatment  2   0.0000         4     5.1291
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: stepfun
-> ### Title: Step Function Class
+> ### Title: Step Functions - Creation and Class
 > ### Aliases: stepfun is.stepfun as.stepfun print.stepfun summary.stepfun
 > ###   knots
 > ### Keywords: dplot
@@ -15526,8 +15550,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x252f488>
-<environment: 0x4109208>
+<bytecode: 0x3ccdad8>
+<environment: 0x551d2b0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17817,7 +17841,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.648 0.099 4.761 0 0 
+Time elapsed:  4.592 0.102 4.694 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1247,15 +1247,14 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     return 0;
 }
 
-static int R_X11IOErrSimple(Display *dsp)
+static int NORET R_X11IOErrSimple(Display *dsp)
 {
     char *dn = XDisplayName(dspname);
     strcpy(dspname, "");
     error(_("X11 I/O error while opening X11 connection to '%s'"), dn);
-    return 0; /* but should never get here */
 }
 
-static int R_X11IOErr(Display *dsp)
+static int NORET R_X11IOErr(Display *dsp)
 {
     int fd = ConnectionNumber(display);
     /*
@@ -1270,7 +1269,6 @@ static int R_X11IOErr(Display *dsp)
     strcpy(dspname, "");
     */
     error(_("X11 fatal IO error: please save work and shut down R"));
-    return 0; /* but should never get here */
 }
 
 #define USE_Xt 1
@@ -3389,6 +3387,11 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 }
 
 #include <R_ext/Rdynload.h>
+
+extern const char * in_R_pngVersion(void);
+extern const char * in_R_jpegVersion(void);
+extern const char * in_R_tiffVersion(void);
+
 void R_init_R_X11(DllInfo *info)
 {
     R_X11Routines *tmp;
@@ -3402,5 +3405,8 @@ void R_init_R_X11(DllInfo *info)
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
     tmp->readclp = in_R_X11readclp;
+    tmp->R_pngVersion = in_R_pngVersion;
+    tmp->R_jpegVersion = in_R_jpegVersion;
+    tmp->R_tiffVersion = in_R_tiffVersion;
     R_setX11Routines(tmp);
 }

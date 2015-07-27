@@ -1,7 +1,7 @@
 #  File src/library/base/R/eval.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ within.data.frame <- function(data, expr, ...)
     e <- evalq(environment(), data, parent)
     eval(substitute(expr), e)
     l <- as.list(e)
-    l <- l[!sapply(l, is.null)]
+    l <- l[!vapply(l, is.null, NA, USE.NAMES=FALSE)]
     ## del: variables to *del*ete from data[]
     nD <- length(del <- setdiff(names(data), (nl <- names(l))))
     data[nl] <- l

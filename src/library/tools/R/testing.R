@@ -33,7 +33,13 @@ massageExamples <-
     if(is.character(outFile)) {
         out <- file(outFile, "wt")
         on.exit(close(out))
-    } else out <- outFile
+        cntFile <- paste0(outFile, "-cnt")
+    } else {
+        out <- outFile
+        cntFile <- NULL
+    }
+
+    count <- 0L # of files using \donttest
 
     lines <- c(paste0('pkgname <- "', pkg, '"'),
                'source(file.path(R.home("share"), "R", "examples-header.R"))',
@@ -104,8 +110,10 @@ massageExamples <-
             dont_test <- FALSE
             for (line in lines) {
                 if(any(grepl("^[[:space:]]*## No test:", line,
-                             perl = TRUE, useBytes = TRUE)))
+                             perl = TRUE, useBytes = TRUE))) {
                     dont_test <- TRUE
+                    count <- count + 1L
+                }
                 if(!dont_test) cat(line, "\n", sep = "", file = out)
                 if(any(grepl("^[[:space:]]*## End\\(No test\\)", line,
                              perl = TRUE, useBytes = TRUE)))
@@ -127,11 +135,13 @@ massageExamples <-
 
     cat(readLines(file.path(R.home("share"), "R", "examples-footer.R")),
         sep = "\n", file = out)
+
+    if(count && !is.null(cntFile)) writeLines(as.character(count), cntFile)
 }
 
 ## compares 2 files
 Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
-                  nullPointers=TRUE, Log = FALSE)
+                  nullPointers = TRUE, Log = FALSE)
 {
     clean <- function(txt)
     {
@@ -490,9 +500,10 @@ testInstalledPackage <-
     return(nfail)
 }
 
+## Defaults for commenting are the same as per-3.2.0 version.
 .createExdotR <-
     function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
-             ..., commentDontrun = TRUE)
+             ..., commentDontrun = TRUE, commentDonttest = TRUE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
 
@@ -514,7 +525,8 @@ testInstalledPackage <-
         nm <- sub("\\.[Rr]d$", "", basename(f))
         Rd2ex(db[[f]],
               file.path(filedir, paste(nm, "R", sep = ".")),
-              defines = NULL, commentDontrun = commentDontrun)
+              defines = NULL, commentDontrun = commentDontrun,
+              commentDonttest = commentDonttest)
         cnt <- cnt + 1L
         if(!silent && cnt %% 10L == 0L)
             message(".", appendLF = FALSE, domain = NA)
@@ -523,7 +535,8 @@ testInstalledPackage <-
     nof <- length(Sys.glob(file.path(filedir, "*.R")))
     if(!nof) return(invisible(NULL))
 
-    massageExamples(pkg, filedir, Rfile, use_gct, addTiming, ...)
+    massageExamples(pkg, filedir, Rfile, use_gct, addTiming,
+                    commentDonttest = commentDonttest, ...)
     invisible(Rfile)
 }
 

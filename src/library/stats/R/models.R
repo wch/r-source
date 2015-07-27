@@ -488,6 +488,7 @@ model.frame.default <-
 		    warning(gettextf("variable '%s' is not a factor", nm),
                             domain = NA)
 		else {
+		    ctr <- attr(xi, "contrasts")
 		    xi <- xi[, drop = TRUE] # drop unused levels
                     nxl <- levels(xi)
 		    if(any(m <- is.na(match(nxl, xl))))
@@ -497,14 +498,22 @@ model.frame.default <-
                                      nm, paste(nxl[m], collapse=", ")),
                              domain = NA)
 		    data[[nm]] <- factor(xi, levels=xl, exclude=NULL)
+		    if (!identical(attr(data[[nm]], "contrasts"), ctr))
+		    	warning(gettext(sprintf("contrasts dropped from factor %s", nm), domain = NA),
+		    	        call. = FALSE)
 		}
 	    }
     } else if(drop.unused.levels) {
 	for(nm in names(data)) {
 	    x <- data[[nm]]
 	    if(is.factor(x) &&
-	       length(unique(x[!is.na(x)])) < length(levels(x)))
-		data[[nm]] <- data[[nm]][, drop = TRUE]
+	       length(unique(x[!is.na(x)])) < length(levels(x))) {
+	        ctr <- attr(x, "contrasts")
+		data[[nm]] <- x[, drop = TRUE]
+		if (!identical(attr(data[[nm]], "contrasts"), ctr))
+		    warning(gettext(sprintf("contrasts dropped from factor %s due to missing levels", nm), domain = NA), 
+		            call. = FALSE)
+	    }
 	}
     }
     attr(formula, "dataClasses") <- vapply(data, .MFclass, "")

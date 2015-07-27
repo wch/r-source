@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-11-20 11:48+0000\n"
 "PO-Revision-Date: 2014-03-13 20:34+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -435,7 +435,7 @@ msgstr "Wybierz jeden"
 # error(_("'default' must be a character string"))
 # utils/src/windows/widgets.c: 252
 # error(_("'default' must be a character string"))
-#: windows/widgets.c:182 windows/widgets.c:252
+#: windows/widgets.c:182 windows/widgets.c:247
 msgid "'default' must be a character string"
 msgstr "argument 'default' musi być łańcuchem tekstowym"
 
@@ -443,7 +443,7 @@ msgstr "argument 'default' musi być łańcuchem tekstowym"
 # error(_("'default' is overlong"))
 # utils/src/windows/widgets.c: 254
 # error(_("'default' is overlong"))
-#: windows/widgets.c:184 windows/widgets.c:254
+#: windows/widgets.c:184 windows/widgets.c:249
 msgid "'default' is overlong"
 msgstr "argument 'default' jest zbyt długi"
 
@@ -451,7 +451,7 @@ msgstr "argument 'default' jest zbyt długi"
 # error(_("'caption' must be a character string"))
 # utils/src/windows/widgets.c: 258
 # error(_("'caption' must be a character string"))
-#: windows/widgets.c:188 windows/widgets.c:258
+#: windows/widgets.c:188 windows/widgets.c:253
 msgid "'caption' must be a character string"
 msgstr "argument 'caption' musi być łańcuchem tekstowym"
 

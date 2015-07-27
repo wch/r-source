@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.6.4\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "vérification de %s ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "l'argument 'package' doit être de longueur 1"
@@ -248,9 +258,9 @@ msgstr ""
 "Les packages avec priorité 'base' ou 'recommended' ou 'defunct-base' doivent "
 "être déjà connus de R."
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "Voyez l'information à propos des fichiers DESCRIPTION dans la section "
 "'Creating R packages' du manuel 'Writing R Extensions'."
@@ -320,9 +330,8 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "Voyez l'information dans la section 'Croos-references' du manuel 'Writing R "
 "Extensions'."
@@ -407,6 +416,14 @@ msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr ""
 "appels 'library' ou 'require' à %s qui est déjà attaché depuis Depends."
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "appels 'library' ou 'require' non déclarés depuis :"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "appels 'library' ou 'require' non déclarés depuis :"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr "Espaces de noms dans le champ Imports non importés depuis :"
@@ -602,6 +619,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "impossible de créer le répertoire temporaire %s"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr "Exécution"
 
@@ -641,10 +661,6 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 "le nom de fichier '%s' pour la vignette ne correspond pas au pattern de nom "
 "de fichier '%s'"
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "Spécifications d'encodage incohérentes :"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Dans '%s' les vignettes '%s' et '%s' ont le même nom de vignette"
@@ -1432,6 +1448,10 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d des tests du package ont échoué"
 msgstr[1] "%d des tests du package ont échoué"
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "Spécifications d'encodage incohérentes :"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr ""

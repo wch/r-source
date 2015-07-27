@@ -64,6 +64,12 @@ as.raster(x, \dots)
   values are interpreted as the fully transparent colour by some (but
   not all) graphics devices.
 }
+\note{
+  Raster images are internally represented row-first, which can cause
+  confusion when trying to manipulate a raster object.  The recommended
+  approach is to coerce a raster to a matrix, perform the manipulation,
+  then convert back to a raster.
+}
 \value{
   For \code{as.raster()}, a raster object.
 

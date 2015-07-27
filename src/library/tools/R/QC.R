@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -800,7 +800,7 @@ function(x, ...)
             s <- paste(deparse(s), collapse = "")
             s <- gsub(" = ([,\\)])", "\\1", s)
             s <- gsub("<unescaped bksl>", "\\", s, fixed = TRUE)
-            gsub("^list", "function", s)
+            gsub("^pairlist", "function", s)
         }
     }
 
@@ -3306,7 +3306,7 @@ function(x, ...)
                      ""))
 
     if(any(as.integer(sapply(x, length)) > 0L))
-        writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+        writeLines(c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
                      ""))
 
     invisible(x)
@@ -3526,7 +3526,7 @@ function(x, ...)
             .pretty_format(x$fields_with_non_ASCII_values))
       },
       if(any(as.integer(sapply(x, length)) > 0L)) {
-          c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+          c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
             "")
       })
 }
@@ -3956,6 +3956,16 @@ function(package, lib.loc = NULL)
 format.check_code_usage_in_package <-
 function(x, ...)
 {
+    ## <FIXME>
+    ## Temporarily try to remove
+    ##   ... used in a situation where it does not exist
+    ## notes caused by c67440
+    if(length(x)) {
+        ind <- grepl("... used in a situation where it does not exist",
+                     x, fixed = TRUE)
+        if(any(ind)) x <- x[!ind]
+    }
+    ## </FIXME>
     if(length(x)) {
         ## There seems no easy we can gather usage diagnostics by type,
         ## so try to rearrange to some extent when formatting.
@@ -4104,6 +4114,12 @@ function(package, dir, lib.loc = NULL)
     unknown <- unknown[!obsolete]
     if (length(unknown)) {
         repos <- .get_standard_repository_URLs()
+        ## Also allow for additionally specified repositories.
+        aurls <- pkgInfo[["DESCRIPTION"]]["Additional_repositories"]
+        if(!is.na(aurls)) {
+            repos <- c(repos,
+                       unique(unlist(strsplit(aurls, ",[[:space:]]*"))))
+        }
         known <-
             try(suppressWarnings(utils::available.packages(utils::contrib.url(repos, "source"),
                filters = c("R_version", "duplicates"))[, "Package"]))
@@ -4142,7 +4158,7 @@ function(x, ...)
               "")
         }
         c(unlist(lapply(seq_along(xx), .fmt)),
-          strwrap(gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual.")),
+          strwrap(gettextf("See section 'Cross-references' in the 'Writing R Extensions' manual.")),
           "")
     } else {
         character()
@@ -5014,7 +5030,7 @@ function(dir)
         ## (This may fail for conditionalized code not meant for R
         ## [e.g., argument 'where'].)
         mc <- tryCatch(match.call(base::assign, e), error = identity)
-        if(inherits(mc, "error") || mc$x == ".Random.seed")
+        if(inherits(mc, "error") || identical(mc$x, ".Random.seed"))
             return(FALSE)
         if(!is.null(env <- mc$envir) &&
            identical(tryCatch(eval(env),
@@ -5187,12 +5203,13 @@ function(package, dir, lib.loc = NULL)
     ## we just have a stop list here.
     common_names <- c("pkg", "pkgName", "package", "pos", "dep_name")
 
-    bad_exprs <- bad_deps <- bad_imps <- character()
+    bad_exprs <- bad_deps <- bad_imps <- bad_prac <- character()
     bad_imports <- all_imports <- imp2 <- imp2f <- imp3 <- imp3f <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
+            if(Call %in% c("clusterEvalQ", "parallel::clusterEvalQ")) return()
             if((Call %in%
                 c("library", "require", "loadNamespace", "requireNamespace"))
                && (length(e) >= 2L)) {
@@ -5227,6 +5244,9 @@ function(package, dir, lib.loc = NULL)
                                 bad_exprs <<- c(bad_exprs, pkg)
                             if(pkg %in% depends)
                                 bad_deps <<- c(bad_deps, pkg)
+                           ## assume calls to itself are to clusterEvalQ etc
+                           else if (pkg != package)
+                               bad_prac <<- c(bad_prac, pkg)
                         }
                     }
                 }
@@ -5425,6 +5445,7 @@ function(package, dir, lib.loc = NULL)
         }
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
+                bad_practice = unique(bad_prac),
                 imports = unique(bad_imports),
                 imps = unique(bad_imps),
                 in_depends = unique(bad_deps),
@@ -5486,6 +5507,18 @@ function(x, ...)
                          sQuote(xx)), msg)
           }
       },
+      if(length(xx <- x$bad_practice)) {
+          msg <-
+              "  Please use :: or requireNamespace() instead.\n  See section 'Suggested packages' in the 'Writing R Extensions' manual."
+          if(length(xx) > 1L) {
+              c(gettext("'library' or 'require' calls in package code:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("'library' or 'require' call to %s in package code.",
+                         sQuote(xx)), msg)
+          }
+      },
+
       if(length(xx <- x$unused_imports)) {
           msg <- "  All declared Imports should be used."
           if(length(xx) > 1L) {
@@ -5714,7 +5747,8 @@ function(package, dir, lib.loc = NULL)
     }
     pkg_name <- db["Package"]
 
-    file <- .createExdotR(pkg_name, dir, silent = TRUE)
+    file <- .createExdotR(pkg_name, dir, silent = TRUE,
+                          commentDonttest = FALSE)
     if (is.null(file)) return(invisible(NULL)) # e.g, no examples
     on.exit(unlink(file))
     enc <- db["Encoding"]
@@ -6585,9 +6619,21 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
+    ## Does this have strong dependencies not in mainstream
+    ## repositories?  This should not happen, and hence is not compared
+    ## against possibly given additional repositories.
+    strong_dependencies <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
+                         .extract_dependency_package_names(meta["Imports"]),
+                         .extract_dependency_package_names(meta["LinkingTo"]))),
+                c(.get_standard_package_names()$base, db[, "Package"]))
+    if(length(strong_dependencies)) {
+        out$strong_dependencies_not_in_mainstream_repositories <-
+            strong_dependencies
+    }
+
     ## Does this have Suggests or Enhances not in mainstream
     ## repositories?
-
     suggests_or_enhances <-
         setdiff(unique(c(.extract_dependency_package_names(meta["Suggests"]),
                          .extract_dependency_package_names(meta["Enhances"]))),
@@ -6595,53 +6641,67 @@ function(dir)
     if(length(suggests_or_enhances)) {
         out$suggests_or_enhances_not_in_mainstream_repositories <-
             suggests_or_enhances
-        if(!is.na(aurls <- meta["Additional_repositories"])) {
-            aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
-            adb <-
-                tryCatch(utils::available.packages(utils::contrib.url(aurls,
-                                                                      "source"),
-                                                   filters =
-                                                   c("R_version",
-                                                     "duplicates")))
-            if(inherits(adb, "error")) {
-                out$additional_repositories_analysis_failed_with <-
-                    conditionMessage(adb)
-            } else {
-                pos <- match(suggests_or_enhances, rownames(adb), nomatch =
-                             0L)
-                ind <- (pos > 0L)
-                tab <- matrix(character(), nrow = 0L, ncol = 3L)
-                if(any(ind))
-                    tab <- rbind(tab,
-                                 cbind(suggests_or_enhances[ind],
-                                       "yes",
-                                       adb[pos[ind], "Repository"]))
-                ind <- !ind
-                if(any(ind))
-                    tab <- rbind(tab,
-                                 cbind(suggests_or_enhances[ind],
-                                       "no",
-                                       ""))
-                ## Map Repository fields to URLs, and determine unused
-                ## URLs.
-                ## Note that available.packages() possibly adds Path
-                ## information in the Repository field, so matching
-                ## given contrib URLs to these fields is not trivial.
-                unused <- character()
-                for(u in aurls) {
-                    cu <- utils::contrib.url(u, "source")
-                    ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
-                    if(any(ind)) {
-                        tab[ind, 3L] <- u
-                    } else {
-                        unused <- c(unused, u)
-                    }
+    }
+    if(!is.na(aurls <- meta["Additional_repositories"])) {
+        aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
+        ## Get available packages separately for each given URL, so that
+        ## we can spot the ones which do not provide any packages.
+        adb <-
+            tryCatch(lapply(aurls,
+                            function(u) {
+                                utils::available.packages(utils::contrib.url(u,
+                                                                             "source"),
+                                                          filters =
+                                                              c("R_version",
+                                                                "duplicates"))
+                            }))
+        if(inherits(adb, "error")) {
+            out$additional_repositories_analysis_failed_with <-
+                conditionMessage(adb)
+        } else {
+            ## Check for additional repositories with no packages.
+            ind <- sapply(adb, NROW) == 0L
+            if(any(ind))
+                out$additional_repositories_with_no_packages <-
+                    aurls[ind]
+            ## Merge available packages dbs and remove duplicates.
+            adb <- do.call(rbind, adb)
+            adb <- utils:::available_packages_filters_db$duplicates(adb)
+            ## Ready.
+            dependencies <- unique(c(strong_dependencies, suggests_or_enhances))
+            pos <- match(dependencies, rownames(adb), nomatch = 0L)
+            ind <- (pos > 0L)
+            tab <- matrix(character(), nrow = 0L, ncol = 3L)
+            if(any(ind))
+                tab <- rbind(tab,
+                             cbind(dependencies[ind],
+                                   "yes",
+                                   adb[pos[ind], "Repository"]))
+            ind <- !ind
+            if(any(ind))
+                tab <- rbind(tab,
+                             cbind(dependencies[ind],
+                                   "no",
+                                   "?"))
+            ## Map Repository fields to URLs, and determine unused
+            ## URLs.
+            ## Note that available.packages() possibly adds Path
+            ## information in the Repository field, so matching
+            ## given contrib URLs to these fields is not trivial.
+            unused <- character()
+            for(u in aurls) {
+                cu <- utils::contrib.url(u, "source")
+                ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                if(any(ind)) {
+                    tab[ind, 3L] <- u
+                } else {
+                    unused <- c(unused, u)
                 }
-                if(length(unused))
-                    tab <- rbind(tab, cbind("", "", unused))
-                dimnames(tab) <- NULL
-                out$additional_repositories_analysis_results <- tab
             }
+            if(length(unused))
+                tab <- rbind(tab, cbind("?", "?", unused))
+            dimnames(tab) <- NULL
+            out$additional_repositories_analysis_results <- tab
         }
     }
 
@@ -6730,6 +6790,68 @@ function(dir)
                      list.files(file.path(dir, "exec"), pattern = ".*[.]java$",
                                 full.names = TRUE))
         if(length(dotjava)) out$dotjava <- dotjava
+    }
+
+    ## Check CITATION file for CRAN needs.
+    .check_citation_for_CRAN <- function(cfile, meta) {
+        ## For publishing on CRAN, we need to be able to process package
+        ## CITATION files without having the package installed
+        ## (actually, using only the base and recommended packages),
+        ## which we cannot perfectly emulate when checking.
+        ## The best we can easily do is reduce the library search path
+        ## to the system and site library.  If the package is not
+        ## installed there, check directly; otherwise, check for
+        ## offending calls likely to cause trouble.
+        libpaths <- .libPaths()
+        .libPaths(character())
+        on.exit(.libPaths(libpaths))
+        out <- list()
+        if(system.file(package = meta["Package"]) != "") {
+            ccalls <- .find_calls_in_file(cfile, recursive = TRUE)
+            cnames <-
+                intersect(unique(.call_names(ccalls)),
+                          c("packageDescription", "library", "require"))
+            if(length(cnames))
+                out$citation_calls <- cnames
+        } else {
+            cinfo <-
+                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
+                                                                    meta),
+                                            error = identity))$value
+            if(inherits(cinfo, "error"))
+                out$citation_error <- conditionMessage(cinfo)
+        }
+        out
+    }
+    if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
+        cinfo <- .check_citation_for_CRAN(cfile, meta)
+        if(length(cinfo))
+            out[names(cinfo)] <- cinfo
+        ## Simply
+        ##   out <- c(out, cinfo)
+        ## strips the class attribute from out ...
+    }
+
+    ## Check Authors@R.
+    if(!is.na(aar <- meta["Authors@R"]) &&
+       ## DESCRIPTION is fully checked lateron, so be careful.
+       !inherits(aar <- tryCatch(parse(text = aar), error = identity),
+                 "error")) {
+        bad <- ((length(aar) != 1L) || !is.call(aar <- aar[[1L]]))
+        if(!bad) {
+            cname <- as.character(aar[[1L]])
+            bad <-
+                ((cname != "person") &&
+                 ((cname != "c") ||
+                  !all(vapply(aar[-1L],
+                              function(e) {
+                                  (is.call(e) &&
+                                       (as.character(e[[1L]]) == "person"))
+                              },
+                              FALSE))))
+        }
+        if(bad)
+            out$authors_at_R_calls <- aar
     }
 
     ## Is this an update for a package already on CRAN?
@@ -6911,23 +7033,30 @@ function(x, ...)
 	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
-      if(length(y <-
-                x$suggests_or_enhances_not_in_mainstream_repositories)) {
+      if(length(y <- x$strong_dependencies_not_in_mainstream_repositories)) {
+          c("Strong dependencies not in mainstream repositories:",
+            strwrap(paste(y, collapse = ", "),
+                    indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$suggests_or_enhances_not_in_mainstream_repositories)) {
           c("Suggests or Enhances not in mainstream repositories:",
             strwrap(paste(y, collapse = ", "),
-                    indent = 2L, exdent = 4L),
-            if(length(y <-
-                      x$additional_repositories_analysis_failed_with)) {
-                c("Using Additional_repositories specification failed with:",
-                  paste(" ", y))
-            } else if(length(y <-
-                             x$additional_repositories_analysis_results)) {
-                c("Availability using Additional_repositories specification:",
-                  sprintf("  %s   %s   %s",
-                          format(y[, 1L], justify = "left"),
-                          format(y[, 2L], justify = "right"),
-                          format(y[, 3L], justify = "left")))
-            })
+                    indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$additional_repositories_analysis_failed_with)) {
+          c("Using Additional_repositories specification failed with:",
+            paste(" ", y))
+      },
+      if(length(y <- x$additional_repositories_analysis_results)) {
+          c("Availability using Additional_repositories specification:",
+            sprintf("  %s   %s   %s",
+                    format(y[, 1L], justify = "left"),
+                    format(y[, 2L], justify = "right"),
+                    format(y[, 3L], justify = "left")))
+      },
+      if(length(y <- x$additional_repositories_with_no_packages)) {
+          c("Additional repositories with no packages:",
+            paste(" ", y))
       },
       if (length(y <- x$uses)) {
           paste(if(length(y) > 1L)
@@ -6940,6 +7069,9 @@ function(x, ...)
 		"Uses the non-portable packages:" else
 		"Uses the non-portable package:",
                 paste(sQuote(y), collapse = ", "))
+      },
+      if(length(y <- x$authors_at_R_calls)) {
+          c("Authors@R field should be a call to person(), or combine such calls.")
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
@@ -6966,6 +7098,15 @@ function(x, ...)
       },
       if(length(y <- x$javafiles)) {
           "Package has FOSS license, installs .class/.jar but has no 'java' directory."
+      },
+      if(length(y <- x$citation_calls)) {
+          c("Package CITATION file contains call(s) to:",
+            strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$citation_error)) {
+          c("Reading CITATION file fails with",
+            paste(" ", y),
+            "when package is not installed.")
       }
       )
 }

@@ -52,7 +52,7 @@ OlsonNames()
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
   \url{http://en.wikipedia.org/wiki/Coordinated_Universal_Time}).  (Some
-  but not all platforms will give a warning for invalid timezones.)
+  but not all platforms will give a warning for invalid time zones.)
 
   Time zones did not come into use until the second half of the
   nineteenth century and were not widely adopted until the twentieth,
@@ -85,6 +85,9 @@ OlsonNames()
 }
 
 \section{Time zone names}{
+  Names \code{"UTC"} and (its synonym) \code{"GMT"} are accepted on all
+  platforms.
+
   Where OSes describe their valid time zones can be obscure.  The help
   for the C function \code{tzset} can be helpful, but it can also be
   inaccurate.  There is a cumbersome POSIX specification (listed under

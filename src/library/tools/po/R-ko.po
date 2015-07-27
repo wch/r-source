@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.4\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"TeX 파일 %s를 컴파일하는데 실패했습니다:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "%s를 확인합니다 ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "인자 'package'는 반드시 길이가 1 이어야 합니다"
@@ -250,9 +260,9 @@ msgstr ""
 "'base' 또는 'recommended' 또는 'defunct-base'와 같은 우선순위를 가지는 패키지"
 "들은 반드시 R이 인식할 수 있도록 해야합니다."
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "'Writing R Extensions' 매뉴얼에 'Creating R packages' 섹션을 보면 "
 "DESCRIPTION 파일에 대한 정보를 얻을 수 있습니다."
@@ -320,9 +330,8 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "'Writing R Extensions' 매뉴얼에서 'Cross-references' 섹션의 내용을 살펴보세"
 "요."
@@ -404,6 +413,14 @@ msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr ""
 "Depends에 의하여 이미 부착된 %s로의 'library' 또는 'require' 호출입니다."
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
@@ -594,6 +611,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "임시디렉토리 %s를 생성하지 못했습니다"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr "실행중입니다"
 
@@ -630,10 +650,6 @@ msgstr "파일 '%s'를 찾을 수 없습니다"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 "비니에트 파일명 '%1$s'은 '%2$s' 파일명 패턴들 중 어느것과도 일치하지 않습니다"
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "다음은 일치하지 않는 인코딩 지정들입니다:"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
@@ -1345,6 +1361,10 @@ msgstr[0] "객체 %s는 하나 이상의 데이터 호출로부터 생성되었�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "다음은 일치하지 않는 인코딩 지정들입니다:"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "인자 'file'은 반드시 문자열 또는 연결이어야 합니다"

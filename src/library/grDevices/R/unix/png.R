@@ -162,3 +162,9 @@ bmp <- function(filename = "Rplot%03d.bmp",
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                              0L, 0L, "", 0, 0, d$family))
 }
+
+grSoftVersion <- function() {
+    bm <- .Call(C_bmVersion)
+    if(nzchar(bm[3L])) bm[3L] <- strsplit(bm[3L], "\n")[[1L]][1L]
+    c(cairo = cairoVersion(), bm)
+}

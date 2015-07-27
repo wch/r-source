@@ -261,3 +261,12 @@
 ## Additional libraries to link the internet module against.
 ## Some claim Solaris needs -lsocket -lnsl
 ## INTERNET_LIBS=
+
+## Script from texinfo 5.1 or later.
+## Can be texi2any (the default) or makeinfo or a full path to either
+## MAKEINFO=
+
+## Use these to override curl-config if needed, which it sometimes is
+## for static libs (try curl-config --static-libs)
+## CURL_CPPFLAGS=
+## CURL_LIBS=

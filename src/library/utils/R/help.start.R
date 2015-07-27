@@ -28,10 +28,10 @@ help.start <-
             stop("invalid browser name, check options(\"browser\").")
     }
     home <- if (is.null(remote)) {
-        if (tools:::httpdPort == 0L) tools::startDynamicHelp()
-        if (tools:::httpdPort > 0L) {
+        if (tools:::httpdPort() == 0L) tools::startDynamicHelp()
+        if (tools:::httpdPort() > 0L) {
             if (update) make.packages.html(temp = TRUE)
-            paste0("http://127.0.0.1:", tools:::httpdPort)
+            paste0("http://127.0.0.1:", tools:::httpdPort())
         } else stop("help.start() requires the HTTP server to be running",
                     call. = FALSE)
     } else remote

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-11-20 11:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2714,6 +2714,12 @@ msgstr "argument 'iter.max' musi być dodatni"
 # stop("must have same number of columns in 'x' and 'centers'")
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "potrzeba mieć tę samą liczbę kolumn w 'x' oraz 'centers'"
+
+msgid "'x' is a list, so ignoring argument 'g'"
+msgstr ""
+
+msgid "some elements of 'x' are not numeric and will be coerced to numeric"
+msgstr ""
 
 # stats/R/ks.test.R: 28
 # stop("not enough 'x' data")

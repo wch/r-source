@@ -2571,7 +2571,7 @@ external file.  This is discussed further in @ref{Reading data from
 files}.
 
 @node attach() and detach(), Working with data frames, Making data frames, Data frames
-@subsection @code{attach() and @code{detach()}}
+@subsection @code{attach()} and @code{detach()}
 @findex attach
 @findex detach
 
@@ -4603,7 +4603,7 @@ fitted model object.
 @section Analysis of variance and model comparison
 @cindex Analysis of variance
 
-The model fitting function @code{aov(@code{formula},
+The model fitting function @code{aov(@var{formula},
 data=@var{data.frame})}
 @findex aov
 operates at the simplest level in a very similar way to the function

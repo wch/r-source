@@ -11,7 +11,7 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-PCRE_CPPFLAGS = -I$(srcdir)
+PCRE_CPPFLAGS = -I$(srcdir) -DLINK_SIZE=2
 ALL_CPPFLAGS = $(PCRE_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
 SOURCES = pcre_chartables.c pcre_compile.c pcre_config.c pcre_exec.c \

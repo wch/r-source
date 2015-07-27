@@ -28,11 +28,7 @@ packageEvent <-
 }
 
 getHook <- function(hookName)
-{
-    if (exists(hookName, envir = .userHooksEnv, inherits = FALSE))
-        get(hookName, envir = .userHooksEnv, inherits = FALSE)
-    else list()
-}
+    get0(hookName, envir = .userHooksEnv, inherits = FALSE, ifnotfound = list())
 
 setHook <- function(hookName, value,
                     action = c("append", "prepend", "replace"))

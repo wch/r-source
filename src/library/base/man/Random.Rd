@@ -239,8 +239,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 
   Knuth, D. E. (2002)
   \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
-  printing.\cr
-  See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
+  printing.
 
   L'Ecuyer, P. (1999) Good parameters and implementations for combined
   multiple recursive random number generators. \emph{Operations
@@ -259,8 +258,9 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   pseudo-random number generator,
   \emph{ACM Transactions on Modeling and Computer Simulation},
   \bold{8}, 3--30.\cr
-  Source code at \url{http://www.math.keio.ac.jp/~matumoto/emt.html}.
-
+  Source code formerly at \code{http://www.math.keio.ac.jp/~matumoto/emt.html}.\cr
+  Now see \url{http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.
+  
   Reeds, J., Hubert, S. and Abrahams, M. (1982--4) C implementation of
   SuperDuper, University of California at Berkeley.  (Personal
   communication from Jim Reeds to Ross Ihaka.)

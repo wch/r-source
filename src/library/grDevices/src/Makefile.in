@@ -27,9 +27,9 @@ ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 # need Defn.h etc, and config.h
 PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H $(ZLIB_CPPFLAGS)
 
-@BUILD_AQUA_TRUE@AQUA_LIBS=-framework AppKit
-@BUILD_ZLIB_TRUE@R_ZLIBS=$(top_builddir)/src/extra/zlib/libz.a
-@BUILD_ZLIB_FALSE@R_ZLIBS=-lz
+@BUILD_AQUA_TRUE@AQUA_LIBS = -framework AppKit
+@BUILD_ZLIB_TRUE@R_ZLIBS = $(top_builddir)/src/extra/zlib/libz.a
+@BUILD_ZLIB_FALSE@R_ZLIBS = -lz
 PKG_LIBS = $(AQUA_LIBS) $(R_ZLIBS)
 
 all: Makedeps

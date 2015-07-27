@@ -495,9 +495,9 @@ Based on gettextize from gettext 0.17
 src/include/vg/memcheck.h
 src/include/vg/valgrind.h
 
-From valgrind,
+From valgrind 3.10.1,
 
-   Copyright (C) 2000-2005 Julian Seward.  All rights reserved.
+   Copyright (C) 2000-2013 Julian Seward.  All rights reserved.
 
 
 src/main/mkdtemp.c

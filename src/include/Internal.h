@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ SEXP do_bindtextdomain(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bitwise(SEXP, SEXP, SEXP, SEXP);
 SEXP do_body(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bodyCode(SEXP, SEXP, SEXP, SEXP);
-SEXP do_break(SEXP, SEXP, SEXP, SEXP);
+SEXP NORET do_break(SEXP, SEXP, SEXP, SEXP);
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 SEXP do_builtins(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c(SEXP, SEXP, SEXP, SEXP);
@@ -108,6 +108,9 @@ SEXP do_copyDFattr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_crc64(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Cstack_info(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cum(SEXP, SEXP, SEXP, SEXP);
+SEXP do_curlDownload(SEXP, SEXP, SEXP, SEXP);
+SEXP do_curlGetHeaders(SEXP, SEXP, SEXP, SEXP);
+SEXP do_curlVersion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_D2POSIXlt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dataentry(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dataframe(SEXP, SEXP, SEXP, SEXP);
@@ -118,7 +121,7 @@ SEXP do_devAskNewPage(SEXP, SEXP, SEXP, SEXP);
 SEXP do_delayed(SEXP, SEXP, SEXP, SEXP);
 SEXP do_deparse(SEXP, SEXP, SEXP, SEXP);
 SEXP do_detach(SEXP,SEXP,SEXP,SEXP);
-SEXP do_dfltStop(SEXP, SEXP, SEXP, SEXP);
+SEXP NORET do_dfltStop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dfltWarn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_diag(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dim(SEXP, SEXP, SEXP, SEXP);
@@ -148,6 +151,7 @@ SEXP do_envir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirName(SEXP, SEXP, SEXP, SEXP);
 SEXP do_env2list(SEXP, SEXP, SEXP, SEXP);
+SEXP do_eSoftVersion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_External(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Externalgr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_eval(SEXP, SEXP, SEXP, SEXP);
@@ -216,7 +220,7 @@ SEXP do_internal(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interruptsSuspended(SEXP, SEXP, SEXP, SEXP);
 SEXP do_intToBits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_invisible(SEXP, SEXP, SEXP, SEXP);
-SEXP do_invokeRestart(SEXP, SEXP, SEXP, SEXP);
+SEXP NORET do_invokeRestart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_is(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isatty(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isfinite(SEXP, SEXP, SEXP, SEXP);
@@ -287,6 +291,7 @@ SEXP do_parentframe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_parse(SEXP, SEXP, SEXP, SEXP);
 SEXP do_paste(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pathexpand(SEXP, SEXP, SEXP, SEXP);
+SEXP do_pcre_config(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pmatch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pmin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
@@ -333,7 +338,7 @@ SEXP do_rep_len(SEXP, SEXP, SEXP, SEXP);
 SEXP do_repeat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_resetCondHands(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
-SEXP do_return(SEXP, SEXP, SEXP, SEXP);
+SEXP NORET do_return(SEXP, SEXP, SEXP, SEXP);
 SEXP do_returnValue(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rgb(SEXP, SEXP, SEXP, SEXP);
 SEXP do_RGB2hsv(SEXP, SEXP, SEXP, SEXP);
@@ -378,7 +383,7 @@ SEXP do_sort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_split(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sprintf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_standardGeneric(SEXP, SEXP, SEXP, SEXP);
-SEXP do_stop(SEXP, SEXP, SEXP, SEXP);
+SEXP NORET do_stop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_storage_mode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strsplit(SEXP,SEXP,SEXP,SEXP);
 SEXP do_strptime(SEXP,SEXP,SEXP,SEXP);
@@ -429,7 +434,7 @@ SEXP do_unlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unserializeFromConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unsetenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unzip(SEXP, SEXP, SEXP, SEXP);
-SEXP do_usemethod(SEXP, SEXP, SEXP, SEXP);
+SEXP NORET do_usemethod(SEXP, SEXP, SEXP, SEXP);
 SEXP do_utf8ToInt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_vapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_version(SEXP, SEXP, SEXP, SEXP);

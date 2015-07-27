@@ -51,4 +51,8 @@ local({
     if(!is.na(br)) options(browser = br)
     tests_startup <- Sys.getenv("R_TESTS")
     if(nzchar(tests_startup)) source(tests_startup)
+    ca_cert <- Sys.getenv("CURL_CA_BUNDLE", NA_character_)
+    if(!is.na(ca_cert) &&
+       file.exists(ca_path <- file.path(R.home("etc"), "curl-ca-bundle.crt")))
+        Sys.setenv(CURL_CA_BUNDLE = ca_path)
 })

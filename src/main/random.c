@@ -32,7 +32,7 @@
 /* Code down to do_random3 (inclusive) can be removed once the byte
   compiler knows how to optimize to .External rather than .Internal */
 #include <Internal.h>
-static void invalid(SEXP call)
+static void NORET invalid(SEXP call)
 {
     error(_("invalid arguments"));
 }

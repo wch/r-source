@@ -1,6 +1,6 @@
 % File src/library/base/man/list.files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{list.files}
@@ -68,7 +68,8 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 #ifdef windows
 
   \code{path} must specify paths which can be represented in the current
-  codepage.
+  codepage, and files/directories below \code{path} whose names cannot
+  be represented in that codepage will most likely not be found.
 #endif
 }
 \seealso{\code{\link{file.info}}, \code{\link{file.access}}

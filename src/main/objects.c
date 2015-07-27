@@ -389,7 +389,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 */
 
 /* This is a primitive SPECIALSXP */
-SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
     SEXP callenv, defenv;
@@ -441,8 +441,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
-	UNPROTECT(2); /* obj, argList */
-	PROTECT(ans);
+	UNPROTECT(3); /* obj, generic, argList */
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
     }
     else {
@@ -464,8 +463,6 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("no applicable method for '%s' applied to an object of class \"%s\""),
 		  translateChar(STRING_ELT(generic, 0)), cl);
     }
-    /* Not reached */
-    return R_NilValue;
 }
 
 /*
@@ -533,8 +530,8 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *sb, *sg, *sk;
     SEXP ans, s, t, klass, method, matchedarg, generic;
     SEXP nextfun, nextfunSignature;
-    SEXP sysp, m, formals, actuals, tmp, newcall;
-    SEXP a, group, basename;
+    SEXP sysp, formals, newcall;
+    SEXP group, basename;
     SEXP callenv, defenv;
     RCNTXT *cptr;
     int i, j;
@@ -586,54 +583,8 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* get formals and actuals; attach the names of the formals to
        the actuals, expanding any ... that occurs */
     formals = FORMALS(s);
-    PROTECT(actuals = matchArgs(formals, cptr->promargs, call));
+    PROTECT(matchedarg = patchArgsByActuals(formals, cptr->promargs, cptr->cloenv));
 
-    i = 0;
-    for(s = formals, t = actuals; ! IS_R_NilValue(s); s = CDR(s), t = CDR(t)) {
-	SET_TAG(t, TAG(s));
-	if(SEXP_EQL(TAG(t), R_DotsSymbol)) i = length(CAR(t));
-    }
-    if(i) {   /* we need to expand out the dots */
-	PROTECT(t = allocList(i+length(actuals)-1));
-	for(s = actuals, m = t; ! IS_R_NilValue(s); s = CDR(s)) {
-	    if(TYPEOF(CAR(s)) == DOTSXP) {
-		for(i = 1, a = CAR(s); ! IS_R_NilValue(a);
-		    a = CDR(a), i++, m = CDR(m)) {
-		    SET_TAG(m, installDDVAL(i));
-		    SETCAR(m, CAR(a));
-		}
-	    } else {
-		SET_TAG(m, TAG(s));
-		SETCAR(m, CAR(s));
-		m = CDR(m);
-	    }
-	}
-	UNPROTECT(1);
-	actuals = t;
-    }
-    PROTECT(actuals);
-
-
-    /* we can't duplicate because it would force the promises */
-    /* so we do our own duplication of the promargs */
-
-    PROTECT(matchedarg = allocList(length(cptr->promargs)));
-    for (t = matchedarg, s = cptr->promargs; ! IS_R_NilValue(t);
-	 s = CDR(s), t = CDR(t)) {
-	SETCAR(t, CAR(s));
-	SET_TAG(t, TAG(s));
-    }
-    for (t = matchedarg; ! IS_R_NilValue(t); t = CDR(t)) {
-	for (m = actuals; ! IS_R_NilValue(m); m = CDR(m))
-	    if (SEXP_EQL(CAR(m), CAR(t)))  {
-		if (IS_R_MissingArg(CAR(m))) {
-		    tmp = findVarInFrame3(cptr->cloenv, TAG(m), TRUE);
-		    if (IS_R_MissingArg(tmp)) break;
-		}
-		SETCAR(t, mkPROMISE(TAG(m), cptr->cloenv));
-		break;
-	   }
-    }
     /*
       Now see if there were any other arguments passed in
       Currently we seem to only allow named args to change
@@ -811,7 +762,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ans = applyMethod(newcall, nextfun, matchedarg, env, newvars);
     vmaxset(vmax);
-    UNPROTECT(9);
+    UNPROTECT(7);
     return(ans);
 }
 
@@ -1569,12 +1520,13 @@ SEXP R_do_new_object(SEXP class_def)
 	      translateChar(asChar(e)));
     }
     e = R_do_slot(class_def, s_className);
-    value = duplicate(R_do_slot(class_def, s_prototype));
+    PROTECT(value = duplicate(R_do_slot(class_def, s_prototype)));
     if(TYPEOF(value) == S4SXP || ! IS_R_NilValue(getAttrib(e, R_PackageSymbol)))
     { /* Anything but an object from a base "class" (numeric, matrix,..) */
 	setAttrib(value, R_ClassSymbol, e);
 	SET_S4_OBJECT(value);
     }
+    UNPROTECT(1); /* value */
     vmaxset(vmax);
     return value;
 }
@@ -1629,24 +1581,32 @@ SEXP asS4(SEXP s, Rboolean flag, int complete)
     if(flag == IS_S4_OBJECT(s))
 	return s;
     PROTECT(s);
-    if(MAYBE_SHARED(s))
+    if(MAYBE_SHARED(s)) {
 	s = shallow_duplicate(s);
-    UNPROTECT(1);
+	UNPROTECT(1);
+	PROTECT(s);
+    }
     if(flag) SET_S4_OBJECT(s);
     else {
 	if(complete) {
 	    SEXP value;
 	    /* TENTATIVE:  how much does this change? */
 	    if(! IS_R_NilValue(value = R_getS4DataSlot(s, ANYSXP)) &&
-	       ! IS_S4_OBJECT(value))
+	       ! IS_S4_OBJECT(value)) {
+	      UNPROTECT(1);
 	      return value;
+	    }
 	    /* else no plausible S3 object*/
 	    else if(complete == 1) /* ordinary case (2, for conditional) */
 	      error(_("object of class \"%s\" does not correspond to a valid S3 object"),
 		      CHAR(STRING_ELT(R_data_class(s, FALSE), 0)));
-	    else return s; /*  unchanged */
+	    else {
+	        UNPROTECT(1);
+	        return s; /*  unchanged */
+	    }
 	}
 	UNSET_S4_OBJECT(s);
     }
+    UNPROTECT(1);
     return s;
 }

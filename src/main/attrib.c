@@ -357,8 +357,8 @@ static SEXP removeAttrib(SEXP vec, SEXP name)
     SEXP t;
     if(TYPEOF(vec) == CHARSXP)
 	error("cannot set attribute on a CHARSXP");
-    if (SEXP_EQL(name, R_NamesSymbol) && isList(vec)) {
-	for (t = vec; ! IS_R_NilValue(t); t = CDR(t))
+    if (SEXP_EQL(name, R_NamesSymbol) && isPairList(vec)) {
+		for (t = vec; ! IS_R_NilValue(t); t = CDR(t))
 	    SET_TAG(t, R_NilValue);
 	return R_NilValue;
     }
@@ -390,7 +390,7 @@ static void checkNames(SEXP x, SEXP s)
 
 /* Time Series Parameters */
 
-static void badtsp(void)
+static void NORET badtsp(void)
 {
     error(_("invalid time series parameters specified"));
 }
@@ -1695,13 +1695,13 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 			  translateChar(asChar(input)),
 			  CHAR(type2str(TYPEOF(obj))));
 		}
+		UNPROTECT(1);
 	    }
 	    else classString = R_NilValue; /* make sure it is initialized */
 	    /* not there.  But since even NULL really does get stored, this
 	       implies that there is no slot of this name.  Or somebody
 	       screwed up by using attr(..) <- NULL */
 
-	    UNPROTECT(1);
 	    error(_("no slot of name \"%s\" for this object of class \"%s\""),
 		  translateChar(asChar(input)),
 		  translateChar(asChar(classString)));
@@ -1804,17 +1804,22 @@ SEXP attribute_hidden
 R_getS4DataSlot(SEXP obj, SEXPTYPE type)
 {
   static SEXP s_xData, s_dotData; SEXP value = R_NilValue;
+  PROTECT_INDEX opi;
+
+  PROTECT_WITH_INDEX(obj, &opi);
   if(IS_NULL_SEXP(s_xData)) {
     s_xData = install(".xData");
     s_dotData = install(".Data");
   }
   if(TYPEOF(obj) != S4SXP || type == S4SXP) {
     SEXP s3class = S3Class(obj);
-    if(IS_R_NilValue(s3class) && type == S4SXP)
+    if(IS_R_NilValue(s3class) && type == S4SXP) {
+      UNPROTECT(1); /* obj */
       return R_NilValue;
+    }
     PROTECT(s3class);
-    if(MAYBE_REFERENCED(obj)) obj = shallow_duplicate(obj);
-    UNPROTECT(1);
+    if(MAYBE_REFERENCED(obj))
+      REPROTECT(obj = shallow_duplicate(obj), opi);
     if(! IS_R_NilValue(s3class)) {/* replace class with S3 class */
       setAttrib(obj, R_ClassSymbol, s3class);
       setAttrib(obj, s_dot_S3Class, R_NilValue); /* not in the S3 class */
@@ -1822,20 +1827,26 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
     else { /* to avoid inf. recursion, must unset class attribute */
       setAttrib(obj, R_ClassSymbol, R_NilValue);
     }
+    UNPROTECT(1); /* s3class */
     UNSET_S4_OBJECT(obj);
-    if(type == S4SXP)
+    if(type == S4SXP) {
+      UNPROTECT(1); /* obj */
       return obj;
+    }
     value = obj;
   }
   else
       value = getAttrib(obj, s_dotData);
   if(IS_R_NilValue(value))
       value = getAttrib(obj, s_xData);
+
+  UNPROTECT(1); /* obj */
 /* the mechanism for extending abnormal types.  In the future, would b
    good to consolidate under the ".Data" slot, but this has
    been used to mean S4 objects with non-S4 type, so for now
    a secondary slot name, ".xData" is used to avoid confusion
-*/  if(! IS_R_NilValue(value) &&
+*/
+  if(! IS_R_NilValue(value) &&
      (type == ANYSXP || type == TYPEOF(value)))
      return value;
   else

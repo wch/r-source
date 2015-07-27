@@ -48,10 +48,9 @@ depending on the PRIV macro. */
 
 #include <config.h>
 
-/* and those that are not in R's configure */
+/* and those that are not in R's configure:
+   LINK_SIZE is set on the command line */
 #define HAVE_MEMMOVE 1
-#ifndef LINK_SIZE
-#define LINK_SIZE 2
 #define MATCH_LIMIT 10000000
 #define MATCH_LIMIT_RECURSION MATCH_LIMIT
 #define MAX_NAME_COUNT 10000
@@ -59,8 +58,8 @@ depending on the PRIV macro. */
 #define NEWLINE 10
 #define PARENS_NEST_LIMIT 250
 #define POSIX_MALLOC_THRESHOLD 10
-#define SUPPORT_UTF8
 #define SUPPORT_UCP
+#define SUPPORT_UTF
 
 /* See http://sourceforge.net/p/predef/wiki/Architectures/
    SPARC_32 support added in 8.32, 'experimental'.
@@ -73,7 +72,6 @@ depending on the PRIV macro. */
 #endif
 #endif
 
-#endif
 
 /* Define PCRE_DEBUG to get debugging output on stdout. */
 

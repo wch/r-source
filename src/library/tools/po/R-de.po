@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -15,6 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"TeX Durchlauf für Datei %s fehlgeschlagen mit Nachricht:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "überprüfe %s ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "Argument 'package' muss Länge 1 haben"
@@ -238,9 +248,9 @@ msgstr ""
 "Pakete mit Prioritäten 'base', 'recommended' oder 'defunct-base' müssen R "
 "bereits bekannt sein"
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
 "packages' im 'Writing R Extension' Handbuch"
@@ -307,9 +317,8 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "Bitte im 'Writing R Extensions' Handbuch im Abschnitt über Kreuzreferenzen "
 "nachsehen!"
@@ -391,6 +400,14 @@ msgid ""
 msgstr ""
 "Aufruf von 'library' oder 'require'  für %s, ist aber bereits mit Depends "
 "geladen."
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr "Namensräume im Imports Feld nicht importiert aus:"
@@ -579,6 +596,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr "Ausführen"
 
@@ -614,10 +634,6 @@ msgstr "Datei '%s' nicht gefunden"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "Vignettendateiname '%s' passt zu keinem der %s' Dateinamenmuster"
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "Inkonsistente Kodierungsspezifikationen:"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignettennamen"
@@ -1384,6 +1400,10 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "Inkonsistente Kodierungsspezifikationen:"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"

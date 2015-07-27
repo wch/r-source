@@ -1393,8 +1393,10 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
    	    	buf[i] = (char) R_IoBufferGetc(buffer);
 
    	    buf[buflen] = 0;
-    	    defineVar(install("filename"), ScalarString(mkChar("")), ParseState.Original);
-    	    defineVar(install("lines"), ScalarString(mkChar(buf)), ParseState.Original);
+	    SEXP s_filename = install("filename");
+	    defineVar(s_filename, ScalarString(mkChar("")), ParseState.Original);
+	    SEXP s_lines = install("lines");
+	    defineVar(s_lines, ScalarString(mkChar(buf)), ParseState.Original);
     	    PROTECT(class = allocVector(STRSXP, 2));
             SET_STRING_ELT(class, 0, mkChar("srcfilecopy"));
             SET_STRING_ELT(class, 1, mkChar("srcfile"));

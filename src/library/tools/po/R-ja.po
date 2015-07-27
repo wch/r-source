@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -12,6 +12,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+" TeXファイル %s のコンパイルに失敗しました。メッセージは以下の通りです: \n"
+" %s "
+
+#, fuzzy
+msgid "Checking %s"
+msgstr " %s をチェックしています... "
 
 msgid "argument 'package' must be of length 1"
 msgstr " 引数 'package' は 長さ 1 でなければなりません "
@@ -239,9 +249,9 @@ msgstr ""
 " パッケージが必要とする優先順位 'base' 'recommended' 'defunct-base' は、R が"
 "既に知らなければならない。 "
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 " マニュアル 'Writing R Extensions' の章 'Creating R packages' 中の "
 "DESCRIPTION ファイルにある情報を参照してください。 "
@@ -309,9 +319,8 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 " マニュアル 'Writing R Extensions' の節 'Cross-references' 中の情報を参照して"
 "ください。 "
@@ -398,6 +407,16 @@ msgid ""
 msgstr ""
 " 'library' もしくは 'requires' により、すでにDepends によりアタッチされた %s "
 "が呼び出されました "
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr ""
+" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr ""
+" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
@@ -597,6 +616,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr " 一時ディレクトリ %s を生成することが出来ません "
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr " 実行中 "
 
@@ -636,10 +658,6 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 " ビニエットファイル名 '%s' が、ファイル名パターン '%s' のいずれとも一致しませ"
 "ん "
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr " 一貫していないエンコーディングの指定: "
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
@@ -1387,6 +1405,10 @@ msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しによ�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr " 一貫していないエンコーディングの指定: "
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr " 引数 'file' は文字ベクトルかコネクションでなければなりません "

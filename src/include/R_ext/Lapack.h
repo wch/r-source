@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-14 The R Core Team.
+ *  Copyright (C) 2003-2015 The R Core Team.
  *  Copyright (C) 2008   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1712,20 +1712,18 @@ F77_NAME(dlaed1)(const int* n, double* d, double* q, const int* ldq,
 La_extern void
 F77_NAME(dlaed2)(const int* k, const int* n, double* d,
 		 double* q, const int* ldq, int* indxq,
-		 double* rho, const int* cutpnt, double* z,
-		 double* dlamda, double* q2, const int *ldq2,
-		 int* indxc, int* w, int* indxp, int* indx,
+		 double* rho, double* z,
+		 double* dlamda, double* w, double* q2,
+		 int* indx, int* indxc, int* indxp,
 		 int* coltyp, int* info);
 /* DLAED3 - find the roots of the secular equation, as defined by */
 /* the values in double* d, W, and RHO, between KSTART and KSTOP */
 La_extern void
-F77_NAME(dlaed3)(const int* k, const int* kstart,
-		 const int *kstop, const int* n,
+F77_NAME(dlaed3)(const int* k, const int* n, const int* n1,
 		 double* d, double* q, const int* ldq,
-		 const double* rho, const int* cutpnt,
-		 double* dlamda, int* q2, const int* ldq2,
-		 int* indxc, int* ctot, double* w,
-		 double* s, const int* lds, int* info);
+		 const double* rho, double* dlamda, double* q2, 
+		 int* indx, int* ctot, double* w,
+		 double* s, int* info);
 /* DLAED4 - subroutine computes the I-th updated eigenvalue of a */
 /* symmetric rank-one modification to a diagonal matrix whose */
 /* elements are given in the array d, and that	 D(i); < D(j); for */

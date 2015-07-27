@@ -731,19 +731,27 @@ function(log, drop_ok = TRUE)
     } else return()
 
     ## Get footer.
+    len <- length(lines)
     ## Some check systems explicitly record the elapsed time in the
     ## last line:
-    len <- length(lines)
     if(grepl("^\\* elapsed time ", lines[len],
              perl = TRUE, useBytes = TRUE)) {
         lines <- lines[-len]
         len <- len - 1L
     }
-    num <- length(grep("^(NOTE|WARNING): There",
-                       lines[c(len - 1L, len)]))
-    if(num > 0L) {
-        pos <- seq.int(len - num + 1L, len)
-        lines <- lines[-pos]
+    ## Summary footers.
+    if(grepl("^Status: ", lines[len],
+             perl = TRUE, useBytes = TRUE)) {
+        ## New-style status summary.
+        lines <- lines[-len]
+    } else {
+        ## Old-style status summary.
+        num <- length(grep("^(NOTE|WARNING): There",
+                           lines[c(len - 1L, len)]))
+        if(num > 0L) {
+            pos <- seq.int(len - num + 1L, len)
+            lines <- lines[-pos]
+        }
     }
 
     analyze_lines <- function(lines) {

@@ -1,6 +1,6 @@
 % File src/library/base/man/as.Date.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.Date}
@@ -115,9 +115,7 @@ as.Date(x, \dots)
   \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
   For links to versions available on-line see (at the time of writing)
-  \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
-  current official version, see
-  \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
+  \url{http://www.qsl.net/g1smd/isopdf.htm}.
 }
 \seealso{
   \link{Date} for details of the date class;

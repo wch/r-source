@@ -4250,7 +4250,7 @@ first place.
 
 @cindex comments
 Comments in @R{} are ignored by the parser.  Any text from a
-@findex @code{#}
+@findex #
 @code{#} character
 to the end of the line is taken to be a comment, unless
 the @code{#} character is inside a quoted string. For example,

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-12-04 22:02\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -521,15 +521,6 @@ msgstr "funkcja %s już jest w grupie ogólnej; brak zmian"
 #                             sQuote(name))
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "Funkcja %s jest w grupie ogólnej; nie wywołuj jej bezpośrednio"
-
-# methods/R/Methods.R: 1210
-# stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
-msgid ""
-"'callGeneric' with a primitive needs explicit arguments (no formal args "
-"defined)"
-msgstr ""
-"'callGeneric' z prymitywną funkcją potrzebuje jawnych argumentów (nie "
-"zdefiniowano formalnych argumentów)"
 
 # methods/R/Methods.R: 1218
 # stop("'callGeneric' must be called from a generic function or method")
@@ -3492,6 +3483,15 @@ msgid_plural ""
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
+
+# methods/R/Methods.R: 1210
+# stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
+#~ msgid ""
+#~ "'callGeneric' with a primitive needs explicit arguments (no formal args "
+#~ "defined)"
+#~ msgstr ""
+#~ "'callGeneric' z prymitywną funkcją potrzebuje jawnych argumentów (nie "
+#~ "zdefiniowano formalnych argumentów)"
 
 # methods/R/MethodsList.R: 62
 # stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",

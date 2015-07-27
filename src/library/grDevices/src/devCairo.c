@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 2011     The R Core Team
+ *  Copyright (C) 2011-2014     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,10 @@
 int R_cairoCdynload(int local, int now);
 
 typedef SEXP (*R_cairo)(SEXP args);
+typedef SEXP (*R_cairoVersion_t)(void);
 
 static R_cairo R_devCairo;
+static R_cairoVersion_t R_cairoVersion;
 
 static int Load_Rcairo_Dll(void)
 {
@@ -42,6 +44,7 @@ static int Load_Rcairo_Dll(void)
     if(!res) return initialized;
     R_devCairo = (R_cairo) R_FindSymbol("in_Cairo", "cairo", NULL);
     if (!R_devCairo) error("failed to load cairo DLL");
+    R_cairoVersion = (R_cairoVersion_t) R_FindSymbol("in_CairoVersion", "cairo", NULL);
     initialized = 1;
     return initialized;
 }
@@ -52,4 +55,14 @@ SEXP devCairo(SEXP args)
     if (Load_Rcairo_Dll() < 0) warning("failed to load cairo DLL");
     else (R_devCairo)(args);
     return R_NilValue;
+}
+
+SEXP cairoVersion(void)
+{
+#ifdef HAVE_WORKING_CAIRO
+    if (Load_Rcairo_Dll() < 0) return mkString("");
+    else return (R_cairoVersion)();
+#else
+    return mkString("");
+#endif
 }

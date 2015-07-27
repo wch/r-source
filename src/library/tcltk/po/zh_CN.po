@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -21,27 +21,27 @@ msgstr ""
 msgid "parse error in R expression"
 msgstr "R表达式里句法分析错误"
 
-#: tcltk.c:169 tcltk.c:246
+#: tcltk.c:171 tcltk.c:248
 msgid "tcl error.\n"
 msgstr "tcl错误。\n"
 
-#: tcltk.c:198 tcltk.c:743
+#: tcltk.c:200 tcltk.c:745
 msgid "invalid argument"
 msgstr "参数不对"
 
-#: tcltk.c:302 tcltk.c:320 tcltk.c:393 tcltk.c:456 tcltk.c:508
+#: tcltk.c:304 tcltk.c:322 tcltk.c:395 tcltk.c:458 tcltk.c:510
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "tclObj无效--是不是因此它是由另外一个对话期间保存的？"
 
-#: tcltk.c:618
+#: tcltk.c:620
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "tcltk内部函数'callback_closure'的参数串列太长"
 
-#: tcltk.c:651
+#: tcltk.c:653
 msgid "argument is not of correct type"
 msgstr "参数的种类不对"
 
-#: tcltk.c:702
+#: tcltk.c:704
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "没有DISPLAY变量，因此没有Tk这个功能"
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -225,7 +225,7 @@ Rconnection getConnection_no_err(int n)
 
 }
 
-static void set_iconv_error(Rconnection con, char* from, char* to)
+static void NORET set_iconv_error(Rconnection con, char* from, char* to)
 {
     char buf[100];
     snprintf(buf, 100, _("unsupported conversion from '%s' to '%s'"), from, to);
@@ -282,10 +282,9 @@ void set_iconv(Rconnection con)
 
 /* ------------------- null connection functions --------------------- */
 
-static Rboolean null_open(Rconnection con)
+static Rboolean NORET null_open(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "open");
-    return FALSE;		/* -Wall */
 }
 
 static void null_close(Rconnection con)
@@ -298,10 +297,9 @@ static void null_destroy(Rconnection con)
     if(con->private) free(con->private);
 }
 
-static int null_vfprintf(Rconnection con, const char *format, va_list ap)
+static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error(_("%s not enabled for this connection"), "printing");
-    return 0;			/* -Wall */
 }
 
 /* va_copy is C99, but a draft standard had __va_copy.  Glibc has
@@ -450,19 +448,17 @@ int dummy_fgetc(Rconnection con)
 	return con->fgetc_internal(con);
 }
 
-static int null_fgetc(Rconnection con)
+static int NORET null_fgetc(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'getc'");
-    return 0;			/* -Wall */
 }
 
-static double null_seek(Rconnection con, double where, int origin, int rw)
+static double NORET null_seek(Rconnection con, double where, int origin, int rw)
 {
     error(_("%s not enabled for this connection"), "'seek'");
-    return 0.;			/* -Wall */
 }
 
-static void null_truncate(Rconnection con)
+static void NORET null_truncate(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "truncation");
 }
@@ -472,18 +468,16 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-static size_t null_read(void *ptr, size_t size, size_t nitems,
+static size_t NORET null_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'read'");
-    return 0;			/* -Wall */
 }
 
-static size_t null_write(const void *ptr, size_t size, size_t nitems,
+static size_t NORET null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'write'");
-    return 0;			/* -Wall */
 }
 
 void init_con(Rconnection new, const char *description, int enc,
@@ -3750,6 +3744,7 @@ static SEXP readOneString(Rconnection con)
     for(pos = 0; pos < 10000; pos++) {
 	p = buf + pos;
 	m = (int) con->read(p, sizeof(char), 1, con);
+	if (m < 0) error("error reading from the connection");
 	if(!m) {
 	    if(pos > 0)
 		warning(_("incomplete string at end of file has been discarded"));
@@ -3884,6 +3879,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while(n0) {
 		size_t n1 = (n0 < BLOCK) ? n0 : BLOCK;
 		m0 = con->read(pp, size, n1, con);
+		if (m0 < 0) error("error reading from the connection");
 		m += m0;
 		if (m0 < n1) break;
 		n0 -= n1;
@@ -3964,8 +3960,9 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!signd && (mode != 1 || size > 2))
 	    warning(_("'signed = FALSE' is only valid for integers of sizes 1 and 2"));
 	if(size == sizedef) {
-	    if(isRaw) m = rawRead(p, size, n, bytes, nbytes, &np);
-	    else {
+	    if(isRaw) {
+		m = rawRead(p, size, n, bytes, nbytes, &np);
+	    } else {
 		/* Do this in blocks to avoid large buffers in the connection */
 		char *pp = p;
 		R_xlen_t m0, n0 = n;
@@ -3973,6 +3970,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		while(n0) {
 		    size_t n1 = (n0 < BLOCK) ? n0 : BLOCK;
 		    m0 = con->read(pp, size, n1, con);
+		    if (m0 < 0) error("error reading from the connection");
 		    m += m0;
 		    if (m0 < n1) break;
 		    n0 -= n1;
@@ -3988,6 +3986,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
 			: (int) con->read(buf, size, 1, con);
+		    if (s < 0) error("error reading from the connection");
 		    if(s) m++; else break;
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
@@ -4020,6 +4019,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
 			: (int) con->read(buf, size, 1, con);
+		    if (s < 0) error("error reading from the connection");
 		    if(s) m++; else break;
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
@@ -4951,12 +4951,15 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 /* op = 0: url(description, open, blocking, encoding)
    op = 1: file(description, open, blocking, encoding)
 */
+extern
+Rconnection R_newCurlUrl(const char *description, const char * const mode);
+
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     char *class2 = "url";
     const char *url, *open;
-    int ncon, block, raw = 0;
+    int ncon, block, raw = 0, meth = 0;
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET
@@ -4971,7 +4974,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("only first element of 'description' argument used"));
     url = CHAR(STRING_ELT(scmd, 0)); /* ASCII */
 #ifdef Win32
-    if(PRIMVAL(op) && !IS_ASCII(STRING_ELT(scmd, 0)) ) {
+    if(PRIMVAL(op) == 1 && !IS_ASCII(STRING_ELT(scmd, 0)) ) {
 	ienc = CE_UTF8;
 	url = translateCharUTF8(STRING_ELT(scmd, 0));
     } else {
@@ -4984,10 +4987,13 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	url = translateChar(STRING_ELT(scmd, 0));
 #endif
+
 #ifdef HAVE_INTERNET
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
     else if (strncmp(url, "https://", 8) == 0) type = HTTPSsh;
+    // ftps:// is 'in principle' at present.
+    else if (strncmp(url, "ftps://", 7) == 0) type = FTPSsh;
 #endif
 
     sopen = CADR(args);
@@ -5001,10 +5007,15 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    if(PRIMVAL(op)) {
+    if(PRIMVAL(op) == 1) {
 	raw = asLogical(CAD4R(args));
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
+    }
+
+    if(PRIMVAL(op) == 0) {
+	const char *cmeth = CHAR(asChar(CAD4R(args)));
+	meth = strcmp(cmeth, "internal");
     }
 
     ncon = NextConnection();
@@ -5020,12 +5031,17 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "https://", 8) == 0 ||
-	       strncmp(url, "ftp://", 6) == 0) {
-       con = R_newurl(url, strlen(open) ? open : "r");
-       ((Rurlconn)con->private)->type = type;
+	       strncmp(url, "ftp://", 6) == 0 ||
+	       strncmp(url, "ftps://", 7) == 0) {
+	if(meth) {
+	    con = R_newCurlUrl(url, strlen(open) ? open : "r");
+	} else {
+	    con = R_newurl(url, strlen(open) ? open : "r");
+	    ((Rurlconn)con->private)->type = type;
+	}
 #endif
     } else {
-	if(PRIMVAL(op)) { /* call to file() */
+	if(PRIMVAL(op) == 1) { /* call to file() */
 	    if(strlen(url) == 0) {
 		if(!strlen(open)) open ="w+";
 		if(strcmp(open, "w+") != 0 && strcmp(open, "w+b") != 0) {
