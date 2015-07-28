@@ -116,3 +116,16 @@ callme()
 callme(mm="B")
 mycaller <- function(x = 1, callme = pi) { callme(x) }
 mycaller()## wrongly gave `mm = NULL'  now = "Abc"
+
+
+## Garbage collection  protection problem:
+if(FALSE) ## only here to be run as part of  'make test-Gct'
+    gctorture() # <- for manual testing
+x <- c("a", NA, "b")
+fx <- factor(x, exclude="")
+ST <- if(interactive()) system.time else invisible
+ST(r <- replicate(20, capture.output(print(fx))))
+table(ok. <- r[2,] == "Levels: a b <NA>") # want all TRUE
+stopifnot(ok.) # in case of failure, see
+r[2,] ## the '<NA>' levels part would be wrong occasionally
+

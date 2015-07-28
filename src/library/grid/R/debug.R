@@ -124,7 +124,7 @@ showGrob <- function(x=NULL,
         # To remove labels use grid.redraw()
         if (is.null(gPath)) {
             # Show the current scene
-            dl <- grid.Call(L_getDisplayList)[1L:grid:::grid.Call(L_getDLindex)]
+            dl <- grid.Call(L_getDisplayList)[1L : grid.Call(L_getDLindex)]
             grid.newpage(recording=FALSE)
             # -1 because first element on DL is ROOT viewport
             lapply(dl[-1],

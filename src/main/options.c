@@ -25,6 +25,7 @@
 #include "Defn.h"
 #include <Internal.h>
 #include "Print.h"
+#include <Rinternals.h>
 
 /* The global var. R_Expressions is in Defn.h */
 #define R_MIN_EXPRESSIONS_OPT	25
@@ -472,13 +473,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "editor") && isString(argi)) {
 		SEXP s =  asChar(argi);
-		if (IS_NA_STRING(s) || length(s) == 0)
+		if (IS_NA_STRING(s) || LENGTH(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s)));
 	    }
 	    else if (streql(CHAR(namei), "continue")) {
 		SEXP s =  asChar(argi);
-		if (IS_NA_STRING(s) || length(s) == 0)
+		if (IS_NA_STRING(s) || LENGTH(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
 		SET_VECTOR_ELT(value, i,
@@ -486,7 +487,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
 		SEXP s =  asChar(argi);
-		if (IS_NA_STRING(s) || length(s) == 0)
+		if (IS_NA_STRING(s) || LENGTH(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
 		SET_VECTOR_ELT(value, i,
@@ -505,7 +506,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "warn")) {
-		if (!isNumeric(argi) || length(argi) != 1)
+		if (!isNumeric(argi) || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
@@ -542,7 +543,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 /* handle this here to avoid GetOption during error handling */
 	    else if ( streql(CHAR(namei), "show.error.messages") ) {
-		if( !isLogical(argi) && length(argi) != 1 )
+		if( !isLogical(argi) && LENGTH(argi) != 1 )
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 		R_ShowErrorMessages = LOGICAL(argi)[0];
@@ -561,6 +562,10 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		static char sdec[11];
+		if(R_nchar(STRING_ELT(argi, 0), Chars,
+			   /* allowNA = */ FALSE, /* keepNA = */ FALSE,
+			   "OutDec") != 1) // will become an error
+		    warning(_("'OutDec' must be a string of one character"));
 		strncpy(sdec, CHAR(STRING_ELT(argi, 0)), 10);
 		sdec[10] = '\0';
 		OutDec = sdec;

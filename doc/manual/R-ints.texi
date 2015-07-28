@@ -3252,7 +3252,7 @@ returned.  C functions @code{doMouseEvent} and @code{doKeybd} are
 provided to call the R event handlers @code{onMouseDown},
 @code{onMouseMove}, @code{onMouseUp}, and @code{onKeybd} and set
 @code{eventEnv$result} during this step.  Finally, @code{initEvent} is
-called again with @code{init=false} to inform the the devices that the
+called again with @code{init=false} to inform the devices that the
 loop is done, and the result is returned to the user.
 
 @node Specific devices,  , Graphics events, Graphics devices
@@ -3811,8 +3811,8 @@ interactively.
 Default: true.
 @item _R_CHECK_VIGNETTES_NLINES_
 Maximum number of lines to show at the bottom of the output when reporting
-errors in running vignettes.
-Default: 10.
+errors in running or re-building vignettes.
+Default: 10 for running, 25 for re-building.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
 Default: true.
@@ -4069,6 +4069,11 @@ If set, check code usage (via @CRANpkg{codetools}) directly on the
 package namespace without loading and attaching the package and its
 suggests and enhances.
 Default: true (and true for CRAN submission checks).
+
+@item _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_
+If set, check code usage (via @CRANpkg{codetools}) with only the base
+package attached.
+Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_EXIT_ON_FIRST_ERROR_
 If set to a true value, the check will exit on the first error.

@@ -319,7 +319,6 @@ AC_ARG_ENABLE([prebuilt-html],
 [want_prebuilt_html=no])
 AM_CONDITIONAL(BUILD_HTML, [test "x${want_prebuilt_html}" = xyes])
 
-
 AC_ARG_ENABLE([lto],
 [AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
 [want_lto="${enableval}"], [want_lto=no])
@@ -334,6 +333,11 @@ AC_SUBST(LTO)
 AC_SUBST(LTOALL)
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
 
+AC_ARG_ENABLE([java],
+[AS_HELP_STRING([--enable-java],[enable Java @<:@yes@:>@])],
+[want_java="${enableval}"],
+[want_java=yes])
+AM_CONDITIONAL(WANT_JAVA, [test "x${want_java}" = xyes])
 
 ### ** Optional packages.
 
@@ -1659,6 +1663,7 @@ dylib_ldflags="${SHLIB_LDFLAGS}"
 LIBR_LDFLAGS=""
 RLAPACK_LDFLAGS=""
 RBLAS_LDFLAGS=""
+R_DYLIB_VERSION_SUFFIX=""
 case "${host_os}" in
   aix*)
     ## Not needed for -brtl linking
@@ -1685,13 +1690,18 @@ case "${host_os}" in
     fi
     ;;
   openbsd*)
-    PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/\.//" -e "s/\..*$//"`
-    PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
-      sed -e "s/.*\.\([[^.]][[^.]]*$\)/\1/"`
-    DYLIB_EXT=".so.${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
+    if test -z "${R_DYLIB_VERSION}"; then
+      PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
+        sed -e "s/\.//" -e "s/\..*$//"`
+      PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
+        sed -e "s/.*\.\([[^.]][[^.]]*$\)/\1/"`
+      R_DYLIB_VERSION="${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
+    fi
+    R_DYLIB_VERSION_SUFFIX=".${R_DYLIB_VERSION}"
     ;;
 esac
+
+R_DYLIB_EXT="${DYLIB_EXT}${R_DYLIB_VERSION_SUFFIX}"
 
 if test -z "${DYLIB_LD}"; then
   dylib_ld_was_given=no
@@ -1735,6 +1745,7 @@ AC_SUBST(LAPACK_LDFLAGS)
 AC_SUBST(FW_VERSION)
 AC_SUBST(STATICR1)
 AC_SUBST(STATICR2)
+AC_SUBST(R_DYLIB_EXT)
 
 ## C++11 and later
 R_CXX1X
@@ -2305,7 +2316,8 @@ R_TRE
 ## and check the version directly rather than by curl-config --checkfor
 AC_PATH_PROG(CURL_CONFIG, curl-config)
 if test -n "${CURL_CONFIG}"; then
-  echo `${CURL_CONFIG} --version`
+  echo "checking libcurl version ..." \
+    `${CURL_CONFIG} --version | sed -e 's,^[[^0-9]]*,,'`
   if test -z "${CURL_CPPFLAGS}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi

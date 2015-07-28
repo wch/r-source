@@ -561,7 +561,7 @@ buildVignettes <-
     } else {
         ## Badly-written vignettes open a pdf() device on Rplots.pdf and
         ## fail to close it.
-        graphics.off()
+        grDevices::graphics.off()
 
         keep <- c(outputs, unlist(sourceList))
         if(clean) {

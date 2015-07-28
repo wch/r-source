@@ -217,7 +217,7 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < PROFLINEMAX)
 		snprintf(buf+len, PROFBUFSIZ - len,
-			 ":%lu:%lu:%lu:%lu:", 
+			 ":%lu:%lu:%lu:%lu:",
 			 (unsigned long) smallv, (unsigned long) bigv,
 			 (unsigned long) nodes, get_duplicate_counter());
 	    reset_duplicate_counter();
@@ -1219,7 +1219,7 @@ SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
     UNPROTECT(1);
     return tmp;
 }
-    
+
 SEXP attribute_hidden do_forceAndCall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int n = asInteger(eval(CADR(call), rho));
@@ -1256,7 +1256,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 	R_varloc_t loc;
 	int missing;
 	loc = R_findVarLocInFrame(rho,symbol);
-	if(loc == NULL)
+	if(R_VARLOC_IS_NULL(loc))
 	    error(_("could not find symbol \"%s\" in environment of the generic function"),
 		  CHAR(PRINTNAME(symbol)));
 	missing = R_GetVarLocMISSING(loc);
@@ -1464,8 +1464,8 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
     if (IS_R_BaseEnv(rho) || IS_R_BaseNamespace(rho))
 	return R_NilValue;
     else {
-	SEXP loc = PTR_TO_SEXP((void *) R_findVarLocInFrame(rho, symbol));
-	return (! IS_NULL_SEXP(loc)) ? loc : R_NilValue;
+	R_varloc_t loc = R_findVarLocInFrame(rho, symbol);
+	return (! R_VARLOC_IS_NULL(loc)) ? loc.cell : R_NilValue;
     }
 }
 
@@ -1993,13 +1993,10 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (IS_R_BaseEnv(rho))
 	errorcall(call, _("cannot do complex assignments in base environment"));
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
-    DISABLE_REFCNT((SEXP) tmploc);
-    DECREMENT_REFCNT(CDR((SEXP) tmploc));
-
-    /**** This bit is pretty dubious - LT */
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
-    SEXP tmplocSEXP = PTR_TO_SEXP((void *) tmploc);
-    PROTECT(tmplocSEXP);
+    PROTECT(tmploc.cell);
+    DISABLE_REFCNT(tmploc.cell);
+    DECREMENT_REFCNT(CDR(tmploc.cell));
 
     /* Now set up a context to remove it when we are done, even in the
      * case of an error.  This all helps error() provide a better call.
@@ -2699,7 +2696,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 						call, 0));
 		else {
 		    PROTECT(argValue = CONS_NR(x, evalArgs(CDR(argValue), rho,
-							dropmissing, call, 1)));
+							   dropmissing, call, 1)));
 		    SET_TAG(argValue, CreateTag(TAG(args)));
 		}
 		nprotect++;
@@ -3191,7 +3188,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
     /* no error checking since only called with tag != 0 */
     SEXP value;
     switch (s->tag) {
-    case REALSXP: 
+    case REALSXP:
 #ifdef CACHE_SCALARS
 	if (! IS_NULL_SEXP(R_CachedScalarReal)) {
 	    value = R_CachedScalarReal;
@@ -3355,7 +3352,7 @@ static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 #ifdef TYPED_STACK
     int tag = s->tag;
 
-    if (tag) 
+    if (tag)
 	switch(tag) {
 	case REALSXP: v->dval = s->u.dval; return tag;
 	case INTSXP: v->ival = s->u.ival; return tag;
@@ -3719,26 +3716,26 @@ static struct { const char *name; SEXP sym; double (*fun)(double); }
 
 	{"expm1", SEXP_INIT, expm1},
 	{"log1p", SEXP_INIT, log1p},
-	
+
 	{"cos", SEXP_INIT, cos},
 	{"sin", SEXP_INIT, sin},
 	{"tan", SEXP_INIT, tan},
 	{"acos", SEXP_INIT, acos},
 	{"asin", SEXP_INIT, asin},
 	{"atan", SEXP_INIT, atan},
-	
+
 	{"cosh", SEXP_INIT, cosh},
 	{"sinh", SEXP_INIT, sinh},
 	{"tanh", SEXP_INIT, tanh},
 	{"acosh", SEXP_INIT, acosh},
 	{"asinh", SEXP_INIT, asinh},
 	{"atanh", SEXP_INIT, atanh},
-	
+
 	{"lgamma", SEXP_INIT, lgammafn},
 	{"gamma", SEXP_INIT, gammafn},
 	{"digamma", SEXP_INIT, digamma},
 	{"trigamma", SEXP_INIT, trigamma},
-	
+
 	{"cospi", SEXP_INIT, cospi},
 	{"sinpi", SEXP_INIT, sinpi},
 #ifndef HAVE_TANPI
@@ -3747,7 +3744,7 @@ static struct { const char *name; SEXP sym; double (*fun)(double); }
 	{"tanpi", SEXP_INIT, Rtanpi}
 #endif
     };
-    
+
 static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
     if (IS_NULL_SEXP(math1funs[i].sym))
 	math1funs[i].sym = install(math1funs[i].name);
@@ -3755,7 +3752,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	error("math1 compiler/interpreter mismatch");
     return math1funs[i].fun;
 }
-    
+
 #define DO_MATH1() do {							\
 	SEXP call = VECTOR_ELT(constants, GETOP());			\
 	double (*fun)(double) = getMath1Fun(GETOP(), call);		\
@@ -4022,7 +4019,7 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
    table is used as the cache index.  Two options can be used to chose
    among implementation strategies:
 
-       If CACHE_ON_STACK is defined the the cache is allocated on the
+       If CACHE_ON_STACK is defined the cache is allocated on the
        byte code stack. Otherwise it is allocated on the heap as a
        VECSXP.  The stack-based approach is more efficient, but runs
        the risk of running out of stack space.
@@ -4863,7 +4860,7 @@ static R_INLINE void VECSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 
 static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 				      R_bcstack_t *si, R_bcstack_t *sj,
-				      R_bcstack_t *sv, 
+				      R_bcstack_t *sv,
 				      SEXP rho, SEXP consts, int callidx,
 				      Rboolean subassign2)
 {
@@ -4920,7 +4917,7 @@ static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 
 static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 				     R_bcstack_t *srhs,
-				     R_bcstack_t *si, R_bcstack_t *sv, 
+				     R_bcstack_t *si, R_bcstack_t *sv,
 				     SEXP rho, SEXP consts, int callidx,
 				     Rboolean subassign2)
 {
@@ -5035,13 +5032,13 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 #define IS_TRUE_BUILTIN(x) ((R_FunTab[PRIMOFFSET(x)].eval % 100 )/10 == 0)
 
 static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
-						    SEXP constants) 
+						    SEXP constants)
 {
 #ifdef TYPED_STACK
     if (s->tag == LGLSXP && s->u.ival != NA_LOGICAL)
 	return s->u.ival;
 #endif
-    SEXP value = GETSTACK_PTR(s); 
+    SEXP value = GETSTACK_PTR(s);
     if (IS_SCALAR(value, LGLSXP) && LOGICAL(value)[0] != NA_LOGICAL)
 	return LOGICAL(value)[0];
     else {

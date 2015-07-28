@@ -13,11 +13,9 @@
   from a local mirror).
 }
 \usage{
-available.packages(contriburl =
-                   contrib.url(getOption("repos"), type),
-                   method, fields = NULL,
-                   type = getOption("pkgType"),
-                   filters = NULL)
+available.packages(contriburl = contrib.url(repos, type), method,
+                   fields = NULL, type = getOption("pkgType"),
+                   filters = NULL, repos = getOption("repos"))
 }
 \arguments{
   \item{contriburl}{
@@ -42,6 +40,9 @@ available.packages(contriburl =
   }
   \item{filters}{
     a character vector or list or \code{NULL} (default). See \sQuote{Details}.
+  }
+  \item{repos}{
+    character vector, the base URL(s) of the repositories to use.
   }
 }
 \details{

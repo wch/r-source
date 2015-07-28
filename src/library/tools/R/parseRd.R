@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseRd.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -168,8 +168,11 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
     		dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))
     	    	result <- dep[[1L]]
     	    	state <<- dep[[2L]][1L:2L]
-    	    } else
+    	    } else {
+	        if (inherits(x, "Rd"))
+		    class(x) <- setdiff(class(x), "Rd") # Avoid infinite recursion from misuse (PR#16448)
     	    	result <- as.character(x)
+	    }
     	    if (needBraces) {
     	    	if (grepl("^[[:alpha:]]", result)) result <- c("{}", result)
     	    	needBraces <<- FALSE

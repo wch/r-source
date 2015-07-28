@@ -199,7 +199,8 @@ function(dir,
             for(i in seq_along(rfiles)) {
                 message(sprintf("downloading %s ... ", rfiles[i]),
                         appendLF = FALSE)
-                status <- if(!utils::download.file(rfurls[i], rfiles[i]))
+                status <- if(!utils::download.file(rfurls[i], rfiles[i],
+                                                   quiet = TRUE))
                     "ok" else "failed"
                 message(status)
             }

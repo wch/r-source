@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,11 +58,14 @@ sessionInfo <- function(package = NULL)
                        ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
                        sprintf("OS X %s (%s)", ver,
                                switch(ver1,
+                                      "4" = "Tiger",
+                                      "5" = "Leopard",
                                       "6" = "Snow Leopard",
                                       "7" = "Lion",
                                       "8" = "Mountain Lion",
                                       "9" = "Mavericks",
                                       "10" = "Yosemite",
+                                      "11" = "El Capitan",
                                       "unknown"))
                    },
                    "SunOS" = {
@@ -76,8 +79,9 @@ sessionInfo <- function(package = NULL)
     if(is.null(package)){
         package <- grep("^package:", search(), value=TRUE)
         # weed out environments which are not really packages
-        keep <- sapply(package, function(x) x == "package:base" || !is.null(attr(as.environment(x), "path")))
-        package <- sub("^package:", "", package[keep])
+        keep <- vapply(package, function(x) x == "package:base"
+                       || !is.null(attr(as.environment(x), "path")), NA)
+        package <- .rmpkg(package[keep])
     }
 
     ## no need to re-encode given what we extract.

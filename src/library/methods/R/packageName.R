@@ -1,7 +1,7 @@
 #  File src/library/methods/R/packageName.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,16 @@
 ## utilities to manage package names
 
 getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
-    pkg <- ""
-    hasNameSaved <- exists(".packageName", where, inherits = FALSE)
-    if(hasNameSaved)
-        pkg <- get(".packageName", where)
-    else  if(identical(where, 1) || identical(as.environment(where), topenv(parent.frame())))
-        pkg <- Sys.getenv("R_PACKAGE_NAME")
     env <- as.environment(where)
-    envName <- environmentName(env)
-    if(nzchar(envName)) {
-        if(regexpr("package:", envName, fixed = TRUE) == 1L)
-          pkg <- sub("package:","", envName, fixed = TRUE)
+    notSaved <- is.null(pkg <- get0(".packageName", env, inherits = FALSE))
+    if(notSaved) {
+	pkg <- if(identical(where, 1) || identical(env, topenv(parent.frame())))
+	    Sys.getenv("R_PACKAGE_NAME")
+	else ""
     }
+    envName <- environmentName(env)
+    if(nzchar(envName) && regexpr("package:", envName, fixed = TRUE) == 1L)
+	pkg <- .rmpkg(envName)
     if(!nzchar(pkg)) { ## is still ""
         if(identical(env, .GlobalEnv))
             pkg <- ".GlobalEnv"
@@ -45,12 +43,12 @@ getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
                         pkg <- db; break
                     }
             }
-            else if(nzchar(environmentName(env)))
-                pkg <- environmentName(env)
+            else if(nzchar(envName))
+                pkg <- envName
             else
                 pkg <- as.character(where)
-            if(identical(substr(pkg, 1L, 8L), "package:"))
-                pkg <- substr(pkg, 9L, nchar(pkg, "c"))
+
+	    pkg <- .rmpkg(pkg)
         }
 #  Problem:  the library() function should now be putting .packageName in package environments
 #   but namespace makes them invisible from outside.
@@ -75,7 +73,7 @@ getPackageName <- function(where = topenv(parent.frame()), create = TRUE) {
                          sQuote(pkg)),
                 domain = NA)
         assign(pkg, env, envir = .PackageEnvironments)
-        if(!(hasNameSaved || environmentIsLocked(env)))
+	if(notSaved && !environmentIsLocked(env))
             setPackageName(pkg, env)
     }
     pkg

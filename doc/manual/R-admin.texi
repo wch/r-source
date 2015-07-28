@@ -1611,9 +1611,9 @@ Windows' CRLF line endings.
 @end macro
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
-X'. Click on that, then download the file
-@file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
-X 10.9 and later (Mavericks and Yosemite).
+X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
+and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
+El Capitan, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}.
@@ -3850,12 +3850,14 @@ against, and this can lead to symbol conflicts.
 For maximally effective use of @command{valgrind}, @R{} should be
 compiled with valgrind instrumentation. The @command{configure} option
 is @option{--with-valgrind-instrumentation=@var{level}}, where
-@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add
-any anything.)  The system headers for @command{valgrind} can be
-requested by option @option{--with-system-valgrind-headers}: they will
-be used if present (on Linux they may be in a separate package such as
+@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add any
+anything.)  The system headers for @command{valgrind} can be requested
+by option @option{--with-system-valgrind-headers}: they will be used if
+present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
-code in @R{} will be compatible with future @command{valgrind} headers.
+code in @R{} will be compatible with very old@footnote{We believe that
+versions 3.4.0 to 3.10.1 are compatible.} or future @command{valgrind}
+headers.
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
@@ -4695,10 +4697,10 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: for the 2014 version we needed to add
-@pkg{cm-super}, @pkg{ec}, @pkg{helvetic}, @pkg{inconsolata} and
-@pkg{texinfo} which brought this to about 380MB (or package
-@pkg{texinfo} and the collections @pkg{collection-fontsrecommended},
+some packages, e.g.@: for the 2015 version we needed to add
+@pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
+which brought this to about 410MB (or package @pkg{texinfo} and the
+collections @pkg{collection-fontsrecommended},
 @pkg{collection-fontsextra} and @pkg{collection-latexextra} which will
 take this up to about 1GB).  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
@@ -4711,15 +4713,15 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 @menu
-* Mavericks and Yosemite::      
+* Mavericks and later::         
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Mavericks and Yosemite, Tcl/Tk headers and libraries, OS X, OS X
-@subsection Mavericks and Yosemite
+@node Mavericks and later, Tcl/Tk headers and libraries, OS X, OS X
+@subsection Mavericks and later
 
 For these versions Apple makes available compilers based on
 @command{clang}, and C++ headers and runtime are from LLVM's
@@ -4727,10 +4729,10 @@ For these versions Apple makes available compilers based on
 called `Command Line Developer Tools').
 
 These tools can be (re-)installed by @command{xcode-select --install}.
-(If you have a fresh installation of Mavericks/Yosemite, running e.g.@:
-@command{make} in a terminal will offer the installation of the
-command-line tools, or perhaps use the versions from Xcode.  However,
-after an OS update, you are advised to re-install them.)
+(If you have a fresh installation, running e.g.@: @command{make} in a
+terminal will offer the installation of the command-line tools, or
+perhaps use the versions from Xcode.  However, after an OS update, you
+are advised to re-install them.)
 
 To use the compilers from the command-line tools with the recommended
 Fortran compiler, have in @file{config.site} something like
@@ -4769,7 +4771,7 @@ For some pre-compiled software, for example the GTK framework,
 @file{/opt/X11/include} may need to be added to the include paths.
 
 
-If you upgrade to Yosemite you should re-install any of XQuartz, the
+If you upgrade your OS you should re-install any of XQuartz, the
 `Command Line Tools' and Java which you have installed.  (Upgrading may
 partially remove previous versions which can be confusing.)
 
@@ -4778,7 +4780,7 @@ under Yosemite.  They give warnings and @command{gfortran-4.8} is
 reported to be unable to link packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mavericks and Yosemite, OS X
+@node Tcl/Tk headers and libraries, Java (OS X), Mavericks and later, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to

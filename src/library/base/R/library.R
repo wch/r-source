@@ -133,8 +133,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 message(gettextf("package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg)), domain = NA)
                 message(pkgInfo$DESCRIPTION["License"], domain = NA)
             }
-            choice <- menu(c("accept", "decline"),
-                           title = paste("License for", sQuote(pkg)))
+            choice <- utils::menu(c("accept", "decline"),
+                                  title = paste("License for", sQuote(pkg)))
             if(choice != 1)
                 stop(gettextf("license for package %s not accepted",
                               sQuote(package)), domain = NA, call. = FALSE)
@@ -275,7 +275,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(is.character(pos)) {
                 npos <- match(pos, search())
                 if(is.na(npos)) {
-                    warning(gettextf("%s not found on search path, using pos = 2", sQuote(pos)), domain = NA)
+                    warning(gettextf("%s not found on search path, using pos = 2",
+                                     sQuote(pos)), domain = NA)
                     pos <- 2
                 } else pos <- npos
             }
@@ -287,20 +288,23 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
 		if (isNamespaceLoaded(package)) {
-                    # Already loaded.  Does the version match?
+                    ## Already loaded.  Does the version match?
                     newversion <- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
                     oldversion <- as.numeric_version(getNamespaceVersion(package))
                     if (newversion != oldversion) {
-                    	# No, so try to unload the previous one
+                    	## No, so try to unload the previous one
                     	res <- try(unloadNamespace(package))
                     	if (inherits(res, "try-error"))
-                    	    stop(gettextf("Package %s version %s cannot be unloaded", sQuote(package), oldversion, domain = "R-base"))
+                    	    stop(gettextf("Package %s version %s cannot be unloaded",
+					  sQuote(package), oldversion), domain=NA)
                     }
                 }
                 tt <- try({
-                    ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
+                    attr(package, "LibPath") <- which.lib.loc
+                    ns <- loadNamespace(package, lib.loc)
                     env <- attachNamespace(ns, pos = pos, deps)
                 })
+                attr(package, "LibPath") <- NULL
                 if (inherits(tt, "try-error"))
                     if (logical.return)
                         return(FALSE)
@@ -436,7 +440,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     if (logical.return)
 	TRUE
     else invisible(.packages())
-}
+} ## {library}
 
 format.libraryIQR <-
 function(x, ...)
@@ -626,7 +630,7 @@ function(all.available = FALSE, lib.loc = NULL)
         return(unique(ans))
     } ## else
     s <- search()
-    return(invisible(substring(s[substr(s, 1L, 8L) == "package:"], 9)))
+    invisible(.rmpkg(s[substr(s, 1L, 8L) == "package:"]))
 }
 
 path.package <-

@@ -513,7 +513,7 @@ FUNTAB R_FunTab[] =
 {"paste",	do_paste,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"paste0",	do_paste,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.path",	do_filepath,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"format",	do_format,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
+{"format",	do_format,	0,	11,	9,	{PP_FUNCALL, PREC_FN,	0}},
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"do.call",	do_docall,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
@@ -847,7 +847,7 @@ FUNTAB R_FunTab[] =
 {"isSeekable",	do_isseekable,	0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"close",	do_close,	0,      111,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"flush",	do_flush,	0,      111,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"file",	do_url,		1,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
+{"file",	do_url,		1,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"url",		do_url,		0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"pipe",	do_pipe,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"fifo",	do_fifo,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
@@ -1016,7 +1016,7 @@ SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP name, prim;
     checkArity(op, args);
     name = CAR(args);
-    if (!isString(name) || length(name) != 1 ||
+    if (!isString(name) || LENGTH(name) != 1 ||
 	IS_R_NilValue(STRING_ELT(name, 0)))
 	errorcall(call, _("string argument required"));
     prim = R_Primitive(CHAR(STRING_ELT(name, 0)));

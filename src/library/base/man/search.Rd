@@ -1,16 +1,17 @@
 % File src/library/base/man/search.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{search}
 \title{Give Search Path for R Objects}
+\alias{search}
+\alias{searchpaths}
+\alias{.rmpkg}% not yet: to get pkg name from search()
 \usage{
 search()
 searchpaths()
 }
-\alias{search}
-\alias{searchpaths}
 \description{
   Gives a list of \code{\link{attach}}ed \emph{packages}
   (see \code{\link{library}}), and \R objects, usually

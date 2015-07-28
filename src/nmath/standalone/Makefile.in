@@ -59,7 +59,7 @@ libRmath_a_OBJECTS = $(OBJECTS)
 ## <FIXME>
 ## Change to 'libRmath.la' when using libtool for shlibs.
 ## Remove when using automake ...
-libRmath_la = libRmath$(DYLIB_EXT)
+libRmath_la = libRmath$(R_DYLIB_EXT)
 ## </FIXME>
 Rexeclibdir_LTLIBRARIES = $(libRmath_la)
 libRmath_la_SOURCES = $(SOURCES)

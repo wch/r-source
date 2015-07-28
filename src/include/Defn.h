@@ -860,7 +860,6 @@ LibExtern Rboolean UseInternet2;
 # define EncodeString           Rf_EncodeString
 # define EnsureString 		Rf_EnsureString
 # define endcontext		Rf_endcontext
-# define envlength		Rf_envlength
 # define ErrorMessage		Rf_ErrorMessage
 # define evalList		Rf_evalList
 # define evalListKeepMissing	Rf_evalListKeepMissing
@@ -1000,7 +999,8 @@ Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 
 /* environment cell access */
-typedef struct R_varloc_st *R_varloc_t;
+typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */
+#define R_VARLOC_IS_NULL(loc) (IS_NULL_SEXP((loc).cell))
 R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
 SEXP R_GetVarLocValue(R_varloc_t);
 SEXP R_GetVarLocSymbol(R_varloc_t);
@@ -1062,7 +1062,6 @@ int DispatchGroup(const char *, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP, Rboolean);
 R_xlen_t any_duplicated(SEXP, Rboolean);
 R_xlen_t any_duplicated3(SEXP, SEXP, Rboolean);
-int envlength(SEXP);
 SEXP evalList(SEXP, SEXP, SEXP, int);
 SEXP evalListKeepMissing(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
@@ -1350,14 +1349,25 @@ extern const char *locale2charset(const char *);
 } while(0)
 
 
+/* 
+   alloca is neither C99 nor POSIX.
+
+   It might be better to try alloca.h first, see
+   https://www.gnu.org/software/autoconf/manual/autoconf-2.60/html_node/Particular-Functions.html
+*/
 #ifdef __GNUC__
+// This covers GNU, Clang and Intel compilers
+// The undef is needed in case some other header, e.g. malloc.h, already did this
 # undef alloca
 # define alloca(x) __builtin_alloca((x))
 #else
 # ifdef HAVE_ALLOCA_H
+// Needed for native compilers on Solaris and AIX
 #  include <alloca.h>
 # endif
+// it might have been defined via some other standard header, e.g. stdlib.h
 # if !HAVE_DECL_ALLOCA
+#  include <stddef.h> // for size_t
 extern void *alloca(size_t);
 # endif
 #endif

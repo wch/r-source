@@ -1,6 +1,6 @@
 % File src/library/base/man/levels.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{levels}
@@ -62,13 +62,16 @@ levels(y) <- c("low", "high")
 y
 
 ## combine some levels
-z <- gl(3, 2, 12)
-levels(z) <- c("A", "B", "A")
+z <- gl(3, 2, 12, labels = c("apple", "salad", "orange"))
+z
+levels(z) <- c("fruit", "veg", "fruit")
 z
 
 ## same, using a named list
-z <- gl(3, 2, 12)
-levels(z) <- list(A = c(1,3), B = 2)
+z <- gl(3, 2, 12, labels = c("apple", "salad", "orange"))
+z
+levels(z) <- list("fruit" = c("apple","orange"),
+                  "veg"   = "salad")
 z
 
 ## we can add levels this way:

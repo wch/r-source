@@ -17,8 +17,9 @@
 #  http://www.r-project.org/Licenses/
 
 available.packages <-
-function(contriburl = contrib.url(getOption("repos"), type), method,
-         fields = NULL, type = getOption("pkgType"), filters = NULL)
+function(contriburl = contrib.url(repos, type), method,
+         fields = NULL, type = getOption("pkgType"),
+         filters = NULL, repos = getOption("repos"))
 {
     requiredFields <-
         c(tools:::.get_standard_repository_db_fields(), "File")
@@ -673,6 +674,9 @@ download.packages <- function(pkgs, destdir, available = NULL,
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(nonlocalcran && !dir.exists(destdir))
         stop("'destdir' is not a directory")
+    
+    type <- resolvePkgType(type)
+    
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
@@ -739,11 +743,16 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval
 }
 
-contrib.url <- function(repos, type = getOption("pkgType"))
-{
+resolvePkgType <- function(type) {
     ## Not entirely clear this is optimal
     if(type == "both") type <- "source"
-    if(type == "binary") type <- .Platform$pkgType
+    else if(type == "binary") type <- .Platform$pkgType
+    type
+}
+
+contrib.url <- function(repos, type = getOption("pkgType"))
+{
+    type <- resolvePkgType(type)
     if(is.null(repos)) return(NULL)
     if("@CRAN@" %in% repos && interactive()) {
         cat(gettext("--- Please select a CRAN mirror for use in this session ---"),
@@ -780,11 +789,11 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     m <- NULL
     if(!local.only) {
         ## Try to handle explicitly failure to connect to CRAN.
-        con <- url("http://cran.r-project.org/CRAN_mirrors.csv")
-        m <- try(open(con, "r"), silent = TRUE)
+        f <- tempfile()
+        m <- try(download.file("https://cran.r-project.org/CRAN_mirrors.csv", destfile = f, quiet = TRUE))
         if(!inherits(m, "try-error"))
-            m <- try(read.csv(con, as.is = TRUE, encoding = "UTF-8"))
-        close(con)
+            m <- try(read.csv(f, as.is = TRUE, encoding = "UTF-8"))
+        unlink(f)
     }
     if(is.null(m) || inherits(m, "try-error"))
         m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
@@ -794,13 +803,36 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
 }
 
 
-chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL)
+chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL, 
+                             useHTTPS = getOption("useHTTPS", TRUE))
 {
     if(is.null(ind) && !interactive())
         stop("cannot choose a CRAN mirror non-interactively")
     m <- getCRANmirrors(all = FALSE, local.only = FALSE)
-    res <- if (length(ind)) as.integer(ind)[1L] else
-    menu(m[, 1L], graphics, "CRAN mirror")
+    if (length(ind)) 
+        res <- as.integer(ind)[1L] 
+    else {
+    	isHTTPS <- grepl("^https", m[, "URL"])
+    	mHTTPS <- m[isHTTPS,]
+    	mHTTP <- m[!isHTTPS,]
+    	if (useHTTPS) {
+    	    m <- mHTTPS
+    	    if (!nrow(m)) {
+    	    	useHTTPS <- FALSE
+    	    	m <- mHTTP
+    	    }
+    	}
+    	if (useHTTPS) {
+    	    res <- menu(c(m[, 1L], "(HTTP mirrors)"), graphics, "HTTPS CRAN mirror")
+    	    if (res > nrow(m)) {
+    	    	m <- mHTTP
+    	    	res <- menu(m[, 1L], graphics, "HTTP CRAN mirror")
+    	    }
+    	} else {
+    	    m <- mHTTP
+    	    res <- menu(m[, 1L], graphics, "HTTP CRAN mirror")
+    	}
+    }
     if(res > 0L) {
         URL <- m[res, "URL"]
         repos <- getOption("repos")

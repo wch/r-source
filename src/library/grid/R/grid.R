@@ -479,7 +479,7 @@ grid.Call.graphics <- function(fnname, ...) {
   engineDLon <- grid.Call(L_getEngineDLon)
   if (engineDLon) {
     # NOTE that we need a .Call.graphics("L_gridDirty") so that
-    # the the first thing on the engine display list is a dirty
+    # the first thing on the engine display list is a dirty
     # operation;  this is necessary in case the display list is
     # played on another device (e.g., via replayPlot() or dev.copy())
     .Call.graphics(L_gridDirty)

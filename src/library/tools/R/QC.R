@@ -3273,7 +3273,8 @@ function(dfile, strict = FALSE)
 
     ## Minimal check (so far) of Title and Description.
     if(strict && !is.na(val <- db["Title"])
-       && grepl("[.]$", val) && !grepl(" [.][.][.]|et al[.]", trimws(val)))
+       && grepl("[.]$", val)
+       && !grepl("[[:space:]][.][.][.]|et[[:space:]]al[.]", trimws(val)))
         out$bad_Title <- TRUE
     ## some people put punctuation inside quotes, some outside.
     if(strict && !is.na(val <- db["Description"])
@@ -3881,7 +3882,7 @@ function(package, lib.loc = NULL)
                    envir = compat)
         }
         if(.Platform$OS.type != "windows") {
-            assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
+            assign("bringToTop", function (which = grDevices::dev.cur(), stay = FALSE) {},
                    envir = compat)
             assign("choose.dir",
                    function (default = "", caption = "Select folder") {},
@@ -3915,7 +3916,7 @@ function(package, lib.loc = NULL)
                    function (filename = "Rplot",
                              type = c("wmf", "emf", "png", "jpeg", "jpg",
                                       "bmp", "ps", "eps", "pdf"),
-                             device = dev.cur(), restoreConsole = TRUE) {},
+                             device = grDevices::dev.cur(), restoreConsole = TRUE) {},
                    envir = compat)
             assign("win.graph",
                    function(width = 7, height = 7, pointsize = 12,
@@ -3963,7 +3964,7 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign(".install.winbinary",
                    function(pkgs, lib, repos = getOption("repos"),
-                            contriburl = contrib.url(repos),
+                            contriburl = utils::contrib.url(repos),
                             method, available = NULL, destdir = NULL,
                             dependencies = FALSE, libs_only = FALSE,
                             ...) {}, envir = compat)
@@ -3988,7 +3989,7 @@ function(package, lib.loc = NULL)
     checkMethodUsageEnv <- function(env, ...) {
 	for(g in .get_S4_generics(env))
 	    for(m in .get_S4_methods_list(g, env)) {
-		fun <- methods::getDataPart(m)
+		fun <- methods::unRematchDefinition(methods::getDataPart(m))
 		signature <- paste(m@generic,
 				   paste(m@target, collapse = "-"),
 				   sep = ",")
@@ -4051,7 +4052,21 @@ function(x, ...)
         ind <- grepl(": partial argument match of", x, fixed = TRUE)
         if(any(ind)) x <- c(x[ind], x[!ind])
     }
-    strwrap(x, indent = 0L, exdent = 2L)
+    if(length(x)) {
+        ## Provide a summary listing of the undefined globals:
+        y <- .canonicalize_quotes(x)
+        m <- regexec("no visible global function definition for '(.*)'", y)
+        funs <- vapply(Filter(length, regmatches(y, m)), `[`, "", 2L)
+        m <- regexec("no visible binding for global variable '(.*)'", y)
+        vars <- vapply(Filter(length, regmatches(y, m)), `[`, "", 2L)
+        y <- sort(unique(c(funs, vars)))
+        c(strwrap(x, indent = 0L, exdent = 2L),
+          if(length(y)) {
+              c("Undefined global functions or variables:",
+                strwrap(paste(y, collapse = " "),
+                        indent = 2L, exdent = 2L))
+          })
+    } else character()
 }
 
 ### * .check_Rd_xrefs
@@ -6731,7 +6746,8 @@ function(dir)
                                                           filters =
                                                               c("R_version",
                                                                 "duplicates"))
-                            }))
+                            }),
+                     error = identity)
         if(inherits(adb, "error")) {
             out$additional_repositories_analysis_failed_with <-
                 conditionMessage(adb)
@@ -7304,7 +7320,7 @@ function(x, ...)
       },
       if(length(y) && any(nzchar(y$CRAN))) {
           c("\n  The canonical URL of the CRAN page for a package is ",
-            "  http://cran.r-project.org/package=pkgname")
+            "  https://cran.r-project.org/package=pkgname")
       },
       if(length(y) && any(nzchar(y$Spaces))) {
           "\n  Spaces in an http[s] URL should probably be replaced by %20"

@@ -84,6 +84,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   attempt to get a copy directly from the site rather than from an
   intermediate cache.  It is used by \code{\link{available.packages}}.
 
+  By default only the \code{"libcurl"} and \code{"wget"} methods follow
+  \samp{http://} redirections.  (For method \code{"curl"} use argument
+  \code{extra = "-L"}. To disable redirection in \command{wget}, use
+  \code{extra = "--max-redirect=0"}.)
+
   The remaining details apply to method \code{"internal"} only.
 
   Note that \samp{https://} URLs are
@@ -91,9 +96,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   not supported by the internal method.
 #endif
 #ifdef windows
-  only supported if \option{--internet2} or environment variable
+  supported by default.  (Prior to \R 3.2.2, this required that
+  option \option{--internet2} or environment variable
   \env{R_WIN_INTERNET2} was set or \code{\link{setInternet2}(TRUE)} was
-  used (to make use of Windows internal functions), and then only if the
+  used. The option and environment variable are now ignored.)  
+  However, \samp{https://} support only works if the
   certificate is considered to be valid.
 #endif
 
@@ -127,8 +134,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{mode = "wb"}.
 
   There is an alternative method \code{"wininet"}. (This selected for
-  \code{method = "internal"} if the command line flag
-  \option{--internet2}, was used or \code{\link{setInternet2}(TRUE)}
+  \code{method = "internal"} unless \code{\link{setInternet2}(FALSE)} is
   called.)  Then the \sQuote{Internet Options} of the system are used to
   choose proxies and so on; these are set in the Control Panel and are
   those used for Internet Explorer.  That version does not support
@@ -147,9 +153,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
    Files of more than 2GB are supported on 64-bit builds of \R; they
   may be truncated on some 32-bit builds.
   
-  Method \code{"wget"} is mainly for historical compatibility, but it
-  and \code{"curl"} can be used for URLs (e.g., \samp{https://} URLs or
-  those that use cookies) which the internal method does not support.
+  Methods \code{"wget"} and \code{"curl"} are mainly for historical
+  compatibility, but can be used for URLs (e.g., \samp{https://} URLs or
+  those that use cookies or redirection) which the internal method does
+  not support where the \code{"libcurl"} method is not available.
 
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the

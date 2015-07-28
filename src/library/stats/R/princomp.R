@@ -26,6 +26,7 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     mf$... <- NULL
+    ## need stats:: for non-standard evaluation
     mf[[1L]] <- quote(stats::model.frame)
     mf <- eval.parent(mf)
     ## this is not a `standard' model-fitting function,

@@ -6,3 +6,4 @@ Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Base R functions.
 License: Part of R @VERSION@
+Suggests: methods

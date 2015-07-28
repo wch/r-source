@@ -406,7 +406,7 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
-        cran <- grepl("http://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
+        cran <- grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
                       u, ignore.case = TRUE)
         spaces <- grepl(" ", u)
         c(s, msg, newLoc, if(cran) u else "", if(spaces) u else "")

@@ -228,7 +228,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
             list(status = status, out = c(out, readLines(tf)))
         } else system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
-}
+} ## {Rdiff}
 
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
@@ -696,7 +696,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
         unl <- unlist(deps)
         for(i in seq_along(deps)) {
             this <- names(deps)[i]
-            if(sub("^package:", "", this) %in% unl) next else break
+	    if(.rmpkg(this) %in% unl) next else break
         }
         ## hopefully force = TRUE is never needed, but it does ensure
         ## that progress gets made

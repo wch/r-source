@@ -39,7 +39,7 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
     if (IS_R_NilValue(vec))
 	error(_("attempt to set an attribute on NULL"));
 
-    if(isReal(val) && length(val) == 2 && ISNAN(REAL(val)[0]) ) {
+    if(isReal(val) && LENGTH(val) == 2 && ISNAN(REAL(val)[0]) ) {
 	/* This should not happen, but if a careless user dput()s a
 	   data frame and sources the result, it will */
 	PROTECT(vec);
@@ -106,7 +106,7 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
     if (SEXP_EQL(name, R_NamesSymbol)) {
 	if(isVector(vec) || isList(vec) || isLanguage(vec)) {
 	    s = getAttrib(vec, R_DimSymbol);
-	    if(TYPEOF(s) == INTSXP && length(s) == 1) {
+	    if(TYPEOF(s) == INTSXP && LENGTH(s) == 1) {
 		s = getAttrib(vec, R_DimNamesSymbol);
 		if(!isNull(s)) {
 		    SET_NAMED(VECTOR_ELT(s, 0), 2);
@@ -409,7 +409,7 @@ SEXP tspgets(SEXP vec, SEXP val)
 	return vec;
     }
 
-    if (!isNumeric(val) || length(val) != 3)
+    if (!isNumeric(val) || LENGTH(val) != 3)
 	error(_("'tsp' attribute must be numeric of length three"));
 
     if (isReal(val)) {
@@ -1191,6 +1191,10 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     check1arg(args, call, "x");
     namesattr = R_NilValue;
+
+    if (TYPEOF(CAR(args)) == ENVSXP)
+	R_CheckStack(); /* in case attributes might lead to a cycle */
+
     attrs = ATTRIB(CAR(args));
     nvalues = length(attrs);
     if (isList(CAR(args))) {
@@ -1241,10 +1245,11 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchOrEval(call, op, "levels<-", args, env, &ans, 0, 1))
 	/* calls, e.g., levels<-.factor() */
 	return(ans);
+    PROTECT(ans);
     if(!isNull(CADR(args)) && any_duplicated(CADR(args), FALSE))
 	warningcall(call, "duplicated levels in factors are deprecated");
 /* TODO errorcall(call, _("duplicated levels are not allowed in factors anymore")); */
-    PROTECT(args = ans);
+    args = ans;
     if (MAYBE_SHARED(CAR(args))) SETCAR(args, duplicate(CAR(args)));
     setAttrib(CAR(args), R_LevelsSymbol, CADR(args));
     UNPROTECT(1);
@@ -1386,6 +1391,9 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("'which' must be of mode character"));
     if (length(t) != 1)
 	errorcall(call, _("exactly one attribute 'which' must be given"));
+
+    if (TYPEOF(s) == ENVSXP)
+	R_CheckStack(); /* in case attributes might lead to a cycle */
 
     if(nargs == 3) {
 	exact = asLogical(CADDR(args));

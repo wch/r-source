@@ -1318,7 +1318,7 @@ setRlibs <-
 
     check_R_code <- function()
     {
-        if (!is_base_pkg) {
+        ## if (!is_base_pkg) {
             checkingLog(Log, "dependencies in R code")
             if (do_install) {
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
@@ -1345,7 +1345,7 @@ setRlibs <-
                     ## wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
             }
-        }
+        ## }
 
         ## Check whether methods have all arguments of the corresponding
         ## generic.
@@ -1494,7 +1494,25 @@ setRlibs <-
             Rcmd <-
                 paste("options(warn=1)\n",
                       sprintf("tools:::.check_code_usage_in_package(package = \"%s\")\n", pkgname))
-            out3 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
+            if(config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_",
+                                                "false"))) {
+                out3 <-  R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+                if(length(pos <-
+                          grep("^Undefined global functions or variables:",
+                               out3))) {
+                    Rcmd <-
+                        sprintf("writeLines(strwrap(tools:::imports_for_undefined_globals(\"%s\"), exdent = 11))\n",
+                                paste(utils::tail(out3, -pos),
+                                      collapse = " "))
+                    miss <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
+                    if(length(miss))
+                        out3 <- c(out3,
+                                  c("Consider adding",
+                                    paste0("  ", miss),
+                                    "to your NAMESPACE."))
+                }
+            } else
+                out3 <-  R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
 
         if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
@@ -2789,7 +2807,10 @@ setRlibs <-
 
     run_vignettes <- function(desc)
     {
+        libpaths <- .libPaths()
+        .libPaths(c(libdir, libpaths))
         vigns <- pkgVignettes(dir = pkgdir)
+        .libPaths(libpaths)
         if (is.null(vigns) || !length(vigns$docs)) return()
 
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
@@ -3071,7 +3092,7 @@ setRlibs <-
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
                     noteLog(Log)
-                    out <- utils::tail(out, 25)
+                    out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 25)))
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
@@ -4411,6 +4432,7 @@ setRlibs <-
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
+        Sys.setenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_" = "TRUE")
         Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE

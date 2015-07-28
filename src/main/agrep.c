@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2014  The R Core Team
+ *  Copyright (C) 2002--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -127,9 +127,9 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(opt_fixed) cflags |= REG_LITERAL;
 
-    if(!isString(pat) || length(pat) < 1)
+    if(!isString(pat) || LENGTH(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
-    if(length(pat) > 1)
+    if(LENGTH(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
     
     if(!isString(vec)) error(_("invalid '%s' argument"), "x");

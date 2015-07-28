@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2013 The R Core Team
+ *  Copyright (C) 1998--2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -108,7 +108,7 @@ static void chmod_one(const char *name, const int grpwrt)
 /* This is a .Call so manages R_alloc stack */
 SEXP dirchmod(SEXP dr, SEXP gwsxp)
 {
-    if(!isString(dr) || length(dr) != 1)
+    if(!isString(dr) || LENGTH(dr) != 1)
 	error(_("invalid '%s' argument"), "dir");
     chmod_one(translateChar(STRING_ELT(dr, 0)), asLogical(gwsxp));
 
@@ -127,12 +127,11 @@ SEXP dirchmod(SEXP dr, SEXP gwsxp)
 SEXP codeFilesAppend(SEXP f1, SEXP f2)
 {
     int n, n1, n2;
-    n1 = length(f1);
-    n2 = length(f2);
-    if (!isString(f1) || n1 != 1)
+    if (!isString(f1) || (n1 = LENGTH(f1)) != 1)
 	error(_("invalid '%s' argument"), "file1");
     if (!isString(f2))
 	error(_("invalid '%s' argument"), "file2");
+    n2 = LENGTH(f2);
     if (n2 < 1) return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2; // will be n2.
     SEXP ans = PROTECT(allocVector(LGLSXP, n));

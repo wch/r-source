@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1994-9 W. N. Venables and B. D. Ripley
-#  Copyright (C) 1999-2013 The R Core Team
+#  Copyright (C) 1999-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -215,11 +215,13 @@ plot.spec <-
     log <- match.arg(log)
     m <- match.call()
     if(plot.type == "coherency") {
+        ## need stats:: for non-standard evaluation
         m[[1L]] <- quote(stats::plot.spec.coherency)
         m$plot.type <- m$log <- m$add <- NULL
         return(eval(m, parent.frame()))
     }
     if(plot.type == "phase") {
+        ## need stats:: for non-standard evaluation
         m[[1L]] <- quote(stats::plot.spec.phase)
         m$plot.type <- m$log <- m$add <- NULL
         return(eval(m, parent.frame()))

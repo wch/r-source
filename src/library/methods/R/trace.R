@@ -634,7 +634,7 @@ utils::globalVariables("fdef")
                                    collapse = ", ")),
                     domain = NA)
     }
-    sub("package:","", names(possible[1L])) # the package name, or .GlobalEnv
+    .rmpkg(names(possible[1L])) # the package name, or .GlobalEnv
 }
 
 ## extract the new definitions from the source file

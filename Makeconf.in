@@ -66,6 +66,7 @@ MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LIBR0) $(LDFLAGS)
 MKINSTALLDIRS = @R_SHELL@ $(top_srcdir)/src/scripts/mkinstalldirs.in
 NOTANGLE = @NOTANGLE@
 R_ARCH = @R_ARCH@
+R_DYLIB_EXT = @R_DYLIB_EXT@
 R_FRAMEWORK_DIR = $(prefix)/R.framework
 R_GZIPCMD = @R_GZIPCMD@
 ## needed for AIX only

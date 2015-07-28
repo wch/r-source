@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/png.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -56,10 +56,10 @@ png <- function(filename = "Rplot%03d.png",
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 2L, g$width, g$height,
-                            pointsize, bg, res, antialias, 100L, d$family))
+                            pointsize, bg, res, antialias, 100L, d$family, 300))
     else if (type == "cairo-png" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 5L, g$width, g$height,
-                            pointsize, bg, res, antialias, 100L, d$family))
+                            pointsize, bg, res, antialias, 100L, d$family, 300))
     else
         invisible(.External2(C_X11,
                              paste("png::", filename, sep=""),
@@ -90,7 +90,8 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 3L, g$width, g$height,
-                            pointsize, bg, res, antialias, quality, d$family))
+                            pointsize, bg, res, antialias, quality, d$family,
+                            300))
     else
         invisible(.External2(C_X11,
                             paste("jpeg::", quality, ":", filename, sep=""),
@@ -125,7 +126,8 @@ tiff <- function(filename = "Rplot%03d.tiff",
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 8L, g$width, g$height,
-                            pointsize, bg, res, antialias, comp, d$family))
+                            pointsize, bg, res, antialias, comp, d$family,
+                            300))
     else
         invisible(.External2(C_X11,
                              paste("tiff::", comp, ":", filename, sep=""),
@@ -155,7 +157,8 @@ bmp <- function(filename = "Rplot%03d.bmp",
                             "white", if(is.na(res)) NULL else res))
     } else if (type == "cairo" && capabilities("cairo"))
         invisible(.External(C_devCairo, filename, 9L, g$width, g$height,
-                            pointsize, bg, res, antialias, 100L, d$family))
+                            pointsize, bg, res, antialias, 100L, d$family,
+                            300))
     else
         invisible(.External2(C_X11, paste("bmp::", filename, sep=""),
                              g$width, g$height, pointsize, d$gamma,

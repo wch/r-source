@@ -223,9 +223,9 @@ as.character.srcref <- function(x, useSource = TRUE, to = x, ...)
     	x[c(3L, 4L, 6L, 8L)] <- to[c(3L, 4L, 6L, 8L)]
     }	
     if (!is.null(srcfile) && !inherits(srcfile, "srcfile")) {
-       cat("forcing class on") ## debug
-	print(str(srcfile))
-       class(srcfile) <- c("srcfilealias", "srcfile")
+        cat("forcing class on") ## debug
+        print(utils::str(srcfile))
+        class(srcfile) <- c("srcfilealias", "srcfile")
     }
     
     if (useSource) {

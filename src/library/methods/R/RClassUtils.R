@@ -1934,8 +1934,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
             pkg <- prev@package # start a per-package list
             if(identical(pkg, newpkg)) { # redefinition
                 ## cache for S3, to override possible previous cache
-                base:::.cache_class(name, .extendsForS3(def))
-##                base:::.cache_class(name, extends(def))
+                .cache_class(name, .extendsForS3(def))
                 return(assign(name, def, envir = .classTable))
             }
             else if(.simpleDuplicateClass(def, prev))
@@ -2270,9 +2269,9 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
   if(length(abbr) != 1 || is.na(abbr))
     stop("argument 'abbreviate' must be 0, 1, 2, or 3")
   if(abbr %% 2)
-    dimnames(value)[[1]] <- base::abbreviate(dimnames(value)[[1]])
+    dimnames(value)[[1]] <- abbreviate(dimnames(value)[[1]])
   if(abbr %/% 2)
-    dimnames(value)[[2]] <- base::abbreviate(dimnames(value)[[2]])
+    dimnames(value)[[2]] <- abbreviate(dimnames(value)[[2]])
   value
 }
 

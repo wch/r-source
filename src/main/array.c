@@ -28,6 +28,9 @@
 #include <Rmath.h>
 #include <R_ext/RS.h>     /* for Calloc/Free */
 #include <R_ext/Applic.h> /* for dgemm */
+#include <R_ext/Itermacros.h>
+
+#include "duplicate.h"
 
 /* "GetRowNames" and "GetColNames" are utility routines which
  * locate and return the row names and column names from the
@@ -1564,28 +1567,28 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch(TYPEOF(vals)) {
     case LGLSXP:
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++)
-		LOGICAL(ans)[i] = LOGICAL(vals)[i % lendat];
+	    xcopyLogicalWithRecycle(LOGICAL(ans), LOGICAL(vals), 0, nans,
+				    lendat);
 	else
 	    for (i = 0; i < nans; i++) LOGICAL(ans)[i] = NA_LOGICAL;
 	break;
     case INTSXP:
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++)
-		INTEGER(ans)[i] = INTEGER(vals)[i % lendat];
+	    xcopyIntegerWithRecycle(INTEGER(ans), INTEGER(vals), 0, nans,
+				    lendat);
 	else
 	    for (i = 0; i < nans; i++) INTEGER(ans)[i] = NA_INTEGER;
 	break;
     case REALSXP:
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++) REAL(ans)[i] = REAL(vals)[i % lendat];
+	    xcopyRealWithRecycle(REAL(ans), REAL(vals), 0, nans, lendat);
 	else
 	    for (i = 0; i < nans; i++) REAL(ans)[i] = NA_REAL;
 	break;
     case CPLXSXP:
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++)
-		COMPLEX(ans)[i] = COMPLEX(vals)[i % lendat];
+	    xcopyComplexWithRecycle(COMPLEX(ans), COMPLEX(vals), 0, nans,
+				    lendat);
 	else {
 	    Rcomplex na_cmplx;
 	    na_cmplx.r = NA_REAL;
@@ -1595,22 +1598,20 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case RAWSXP:
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++) RAW(ans)[i] = RAW(vals)[i % lendat];
+	    xcopyRawWithRecycle(RAW(ans), RAW(vals), 0, nans, lendat);
 	else
 	    for (i = 0; i < nans; i++) RAW(ans)[i] = 0;
 	break;
     /* Rest are already initialized */
     case STRSXP:
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++)
-		SET_STRING_ELT(ans, i, STRING_ELT(vals, i % lendat));
+	    xcopyStringWithRecycle(ans, vals, 0, nans, lendat);
 	break;
     case VECSXP:
     case EXPRSXP:
 #ifdef SWITCH_TO_REFCNT
 	if (nans && lendat)
-	    for (i = 0; i < nans; i++)
-		SET_VECTOR_ELT(ans, i, VECTOR_ELT(vals, i % lendat));
+	    xcopyVectorWithRecycle(ans, vals, 0, nans, lendat);
 #else
 	if (nans && lendat) {
 	    /* Need to guard against possible sharing of values under
@@ -1677,7 +1678,10 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
        Rcomplex *rx = COMPLEX(x), *ra = COMPLEX(ans), zero;
        zero.r = zero.i = 0.0;
        for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = zero;
-       for (int j = 0; j < mn; j++) ra[j * (NR+1)] = rx[j % nx];
+       R_xlen_t i, i1;
+       MOD_ITERATE1(mn, nx, i, i1, {
+	   ra[i * (NR+1)] = rx[i1];
+       });
   } else {
        if(TYPEOF(x) != REALSXP) {
 	   PROTECT(x = coerceVector(x, REALSXP));
@@ -1688,7 +1692,10 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
        R_xlen_t NR = nr;
        double *rx = REAL(x), *ra = REAL(ans);
        for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = 0.0;
-       for (int j = 0; j < mn; j++) ra[j * (NR+1)] = rx[j % nx];
+       R_xlen_t i, i1;
+       MOD_ITERATE1(mn, nx, i, i1, {
+	   ra[i * (NR+1)] = rx[i1];
+       });
    }
    UNPROTECT(nprotect);
    return ans;

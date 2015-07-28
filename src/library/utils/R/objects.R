@@ -32,7 +32,7 @@ findGeneric <- function(fname, envir, warnS4only = TRUE)
 	fMethsEnv <- methods::getMethodsForDispatch(f)
         meths <- as.list(fMethsEnv, all.names=TRUE)
         r <- meths[grep("^ANY\\b", names(meths))]
-	if(any(ddm <- vapply(r, is, logical(1L), "derivedDefaultMethod")))
+	if(any(ddm <- vapply(r, methods::is, logical(1L), "derivedDefaultMethod")))
 	    f <- r[ddm][[1]]@.Data
 	else if(warnS4only)
 	    warning(gettextf(
@@ -96,7 +96,7 @@ function(generic.function, class, envir=parent.frame())
     an <- an[!duplicated(an)] # removed masked objects, *keep* names
     names(an) <- sub("[0-9]*$", "", names(an))
     info <- data.frame(visible = rep.int(TRUE, length(an)),
-                       from = sub("package:", "", names(an)),
+		       from = .rmpkg(names(an)),
                        row.names = an)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
@@ -332,7 +332,7 @@ function(x, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
         nm <- attr(envir, "name", exact = TRUE)
-        if(is.null(nm) || substring(nm, 1L, 8L) != "package:")
+        if(is.null(nm) || substr(nm, 1L, 8L) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
@@ -384,7 +384,7 @@ function(x, value, ns, pos = -1, envir = as.environment(pos))
     nf <- sys.nframe()
     if(missing(ns)) {
         nm <- attr(envir, "name", exact = TRUE)
-        if(is.null(nm) || substring(nm, 1L, 8L) != "package:")
+        if(is.null(nm) || substr(nm, 1L, 8L) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)
@@ -449,7 +449,7 @@ function(x, ns, pos = -1, envir = as.environment(pos), ...)
         stop("'fixInNamespace' requires a name")
     if(missing(ns)) {
         nm <- attr(envir, "name", exact = TRUE)
-        if(is.null(nm) || substring(nm, 1L, 8L) != "package:")
+        if(is.null(nm) || substr(nm, 1L, 8L) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9L))
     } else ns <- asNamespace(ns)

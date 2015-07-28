@@ -1393,9 +1393,9 @@ print.data.frame <-
 {
     n <- length(row.names(x))
     if(length(x) == 0L) {
-        cat(sprintf(ngettext(n, "data frame with 0 columns and %d row",
-                             "data frame with 0 columns and %d rows",
-                             domain = "R-base"), n), "\n", sep = "")
+	cat(sprintf(ngettext(n, "data frame with 0 columns and %d row",
+			     "data frame with 0 columns and %d rows"),
+		    n), "\n", sep = "")
     } else if(n == 0L) {
         ## FIXME: header format is inconsistent here
 	print.default(names(x), quote = FALSE)

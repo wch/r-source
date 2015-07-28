@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-06-08
+@set FAQ_DATE @value{FAQ_YEAR}-07-11
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -532,7 +532,7 @@ install r-base-dev} to obtain the additional tools required for this.
 So-called ``backports'' of the current R packages for at least the
 @dfn{stable} distribution of Debian are provided by Johannes Ranke, and
 available from @CRAN{}.  See
-@url{http://CRAN.R-project.org/bin/linux/debian/README} for details on R
+@url{http://CRAN.R-project.org/bin/linux/debian/README.html} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
 provided by Michael Rutter.
@@ -895,7 +895,7 @@ software and documentation.  See
 
 R-Forge (@url{http://R-Forge.R-project.org/}) offers a central platform
 for the development of R packages, R-related software and further
-projects.  It is based on @url{http://www.gforge.org/, GForge} offering
+projects.  It is based on @url{https://en.wikipedia.org/wiki/GForge, GForge} offering
 easy access to the best in SVN, daily built and checked packages,
 mailing lists, bug tracking, message boards/forums, site hosting,
 permanent file archival, full backups, and total web-based
@@ -962,15 +962,15 @@ This is also called the ``@emph{White Book}'', and introduced S version
 @item
 John M. Chambers (1998), ``Programming with Data,'' New York: Springer,
 ISBN 0-387-98503-4
-(@url{http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/}).
+(@url{http://statweb.stanford.edu/~jmc4/Sbook/}).
 
 This ``@emph{Green Book}'' describes version 4 of S, a major revision of
 S designed by John Chambers to improve its usefulness at every stage of
 the programming process.
 @end itemize
 
-See @url{http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html}
-for further information on ``Stages in the Evolution of S''.
+See @url{http://statweb.stanford.edu/~jmc4/papers/96.7.ps}
+for further information on the ``Evolution of the S Language''.
 
 There is a huge amount of user-contributed code for S, available at the
 @url{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
@@ -1616,7 +1616,7 @@ the R interpreter inside Apache 2 (and beyond).  A tutorial and
 presentation are available from the project web page at
 @url{http://biostat.mc.vanderbilt.edu/@/twiki/@/bin/@/view/@/Main/@/RApacheProject}.
 
-@url{http://stats.math.uni-augsburg.de/Rserve/, Rserve} is a project
+@url{http://www.rforge.net/Rserve/, Rserve} is a project
 actively developed by Simon Urbanek.  It implements a TCP/IP server which
 allows other programs to use facilities of R.  Clients are available from
 the web site for Java and C++ (and could be written for other languages
@@ -1651,11 +1651,12 @@ any extra scripting or learn any new scripting techniques.
 The @CRANpkg{R.rsp} package by Henrik Bengtsson introduces ``R Server
 Pages''.  Analogous to Java Server Pages, an R server page is typically
 @HTML{} with embedded R code that gets evaluated when the page is
-requested.  The package includes an internal cross-platform HTTP server
-implemented in Tcl, so provides a good framework for including web-based
-user interfaces in packages.  The approach is similar to the use of the
-@CRANpkg{brew} package with @url{http://rapache.net/, Rapache} with the
-advantage of cross-platform support and easy installation.
+requested.  The package includes an internal cross-platform
+@acronym{HTTP} server implemented in Tcl, so provides a good framework
+for including web-based user interfaces in packages.  The approach is
+similar to the use of the @CRANpkg{brew} package with
+@url{http://rapache.net/, Rapache} with the advantage of cross-platform
+support and easy installation.
 
 The @CRANpkg{Rook} package by Jeffrey Horner provides a web server
 interface borrowing heavily from Ruby's Rack project.
@@ -1673,8 +1674,8 @@ server (exchange and storage of the data), @uref{http://rstudio.org/,
 Rstudio} (R code designing and testing, file management), CKEditor
 (@HTML{} Layer design), and PHP.
 
-See @url{http://rwiki.sciviews.org/doku.php?id=faq-r#web_interfaces} for
-additional information.
+@c See @url{http://rwiki.sciviews.org/doku.php?id=faq-r#web_interfaces} for
+@c additional information.
 
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
@@ -2231,6 +2232,7 @@ dir /opt/R/src/unix
 * How do I access the source code for a function?::
 * Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::
 * Why is R apparently not releasing memory?::
+* How can I enable secure https downloads in R?::
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3266,10 +3268,11 @@ the data, is possible in R but is not recommended.  The basic approach
 for constructing such graphs is to use @code{par(new=TRUE)} (see
 @code{?par}); functions @code{twoord.plot()} (in the @CRANpkg{plotrix}
 package) and @code{doubleYScale()} (in the @CRANpkg{latticeExtra}
-package) automate the process somewhat.  See
-@url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
-for more information, including strong arguments against this sort of
-graph.
+package) automate the process somewhat.
+@c See
+@c @url{http://rwiki.sciviews.org/@/doku.php?id=tips:graphics-base:2yaxes}
+@c for more information, including strong arguments against this sort of
+@c graph.
 
 @node How do I access the source code for a function?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, How do I create a plot with two y-axes?, R Miscellanea
 @section How do I access the source code for a function?
@@ -3320,7 +3323,7 @@ of the variance, is the model where @math{E[Y]=0} everywhere.  (If you
 don't know a priori that @math{E[Y]=0} when @math{x=0}, then you
 probably shouldn't be fitting a line through the origin.)
 
-@node Why is R apparently not releasing memory?,  , Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
+@node Why is R apparently not releasing memory?, How can I enable secure https downloads in R?, Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, R Miscellanea
 @section Why is R apparently not releasing memory?
 
 This question is often asked in different flavors along the lines of
@@ -3374,6 +3377,33 @@ Unix-like systems) it is possible to use the @code{mallinfo} system call
 (also see the @url{http://rforge.net/mallinfo, mallinfo} package) to
 query the allocator about the layout of the allocations, including the
 actually used memory as well as unused memory that cannot be released.
+
+@node How can I enable secure https downloads in R?,  , Why is R apparently not releasing memory?, R Miscellanea
+@section How can I enable secure https downloads in R?
+
+When R transfers files over @acronym{HTTP} (e.g., using the
+@code{install.packages()} or @code{download.file()} function), a
+download method is chosen based on the @option{download.file.method}
+option.  There are several methods available and the default behavior if
+no option is explicitly specified is to use R's internal @acronym{HTTP}
+implementation.  In many circumstances this internal method will not
+support @acronym{HTTPS} connections so you'll need to override the default.
+
+R versions 3.2.0 and greater include two download methods (@code{"libcurl"} and
+@code{"wininet"}) that both support @acronym{HTTPS} connections.  We
+recommend that you use these methods.  The requisite code to add to
+@file{.Rprofile} or @file{Rprofile.site} is as follows: 
+
+@example
+options(download.file.method = "wininet")     @r{(Windows)}
+options(download.file.method = "libcurl")     @r{(Linux and OS X)}
+@end example
+
+Note that if you built R from source the @code{"libcurl"} method may or
+may not have been compiled in.  In the case that it wasn't,
+i.e.. @code{capabilities("libcurl") == FALSE}, we recommend method
+@code{"wget"} on Linux and @code{"curl"} on OS X.
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

@@ -133,7 +133,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   indicates all the terms in \code{first} together with all the terms in
   \code{second} with any duplicates removed.
 
-  A specification of the form \code{first:second} indicates the the set
+  A specification of the form \code{first:second} indicates the set
   of terms obtained by taking the interactions of all terms in
   \code{first} with all terms in \code{second}.  The specification
   \code{first*second} indicates the \emph{cross} of \code{first} and

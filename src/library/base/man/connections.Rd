@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{connections}
+\title{Functions to Manipulate Connections (Files, URLs, ...)}
 \alias{connections}
 \alias{connection}
 \alias{file}
@@ -33,16 +34,19 @@
 \concept{gzip}
 \concept{bzip2}
 \concept{lzma}
-\title{Functions to Manipulate Connections}
 \description{
-  Functions to create, open and close connections.
+  Functions to create, open and close connections, i.e.,
+  \dQuote{generalized files}, such as possibly compressed files, URLs,
+  pipes, etc.
 }
 \usage{
 file(description = "", open = "", blocking = TRUE,
-     encoding = getOption("encoding"), raw = FALSE)
+     encoding = getOption("encoding"), raw = FALSE,
+     method = getOption("url.method", "default"))
 
 url(description, open = "", blocking = TRUE,
-    encoding = getOption("encoding"), method)
+    encoding = getOption("encoding"),
+    method = getOption("url.method", "default"))
 
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
@@ -92,6 +96,7 @@ isIncomplete(con)
     \sQuote{file} may not be seekable.}
   \item{method}{character string, partially matched to
     \code{c("default", "internal", "wininet", "libcurl")}:
+%% FIXME:  Consider  "auto", as in download.file()
     see \sQuote{Details}.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal available.  For
@@ -136,8 +141,8 @@ isIncomplete(con)
   passed to \code{file}).  \code{method = "wininet"} is only available on
   Windows.
 #ifdef windows
-  (See \code{\link{setInternet2}}, which chooses whether \code{"default"}
-  means \code{"internal"} or \code{"wininet"}.)
+  (See \code{\link{setInternet2}}, which chooses whether the \code{"internal"}
+  method is equivalent to \code{"wininet"}.)
 #endif
 
   For \code{gzfile} the description is the path to a file compressed by
@@ -224,18 +229,11 @@ isIncomplete(con)
   \code{\link{URLdecode}} if necessary.
 
   Note that the \samp{https://} URL scheme is not supported by the
-  internal method except on Windows.  There it is only supported if
-  \option{--internet2} or
-#ifdef unix
-  \code{setInternet2(TRUE)}
-#endif
-#ifdef windows
-  \code{\link{setInternet2}(TRUE)}
-#endif
-  was used (to make use of Windows internal functions), and then only
-  if the certificate is considered to be valid.  With that option only,
-  the \samp{http://user:pass@site} notation for sites requiring
-  authentication is also accepted.
+  internal method except on Windows.  There it is supported by default,
+  and the \samp{http://user:pass@site} notation for sites requiring
+  authentication is also accepted.  However, if the
+  certificate is considered to be invalid, or if
+  \code{setInternet2(FALSE)} is run, neither of these will be accepted.
 
   Where supported, \code{url(method = "libcurl")} allows more schemes:
   exactly which schemes is platform-dependent (see
@@ -245,7 +243,7 @@ isIncomplete(con)
   The default internal method does not follow re-directed HTTP URLs:
   both \code{url(method = "libcurl")} and the use of Windows internal
   functions do.
-  
+
   Function \code{\link{download.file}} and contributed package
   \CRANpkg{RCurl} provide more comprehensive facilities to download
   from URLs.
@@ -256,14 +254,14 @@ isIncomplete(con)
   \code{bzfile}, \code{xzfile}, \code{unz} and \code{socketConnection}
   return a connection object which inherits from class
   \code{"connection"} and has a first more specific class.
-  
+
   \code{open} and \code{flush} return \code{NULL}, invisibly.
 
   \code{close} returns either \code{NULL} or an integer status,
   invisibly. The status is from when the connection was last closed and
   is available only for some types of connections (e.g., pipes, files and
   fifos): typically zero values indicate success.
-  
+
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
 

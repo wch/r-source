@@ -2,7 +2,7 @@
 # Configuration validation subroutine script.
 #   Copyright 1992-2015 Free Software Foundation, Inc.
 
-timestamp='2015-04-06'
+timestamp='2015-07-24'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -255,6 +255,7 @@ case $basic_machine in
 	| arc | arceb \
 	| arm | arm[bl]e | arme[lb] | armv[2-8] | armv[3-8][lb] | armv7[arm] \
 	| avr | avr32 \
+	| ba \
 	| be32 | be64 \
 	| bfin \
 	| c4x | c8051 | clipper \
@@ -376,6 +377,7 @@ case $basic_machine in
 	| alphapca5[67]-* | alpha64pca5[67]-* | arc-* | arceb-* \
 	| arm-*  | armbe-* | armle-* | armeb-* | armv*-* \
 	| avr-* | avr32-* \
+	| ba-* \
 	| be32-* | be64-* \
 	| bfin-* | bs2000-* \
 	| c[123]* | c30-* | [cjt]90-* | c4x-* \
@@ -433,7 +435,7 @@ case $basic_machine in
 	| shle-* | sh[1234]le-* | sh3ele-* | sh64-* | sh64le-* \
 	| sparc-* | sparc64-* | sparc64b-* | sparc64v-* | sparc86x-* | sparclet-* \
 	| sparclite-* \
-	| sparcv8-* | sparcv9-* | sparcv9b-* | sparcv9v-* | sv1-* | sx?-* \
+	| sparcv8-* | sparcv9-* | sparcv9b-* | sparcv9v-* | sv1-* | sx*-* \
 	| tahoe-* \
 	| tic30-* | tic4x-* | tic54x-* | tic55x-* | tic6x-* | tic80-* \
 	| tile*-* \

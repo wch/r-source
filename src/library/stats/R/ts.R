@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -711,6 +711,7 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     m <- match.call(expand.dots = FALSE)
     m$value <- NULL
     m$extend <- TRUE
+    ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::window)
     xx <- eval.parent(m)
     xxtsp <- tsp(xx)

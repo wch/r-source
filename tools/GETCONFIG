@@ -28,6 +28,8 @@ line=`grep "SUPPORT_OPENMP" config.h`
 echo "${line}"
 line=`grep "SIZEOF_SIZE_T" config.h`
 echo "${line}"
+line=`grep "HAVE_ALLOCA_H" config.h`
+echo "${line}"
 echo
 echo "#endif /* not R_CONFIG_H */"
 echo

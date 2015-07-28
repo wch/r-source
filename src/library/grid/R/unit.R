@@ -786,7 +786,13 @@ absolute <- function(unit) {
                  "mm", "points", "picas", "bigpts",
                  "dida", "cicero", "scaledpts",
                  "strwidth", "strheight", "strascent", "strdescent", "char",
-                 "mylines", "mychar", "mystrwidth", "mystrheight")))
+                 "mylines", "mychar", "mystrwidth", "mystrheight",
+                 # pseudonyms (from unit.c)
+                 "centimetre", "centimetres", "centimeter",  "centimeters",
+                 "in", "inch",       
+                 "line",       
+                 "millimetre", "millimetres", "millimeter", "millimeters",
+                 "point", "pt")))
 }
 
 # OLD absolute.unit

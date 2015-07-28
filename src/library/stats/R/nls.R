@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
-#  Copyright (C) 2000-2014 The R Core Team
+#  Copyright (C) 2000-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -413,7 +413,6 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
     if (trace)
         iv[port_cpos[["trace"]]] <- 1L
     scale <- 1
-    low <- upp <- NULL
     if (any(lower != -Inf) || any(upper != Inf)) {
         low <- rep_len(as.double(lower), length(par))
         upp <- rep_len(as.double(upper), length(par))
@@ -421,7 +420,9 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
             iv[1L] <- 300
 	    return(if(give.v) list(iv = iv, v = v[seq_len(18L)]) else iv)
         }
-    }
+    } else
+    	low <- upp <- numeric()
+    	
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
         .Call(C_port_nlsb, m,
@@ -558,6 +559,7 @@ nls <-
                            env = environment(formula))
             mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
             mf$lower <- mf$upper <- NULL
+            ## need stats:: for non-standard evaluation
             mf[[1L]] <- quote(stats::model.frame)
             mf <- eval.parent(mf)
             n <- nrow(mf)

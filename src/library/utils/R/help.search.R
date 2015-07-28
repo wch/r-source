@@ -155,13 +155,47 @@ function(pattern, fields = c("alias", "concept", "title"),
     if(!missing(help.db))
 	warning("argument 'help.db' is deprecated")
 
+    ## This duplicates expansion in hsearch_db(), but there is no simple
+    ## way to avoid this.
+    i <- pmatch(types, hsearch_db_types)
+    if (anyNA(i))
+	stop("incorrect type specification")
+    else
+	types <- hsearch_db_types[i]
+    
     ### Set up the hsearch db.
     db <- hsearch_db(package, lib.loc, types, verbose, rebuild,
                      use_UTF8)
-    ## Arguments types and lib.loc were expanded when building the
-    ## hsearch db, so get from there.
-    types <- attr(db, "Types")
+    ## Argument lib.loc was expanded when building the hsearch db, so
+    ## get from there.
     lib.loc <- attr(db, "LibPaths")
+
+    ## Subset to the requested help types if necessary.
+    if(!identical(sort(types), sort(attr(db, "Types")))) {
+        db$Base <- db$Base[!is.na(match(db$Base$Type, types)), ]
+        db[-1L] <-
+            lapply(db[-1L],
+                   function(e) {
+                       e[!is.na(match(e$ID, db$Base$ID)), ]
+                   })
+    }
+        
+    if(!is.null(package)) {
+	## Argument 'package' was given.  Need to check that all given
+	## packages exist in the db, and only search the given ones.
+	pos_in_hsearch_db <-
+	    match(package, unique(db$Base[, "Package"]), nomatch = 0L)
+        ## This should not happen for R >= 2.4.0
+	if(any(pos_in_hsearch_db) == 0L)
+	    stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
+			  sQuote(package[pos_in_hsearch_db == 0][1L])),
+                 domain = NA)
+	db[] <-
+	    lapply(db,
+		   function(e) {
+		       e[!is.na(match(e$Package, package)), ]
+		   })
+    }
 
     ### Matching.
     if(verbose >= 2L) {
@@ -173,25 +207,6 @@ function(pattern, fields = c("alias", "concept", "title"),
                 domain = NA)
         flush.console()
     }
-    if(!is.null(package)) {
-	## Argument 'package' was given.  Need to check that all given
-	## packages exist in the db, and only search the given ones.
-	pos_in_hsearch_db <-
-	    match(package, unique(db$Base[, "Package"]), nomatch = 0L)
-        ## This should not happen for R >= 2.4.0
-	if(any(pos_in_hsearch_db) == 0L)
-	    stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
-			  sQuote(package[pos_in_hsearch_db == 0][1L])),
-                 domain = NA)
-	db <-
-	    lapply(db,
-		   function(x) {
-		       x[x[, "Package"] %in% package, , drop = FALSE]
-		   })
-    }
-
-    ## Subset to the requested help types
-    db$Base <- db$Base[db$Base[,"Type"] %in% types, , drop=FALSE]
 
     ## <FIXME>
     ## No need continuing if there are no objects in the data base.
@@ -287,6 +302,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                          "Package", "LibPath", "Type"),
                        drop = FALSE],
                 matches[c("Field", "Entry")])
+    rownames(db) <- NULL
     if(verbose>= 2L) {
         n_of_objects_matched <- length(unique(db[, "ID"]))
         message(sprintf(ngettext(n_of_objects_matched,
@@ -336,19 +352,19 @@ function(package = NULL, lib.loc = NULL,
 	## library path is different from the one used when building the
 	## hsearch db (stored as its "LibPaths" attribute).
 	if(!identical(lib.loc, attr(db, "LibPaths")) ||
-	   !all(types %in% attr(db, "Types")) ||
+	   any(is.na(match(types, attr(db, "Types")))) ||
 	   ## We also need to rebuild the hsearch db in case an existing
 	   ## dir in the library path was modified more recently than
 	   ## the db, as packages might have been installed or removed.
-	   any(attr(db, "mtime") < file.mtime(lib.loc[file.exists(lib.loc)])) ||
+           any(attr(db, "mtime") < file.mtime(lib.loc[file.exists(lib.loc)])) ||
 	   ## Or if the user changed the locale character type ...
 	   !identical(attr(db, "ctype"), Sys.getlocale("LC_CTYPE"))
-	   )
+           )
 	    rebuild <- TRUE
         ## We also need to rebuild if 'packages' was used before and has
         ## changed.
-        if (!is.null(package) &&
-            any(! package %in% db$Base[, "Package"]))
+        if(!is.null(package) &&
+           any(is.na(match(package, db$Base[, "Package"]))))
             rebuild <- TRUE
     }
     if(rebuild) {
@@ -357,6 +373,10 @@ function(package = NULL, lib.loc = NULL,
                     if(verbose > 1L) "...", domain = NA)
             flush.console()
         }
+
+        want_type_help <- any(types == "help")
+        want_type_demo <- any(types == "demo")
+        want_type_vignette <- any(types == "vignette")
 
 	if(!is.null(package)) {
 	    packages_in_hsearch_db <- package
@@ -415,6 +435,9 @@ function(package = NULL, lib.loc = NULL,
 	dbMat <- vector("list", length(packages_in_hsearch_db) * 4L)
 	dim(dbMat) <- c(length(packages_in_hsearch_db), 4L)
 
+        ## Empty hsearch index:
+        hDB0 <- tools:::.build_hsearch_index(NULL)
+
 	for(p in packages_in_hsearch_db) {
             if(incr && np %% incr == 0L) {
                 message(".", appendLF = FALSE, domain = NA)
@@ -439,40 +462,46 @@ function(package = NULL, lib.loc = NULL,
 	    ## We always load hsearch.rds to establish the format,
 	    ## sometimes vignette.rds.
 
-	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
-		hDB <- readRDS(hs_file)
-		if(!is.null(hDB)) {
-		    ## Fill up possibly missing information.
-		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
-			hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
-                    ## <FIXME>
-                    ## Transition fro old-style to new-style colnames.
-                    ## Remove eventually.
-                    for(i in seq_along(hDB)) {
-                        colnames(hDB[[i]]) <-
-                            tools:::hsearch_index_colnames[[i]]
+            hDB <- NULL
+            if(want_type_help) {
+                if(file.exists(hs_file <-
+                    file.path(path, "Meta", "hsearch.rds"))) {
+                    hDB <- readRDS(hs_file)
+                    if(!is.null(hDB)) {
+                        ## Fill up possibly missing information.
+                        if(is.na(match("Encoding", colnames(hDB[[1L]]))))
+                            hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
+                        ## <FIXME>
+                        ## Transition fro old-style to new-style colnames.
+                        ## Remove eventually.
+                        for(i in seq_along(hDB)) {
+                            colnames(hDB[[i]]) <-
+                                tools:::hsearch_index_colnames[[i]]
+                        }
+                        ## </FIXME>
+                    } else if(verbose >= 2L) {
+                        message(gettextf("package %s has empty hsearch data - strangely",
+                                         sQuote(p)),
+                                domain = NA)
+                        flush.console()
                     }
-                    ## </FIXME>
-		    nh <- NROW(hDB[[1L]])
-		    hDB[[1L]] <- cbind(hDB[[1L]],
-		                       Type = rep("help", nh))
-		    if (nh)
-		    	hDB[[1L]][, "LibPath"] <- path
-		    if ("vignette" %in% types)
-		    	hDB <- merge_vignette_index(hDB, path, p)
-		    if ("demo" %in% types)
-		    	hDB <- merge_demo_index(hDB, path, p)
-		    ## Put the hsearch index for the np-th package into the
-		    ## np-th row of the matrix used for aggregating.
-		    dbMat[np, seq_along(hDB)] <- hDB
-		} else if(verbose >= 2L) {
-		    message(gettextf("package %s has empty hsearch data - strangely",
-                                     sQuote(p)), domain = NA)
-                    flush.console()
-                }
-	    }
-	    else if(!is.null(package))
-                warning("no hsearch.rds meta data for package ", p, domain = NA)
+                } else if(!is.null(package))
+                      warning("no hsearch.rds meta data for package ", p,
+                              domain = NA)
+            }
+            if(is.null(hDB))
+                hDB <- hDB0
+            nh <- NROW(hDB[[1L]])
+            hDB[[1L]] <- cbind(hDB[[1L]], Type = rep("help", nh))
+            if(nh)
+                hDB[[1L]][, "LibPath"] <- path
+            if(want_type_vignette)
+                hDB <- merge_vignette_index(hDB, path, p)
+            if(want_type_demo)
+                hDB <- merge_demo_index(hDB, path, p)
+            ## Put the hsearch index for the np-th package into the
+            ## np-th row of the matrix used for aggregating.
+            dbMat[np, seq_along(hDB)] <- hDB
 	}
 
 	if(verbose >= 2L)  {
@@ -543,9 +572,12 @@ function(package = NULL, lib.loc = NULL,
 	bad_IDs <-
 	    unlist(sapply(db,
 			  function(u)
-			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
+                              u[rowSums(is.na(nchar(u, "chars",
+                                                    allowNA = TRUE,
+                                                    keepNA = FALSE))) > 0,
+                                "ID"]))
         ## FIXME: drop this fallback
-	if(length(bad_IDs)) { ## try latin1
+	if(length(bad_IDs)) {           # try latin1
             for(i in seq_along(db)) {
                 ind <- db[[i]][, "ID"] %in% bad_IDs
                 db[[i]][ind, ] <- iconv(db[[i]][ind, ], "latin1", "")
@@ -553,13 +585,26 @@ function(package = NULL, lib.loc = NULL,
             bad_IDs <-
                 unlist(sapply(db,
                               function(u)
-                              u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
+                                  u[rowSums(is.na(nchar(u, "chars",
+                                                        allowNA = TRUE,
+                                                        keepNA = FALSE))) > 0,
+                                    "ID"]))
         }
 	## If there are any invalid multi-byte character data
 	## left, we simple remove all Rd objects with at least one
 	## invalid entry, and warn.
         if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
+	    for(i in seq_along(db)) {
+		ind <- db[[i]][, "ID"] %in% bad_IDs
+		db[[i]] <- db[[i]][!ind, ]
+	    }
+	}
+
+        ## Drop entries without topic as these cannot be accessed.
+        ## (These come from help pages without \alias.)
+        bad_IDs <- db$Base[is.na(db$Base[, "Topic"]), "ID"]
+        if(length(bad_IDs)) {
 	    for(i in seq_along(db)) {
 		ind <- db[[i]][, "ID"] %in% bad_IDs
 		db[[i]] <- db[[i]][!ind, ]

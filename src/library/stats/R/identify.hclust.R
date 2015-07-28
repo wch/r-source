@@ -78,11 +78,11 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
     retval <- list()
     oldk <- NULL
     oldx <- NULL
-    DEV.x <- grDevices::dev.cur()
+    DEV.x <- dev.cur()
 
     for(n in 1L:N){
 
-        grDevices::dev.set(DEV.x)
+        dev.set(DEV.x)
         X <- locator(1)
         if(is.null(X))
             break
@@ -98,7 +98,7 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
                                           border = "red"))
         if(!is.null(FUN)){
             if(!is.null(DEV.FUN)){
-                grDevices::dev.set(DEV.FUN)
+                dev.set(DEV.FUN)
             }
             retval[[n]] <- FUN(retval[[n]], ...)
         }
@@ -106,6 +106,6 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
         oldx <- X$x
         oldk <- k
     }
-    grDevices::dev.set(DEV.x)
+    dev.set(DEV.x)
     invisible(retval)
 }

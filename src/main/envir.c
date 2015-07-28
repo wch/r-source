@@ -947,31 +947,33 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
 R_varloc_t R_findVarLocInFrame(SEXP rho, SEXP symbol)
 {
     SEXP binding = findVarLocInFrame(rho, symbol, NULL);
-    return IS_R_NilValue(binding) ? NULL : (R_varloc_t) SEXP_TO_PTR(binding);
+    R_varloc_t val;
+    val.cell = IS_R_NilValue(binding) ? R_NULL_SEXP : binding;
+    return val;
 }
 
 attribute_hidden
 SEXP R_GetVarLocValue(R_varloc_t vl)
 {
-    return BINDING_VALUE(PTR_TO_SEXP(vl));
+    return BINDING_VALUE(vl.cell);
 }
 
 attribute_hidden
 SEXP R_GetVarLocSymbol(R_varloc_t vl)
 {
-    return TAG(PTR_TO_SEXP(vl));
+    return TAG(vl.cell);
 }
 
 /* used in methods */
 Rboolean R_GetVarLocMISSING(R_varloc_t vl)
 {
-    return MISSING(PTR_TO_SEXP(vl));
+    return MISSING(vl.cell);
 }
 
 attribute_hidden
 void R_SetVarLocValue(R_varloc_t vl, SEXP value)
 {
-    SET_BINDING_VALUE(PTR_TO_SEXP(vl), value);
+    SET_BINDING_VALUE(vl.cell, value);
 }
 
 
@@ -2946,12 +2948,25 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 
-int envlength(SEXP rho)
+/* Leaks out via inlining in src/library/tools/src/ */
+int Rf_envlength(SEXP rho)
 {
     if(IS_USER_DATABASE(rho)) {
         R_ObjectTable *tb = (R_ObjectTable*)
 	    R_ExternalPtrAddr(HASHTAB(rho));
-        return(xlength(tb->objects(tb)));
+        return length(tb->objects(tb));
+    } else if( ! IS_R_NilValue(HASHTAB(rho)))
+	return HashTableSize(HASHTAB(rho), 1);
+    else
+	return FrameSize(FRAME(rho), 1);
+}
+
+R_xlen_t Rf_envxlength(SEXP rho)
+{
+    if(IS_USER_DATABASE(rho)) {
+        R_ObjectTable *tb = (R_ObjectTable*)
+	    R_ExternalPtrAddr(HASHTAB(rho));
+        return xlength(tb->objects(tb));
     } else if( ! IS_R_NilValue(HASHTAB(rho)))
 	return HashTableSize(HASHTAB(rho), 1);
     else

@@ -1,4 +1,16 @@
 
+Changes from grid_3.2.* to grid_3.3.0:
+-------------------------------------
+
+1.  Added "pseudonym" units to check made in absolute.size() so that,
+    for example, absolute.size(unit(1, "in")) works properly
+    (reported by Baptiste Auguie).
+
+2.  Registered absolute.units() methods in NAMESPACE, so that, for
+    example, a call to absolute.size(unit(1,"npc") + unit(2,"mm"))
+    works outside of 'grid' (reported by Baptiste Auguie).
+
+
 Changes from grid_3.1.* to grid_3.2.0:
 -------------------------------------
 
