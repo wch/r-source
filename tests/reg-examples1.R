@@ -7,29 +7,29 @@ pdf("reg-examples-1.pdf", encoding = "ISOLatin1.enc")
 
 
 ## base
-example(Cstack_info)
-example(DateTimeClasses)
-example(Dates)
-example(Ops.Date)
-example(Random)
-example(Sys.getpid)
-example(Sys.sleep)
-example(Sys.time)
-example(as.POSIXlt)
-example(difftime)
-example(format.Date)
-example(Reduce) # funprog.Rd
-example(gc)
-example(memory.profile)
+example(Cstack_info, run.donttest = TRUE)
+example(DateTimeClasses, run.donttest = TRUE)
+example(Dates, run.donttest = TRUE)
+example(Ops.Date, run.donttest = TRUE)
+example(Random, run.donttest = TRUE)
+example(Sys.getpid, run.donttest = TRUE)
+example(Sys.sleep, run.donttest = TRUE)
+example(Sys.time, run.donttest = TRUE)
+example(as.POSIXlt, run.donttest = TRUE)
+example(difftime, run.donttest = TRUE)
+example(format.Date, run.donttest = TRUE)
+example(Reduce, run.donttest = TRUE) # funprog.Rd
+example(gc, run.donttest = TRUE)
+example(memory.profile, run.donttest = TRUE)
 paste("Today is", date()) # from paste.Rd
 trunc(Sys.time(), "day") # from round.POSIXt.Rd
-example(srcref)
-example(strptime)
-example(sys.parent)
-example(system.time)
-example(tempfile)
-example(weekdays)
-library(help="splines")
+example(srcref, run.donttest = TRUE)
+example(strptime, run.donttest = TRUE)
+example(sys.parent, run.donttest = TRUE)
+example(system.time, run.donttest = TRUE)
+example(tempfile, run.donttest = TRUE)
+example(weekdays, run.donttest = TRUE)
+library(help = "splines")
 
 ## for example(NA)
 if(require("microbenchmark")) {
@@ -43,29 +43,29 @@ if(require("microbenchmark")) {
 }
 
 ## utils
-example(news)
-example(sessionInfo)
+example(news, run.donttest = TRUE)
+example(sessionInfo, run.donttest = TRUE)
 
 ## datasets
-example(JohnsonJohnson)
-example(ability.cov)
-example(npk)
+example(JohnsonJohnson, run.donttest = TRUE)
+example(ability.cov, run.donttest = TRUE)
+example(npk, run.donttest = TRUE)
 
 ## grDevices
-example(grSoftVersion)
+example(grSoftVersion, run.donttest = TRUE)
 if(.Platform$OS.type == "windows") {
-    example(windowsFonts)
+    example(windowsFonts, run.donttest = TRUE)
 } else {
-    example(X11Fonts)
-    example(quartzFonts)
+    example(X11Fonts, run.donttest = TRUE)
+    example(quartzFonts, run.donttest = TRUE)
 }
 
 library(tools)
-example(Rdutils)
-example(fileutils)
+example(Rdutils, run.donttest = TRUE)
+example(fileutils, run.donttest = TRUE)
 ## results are location- and OS-specific
-example(parseLatex) # charset-specific
-example(loadRdMacros) # collation-specific
+example(parseLatex, run.donttest = TRUE) # charset-specific
+example(loadRdMacros, run.donttest = TRUE) # collation-specific
 
 ## part of example(buildVignettes) at one time
 gVigns <- pkgVignettes("grid")
@@ -85,5 +85,5 @@ if(nzchar(vind)) { # so vignettes have been installed
 }
 
 ## This might leave collation changed, so do not put other things after it.
-example(icuSetCollate)
+example(icuSetCollate, run.donttest = TRUE)
 proc.time()

@@ -1,7 +1,7 @@
 #  File src/library/base/R/options.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,9 @@ getOption <- function(x, default = NULL)
 {
     ## To avoid always performing the %in%,
     ## we use the original code if default is not specified.
-    if(missing(default)) return(options(x)[[1L]])
-
-    if(x %in% names(options())) options(x)[[1L]] else default
+    ## if(missing(default)) return(options(x)[[1L]])
+    if(missing(default) || x %in% names(options()))
+	.Internal(getOption(x))
+    else
+	default
 }

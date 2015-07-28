@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1291,7 +1291,7 @@ function(x)
     footer <- attr(x, "footer")
     x <- sapply(x, .format_person_for_plain_author_spec)
     ## Drop persons with irrelevant roles.
-    x <- x[x != ""]
+    x <- x[nzchar(x)]
     ## And format.
     if(!length(x)) return("")
     ## We need to ensure that the first line has no indentation, whereas
@@ -1321,17 +1321,20 @@ function(x)
 {
     if(is.character(x))
         x <- .read_authors_at_R_field(x)
-    ## Maintainers need cre roles and email addresses.
+    ## Maintainers need cre roles, valid email addresses and non-empty
+    ## names.
+    ## <FIXME>
+    ## Check validity of email addresses.
     x <- Filter(function(e)
-                !is.null(e$email) && ("cre" %in% e$role),
+                (!is.null(e$given) || !is.null(e$family)) && !is.null(e$email) && ("cre" %in% e$role),
                 x)
-    ## If this leaves nothing ...
-    if(!length(x)) return("")
-    paste(format(x, include = c("given", "family", "email")),
-          collapse = ",\n  ")
+    ## </FIXME>
+    ## If this leaves nothing or more than one ...
+    if(length(x) != 1L) return("")
+    format(x, include = c("given", "family", "email"))
 }
 
-# Cite using the default style (which is usually citeNatbib)
+## Cite using the default style (which is usually citeNatbib)
 
 cite <-
 function(keys, bib, ...)
@@ -1342,9 +1345,9 @@ function(keys, bib, ...)
     fn(keys, bib, ...)
 }
 
-# Cite using natbib-like options.  A bibstyle would normally
-# choose some of these options and just have a cite(keys, bib, previous)
-# function within it.
+## Cite using natbib-like options.  A bibstyle would normally
+## choose some of these options and just have a cite(keys, bib, previous)
+## function within it.
 
 citeNatbib <-
 local({

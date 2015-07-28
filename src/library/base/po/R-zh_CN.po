@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1103,6 +1103,10 @@ msgstr "不能在封闭名字空间里进行出口加入"
 
 msgid "undefined exports: %s"
 msgstr "出口不存在：%s"
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "'namespace:%2$s'没有出口%1$s这个对象"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "程辑包%s 没有'NAMESPACE'这一文件"

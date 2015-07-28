@@ -24,7 +24,7 @@ loess()		        [R] ../R/loess.R
     |	 |              |
     |	 |              |--> ehg106	{partial sort (for median etc)}
     |	 |              |
-    |	 |              |--> "Linpack" [QR,SVD..]
+    |	 |              |--> "LINPACK" [QR,SVD..]
     |	 |              |
     |    |              \--> ehg184	{warning}
     |	 |

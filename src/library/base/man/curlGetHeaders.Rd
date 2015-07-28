@@ -10,15 +10,18 @@
 }
 \description{
   Retrieve the headers for a URL for a supported protocol such as
-  \code{http://}, \code{ftp://} and \code{https://}.  An optional function.
+  \code{http://}, \code{ftp://}, \code{https://} and \code{ftps://}.
+  An optional function not supported on all platforms.
 }
 \usage{
-curlGetHeaders(url, redirect = TRUE)
+curlGetHeaders(url, redirect = TRUE, verify = TRUE)
 }
 
 \arguments{
   \item{url}{character string specifying the URL.}
   \item{redirect}{logical: should redirections be followed?}
+  \item{verify}{logical: should certificates be verified as valid
+    and applying to that host?}
 }
 
 \details{
@@ -36,22 +39,39 @@ curlGetHeaders(url, redirect = TRUE)
 
   To see all the details of the interaction with the server(s) set
   \code{\link{options}(internet.info = 1)}.
-
+  
+  HTTP[S] servers are allowed to refuse requests to read the headers and
+  some do: this will result in a \code{status} of \code{405}.
+  
   For possible issues with secure URLs (especially on Windows) see
   \code{\link{download.file}}.
+
+  There is a security risk in not verifying certificates, but as only
+  the headers are captured it is slight.  Usually looking at the URL in
+  a browser will reveal what the problem is (and it may well be
+  machine-specific).
 }
 \value{
   A character vector with integer attribute \code{"status"} (the
-  last-received status code).  If redirection occurs this will include
+  last-received \sQuote{status} code).  If redirection occurs this will include
   the headers for all the URLs visited.
+
+  For the interpretation of \sQuote{status} codes see
+  \url{http://en.wikipedia.org/wiki/List_of_HTTP_status_codes} and
+  \url{http://en.wikipedia.org/wiki/List_of_FTP_server_return_codes}.
+  A successful FTP connection will usually have status 250 or 350.  
 }
 
 \seealso{
   \code{\link{capabilities}("libcurl")} to see if this is supported.
 }
 
+% http://forum.rebex.net/questions/1343/open-ftps-and-sftp-servers-for-testing-our-code-and-connectivity
 \examples{\donttest{## needs Internet access, results vary
 curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
 curlGetHeaders("https://httpbin.org/status/404")  ## returns status
 curlGetHeaders("ftp://cran.r-project.org")
+}
+\dontrun{ ## a not-always-available site:
+curlGetHeaders("ftps://test.rebex.net/readme.txt")
 }}

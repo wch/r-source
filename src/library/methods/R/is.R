@@ -143,15 +143,18 @@ setIs <-
     ## be retained by saving the corresponding image)
     m1 <- classMetaName(class1)
     local1 <- exists(m1, where, inherits = FALSE) &&
-    !(classDef@sealed || bindingIsLocked(m1, where))
-    m2 <- classMetaName(class2)
-    local2 <- exists(m2, where, inherits = FALSE) &&
-    !(classDef2@sealed || bindingIsLocked(m2, where))
-    if(!(local1 || local2) )
-        stop(gettextf("cannot create a 'setIs' relation when neither of the classes (%s and %s) is local and modifiable in this package",
-                      dQuote(class1),
-                      dQuote(class2)),
-             domain = NA)
+	!(classDef@sealed || bindingIsLocked(m1, where))
+    if(!local1) {
+	m2 <- classMetaName(class2)
+	local2 <- exists(m2, where, inherits = FALSE) &&
+	    !(classDef2@sealed || bindingIsLocked(m2, where))
+	if(!local2)
+	    stop(gettextf(
+		"cannot create a 'setIs' relation when neither of the classes (%s and %s) is local and modifiable in this package",
+			dQuote(class1),
+			dQuote(class2)),
+		 domain = NA)
+    }
     if(classDef@sealed && !isClassUnion(classDef2))
         stop(gettextf("class %s is sealed; new superclasses can not be defined, except by 'setClassUnion'",
                       dQuote(class1)),
@@ -206,7 +209,8 @@ setIs <-
     if(length(whereIs))
       whereIs[[1L]]
     else {
-        warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
+        if(purpose != "subclass")
+            warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
                          .dQ(class), sQuote(classDef@package), purpose,
                          sQuote(getPackageName(where, FALSE))),
                 call. = FALSE, domain = NA)

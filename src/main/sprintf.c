@@ -27,6 +27,9 @@
 #include <Internal.h>
 #include "RBufferUtils.h"
 #include <R_ext/RS.h> /* for Calloc/Free */
+#ifdef Win32
+#include <trioremap.h>
+#endif
 
 #define MAXLINE MAXELTSIZE
 #define MAXNARGS 100

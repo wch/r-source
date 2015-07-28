@@ -1,6 +1,6 @@
 % File src/library/base/man/print.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print}
@@ -19,7 +19,6 @@ print(x, \dots)
 \alias{print}
 \alias{print.factor}
 \alias{print.function}
-\alias{print.htest}
 \alias{print.listof}
 \alias{print.simple.list}
 \alias{print.Dlist}

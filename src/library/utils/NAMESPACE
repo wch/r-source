@@ -1,7 +1,7 @@
 # Refer to all C routines by their name prefixed by C_
 useDynLib(utils, .registration = TRUE, .fixes = "C_")
 
-export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
+export("?", .DollarNames, .S3methods, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        RSiteSearch, URLdecode, URLencode, View, adist, alarm, apropos,
        aregexec, argsAnywhere, assignInMyNamespace, assignInNamespace,
        as.roman, as.person, as.personList, as.relistable, aspell,
@@ -43,6 +43,8 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 
+export("hsearch_db", "hsearch_db_concepts", "hsearch_db_keywords")
+
 S3method("[", getAnywhere)
 S3method("[", roman)
 S3method(as.character, person)
@@ -55,6 +57,7 @@ S3method(edit, data.frame)
 S3method(edit, default)
 S3method(edit, matrix)
 S3method(edit, vignette)
+S3method(format, "aspell")
 S3method(format, "news_db")
 S3method(format, "object_size")
 S3method(format, "roman")
@@ -71,8 +74,9 @@ S3method(print, changedFiles)
 S3method(print, fileSnapshot)
 S3method(print, findLineNumResult)
 S3method(print, getAnywhere)
-S3method(print, hsearch)
 S3method(print, "help_files_with_topic")
+S3method(print, hsearch)
+S3method(print, "hsearch_db")
 S3method(print, Latex)
 S3method(print, "ls_str")
 S3method(print, MethodsFunction)

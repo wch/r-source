@@ -8,9 +8,10 @@ G_FLAG ?= -gdwarf-2
 USE_ATLAS ?= NO
 ATLAS_PATH ?= 
 MULTI ?=
-TOOL_PATH ?=
-BINPREF ?=
-BINPREF64 ?= x86_64-w64-mingw32-
+RTOOLS ?= C:/Rtools/
+TOOL_PATH ?= 
+BINPREF ?= $(RTOOLS)gcc492_32/bin/
+BINPREF64 ?= $(RTOOLS)gcc492_64/bin/
 M_ARCH ?=
 AS_ARCH ?=
 RC_ARCH ?=
@@ -60,6 +61,7 @@ R_ARCH = /x64
 arch_DEFS = -DR_ARCH='"x64"'
 BINPREF = $(BINPREF64)
 SYMPAT = 's/^.* [BCDRT] / /p'
+NM_FILTER ?= | $(SED) -e '/.refptr./d'
 else
 R_ARCH = /i386
 arch_DEFS = -DR_ARCH='"i386"'
@@ -94,7 +96,7 @@ DLLTOOL=$(BINPREF)dlltool
 DLLTOOLFLAGS=--as $(BINPREF)as $(DT_ARCH) -k
 ECHO=echo
 F77=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
-FLIBS=-lgfortran
+FLIBS=-lgfortran -lquadmath
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
 MAKEINFO = $(TEXI2ANY)

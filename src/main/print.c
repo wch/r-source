@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2014	The R Core Team.
+ *  Copyright (C) 2000-2015	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -904,8 +904,9 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		    if(IS_R_UnboundValue(methodsNS))
 			error("missing methods namespace: this should not happen");
 		    PROTECT(showS);
+		    PROTECT(methodsNS);
 		    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
-		    UNPROTECT(1);
+		    UNPROTECT(2);
 		    if(IS_R_UnboundValue(showS))
 			error("missing show() in methods namespace: this should not happen");
 		}
@@ -972,7 +973,8 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 	  print(), so S4 methods for show() have precedence over those for
 	  print() to conform with the "green book", p. 332
 	*/
-	SEXP call, showS;
+	SEXP call, showS, prinfun;
+	SEXP xsym = install("x");
 	if(isMethodsDispatchOn() && IS_S4_OBJECT(s)) {
 	    /*
 	      Note that we cannot assume that show() is visible from
@@ -992,19 +994,21 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 		if(IS_R_UnboundValue(showS))
 		    error("missing show() in methods namespace: this should not happen");
 	    }
-	    PROTECT(call = lang2(showS, s));
+	    prinfun = showS;
 	}
 	else /* S3 */
-	    PROTECT(call = lang2(install("print"), s));
+	    prinfun = install("print");
 
-	if (TYPEOF(s) == SYMSXP || TYPEOF(s) == LANGSXP)
-	    /* If s is not self-evaluating wrap it in a promise. Doing
-	       this unconditionally seems to create problems in the S4
-	       case. */
-	    SETCADR(call, R_mkEVPROMISE(s, s));
-
+	/* Bind value to a variable in a local environment, similar to
+	   a local({ x <- <value>; print(x) }) call. This avoids
+	   problems in previous approaches with value duplication and
+	   evaluating the value, which might be a call object. */
+	PROTECT(call = lang2(prinfun, xsym));
+	PROTECT(env = NewEnvironment(R_NilValue, R_NilValue, env));
+	defineVar(xsym, s, env);
 	eval(call, env);
-	UNPROTECT(1);
+	defineVar(xsym, R_NilValue, env); /* to eliminate reference to s */
+	UNPROTECT(2);
     } else PrintValueRec(s, env);
     UNPROTECT(1);
 }

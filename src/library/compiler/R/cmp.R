@@ -1066,7 +1066,7 @@ checkCall <- function(def, call, signal = warning) {
     if (typeof(def) != "closure" || any.dots(call))
         NA
     else {
-        old <-options()$show.error.messages
+        old <- getOption("show.error.messages")
         if (is.null(old)) old <- TRUE
         options(show.error.messages=FALSE)
         msg <- try({match.call(def, call); NULL})
@@ -2379,8 +2379,8 @@ setInlineHandler("switch", function(e, cb, cntxt) {
 
         ## collect information on named alternatives and check for
         ## multiple default cases.
-        if (! is.null(nm)) {
-            haveNames <- TRUE
+        haveNames <- !is.null(nm)
+        if (haveNames) {
             ndflt <- sum(nm == "")
             if (ndflt > 1) {
                 notifyMultipleSwitchDefaults(ndflt, cntxt)
@@ -2389,13 +2389,9 @@ setInlineHandler("switch", function(e, cb, cntxt) {
                 cmpSpecial(e, cb, cntxt)
                 return(TRUE)
             }
-            if (ndflt > 0)
-                haveCharDflt <- TRUE
-            else
-                haveCharDflt <- FALSE
+            haveCharDflt <- (ndflt > 0)
         }
         else {
-            haveNames <- FALSE
             haveCharDflt <- FALSE
         }
 
@@ -2692,7 +2688,7 @@ tryCmpfun <- function(f)
 
 cmpframe <- function(inpos, file) {
     expr.needed <- 1000
-    expr.old <- options()$expressions
+    expr.old <- getOption("expressions")
     if (expr.old < expr.needed)
        options(expressions = expr.needed)
     on.exit(options(expressions = expr.old))
@@ -2743,7 +2739,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
     nforms <- length(forms)
     if (nforms > 0) {
         expr.needed <- 1000
-        expr.old <- options()$expressions
+        expr.old <- getOption("expressions")
         if (expr.old < expr.needed) {
             options(expressions = expr.needed)
             on.exit(options(expressions = expr.old))

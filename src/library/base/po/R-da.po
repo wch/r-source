@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1120,6 +1120,10 @@ msgstr "kan ikke tilføje eksport for et forseglet navnerum"
 
 msgid "undefined exports: %s"
 msgstr "ej defineret eksport: %s"
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "objekt %s er ikke eksporteret af 'navnerum:%s'"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "pakke %s har ikke en 'NAMESPACE'-fil"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -633,6 +633,13 @@ msgstr ""
 "Pakiety z priorytetami 'base' lub 'recommended' lub 'defunct-base' muszą być "
 "już być znane R."
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 # tools/R/QC.R: 3249
 # gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")
 # tools/R/QC.R: 3470
@@ -669,9 +676,18 @@ msgstr "Pole 'Authors@R' wskazuje na osoby z niepoprawnymi rolami:"
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Nie można wyodrębnić pola 'Maintainer' z pola 'Authors@R':"
 
+# tools/R/QC.R: 3399
+# gettext("Authors@R field gives no person with author role.")
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "Pole 'Authors@R' nie zawiera danych osoby z rolą autora."
+
 # tools/R/QC.R: 3411
 # gettext("Authors@R field gives no person with maintainer role and email address.")
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 "Pole 'Authors@R' nie zawiera danych osoby z rolą opiekuna oraz adresem email."
 
@@ -2635,6 +2651,18 @@ msgstr "argument 'x' musi być pojedynczym łańcuchem tekstowym"
 msgid "test '%s' is not available"
 msgstr "test '%s' nie jest dostępny"
 
+msgid ":"
+msgstr ""
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 # tools/R/utils.R: 182
 # stop("argument 'x' must be a character vector")
 msgid "argument 'x' must be a character vector"
@@ -2723,6 +2751,12 @@ msgstr "nie można wykonać kodu pakietu"
 
 msgid "Call sequence:"
 msgstr "Sekwencja wywołania:"
+
+# tools/R/utils.R: 182
+# stop("argument 'x' must be a character vector")
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "argument 'x' musi być wektorem tekstowym"
 
 # tools/R/xgettext.R: 84
 # message(gettextf("parsing '%s'", f), domain = NA)
@@ -3077,6 +3111,19 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d z testów pakietu nie powiodło się"
 msgstr[1] "%d z testów pakietu nie powiodło się"
 msgstr[2] "%d z testów pakietu nie powiodło się"
+
+# tools/R/QC.R: 4052
+# message(sprintf(ngettext(sum(!miss),
+#                                      "Unknown package %s in Rd xrefs",
+#                                      "Unknown packages %s in Rd xrefs"),
+#                              paste(sQuote(unknown[!miss]), collapse = ", ")),
+#                     domain = NA)
+#, fuzzy
+#~ msgid "Undeclared package used in Rd xrefs:"
+#~ msgid_plural "Undeclared packages used in Rd xrefs:"
+#~ msgstr[0] "Nieznany pakiet %s w krzyżowych referencjach Rd"
+#~ msgstr[1] "Nieznane pakiety %s w krzyżowych referencjach Rd"
+#~ msgstr[2] "Nieznane pakiety %s w krzyżowych referencjach Rd"
 
 # tools/R/Vignettes.R: 698
 # stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")

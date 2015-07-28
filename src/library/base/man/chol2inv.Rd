@@ -1,6 +1,6 @@
 % File src/library/base/man/chol2inv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
@@ -24,6 +24,10 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
 }
 \value{
   The inverse of the matrix whose Choleski decomposition was given.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \source{
   This is an interface to the LAPACK routine \code{DPOTRI}.

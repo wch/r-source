@@ -1,13 +1,14 @@
 % File src/library/base/man/ns-topenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-topenv}
 \title{Top Level Environment}
 \alias{topenv}
 \description{
-  Finding the top level environment.
+  Finding the top level environment from an environment \code{envir} and
+  its enclosing environments.
 }
 \usage{
 topenv(envir = parent.frame(),
@@ -30,6 +31,14 @@ topenv(envir = parent.frame(),
 }
 \examples{
 topenv(.GlobalEnv)
-topenv(new.env())
+topenv(new.env()) # also global env
+topenv(environment(ls))# namespace:base
+topenv(environment(lm))# namespace:stats
+\dontshow{
+stopifnot(identical(.GlobalEnv, topenv(.GlobalEnv)),
+          identical(.GlobalEnv, topenv(new.env())),
+          identical(topenv(environment(ls)), asNamespace("base")),
+          identical(topenv(environment(lm)), asNamespace("stats")))
+}
 }
 \keyword{programming}

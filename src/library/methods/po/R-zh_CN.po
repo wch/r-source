@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-31 13:18\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -265,7 +265,8 @@ msgstr "函数%s已经是群体泛型函数了；没有变动"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "函数%s是群体泛型函数；不能直接調用"
 
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr "'callGeneric'只能由泛型函数或方法来調用"
 
 msgid "expected a non-empty character string for argument name"
@@ -470,6 +471,9 @@ msgstr "調用'callNextMethod'既不在'method'也不在'callNextMethod'的文�
 
 msgid "bad object found as method (class %s)"
 msgstr "作为方法的对象(类别%s)出了错"
+
+msgid "No next method available"
+msgstr ""
 
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
@@ -688,12 +692,6 @@ msgstr "%s的参数要么是NULL，要么是泛型函数对象；现在却是类
 
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "此函数里没有合适的参数可用来分配方法"
-
-msgid "special function %s is not permitted to have methods"
-msgstr "特殊函数%s不可以有方法"
-
-msgid "special function %s has no known argument list; will assume '(x, ...)'"
-msgstr "特殊函数%s没有已知的参数串列；假设用'(x, ...)'"
 
 msgid "making a generic for special function %s"
 msgstr "为特殊函数 %s制造泛型函数"
@@ -1636,6 +1634,13 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#~ msgid "special function %s is not permitted to have methods"
+#~ msgstr "特殊函数%s不可以有方法"
+
+#~ msgid ""
+#~ "special function %s has no known argument list; will assume '(x, ...)'"
+#~ msgstr "特殊函数%s没有已知的参数串列；假设用'(x, ...)'"
 
 #~ msgid ""
 #~ "'callGeneric' with a primitive needs explicit arguments (no formal args "

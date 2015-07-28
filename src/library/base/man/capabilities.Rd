@@ -99,7 +99,10 @@ capabilities(what = NULL)
     present long doubles will have at least as much range and accuracy
     as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
   }
-  \item{libcurl}{is \code{libcurl} available in this build?}
+
+  \item{libcurl}{is \code{libcurl} available in this build?  Used by
+    function \code{\link{curlGetHeaders}} and optionally by
+    \code{\link{download.file}} and \code{\link{url}}.}
 }
 \seealso{\code{\link{.Platform}}}
 
@@ -107,7 +110,7 @@ capabilities(what = NULL)
 capabilities()
 
 if(!capabilities("http/ftp"))
-   warning("internal download.file() is not available")
+   warning("internal download.file() method is not available")
 
 ## See also the examples for 'connections'.
 }

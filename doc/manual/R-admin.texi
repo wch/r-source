@@ -248,6 +248,9 @@ distributions and for OS X (formerly Mac OS).  See the @acronym{FAQ} for
 current details.  These are installed in platform-specific ways, so for
 the rest of this chapter we consider only building from the sources.
 
+Cross-building is not possible: installing @R{} builds a minimal version
+of @R{} and then runs many @R{} scripts to complete the build.
+
 @menu
 * Simple compilation::          
 * Help options::                
@@ -309,10 +312,9 @@ make check
 
 @noindent
 Failures are not necessarily problems as they might be caused by missing
-functionality,@footnote{for example, if you configured @R{} with
-@option{--without-recommended}.} but you should look carefully at any
-reported discrepancies.  (Some non-fatal errors are expected in locales
-that do not support Latin-1, in particular in true @code{C} locales and
+functionality, but you should look carefully at any reported
+discrepancies.  (Some non-fatal errors are expected in locales that do
+not support Latin-1, in particular in true @code{C} locales and
 non-UTF-8 non-Western-European locales.)  A failure in
 @file{tests/ok-errors.R} may indicate inadequate resource limits
 (@pxref{Running R}).
@@ -333,7 +335,7 @@ make check-all
 @noindent
 see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
-need the recommended packages to be installed.
+are only run completely if the recommended packages are installed.
 
 If the command @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
@@ -425,9 +427,10 @@ There is a set of manuals that can be built from the sources,
 @table @samp
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(over 3300 pages).
+(around 3500 pages).
 @item refman
-Printed versions of the help pages for selected base packages (over 1900 pages)
+Printed versions of the help pages for selected base packages (around
+2000 pages)
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -485,7 +488,7 @@ fonts.  We have provided four alternatives:
 and Courier.  This works well both for on-screen viewing and for
 printing.  One disadvantage is that the Usage and Examples sections may
 come out rather wide: this can be overcome by using @emph{in addition}
-either of the options @code{inconsolata}, on a Unix-alike only if found
+either of the options @code{inconsolata} (on a Unix-alike only if found
 by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
@@ -538,9 +541,9 @@ package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
 @LaTeX{} package @pkg{inconsolata} installed.
 
 Further options, e.g@: for @pkg{hyperref}, can be included in a file
-@file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example if
+@file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example, if
 you prefer the text and not the page number in the table of contents to
-be hyperlinked, use
+be hyperlinked use
 @example
 \ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=section@}@}@{@}
 @end example
@@ -552,12 +555,11 @@ or
 @end example
 
 @noindent
-to hyperlink both text and page number@footnote{The @code{linktoc} 
-settings require @pkg{hyperref} version 6.78f or newer; with older versions of
-@pkg{hyperref} use @code{linktocpage=false} to hyperlink the text.}.
+to hyperlink both text and page number.
+@c Requires 6.78f from Aug 2008.
 
-Ebook versions in one or both of @file{.epub} and @file{.mobi} formats
-can be made by running in @file{doc/manual} one of
+Ebook versions of most of the manuals in one or both of @file{.epub} and
+@file{.mobi} formats can be made by running in @file{doc/manual} one of
 @example
 make ebooks
 make epub
@@ -628,7 +630,8 @@ the option @option{--prefix}, as in
 @end example
 
 @noindent
-This causes @command{make install} to install the @R{} script to
+where the value should be an absolute path.  This causes @command{make
+install} to install the @R{} script to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  The installation may need
@@ -641,8 +644,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} @command{make} (and current Solaris
-@command{make}, but not some older Unix makes).
+at least with @acronym{GNU} @command{make} and current Solaris
+@command{make} (but not some older Unix makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -796,7 +799,7 @@ If you have two or more such builds you can install them over each other
 (and for 32/64-bit builds on one architecture, one build can be done
 without @samp{r_arch}).  The space savings can be considerable: on
 @cputype{x86_64} Linux a basic install (without debugging symbols) took
-63Mb, and adding a 32-bit build added 6Mb.  If you have installed
+74Mb, and adding a 32-bit build added 6Mb.  If you have installed
 multiple builds you can select which build to run by
 
 @example
@@ -996,13 +999,22 @@ testInstalledPackages(scope = "recommended")
 runs the basic tests and then all the tests on the standard and
 recommended packages.  These tests can be run from anywhere: the basic
 tests write their results in the @file{tests} folder of the @R{} home
-directory and run slightly fewer tests than the first approach: in
-particular they do not test Internet access.
+directory and run fewer tests than the first approach: in particular
+they do not test things which need Internet access---that can be tested
+by
+@example
+testInstalledBasic("internet")
+@end example
+
+@noindent
+(On Windows that runs the tests using whichever of internal or WinInet
+internet functions has been selected for that session: to test both run
+this twice selecting both options using @code{setInternet2}.)
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
 Windows users) is in the path.
 
-It is possible to test the installed packages (but not the
+It is possible to test the installed packages (but not their
 package-specific tests) by @code{testInstalledPackages} even if
 @command{make install-tests} was not run.
 
@@ -1015,7 +1027,7 @@ LANGUAGE=en
 @end example
 
 @noindent
-but use a UTF-8 or Latin-1 locale.
+and use a UTF-8 or Latin-1 locale.
 
 
 @node Installing R under Windows, Installing R under OS X, Installing R under Unix-alikes, Top
@@ -1301,16 +1313,16 @@ collation, or set the environment variable @env{R_ICU_LOCALE}.
 @subsection Support for libcurl
 
 @code{libcurl} version 7.28.0 or later can be used to support
-@code{curlGetHeaders} and the @code{"libcurl"} method of
-@code{download.file}.
+@code{curlGetHeaders} and the @code{"libcurl"} methods of
+@code{download.file} and @code{url}.
 
 A suitable distribution can be found @emph{via}
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html} and its unpacked
 location should be specified in file @file{MkRules.local}.
 
-For secure use of e.g.@: @samp{https://} URLs Windows users need to
-specify the path to @emph{CA root certificates}: see
-@code{download.file}.
+For secure use of e.g.@: @samp{https://} URLs Windows users may need to
+specify the path to up-to-date @emph{CA root certificates}: see
+@code{?download.file}.
 
 @node Checking the build, Building the manuals, Support for libcurl, Building from source
 @subsection Checking the build
@@ -1598,17 +1610,16 @@ Windows' CRLF line endings.
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file
-@file{R-@value{VERSIONno}-snowleopard.pkg} and install it.  This runs on
-OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
-Yosemite, @dots{}); it is a 64-bit (@cputype{x86_64}) build which should
-run on all Macs from mid-2008 on.  For older Intel Macs and some older
-versions of the OS you can install @R{} from the sources.
+@file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
+X 10.9 and later (Mavericks and Yosemite).
 
-There is a separate installer package,
-@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks and
-Yosemite: the `Snow Leopard' installer package also works there and may
-have more binary packages available (but there are a few packages using
-C++11 and only available for the Mavericks build).
+There may be a separate installer package,
+@file{R-@value{VERSIONno}-snowleopard.pkg} which runs on OS X 10.6 and
+later (Snow Leopard, Lion, Mountain Lion, Mavericks, Yosemite, @dots{});
+it is a 64-bit (@cputype{x86_64}) build which should run on all Macs
+from mid-2008 on.  For older Intel Macs and some older versions of the
+OS you can in principle (it is little tested) install @R{} from the
+sources.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: run `Software Update' from the Apple menu to be sure.
@@ -1771,8 +1782,8 @@ in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
 
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
-file descriptors.  (Any modern OS will have default limits at least as
-large as these, but apparently NetBSD does not.  Use the shell command
+file descriptors.  (Any modern OS should have default limits at least as
+large as these, but apparently NetBSD may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
 (@command{csh}/@command{tcsh}) to check.)
 
@@ -2091,13 +2102,13 @@ installed as described in @xref{Building from source}.
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types starting with @code{mac.binary}
 (available for the @acronym{CRAN} distribution but not when compiling
-from source: @code{mac.binary.mavericks} for a `Mavericks' build and
-@code{mac.binary} for a `Snow Leopard' build with @code{"default"} a
-synonym for the apppriate variant) which can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These OS X binary package files have the
-extension @samp{.tgz}.  The @Rapp{} GUI provides menus for installation
-of either binary or source packages, from @acronym{CRAN} or local files.
+from source: @code{mac.binary.mavericks} for a `Mavericks' build with
+@code{"default"} a synonym for the appropriate variant) which can be
+passed to @code{install.packages} in order to download and install
+binary packages from a suitable repository.  These OS X binary package
+files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
+for installation of either binary or source packages, from
+@acronym{CRAN} or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -2969,10 +2980,10 @@ Unix-like platforms, or which will be used by @R{} if found by
 @command{configure}.
 
 Remember that some package management systems (such as @acronym{RPM} and
-deb) make a distinction between the user version of a package and the
-development version.  The latter usually has the same name but with the
-extension @samp{-devel} or @samp{-dev}: you need both versions
-installed.
+Debian/Ubuntu's) make a distinction between the user version of a
+package and the development version.  The latter usually has the same
+name but with the extension @samp{-devel} or @samp{-dev}: you need both
+versions installed.
 
 @menu
 * Essential programs and libraries::  
@@ -3166,6 +3177,7 @@ needed).  Recent versions allow several other libraries to be linked
 into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.
 
+@c PCRE 8.10 is from June 2010, 8.32 from May 2013
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib} (version 1.2.5 or
 later),, @code{libbz2} (version 1.0.6 or later: called
@@ -3186,11 +3198,13 @@ version of TRE. (The current sources are in the @command{git} repository
 at @url{https://github.com/laurikari/tre/}, but at the time of writing
 the resulting build will not pass its checks.).
 
-Library @code{liblzma} from @code{xz-utils} version 5.0.3 or later will
-be used if installed: the version in the @R{} sources can be selected
-instead by configuring with @option{--without-system-xz}.  Systems
-differ in what they call the package including this: e.g.@: on Fedora
-the library is in @samp{xz-libs} and the headers in @samp{xz-devel}.
+@c 5.0.3 was released on 2011-05-21
+Library @code{liblzma} from @code{xz-utils} version 5.0.3 or later
+(including 5.2.x) will be used if installed: the version in the @R{}
+sources can be selected instead by configuring with
+@option{--without-system-xz}.  Systems differ in what they call the
+package including this: e.g.@: on Fedora the library is in
+@samp{xz-libs} and the headers in @samp{xz-devel}.
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
@@ -3218,10 +3232,16 @@ or @code{icu4c}.  It will be used by default where available (including
 on OS X >= 10.4): should a very old or broken version of ICU be found
 this can be suppressed by @option{--without-ICU}.
 
+@c 7.28.0 was released in Oct 2012.
 If @code{libcurl} version 7.28.0 or later is available (including its
-development version), it will be linked in to support
-@code{curlGetHeaders} and the @code{"libcurl"} method of
-@code{download.file}.
+development files), it will be linked in to support
+@code{curlGetHeaders} and the @code{"libcurl"} methods of
+@code{download.file} and @code{url}.  This is recommended as it gives
+access to @samp{https://} and @samp{ftps://} URLs.  Information on
+@code{libcurl} is found from the @command{curl-config} script: if that
+is missing or needs to be overridden@footnote{for example to specify
+static linking with a build which has both shared and static libraries.}
+there are macros described in file @file{config.site}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -3851,6 +3871,9 @@ code in @R{} will be compatible with future @command{valgrind} headers.
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
 
+The @file{configure} script has other generic options added by
+@command{autoconf} and which are not supported for @R{}: in particular
+building for one architecture on a different host is not possible.
 
 @node Internationalization support, Configuration variables, Configuration options, Configuration on a Unix-alike
 @section Internationalization support
@@ -4399,7 +4422,7 @@ see in the @command{configure} summary
 
 @example
   Interfaces supported:      X11, tcltk
-  External libraries:        readline, zlib, bzlib, lzma, PCRE
+  External libraries:        readline, zlib, bzlib, lzma, PCRE, curl
   Additional capabilities:   PNG, JPEG, TIFF, NLS, cairo, ICU
 @end example
 
@@ -4590,8 +4613,9 @@ the configure flag @option{--disable-largefile} was needed (since
 
 You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
-with @option{--without-readline}).  That and other binary components are
-available from @uref{http://r.research.att.com/libs}.
+with @option{--without-readline}), and a Fortran compiler.  Those and
+other binary components are available from
+@uref{http://r.research.att.com/libs}.
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): X is part of the standard
@@ -4600,20 +4624,18 @@ installed.  For Mountain Lion and later, see
 @uref{http://xquartz.macosforge.org/}.  (Note that XQuartz will likely
 need to be re-installed after an OS upgrade.)
 
-In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
-but this has not been tested recently: 10.6 (Snow Leopard) is the
-earliest version currently tested.  32-bit Intel builds of @R{} 3.0.0
-were tested: they would be needed for Snow Leopard running on very old
-machines with Core Solo or Core Duo CPUs.  The instructions here are for
-@cputype{x86_64} builds.
+The instructions here are for @cputype{x86_64} builds on 10.6 (Snow
+Leopard) or later.  In principle @R{} can be built for 10.4.x, 10.5.x
+and for PowerPC or 32-bit Intel Macs but these has not been tested
+recently.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
-would only be used for the data editor/viewer.  (This needs an
-Objective-C compiler@footnote{These days that is defined by Apple's
-implementation of @code{clang}, so it is strongly recommended to use
-that.} which can compile the code for @code{quartz()}.)
+would only be used for the command-line-@R{} data editor/viewer.  (This
+needs an Objective-C compiler@footnote{These days that is defined by
+Apple's implementation of @code{clang}, so it is strongly recommended to
+use that.} which can compile the source code of @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4621,18 +4643,31 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths()}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
-`Command-line Tools for Xcode' used to be part of the Apple Developer
-Tools (`Xcode') but nowadays need to be installed separately.  They can
-be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
-will need to register there: that allows you to download older versions
-available for your OS) or some versions of Xcode (from the App Store or
-from @uref{http://developer.apple.com/devcenter/mac/}) you can install
-the command-line tools from within Xcode, from the @samp{Downloads} pane
-in the @samp{Preferences}.  For Mavericks and later, see the specific
-sub-section below.
+Various compilers can be used.  The current @acronym{CRAN} `Mavericks'
+distribution of @R{} is built using
 
-Various compilers can be used.  The current @acronym{CRAN} `Snow
-Leopard' distribution of @R{} is built using
+@example
+CC=clang
+CXX=clang++
+F77=gfortran-4.8
+FC=$F77
+OBJC=clang
+CFLAGS=-Wall -mtune=core2 -g -O2
+CXXFLAGS=-Wall -mtune=core2 -g -O2'
+OBJCFLAGS=-Wall -mtune=core2 -g -O2
+F77FLAGS=-Wall -g -O2
+FCFLAGS=$F77FLAGS
+@end example
+
+@noindent
+with @command{clang} and @command{clang++} from Xcode 5, and the Fortran
+compiler from
+@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
+is a tarball which needs to be unpacked in the Terminal by e.g.@:
+@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
+builds of @command{clang} currently have little or no OpenMP support.
+
+The @acronym{CRAN} `Snow Leopard' distribution of @R{} was built using
 
 @itemize
 @item @command{gcc}
@@ -4671,35 +4706,19 @@ build, use @code{-arch i386} for all compiler commands.)
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
 
-The current @acronym{CRAN} `Mavericks' distribution of @R{} is built
-using
-
-@example
-CC=clang
-CXX=clang++
-F77=gfortran-4.8
-FC=$F77
-OBJC=clang
-@end example
-
-@noindent
-with @command{clang} and @command{clang++} from Xcode 5, and the Fortran
-compiler from
-@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
-is a tarball which needs to be unpacked in the Terminal by e.g.@:
-@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
-builds of @command{clang} currently have little or no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
-(and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
-and useful for many packages: it will also be used if present when
-configuring the @code{X11()} device.
+most likely want at least @code{pcre}, @code{xz}, @code{jpeg},
+@code{libpng} and @code{readline} (and perhaps @code{tiff}).
+@code{pkg-config} is not provided by Apple and useful for many packages:
+it will also be used if present when configuring the @code{X11()}
+device.
 
 Recent versions of OS X ship with @code{zlib} version 1.2.8 and
 @code{bzlib} version 1.0.6, sufficient for the default
-@command{configure} checks.
+@command{configure} checks.  Mavericks has a recent enough version of
+@code{libcurl}: Snow Leopard does not.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4721,10 +4740,10 @@ Looking at the top of
 will show the compilers and configuration options used for the
 @acronym{CRAN} binary package for @R{}: at the time of writing
 @example
---enable-memory-profiling --disable-openmp
+--enable-memory-profiling
 @end example
 @noindent
-was used for `Snow Leopard' and the first two for `Mavericks'.
+was used for `Mavericks'.
 
 Configure option @option{--with-internal-tzcode} is the default, as a
 64-bit @code{time_t} is available but the system implementation of time
@@ -4750,69 +4769,17 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 @menu
+* Mavericks and Yosemite::      
+* Lion and Mountain Lion::      
 * Snow Leopard::                
-* Lion::                        
-* Mountain Lion::               
-* Mavericks::                   
-* Yosemite::                    
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Snow Leopard, Lion, OS X, OS X
-@subsection Snow Leopard
-
-A quirk on Snow Leopard is that the X11 libraries are not in the default
-linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
-required in @file{config.site}, or you can use the @command{configure}
-options @option{--x-includes=/usr/X11/include
---x-libraries=/usr/X11/lib} .
-
-The @acronym{CRAN} binaries are built using Xcode 4.2, a version
-available only to subscribing developers.  It is believed that 3.2.6 (the
-last public free version for Snow Leopard) will work.
-
-@node Lion, Mountain Lion, Snow Leopard, OS X
-@subsection Lion
-
-No tweaks are known to be needed on Lion.  See the notes on Mountain
-Lion if XQuartz is in use.
-
-@node Mountain Lion, Mavericks, Lion, OS X
-@subsection Mountain Lion
-
-The X11 system used with Mountain Lion is XQuartz (see above).
-
-To build the graphics devices depending on cairographics the XQuartz
-path for @command{pkg-config} files needs to be known to
-@command{pkg-config} when @command{configure} is run: this usually means
-adding it to the @env{PKG_CONFIG_PATH} environment variable, e.g.
-
-@example
-export PKG_CONFIG_PATH= \
-  /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-
-@noindent
-or putting
-@example
-PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-
-@noindent
-in @file{config.site}.
-
-For some pre-compiled software, for example the GTK framework,
-@file{/opt/X11/include} may need to be added to the include paths.
-
-If you install the command-line tools for Xcode 4.6.3 you will get the
-compilers used for the CRAN binary distribution: those for Xcode 5 can
-be installed afterwards.
-
-@node Mavericks, Yosemite, Mountain Lion, OS X
-@subsection Mavericks
+@node Mavericks and Yosemite, Lion and Mountain Lion, OS X, OS X
+@subsection Mavericks and Yosemite
 
 Xcode for Mavericks provides different compilers, headers and libraries from
 earlier versions.  In particular the compilers (even those called
@@ -4853,23 +4820,72 @@ when installing on Mavericks.
 
 See the comments under Mountain Lion about X11 and GTK.
 
-@node Yosemite, Tcl/Tk headers and libraries, Mavericks, OS X
-@subsection Yosemite
-
-See the comments under `Mavericks'.
-
-Note that if you upgrade to Yosemite you should re-install any of
-XQuartz, the `Command-line Tools for Xcode' and Java which you have
-installed.  (Upgrading may partially remove previous versions which can
-be confusing.)
+If you upgrade to Yosemite you should re-install any of XQuartz, the
+`Command-line Tools for Xcode' and Java which you have installed.
+(Upgrading may partially remove previous versions which can be
+confusing.)
 
 There are some problems with the recommended @command{gfortran} builds
 under Yosemite.  They give warnings and @command{gfortran-4.8} is
 reported to be unable to link packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
+@node Lion and Mountain Lion, Snow Leopard, Mavericks and Yosemite, OS X
+@subsection Lion and Mountain Lion
 
-@node Tcl/Tk headers and libraries, Java (OS X), Yosemite, OS X
+`Command-line Tools for Xcode' used to be part of the Apple Developer
+Tools (`Xcode') but nowadays need to be installed separately.  They can
+be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
+will need to register there: that allows you to download older versions
+available for your OS) or from within some versions of Xcode you can
+install the command-line tools from the @samp{Downloads} pane in the
+@samp{Preferences}.
+
+The X11 system used with Mountain Lion is XQuartz (see above): Lion
+included an X11 system.
+
+To build the graphics devices depending on cairographics, the XQuartz
+path for @command{pkg-config} files needs to be known to
+@command{pkg-config} when @command{configure} is run: this usually means
+adding it to the @env{PKG_CONFIG_PATH} environment variable, e.g.
+
+@example
+export PKG_CONFIG_PATH= \
+  /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+
+@noindent
+or putting
+@example
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+
+@noindent
+in @file{config.site}.
+
+For some pre-compiled software, for example the GTK framework,
+@file{/opt/X11/include} may need to be added to the include paths.
+
+If you install the command-line tools for Xcode 4.6.3 you will get the
+compilers used for the CRAN binary distribution: those for Xcode 5 can
+be installed afterwards.
+
+
+@node Snow Leopard, Tcl/Tk headers and libraries, Lion and Mountain Lion, OS X
+@subsection Snow Leopard
+
+A quirk on Snow Leopard is that the X11 libraries are not in the default
+linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
+required in @file{config.site}, or you can use the @command{configure}
+options @option{--x-includes=/usr/X11/include
+--x-libraries=/usr/X11/lib} .
+
+The @acronym{CRAN} binaries are built using Xcode 4.2, a version
+available only to subscribing developers.  It is believed that 3.2.6 (the
+last public free version for Snow Leopard) will work.
+
+
+@node Tcl/Tk headers and libraries, Java (OS X), Snow Leopard, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -5648,7 +5664,8 @@ It is important to set your @env{PATH} properly.  The installer
 installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
-directories of the tools, the compiler toolchain and @LaTeX{}.  Do not
+directories of the tools and @LaTeX{}. (As of Rtools33, the 
+compilers do not need to be on the @env{PATH}.)  Do not
 use filepaths containing spaces: you can always use the short forms
 (found by @code{dir /x} at the Windows command line).  Network shares
 (with paths starting @code{\\}) are not supported.
@@ -5656,8 +5673,8 @@ use filepaths containing spaces: you can always use the short forms
 For example for a 32-bit build, all on one line,
 
 @example
-PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;c:\MiKTeX\miktex\bin;
-     c:\R\R-3.1\bin\i386;c:\windows;c:\windows\system32
+PATH=c:\Rtools\bin;c:\MiKTeX\miktex\bin;
+     c:\R\R-3.2\bin\i386;c:\windows;c:\windows\system32
 @end example
 
 @noindent

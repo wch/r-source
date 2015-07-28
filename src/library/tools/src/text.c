@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-11   The R Core Team.
+ *  Copyright (C) 2003-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -156,7 +156,7 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
     if(ign == NA_LOGICAL) error("'ignore_quotes' must be TRUE or FALSE");
 
     for (i = 0; i < LENGTH(text); i++) {
-	p = CHAR(STRING_ELT(text, i)); /* ASCII or not not affected by charset */
+	p = CHAR(STRING_ELT(text, i)); // ASCII or not not affected by charset
 	inquote = FALSE; /* avoid runaway quotes */
 	for(; *p; p++) {
 	    if(!inquote && *p == '#') break;
@@ -167,7 +167,7 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
 		    return ScalarLogical(TRUE);
 		}
 	    }
-	    if(nbslash % 2 && (*p == '"' || *p == '\'')) {
+	    if((nbslash % 2 == 0) && (*p == '"' || *p == '\'')) {
 		if(inquote && *p == quote) {
 		    inquote = FALSE;
 		} else if(!inquote) {
@@ -254,4 +254,44 @@ SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 str
     UNPROTECT(1);
     free(buffer);
     return result;
+}
+
+/* This could be done in wchar_t, but it is only used for
+   ASCII delimiters which are not lead bytes in UTF-8 or
+   DBCS encodings. */
+SEXP splitString(SEXP string, SEXP delims)
+{
+    if(!isString(string) || length(string) != 1)
+	error("first arg must be a single character string");
+    if(!isString(delims) || length(delims) != 1)
+	error("first arg must be a single character string");
+    const char *in = CHAR(STRING_ELT(string, 0)),
+	*del = CHAR(STRING_ELT(delims, 0));
+    cetype_t ienc = getCharCE(STRING_ELT(string, 0));
+    int nc = (int) strlen(in), used = 0;
+
+    // Used for short strings, so OK to over-allocate wildly
+    SEXP out = PROTECT(allocVector(STRSXP, nc));
+    const char *p;
+    char tmp[nc], *this = tmp;
+    int nthis = 0;
+    for(p = in; *p ; p++) {
+	if(strchr(del, *p)) {
+	    // put out current string (if any)
+	    if(nthis) 
+		SET_STRING_ELT(out, used++, mkCharLenCE(tmp, nthis, ienc));
+	    // put out delimiter
+	    SET_STRING_ELT(out, used++, mkCharLen(p, 1));
+	    // restart
+	    this = tmp; nthis = 0;
+	} else {
+	    *this++ = *p;
+	    nthis++;
+	}
+    }
+    if(nthis) SET_STRING_ELT(out, used++, mkCharLenCE(tmp, nthis, ienc));
+
+    SEXP ans = lengthgets(out, used);
+    UNPROTECT(1);
+    return ans;
 }

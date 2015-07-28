@@ -309,6 +309,10 @@ getOption(x, default = NULL)
     \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
       \code{\link{sys.source}}.}
 
+    \item{\code{url.method}:}{character string: the default method for
+      \code{\link{url}}.  Normally unset, which is equivalent to
+      \code{"default"}, which is \code{"internal"} except on Windows.}
+
     \item{\code{useFancyQuotes}:}{controls the use of
       directional quotes in \code{\link{sQuote}}, \code{dQuote} and in
       rendering text help (see \code{\link{Rd2txt}} in package
@@ -487,15 +491,16 @@ getOption(x, default = NULL)
   \describe{
     \item{\code{BioC_mirror}:}{The URL of a Bioconductor mirror
       for use by \code{\link{setRepositories}},
-      e.g.\sspace{}the default \samp{"http://www.bioconductor.org"}
+      e.g.\sspace{}the default \samp{"http://bioconductor.org"}
       or the European mirror
       \samp{"http://bioconductor.statistik.tu-dortmund.de"}.  Can be set
       by \code{\link{chooseBioCmirror}}.}
 
-    \item{\code{browser}:}{default HTML browser used by
-      \code{\link{help.start}()} and \code{\link{browseURL}} on UNIX, or
-      a non-default browser on Windows.  Alternatively, an \R function that
-      is called with a URL as its argument.}
+    \item{\code{browser}:}{The HTML browser to be used by
+      \code{\link{browseURL}}.  This sets the default browser on UNIX or
+      a non-default browser on Windows.  Alternatively, an \R function
+      that is called with a URL as its argument.  See
+      \code{\link{browseURL}} for further details.}
 
     \item{\code{ccaddress}:}{default Cc: address used by
       \code{\link{create.post}} (and hence\code{\link{bug.report}} and
@@ -555,12 +560,14 @@ getOption(x, default = NULL)
     }
 
     \item{\code{install.packages.check.source}:}{Used by
-      \code{\link{install.packages}} on platforms which support binary
+      \code{\link{install.packages}} (and indirectly
+      \code{\link{update.packages}}) on platforms which support binary
       packages.  Possible values \code{"yes"} and \code{"no"}, with
       unset being equivalent to \code{"yes"}.}
 
     \item{\code{install.packages.compile.from.source}:}{Used by
-      \code{\link{install.packages}(type = "both")} on platforms which
+      \code{\link{install.packages}(type = "both")} (and indirectly
+      \code{\link{update.packages}}) on platforms which
       support binary packages.  Possible values are \code{"never"},
       \code{"interactive"} (which means ask in interactive use and
       \code{"never"} in batch use) and \code{"always"}.  The default is

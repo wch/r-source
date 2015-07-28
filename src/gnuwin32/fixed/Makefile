@@ -28,7 +28,7 @@ ifeq "$(WIN)" "64"
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
-	  -e "s|BINPREF =|BINPREF = $(BINPREF)|" \
+	  -e 's|BINPREF =|BINPREF ?= $$(RTOOLS)gcc492_64/bin/|' \
 	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
@@ -39,11 +39,12 @@ ifeq "$(WIN)" "64"
 	  -e "s|(TCL_HOME)/bin|(TCL_HOME)/bin64|" \
 	  -e "s|@OPENMP@|$(OPENMP)|" \
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
+	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
-	  -e "s|BINPREF =|BINPREF = $(BINPREF)|" \
+	  -e 's|BINPREF =|BINPREF ?= $$(RTOOLS)gcc492_32/bin/|' \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  -e "s|DT_ARCH =|DT_ARCH = $(DT_ARCH)|" \
@@ -52,6 +53,7 @@ else
 	  -e "s|@SYMPAT@|$(SYMPAT)|" \
 	  -e "s|@OPENMP@|$(OPENMP)|" \
 	  -e "s|@PTHREAD@|$(PTHREAD)|" \
+	  -e "s@NM_FILTER =@NM_FILTER = $(NM_FILTER)@" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 endif
 	$(SED) -e "s+@BINDIR@+$(BINDIR)+" Makeconf > $(R_HOME)/Makeconf

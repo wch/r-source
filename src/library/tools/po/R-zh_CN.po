@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -237,6 +237,13 @@ msgid ""
 "already be known to R."
 msgstr "R必需知道带'base'，'recommended'或'defunct-base'优先权的程辑包."
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -258,7 +265,14 @@ msgstr "Authors@R领域里没有有效作用的人"
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "无法从Authors@R 抽取维修人域"
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "Authors@R域没有提供有作者作用的人"
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr "Authors@R域没有提供有维修作用的人和他的email"
 
 msgid "Encoding '%s' is not portable"
@@ -1161,6 +1175,18 @@ msgstr "'x'必需是单字符串"
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
 
+msgid ":"
+msgstr "："
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "参数'x'必需是字符矢量"
 
@@ -1209,6 +1235,10 @@ msgstr "无法读取程辑包源编码"
 
 msgid "Call sequence:"
 msgstr "调用序列:"
+
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "参数'x'必需是字符矢量"
 
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
@@ -1336,6 +1366,11 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 
 #, fuzzy
+#~ msgid "Undeclared package used in Rd xrefs:"
+#~ msgid_plural "Undeclared packages used in Rd xrefs:"
+#~ msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
+
+#, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 #~ msgstr "非标准执照规格"
 
@@ -1365,9 +1400,6 @@ msgstr[0] ""
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr "。目录里有这些文件"
-
-#~ msgid ":"
-#~ msgstr "："
 
 #~ msgid "Located more than one"
 #~ msgstr "找到一个以上的"

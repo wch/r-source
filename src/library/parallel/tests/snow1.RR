@@ -20,21 +20,21 @@ parSapply(cl, 1:20, get("+"), 3)
 ## PR14898
 parSapply(cl, 1, identity)
 
-
-## A bootstrapping example, which can be done in many ways:
-clusterEvalQ(cl, {
-  ## set up each worker.  Could also use clusterExport()
-  library(boot)
-  cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-  cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
-  NULL
-})
-res <- clusterEvalQ(cl, boot(cd4, corr, R = 100,
-                    sim = "parametric", ran.gen = cd4.rg, mle = cd4.mle))
-library(boot)
-cd4.boot <- do.call(c, res)
-boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
-        conf = 0.9, h = atanh, hinv = tanh)
+if(require(boot)) {
+    ## A bootstrapping example, which can be done in many ways:
+    clusterEvalQ(cl, {
+        ## set up each worker.  Could also use clusterExport()
+        library(boot)
+        cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+        cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
+        NULL
+    })
+    res <- clusterEvalQ(cl, boot(cd4, corr, R = 100,
+                                 sim = "parametric", ran.gen = cd4.rg, mle = cd4.mle))
+    cd4.boot <- do.call(c, res)
+    print(boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
+                  conf = 0.9, h = atanh, hinv = tanh))
+}
 stopCluster(cl)
 
 

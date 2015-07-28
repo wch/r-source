@@ -1,7 +1,7 @@
 #  File src/library/stats/R/anova.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -159,7 +159,7 @@ printCoefmat <-
 	    sleg <- strwrap(sleg, width = w - 2, prefix = "  ")
 	##"FIXME": Double space __ is for reproducibility, rather than by design
 	cat("---\nSignif. codes:  ", sleg, sep = "",
-	    fill = w+4 + max(nchar(sleg,"bytes") - nchar(sleg)))# +4: "---" 
+	    fill = w+4 + max(nchar(sleg,"bytes") - nchar(sleg)))# +4: "---"
     }
     invisible(x)
 }

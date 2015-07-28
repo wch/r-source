@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -540,7 +540,7 @@ testInstalledPackage <-
     invisible(Rfile)
 }
 
-testInstalledBasic <- function(scope = c("basic", "devel", "both"))
+testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
 {
     scope <- match.arg(scope)
 
@@ -549,10 +549,12 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
                 "ok-errors", "method-dispatch", "array-subset",
                 "any-all", "d-p-q-r-tests")
-    tests2 <- c("complex", "print-tests", "lapack", "datasets", "iec60559")
+    tests2 <- c("complex", "print-tests", "lapack", "datasets", "datetime",
+                "iec60559")
     tests3 <- c("reg-tests-1a", "reg-tests-1b", "reg-tests-1c", "reg-tests-2",
                 "reg-examples1", "reg-examples2", "reg-packages",
-                "reg-IO", "reg-IO2", "reg-S4", "reg-plot", "reg-BLAS")
+                "p-qbeta-strict-tst",
+                "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
 
     runone <- function(f, diffOK = FALSE, inC = TRUE)
     {
@@ -561,12 +563,12 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
             if (!file.exists(fin <- paste0(f, "in")))
                 stop("file ", sQuote(f), " not found", domain = NA)
             message("creating ", sQuote(f), domain = NA)
-            ## FIXME: this creates an extra trailing space compared to
-            ## the .Rin.R rule
             cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                          "--vanilla --slave -f", fin)
             if (system(cmd))
                 stop("creation of ", sQuote(f), " failed", domain = NA)
+            ## This needs an extra trailing space to match the .Rin.R rule
+            cat("\n", file = f, append = TRUE)
             on.exit(unlink(f))
         }
         message("  running code in ", sQuote(f), domain = NA)
@@ -620,6 +622,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
             }
         }
         runone("reg-tests-3", TRUE)
+        runone("reg-examples3", TRUE)
         message("running tests of plotting Latin-1", domain = NA)
         message("  expect failure or some differences if not in a Latin or UTF-8 locale", domain = NA)
 
@@ -631,16 +634,28 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     }
 
     if (scope %in% c("devel", "both")) {
+        message("running tests of date-time printing\n expect platform-specific differences", domain = NA)
+        runone("datetime2")
         message("running tests of consistency of as/is.*", domain = NA)
         runone("isas-tests")
         message("running tests of random deviate generation -- fails occasionally")
         runone("p-r-random-tests", TRUE)
+        message("running tests demos from base and stats", domain = NA)
+        if (runone("demos")) return(invisible(1L))
+        if (runone("demos2")) return(invisible(1L))
         message("running tests of primitives", domain = NA)
         if (runone("primitives")) return(invisible(1L))
         message("running regexp regression tests", domain = NA)
         if (runone("utf8-regex", inC = FALSE)) return(invisible(1L))
         message("running tests to possibly trigger segfaults", domain = NA)
         if (runone("no-segfault")) return(invisible(1L))
+    }
+    if (scope %in% "internet") {
+        message("running tests of Internet functions - expect some differences", domain = NA)
+        runone("internet")
+        message("running more Internet and socket tests", domain = NA)
+        runone("internet2")
+        runone("libcurl")
     }
 
     invisible(0L)
@@ -728,7 +743,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2013 The R Core Team.",
+                "Copyright (C) 2000-2015 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")

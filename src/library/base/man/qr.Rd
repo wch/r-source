@@ -1,6 +1,6 @@
 % File src/library/base/man/qr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{qr}
@@ -83,6 +83,10 @@ as.qr(x)
   than \eqn{2^{31}}{2^31} elements.
 
   \code{qr.fitted} and \code{qr.resid} only support the LINPACK interface.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \value{
   The QR decomposition of the matrix as computed by LINPACK or LAPACK.

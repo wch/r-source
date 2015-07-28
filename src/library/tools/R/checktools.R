@@ -894,14 +894,14 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     outdirs <- tools:::R_check_outdirs(dir, all = sources, invert = TRUE)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
-    new <- tools:::check_packages_in_dir_details(logs = logs)
+    new <- tools:::check_packages_in_dir_details(logs = logs, drop_ok = FALSE)
 
     ## Use
     ##   old = tools:::CRAN_check_details(FLAVOR)
     ## to compare against the results/details of a CRAN check flavor.
 
     if(!inherits(old, "check_details"))
-        old <- tools:::check_packages_in_dir_details(old)
+        old <- tools:::check_packages_in_dir_details(old, drop_ok = FALSE)
 
     ## Simplify matters by considering only "changes" in *available*
     ## results/details.
@@ -925,6 +925,8 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     ## Even with the above simplification, missing entries do not
     ## necessarily indicate "OK" (checks could have been skipped).
     ## Hence leave as missing and show as empty in the diff.
+    ## An exception to this rule is made if we find an "ERROR" result
+    ## as this may explain skipped checks.
 
     ## Complete possibly missing version information.
     chunks <-
@@ -939,6 +941,21 @@ function(dir, old, outputs = FALSE, sources = FALSE)
                            rep.int(e[pos[1L], "Version.y"], len)
                    e
                })
+
+    ## If one check results in "ERROR" then drop missing checks
+    chunks <- lapply(chunks,
+                     function(e) {
+                         errx <- !is.na(match("ERROR", e$Status.x))
+                         erry <- !is.na(match("ERROR", e$Status.y))
+                         if (errx || erry) {
+                             e[(errx && !is.na(e$Status.x)) |
+                               (erry && !is.na(e$Status.y)),]
+                         }
+                         else {
+                             e
+                         }
+                     })
+
     db <- do.call(rbind, chunks)
 
     sx <- as.character(db$Status.x)

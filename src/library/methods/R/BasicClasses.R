@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicClasses.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -573,7 +573,7 @@
 )
 
 .InitSpecialTypesAndClasses <- function(where) {
-    if(is.null(S3table <- get0(".S3MethodsClasses", envir = where, inherits = FALSE))) {
+    if(is.null(S3table <- where$.S3MethodsClasses)) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
     }

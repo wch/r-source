@@ -4,7 +4,7 @@
  *   October 23, 2000.
  *
  *  Merge in to R and further tweaks :
- *	Copyright (C) 2000-2014 The R Core Team
+ *	Copyright (C) 2000-2015 The R Core Team
  *	Copyright (C) 2008 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -41,8 +41,7 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double attribute_hidden
-dbinom_raw(double x, double n, double p, double q, int give_log)
+double dbinom_raw(double x, double n, double p, double q, int give_log)
 {
     double lf, lc;
 

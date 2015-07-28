@@ -63,9 +63,11 @@ httpd <- function(path, query, ...)
     .HTMLsearch <- function(query)
     {
     	bool <- function(x) as.logical(as.numeric(x))
-        res <- if(identical(names(query), "category"))
+        res <- if(identical(names(query), "category")) {
             help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
-        else {
+        } else if(identical(names(query), "results")) {
+            utils:::.hsearch_results()
+        } else {
             fields <- types <- character()
             args <- list(pattern = ".")
             for (i in seq_along(query))
@@ -96,7 +98,7 @@ httpd <- function(path, query, ...)
                        types.demo =
                            if(bool(query[i]))
                                types <- c(types, "demo"),
-                       ## Not sure how to get these ...
+                       ## Possibly passed from utils:::printhsearchInternal().
                        package = args$package <- strsplit(query[i], ";")[[1L]],
                        lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
                        warning("Unrecognized search field: ", names(query)[i],
@@ -121,16 +123,17 @@ httpd <- function(path, query, ...)
             vigfile0 <- ""
             vigDB <- NULL
             for (type in types) {
-		if(NROW(temp <- res[res[,"Type"] == type,,drop=FALSE]) > 0)
+		if(NROW(temp <- res[res[,"Type"] == type, , drop=FALSE]) > 0) {
+                    temp <- temp[!duplicated(temp[, "ID"]), , drop = FALSE]
 		    switch(type,
 		    vignette = {
 			out <- c(out, paste0("<h3>", gettext("Vignettes:"), "</h3>"), "<dl>")
 			n <- NROW(temp)
-			vignettes <- matrix("", n, 5)
-			colnames(vignettes) <- c("Package", "File",
-			                         "Title", "PDF","R")
+			vignettes <- matrix("", n, 5L)
+			colnames(vignettes) <-
+                            c("Package", "File", "Title", "PDF", "R")
 			for (i in seq_len(NROW(temp))) {
-			    topic <- temp[i, "topic"]
+			    topic <- temp[i, "Topic"]
 			    pkg <- temp[i, "Package"]
 			    vigfile <- file.path(temp[i, "LibPath"], "Meta", "vignette.rds")
 			    if (!identical(vigfile, vigfile0)) {
@@ -152,12 +155,64 @@ httpd <- function(path, query, ...)
 			out <- c(out, paste0("<h3>", gettext("Help pages:"), "</h3>"))
 			out <- c(out, makeHelpTable(temp))
 		    })
+                }
 	    }
         }
         out <- c(out, "<hr/>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
+    .HTML_hsearch_db_concepts <- function() {
+        concepts <- utils::hsearch_db_concepts()
+        s <- concepts$Concept
+        out <-
+            c(tools:::HTMLheader("Help search concepts"),
+              c("",
+                "<table>",
+                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                paste0("<tr><td>",
+                       "<a href=\"/doc/html/Search?pattern=",
+                       vapply(reQuote(s), URLencode, "", reserved = TRUE),
+                       "&fields.concept=1&agrep=0\">",
+                       shtmlify(substring(s, 1, 80)),
+                       "</a>",
+                       "</td><td style=\"text-align: right\">",
+                       concepts$Frequency,
+                       "</td><td style=\"text-align: right\">",
+                       concepts$Packages,
+                       "</td></tr>"),
+                "</table>",
+                "</body>",
+                "</html>"))
+        list(payload = paste(out, collapse = "\n"))
+    }
+
+    .HTML_hsearch_db_keywords <- function() {
+        keywords <- utils::hsearch_db_keywords()
+        out <-
+            c(tools:::HTMLheader("Help search keywords"),
+              c("",
+                "<table>",
+                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                paste0("<tr><td>",
+                       "<a href=\"/doc/html/Search?category=",
+                       keywords$Keyword,
+                       "\">",
+                       keywords$Keyword,
+                       "</a>",
+                       "</td><td>",
+                       shtmlify(substring(keywords$Concept, 1, 80)),
+                       "</td><td style=\"text-align: right\">",
+                       keywords$Frequency,
+                       "</td><td style=\"text-align: right\">",
+                       keywords$Packages,
+                       "</td></tr>"),
+                "</table>",
+                "</body>",
+                "</html>"))
+        list(payload = paste(out, collapse = "\n"))
+    }
+    
     unfix <- function(file)
     {
         ## we need to re-fix links altered by fixup.package.URLs
@@ -228,6 +283,11 @@ httpd <- function(path, query, ...)
                                 "and", mono("/library"), "are allowed")))
     else if(path == "/doc/html/UserManuals.html")
     	return(.HTMLusermanuals())
+    else if(path == "/doc/html/hsearch_db_concepts.html")
+        return(.HTML_hsearch_db_concepts())
+    else if(path == "/doc/html/hsearch_db_keywords.html")
+        return(.HTML_hsearch_db_keywords())
+
 
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
@@ -528,7 +588,7 @@ httpdPort <- local({
     }
 })
 
-startDynamicHelp <- function(start=TRUE)
+startDynamicHelp <- function(start = TRUE)
 {
     if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
         httpdPort(-1L)
@@ -536,7 +596,12 @@ startDynamicHelp <- function(start=TRUE)
         utils::flush.console()
         return(invisible(httpdPort()))
     }
+
     port <- httpdPort()
+    if (is.na(start)) {
+        if(port <= 0L) return(startDynamicHelp(TRUE))
+        return(invisible(port))
+    }
     if (start && port) {
         if(port > 0L) stop("server already running")
         else stop("server could not be started on an earlier attempt")
@@ -586,5 +651,10 @@ startDynamicHelp <- function(start=TRUE)
     invisible(httpdPort())
 }
 
+dynamicHelpURL <-
+function(path, port = httpdPort())
+    paste0("http://127.0.0.1:", port, path)
+
 ## environment holding potential custom httpd handlers
 .httpd.handlers.env <- new.env()
+

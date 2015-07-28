@@ -8,10 +8,10 @@ all: makeMakedeps install
 install: Riconv.dll
 	@cp Riconv.dll ../../../$(BINDIR)
 
-CPPFLAGS=-I../../include
+CPPFLAGS = -I../../include
 
-CSOURCES= win_iconv.c
-OBJS=$(CSOURCES:.c=.o)
+CSOURCES =  win_iconv.c
+OBJS = $(CSOURCES:.c=.o)
 
 Riconv.dll: $(OBJS)
 
@@ -21,7 +21,7 @@ distclean: clean
 	@$(RM) Riconv.dll
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

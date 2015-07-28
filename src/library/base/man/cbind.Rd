@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -13,7 +13,7 @@
 \concept{insert}
 \title{Combine R Objects by Rows or Columns}
 \description{
-  Take a sequence of vector, matrix or data frames arguments and combine
+  Take a sequence of vector, matrix or data-frame arguments and combine
   by \emph{c}olumns or \emph{r}ows, respectively.  These are generic
   functions with methods for other \R classes.
 }
@@ -23,11 +23,12 @@ rbind(\dots, deparse.level = 1)
 \method{rbind}{data.frame}(\dots, deparse.level = 1, make.row.names = TRUE)
 }
 \arguments{
-  \item{\dots}{vectors or matrices.  These can be given as named
-    arguments.  Other \R objects will be coerced as appropriate: see
-    sections \sQuote{Details} and \sQuote{Value}.  (For the
-    \code{"data.frame"} method of \code{cbind} these can be further
-    arguments to \code{\link{data.frame}} such as \code{stringsAsFactors}.)}
+  \item{\dots}{(generalized) vectors or matrices.  These can be given as named
+    arguments.  Other \R objects may be coerced as appropriate, or S4
+    methods may be used: see sections \sQuote{Details} and
+    \sQuote{Value}.  (For the \code{"data.frame"} method of \code{cbind}
+    these can be further arguments to \code{\link{data.frame}} such as
+    \code{stringsAsFactors}.)}
   \item{deparse.level}{integer controlling the construction of labels in
     the case of non-matrix-like arguments (for the default method):\cr
     \code{deparse.level = 0} constructs no labels; the default,\cr
@@ -43,7 +44,12 @@ rbind(\dots, deparse.level = 1)
   least one argument is a data frame and the rest are vectors or
   matrices.  There can be other methods; in particular, there is one for
   time series objects.  See the section on \sQuote{Dispatch} for how
-  the method to be used is selected.
+  the method to be used is selected.  If some of the arguments are of an
+  S4 class, i.e., \code{\link{isS4}(.)} is true, S4 methods are sought
+  also, and the hidden \code{cbind} / \code{rbind} functions
+  from package \pkg{methods} maybe called, which in turn build on
+  \code{\link{cbind2}} or \code{\link{rbind2}}, respectively.  In that
+  case, \code{deparse.level} is obeyed, similarly to the default method.
 
   In the default method, all the vectors/matrices must be atomic (see
   \code{\link{vector}}) or lists.  Expressions are not allowed.
@@ -70,6 +76,11 @@ rbind(\dots, deparse.level = 1)
   \code{NULL}) are ignored unless the result would have zero rows
   (columns), for S compatibility.
   (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
+
+  Matrices are restricted to less than \eqn{2^{31}}{2^31} rows and
+  columns even on 64-bit systems.  So input vectors have the same length
+  restriction: as from \R 3.2.0 input matrices with more elements (but
+  meeting the row and column restrictions) are allowed.
 }
 \section{Data frame methods}{
   The \code{cbind} data frame method is just a wrapper for

@@ -202,7 +202,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
     pp <- nrow(T)
     U <- solve(Psi,B)
     sigma <- Tr(U)/pp/object$df
-    lambda <- Re(eigen(U)$values)
+    lambda <- Re(eigen(U, only.values = TRUE)$values)
     GG.eps <- sum(lambda)^2/sum(lambda^2)/pp
     n <- object$df
     HF.eps <- ((n + 1) * pp * GG.eps - 2) / (pp * (n - pp * GG.eps))
@@ -318,27 +318,23 @@ anova.mlm <-
                 stop(gettextf("residuals have rank %s < %s", rss.qr$rank, pp),
                      domain = NA)
             eigs <- array(NA, c(nmodels, pp))
-            stats <- matrix(NA, nmodels+1L, 5L)
-            colnames(stats) <- c(test, "approx F", "num Df", "den Df", "Pr(>F)")
-
+            stats <- matrix(NA, nmodels+1L, 5L,
+                            dimnames = list(NULL, c(test,
+                                "approx F", "num Df", "den Df", "Pr(>F)")))
             for(i in seq_len(nmodels)) {
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr,
                                               (T %*% ss[[i]] %*% t(T)) * scm),
-                                      symmetric = FALSE)$values)
+                                      symmetric = FALSE, only.values = TRUE)$values)
                 stats[i, 1L:4L] <-
                     switch(test,
-                           "Pillai" = Pillai(eigs[i,  ],
-                           df[i], df.res),
-                           "Wilks" = Wilks(eigs[i,  ],
-                           df[i], df.res),
-                           "Hotelling-Lawley" = HL(eigs[i,  ],
-                           df[i], df.res),
-                           "Roy" = Roy(eigs[i,  ],
-                           df[i], df.res))
+			   "Pillai" =		Pillai(eigs[i, ], df[i], df.res),
+			   "Wilks" =		Wilks (eigs[i, ], df[i], df.res),
+			   "Hotelling-Lawley" = HL    (eigs[i, ], df[i], df.res),
+			   "Roy" =		Roy   (eigs[i, ], df[i], df.res))
                 ok <- stats[, 2L] >= 0 & stats[, 3L] > 0 & stats[, 4L] > 0
                 ok <- !is.na(ok) & ok
-                stats[ok, 5L] <- pf(stats[ok, 2], stats[ok, 3L], stats[ok, 4L],
-                                   lower.tail = FALSE)
+                stats[ok, 5L] <- pf(stats[ok, 2L], stats[ok, 3L], stats[ok, 4L],
+                                    lower.tail = FALSE)
             }
 
         }
@@ -467,8 +463,8 @@ anova.mlmlist <- function (object, ...,
                             c("Res.Df", "Df", "Gen.var."))
 
     title <- "Analysis of Variance Table\n"
-    topnote <- paste("Model ", format(seq_len(nmodels)),": ",
-		     variables, sep = "", collapse = "\n")
+    topnote <- paste0("Model ", format(seq_len(nmodels)),": ", variables,
+		      collapse = "\n")
     transformnote <- if (!missing(T))
         c("\nContrast matrix", apply(format(T), 1L, paste, collapse = " "))
     else
@@ -549,7 +545,7 @@ anova.mlmlist <- function (object, ...,
             eigs[i, ] <- Re(eigen(qr.coef(rss.qr,
                                           sg * (T %*% deltassd[[i-1]] %*%
                                           t(T)) * scm),
-                                  symmetric = FALSE)$values)
+                                  symmetric = FALSE, only.values = TRUE)$values)
             stats[i, 1L:4] <-
                 switch(test,
                        "Pillai" = Pillai(eigs[i,  ],
@@ -576,10 +572,8 @@ anova.mlmlist <- function (object, ...,
 
 deviance.mlm <- function(object, ...)
 {
-    res <-
-	if(is.null(w <- object$weights)) object$residuals^2
-	else w * object$residuals^2
-    drop(rep.int(1, nrow(res)) %*% res)
+    colSums(if(is.null(w <- object$weights)) object$residuals^2
+	    else w * object$residuals^2)
 }
 
 plot.mlm <- function (x, ...) .NotYetImplemented()

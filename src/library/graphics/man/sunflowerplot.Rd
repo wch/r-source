@@ -1,6 +1,6 @@
 % File src/library/graphics/man/sunflowerplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sunflowerplot}
@@ -117,7 +117,7 @@ sunflowerplot(x, \dots)
 \seealso{\code{\link{density}}, \code{\link{xyTable}}
 }
 \examples{
-require(stats)
+require(stats) # for rnorm
 require(grDevices)
 
 ## 'number' is computed automatically:

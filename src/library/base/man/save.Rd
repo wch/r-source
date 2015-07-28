@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -14,8 +14,9 @@
   (or \code{\link{data}} in some cases).
 
   \code{save.image()} is just a short-cut for \sQuote{save my current
-    workspace}, i.e., \code{save(list = ls(all = TRUE), file =
-    ".RData")}.  It is also what happens with \code{\link{q}("yes")}.
+    workspace}, i.e., \code{save(list = ls(all.names = TRUE), file =
+    ".RData", envir = .GlobalEnv)}.
+  It is also what happens with \code{\link{q}("yes")}.
 }
 \usage{
 save(\dots, list = character(),
@@ -116,6 +117,26 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   is the same as saving with compression.  Also, a saved file can be
   uncompressed and re-compressed under a different compression scheme
   (and see \code{\link{resaveRdaFiles}} for a way to do so from within \R).
+}
+
+\section{Parallel compression}{
+  That \code{file} can be a connection can be exploited to make use of
+  an external parallel compression utility such as \command{pigz}
+  (\url{http://zlib.net/pigz/}) or \command{pbzip2}
+  (\url{http://compression.ca/pbzip2/}) \emph{via} a \code{\link{pipe}}
+  connection.  For example, using 8 threads,
+\preformatted{    con <- pipe("pigz -p8 > fname.gz", "wb")
+    save(myObj, file = con); close(con)
+
+    con <- pipe("pbzip2 -p8 -9 > fname.bz2", "wb")
+    save(myObj, file = con); close(con)
+
+    con <- pipe("xz -T8 -6 -e > fname.xz", "wb")
+    save(myObj, file = con); close(con)
+}
+  where the last requires \command{xz} 5.1.1 or later built with support
+  for multiple threads (and parallel compression is only effective for
+  large objects: at level 6 it will compress in serialized chunks of 12MB).
 }
 
 \note{

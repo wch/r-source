@@ -25,9 +25,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     file is saved.  Tilde-expansion is performed.}
 
   \item{method}{Method to be used for downloading files.  Current
-    download methods are \code{"internal"}, \code{"libcurl"},
-    \code{"wget"} and \code{"curl"}, and there is a value \code{"auto"}:
-    see \sQuote{Details} and \sQuote{Note}.
+    download methods are \code{"internal"}, \code{"wininet"} (Windows
+    only) \code{"libcurl"}, \code{"wget"} and \code{"curl"}, and there
+    is a value \code{"auto"}: see \sQuote{Details} and \sQuote{Note}.
 
     The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.
@@ -43,9 +43,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     (See also \sQuote{Details}.)
 #endif
   }
-  \item{cacheOK}{logical.  Is a server-side cached value acceptable?
-    Implemented for the \code{"internal"}, \code{"wget"} and
-    \code{"curl"} methods.}
+  \item{cacheOK}{logical.  Is a server-side cached value acceptable?}
 
   \item{extra}{character vector of additional command-line arguments for
     the \code{"wget"} and \code{"curl"} methods.}
@@ -71,8 +69,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Support for method \code{"libcurl"} is optional: use
   \code{\link{capabilities}("libcurl")} to see if it is supported on
   your build.  It provides (non-blocking) access to \samp{https://} and
-  \samp{ftps://} URLs.  If \code{quiet = FALSE} there is a progress bar
-  similar to the \command{curl} command-line tool.
+  \samp{ftps://} URLs.  There is support for simultaneous downloads, so
+  \code{url} and \code{destfile} can be character vectors of the same
+  length greater than one.  For a single URL and \code{quiet = FALSE}
+  there a progress bar is shown in interactive use.
   
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -92,10 +92,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #endif
 #ifdef windows
   only supported if \option{--internet2} or environment variable
-  \env{R_WIN_INTERNET2} was set or
-  \code{\link{setInternet2}(TRUE)} was used (to make use of Internet
-  Explorer internals), and then only if the certificate is considered to
-  be valid.
+  \env{R_WIN_INTERNET2} was set or \code{\link{setInternet2}(TRUE)} was
+  used (to make use of Windows internal functions), and then only if the
+  certificate is considered to be valid.
 #endif
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
@@ -115,7 +114,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   A progress bar tracks the transfer.  If the file length is known, the
   full width of the bar is the known length.  Otherwise the initial
   width represents 100 Kbytes and is doubled whenever the current width
-  is exceeded.
+  is exceeded.  (In non-interactive use this uses a text version. If the
+  file length is known, an equals sign represents 2\% of the transfer
+  completed: otherwise a dot represents 10Kb.)
+  
 
   If \code{mode} is not supplied and \code{url} ends in one of
   \code{.gz}, \code{.bz2}, \code{.xz}, \code{.tgz}, \code{.zip},
@@ -124,12 +126,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   care is needed that other binary file types are transferred with
   \code{mode = "wb"}.
 
-  There is an alternative method if you have Internet Explorer 4 or
-  later installed.   You can use the command line flag \option{--internet2},
-  or call \code{\link{setInternet2}(TRUE)} and then
-  the \sQuote{Internet Options} of the system are used to choose proxies
-  and so on; these are set in the Control Panel and are those used for
-  Internet Explorer.  That version does not support \code{cacheOK = FALSE}.
+  There is an alternative method \code{"wininet"}. (This selected for
+  \code{method = "internal"} if the command line flag
+  \option{--internet2}, was used or \code{\link{setInternet2}(TRUE)}
+  called.)  Then the \sQuote{Internet Options} of the system are used to
+  choose proxies and so on; these are set in the Control Panel and are
+  those used for Internet Explorer.  That version does not support
+  \code{cacheOK = FALSE}.
 #endif
 #ifdef unix
   A progress bar tracks the transfer.  If the file length is known, an
@@ -200,7 +203,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs usually
   try to verify their certificates. This is usually done using the CA
-  root certifcates installed by the OS (although we have seen instances
+  root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated).
 
   This is an issue for \code{method = "libcurl"} on Windows, where the

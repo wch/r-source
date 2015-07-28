@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2015-03-01 13:19\n"
 "PO-Revision-Date: 2014-03-11 10:28-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -241,6 +241,10 @@ msgstr "значения 'x' и 'y' должны быть конечными и не пропущенными"
 
 msgid "'z' must be a matrix"
 msgstr "'z' должен быть матрицей"
+
+#, fuzzy
+msgid "'z' must be numeric or logical"
+msgstr "'x' должен быть числовым"
 
 msgid "invalid z limits"
 msgstr "неправильные границы z"

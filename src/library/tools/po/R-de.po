@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -248,6 +248,13 @@ msgstr ""
 "Pakete mit Prioritäten 'base', 'recommended' oder 'defunct-base' müssen R "
 "bereits bekannt sein"
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -270,7 +277,14 @@ msgstr "Das Authors@R Feld enthält Personen ohne gültige Rolle."
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Kann kein Maintainer Feld aus dem Authors@R Feld extrahieren:"
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 "Das Authors@R Feld enthält keine Person als Maintainer mit email Adresse."
 
@@ -1192,6 +1206,18 @@ msgstr "'x' muss eine Zeichenkette sein"
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
 
+msgid ":"
+msgstr ":"
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
 
@@ -1240,6 +1266,10 @@ msgstr "kann Paketquelltext nicht einlesen"
 
 msgid "Call sequence:"
 msgstr "Aufrufsequenz:"
+
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "Argument 'x' muss ein Charaktervektor sein"
 
 msgid "parsing '%s'"
 msgstr "parse '%s'"
@@ -1402,6 +1432,12 @@ msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
 
 #, fuzzy
+#~ msgid "Undeclared package used in Rd xrefs:"
+#~ msgid_plural "Undeclared packages used in Rd xrefs:"
+#~ msgstr[0] "Unbekanntes Paket %s in Rd Kreuzreferenzen"
+#~ msgstr[1] "Unbekannte Pakete %s in Rd Kreuzreferenzen"
+
+#, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 #~ msgstr "Inkonsistente Kodierungsspezifikationen:"
 
@@ -1434,9 +1470,6 @@ msgstr[1] "%d der Pakettests fehlgeschlagen"
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr ". Die folgende Datei exisitiert im Verzeichnis"
-
-#~ msgid ":"
-#~ msgstr ":"
 
 #~ msgid "Located more than one"
 #~ msgstr "mehr als eine gefunden"

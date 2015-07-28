@@ -54,7 +54,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
                         exclude=NULL)
 	u[ , drop = drop.unused.levels]
     })
-    if(!sparse) { ## identical to stats::xtabs
+    if(!sparse) {
 	x <-
 	    if(is.null(y))
 		do.call("table", by)
@@ -66,7 +66,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 		      dim = c(dim(z[[1L]]), length(z)),
 		      dimnames = c(dimnames(z[[1L]]), list(names(z))))
 	    }
-	x[is.na(x)] <- 0
+	x[is.na(x)] <- 0L
 	class(x) <- c("xtabs", "table")
 	attr(x, "call") <- match.call()
 	x

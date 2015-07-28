@@ -1,9 +1,9 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-DEFS=-DWIN32 -DPCRE_STATIC -DLINK_SIZE=2
+DEFS = -DWIN32 -DPCRE_STATIC -DLINK_SIZE=2
 
-CPPFLAGS=-I../../include -I. $(DEFS)
+CPPFLAGS = -I../../include -I. $(DEFS)
 
 ## done this way for parallel make
 all:
@@ -15,7 +15,7 @@ CSOURCES = pcre_chartables.c pcre_compile.c pcre_config.c pcre_exec.c \
 	pcre_maketables.c pcre_newline.c pcre_ord2utf8.c pcre_refcount.c \
 	pcre_study.c pcre_tables.c pcre_ucd.c \
 	pcre_valid_utf8.c pcre_version.c pcre_xclass.c
-OBJS=$(CSOURCES:.c=.o)
+OBJS = $(CSOURCES:.c=.o)
 libpcre.a: $(OBJS)
 
 clean:
@@ -25,7 +25,7 @@ distclean: clean
 	@$(RM) libpcre.a
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

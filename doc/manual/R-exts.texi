@@ -394,7 +394,9 @@ be omitted if the latter is provided: however if they are not
 @c DESCRIPTION field Package
 The mandatory @samp{Package} field gives the name of the package.  This
 should contain only (@acronym{ASCII}) letters, numbers and dot, have at
-least two characters and start with a letter and not end in a dot.
+least two characters and start with a letter and not end in a dot.  If
+it needs explaining, this should be done in the @samp{Description} field
+(and not the @samp{Title} field).
 
 @c DESCRIPTION field Version
 The mandatory @samp{Version} field gives the version of the package.
@@ -407,20 +409,29 @@ were @samp{0.1-0}.  It is @strong{not} a decimal number, so for example
 
 The mandatory @samp{License} field is discussed in the next subsection.
 
+@c DESCRIPTION field Title
+The mandatory @samp{Title} field should give a @emph{short} description
+of the package.  Some package listings may truncate the title to 65
+characters.  It should use @emph{title case} (that is, use capitals for
+the principal words: @code{tools::toTitleCase} can help you with this),
+not use any markup, not have any continuation lines, and not end in a
+period (unless part of @dots{}).  Do not repeat the package name: it is
+often used prefixed by the name.  Refer to other packages and external
+software in single quotes, and to book titles (and similar) in double
+quotes.
 
 @c DESCRIPTION field Description
 The mandatory @samp{Description} field should give a
 @emph{comprehensive} description of what the package does.  One can use
 several (complete) sentences, but only one paragraph. It should be
 intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
-package to all @acronym{CRAN} users).
-
-@c DESCRIPTION field Title
-The mandatory @samp{Title} field should give a short description of the
-package.  Some package listings may truncate the title to 65 characters.
-It should use @emph{title case} (that is, use capitals for the principal
-words), not use any markup, not have any continuation lines, and not end
-in a period.
+package to all @acronym{CRAN} users).  It is good practice not to start
+with the package name, `This package' or similar.  As with the
+@samp{Title} field, double quotes should be used for quotations
+(including titles of books and articles), and single quotes for
+non-English usage, including names of other packages and external
+software.  This field should also be used for explaining the package
+name if necessary.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
@@ -1042,24 +1053,25 @@ provided that the objects created do not depend on those packages except
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of one or more @R{} objects: please
 use suitable compression as suggested by @code{tools::resaveRdaFiles},
-and see also @samp{SysDataCompression} @file{DESCRIPTION} field.)  this
-will be lazy-loaded into the namespace environment -- this is intended
-for system datasets that are not intended to be user-accessible
+and see also the @samp{SysDataCompression} @file{DESCRIPTION} field.)
+this will be lazy-loaded into the namespace environment -- this is
+intended for system datasets that are not intended to be user-accessible
 @emph{via} @code{data}.  Also, files ending in @samp{.in} will be
 allowed in the @file{R} directory to allow a @file{configure} script to
 generate suitable files.
 
 Only @acronym{ASCII} characters (and the control characters tab,
 formfeed, LF and CR) should be used in code files.  Other characters are
-accepted in comments, but then the comments may not be readable in
-e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in object names
-will normally@footnote{This is true for OSes which implement the
-@samp{C} locale: Windows' idea of the @samp{C} locale uses the WinAnsi
-charset.} fail when the package is installed.  Any byte will be allowed
-in a quoted character string but @code{\uxxxx} escapes should be used
-for non-@acronym{ASCII} characters.  However, non-@acronym{ASCII}
-character strings may not be usable in some locales and may display
-incorrectly in others.
+accepted in comments@footnote{but they should be in the encoding
+declared in the @file{DESCRIPTION} file.}, but then the comments may not
+be readable in e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in
+object names will normally@footnote{This is true for OSes which
+implement the @samp{C} locale: Windows' idea of the @samp{C} locale uses
+the WinAnsi charset.} fail when the package is installed.  Any byte will
+be allowed in a quoted character string but @code{\uxxxx} escapes should
+be used for non-@acronym{ASCII} characters.  However,
+non-@acronym{ASCII} character strings may not be usable in some locales
+and may display incorrectly in others.
 
 
 @findex library.dynam
@@ -1204,8 +1216,8 @@ if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
 and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
-line for each demo, giving its name and a description separated by white
-space. (Note that it is not possible to generate this index file
+line for each demo, giving its name and a description separated by a
+tab or at least three spaces. (This index file is not generated
 automatically.)  Note that a demo does not have a specified encoding and
 so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
 @R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
@@ -1320,10 +1332,12 @@ should be ``self-sufficient'' and not make use of extra functionality
 provided by the package, so that the data file can also be used without
 having to load the package or its namespace.
 
-Images (extensions @file{.RData} or @file{.rda}) can contain references
-to the namespaces of packages that were used to create them.  Preferably
-there should be no such references in data files, and in any case they
-should only be to packages listed in the @code{Depends} and
+Images (extensions @file{.RData}@footnote{People who have trouble with
+case are advised to use @file{.rda} as a common error is to refer to
+@file{abc.RData} as @file{abc.Rdata}!} or @file{.rda}) can contain
+references to the namespaces of packages that were used to create them.
+Preferably there should be no such references in data files, and in any
+case they should only be to packages listed in the @code{Depends} and
 @code{Imports} fields, as otherwise it may be impossible to install the
 package.  To check for such references, load all the images into a
 vanilla @R{} session, and look at the output of
@@ -2007,9 +2021,15 @@ Apple builds will incorporate it.} have no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and the Apple OS X@footnote{using the @code{libgomp} from
-@command{g++} 4.2: using @code{libiomp} versions seems better.}
+@command{g++} 4.2: versions using @code{libiomp} seem better.}
 implementations have substantial overheads and are only beneficial if
-quite substantial tasks are run in parallel.
+quite substantial tasks are run in parallel.  Also, on Windows new
+threads are started with the default@footnote{Windows, not MinGW-w64
+default.} FPU control word, so computations done on OpenMP threads will
+not make use of extended-precision arithmetic which is the default for
+the main process.
+@c mingw64-public, 2015-02-02.  
+@c http://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
 Calling any of the @R{} API from threaded code is `for experts only':
 they will need to read the source code to determine if it is
@@ -2752,7 +2772,9 @@ environment of a function for later use.
 
 Complete checking of a package which contains a file @file{README.md}
 needs @command{pandoc} installed: see
-@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.
+@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.  This
+should be reasonably current: @acronym{CRAN} used version 1.12.4.1 to
+process these files at the time of writing
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -4132,9 +4154,11 @@ work as intended.  For alternatives, see @ref{Suggested packages} and
 Examples can be run interactively @emph{via} @code{example} as well as
 in batch mode when checking.  So they should behave appropriately in
 both scenarios, conditioning by @code{interactive()} the parts which
-need an operator or observer.  For instance, progress bars are only
-appropriate in interactive use, as is displaying help pages or calling
-@code{View()} (see below).
+need an operator or observer.  For instance, progress
+bars@footnote{except perhaps the simplest kind as used by
+@code{download.file()} on non-Windows OSes.} are only appropriate in
+interactive use, as is displaying help pages or calling @code{View()}
+(see below).
 
 @end itemize
 
@@ -4421,11 +4445,13 @@ compilers in use with @R{} on some platforms.
 
 @item
 Be careful to include the headers which define the functions you use.
-Some compilers (notably the GCC family) include other system headers in
-their headers which are not required by the standards, and so code may
-compile on such compilers and not on others.  (A prominent example is
-the C++11 header @code{<random>} which is indirectly included by
-@code{<algorithm>} by @command{g++}.)
+Some compilers/OSes include other system headers in their headers which
+are not required by the standards, and so code may compile on such
+systems and not on others.  (A prominent example is the C++11 header
+@code{<random>} which is indirectly included by @code{<algorithm>} by
+@command{g++}.  Another frequent issue is the C header @code{<time.h>}
+which is included by other headers on Linux and Windows but not OS X nor
+Solaris.)
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
@@ -4995,29 +5021,34 @@ The general syntax of @file{Rd} files is summarized below.  For a detailed
 technical discussion of current @file{Rd} syntax, see
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
 
-@file{Rd} files consists of three types of text input.  The most common
+@file{Rd} files consist of four types of text input.  The most common
 is @LaTeX{}-like, with the backslash used as a prefix on markup
 (e.g. @code{\alias}), and braces used to indicate arguments
-(e.g. @code{@{load@}}).  The least common type of text is verbatim text,
-where no markup is processed. The third type is @R{}-like, intended for
-@R{} code, but allowing some embedded macros.  Quoted strings within
-@R{}-like text are handled specially: regular character escapes such as
-@code{\n} may be entered as-is.  Only markup starting with @code{\l}
-(e.g.  @code{\link}) or @code{\v} (e.g. @code{\var}) will be recognized
-within quoted strings.  The rarely used vertical tab @code{\v} must be
-entered as @code{\\v}.
+(e.g. @code{@{load@}}).  The least common type of text is `verbatim'
+text, where no markup other than the comment marker (@code{%}) is 
+processed.  There is also a rare variant of `verbatim' text 
+(used in @code{\eqn}, @code{\deqn}, @code{\figure},
+and @code{\newcommand}) where comment markers need not be escaped.
+The final type is @R{}-like, intended for @R{} code, but allowing some
+embedded macros.  Quoted strings within @R{}-like text are handled
+specially: regular character escapes such as @code{\n} may be entered
+as-is.  Only markup starting with @code{\l} (e.g.  @code{\link}) or
+@code{\v} (e.g. @code{\var}) will be recognized within quoted strings.
+The rarely used vertical tab @code{\v} must be entered as @code{\\v}.
 
 Each macro defines the input type for its argument.  For example, the
 file initially uses @LaTeX{}-like syntax, and this is also used in the
 @code{\description} section, but the @code{\usage} section uses
-@R{}-like syntax, and the @code{\alias} macro uses verbatim syntax.
+@R{}-like syntax, and the @code{\alias} macro uses `verbatim' syntax.
 Comments run from a percent symbol @code{%} to the end of the line in
-all types of text (as on the first line of the @code{load} example).
+all types of text except the rare `verbatim' variant
+(as on the first line of the @code{load} example).
 
 Because backslashes, braces and percent symbols have special meaning, to
 enter them into text sometimes requires escapes using a backslash.  In
 general balanced braces do not need to be escaped, but percent symbols
-always do.  For the complete list of macros and rules for escapes, see
+always do, except in the `verbatim' variant.
+For the complete list of macros and rules for escapes, see
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
 
 @menu
@@ -5301,7 +5332,7 @@ for extra commands for testing that should not be shown to users, but
 will be run by @code{example()}.  (Previously this was called
 @code{\testonly}, and that is still accepted.)
 
-Text inside @code{\dontrun@{@}} is verbatim, but the other parts
+Text inside @code{\dontrun@{@}} is `verbatim', but the other parts
 of the @code{\examples} section are @R{}-like text.
 
 For example,
@@ -5320,7 +5351,7 @@ special facilities (such as Internet access or write permission to
 specific directories).  Text included in @code{\dontrun} is indicated by
 comments in the processed help files: it need not be valid @R{} code but
 the escapes must still be used for @code{%}, @code{\} and unpaired
-braces as in other verbatim text.
+braces as in other `verbatim' text.
 
 Example code must be capable of being run by @code{example}, which uses
 @code{source}.  This means that it should not access @file{stdin},
@@ -5337,14 +5368,14 @@ line) to mark code that should be run by @code{example()} but not by
 @option{--run-donttest} can be used).  This should be needed only
 occasionally but can be used for code which might fail in circumstances
 that are hard to test for, for example in some locales.  (Use
-e.g. @code{capabilities()} to test for features needed in the examples
-wherever possible, and you can also use @code{try()} or
-@code{tryCatch()}.  Use @code{interactive()} to condition examples which
-need someone to interact with.)  Note that code included in
-@code{\donttest} must be correct @R{} code, and any packages used should
-be declared in the @file{DESCRIPTION} file.  It is good practice to
-include a comment in the @code{\donttest} section explaining why it is
-needed.
+e.g. @code{capabilities()} or @code{nzchar(Sys.which("someprogram"))} to
+test for features needed in the examples wherever possible, and you can
+also use @code{try()} or @code{tryCatch()}.  Use @code{interactive()} to
+condition examples which need someone to interact with.)  Note that code
+included in @code{\donttest} must be correct @R{} code, and any packages
+used should be declared in the @file{DESCRIPTION} file.  It is good
+practice to include a comment in the @code{\donttest} section explaining
+why it is needed.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -5585,7 +5616,7 @@ possible; @code{\strong} is regarded as stronger (more emphatic).
 
 @item \bold@{@var{text}@}
 @findex \bold
-Set @var{text} in @b{bold} font if possible.
+Set @var{text} in @b{bold} font where possible.
 
 @item \sQuote@{@var{text}@}
 @findex \sQuote
@@ -5599,7 +5630,7 @@ Each of the above commands takes @LaTeX{}-like input, so other macros
 may be used within @var{text}.
 
 The following logical markup commands are available for indicating
-specific kinds of text.  Except as noted, these take verbatim text
+specific kinds of text.  Except as noted, these take `verbatim' text
 input, and so other macros may not be used within them.  Some characters
 will need to be escaped (@pxref{Insertions}).
 
@@ -5609,13 +5640,13 @@ will need to be escaped (@pxref{Insertions}).
 Indicate text that is a literal example of a piece of an @R{} program,
 e.g., a fragment of @R{} code or the name of an @R{} object.  Text is
 entered in @R{}-like syntax, and displayed using @code{typewriter} font
-if possible.  Macros @code{\var} and @code{\link} are interpreted within
+where possible.  Macros @code{\var} and @code{\link} are interpreted within
 @var{text}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
 Indicate text that is a literal example of a piece of a program.  Text
-is displayed using @code{typewriter} font if possible.  Formatting,
+is displayed using @code{typewriter} font where possible.  Formatting,
 e.g.@: line breaks, is preserved.  (Note that this includes a line break
 after the initial @{, so typically text should start on the same line as
 the command.)
@@ -5628,13 +5659,13 @@ nested within other markup macros other than @code{\dQuote} and
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
 possible, so users can distinguish the characters they are supposed to
-type from computer output.  Text is entered verbatim.
+type from computer output.  Text is entered `verbatim'.
 
 @item \samp@{@var{text}@}
 @findex \samp
 Indicate text that is a literal example of a sequence of characters,
-entered verbatim.  No wrapping or reformatting will occur.  Displayed
-using @code{typewriter} font if possible.
+entered `verbatim'.  No wrapping or reformatting will occur.  Displayed
+using @code{typewriter} font where possible.
 
 
 @item \verb@{@var{text}@}
@@ -5651,26 +5682,38 @@ Indicate the name of an @R{} package.  @LaTeX{}-like.
 @item \file@{@var{file_name}@}
 @findex \file
 Indicate the name of a file.  Text is @LaTeX{}-like, so backslash needs
-to be escaped.  Displayed using a distinct font if possible.
+to be escaped.  Displayed using a distinct font where possible.
 
 @item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.  @LaTeX{}-like, will be rendered as
 a hyperlink in @HTML{} and PDF conversion.  Displayed using
-@code{typewriter} font if possible.
+@code{typewriter} font where possible.
 
 @item \url@{@var{uniform_resource_locator}@}
 @findex \url
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
-Web.  The argument is handled verbatim, and rendered as a hyperlink in
-@HTML{} and PDF conversion.  Displayed using @code{typewriter} font if
-possible.
+Web.  The argument is handled as `verbatim' text (with percent and
+braces escaped by backslash), and rendered as a hyperlink in @HTML{} and
+PDF conversion.  Linefeeds are removed, and as from @R{} 3.2.0 leading
+and trailing whitespace@footnote{as defined by the @R{} function
+@code{trimws}.} is removed.
+
+Displayed using @code{typewriter} font where possible.
 
 @item \href@{@var{uniform_resource_locator}@}@{@var{text}@}
 @findex \href
-Indicate a hyperlink to the World Wide Web. The first argument is handled
-verbatim, and is used as the @acronym{URL} in the hyperlink, with the
-second argument of @LaTeX{}-like text displayed to the user.
+Indicate a hyperlink to the World Wide Web. The first argument is
+handled as `verbatim' text (with percent and braces escaped by
+backslash) and is used as the @acronym{URL} in the hyperlink, with the
+second argument of @LaTeX{}-like text displayed to the user.  Linefeeds
+are removed from the first arguemnt, and as from @R{} 3.2.0 leading and
+trailing whitespace is removed.
+
+Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
+place of @samp{(VS.85)}) may not work correctly in versions of @R{}
+before 3.1.3 and are best avoided---use @code{URLdecode()} to decode
+them.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var
@@ -5680,16 +5723,16 @@ rendered differently only in @HTML{} conversions, and @LaTeX{} conversion
 outside @samp{\usage} and @samp{\examples} environments.}. @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
-Indicate an environment variable. Verbatim.
-Displayed using @code{typewriter} font if possible
+Indicate an environment variable. `Verbatim'.
+Displayed using @code{typewriter} font where possible
 @item \option@{@var{option}@}
 @findex \option
-Indicate a command-line option.  Verbatim.
-Displayed using @code{typewriter} font if possible.
+Indicate a command-line option.  `Verbatim'.
+Displayed using @code{typewriter} font where possible.
 @item \command@{@var{command_name}@}
 @findex \command
 Indicate the name of a command. @LaTeX{}-like, so @code{\var} is
-interpreted.  Displayed using @code{typewriter} font if possible.
+interpreted.  Displayed using @code{typewriter} font where possible.
 @item \dfn@{@var{term}@}
 @findex \dfn
 Indicate the introductory or defining use of a term. @LaTeX{}-like.
@@ -5830,7 +5873,7 @@ online help.  To this end, the two commands
 is used for ``inline'' formulae (corresponding to @TeX{}'s
 @code{$@dots{}$}), @code{\deqn} gives ``displayed equations'' (as in
 @LaTeX{}'s @code{displaymath} environment, or @TeX{}'s
-@code{$$@dots{}$$}).  Both arguments are treated as verbatim text.
+@code{$$@dots{}$$}).  Both arguments are treated as `verbatim' text.
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 @emph{one} argument) which then is used for both @var{latex} and
@@ -6229,12 +6272,12 @@ will expand to
 when parsed.  See the comments in that file for a discussion of what
 macros are available and what they do.
 
-Packages may also define their
-own common macros; these would be stored in an @file{.Rd} file in 
-@file{man/macros} in the package source and will be installed into 
-@file{help/macros} when the package is installed.  A package may also
-use the macros from a different package by listing the other package
-in the @samp{RdMacros} field in the @file{DESCRIPTION} file.
+Packages may also define their own common macros; these would be stored
+in an @file{.Rd} file in @file{man/macros} in the package source and
+will be installed into @file{help/macros} when the package is installed.
+A package may also use the macros from a different package by listing
+the other package in the @samp{RdMacros} field in the @file{DESCRIPTION}
+file.
 
 
 
@@ -6255,7 +6298,7 @@ files themselves is now UTF-8.
 
 Wherever possible, avoid non-@acronym{ASCII} chars in @file{Rd} files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
-@samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside verbatim
+@samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside `verbatim'
 environments (since they may disappear in fonts designed to render
 text).  (Function @code{showNonASCIIfile} in package @pkg{tools} can help
 in finding non-@acronym{ASCII} bytes in the files.)
@@ -7776,7 +7819,7 @@ In addition,
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
-@command{clang} 3.5 needs
+@command{clang} 3.5 and later seem to need
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
@@ -7797,7 +7840,7 @@ See
 manual for your version of GCC).  GCC 5.0.0 (under development) adds
 @example
 -fsanitize=alignment,bounds,float-cast-overflow,object-size,
-nonnull-attribute,returns-nonnull-attribute,bool,enum
+nonnull-attribute,returns-nonnull-attribute,bool,enum,vptr
 @end example
 @noindent
 with
@@ -7807,7 +7850,9 @@ with
 
 @noindent
 as a separate option not enabled by @code{-fsanitize=undefined} (and not
-desirable for @R{} uses).
+desirable for @R{} uses).  At the time of writing the @code{object-size}
+and @code{vptr} checks produced many warnings on GCC's own C++ headers,
+so should be disabled.
 
 Other useful flags include
 @example
@@ -11339,7 +11384,7 @@ just under 16Gb.
 
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
-needs more. As from @R{} 3.2.0 there is also
+needs more.  As from @R{} 3.2.0 there is also
 
 @example
 long double *R_allocLD(size_t @var{n})
@@ -11825,6 +11870,25 @@ similarly for the signed rank functions.
 
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
+
+For the negative binomial distribution (@samp{nbinom}), in addition to the
+@code{(size, prob)} parametrization, the alternative @code{(size, mu)}
+parametrization is provided as well by functions @samp{[dpqr]nbinom_mu()},
+see @kbd{?NegBinomial} in @R{}.
+
+Functions @code{dpois_raw(x, *)} and @code{dbinom_raw(x, *)} are versions of the 
+Poisson and binomial probability mass functions which work continuously in
+@code{x}, whereas @code{dbinom(x,*)} and @code{dpois(x,*)} only return non
+zero values for integer @code{x}.
+@example
+@group
+double dbinom_raw(double x, double n, double p, double q, int give_log)
+double dpois_raw (double x, double lambda, int give_log)
+@end group
+@end example
+Note that @code{dbinom_raw()} gets both @eqn{p, p} and @eqn{q = 1-p, q = 1-p} which
+may be advantageous when one of them is close to @eqn{1, 1}.
+
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
@@ -12709,6 +12773,11 @@ with examples of the problems caused by not adhering to them.
 This chapter only covers the `informal' class system copied from S3,
 and not with the S4 (formal) methods of package @pkg{methods}.
 
+First, a @emph{caveat}: a function named @code{@var{gen}.@var{cl}} will
+be invoked by the generic @code{@var{gen}} for class @code{@var{cl}}, so
+do not name functions in this style unless they are intended to be
+methods.
+
 The key function for methods is @code{NextMethod}, which dispatches the
 next method.  It is quite typical for a method function to make a few
 changes to its arguments, dispatch to the next method, receive the
@@ -12725,13 +12794,9 @@ t.data.frame <- function(x)
 @end example
 
 @noindent
-Also consider @code{predict.glm}: it happens that in @R{} for historical
-reasons it calls @code{predict.lm} directly, but in principle (and in S
-originally and currently) it could use @code{NextMethod}.
-(@code{NextMethod} seems under-used in the @R{} sources.  Do be aware
-that there are S/R differences in this area, and the example above works
-because there is a @emph{next} method, the default method, not that a
-new method is selected when the class is changed.)
+Note that the example above works because there is a @emph{next} method,
+the default method, not that a new method is selected when the class is
+changed.
 
 @emph{Any} method a programmer writes may be invoked from another method
 by @code{NextMethod}, @emph{with the arguments appropriate to the

@@ -1,9 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
-#
-# NB: also copyright date in Usage.
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -85,7 +83,7 @@ setRlibs <-
 
     if(test_recommended) {
         ## Now add dummies for recommended packages (removed later if declared)
-        recommended <-  .get_standard_package_names()$recommended
+        recommended <- .get_standard_package_names()$recommended
         ## grDevices has :: to KernSmooth
         ## stats has ::: to Matrix, Matrix depends on lattice
         ## which gives false positives in MASS and Rcpp
@@ -101,7 +99,9 @@ setRlibs <-
         for(pkg in recommended) {
             if(pkg == thispkg) next
             dir.create(pd <- file.path(tmplib, pkg))
-            file.copy(file.path(.Library, pkg, "DESCRIPTION"), pd)
+            ## some people remove recommended packages ....
+            f <- file.path(.Library, pkg, "DESCRIPTION")
+            if(file.exists(f)) file.copy(f, pd)
             ## to make sure find.package throws an error:
             close(file(file.path(pd, "dummy_for_check"), "w"))
         }
@@ -608,18 +608,25 @@ setRlibs <-
 
         checkingLog(Log, "DESCRIPTION meta-information")
         dfile <- if (is_base_pkg) "DESCRIPTION.in" else "DESCRIPTION"
+        any <- FALSE
+
         ## FIXME: this does not need to be run in another process
         ## but that needs conversion to format().
         Rcmd <- sprintf("tools:::.check_package_description(\"%s\", TRUE)",
                         dfile)
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
-            errorLog(Log)
-            printLog0(Log, paste(out, collapse = "\n"), "\n")
-            summaryLog(Log)
-            do_exit(1L)
+            if(any(!grepl("^Malformed (Title|Description)", out))) {
+                errorLog(Log)
+                printLog0(Log, paste(out, collapse = "\n"), "\n")
+                summaryLog(Log)
+                do_exit(1L)
+            } else {
+                noteLog(Log)
+                any <- TRUE
+                printLog0(Log, paste(out, collapse = "\n"), "\n")
+            }
         }
-        any <- FALSE
         ## Check the encoding.
         Rcmd <- sprintf("tools:::.check_package_description_encoding(\"%s\")", dfile)
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -776,11 +783,7 @@ setRlibs <-
         if (file.exists("README.md") && check_incoming) {
             if (nzchar(Sys.which("pandoc"))) {
                 rfile <- file.path(tempdir(), "README.html")
-                out <- .system_with_capture("pandoc",
-                                            paste("README.md", "-s",
-                                                  "--email-obfuscation=references",
-                                                  "--css=../../CRAN_web.css",
-                                                  "-o", rfile))
+                out <- .pandoc_README_md_for_CRAN("README.md", rfile)
                 if(out$status) {
                     if(!any) warningLog(Log)
                     any <- TRUE
@@ -1334,10 +1337,29 @@ setRlibs <-
                       sprintf("tools::checkS3methods(dir = \"%s\")\n", pkgdir))
         out <- R_runR2(Rcmd)
         if (length(out)) {
-            warningLog(Log)
-            printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            wrapLog("See section 'Generic functions and methods'",
-                    "in the 'Writing R Extensions' manual.\n")
+            pos <- grep("^Found the following apparent S3 methods", out)
+            if(!length(pos)) {
+                out1 <- out
+                out2 <- character()
+            } else {
+                pos <- pos[1L]
+                out1 <- out[seq_len(pos - 1L)]
+                out2 <- out[seq.int(pos, length(out))]
+            }
+            if(length(out1)) {
+                warningLog(Log)
+                printLog0(Log, paste(c(out1, ""), collapse = "\n"))
+                wrapLog("See section 'Generic functions and methods'",
+                        "in the 'Writing R Extensions' manual.\n")
+            } else
+                noteLog(Log)
+            if(length(out2)) {
+                printLog0(Log,
+                          paste(c(if(length(out1)) "", out2, ""),
+                                collapse = "\n"))
+                wrapLog("See section 'Registering S3 methods'",
+                        "in the 'Writing R Extensions' manual.\n")
+            }
         } else resultLog(Log, "OK")
 
         ## Check whether replacement functions have their final argument
@@ -2393,6 +2415,27 @@ setRlibs <-
                         "see the messages for details.\n")
             } else resultLog(Log, "OK")
         }
+        if(!extra_arch && !is_base_pkg) {
+            check_S3reg <-
+                Sys.getenv("_R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_", "NA")
+            check_S3reg <- if(check_S3reg == "NA") check_incoming else {
+                config_val_to_logical(check_S3reg)
+            }
+            if(check_S3reg) {
+                checkingLog(Log, "use of S3 registration")
+                Rcmd <- sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
+                                pkgname, libdir)
+                opts <- if(nzchar(arch)) R_opts4 else R_opts2
+                env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=", pkgname)
+                out <- R_runR(Rcmd, opts, env, arch = arch)
+                if (any(grepl("^Registered S3 method.*overwritten", out))) {
+                    out <- grep("^<environment: namespace:", out,
+                                invert = TRUE, value = TRUE)
+                    warningLog(Log)
+                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                } else resultLog(Log, "OK")
+            }
+        }
     }
 
     run_examples <- function()
@@ -2535,6 +2578,7 @@ setRlibs <-
             ## any arch will do here
             status <- R_runR(cmd, R_opts2, "LC_ALL=C",
                              stdout = Rout, stderr = Rout)
+            exfile <- paste0(pkgname, "-Ex.R")
             if (status) {
                 errorLog(Log,
                          paste("Running massageExamples to create",
@@ -2546,7 +2590,6 @@ setRlibs <-
 		maybe_exit(1L)
             }
             ## It ran, but did it create any examples?
-            exfile <- paste0(pkgname, "-Ex.R")
             if (file.exists(exfile)) {
                 enc <- if (!is.na(e <- desc["Encoding"])) {
                     paste("--encoding", e, sep="=")
@@ -3210,7 +3253,7 @@ setRlibs <-
         alldirs <- sub("^./","", alldirs)
         alldirs <- alldirs[alldirs != "."]
         bases <- basename(alldirs)
-        dots <- c(dots, alldirs[grepl("^[.]", bases)])
+        dots <- c(dots, setdiff(alldirs[grepl("^[.]", bases)], ".aspell"))
         if (length(dots)) {
             noteLog(Log, "Found the following hidden files and directories:")
             printLog0(Log, .format_lines_with_indent(dots), "\n")
@@ -3693,7 +3736,7 @@ setRlibs <-
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
 		maybe_exit(1L)
             } else if(length(res$bad_version) ||
-                      identical(res$foss_with_BuildVigettes, TRUE) ||
+                      identical(res$foss_with_BuildVignettes, TRUE) ||
                       res$empty_Maintainer_name ||
                       res$Maintainer_needs_quotes)
                 warningLog(Log)
@@ -4240,6 +4283,11 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
+    ## Howver, we cannot use this if we did not install the recommended packages
+    if(R_check_use_codetools) {
+        tmp <- tryCatch(find.package('codetools'), error = identity)
+        if(inherits(tmp, "error")) R_check_use_codetools <- FALSE
+    }
     R_check_executables <-
         config_val_to_logical(Sys.getenv("_R_CHECK_EXECUTABLES_", "TRUE"))
     R_check_executables_exclusions <-
@@ -4319,6 +4367,7 @@ setRlibs <-
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
+        Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -4486,11 +4535,13 @@ setRlibs <-
         if (!do_codoc) opts <- c(opts, "--no-codoc")
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
         if (!do_tests && !spec_install) opts <- c(opts, "--no-tests")
+        if (!do_manual && !spec_install) opts <- c(opts, "--no-manual")
         if (!do_vignettes && !spec_install) opts <- c(opts, "--no-vignettes")
         if (!do_build_vignettes && !spec_install)
             opts <- c(opts, "--no-build-vignettes")
         if (use_gct) opts <- c(opts, "--use-gct")
         if (use_valgrind) opts <- c(opts, "--use-valgrind")
+        if (as_cran) opts <- c(opts, "--as-cran")
         if (length(opts) > 1L)
             messageLog(Log, "using options ", sQuote(paste(opts, collapse=" ")))
         else if (length(opts) == 1L)

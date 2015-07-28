@@ -1,14 +1,15 @@
 % File src/library/stats/man/fft.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fft}
 \alias{fft}
 \alias{mvfft}
-\title{Fast Discrete Fourier Transform}
+\title{Fast Discrete Fourier Transform (FFT)}
 \description{
-  Performs the Fast Fourier Transform of an array.
+  Computes the Discrete Fourier Transform (DFT) of an array with a fast
+  algorithm, the \dQuote{Fast Fourier Transform} (FFT).
 }
 \usage{
 fft(z, inverse = FALSE)
@@ -23,12 +24,14 @@ mvfft(z, inverse = FALSE)
 }
 \value{
   When \code{z} is a vector, the value computed and returned by
-  \code{fft} is the unnormalized univariate Fourier transform of the
-  sequence of values in \code{z}.
-  %%
-  %% Here, we should really have a nice  \deqn{}{} giving the definition
-  %% of the DFT !
-  %%
+  \code{fft} is the unnormalized univariate discrete Fourier transform of the
+  sequence of values in \code{z}.  Specifically, \code{y <- fft(z)} returns
+  \deqn{y[h] = \sum_{k=1}^n z[k] \exp(-2\pi i (k-1) (h-1)/n)}{%
+        y[h] =  sum_{k=1}^n z[k]*exp(-2*pi*1i*(k-1)*(h-1)/n)}
+  for \eqn{h = 1,\ldots,n}{h = 1, ..., n} where n = \code{length(y)}.  If
+  \code{inverse} is \code{TRUE}, \eqn{\exp(-2\pi\ldots)}{exp(-2*pi...)}
+  is replaced with \eqn{\exp(2\pi\ldots)}{exp(2*pi...)}.
+
   When \code{z} contains an array, \code{fft} computes and returns the
   multivariate (spatial) transform.  If \code{inverse} is \code{TRUE},
   the (unnormalized) inverse Fourier transform is returned, i.e.,
@@ -58,6 +61,11 @@ mvfft(z, inverse = FALSE)
   in \emph{Programs for Digital Signal Processing},
   IEEE Digital Signal Processing Committee eds.
   IEEE Press.
+
+  Cooley, James W., and Tukey, John W. (1965)
+  An algorithm for the machine calculation of complex Fourier series,
+  \emph{Math. Comput.} \bold{19}(90), 297--301.
+  \url{https://dx.doi.org/10.1090/S0025-5718-1965-0178586-1}
 }
 \seealso{
   \code{\link{convolve}}, \code{\link{nextn}}.
@@ -66,6 +74,22 @@ mvfft(z, inverse = FALSE)
 x <- 1:4
 fft(x)
 fft(fft(x), inverse = TRUE)/length(x)
+
+## Slow Discrete Fourier Transform (DFT) - e.g., for checking the formula
+fft0 <- function(z, inverse=FALSE) {
+  n <- length(z)
+  if(n == 0) return(z)
+  k <- 0:(n-1)
+  ff <- (if(inverse) 1 else -1) * 2*pi * 1i * k/n
+  vapply(1:n, function(h) sum(z * exp(ff*(h-1))), complex(1))
 }
+
+relD <- function(x,y) 2* abs(x - y) / abs(x + y)
+n <- 2^8
+z <- complex(n, rnorm(n), rnorm(n))
+\donttest{## relative differences in the order of 4*10^{-14} :
+summary(relD(fft(z), fft0(z)))
+summary(relD(fft(z, inverse=TRUE), fft0(z, inverse=TRUE)))
+}}
 \keyword{math}
 \keyword{dplot}

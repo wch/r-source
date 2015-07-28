@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -249,6 +249,13 @@ msgstr ""
 " パッケージが必要とする優先順位 'base' 'recommended' 'defunct-base' は、R が"
 "既に知らなければならない。 "
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -271,7 +278,14 @@ msgstr " Authors@Rフィールドに役割が明示されていない人がい�
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr " Authors@R フィールドから Maintainer フィールドを抽出できません: "
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr " Authors@R フィールドに役割が明示された人がいません "
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr " Authors@R にメインテナの役割と e-mail アドレスを持った人がいません。 "
 
 msgid "Encoding '%s' is not portable"
@@ -1224,6 +1238,18 @@ msgstr " 'x' は 1 つの文字でなければなりません "
 msgid "test '%s' is not available"
 msgstr " テスト '%s' は利用出来ません "
 
+msgid ":"
+msgstr " ： "
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 
@@ -1272,6 +1298,10 @@ msgstr " パッケージコードを読み込めません "
 
 msgid "Call sequence:"
 msgstr " 呼び出しシーケンス: "
+
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
@@ -1407,6 +1437,11 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
 #, fuzzy
+#~ msgid "Undeclared package used in Rd xrefs:"
+#~ msgid_plural "Undeclared packages used in Rd xrefs:"
+#~ msgstr[0] " Rd xrefs 中に未知のパッケージ %s があります "
+
+#, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 #~ msgstr " 一貫していないエンコーディングの指定: "
 
@@ -1439,9 +1474,6 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr " . ディレクトリには以下のファイルがあります "
-
-#~ msgid ":"
-#~ msgstr " ： "
 
 #~ msgid "Located more than one"
 #~ msgstr " 1個以上が見つかりました "

@@ -1,13 +1,13 @@
 % File src/library/utils/man/browseURL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browseURL}
 \alias{browseURL}
-\title{Load URL into a WWW Browser}
+\title{Load URL into an HTML Browser}
 \description{
-  Load a given URL into a WWW browser.
+  Load a given URL into an HTML browser.
 }
 \usage{
 browseURL(url, browser = getOption("browser"),
@@ -16,7 +16,7 @@ browseURL(url, browser = getOption("browser"),
 \arguments{
   \item{url}{a non-empty character string giving the URL to be loaded.}
   \item{browser}{a non-empty character string giving the name of the
-    program to be used as hypertext browser.  It should be in the PATH,
+    program to be used as the HTML browser.  It should be in the PATH,
     or a full path specified.  Alternatively, an \R function to be
     called to invoke the browser.
 
@@ -38,16 +38,21 @@ browseURL(url, browser = getOption("browser"),
   made manually or automatically when \R was configured.  (See
   \code{\link{Startup}} for where to override that default value.)
   To suppress showing URLs altogether, use the value \code{"false"}.
-
+  
+  On many platforms it is best to set option \code{"browser"} to a
+  generic program/script and let that invoke the user's choice of
+  browser.  For example, on OS X use \command{open} and on many other
+  Unix-alikes use \command{xdg-open}.
+  
   If \code{browser} supports remote control and \R knows how to perform
-  it, the URL is opened in any already running browser or a new one if
+  it, the URL is opened in any already-running browser or a new one if
   necessary.  This mechanism currently is available for browsers which
   support the \code{"-remote openURL(...)"} interface (which includes
-  Mozilla >= 0.9.5 and Mozilla Firefox), Galeon, KDE konqueror
-  (\emph{via} kfmclient) and the GNOME interface to Mozilla.  Note that
-  the type of browser is determined from its name, so this mechanism
-  will only be used if the browser is installed under its canonical
-  name.
+  Mozilla and Opera), Galeon, KDE konqueror (\emph{via} kfmclient) and
+  the GNOME interface to Mozilla. (Firefox has droppped support, but
+  defaults to using an already-running browser.)  Note that the type of
+  browser is determined from its name, so this mechanism will only be
+  used if the browser is installed under its canonical name.
 
   Because \code{"-remote"} will use any browser displaying on the X
   server (whatever machine it is running on), the remote control

@@ -328,6 +328,10 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
 
+
+    if(type == "both" && (!missing(contriburl) || !is.null(available))) {
+        stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
+    }
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
@@ -385,9 +389,14 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         ## do this a library at a time, to handle dependencies correctly.
         libs <- unique(instlib)
         for(l in libs)
-            install.packages(update[instlib == l , "Package"], l,
-                             contriburl = contriburl, method = method,
-                             available = available, ..., type = type)
+            if (type == 'both')
+                install.packages(update[instlib == l , "Package"], l,
+                                 repos = repos, method = method,
+                                 ..., type = type)
+            else
+                install.packages(update[instlib == l , "Package"], l,
+                                 contriburl = contriburl, method = method,
+                                 available = available, ..., type = type)
     }
 }
 
@@ -452,6 +461,9 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          ..., type = getOption("pkgType"))
 {
     ask  # just a check that it is valid before we start work
+    if(type == "both" && (!missing(contriburl) || !is.null(available))) {
+        stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
+    }
     if(is.null(lib.loc)) lib.loc <- .libPaths()
     if(!is.matrix(instPkgs))
         stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
@@ -482,9 +494,13 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         else message("no new packages are available")
     }
     if(length(update)) {
-        install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
-                         method = method, available = available,
-                         type = type, ...)
+        if(type == "both")
+            install.packages(update, lib = lib.loc[1L], method = method,
+                             type = type, ...)
+        else
+            install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
+                             method = method, available = available,
+                             type = type, ...)
         # Now check if they were installed and update 'res'
         dirs <- list.files(lib.loc[1L])
         updated <- update[update %in% dirs]
@@ -795,12 +811,13 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"), ind = NULL)
 {
     if(is.null(ind) && !interactive())
         stop("cannot choose a BioC mirror non-interactively")
-    m <- c("Seattle (USA)"="http://www.bioconductor.org"
+    m <- c("Bioconductor (World-wide)"="http://bioconductor.org"
 	   , "Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror"
 	   , "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de"
 	   , "Anhui (China)"="http://mirrors.ustc.edu.cn/bioc/"
 	   , "Cambridge (UK)"="http://mirrors.ebi.ac.uk/bioconductor/"
 	   , "Riken, Kobe (Japan)" = "http://bioconductor.jp/"
+	   , "Tokyo (Japan)" = "http://bioc.ism.ac.jp/"
 	   , "Canberra (Australia)" = "http://mirror.aarnet.edu.au/pub/bioconductor/"
 	   , "Sao Paulo (Brazil)" = "http://bioconductor.fmrp.usp.br/"
 	   )

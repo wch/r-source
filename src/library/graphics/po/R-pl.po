@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2015-03-01 13:19\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -440,6 +440,14 @@ msgstr ""
 # stop("'z' must be a matrix")
 msgid "'z' must be a matrix"
 msgstr "'z' musi być macierzą"
+
+# graphics/R/stem.R: 21
+# stop("'x' must be numeric")
+# graphics/R/hist.R: 33
+# stop("'x' must be numeric")
+#, fuzzy
+msgid "'z' must be numeric or logical"
+msgstr "argument 'x' musi być liczbą"
 
 # graphics/R/image.R: 77
 # stop("invalid z limits")

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/modifyList.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ modifyList <- function(x, val, keep.null = FALSE)
     xnames <- names(x)
     vnames <- names(val)
     ## Will not update unnamed components.  FIXME: What if names are repeated? Warn?
-    vnames <- vnames[vnames != ""]
+    vnames <- vnames[nzchar(vnames)]
     if (keep.null) {
         for (v in vnames) {
             x[v] <-

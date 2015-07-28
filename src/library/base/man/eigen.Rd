@@ -1,6 +1,6 @@
 % File src/library/base/man/eigen.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eigen}
@@ -41,6 +41,10 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   algebraic solution with repeated real eigenvalues, the computed
   solution may be of a similar matrix with complex conjugate pairs of
   eigenvalues.
+  
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code (most often \code{1}): these can
+  only be interpreted by detailed study of the FORTRAN code.
 }
 \value{
   The spectral decomposition of \code{x} is returned as components of a
@@ -67,8 +71,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   fuzz), where \eqn{\Lambda =}{Lmbd =}\code{diag(lam)}.
 }
 \source{
-  By default \code{eigen} uses the LAPACK routines \code{DSYEVR},
-  \code{DGEEV}, \code{ZHEEV} and \code{ZGEEV} whereas
+  \code{eigen} uses the LAPACK routines \code{DSYEVR}, \code{DGEEV},
+  \code{ZHEEV} and \code{ZGEEV}.
 
   LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.

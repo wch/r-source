@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -1106,7 +1106,7 @@
                 parse_description_field(desc, "KeepSource",
                                         default = keep.source)
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
-	    if (pkg_name %in% loadedNamespaces())
+	    if (isNamespaceLoaded(pkg_name))
 		unloadNamespace(pkg_name)
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))

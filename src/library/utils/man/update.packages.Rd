@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update.packages}
@@ -49,22 +49,25 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \item{contriburl}{URL(s) of the contrib sections of the
     repositories.  Use this argument if your repository is
     incomplete.  Overrides argument \code{repos}.
+    Incompatible with \code{type = "both"}.
   }
-  \item{method}{Download method, see \code{\link{download.file}}.}
+  \item{method}{Download method, see \code{\link{download.file}}.
+    Unused if a non-\code{NULL} \code{available} is supplied.} 
   \item{instlib}{character string giving the library directory where to
     install the packages.}
-  \item{ask}{logical indicating whether to ask user before packages are
-    actually downloaded and installed, or the character string
-    \code{"graphics"}, which brings up a widget to allow the
-    user to (de-)select from the list of packages which could
-    be updated or added.  The latter value only works on
-    systems with a GUI version of \code{\link{select.list}},
-    and is otherwise equivalent to \code{ask = TRUE}.
+  \item{ask}{logical indicating whether to ask the user to select
+    packages before they are downloaded and installed, or the character
+    string \code{"graphics"}, which brings up a widget to allow the user
+    to (de-)select from the list of packages which could be updated.
+    (The latter value only works on systems with a GUI version of
+    \code{\link{select.list}}, and is otherwise equivalent to
+    \code{ask = TRUE}.)
   }
   \item{available}{
     an object as returned by \code{\link{available.packages}}
     listing packages available at the repositories, or \code{NULL} which
     makes an internal call to \code{available.packages}.
+    Incompatible with \code{type = "both"}.
   }
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
     major.minor version of \R (e.g., \code{3.1}) is considered to be
@@ -72,7 +75,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers
     these packages for updating. This may be a character vector
-    of package names or a matrix as returned by \code{old.packages()}.
+    of package names or a matrix as returned by \code{old.packages}.
   }
   \item{instPkgs}{
     by default all installed packages,
@@ -142,6 +145,9 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \code{\link{available.packages}}, \code{\link{download.packages}},
   \code{\link{installed.packages}}, \code{\link{contrib.url}}.
 
+  The options listed for \code{install.packages} under
+  \code{\link{options}}.
+  
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2013  The R Core Team.
+ *  Copyright (C) 1998--2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,8 +86,8 @@ extern0 SEXP	R_WholeSrcrefSymbol;   /* "wholeSrcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
 extern0 SEXP	R_ColonSymbol;         /* ":" */
-extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
-extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
+//extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
+//extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
 extern0 SEXP    R_ConnIdSymbol;  /* "conn_id" */
 extern0 SEXP    R_DevicesSymbol;  /* ".Devices" */
 
@@ -809,6 +809,10 @@ LibExtern SEXP R_TrueValue INI_as(SEXP_INIT);
 LibExtern SEXP R_FalseValue INI_as(SEXP_INIT);
 LibExtern SEXP R_LogicalNAValue INI_as(SEXP_INIT);
 
+#ifdef Win32
+LibExtern Rboolean UseInternet2;
+#endif
+
 #ifdef __MAIN__
 # undef extern
 # undef extern0
@@ -1283,7 +1287,6 @@ void InitDynload(void);
 void R_CleanTempDir(void);
 
 #ifdef Win32
-Rboolean UseInternet2;
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);

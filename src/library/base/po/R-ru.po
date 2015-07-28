@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1129,6 +1129,10 @@ msgstr "не могу добавить к экспорту из запечатанного пространства имен"
 
 msgid "undefined exports: %s"
 msgstr "неопределенные экспорты: %s"
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "объект %s не экспортирован из 'namespace:%s'"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "у пакета %s нет файла NAMESPACE"

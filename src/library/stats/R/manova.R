@@ -91,16 +91,13 @@ summary.manova <-
         ss[[nt]] <- crossprod(resid)
         names(ss)[nt] <- nmrows[nt] <- "Residuals"
         ok <- df[-nt] > 0
-        eigs <- array(NA, c(nterms, nresp))
-        dimnames(eigs) <- list(nmrows[-nt], NULL)
-        stats <- matrix(NA, nt, 5)
-        dimnames(stats) <-  list(nmrows,
-                                 c(test, "approx F", "num Df", "den Df",
-                                   "Pr(>F)"))
-        sc <- sqrt(diag(ss[[nt]]))
-        ## Let us try to distnguish bad scaling and near-perfect fit
-        sss <- sc^2
-        for(i in seq_len(nterms)[ok]) sss <- sss +  diag(ss[[i]])
+        eigs <- array(NA, c(nterms, nresp), dimnames =
+                          list(nmrows[-nt], NULL))
+        stats <- matrix(NA, nt, 5, dimnames = list(nmrows, c(test,
+                                       "approx F", "num Df", "den Df", "Pr(>F)")))
+        sc <- sqrt(sss <- diag(ss[[nt]]))
+        ## Let us try to distinguish bad scaling and near-perfect fit
+        for(i in seq_len(nterms)[ok]) sss <- sss + diag(ss[[i]])
         sc[sc < sqrt(sss)*1e-6] <- 1
         D <- diag(1/sc)
         rss.qr <- qr(D %*% ss[[nt]] %*% D, tol=tol)
@@ -110,17 +107,17 @@ summary.manova <-
         if(!is.null(rss.qr))
             for(i in seq_len(nterms)[ok]) {
                 A1 <- qr.coef(rss.qr, D %*% ss[[i]] %*% D)
-                eigs[i, ] <- Re(eigen(A1, symmetric = FALSE)$values)
-                stats[i, 1L:4] <-
+                eigs[i, ] <- Re(eigen(A1, symmetric = FALSE, only.values = TRUE)$values)
+                stats[i, 1L:4L] <-
                     switch(test,
-                           "Pillai" = Pillai(eigs[i,  ], df[i], df[nt]),
-                           "Wilks" = Wilks(eigs[i,  ], df[i], df[nt]),
-                           "Hotelling-Lawley" = HL(eigs[i,  ], df[i], df[nt]),
-                           "Roy" = Roy(eigs[i,  ], df[i], df[nt]))
-                ok <- stats[, 2] >= 0 & stats[, 3] > 0 & stats[, 4] > 0
+			   "Pillai" = 		Pillai(eigs[i, ], df[i], df[nt]),
+			   "Wilks" = 		Wilks (eigs[i, ], df[i], df[nt]),
+			   "Hotelling-Lawley" = HL    (eigs[i, ], df[i], df[nt]),
+			   "Roy" =		Roy   (eigs[i, ], df[i], df[nt]))
+                ok <- stats[, 2L] >= 0 & stats[, 3L] > 0 & stats[, 4L] > 0
                 ok <- !is.na(ok) & ok
-                stats[ok, 5] <- pf(stats[ok, 2], stats[ok, 3], stats[ok, 4],
-                                   lower.tail = FALSE)
+                stats[ok, 5L] <- pf(stats[ok, 2L], stats[ok, 3L], stats[ok, 4L],
+                                    lower.tail = FALSE)
 
             }
         x <- list(row.names = nmrows, SS = ss,

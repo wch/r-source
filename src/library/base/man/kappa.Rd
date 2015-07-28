@@ -1,6 +1,6 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Copyright 2008-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -38,8 +38,8 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \item{triangular}{logical.  If true, the matrix used is just the lower
     triangular part of \code{z}.}
   \item{LINPACK}{logical.  If true and \code{z} is not complex, the
-    Linpack routine \code{dtrco()} is called; otherwise the relevant
-    Lapack routine is.}
+    LINPACK routine \code{dtrco()} is called; otherwise the relevant
+    LAPACK routine is.}
   \item{\dots}{further arguments passed to or from other methods;
     for \code{kappa.*()}, notably \code{LINPACK} when \code{norm} is not
     \code{"2"}.}
@@ -74,6 +74,10 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 
   \code{.kappa_tri} is an internal function called by \code{kappa.qr} and
   \code{kappa.default}.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \value{
   The condition number, \eqn{kappa}, or an approximation if

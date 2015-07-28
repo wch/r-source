@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -287,8 +287,10 @@ findArgs("package:base", "warn")
 ## trim trailing white space
 str <- "Now is the time      "
 sub(" +$", "", str)  ## spaces only
+## what is considered 'white space' depends on the locale.
 sub("[[:space:]]+$", "", str) ## white space, POSIX-style
-sub("\\\\s+$", "", str, perl = TRUE) ## Perl-style white space
+## what PCRE considered white space changed in version 8.34: see ?regex
+sub("\\\\s+$", "", str, perl = TRUE) ## PCRE-style white space
 
 ## capitalizing
 txt <- "a test of capitalizing"

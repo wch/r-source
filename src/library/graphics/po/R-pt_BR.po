@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2015-03-01 13:19\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -241,6 +241,10 @@ msgstr "valores 'x' e 'y' devem ser finitos não-faltantes"
 
 msgid "'z' must be a matrix"
 msgstr "'z' deve ser uma matriz"
+
+#, fuzzy
+msgid "'z' must be numeric or logical"
+msgstr "'x' deve ser numérico"
 
 msgid "invalid z limits"
 msgstr "limites z inválidos"

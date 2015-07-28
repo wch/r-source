@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2013	    The R Core Team.
- *  Copyright (C) 2003-4	    The R Foundation
+ *  Copyright (C) 1998--2015	    The R Core Team.
+ *  Copyright (C) 2003--2015	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1396,6 +1396,8 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
     double amax, *work;
     size_t nw;
 
+#define besselJY_max_nu 1e7
+
     if (!isNumeric(sa) || !isNumeric(sb))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
 
@@ -1408,8 +1410,11 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
     amax = 0.0;
     for (i = 0; i < nb; i++) {
 	double av = b[i] < 0 ? -b[i] : b[i];
-	if (av > amax) amax = av;
+	if (amax < av)
+	    amax = av;
     }
+    if (amax > besselJY_max_nu)
+	amax = besselJY_max_nu; // and warning will happen in ../nmath/bessel_[jy].c
     const void *vmax = vmaxget();
     nw = 1 + (size_t)floor(amax);
     work = (double *) R_alloc(nw, sizeof(double));
@@ -1448,8 +1453,8 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (PRIMVAL(op)) {
 
     case  0: return Math2(args, atan2);
-    case 10001: return Math2(args, fround);/* round(), src/nmath/fround.c */
-    case 10004: return Math2(args, fprec); /* signif(), src/nmath/fprec.c */
+    case 10001: return Math2(args, fround);// round(),  ../nmath/fround.c
+    case 10004: return Math2(args, fprec); // signif(), ../nmath/fprec.c
 
     case  2: return Math2(args, lbeta);
     case  3: return Math2(args, beta);
@@ -1579,7 +1584,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     args = evalListKeepMissing(args, env);
     return  do_log_builtin(call, op, args, env);
-}    
+}
 
 SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1602,7 +1607,7 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (n == 2 &&
 	     IS_R_NilValue(TAG(args)) &&
 	     (IS_R_NilValue(TAG(CDR(args))) ||
-	      SEXP_EQL(TAG(CDR(args)), R_baseSymbol))) {
+	      SEXP_EQL(TAG(CDR(args)), R_BaseSymbol))) {
 	/* log(x, y) or log(x, base = y) are handled here */
 	SEXP x = CAR(args);
 	SEXP y = CADR(args);
@@ -1621,7 +1626,7 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
     static SEXP R_x_Symbol = SEXP_INIT;
     if (IS_NULL_SEXP(do_log_formals)) {
 	R_x_Symbol = install("x");
-	do_log_formals = allocFormalsList2(R_x_Symbol, R_baseSymbol);
+	do_log_formals = allocFormalsList2(R_x_Symbol, R_BaseSymbol);
     }
 
     if (n == 1) {

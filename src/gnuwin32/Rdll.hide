@@ -79,7 +79,6 @@
  R_DevicesSymbol
  R_DisableNLinBrowser
  R_DotEnvSymbol
- R_DoubleColonSymbol
  R_ErrorCon
  R_EvalDepth
  R_ExactSymbol
@@ -169,7 +168,6 @@
  R_TmpvalSymbol
  R_Toplevel
  R_ToplevelContext
- R_TripleColonSymbol
  R_UTF8fixslash
  R_UseNamesSymbol
  R_VSize
@@ -229,6 +227,7 @@
  R_max_num_math_threads
  R_mktime
  R_moduleCdynload
+ R_newCurlUrl
  R_newsock
  R_newunz
  R_newurl
@@ -446,7 +445,6 @@
  UNSET_SPECIAL_SYMBOL
  UTF8in
  UTF8out
- UseInternet2
  WinCheckUTF8
  WinUTF8out
  WrongArgCount
@@ -553,7 +551,6 @@
  cpuLimit2
  cpuLimitValue
  csroot_
- dbinom_raw
  dblep0_
  deleditordata
  do_AT
@@ -741,6 +738,7 @@
  do_geterrmessage
  do_getfmts
  do_getlocale
+ do_getOption
  do_gettext
  do_getwd
  do_glob
@@ -1012,6 +1010,7 @@
  do_textconvalue
  do_tilde
  do_tolower
+ do_topenv
  do_trace
  do_traceOnOff
  do_traceback
@@ -1055,7 +1054,6 @@
  do_xtfrm
  dos_wglob
  dos_wglobfree
- dpois_raw
  drawconsole
  dt_invalidate_locale
  editorchecksave

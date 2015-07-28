@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -239,6 +239,13 @@ msgid ""
 "already be known to R."
 msgstr ""
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
@@ -258,7 +265,12 @@ msgstr ""
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr ""
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr ""
+
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 
 #, fuzzy
@@ -1167,6 +1179,18 @@ msgstr "l'argomento 'txt' deve essere una stringa carattere"
 msgid "test '%s' is not available"
 msgstr "il test '%s' non è disponibile"
 
+msgid ":"
+msgstr ""
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "l'argomento 'x' deve essere un vettore carattere"
 
@@ -1219,6 +1243,10 @@ msgstr "impossibile leggere codice sorgente del pacchetto"
 
 msgid "Call sequence:"
 msgstr "Successione delle chiamate:"
+
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "l'argomento 'x' deve essere un vettore carattere"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"

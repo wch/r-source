@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -71,7 +71,7 @@ hist(x, \dots)
     plotted, otherwise a list of breaks and counts is returned.  In the
     latter case, a warning is used if (typically graphical) arguments
     are specified that only apply to the \code{plot = TRUE} case.}
-  \item{labels}{logical or character.  Additionally draw labels on top
+  \item{labels}{logical or character string.  Additionally draw labels on top
     of bars, if not \code{FALSE}; see \code{\link{plot.histogram}}.}
   \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,
     \code{nclass} is equivalent to \code{breaks} for a scalar or

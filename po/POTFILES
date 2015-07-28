@@ -92,6 +92,7 @@ src/modules/X11/dataentry.c
 src/modules/X11/devX11.c
 src/modules/internet/Rhttpd.c
 src/modules/internet/internet.c
+src/modules/internet/libcurl.c
 src/modules/internet/nanoftp.c
 src/modules/internet/nanohttp.c
 src/modules/internet/sockconn.c

@@ -1,7 +1,7 @@
 #  File src/library/base/R/load.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     else outfile <- file
 
     on.exit(file.remove(outfile))
-    save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = outfile,
+    save(list = names(.GlobalEnv), file = outfile,
          version = version, ascii = ascii, compress = compress,
          envir = .GlobalEnv, precheck = FALSE)
     if (safe)
@@ -189,8 +189,7 @@ findPackageEnv <- function(info)
     if(info %in% search()) return(as.environment(info))
     message(gettextf("Attempting to load the environment %s", sQuote(info)),
             domain = NA)
-    pkg <- substr(info, 9L, 1000L)
-    if(require(pkg, character.only=TRUE, quietly = TRUE))
+    if(require(substr(info, 9L, 1000L), character.only = TRUE, quietly = TRUE))
         return(as.environment(info))
     message("Specified environment not found: using '.GlobalEnv' instead")
     .GlobalEnv

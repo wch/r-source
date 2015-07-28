@@ -1,7 +1,7 @@
 #  File src/library/base/R/strwrap.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -196,4 +196,16 @@ function(x, y, style = c("table", "list"),
         r <- unlist(lapply(y, paste, collapse = "\n"))
     }
     r
+}
+
+trimws <-
+function(x, which = c("both", "left", "right"))
+{
+    which <- match.arg(which)
+    mysub <- function(re, x) sub(re, "", x, perl = TRUE)
+    if(which == "left")
+        return(mysub("^[ \t\r\n]+", x))
+    if(which == "right")
+        return(mysub("[ \t\r\n]+$", x))
+    mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
 }

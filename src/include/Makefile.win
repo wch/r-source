@@ -1,8 +1,10 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
-R_HOME=../..
+R_HOME = ../..
 
-VER=$(shell sed -e 's/\([^ ]*\).*/\1/' ../../VERSION)
+GIT = `if [ -d "$(top_builddir)/.git" ]; then echo "git"; fi`
+
+VER = $(shell sed -e 's/\([^ ]*\).*/\1/' ../../VERSION)
 
 ## keep these in step with ./Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h
@@ -10,7 +12,7 @@ SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 GW32_HEADERS = iconv.h psignal.h
 
-all: fixh config.h
+all: fixh config.h trioremap.h
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
 	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) iconv.h $(R_HOME)/include
@@ -52,6 +54,9 @@ Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION Makefile.win
 
 Rmath.h: Rmath.h0
 	@sh $(R_HOME)/tools/copy-if-change $< $@
+	
+trioremap.h: ../gnuwin32/fixed/h/trioremap.h
+	@cp $< $@
 
 ## If we do not have svn, get the old file from SVN-REVISION.bak (if poss).
 ## This needs to be copy-on-change.
@@ -67,14 +72,14 @@ ifdef USE_SVNVERSION
 	@LC_ALL=C svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
 	@grep -v exported svn-tmp > /dev/null || rm -f svn-tmp
 else
-	@(cd ../..; LC_ALL=C svn info || echo "Revision: unknown") 2> /dev/null \
+	@(cd ../..; LC_ALL=C $(GIT) svn info || echo "Revision: unknown") 2> /dev/null \
 	  | sed -n '/^Revision/p' > svn-tmp
 	@if grep unknown svn-tmp > /dev/null ; then \
 	  rm svn-tmp; \
 	fi
 endif
 	@if test -f svn-tmp ; then \
-	  (cd ../..; LC_ALL=C TZ=GMT svn info || echo "Last Changed Date: unknown") 2> /dev/null \
+	  (cd ../..; LC_ALL=C TZ=GMT $(GIT) svn info || echo "Last Changed Date: unknown") 2> /dev/null \
 	    | sed -n '/^Last Changed Date:/p' | sed 's/[0-9][0-9]:.*//' \
 	    >> svn-tmp ; \
 	else \

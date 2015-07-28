@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.start.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@ help.start <-
             stop("invalid browser name, check options(\"browser\").")
     }
     home <- if (is.null(remote)) {
-        if (tools:::httpdPort() == 0L) tools::startDynamicHelp()
-        if (tools:::httpdPort() > 0L) {
+        port <- tools::startDynamicHelp(NA)
+        if (port > 0L) {
             if (update) make.packages.html(temp = TRUE)
-            paste0("http://127.0.0.1:", tools:::httpdPort())
+            paste0("http://127.0.0.1:", port)
         } else stop("help.start() requires the HTTP server to be running",
                     call. = FALSE)
     } else remote
@@ -88,7 +88,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
                "gnome-moz-remote" =, "open" = quotedUrl,
                "galeon" = paste("-x", quotedUrl),
                "kfmclient" = paste("openURL", quotedUrl),
-               "mozilla" =, "opera" =, "firefox" = {
+               "mozilla" =, "opera" = {
                    paste0("-remote \"openURL(",
                          ## Quote ',' and ')' ...
                          gsub("([,)$])", "%\\1", url), ")\"")

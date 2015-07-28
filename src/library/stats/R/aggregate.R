@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aggregate.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,17 +50,17 @@ function(x, by, FUN, ..., simplify = TRUE)
         ind <- which(!nzchar(nam))
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
- 
+
     nrx <- NROW(x)
 
     if(any(unlist(lapply(by, length)) != nrx))
         stop("arguments must have same length")
-	
+
     y <- as.data.frame(by, stringsAsFactors = FALSE)
     keep <- complete.cases(by)
     y <- y[keep, , drop = FALSE]
     x <- x[keep, , drop = FALSE]
-    
+
     nrx <- NROW(x)
 
     # Generate a group identifier vector with integers and dots.

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -422,10 +422,16 @@ msgstr ""
 msgid "do not know what to search"
 msgstr ""
 
-msgid "incorrect type specification"
+msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "argument 'help.db' is deprecated"
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+
+msgid "incorrect 'agrep' specification"
+msgstr ""
+
+msgid "incorrect type specification"
 msgstr ""
 
 msgid "could not find package %s"
@@ -435,12 +441,6 @@ msgid "package %s has empty hsearch data - strangely"
 msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-
-msgid "incorrect 'agrep' specification"
 msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
@@ -559,6 +559,11 @@ msgid "unable to access index for repository %s"
 msgstr ""
 
 msgid "invalid 'filters' argument."
+msgstr ""
+
+msgid ""
+"specifying 'contriburl' or 'available' requires a single type, not type = "
+"\"both\""
 msgstr ""
 
 msgid "package '%s' in library '%s' will not be updated"
@@ -1018,6 +1023,12 @@ msgid "'ccaddress' must be of length 1"
 msgstr ""
 
 msgid "no download method found"
+msgstr ""
+
+msgid "'url' must be a length-one character vector"
+msgstr ""
+
+msgid "'destfile' must be a length-one character vector"
 msgstr ""
 
 msgid "download had nonzero exit status"

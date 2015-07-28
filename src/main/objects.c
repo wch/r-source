@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2002-3     The R Foundation
- *  Copyright (C) 1999-2014  The R Core Team.
+ *  Copyright (C) 1999-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1125,7 +1125,7 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
     const char *code_string;
     const void *vmax = vmaxget();
     if(!isValidString(code_vec))
-	error(_("argument 'code' must be a character string"));
+	error(_("argument '%s' must be a character string"), "code");
     code_string = translateChar(asChar(code_vec));
     /* with a NULL op, turns all primitive matching off or on (used to avoid possible infinite
      recursion in methods computations*/

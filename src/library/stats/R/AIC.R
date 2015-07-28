@@ -1,7 +1,7 @@
 #  File src/library/stats/R/AIC.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2001-3 The R Core Team
+#  Copyright (C) 2001-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ AIC.logLik <- function(object, ..., k = 2)
 AIC.default <- function(object, ..., k = 2)
 {
     ## AIC for various fitted objects --- any for which there's a logLik() method:
-    ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
+    ll <- if(isNamespaceLoaded("stats4")) stats4:::logLik else logLik
     if(!missing(...)) {# several objects: produce data.frame
 	lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
@@ -59,9 +59,9 @@ BIC.logLik <- function(object, ...)
 
 BIC.default <- function(object, ...)
 {
-    ll <- if("stats4" %in% loadedNamespaces()) stats4:::logLik else logLik
-    Nobs <- if("stats4" %in% loadedNamespaces()) stats4:::nobs else nobs
-    if(!missing(...)) {
+    ll   <- if(isNamespaceLoaded("stats4")) stats4:::logLik else logLik
+    Nobs <- if(isNamespaceLoaded("stats4")) stats4:::nobs   else nobs
+    if(!missing(...)) {# several objects: produce data.frame
         lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
             no <- attr(el, "nobs")
@@ -76,16 +76,15 @@ BIC.default <- function(object, ...)
         unknown <- is.na(val$nobs)
         if(any(unknown))
             val$nobs[unknown] <-
-                sapply(list(object, ...)[unknown],
-                       function(x, f) tryCatch(f(x), error = function(e) NA_real_),
-                       f = Nobs)
+		sapply(list(object, ...)[unknown],
+		       function(x) tryCatch(Nobs(x), error = function(e) NA_real_))
         val <- data.frame(df = val$df, BIC = -2*val$ll + log(val$nobs)*val$df)
         row.names(val) <- as.character(match.call()[-1L])
         val
     } else {
         lls <- ll(object)
         nos <- attr(lls, "nobs")
-        if (is.null(nos))
+	if (is.null(nos)) ## helps if has nobs() method, but logLik() gives no "nobs":
             nos <- tryCatch(Nobs(object), error = function(e) NA_real_)
         -2 * as.numeric(lls) + log(nos) * attr(lls, "df")
     }

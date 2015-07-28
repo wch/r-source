@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2014-03-26 13:57+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1144,6 +1144,10 @@ msgstr " 封印された名前空間のエクスポートへ加えることが�
 
 msgid "undefined exports: %s"
 msgstr " 未定義のエクスポートです: %s "
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr " オブジェクト %s は 'namespace:%s' によってエクスポートされていません "
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr " パッケージ %s には 'NAMESPACE' ファイルがありません "

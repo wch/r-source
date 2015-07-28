@@ -15,15 +15,15 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "find_gs_cmd", "getBibstyle", "getDepList", "getVignetteInfo",
        "installFoundDepends", "latexToUtf8", "list_files_with_exts",
        "list_files_with_type", "loadRdMacros", "loadPkgRdMacros",
-       "make_translations_pkg", "md5sum",
-       "package.dependencies", "package_dependencies", "parseLatex",
-       "parse_Rd", "pkgDepends", "pkgVignettes", "pskill", "psnice",
-       "read.00Index", "readNEWS", "resaveRdaFiles", "showNonASCII",
-       "showNonASCIIfile", "startDynamicHelp", "testInstalledBasic",
+       "make_translations_pkg", "md5sum", "package.dependencies",
+       "package_dependencies", "parseLatex", "parse_Rd", "pkgDepends",
+       "pkgVignettes", "pskill", "psnice", "read.00Index", "readNEWS",
+       "resaveRdaFiles", "showNonASCII", "showNonASCIIfile",
+       "startDynamicHelp", "testInstalledBasic",
        "testInstalledPackage", "testInstalledPackages", "texi2dvi",
-       "texi2pdf", "toHTML", "toRd", "undoc", "update_pkg_po",
-       "vignetteDepends", "vignetteEngine", "write_PACKAGES",
-       "xgettext", "xgettext2pot", "xngettext")
+       "texi2pdf", "toHTML", "toRd", "toTitleCase", "undoc",
+       "update_pkg_po", "vignetteDepends", "vignetteEngine",
+       "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext")
 
 export("check_packages_in_dir",
        "summarize_check_packages_in_dir_depends",
@@ -63,6 +63,7 @@ S3method("format", "check_packages_in_dir_changes")
 S3method("format", "check_packages_used")
 S3method("format", "check_so_symbols")
 S3method("format", "check_nonAPI_calls")
+S3method("format", "check_url_db")
 S3method("format", "checkDocFiles")
 S3method("format", "checkDocStyle")
 S3method("format", "checkFF")
@@ -148,6 +149,7 @@ S3method("print", "check_packages_used", .print.via.format)
 S3method("print", "check_po_files")
 S3method("print", "check_so_symbols", .print.via.format)
 S3method("print", "check_nonAPI_calls", .print.via.format)
+S3method("print", "check_url_db")
 S3method("print", "check_vignette_index")
 S3method("print", "summarize_CRAN_check_status")
 

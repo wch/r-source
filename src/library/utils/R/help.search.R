@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.search.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.hsearch_db <- local({
+.hsearch_db <-
+local({
     hdb <- NULL
     function(new) {
 	if(!missing(new))
@@ -26,36 +27,38 @@
     }
 })
 
-merge.vignette.index <- function(hDB, path, pkg) {
-    ## Vignettes in the hsearch index started in R2.14.0
+merge_vignette_index <-
+function(hDB, path, pkg)
+{
+    ## Vignettes in the hsearch index started in R 2.14.0
     ## Most packages don't have them, so the following should not be
     ## too inefficient
     if(file.exists(v_file <- file.path(path, "Meta", "vignette.rds"))
        && !is.null(vDB <- readRDS(v_file))
        && nrow(vDB)) {
 	## Make it look like an hDB base matrix and append it
-	base <- matrix("", nrow=nrow(vDB), ncol=8)
-	colnames(base) <- colnames(hDB[[1]])
-	base[,"Package"] <- pkg
-	base[,"LibPath"] <- path
-	id <- as.character(1:nrow(vDB) + NROW(hDB[[1]]))
-	base[,"ID"] <- id
-	base[,"name"] <- sub("\\.[^.]*$", "", basename(vDB$File))
-	base[,"topic"] <- base[,"name"]
-	base[,"title"] <- vDB$Title
-	base[,"Type"] <- "vignette"
+	base <- matrix("", nrow = nrow(vDB), ncol = 8L)
+	colnames(base) <- colnames(hDB[[1L]])
+	base[, "Package"] <- pkg
+	base[, "LibPath"] <- path
+	id <- as.character(1:nrow(vDB) + NROW(hDB[[1L]]))
+	base[, "ID"] <- id
+	base[, "Name"] <- sub("\\.[^.]*$", "", basename(vDB$File))
+	base[, "Topic"] <- base[, "Name"]
+	base[, "Title"] <- vDB$Title
+	base[, "Type"] <- "vignette"
 	hDB[[1L]] <- rbind(hDB[[1L]], base)
-	aliases <- matrix("", nrow=nrow(vDB), ncol=3)
-	colnames(aliases) <- colnames(hDB[[2]])
-	aliases[,"Aliases"] <- base[,"name"]
-	aliases[,"ID"] <- id
-	aliases[,"Package"] <- pkg
+	aliases <- matrix("", nrow = nrow(vDB), ncol = 3L)
+	colnames(aliases) <- colnames(hDB[[2L]])
+	aliases[, "Alias"] <- base[, "Name"]
+	aliases[, "ID"] <- id
+	aliases[, "Package"] <- pkg
 	hDB[[2L]] <- rbind(hDB[[2L]], aliases)
 	nkeywords <- sum(sapply(vDB$Keywords, length))
 	if (nkeywords) {
-	    keywords <- matrix("", nrow=nkeywords, ncol=3)
-	    colnames(keywords) <- colnames(hDB[[4]])
-	    keywords[,"Concepts"] <- unlist(vDB$Keywords)
+	    keywords <- matrix("", nrow = nkeywords, ncol = 3L)
+	    colnames(keywords) <- colnames(hDB[[4L]])
+	    keywords[,"Concept"] <- unlist(vDB$Keywords)
 	    keywords[,"ID"] <- unlist(lapply(1:nrow(vDB),
 		   function(i) rep(id[i], length(vDB$Keywords[[i]]))))
 	    keywords[,"Package"] <- pkg
@@ -65,64 +68,64 @@ merge.vignette.index <- function(hDB, path, pkg) {
     hDB
 }
 
-merge.demo.index <- function(hDB, path, pkg) {
-    ## Demos in the hsearch index started in R2.14.0
+merge_demo_index <-
+function(hDB, path, pkg)
+{
+    ## Demos in the hsearch index started in R 2.14.0
     if(file.exists(d_file <- file.path(path, "Meta", "demo.rds"))
        && !is.null(dDB <- readRDS(d_file))
        && nrow(dDB)) {
 	## Make it look like an hDB base matrix and append it
-	base <- matrix("", nrow=nrow(dDB), ncol=8)
+	base <- matrix("", nrow = nrow(dDB), ncol = 8L)
 	colnames(base) <- colnames(hDB[[1]])
-	base[,"Package"] <- pkg
-	base[,"LibPath"] <- path
-	id <- as.character(1:nrow(dDB) + NROW(hDB[[1]]))
-	base[,"ID"] <- id
-	base[,"name"] <- dDB[,1]
-	base[,"topic"] <- base[,"name"]
-	base[,"title"] <- dDB[,2]
-	base[,"Type"] <- "demo"
+	base[, "Package"] <- pkg
+	base[, "LibPath"] <- path
+	id <- as.character(1:nrow(dDB) + NROW(hDB[[1L]]))
+	base[, "ID"] <- id
+	base[, "Name"] <- dDB[, 1L]
+	base[, "Topic"] <- base[, "Name"]
+	base[, "Title"] <- dDB[, 2L]
+	base[, "Type"] <- "demo"
 	hDB[[1L]] <- rbind(hDB[[1L]], base)
-	aliases <- matrix("", nrow=nrow(dDB), ncol=3)
-	colnames(aliases) <- colnames(hDB[[2]])
-	aliases[,"Aliases"] <- base[,"name"]
-	aliases[,"ID"] <- id
-	aliases[,"Package"] <- pkg
+	aliases <- matrix("", nrow = nrow(dDB), ncol = 3L)
+	colnames(aliases) <- colnames(hDB[[2L]])
+	aliases[, "Alias"] <- base[, "Name"]
+	aliases[, "ID"] <- id
+	aliases[, "Package"] <- pkg
 	hDB[[2L]] <- rbind(hDB[[2L]], aliases)
     }
     hDB
 }
 
+hsearch_db_fields <-
+    c("alias", "concept", "keyword", "name", "title")
+hsearch_db_types <-
+    c("help", "vignette", "demo")
+
 ## FIXME: use UTF-8, either always or optionally
 ## (Needs UTF-8-savvy & fast agrep, and PCRE regexps.)
 help.search <-
-    function(pattern, fields = c("alias", "concept", "title"),
-             apropos, keyword, whatis, ignore.case = TRUE,
-             package = NULL, lib.loc = NULL,
-             help.db = getOption("help.db"),
-             verbose = getOption("verbose"),
-             rebuild = FALSE, agrep = NULL, use_UTF8 = FALSE,
-             types = getOption("help.search.types")
-)
+function(pattern, fields = c("alias", "concept", "title"),
+         apropos, keyword, whatis, ignore.case = TRUE,
+         package = NULL, lib.loc = NULL,
+         help.db = getOption("help.db"),
+         verbose = getOption("verbose"),
+         rebuild = FALSE, agrep = NULL, use_UTF8 = FALSE,
+         types = getOption("help.search.types"))
 {
-    WINDOWS <- .Platform$OS.type == "windows"
-
     ### Argument handling.
-    FIELDS <- c("alias", "concept", "keyword", "name", "title")
-    TYPES <- c("help", "vignette", "demo")
-
-    if (is.logical(verbose)) verbose <- 2*as.integer(verbose)
     .wrong_args <- function(args)
 	gettextf("argument %s must be a single character string", sQuote(args))
-
+    if(is.logical(verbose)) verbose <- 2 * as.integer(verbose)
     fuzzy <- agrep
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1L))
 	    stop(.wrong_args("pattern"), domain = NA)
-	i <- pmatch(fields, FIELDS)
+	i <- pmatch(fields, hsearch_db_fields)
 	if(anyNA(i))
 	    stop("incorrect field specification")
 	else
-	    fields <- FIELDS[i]
+	    fields <- hsearch_db_fields[i]
     } else if(!missing(apropos)) {
 	if(!is.character(apropos) || (length(apropos) > 1L))
 	    stop(.wrong_args("apropos"), domain = NA)
@@ -148,19 +151,179 @@ help.search <-
     } else {
 	stop("do not know what to search")
     }
-    i <- pmatch(types, TYPES)
-    if (anyNA(i))
-	stop("incorrect type specification")
-    else
-	types <- TYPES[i]
-
-    if(is.null(lib.loc))
-	lib.loc <- .libPaths()
 
     if(!missing(help.db))
 	warning("argument 'help.db' is deprecated")
 
     ### Set up the hsearch db.
+    db <- hsearch_db(package, lib.loc, types, verbose, rebuild,
+                     use_UTF8)
+    ## Arguments types and lib.loc were expanded when building the
+    ## hsearch db, so get from there.
+    types <- attr(db, "Types")
+    lib.loc <- attr(db, "LibPaths")
+
+    ### Matching.
+    if(verbose >= 2L) {
+	message("Database of ",
+                NROW(db$Base), " help objects (",
+                NROW(db$Aliases), " aliases, ",
+                NROW(db$Concepts), " concepts, ",
+                NROW(db$Keywords), " keywords)",
+                domain = NA)
+        flush.console()
+    }
+    if(!is.null(package)) {
+	## Argument 'package' was given.  Need to check that all given
+	## packages exist in the db, and only search the given ones.
+	pos_in_hsearch_db <-
+	    match(package, unique(db$Base[, "Package"]), nomatch = 0L)
+        ## This should not happen for R >= 2.4.0
+	if(any(pos_in_hsearch_db) == 0L)
+	    stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
+			  sQuote(package[pos_in_hsearch_db == 0][1L])),
+                 domain = NA)
+	db <-
+	    lapply(db,
+		   function(x) {
+		       x[x[, "Package"] %in% package, , drop = FALSE]
+		   })
+    }
+
+    ## Subset to the requested help types
+    db$Base <- db$Base[db$Base[,"Type"] %in% types, , drop=FALSE]
+
+    ## <FIXME>
+    ## No need continuing if there are no objects in the data base.
+    ## But shouldn't we return something of class "hsearch"?
+    if(!length(db$Base)) return(invisible())
+    ## </FIXME>
+
+    ## If agrep is NULL (default), we want to use fuzzy matching iff
+    ## 'pattern' contains no characters special to regular expressions.
+    ## We use the following crude approximation: if pattern contains
+    ## only alphanumeric characters or whitespace or a '-', it is taken
+    ## 'as is', and fuzzy matching is used unless turned off explicitly,
+    ## or pattern has very few (currently, less than 5) characters.
+    if(is.null(fuzzy) || is.na(fuzzy))
+	fuzzy <-
+	    (grepl("^([[:alnum:]]|[[:space:]]|-)+$", pattern)
+	     && (nchar(pattern, type="c") > 4L))
+    if(is.logical(fuzzy)) {
+	if(fuzzy)
+	    max.distance <- 0.1
+    }
+    else if(is.numeric(fuzzy) || is.list(fuzzy)) {
+	max.distance <- fuzzy
+	fuzzy <- TRUE
+    }
+    else
+	stop("incorrect 'agrep' specification")
+
+    dbBase <- db$Base
+    search_fun <- if(fuzzy) {
+        function(x) {
+	    agrep(pattern, x, ignore.case = ignore.case,
+		  max.distance = max.distance)
+        }
+    } else {
+        function(x) {
+            grep(pattern, x, ignore.case = ignore.case,
+                 perl = use_UTF8)
+        }
+    }
+    search_db_results <- function(p, f, e)
+        data.frame(Position = p, Field = f, Entry = e,
+                   stringsAsFactors = FALSE)
+    search_db_field <- function(field) {
+	switch(field,
+	       alias = {
+		   aliases <- db$Aliases$Alias
+                   matched <- search_fun(aliases)
+                   search_db_results(match(db$Aliases$ID[matched],
+                                           dbBase$ID),
+                                     rep.int(field, length(matched)),
+                                     aliases[matched])
+	       },
+	       concept = {
+		   concepts <- db$Concepts$Concept
+                   matched <- search_fun(concepts)
+                   search_db_results(match(db$Concepts$ID[matched],
+                                           dbBase$ID),
+                                     rep.int(field, length(matched)),
+                                     concepts[matched])
+	       },
+	       keyword = {
+		   keywords <- db$Keywords$Keyword
+                   matched <- search_fun(keywords)
+                   search_db_results(match(db$Keywords$ID[matched],
+                                           dbBase$ID),
+                                     rep.int(field, length(matched)),
+                                     keywords[matched])
+	       },
+               ## Alternatively, generically use field mapped to title
+               ## case.
+               name = {
+                   matched <- search_fun(dbBase$Name)
+                   search_db_results(matched,
+                                     rep.int("Name", length(matched)),
+                                     dbBase$Name[matched])
+               },
+               title = {
+                   matched <- search_fun(dbBase$Title)
+                   search_db_results(matched,
+                                     rep.int("Title", length(matched)),
+                                     dbBase$Title[matched])
+               }
+               )
+    }
+
+    matches <- NULL
+    for(f in fields)
+        matches <- rbind(matches, search_db_field(f))
+    matches <- matches[order(matches$Position), ]
+    db <- cbind(dbBase[matches$Position,
+                       c("Topic", "Title", "Name", "ID",
+                         "Package", "LibPath", "Type"),
+                       drop = FALSE],
+                matches[c("Field", "Entry")])
+    if(verbose>= 2L) {
+        n_of_objects_matched <- length(unique(db[, "ID"]))
+        message(sprintf(ngettext(n_of_objects_matched,
+                                 "matched %d object.",
+                                 "matched %d objects."),
+                        n_of_objects_matched),
+                domain = NA)
+        flush.console()
+    }
+
+    ## Retval.
+    y <- list(pattern = pattern, fields = fields,
+	      type = if(fuzzy) "fuzzy" else "regexp",
+	      agrep = agrep,
+	      ignore.case = ignore.case, types = types,
+	      package = package, lib.loc = lib.loc,
+	      matches = db)
+    class(y) <- "hsearch"
+    y
+}
+
+hsearch_db <-
+function(package = NULL, lib.loc = NULL,
+         types = getOption("help.search.types"),
+         verbose = getOption("verbose"),
+         rebuild = FALSE, use_UTF8 = FALSE)
+{
+    WINDOWS <- .Platform$OS.type == "windows"
+    if(is.logical(verbose)) verbose <- 2 * as.integer(verbose)
+    if(is.null(lib.loc))
+	lib.loc <- .libPaths()
+    i <- pmatch(types, hsearch_db_types)
+    if (anyNA(i))
+	stop("incorrect type specification")
+    else
+	types <- hsearch_db_types[i]
+
     db <- eval(.hsearch_db())
     if(is.null(db))
 	rebuild <- TRUE
@@ -282,15 +445,23 @@ help.search <-
 		    ## Fill up possibly missing information.
 		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
 			hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
+                    ## <FIXME>
+                    ## Transition fro old-style to new-style colnames.
+                    ## Remove eventually.
+                    for(i in seq_along(hDB)) {
+                        colnames(hDB[[i]]) <-
+                            tools:::hsearch_index_colnames[[i]]
+                    }
+                    ## </FIXME>
 		    nh <- NROW(hDB[[1L]])
 		    hDB[[1L]] <- cbind(hDB[[1L]],
 		                       Type = rep("help", nh))
 		    if (nh)
 		    	hDB[[1L]][, "LibPath"] <- path
 		    if ("vignette" %in% types)
-		    	hDB <- merge.vignette.index(hDB, path, p)
+		    	hDB <- merge_vignette_index(hDB, path, p)
 		    if ("demo" %in% types)
-		    	hDB <- merge.demo.index(hDB, path, p)
+		    	hDB <- merge_demo_index(hDB, path, p)
 		    ## Put the hsearch index for the np-th package into the
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
@@ -325,12 +496,19 @@ help.search <-
 		   Aliases  = do.call("rbind", dbMat[, 2]),
 		   Keywords = do.call("rbind", dbMat[, 3]),
 		   Concepts = do.call("rbind", dbMat[, 4]))
-	if(is.null(db$Concepts))
+        rownames(db$Base) <- NULL
+        ## <FIXME>
+        ## Remove eventually ...
+	if(is.null(db$Concepts)) {
 	    db$Concepts <-
-		matrix(character(), ncol = 3L,
-		       dimnames = list(NULL,
-		       c("Concepts", "ID", "Package")))
-	## Make the IDs globally unique by prefixing them with the
+                matrix(character(), ncol = 3L,
+                       dimnames =
+                           list(NULL,
+                                tools:::hsearch_index_colnames$Concepts))
+        }
+        ## </FIXME>
+
+        ## Make the IDs globally unique by prefixing them with the
 	## number of the package in the global index.
 	for(i in which(sapply(db, NROW) > 0L)) {
 	    db[[i]][, "ID"] <-
@@ -342,7 +520,7 @@ help.search <-
 	## And maybe re-encode ...
 	if(!identical(Sys.getlocale("LC_CTYPE"), "C")) {
 	    if(verbose >= 2L) {
-                message("reencoding ...", appendLF=FALSE, domain = NA)
+                message("reencoding ...", appendLF = FALSE, domain = NA)
                 flush.console()
             }
 	    encoding <- db$Base[, "Encoding"]
@@ -388,14 +566,45 @@ help.search <-
 	    }
 	}
 
+        ## Remove keywords which are empty or package.skeleton()
+        ## leftovers.
+        ind <- is.na(match(db$Keywords[, "Keyword"],
+                           c("", "~kwd1", "~kwd2",
+                             "~~ other possible keyword(s) ~~")))
+        db$Keywords <- db$Keywords[ind, , drop = FALSE]
+        ## Remove concepts which are empty.
+        ind <- nzchar(db$Concepts[, "Concept"])
+        db$Concepts <- db$Concepts[ind, , drop = FALSE]
+
+        ## Map non-standard keywords to concepts, and use the
+        ## descriptions of the standard keywords as concepts, with the
+        ## exception of keyword 'internal'.
+        standard <- .get_standard_Rd_keywords_with_descriptions()
+        keywords <- standard$Keywords
+        concepts <- standard$Descriptions
+        pos <- match(db$Keywords[, "Keyword"], keywords)
+        ind <- !is.na(pos) & (keywords[pos] != "internal")
+        db$Concepts <-
+            rbind(db$Concepts,
+                  db$Keywords[is.na(pos), , drop = FALSE],
+                  cbind(concepts[pos[ind]],
+                        db$Keywords[ind, -1L, drop = FALSE]))
+        db$Keywords <- db$Keywords[!is.na(pos), , drop = FALSE]
+
+        ## Doing this earlier will not work: in particular, re-encoding
+        ## is written for character matrices.
+        db <- lapply(db, as.data.frame,
+                     stringsAsFactors = FALSE, row.names = NULL)
+
         if(verbose >= 2L) {
-            message("saving the database ...", appendLF=FALSE, domain = NA)
+            message("saving the database ...", appendLF = FALSE, domain = NA)
             flush.console()
         }
         attr(db, "LibPaths") <- lib.loc
         attr(db, "mtime") <- Sys.time()
         attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
         attr(db, "Types") <- unique(c("help", types))
+        class(db) <- "hsearch_db"
         .hsearch_db(db)
         if(verbose >= 2L) {
             message(" ", "done", domain = NA)
@@ -405,202 +614,157 @@ help.search <-
             message("... database rebuilt", domain = NA)
             if(WINDOWS) {
                 close(pb)
-                on.exit() # clear closing of progress bar
+                on.exit()               # clear closing of progress bar
             }
             flush.console()
         }
     }
 
-    ### Matching.
-    if(verbose >= 2L) {
-	message("Database of ",
-                NROW(db$Base), " help objects (",
-                NROW(db$Aliases), " aliases, ",
-                NROW(db$Concepts), " concepts, ",
-                NROW(db$Keywords), " keywords)",
-                domain = NA)
-        flush.console()
-    }
-    if(!is.null(package)) {
-	## Argument 'package' was given.  Need to check that all given
-	## packages exist in the db, and only search the given ones.
-	pos_in_hsearch_db <-
-	    match(package, unique(db$Base[, "Package"]), nomatch = 0L)
-        ## This should not happen for R >= 2.4.0
-	if(any(pos_in_hsearch_db) == 0L)
-	    stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
-			  sQuote(package[pos_in_hsearch_db == 0][1L])),
-                 domain = NA)
-	db <-
-	    lapply(db,
-		   function(x) {
-		       x[x[, "Package"] %in% package, , drop = FALSE]
-		   })
-    }
-
-    ## Subset to the requested help types
-    db$Base <- db$Base[db$Base[,"Type"] %in% types,,drop=FALSE]
-
-    ## <FIXME>
-    ## No need continuing if there are no objects in the data base.
-    ## But shouldn't we return something of class "hsearch"?
-    if(!length(db$Base)) return(invisible())
-    ## </FIXME>
-
-    ## If agrep is NULL (default), we want to use fuzzy matching iff
-    ## 'pattern' contains no characters special to regular expressions.
-    ## We use the following crude approximation: if pattern contains
-    ## only alphanumeric characters or whitespace or a '-', it is taken
-    ## 'as is', and fuzzy matching is used unless turned off explicitly,
-    ## or pattern has very few (currently, less than 5) characters.
-    if(is.null(fuzzy) || is.na(fuzzy))
-	fuzzy <-
-	    (grepl("^([[:alnum:]]|[[:space:]]|-)+$", pattern)
-	     && (nchar(pattern, type="c") > 4L))
-    if(is.logical(fuzzy)) {
-	if(fuzzy)
-	    max.distance <- 0.1
-    }
-    else if(is.numeric(fuzzy) || is.list(fuzzy)) {
-	max.distance <- fuzzy
-	fuzzy <- TRUE
-    }
-    else
-	stop("incorrect 'agrep' specification")
-
-    searchFun <- function(x) {
-	if(fuzzy)
-	    agrep(pattern, x, ignore.case = ignore.case,
-		  max.distance = max.distance)
-	else
-	    grep(pattern, x, ignore.case = ignore.case, perl = use_UTF8)
-    }
-    dbBase <- db$Base
-    searchDbField <- function(field) {
-	switch(field,
-	       alias = {
-		   aliases <- db$Aliases
-		   match(aliases[searchFun(aliases[, "Aliases"]),
-				 "ID"],
-			 dbBase[, "ID"])
-	       },
-	       concept = {
-		   concepts <- db$Concepts
-		   match(concepts[searchFun(concepts[, "Concepts"]),
-				  "ID"],
-			 dbBase[, "ID"])
-	       },
-
-	       keyword = {
-		   keywords <- db$Keywords
-		   match(keywords[searchFun(keywords[, "Keywords"]),
-				  "ID"],
-			 dbBase[, "ID"])
-	       },
-	       searchFun(db$Base[, field]))
-    }
-
-    i <- NULL
-    for(f in fields) i <- c(i, searchDbField(f))
-    db <- dbBase[sort(unique(i)),
-		 c("topic", "title", "Package", "LibPath", "name", "Type"),
-		 drop = FALSE]
-    if(verbose>= 2L) {
-        message(sprintf(ngettext(NROW(db),
-                                 "matched %d object.",
-                                 "matched %d objects."),
-                        NROW(db)),
-                domain = NA)
-        flush.console()
-    }
-
-    ## Retval.
-    y <- list(pattern = pattern, fields = fields,
-	      type = if(fuzzy) "fuzzy" else "regexp",
-	      agrep = agrep,
-	      ignore.case = ignore.case, types = types,
-	      package = package, lib.loc = lib.loc,
-	      matches = db)
-    class(y) <- "hsearch"
-    y
+    db
 }
 
-## this extra indirection allows the Mac GUI to replace this
+## Cf. tools:::.get_standard_Rd_keywords().
+.get_standard_Rd_keywords_with_descriptions <-
+function()
+{
+    lines <- readLines(file.path(R.home("doc"), "KEYWORDS.db"))
+    ## Strip top-level entries.
+    lines <- grep("^.*\\|([^:]*):.*", lines, value = TRUE)
+    ## Strip comments.
+    lines <- sub("[[:space:]]*#.*", "", lines)
+    list(Keywords = sub("^.*\\|([^:]*):.*", "\\1", lines),
+         Descriptions = sub(".*:[[:space:]]*", "", lines))
+}
+             
+## This extra indirection allows the Mac GUI to replace this
 ## yet call the printhsearchInternal function.
-print.hsearch <- function(x, ...)
+print.hsearch <-
+function(x, ...)
     printhsearchInternal(x, ...)
 
-
-printhsearchInternal  <- function(x, ...)
+printhsearchInternal <-
+function(x, ...)
 {
-    help_type <- getOption("help_type", default="text")
+    help_type <- getOption("help_type", default = "text")
     types <- x$types
     if (help_type == "html") {
         browser <- getOption("browser")
-	if (tools:::httpdPort() == 0L) tools::startDynamicHelp()
-	if (tools:::httpdPort() > 0L) {
-	    url <- paste0("http://127.0.0.1:", tools:::httpdPort(),
-                      "/doc/html/Search?pattern=", tools:::escapeAmpersand(x$pattern),
-                      # Only encode non-default values
-                      if (!("title" %in% x$fields)) "&title=0",
-                      if ("keyword" %in% x$fields) "&keyword=1",
-                      if (!("alias" %in% x$fields)) "&alias=0",
-                      if (!("concept" %in% x$fields)) "&concept=0",
-                      if ("name" %in% x$fields) "&name=1",
-                      if (!is.null(x$agrep)) paste0("&agrep=", x$agrep),
-                      if (!x$ignore.case) "&ignore.case=0",
-                      if (!identical(types, getOption("help.search.types")))
-			 paste0("&types=", paste(types, collapse=";")),
-                      if (!is.null(x$package))
-			 paste0("&package=", paste(x$package, collapse=";")),
-                      if (!identical(x$lib.loc, .libPaths()))
-			 paste0("&lib.loc=", paste(x$lib.loc, collapse=";")))
+        port <- tools::startDynamicHelp(NA)
+	if (port > 0L) {
+            .hsearch_results(x)
+            url <- paste0("http://127.0.0.1:", port,
+                          "/doc/html/Search?results=1")
+            ## <NOTE>
+            ## Older versions used the following, which invokes the
+            ## dynamic HTML help system in a way that this calls
+            ## help.search() to give the results to be displayed.
+            ## This is now avoided by passing the (already available)
+            ## results to the dynamic help system using the dynamic
+            ## variable .hsearch_results().
+	    ## url <-
+            ##     paste0("http://127.0.0.1:", port,
+            ##            "/doc/html/Search?pattern=",
+            ##            tools:::escapeAmpersand(x$pattern),
+            ##            paste0("&fields.", x$fields, "=1",
+            ##                   collapse = ""),
+            ##            if (!is.null(x$agrep)) paste0("&agrep=", x$agrep),
+            ##            if (!x$ignore.case) "&ignore.case=0",
+            ##            if (!identical(types,
+            ##                           getOption("help.search.types")))
+            ##                paste0("&types.", types, "=1",
+            ##                       collapse = ""),
+            ##            if (!is.null(x$package))
+            ##                paste0("&package=",
+            ##                       paste(x$package, collapse=";")),
+            ##            if (!identical(x$lib.loc, .libPaths()))
+            ##                paste0("&lib.loc=",
+            ##                       paste(x$lib.loc, collapse=";"))
+            ##            )
+            ## </NOTE>
             browseURL(url, browser)
             return(invisible(x))
         }
     }
     hfields <- paste(x$fields, collapse = " or ")
-    vfieldnames <- c(alias = "name", concept="keyword", keyword=NA,
-                     name="name", title="title")
+    vfieldnames <-
+        c(alias = "name", concept = "keyword", keyword = NA,
+          name = "name", title = "title")
     vfieldnames <- vfieldnames[x$fields]
-    vfields <- paste(unique(vfieldnames[!is.na(vfieldnames)]), collapse = " or ")
-    dfieldnames <- c(alias = "name", concept=NA, keyword=NA,
-                     name = "name", title = "title")
+    vfields <- paste(unique(vfieldnames[!is.na(vfieldnames)]),
+                     collapse = " or ")
+    dfieldnames <-
+        c(alias = "name", concept = NA, keyword = NA,
+          name = "name", title = "title")
     dfieldnames <- dfieldnames[x$fields]
-    dfields <- paste(unique(dfieldnames[!is.na(dfieldnames)]), collapse = " or ")
-    fields <- list(help=hfields, vignette=vfields, demo=dfields)
+    dfields <- paste(unique(dfieldnames[!is.na(dfieldnames)]),
+                     collapse = " or ")
+    fields_used <-
+        list(help = hfields, vignette = vfields, demo = dfields)
     matchtype <- switch(x$type, fuzzy = "fuzzy", "regular expression")
-    typenames <- c(vignette = "Vignettes", help = "Help files", demo="Demos")
+    typenames <-
+        c(vignette = "Vignettes", help = "Help files", demo = "Demos")
+    fields_for_match_details <-
+        list(help = c("alias", "concept", "keyword"),
+             vignette = c("concept"),
+             demo = character())
+    field_names_for_details <-
+        c(alias = "Aliases", concept = "Concepts", keyword = "Keywords")
+
     db <- x$matches
     if(NROW(db) == 0) {
-    	typenames <- paste(tolower(typenames[types]), collapse=" or ")
-	writeLines(strwrap(paste("No", typenames,  "found with", fields$help,
+    	typenames <- paste(tolower(typenames[types]), collapse= " or ")
+	writeLines(strwrap(paste("No", typenames,
+                                 "found with", fields_used$help,
 				 "matching", sQuote(x$pattern),
-				 "using", matchtype, "matching.")))
+				 "using", matchtype,
+                                 "matching.")))
         return(invisible(x))
     }
 
     outFile <- tempfile()
     outConn <- file(outFile, open = "w")
-    typeinstruct <- c(vignette = paste("Type 'vignette(\"FOO\", package=\"PKG\")' to",
-				       "inspect entries 'PKG::FOO'."),
-                      help = paste("Type '?PKG::FOO' to",
-				       "inspect entries 'PKG::FOO',",
-				       "or 'TYPE?PKG::FOO' for entries like",
-				       "'PKG::FOO-TYPE'."),
-		      demo = paste("Type 'demo(PKG::FOO)' to",
-				       "run demonstration 'PKG::FOO'."))
+    typeinstruct <-
+        c(vignette =
+              paste("Type 'vignette(\"FOO\", package=\"PKG\")' to",
+                    "inspect entries 'PKG::FOO'."),
+          help =
+              paste("Type '?PKG::FOO' to",
+                    "inspect entries 'PKG::FOO',",
+                    "or 'TYPE?PKG::FOO' for entries like",
+                    "'PKG::FOO-TYPE'."),
+          demo =
+              paste("Type 'demo(PKG::FOO)' to",
+                    "run demonstration 'PKG::FOO'."))
 
-    for (type in types) {
-	if(NROW(dbtemp <- db[db[,"Type"] == type,,drop=FALSE]) > 0) {
-	    writeLines(c(strwrap(paste(typenames[type], "with", fields[[type]],
-				       "matching", sQuote(x$pattern),
-				       "using", matchtype, "matching:")),
+    for(type in types) {
+	if(NROW(dbtemp <- db[db[, "Type"] == type, , drop = FALSE]) > 0) {
+	    writeLines(c(strwrap(paste(typenames[type], "with",
+                                       fields_used[[type]], "matching",
+                                       sQuote(x$pattern), "using",
+                                       matchtype, "matching:")),
 			 "\n"),
 		       outConn)
-	    dbnam <- paste0(dbtemp[, "Package"], "::", dbtemp[ , "topic"])
-	    dbtit <- paste0(dbtemp[ , "title"])
-	    writeLines(formatDL(dbnam, dbtit), outConn)
+            fields <- fields_for_match_details[[type]]
+            chunks <- split.data.frame(dbtemp,
+                                       paste0(dbtemp[, "Package"],
+                                              "::",
+                                              dbtemp[ , "Topic"]))
+            nms <- names(chunks)
+            for(i in seq_along(nms)) {
+                chunk <- chunks[[i]]
+                writeLines(formatDL(nms[i], chunk[1L, "Title"]),
+                           outConn)
+                matches <- Filter(length,
+                                  split(chunk[, "Entry"],
+                                        chunk[, "Field"])[fields])
+                if(length(matches)) {
+                    tags <- field_names_for_details[names(matches)]
+                    vals <- vapply(matches, paste, "", collapse = ", ")
+                    writeLines(strwrap(paste0(tags, ": ", vals),
+                                       indent = 2L, exdent = 4L),
+                               outConn)
+                }
+            }
 	    writeLines(c("\n",
 			 strwrap(typeinstruct[type]),
 			 "\n\n"),
@@ -609,5 +773,69 @@ printhsearchInternal  <- function(x, ...)
     }
     close(outConn)
     file.show(outFile, delete.file = TRUE)
+    invisible(x)
+}
+
+.hsearch_results <-
+local({
+    res <- NULL
+    function(new) {
+	if(!missing(new))
+	    res <<- new
+	else
+	    res
+    }
+})
+
+hsearch_db_concepts <-
+function(db = hsearch_db())
+{
+    ## <NOTE>
+    ## This should perhaps get an ignore.case = TRUE argument.
+    ## </NOTE>
+    pos <- match(db$Concepts[, "ID"], db$Base[, "ID"])
+    entries <- split(as.data.frame(db$Base[pos, ],
+                                   stringsAsFactors = FALSE),
+                     db$Concepts[, "Concept"])
+    enums <- sapply(entries, NROW)
+    pnums <- sapply(entries, function(e) length(unique(e$Package)))
+    pos <- order(enums, pnums, decreasing = TRUE)
+    data.frame(Concept = names(entries)[pos],
+               Frequency = enums[pos],
+               Packages = pnums[pos],
+               stringsAsFactors = FALSE,
+               row.names = NULL)
+}
+
+hsearch_db_keywords <-
+function(db = hsearch_db())
+{
+    pos <- match(db$Keywords[, "ID"], db$Base[, "ID"])
+    entries <- split(as.data.frame(db$Base[pos, ],
+                                   stringsAsFactors = FALSE),
+                     db$Keywords[, "Keyword"])
+    enums <- sapply(entries, NROW)
+    pnums <- sapply(entries, function(e) length(unique(e$Package)))
+    standard <- .get_standard_Rd_keywords_with_descriptions()
+    concepts <- standard$Descriptions[match(names(entries),
+                                            standard$Keywords)]
+    pos <- order(enums, pnums, decreasing = TRUE)
+    data.frame(Keyword = names(entries)[pos],
+               Concept = concepts[pos],
+               Frequency = enums[pos],
+               Packages = pnums[pos],
+               stringsAsFactors = FALSE,
+               row.names = NULL)
+}
+
+print.hsearch_db <- 
+function(x, ...)
+{
+    writeLines(c("A help search database:",
+                 sprintf("Objects: %d, Aliases: %d, Keywords: %d, Concepts: %d",
+                         NROW(x$Base),
+                         NROW(x$Aliases),
+                         NROW(x$Keywords),
+                         NROW(x$Concepts))))
     invisible(x)
 }

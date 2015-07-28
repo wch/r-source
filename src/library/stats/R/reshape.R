@@ -240,8 +240,10 @@ reshape <-
                times <- back$times
            }
 
-           if (is.matrix(varying))
-               varying <- split(varying, row(varying))
+           if (is.matrix(varying)) {
+               ## <FIXME split.matrix>
+               varying <- split(c(varying), row(varying))
+           }
            if (is.null(varying))
                stop("'varying' must be nonempty list or vector")
            if(is.atomic(varying)) {

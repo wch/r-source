@@ -24,7 +24,7 @@ testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
                       types = c("examples", "tests", "vignettes"),
                       srcdir = NULL, Ropts = "", ...)
 
-testInstalledBasic(scope = c("basic", "devel", "both"))
+testInstalledBasic(scope = c("basic", "devel", "both", "internet"))
 }
 \arguments{
   \item{pkg}{name of an installed package.}

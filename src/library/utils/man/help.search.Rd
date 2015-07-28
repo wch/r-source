@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.search.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help.search}
@@ -38,8 +38,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     \code{"name"}, \code{"title"}, \code{"alias"}, \code{"concept"}, and
     \code{"keyword"}, corresponding to the help page's (file) name, its
     title, the topics and concepts it provides documentation for, and
-    the keywords it can be classified to.  See below for how vignettes
-    and demos are searched.}
+    the keywords it can be classified to.  See below for details and how
+    vignettes and demos are searched.}
   \item{apropos}{a character string to be matched in the help page
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
@@ -80,7 +80,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     used.  Otherwise, one can give a numeric or a list specifying the
     maximal distance for the approximate match, see argument
     \code{max.distance} in the documentation for \code{\link{agrep}}.}
-  \item{use_UTF8}{logical: should be results be given in UTF-8 encoding?
+  \item{use_UTF8}{logical: should results be given in UTF-8 encoding?
     Also changes the meaning of regexps in \code{agrep} to be Perl regexps.}
   \item{types}{a character vector listing the types of documentation
     to search.  The entries must be abbreviations of \code{"vignette"}
@@ -93,7 +93,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   serialized as \file{hsearch.rds} in the \file{Meta} directory
   (provided the package has any help pages).  Vignettes are also
   indexed in the \file{Meta/vignette.rds} file.  These files are used to
-  create the help search database.
+  create the help search database via \code{\link{hsearch_db}}.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
@@ -113,12 +113,19 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   package name followed by \code{::} or \code{:::} to limit the search
   to that package.
 
+  For help files, \samp{\keyword} entries which are not among the
+  standard keywords as listed in file \file{KEYWORDS} in the \R
+  documentation directory are taken as concepts.  For standard keyword
+  entries different from \samp{internal}, the corresponding descriptions
+  from file \file{KEYWORDS} are additionally taken as concepts.  All
+  \samp{\concept} entries used as concepts.  
+
   Vignettes are searched as follows.  The \code{"name"} and
   \code{"alias"} are both the base of the vignette filename, and the
-  \code{"concept"} entries are taken from the \code{\\VignetteKeywords}
+  \code{"concept"} entries are taken from the \code{\\VignetteKeyword}
   entries.  Vignettes are not classified using the help system
   \code{"keyword"} classifications.  Demos are handled
-  similarly to vignettes, without the  \code{"concept"} search.
+  similarly to vignettes, without the \code{"concept"} search.
 }
 
 \value{
@@ -134,6 +141,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   The internal format of the class is undocumented and subject to change.
 }
 \seealso{
+  \code{\link{hsearch_db}} for more information on the help search
+  database employed, and for utilities to inspect available concepts and
+  keywords.
+  
   \code{\link{help}};
   \code{\link{help.start}} for starting the hypertext (currently HTML)
   version of \R's online documentation, which offers a similar search

@@ -1,6 +1,6 @@
 % File src/library/base/man/names.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{names}
@@ -21,20 +21,31 @@ names(x) <- value
   \item{value}{a character vector of up to the same length as \code{x}, or
     \code{NULL}.}
 }
+
 \value{
   For \code{names}, \code{NULL} or a character vector of the same length
   as \code{x}.  (\code{NULL} is given if the object has no names,
-  including for objects of types which cannot have names.)
+  including for objects of types which cannot have names.)  For an
+  environment, the length is the number of objects in the environment
+  but the order of the names is arbitrary.
 
   For \code{names<-}, the updated object.  (Note that the value of
   \code{names(x) <- value} is that of the assignment, \code{value}, not
   the return value from the left-hand side.)
 }
+
 \details{
   \code{names} is a generic accessor function, and \code{names<-} is a
   generic replacement function.  The default methods get and set
   the \code{"names"} attribute of a vector (including a list) or
   pairlist.
+
+  For an \code{\link{environment}} \code{env}, \code{names(env)} gives
+  the names of the corresponding list, i.e.,
+  \code{names(as.list(env, all.names = TRUE))} which are also given by
+  \code{\link{ls}(env, all.names = TRUE, sorted = FALSE)}.  If the
+  environment is used as a hash table, \code{names(env)} are its
+  \dQuote{keys}.
 
   If \code{value} is shorter than \code{x}, it is extended by character
   \code{NA}s to the length of \code{x}.
@@ -92,5 +103,11 @@ names(z)
 ## assign just one name
 names(z)[2] <- "b"
 z
+
+\dontshow{## "show" the equivalence claimed above:
+  for(e in c(baseenv(), globalenv()))
+  stopifnot(identical(names(e), ls(e, all.names=TRUE, sorted=FALSE)),
+            identical(names(e), names(as.list(e, all.names=TRUE))))
+}
 }
 \keyword{attribute}

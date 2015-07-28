@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2015-03-01 13:19\n"
 "PO-Revision-Date: 2014-03-27 09:00-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -240,6 +240,10 @@ msgstr "'x'와 'y'의 값들은 반드시 유한해야 하며 누락되지 않�
 
 msgid "'z' must be a matrix"
 msgstr "'z'는 반드시 행렬이어야 합니다"
+
+#, fuzzy
+msgid "'z' must be numeric or logical"
+msgstr "'x'는 반드시 숫자이어야 합니다"
 
 msgid "invalid z limits"
 msgstr "유효하지 않은 z limits입니다"

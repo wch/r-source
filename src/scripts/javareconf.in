@@ -13,7 +13,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R Java configurator: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-2013 The R Core Team.
+Copyright (C) 2002-2015 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -327,7 +327,7 @@ wd=${PWD}
 cd "${tempdir}"
 
 echo
-echo "trying to compile and link a JNI progam "
+echo "trying to compile and link a JNI program "
 echo "detected JNI cpp flags    : ${JAVA_CPPFLAGS}"
 echo "detected JNI linker flags : ${JAVA_LIBS}"
 

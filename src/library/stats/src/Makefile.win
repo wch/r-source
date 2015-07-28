@@ -50,7 +50,7 @@ include $(top_srcdir)/share/make/winshlib.mk
 
 
 ## Meeded with i386 gcc 4.5.0 -- PR#14427
-portsrc_FFLAGS=$(SAFE_FFLAGS)
+portsrc_FFLAGS = $(SAFE_FFLAGS)
 portsrc.o: portsrc.f
 	$(F77) $(portsrc_FFLAGS) -c $< -o $@
 

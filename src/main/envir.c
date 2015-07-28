@@ -680,7 +680,7 @@ void attribute_hidden InitGlobalEnv()
     R_PreserveObject(R_BaseNamespaceName);
     R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
     R_PreserveObject(R_NamespaceRegistry);
-    defineVar(R_baseSymbol, R_BaseNamespace, R_NamespaceRegistry);
+    defineVar(R_BaseSymbol, R_BaseNamespace, R_NamespaceRegistry);
     /**** needed to properly initialize the base namespace */
 }
 
@@ -3533,12 +3533,21 @@ SEXP attribute_hidden do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name, val;
     checkArity(op, args);
-    name = checkNSname(call, CAR(args));
+    name = checkNSname(call, coerceVector(CAR(args), SYMSXP));
     val = findVarInFrame(R_NamespaceRegistry, name);
-    if (IS_R_UnboundValue(val))
-	return R_NilValue;
-    else
-	return val;
+
+    switch(PRIMVAL(op)) {
+    case 0: // get..()
+	if (IS_R_UnboundValue(val))
+	    return R_NilValue;
+	else
+	    return val;
+    case 1: // is..()
+	return ScalarLogical(IS_R_UnboundValue(val) ? FALSE : TRUE);
+
+    default: error(_("unknown op"));
+    }
+    return R_NilValue; // -Wall
 }
 
 SEXP attribute_hidden do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -3914,3 +3923,36 @@ void do_write_cache()
     }
 }
 #endif /* DEBUG_SHOW_CHARSXP_CACHE */
+
+// topenv
+
+SEXP topenv(SEXP target, SEXP envir) {
+    SEXP env = envir;
+    while (! IS_R_EmptyEnv(env)) {
+	if (SEXP_EQL(env, target) ||
+	    IS_R_GlobalEnv(env) || IS_R_BaseNamespace(env) ||
+	    R_IsPackageEnv(env) || R_IsNamespaceEnv(env) ||
+	    existsVarInFrame(env, R_dot_packageName)) {
+	    return env;
+	} else {
+	    env = ENCLOS(env);
+	}
+    }
+    return R_GlobalEnv;
+}
+
+/** topenv():
+ *
+ * .Internal(topenv(envir, matchThisEnv))
+ *
+ * @return
+ */
+SEXP attribute_hidden do_topenv(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    checkArity(op, args);
+    SEXP envir = CAR(args);
+    SEXP target = CADR(args); // = matchThisEnv
+    if (TYPEOF(envir) != ENVSXP) envir = rho; // target = parent.frame()
+    if (! IS_R_NilValue(target) && TYPEOF(target) != ENVSXP)
+	target = R_NilValue;
+    return topenv(target, envir);
+}

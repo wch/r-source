@@ -1,24 +1,28 @@
 # Korean translation for R base package
 # src/library/base/po/RGui-ko.po
-# Copyright (C) 1995-2014 The R Core Team
+# Copyright (C) 1995-2015 The R Core Team
+#
 # This file is distributed under the same license as the R base package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+#
+# Reviewing source codes for translation was completed (17-JAN-2015)
+# QC: PASS
+# Bug-reports are processed (17-JAN-2015)
+# Freezed on 06-FEB-2015 for R-3.1.3
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-16 08:57+0000\n"
-"PO-Revision-Date: 2014-03-27 08:58-0600\n"
+"POT-Creation-Date: 2015-02-09 08:52+0000\n"
+"PO-Revision-Date: 2015-02-08 21:30-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team:  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
 
 #: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
 msgid "Not enough memory"
@@ -122,33 +126,33 @@ msgstr "     Ctrl+U: 현재 라인의 모든 텍스트를 삭제합니다.\n"
 
 #: src/gnuwin32/console.c:2247
 msgid "  Copy and paste.\n"
-msgstr "  복사와 붙여넣기.\n"
+msgstr "  복사하여 붙여넣기.\n"
 
 #: src/gnuwin32/console.c:2248
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
-"     텍스트를 표시 혹은 선택하려면 (좌측버튼을 누른채로) 마우스를 이용하세"
-"요.\n"
+"     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하"
+"세요. \n"
 
 #: src/gnuwin32/console.c:2249
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
-"     선택한 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)을 "
-"사용하세요\n"
+"     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 "
+"사용합니다. \n"
 
 #: src/gnuwin32/console.c:2250
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
-"     (만약) 클립보드에 있는 내용을 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V "
-"혹은 Ctrl+Y)을 이용하세요  \n"
+"     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V "
+"혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
 
 #: src/gnuwin32/console.c:2251
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr ""
+msgstr "     Ctrl+X를 이용하여 복사한 뒤 붙여넣을수도 있습니다.\n"
 
 #: src/gnuwin32/console.c:2252
 msgid "  Misc:\n"
@@ -156,7 +160,7 @@ msgstr "  기타:\n"
 
 #: src/gnuwin32/console.c:2253
 msgid "     Ctrl+L: Clear the console.\n"
-msgstr "     Ctrl+L: 콘솔을 지워 깨끗이 합니다.\n"
+msgstr "     Ctrl+L: 콘솔화면을 깨끗하게 정리해 줍니다.\n"
 
 #: src/gnuwin32/console.c:2254
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
@@ -188,7 +192,7 @@ msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
 msgstr ""
-"인터프리터를 중단하기 위해서는 ESC 를 이용하세요.\n"
+"인터프리터를 중단하기 위해서는 ESC 키를 이용하세요.\n"
 "\n"
 
 #: src/gnuwin32/console.c:2259
@@ -196,14 +200,18 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
+"TAB키를 이용하여 현재 입력중인 단어에 대한 자동완성기능을 살펴볼 수 있습니"
+"다.\n"
+"\n"
 
 #: src/gnuwin32/console.c:2260
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr ""
+msgstr "표준 윈도우즈 핫키들이 그래픽 장치 전환에 사용될 수 있습니다 \n"
 
 #: src/gnuwin32/console.c:2261
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
+"(MDI의 경우 Ctrl+Tab 또는 Ctrl+F6를, SDI의 경우 Alt+Tab을 사용할 수 있습니다)"
 
 #: src/gnuwin32/editor.c:91 src/gnuwin32/editor.c:93
 msgid "R Editor"
@@ -229,11 +237,11 @@ msgid "Save script as"
 msgstr "다른 이름으로 스크립트를 저장"
 
 #: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
-#: src/gnuwin32/pager.c:429 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "스크립트 열기"
 
-#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:183 src/gnuwin32/pager.c:203
+#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:184 src/gnuwin32/pager.c:204
 msgid "No RGui console to paste to"
 msgstr "붙여넣기를 할 RGui 콘솔이 없습니다"
 
@@ -269,18 +277,17 @@ msgstr "     툴바에 있는 \"줄 또는 선택영역 실행\" 아이콘을 �
 #: src/gnuwin32/editor.c:613
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
-msgstr "이것은 선택된 명령어들을 콘솔로 복사한 뒤 그것들을 실행할 것입니다.\n"
+msgstr "이것은 선택된 명령어들을 콘솔로 복사하고 평가할 것입니다.\n"
 
 #: src/gnuwin32/editor.c:614
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
-"만약 선택된 것이 없다면, 이것은 단순히 현재 라인과 이전라인만을 실행할 것입니"
-"다\n"
+"만약 선택된 명령어들이 없다면, 이것은 단순히 커서가 놓인 라인을 실행하고\n"
 
 #: src/gnuwin32/editor.c:615
 msgid "the cursor by one line.\n"
-msgstr ""
+msgstr "그 다음라인으로 커서를 이동시킬 것입니다.\n"
 
 #: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:704
 #: src/gnuwin32/editor.c:762
@@ -296,7 +303,7 @@ msgid "Cut"
 msgstr "잘라내기"
 
 #: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
-#: src/gnuwin32/pager.c:303 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:859
+#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
 #: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "복사하기"
@@ -311,16 +318,16 @@ msgid "Delete"
 msgstr "삭제하기"
 
 #: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:482 src/gnuwin32/rui.c:866
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
 #: src/gnuwin32/rui.c:1149
 msgid "Select all"
-msgstr "모두 선택"
+msgstr "모두 선택하기"
 
 #: src/gnuwin32/editor.c:700
 msgid "Save script"
 msgstr "스크립트 저장하기"
 
-#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:449
+#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
 #: src/library/grDevices/src/devWindows.c:1613
 msgid "Return focus to Console"
 msgstr "콘솔로 돌아가기"
@@ -329,22 +336,22 @@ msgstr "콘솔로 돌아가기"
 msgid "Print script"
 msgstr "스크립트 인쇄하기"
 
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:444 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
 #: src/library/grDevices/src/devWindows.c:1607
 msgid "Print"
 msgstr "인쇄하기"
 
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:465 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1791
 #: src/library/grDevices/src/devWindows.c:1645
 msgid "File"
 msgstr "파일"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
 msgid "New script"
 msgstr "새 스크립트"
 
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1125
 msgid "Open script..."
 msgstr "스크립트 열기..."
 
@@ -356,7 +363,7 @@ msgstr "저장하기"
 msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
 #: src/library/grDevices/src/devWindows.c:1708
 msgid "Print..."
 msgstr "인쇄하기..."
@@ -365,7 +372,7 @@ msgstr "인쇄하기..."
 msgid "Close script"
 msgstr "스크립트 닫기"
 
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:475 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:1143
 #: src/library/utils/src/windows/dataentry.c:1797
 msgid "Edit"
 msgstr "편집"
@@ -378,9 +385,11 @@ msgstr "콘솔 지우기"
 msgid "Run all"
 msgstr "전부 실행하기"
 
+# reported by 양민혁 <didalsgur85@naver.com> on 15-DEC-2014
+# status: fixed (closed on 29-JAN-2015)
 #: src/gnuwin32/editor.c:767
 msgid "Find..."
-msgstr "착기..."
+msgstr "찾기..."
 
 #: src/gnuwin32/editor.c:769
 msgid "Replace..."
@@ -416,48 +425,48 @@ msgstr "제목없음"
 msgid "Select file"
 msgstr "파일선택"
 
-#: src/gnuwin32/pager.c:87
+#: src/gnuwin32/pager.c:88
 msgid "Error opening file"
 msgstr "파일을 여는 도중 에러가 발생했습니다"
 
-#: src/gnuwin32/pager.c:94
+#: src/gnuwin32/pager.c:95
 msgid "Insufficient memory to display file in internal pager"
 msgstr "내부페이저에 파일을 표시하기 위한 메모리가 부족합니다"
 
-#: src/gnuwin32/pager.c:175 src/gnuwin32/pager.c:187 src/gnuwin32/pager.c:207
+#: src/gnuwin32/pager.c:176 src/gnuwin32/pager.c:188 src/gnuwin32/pager.c:208
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "선택된 것이 없습니다"
 
-#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:434 src/gnuwin32/pager.c:478
+#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:435 src/gnuwin32/pager.c:479
 msgid "Paste to console"
 msgstr "콘솔에 붙여넣기"
 
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:439 src/gnuwin32/pager.c:480
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:440 src/gnuwin32/pager.c:481
 msgid "Paste commands to console"
 msgstr "콘솔에 명령어를 붙여넣기"
 
-#: src/gnuwin32/pager.c:308 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
 #: src/library/grDevices/src/devWindows.c:1705
 msgid "Stay on top"
 msgstr "맨 위에 있도록 합니다"
 
-#: src/gnuwin32/pager.c:310 src/gnuwin32/pager.c:473
+#: src/gnuwin32/pager.c:311 src/gnuwin32/pager.c:474
 #: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/utils/src/windows/dataentry.c:1793
 msgid "Close"
 msgstr "닫기"
 
-#: src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:471 src/gnuwin32/rui.c:1139
 msgid "Save to File..."
 msgstr "파일에 저장..."
 
-#: src/gnuwin32/pager.c:485 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:486 src/gnuwin32/rui.c:1156
 msgid "View"
 msgstr "보기"
 
-#: src/gnuwin32/pager.c:517
+#: src/gnuwin32/pager.c:518
 msgid "Unable to create pager window"
 msgstr "페이저 윈도우를 생성할 수 없습니다"
 
@@ -665,11 +674,11 @@ msgstr "계단식"
 
 #: src/gnuwin32/rui.c:1010 src/extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
-msgstr ""
+msgstr "창을 가로로 정렬"
 
 #: src/gnuwin32/rui.c:1011 src/extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
-msgstr ""
+msgstr "창을 세로로 정렬"
 
 #: src/gnuwin32/rui.c:1012
 msgid "Minimize group"
@@ -1021,7 +1030,7 @@ msgstr "휴대 네트워크 그래픽스 파일"
 
 #: src/library/grDevices/src/devWindows.c:952
 msgid "Windows bitmap file"
-msgstr "윈도우즈 bitmap 파일"
+msgstr "윈도우즈 비트맵 파일"
 
 #: src/library/grDevices/src/devWindows.c:955
 msgid "TIFF file"
@@ -1033,7 +1042,7 @@ msgstr "Jpeg 파일"
 
 #: src/library/grDevices/src/devWindows.c:980
 msgid "Postscript file"
-msgstr "Postscript 파일"
+msgstr "포스트스크립트(postscript) 파일"
 
 #: src/library/grDevices/src/devWindows.c:992
 msgid "PDF file"
@@ -1041,7 +1050,7 @@ msgstr "PDF 파일"
 
 #: src/library/grDevices/src/devWindows.c:1004
 msgid "Enhanced metafiles"
-msgstr ""
+msgstr "확장형 메타파일(enhanced metafiles)"
 
 #: src/library/grDevices/src/devWindows.c:1007
 #: src/library/grDevices/src/devWindows.c:3445
@@ -1071,7 +1080,7 @@ msgstr "클립보드에 메타파일로서 복사"
 #: src/library/grDevices/src/devWindows.c:1619
 #: src/library/grDevices/src/devWindows.c:1630
 msgid "Stop locator"
-msgstr ""
+msgstr "로케이터의 사용을 중지합니다."
 
 #: src/library/grDevices/src/devWindows.c:1629
 #: src/library/grDevices/src/devWindows.c:1633
@@ -1167,31 +1176,31 @@ msgstr "R 모드"
 
 #: src/library/grDevices/src/devWindows.c:1686
 msgid "Fit to window"
-msgstr "윈도우에 맞추기"
+msgstr "윈도우 사이즈에 맞추기"
 
 #: src/library/grDevices/src/devWindows.c:1688
 msgid "Fixed size"
-msgstr "고정 크기"
+msgstr "고정 크기 사용하기"
 
 #: src/library/grDevices/src/devWindows.c:1695
 msgid "Copy as metafile"
-msgstr "메타파일 형식으로 복사"
+msgstr "메타파일(metafile) 형식으로 복사"
 
 #: src/library/grDevices/src/devWindows.c:1697
 msgid "Copy as bitmap"
-msgstr "bitmap 형식으로 복사"
+msgstr "비트맵(bitmap) 형식으로 복사"
 
 #: src/library/grDevices/src/devWindows.c:1700
 msgid "Save as metafile..."
-msgstr "메타파일 형식으로 저장..."
+msgstr "메타파일(metafile) 형식으로 저장..."
 
 #: src/library/grDevices/src/devWindows.c:1702
 msgid "Save as postscript..."
-msgstr "postscript 으로 저장..."
+msgstr "포스트스크립트(postscript) 형식으로 저장..."
 
 #: src/library/grDevices/src/devWindows.c:3143
 msgid "Locator is active"
-msgstr ""
+msgstr "로케이터가 활성화되었습니다."
 
 #: src/library/grDevices/src/devWindows.c:3769
 msgid "Waiting to confirm page change..."

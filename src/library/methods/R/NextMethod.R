@@ -40,16 +40,16 @@ callNextMethod <- function(...) {
     }
     ## set up the nextMethod object, load it
     ## into the calling environment, and cache it
-    if(!is.null(method <- get0(".Method", envir = methodEnv, inherits = FALSE))) {
+    if(!is.null(method <- methodEnv$.Method)) {
         ## call to standardGeneric(f)
-        if(!is.null(nextMethod <- get0(".nextMethod", envir = callEnv, inherits = FALSE))) {}
-        f <- get(".Generic", envir = methodEnv)
+        nextMethod <- callEnv$.nextMethod
+        f <- methodEnv$.Generic
     }
     else if(identical(mcall[[1L]], dotNextMethod)) {
         ## a call from another callNextMethod()
         nextMethodEnv <- parent.frame(i+1)
-        nextMethod <- get(".nextMethod", nextMethodEnv)
-        f <- get(".Generic", envir = nextMethodEnv)
+        nextMethod <- nextMethodEnv$.nextMethod
+        f <- nextMethodEnv$.Generic
     }
     else {
         ## may be a method call for a primitive; not available as .Method
@@ -98,6 +98,8 @@ callNextMethod <- function(...) {
     else
         stop(gettextf("bad object found as method (class %s)",
                       dQuote(class(method))), domain = NA)
+    if (is.null(nextMethod))
+        stop("No next method available")
     subsetCase <- !is.na(match(f, .BasicSubsetFunctions))
     if(nargs()>0) {
       call <- sys.call()

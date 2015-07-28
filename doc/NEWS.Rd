@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN 3.2.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
@@ -56,7 +56,7 @@
       directories.
 
       \item \code{dput()} and friends gain new controls
-      \samp{"hexNumeric"} and \samp{"digits17"} which output double and
+      \samp{hexNumeric} and \samp{digits17} which output double and
       complex quantities as, respectively, binary fractions (exactly,
       see \code{sprintf("\%a")}) and as decimals with up to 17
       significant digits.
@@ -120,9 +120,9 @@
       \item \code{ls()} (aka \code{objects()}) and
       \code{as.list.environment()} gain a new argument \code{sorted}.
 
-      \item The \code{"source"} attribute (which has not been added
-      to functions by \R
-      since before \R version 2.14.0) is no longer treated as special.
+      \item The \code{"source"} attribute (which has not been added to
+      functions by \R since before \R version 2.14.0) is no longer
+      treated as special.
 
       \item An experimental function \code{returnValue()} has been added
       to give \code{on.exit()} code access to a function's return
@@ -137,7 +137,7 @@
       \item An experimental utility \code{dynGet()} useful for detecting
       cycles, aka infinite recursions.
 
-      \item The byte code compiler and interpreter now include new
+      \item The byte-code compiler and interpreter include new
       instructions that allow many scalar subsetting and assignment and
       scalar arithmetic operations to be handled more efficiently. This
       can result in significant performance improvements in scalar
@@ -149,10 +149,11 @@
       \item A new somewhat experimental function \code{debuggingState()}
       has been added, allowing to temporarily turn off debugging.
 
-      \item \code{example()} gets new optional argument \code{run.dontcheck}
-      and \code{tools::Rd2ex()} a corresponding \code{commentDonttest},
-      with a default such that \code{example(..)} in help examples will
-      run \code{\\dontcheck} code only if used interactively.
+      \item \code{example()} gets a new optional argument
+      \code{run.donttest} and \code{tools::Rd2ex()} a corresponding
+      \code{commentDonttest}, with a default such that
+      \code{example(..)} in help examples will run \code{\\donttest}
+      code only if used interactively (a change in behaviour).
 
       \item \code{rbind.data.frame()} gains an optional argument
       \code{make.row.names}, for potential speedup.
@@ -184,7 +185,8 @@
       dependency version is masking a sufficient one later on the
       library search path.
 
-      \item A new \code{plot.raster()} method has been added.
+      \item A new \code{plot()} method for class \code{"raster"} has
+      been added.
 
       \item New \code{check_packages_in_dir_changes()} function in
       package \pkg{tools} for conveniently analyzing how changing
@@ -202,27 +204,151 @@
       the \code{\dots} in the call, if any; this environment was wrong
       (or at least undesirable) when the \code{definition} argument was
       a function.
-            
-      \item Work in progress on optional use of \code{libcurl} (version
-      7.28.0 or later) for Internet access (including on Windows):
+
+      \item \code{topenv()} has been made \code{.Internal()} for
+      speedup, based on Peter Haverty's proposal in \PR{16140}.
+
+      \item \code{getOption()} no longer calls \code{options()} in the main
+      case.
+
+      \item Optional use of \code{libcurl} (version 7.28.0 from Oct 2012
+      or later) for Internet access:
       \itemize{
 	\item \code{capabilities("libcurl")} reports if this is
 	available.
 
 	\item \code{libcurlVersion()} reports the version in use, and
-	other details.
+	other details of the \code{"libcurl"} build including which URL
+	schemes it supports.
 
 	\item \code{curlGetHeaders()} retrieves the headers for
-	\code{http://}, \code{https://} and \code{ftp://} URLs: analysis
-	of these headers can provide insights into the `existence' of a
-	URL (it might for example be permanently redirected) and will be
-	so used in \command{R CMD check}.
+	\code{http://}, \code{https://}, \code{ftp://} and
+	\code{ftps://} URLs: analysis of these headers can provide
+	insights into the `existence' of a URL (it might for example be
+	permanently redirected) and is so used in \command{R CMD
+	  check --as-cran}.
 
-	\item \code{download.file()} has a new built-in method
-	\code{"libcurl"} which will handle \code{https://} URLs and
-	follow redirections.
+	\item \code{download.file()} has a new optional method
+	\code{"libcurl"} which will handle more URL schemes, follow
+	redirections, and allows simultaneous downloads of multiple
+	URLs.
+
+	\item \code{url()} has a new method \code{"libcurl"} which
+	handles more URL schemes and follows redirections.  The default
+	method is controlled by a new option \code{url.method}, which
+	applies also to the opening of URLs \emph{via} \code{file()}
+	(which happens implicitly in functions such as
+	\code{read.table}.)
+
+	\item When \code{file()} or \code{url()} is invoked with a
+	\code{https://} or \code{ftps://} URL which the current method
+	cannot handle, it switches to a suitable method if one is
+	available.
       }
 
+      \item (Windows.) The DLLs \file{internet.dll} and
+      \file{internet2.dll} have been merged.  In this version it is safe
+      to switch (repeatedly) between the internal and Windows internet
+      functions within an \R session.
+
+      The Windows internet functions are still selected by flag
+      \option{--internet2} or \code{setInternet2()}.  This can be
+      overridden for an \code{url()} connection \emph{via} its new
+      \code{method} argument.
+
+      \code{download.file()} has new method \code{"wininet"}, selected
+      as the default by \option{--internet2} or \code{setInternet2()}.
+
+      \item \code{parent.env<-} can no longer modify the parent of a
+      locked namespace or namespace imports environment.  Contributed by
+      Karl Millar.
+
+      \item New function \code{isLoadedNamespace()} for readability and speed.
+
+      \item \code{names(env)} now returns all the object names of an
+      \code{environment} \code{env}, equivalently to
+      \code{ls(env, all.names = TRUE, sorted = FALSE)} and also to
+      the names of the corresponding list,
+      \code{names(as.list(env, all.names = TRUE))}.
+      Note that although \code{names()} returns a character vector, the
+      names have no particular ordering.
+
+      \item The memory manager now grows the heap more aggressively. This
+      reduces the number of garbage collections, in particular while
+      data or code are loaded, at the expense of slightly increasing the
+      memory footprint.
+
+      \item New function \code{trimws()} for removing leading/trailing
+      whitespace.
+
+      \item \code{cbind()} and \code{rbind()} now consider S4 inheritance
+      during S3 dispatch and also obey \code{deparse.level}.
+
+      \item \code{cbind()} and \code{rbind()} will delegate recursively
+      to \code{methods::cbind2} (\code{methods::rbind2}) when at least
+      one argument is an S4 object and S3 dispatch fails (due to
+      ambiguity).
+
+      \item (Windows.)  \code{download.file(quiet = FALSE)} now uses
+      text rather than Windows progress bars in non-interactive use.
+
+      \item New function \code{hsearch_db()} in package \pkg{utils} for
+      building and retrieving the help search database used by
+      \code{help.search()}, along with functions for inspecting the
+      concepts and keywords in the help search database.
+
+      \item New function \code{.getNamespaceInfo()}, a no-check version
+      of \code{getNamespaceInfo()} mostly for internal speedups.
+
+      \item The help search system now takes \samp{\keyword} entries in
+      Rd files which are not standard keywords (as given in
+      \file{KEYWORDS} in the \R documentation directory) as concepts.
+      For standard keyword entries the corresponding descriptions are
+      additionally taken as concepts.
+
+      \item New \code{lengths()} function for getting the lengths of all
+      elements in a list.
+
+      \item New function \code{toTitleCase()} in package \pkg{tools},
+      tailored to package titles.
+
+      \item The matrix methods of \code{cbind()} and \code{rbind()}
+      allow matrices as inputs which have \eqn{2^{31}}{2^31} or more
+      elements.  (For \code{cbind()}, wish of \PR{16198}.)
+
+      \item The default method of \code{image()} has an explicit check
+      for a numeric or logical matrix (which was always required).
+
+      \item \code{URLencode()} will not by default encode further URLs
+      which appear to be already encoded.
+
+      \item \code{BIC(mod)} and \code{BIC(mod, mod2)} now give non-NA
+      numbers for \code{arima()} fitted models, as \code{nobs(mod)} now
+      gives the number of \dQuote{used} observations for such models --
+      somewhat experimentally.
+      This fixes \PR{16198}, quite differently than proposed there.
+
+      \item The \code{print()} methods for \code{"htest"},
+      \code{"pairwise.htest"} and \code{"power.htest"} objects now have
+      a \code{digits} argument defaulting to (a function of)
+      \code{getOption("digits")}, and influencing all printed numbers
+      coherently.  Unavoidably, this changes the display of such test
+      results in some cases.
+
+      \item Code completion for namespaces now recognizes all loaded
+      namespaces, rather than only the ones that are also attached.
+
+      \item The code completion mechanism can now be replaced by a
+      user-specified completer function, for (temporary) situations
+      where the usual code completion is inappropriate.
+      
+      \item \code{unzip()} will now warn if it is able to detect truncation
+      when unpacking a file of 4GB or more (related to \PR{16243}).
+
+      \item \code{methods()} reports S4 in addition to S3 methods;
+      output is simplified when the \code{class} argument is
+      used.  \code{.S3methods()} and \code{methods::.S4methods()} report
+      S3 and S4 methods separately.
     }
   }
 
@@ -249,15 +375,16 @@
 
        Linux users should check that the \code{-devel} or \code{-dev}
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
-       \code{pcre} (or similar names) are installed.
+       \pkg{pcre} (or similar names) are installed.
 
-       \item \command{configure} requires the \command{texi2any} script
-       from \pkg{texinfo} 5.1 or later, replacing the \command{makeinfo}
-       program.  (\command{makeinfo} is a link to the Perl script
-       \command{texi2any} in \pkg{texinfo} 5.x.)
+       \item \command{configure} by default looks for the
+       \command{texi2any} script from \pkg{texinfo} 5.1 or later, rather
+       than the \command{makeinfo} program.  (\command{makeinfo} is a
+       link to the Perl script \command{texi2any} in \pkg{texinfo} 5.x.)
 
-       \item \command{R CMD INSTALL} gets option \code{--built-timestamp=STAMP}
-       allowing 100\% reproducible package building, thanks to Dirk Eddelbuettel.
+       \item \command{R CMD INSTALL} gains an  option
+       \option{--built-timestamp=STAMP} allowing 100\% reproducible
+       package building, thanks to Dirk Eddelbuettel.
      }
   }
 
@@ -276,10 +403,13 @@
       \code{tools::toHTML()} methods is now
       \sQuote{\acronym{XHTML} 1.0 Strict}.
 
-      \item The \pkg{compiler} package has a new utility function
+      \item The \pkg{compiler} package's utility function
       \code{setCompilerOptions()} now returns the old values
       invisibly. The initial optimization level can also be set with the
       environment variable \env{R_COMPILER_OPTIMIZE}.
+
+      \item \command{R CMD build} adds a \samp{NeedsCompilation} field
+      if one is not already present in the \file{DESCRIPTION} file.
 
       \item \command{R CMD check} gains option \option{--test-dir} to
       specify an alternative set of tests to run.
@@ -288,16 +418,35 @@
       testing after many types of errors, and will output a summary
       count of errors at the end if any have occurred.
 
+      \item \command{R CMD check} now checks that the \samp{Title} and
+      \samp{Description} fields are correctly terminated.
+
       \item \command{R CMD check --as-cran} checks a \file{README.md}
       file can be processed: this needs \command{pandoc} installed.
 
-      \item \command{R CMD build} adds a \samp{NeedsCompilation} field
-      if one is not already present in the DESCRIPTION file.
+      \item \command{R CMD check --as-cran} checks the existence and
+      accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
+      and \file{NEWS.Rd} files and in the help files.
 
-      \item \command{R CMD check} notes uses of \code{library()} and
-      \code{require()} in package code: see the section
-      \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
-      good practice.
+      \item \command{R CMD check --as-cran} reports non-ASCII characters
+      in R source files when there is no package encoding declared in
+      the \file{DESCRIPTION} file.
+
+      \item \command{R CMD check --as-cran} reports (apparent) S3
+      methods exported but not registered.
+
+      It reports overwriting registered S3 methods from base/recommended
+      packages.  (Such methods are replaced in the affected package for
+      the rest of the session, even if the replacing namespace is
+      unloaded.)
+
+      These checks can also be selected by environment variables: see
+      the \sQuote{R Internals} manual.
+
+      \item \command{R CMD check --as-cran} reports if the \code{Title}
+      field does not appear to be in title case (see \sQuote{Writing R
+      Extensions}: there may be false positives, but note that
+      technical words should be single-quoted and will then be accepted).
     }
   }
 
@@ -337,9 +486,13 @@
       \item Building the manuals now requires \command{texi2any} from
       \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds
       include the manuals, but by default builds from source will not, and
-      they will be accessed from \acronym{CRAN}. See the comments in
+      they will be accessed from \acronym{CRAN}.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
+
+      \item (Windows) The default toolchain for Windows is now based
+      on GCC 4.9.2.  Corresponding code changes and \file{Makefile} changes 
+      have been made; see \file{src/gnuwin32/MkRules.dist} for details.
     }
   }
 
@@ -356,8 +509,12 @@
       tried if binary versions are not available or not up to date.
 
       There are options for what \code{install.packages(type = "both")}
-      will do if compilation of a source package is desirable: see
-      \code{?options} (under \pkg{utils}).
+      (possibly called \emph{via} \code{update.packages()}) will do if
+      compilation of a source package is desirable: see \code{?options}
+      (under \pkg{utils}).
+
+      If you intend not to accept updates as source packages, you should
+      use \code{update.packages(type = "binary")}.
     }
   }
 
@@ -365,9 +522,9 @@
     \itemize{
       \item \code{download.file(method = "lynx")} is defunct.
 
-      \item Use of the included versions of \code{zlib}, \code{bzip2},
-      \code{xz} and PCRE is deprecated: these are essentially frozen and
-      will eventually be removed.
+      \item Building \R using the included versions of \code{zlib},
+      \code{bzip2}, \code{xz} and PCRE is deprecated: these are frozen
+      (bar essential bug-fixes) and will be removed for \R 3.3.0.
 
       \item The \command{configure} option
       \option{--with-valgrind-instrumentation=3} has been withdrawn, as
@@ -387,29 +544,46 @@
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
 
-      \item \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
-      avoid corruption of S4 class information by the S3 methods.
+      \item \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods
+      to avoid corruption of S4 class information by the S3 methods.
 
       \item \code{callNextMethod()} should now work within a \code{.local}
       call when \code{\dots} is absent from \code{formals(.local)}.
 
-      \item \code{dput(pairlist(x))} generates a call to the \code{pairlist}
-      constructor, instead of the \code{list} constructor.
+      \item \code{dput(pairlist(x))} generates a call to the
+      \code{pairlist} constructor instead of the \code{list}
+      constructor.
 
       \item Fix \code{missing()} when arguments are propagated through
-      \code{\dots}; see \PR{15707}.
+      \code{\dots} . (\PR{15707})
 
-      \item \code{eigen(m)} now defaults to \code{symmetric=TRUE} even when
-      the dimnames are asymmetric if the matrix is otherwise symmetric;
-      \PR{16151}.
+      \item \code{eigen(m)} now defaults to \code{symmetric = TRUE} even
+      when the dimnames are asymmetric if the matrix is otherwise
+      symmetric.  (\PR{16151})
 
       \item Fix issues with forwarding \code{\dots} through
-      \code{callGeneric} and \code{callNextMethod}; see \PR{16141}.
+      \code{callGeneric()} and \code{callNextMethod()}.  (\PR{16141})
+
+      \item \code{callGeneric()} now works after a \code{callNextMethod()}.
+
+      \item Subclass information is kept consistent when replacing an
+      ordinary S4 class with an \dQuote{old class} \emph{via} the
+      \code{S4Class} argument to \code{setOldClass()}. Thus, for
+      example, a \code{data.frame} is valid for a \code{list} argument
+      in the signature, and a \code{factor} is valid for \code{vector}
+      arguments.
+
+      \item In \code{qbeta()} the inversion of \code{pbeta()} is much
+      more sophisticated.  This works better in border cases, still
+      using too many iterations.
+
+      \item Auto-printing no longer duplicates objects when printing is
+      dispatched to a method.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.1.2 patched}{
+\section{\Rlogo CHANGES IN R 3.1.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The internal method of \code{download.file()} can now handle
@@ -449,13 +623,19 @@
       the platform (if it has one).
 
       \item Single source or binary files can be supplied for
-      \code{install.packages(type = "both")} and the approporiate type
+      \code{install.packages(type = "both")} and the appropriate type
       and \code{repos = NULL} will be inferred.
 
       \item New function \code{pcre_config()} to report on some of the
       configuration options of the version of PCRE in use.  In
       particular, this reports if regular expressions using
       \samp{\p{xx}} are supported.
+
+      \item (Windows.) \code{download.file(cacheOK = FALSE)} is now
+      supported when \file{internet2.dll} is used.
+
+      \item \code{browseURL()} has been updated to work with Firefox
+      36.0 which has dropped support for the \option{-remote} interface.
     }
   }
 
@@ -482,6 +662,11 @@
 
       \command{R CMD build} will correct line endings in all Makefiles,
       not just those in the \file{src} directory.
+
+      \item \command{R CMD check} notes uses of \code{library()} and
+      \code{require()} in package code: see the section
+      \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
+      good practice.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -544,6 +729,10 @@
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
 
+      \emph{Inter alia} that fix gives the documented behaviour for
+      \code{substr(x, 1, 2) <- ""} (subsequently reported as
+      \PR{16214}).
+
       \item Loading packages incorrectly defining an S4 generic followed
       by a function of the same name caused an erroneous cyclic
       namespace dependency error.
@@ -552,8 +741,8 @@
       vignette engine.
 
       \item Port Tomas Kalibera's fix from R-devel that restores the
-      loadMethod fast path, effectively doubling the speed of S4
-      dispatch.
+      \code{loadMethod()} fast path, effectively doubling the speed of
+      S4 dispatch.
 
       \item \code{power.t.test()} and \code{power.prop.test()} now make
       use of the \code{extendInt} option of \code{uniroot()} and hence
@@ -574,10 +763,28 @@
 
       \item \code{split.Date()} retains fractional representations while
       avoiding incomplete class propagation.
-      
-      \item \file{R_ext/Lapack.h} had not been updated for changes to
-      the argument lists of the (largely internal) functions
-      \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
+
+      \item \file{R_ext/Lapack.h} had not been updated for changes made
+      by LAPACK to the argument lists of its (largely internal)
+      functions \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
+
+      \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
+      layout changes of \R 3.1.0.
+
+      \item The \code{xtfrm()} method for class \code{"Surv"} has been
+      corrected and its description expanded.
+
+      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before
+      changing its mode. (\PR{16215})
+
+      \item \code{besselJ(1, 2^64)} and \code{besselY(..)} now signal a
+      warning, returning \code{NaN} instead of typically
+      segfaulting. (Issue 3 of \PR{15554})
+
+      \item HTML conversion of \samp{\href} markup in \file{.Rd} files
+      did not remove the backslash from \samp{\\\%} and so gave an
+      invalid URL.  In a related change, the \samp{\\} escape is now
+      required in such URLs.
     }
   }
 }

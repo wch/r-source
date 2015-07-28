@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -288,8 +288,8 @@ extSoftVersion <- function() .Internal(eSoftVersion())
 
 libcurlVersion <- function() .Internal(curlVersion())
 
-curlGetHeaders <- function(url, redirect = TRUE)
-    .Internal(curlGetHeaders(url, redirect))
+curlGetHeaders <- function(url, redirect = TRUE, verify = TRUE)
+    .Internal(curlGetHeaders(url, redirect, verify))
 
 
 ## base has no S4 generics

@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"Project-Id-Version: methods 3.2.0\n"
+"POT-Creation-Date: 2015-03-02 10:09\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,7 +193,7 @@ msgstr ""
 msgid "Function %s is a group generic; do not call it directly"
 msgstr ""
 
-msgid "'callGeneric' must be called from a generic function or method"
+msgid "callGeneric() must be called from within a method body"
 msgstr ""
 
 msgid "expected a non-empty character string for argument name"
@@ -356,6 +355,9 @@ msgstr ""
 msgid "bad object found as method (class %s)"
 msgstr ""
 
+msgid "No next method available"
+msgstr ""
+
 msgid "in constructing the prototype for class %s: prototype has class %s, but the data part specifies class %s"
 msgstr ""
 
@@ -498,12 +500,6 @@ msgid "the %s argument must be NULL or a generic function object; got an object 
 msgstr ""
 
 msgid "no suitable arguments to dispatch methods in this function"
-msgstr ""
-
-msgid "special function %s is not permitted to have methods"
-msgstr ""
-
-msgid "special function %s has no known argument list; will assume '(x, ...)'"
 msgstr ""
 
 msgid "making a generic for special function %s"

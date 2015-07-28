@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/pairs.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #  Some parts  Copyright (C) 1999 Dr. Jens Oehlschlaegel-Akiyoshi
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,6 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
     m$... <- NULL
     m$na.action <- na.action # force in even if  default
     m[[1L]] <- quote(stats::model.frame)
-    require(stats, quietly=TRUE)
     mf <- eval(m, parent.frame())
     pairs(mf, ...)
 }

@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,8 +38,8 @@ utils::globalVariables(".addBasicGeneric")
     }
 
     ## Next, add the remaining primitive generics
-    prims <- ls(.GenericArgsEnv, all.names=TRUE)
-    new_prims <- prims[!prims %in% names(funs)]
+    prims <- names(.GenericArgsEnv)
+    new_prims <- setdiff(prims, names(funs))
     for(nm in new_prims) {
         f <- get(nm, envir = .GenericArgsEnv)
         body(f) <- substitute(standardGeneric(ff), list(ff=val))
@@ -47,9 +47,9 @@ utils::globalVariables(".addBasicGeneric")
     }
 
     ## Then add all the primitives that are not already there.
-    ff <- ls("package:base", all.names=TRUE)
-    prims <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
-    new_prims <- prims[!prims %in% names(funs)]
+    ff <- as.list(baseenv(), all.names=TRUE)
+    prims <- ff[vapply(ff, is.primitive, logical(1L))]
+    new_prims <- setdiff(names(prims), names(funs))
     add <- rep(list(FALSE), length(new_prims))
     names(add) <- new_prims
     funs <- c(funs, add)

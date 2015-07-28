@@ -65,10 +65,13 @@ runs regression tests, that is tests that ensure that things which have been
 changed (perhaps as a result of bug reports) stay fixed.
 
 	make test-Internet
+	make test-Internet2
 
 runs tests which need access to the Internet and/or sockets and so may
-not run on every machine.  You will see some differences in the output,
-but no test should fail if you do have sockets and Internet access.
+not run on every machine.  You will see some differences in the
+output, but no test should fail if you do have sockets and Internet
+access.  test-Internet2 is part of 'make check-devel' and checks less
+commonly-used options.
 
 
 Further tests are run by the target `make check-devel', including
@@ -94,6 +97,12 @@ will be failed in about 1 in 50 runs.
 runs a test abusing all the functions in the base packages via
 no-segfault.R, and that can be quite slow (a minute or more).
 
+
+A target not run by anything else is
+
+	make test-System
+
+which checks options in system[2]() calls.
 
 
 A rarely-used target is

@@ -1,6 +1,6 @@
 % File src/library/tools/man/package_dependencies.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012-2012 R Core Team
+% Copyright 2012-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package_dependencies}

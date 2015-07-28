@@ -1,6 +1,6 @@
 % File src/library/tools/man/startDynamicHelp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{startDynamicHelp}
@@ -18,7 +18,7 @@ startDynamicHelp(start = TRUE)
 }
 \arguments{
   \item{start}{logical: whether to start or shut down the dynamic help
-    system.}
+    system.  If \code{NA}, the server is started if not already running.}
 }
 \details{
   This function starts the internal HTTP server, which runs on the

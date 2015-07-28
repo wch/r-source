@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -31,7 +31,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{exdir}{The directory to extract files to (the equivalent of
     \command{tar -C}).  It will be created if necessary.}
 
-  \item{compressed}{logical or character.  Values \code{"gzip"},
+  \item{compressed}{logical or character string.  Values \code{"gzip"},
     \code{"bzip2"} and \code{"xz"} select that form of compression (and
     may be abbreviated to the first letter).  \code{TRUE} indicates gzip
     compression, \code{FALSE} no known compression (but an external

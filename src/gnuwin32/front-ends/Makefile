@@ -1,28 +1,28 @@
 include ../MkRules
 R_HOME = ../../..
 
-CFLAGS=-O3 -Wall -pedantic
+CFLAGS = -O3 -Wall -pedantic
 ifdef DEBUG
- CFLAGS+=$(G_FLAG)
- LINKFLAGS=
- DLLFLAGS=
+ CFLAGS += $(G_FLAG)
+ LINKFLAGS =
+ DLLFLAGS =
 else
- LINKFLAGS=-s
- DLLFLAGS=-s
+ LINKFLAGS = -s
+ DLLFLAGS = -s
 endif
-CPPFLAGS=-I../../include $(arch_DEFS)
+CPPFLAGS = -I../../include $(arch_DEFS)
 
 ifeq "$(WIN)" "32"
 ## Increase stack size to 16Mb
-LARGE_STACK=-Wl,--stack=0x1000000
+LARGE_STACK = -Wl,--stack=0x1000000
 ## allow 32-bit builds to address over 2Gb
-LARGE_ADDR=-Wl,--large-address-aware
+LARGE_ADDR = -Wl,--large-address-aware
 else
 ## Increase stack size to 64Mb
-LARGE_STACK=-Wl,--stack=0x4000000
+LARGE_STACK = -Wl,--stack=0x4000000
 endif
 
-rcmdfn-CFLAGS=-DBINDIR='"$(BINDIR)"'
+rcmdfn-CFLAGS = -DBINDIR='"$(BINDIR)"'
 
 .PHONY : all makeMakedeps
 
@@ -74,17 +74,17 @@ $(R_HOME)/$(BINDIR)/open.exe: open.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
-rgui-CPPFLAGS=-DWin32
-rterm-CPPFLAGS=-DWin32
+rgui-CPPFLAGS = -DWin32
+rterm-CPPFLAGS = -DWin32
 
 ## -luser32 -lkernel32 -ladvapi32 -lshell32 are now standard
-Rgui-LIBS=-L../../../$(IMPDIR) -lR -lRgraphapp
-Rscript-LIBS=-L../../../$(IMPDIR) -lR -lRgraphapp
-Rterm-LIBS=-L../../../$(IMPDIR) -lR -lRgraphapp
+Rgui-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
+Rscript-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
+Rterm-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
 
-Rgui-LINKFLAGS=-mwindows $(LARGE_ADDR) $(LARGE_STACK)
-Rterm-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
-Rscript-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
+Rgui-LINKFLAGS = -mwindows $(LARGE_ADDR) $(LARGE_STACK)
+Rterm-LINKFLAGS = $(LARGE_ADDR) $(LARGE_STACK)
+Rscript-LINKFLAGS = $(LARGE_ADDR) $(LARGE_STACK)
 
 Rgui.exe: graphappmain.o rgui.o rgico.o
 Rterm.exe: graphappmain.o rterm.o rtico.o
@@ -130,8 +130,8 @@ open.exe: open.o
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps
 
-CSOURCES=$(filter-out R.c rcmd.c rpwd.c rtest.c, $(wildcard *.c))
-DEPS=$(CSOURCES:.c=.d)
+CSOURCES = $(filter-out R.c rcmd.c rpwd.c rtest.c, $(wildcard *.c))
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2014   The R Core Team.
+ *  Copyright (C) 1999-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -776,34 +776,40 @@ extern
 SEXP	R_RestartToken;     /* Marker for restarted function calls */
 
 /* Symbol Table Shortcuts */
+LibExtern SEXP	R_baseSymbol; // <-- backcompatible version of:
+LibExtern SEXP	R_BaseSymbol;	// "base"
+LibExtern SEXP	R_BraceSymbol;	    /* "{" */
 LibExtern SEXP	R_Bracket2Symbol;   /* "[[" */
 LibExtern SEXP	R_BracketSymbol;    /* "[" */
-LibExtern SEXP	R_BraceSymbol;      /* "{" */
 LibExtern SEXP	R_ClassSymbol;	    /* "class" */
-LibExtern SEXP	R_DeviceSymbol;     /* ".Device" */
+LibExtern SEXP	R_DeviceSymbol;	    /* ".Device" */
 LibExtern SEXP	R_DimNamesSymbol;   /* "dimnames" */
 LibExtern SEXP	R_DimSymbol;	    /* "dim" */
 LibExtern SEXP	R_DollarSymbol;	    /* "$" */
 LibExtern SEXP	R_DotsSymbol;	    /* "..." */
-LibExtern SEXP	R_baseSymbol;	    /* "base" */
+LibExtern SEXP	R_DoubleColonSymbol;// "::"
 LibExtern SEXP	R_DropSymbol;	    /* "drop" */
 LibExtern SEXP	R_LastvalueSymbol;  /* ".Last.value" */
 LibExtern SEXP	R_LevelsSymbol;	    /* "levels" */
 LibExtern SEXP	R_ModeSymbol;	    /* "mode" */
+LibExtern SEXP	R_NaRmSymbol;	    /* "na.rm" */
 LibExtern SEXP	R_NameSymbol;	    /* "name" */
 LibExtern SEXP	R_NamesSymbol;	    /* "names" */
-LibExtern SEXP	R_NaRmSymbol;	    /* "na.rm" */
-LibExtern SEXP  R_PackageSymbol;    /* "package" */
-LibExtern SEXP  R_PreviousSymbol;   /* "previous" */
-LibExtern SEXP  R_QuoteSymbol;	    /* "quote" */
+LibExtern SEXP	R_NamespaceEnvSymbol;// ".__NAMESPACE__."
+LibExtern SEXP	R_PackageSymbol;    /* "package" */
+LibExtern SEXP	R_PreviousSymbol;   /* "previous" */
+LibExtern SEXP	R_QuoteSymbol;	    /* "quote" */
 LibExtern SEXP	R_RowNamesSymbol;   /* "row.names" */
 LibExtern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
 LibExtern SEXP	R_SortListSymbol;   /* "sort.list" */
-LibExtern SEXP	R_SourceSymbol;     /* "source" */
+LibExtern SEXP	R_SourceSymbol;	    /* "source" */
+LibExtern SEXP	R_SpecSymbol;	// "spec"
+LibExtern SEXP	R_TripleColonSymbol;// ":::"
 LibExtern SEXP	R_TspSymbol;	    /* "tsp" */
 
 LibExtern SEXP  R_dot_defined;      /* ".defined" */
 LibExtern SEXP  R_dot_Method;       /* ".Method" */
+LibExtern SEXP	R_dot_packageName;// ".packageName"
 LibExtern SEXP  R_dot_target;       /* ".target" */
 
 /* Missing Values - others from Arith.h */
@@ -1156,11 +1162,13 @@ int R_system(const char *);
 
 /* R_compute_identical:  C version of identical() function
    The third arg to R_compute_identical() consists of bitmapped flags for non-default options:
-   currently all default to TRUE, so the flag is set for FALSE values:
+   currently the first 4 default to TRUE, so the flag is set for FALSE values:
    1 = !NUM_EQ
    2 = !SINGLE_NA
    4 = !ATTR_AS_SET
    8 = !IGNORE_BYTECODE
+  16 = !IGNORE_ENV
+  Default from R's default: 15
 */
 Rboolean R_compute_identical(SEXP, SEXP, int);
 
@@ -1325,6 +1333,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define stringPositionTr	Rf_stringPositionTr
 #define StringBlank		Rf_StringBlank
 #define substitute		Rf_substitute
+#define topenv		        Rf_topenv
 #define translateChar		Rf_translateChar
 #define translateChar0		Rf_translateChar0
 #define translateCharUTF8      	Rf_translateCharUTF8

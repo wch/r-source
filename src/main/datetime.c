@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014  The R Core Team.
+ *  Copyright (C) 2000-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,6 +85,8 @@ known OS with 64-bit time_t and complete tables is Linux.
 # define HAVE_TM_GMTOFF 1
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
+# undef HAVE_WORKING_64BIT_MKTIME
+# define HAVE_WORKING_64BIT_MKTIME 1
 #else
 
 typedef struct tm stm;

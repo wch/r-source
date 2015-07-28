@@ -62,7 +62,7 @@ makePrototypeFromClassDef <-
     snames <- names(slots)
     ## try for a single superclass that is not virtual
     supers <- names(extends)
-    virtual <- NA
+##    virtual <- NA
     dataPartClass <- elNamed(slots, ".Data")
     prototype <- ClassDef@prototype
     dataPartDone <- is.null(dataPartClass)  || is(prototype, dataPartClass)# don't look for data part in supreclasses
@@ -81,10 +81,10 @@ makePrototypeFromClassDef <-
         exti <- extends[[i]]
         if(identical(exti@simple, FALSE))
             next ## only simple contains rel'ns give slots
-        if(identical(what, "VIRTUAL"))
+        if(identical(what, "VIRTUAL")) {
             ## the class is virtual, and the prototype usually NULL
-            virtual <- TRUE
-        else if(isClass(what, where = where)) {
+##            virtual <- TRUE
+        } else if(isClass(what, where = where)) {
             cli <- getClass(what, where = where)
             slotsi <- names(cli@slots)
             pri <- cli@prototype
@@ -92,7 +92,7 @@ makePrototypeFromClassDef <-
             if(is.null(prototype)) {
                 prototype <- pri
                 pnames <- names(attributes(prototype))
-                fromClass <- what
+##                fromClass <- what
             }
             else if(length(slots)) {
                 for(slotName in slotsi) {
@@ -224,9 +224,9 @@ completeClassDefinition <-
     properties <- ClassDef@slots
     prototype <- makePrototypeFromClassDef(properties, ClassDef, immediate, where)
     virtual <- ClassDef@virtual
-    validity <- ClassDef@validity
-    access <- ClassDef@access
-    package <- ClassDef@package
+#    validity <- ClassDef@validity
+#    access <- ClassDef@access
+#    package <- ClassDef@package
     extends    <- if(doExtends) completeExtends   (ClassDef, where = where) else ClassDef@contains
     subclasses <- if(doExtends) completeSubclasses(ClassDef, where = where) else ClassDef@subclasses
     if(is.na(virtual))
@@ -255,9 +255,9 @@ completeClassDefinition <-
 
 .completeClassSlots <- function(ClassDef, where) {
         properties <- ClassDef@slots
-        simpleContains <- ClassDef@contains
-        Class <- ClassDef@className
-        package <- ClassDef@package
+##        simpleContains <- ClassDef@contains
+##        Class <- ClassDef@className
+##        package <- ClassDef@package
         ext <- getAllSuperClasses(ClassDef, TRUE)
         ## ext has the names of all the direct and indirect superClasses but NOT those that do
         ## an explicit coerce (we can't conclude anything about slots, etc. from them)
@@ -708,7 +708,7 @@ reconcilePropertiesAndPrototype <-
                                 dQuote(elNamed(properties, ".Data")),
                                 dQuote(dataPartClass)),
                        domain = NA)
-              pslots <- NULL
+##              pslots <- NULL
               if(is.null(prototype)) {
                   if(dataPartValue)
                       prototype <- newObject
@@ -1513,7 +1513,7 @@ setDataPart <- function(object, value, check = TRUE) {
 }
 
 .transitiveSubclasses <- function(by, to, toExt, moreExts, strictBy) {
-    what <- names(moreExts)
+##    what <- names(moreExts)
 ###    if(!strictBy) message("Subclasses: ",by, ": ", paste(what, collapse = ", "))
     for(i in seq_along(moreExts)) {
         byExt <- moreExts[[i]]
@@ -1528,10 +1528,9 @@ setDataPart <- function(object, value, check = TRUE) {
         ## construct the composite coerce method, taking into account the strict=
         ## argument.
         f <- toExt@coerce
-        fR <- toExt@replace
-            toExpr <- body(f)
-            fBy <- byExt@coerce
-            byExpr <- body(fBy)
+	toExpr <- body(f)
+	fBy <- byExt@coerce
+	byExpr <- body(fBy)
         ## if both are simple extensions, so is the composition
         if(byExt@simple && toExt@simple) {
             expr <- (if(byExt@dataPart)
@@ -1793,7 +1792,7 @@ substituteFunctionArgs <-
                 return(.GlobalEnv)
             if(identical(package, "methods"))
                 return(topenv(parent.frame())) # booting methods
-            if(!is.null(pkg <- get0(package, envir = .PackageEnvironments, inherits = FALSE)))
+            if(!is.null(pkg <- .PackageEnvironments[[package]]))
                 return(pkg) #cached, but only if no namespace
         }
     }
@@ -2022,7 +2021,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 }
 
 .uncacheClass <- function(name, def) {
-    if(!is.null(prev <- get0(name, envir = .classTable, inherits = FALSE))) {
+  if(!is.null(prev <- .classTable[[name]])) {
         if(is(def, "classRepresentation")) # paranoia: should only be called this way
             newpkg <- def@package
         else
@@ -2221,7 +2220,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     evv <- findClass(class, .GlobalEnv) # what about hidden classes?  how to find them?
     mname <- classMetaName(class)
     for(where in evv) {
-        if(!is.null(cdef <- get0(mname, envir = where, inherits = FALSE))) {
+        if(!is.null(cdef <- where[[mname]])) {
             newdef <- .deleteSuperClass(cdef, superclass)
             if(!is.null(newdef)) {
               assignClassDef(class, newdef,  where, TRUE)
@@ -2389,7 +2388,7 @@ S3forS4Methods <- function(where, checkClasses = character()) {
   if(length(allClasses) == 0)
     return(allClasses)
   pattern <- paste0("([.]",allClasses, "$)", collapse="|")
-  allObjects <- objects(where, all.names = TRUE)
+  allObjects <- names(where)
   allObjects <- allObjects[-grep("^[.][_][_]", allObjects)] # remove meta data
   allObjects <- grep(pattern, allObjects, value = TRUE)
   if(length(allObjects) > 0) {

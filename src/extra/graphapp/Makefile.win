@@ -45,7 +45,7 @@ distclean: clean
 
 # Dependencies
 dllversion.o: ../../include/Rversion.h
-DEPS=$(SOURCES:.c=.d)
+DEPS = $(SOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

@@ -86,9 +86,7 @@
 #undef ERROR			/* for compilation on Windows */
 
 #ifdef Win32
-int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
-		   va_list args);
-# define vsnprintf trio_vsnprintf
+#include <trioremap.h>
 #endif
 
 int attribute_hidden R_OutputCon; /* used in printutils.c */
@@ -4951,8 +4949,10 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 /* op = 0: url(description, open, blocking, encoding)
    op = 1: file(description, open, blocking, encoding)
 */
-extern
-Rconnection R_newCurlUrl(const char *description, const char * const mode);
+
+// in internet module: 'type' is unused
+extern Rconnection 
+R_newCurlUrl(const char *description, const char * const mode, int type);
 
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -4960,6 +4960,9 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     char *class2 = "url";
     const char *url, *open;
     int ncon, block, raw = 0, meth = 0;
+#ifdef Win32
+    int urlmeth = UseInternet2;
+#endif
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET
@@ -4992,7 +4995,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
     else if (strncmp(url, "https://", 8) == 0) type = HTTPSsh;
-    // ftps:// is 'in principle' at present.
+    // ftps:// is available via most libcurl.
     else if (strncmp(url, "ftps://", 7) == 0) type = FTPSsh;
 #endif
 
@@ -5015,7 +5018,62 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(PRIMVAL(op) == 0) {
 	const char *cmeth = CHAR(asChar(CAD4R(args)));
-	meth = strcmp(cmeth, "internal");
+	meth = streql(cmeth, "libcurl");
+	if (streql(cmeth, "wininet")) {
+#ifdef Win32
+	    urlmeth = 1;
+#else
+	    error(_("method = \"wininet\" is only supported on Windows"));
+#endif    
+	} 
+#ifdef Win32
+	else if (streql(cmeth, "internal")) urlmeth = 0;
+#endif
+    } else { // file(), look at option.
+	SEXP opt = GetOption1(install("url.method"));
+	if (isString(opt) && LENGTH(opt) >= 1) {
+	    const char *val = CHAR(STRING_ELT(opt, 0));
+	    if (streql(val, "libcurl")) meth = 1;
+#ifdef Win32
+	    if (streql(val, "wininet")) urlmeth = 1;
+#endif
+	}
+    }
+
+    if(!meth) {
+	if (strncmp(url, "ftps://", 7) == 0)
+#ifdef HAVE_CURL_CURL_H
+	{
+	    // this is slightly optimistic: we did not check the libcurl build
+	    REprintf("ftps:// URLs are not supported by the default method: trying \"libcurl\"\n");
+	    R_FlushConsole();
+	    meth = 1;
+	}
+//	error("ftps:// URLs are not supported by the default method:\n   consider url(method = \"libcurl\")");
+#else
+	error("ftps:// URLs are not supported");
+#endif
+#ifdef Win32
+	if (!urlmeth && strncmp(url, "https://", 8) == 0) {
+	    REprintf("https:// URLs are not supported by the default method: using \"wininet\"\n");
+	    R_FlushConsole();
+	    urlmeth = 1;
+	}
+	//   error("for https:// URLs use setInternet2(TRUE)");
+#else
+	if (strncmp(url, "https://", 8) == 0)
+# ifdef HAVE_CURL_CURL_H
+	{
+	    // this is slightly optimistic: we did not check the libcurl build
+	    REprintf("https:// URLs are not supported by the default method: trying \"libcurl\"\n");
+	    R_FlushConsole();
+	    meth = 1;
+	}
+//	    error("https:// URLs are not supported by the default method:\n  consider url(method = \"libcurl\")");
+# else
+	error("https:// URLs are not supported");
+# endif
+#endif
     }
 
     ncon = NextConnection();
@@ -5029,14 +5087,23 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	con = newfile(url + nh, ienc, strlen(open) ? open : "r", raw);
 	class2 = "file";
 #ifdef HAVE_INTERNET
+	// we could pass others to libcurl.
     } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "https://", 8) == 0 ||
 	       strncmp(url, "ftp://", 6) == 0 ||
 	       strncmp(url, "ftps://", 7) == 0) {
 	if(meth) {
-	    con = R_newCurlUrl(url, strlen(open) ? open : "r");
+#ifdef HAVE_CURL_CURL_H
+	    con = R_newCurlUrl(url, strlen(open) ? open : "r", 0);
+#else
+	    error("url(method = \"libcurl\") is not supported on this platform");
+#endif
 	} else {
-	    con = R_newurl(url, strlen(open) ? open : "r");
+#ifdef Win32
+	    con = R_newurl(url, strlen(open) ? open : "r", urlmeth);
+#else
+	    con = R_newurl(url, strlen(open) ? open : "r", 0);
+#endif
 	    ((Rurlconn)con->private)->type = type;
 	}
 #endif
@@ -5100,7 +5167,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    class2 = "file";
 	} else {
-	    error(_("unsupported URL scheme"));
+	    error(_("URL scheme unsupported by this method"));
 	}
     }
 

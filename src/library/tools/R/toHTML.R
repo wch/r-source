@@ -1,7 +1,7 @@
 toHTML <- function(x, ...) UseMethod("toHTML")
 
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 
 HTMLheader <-
 function(title="R", logo=TRUE,
@@ -160,7 +160,7 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	      '<col style="width: 50%;" />',
 	      '<col style="width:  8%;" />',
 	      '<col style="width:  8%;" />',
-	      '<col style="width:  8%;" />')
+             '<col style="width:  8%;" />')
     for (i in seq_len(nrow(vignettes))) {
 	Outfile <- vignettes[i, "PDF"]
 	topic <- file_path_sans_ext(Outfile)
@@ -195,10 +195,10 @@ makeDemoTable <- function(demos, depth=2) {
              '<col style="width: 54%;" />',
              '<col style="width: 20%;" />')
     for (i in seq_len(nrow(demos))) {
-	topic <- demos[i, "topic"]
+	topic <- demos[i, "Topic"]
 	pkg <- demos[i, "Package"]
         root <- c(rep("../", depth), "library/", pkg, "/")
-	Title <- demos[i, "title"]
+	Title <- demos[i, "Title"]
 	path <- file.path(demos[i, "LibPath"], "demo")
 	files <- basename(list_files_with_type(path, "demo", full.names=FALSE))
 	file <- files[topic == file_path_sans_ext(files)]
@@ -222,18 +222,18 @@ makeDemoTable <- function(demos, depth=2) {
 
 makeHelpTable <- function(help, depth=2) {
     out <- c('<table width="100%">',
-	      '<col style="width: 22%;" />',
-	      '<col style="width:  2%;" />',
-	      '<col style="width: 74%;" />')
-    pkg <- help[,"Package"]
-    root <- paste0(paste(rep.int("../", depth), collapse=""),
+             '<col style="width: 22%;" />',
+             '<col style="width:  2%;" />',
+             '<col style="width: 74%;" />')
+    pkg <- help[, "Package"]
+    root <- paste0(paste(rep.int("../", depth), collapse = ""),
                    "library/", pkg, "/html/")
-    topic <- help[, "topic"]
-    Title <- help[, "title"]
+    topic <- help[, "Topic"]
+    Title <- help[, "Title"]
     links <- paste0('<a href="', root, topic, '.html">',
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')
-    lines <- paste0('<tr><td style="text-align: right; vertical-align: top";>', links,
+    lines <- paste0('<tr><td style="text-align: right; vertical-align: top;">', links,
 		    '</td>\n<td></td><td valign="top">', Title,
 		    '</td></tr>')
     c(out, lines, '</table>')

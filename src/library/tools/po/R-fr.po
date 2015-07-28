@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -258,6 +258,13 @@ msgstr ""
 "Les packages avec priorité 'base' ou 'recommended' ou 'defunct-base' doivent "
 "être déjà connus de R."
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -280,7 +287,14 @@ msgstr "Le champ Authors@R ne renvoie aucune personne avec un rôle reconnu."
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Impossible d'extraire le champ 'Maintainer' du champ 'Authors@R' :"
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "Le champ 'Authors@R' ne renvoie aucune personne avec un rôle d'auteur."
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 "Le champ 'Authors@R' ne renvoie personne avec un rôle de mainteneur et une "
 "adresse email."
@@ -1228,6 +1242,18 @@ msgstr "'x' doit être une chaîne de caractères unique"
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
 
+msgid ":"
+msgstr " :"
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "l'argument 'x' doit être un vecteur de chaînes de caractères"
 
@@ -1276,6 +1302,10 @@ msgstr "impossible de sourcer le code du package"
 
 msgid "Call sequence:"
 msgstr "Séquence d'appel :"
+
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "l'argument 'x' doit être un vecteur de chaînes de caractères"
 
 msgid "parsing '%s'"
 msgstr "analyse de '%s'"
@@ -1450,6 +1480,12 @@ msgstr[0] "%d des tests du package ont échoué"
 msgstr[1] "%d des tests du package ont échoué"
 
 #, fuzzy
+#~ msgid "Undeclared package used in Rd xrefs:"
+#~ msgid_plural "Undeclared packages used in Rd xrefs:"
+#~ msgstr[0] "Package inconnu %s dans les xrefs Rd"
+#~ msgstr[1] "Packages inconnus %s dans les xrefs Rd"
+
+#, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 #~ msgstr "Spécifications d'encodage incohérentes :"
 
@@ -1483,9 +1519,6 @@ msgstr[1] "%d des tests du package ont échoué"
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr ". Les fichiers sont dans ce répertoire"
-
-#~ msgid ":"
-#~ msgstr " :"
 
 #~ msgid "Located more than one"
 #~ msgstr "Localisation plus d'une fois"
