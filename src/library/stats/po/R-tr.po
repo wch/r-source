@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-11-20 11:48\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -679,9 +679,6 @@ msgid "'ColSideColors' must be a character vector of length ncol(x)"
 msgstr "'ColSideColors' ncol(x) büyüklüğünde bir karakter vektörü olmalı"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr ""
-
-msgid "non-matched further arguments are disregarded"
 msgstr ""
 
 msgid "argument 'x' must be numeric"
@@ -2412,12 +2409,6 @@ msgstr[0] "ekstra argümanlar çıkarıldı"
 msgstr[1] "ekstra argümanlar çıkarıldı"
 
 #, fuzzy
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "ekstra argümanlar çıkarıldı"
-msgstr[1] "ekstra argümanlar çıkarıldı"
-
-#, fuzzy
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"
 msgstr[0] "%d faktör %d değişken için çok fazla"
@@ -2544,6 +2535,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#, fuzzy
+#~ msgid "extra argument %s will be disregarded"
+#~ msgid_plural "extra arguments %s will be disregarded"
+#~ msgstr[0] "ekstra argümanlar çıkarıldı"
+#~ msgstr[1] "ekstra argümanlar çıkarıldı"
 
 #~ msgid "'merge' and 'height' do not fit!"
 #~ msgstr "'merge' ve 'height' uymuyor!"

@@ -1,7 +1,7 @@
 #  File src/library/base/R/seq.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,12 +42,7 @@ seq.default <-
         }
 	length.out <- ceiling(length.out)
     }
-    if(!missing(...))
-        warning(sprintf(ngettext(length(list(...)),
-                                 "extra argument %s will be disregarded",
-                                 "extra arguments %s will be disregarded"),
-			 paste(sQuote(names(list(...))), collapse = ", ")),
-		domain = NA)
+    chkDots(...)
     if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
     if (!missing(to) && length(to) != 1L) stop("'to' must be of length 1")
     if (!missing(from) && !is.finite(from))

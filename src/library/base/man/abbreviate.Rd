@@ -21,8 +21,8 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{strict}{logical: should \code{minlength} be observed strictly?
     Note that setting \code{strict = TRUE} may return \emph{non}-unique
     strings.}
-  \item{method}{a string specifying the method used with default
-    \code{"left.kept"}, see \sQuote{Details} below.}
+  \item{method}{a character string specifying the method used with default
+    \code{"left.kept"}, see \sQuote{Details} below. Partial matches allowed.}
 }
 \description{
   Abbreviate strings to at least \code{minlength} characters,

@@ -95,7 +95,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
     case STRSXP:
 	vmax = vmaxget();
 	nx = xlength(x);
-	names = getAttrib(x, R_NamesSymbol);
+	names = PROTECT(getAttrib(x, R_NamesSymbol));
 	if (! IS_R_NilValue(names)) {
 	    /* Try for exact match */
 	    for (i = 0; i < nx; i++) {
@@ -121,6 +121,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 		}
 	    }
 	}
+	UNPROTECT(1); /* names */
 	if (indx == -1)
 	    indx = nx;
 	*newname = STRING_ELT(s, pos);
@@ -131,12 +132,14 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	nx = xlength(x);
 	names = getAttrib(x, R_NamesSymbol);
 	if (! IS_R_NilValue(names)) {
+	    PROTECT(names);
 	    for (i = 0; i < nx; i++)
 		if (streql(translateChar(STRING_ELT(names, i)),
 			   translateChar(PRINTNAME(s)))) {
 		    indx = i;
 		    break;
 		}
+	    UNPROTECT(1); /* names */
 	}
 	if (indx == -1)
 	    indx = nx;
@@ -308,8 +311,11 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    else
 		errorcall(call, _("attempt to select more than one element"));
 	}
-	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
+	PROTECT(x);
+	SEXP names = PROTECT(getAttrib(x, R_NamesSymbol));
+	offset = get1index(thesub, names,
 		           xlength(x), pok, i, call);
+	UNPROTECT(2); /* x, names */
 	if(offset < 0 || offset >= xlength(x))
 	    errorcall(call, _("no such index at level %d\n"), i+1);
 	if(isPairList(x)) {
@@ -523,7 +529,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 		if (LOGICAL(s)[i]) count++;
 	    count *= nmax / ns;
 	}
-	indx = allocVector(REALSXP, count);
+	PROTECT(indx = allocVector(REALSXP, count));
 	count = 0;
 	if (ns == nmax) { /* no recycling - use fast single-index code */
 	    R_ITERATE_CHECK(NINTERRUPT, nmax, i,		\
@@ -542,6 +548,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 			    REAL(indx)[count++] = (int)(i + 1);		\
 		    });							\
 
+	UNPROTECT(1);
 	return indx;
     }
 #endif
@@ -563,7 +570,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	    if (LOGICAL(s)[i]) count++;
 	count *= nmax / ns;
     }
-    indx = allocVector(INTSXP, count);
+    PROTECT(indx = allocVector(INTSXP, count));
     count = 0;
     if (ns == nmax) { /* no recycling - use fast single-index code */
 	R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
@@ -583,6 +590,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 		}						\
 	    });
 
+    UNPROTECT(1);
     return indx;
 }
 

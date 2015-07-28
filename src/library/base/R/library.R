@@ -294,7 +294,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     	# No, so try to unload the previous one
                     	res <- try(unloadNamespace(package))
                     	if (inherits(res, "try-error"))
-                    	    stop(dQuote(package), " version ", oldversion, " cannot be unloaded.")
+                    	    stop(gettextf("Package %s version %s cannot be unloaded", sQuote(package), oldversion, domain = "R-base"))
                     }
                 }
                 tt <- try({
@@ -839,7 +839,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
             stop(gettextf("package %s required by %s could not be found",
                           sQuote(pkg), sQuote(pkgname)),
                  call. = FALSE, domain = NA)
-        have_vers <- vapply(depends, length, 1L) > 1L
+        have_vers <- lengths(depends) > 1L
         for(dep in depends[have_vers]) {
             target <- as.numeric_version(dep$version)
             sufficient <- do.call(dep$op, list(current, target))
@@ -871,7 +871,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 packageStartupMessage(gettextf("Loading required package: %s",
                                                pkg), domain = NA)
             library(pkg, character.only = TRUE, logical.return = TRUE,
-                    lib.loc = lib.loc) ||
+                    lib.loc = lib.loc, quietly = quietly) ||
                 stop(gettextf("package %s could not be loaded", sQuote(pkg)),
                      call. = FALSE, domain = NA)
         }

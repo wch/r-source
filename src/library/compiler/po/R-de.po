@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
-"PO-Revision-Date: 2013-02-28 16:12+0100\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-20 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsuhh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -30,7 +30,7 @@ msgid "cannot constant fold literal promises"
 msgstr "kann literale Promises nicht konstant falten"
 
 msgid "cannot constant fold literal bytecode objects"
-msgstr "kann literale Bytecodeobjecte nicht konstant falten"
+msgstr "kann literale Bytecode-Objekte nicht konstant falten"
 
 msgid "no offset recorded for label \"%s\""
 msgstr "kein Offset aufgezeichnet für Label \"%s\""
@@ -39,7 +39,7 @@ msgid "cannot compile byte code literals in code"
 msgstr "kann Bytecode Literale im Code nicht kompilieren"
 
 msgid "cannot compile promise literals in code"
-msgstr "kann literatle promises nicht in Programm kompilieren"
+msgstr "kann literale promises nicht in Programm kompilieren"
 
 msgid "possible error in '%s': %s"
 msgstr "möglicher Fehler in '%s': %s"
@@ -56,8 +56,9 @@ msgstr "unzulässige Zuweisung 2"
 msgid "invalid function in complex assignment"
 msgstr "unzulässige Funktion in komplexer Zuweisung"
 
-msgid "is not a registered math1 function"
-msgstr ""
+#, fuzzy
+msgid "%s is not a registered math1 function"
+msgstr "ist keine registrierte math1 Funktion"
 
 msgid "missing arguments are not allowed"
 msgstr "fehlende Argumente sind nicht zugelassen"
@@ -105,14 +106,13 @@ msgid "file '%s' does not exist"
 msgstr "Datei '%s' existiert nicht"
 
 msgid "'%s' is not a valid compiler option"
-msgstr "'%s' ist keine zulässige Kompileroption"
+msgstr "'%s' ist keine zulässige Compiler-Option"
 
 msgid "function is not compiled"
 msgstr "Funktion ist nicht kompiliert"
 
-#, fuzzy
 msgid "cannot compile this expression"
-msgstr "kann literatle promises nicht in Programm kompilieren"
+msgstr "kann diesen Ausdruck nicht kompilieren"
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "

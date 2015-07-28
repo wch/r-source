@@ -86,7 +86,8 @@ hat(x, intercept = TRUE)
   \item{dispersion}{dispersion (for \code{\link{glm}} objects) to use,
     see default.}
   \item{hat}{hat values \eqn{H_{ii}}{H[i,i]}, see default.}
-  \item{type}{type of residuals for \code{glm} method for \code{rstandard.}}
+  \item{type}{type of residuals for \code{glm} method for \code{rstandard}.
+    Can be abbreviated.}
 
   \item{x}{the \eqn{X} or design matrix.}
   \item{intercept}{should an intercept column be prepended to \code{x}?}

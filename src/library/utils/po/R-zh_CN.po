@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -80,12 +80,6 @@ msgstr "指向%s的路径里不能有空格,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "这可能会对运行LaTeX里产生问题"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "输出文件'%s'不见了"
@@ -510,11 +504,14 @@ msgstr "'%s'是正式同属函数; 很有可能找不到S3方法"
 msgid "no function '%s' is visible"
 msgstr "看不到'%s'这样一个函数"
 
-msgid "function '%s' appears not to be generic"
-msgstr "函数'%s'好象不是同属的"
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "同属函数'%s'给同属'%s'分發了方法"
+
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr "函数'%s'好象不是同属的"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "必需提供'generic.function'或'class'两个中的一个"
@@ -1108,6 +1105,9 @@ msgstr "无法建立%s"
 msgid "there is no 'libs' directory in package %s"
 msgstr "在程序包%s里找不到'libs'这个目录"
 
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr ""
+
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"
 
@@ -1225,13 +1225,12 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字不对：%s"
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid ","
+#~ msgstr ","
 
 #~ msgid ""
 #~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "

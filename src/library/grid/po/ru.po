@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2013-03-19 20:00-0600\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"PO-Revision-Date: 2015-03-26 19:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -25,49 +25,49 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "не могу обрезать до повернутой оконницы"
 
-#: grid.c:696 grid.c:701 grid.c:790 grid.c:795
+#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' "
 "смешались?)"
 
-#: grid.c:975
+#: grid.c:977
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
-#: grid.c:1307
+#: grid.c:1309
 msgid "there is no layout defined"
 msgstr "нет заданного эскиза"
 
-#: grid.c:1527
+#: grid.c:1529
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "край многоугольника не найден (нулевая ширина или высота?)"
 
-#: grid.c:1536
+#: grid.c:1538
 msgid "polygon edge not found"
 msgstr "край многоугольника не найден"
 
-#: grid.c:1690
+#: grid.c:1692
 msgid "require at least two points to draw arrow"
 msgstr "надо как минимум две точки, чтобы нарисовать стрелку"
 
-#: grid.c:2006
+#: grid.c:2008
 msgid "non-finite control point in Xspline"
 msgstr "не-конечная контрольная точка в Xspline"
 
-#: grid.c:2871
+#: grid.c:2873
 msgid "non-finite x or y in graphics path"
 msgstr "бесконечный x или y в кривой крафика"
 
-#: grid.c:2912
+#: grid.c:2914
 msgid "Empty raster"
-msgstr ""
+msgstr "Пустой растр"
 
-#: grid.c:3364
+#: grid.c:3368
 msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
-#: grid.c:3450
+#: grid.c:3454
 msgid "unable to clip to rotated rectangle"
 msgstr "не могу обрезать до повернутого четырехугольника"
 
@@ -97,11 +97,11 @@ msgstr "неправильная или не разработанная единица"
 
 #: unit.c:1702 unit.c:1733
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr "Оконница имеет ноль измерений"
 
 #: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr "Неподдерживаемая конверсия единиц измерения"
 
 #: unit.c:1898
 msgid "Invalid unit"

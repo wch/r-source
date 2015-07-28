@@ -36,21 +36,27 @@
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# With the recommended toolchain, set RTOOLS to its root directory, and
-# BINPREF and BINPREF64 (below) will be set properly.  Set them by hand
-# for a different toolchain.  Include the trailing /, and use / not \.
-# RTOOLS = C:/Rtools/
-# for other toolchains set the more detailed options below
+# With the recommended gcc 4.6.3 toolchain, set this to 32 or 64
+# MULTI =
+# If the toolchain's bin directory is not in your path, set this to the path
+# (including the trailing /, and use / not \).
+# TOOL_PATH =
+# for other toolchains leave these empty and set the more detailed options below
+
+# With the experimental gcc 4.9.2 toolchain or another toolchain, set 
+# BINPREF and BINPREF64 (below) to the respective bin directories.  
+# Include the trailing /, and use / not \.
+# Do this in the more detailed options below
 
 
 ### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
-# including a trailing / .
-# prefix for 32-bit: path or i686-w64-mingw32-
-# BINPREF = $(RTOOLS)gcc492_32/bin/
-# prefix for 64-bit: path or x86_64-w64-mingw32-
-# BINPREF64 = $(RTOOLS)gcc492_64/bin/
+# including a trailing / .  The experimental gcc 4.9.2 defaults are shown;
+# actual defaults are blank for both of these.
+# BINPREF = c:/Rtools/gcc492_32/bin/
+# prefix for 64-bit:
+# BINPREF64 = c:/Rtools/gcc492_64/bin/
 
 # Others use a -m64 or -m32 option to select architectures
 # M_ARCH =
@@ -73,12 +79,6 @@
 # but this macro forces the use of import libs
 # Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
-
-# With the recommended toolchain, these should be blank.  With a multilib
-# toolchain, set it to 32 or 64
-# MULTI =
-# and set this to the bin directory of the compilers
-# TOOL_PATH =
 
 ### END more detailed options
 

@@ -36,7 +36,7 @@ splinefunH(x, y, m)
     piecewise cubic, (only) \emph{once} differentiable continuously.}
   \item{method}{specifies the type of spline to be used.  Possible
     values are \code{"fmm"}, \code{"natural"}, \code{"periodic"},
-    \code{"monoH.FC"} and \code{"hyman"}.}
+    \code{"monoH.FC"} and \code{"hyman"}.  Can be abbreviated.}
   \item{n}{if \code{xout} is left unspecified, interpolation takes place
        at \code{n} equally spaced points spanning the interval
        [\code{xmin}, \code{xmax}].}

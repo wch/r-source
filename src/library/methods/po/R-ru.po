@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-31 13:18\n"
-"PO-Revision-Date: 2014-03-11 10:30-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-26 19:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -21,7 +21,8 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+#, fuzzy
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "OOPS: что-то не так со строкой %d в '.OldClassesPrototypes'"
 
 msgid ""
@@ -283,6 +284,9 @@ msgstr ""
 "первый аргумент должен быть именем(-ами) общих функций (а получен объект "
 "класса %s)"
 
+msgid "must supply 'generic.function' or 'class'"
+msgstr "надо указать 'generic.function' или 'class'"
+
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr "%s не является общей функцией S4 в %s; методы не удалены"
 
@@ -305,9 +309,8 @@ msgstr "Функция %s уже в группе общие; без изменений"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "Функция %s является общегрупповой; не вызывайте ее напрямую"
 
-#, fuzzy
 msgid "callGeneric() must be called from within a method body"
-msgstr "'callGeneric' должна быть вызвана из общей функции или метода"
+msgstr "callGeneric() должна быть вызвана из тела метода"
 
 msgid "expected a non-empty character string for argument name"
 msgstr "ожидаю непустую текстовую строку для имени аргумента"
@@ -368,11 +371,11 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "не общая функция '%s' отдана findMethods()"
 
-#, fuzzy
 msgid ""
 "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
-"только FALSE имеет значение для 'inherited', когда указано 'where' (получен"
+"только FALSE имеет значение для 'inherited', когда указано 'where' (получен "
+"%s)"
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr "аргумент 'f' должен быть общей функцией или %s"
@@ -493,6 +496,18 @@ msgstr ""
 msgid "use %s instead."
 msgstr "вместо этого используйте %s."
 
+#, fuzzy
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+"%s, также как и иное использование объектов метаданных \"MethodsList\", не "
+"рекомендуется."
+
+#, fuzzy
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr ""
+"в %s: использование обектов метаданных \"MethodsList\" не рекомендуется."
+
 msgid "invalid object for formal method definition: type %s"
 msgstr "неверный объект для формального определения метода: тип %s"
 
@@ -521,11 +536,10 @@ msgstr ""
 "имена в идентификаторе для метода (%s) не совпадают с %s аргументами функции "
 "(%s)"
 
-#, fuzzy
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
 msgstr ""
-"имена в идентификаторе для метода (%s) не совпадают с %s аргументами функции "
+"имена в идентификаторе для метода (%s) не совпадают с аргументами функции "
 "(%s)"
 
 msgid ""
@@ -546,7 +560,7 @@ msgid "bad object found as method (class %s)"
 msgstr "плохой объект найден в качестве метода (класс %s)"
 
 msgid "No next method available"
-msgstr ""
+msgstr "Нет доступного следующего метода"
 
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
@@ -721,32 +735,29 @@ msgstr "не могу найти требуемый пакет %s"
 msgid "unable to find an environment containing class %s"
 msgstr "не могу найти окружение, содержащее класс %s"
 
-#, fuzzy
 msgid ""
 "Note: the specification for S3 class %s in package %s seems equivalent to "
 "one from package %s: not turning on duplicate class definitions for this "
 "class."
 msgstr ""
-"спецификация класса S3 %s в пакете %s похожа на спецификацию из пакета %s и "
-"не превращается в дублированное определение для этого класса"
+"Замечание: спецификация класса S3 %s в пакете %s похожа на спецификацию из "
+"пакета %s: не превращается в дублированное определение для этого класса."
 
-#, fuzzy
 msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
 msgstr ""
-"некоторые супер-классы класса %s пакета %s имеют двойные определения. Это "
-"определение не будет рассматриваться как соответствующее определению из "
-"пакета %s"
+"Замечание: некоторые супер-классы класса %s пакета %s имеют двойные "
+"определения. Это определение не будет рассматриваться как соответствующее "
+"определению из пакета %s"
 
-#, fuzzy
 msgid ""
 "Note: the specification for class %s in package %s seems equivalent to one "
 "from package %s: not turning on duplicate class definitions for this class."
 msgstr ""
-"спецификация класса %s пакета %s похоже на спецификацию из пакета %s и не "
-"будет дубликатом определений этого класса"
+"Замечание: спецификация класса %s пакета %s похоже на спецификацию из пакета "
+"%s: не будет дубликатом определений этого класса."
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "неопределенный подкласс %s класса \"%s\"; определение не обновлено"
@@ -865,6 +876,9 @@ msgstr ""
 
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr "неверное значение из общей функции %s, класс %s, ожидалось %s"
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr ""
 
 msgid ""
 "the body of the generic function for %s calls 'standardGeneric' to dispatch "
@@ -1258,9 +1272,10 @@ msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 "неверный объект в мета-таблице методов для %s, метка %s, имеет класс %s"
 
+#, fuzzy
 msgid ""
-"invalid mlist element for signature %s at level %d (should be methods list "
-"or method, had class %s)"
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
 msgstr ""
 "неправильный элемент mlist для подписи %s на уровне %d (должен быть списком "
 "методов либо методом, имеет класс %s)"
@@ -1275,9 +1290,8 @@ msgstr ""
 "неверный объект в таблице методов (%s): ожидался метод, а получен объект "
 "класса %s"
 
-#, fuzzy
 msgid "invalid or unset methods table in generic function %s"
-msgstr "неверная или неустановленная таблица методов в общей функции \""
+msgstr "неверная или неустановленная таблица методов в общей функции %s"
 
 msgid "trying to find a methods table in a non-generic function"
 msgstr "пытаюсь найти таблицу методов в не-общей функции"

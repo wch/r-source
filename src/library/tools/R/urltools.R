@@ -21,12 +21,12 @@ function()
 {
     ## See <http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml>.
     baseurl <- "http://www.iana.org/assignments/uri-schemes/"
-    permanent <- read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
-                          stringsAsFactors = FALSE)
-    provisional <- read.csv(url(paste0(baseurl, "uri-schemes-2.csv")),
-                            stringsAsFactors = FALSE)
-    historical <- read.csv(url(paste0(baseurl, "uri-schemes-3.csv")),
-                           stringsAsFactors = FALSE)
+    permanent <- utils::read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
+                                 stringsAsFactors = FALSE)
+    provisional <- utils::read.csv(url(paste0(baseurl, "uri-schemes-2.csv")),
+                                   stringsAsFactors = FALSE)
+    historical <- utils::read.csv(url(paste0(baseurl, "uri-schemes-3.csv")),
+                                  stringsAsFactors = FALSE)
     db <- rbind(permanent, provisional, historical)
     db$Category <-
         rep.int(c("permanent", "provisional", "historical"),
@@ -100,7 +100,8 @@ function(f)
 url_db <-
 function(urls, parents)
 {
-    db <- data.frame(URL = as.character(urls),
+    ## Some people get leading LFs in URLs, so trim before checking.
+    db <- data.frame(URL = trimws(as.character(urls)),
                      Parent = as.character(parents),
                      stringsAsFactors = FALSE)
     class(db) <- c("url_db", "data.frame")
@@ -113,7 +114,7 @@ function(db)
     urls <- Filter(length, lapply(db, .get_urls_from_Rd))
     url_db(unlist(urls, use.names = FALSE),
            rep.int(file.path("man", names(urls)),
-                   sapply(urls, length)))
+                   lengths(urls)))
 }
 
 url_db_from_package_metadata <-
@@ -155,7 +156,7 @@ function(dir, meta, installed = FALSE)
     if(file.exists(cfile)) {
         cinfo <- .read_citation_quietly(cfile, meta)
         if(!inherits(cinfo, "error"))
-            urls <- unique(unlist(cinfo$url, use.names = FALSE))
+            urls <- trimws(unique(unlist(cinfo$url, use.names = FALSE)))
     }
     url_db(urls, rep.int(path, length(urls)))
 }
@@ -191,7 +192,7 @@ function(dir, installed = FALSE)
         if(length(urls)) {
             parents <- rep.int(.file_path_relative_to_dir(names(urls),
                                                           dir),
-                               sapply(urls, length))
+                               lengths(urls))
             urls <- unlist(urls, use.names = FALSE)
         }
     }
@@ -199,20 +200,41 @@ function(dir, installed = FALSE)
 }
 
 url_db_from_package_README_md <-
-function(dir)
+function(dir, installed = FALSE)
 {
-    urls <- character()
-    if(file.exists(rfile <- file.path(dir, "README.md")) &&
-       nzchar(Sys.which("pandoc"))) {
-        tfile <- tempfile("README", fileext=".html")
+    urls <- path <- character()
+    rfile <- Filter(file.exists,
+                    c(if(!installed) file.path("inst", "README.md"),
+                      "README.md"))[1L]
+    if(!is.na(rfile) && nzchar(Sys.which("pandoc"))) {
+        path <- .file_path_relative_to_dir(rfile, dir)
+        tfile <- tempfile("README", fileext = ".html")
         on.exit(unlink(tfile))
-        out <- .pandoc_README_md_for_CRAN(rfile, tfile)
+        out <- .pandoc_md_for_CRAN(rfile, tfile)
         if(!out$status) {
             urls <- .get_urls_from_HTML_file(tfile)
         }
     }
-    url_db(urls, rep.int("README.md", length(urls)))
+    url_db(urls, rep.int(path, length(urls)))
+}
 
+url_db_from_package_NEWS_md <-
+function(dir, installed = FALSE)
+{
+    urls <- path <- character()
+    nfile <- Filter(file.exists,
+                    c(if(!installed) file.path("inst", "NEWS.md"),
+                      "NEWS.md"))[1L]
+    if(!is.na(nfile) && nzchar(Sys.which("pandoc"))) {
+        path <- .file_path_relative_to_dir(nfile, dir)
+        tfile <- tempfile("NEWS", fileext = ".html")
+        on.exit(unlink(tfile))
+        out <- .pandoc_md_for_CRAN(nfile, tfile)
+        if(!out$status) {
+            urls <- .get_urls_from_HTML_file(tfile)
+        }
+    }
+    url_db(urls, rep.int(path, length(urls)))
 }
 
 url_db_from_package_sources <-
@@ -225,7 +247,9 @@ function(dir, add = FALSE) {
     if(requireNamespace("XML", quietly = TRUE)) {
         db <- rbind(db,
                     url_db_from_package_HTML_files(dir),
-                    url_db_from_package_README_md(dir))
+                    url_db_from_package_README_md(dir),
+                    url_db_from_package_NEWS_md(dir)
+                    )
     }
     if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
@@ -251,7 +275,12 @@ function(packages, lib.loc = NULL, verbose = FALSE)
         if(requireNamespace("XML", quietly = TRUE)) {
             db <- rbind(db,
                         url_db_from_package_HTML_files(dir,
-                                                       installed = TRUE))
+                                                       installed = TRUE),
+                        url_db_from_package_README_md(dir,
+                                                      installed = TRUE),
+                        url_db_from_package_NEWS_md(dir,
+                                                    installed = TRUE)
+                        )
         }
         db$Parent <- file.path(p, db$Parent)
         db
@@ -267,8 +296,8 @@ function()
     ## See
     ## <http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
     baseurl <- "http://www.iana.org/assignments/http-status-codes/"
-    db <- read.csv(url(paste0(baseurl, "http-status-codes-1.csv")),
-                   stringsAsFactors = FALSE)
+    db <- utils::read.csv(url(paste0(baseurl, "http-status-codes-1.csv")),
+                          stringsAsFactors = FALSE)
     ## Drop "Unassigned".
     db[db$Description != "Unassigned", ]
 }
@@ -315,9 +344,12 @@ function(db, verbose = FALSE)
 {
     .gather <- function(u = character(),
                         p = list(),
-                        s = character(),
-                        m = character()) {
+                        s = rep.int("", length(u)),
+                        m = rep.int("", length(u)),
+                        cran = rep.int("", length(u)),
+                        spaces = rep.int("", length(u))) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
+                        CRAN = cran, Spaces = spaces,
                         stringsAsFactors = FALSE)
         y$From <- p
         class(y) <- c("check_url_db", "data.frame")
@@ -347,7 +379,7 @@ function(db, verbose = FALSE)
             s <- as.character(attr(h, "status"))
             msg <- table_of_FTP_server_return_codes[s]
         }
-        c(s, msg, "")
+        c(s, msg, "", "")
     }
 
     .check_http <- function(u) {
@@ -374,7 +406,10 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
-        c(s, msg, newLoc)
+        cran <- grepl("http://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
+                      u, ignore.case = TRUE)
+        spaces <- grepl(" ", u)
+        c(s, msg, newLoc, if(cran) u else "", if(spaces) u else "")
     }
 
     bad <- .gather()
@@ -392,8 +427,7 @@ function(db, verbose = FALSE)
         bad <- rbind(bad,
                      .gather(urls[ind],
                              parents[ind],
-                             rep.int("", len),
-                             rep.int("Empty URL", len)))
+                             m = rep.int("Empty URL", len)))
     }
 
     ## Invalid URI schemes.
@@ -404,8 +438,7 @@ function(db, verbose = FALSE)
         bad <- rbind(bad,
                      .gather(urls[ind],
                              parents[ind],
-                             rep.int("", len),
-                             rep.int("Invalid URI scheme", len)))
+                             m = rep.int("Invalid URI scheme", len)))
     }
 
     ## ftp.
@@ -420,7 +453,8 @@ function(db, verbose = FALSE)
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            bad <- rbind(bad, .gather(urls[pos], parents[pos], s, m))
+            bad <- rbind(bad,
+                         .gather(urls[pos], parents[pos], s, m))
         }
     }
 
@@ -431,23 +465,24 @@ function(db, verbose = FALSE)
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ind <- !(status %in% c(200L, 405L))
+        ind <- !(status %in% c(200L, 405L)) |
+            nzchar(results[, 4L]) | nzchar(results[, 5L])
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            url <- urls[pos]; newLoc <- results[ind, 3]
+            url <- urls[pos]; newLoc <- results[ind, 3L]
             ind2 <- nzchar(newLoc)
             url[ind2] <-
                 paste0(url[ind2], " (moved to ", newLoc[ind2], ")")
-            bad <- rbind(bad, .gather(url, parents[pos], s, m))
+            bad <- rbind(bad,
+                         .gather(url, parents[pos], s, m,
+                                 results[ind, 4L], results[ind, 5L]))
         }
     }
-
     bad
-
 }
 
 format.check_url_db <-
@@ -463,7 +498,14 @@ function(x, ...)
                   sprintf("\nStatus: %s", s)),
            ifelse((m <- x$Message) == "",
                   "",
-                  sprintf("\nMessage: %s", m)))
+                  sprintf("\nMessage: %s", m)),
+           ifelse((m <- x$Spaces) == "",
+                  "",
+                  "\nURL contains spaces"),
+           ifelse((m <- x$CRAN) == "",
+                  "",
+                  "\nCRAN URL not in canonical form")
+           )
 }
 
 print.check_url_db <-

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2014  The R Core Team.
+ *  Copyright (C) 1999--2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 #include <Internal.h>
 
 /* interval at which to check interrupts, a guess */
-#define NINTERRUPT 10000000
+// #define NINTERRUPT 10000000
 
 
 static SEXP lunary(SEXP, SEXP, SEXP);
@@ -38,37 +38,28 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2);
 /* & | ! */
 SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, arg1, arg2;
-    int argc;
-
-    if (IS_R_NilValue(args))
-	argc = 0;
-    else if (IS_R_NilValue(CDR(args)))
-	argc = 1;
-    else if (IS_R_NilValue(CDDR(args)))
-	argc = 2;
-    else
-	argc = length(args);
-    arg1 = CAR(args);
-    arg2 = CADR(args);
-
-    if (! IS_R_NilValue(ATTRIB(arg1)) || ! IS_R_NilValue(ATTRIB(arg2))) {
-	if (DispatchGroup("Ops",call, op, args, env, &ans))
+    SEXP arg1 = CAR(args); //, arg2 = CADR(args)
+    Rboolean attr1 = ! IS_R_NilValue(ATTRIB(arg1));
+    if (attr1 || ! IS_R_NilValue(ATTRIB(CADR(args)))) {
+	SEXP ans;
+	if (DispatchGroup("Ops", call, op, args, env, &ans))
 	    return ans;
     }
-    else if (argc == 1 && IS_SCALAR(arg1, LGLSXP)) {
-	/* directly handle '!' operator for simple logical scalars. */
-        int v = LOGICAL(arg1)[0];
-        return ScalarLogical(v == NA_LOGICAL ? v : ! v);
-    }
+    /* The above did dispatch to valid S3/S4 methods, including those with
+     * "wrong" number of arguments.
+     * Now require binary calls to `&` and `|`  or unary calls to `!` : */
+    checkArity(op, args);
 
-    if (argc == 1)
+    if (IS_R_NilValue(CDR(args))) { // one argument  <==>  !(arg1)
+	if (!attr1 && IS_SCALAR(arg1, LGLSXP)) {
+	    /* directly handle '!' operator for simple logical scalars. */
+	    int v = LOGICAL(arg1)[0];
+	    return ScalarLogical(v == NA_LOGICAL ? v : ! v);
+	}
 	return lunary(call, op, arg1);
-    else if (argc == 2)
-	return lbinary(call, op, args);
-    else
-	error(_("binary operations require two arguments"));
-    return R_NilValue;	/* for -Wall */
+    }
+    // else : two arguments
+    return lbinary(call, op, args);
 }
 
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
@@ -189,7 +180,7 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	errorcall(call, _("invalid argument type"));
     }
     if (isLogical(arg) || isRaw(arg))
-	x = PROTECT(duplicate(arg));  // copy all attributes in this case 
+	x = PROTECT(duplicate(arg));  // copy all attributes in this case
     else {
 	x = PROTECT(allocVector(isRaw(arg) ? RAWSXP : LGLSXP, len));
 	PROTECT(names = getAttrib(arg, R_NamesSymbol));

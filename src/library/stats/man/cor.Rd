@@ -43,7 +43,7 @@ cov2cor(V)
     \code{"na.or.complete"}, or \code{"pairwise.complete.obs"}.}
   \item{method}{a character string indicating which correlation
     coefficient (or covariance) is to be computed.  One of
-    \code{"pearson"} (default), \code{"kendall"}, or \code{"spearman"},
+    \code{"pearson"} (default), \code{"kendall"}, or \code{"spearman"}:
     can be abbreviated.}
   \item{V}{symmetric numeric matrix, usually positive definite such as a
     covariance matrix.}

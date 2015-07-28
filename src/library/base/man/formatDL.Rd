@@ -21,7 +21,8 @@ formatDL(x, y, style = c("table", "list"),
     corresponding descriptions.  Only used if \code{x} does not already
     give the descriptions.}
   \item{style}{a character string specifying the rendering style of the
-    description information.  If \code{"table"}, a two-column table with
+    description information.  Can be abbreviated.
+    If \code{"table"}, a two-column table with
     items and descriptions as columns is produced (similar to Texinfo's
     \verb{@table} environment.  If \code{"list"}, a LaTeX-style tagged
     description list is obtained.}

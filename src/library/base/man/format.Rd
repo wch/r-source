@@ -50,7 +50,7 @@ format(x, \dots)
     Allowed values are \code{0 <= nsmall <= 20}.}
   
   \item{justify}{should a \emph{character} vector be left-justified (the
-    default), right-justified, centred or left alone.}
+    default), right-justified, centred or left alone.  Can be abbreviated.}
   
   \item{width}{\code{default} method: the \emph{minimum} field width or
     \code{NULL} or \code{0} for no restriction.

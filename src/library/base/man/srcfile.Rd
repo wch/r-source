@@ -41,7 +41,7 @@ srcref(srcfile, lloc)
 \method{close}{srcfile}(con, \dots)
 \method{print}{srcref}(x, useSource = TRUE, \dots)
 \method{summary}{srcref}(object, useSource = FALSE, \dots)
-\method{as.character}{srcref}(x, useSource = TRUE, \dots)
+\method{as.character}{srcref}(x, useSource = TRUE, to = x, \dots)
 .isOpen(srcfile)
 }
 \arguments{
@@ -60,6 +60,8 @@ srcref(srcfile, lloc)
   \item{x, object, con}{ An object of the appropriate class. }
   \item{useSource}{ Whether to read the \code{srcfile} to obtain the
     text of a \code{srcref}. }
+  \item{to}{ An optional second \code{srcref} object to mark the end
+    of the character range. }
   \item{\dots}{ Additional arguments to the methods; these will be ignored. }
 }
 \details{
@@ -111,7 +113,10 @@ srcref(srcfile, lloc)
   Methods are defined for \code{print}, \code{summary} and
   \code{as.character} for class \code{srcref}.  The \code{as.character}
   method will read the associated source file to obtain the text
-  corresponding to the reference.  The exact behaviour depends on the
+  corresponding to the reference.  If the \code{to} argument is given,
+  it should be a second \code{srcref} that follows the first, in the
+  same file; they will be treated as one reference to the whole 
+  range.  The exact behaviour depends on the
   class of the source file.  If the source file inherits from
   class \code{srcfilecopy}, the lines are taken from the saved copy
   using the \dQuote{parsed} line counts.  If not, an attempt

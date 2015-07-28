@@ -696,4 +696,91 @@ stopifnot(all.equal(BB[,"BIC"],
                     sapply(fmLst, function(fm) AIC(fm, k = log(nobs(fm))))))
 ## BIC() was NA unnecessarily in  R < 3.2.0; nobs() was not available eiher
 
-proc.time()
+
+## as.integer() close and beyond maximal integer
+MI <- .Machine$integer.max
+stopifnot(identical( MI, as.integer( MI + 0.99)),
+	  identical(-MI, as.integer(-MI - 0.99)),
+	  is.na(as.integer(as.character( 100*MI))),
+	  is.na(as.integer(as.character(-100*MI))))
+## The two cases with positive numbers  failed in R <= 3.2.0
+
+
+## Ensure that sort() works with a numeric vector "which is an object":
+stopifnot(is.object(y <- freeny$y))
+stopifnot(diff(sort(y)) > 0)
+## order() and hence sort() failed here badly for a while around 2015-04-16
+
+
+## NAs in data frame names:
+dn <- list(c("r1", NA), c("V", NA))
+d11 <- as.data.frame(matrix(c(1, 1, 1, 1), ncol = 2, dimnames = dn))
+stopifnot(identical(names(d11), dn[[2]]),
+          identical(row.names(d11), dn[[1]]))
+## as.data.frame() failed in R-devel for a couple of hours ..
+## note that format(d11) does fail currently, and hence print(), too
+
+
+## Ensure  R -e ..  works on Unix
+if(.Platform$OS.type == "unix" &&
+   file.exists(Rc <- file.path(R.home("bin"), "R")) &&
+   file.access(Rc, mode = 1) == 0) { # 1: executable
+    cmd <- paste(Rc, "-q --vanilla -e 1:3")
+    ans <- system(cmd, intern=TRUE)
+    stopifnot(length(ans) >= 3,
+	      identical(ans[1:2], c("> 1:3",
+				    "[1] 1 2 3")))
+}
+## (failed for < 1 hr, in R-devel only)
+
+
+## Parsing large exponents of floating point numbers, PR#16358
+set.seed(12)
+lrg <- sprintf("%.0f", round(exp(10*(2+abs(rnorm(2^10))))))
+head(huge <- paste0("1e", lrg))
+    micro <- paste0("1e-", lrg)
+stopifnot(as.numeric(huge) == Inf,
+          as.numeric(micro) == 0)
+## Both failed in R <= 3.2.0
+
+
+## vcov() failed on manova() results, PR#16380
+tear <- c(6.5, 6.2, 5.8, 6.5, 6.5, 6.9, 7.2, 6.9, 6.1, 6.3, 6.7, 6.6, 7.2, 7.1, 6.8, 7.1, 7.0, 7.2, 7.5, 7.6)
+gloss <- c(9.5, 9.9, 9.6, 9.6, 9.2, 9.1, 10.0, 9.9, 9.5, 9.4, 9.1, 9.3, 8.3, 8.4, 8.5, 9.2, 8.8, 9.7, 10.1, 9.2)
+opacity <- c(4.4, 6.4, 3.0, 4.1, 0.8, 5.7, 2.0, 3.9, 1.9, 5.7, 2.8, 4.1, 3.8,1.6, 3.4, 8.4, 5.2, 6.9, 2.7, 1.9)
+Y <- cbind(tear, gloss, opacity)
+rate <- factor(gl(2,10), labels = c("Low", "High"))
+fit <- manova(Y ~ rate)
+vcov(fit)
+## Gave error because coef.aov() turned matrix of coefficients into a vector
+
+
+## Unary / Binary uses of logic operations, PR#16385
+tools::assertError(`&`(FALSE))
+tools::assertError(`|`(TRUE))
+## Did not give errors in R <= 3.2.0
+E <- tryCatch(`!`(), error = function(e)e)
+stopifnot(grepl("0 arguments .*\\<1", conditionMessage(E)))
+## Gave wrong error message in R <= 3.2.0
+stopifnot(identical(!matrix(TRUE), matrix(FALSE)),
+	  identical(!matrix(FALSE), matrix(TRUE)))
+## was wrong for while in R 3.2.0 patched
+
+
+## cummax(<integer>)
+iNA <- NA_integer_
+x <- c(iNA, 1L)
+stopifnot(identical(cummin(x), c(iNA, iNA)),
+          identical(cummax(x), c(iNA, iNA)))
+## an initial NA was not propaged in R <= 3.2.0
+
+
+## summaryRprof failed for very short profile, PR#16395
+profile <- tempfile()
+writeLines(c(
+'memory profiling: sample.interval=20000',
+':145341:345360:13726384:0:"stdout"', 
+':208272:345360:19600000:0:"stdout"'), profile)
+summaryRprof(filename = profile, memory = "both")
+unlink(profile)
+## failed when a matrix was downgraded to a vector

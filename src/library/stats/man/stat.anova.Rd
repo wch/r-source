@@ -1,6 +1,6 @@
 % File src/library/stats/man/stat.anova.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stat.anova}
@@ -13,7 +13,7 @@ stat.anova(table, test = c("Rao","LRT", "Chisq", "F", "Cp"),
 \arguments{
  \item{table}{numeric matrix as results from
    \code{\link{anova.glm}(\dots, test = NULL)}.}
- \item{test}{a character string, matching one of \code{"Rao"},
+ \item{test}{a character string, partially matching one of \code{"Rao"},
    \code{"LRT"}, \code{"Chisq"}, \code{"F"} or \code{"Cp"}.}
  \item{scale}{a residual mean square or other scale estimate to be used
    as the denominator in an F test.}

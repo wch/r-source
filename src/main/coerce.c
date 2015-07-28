@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2014  The R Core Team
- *  Copyright (C) 2003-2009 The R Foundation
+ *  Copyright (C) 1997-2015  The R Core Team
+ *  Copyright (C) 2003-2015  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 
 /* Coercion warnings will be OR'ed : */
 #define WARN_NA	   1
-#define WARN_INACC 2
+#define WARN_INT_NA 2
 #define WARN_IMAG  4
 #define WARN_RAW  8
 
@@ -75,8 +75,8 @@ void attribute_hidden CoercionWarning(int warn)
 */
     if (warn & WARN_NA)
 	warning(_("NAs introduced by coercion"));
-    if (warn & WARN_INACC)
-	warning(_("inaccurate integer conversion in coercion"));
+    if (warn & WARN_INT_NA)
+	warning(_("NAs introduced by coercion to integer range"));
     if (warn & WARN_IMAG)
 	warning(_("imaginary parts discarded in coercion"));
     if (warn & WARN_RAW)
@@ -126,8 +126,8 @@ IntegerFromReal(double x, int *warn)
 {
     if (ISNAN(x))
 	return NA_INTEGER;
-    else if (x > INT_MAX || x <= INT_MIN ) {
-	*warn |= WARN_NA;
+    else if (x >= INT_MAX+1. || x <= INT_MIN ) {
+	*warn |= WARN_INT_NA;
 	return NA_INTEGER;
     }
     return (int) x;
@@ -138,8 +138,8 @@ IntegerFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
-    else if (x.r > INT_MAX || x.r <= INT_MIN ) {
-	*warn |= WARN_NA;
+    else if (x.r > INT_MAX+1. || x.r <= INT_MIN ) {
+	*warn |= WARN_INT_NA;
 	return NA_INTEGER;;
     }
     if (x.i != 0)
@@ -156,14 +156,22 @@ IntegerFromString(SEXP x, int *warn)
     if (! SEXP_EQL(x, R_NaString) && !isBlankString(CHAR(x))) { /* ASCII */
 	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
 	if (isBlankString(endp)) {
+#ifdef _R_pre_Version_3_3_0
 	    if (xdouble > INT_MAX) {
-		*warn |= WARN_INACC;
+		*warn |= WARN_INT_NA;
 		return INT_MAX;
 	    }
 	    else if(xdouble < INT_MIN+1) {
-		*warn |= WARN_INACC;
-		return INT_MIN;
+		*warn |= WARN_INT_NA;
+		return INT_MIN;// <- "wrong" as INT_MIN == NA_INTEGER currently; should have used INT_MIN+1
 	    }
+#else
+	    // behave the same as IntegerFromReal() etc:
+	    if (xdouble >= INT_MAX+1. || xdouble <= INT_MIN ) {
+		*warn |= WARN_INT_NA;
+		return NA_INTEGER;
+	    }
+#endif
 	    else
 		return (int) xdouble;
 	}
@@ -406,9 +414,10 @@ static SEXP coerceToSymbol(SEXP v)
     default:
 	UNIMPLEMENTED_TYPE("coerceToSymbol", v);
     }
+    PROTECT(ans);
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     ans = installChar(ans);
-    UNPROTECT(1);
+    UNPROTECT(2); /* ans, v */
     return ans;
 }
 
@@ -1311,21 +1320,16 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     else if (isVector(u) || isList(u) || isLanguage(u)
 	     || (isSymbol(u) && type == EXPRSXP)) {
 	v = u;
-	/* this duplication may appear not to be needed in all cases,
-	   but beware that other code relies on it.
-	   (E.g  we clear attributes in do_asvector and do_asatomic.)
-
-	   Generally coerceVector will copy over attributes.
-	*/
 	if (type != ANYSXP && TYPEOF(u) != type) v = coerceVector(u, type);
-	else if (MAYBE_REFERENCED(u)) v = duplicate(u);
-
+	else v = u;
+  
 	/* drop attributes() and class() in some cases for as.pairlist:
 	   But why?  (And who actually coerces to pairlists?)
 	 */
 	if ((type == LISTSXP) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
+      if (MAYBE_REFERENCED(v)) v = shallow_duplicate(v);
 	    CLEAR_ATTRIB(v);
 	}
 	return v;
@@ -1354,12 +1358,18 @@ SEXP asCharacterFactor(SEXP x)
 
     R_xlen_t i, n = XLENGTH(x);
     SEXP labels = getAttrib(x, R_LevelsSymbol);
+    if (TYPEOF(labels) != STRSXP)
+	error(_("malformed factor"));
+    int nl = LENGTH(labels);
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
       int ii = INTEGER(x)[i];
-      SET_STRING_ELT(ans, i,
-		   (ii == NA_INTEGER) ? NA_STRING
-		   : STRING_ELT(labels, ii - 1));
+      if (ii == NA_INTEGER)
+	  SET_STRING_ELT(ans, i, NA_STRING);
+      else if (ii >= 1 && ii <= nl)
+	  SET_STRING_ELT(ans, i, STRING_ELT(labels, ii - 1));
+      else
+	  error(_("malformed factor"));
     }
     UNPROTECT(1);
     return ans;
@@ -1515,7 +1525,7 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(arglist);
     if (n < 1)
 	errorcall(call, _("argument must have length at least 1"));
-    names = getAttrib(arglist, R_NamesSymbol);
+    PROTECT(names = getAttrib(arglist, R_NamesSymbol));
     PROTECT(pargs = args = allocList(n - 1));
     for (i = 0; i < n - 1; i++) {
 	SETCAR(pargs, VECTOR_ELT(arglist, i));
@@ -1537,7 +1547,7 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    args =  mkCLOSXP(args, body, envir);
     else
 	    errorcall(call, _("invalid body for function"));
-    UNPROTECT(2);
+    UNPROTECT(3); /* body, pargs, names */
     return args;
 }
 
@@ -1560,7 +1570,7 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
     case EXPRSXP:
 	if(0 == (n = length(args)))
 	    errorcall(call, _("invalid length 0 argument"));
-	names = getAttrib(args, R_NamesSymbol);
+	PROTECT(names = getAttrib(args, R_NamesSymbol));
 	PROTECT(ap = ans = allocList(n));
 	for (i = 0; i < n; i++) {
 	    SETCAR(ap, VECTOR_ELT(args, i));
@@ -1568,7 +1578,7 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_TAG(ap, installTrChar(STRING_ELT(names, i)));
 	    ap = CDR(ap);
 	}
-	UNPROTECT(1);
+	UNPROTECT(2); /* ap, names */
 	break;
     case LISTSXP:
 	ans = duplicate(args);
@@ -1899,6 +1909,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
  * It seems to make more sense to check for a dim attribute.
  */
 
+// is.vector(x, mode) :
 SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, a, x;
@@ -2123,8 +2134,8 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
     case LISTSXP:
     {
 	SEXP call2, args2, ans;
-	args2 = PROTECT(duplicate(args));
-	call2 = PROTECT(duplicate(call));
+	args2 = PROTECT(shallow_duplicate(args));
+	call2 = PROTECT(shallow_duplicate(call));
 	for (i = 0; i < n; i++, x = CDR(x)) {
 	    SETCAR(args2, CAR(x)); SETCADR(call2, CAR(x));
 	    if ((DispatchOrEval(call2, op, "anyNA", args2, env, &ans, 0, 1)
@@ -2139,8 +2150,8 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
     case VECSXP:
     {
 	SEXP call2, args2, ans;
-	args2 = PROTECT(duplicate(args));
-	call2 = PROTECT(duplicate(call));
+	args2 = PROTECT(shallow_duplicate(args));
+	call2 = PROTECT(shallow_duplicate(call));
 	for (i = 0; i < n; i++) {
 	    SETCAR(args2, VECTOR_ELT(x, i)); SETCADR(call2, VECTOR_ELT(x, i));
 	    if ((DispatchOrEval(call2, op, "anyNA", args2, env, &ans, 0, 1)
@@ -2269,13 +2280,13 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     x = CAR(args);
     n = xlength(x);
-    ans = allocVector(LGLSXP, n);
+    PROTECT(ans = allocVector(LGLSXP, n));
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
 	if (isArray(x))
-	    names = getAttrib(x, R_DimNamesSymbol);
+	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
 	else
-	    names = getAttrib(x, R_NamesSymbol);
+	    PROTECT(names = getAttrib(x, R_NamesSymbol));
     }
     else dims = names = R_NilValue;
     switch (TYPEOF(x)) {
@@ -2309,6 +2320,9 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
+    if (isVector(x))
+	UNPROTECT(1); /* names */
+    UNPROTECT(1); /* ans */
     return ans;
 }
 
@@ -2329,13 +2343,13 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     x = CAR(args);
     n = xlength(x);
-    ans = allocVector(LGLSXP, n);
+    PROTECT(ans = allocVector(LGLSXP, n));
     if (isVector(x)) {
 	dims = getAttrib(x, R_DimSymbol);
 	if (isArray(x))
-	    names = getAttrib(x, R_DimNamesSymbol);
+	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
 	else
-	    names = getAttrib(x, R_NamesSymbol);
+	    PROTECT(names = getAttrib(x, R_NamesSymbol));
     }
     else	dims = names = R_NilValue;
     switch (TYPEOF(x)) {
@@ -2377,6 +2391,9 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
+    if (isVector(x))
+	UNPROTECT(1); /* names */
+    UNPROTECT(1); /* ans */
     return ans;
 }
 
@@ -2432,14 +2449,14 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'args' must be a list or expression"));
 #else
     if (!isNull(args) && !isNewList(args))
-	error(_("'args' must be a list"));
+        error(_("'%s' must be a list"), "args");
 #endif
 
     if (!isEnvironment(envir))
 	error(_("'envir' must be an environment"));
 
     n = length(args);
-    names = getAttrib(args, R_NamesSymbol);
+    PROTECT(names = getAttrib(args, R_NamesSymbol));
 
     PROTECT(c = call = allocList(n + 1));
     SET_TYPEOF(c, LANGSXP);
@@ -2466,7 +2483,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     call = eval(call, envir);
 
-    UNPROTECT(1);
+    UNPROTECT(2); /* c, names */
     return call;
 }
 
@@ -2540,9 +2557,11 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 		h = LCONS(R_DotsSymbol, R_NilValue);
 	    else if (IS_R_NilValue(h)  || IS_R_MissingArg(h))
 		h = R_NilValue;
-	    else if (TYPEOF(h) == DOTSXP)
+	    else if (TYPEOF(h) == DOTSXP) {
+		PROTECT(h);
 		h = substituteList(h, R_NilValue);
-	    else
+		UNPROTECT(1);
+	    } else
 		error(_("'...' used in an incorrect context"));
 	} else {
 	    h = substitute(CAR(el), rho);

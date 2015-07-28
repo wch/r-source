@@ -286,13 +286,12 @@ SEXP DropDims(SEXP x)
 
     PROTECT(x);
     dims = getAttrib(x, R_DimSymbol);
-    dimnames = getAttrib(x, R_DimNamesSymbol);
 
     /* Check that dropping will actually do something. */
     /* (1) Check that there is a "dim" attribute. */
 
     if (IS_R_NilValue(dims)) {
-	UNPROTECT(1);
+	UNPROTECT(1); /* x */
 	return x;
     }
     ndims = LENGTH(dims);
@@ -302,10 +301,11 @@ SEXP DropDims(SEXP x)
     for (i = 0; i < ndims; i++)
 	if (INTEGER(dims)[i] != 1) n++;
     if (n == ndims) {
-	UNPROTECT(1);
+	UNPROTECT(1); /* x */
 	return x;
     }
 
+    PROTECT(dimnames = getAttrib(x, R_DimNamesSymbol));
     if (n <= 1) {
 	/* We have reduced to a vector result.
 	   If that has length one, it is ambiguous which dimnames to use,
@@ -343,11 +343,11 @@ SEXP DropDims(SEXP x)
 /* 	    setAttrib(x, R_ClassSymbol, R_NilValue); */
 /* 	    UNSET_S4_OBJECT(x); */
 /* 	} */
-	UNPROTECT(1);
+	UNPROTECT(1); /* newnames */
     } else {
 	/* We have a lower dimensional array. */
 	SEXP newdims, dnn, newnamesnames = R_NilValue;
-	dnn = getAttrib(dimnames, R_NamesSymbol);
+	PROTECT(dnn = getAttrib(dimnames, R_NamesSymbol));
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
@@ -372,7 +372,6 @@ SEXP DropDims(SEXP x)
 	    }
 	    else dimnames = R_NilValue;
 	}
-	PROTECT(dimnames);
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
 	if (! IS_R_NilValue(dimnames))
@@ -380,11 +379,11 @@ SEXP DropDims(SEXP x)
 	    if(!isNull(dnn))
 		setAttrib(newnames, R_NamesSymbol, newnamesnames);
 	    setAttrib(x, R_DimNamesSymbol, newnames);
-	    UNPROTECT(2);
+	    UNPROTECT(2); /* newnamesnames, newnames */
 	}
-	UNPROTECT(2);
+	UNPROTECT(2); /* newdims, dnn */
     }
-    UNPROTECT(1);
+    UNPROTECT(2); /* dimnames, x */
     return x;
 }
 
@@ -436,24 +435,26 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(length(x));
 }
 
+// auxiliary for do_lengths_*(), i.e., R's lengths()
 static R_xlen_t getElementLength(SEXP x, R_xlen_t i, SEXP call, SEXP rho) {
     static SEXP length_op = SEXP_INIT;
     SEXP x_elt = VECTOR_ELT(x, i);
     if (isObject(x_elt)) {
         SEXP args, len;
         PROTECT(args = list1(x_elt));
-        if (IS_NULL_SEXP(length_op)) {
+	if (IS_NULL_SEXP(length_op))
             length_op = R_Primitive("length");
-        }
         if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1)) {
-          return (R_xlen_t)
-	      (TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len));
-        }
+	    UNPROTECT(1);
+	    return (R_xlen_t)
+		(TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len));
+	}
         UNPROTECT(1);
     }
     return(xlength(x_elt));
 }
 
+#ifdef LONG_VECTOR_SUPPORT
 static SEXP do_lengths_long(SEXP x, SEXP call, SEXP rho)
 {
     SEXP ans;
@@ -462,12 +463,12 @@ static SEXP do_lengths_long(SEXP x, SEXP call, SEXP rho)
 
     x_len = xlength(x);
     PROTECT(ans = allocVector(REALSXP, x_len));
-    for (i = 0, ans_elt = REAL(ans); i < x_len; i++, ans_elt++) {
+    for (i = 0, ans_elt = REAL(ans); i < x_len; i++, ans_elt++)
         *ans_elt = getElementLength(x, i, call, rho);
-    }
     UNPROTECT(1);
     return ans;
 }
+#endif
 
 SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -477,26 +478,44 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     int useNames = asLogical(CADR(args));
     if (useNames == NA_LOGICAL)
 	error(_("invalid '%s' value"), "USE.NAMES");
-    if (!isVectorList(x))
-        error(_("'%s' must be a list"), "x");
+    Rboolean isList = isVectorList(x);
+    if(!isList) switch(TYPEOF(x)) {
+	case NILSXP:
+	case CHARSXP:
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	case RAWSXP:
+	    break;
+	default:
+	    error(_("'%s' must be a list or atomic vector"), "x");
+    }
     x_len = xlength(x);
     PROTECT(ans = allocVector(INTSXP, x_len));
-    for (i = 0, ans_elt = INTEGER(ans); i < x_len; i++, ans_elt++) {
-        R_xlen_t x_elt_len = getElementLength(x, i, call, rho);
+    if(isList) {
+	for (i = 0, ans_elt = INTEGER(ans); i < x_len; i++, ans_elt++) {
+	    R_xlen_t x_elt_len = getElementLength(x, i, call, rho);
 #ifdef LONG_VECTOR_SUPPORT
-        if (x_elt_len > INT_MAX) {
-            ans = do_lengths_long(x, call, rho);
-            break;
-        }
+	    if (x_elt_len > INT_MAX) {
+		ans = do_lengths_long(x, call, rho);
+		UNPROTECT(1);
+		PROTECT(ans);
+		break;
+	    }
 #endif
-        *ans_elt = (int)x_elt_len;
+	    *ans_elt = (int)x_elt_len;
+	}
+    } else { // atomic: every element has length 1
+	for (i = 0, ans_elt = INTEGER(ans); i < x_len; i++, ans_elt++)
+	    *ans_elt = 1;
     }
-    UNPROTECT(1);
-
     if(useNames) {
 	SEXP names = getAttrib(x, R_NamesSymbol);
 	if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
     }
+    UNPROTECT(1);
     return ans;
 }
 
@@ -1067,6 +1086,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else
 	goto not_matrix;
+    PROTECT(dimnamesnames);
     PROTECT(r = allocVector(TYPEOF(a), len));
     R_xlen_t i, j, l_1 = len-1;
     switch (TYPEOF(a)) {
@@ -1109,14 +1129,14 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
         }
         break;
     default:
-        UNPROTECT(1);
+        UNPROTECT(2); /* r, dimnamesnames */
         goto not_matrix;
     }
     PROTECT(dims = allocVector(INTSXP, 2));
     INTEGER(dims)[0] = ncol;
     INTEGER(dims)[1] = nrow;
     setAttrib(r, R_DimSymbol, dims);
-    UNPROTECT(1);
+    UNPROTECT(1); /* dims */
     /* R <= 2.2.0: dropped list(NULL,NULL) dimnames :
      * if(rnames != R_NilValue || cnames != R_NilValue) */
     if(!isNull(dimnames)) {
@@ -1130,13 +1150,13 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 			   (ldim == 2) ? STRING_ELT(dimnamesnames, 1):
 			   R_BlankString);
 	    setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* ndimnamesnames */
 	}
 	setAttrib(r, R_DimNamesSymbol, dimnames);
-	UNPROTECT(1);
+	UNPROTECT(1); /* dimnames */
     }
     copyMostAttrib(a, r);
-    UNPROTECT(1);
+    UNPROTECT(2); /* r, dimnamesnames */
     return r;
  not_matrix:
     error(_("argument is not a matrix"));
@@ -1350,15 +1370,17 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
     keepNA = !NaRm;
 
-    int OP = PRIMVAL(op);
     switch (type = TYPEOF(x)) {
-    case LGLSXP: break;
-    case INTSXP: break;
+    case LGLSXP:
+    case INTSXP:
     case REALSXP: break;
     default:
 	error(_("'x' must be numeric"));
     }
+    if (n * (double)p > XLENGTH(x))
+    	error(_("'x' is too short")); /* PR#16367 */
 
+    int OP = PRIMVAL(op);
     if (OP == 0 || OP == 1) { /* columns */
 	PROTECT(ans = allocVector(REALSXP, p));
 #ifdef _OPENMP

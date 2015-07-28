@@ -1242,6 +1242,7 @@ static SEXP subDots(SEXP rho)
 	error(_("... is not a pairlist"));
 
     len = length(dots);
+    PROTECT(dots);
     PROTECT(rval=allocList(len));
     for(a = dots, b = rval, i = 1; i <= len; a = CDR(a), b = CDR(b), i++) {
 	SET_TAG(b, TAG(a));
@@ -1253,7 +1254,7 @@ static SEXP subDots(SEXP rho)
 	else
 	    SETCAR(b, t);
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return rval;
 }
 
@@ -1436,7 +1437,7 @@ rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
     setAttrib(ans, R_DimNamesSymbol, dn);
     SET_VECTOR_ELT(dn, 0, rn);
     dn2 = getAttrib(x, R_DimNamesSymbol);
-    if(length(dn2 = getAttrib(x, R_DimNamesSymbol)) >= 2 &&
+    if(length(dn2) >= 2 &&
        !isNull(dn3 = VECTOR_ELT(dn2, 1))) SET_VECTOR_ELT(dn, 1, dn3);
 
     UNPROTECT(3); /* HashTable, matches, ans */

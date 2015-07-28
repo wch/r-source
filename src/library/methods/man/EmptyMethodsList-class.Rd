@@ -1,6 +1,6 @@
 % File src/library/methods/man/EmptyMethodsList-class.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EmptyMethodsList-class}
@@ -34,9 +34,9 @@
   signature.
 }
 \seealso{
-  Function \code{\link{MethodsListSelect}} uses the objects;
-  see the class \code{\linkS4class{MethodsList}} for the non-empty
-  methods list objects.
+  Function \code{\link{MethodsListSelect}} (deprecated since \R version
+  3.2.0) uses the objects;
+  class \code{\linkS4class{MethodsList}} is formally defunct since \R 3.2.0.
 }
 \keyword{classes}
 \keyword{internal}

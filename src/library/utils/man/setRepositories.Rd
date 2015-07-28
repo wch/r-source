@@ -28,7 +28,9 @@ setRepositories(graphics = getOption("menu.graphics"),
   The default list of known repositories is stored in the file
   \file{\var{\link{R_HOME}}/etc/repositories}.
   That file can be edited for a site, or a user can have a personal copy
-  in \file{\var{HOME}/.R/repositories} which will take precedence.
+  in the file pointed to by the environment variable
+  \env{R_REPOSITORIES}, or if this is unset or does not exist,
+  in \file{\var{HOME}/.R/repositories}, which will take precedence.
 
   A Bioconductor mirror can be selected by setting
   \code{\link{options}("BioC_mirror")}, e.g.\sspace{}via

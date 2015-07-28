@@ -971,6 +971,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	error(_("invalid '%s' argument"), "what");
     }
+    PROTECT(ans);
     endcontext(&cntxt);
 
     /* we might have a character that was unscanchar-ed.
@@ -985,6 +986,8 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (data.quoteset[0]) free(data.quoteset);
     if (!skipNul && data.embedWarn) 
 	warning(_("embedded nul(s) found in input"));
+
+    UNPROTECT(1); /* ans */
     return ans;
 }
 

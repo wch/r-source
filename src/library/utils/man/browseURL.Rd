@@ -49,7 +49,7 @@ browseURL(url, browser = getOption("browser"),
   necessary.  This mechanism currently is available for browsers which
   support the \code{"-remote openURL(...)"} interface (which includes
   Mozilla and Opera), Galeon, KDE konqueror (\emph{via} kfmclient) and
-  the GNOME interface to Mozilla. (Firefox has droppped support, but
+  the GNOME interface to Mozilla. (Firefox has dropped support, but
   defaults to using an already-running browser.)  Note that the type of
   browser is determined from its name, so this mechanism will only be
   used if the browser is installed under its canonical name.

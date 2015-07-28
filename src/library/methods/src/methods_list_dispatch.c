@@ -662,21 +662,20 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 {
     SEXP e, val, args, this_sym, op;
-    int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
+    int i, nargs = length(matched_call)-1, error_flag;
     Rboolean prim_case;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
     */
-    op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
+    PROTECT(op = findVarInFrame3(ev, R_dot_nextMethod, TRUE));
     if(IS_R_UnboundValue(op))
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
-    {PROTECT(e = duplicate(matched_call)); nprotect++;}
+    PROTECT(e = duplicate(matched_call));
     prim_case = isPrimitive(op);
     if(prim_case) {
 	/* retain call to primitive function, suppress method
 	   dispatch for it */
         do_set_prim_method(op, "suppress", R_NilValue, R_NilValue);
-	PROTECT(op); nprotect++; /* needed? */
     }
     else
 	SETCAR(e, R_dot_nextMethod); /* call .nextMethod instead */
@@ -701,7 +700,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     }
     else
 	val = eval(e, ev);
-    UNPROTECT(nprotect);
+    UNPROTECT(2);
     return val;
 }
 
@@ -903,12 +902,13 @@ static SEXP dots_class(SEXP ev, int *checkerrP)
     if(IS_NULL_SEXP(call)) {
 	SEXP dotFind, f, R_dots;
 	dotFind = install(".dotsClass");
-	f = findFun(dotFind, R_MethodsNamespace);
+	PROTECT(f = findFun(dotFind, R_MethodsNamespace));
 	R_dots = install("...");
 	call = allocVector(LANGSXP, 2);
 	R_PreserveObject(call);
 	SETCAR(call,f); ee = CDR(call);
 	SETCAR(ee, R_dots);
+	UNPROTECT(1);
     }
     return R_tryEvalSilent(call, ev, checkerrP);
 }
@@ -1013,8 +1013,11 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     }
     method = findVarInFrame(mtable, install(buf));
     vmaxset(vmax);
-    if(DUPLICATE_CLASS_CASE(method))
+    if(DUPLICATE_CLASS_CASE(method)) {
+	PROTECT(method);
 	method = R_selectByPackage(method, classes, nargs);
+	UNPROTECT(1);
+    }
     if(IS_R_UnboundValue(method)) {
 	method = do_inherited_table(classes, fdef, mtable, ev);
     }

@@ -1,78 +1,81 @@
 # Korean translation for R base package
 # src/library/base/po/R-ko.po
-# Copyright (C) 1995-2014 The R Core Team
+#
+# Copyright (C) 1995-2015 The R Core Team
+#
 # This file is distributed under the same license as the R base package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+#
+# Notes:
+# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
-"PO-Revision-Date: 2014-03-27 08:58-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team:  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
 
 msgid "'%s' is defunct."
-msgstr "'%s'는 더 이상 지원되지 않습니다."
+msgstr "'%s'는 더 이상 사용되지 않습니다."
 
 msgid "Use '%s' instead."
-msgstr "대신 '%s'를 사용하세요."
+msgstr "대신 '%s'를 사용하길 바랍니다."
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr ""
-"help(\"Defunct\")와 help(\"%s-defunct\")을 입력하여 관련도움말을 확인해주세"
-"요."
+msgstr "help(\"Defunct\")와 help(\"%s-defunct\")를 읽어보시길 바랍니다."
 
 msgid "See help(\"Defunct\")"
-msgstr "help(\"Defunct\")을 입력하여 관련도움말을 확인해주세요."
+msgstr "help(\"Defunct\")를 읽어보시길 바랍니다."
 
 msgid "'%s' is deprecated."
-msgstr "'%s'은 제거되었습니다."
+msgstr "'%s'은 제거될 예정입니다."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr ""
-"help(\"Deprecated\")와 help(\"%s-deprecated\")를 입력하여 관련 도움말을 확인"
-"해주세요."
+msgstr "help(\"Deprecated\")와 help(\"%s-deprecated\")를 읽어보시길 바랍니다."
 
 msgid "See help(\"Deprecated\")"
-msgstr "help(\"Deprecated\")을 입력하여 관련 도움말을 확인해주세요."
+msgstr "help(\"Deprecated\")를 읽어보시길 바랍니다."
 
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "'La.svd'의 입력인수는 반드시 수치형 혹은 복소수형이어야 합니다"
+msgstr ""
+"'La.svd'에 전달되는 인자는 반드시 수치형(numeric) 또는 복소수형(complex)이어"
+"야 합니다."
 
 msgid "infinite or missing values in 'x'"
-msgstr "'x'에 무한한 값이 있거나 결측치가 있습니다"
+msgstr "'x'에 무한(infinite) 또는 결측(missing)값이 존재합니다."
 
 msgid "a dimension is zero"
-msgstr "차원이 0입니다"
+msgstr "차원이 영(zero)입니다."
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
-msgstr ""
+#, fuzzy
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
+msgstr "\"hexNumeric\"와 \"digits17\"는 상호배타적(mutually exclusive)입니다."
 
 msgid "second argument must be a list"
-msgstr "두번째 인수는 반드시 리스트이어야 합니다"
+msgstr "두번째 인자는 반드시 리스트(list)이어야 합니다."
 
 msgid "'iconvlist' is not available on this system"
-msgstr "이 시스템에서 'iconvlist'는 사용가능하지 않습니다"
+msgstr "이 시스템에서는 'iconvlist'을 사용할 수 없습니다."
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr ""
-"'kind'는 반드시 길이가 1인 문자열이어야 합니다 (난수생성방법 지정에 이용됩니"
-"다)."
+"'kind'는 반드시 길이가 1인 문자열(character string)이어야 합니다. 이는 RNG(난"
+"수생성기)에 사용됩니다."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr "'%s'는 올바른 난수생성방법의 약자가 아닙니다"
+msgstr "'%s'는 올바른 RNG(난수생성기)의 약자가 아닙니다."
 
 msgid "'normal.kind' must be a character string of length 1"
-msgstr "'normal.kind'는 반드시 길이가 1인 문자열이어야 합니다"
+msgstr "'normal.kind'는 반드시 길이가 1인 문자열이어야 합니다."
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s'는 유효한 선택이 아닙니다"
@@ -182,7 +185,7 @@ msgid "not a valid restart specification"
 msgstr "유효한 재시작 지정이 아닙니다"
 
 msgid "argument 'where' of length 0"
-msgstr "인자 'where'의 길이가 0입니다"
+msgstr "인자 'where'의 길이는 영(0)입니다."
 
 msgid "argument 'object' must deparse to a single character string"
 msgstr ""
@@ -312,9 +315,8 @@ msgstr ""
 msgid "only a single element should be replaced"
 msgstr "한개의 구성요소만이 교체되어져야 합니다"
 
-#, fuzzy
 msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "데이터 프레임내에 부분적으로 일치하는 이름이 있습니다"
+msgstr ""
 
 msgid "names do not match previous names"
 msgstr ""
@@ -332,9 +334,8 @@ msgstr "<0 행> <또는 row.names의 길이가 0입니다>"
 msgid "non-numeric variable in data frame:"
 msgstr "데이터 프레임에 수치형이 아닌 변수가 있습니다"
 
-#, fuzzy
 msgid "%s only defined for equally-sized data frames"
-msgstr "동일한 사이즈의 데이터 프레임들에 대해서만 정의되어집니다"
+msgstr "동일한 사이즈의 데이터 프레임들의 경우에만 정의된 %s입니다."
 
 msgid "list of length %d not meaningful"
 msgstr "의미가 없는 길이 %d인 리스트입니다"
@@ -553,20 +554,19 @@ msgstr ""
 "유효하지 않은 'labels'입니다; 길이 %d는 반드시 1 이거나 %d이어야 합니다"
 
 msgid "number of levels differs"
-msgstr "레벨의 개수가 다릅니다"
+msgstr "레벨의 개수가 다릅니다."
 
-#, fuzzy
 msgid "%s not meaningful for factors"
-msgstr "순서형 요인들에 정의되지 않은 '%s'입니다"
+msgstr "요인(factors)에 대하여 의미있는 %s가 아닙니다."
 
 msgid "level sets of factors are different"
 msgstr ""
 
 msgid "invalid factor level, NA generated"
-msgstr ""
+msgstr "요인의 수준(factor level)이 올바르지 않아 NA가 생성되었습니다."
 
 msgid "'%s' is not meaningful for ordered factors"
-msgstr ""
+msgstr "순서형 요인(ordered factors)에 대하여 의미가 있는 '%s'가 아닙니다."
 
 msgid "'%s' not defined for ordered factors"
 msgstr "순서형 요인들에 정의되지 않은 '%s'입니다"
@@ -767,12 +767,8 @@ msgstr "%s는 유효하게 설치된 패키지가 아닙니다"
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s를 탐색경로에서 찾을 수 없어 pos = 2 를 사용합니다"
 
-msgid "version"
+msgid "Package %s version %s cannot be unloaded"
 msgstr ""
-
-#, fuzzy
-msgid "cannot be unloaded."
-msgstr "%s 네임스페이스는 언로드 될 수 없습니다:"
 
 msgid "package or namespace load failed for %s"
 msgstr ""
@@ -1122,10 +1118,6 @@ msgstr ""
 msgid "undefined exports: %s"
 msgstr ""
 
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "객체 %s들은 'namespace:%s'에 의해서 내보내어지지 않았습니다"
-
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "패키지 %s는 'NAMESPACE' 파일을 가지고 있지 않습니다"
 
@@ -1368,6 +1360,10 @@ msgstr "'%s'는 존재하는 파일이 아닙니다"
 
 msgid "Timestamp of %s has changed"
 msgstr "%s의 타임스탬프가 변경되었습니다"
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x'와 'y'는 반드시 같은 길이를 가져야 합니다"
 
 msgid "additional arguments ignored in stop()"
 msgstr "stop()에서 무시된 추가적인 인자들입니다"
@@ -1621,10 +1617,9 @@ msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] ""
 
-#, fuzzy
 msgid "data frame with 0 columns and %d row"
 msgid_plural "data frame with 0 columns and %d rows"
-msgstr[0] "행의 개수가 %d이고 열의 개수가 0인 데이터 프레임입니다"
+msgstr[0] "열의 개수가 0이고 행의 개수가 %d인 데이터 프레임입니다."
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
@@ -1636,7 +1631,7 @@ msgstr[0] "패키지 %s는 로드되지 않았습니다"
 
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] "호출된 패키지들이 없습니다"
+msgstr[0] "호출된 패키지(들)가 없습니다"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
@@ -1670,10 +1665,6 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3 메소드 %s는 NAMESPACE 내에 선언되었으나 찾을 수 없습니다"
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "추가적인 인자 %s는 고려되지 않을 것입니다"
-
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "%s는 TRUE가 아닙니다"
@@ -1681,6 +1672,18 @@ msgstr[0] "%s는 TRUE가 아닙니다"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 메시지:\n"
+
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] "추가적인 인자 %s는 고려되지 않을 것입니다"
+
+#~ msgid "cannot be unloaded."
+#~ msgstr "%s 네임스페이스는 언로드 될 수 없습니다:"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "패키지 %s %s를 찾았으나, %s %s는 %s에 의해서 요구되어 집니다"

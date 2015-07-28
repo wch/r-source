@@ -443,14 +443,14 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 	}
     }
 
-    x = getAttrib(x, R_NamesSymbol);
-    y = getAttrib(y, R_NamesSymbol);
+    PROTECT(x = getAttrib(x, R_NamesSymbol));
+    PROTECT(y = getAttrib(y, R_NamesSymbol));
     if(!isNull(x) || !isNull(y)) {
 	PROTECT(dimnames = allocVector(VECSXP, 2));	    
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	setAttrib(ans, R_DimNamesSymbol, dimnames);
-	UNPROTECT(1);
+	UNPROTECT(1); /* dimnames */
     }
 
     if(opt_counts) {
@@ -465,19 +465,19 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 	SET_VECTOR_ELT(dimnames, 2, names);
 	setAttrib(counts, R_DimNamesSymbol, dimnames);
 	setAttrib(ans, install("counts"), counts);
-	UNPROTECT(2);
+	UNPROTECT(2); /* names, dimnames */
 	if(!isNull(x) || !isNull(y)) {
 	    PROTECT(dimnames = allocVector(VECSXP, 2));	    
 	    SET_VECTOR_ELT(dimnames, 0, x);
 	    SET_VECTOR_ELT(dimnames, 1, y);
 	    setAttrib(trafos, R_DimNamesSymbol, dimnames);
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* dimnames */
 	}
 	setAttrib(ans, install("trafos"), trafos);
-	UNPROTECT(2);
+	UNPROTECT(2); /* trafos, counts */
     }
 		
-    UNPROTECT(1);
+    UNPROTECT(3); /* y, x, ans */
     return ans;
 }
 
@@ -693,14 +693,14 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    x = getAttrib(x, R_NamesSymbol);
-    y = getAttrib(y, R_NamesSymbol);
+    PROTECT(x = getAttrib(x, R_NamesSymbol));
+    PROTECT(y = getAttrib(y, R_NamesSymbol));
     if(!isNull(x) || !isNull(y)) {
 	PROTECT(dimnames = allocVector(VECSXP, 2));	    
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	setAttrib(ans, R_DimNamesSymbol, dimnames);
-	UNPROTECT(1);
+	UNPROTECT(1); /* dimnames */
     }
     if(opt_counts) {
 	PROTECT(dimnames = allocVector(VECSXP, 3));
@@ -713,7 +713,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dimnames, 2, names);
 	setAttrib(counts, R_DimNamesSymbol, dimnames);
 	setAttrib(ans, install("counts"), counts);
-	UNPROTECT(2);
+	UNPROTECT(2); /* names, dimnames */
 	PROTECT(dimnames = allocVector(VECSXP, 3));
 	PROTECT(names = allocVector(STRSXP, 2));
 	SET_STRING_ELT(names, 0, mkChar("first"));
@@ -723,10 +723,10 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(dimnames, 2, names);
 	setAttrib(offsets, R_DimNamesSymbol, dimnames);
 	setAttrib(ans, install("offsets"), offsets);
-	UNPROTECT(4);
+	UNPROTECT(4); /* names, dimnames, counts, offsets */
     }
 
-    UNPROTECT(1);
+    UNPROTECT(3); /* y, x, counts */
     return ans;
 }
 

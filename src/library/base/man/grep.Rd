@@ -40,7 +40,7 @@ regexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 
-regexec(pattern, text, ignore.case = FALSE,
+regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
         fixed = FALSE, useBytes = FALSE)
 }
 \arguments{

@@ -80,7 +80,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   \item{dec}{the character used in the file for decimal points.}
 
   \item{numerals}{string indicating how to convert numbers whose conversion
-    to double precision would lose accuracy, see \code{\link{type.convert}}.}
+    to double precision would lose accuracy, see \code{\link{type.convert}}.
+    Can be abbreviated.}
 
   \item{row.names}{a vector of row names.  This can be a vector giving
     the actual row names, or a single number giving the column of the

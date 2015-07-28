@@ -1,7 +1,7 @@
 #  File src/library/utils/R/edit.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ View <- function (x, title)
     rn <- row.names(x0)
     if(any(rn != seq_along(rn))) x <- c(list(row.names = rn), x)
     if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
-       !max(sapply(x, length)))
+       !max(lengths(x)))
         stop("invalid 'x' argument")
     if (grepl("darwin", R.version$os)) check_for_XQuartz()
     invisible(.External2(C_dataviewer, x, title))
@@ -147,7 +147,7 @@ edit.data.frame <-
         ## e.g. started with 0-col data frame or NULL, and created no cols
         return (name)
     }
-    lengths <- sapply(out, length)
+    lengths <- lengths(out)
     maxlength <- max(lengths)
     if (edit.row.names) rn <- out[[1L]]
     for (i in which(lengths != maxlength))
@@ -233,7 +233,7 @@ edit.matrix <-
 
     out <- .External2(C_dataentry, datalist, modes)
 
-    lengths <- sapply(out, length)
+    lengths <- lengths(out)
     maxlength <- max(lengths)
     if (edit.row.names) rn <- out[[1L]]
     for (i in which(lengths != maxlength))

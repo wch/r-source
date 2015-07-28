@@ -132,7 +132,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{uniquenesses}{The uniquenesses computed.}
   \item{correlation}{The correlation matrix used.}
   \item{criteria}{The results of the optimization: the value of the
-    negative log-likelihood and information on the iterations used.}
+    criterion (a linear function of the negative log-likelihood) and information on the iterations used.}
   \item{factors}{The argument \code{factors}.}
   \item{dof}{The number of degrees of freedom of the factor analysis model.}
   \item{method}{The method: always \code{"mle"}.}

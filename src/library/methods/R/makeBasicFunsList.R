@@ -191,6 +191,9 @@ utils::globalVariables(".addBasicGeneric")
     setGeneric("norm", function(x, type, ...) standardGeneric("norm"),
 	       useAsDefault = function(x, type, ...) base::norm(x, type, ...),
 	       signature = c("x", "type"), where = where)
+    ## this method *belong*s to the generic:
+    setMethod("norm", signature(x = "ANY", type = "missing"),
+              function (x, type, ...) norm(x, type = "O", ...))
     setGenericImplicit("norm", where, FALSE)
 
     setGeneric("backsolve", function(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE, ...)
@@ -227,12 +230,34 @@ utils::globalVariables(".addBasicGeneric")
     setGenericImplicit("rowMeans", where, FALSE)
     setGenericImplicit("rowSums",  where, FALSE)
 
+    setGeneric("crossprod", function(x, y = NULL, ...) standardGeneric("crossprod"),
+	       useAsDefault = function(x, y = NULL, ...) base::crossprod(x, y),
+	       signature = c("x", "y"), where = where)
+    setGeneric("tcrossprod", function(x, y = NULL, ...) standardGeneric("tcrossprod"),
+	       useAsDefault = function(x, y = NULL, ...) base::tcrossprod(x, y),
+	       signature = c("x", "y"), where = where)
+    setGenericImplicit("crossprod",  where, FALSE)
+    setGenericImplicit("tcrossprod",  where, FALSE)
+
     setGeneric("sample", function(x, size, replace = FALSE, prob = NULL, ...)
 			standardGeneric("sample"),
 	       useAsDefault = function(x, size, replace = FALSE, prob = NULL, ...)
 			base::sample(x, size, replace=replace, prob=prob, ...),
 	       signature = c("x", "size"), where = where)
     setGenericImplicit("sample", where, FALSE)
+
+    ## qr.R(): signature should only have "qr", args should have "..."
+    setGeneric("qr.R", function(qr, complete = FALSE, ...) standardGeneric("qr.R"),
+	       useAsDefault= function(qr, complete = FALSE, ...)
+                   base::qr.R(qr, complete=complete),
+	       signature = "qr", where = where)
+    setGenericImplicit("qr.R", where, FALSE)
+
+    ## our toeplitz() only has 'x'; want the generic "here" rather than "out there"
+    setGeneric("toeplitz", function(x, ...) standardGeneric("toeplitz"),
+	       useAsDefault= function(x, ...) stats::toeplitz(x),
+	       signature = "x", where = where)
+    setGenericImplicit("toeplitz", where, FALSE)
 
     ## not implicitGeneric() which is not yet available "here"
     registerImplicitGenerics(where = where)

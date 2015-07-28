@@ -28,7 +28,7 @@
   \item{x}{an \code{\link{isoreg}} object.}
   \item{plot.type}{character indicating which type of plot is desired.
     The first (default) only draws the data and the fit, where the
-    others add a plot of the cumulative data and fit.}
+    others add a plot of the cumulative data and fit.  Can be abbreviated.}
   \item{main}{main title of plot, see \code{\link{title}}.}
   \item{main2}{title for second (cumulative) plot.}
   \item{xlab, ylab}{x- and y- axis annotation.}

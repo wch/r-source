@@ -28,8 +28,8 @@ fourfoldplot(x, color = c("#99CCFF", "#6699CC"),
     the odds ratios.  Must be a single nonnegative number less than 1;
     if set to 0, confidence rings are suppressed.}
   \item{std}{a character string specifying how to standardize the table.
-    Must be one of \code{"margins"}, \code{"ind.max"}, or
-    \code{"all.max"}, and can be abbreviated by the initial letter.
+    Must match one of \code{"margins"}, \code{"ind.max"}, or
+    \code{"all.max"}, and can be abbreviated to the initial letter.
     If set to \code{"margins"}, each 2 by 2 table is standardized to
     equate the margins specified by \code{margin} while preserving the
     odds ratio.  If \code{"ind.max"} or \code{"all.max"}, the tables are

@@ -360,10 +360,10 @@ C     is equal to the step at which cluster L is last updated plus M.
 C
       ICOUN = 0
       ISTEP = 0
+c   Repeat {
  10   continue
 
       DO I = 1, M
-        call rchkusr()
         if(iTrace .gt. 0 .and. ISTEP .ge. 1 .and. I .eq. 1) ! only from second "round" on
      +       call kmnsQpr(ISTEP, ICOUN, NCP, K, iTrace)
         ICOUN = ICOUN + 1
@@ -439,6 +439,7 @@ C
    60   IF (ICOUN .EQ. M) RETURN
       end do
 
+      call rchkusr() ! allow user interrupt
       GO TO 10
 c     --------
       END

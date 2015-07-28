@@ -97,7 +97,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \code{\link{installed.packages}} by default) and reports installed
   packages that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
-  version of \R (for example built under 3.0.x when running \R 3.1.0).
+  version of \R (for example built under 3.1.x when running \R 3.2.0).
   (For binary package types here is no check that the version on the
   repository was built under the current minor version of \R,
   but it is advertised as being suitable for this version.)

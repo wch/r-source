@@ -1,7 +1,7 @@
 #  File src/library/tools/R/checktools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2013-2014 The R Core Team
+#  Copyright (C) 2013-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -70,8 +70,8 @@ function(dir,
         xvfb_options <- as.character(xvfb)
         xvfb <- TRUE
     }
-    
-    curl <- if(os_type == "windows") 
+
+    curl <- if(os_type == "windows")
         sprintf("file:///%s", dir)
     else
         sprintf("file://%s", dir)
@@ -136,11 +136,11 @@ function(dir,
           setdiff(pnames_using_install_fake, available[, "Package"]))
     pnames_using_install_fake <-
         intersect(pnames_using_install_fake, available[, "Package"])
-    
+
     if(!is.null(reverse) && !identical(reverse, FALSE)) {
         ## Determine and download reverse dependencies to be checked as
         ## well.
-        
+
         reverse <- as.list(reverse)
         ## Merge with defaults, using partial name matching.
         defaults <- list(which = c("Depends", "Imports", "LinkingTo"),
@@ -214,6 +214,11 @@ function(dir,
 
     ## Install what is needed.
 
+    if(xvfb) {
+        pid <- start_virtual_X11_fb(xvfb_options)
+        on.exit(close_virtual_X11_db(pid), add = TRUE)
+    }
+
     depends <-
         package_dependencies(pnames, available, which = "most")
     depends <- setdiff(unique(unlist(depends, use.names = FALSE)),
@@ -234,7 +239,7 @@ function(dir,
                                       paste(sQuote(depends),
                                             collapse = ", ")),
                               exdent = 2L),
-                      collapse = "\n"))
+                      collapse = "\n"), domain = NA)
         ## <NOTE>
         ## Ideally we would capture stdout and stderr in e.g.
         ##   outdir/install_stdout.txt
@@ -255,7 +260,7 @@ function(dir,
                                 dependencies = NA,
                                 INSTALL_opts = iflags,
                                 keep_outputs = tmpdir,
-                                Ncpus = Ncpus, 
+                                Ncpus = Ncpus,
                                 type = "source")
         outfiles <- Sys.glob(file.path(tmpdir, "*.out"))
         file.rename(outfiles,
@@ -311,11 +316,6 @@ function(dir,
                             env = env))
     }
 
-    if(xvfb) {
-        pid <- start_virtual_X11_fb(xvfb_options)
-        on.exit(close_virtual_X11_db(pid), add = TRUE)
-    }
-
     if(Ncpus > 1L) {
         if(os_type != "windows") {
             timings <- parallel::mclapply(pfiles,
@@ -341,7 +341,7 @@ function(dir,
 
     timings <- do.call(rbind, lapply(timings, summary))
     rownames(timings) <- pnames
-    write.table(timings, "timings.tab")
+    utils::write.table(timings, "timings.tab")
 
     file.rename(sprintf("%s.Rcheck", rnames),
                 sprintf("rdepends_%s.Rcheck", rnames))
@@ -367,7 +367,7 @@ function(x, ...)
         writeLines("No packages checked.")
         return(invisible(x))
     }
-    
+
     dir <- attr(x, "dir")
     writeLines(c(strwrap(sprintf("Check results for packages in dir '%s':",
                                  dir)),
@@ -422,7 +422,7 @@ function(options)
     ## This could be done via
     ##   system2("Xvfb", options, stdout = FALSE, stderr = FALSE,
     ##           wait = FALSE)
-    ## and then determine the pid as 
+    ## and then determine the pid as
     ##   pid <- scan(text =
     ##               grep(sprintf("Xvfb %s", num),
     ##                    system2("ps", "auxw", stdout = TRUE),
@@ -441,7 +441,7 @@ function(options)
                tf)
     pid <- system2("sh", tf, stdout = TRUE)
     Sys.setenv("DISPLAY" = num)
-    
+
     ## Propagate both pid and original setting of DISPLAY so that the
     ## latter can be restored when Xvfb is closed.
     attr(pid, "display") <- dis
@@ -482,12 +482,12 @@ summarize_check_packages_in_dir_depends <-
 function(dir, all = FALSE, which = c("Depends", "Imports", "LinkingTo"))
 {
     ## See tools::package_dependencies(): should perhaps separate out.
-    if(identical(which, "all")) 
+    if(identical(which, "all"))
         which <- c("Depends", "Imports", "LinkingTo", "Suggests",
                    "Enhances")
-    else if(identical(which, "most")) 
+    else if(identical(which, "most"))
         which <- c("Depends", "Imports", "LinkingTo", "Suggests")
-    
+
     for(d in R_check_outdirs(dir, all = all)) {
         dfile <- Sys.glob(file.path(d, "00_pkg_src", "*",
                                     "DESCRIPTION"))[1L]
@@ -519,7 +519,7 @@ function(dir, all = TRUE, full = FALSE)
     outdirs <- R_check_outdirs(dir, all = all)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
-    
+
     results <- check_packages_in_dir_results(logs = logs)
 
     writeLines("Check status summary:")
@@ -582,7 +582,7 @@ function(dir, all = FALSE, full = FALSE)
         tfiles <- Sys.glob(file.path(R_check_outdirs(dir, all = all),
                                      "*-Ex.timings"))
         if(length(tfiles)) message("")
-        timings <- lapply(tfiles, read.table, header = TRUE)
+        timings <- lapply(tfiles, utils::read.table, header = TRUE)
         ## Order by CPU time.
         timings <- lapply(timings,
                           function(x)
@@ -616,7 +616,7 @@ function(dir, logs = NULL)
     ## Perhaps make the individual non-OK check values more readily
     ## available?
     ## </NOTE>
-    
+
     results <- lapply(logs, function(log) {
         lines <- read_check_log(log)
         ## Should this be anchored with $ as well?
@@ -708,6 +708,8 @@ function(log, drop_ok = TRUE)
         lines <- iconv(lines, enc, "UTF-8", sub = "byte")
         ## If the check log uses ASCII, there should be no non-ASCII
         ## characters in the message lines: could check for this.
+        if(any(bad <- !validEnc(lines)))
+            lines[bad] <- iconv(lines[bad], to = "ASCII", sub = "byte")
     } else return()
 
     ## Get header.
@@ -744,6 +746,7 @@ function(log, drop_ok = TRUE)
              perl = TRUE, useBytes = TRUE)) {
         ## New-style status summary.
         lines <- lines[-len]
+        len <- len - 1L
     } else {
         ## Old-style status summary.
         num <- length(grep("^(NOTE|WARNING): There",
@@ -751,8 +754,12 @@ function(log, drop_ok = TRUE)
         if(num > 0L) {
             pos <- seq.int(len - num + 1L, len)
             lines <- lines[-pos]
+            len <- len - num
         }
     }
+    ## New-style end-of-check tag.
+    if(lines[len] == "* DONE")
+        lines <- lines[-len]
 
     analyze_lines <- function(lines) {
         ## Windows has
@@ -776,7 +783,7 @@ function(log, drop_ok = TRUE)
         ind <- grepl(re, lines, perl = TRUE, useBytes = TRUE)
         csi <- cumsum(ind)
         ind <- (csi > 0)
-        chunks <- 
+        chunks <-
             lapply(split(lines[ind], csi[ind]),
                    function(s) {
                        ## Note that setting
@@ -795,12 +802,12 @@ function(log, drop_ok = TRUE)
         if(identical(drop_ok, TRUE) ||
            (is.na(drop_ok) && all(status != "ERROR")))
             chunks <- chunks[is.na(match(status, drop_ok_status_tags))]
-        
+
         chunks
     }
 
     chunks <- analyze_lines(lines)
-    if(!length(chunks) && is.na(drop_ok)) {
+    if(!length(chunks) && !identical(drop_ok, FALSE)) {
         chunks <- list(list(check = "*", status = "OK", output = ""))
     }
 
@@ -819,12 +826,12 @@ function(dir, logs = NULL, drop_ok = TRUE)
 
     db_from_logs <- function(logs, drop_ok) {
         out <- lapply(logs, analyze_check_log, drop_ok)
-        out <- out[sapply(out, length) > 0L]
+        out <- out[lengths(out) > 0L]
         if(!length(out))
             return(matrix(character(), ncol = 6L))
         chunks <- lapply(out, `[[`, "Chunks")
         package <- sapply(out, `[[`, "Package")
-        lens <- sapply(chunks, length)
+        lens <- lengths(chunks)
         cbind(rep.int(package, lens),
               rep.int(sapply(out, `[[`, "Version"), lens),
               matrix(as.character(unlist(chunks)), ncol = 3L,
@@ -844,7 +851,7 @@ function(dir, logs = NULL, drop_ok = TRUE)
                       "Output", "Flags")
 
     ## Now some cleanups.
-    
+
     ## Alternatives for left and right quotes.
     lqa <- "'|\xe2\x80\x98"
     rqa <- "'|\xe2\x80\x99"
@@ -891,17 +898,17 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     else
         normalizePath(dir)
 
-    outdirs <- tools:::R_check_outdirs(dir, all = sources, invert = TRUE)
+    outdirs <- R_check_outdirs(dir, all = sources, invert = TRUE)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
-    new <- tools:::check_packages_in_dir_details(logs = logs, drop_ok = FALSE)
+    new <- check_packages_in_dir_details(logs = logs, drop_ok = FALSE)
 
     ## Use
     ##   old = tools:::CRAN_check_details(FLAVOR)
     ## to compare against the results/details of a CRAN check flavor.
 
     if(!inherits(old, "check_details"))
-        old <- tools:::check_packages_in_dir_details(old, drop_ok = FALSE)
+        old <- check_packages_in_dir_details(old, drop_ok = FALSE)
 
     ## Simplify matters by considering only "changes" in *available*
     ## results/details.
@@ -922,12 +929,6 @@ function(dir, old, outputs = FALSE, sources = FALSE)
                 new[!is.na(match(new$Package, packages)), ],
                 by = c("Package", "Check"), all = TRUE)
 
-    ## Even with the above simplification, missing entries do not
-    ## necessarily indicate "OK" (checks could have been skipped).
-    ## Hence leave as missing and show as empty in the diff.
-    ## An exception to this rule is made if we find an "ERROR" result
-    ## as this may explain skipped checks.
-
     ## Complete possibly missing version information.
     chunks <-
         lapply(split(db, db$Package),
@@ -936,27 +937,23 @@ function(dir, old, outputs = FALSE, sources = FALSE)
                    if(length(pos <- which(!is.na(e$Version.x))))
                        e$Version.x <-
                            rep.int(e[pos[1L], "Version.x"], len)
-                    if(length(pos <- which(!is.na(e$Version.y))))
+                   if(length(pos <- which(!is.na(e$Version.y))))
                        e$Version.y <-
                            rep.int(e[pos[1L], "Version.y"], len)
                    e
                })
-
-    ## If one check results in "ERROR" then drop missing checks
-    chunks <- lapply(chunks,
-                     function(e) {
-                         errx <- !is.na(match("ERROR", e$Status.x))
-                         erry <- !is.na(match("ERROR", e$Status.y))
-                         if (errx || erry) {
-                             e[(errx && !is.na(e$Status.x)) |
-                               (erry && !is.na(e$Status.y)),]
-                         }
-                         else {
-                             e
-                         }
-                     })
-
     db <- do.call(rbind, chunks)
+    
+    ## Drop checks that are OK in both versions
+    x.issue <- !is.na(match(db$Status.x, c("NOTE","ERROR","WARNING")))
+    y.issue <- !is.na(match(db$Status.y, c("NOTE","ERROR","WARNING")))
+    db <- db[x.issue | y.issue,]
+    
+    ## Even with the above simplification, missing entries do not
+    ## necessarily indicate "OK" (checks could have been skipped).
+    ## Hence leave as missing and show as empty in the diff.
+    ## An exception to this rule is made if we find an "ERROR" result
+    ## as this may explain skipped checks.
 
     sx <- as.character(db$Status.x)
     sy <- as.character(db$Status.y)

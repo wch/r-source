@@ -8,6 +8,7 @@
 
 \alias{asNamespace}
 \alias{getNamespaceInfo}
+\alias{.getNamespaceInfo}
 \alias{importIntoEnv}
 \alias{isBaseNamespace}
 \alias{isNamespace}
@@ -94,6 +95,13 @@ loadingNamespaceInfo()
   Luke Tierney and other members of the R Core Team.
 }
 \examples{
+nsName <- "stats"
+(ns <- asNamespace(nsName)) # <environment: namespace:stats>
+## The inverse function of  asNamespace() :
+getNamespaceInfo(ns, "spec")[["name"]] ## -> "stats"
+\dontshow{stopifnot(identical(nsName,
+                      getNamespaceInfo(ns, "spec")[["name"]]))}
+
 ## Only for for the daring ones, trying to get into the bowels :
 
 lsNamespaceInfo <- function(ns, ...) {

@@ -36,7 +36,7 @@
 <h1>R-@FULLVERSION@ build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(54 megabytes, 32/64 bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(62 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>

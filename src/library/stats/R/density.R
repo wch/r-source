@@ -1,7 +1,7 @@
 #  File src/library/stats/R/density.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ density.default <-
 	     give.Rkern = FALSE,
 	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
 {
-    if(!missing(...)) warning("non-matched further arguments are disregarded")
+    chkDots(...)
     if(!missing(window) && missing(kernel))
 	kernel <- window
     kernel <- match.arg(kernel)

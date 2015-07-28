@@ -1,7 +1,7 @@
 #  File src/library/utils/R/summRprof.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -95,9 +95,11 @@ summaryRprof <-
            if (memory == "both") {
                memstuff <- substr(chunk, 2L, memprefix-1L)
                memcounts <- pmax(apply(sapply(strsplit(memstuff, ":"), as.numeric), 1, diff), 0)
+	       if (!is.matrix(memcounts)) # Need a matrix result (PR#16395)
+	           memcounts <- matrix(memcounts, nrow = 1)
                ##  memcounts <- c(0, rowSums(memcounts[, 1L:3L]))
                ## convert to bytes.
-               memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L] * 8, memcounts[, 3L])))
+               memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L, drop = FALSE] * 8, memcounts[, 3L, drop = FALSE])))
                rm(memstuff)
            }
            chunk <- substr(chunk, memprefix+1L, nchar(chunk,  "c"))
@@ -124,7 +126,7 @@ summaryRprof <-
        	     })
        newfirsts <- sapply(chunk,  "[[",  1L)
        newuniques <- lapply(chunk,  unique)
-       ulen <- sapply(newuniques, length)
+       ulen <- lengths(newuniques)
        newuniques <- unlist(newuniques)
 
        new.utable <- table(newuniques)

@@ -38,7 +38,7 @@ step(object, scope, scale = 0,
     the mode of stepwise search, can be one of \code{"both"},
     \code{"backward"}, or \code{"forward"}, with a default of \code{"both"}.
     If the \code{scope} argument is missing the default for
-    \code{direction} is \code{"backward"}.
+    \code{direction} is \code{"backward"}.  Values can be abbreviated.
   }
   \item{trace}{
     if positive, information is printed during the running of \code{step}.

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2013  The R Core Team
+ *  Modifications copyright (C) 2007-2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,9 +38,18 @@ use of tm_zone and tm_gmtoff on all platforms.
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
 
-#ifdef __GLIBC__
-// to get tm_zone, tm_gmtoff defined
-# define _BSD_SOURCE
+// to get tm_zone, tm_gmtoff defined in glibc.
+// some other header, e.g. math.h, might define the macro.
+#if defined HAVE_FEATURES_H
+# include <features.h>
+# ifdef __GNUC_PREREQ
+#  if __GNUC_PREREQ(2,20) && !defined(_DEFAULT_SOURCE_)
+#   define _DEFAULT_SOURCE 1
+#  endif
+# endif
+#endif
+#if defined(HAVE_GLIBC2) && !defined(_DEFAULT_SOURCE_) && !defined(_BSD_SOURCE)
+# define _BSD_SOURCE 1
 #endif
 #include <time.h>
 

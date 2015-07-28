@@ -1,26 +1,31 @@
 # Korean translation for R methods package
 # src/library/methods/po/R-ko.po
-# Copyright (C) 1995-2014 The R Core Team
+#
+# Copyright (C) 1995-2015 The R Core Team
+#
 # This file is distributed under the same license as the R methods package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+#
+# Notes:
+# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-31 13:18\n"
-"PO-Revision-Date: 2014-03-27 13:32-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team:  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
 
-msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+#, fuzzy
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr ""
 "아이쿠: '.OldClassesPrototypes'내의 %d번째 줄에 무엇인가 잘못되었습니다"
 
@@ -287,6 +292,9 @@ msgid ""
 "object of class %s)"
 msgstr ""
 
+msgid "must supply 'generic.function' or 'class'"
+msgstr ""
+
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr ""
 "%1$s는 %2$s내에 있는 S4 제네릭 함수가 아닙니다; 따라서 메소드들이 제거되지 않"
@@ -310,11 +318,13 @@ msgid "Function %s is already a group generic; no change"
 msgstr "함수 %s는 이미 그룹제네릭입니다; 변경하지 않습니다"
 
 msgid "Function %s is a group generic; do not call it directly"
-msgstr "함수 %s는 그룹제네릭입니다; 직접적으로 호출할 수 없습니다"
+msgstr ""
+"함수 %s는 그룹제네릭(group generic)이므로 직접적으로 호출하지 말아야 합니다."
 
-#, fuzzy
 msgid "callGeneric() must be called from within a method body"
-msgstr "'callGeneric'은 반드시 제네릭 함수 또는 메소드로부터 호출되어야 합니다"
+msgstr ""
+"'callGeneric'은 반드시 메소드 본체(method body)의 내부로부터 호출되어야 합니"
+"다."
 
 msgid "expected a non-empty character string for argument name"
 msgstr "인자의 이름에는 빈 문자열이 와서는 안됩니다"
@@ -376,12 +386,11 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "findMethods()에 제네릭이 아닌 함수 '%s'가 주어졌습니다"
 
-#, fuzzy
 msgid ""
 "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
-"'where'이 주어졌을 때, 'inherited'에 대해서 오로지 FALSE만이 의미가 있습니다 "
-"(다음이 주어졌습니다"
+"'where'가 주어진 경우 (%s를 가짐), 'inherited'은 오로지 FALSE 인 경우에만 의"
+"미가 있습니다."
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr "인자 'f'는 반드시 제네릭 함수 또는 %s이어야 합니다"
@@ -501,6 +510,18 @@ msgstr ""
 msgid "use %s instead."
 msgstr "대신 %s을 사용하세요."
 
+#, fuzzy
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+"\"MethodsList\" 메타데이터 객체의 다른 용도에 함께 이용되는 %s는 더 이상 제공"
+"되지 않습니다."
+
+#, fuzzy
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr ""
+"%s내에서:  \"MethodsList\" 메타데이터 객체들의 사용은 지원되지 않습니다."
+
 msgid "invalid object for formal method definition: type %s"
 msgstr "형식 메소드 정의에 대한 객체가 올바르지 않습니다: 유형 %s"
 
@@ -529,12 +550,11 @@ msgstr ""
 "메소드 (%s)에 대한 서명내에 있는 이름들이 %s의 인자들 (%s)과 일치하지 않습니"
 "다"
 
-#, fuzzy
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
 msgstr ""
-"메소드 (%s)에 대한 서명내에 있는 이름들이 %s의 인자들 (%s)과 일치하지 않습니"
-"다"
+"메소드에 대한 서명(signature)내에 있는 이름(%s)들이 함수의 인자(%s)들과 일치"
+"하지 않습니다."
 
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
@@ -858,6 +878,9 @@ msgstr ""
 "변화를 주지 않습니다"
 
 msgid "invalid value from generic function %s, class %s, expected %s"
+msgstr ""
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
 msgstr ""
 
 msgid ""
@@ -1246,10 +1269,13 @@ msgstr "%s에 쓰여진 메소드의 구조"
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"invalid mlist element for signature %s at level %d (should be methods list "
-"or method, had class %s)"
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
 msgstr ""
+"\"signature\" 인자에 대한 리스트내에 잘못된 구성요소가 있습니다; 구성요소 %d"
+"는 클래스 정의도 아니고 클래스명도 아닙니다"
 
 msgid "bad method object stored in method table, class %s"
 msgstr ""
@@ -1261,9 +1287,9 @@ msgstr ""
 "메소드 테이블 (%s)내에 잘못된 객체가 있습니다, 메소드가 와야 하는데, 클래스 "
 "%s 객체를 가집니다"
 
-#, fuzzy
 msgid "invalid or unset methods table in generic function %s"
-msgstr "인자 'f'는 반드시 제네릭 함수 또는 %s이어야 합니다"
+msgstr ""
+"제네릭 함수 %s내에 있는 메소드 테이블이 올바르지 않거나 설정되지 않았습니다."
 
 msgid "trying to find a methods table in a non-generic function"
 msgstr ""

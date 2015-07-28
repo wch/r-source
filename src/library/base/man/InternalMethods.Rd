@@ -1,6 +1,6 @@
 % File src/library/base/man/zMethods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{InternalMethods}
@@ -59,8 +59,11 @@
   (which dispatches methods for \code{"seq"})%       [seq.c]
   and \code{\link{xtfrm}}%                           [sort.c]
 
-  In addition, \code{is.name} is a synonym for \code{is.symbol} and
-  dispatches methods for the latter.
+  In addition, \code{is.name} is a synonym for \code{\link{is.symbol}} and
+  dispatches methods for the latter.  Similarly, \code{\link{as.numeric}}
+  is a synonym for \code{as.double} and dispatches methods for the
+  latter, i.e., S3 methods are for \code{as.double}, whereas S4 methods
+  are to be written for \code{as.numeric}.
 
   Note that all of the \link{group generic} functions are also
   internal/primitive and allow methods to be written for them.

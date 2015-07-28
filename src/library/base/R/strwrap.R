@@ -1,7 +1,7 @@
 #  File src/library/base/R/strwrap.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 {
     if(!is.character(x)) x <- as.character(x)
     ## Useful variables.
-    indentString <- paste(rep.int(" ", indent), collapse = "")
-    exdentString <- paste(rep.int(" ", exdent), collapse = "")
+    indentString <- strrep(" ", indent)
+    exdentString <- strrep(" ", exdent)
     y <- list()                         # return value
     UB <- TRUE
     ## input need not be valid in this locale, e.g. from write.dcf
@@ -145,7 +145,7 @@ function(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
 {
     if(is.list(x)) {
-        if(length(x) == 2L && diff(vapply(x, length, 1L)) == 0L) {
+        if(length(x) == 2L && diff(lengths(x)) == 0L) {
             y <- x[[2L]]; x <- x[[1L]]
         }
         else
@@ -175,7 +175,7 @@ function(x, y, style = c("table", "list"),
     if(indent > 0.5 * width)
         stop("incorrect values of 'indent' and 'width'")
 
-    indentString <- paste(rep.int(" ", indent), collapse = "")
+    indentString <- strrep(" ", indent)
 
     if(style == "table") {
         i <- (nchar(x, type="w") > indent - 3L)

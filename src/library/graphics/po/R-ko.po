@@ -1,24 +1,28 @@
 # Korean translation for R graphics package
 # src/library/graphics/po/R-ko.po
-# Copyright (C) 1995-2014 The R Core Team
+#
+# Copyright (C) 1995-2015 The R Core Team
+#
 # This file is distributed under the same license as the R graphics package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+#
+# Notes:
+# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:19\n"
-"PO-Revision-Date: 2014-03-27 09:00-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team:  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr "'a'는 'reg'에 의하여 덮어씌워졌습니다"
@@ -241,9 +245,8 @@ msgstr "'x'와 'y'의 값들은 반드시 유한해야 하며 누락되지 않�
 msgid "'z' must be a matrix"
 msgstr "'z'는 반드시 행렬이어야 합니다"
 
-#, fuzzy
 msgid "'z' must be numeric or logical"
-msgstr "'x'는 반드시 숫자이어야 합니다"
+msgstr ""
 
 msgid "invalid z limits"
 msgstr "유효하지 않은 z limits입니다"
@@ -328,13 +331,11 @@ msgstr "'pairs'에 숫자가 아닌 인자가 전달되었습니다"
 msgid "only one column in the argument to 'pairs'"
 msgstr ""
 
-#, fuzzy
 msgid "invalid argument 'horInd'"
-msgstr "첫번째 인자가 잘못되었습니다"
+msgstr "인자 'horInd'가 올바르지 않습니다."
 
-#, fuzzy
 msgid "invalid argument 'verInd'"
-msgstr "첫번째 인자가 잘못되었습니다"
+msgstr "인자 'verInd'가 올바르지 않습니다."
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'함수가 새 플랏을 작성했습니다"
@@ -469,6 +470,6 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] ""
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "추가적인 인자들 %s은 무시되어질 것입니다"
+#~ msgid "extra argument %s will be disregarded"
+#~ msgid_plural "extra arguments %s will be disregarded"
+#~ msgstr[0] "추가적인 인자들 %s은 무시되어질 것입니다"

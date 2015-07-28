@@ -30,7 +30,7 @@ packBits(x, type = c("raw", "integer"))
     character string or multiple individual characters?}
   \item{n}{the number of bits to shift.  Positive numbers shift right
     and negative numbers shift left: allowed values are \code{-8 ... 8}.}
-  \item{type}{the result type.}
+  \item{type}{the result type, partially matched.}
 }
 \value{
   \code{charToRaw} converts a length-one character string to raw bytes.

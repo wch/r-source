@@ -1,6 +1,6 @@
 % File src/library/stats/man/ARMAacf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ARMAacf}
@@ -43,8 +43,12 @@ ARMAacf(ar = numeric(), ma = numeric(), lag.max = r, pacf = FALSE)
 ARMAacf(c(1.0, -0.25), 1.0, lag.max = 10)
 
 ## Example from Brockwell & Davis (1991, pp.92-4)
-## answer 2^(-n) * (32/3 + 8 * n) /(32/3)
-n <- 1:10; 2^(-n) * (32/3 + 8 * n) /(32/3)
+## answer: 2^(-n) * (32/3 + 8 * n) /(32/3)
+n <- 1:10
+a.n <- 2^(-n) * (32/3 + 8 * n) /(32/3)
+(A.n <- ARMAacf(c(1.0, -0.25), 1.0, lag.max = 10))
+stopifnot(all.equal(unname(A.n), c(1, a.n)))
+
 ARMAacf(c(1.0, -0.25), 1.0, lag.max = 10, pacf = TRUE)
 zapsmall(ARMAacf(c(1.0, -0.25), lag.max = 10, pacf = TRUE))
 

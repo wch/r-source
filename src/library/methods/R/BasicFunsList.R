@@ -22,9 +22,8 @@
 ## needs to have a special form (e.g., belonging to one of the
 ## predefined groups of functions).
 
-## The list is expanded in .makeBasicFuns by adding the S4 group generics
-## and the remaining primitives.
-
+##' The list is expanded in .makeBasicFuns() -> ./makeBasicFunsList.R by 
+##' adding the S4 group generics and the remaining primitives.
 .BasicFunsList <-
 list(
 ### subset/subassignment ops are regarded as language elements

@@ -42,9 +42,13 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
     if(isReal(val) && length(val) == 2 && ISNAN(REAL(val)[0]) ) {
 	/* This should not happen, but if a careless user dput()s a
 	   data frame and sources the result, it will */
-	PROTECT(val = coerceVector(val, INTSXP));
+	PROTECT(vec);
+	PROTECT(val);
+	val = coerceVector(val, INTSXP);
+	UNPROTECT(1); /* val */
+	PROTECT(val);
 	ans =  installAttrib(vec, R_RowNamesSymbol, val);
-	UNPROTECT(1);
+	UNPROTECT(2); /* vec, val */
 	return ans;
     }
     if(isInteger(val)) {
@@ -61,19 +65,21 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
 	} else OK_compact = FALSE;
 	if(OK_compact) {
 	    /* we hide the length in an impossible integer vector */
+	    PROTECT(vec);
 	    PROTECT(val = allocVector(INTSXP, 2));
 	    INTEGER(val)[0] = NA_INTEGER;
 	    INTEGER(val)[1] = n;
 	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
-	    UNPROTECT(1);
+	    UNPROTECT(2); /* vec, val */
 	    return ans;
 	}
     } else if(!isString(val))
 	error(_("row names must be 'character' or 'integer', not '%s'"),
 	      type2char(TYPEOF(val)));
+    PROTECT(vec);
     PROTECT(val);
     ans =  installAttrib(vec, R_RowNamesSymbol, val);
-    UNPROTECT(1);
+    UNPROTECT(2); /* vec, val */
     return ans;
 }
 
@@ -132,22 +138,10 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    return R_NilValue;
 	}
     }
-    /* This is where the old/new list adjustment happens. */
     for (s = ATTRIB(vec); ! IS_R_NilValue(s); s = CDR(s))
 	if (SEXP_EQL(TAG(s), name)) {
-	    if (SEXP_EQL(name, R_DimNamesSymbol) && TYPEOF(CAR(s)) == LISTSXP) {
-		SEXP _new, old;
-		int i;
-		_new = allocVector(VECSXP, length(CAR(s)));
-		old = CAR(s);
-		i = 0;
-		while (! IS_R_NilValue(old)) {
-		    SET_VECTOR_ELT(_new, i++, CAR(old));
-		    old = CDR(old);
-		}
-		SET_NAMED(_new, 2);
-		return _new;
-	    }
+	    if (SEXP_EQL(name, R_DimNamesSymbol) && TYPEOF(CAR(s)) == LISTSXP)
+		error("old list is no longer allowed for dimnames attribute");
 	    SET_NAMED(CAR(s), 2);
 	    return CAR(s);
 	}
@@ -223,7 +217,9 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
     PROTECT(name);
 
     if (isString(name)) {
+	PROTECT(val);
 	name = installTrChar(STRING_ELT(name, 0));
+	UNPROTECT(1);
     }
     if (IS_R_NilValue(val)) {
 	UNPROTECT(2);
@@ -342,8 +338,10 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 	}
 	t = s; // record last attribute, if any
     }
+
     /* The usual convention is that the caller protects,
-       so this is historical over-cautiousness */
+       but a lot of existing code depends assume that
+       setAttrib/installAttrib protects its arguments */
     PROTECT(vec); PROTECT(name); PROTECT(val);
     SEXP s = CONS(val, R_NilValue);
     SET_TAG(s, name);
@@ -692,9 +690,9 @@ static SEXP S4_extends(SEXP klass)
     SETCAR(e, s_extendsForS3);
     val = CDR(e);
     SETCAR(val, klass);
-    val = eval(e, R_MethodsNamespace);
+    PROTECT(val = eval(e, R_MethodsNamespace));
     cache_class(class, val);
-    UNPROTECT(1);
+    UNPROTECT(2); /* val, e */
     return(val);
 }
 
@@ -763,10 +761,18 @@ void InitS3DefaultTypes()
 
 	Type2DefaultClass[type].vector =
 	    createDefaultClass(R_NilValue, part2, part3);
+
+	SEXP part1;
+	PROTECT(part1 = mkChar("matrix"));
 	Type2DefaultClass[type].matrix =
-	    createDefaultClass(mkChar("matrix"), part2, part3);
+	    createDefaultClass(part1, part2, part3);
+	UNPROTECT(1);
+
+	PROTECT(part1 = mkChar("array"));
 	Type2DefaultClass[type].array =
-	    createDefaultClass(mkChar("array"), part2, part3);
+	    createDefaultClass(part1, part2, part3);
+	UNPROTECT(1);
+
 	UNPROTECT(nprotected);
     }
 }
@@ -1025,7 +1031,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     /* there may be old pair-lists out there */
     /* There are, when this gets used as names<- for 1-d arrays */
     if (!isPairList(val) && !isNewList(val))
-	error(_("'dimnames' must be a list"));
+        error(_("'%s' must be a list"), "dimnames");
     dims = getAttrib(vec, R_DimSymbol);
     if ((k = LENGTH(dims)) < length(val))
 	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
@@ -1435,11 +1441,11 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* no match on other attributes and a possible
 	       partial match on "names" */
 	    tag = R_NamesSymbol;
-	    t = getAttrib(s, tag);
+	    PROTECT(t = getAttrib(s, tag));
 	    if(! IS_R_NilValue(t) && R_warn_partial_match_attr)
 		warningcall(call, _("partial match of '%s' to '%s'"), str,
 			    CHAR(PRINTNAME(tag)));
-	    UNPROTECT(1);
+	    UNPROTECT(2);
 	    return t;
 	}
 	else if (match == PARTIAL && strcmp(CHAR(PRINTNAME(tag)), "names")) {

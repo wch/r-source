@@ -481,8 +481,9 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
 	    if (isString(s)) {
-		s = strmat2intmat(s, GetArrayDimnames(x), call);
-		UNPROTECT(1);
+		SEXP dnames = PROTECT(GetArrayDimnames(x));
+		s = strmat2intmat(s, dnames, call);
+		UNPROTECT(2); /* dnames, s */
 		PROTECT(s);
 	    }
 	    if (isInteger(s) || isReal(s)) {
@@ -1273,7 +1274,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
     if (stretch) {
 	SEXP t = CAR(s);
-	SEXP yi = allocList((int)(stretch - nx));
+	SEXP yi = PROTECT(allocList((int)(stretch - nx)));
 	/* This is general enough for only usage */
 	if(isString(t) && length(t) == stretch - nx) {
 	    SEXP z = yi;
@@ -1281,6 +1282,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 	    for(i = 0; i < LENGTH(t); i++, z = CDR(z))
 		SET_TAG(z, installTrChar(STRING_ELT(t, i)));
 	}
+	UNPROTECT(1);
 	PROTECT(x = listAppend(x, yi));
 	nx = (int) stretch;
     }
@@ -1582,14 +1584,13 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isNull(x)) {
 	if (isNull(y)) {
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* args */
 	    return x;
 	}
-	UNPROTECT(1);
 	if (length(y) == 1)
-	    PROTECT(x = allocVector(TYPEOF(y), 0));
+	    x = allocVector(TYPEOF(y), 0);
 	else
-	    PROTECT(x = allocVector(VECSXP, 0));
+	    x = allocVector(VECSXP, 0);
     }
 
     /* Ensure that the LHS is a local variable. */
@@ -1597,11 +1598,6 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (MAYBE_SHARED(x))
 	SETCAR(args, x = shallow_duplicate(x));
-
-    xtop = xup = x; /* x will be the element which is assigned to */
-
-    dims = getAttrib(x, R_DimSymbol);
-    ndims = length(dims);
 
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
@@ -1611,12 +1607,18 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	  errorcall(call, _("[[<- defined for objects of type \"S4\" only for subclasses of environment"));
     }
 
+    PROTECT(x);
+    xtop = xup = x; /* x will be the element which is assigned to */
+
+    dims = getAttrib(x, R_DimSymbol);
+    ndims = length(dims);
+
     /* ENVSXP special case first */
     if( TYPEOF(x) == ENVSXP) {
 	if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
 	    error(_("wrong args for environment subassignment"));
 	defineVar(installTrChar(STRING_ELT(CAR(subs), 0)), y, x);
-	UNPROTECT(1);
+	UNPROTECT(2); /* x, args */
 	return(S4 ? xOrig : x);
     }
 
@@ -1629,11 +1631,15 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    xup = vectorIndex(x, thesub, 0, len-2, /*partial ok*/TRUE, call,
 			      TRUE);
 	    /* OneIndex sets newname, but it will be overwritten before being used. */
+	    PROTECT(xup);
 	    off = OneIndex(xup, thesub, xlength(xup), 0, &newname, len-2, R_NilValue);
 	    x = vectorIndex(xup, thesub, len-2, len-1, TRUE, call, TRUE);
+	    UNPROTECT(2); /* xup, x */
+	    PROTECT(x);
 	    recursed = TRUE;
 	}
     }
+    PROTECT(xup);
 
     stretch = 0;
     if (isVector(x)) {
@@ -1650,9 +1656,13 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		x = DeleteOneVectorListItem(x, offset);
 		if(recursed) {
 		    if(isVectorList(xup)) SET_VECTOR_ELT(xup, off, x);
-		    else xup = SimpleListAssign(call, xup, subs, x, len-2);
+		    else {
+		        PROTECT(x);
+		        xup = SimpleListAssign(call, xup, subs, x, len-2);
+		        UNPROTECT(1); /* x */
+		    }
 		} else xtop = x;
-		UNPROTECT(1);
+		UNPROTECT(3); /* xup, x, args */
 		return xtop;
 	    }
 	    if (offset < 0)
@@ -1680,12 +1690,13 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = (ndims - 1); i > 0; i--)
 		offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
 	    offset += INTEGER(indx)[0];
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* indx */
 	}
 
 	which = SubassignTypeFix(&x, &y, stretch, 2, call);
 
 	PROTECT(x);
+	PROTECT(y);
 
 	switch (which) {
 	    /* as from 2.3.0 'which' is after conversion */
@@ -1820,12 +1831,14 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		PROTECT(names = allocVector(STRSXP, length(x)));
 		SET_STRING_ELT(names, offset, newname);
 		setAttrib(x, R_NamesSymbol, names);
-		UNPROTECT(1);
+		UNPROTECT(1); /* names */
 	    }
 	    else
 		SET_STRING_ELT(names, offset, newname);
 	}
-	UNPROTECT(1);
+	UNPROTECT(4); /* y, x, xup, x */
+	PROTECT(x);
+	PROTECT(xup);
     }
     else if (isPairList(x)) {
 	y = R_FixupRHS(x, y);
@@ -1860,9 +1873,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXP slot = nthcdr(x, (int) offset);
 	    SETCAR(slot, duplicate(y));
 	    /* FIXME: add name */
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* indx */
 	}
-	UNPROTECT(1);
+	UNPROTECT(3); /* y, xup, x */
+	PROTECT(x);
+	PROTECT(xup);
     }
     else error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
@@ -1877,7 +1892,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else xtop = x;
 
-    UNPROTECT(1);
+    UNPROTECT(3); /* xup, x, args */
     SET_NAMED(xtop, 0);
     if(S4) SET_S4_OBJECT(xtop);
     return xtop;
@@ -1948,7 +1963,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
 	xS4 = x;
-        x = R_getS4DataSlot(x, ANYSXP);
+	REPROTECT(x = R_getS4DataSlot(x, ANYSXP), pxidx);
 	if(IS_R_NilValue(x))
 	  errorcall(call, _("no method for assigning subsets of this S4 class"));
     }

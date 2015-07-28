@@ -47,7 +47,7 @@ PDFTEX = @PDFTEX@
 
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 
-## experimental support of ebook conversion.
+## support for ebook conversion.
 ## ebook-convert is part of 'calibre'
 ## (http://calibre-ebook.com/download, or Debian/Fedora/... packages)
 EBOOK = ebook-convert

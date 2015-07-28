@@ -345,30 +345,14 @@ getMethods <-
     function(f, where = topenv(parent.frame()), table = FALSE)
 {
     if(!table)
-      .MlistDeprecated("getMethods", "findMethods")
+      .MlistDefunct("getMethods", "findMethods")
     nowhere <- missing(where)
     fdef <- getGeneric(f, where = where)
     f <- fdef@generic
     if(!is.null(fdef)) {
         if(table)
           return(getMethodsForDispatch(fdef, TRUE))
-        value <-
-            (if(nowhere) {
-                if(is(fdef, "genericFunction"))
-                    .makeMlistFromTable(fdef) # else NULL
-            }
-            else if(.noMlists())
-		.makeMlistFromTable(fdef, where)
-            else getMethodsMetaData(f, where = where)
-             )
-
-        if(is.null(value)) ## return empty methods list
-            new("MethodsList", argument = fdef@default@argument) # but deprecated from 2.11.0
-        else
-            value
-    }
-    else
-      NULL
+    } ## else NULL
 }
 
 getMethodsForDispatch <- function(fdef, inherited = FALSE)
@@ -393,8 +377,7 @@ getMethodsForDispatch <- function(fdef, inherited = FALSE)
     }
 }
 
-##NB used internally in MethodsListSelect.  Must NOT use the standard version
-## to prevent recursion
+## Must NOT use the standard version to prevent recursion  {still true ?}
 .getMethodsForDispatch <- function(fdef) {
     ev <- base::environment(fdef)
     if(base::exists(".Methods", envir = ev))

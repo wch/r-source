@@ -1,7 +1,7 @@
 #  File src/library/stats/R/contr.poly.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -149,7 +149,7 @@ polym <- function(..., degree = 1, raw = FALSE)
     nd <- length(dots)
     if(nd == 0) stop("must supply one or more vectors")
     if(nd == 1) return(poly(dots[[1L]], degree, raw = raw))
-    n <- sapply(dots, length)
+    n <- lengths(dots)
     if(any(n != n[1L]))
         stop("arguments must have the same length")
     z <- do.call("expand.grid", rep.int(list(0:degree), nd))

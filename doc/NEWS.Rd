@@ -5,7 +5,222 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN 3.2.0}{
+\section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{nchar(x, *)} gains a new argument \code{keepNA} which
+      governs how the result for \code{NA}s in \code{x} is determined.
+      The new default \code{keepNA = NA} returns \code{NA} where
+      \code{x} is \code{NA}, unless for \code{type = "width"} which still
+      returns \code{2}, the formatting / printing width of \code{NA}.
+
+      \code{nzchar(x)} gets the same new argument, with default
+      \code{keepNA = FALSE} however.  Consequently \code{nzchar(x)} keeps
+      returning a non-\code{NA} logical vector, back compatibly.
+    }
+  }
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The \code{print} method for \code{methods()} gains a
+      \code{byclass} argument.
+
+      \item New functions \code{validEnc()} and \code{validUTF8()} to
+      give access to the validity checks for inputs used by
+      \code{grep()} and friends.
+
+      \item Experimental new functionality for S3 method checking, notably
+      \code{isS3method()}.  Also, the \R \sQuote{language element} names
+      are exported as \code{tools::langElts}.
+
+      \item \code{str(x)} now displays \code{"Time-Series"} also for
+      matrix (multivariate) time-series, i.e. when \code{is.ts(x)} is true.
+
+      \item (Windows only)  The GUI menu item to install local packages
+      now accepts \file{*.tar.gz} files as well as \file{*.zip} files
+      (but defaults to the latter).
+
+      \item New programmeR's utility function \code{chkDots()}.
+
+      \item \code{D()} now signals an error when given invalid input,
+      rather than silently returning \code{NA}.  (Request of John Nash.)
+
+      \item \code{formula} objects are slightly more \dQuote{first class}:
+      e.g., \code{formula()} or \code{new("formula", y ~ x)} are now
+      valid.  Similarly, for \code{"table"}, \code{"ordered"} and
+      \code{"summary.table"}.  Packages defining S4 classes with the above
+      S3/S4 classes as slots should be reinstalled.
+      % notably if their classes are reused in other
+      % packages. e.g. re-install arules for arulesSequence, flexmix for betareg
+
+      \item New function \code{strrep()} for repeating the elements of a
+      character vector.
+
+      \item \code{rapply} preserves attributes on the list when
+      \code{how="replace"}.
+
+      \item New S3 generic function \code{sigma()} with methods for
+      extracting the estimated standard deviation aka \dQuote{residual
+	standard deviation} from a fitted model.
+
+      \item \code{news()} now displays \R and package news files within
+      the HTML help system if it is available.  If no news file is found,
+      a visible \code{NULL} is returned to the console.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} has a new option
+      \option{--ignore-vignettes} for use with non-Sweave vignettes
+      whose \samp{VignetteBuilder} package is not available.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The included versions of \code{zlib}, \code{bzip2},
+      \code{xz} and PCRE have been removed, so system versions are
+      required (see the \sQuote{R Installation and Administration} manual).
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
+      vector, and it returns \dQuote{TRUE}/\dQuote{FALSE} instead of
+      \dQuote{T}/\dQuote{F} for logical vectors.
+
+      \item \code{.colSums()} etc (with an initial dot) first argument
+      name \code{x} matches \code{colSums()} such that error messages
+      are correct.
+
+      \item A \code{coef.maov()} method has been added to allow
+      \code{vcov()} to work with multivariate results. (\PR{16380})
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.2.1}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{utf8ToInt()} now checks that its input is valid UTF-8
+      and returns \code{NA} if it is not.
+
+      \item \code{install.packages()} now allows \code{type = "both"}
+      with \code{repos = NULL} if it can infer the type of file.
+
+      \item \code{nchar(x, *)} and \code{nzchar(x)} gain a new argument
+      \code{keepNA} which governs how the result for \code{NA}s in
+      \code{x} is determined.  For the \R 3.2.x series, the default
+      remains \code{FALSE} which is fully back compatible.
+      From \R 3.3.0, the default will change to \code{keepNA = NA} and
+      you are advised to consider this for code portability.
+
+      \item \code{news()} more flexibly extracts dates from package
+      \file{NEWS.Rd} files.
+
+      \item \code{lengths(x)} now also works (trivially) for atomic
+      \code{x} and hence can be used more generally as an efficient
+      replacement of \code{sapply(x, length)} and similar.
+
+      \item The included version of PCRE has been updated to 8.37, a
+      bug-fix release.
+
+      \item \code{diag()} no longer duplicates a matrix when extracting
+      its diagonal.
+
+      \item \code{as.character.srcref()} gains an argument to allow
+      characters corresponding to a range of source references to be
+      extracted.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{acf()} and \code{ccf()} now guarantee values strictly
+      in \eqn{[-1,1]} (instead of sometimes very slightly outside). \PR{15832}.
+
+      \item \code{as.integer("111111111111")} now gives NA (with a warning) as
+      it does for the corresponding numeric or negative number
+      coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
+      (instead of NA) when M is the maximal representable integer.
+
+      \item On some platforms \code{nchar(x, "c")} and \code{nchar(x, "w")}
+      would return values (possibly \code{NA}) for inputs which were
+      declared to be UTF-8 but were not, or for invalid strings without a
+      marked encoding in a multi-byte locale, rather than give an
+      error.  Additional checks have been added to mitigate this.
+
+      \item \code{apply(a, M, function(u) c(X = ., Y = .))} again
+      has dimnames containing "X" and "Y" (as in R < 3.2.0).
+
+      \item (Windows only) In some cases, the \command{--clean} option
+      to \command{R CMD INSTALL} could fail.  (\PR{16178})
+
+      \item (Windows only) \code{choose.files()} would occasionally
+      include characters from the result of an earlier call in
+      the result of a later one.  (\PR{16270})
+
+      \item A change in \code{RSiteSearch()} in \R 3.2.0 caused it to
+      submit invalid URLs.  (\PR{16329})
+
+      \item \command{Rscript} and command line \command{R} silently
+      ignored incomplete statements at the end of a script; now they
+      are reported as parse errors.  (\PR{16350})
+
+      \item Parse data for very long strings was not stored.  (\PR{16354})
+
+      \item \code{plotNode()}, the workhorse of the \code{plot} method
+      for \code{"dendrogram"}s is no longer recursive, thanks to Suharto
+      Anggono, and hence also works for deeply nested dendrograms.  (\PR{15215})
+
+      \item The parser could overflow internally when given numbers
+      in scientific format with extremely large exponents.  (\PR{16358})
+
+      \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
+      and related functions could repeatedly query the user for it.
+      (Part of \PR{16362})
+
+      \item The low-level functions \code{.rowSums()} etc. did not
+      check the length of their argument, so could segfault. (\PR{16367})
+
+      \item The \code{quietly} argument of \code{library()} is now
+      correctly propagated from \code{.getRequiredPackages2()}.
+
+      \item Under some circumstances using the internal PCRE when
+      building \R from source would cause external libs such as
+      \code{-llzma} to be omitted from the main link.
+
+      \item The .Primitive default methods of the logic operators, i.e.,
+      \code{!}, \code{&} and \code{|}, now give correct error messages
+      when appropriate, e.g., for \code{`&`(TRUE)} or \code{`!`()}.
+      (\PR{16385})
+
+      \item \code{cummax(x)} now correctly propagates \code{NA}s also
+      when \code{x} is of type \code{integer} and begins with an \code{NA}.
+
+      \item \code{summaryRprof()} could fail when the profile contained
+      only two records.  (\PR{16395})
+
+      \item HTML vignettes opened using \code{vignette()} did not support
+      links into the rest of the HTML help system.  (Links worked properly
+      when the vignette was opened using \code{browseVignettes()} or from
+      within the help system.)
+
+      \item \code{arima(*, xreg = .)} (for \eqn{d \ge 1}{d >= 1})
+      computes estimated variances based on a the number of effective
+      observations as in \R version 3.0.1 and earlier.  (\PR{16278})
+
+      \item \code{slotNames(.)} is now correct for \code{"signature"}
+      objects (mostly used internally in \pkg{methods}).
+      
+      \item On some systems, the first string comparison after
+      a locale change would result in \code{NA}.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.2.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
@@ -124,9 +339,9 @@
       functions by \R since before \R version 2.14.0) is no longer
       treated as special.
 
-      \item An experimental function \code{returnValue()} has been added
-      to give \code{on.exit()} code access to a function's return
-      value for debugging purposes.
+      \item Function \code{returnValue()} has been added to give
+      \code{on.exit()} code access to a function's return value for
+      debugging purposes.
 
       \item \code{crossprod(x, y)} allows more matrix coercions when
       \code{x} or \code{y} are vectors, now equalling
@@ -134,7 +349,7 @@
       Similarly, \code{tcrossprod(x,y)} and \code{\%*\%} work in more
       cases with vector arguments.
 
-      \item An experimental utility \code{dynGet()} useful for detecting
+      \item Utility function \code{dynGet()} useful for detecting
       cycles, aka infinite recursions.
 
       \item The byte-code compiler and interpreter include new
@@ -146,8 +361,8 @@
       \item \code{apply(m, 2, identity)} is now the same as the matrix
       \code{m} when it has \emph{named} row names.
 
-      \item A new somewhat experimental function \code{debuggingState()}
-      has been added, allowing to temporarily turn off debugging.
+      \item A new function \code{debuggingState()} has been added,
+      allowing to temporarily turn off debugging.
 
       \item \code{example()} gets a new optional argument
       \code{run.donttest} and \code{tools::Rd2ex()} a corresponding
@@ -196,8 +411,8 @@
       \code{methods:::.requirePackage()} speeding up package loading.
       (\PR{16133})
 
-      \item New (somewhat experimental) \code{get0()} function, combining
-      \code{exists()} and \code{get()} in one call.
+      \item New \code{get0()} function, combining \code{exists()} and
+      \code{get()} in one call, for efficiency.
 
       \item \code{match.call()} gains an \code{envir} argument for
       specifying the environment from which to retrieve
@@ -263,7 +478,7 @@
       locked namespace or namespace imports environment.  Contributed by
       Karl Millar.
 
-      \item New function \code{isLoadedNamespace()} for readability and speed.
+      \item New function \code{isNamespaceLoaded()} for readability and speed.
 
       \item \code{names(env)} now returns all the object names of an
       \code{environment} \code{env}, equivalently to
@@ -324,8 +539,7 @@
 
       \item \code{BIC(mod)} and \code{BIC(mod, mod2)} now give non-NA
       numbers for \code{arima()} fitted models, as \code{nobs(mod)} now
-      gives the number of \dQuote{used} observations for such models --
-      somewhat experimentally.
+      gives the number of \dQuote{used} observations for such models.
       This fixes \PR{16198}, quite differently than proposed there.
 
       \item The \code{print()} methods for \code{"htest"},
@@ -341,7 +555,7 @@
       \item The code completion mechanism can now be replaced by a
       user-specified completer function, for (temporary) situations
       where the usual code completion is inappropriate.
-      
+
       \item \code{unzip()} will now warn if it is able to detect truncation
       when unpacking a file of 4GB or more (related to \PR{16243}).
 
@@ -349,6 +563,12 @@
       output is simplified when the \code{class} argument is
       used.  \code{.S3methods()} and \code{methods::.S4methods()} report
       S3 and S4 methods separately.
+
+      \item Higher order functions such as the \code{apply} functions
+      and \code{Reduce()} now force arguments to the functions they apply
+      in order to eliminate undesirable interactions between lazy
+      evaluation and variable capture in closures.  This resolves
+      \PR{16093}.
     }
   }
 
@@ -375,7 +595,8 @@
 
        Linux users should check that the \code{-devel} or \code{-dev}
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
-       \pkg{pcre} (or similar names) are installed.
+       \pkg{pcre} as well as \pkg{xz-devel}/\pkg{liblzma-dev} (or
+       similar names) are installed.
 
        \item \command{configure} by default looks for the
        \command{texi2any} script from \pkg{texinfo} 5.1 or later, rather
@@ -421,32 +642,34 @@
       \item \command{R CMD check} now checks that the \samp{Title} and
       \samp{Description} fields are correctly terminated.
 
-      \item \command{R CMD check --as-cran} checks a \file{README.md}
-      file can be processed: this needs \command{pandoc} installed.
+      \item \command{R CMD check --as-cran} now:
+      \itemize{
+	\item checks a \file{README.md} file can be processed: this
+	needs \command{pandoc} installed.
 
-      \item \command{R CMD check --as-cran} checks the existence and
-      accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
-      and \file{NEWS.Rd} files and in the help files.
+	\item checks the existence and accessibility of URLs in the
+	\file{DESCRIPTION}, \file{CITATION}, \file{NEWS.Rd} and
+	\file{README.md} files and in the help files (provided the build
+	has \code{libcurl} support).
 
-      \item \command{R CMD check --as-cran} reports non-ASCII characters
-      in R source files when there is no package encoding declared in
-      the \file{DESCRIPTION} file.
+	\item reports non-ASCII characters in R source files when there
+	is no package encoding declared in the \file{DESCRIPTION} file.
 
-      \item \command{R CMD check --as-cran} reports (apparent) S3
-      methods exported but not registered.
+	\item reports (apparent) S3 methods exported but not registered.
 
-      It reports overwriting registered S3 methods from base/recommended
-      packages.  (Such methods are replaced in the affected package for
-      the rest of the session, even if the replacing namespace is
-      unloaded.)
+	\item reports overwriting registered S3 methods from
+	base/recommended packages.  (Such methods are replaced in the
+	affected package for the rest of the session, even if the
+	replacing namespace is unloaded.)
 
-      These checks can also be selected by environment variables: see
-      the \sQuote{R Internals} manual.
+	\item reports if the \code{Title} field does not appear to be in
+	title case (see \sQuote{Writing R Extensions}: there may be
+	false positives, but note that technical words should be
+	single-quoted and will then be accepted).
+      }
 
-      \item \command{R CMD check --as-cran} reports if the \code{Title}
-      field does not appear to be in title case (see \sQuote{Writing R
-      Extensions}: there may be false positives, but note that
-      technical words should be single-quoted and will then be accepted).
+      Most of these checks can also be selected by environment
+      variables: see the \sQuote{R Internals} manual.
     }
   }
 
@@ -476,23 +699,26 @@
     The following are currently in place.
     \itemize{
       \item Installation using external binary distributions
-      of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
+      of \pkg{zlib}, \pkg{bzip2}, \pkg{liblzma}, \pkg{pcre},
       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
       and the build instructions have been revised.
 
       \item A new \command{make} target \code{rsync-extsoft} has been
-      added to obtain copies of the external libraries from \acronym{CRAN}.
+      added to obtain copies of the external libraries from
+      \acronym{CRAN}.
 
       \item Building the manuals now requires \command{texi2any} from
-      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds
-      include the manuals, but by default builds from source will not, and
-      they will be accessed from \acronym{CRAN}.  See the comments in
+      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds include
+      the manuals, but by default builds from source will not, and they
+      will be accessed from \acronym{CRAN}.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
 
-      \item (Windows) The default toolchain for Windows is now based
-      on GCC 4.9.2.  Corresponding code changes and \file{Makefile} changes 
-      have been made; see \file{src/gnuwin32/MkRules.dist} for details.
+      \item (Windows) Changes have been made to support an experimental
+      Windows toolchain based on GCC 4.9.2.  The default toolchain
+      continues to be based on GCC 4.6.3, as the new toolchain is not
+      yet stable enough.  A change to a new toolchain is expected during
+      the R 3.2.x lifetime.
     }
   }
 
@@ -530,6 +756,11 @@
       \option{--with-valgrind-instrumentation=3} has been withdrawn, as
       it did not work with recent \command{valgrind} headers: it is now
       treated as level \code{2}.
+
+      \item The \code{MethodsList} class in package \pkg{methods} had
+      been deprecated in \R 2.11.0 and is defunct now.  Functions using
+      it are defunct if they had been deprecated in \R 2.11.0, and are
+      deprecated now, otherwise.
     }
   }
 
@@ -574,11 +805,23 @@
       arguments.
 
       \item In \code{qbeta()} the inversion of \code{pbeta()} is much
-      more sophisticated.  This works better in border cases, still
-      using too many iterations.
+      more sophisticated.  This works better in corner cases some of
+      which failed completely previously (\PR{15755}), or were using
+      too many iterations.
 
       \item Auto-printing no longer duplicates objects when printing is
       dispatched to a method.
+
+      \item \code{kmeans(x, k)} would fail when \code{nrow(x) >= 42949673}.
+      (Comment 6 of \PR{15364})
+
+      \item \sQuote{Abbreviated} locale-specific day and month names
+      could have been truncated in those rare locales where there are
+      the same as the full names.
+
+      \item An irrelevant warning message from updating subclass
+      information was silenced (the namespace would not be writable
+      in this case).
     }
   }
 }
@@ -963,7 +1206,7 @@
       dendrogram.
 
       \item The \code{plot} method for \code{"hclust"} objects gets an
-      optional argument \code{check}; When that is true (the default) it
+      optional argument \code{check}; when that is true (the default) it
       checks more carefully for valid input.
 
       \item (Windows only) If a user chose to install 64 bit \R but not

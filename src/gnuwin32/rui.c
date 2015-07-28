@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004--2014  The R Foundation
+ *  Copyright (C) 2004--2015  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -917,7 +917,7 @@ int RguiPackageMenu(PkgMenuItems pmenu)
     MCHECK(pmenu->mpkgu = newmenuitem(G_("Update packages..."), 0,
 			       menupkgupdate));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(pmenu->mpkgil = newmenuitem(G_("Install package(s) from local zip files..."),
+    MCHECK(pmenu->mpkgil = newmenuitem(G_("Install package(s) from local files..."),
 				0, menupkginstalllocal));
     return 0;
 }

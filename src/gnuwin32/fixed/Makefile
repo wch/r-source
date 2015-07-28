@@ -28,7 +28,7 @@ ifeq "$(WIN)" "64"
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
-	  -e 's|BINPREF =|BINPREF ?= $$(RTOOLS)gcc492_64/bin/|' \
+	  -e "s|BINPREF =|BINPREF = $(BINPREF)|" \
 	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
@@ -44,7 +44,7 @@ ifeq "$(WIN)" "64"
 else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
-	  -e 's|BINPREF =|BINPREF ?= $$(RTOOLS)gcc492_32/bin/|' \
+	  -e "s|BINPREF =|BINPREF = $(BINPREF)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  -e "s|DT_ARCH =|DT_ARCH = $(DT_ARCH)|" \

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ftable.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -160,8 +160,8 @@ as.table.ftable <- function(x, ...)
     xrv <- rev(attr(x, "row.vars"))
     xcv <- rev(attr(x, "col.vars"))
     x <- array(data = c(x),
-               dim = c(sapply(xrv, length),
-                       sapply(xcv, length)),
+               dim = c(lengths(xrv),
+                       lengths(xcv)),
                dimnames = c(xrv, xcv))
     nrv <- length(xrv)
     ncv <- length(xcv)
@@ -179,7 +179,7 @@ format.ftable <-
 	stop("'x' must be an \"ftable\" object")
     charQuote <- function(s) if(quote && length(s)) paste0("\"", s, "\"") else s
     makeLabels <- function(lst) {
-	lens <- sapply(lst, length)
+	lens <- lengths(lst)
 	cplensU <- c(1, cumprod(lens))
 	cplensD <- rev(c(1, cumprod(rev(lens))))
 	y <- NULL
@@ -393,8 +393,8 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         len <- length(tmp)
     }
     values <- matrix(values,
-                     nrow = prod(sapply(row.vars, length)),
-                     ncol = prod(sapply(col.vars, length)),
+                     nrow = prod(lengths(row.vars)),
+                     ncol = prod(lengths(col.vars)),
                      byrow = TRUE)
     structure(values,
               row.vars = row.vars,

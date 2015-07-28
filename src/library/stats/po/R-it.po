@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-11-20 11:48\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -715,10 +715,6 @@ msgstr "'ColSideColors' deve essere un vettore carattere di lunghezza ncol(x)"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr "'RowSideColors' deve essere un vettore carattere di lunghezza nrow(x)"
-
-#, fuzzy
-msgid "non-matched further arguments are disregarded"
-msgstr "argometni extra ignorati"
 
 msgid "argument 'x' must be numeric"
 msgstr "l'argomento 'x' deve essere numerico"
@@ -2577,12 +2573,6 @@ msgstr[0] "argometni extra ignorati"
 msgstr[1] "argometni extra ignorati"
 
 #, fuzzy
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "argometni extra ignorati"
-msgstr[1] "argometni extra ignorati"
-
-#, fuzzy
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"
 msgstr[0] "%d variabili factor sono troppe per %d variabili"
@@ -2708,6 +2698,16 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "non-matched further arguments are disregarded"
+#~ msgstr "argometni extra ignorati"
+
+#, fuzzy
+#~ msgid "extra argument %s will be disregarded"
+#~ msgid_plural "extra arguments %s will be disregarded"
+#~ msgstr[0] "argometni extra ignorati"
+#~ msgstr[1] "argometni extra ignorati"
 
 #~ msgid "'merge' and 'height' do not fit!"
 #~ msgstr "'merge' e 'height' in disaccordo!"

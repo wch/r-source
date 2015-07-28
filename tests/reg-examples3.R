@@ -99,7 +99,7 @@ anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
 summary(anorex.1)
 
 # logLik.Rd
-{utils::data(Orthodont, package = "nlme")
+utils::data(Orthodont, package = "nlme")
 fm1 <- lm(distance ~ Sex * age, Orthodont)
 logLik(fm1)
 logLik(fm1, REML = TRUE)
@@ -141,6 +141,15 @@ options(od)
 ## Robust:
 (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
 
+# termplot.R
+library(MASS)
+hills.lm <- lm(log(time) ~ log(climb)+log(dist), data = hills)
+termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth,
+        terms = "log(dist)", main = "Original")
+termplot(hills.lm, transform.x = TRUE,
+         partial.resid = TRUE, smooth = panel.smooth,
+	 terms = "log(dist)", main = "Transformed")
+
 # xtabs.Rd
 if(require("Matrix")) {
  ## similar to "nlme"s  'ergoStool' :
@@ -150,20 +159,12 @@ if(require("Matrix")) {
  set.seed(15) # a subset of cases:
  print(xtabs(~ Type + Subj, data = d.ergo[sample(36, 10), ], sparse = TRUE))
 
- ## Hypothetical two level setup:
+ ## Hypothetical two-level setup:
  inner <- factor(sample(letters[1:25], 100, replace = TRUE))
  inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
  fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
  print(xtabs(~ inner + outer, fr, sparse = TRUE))
 }
-
-
-## From tools
-
-## This may not be installed
-gridEx <- system.file("doc", "grid.Rnw", package = "grid")
-vignetteDepends(gridEx)
-
 
 ## From utils
 example(packageDescription)
@@ -173,3 +174,14 @@ example(packageDescription)
 library(splines)
 Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))
 
+
+## From tools
+
+library(tools)
+## there are few dependencies in a vanilla R installation:
+## lattice may not be installed
+dependsOnPkgs("lattice")
+
+## This may not be installed
+gridEx <- system.file("doc", "grid.Rnw", package = "grid")
+vignetteDepends(gridEx)

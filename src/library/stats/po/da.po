@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,25 +104,29 @@ msgstr ""
 msgid "Function '%s' is not in the derivatives table"
 msgstr ""
 
-#: deriv.c:642
-msgid "variable must be a character string"
+#: deriv.c:641
+msgid "'expr' must be an expression or call"
 msgstr ""
 
 #: deriv.c:644
+msgid "variable must be a character string"
+msgstr ""
+
+#: deriv.c:646
 msgid "only the first element is used as variable name"
 msgstr ""
 
-#: deriv.c:657
+#: deriv.c:659
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr ""
 
-#: deriv.c:935 model.c:99
+#: deriv.c:937 model.c:99
 #, fuzzy
 msgid "invalid variable names"
 msgstr "ugyldig værdi for lag.max"
 
-#: deriv.c:944
+#: deriv.c:946
 #, fuzzy
 msgid "invalid tag"
 msgstr "ugyldig argumenttype"
@@ -371,25 +375,25 @@ msgstr "ugyldig værdi for lag.max"
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr ""
 
-#: model.c:1576
+#: model.c:1579
 #, fuzzy
 msgid "invalid model formula in EncodeVars"
 msgstr "ugyldig værdi for lag.max"
 
-#: model.c:1662
+#: model.c:1665
 msgid "argument is not a valid model"
 msgstr ""
 
-#: model.c:1672
+#: model.c:1675
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' skal være en tegnvektor"
 
-#: model.c:1684
+#: model.c:1687
 msgid "'data' argument is of the wrong type"
 msgstr ""
 
-#: model.c:1954
+#: model.c:1957
 msgid "'.' in formula and no 'data' argument"
 msgstr ""
 
@@ -457,16 +461,16 @@ msgstr "'rho' skal være et miljø"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' er ikke en numerisk vektor med korrekt længde"
 
-#: nls.c:311 nls.c:346
+#: nls.c:311 nls.c:345
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Manglende værdi eller en uendelig lavet under evaluering af modellen"
 
-#: nls.c:318
+#: nls.c:319
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "variable '%s' er et heltal, ikke numerisk"
 
-#: nls.c:320
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "variabel '%s' er ikke numerisk"
@@ -728,7 +732,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr "'rho' skal være et miljø"
 
-#: port.c:382 port.c:543
+#: port.c:382 port.c:546
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' skal være en numerisk vektor som ikke er tom"
 
@@ -745,34 +749,34 @@ msgstr "miljø 'rho' skal indeholde en numerisk vektor '.par' med længden %d"
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' og 'upper' skal være numeriske vektorer"
 
-#: port.c:457
+#: port.c:460
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' gælder kun for navngivne lister"
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() er ikke fundet"
 
-#: port.c:491
+#: port.c:494
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' skal være en numerisk matrix med dimension (%d, %d)"
 
-#: port.c:512
+#: port.c:515
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn lavede tilstand %d, længde %d - ønsket tilstand %d, længde %d"
 
-#: port.c:525
+#: port.c:528
 msgid "invalid type for eval_check_store"
 msgstr "ugyldig type for eval_check_store"
 
-#: port.c:544
+#: port.c:547
 msgid "m must be a list"
 msgstr "m skal være en liste"
 
-#: port.c:564
+#: port.c:567
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' og 'upperb' skal være numeriske vektorer"
 

@@ -123,6 +123,7 @@ FUNTAB R_FunTab[] =
 {"missing",	do_missing,	1,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"nargs",	do_nargs,	1,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"on.exit",	do_onexit,	0,	100,	1,	{PP_FUNCALL, PREC_FN,	  0}},
+{"forceAndCall",do_forceAndCall,	0,	0,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 
 /* .Internals */
 
@@ -519,8 +520,8 @@ FUNTAB R_FunTab[] =
 
 /* String Manipulation */
 
-{"nchar",	do_nchar,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"nzchar",	do_nzchar,	1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"nchar",	do_nchar,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"nzchar",	do_nzchar,	1,	1,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"substr",	do_substr,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"substr<-",	do_substrgets,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"strsplit",	do_strsplit,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
@@ -552,10 +553,13 @@ FUNTAB R_FunTab[] =
 {"packBits",	do_packBits,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"utf8ToInt",	do_utf8ToInt,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"intToUtf8",	do_intToUtf8,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"validUTF8",	do_validUTF8,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"validEnc",	do_validEnc,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"encodeString",do_encodeString,1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"iconv",	do_iconv,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"strtrim",	do_strtrim,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"strtoi",	do_strtoi,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"strrep",	do_strrep,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Type Checking (typically implemented in ./coerce.c ) */
 
@@ -1033,13 +1037,12 @@ int StrToInternal(const char *s)
 static void installFunTab(int i)
 {
     SEXP prim;
-    /* prim needs to be protected since install can (and does here) allocate */
-    PROTECT(prim = mkPRIMSXP(i, R_FunTab[i].eval % 10));
+    /* mkPRIMSXP caches its results, thus prim does not need protection */
+    prim = mkPRIMSXP(i, R_FunTab[i].eval % 10);
     if ((R_FunTab[i].eval % 100 )/10)
 	SET_INTERNAL(install(R_FunTab[i].name), prim);
     else
 	SET_SYMVALUE(install(R_FunTab[i].name), prim);
-    UNPROTECT(1);
 }
 
 static void SymbolShortcuts(void)
@@ -1246,9 +1249,11 @@ SEXP installChar(SEXP charSXP)
         /* This branch is to match behaviour of install (which is older):
            symbol C-string names are always interpreted as if
            in the native locale, even when they are not in the native locale */
+        PROTECT(charSXP);
         sym = mkSYMSXP(mkChar(CHAR(charSXP)), R_UnboundValue);
         SET_HASHVALUE(PRINTNAME(sym), hashcode);
         SET_HASHASH(PRINTNAME(sym), 1);
+        UNPROTECT(1);
     }
 
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);

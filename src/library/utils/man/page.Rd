@@ -17,7 +17,7 @@ page(x, method = c("dput", "print"), \dots)
   \item{x}{An \R object, or a character string naming an object.}
   \item{method}{The default method is to dump the object \emph{via}
     \code{\link{dput}}.  An alternative is to use \code{print} and
-    capture the output to be shown in the pager.}
+    capture the output to be shown in the pager.  Can be abbreviated.}
   \item{\dots}{additional arguments for \code{\link{dput}},
     \code{\link{print}} or \code{\link{file.show}} (such as \code{title}).}
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/stop.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stop}
@@ -71,19 +71,14 @@ geterrmessage()
   of messages.
 }
 \examples{
-options(error = expression(NULL))
-# don't stop on stop(.)  << Use with CARE! >>
-
 iter <- 12
-if(iter > 10) stop("too many iterations")
+try(if(iter > 10) stop("too many iterations"))
 
 tst1 <- function(...) stop("dummy error")
-tst1(1:10, long, calling, expression)
+try(tst1(1:10, long, calling, expression))
 
 tst2 <- function(...) stop("dummy error", call. = FALSE)
-tst2(1:10, longcalling, expression, but.not.seen.in.Error)
-
-options(error = NULL)  # restore to default
+try(tst2(1:10, longcalling, expression, but.not.seen.in.Error))
 }
 \keyword{environment}
 \keyword{programming}

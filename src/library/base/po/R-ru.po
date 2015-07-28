@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
-"PO-Revision-Date: 2014-03-11 10:24-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-26 17:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -51,8 +51,9 @@ msgstr "неопределенные или пропущенные значения в 'x'"
 msgid "a dimension is zero"
 msgstr "нулевое измерение"
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
-msgstr ""
+#, fuzzy
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
+msgstr "\"hexNumeric\" и \"digits17\" исключают друг друга"
 
 msgid "second argument must be a list"
 msgstr "второй аргумент должен быть списком"
@@ -78,17 +79,14 @@ msgstr "неправильно сформирована строка версии"
 msgid "target is %s, current is %s"
 msgstr "цель %s, текущая %s"
 
-#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr "'x' должен быть числом"
+msgstr "'tolerance' должно быть числом"
 
-#, fuzzy
 msgid "'scale' should be numeric or NULL"
-msgstr "'arg' должен быть одним из %s"
+msgstr "'scale' должен быть числом или NULL"
 
-#, fuzzy
 msgid "'%s' must be logical"
-msgstr "'subset' должен быть логическим"
+msgstr "'%s' должен быть логическим"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) должен иметь положительную длину"
@@ -309,9 +307,8 @@ msgstr "замена элемента в несуществующей колонке: %s"
 msgid "only a single element should be replaced"
 msgstr "только одиночный элемент можно заменить"
 
-#, fuzzy
 msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "нечисловая переменная переменная в таблице данных:"
+msgstr "Частичное соответствие '%s' и '%s' в таблице данных"
 
 msgid "names do not match previous names"
 msgstr "имена не соответствуют прежним именам"
@@ -328,9 +325,8 @@ msgstr "<0 строк> (или 'row.names' нулевой длины)"
 msgid "non-numeric variable in data frame:"
 msgstr "нечисловая переменная переменная в таблице данных:"
 
-#, fuzzy
 msgid "%s only defined for equally-sized data frames"
-msgstr "определено только для таблиц данных одинаковых размеров"
+msgstr "%s определено только для таблиц данных одинаковых размеров"
 
 msgid "list of length %d not meaningful"
 msgstr "список длины %d не значим"
@@ -472,9 +468,8 @@ msgstr "'from' должен быть объектом \"POSIXt\""
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' должен быть объектом \"POSIXt\""
 
-#, fuzzy
 msgid "no Olson database found"
-msgstr "файл не найден"
+msgstr "база данных Olson не найдена"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' должен быть текстовой строкой или соединением"
@@ -557,9 +552,8 @@ msgstr "неправильные метки; длина %d должна быть 1 или %d"
 msgid "number of levels differs"
 msgstr "число уровней различается"
 
-#, fuzzy
 msgid "%s not meaningful for factors"
-msgstr "не значимо для факторов"
+msgstr "%s не значимо для факторов"
 
 msgid "level sets of factors are different"
 msgstr "установки уровней для факторов различны"
@@ -628,7 +622,7 @@ msgid "using the first element of 'value' of type \"expression\""
 msgstr "использую первый элемент 'value' типа \"expression\""
 
 msgid "class of 'x' was discarded"
-msgstr ""
+msgstr "класс 'x' удален"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
@@ -651,7 +645,7 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "поврежденная таблица данных: колонки будут обрезаны или заполнены NA"
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
+msgstr "'big.mark' и 'decimal.mark' оба '%s', что может быть неправильно"
 
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' имеет длину > 1"
@@ -701,9 +695,8 @@ msgstr "нужны замены для несоответствующих значений"
 msgid "must have replacements for matches"
 msgstr "нужны замены для соответствий"
 
-#, fuzzy
 msgid "No factors specified"
-msgstr "не определена DLL"
+msgstr "Не определены факторы"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' сейчас всегда использует exact = FALSE"
@@ -771,12 +764,8 @@ msgstr "%s не является правильным установленным пакетом"
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s не найден в пути поиска, использую pos = 2"
 
-msgid "version"
-msgstr ""
-
-#, fuzzy
-msgid "cannot be unloaded."
-msgstr "%s пространство имен нельзя выгрузить:"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "Пакет %s версии %s не может быть выгружен"
 
 msgid "package or namespace load failed for %s"
 msgstr "не удалась загрузка пакета или пространства имен для %s"
@@ -868,7 +857,7 @@ msgid "package %s required by %s could not be found"
 msgstr "пакет %s, требуемый для %s, не найден"
 
 msgid "version %s of %s masked by %s in %s"
-msgstr ""
+msgstr "версия %s %s замаскирована %s из %s"
 
 msgid "package %s could not be loaded"
 msgstr "пакет %s нельзя загрузить"
@@ -979,13 +968,13 @@ msgstr ""
 "логические данные"
 
 msgid "long vectors are not supported"
-msgstr ""
+msgstr "длинные векторы не поддерживаются"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
 
 msgid "'incomparables' is supported only for merging on a single column"
-msgstr ""
+msgstr "'incomparables' поддерживается для merge в одну колонку"
 
 msgid "additional arguments ignored in message()"
 msgstr "дополнительные аргументы пропущены в message()"
@@ -1101,7 +1090,6 @@ msgstr "заменяю локальное значение на импортированное %s во время загрузки %s"
 msgid "cannot import into a sealed namespace"
 msgstr "не могу импортировать в запечатанное пространство имен"
 
-#, fuzzy
 msgid "replacing previous import by %s when loading %s"
 msgstr "заменяю предыдущий импорт %s во время загрузки %s"
 
@@ -1130,19 +1118,14 @@ msgstr "не могу добавить к экспорту из запечатанного пространства имен"
 msgid "undefined exports: %s"
 msgstr "неопределенные экспорты: %s"
 
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "объект %s не экспортирован из 'namespace:%s'"
-
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "у пакета %s нет файла NAMESPACE"
 
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "пустое имя в директиве '%s' из файла 'NAMESPACE'"
 
-#, fuzzy
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
-msgstr "повторяющиеся имена символов %s в useDynlib(\"%s\")"
+msgstr "повторяющиеся имена символов %s в useDynLib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "неправильная директива 'S3method': %s"
@@ -1229,7 +1212,6 @@ msgstr ""
 msgid "invalid NCOL(R)"
 msgstr "неправильное NCOL(R)"
 
-#, fuzzy
 msgid "'x' must be a vector of an atomic type"
 msgstr "'x' должен быть атомарным вектором"
 
@@ -1258,7 +1240,7 @@ msgid "either specify 'nmax' or 'n', but not both."
 msgstr "укажите либо 'nmax', либо 'n', но не оба."
 
 msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'from' не может быть NA, NaN или infinite"
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "аргумент 'length.out' должен быть длиной 1"
@@ -1267,7 +1249,7 @@ msgid "first element used of 'length.out' argument"
 msgstr "только первый элемент аргумента 'length.out' использован"
 
 msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'to' не может быть NA, NaN или infinite"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "неправильный (to - from)/by в seq(.)"
@@ -1382,6 +1364,10 @@ msgstr "'%s' не является существующим файлом"
 
 msgid "Timestamp of %s has changed"
 msgstr "ВременнАя маска %s изменилась"
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x' и 'y' должны иметь одинаковую длину"
 
 msgid "additional arguments ignored in stop()"
 msgstr "дополнительные аргументы пропущены в stop()"
@@ -1576,7 +1562,6 @@ msgstr[0] "опция разбора %s не распознана"
 msgstr[1] "опции разбора %s не распознаны"
 msgstr[2] "опции разбора %s не распознаны"
 
-#, fuzzy
 msgid ""
 "The following object is masked _by_ %s:\n"
 "\n"
@@ -1586,19 +1571,18 @@ msgid_plural ""
 "\n"
 "%s\n"
 msgstr[0] ""
-"Следующий объект скрыт %s %s:\n"
+"Следующий объект скрыт %s:\n"
 "\n"
 "%s\n"
 msgstr[1] ""
-"Следующие объекты скрыты %s %s:\n"
+"Следующие объекты скрыты %s:\n"
 "\n"
 "%s\n"
 msgstr[2] ""
-"Следующие объекты скрыты %s %s:\n"
+"Следующие объекты скрыты %s:\n"
 "\n"
 "%s\n"
 
-#, fuzzy
 msgid ""
 "The following object is masked from %s:\n"
 "\n"
@@ -1608,15 +1592,15 @@ msgid_plural ""
 "\n"
 "%s\n"
 msgstr[0] ""
-"Следующий объект скрыт %s %s:\n"
+"Следующий объект скрыт от %s:\n"
 "\n"
 "%s\n"
 msgstr[1] ""
-"Следующие объекты скрыты %s %s:\n"
+"Следующие объекты скрыты от %s:\n"
 "\n"
 "%s\n"
 msgstr[2] ""
-"Следующие объекты скрыты %s %s:\n"
+"Следующие объекты скрыты от %s:\n"
 "\n"
 "%s\n"
 
@@ -1684,12 +1668,11 @@ msgstr[0] "предложено %d переменных для замены %d переменных"
 msgstr[1] "предложено %d переменные для замены %d переменных"
 msgstr[2] "предложено %d переменных для замены %d переменных"
 
-#, fuzzy
 msgid "data frame with 0 columns and %d row"
 msgid_plural "data frame with 0 columns and %d rows"
 msgstr[0] "таблица данных с 0 колонок и %d строк"
-msgstr[1] "таблица данных с 0 колонок и %d строк"
-msgstr[2] "таблица данных с 0 колонок и %d строк"
+msgstr[1] "таблица данных с 0 колонок и %d строками"
+msgstr[2] "таблица данных с 0 колонок и %d строками"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
@@ -1758,12 +1741,6 @@ msgstr[0] "S3 метод %s объявлен в NAMESPACE но не найден"
 msgstr[1] "S3 методы %s объявлены в NAMESPACE но не найдены"
 msgstr[2] "S3 методы %s объявлены в NAMESPACE но не найдены"
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "дополнительный аргумент %s не будет учтен"
-msgstr[1] "дополнительные аргументы %s не будут учтены"
-msgstr[2] "дополнительные аргументы %s не будут учтены"
-
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "%s не TRUE"
@@ -1775,6 +1752,25 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] "дополнительный аргумент %s не будет учтен"
+msgstr[1] "дополнительные аргументы %s не будут учтены"
+msgstr[2] "дополнительные аргументы %s не будут учтены"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "%s пространство имен нельзя выгрузить:"
+
+#, fuzzy
+#~ msgid "re-exports %s not exported by %s"
+#~ msgstr "объект %s не экспортирован из 'namespace:%s'"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "пакет %s %s найден, но %s %s требуется для %s"

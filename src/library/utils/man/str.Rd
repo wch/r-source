@@ -77,7 +77,7 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
     \code{\link{delayedAssign}}) objects only.}
   \item{strict.width}{string indicating if the \code{width} argument's
     specification should be followed strictly, one of the values
-    \code{c("no", "cut", "wrap")}.
+    \code{c("no", "cut", "wrap")}, which can be abbreviated.
     Defaults to the \code{strict.width} component of option \code{"str"}
     (see \code{\link{options}}) which defaults to \code{"no"} for back
     compatibility reasons; \code{"wrap"} uses

@@ -412,6 +412,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP env = CAR(args), ans=mkString(""), res;
 
     checkArity(op, args);
+    PROTECT(ans);
     if (TYPEOF(env) == ENVSXP ||
 	TYPEOF((env = simple_as_environment(env))) == ENVSXP) {
 	if (IS_R_GlobalEnv(env)) ans = mkString("R_GlobalEnv");
@@ -423,6 +424,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = ScalarString(STRING_ELT(R_NamespaceEnvSpec(env), 0));
 	else if (!isNull(res = getAttrib(env, R_NameSymbol))) ans = res;
     }
+    UNPROTECT(1); /* ans */
     return ans;
 }
 
@@ -953,7 +955,7 @@ static SEXP expandDots(SEXP el, SEXP rho)
 
     while (! IS_R_NilValue(el)) {
 	if (SEXP_EQL(CAR(el), R_DotsSymbol)) {
-	    SEXP h = findVar(CAR(el), rho);
+	    SEXP h = PROTECT(findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || IS_R_NilValue(h)) {
 		while (! IS_R_NilValue(h)) {
 		    SETCDR(tail, CONS(CAR(h), R_NilValue));
@@ -963,6 +965,7 @@ static SEXP expandDots(SEXP el, SEXP rho)
 		}
 	    } else if (! IS_R_MissingArg(h))
 		error(_("'...' used in an incorrect context"));
+	    UNPROTECT(1); /* h */
 	} else {
 	    SETCDR(tail, CONS(CAR(el), R_NilValue));
 	    tail = CDR(tail);

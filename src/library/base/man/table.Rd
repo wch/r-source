@@ -12,6 +12,7 @@
 \alias{as.table}
 \alias{as.table.default}
 \alias{is.table}
+\alias{[.table}
 
 \concept{counts}
 \concept{frequencies}
@@ -23,8 +24,10 @@
   table of the counts at each combination of factor levels.
 }
 \usage{
-table(\dots, exclude = if (useNA == "no") c(NA, NaN), useNA = c("no",
-    "ifany", "always"), dnn = list.names(\dots), deparse.level = 1)
+table(\dots,
+      exclude = if (useNA == "no") c(NA, NaN),
+      useNA = c("no", "ifany", "always"),
+      dnn = list.names(\dots), deparse.level = 1)
 
 as.table(x, \dots)
 is.table(x)
@@ -42,7 +45,7 @@ is.table(x)
     If set to \code{NULL}, it implies \code{useNA = "always"}.  See
     \sQuote{Details} for its interpretation for non-factor arguments.}
   \item{useNA}{whether to include \code{NA} values in the table.
-    See \sQuote{Details}.}
+    See \sQuote{Details}.  Can be abbreviated.}
   \item{dnn}{the names to be given to the dimensions in the result (the
     \emph{dimnames names}).}
   \item{deparse.level}{controls how the default \code{dnn} is

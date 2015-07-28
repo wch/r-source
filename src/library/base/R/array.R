@@ -1,7 +1,7 @@
 #  File src/library/base/R/array.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ provideDimnames <- function(x, sep = "", base = list(LETTERS))
     dnx <- dimnames(x)
     if(new <- is.null(dnx))
 	dnx <- vector("list", length(dx))
-    k <- length(M <- vapply(base, length, 1L))
+    k <- length(M <- lengths(base))
     for(i in which(vapply(dnx, is.null, NA))) {
 	ii <- 1L+(i-1L) %% k # recycling
         ss <- seq_len(dx[i]) - 1L # dim could be zero

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/choose.files.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,13 +27,14 @@ structure(c("R or S files (*.R,*.q,*.ssc,*.S)",
             "Text files (*.txt)",
             "R images (*.RData,*.rda)",
             "Zip files (*.zip)",
+            "Package tarballs (*.tar.gz)",
             "All files (*.*)",
 
             "*.R;*.q;*.ssc;*.S", "*.emf", "*.ps", "*.pdf", "*.png", "*.bmp",
-            "*.jpeg;*.jpg", "*.txt", "*.RData;*.rda", "*.zip", "*.*"),
-       .Dim = c(11L, 2L),
+            "*.jpeg;*.jpg", "*.txt", "*.RData;*.rda", "*.zip", "*.tar.gz", "*.*"),
+       .Dim = c(12L, 2L),
        .Dimnames = list(c("R", "emf", "ps","pdf", "png",
-                          "bmp", "jpeg", "txt", "RData", "zip", "All"),
+                          "bmp", "jpeg", "txt", "RData", "zip", "tarball", "All"),
                         NULL))
 
 choose.files <- function(default = '', caption = 'Select files', multi = TRUE,

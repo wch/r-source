@@ -50,6 +50,7 @@ double qf(double p, double df1, double df2, int lower_tail, int log_p)
 	return df2 / qchisq(p, df2, !lower_tail, log_p);
     }
 
+    // FIXME: (1/qb - 1) = (1 - qb)/qb; if we know qb ~= 1, should use other tail
     p = (1. / qbeta(p, df2/2, df1/2, !lower_tail, log_p) - 1.) * (df2 / df1);
     return ML_VALID(p) ? p : ML_NAN;
 }

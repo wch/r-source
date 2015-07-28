@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-11-20 11:48\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -666,9 +666,6 @@ msgstr "'ColSideColors'必需是长度为ncol(x)的字节矢量"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr "'RowSideColors'必需是长度为nrow(x)的字节矢量"
-
-msgid "non-matched further arguments are disregarded"
-msgstr "不匹配的额外参数略过不用"
 
 msgid "argument 'x' must be numeric"
 msgstr "参数'x'必需是数值"
@@ -2346,10 +2343,6 @@ msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] "额外参数%s的类别不是\"%s\""
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "不用额外的参数%s"
-
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"
 msgstr[0] "%2$d变量不能有%1$d这么多的因子"
@@ -2442,6 +2435,13 @@ msgstr[0] "删除了含NA, NaN或Inf的%d个观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
+
+#~ msgid "non-matched further arguments are disregarded"
+#~ msgstr "不匹配的额外参数略过不用"
+
+#~ msgid "extra argument %s will be disregarded"
+#~ msgid_plural "extra arguments %s will be disregarded"
+#~ msgstr[0] "不用额外的参数%s"
 
 #~ msgid "'merge' and 'height' do not fit!"
 #~ msgstr "'merge'和'height'不合!"

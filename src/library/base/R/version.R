@@ -1,7 +1,7 @@
 #  File src/library/base/R/version.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -134,19 +134,11 @@ function()
 .encode_numeric_version <-
 function(x)
 {
-    strings <- function(char, n) {
-        vapply(Map(rep.int,
-                   rep_len(char, length(n)),
-                   n,
-                   USE.NAMES = FALSE),
-               paste, "", collapse = "")
-    }
-
     strlpad <- function(x, char, width)
-        paste0(strings(char, width - nchar(x)), x)
+        paste0(strrep(char, width - nchar(x)), x)
 
     strrpad <- function(x, char, width)
-        paste0(x, strings(char, width - nchar(x)))
+        paste0(x, strrep(char, width - nchar(x)))
 
     if(!is.numeric_version(x)) stop("wrong class")
 
@@ -350,7 +342,7 @@ function(x, ...)
     x <- unclass(x)
     y <- rep.int(NA_character_, length(x))
     names(y) <- names(x)
-    ind <- vapply(x, length, 1L) > 0L
+    ind <- lengths(x) > 0L
     y[ind] <- unlist(lapply(x[ind], paste, collapse = "."))
     y
 }

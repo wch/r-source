@@ -266,6 +266,8 @@
 ## Can be texi2any (the default) or makeinfo or a full path to either.
 ## MAKEINFO=
 
+## Full path to version of curl-config to be used
+## CURL_CONFIG=
 ## Use these to override curl-config if needed.
 ## Used as from R 3.2.0.
 ## CURL_CPPFLAGS=
@@ -273,3 +275,6 @@
 ## To force a static link use the line below: this is only needed
 ## if both shared and static libcurl libraries were built.
 ## CURL_LIBS=`curl-config --static-libs`
+
+## Path to the version of pkg-config to be used for locating cairographics.
+## PKGCONF =

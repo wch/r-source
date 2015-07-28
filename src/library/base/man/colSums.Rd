@@ -1,6 +1,6 @@
 % File src/library/base/man/colSums.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{colSums}
@@ -14,7 +14,7 @@
 \alias{.rowMeans}
 \title{Form Row and Column Sums and Means}
 \description{
-  Form row and column sums and means for numeric arrays.
+  Form row and column sums and means for numeric arrays (or data frames).
 }
 \usage{
 colSums (x, na.rm = FALSE, dims = 1)
@@ -22,22 +22,24 @@ rowSums (x, na.rm = FALSE, dims = 1)
 colMeans(x, na.rm = FALSE, dims = 1)
 rowMeans(x, na.rm = FALSE, dims = 1)
 
-.colSums(X, m, n, na.rm = FALSE)
-.rowSums(X, m, n, na.rm = FALSE)
-.colMeans(X, m, n, na.rm = FALSE)
-.rowMeans(X, m, n, na.rm = FALSE)
+.colSums(x, m, n, na.rm = FALSE)
+.rowSums(x, m, n, na.rm = FALSE)
+.colMeans(x, m, n, na.rm = FALSE)
+.rowMeans(x, m, n, na.rm = FALSE)
 }
 \arguments{
   \item{x}{an array of two or more dimensions, containing numeric,
-    complex, integer or logical values, or a numeric data frame.}
+    complex, integer or logical values, or a numeric data frame.  For
+    \code{.colSums()} etc, a numeric, integer or logical matrix (or
+    vector of length \code{m * n}).}
   \item{na.rm}{logical.  Should missing values (including \code{NaN})
     be omitted from the calculations?}
   \item{dims}{integer: Which dimensions are regarded as \sQuote{rows} or
     \sQuote{columns} to sum over.  For \code{row*}, the sum or mean is
     over dimensions \code{dims+1, \dots}; for \code{col*} it is over
     dimensions \code{1:dims}.}
-  \item{X}{a numeric matrix.}
-  \item{m, n}{the dimensions of X.}
+  \item{m, n}{the dimensions of the matrix \code{x} for
+    \code{.colSums()} etc.}
 }
 \details{
   These functions are equivalent to use of \code{\link{apply}} with
@@ -54,9 +56,9 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   them with \code{\link{na.omit}} or \code{\link{complete.cases}}
   (possibly on the transpose of \code{x}).
 
-  The versions with an initial dot in the name are \sQuote{bare-bones}
-  versions for use in programming: they apply only to numeric matrices
-  and do not name the result.
+  The versions with an initial dot in the name (\code{.colSums()} etc)
+  are \sQuote{bare-bones} versions for use in programming: they apply
+  only to numeric (like) matrices and do not name the result.
 }
 \value{
   A numeric or complex array of suitable size, or a vector if the result

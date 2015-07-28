@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,8 +127,10 @@ static SEXP cummin(SEXP x, SEXP s)
 
 static SEXP icummax(SEXP x, SEXP s)
 {
-    int *ix = INTEGER(x), *is = INTEGER(s);
-    int max = ix[0];
+    int *ix = INTEGER(x);
+    if(ix[0] == NA_INTEGER)
+	return s; // all NA
+    int *is = INTEGER(s), max = ix[0];
     is[0] = max;
     for (R_xlen_t i = 1 ; i < xlength(x) ; i++) {
 	if(ix[i] == NA_INTEGER) break;
@@ -189,22 +191,27 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	n = XLENGTH(t);
 	PROTECT(s = allocVector(INTSXP, n));
 	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
-	UNPROTECT(2);
-	if(n == 0) return s;
+	if(n == 0) {
+	    UNPROTECT(2); /* t, s */
+	    return s;
+	}
 	for(i = 0 ; i < n ; i++) INTEGER(s)[i] = NA_INTEGER;
 	switch (PRIMVAL(op) ) {
 	case 1:	/* cumsum */
-	    return icumsum(t,s);
+	    ans = icumsum(t,s);
 	    break;
 	case 3: /* cummax */
-	    return icummax(t,s);
+	    ans = icummax(t,s);
 	    break;
 	case 4: /* cummin */
-	    return icummin(t,s);
+	    ans = icummin(t,s);
 	    break;
 	default:
 	    errorcall(call, _("unknown cumxxx function"));
+	    ans = R_NilValue;
 	}
+	UNPROTECT(2); /* t, s */
+	return ans;
     } else {
 	PROTECT(t = coerceVector(CAR(args), REALSXP));
 	n = XLENGTH(t);

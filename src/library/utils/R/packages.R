@@ -156,7 +156,7 @@ function(db)
     x <- lapply(strsplit(sub("^[[:space:]]*", "", depends),
                              "[[:space:]]*,[[:space:]]*"),
                 function(s) s[grepl("^R[[:space:]]*\\(", s)])
-    lens <- sapply(x, length)
+    lens <- lengths(x)
     pos <- which(lens > 0L)
     if(!length(pos)) return(db)
     lens <- lens[pos]
@@ -242,9 +242,9 @@ function(db, predicate, recursive = TRUE)
     ## Now find the recursive reverse dependencies of these and the
     ## non-standard packages missing from the db.
     rdepends <-
-        tools:::package_dependencies(db1$Package[ind], db = db1,
-                                     reverse = TRUE,
-                                     recursive = recursive)
+        tools::package_dependencies(db1$Package[ind], db = db1,
+                                    reverse = TRUE,
+                                    recursive = recursive)
     rdepends <- unique(unlist(rdepends))
     ind[match(rdepends, db1$Package, nomatch = 0L)] <- TRUE
 
@@ -332,10 +332,11 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(type == "both" && (!missing(contriburl) || !is.null(available))) {
         stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
     }
-    if(is.null(available))
+    if(is.null(available)) {
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-
+        if (missing(repos)) repos <- getOption("repos") # May have changed
+    } 
     if(!is.matrix(oldPkgs) && is.character(oldPkgs)) {
     	subset <- oldPkgs
     	oldPkgs <- NULL
@@ -347,6 +348,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 	oldPkgs <- old.packages(lib.loc = lib.loc,
 				contriburl = contriburl, method = method,
 				available = available, checkBuilt = checkBuilt)
+	if (missing(repos)) repos <- getOption("repos") # May have changed
 	## prune package versions which are invisible to require()
 	if(!is.null(oldPkgs)) {
 	    pkg <- 0L
@@ -777,15 +779,16 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
 {
     m <- NULL
     if(!local.only) {
-        ## try to handle explicitly failure to connect to CRAN.
+        ## Try to handle explicitly failure to connect to CRAN.
         con <- url("http://cran.r-project.org/CRAN_mirrors.csv")
         m <- try(open(con, "r"), silent = TRUE)
-        if(!inherits(m, "try-error")) m <- try(read.csv(con, as.is = TRUE))
+        if(!inherits(m, "try-error"))
+            m <- try(read.csv(con, as.is = TRUE, encoding = "UTF-8"))
         close(con)
     }
     if(is.null(m) || inherits(m, "try-error"))
         m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
-                      as.is = TRUE)
+                      as.is = TRUE, encoding = "UTF-8")
     if(!all) m <- m[as.logical(m$OK), ]
     m
 }
@@ -833,10 +836,7 @@ setRepositories <-
 {
     if(is.null(ind) && !interactive())
         stop("cannot set repositories non-interactively")
-    p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-    if(!file.exists(p))
-        p <- file.path(R.home("etc"), "repositories")
-    a <- tools:::.read_repositories(p)
+    a <- tools:::.get_repositories()
     pkgType <- getOption("pkgType")
     if (pkgType == "both") pkgType <- "source" #.Platform$pkgType
     if (pkgType == "binary") pkgType <- .Platform$pkgType
@@ -1019,7 +1019,7 @@ compareVersion <- function(a, b)
     ## some of the packages may be already installed, but the
     ## dependencies apply to those being got from CRAN.
     DL <- lapply(DL, function(x) x[x %in% pkgs])
-    lens <- sapply(DL, length)
+    lens <- lengths(DL)
     if(all(lens > 0L)) {
         warning("every package depends on at least one other")
         return(pkgs)

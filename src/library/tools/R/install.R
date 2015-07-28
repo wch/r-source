@@ -99,7 +99,8 @@
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
-    MAKE <- Sys.getenv("MAKE") # FIXME shQuote, default?
+    if (WINDOWS) MAKE <- "make"
+    else MAKE <- Sys.getenv("MAKE") # FIXME shQuote, default?
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)
@@ -648,7 +649,7 @@
 
 
         if (more_than_libs) {
-            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS"))
+            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS", "NEWS.md"))
                 if (file.exists(f)) {
                     file.copy(f, instdir, TRUE)
 		    Sys.chmod(file.path(instdir, f), fmode)
@@ -681,7 +682,7 @@
                 if (length(paths)) {
                     ## check any version requirements
                     have_vers <-
-                        (vapply(linkTo, length, 1L) > 1L) & lpkgs %in% bpaths
+                        (lengths(linkTo) > 1L) & lpkgs %in% bpaths
                     for (z in linkTo[have_vers]) {
                         p <- z[[1L]]
                         path <- paths[bpaths %in% p]
@@ -1993,7 +1994,7 @@
                    Internal = character(),
                    stringsAsFactors = FALSE)
     } else {
-        lens <- sapply(topics, length)
+        lens <- lengths(topics)
         files <- sub("\\.[Rr]d$", "", Rd$File)
         internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)
         data.frame(Topic = unlist(topics),
@@ -2006,8 +2007,9 @@
     outman <- file.path(outDir, "help")
     dir.create(outman, showWarnings = FALSE)
     MM <- M[re(M[, 1L]), 1:2]
-    write.table(MM, file.path(outman, "AnIndex"),
-                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    utils::write.table(MM, file.path(outman, "AnIndex"),
+                       quote = FALSE, row.names = FALSE, col.names = FALSE,
+                       sep = "\t")
     a <- structure(MM[, 2L], names=MM[, 1L])
     saveRDS(a, file.path(outman, "aliases.rds"))
 

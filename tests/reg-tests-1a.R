@@ -2241,8 +2241,9 @@ a9 <- strsplit(a, "NA", perl = TRUE)
 stopifnot(identical(a9, list("", na ,c("BA",""))))
 a10 <- strsplit(a, na)
 stopifnot(identical(a10, as.list(a)))
-## but nchar doesn't fit this pattern
-stopifnot(all(!is.na(nchar(a))))
+## nchar() differs a bit
+stopifnot(identical(is.na(a), is.na(nchar(a))),
+          all(!is.na(nchar(a, type = "width"))))
 ## NA and "NA" were not distinguished in 1.7.x
 
 

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/xgettext.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
         out[[f]] <- structure(unique(strings), class="xgettext")
     }
 
-    out[sapply(out, length) > 0L]
+    out[lengths(out) > 0L]
 }
 
 print.xgettext <-
@@ -146,7 +146,7 @@ function(dir, verbose = FALSE)
         out[[f]] <- structure(strings, class="xngettext")
     }
 
-    out[sapply(out, length) > 0L]
+    out[lengths(out) > 0L]
 }
 
 xgettext2pot <-

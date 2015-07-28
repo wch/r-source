@@ -35,7 +35,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 	nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
     rep.fac <- 1L
-    d <- vapply(args, length, 1)
+    d <- lengths(args)
     if(KEEP.OUT.ATTRS) {
 	dn <- vector("list", nargs)
 	names(dn) <- nmc

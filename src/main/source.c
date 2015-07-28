@@ -276,7 +276,12 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if(!con->canread) error(_("cannot read from this connection"));
 	s = R_ParseConn(con, num, &status, source);
-	if(!wasopen) {endcontext(&cntxt); con->close(con);}
+	if(!wasopen) {
+	    PROTECT(s);
+	    endcontext(&cntxt);
+	    con->close(con);
+	    UNPROTECT(1);
+	}
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {

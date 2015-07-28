@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -138,8 +138,7 @@ const static char * const falsenames[] = {
 
 SEXP asChar(SEXP x)
 {
-    if (XLENGTH(x) >= 1) {
-	if (isVectorAtomic(x)) {
+	if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
 	    int w, d, e, wi, di, ei;
 	    char buf[MAXELTSIZE];  /* Probably 100 would suffice */
 
@@ -148,9 +147,9 @@ SEXP asChar(SEXP x)
 		if (LOGICAL(x)[0] == NA_LOGICAL)
 		    return NA_STRING;
 		if (LOGICAL(x)[0])
-		    sprintf(buf, "T");
+		    sprintf(buf, "TRUE");
 		else
-		    sprintf(buf, "F");
+		    sprintf(buf, "FALSE");
 		return mkChar(buf);
 	    case INTSXP:
 		if (INTEGER(x)[0] == NA_INTEGER)
@@ -174,7 +173,6 @@ SEXP asChar(SEXP x)
 	    return x;
 	} else if(TYPEOF(x) == SYMSXP)
 	    return PRINTNAME(x);
-    }
     return NA_STRING;
 }
 
@@ -762,7 +760,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("missing value is invalid"));
 
     /* get current directory to return */
-    wd = intern_getwd();
+    PROTECT(wd = intern_getwd());
 
 #ifdef Win32
     {
@@ -778,6 +776,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("cannot change working directory"));
     }
 #endif
+    UNPROTECT(1); /* wd */
     return(wd);
 }
 
@@ -1368,6 +1367,39 @@ Rboolean utf8Valid(const char *str)
     return valid_utf8(str, strlen(str)) == 0;
 }
 
+SEXP attribute_hidden do_validUTF8(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    if (!isString(x))
+	error(_("invalid '%s' argument"), "x");
+    R_xlen_t n = XLENGTH(x);
+    SEXP ans = allocVector(LGLSXP, n); // no allocation below
+    int *lans = LOGICAL(ans);
+    for (R_xlen_t i = 0; i < n; i++)
+	lans[i] = utf8Valid(CHAR(STRING_ELT(x, i)));
+    return ans;
+}
+
+SEXP attribute_hidden do_validEnc(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    if (!isString(x))
+	error(_("invalid '%s' argument"), "x");
+    R_xlen_t n = XLENGTH(x);
+    SEXP ans = allocVector(LGLSXP, n); // no allocation below
+    int *lans = LOGICAL(ans);
+    for (R_xlen_t i = 0; i < n; i++) {
+	SEXP p = STRING_ELT(x, i);
+	if (IS_BYTES(p) || IS_LATIN1(p)) lans[i] = 1;
+	else if (IS_UTF8(p) || utf8locale) lans[i] = utf8Valid(CHAR(p));
+	else if(mbcslocale) lans[i] = mbcsValid(CHAR(p));
+	else lans[i] = 1;
+    }
+    return ans;
+}
+
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */
 char *Rf_strchr(const char *s, int c)
@@ -1637,7 +1669,10 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    case '+': p++;
 	    default: ;
 	    }
-	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
+	    /* The test for n is in response to PR#16358; it's not right if the exponent is 
+	       very large, but the overflow or underflow below will handle it. */
+#define MAX_EXPONENT_PREFIX 9999
+	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
 	    if (ans != 0.0) { /* PR#15976:  allow big exponents on 0 */
 		expn += expsign * n;
 		if(exph > 0) expn -= exph;
@@ -1673,7 +1708,7 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	case '+': p++;
 	default: ;
 	}
-	for (n = 0; *p >= '0' && *p <= '9'; p++) n = n * 10 + (*p - '0');
+	for (n = 0; *p >= '0' && *p <= '9'; p++) n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
 	expn += expsign * n;
     }
 
@@ -2009,6 +2044,7 @@ attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
     if (!collationLocaleSet) {
+    	int errsv = errno;      /* OSX may set errno in the operations below. */
 	collationLocaleSet = 1;
 #ifndef Win32
 	if (strcmp("C", getLocale()) ) {
@@ -2026,6 +2062,7 @@ int Scollate(SEXP a, SEXP b)
 		error("failed to open ICU collator (%d)", status);
 	    }
 	}
+	errno = errsv;
     }
     if (collator == NULL)
 	return collationLocaleSet == 2 ?

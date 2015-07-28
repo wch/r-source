@@ -1649,6 +1649,9 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(*sp);
 #endif
 
+    FORWARD_NODE(R_CachedScalarReal);
+    FORWARD_NODE(R_CachedScalarInteger);
+
     /* main processing loop */
     PROCESS_NODES();
 
@@ -1871,7 +1874,7 @@ SEXP attribute_hidden do_gctorture2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int gap, wait;
     Rboolean inhibit;
-    SEXP old = ScalarInteger(gc_force_gap);
+    int old = gc_force_gap;
 
     checkArity(op, args);
     gap = asInteger(CAR(args));
@@ -1879,7 +1882,7 @@ SEXP attribute_hidden do_gctorture2(SEXP call, SEXP op, SEXP args, SEXP rho)
     inhibit = asLogical(CADDR(args));
     R_gc_torture(gap, wait, inhibit);
 
-    return old;
+    return ScalarInteger(old);
 }
 
 /* initialize gctorture settings from environment variables */
@@ -3131,7 +3134,7 @@ void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 
 void NORET R_signal_reprotect_error(PROTECT_INDEX i)
 {
-    error(ngettext("R_Reprotect: only %d protected items, can't reprotect index %d",
+    error(ngettext("R_Reprotect: only %d protected item, can't reprotect index %d",
 		   "R_Reprotect: only %d protected items, can't reprotect index %d",
 		   R_PPStackTop),
           R_PPStackTop, i);

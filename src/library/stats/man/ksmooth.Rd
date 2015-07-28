@@ -17,7 +17,7 @@ ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
 \arguments{
  \item{x}{input x values.  Long vectors are supported.}
  \item{y}{input y values.  Long vectors are supported.}
- \item{kernel}{the kernel to be used.}
+ \item{kernel}{the kernel to be used.  Can be abbreviated.}
  \item{bandwidth}{the bandwidth. The kernels are scaled so that their
    quartiles (viewed as probability densities) are at
    \eqn{\pm}{+/-} \code{0.25*bandwidth}.}

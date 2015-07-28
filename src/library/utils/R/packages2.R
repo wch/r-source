@@ -206,7 +206,7 @@ install.packages <-
         ## if no packages were specified, use a menu
 	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
            || (capabilities("tcltk")
-               && capabilities("X11") && suppressWarnings(tcltk:::.TkUp)) ) {
+               && capabilities("X11") && suppressWarnings(tcltk::.TkUp)) ) {
             ## this is the condition for a graphical select.list()
 	} else
 	    stop("no packages were specified")
@@ -215,7 +215,9 @@ install.packages <-
         ## do not want 'available' set for "source".
 	if(is.null(available)) {
 	    av <- available.packages(contriburl = contriburl, method = method)
-            if(type != "both") available <- av
+	    if (missing(repos)) ## Evaluating contriburl may have changed repos, which may be used below
+	      repos <- getOption("repos")
+            if(type != "both") available <- av 
         } else av <- available
 	if(NROW(av)) {
             ## avoid duplicate entries in menus, since the latest available
@@ -315,6 +317,17 @@ install.packages <-
                 message("inferring 'repos = NULL' from 'pkgs'")
            }
         }
+    }
+    
+    ## check if we should infer the type
+    if (length(pkgs) == 1L && is.null(repos) && type == "both") {
+    	if (  (type2 %in% "win.binary" && grepl("[.]zip$", pkgs))
+	    ||(substr(type2, 1L, 10L) == "mac.binary"
+		   && grepl("[.]tgz$", pkgs))) {
+	    type <- type2
+	} else if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
+	    type <- "source"
+       }
     }
 
     if(is.null(repos) && missing(contriburl)) {
@@ -440,13 +453,15 @@ install.packages <-
                                    method = method, available = av2,
                                    destdir = destdir,
                                    dependencies = NULL,
-                                   libs_only = libs_only, ...)
+                                   libs_only = libs_only,
+                                   quiet = quiet, ...)
             else
                 .install.macbinary(pkgs = bins, lib = lib,
                                    contriburl = contrib.url(repos, type2),
                                    method = method, available = av2,
                                    destdir = destdir,
-                                   dependencies = NULL, ...)
+                                   dependencies = NULL,
+                                   quiet = quiet, ...)
         }
         pkgs <- setdiff(pkgs, bins)
         if(!length(pkgs)) return(invisible())

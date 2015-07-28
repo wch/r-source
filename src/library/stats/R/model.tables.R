@@ -1,8 +1,8 @@
 #  File src/library/stats/R/model.tables.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2013 The R Core Team
+#  Copyright     1998 B. D. Ripley
+#  Copyright (C) 1998-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     factors <- lapply(prjs, attr, "factors")
     dn.proj <- unlist(lapply(factors, names), recursive = FALSE)
     m.factors <- unlist(factors, recursive = FALSE)
-    dn.strata <- rep.int(names(factors), vapply(factors, length, 1L))
+    dn.strata <- rep.int(names(factors), lengths(factors))
     names(dn.strata) <- names(m.factors) <- names(dn.proj) <- unlist(dn.proj)
     t.factor <- attr(prjs, "t.factor")
     efficiency <- FALSE

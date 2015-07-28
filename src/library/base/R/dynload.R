@@ -141,7 +141,7 @@ function(x, ...)
     ## of routines in any category. Then fill the column with ""
     ## and then the actual entries.
 
-    n <- vapply(x, length, 1L)
+    n <- lengths(x)
     x <- x[n > 0]
     n <- max(n)
     d <- list()

@@ -14,26 +14,38 @@
 }
 \usage{
 methods(generic.function, class)
-.S3methods(generic.function, class)
+.S3methods(generic.function, class, envir=parent.frame())
+
+\S3method{print}{MethodsFunction}(x, byclass = attr(x, "byclass"), \dots)
 }
 \arguments{
   \item{generic.function}{a generic function, or a character string naming a
     generic function.}
   \item{class}{a symbol or character string naming a class: only used if
     \code{generic.function} is not supplied.}
+  \item{envir}{the environment in which to look for the definition of
+    the generic function, when the generic function is passed as a
+    character string.}
+  \item{x}{typically the result of \code{methods(..)}, an \R object of % S3
+    class \code{"MethodsFunction"}, see \sQuote{Value} below.}
+  \item{byclass}{an optional \code{\link{logical}} allowing to override
+    the \code{"byclass"} attribute determining how the result is
+    printed, see \sQuote{Details}.}
+  \item{\dots}{potentially further arguments passed to and from methods;
+    unused currently.}
 }
 
 \details{
-
   \code{methods()} finds S3 and S4 methods associated with either the
   \code{generic.function} or \code{class} argument.  Methods are found in
   all packages on the current \code{search()} path.  \code{.S3methods()}
-  finds only S3 methods.
+  finds only S3 methods, \code{.S4methods()} finds only only S4 methods.
 
   When invoked with the \code{generic.function} argument, the
-  \code{print} method displays the signatures (full names) of S3 and S4
-  methods.  S3 methods are printed by pasting the generic function and
-  class together, separated by a \sQuote{.}, as
+  \code{"byclass"} attribute (see Details) is \code{FALSE}, and the
+  \code{print} method by default displays the signatures (full names) of
+  S3 and S4 methods.  S3 methods are printed by pasting the generic
+  function and class together, separated by a \sQuote{.}, as
   \code{generic.class}.  The S3 method name is followed by an asterisk
   \code{*} if the method definition is not exported from the package
   namespace in which the method is defined.  S4 method signatures are
@@ -41,9 +53,9 @@ methods(generic.function, class)
   dispatch, so there may be several classes in the signature
   \code{generic,A,B-method}.
 
-  When invoked with the \code{class} argument, the \code{print} method
-  displays the names of the generic functions associated with the class,
-  \code{generic}.
+  When invoked with the \code{class} argument, \code{"byclass"} is
+  \code{TRUE}, and the \code{print} method by default displays the names
+  of the generic functions associated with the class, \code{generic}.
 
   The source code for all functions is available.  For S3 functions
   exported from the namespace, enter the method at the command line as
@@ -56,27 +68,24 @@ methods(generic.function, class)
   name of the generic and tab completion, \code{?"generic<tab>"} to
   select the method for which help is desired.
 
-  The S3 functions listed are those which are \emph{are named like
-  methods} and may not actually be methods (known exceptions are
-  discarded in the code).
-
+  The S3 functions listed are those which \emph{are named like methods}
+  and may not actually be methods (known exceptions are discarded in the
+  code).
 }
 
 \value{
-
   An object of class \code{"MethodsFunction"}, a character vector of
   method names with \code{"byclass"} and \code{"info"} attributes.  The
-  \code{"byclass"} attribute is a logical(1) vector with value
-  \code{TRUE} when the results were obtained with argument \code{class}
-  defined.  The \code{"info"} attribute is a data frame with
-  columns:
+  \code{"byclass"} attribute is a \code{\link{logical}} indicating if
+  the results were obtained with argument \code{class}
+  defined.  The \code{"info"} attribute is a data frame with columns:
   \describe{
-    \item{generic}{character(), the name of the generic.}
-    \item{visible}{logical(), is the column exported from the namespace
+    \item{generic}{\code{\link{character}} vector of the names of the generic.}
+    \item{visible}{logical(), is the method exported from the namespace
       of the package in which it is defined?}
     \item{isS4}{logical(), true when the method is an S4 method.}
-    \item{from}{factor(), the location or package name where the method
-      was found.}
+    \item{from}{a \code{\link{factor}}, the location or package name
+      where the method was found.}
   }
 }
 
@@ -102,6 +111,8 @@ require(stats)
 
 methods(summary)
 methods(class = "aov")    # S3 class
+## The same, with more details and more difficult to read:
+print(methods(class = "aov"), byclass=FALSE)
 methods("[[")             # uses C-internal dispatching
 methods("$")
 methods("$<-")            # replacement function
@@ -110,13 +121,13 @@ methods("Math")           # group generic
 require(graphics)
 methods("axis")           # looks like a generic, but is not
 
-require(Matrix)
-methods(class="Matrix")  # S4 class
-methods("dim")           # S3 and S4 methods
-
-m <- methods("dim")
-attr(m, "info")          # more extensive information
+if(require(Matrix)) {
+print(methods(class = "Matrix"))  # S4 class
+m <- methods("dim")       # S3 and S4 methods
+print(m)
+print(attr(m, "info"))    # more extensive information
 
 ## --> help(showMethods) for related examples
+}
 }
 \keyword{methods}

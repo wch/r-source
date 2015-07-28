@@ -34,6 +34,8 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
         if(is.null(details))
             details <- CRAN_check_details()
         details <- details[!is.na(match(details$Package, package)), ]
+        ## Remove all ok stubs.
+        details <- details[details$Check != "*", ]
         ## Remove trailing white space from outputs ... remove eventually
         ## when this is done on CRAN.
         details$Output <- sub("[[:space:]]+$", "", details$Output)
@@ -173,48 +175,6 @@ function(x, ...)
     invisible(x)
 }
 
-
-## CRAN_check_results <-
-## function()
-## {
-##     ## This allows for partial local mirrors, or to
-##     ## look at a more-freqently-updated mirror
-##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-##                              "web/checks/check_results.rds"),
-##                      open = "rb"))
-##     results <- readRDS(rds)
-##     close(rds)
-##
-##     results
-## }
-
-## CRAN_check_details <-
-## function()
-## {
-##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-##                              "web/checks/check_details.rds"),
-##                      open = "rb"))
-##     details <- readRDS(rds)
-##     close(rds)
-##
-##     details
-## }
-
-## CRAN_memtest_notes <-
-## function()
-## {
-##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-##                              "web/checks/memtest_notes.rds"),
-##                      open = "rb"))
-##     mtnotes <- readRDS(rds)
-##     close(rds)
-##
-##     mtnotes
-## }
-
 CRAN_baseurl_for_src_area <-
 function()
     .get_standard_repository_URLs()[1L]
@@ -234,7 +194,7 @@ function(cran, path)
     readRDS(con)
 }
 
-CRAN_check_results <- 
+CRAN_check_results <-
 function(flavors = NULL)
 {
     db <- read_CRAN_object(CRAN_baseurl_for_web_area(),
@@ -269,7 +229,7 @@ function()
                      "web/packages/packages.rds")
 
 CRAN_aliases_db <-
-function()    
+function()
     read_CRAN_object(CRAN_baseurl_for_src_area(),
                      "src/contrib/Meta/aliases.rds")
 
@@ -284,36 +244,51 @@ function()
                      "src/contrib/Meta/current.rds")
 
 CRAN_rdxrefs_db <-
-function()    
+function()
     read_CRAN_object(CRAN_baseurl_for_src_area(),
                      "src/contrib/Meta/rdxrefs.rds")
 
 check_CRAN_mirrors <-
 function(mirrors = NULL, verbose = FALSE)
 {
+    retry_upon_error <- function(expr, n = 3L) {
+        i <- 1L
+        repeat {
+            y <- tryCatch(expr, error = identity)
+            if(!inherits(y, "error") || (i >= n))
+                break
+            i <- i + 1L
+        }
+        y
+    }
+
     read_package_db <- function(baseurl) {
         path <- sprintf("%ssrc/contrib/PACKAGES.gz", baseurl)
-        db <- tryCatch({
+        db <- retry_upon_error({
             con <- gzcon(url(path, "rb"))
             on.exit(close(con))
             readLines(con)
-        },
-                       error = identity)
-        if(inherits(db, "error"))
-            stop(sprintf("Reading %s failed with message: %s",
-                         path, conditionMessage(db)))
+        })
+        if(inherits(db, "error")) {
+            msg <- sprintf("Reading %s failed with message: %s",
+                           path, conditionMessage(db))
+            return(simpleError(msg))
+        }
         db
     }
 
     read_timestamp <- function(baseurl, path) {
         path <- sprintf("%s%s", baseurl, path)
-        ts <- tryCatch(readLines(path),
-                       error = identity)
-        if(inherits(ts, "error"))
-            stop(sprintf("Reading %s failed with message: %s",
-                         path, conditionMessage(ts)))
-        ts
+        ts <- retry_upon_error(readLines(path))
+        if(inherits(ts, "error")) {
+            msg <- sprintf("Reading %s failed with message: %s",
+                           path, conditionMessage(ts))
+            return(simpleError(msg))
+        }
+        as.POSIXct(as.numeric(ts), origin = "1970-01-01")
     }
+
+    if_ok <- function(u, v) if(inherits(u, "error")) u else v
 
     check_mirror <- function(mirror) {
         mirror_packages <- read_package_db(mirror)
@@ -322,31 +297,23 @@ function(mirrors = NULL, verbose = FALSE)
         mirror_ts3 <- read_timestamp(mirror, path_ts3)
 
         list("PACKAGES" =
-             c("Delta_master_mirror" =
-               sprintf("%d/%d",
-                       length(setdiff(master_packages,
-                                      mirror_packages)),
-                       length(master_packages)),
-               "Delta_mirror_master" =
-               sprintf("%d/%d",
-                       length(setdiff(mirror_packages,
-                                      master_packages)),
-                       length(mirror_packages))),
+             if_ok(mirror_packages,
+                   c("Delta_master_mirror" =
+                         sprintf("%d/%d",
+                                 length(setdiff(master_packages,
+                                                mirror_packages)),
+                                 length(master_packages)),
+                     "Delta_mirror_master" =
+                         sprintf("%d/%d",
+                                 length(setdiff(mirror_packages,
+                                                master_packages)),
+                                 length(mirror_packages)))),
              "TIME" =
-             difftime(as.POSIXct(as.numeric(master_ts1),
-                                 origin = "1970-01-01"),
-                      as.POSIXct(as.numeric(mirror_ts1),
-                                 origin = "1970-01-01")),
+             if_ok(mirror_ts1, difftime(master_ts1, mirror_ts1)),
              "TIME_r-release" =
-             difftime(as.POSIXct(as.numeric(master_ts2),
-                                 origin = "1970-01-01"),
-                      as.POSIXct(as.numeric(mirror_ts2),
-                                 origin = "1970-01-01")),
+             if_ok(mirror_ts2, difftime(master_ts2, mirror_ts2)),
              "TIME_r-old-release" =
-             difftime(as.POSIXct(as.numeric(master_ts3),
-                                 origin = "1970-01-01"),
-                      as.POSIXct(as.numeric(mirror_ts3),
-                                 origin = "1970-01-01"))
+             if_ok(mirror_ts3, difftime(master_ts3, mirror_ts3))
              )
     }
 
@@ -354,14 +321,14 @@ function(mirrors = NULL, verbose = FALSE)
     path_ts1 <- "TIME"
     path_ts2 <- "bin/windows/contrib/r-release/TIME_r-release"
     path_ts3 <- "bin/windows/contrib/r-old-release/TIME_r-old-release"
-    
+
     master_packages <- read_package_db(master)
     master_ts1 <- read_timestamp(master, path_ts1)
     master_ts2 <- read_timestamp(master, path_ts2)
     master_ts3 <- read_timestamp(master, path_ts3)
 
     if(is.null(mirrors)) {
-        mirrors <- as.character(getCRANmirrors(all = TRUE)$URL)
+        mirrors <- as.character(utils::getCRANmirrors(all = TRUE)$URL)
     }
 
     results <- lapply(mirrors,
@@ -391,7 +358,7 @@ CRAN_Rd_xref_available_target_ids <-
 function()
 {
     targets <- lapply(CRAN_aliases_db(), .Rd_available_xref_targets)
-    .Rd_object_id(rep.int(names(targets), sapply(targets, length)),
+    .Rd_object_id(rep.int(names(targets), lengths(targets)),
                   unlist(targets, use.names = FALSE))
 }
 
@@ -431,14 +398,14 @@ function()
     ## catches availability in standard repositories, but not in
     ## additional repositories.
     archived <- setdiff(names(CRAN_archive_db()),
-                        c(rownames(available.packages(filters = list())),
+                        c(rownames(utils::available.packages(filters = list())),
                           unlist(.get_standard_package_names(),
                                  use.names = FALSE)))
     y$xrefs_likely_to_archived_CRAN_packages <-
         db[!is.na(match(db[, "T_Package"], archived)), , drop = FALSE]
 
     y
-}    
+}
 
 .Rd_available_xref_targets <-
 function(aliases)

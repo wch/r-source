@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:19\n"
-"PO-Revision-Date: 2014-03-11 10:28-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-26 18:56-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -242,9 +242,8 @@ msgstr "значения 'x' и 'y' должны быть конечными и не пропущенными"
 msgid "'z' must be a matrix"
 msgstr "'z' должен быть матрицей"
 
-#, fuzzy
 msgid "'z' must be numeric or logical"
-msgstr "'x' должен быть числовым"
+msgstr "'z' должен быть числовым или логическим"
 
 msgid "invalid z limits"
 msgstr "неправильные границы z"
@@ -332,13 +331,11 @@ msgstr "у 'pairs' нечисловой аргумент"
 msgid "only one column in the argument to 'pairs'"
 msgstr "только одна колонка в аргументе pairs'"
 
-#, fuzzy
 msgid "invalid argument 'horInd'"
-msgstr "неправильный первый аргумент"
+msgstr "неправильный аргумент 'horInd'"
 
-#, fuzzy
 msgid "invalid argument 'verInd'"
-msgstr "неправильный первый аргумент"
+msgstr "неправильный аргумент 'verInd'"
 
 msgid "the 'panel' function made a new plot"
 msgstr "функция 'panel' создала новый график"
@@ -434,9 +431,8 @@ msgstr "количества строк в 'locations' и 'x' должен быть равны."
 msgid "length of 'angles' must equal 'ncol(x)'"
 msgstr "длина 'angles' должна равняться 'ncol(x)'"
 
-#, fuzzy
 msgid "no finite and non-missing values"
-msgstr "нет непропущенных значений"
+msgstr "нет конечных и непропущенных значений"
 
 msgid "'scale' must be positive"
 msgstr "'scale' должен быть положительным"
@@ -477,11 +473,11 @@ msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "дополнительный аргумент %s будет отброшен"
-msgstr[1] "дополнительные аргументы %s будут отброшены"
-msgstr[2] "дополнительные аргументы %s будут отброшены"
+#~ msgid "extra argument %s will be disregarded"
+#~ msgid_plural "extra arguments %s will be disregarded"
+#~ msgstr[0] "дополнительный аргумент %s будет отброшен"
+#~ msgstr[1] "дополнительные аргументы %s будут отброшены"
+#~ msgstr[2] "дополнительные аргументы %s будут отброшены"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "негативные 'counts'. Внутренняя ошибка C-кода для \"bincount\""

@@ -22,10 +22,9 @@ PKG_CFLAGS = $(C_VISIBILITY)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
-XZ_CPPFLAGS = @BUILD_XZ_TRUE@  -I$(top_srcdir)/src/extra/xz/api
 # need Defn.h etc, and config.h
 PKG_CPPFLAGS =-I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H \
-  -I$(top_srcdir)/src/main $(XZ_CPPFLAGS)
+  -I$(top_srcdir)/src/main
 
 
 all: Makedeps

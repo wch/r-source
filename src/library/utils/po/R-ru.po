@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
-"PO-Revision-Date: 2014-03-11 10:35-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2015-03-27 19:05-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -70,15 +70,14 @@ msgstr ""
 "ошибка разбора или пустая опция в\n"
 "%s"
 
-#, fuzzy
 msgid "Warning: unknown option '--clean='%s"
-msgstr "Предупреждение: неизвестная опция %s"
+msgstr "Предупреждение: неизвестная опция '--clean='%s"
 
 msgid "Warning: unknown option %s"
 msgstr "Предупреждение: неизвестная опция %s"
 
 msgid "Output file:"
-msgstr ""
+msgstr "Файл вывода:"
 
 msgid "Compacting PDF document"
 msgstr "Сжимаю документ PDF"
@@ -88,12 +87,6 @@ msgstr "путь у %s содержит пробелы,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "файл вывода '%s' пропал :("
@@ -159,10 +152,10 @@ msgid "bad argument"
 msgstr "неправильный аргумент"
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
+msgstr "'full.names' должны быть TRUE для множественных путей."
 
 msgid "Timestamp file no longer exists."
-msgstr ""
+msgstr "Timestamp-файл больше не существует."
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -288,9 +281,8 @@ msgstr "'dump' не является объектом класса %s"
 msgid "Message:"
 msgstr "Сообщение:"
 
-#, fuzzy
 msgid "'dump' is empty"
-msgstr "опция 'dvipscmd' пуста"
+msgstr "'dump' пуст"
 
 msgid "Available environments had calls:"
 msgstr "Доступные окружения имеют вызовы:"
@@ -300,8 +292,8 @@ msgstr "Введите номер окружения или 0 для выхода"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-"восстановление вызвано неинтерактивно; кадры сброшены, используйте debugger"
-"(), чтобы их просмотреть"
+"восстановление вызвано неинтерактивно; кадры сброшены, используйте "
+"debugger(), чтобы их просмотреть"
 
 msgid "No suitable frames for recover()"
 msgstr "Нет подходящих кадров для recover()"
@@ -532,11 +524,14 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr "не видна функция '%s'"
 
-msgid "function '%s' appears not to be generic"
-msgstr "функция '%s', похоже, не общая"
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "общая функция '%s' отправляет методы для общей '%s'"
+
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr ""
+"функция '%s', видимо, не S3-общая; найдены функции, похожие на методы S3"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "надо указать 'generic.function' или 'class'"
@@ -594,6 +589,8 @@ msgid ""
 "specifying 'contriburl' or 'available' requires a single type, not type = "
 "\"both\""
 msgstr ""
+"определение 'contriburl' или 'available' требует single тип, а не type = "
+"\"both\""
 
 msgid "package '%s' in library '%s' will not be updated"
 msgstr "пакет '%s' в библиотеке %s не будет обновлен"
@@ -669,9 +666,8 @@ msgstr ""
 "Не знаю, в какой элемент 'lib' устанавливать зависимости\n"
 "пропускаю зависимости"
 
-#, fuzzy
 msgid "type 'binary' is not supported on this platform"
-msgstr "только 'html = TRUE' поддерживается на этой платформе"
+msgstr "тип 'binary' на этой платформе не поддерживается"
 
 msgid "no packages were specified"
 msgstr "не указаны пакеты"
@@ -685,9 +681,8 @@ msgstr "не могу установить пакеты"
 msgid "unable to create %s"
 msgstr "не удалось создать %s"
 
-#, fuzzy
 msgid "inferring 'repos = NULL' from 'pkgs'"
-msgstr "выставляю 'repos = NULL' на основе имени файла"
+msgstr "выставляю 'repos = NULL' на основе 'pkgs'"
 
 msgid "unable to create temporary directory %s"
 msgstr "не могу создать временную директорию %s"
@@ -735,12 +730,11 @@ msgstr "foundpkgs: %s"
 msgid "files: %s"
 msgstr "files: %s"
 
-#, fuzzy
 msgid ""
 "installation of one or more packages failed,\n"
 "  probably %s"
 msgstr ""
-"установка одного (или более) пакетов завершилась с ошибкой,\n"
+"установка одного или более пакетов завершилась с ошибкой,\n"
 "  возможно %s"
 
 msgid ""
@@ -781,9 +775,8 @@ msgstr "Создан файл с именем %s."
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Редактируется файл и перемещается в положенную папку."
 
-#, fuzzy
 msgid "cannot determine import name"
-msgstr "не могу определить имя, которое можно использовать"
+msgstr "не могу определить имя, которое можно включить"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr "нет документации на тип %s и раздел %s (или ошибка в обработке помощи)"
@@ -908,9 +901,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "не могу перевести 'x' в римскую"
 
-#, fuzzy
 msgid "Could not create file %s, aborting"
-msgstr "не могу восстановить информацию о типе"
+msgstr "Не могу создать файл %s, прерываюсь"
 
 msgid "no valid packages were specified"
 msgstr "правильные пакеты не указаны"
@@ -1001,9 +993,11 @@ msgstr "размер файла ограничен 8GB"
 
 msgid "invalid uid value replaced by that for user 'nobody'"
 msgstr ""
+"неправильное значение uid заменено на таковое для пользователя 'nobody'"
 
 msgid "invalid gid value replaced by that for user 'nobody'"
 msgstr ""
+"неправильное значение gid заменено на таковое для пользователя 'nobody'"
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -1018,9 +1012,8 @@ msgstr "миниатюра %s не найдена"
 msgid "vignette %s has no PDF/HTML"
 msgstr "у миниатюры %s нет PDF/HTML"
 
-#, fuzzy
 msgid "vignette %s has no R code"
-msgstr "миниатюра %s не найдена"
+msgstr "миниатюра %s не содержит кода R"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() нельзя использовать неинтерактивно"
@@ -1087,13 +1080,11 @@ msgstr "'ccaddress' должен быть длиной 1"
 msgid "no download method found"
 msgstr "не найдено метода скачивания"
 
-#, fuzzy
 msgid "'url' must be a length-one character vector"
-msgstr "'title' должны быть NULL или текстовым вектором единичной длины"
+msgstr "'url' должен быть текстовым вектором единичной длины"
 
-#, fuzzy
 msgid "'destfile' must be a length-one character vector"
-msgstr "'title' должны быть NULL или текстовым вектором единичной длины"
+msgstr "'destfile' должен быть текстовым вектором единичной длины"
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
@@ -1151,18 +1142,20 @@ msgstr "не удалось создать %s"
 msgid "there is no 'libs' directory in package %s"
 msgstr "нет директории 'libs' в пакете %s"
 
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr ""
+
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() нельзя использовать неинтерактивно"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() нельзя использовать неинтерактивно"
 
-#, fuzzy
 msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
-msgstr[0] "%d Sweave-файлов с базовым именем %s найдено"
-msgstr[1] "%d Sweave-файлов с базовым именем %s найдено"
-msgstr[2] "%d Sweave-файлов с базовым именем %s найдено"
+msgstr[0] "%d Sweave-файл с базовым именем %s найден"
+msgstr[1] "%d Sweave-файла с базовым именем %s найдены"
+msgstr[2] "%d Sweave-файлов с базовым именем %s найдены"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
@@ -1216,12 +1209,11 @@ msgstr[2] ""
 "Удаляю пакеты из %s\n"
 "(потому что %s не определено)"
 
-#, fuzzy
 msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
-msgstr[0] "пакет '%s' недоступен (для %s)"
-msgstr[1] "пакеты %s недоступны (для %s)"
-msgstr[2] "пакеты %s недоступны (для %s)"
+msgstr[0] "пакет '%s' недоступен (%s)"
+msgstr[1] "пакета %s недоступны (%s)"
+msgstr[2] "пакетов %s недоступно (%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1264,7 +1256,6 @@ msgstr[0] "В наличии есть бинарная версия, но исходники новее"
 msgstr[1] "В наличии есть бинарные версии, но исходники новее"
 msgstr[2] "В наличии есть бинарные версии, но исходники новее"
 
-#, fuzzy
 msgid ""
 "Do you want to install from sources the package which needs compilation?"
 msgid_plural ""
@@ -1276,7 +1267,6 @@ msgstr[1] ""
 msgstr[2] ""
 "Вы хотите установить из исходников пакеты, которые нуждаются в компиляции?"
 
-#, fuzzy
 msgid ""
 "Package which is only available in source form, and may need compilation of "
 "C/C++/Fortran"
@@ -1284,14 +1274,14 @@ msgid_plural ""
 "Packages which are only available in source form, and may need compilation "
 "of C/C++/Fortran"
 msgstr[0] ""
-"Пакет доступен только в форме исходников, возможно, потребуется компиляция C/"
-"C++/Fortran"
+"Пакет доступен только в форме исходников, возможно, потребуется компиляция "
+"кода C/C++/Fortran"
 msgstr[1] ""
 "Пакеты доступны только в форме исходников, возможно, потребуется компиляция "
-"C/C++/Fortran"
+"кода C/C++/Fortran"
 msgstr[2] ""
 "Пакеты доступны только в форме исходников, возможно, потребуется компиляция "
-"C/C++/Fortran"
+"кода C/C++/Fortran"
 
 msgid "installing the source package %s"
 msgid_plural "installing the source packages %s"
@@ -1330,17 +1320,14 @@ msgstr[0] "Неправильные римский номер: %s"
 msgstr[1] "Неправильные римские номера: %s"
 msgstr[2] "Неправильные римские номера: %s"
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid ","
+#~ msgstr ","
 
 #~ msgid ""
 #~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "

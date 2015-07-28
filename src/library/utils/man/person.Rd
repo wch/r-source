@@ -116,8 +116,8 @@ person(given = NULL, family = NULL, middle = NULL,
   name, e.g., \code{person("R Core Team", role = "aut")}.
 
   The new scheme also adds the possibility of specifying \emph{roles}
-  based on a subset of the MARC Value List for Relators and Roles
-  (\url{http://www.loc.gov/standards/sourcelist/relator-role.html}).
+  based on a subset of the MARC Code List for Relators 
+  (\url{http://www.loc.gov/marc/relators/relaterm.html}).
   When giving the roles of persons in the context of authoring \R
   packages, the following usage is suggested.
   \describe{

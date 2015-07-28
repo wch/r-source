@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -350,7 +350,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                 nmi <- nmeffect[1 + uasgn[i]]
                 nmrows <- c(nmrows, nmi)
                 if(!missing(split) && !is.na(int <- match(nmi, ns))) {
-                    df <- c(df, unlist(lapply(split[[int]], length)))
+		    df <- c(df, lengths(split[[int]]))
                     if(is.null(nms <- names(split[[int]])))
                         nms <- paste0("C", seq_along(split[[int]]))
                     ss <- c(ss, unlist(lapply(split[[int]],
@@ -407,6 +407,12 @@ coef.aov <- function(object, ...)
     z[!is.na(z)]
 }
 
+# For maov objects, the coefficients are a matrix and
+# NAs can't sensibly be removed (PR#16380)
+
+coef.maov <- function(object, ...)
+    object$coefficients  
+    
 alias <- function(object, ...) UseMethod("alias")
 
 alias.formula <- function(object, data, ...)

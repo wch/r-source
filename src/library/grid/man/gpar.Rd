@@ -1,6 +1,6 @@
 % File src/library/grid/man/gpar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gpar}
@@ -64,8 +64,8 @@ get.gpar(names = NULL)
   Colours can be specified in one of the forms returned by
   \code{\link{rgb}}, as a name (see \code{\link{colors}}) or as a
   non-negative integer index into the current \link{palette} (with zero
-  being taken as transparent).  (Prior to \R 3.0.0 negative integer
-  values were allowed and taken as transparent: they are now an error.)
+  being taken as transparent).  (Negative integer values are now an
+  error.)
 
   The \code{alpha} setting is combined with the alpha channel for
   individual colours by multiplying (with both alpha settings
@@ -101,8 +101,6 @@ get.gpar(names = NULL)
   All parameter values can be vectors of multiple values.  (This will
   not always make sense -- for example, viewports will only take
   notice of the first parameter value.)
-
-  The \code{gamma} parameter is defunct since \R 2.7.0.
 
   \code{get.gpar()} returns all current graphical parameter settings.
 }

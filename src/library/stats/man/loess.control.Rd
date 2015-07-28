@@ -14,12 +14,12 @@ loess.control(surface = c("interpolate", "direct"),
 \alias{loess.control}
 \arguments{
  \item{surface}{should the fitted surface be computed exactly or via
-   interpolation from a kd tree?}
+   interpolation from a kd tree?  Can be abbreviated.}
  \item{statistics}{should the statistics be computed exactly or
-   approximately? Exact computation can be very slow.}
+   approximately? Exact computation can be very slow.  Can be abbreviated.}
  \item{trace.hat}{should the trace of the smoother matrix be computed
    exactly or approximately? It is recommended to use the approximation
-   for more than about 1000 data points.}
+   for more than about 1000 data points.  Can be abbreviated.}
  \item{cell}{if interpolation is used this controls the accuracy of the
    approximation via the maximum number of points in a  cell in the kd
    tree. Cells with more than \code{floor(n*span*cell)} points are subdivided.}

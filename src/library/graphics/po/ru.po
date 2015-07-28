@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2013-03-19 19:40-0600\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"PO-Revision-Date: 2015-03-26 18:57-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -84,7 +84,7 @@ msgstr "неправильное графическое состояние"
 
 #: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
-msgstr ""
+msgstr "графическое устройство закрыто в процессе вызова locator или identify"
 
 #: graphics.c:2604
 msgid "No graphics device is active"
@@ -121,7 +121,7 @@ msgstr "указано неправильное значение графиче�
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "графический параметр \"%s\" неправильной длины"
 
-#: par.c:262 par.c:672
+#: par.c:262 par.c:673
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "графический параметр \"%s\" не может быть установлен"
@@ -146,35 +146,35 @@ msgstr "значение 'nr' в \"mfg\" неправильное и будет 
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "значение 'nc' в \"mfg\" неправильное и будет пропущено"
 
-#: par.c:477
+#: par.c:478
 msgid "calling par(new=TRUE) with no plot"
 msgstr "вызов par(new=TRUE) без графика"
 
-#: par.c:664 par.c:1062
+#: par.c:665 par.c:1063
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "графический параметр \"%s\" устарел"
 
-#: par.c:668 par.c:1066
+#: par.c:669 par.c:1067
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" -- не графический параметр"
 
-#: par.c:1119
+#: par.c:1120
 msgid "invalid argument passed to par()"
 msgstr "par() передан неправильный аргумент"
 
-#: par.c:1163
+#: par.c:1164
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "слишком много строк в разметке, надо не больше %d"
 
-#: par.c:1169
+#: par.c:1170
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "слишком много колонок в разметке, надо не больше %d"
 
-#: par.c:1171
+#: par.c:1172
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "слишком много ячеек в разметке, надо не больше %d"
@@ -333,7 +333,7 @@ msgstr "не могу смешивать координаты нулевой д�
 
 #: plot.c:1832
 msgid "Empty raster"
-msgstr ""
+msgstr "Пустой растр"
 
 #: plot.c:1914
 msgid "invalid arrow head length"

@@ -1,6 +1,6 @@
 % File src/library/utils/man/edit.data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{edit.data.frame}
@@ -19,7 +19,7 @@
 \arguments{
   \item{name}{A data frame or (numeric, logical or character) matrix.}
   \item{factor.mode}{How to handle factors (as integers or using
-    character levels) in a data frame.}
+    character levels) in a data frame.  Can be abbreviated.}
   \item{edit.row.names}{logical. Show the row names (if they exist) be
     displayed as a separate editable column?  It is an error to ask for
     this on a matrix with \code{NULL} row names.}

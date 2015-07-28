@@ -1,7 +1,7 @@
 #  File src/library/stats/R/princomp.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@ princomp.default <-
     function(x, cor = FALSE, scores = TRUE, covmat = NULL,
              subset = rep_len(TRUE, nrow(as.matrix(x))), ...)
 {
+    chkDots(...)
     cl <- match.call()
     cl[[1L]] <- as.name("princomp")
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]

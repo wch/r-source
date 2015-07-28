@@ -411,26 +411,10 @@ AC_ARG_WITH([libtiff],
 [AS_HELP_STRING([--with-libtiff],[use libtiff library (if available) @<:@yes@:>@])],
 [R_ARG_USE(libtiff)],
 [use_libtiff=yes])
-AC_ARG_WITH([system-zlib],
-[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(zlib)],
-[use_system_zlib=yes])
-AC_ARG_WITH([system-bzlib],
-[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(bzlib)],
-[use_system_bzlib=yes])
-AC_ARG_WITH([system-pcre],
-[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(pcre)],
-[use_system_pcre=yes])
 AC_ARG_WITH([system-tre],
 [AS_HELP_STRING([--with-system-tre],[use system tre library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(tre)],
 [use_system_tre=no])
-AC_ARG_WITH([system-xz],
-[AS_HELP_STRING([--with-system-xz],[use system xz (lzma) library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(xz)],
-[use_system_xz=yes])
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
@@ -814,8 +798,8 @@ AC_HEADER_SYS_WAIT
 ## sys/param.h is one way to get PATH_MAX.
 ## sched.h is POSIX, but we use it for Linux-specific features (affinity)
 ## stdalign.h is C11.
-AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h langinfo.h \
+AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h features.h fcntl.h \
+  floatingpoint.h fpu_control.h glob.h grp.h langinfo.h \
   netdb.h netinet/in.h pwd.h sched.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h \
   sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
@@ -2063,8 +2047,9 @@ fi
 AC_CACHE_CHECK([whether 'struct tm' includes tm_gmtoff],
                 [r_cv_have_tm_gmtoff],
 [AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
-// glibc needs this defined.
+// glibc needs this defined, second for >= 2.20
 #define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 #include <time.h>
 
 int main() {
@@ -2746,14 +2731,10 @@ AC_CONFIG_FILES(
   src/appl/Makefile
   src/extra/Makefile
   src/extra/blas/Makefile
-  src/extra/bzip2/Makefile
   src/extra/intl/Makefile
-  src/extra/pcre/Makefile
   src/extra/tre/Makefile
   src/extra/tzone/Makefile
   src/extra/xdr/Makefile
-  src/extra/xz/Makefile
-  src/extra/zlib/Makefile
   src/include/Makefile
   src/include/Rmath.h0
   src/include/R_ext/Makefile
@@ -2883,18 +2864,6 @@ if test "${acx_lapack_ok}" = "yes"; then
   esac
   R_SH_VAR_ADD(r_external_libs, [LAPACK(${r_lapack})], [, ])
 fi
-if test "${have_zlib}" = yes; then
-  R_SH_VAR_ADD(r_external_libs, [zlib], [, ])
-fi
-if test "${have_bzlib}" = yes; then
-  R_SH_VAR_ADD(r_external_libs, [bzlib], [, ])
-fi
-if test "${have_lzma}" = yes; then
-  R_SH_VAR_ADD(r_external_libs, [lzma], [, ])
-fi
-if test "${have_pcre}" = yes; then
-  R_SH_VAR_ADD(r_external_libs, [PCRE], [, ])
-fi
 if test "${have_tre}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [tre], [, ])
 fi
@@ -2980,7 +2949,7 @@ R is now configured for ${host}
   Fortran 77 compiler:       ${r_f77_compiler}
 
   C++ compiler:              ${r_cxx_compiler}
-  C++ 11 compiler:           ${r_cxx1x_compiler}
+  C++11 compiler:            ${r_cxx1x_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 

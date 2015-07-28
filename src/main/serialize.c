@@ -1008,7 +1008,8 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    warning(_("namespaces may not be available when loading"));
 #endif
 	    OutInteger(stream, NAMESPACESXP);
-	    OutStringVec(stream, R_NamespaceEnvSpec(s), ref_table);
+	    OutStringVec(stream, PROTECT(R_NamespaceEnvSpec(s)), ref_table);
+	    UNPROTECT(1);
 	}
 	else {
 	    OutInteger(stream, ENVSXP);
@@ -2525,12 +2526,13 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 	InitMemOutPStream(&out, &mbs, type, version, hook, fun);
 	R_Serialize(object, &out);
 
-	val =  CloseMemOutPStream(&out);
+	PROTECT(val = CloseMemOutPStream(&out));
 
 	/* end the context after anything that could raise an error but before
 	   calling OutTerm so it doesn't get called twice */
 	endcontext(&cntxt);
 
+	UNPROTECT(1); /* val */
 	return val;
     }
     else {

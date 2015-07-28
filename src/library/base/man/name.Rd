@@ -1,11 +1,11 @@
 % File src/library/base/man/name.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{name}
 \alias{name}
-%\alias{symbol} use for plotmath as from R 2.6.0
+\concept{symbol}%\alias{symbol} use for plotmath as from R 2.6.0
 \alias{is.symbol}
 \alias{as.symbol}
 \alias{as.name}

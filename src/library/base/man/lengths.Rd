@@ -5,15 +5,19 @@
 
 \name{lengths}
 \alias{lengths}
-\title{Lengths of List Elements}
+\title{Lengths of List or Vector Elements}
+\encoding{UTF-8}
 \description{
-  Get the length of each element in a list as an integer or numeric vector.
+  Get the length of each element of a \code{\link{list}} or atomic
+  vector (\code{\link{is.atomic}}) as an integer or numeric vector.
 }
 \usage{
 lengths(x, use.names = TRUE)
 }
 \arguments{
-  \item{x}{a \code{\link{list}} or list-like such as an \code{\link{expression}}.}
+  \item{x}{a \code{\link{list}}, list-like such as an
+    \code{\link{expression}} or an atomic vector (for which the result
+    is trivial).}
   \item{use.names}{logical indicating if the result should inherit the
     \code{\link{names}} from \code{x}.}
 }
@@ -22,6 +26,13 @@ lengths(x, use.names = TRUE)
   containing the length of each element in \code{x}.  Effectively,
   \code{length(x[[i]])} is called for all \code{i}, so any methods on
   \code{length} are considered.
+}
+\note{
+  One raison d'\enc{être}{etre} of \code{lengths(x)} is its use as a
+  more efficient version of \code{sapply(x, length)} and similar
+  \code{*apply} calls to \code{\link{length}}.  This is the reason why
+  \code{x} may be an atomic vector, even though \code{lengths(x)} is
+  trivial in that case.
 }
 \value{
   A non-negative \code{\link{integer}} of length \code{length(x)},
