@@ -226,6 +226,8 @@
       \code{print()} in the base namespace and \code{show()} in the
       \pkg{methods} namespace instead of searching the global
       environment.
+
+      \item \code{rhyper(nn, <large>)} now works correctly. (\PR{16489})
     }
   }
 }

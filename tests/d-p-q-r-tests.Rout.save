@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2015-07-22 r68718) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-07-25 r68748) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -35,9 +35,8 @@ Type 'q()' to quit R.
 > Meps <- .Machine $ double.eps
 > xMax <- .Machine $ double.xmax
 > options(rErr.eps = 1e-30)
-> rErr <- function(approx, true, eps = .Options$rErr.eps)
+> rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
 + {
-+     if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
 +     ifelse(Mod(true) >= eps,
 + 	   1 - approx / true, # relative error
 + 	   true - approx)     # absolute error (e.g. when true=0)
@@ -1331,7 +1330,19 @@ Type 'q()' to quit R.
 > stopifnot(all.equal(qt(p, df=Inf, ncp=5), qnorm(p, m=5)))
 > ## qt(*, df=Inf, .)  gave NaN in  R <= 3.2.1
 > 
+> ## rhyper(*, <large>);  PR#16489
+> ct3 <- system.time(N <- rhyper(100, 8000, 1e9-8000, 1e6))[1]
+> table(N)
+N
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 
+ 1  1  2  5  8 14 16 17  8 13  5  5  3  2 
+> summary(N)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00    6.00    8.00    7.85   10.00   14.00 
+> stopifnot(abs(mean(N) - 8) < 1.5)
+> if(ct3 > 0.02) { cat("system.time:\n"); print(ct3) }
+> ## N were all 0 and took very long for R <= 3.2.1
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.979 0.011 0.99 0 0 
+Time elapsed:  1.326 0.108 1.454 0 0 
 > 

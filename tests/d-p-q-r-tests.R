@@ -18,9 +18,8 @@ opt.conformance <- 0
 Meps <- .Machine $ double.eps
 xMax <- .Machine $ double.xmax
 options(rErr.eps = 1e-30)
-rErr <- function(approx, true, eps = .Options$rErr.eps)
+rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
 {
-    if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
     ifelse(Mod(true) >= eps,
 	   1 - approx / true, # relative error
 	   true - approx)     # absolute error (e.g. when true=0)
@@ -932,5 +931,12 @@ p <- (0:32)/32
 stopifnot(all.equal(qt(p, df=Inf, ncp=5), qnorm(p, m=5)))
 ## qt(*, df=Inf, .)  gave NaN in  R <= 3.2.1
 
+## rhyper(*, <large>);  PR#16489
+ct3 <- system.time(N <- rhyper(100, 8000, 1e9-8000, 1e6))[1]
+table(N)
+summary(N)
+stopifnot(abs(mean(N) - 8) < 1.5)
+if(ct3 > 0.02) { cat("system.time:\n"); print(ct3) }
+## N were all 0 and took very long for R <= 3.2.1
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
