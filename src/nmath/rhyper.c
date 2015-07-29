@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2014 The R Core Team
- *  Copyright (C) 2005	The R Foundation
+ *  Copyright (C) 2000-2015 The R Core Team
+ *  Copyright (C) 2005-2015 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,10 +81,8 @@ static double afc(int i)
 
 double rhyper(double nn1in, double nn2in, double kkin)
 {
-    const static double con = 57.56462733;
     const static double deltal = 0.0078;
     const static double deltau = 0.0034;
-    const static double scale = 1e25;
 
     /* extern double afc(int); */
 
@@ -92,26 +90,22 @@ double rhyper(double nn1in, double nn2in, double kkin)
     int i, ix;
     Rboolean reject, setup1, setup2;
 
-    double e, f, g, p, r, t, u, v, y;
-    double de, dg, dr, ds, dt, gl, gu, nk, nm, ub;
-    double xk, xm, xn, y1, ym, yn, yk, alv;
+    double e, f, g, r, t, y;
 
-    /* These should become `thread_local globals' : */
-    static int ks = -1;
-    static int n1s = -1, n2s = -1;
-
-    static int k, m;
-    static int minjx, maxjx, n1, n2;
-
-    static double a, d, s, w;
-    static double tn, xl, xr, kl, kr, lamdl, lamdr, p1, p2, p3;
-
+    /* These should become 'thread_local globals' : */
+    static int ks = -1, n1s = -1, n2s = -1;
+    static int k, m, tn, minjx, maxjx, n1, n2;
+    // II :
+    static double w;
+    // III:
+    static double a, d, s, xl, xr, kl, kr, lamdl, lamdr, p1, p2, p3;
 
     /* check parameter validity */
 
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
 	ML_ERR_return_NAN;
 
+    // Disabling large (nn1, nn2, kk) { =^= rhyper (m,n,k) }:
     nn1 = (int) R_forceint(nn1in);
     nn2 = (int) R_forceint(nn2in);
     kk	= (int) R_forceint(kkin);
@@ -173,31 +167,35 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	}
 	return ix;
 
-    } else if (m - minjx < 10) { /* II: inverse transformation ---------- */
+    } else if (m - minjx < 10) { // II: (Scaled) algorithm HIN (inverse transformation) ----
+	const static double scale = 1e25; // scaling factor against (early) underflow
+	const static double con = 57.5646273248511421;
+                                          // 25*log(10) = log(scale) { <==> exp(con) == scale }
 	if (setup1 || setup2) {
+	    double lw; // log(w);  w = exp(lw) * scale = exp(lw + log(scale)) = exp(lw + con)
 	    if (k < n2) {
-		w = exp(con + afc(n2) + afc(n1 + n2 - k)
-			- afc(n2 - k) - afc(n1 + n2));
+		lw = afc(n2) + afc(n1 + n2 - k) - afc(n2 - k) - afc(n1 + n2);
 	    } else {
-		w = exp(con + afc(n1) + afc(k)
-			- afc(k - n2) - afc(n1 + n2));
+		lw = afc(n1) + afc(     k     ) - afc(k - n2) - afc(n1 + n2);
 	    }
+	    w = exp(lw + con);
 	}
+	double p, u;
       L10:
 	p = w;
 	ix = minjx;
 	u = unif_rand() * scale;
-      L20:
-	if (u > p) {
+	while (u > p) {
 	    u -= p;
-	    p *= (n1 - ix) * (k - ix);
+	    p *= ((double) n1 - ix) * (k - ix);
 	    ix++;
 	    p = p / ix / (n2 - k + ix);
 	    if (ix > maxjx)
 		goto L10;
-	    goto L20;
 	}
-    } else { /* III : h2pe --------------------------------------------- */
+    } else { /* III : H2PE Algorithm --------------------------------------- */
+
+	double u,v;
 
 	if (setup1 || setup2) {
 	    s = sqrt((tn - k) * k * n1 * n2 / (tn - 1) / tn / tn);
@@ -260,6 +258,8 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		reject = FALSE;
 	    }
 	} else {
+	    double de, dg, dr, ds, dt, gl, gu, nk, nm, ub;
+	    double xk, xm, xn, y1, ym, yn, yk, alv;
 	    /* squeeze using upper and lower bounds */
 	    y = ix;
 	    y1 = y + 1.0;
@@ -319,7 +319,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		    }
 		}
 	    }
-	}
+	} // else
 	if (reject)
 	    goto L30;
     }
