@@ -81,6 +81,10 @@
 
       \item \code{file()} now also gets an explicit \code{method}
       argument instead of implicitly using \code{getOption("url.method")}.
+
+      \item Thanks to a patch from Tomas Kalibera, \code{x[x != 0]} is
+      now typically \emph{faster} than \code{x[which(x != 0)]} (in the
+      case where \code{x} has no NAs, the two are equivalent).
     }
   }
 
