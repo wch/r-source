@@ -2849,6 +2849,11 @@ static void gc_end_timing(void)
 
 static void R_gc_internal(R_size_t size_needed)
 {
+    if (!R_GCEnabled) {
+      AdjustHeapSize(size_needed);
+      return;
+    }
+
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
     SEXPTYPE first_bad_sexp_type = 0;

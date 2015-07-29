@@ -168,6 +168,7 @@ void attribute_hidden R_run_onexits(RCNTXT *cptr)
 void attribute_hidden R_restore_globals(RCNTXT *cptr)
 {
     R_PPStackTop = cptr->cstacktop;
+    R_GCEnabled = cptr->gcenabled;
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
     R_interrupts_suspended = cptr->intsusp;
@@ -228,6 +229,7 @@ void begincontext(RCNTXT * cptr, int flags,
 		  SEXP promargs, SEXP callfun)
 {
     cptr->cstacktop = R_PPStackTop;
+    cptr->gcenabled = R_GCEnabled;
     cptr->evaldepth = R_EvalDepth;
     cptr->callflag = flags;
     cptr->call = syscall;

@@ -510,6 +510,7 @@ typedef struct RCNTXT {
     int callflag;		/* The context "type" */
     JMP_BUF cjmpbuf;		/* C stack and register information */
     int cstacktop;		/* Top of the pointer protection stack */
+    int gcenabled;		/* R_GCenabled value */
     int evaldepth;	        /* evaluation depth at inception */
     SEXP promargs;		/* Promises supplied to closure */
     SEXP callfun;		/* The closure called */
@@ -638,6 +639,7 @@ LibExtern char *R_Home;		    /* Root of the R tree */
 /* Memory Management */
 extern0 R_size_t R_NSize  INI_as(R_NSIZE);/* Size of cons cell heap */
 extern0 R_size_t R_VSize  INI_as(R_VSIZE);/* Size of the vector heap */
+extern0 int	R_GCEnabled INI_as(1);
 extern0 SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern0 SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern0 R_size_t R_Collected;	    /* Number of free cons cells (after gc) */
