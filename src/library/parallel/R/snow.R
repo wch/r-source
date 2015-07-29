@@ -163,6 +163,8 @@ stopCluster.default <- function(cl) for (n in cl) stopNode(n)
 sendCall <- function (con, fun, args, return = TRUE, tag = NULL)
 {
     timing <-  .snowTimingData$running()
+    if (timing)
+        start <- proc.time()[3L]
     postNode(con, "EXEC",
              list(fun = fun, args = args, return = return, tag = tag))
     if (timing)
