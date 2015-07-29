@@ -94,6 +94,12 @@
       \pkg{methods} namespace instead of searching the global
       environment.
 
+      \item \code{polym()} gains a \code{coefs = NULL} argument and
+      returns class \code{"poly"} just like \code{poly()} which gets a
+      new \code{simple=FALSE} option.  They now lead to correct
+      \code{predict()}ions, e.g., on subsets of the original data.
+      %% see https://stat.ethz.ch/pipermail/r-devel/2015-July/071532.html
+
       \item \code{rhyper(nn, <large>)} now works correctly. (\PR{16489})
     }
   }
