@@ -94,7 +94,8 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     /* These should become 'thread_local globals' : */
     static int ks = -1, n1s = -1, n2s = -1;
-    static int k, m, tn, minjx, maxjx, n1, n2;
+    static int k, m, minjx, maxjx, n1, n2;
+    static double tn;
     // II :
     static double w;
     // III:
