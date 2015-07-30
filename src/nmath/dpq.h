@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2014 The  R Core Team
+ *  Copyright (C) 2000--2015 The  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,6 +121,6 @@
 // for discrete d<distr>(x, ...) :
 #define R_D_nonint_check(x) 				\
    if(R_nonint(x)) {					\
-	MATHLIB_WARNING("non-integer x = %f", x);	\
+       MATHLIB_WARNING(_("non-integer x = %f"), x);	\
 	return R_D__0;					\
    }

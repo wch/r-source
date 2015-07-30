@@ -61,7 +61,8 @@ double bessel_j(double x, double alpha)
 	       ((alpha      == na ) ? 0 : bessel_y(x, -alpha) * sinpi(alpha)));
     }
     else if (alpha > 1e7) {
-	MATHLIB_WARNING("besselJ(x, nu): nu=%g too large for bessel_j() algorithm", alpha);
+	MATHLIB_WARNING(_("besselJ(x, nu): nu=%g too large for bessel_j() algorithm"),
+			alpha);
 	return ML_NAN;
     }
     nb = 1 + (int)na; /* nb-1 <= alpha < nb */
@@ -114,7 +115,8 @@ double bessel_j_ex(double x, double alpha, double *bj)
 	       ((alpha      == na ) ? 0 : bessel_y_ex(x, -alpha, bj) * sinpi(alpha)));
     }
     else if (alpha > 1e7) {
-	MATHLIB_WARNING("besselJ(x, nu): nu=%g too large for bessel_j() algorithm", alpha);
+	MATHLIB_WARNING(_("besselJ(x, nu): nu=%g too large for bessel_j() algorithm"),
+			alpha);
 	return ML_NAN;
     }
     nb = 1 + (int)na; /* nb-1 <= alpha < nb */
