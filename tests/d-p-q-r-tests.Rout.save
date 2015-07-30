@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-07-25 r68748) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-07-30 r68756) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1342,7 +1342,12 @@ N
 > stopifnot(abs(mean(N) - 8) < 1.5)
 > if(ct3 > 0.02) { cat("system.time:\n"); print(ct3) }
 > ## N were all 0 and took very long for R <= 3.2.1
+> set.seed(17)
+> stopifnot(rhyper(1, 3024, 27466, 251) == 25,
++           rhyper(1,  329,  3059, 225) == 22)
+> ## failed for a day after a "thinko" in the above bug fix.
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.326 0.108 1.454 0 0 
+Time elapsed:  1.136 0.066 1.21 0 0 
 > 

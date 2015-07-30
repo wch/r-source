@@ -938,5 +938,10 @@ summary(N)
 stopifnot(abs(mean(N) - 8) < 1.5)
 if(ct3 > 0.02) { cat("system.time:\n"); print(ct3) }
 ## N were all 0 and took very long for R <= 3.2.1
+set.seed(17)
+stopifnot(rhyper(1, 3024, 27466, 251) == 25,
+          rhyper(1,  329,  3059, 225) == 22)
+## failed for a day after a "thinko" in the above bug fix.
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
