@@ -735,7 +735,7 @@ install.packages <-
                 ##   cmd <- paste(c(shQuote(command), env, args),
                 ##                collapse = " ")
                 ## on Windows?
-                cmd <- paste(c(shQuote(cmd0), args), collapse = " ")
+                cmd <- paste(c("MAKEFLAGS=", shQuote(cmd0), args), collapse = " ")
                 ## </NOTE>
                 deps <- aDL[[pkg]]
                 deps <- deps[deps %in% upkgs]
