@@ -226,7 +226,7 @@ Modern Unix-alike systems, including OS X, are likely to produce
 UTF-8 files.  Windows may produce what it calls `Unicode' files
 (@code{UCS-2LE} or just possibly @code{UTF-16LE}@footnote{the
 distinction is subtle,
-@uref{http://en.wikipedia.org/@/wiki/@/UTF-16/UCS-2}, and the use of
+@uref{https://en.wikipedia.org/@/wiki/@/UTF-16/UCS-2}, and the use of
 surrogate pairs is very rare.}).  Otherwise most files will be in a
 8-bit encoding unless from a Chinese/Japanese/Korean locale (which have
 a wide range of encodings in common use).  It is not possible to
@@ -236,7 +236,7 @@ example above), so you may simply have to ask the originator for some
 clues (e.g.@: `Russian on Windows').
 
 `BOMs' (Byte Order Marks,
-@uref{http://en.wikipedia.org/wiki/Byte_order_mark}) cause problems for
+@uref{https://en.wikipedia.org/wiki/Byte_order_mark}) cause problems for
 Unicode files.  In the Unix world BOMs are rarely used, whereas in the
 Windows world they almost always are for UCS-2/UTF-16 files, and often
 are for UTF-8 files.  The @command{file} utility will not even recognize
@@ -322,7 +322,7 @@ locales the comma is used as the decimal point (set this in
 semicolon as the field separator: use @code{write.csv2} for appropriate
 defaults.  There is an IETF standard for CSV files (which mandates
 commas and CRLF line endings, for which use @code{eol = "\r\n"}), RFC4180
-(see @uref{http://tools.ietf.org/html/rfc4180}), but what is more
+(see @uref{https://tools.ietf.org/html/rfc4180}), but what is more
 important in practice is that the file is readable by the application it
 is targeted at.
 
@@ -1164,19 +1164,19 @@ from a database for separate analysis.
 
 Increasingly OSes are themselves making use of DBMSs for these reasons,
 so it is nowadays likely that one will be already installed on your
-(non-Windows) OS.  @uref{http://en.wikipedia.org/wiki/Akonadi, Akonadi}
+(non-Windows) OS.  @uref{https://en.wikipedia.org/wiki/Akonadi, Akonadi}
 is used by KDE4 to store personal information.  Several OS X
 applications, including Mail and Address Book, use SQLite.
-@c http://www.actualtechnologies.com/sqlite_applications.php
+@c https://www.actualtech.com/sqlite_applications.php
 
 @node Overview of RDBMSs, R interface packages, Why use a database?, Relational databases
 @section Overview of RDBMSs
 
 Traditionally there had been large (and expensive) commercial RDBMSs
-(@uref{http://www.informix.com, Informix}; @uref{http://www.oracle.com,
+(@uref{http://www.informix.com, Informix}; @uref{https://www.oracle.com,
 Oracle}; @uref{http://www.sybase.com, Sybase};
 @uref{http://www.ibm.com/db2, IBM's DB2};
-@uref{http://www.microsoft.com/SQL/default.mspx, Microsoft @acronym{SQL}
+@uref{https://www.microsoft.com/SQL/default.mspx, Microsoft @acronym{SQL}
 Server} on Windows) and academic and small-system databases (such as
 MySQL@footnote{and forks, notably MariaDB.}, PostgreSQL, Microsoft
 Access, @dots{}), the former marked out by much greater emphasis on data
@@ -1190,7 +1190,7 @@ There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
-@uref{http://msdn.microsoft.com/@/en-us/@/library/@/ms710252%28v=vs.85%29.aspx})
+@uref{https://msdn.microsoft.com/@/en-us/@/library/@/ms710252%28v=vs.85%29.aspx})
 but is also implemented on Linux/Unix/OS X.
 
 All of the packages described later in this chapter provide clients to
@@ -1330,11 +1330,11 @@ data frame or in pieces (usually as groups of rows).
 
 All except @CRANpkg{RODBC} are tied to one DBMS, but there has been a
 proposal for a unified `front-end' package @CRANpkg{DBI}
-(@uref{http://developer.r-project.org/db}) in conjunction with a
+(@uref{https://developer.r-project.org/db}) in conjunction with a
 `back-end', the most developed of which is @CRANpkg{RMySQL}.  Also on
 @acronym{CRAN} are the back-ends @CRANpkg{ROracle}, @CRANpkg{RPostgreSQL} and
 @CRANpkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
-@uref{http://www.sqlite.org}),  @CRANpkg{RJDBC} (which uses Java and can
+@uref{https://www.sqlite.org}),  @CRANpkg{RJDBC} (which uses Java and can
 connect to any DBMS that has a JDBC driver) and @CRANpkg{RpgSQL} (a
 specialist interface to PostgreSQL built on top of @CRANpkg{RJDBC}).
 
@@ -1346,7 +1346,7 @@ The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 PostgreSQL.
 
 Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for
-`MongoDB' (@uref{http://en.wikipedia.org/wiki/MongoDB}) databases, which
+`MongoDB' (@uref{https://en.wikipedia.org/wiki/MongoDB}) databases, which
 are queried using JavaScript rather than SQL.  Package @CRANpkg{rmongodb} is
 another client using @pkg{mongodb}'s C driver.
 
@@ -1362,8 +1362,9 @@ another client using @pkg{mongodb}'s C driver.
 @cindex MySQL database system
 
 Package @CRANpkg{RMySQL} on @acronym{CRAN} provides an interface to the
-MySQL database system (see @uref{http://www.mysql.com} and Dubois,
-2000).  The description here applies to version @code{0.5-0}: earlier
+MySQL database system (see @uref{https://www.mysql.com} and Dubois,
+2000) or its fork MariaDB (see @uref{https://mariadb.org/}).  The
+description here applies to versions @code{0.5-0} and later: earlier
 versions had a substantially different interface.  The current version
 requires the @CRANpkg{DBI} package, and this description will apply with
 minor changes to all the other back-ends to @CRANpkg{DBI}.
@@ -1477,15 +1478,16 @@ database system.
 Windows provides drivers not just for DBMSs but also for Excel
 (@file{.xls}) spreadsheets, DBase (@file{.dbf}) files and even text
 files.  (The named applications do @emph{not} need to be
-installed. Which file formats are supported depends on the versions
-of the drivers.)  There are versions for Excel and Access 2007/2010 (go
-to @uref{http://download.microsoft.com}, and search for `Office ODBC',
-which will lead to @file{AccessDatabaseEngine.exe}), the `2007 Office
-System Driver' (the latter has a version for 64-bit Windows, and that
-will also read earlier versions).
+installed. Which file formats are supported depends on the versions of
+the drivers.)  There are versions for Excel and Access 2007/2010 (go to
+@uref{https://www.microsoft.com/@/en-us/@/download/@/default.aspx}, and
+search for `Office ODBC', which will lead to
+@file{AccessDatabaseEngine.exe}), the `2007 Office System Driver' (the
+latter has a version for 64-bit Windows, and that will also read earlier
+versions).
 
 On OS X the Actual Technologies
-(@url{http://www.actualtechnologies.com/product_access.php}) drivers
+(@url{https://www.actualtech.com/product_access.php}) drivers
 provide ODBC interfaces to Access databases (including Access 2007/2010)
 and to Excel spreadsheets (not including Excel 2007/2010).
 
@@ -1747,7 +1749,7 @@ handle binary files.
 Packages @CRANpkg{hdf5}, @CRANpkg{h5r}, Bioconductor's @pkg{rhdf5},
 @CRANpkg{RNetCDF}, @CRANpkg{ncdf} and @CRANpkg{ncdf4} on @acronym{CRAN} provide
 interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format, see
-@uref{http://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
+@uref{https://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
 (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/software/netcdf/}).
 
@@ -1933,7 +1935,7 @@ available for @R{} input from that connection.
 @acronym{URL}s of types @samp{http://}, @samp{ftp://} and @samp{file://}
 can be read from using the function @code{url}.  For convenience,
 @code{file} will also accept these as the file specification and call
-@code{url}.
+@code{url}.  On most platforms @samp{https://} are also accepted.
 
 @cindex Sockets
 @findex socketConnection
@@ -2267,7 +2269,7 @@ possibility.
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
 example Gnumeric (@uref{http://www.gnome.org/projects/gnumeric/}) and
-OpenOffice (@uref{http://www.openoffice.org}).  You can also
+OpenOffice (@uref{https://www.openoffice.org}).  You can also
 cut-and-paste between the display of a spreadsheet in such a program and
 R: @code{read.table} will read from the R console or, under Windows,
 from the clipboard (via @code{file = "clipboard"} or
@@ -2357,7 +2359,7 @@ Also available at @uref{http://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
 
 @noindent
 B.@: D.@: Ripley (2001) Connections. \@emph{R News}, @strong{1/1}, 16--7.
-  \@uref{http://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+  \@uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 
 
 @noindent

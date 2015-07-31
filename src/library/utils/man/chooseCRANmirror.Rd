@@ -23,7 +23,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
     widget. Otherwise use a text \code{\link{menu}}.}
 
   \item{ind}{Optional numeric value giving which entry to select.}
-  \item{useHTTPS}{Whether to offer HTTPS mirrors.}
+  \item{useHTTPS}{Whether to prefer HTTPS mirrors.}
   \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
   \item{local.only}{Logical, try to get most recent list from CRAN or
     use file on local disk only.}
@@ -34,15 +34,17 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   list of current mirrors is consulted, and the file copy used only if
   the on-line list is inaccessible.
 
-  This function was originally written to support a Windows GUI menu
-  item, but is also called by \code{\link{contrib.url}} if it finds the
-  initial dummy value of \code{\link{options}("repos")}.
+  This function is calle by a Windows GUI menu item and by
+  \code{\link{contrib.url}} if it finds the initial dummy value of
+  \code{\link{options}("repos")}.
   
-  The \code{useHTTPS} argument defaults to \code{TRUE}.  With \code{useHTTPS=TRUE},
-  HTTPS mirrors will be offered in preference to HTTP mirrors.  If it
-  is set to \code{FALSE}, no HTTPS mirrors will be offered.  We recommend
-  that it be left at the default value, as this will help to ensure that
-  packages have not been tampered with in transit.
+  The \code{useHTTPS} argument defaults to \code{TRUE}.  With
+  \code{useHTTPS = TRUE}, HTTPS mirrors will be offered in preference to
+  HTTP mirrors (which are listed in a sub-menu).  If it is set to
+  \code{FALSE}, no HTTPS mirrors will be offered.  Choosing an HTTPS
+  mirror provides some guarantees on the identity of the site chosen and
+  so is recommended. (However, most but not all \R builds support
+  downloading from HTTPS sites.)
 }
 \value{
   None for \code{chooseCRANmirror()}, this function is invoked for its
