@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -54,6 +54,10 @@ setRepositories(graphics = getOption("menu.graphics"),
 
   This function requires the \R session to be interactive unless
   \code{ind} is supplied.
+
+  Some of the entries have \sQuote{secure} versions which use
+  \samp{https://} for access, so if selected need an \R build which
+  supports this.
 }
 \note{
   This does \strong{not} set the list of repositories at startup: to do
