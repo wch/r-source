@@ -1,7 +1,7 @@
 
 R Under development (unstable) (2015-07-31 r68768) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1119,4 +1119,8 @@ Formal class 'signature' [package "methods"] with 3 slots
   ..@ .Data  : chr "mle"
   ..@ names  : chr "obj"
   ..@ package: chr ""
+> 
+> cl4 <- getClasses("package:stats4")
+> stopifnot(c("mle", "profile.mle", "summary.mle") %in% cl4)
+> ## failed after an optimization patch
 > 

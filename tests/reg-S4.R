@@ -789,3 +789,7 @@ require("stats4")# -> "mle" class
 validObject(sig <- new("signature", obj = "mle"))
 stopifnot(c("package", "names") %in% slotNames(sig))
 str(sig) # failed, too
+
+cl4 <- getClasses("package:stats4")
+stopifnot(c("mle", "profile.mle", "summary.mle") %in% cl4)
+## failed after an optimization patch
