@@ -47,7 +47,7 @@ answers is maintained by @email{Kurt.Hornik@@R-project.org, Kurt Hornik}
 and can be found at the @acronym{URL}
 
 @quotation
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html}
+@uref{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html}
 @end quotation
 
 @ifinfo
@@ -64,7 +64,7 @@ are a number of mailing lists which are used by R users and developers.
 See
 
 @quotation
-@uref{http://www.R-project.org/mail.html}
+@uref{https://www.R-project.org/mail.html}
 @end quotation
 
 for details.
@@ -75,11 +75,11 @@ for details.
 The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
 sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
-binaries, with the master site at @uref{http://CRAN.R-project.org/} and
+binaries, with the master site at @uref{https://CRAN.R-project.org/} and
 information on daily mirrors available from
 
 @quotation
-@uref{http://CRAN.R-project.org/mirrors.html}
+@uref{https://CRAN.R-project.org/mirrors.html}
 @end quotation
 
 @node Bug-tracking system,  , Archives, Top
@@ -89,7 +89,7 @@ R has a bug-tracking system (or perhaps a bug-filing system is a more
 precise description) available on the net at
 
 @quotation
-@uref{http://bugs.R-project.org/}
+@uref{https://bugs.R-project.org/}
 @end quotation
 
 @bye

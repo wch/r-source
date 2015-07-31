@@ -2,7 +2,7 @@ The version of Rd.sty in R_HOME/share/texmf uses url.sty.  This is
 normally installed, and can be obtained from any CTAN node or mirror:
 see
 
-	http://www.tug.org/ctan.html
+	https://www.tug.org/ctan.html
 
 It also uses the standard package bm, which is part of the standard
 tools bundle and should be part of any reasonably recent LaTeX
