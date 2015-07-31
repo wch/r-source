@@ -31,7 +31,8 @@ capture.output(\dots, file = NULL, append = FALSE,
 
   Messages sent to \code{\link{stderr}()} (including those from
   \code{\link{message}}, \code{\link{warning}} and \code{\link{stop}})
-  are captured by \code{type = "message"}.
+  are captured by \code{type = "message"}.  Note that this can be
+  \dQuote{unsafe} and should only be used with care.
 }
 \value{
   A character string (if \code{file = NULL}), or invisible \code{NULL}.
