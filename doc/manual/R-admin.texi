@@ -80,7 +80,7 @@ This is a guide to installation and administration for R.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
-members are listed at @uref{http://CRAN.R-project.org/@/mirrors.html}.
+members are listed at @uref{https://CRAN.R-project.org/@/mirrors.html}.
 
 @menu
 * Getting and unpacking the sources::  
@@ -202,7 +202,7 @@ appropriate sources for the recommended packages, run
 If downloading manually from @acronym{CRAN}, do ensure that you have the
 correct versions of the recommended packages: if the number in the file
 @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
-the contents of @samp{http://CRAN.R-project.org/src/contrib/@var{dir}},
+the contents of @samp{https://CRAN.R-project.org/src/contrib/@var{dir}},
 where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for
 r-devel or @file{@var{x}.@var{y}-patched/Recommended} for r-patched,
 respectively, to directory @file{src/library/Recommended} in the sources
@@ -214,7 +214,7 @@ might be (for the correct value of @file{@var{dir}})
 
 @example
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
-  http://CRAN.R-project.org/src/contrib/@var{dir}
+  https://CRAN.R-project.org/src/contrib/@var{dir}
 ./tools/link-recommended
 @end example
 
@@ -384,7 +384,7 @@ source directory has previously been used for a build.)
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/manual/R-FAQ.html}, or
-@uref{http://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html} which always
+@uref{https://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html} which always
 has the version for the latest release of @R{}).
 
 Note: if you already have @R{} installed, check that where you installed
@@ -496,7 +496,7 @@ monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
 @pkg{inconsolata}@footnote{Instructions on how to install the latest
 version are at
-@uref{http://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
+@uref{https://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
 @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
@@ -509,14 +509,14 @@ This needs @LaTeX{} packages @pkg{times}, @pkg{helvetic} and (if used)
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
-@uref{http://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/lm/} and
+@uref{https://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/lm/} and
 mirrors.  This uses fonts rather similar to Computer Modern, but is not
 so good on-screen as @code{times}.
 
 @item cm-super
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
-@uref{http://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/cm-super/}
+@uref{https://www.ctan.org/@/tex-archive/@/fonts/@/ps-type1/@/cm-super/}
 and its mirrors.  These type-1 fonts have poor hinting and so are
 nowhere near as readable on-screen as the other three options.
 
@@ -1054,7 +1054,7 @@ Note that you will be asked to choose a language for installation, and
 that choice applies to both installation and un-installation but not to
 running @R{} itself.
 
-See the @uref{http://CRAN.R-project.org/@/bin/@/windows/@/base/@/rw-FAQ.html, R
+See the @uref{https://CRAN.R-project.org/@/bin/@/windows/@/base/@/rw-FAQ.html, R
 Windows @acronym{FAQ}} for more details on the binary installer.
 
 @menu
@@ -1087,8 +1087,8 @@ is set using macro @code{EXT_LIBS} with default setting
 setting @code{EXT_LIBS} to a different path in
 @file{src/gnuwin32/MkRules.local}. A suitable collection of files can
 also be obtained from 
-@uref{http://CRAN.R-project.org/@/bin/@/windows/@/extsoft} or
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/extsoft} or
+@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.
 
 @menu
 * Getting the tools::           
@@ -1110,7 +1110,7 @@ also be obtained from
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
-@uref{http://CRAN.R-project.org/bin/@/windows/@/Rtools/}) for details.
+@uref{https://CRAN.R-project.org/bin/@/windows/@/Rtools/}) for details.
 
 The @file{Rtools*.exe} executable installer described in @ref{The
 Windows toolset} also includes some source files in addition to the @R{}
@@ -1169,7 +1169,7 @@ make rsync-recommended
 The binary distributions of external software.  Download
 
 @example
-http://www.stats.ox.ac.uk/pub/Rtools/goodies/multilib/local320.zip
+https://www.stats.ox.ac.uk/pub/Rtools/goodies/multilib/local320.zip
 @end example
 
 @noindent
@@ -1208,7 +1208,7 @@ build you will also need
 @item
 The Tcl/Tk support files are contained in @file{Rtools31.exe} and
 available as @file{.zip} files from
-@uref{http://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
+@uref{https://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
 version.  They should be installed to @file{@var{R_HOME}}, creating
 directory @file{Tcl} there.
@@ -1280,7 +1280,7 @@ first used.  It is not built by default, and needs to be built (after
 
 To enable the building of these devices you need to install the static
 cairographics libraries built by Simon Urbanek at
-@uref{http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz}.  Set
+@uref{https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz}.  Set
 the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
 tarball unpacks with a top-level directory @file{src/}:
 @samp{CAIRO_HOME} needs to include that directory in its path.)
@@ -1303,7 +1303,7 @@ ICU_PATH = /path/to/ICU
 @noindent
 The first should be uncommented and the second set to the top-level
 directory of a suitably packaged binary build of ICU, for example that
-at @url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
+at @url{https://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
 Depending on the build, it may be necessary to edit the macro
 @code{ICU_LIBS}.
 
@@ -1319,7 +1319,7 @@ collation, or set the environment variable @env{R_ICU_LOCALE}.
 @code{download.file} and @code{url}.
 
 A suitable distribution can be found @emph{via}
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html} and its unpacked
+@uref{https://www.stats.ox.ac.uk/pub/Rtools/libs.html} and its unpacked
 location should be specified in file @file{MkRules.local}.
 
 For secure use of e.g.@: @samp{https://} URLs Windows users may need to
@@ -1399,10 +1399,10 @@ manuals will not be built.  The comments in file @file{MkRules.dist}
 describe settings to build them.  (Copy that file to
 @file{MkRules.local} and edit it.)  The @pkg{texinfo} 5.x package for
 use on Windows is available at
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
+@uref{https://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
 install @command{Perl}@footnote{Suitable distributions include
 Strawberry Perl, @uref{http://strawberryperl.com/} and ActivePerl,
-@uref{http://www.activestate.com/activeperl}.}
+@uref{https://www.activestate.com/activeperl}.}
 
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
@@ -1514,9 +1514,8 @@ installs, and is not recommended for casual use.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
 3.5} (or perhaps later, untested) available from
-@uref{http://wix.sourceforge.net/} or @uref{http://wixtoolset.org/}.
-Once WiX is installed, set the path to its home directory in
-@file{MkRules.local}.
+@uref{http://wixtoolset.org/}.  Once WiX is installed, set the path to
+its home directory in @file{MkRules.local}.
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.
@@ -1660,7 +1659,7 @@ There is a GUI console normally installed with the @R{} icon in
 Launchpad or Finder).  This is usually referred to as @Rapp{} to
 distinguish it from command-line @R{}: its user manual is currently part
 of the OS X FAQ at
-@uref{http://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
+@uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
 can be viewed from  @Rapp{}'s `Help' menu.
 
 
@@ -2029,7 +2028,7 @@ containing either or both architectures (32- and 64-bit).
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.2/@/@@ReadMe}.
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.2/@/@@ReadMe}.
 Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution of Gtk2 from
@@ -2325,9 +2324,9 @@ Utilities such as @code{install.packages} can be pointed at any
 own.  The `base' of a repository is a URL such as
 @uref{http://www.omegahat.org/R/}: this must be an URL scheme that
 @code{download.packages} supports (which also includes @samp{ftp://} and
-@samp{file://}, but not on most systems @samp{https://}).  Under that
-base URL there should be directory trees for one or more of the
-following types of package distributions:
+@samp{file://} and on most systems @samp{https://}).  Under that base
+URL there should be directory trees for one or more of the following
+types of package distributions:
 
 @itemize
 @item 
@@ -2493,12 +2492,12 @@ locale needs to specify
 @item
 A human language.  These are generally specified by a lower-case
 two-character abbreviation following ISO 639 (see e.g.@:
-@uref{http://en.wikipedia.org/@/wiki/@/ISO_639-1}).
+@uref{https://en.wikipedia.org/@/wiki/@/ISO_639-1}).
 
 @item
 A `territory', used mainly to specify the currency. These are generally
 specified by an upper-case two-character abbreviation following ISO 3166
-(see e.g.@: @uref{http://@/en.wikipedia.org/@/wiki/@/ISO_3166}).
+(see e.g.@: @uref{https://@/en.wikipedia.org/@/wiki/@/ISO_3166}).
 
 @item
 A charset encoding, which determines both how a byte stream should be
@@ -2547,7 +2546,7 @@ compatibility.
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
 information and lists can be found at
-@uref{http://msdn.microsoft.com/en-us/library/hzz3tw78(v=vs.80)}
+@uref{https://msdn.microsoft.com/en-us/library/hzz3tw78(v=vs.80)}
 (or if Microsoft moves it yet again, search for @samp{Windows language
 country strings}).
 
@@ -2562,7 +2561,7 @@ in most of the Chinese-speaking world.
 
 OS X supports locales in its own particular way, but the R GUI tries to
 make this easier for users. See
-@uref{http://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
+@uref{https://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
@@ -3022,7 +3021,7 @@ by default for @code{glibc}@footnote{However, it is possible to break
 the default behaviour of @code{glibc} by re-specifying the @code{gconv}
 modules to be loaded.} but not of most commercial Unixes.  However, you
 can make use of @acronym{GNU} @code{libiconv} (as used on OS X: see
-@uref{http://www.gnu.org/@/software/@/libiconv/}).
+@uref{https://www.gnu.org/@/software/@/libiconv/}).
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
@@ -3056,7 +3055,7 @@ performance.}) are required.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and OS
+@uref{https://github.com/libarchive/libarchive/}, as used by FreeBSD and OS
 X 10.6 and later) or @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
@@ -3150,7 +3149,7 @@ installed: Linux users will want the @code{urw-fonts} package.  On
 platforms which have it available, the @code{msttcorefonts}
 package@footnote{also known as @code{ttf-mscorefonts-installer} in the
 Debian/Ubuntu world: see also
-@uref{http://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.} provides
+@uref{https://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.} provides
 TrueType versions of Monotype fonts such as Arial and Times New Roman.
 Another useful set of fonts is the `liberation' TrueType fonts available
 at
@@ -3158,9 +3157,9 @@ at
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with Arial, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
-(@uref{http://en.wikipedia.org/@/wiki/@/Liberation_fonts}).  Then there
+(@uref{https://en.wikipedia.org/@/wiki/@/Liberation_fonts}).  Then there
 is the `Free UCS Outline Fonts' project
-(@uref{http://www.gnu.org/software/freefont/}) which are
+(@uref{https://www.gnu.org/software/freefont/}) which are
 OpenType/TrueType fonts based on the URW fonts but with extended Unicode
 coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 
@@ -3250,7 +3249,7 @@ environment variable @env{R_GSCMD} at that time.
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk >= 8.4 installed: the sources are
-available at @uref{http://@/www.tcl.tk/}.  To specify the locations of the
+available at @uref{https://@/www.tcl.tk/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
 @table @option
@@ -3529,7 +3528,7 @@ Once it is built and installed, it can be used by configuring @R{} with
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
-OpenBLAS (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant
+OpenBLAS (@uref{http://www.openblas.net/}) is a descendant
 project with support for some later CPUs (e.g.@: Intel Sandy Bridge).
 Once installed it can be used by something like
 
@@ -3990,7 +3989,7 @@ been seen).  On systems using the @acronym{GNU} linker (especially those
 using @R{} as a shared library), it is likely that including
 @samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile, and
 @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
-@uref{http://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
+@uref{https://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
 specific @acronym{CPU} family (e.g.@: @samp{-mtune=native} for
 @command{gcc}) can give worthwhile performance gains, especially on
 older architectures such as @cputype{ix86}.
@@ -4258,7 +4257,7 @@ been updated.
 
 It is likely that in future creating @code{configure} will need the GNU
 `autoconf archive' installed.  This can be found at
-@url{http://www.gnu.org/software/autoconf-archive/} and as a package
+@url{https://www.gnu.org/software/autoconf-archive/} and as a package
 (usually called @pkg{autoconf-archive}) in most packaged distributions,
 for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.
 
@@ -4617,7 +4616,7 @@ these).
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): see
-@uref{http://xquartz.macosforge.org/}.  (Note that XQuartz will likely
+@uref{https://xquartz.macosforge.org/}.  (Note that XQuartz will likely
 need to be re-installed after an OS upgrade.)
 
 To use the @code{quartz()} graphics device you need to configure with
@@ -4695,9 +4694,9 @@ as a 64-bit @code{time_t} is available but the system implementation of
 time zones does not work correctly for times before 1902 or after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
-(@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
+(@uref{https://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version is available at
-@uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
+@uref{https://www.tug.org/mactex/morepackages.html}: you will need to add
 some packages, e.g.@: for the 2015 version we needed to add
 @pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
 which brought this to about 410MB (or package @pkg{texinfo} and the
@@ -4806,7 +4805,7 @@ this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
 are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mavericks).
 It is better to install Tcl/Tk 8.6.x from the sources or a binary
-distribution from @uref{http://www.activestate.com/activetcl/downloads}.
+distribution from @uref{https://www.activestate.com/activetcl/downloads}.
 Configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
@@ -4967,7 +4966,7 @@ tools in @file{/usr/ucb}: POSIX-compliant versions of some tools can be
 found in @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from
-@uref{http://www.opencsw.org}, by default installed under
+@uref{https://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
 (sufficient for the default @option{--with-system-bzlib}) but
 @code{zlib} version 1.2.3 (too old for @option{--with-system-zlib}):
@@ -5320,7 +5319,7 @@ install the corresponding package from the ICU project
 binaries for various platforms which in case of AIX can be installed via
 unpacking the tarball to the root file system.  For full @LaTeX{}
 support one can install the @TeX{} Live DVD distribution
-(@uref{http://www.tug.org/@/texlive/}): it is recommended to update the
+(@uref{https://www.tug.org/@/texlive/}): it is recommended to update the
 distribution using the @code{tlmgr} update manager.  For 64-bit R builds
 supporting Tcl/Tk this needs to installed from the sources as available
 pre-compiled binaries supply only 32-bit shared objects.
@@ -5375,7 +5374,7 @@ environment, and to use @acronym{GNU} Make (e.g., via
 
 Further installation instructions to set up a proper R development
 environment can be found in the ``R on AIX'' project on R-Forge
-(@uref{http://R-Forge.R-project.org/@/projects/@/aix/}).
+(@uref{https://R-Forge.R-project.org/@/projects/@/aix/}).
 
 @node FreeBSD, Cygwin, AIX, Platform notes
 @section FreeBSD
@@ -5505,7 +5504,7 @@ have had a fair amount of practice at porting @R{} to new platforms
 
 If you want to build @R{} or add-on packages from source in Windows, you
 will need to collect, install and test an extensive set of tools.  See
-@uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/} for the current
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/Rtools/} for the current
 locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
@@ -5525,7 +5524,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer
 named@footnote{for @R{} 3.0.0 and later.}  @file{Rtools31.exe},
-available from @uref{http://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You
+available from @uref{https://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You
 should download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
@@ -5616,7 +5615,7 @@ The @file{Rtools*.exe} installer does @emph{not} include any version of
 @LaTeX{}.
 
 It is also possible to use the TeXLive distribution from
-@uref{http://www.tug.org/texlive/}.
+@uref{https://www.tug.org/texlive/}.
 
 @enindex R_RD4PDF
 Please read @ref{Making the manuals} about how to make @file{fullrefman.pdf}
@@ -5671,7 +5670,7 @@ of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
 @code{sort}, @code{tar}, @code{texindex}, @code{touch} and @code{uniq};
 we use those from the Cygwin distribution
-(@uref{http://www.cygwin.com/}) or compiled from the sources.  You will
+(@uref{https://www.cygwin.com/}) or compiled from the sources.  You will
 also need @code{zip} and @code{unzip} from the Info-ZIP project
 (@uref{http://www.info-zip.org/}).  All of these tools are in
 @file{Rtools*.exe}.
@@ -5719,7 +5718,7 @@ To select a 32-bit or 64-bit build of @R{}, set the options in
 Some external software libraries will need to be re-compiled under the
 new toolchain: especially those providing a C++ interface.  Many of
 those used by @acronym{CRAN} packages are available from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
+@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/multilib/}.  Users
 developing packages with @CRANpkg{Rcpp} need to ensure that they use a
 version built with exactly the same toolchain as their package: the
 recommendation is to build @CRANpkg{Rcpp} from its sources yourself.
@@ -5738,7 +5737,7 @@ binaries of @code{qpdf} are available from
 to the @code{qpdf} installation in file @file{MkRules.local}.
 
 Developers of packages will find some of the `goodies' at
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies} useful.  
+@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies} useful.  
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.  The

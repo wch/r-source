@@ -72,7 +72,7 @@ Copyright @copyright{} 1997, 1998 M.@: Maechler@*
 This is an introduction to R (``GNU S''), a language and environment for
 statistical computing and graphics.  R is similar to the
 award-winning@footnote{ACM Software Systems award, 1998:
-@uref{http://awards.acm.org/award_winners/chambers_6640862.cfm}.} S
+@uref{https://awards.acm.org/award_winners/chambers_6640862.cfm}.} S
 system, which was developed at Bell Laboratories by John Chambers et al.
 It provides a wide variety of statistical and graphical techniques
 (linear and nonlinear modelling, statistical tests, time series
@@ -228,7 +228,7 @@ built into the base @R{} environment, but many are supplied as
 @emph{packages}.  There are about 25 packages supplied with @R{} (called
 ``standard'' and ``recommended'' packages) and many more are available
 through the @acronym{CRAN} family of Internet sites (via
-@uref{http://CRAN.R-project.org}) and elsewhere.  More details on
+@uref{https://CRAN.R-project.org}) and elsewhere.  More details on
 packages are given later (@pxref{Packages}).
 
 Most classical statistics and much of the latest methodology is
@@ -6503,7 +6503,7 @@ statistical methods, others give access to data or hardware, and others
 are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
-(@uref{http://CRAN.R-project.org/} and its mirrors) and other
+(@uref{https://CRAN.R-project.org/} and its mirrors) and other
 repositories such as Bioconductor (@uref{http://www.bioconductor.org/})
 and Omegahat (@uref{http://www.omegahat.org/}).  The @emph{R FAQ}
 contains a list of CRAN packages current at the time of release, but the
@@ -6723,8 +6723,8 @@ available.  These generally achieve higher rates of compression
 decompression and much slower compression.
 
 There is some confusion between @command{xz} and @command{lzma}
-compression (see @uref{http://en.wikipedia.org/wiki/Xz} and
-@uref{http://en.wikipedia.org/wiki/LZMA}): @R{} can read files
+compression (see @uref{https://en.wikipedia.org/wiki/Xz} and
+@uref{https://en.wikipedia.org/wiki/LZMA}): @R{} can read files
 compressed by most versions of either.
 
 File archives are single files which contain a collection of files, the

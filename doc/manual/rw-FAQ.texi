@@ -77,7 +77,7 @@ This FAQ is for the Windows port of R: it describes features specific to
 that version.  The main R FAQ can be found at
 
 @display
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html}.
+@uref{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html}.
 @end display
 
 The information here applies only to recent versions of R for Windows,
@@ -125,7 +125,7 @@ The information here applies only to recent versions of R for Windows,
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
 @section Where can I find the latest version?
 
-Go to any CRAN site (see @uref{http://cran.r-project.org/@/mirrors.html}
+Go to any CRAN site (see @uref{https://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
 installer @samp{@RWVER@-win.exe} of about 60MB.
@@ -239,7 +239,7 @@ after having checked the command line.
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
 2, 3, 4 or 5.  See the help for Inno Setup
-(@uref{http://jrsoftware.org/@/ishelp.php}) for details.
+(@uref{https://jrsoftware.org/@/ishelp.php}) for details.
 
 We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation
@@ -1110,7 +1110,7 @@ packages for each minor (3.x.?) version will be stored in a separate area,
 so for R 3.1.? the files are in @file{bin/windows/contrib/3.1}.
 
 Note that the binary versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.1/@/ReadMe},
+@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.1/@/ReadMe},
 which also gives the locations of a few other binary packages.
 
 If there is no binary package or that is not up-to-date or you prefer
@@ -1208,7 +1208,7 @@ You can tell the version the package was compiled for by looking at the
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.1/@/ReadMe} for a
+@uref{https://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.1/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1232,7 +1232,7 @@ no guarantee that a 64-bit build will work: it depends on the layout it
 uses.)
 
 In the past several package authors have suggested using ActiveTcl
-(@uref{http://www.activestate.com/@/Products/@/activetcl/}) as a way to
+(@uref{https://www.activestate.com/@/Products/@/activetcl/}) as a way to
 get Tcl/Tk extensions (but the support files do contain the most
 commonly used @code{TkTable} and @code{BWidget} extensions).  This could
 be used by setting (for a default install)
@@ -1353,7 +1353,7 @@ been built and propagated to the CRAN mirror you are using.  This
 normally (but not always) happens within 24 hours.  Sometimes mirrors
 do get behind (especially unofficial ones), so you could try another
 mirror.  (Mirror statistics are linked near the top of the CRAN mirror
-page at @uref{http://cran.r-project.org/mirrors.html}.)
+page at @uref{https://cran.r-project.org/mirrors.html}.)
 
 The latest version of the package might require a later version of R
 than the one you are using.  You can check on the package's HTML page on
@@ -1683,7 +1683,7 @@ less successful when tried for the common current chips such as Intel's
 Core 2.
 
 Versions of Dr Kazushige Goto's BLAS (see
-@uref{http://en.wikipedia.org/wiki/Kazushige_Goto}) for 64-bit Windows
+@uref{https://en.wikipedia.org/wiki/Kazushige_Goto}) for 64-bit Windows
 by Ei-Ji Nakama can be found at
 @uref{http://prs.ism.ac.jp/~nakama/SurviveGotoBLAS2/binary/windows/x64/}.
 Just download the file @file{Rblas.dll} appropriate to your CPU and

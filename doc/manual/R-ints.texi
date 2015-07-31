@@ -1115,8 +1115,8 @@ functions are defined and also in file @file{size.c} which needs access
 to the sizes of the internal structures.)
 
 For background papers see
-@uref{http://www.stat.uiowa.edu/~luke/R/barrier.html} and
-@uref{http://www.stat.uiowa.edu/~luke/R/gengcnotes.html}.
+@uref{http://homepage.stat.uiowa.edu/~luke/R/barrier.html} and
+@uref{http://homepage.stat.uiowa.edu/~luke/R/gengcnotes.html}.
 
 @node Serialization Formats, Encodings for CHARSXPs, The write barrier, R Internal Structures
 @section Serialization Formats
@@ -1480,7 +1480,7 @@ only the visible methods will be cached.
 @subsection Mechanics of S4 dispatch
 
 This subsection does not discuss how S4 methods are chosen: see
-@uref{http://@/developer.@/r-project.org/howMethodsWork.pdf}.
+@uref{https://@/developer.@/r-project.org/howMethodsWork.pdf}.
 
 For all but primitive functions, setting a method on an existing
 function that is not itself S4 generic creates a new object in the
@@ -2443,7 +2443,7 @@ top-level @file{po} directory.
 @section OS X GUI
 
 This is handled separately: see
-@uref{http://developer.r-project.org/Translations30.html}.
+@uref{https://developer.r-project.org/Translations30.html}.
 
 
 @node Updating,  , OS X GUI, Internationalization in the R sources
@@ -2700,8 +2700,8 @@ that in S and whose @R{} code@footnote{The C code is in files
 @pkg{graphics}) and one implemented in package @pkg{grid}.
 
 Some notes on the historical changes can be found at
-@uref{http://www.stat.auckland.ac.nz/@/~paul/@/R/basegraph.html} and
-@uref{http://www.stat.auckland.ac.nz/@/~paul/R/@/graphicsChanges.html}.
+@uref{https://www.stat.auckland.ac.nz/@/~paul/@/R/basegraph.html} and
+@uref{https://www.stat.auckland.ac.nz/@/~paul/R/@/graphicsChanges.html}.
 
 At the lowest level is a graphics device, which manages a plotting
 surface (a screen window or a representation to be written to a file).
@@ -4454,7 +4454,7 @@ introduce `long' versions @code{xlength} and @code{XLENGTH} which return
 @code{R_xlen_t} values.
 
 
-See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
+See also @uref{http://homepage.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 
 @node Large matrices,  , 64-bit types, Current and future directions
 @section Large matrices
