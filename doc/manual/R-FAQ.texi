@@ -52,7 +52,7 @@ FORTRAN
 @end macro
 
 @macro CRANpkg {p}
-@url{http://CRAN.R-project.org/package=\p\, @strong{\p\}}
+@url{https://CRAN.R-project.org/package=\p\, @strong{\p\}}
 @end macro
 
 @titlepage
@@ -137,7 +137,7 @@ Copies of the @acronym{GNU} General Public License versions are
 available at
 
 @display
-@url{http://www.R-project.org/Licenses/}
+@url{https://www.R-project.org/Licenses/}
 @end display
 
 
@@ -147,20 +147,21 @@ available at
 The latest version of this document is always available from
 
 @display
-@url{http://CRAN.R-project.org/doc/FAQ/}
+@url{https://CRAN.R-project.org/doc/FAQ/}
 @end display
 
 From there, you can obtain versions converted to
-@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
+@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
 @acronym{ASCII} text},
-@c @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
-@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
-info}, @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
-@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
-@c @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript}
-as well as the @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
+@c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
+@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
+info}, @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
+@url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
+@c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript}
+as well as the @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
 Texinfo source} used for creating all these formats using the
-@url{http://texinfo.org/, @acronym{GNU} Texinfo system}.
+@c @url{http://texinfo.org/, @acronym{GNU} Texinfo system}. Defunct
+@acronym{GNU} Texinfo system.
 
 You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
 subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
@@ -178,7 +179,7 @@ In publications, please refer to this @acronym{FAQ} as Hornik
   author        = @{Kurt Hornik@},
   title         = @{@{R@} @{FAQ@}@},
   year          = @{@value{REL_YEAR}@},
-  url           = @{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
+  url           = @{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
 @}
 @end group
 @end example
@@ -199,9 +200,9 @@ most welcome.
 In particular, note that I do not have access to Windows or Mac
 systems.  Features specific to the Windows and OS X ports of R are
 described in the
-@url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
+@url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} and the
-@url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
+@url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}''}.  If you have information on Mac or Windows
 systems that you think should be added to this document, please let me
 know.
@@ -273,11 +274,11 @@ Thomas Lumley, Martin Maechler, Duncan Murdoch, Paul Murrell, Martyn
 Plummer, Brian Ripley, Deepayan Sarkar, Duncan Temple Lang, Luke
 Tierney, and Simon Urbanek.
 
-R has a home page at @url{http://www.R-project.org/}.  It is
-@url{http://www.gnu.org/philosophy/free-sw.html, free software}
+R has a home page at @url{https://www.R-project.org/}.  It is
+@url{https://www.gnu.org/philosophy/free-sw.html, free software}
 distributed under a @acronym{GNU}-style
-@url{http://www.gnu.org/copyleft/copyleft.html, copyleft}, and an
-official part of the @url{http://www.gnu.org/, @acronym{GNU}} project
+@url{https://www.gnu.org/copyleft/copyleft.html, copyleft}, and an
+official part of the @url{https://www.gnu.org/, @acronym{GNU}} project
 (``@acronym{GNU} S'').
 
 @node What machines does R run on?, What is the current version of R?, What is R?, R Basics
@@ -287,10 +288,10 @@ R is being developed for the Unix-like, Windows and Mac families of
 operating systems.  Support for Mac OS Classic ended with R 1.7.1.
 
 The current version of R will configure and build under a number of
-common Unix-like (e.g., @uref{http://en.wikipedia.org/wiki/Unix-like})
+common Unix-like (e.g., @uref{https://en.wikipedia.org/wiki/Unix-like})
 platforms including @var{cpu}-linux-gnu for the i386, amd64, alpha,
 arm/armel, hppa, ia64, m68k, mips/mipsel, powerpc, s390 and sparc 
-@acronym{CPU}s (e.g., @url{http://buildd.debian.org/build.php?&pkg=r-base}),
+@acronym{CPU}s (e.g., @url{https://buildd.debian.org/build.php?&pkg=r-base}),
 i386-hurd-gnu, @var{cpu}-kfreebsd-gnu for i386 and amd64, 
 powerpc-apple-darwin, mips-sgi-irix,
 @c <FIXME>
@@ -468,7 +469,7 @@ Guido Masarotto, and is now being developed and maintained by
 The same directory has links to snapshots of the r-patched and r-devel
 versions of R.
 
-See the @url{http://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
+See the @url{https://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
 ``R for Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Mac),  , How can R be installed (Windows), How can R be installed?
@@ -480,7 +481,7 @@ Once downloaded and executed, the installer will install the current
 release of R and an R.app OS X @acronym{GUI}.  This port of R for OS X
 is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 (and previously by Stefano Iacus).  The
-@url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
+@url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}} has more details.
 
 Snapshots of the r-patched and r-devel versions of R are available as
@@ -532,7 +533,7 @@ install r-base-dev} to obtain the additional tools required for this.
 So-called ``backports'' of the current R packages for at least the
 @dfn{stable} distribution of Debian are provided by Johannes Ranke, and
 available from @CRAN{}.  See
-@url{http://CRAN.R-project.org/bin/linux/debian/README.html} for details on R
+@url{https://CRAN.R-project.org/bin/linux/debian/README.html} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
 provided by Michael Rutter.
@@ -553,11 +554,11 @@ may be a delay of up to 2 weeks until the Fedora RPM becomes publicly
 available, as it must pass through the statutory Fedora review process.
 RPMs for a selection of R packages are also provided by Fedora.  The
 Extra Packages for Enterprise Linux (EPEL) project
-(@url{http://fedoraproject.org/wiki/EPEL}) provides ports of the Fedora
+(@url{https://fedoraproject.org/wiki/EPEL}) provides ports of the Fedora
 RPMs for RedHat Enterprise Linux and compatible distributions (e.g.,
 Centos, Scientific Linux, Oracle Linux).
 
-See @url{http://CRAN.R-project.org/bin/linux/suse/README.html} for
+See @url{https://CRAN.R-project.org/bin/linux/suse/README.html} for
 information about RPMs for openSUSE.
 
 No other binary distributions are currently publically available via
@@ -577,7 +578,7 @@ This documentation can also be made available as one reference manual
 for on-line reading in @HTML{} and PDF formats, and as hardcopy via
 @LaTeX{}, see @ref{How can R be installed?}.  An up-to-date @HTML{}
 version is always available for web browsing at
-@url{http://stat.ethz.ch/R-manual/}.
+@url{https://stat.ethz.ch/R-manual/}.
 
 Printed copies of the R reference manual for some version(s) are
 available from Network Theory Ltd, at
@@ -612,7 +613,7 @@ An annotated bibliography (Bib@TeX{} format) of R-related publications
 can be found at
 
 @display
-@url{http://www.R-project.org/doc/bib/R.bib}
+@url{https://www.R-project.org/doc/bib/R.bib}
 @end display
 
 Books on R by R Core Team members include
@@ -620,15 +621,15 @@ Books on R by R Core Team members include
 @quotation
 John M. Chambers (2008), ``Software for Data Analysis: Programming with
 R''.  Springer, New York, ISBN 978-0-387-75935-7,
-@url{http://statweb.stanford.edu/~jmc4/Rbook/}.
+@url{https://statweb.stanford.edu/~jmc4/Rbook/}.
 
 Peter Dalgaard (2008), ``Introductory Statistics with R'', 2nd edition.
 Springer, ISBN 978-0-387-79053-4,
-@url{http://www.biostat.ku.dk/~pd/ISwR.html}.
+@url{http://publicifsv.sund.ku.dk/~pd/ISwR.html}.
 
 Robert Gentleman (2008), ``R Programming for Bioinformatics''.  Chapman
 & Hall/CRC, Boca Raton, FL, ISBN 978-1-420-06367-7,
-@url{http://www.bioconductor.org/pub/RBioinf/}.
+@url{https://www.bioconductor.org/pub/RBioinf/}.
 
 Stefano M. Iacus (2008), ``Simulation and Inference for Stochastic
 Differential Equations: With R Examples''. Springer, New York, ISBN
@@ -643,11 +644,11 @@ Cambridge, ISBN 978-0521872652.
 
 P. Murrell (2005), ``R Graphics'', Chapman & Hall/CRC, ISBN:
 1-584-88486-X,
-@url{http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
+@url{https://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
 
 William N. Venables and Brian D. Ripley (2002), ``Modern Applied
 Statistics with S'' (4th edition).  Springer, ISBN 0-387-95457-0,
-@url{http://www.stats.ox.ac.uk/pub/MASS4/}.
+@url{https://www.stats.ox.ac.uk/pub/MASS4/}.
 
 Jose C. Pinheiro and Douglas M. Bates (2000), ``Mixed-Effects Models in
 S and S-Plus''. Springer, ISBN 0-387-98957-0.
@@ -673,7 +674,7 @@ To cite R in publications, use
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
   year         = @value{REL_YEAR},
-  url          = @{http://www.R-project.org@}
+  url          = @{https://www.R-project.org@}
 @}
 @end group
 @end example
@@ -709,7 +710,7 @@ This list is for questions and discussion about code development in R.
 @end table
 
 @noindent
-Please read the @url{http://www.R-project.org/posting-guide.html,
+Please read the @url{https://www.R-project.org/posting-guide.html,
 posting guide} @emph{before} sending anything to any mailing list.
 
 Note in particular that R-help is intended to be comprehensible to
@@ -720,7 +721,7 @@ involving C or C++) should go to R-devel.
 
 Convenient access to information on these lists, subscription, and
 archives is provided by the web interface at
-@url{http://stat.ethz.ch/mailman/listinfo/}.  One can also subscribe
+@url{https://stat.ethz.ch/mailman/listinfo/}.  One can also subscribe
 (or unsubscribe) via email, e.g.@: to R-help by sending @samp{subscribe}
 (or @samp{unsubscribe}) in the @emph{body} of the message (not in the
 subject!) to @email{R-help-request@@lists.R-project.org}.
@@ -743,7 +744,7 @@ code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
 
-See @url{http://www.R-project.org/mail.html} for more information on
+See @url{https://www.R-project.org/mail.html} for more information on
 the R mailing lists.
 
 The R Core Team can be reached at @email{R-core@@lists.R-project.org}
@@ -770,7 +771,7 @@ can be found at the @acronym{URL}
 @quotation
 @c @multitable @columnfractions .45 .30
 @c @item
-@url{http://CRAN.R-project.org/}
+@url{https://CRAN.R-project.org/}
 @c @tab (Austria)
 @c @end multitable
 @end quotation
@@ -809,7 +810,7 @@ Daily mirrors are available at @acronym{URL}s including
 @end quotation
 
 @noindent
-See @url{http://CRAN.R-project.org/mirrors.html} for a complete list of
+See @url{https://CRAN.R-project.org/mirrors.html} for a complete list of
 mirrors.  Please use the @CRAN{} site closest to you to reduce network
 load.
 
@@ -828,7 +829,7 @@ Please always use the @acronym{URL} of the master site when referring to
 @section Can I use R for commercial purposes?
 
 R is released under the
-@url{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html,,
+@url{https://www.gnu.org/licenses/old-licenses/gpl-2.0.html,,
 @acronym{GNU} General Public License (@acronym{GPL}), version 2}.  If
 you have any questions regarding the legality of using R in any
 particular situation you should bring it up with your legal counsel.  We
@@ -888,12 +889,12 @@ computing, provide a reference point for individuals, institutions or
 commercial enterprises that want to support or interact with the R
 development community, and to hold and administer the copyright of R
 software and documentation.  See
-@url{http://www.R-project.org/foundation/} for more information.
+@url{https://www.R-project.org/foundation/} for more information.
 
 @node What is R-Forge?,  , What is the R Foundation?, R Basics
 @section What is R-Forge?
 
-R-Forge (@url{http://R-Forge.R-project.org/}) offers a central platform
+R-Forge (@url{https://R-Forge.R-project.org/}) offers a central platform
 for the development of R packages, R-related software and further
 projects.  It is based on @url{https://en.wikipedia.org/wiki/GForge, GForge} offering
 easy access to the best in SVN, daily built and checked packages,
@@ -962,14 +963,14 @@ This is also called the ``@emph{White Book}'', and introduced S version
 @item
 John M. Chambers (1998), ``Programming with Data,'' New York: Springer,
 ISBN 0-387-98503-4
-(@url{http://statweb.stanford.edu/~jmc4/Sbook/}).
+(@url{https://statweb.stanford.edu/~jmc4/Sbook/}).
 
 This ``@emph{Green Book}'' describes version 4 of S, a major revision of
 S designed by John Chambers to improve its usefulness at every stage of
 the programming process.
 @end itemize
 
-See @url{http://statweb.stanford.edu/~jmc4/papers/96.7.ps}
+See @url{https://statweb.stanford.edu/~jmc4/papers/96.7.ps}
 for further information on the ``Evolution of the S Language''.
 
 There is a huge amount of user-contributed code for S, available at the
@@ -984,7 +985,7 @@ There is a huge amount of user-contributed code for S, available at the
 
 @SPLUS{} is a value-added version of S currently sold by
 @url{http://www.tibco.com/, TIBCO Software Inc} as `TIBCO Spotfire S+'.
-See @url{http://en.wikipedia.org/wiki/S-PLUS} for more information.
+See @url{https://en.wikipedia.org/wiki/S-PLUS} for more information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
 @section What are the differences between R and S?
@@ -1577,10 +1578,11 @@ formats and the executed code was presented to the user for revision.
 However, it is not clear if the project is still active.
 @c URL no longer seems to work ...
 @c See @url{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
-Currently, a modified version of @strong{Rcgi} by
-@email{mai@@ms.uky.edu, Mai Zhou} (actually, two versions: one with
-(bitmap) graphics and one without) as well as the original code are
-available from @url{http://www.ms.uky.edu/~statweb/}.
+@c This address is invalid
+@c Currently, a modified version of @strong{Rcgi} by
+@c @email{mai@@ms.uky.edu, Mai Zhou} (actually, two versions: one with
+@c (bitmap) graphics and one without) as well as the original code are
+@c available from @url{http://www.ms.uky.edu/~statweb/}.
 
 @c No longer works ...
 @c CGI-based web access to R is also provided at
@@ -1616,7 +1618,7 @@ the R interpreter inside Apache 2 (and beyond).  A tutorial and
 presentation are available from the project web page at
 @url{http://biostat.mc.vanderbilt.edu/@/twiki/@/bin/@/view/@/Main/@/RApacheProject}.
 
-@url{http://www.rforge.net/Rserve/, Rserve} is a project
+@url{https://www.rforge.net/Rserve/, Rserve} is a project
 actively developed by Simon Urbanek.  It implements a TCP/IP server which
 allows other programs to use facilities of R.  Clients are available from
 the web site for Java and C++ (and could be written for other languages
@@ -1638,7 +1640,7 @@ R-php} is actively developed by Alfredo Pontillo and Angelo Mineo and
 provides both a web interface to R and a set of pre-specified analyses
 that need no R code input.
 
-@url{http://www.bioconductor.org/, webbioc} is ``an integrated web
+@url{https://www.bioconductor.org/, webbioc} is ``an integrated web
 interface for doing microarray analysis using several of the
 Bioconductor packages'' and is designed to be installed at local sites
 as a shared computing resource.
@@ -1670,7 +1672,7 @@ with no programming or web designing background to quickly develop
 flexible and powerful online applications, websites, and psychometrics
 tests.  To maximize its reliability, security, and performance, Concerto
 relies on the popular and reliable open-source elements such as MySQL
-server (exchange and storage of the data), @uref{http://rstudio.org/,
+server (exchange and storage of the data), @uref{https://rstudio.org/,
 Rstudio} (R code designing and testing, file management), CKEditor
 (@HTML{} Layer design), and PHP.
 
@@ -1806,11 +1808,11 @@ Statistics with S'' by W. Venables and B. Ripley.
 Functions for survival analysis, including penalized likelihood.
 @end table
 @c </FIXME>
-See the @url{http://CRAN.R-project.org/web/packages/, , @CRAN{}
+See the @url{https://CRAN.R-project.org/web/packages/, , @CRAN{}
 contributed packages page} for more information.
 
 Many of these packages are categorized into
-@url{http://CRAN.R-project.org/web/views/, @CRAN{} Task Views}, allowing
+@url{https://CRAN.R-project.org/web/views/, @CRAN{} Task Views}, allowing
 to browse packages by topic and providing tools to automatically install
 all packages for special areas of interest.
 
@@ -1819,7 +1821,7 @@ require additional software, or are shipping third party libraries for
 Windows cannot be made available on @CRAN{} in form of a Windows binary
 packages.  Nevertheless, some of these packages are available at the
 ``@CRAN{} extras'' repository at
-@url{http://www.stats.ox.ac.uk/pub/RWin/} kindly provided by Brian
+@url{https://www.stats.ox.ac.uk/pub/RWin/} kindly provided by Brian
 D. Ripley.  Note that this repository is a default repository for recent
 versions of R for Windows.
 
@@ -1837,17 +1839,17 @@ available from the Omega project.
 @node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
 @subsection Add-on packages from Bioconductor
 
-@url{http://www.bioconductor.org/, Bioconductor} is an open source and
+@url{https://www.bioconductor.org/, Bioconductor} is an open source and
 open development software project for the analysis and comprehension of
 genomic data.  Most Bioconductor components are distributed as R add-on
 packages.  Initially most of the
-@url{http://www.bioconductor.org/packages/bioc/, Bioconductor software
+@url{https://www.bioconductor.org/packages/bioc/, Bioconductor software
 packages} focused primarily on DNA microarray data analysis.  As the
 project has matured, the functional scope of the software packages
 broadened to include the analysis of all types of genomic data, such as
 SAGE, sequence, or SNP data.  In addition, there are metadata
 (annotation, CDF and probe) and experiment data packages.  See
-@url{http://www.bioconductor.org/download/} for available packages and a
+@url{https://www.bioconductor.org/download/} for available packages and a
 complete taxonomy via BioC Views.
 
 @node Other add-on packages,  , Add-on packages from Bioconductor, Which add-on packages exist for R?
@@ -1856,7 +1858,7 @@ complete taxonomy via BioC Views.
 Many more packages are available from places other than the three
 default repositories discussed above (@CRAN{}, Bioconductor and
 Omegahat).  In particular, R-Forge provides a @CRAN{} style repository
-at @url{http://R-Forge.R-project.org/}.
+at @url{https://R-Forge.R-project.org/}.
 
 More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
@@ -2057,7 +2059,7 @@ in.  Also, the developers do not have access to all possible machines
 capable of running R.  So, simply using it and communicating problems is
 certainly of great value.
 
-The @url{http://developer.R-project.org/, R Developer Page} acts as an
+The @url{https://developer.R-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
 various other writeups, ideas lists, and SVN miscellanea.
@@ -3281,7 +3283,7 @@ In most cases, typing the name of the function will print its source
 code. However, code is sometimes hidden in a namespace, or compiled.  For 
 a complete overview on how to access source code, see Uwe Ligges (2006),
 ``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
-43--45 (@url{http://CRAN.R-project.org/doc/Rnews/Rnews_2006-4.pdf}).
+43--45 (@url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-4.pdf}).
 
 @node Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?, Why is R apparently not releasing memory?, How do I access the source code for a function?, R Miscellanea
 @section Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?
@@ -3374,7 +3376,7 @@ small objects such as strings or pairlists will be affected by this
 behavior, whereas large objects such as long vectors will be allocated
 using @code{mmap} and thus not affected.  On Linux (and possibly other
 Unix-like systems) it is possible to use the @code{mallinfo} system call
-(also see the @url{http://rforge.net/mallinfo, mallinfo} package) to
+(also see the @url{https://rforge.net/mallinfo, mallinfo} package) to
 query the allocator about the layout of the allocations, including the
 actually used memory as well as unused memory that cannot be released.
 
@@ -3600,7 +3602,7 @@ that might be expected to produce the bug but actually do not.  If you
 want to debug the problem and find exactly what caused it, that is
 wonderful.  You should still report the facts as well as any
 explanations or solutions.  Please include an example that reproduces
-(e.g., @url{http://en.wikipedia.org/wiki/Reproducibility}) the problem,
+(e.g., @url{https://en.wikipedia.org/wiki/Reproducibility}) the problem,
 preferably the simplest one you have found.
 
 Invoking R with the @option{--vanilla} option may help in isolating a
@@ -3610,7 +3612,7 @@ read.
 Before you actually submit a bug report, you should check whether the
 bug has already been reported and/or fixed.  First, try the ``Show open
 bugs new-to-old'' or the search facility on
-@url{http://bugs.R-project.org/}.  Second, consult
+@url{https://bugs.R-project.org/}.  Second, consult
 @url{https://svn.R-project.org/@/R/@/trunk/@/doc/@/NEWS.Rd}, which
 records changes that will appear in the @emph{next} release of R,
 including bug fixes that do not appear on the Bug Tracker.  
@@ -3640,7 +3642,7 @@ Comments on and suggestions for the Windows port of R should be sent to
 Corrections to and comments on message translations should be sent to the
 last translator (listed at the top of the appropriate @samp{.po} file)
 or to the translation team as listed at
-@url{http://developer.R-project.org/TranslationTeams.html}.
+@url{https://developer.R-project.org/TranslationTeams.html}.
 
 @node Acknowledgments,  , R Bugs, Top
 @chapter Acknowledgments
