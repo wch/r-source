@@ -26,6 +26,10 @@
 
       \item \code{chooseCRANmirror()} now offers HTTPS mirrors in
       preference to HTTP mirrors.
+
+      \item \code{capture.output()} gets optional arguments \code{type}
+      and \code{split} to pass to \code{sink()}, and hence can be used
+      capture messages.
     }
   }
 

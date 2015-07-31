@@ -1,7 +1,7 @@
 #  File src/library/utils/R/capture.output.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,10 +16,11 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-capture.output <- function(..., file=NULL, append=FALSE)
+capture.output <- function(..., file=NULL, append=FALSE,
+                           type = c("output", "message"), split = FALSE)
 {
     args <- substitute(list(...))[-1L]
-
+    type <- match.arg(type)
     rval <- NULL; closeit <- TRUE
     if (is.null(file))
         file <- textConnection("rval", "w", local = TRUE)
@@ -31,9 +32,9 @@ capture.output <- function(..., file=NULL, append=FALSE)
     } else
         stop("'file' must be NULL, a character string or a connection")
 
-    sink(file)
+    sink(file, type=type, split=split)
     ## for error recovery: all output will be lost if file=NULL
-    on.exit({sink(); if(closeit) close(file)})
+    on.exit({sink(type=type, split=split); if(closeit) close(file)})
 
     pf <- parent.frame()
     evalVis <- function(expr)
@@ -50,7 +51,7 @@ capture.output <- function(..., file=NULL, append=FALSE)
     }
     ## we need to close the text connection before returning 'rval'
     on.exit()
-    sink()
+    sink(type=type, split=split)
     if(closeit) close(file)
     if(is.null(rval)) invisible(NULL) else rval
 }
