@@ -118,11 +118,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(pkg %in% agreed) return()
             } else agreed <- character()
             if(!interactive())
-                stop(gettextf("package %s has a license that you need to accept in an interactive session", sQuote(pkg)), domain = NA)
+                stop(gettextf(
+                    "package %s has a license that you need to accept in an interactive session",
+                              sQuote(pkg)), domain = NA)
             lfiles <- file.path(pkgpath, c("LICENSE", "LICENCE"))
             lfiles <- lfiles[file.exists(lfiles)]
             if(length(lfiles)) {
-                message(gettextf("package %s has a license that you need to accept after viewing", sQuote(pkg)), domain = NA)
+                message(gettextf(
+                    "package %s has a license that you need to accept after viewing",
+                                 sQuote(pkg)), domain = NA)
                 readline("press RETURN to view license")
                 encoding <- pkgInfo$DESCRIPTION["Encoding"]
                 if(is.na(encoding)) encoding <- ""
@@ -130,8 +134,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(encoding == "latin1") encoding <- "cp1252"
                 file.show(lfiles[1L], encoding = encoding)
             } else {
-                message(gettextf("package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg)), domain = NA)
-                message(pkgInfo$DESCRIPTION["License"], domain = NA)
+                message(gettextf(paste("package %s has a license that you need to accept:",
+				       "according to the DESCRIPTION file it is",
+				       "%s", sep="\n"),
+				 sQuote(pkg),
+				 pkgInfo$DESCRIPTION["License"]), domain = NA)
             }
             choice <- utils::menu(c("accept", "decline"),
                                   title = paste("License for", sQuote(pkg)))
@@ -243,7 +250,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## The methods package caches all other pkgs when it is
             ## attached.
 
-            pkgpath <- find.package(package, lib.loc, quiet = TRUE,
+            ## Too extreme (unfortunately; warning too often):
+	    ## pkgpath <- find.package(package, lib.loc, quiet = TRUE, verbose = !quietly)
+	    ##   'verbose' here means to warn about packages found more than once
+	    pkgpath <- find.package(package, lib.loc, quiet = TRUE, 
                                     verbose = verbose)
             if(length(pkgpath) == 0L) {
                 txt <- if(length(lib.loc))
@@ -679,14 +689,10 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                       "splines", "stats4", "tcltk"))
         return(file.path(.Library, package))
 
-    use_loaded <- FALSE
     if(is.null(package)) package <- .packages()
-    if(is.null(lib.loc)) {
-        use_loaded <- TRUE
-        lib.loc <- .libPaths()
-    }
-
     if(!length(package)) return(character())
+    if(use_loaded <- is.null(lib.loc))
+	lib.loc <- .libPaths()
 
     bad <- character()
     out <- character()
@@ -742,7 +748,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         if(length(paths) > 1L) {
             ## If a package was found more than once ...
             paths <- paths[1L]
-            if(verbose)
+	    if(verbose)
                 warning(gettextf("package %s found more than once,\nusing the one found in %s",
                                  sQuote(pkg), sQuote(paths)), domain = NA)
         }
