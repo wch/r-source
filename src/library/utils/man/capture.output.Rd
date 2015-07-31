@@ -22,7 +22,7 @@ capture.output(\dots, file = NULL, append = FALSE,
     it will be opened initially and closed on exit.}
   \item{append}{logical.  If \code{file} a file name or unopened
     connection, append or overwrite?}
-  \item{type, split}{are passed to \code{\link{sink}(), see there.}
+  \item{type, split}{are passed to \code{\link{sink}()}, see there.}
 }
 \details{
   An attempt is made to write output as far as possible to \code{file}
