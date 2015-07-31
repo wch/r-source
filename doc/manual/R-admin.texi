@@ -163,7 +163,7 @@ built in exactly the same way as distributions of R releases.
 
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
-@uref{http://subversion.apache.org/}), you can check out and update the
+@uref{https://subversion.apache.org/}), you can check out and update the
 current @samp{r-devel} from
 @uref{https://svn.r-project.org/@/R/@/trunk/} and the current
 @samp{r-patched} from
@@ -227,11 +227,10 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @R{} will configure and build under most common Unix and Unix-alike
 platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @cputype{alpha}, @cputype{arm}, @cputype{hppa}, @cputype{ix86},
-@cputype{ia64}, @cputype{m68k}, @cputype{mips}, @cputype{mipsel},
-@cputype{powerpc}, @cputype{s390}, @cputype{sparc}, and @cputype{x86_64}
-@acronym{CPU}s,
-@c (see e.g.@:  @uref{http://buildd.debian.org/build.php?&pkg=r-base}),
-@c Actually, see http://packages.debian.org/unstable/math/r-base-core as
+@cputype{m68k}, @cputype{mips}, @cputype{mipsel}, @cputype{powerpc},
+@cputype{s390}, @cputype{sparc}, and @cputype{x86_64} @acronym{CPU}s,
+@c (see e.g.@:  @uref{https://buildd.debian.org/build.php?&pkg=r-base}),
+@c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd, ix86 <=> i386.
 @samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris} and
@@ -741,7 +740,7 @@ temporary directory in order to move the installed tree to its final
 destination.  In this case @code{prefix} (and so on) should reflect the
 @enindex DESTDIR
 final destination, and @env{DESTDIR} should be used: see
-@uref{http://www.gnu.org/@/prep/@/standards/@/html_node/@/DESTDIR.html}.
+@uref{https://www.gnu.org/@/prep/@/standards/@/html_node/@/DESTDIR.html}.
 
 You can optionally install the run-time tests that are part of
 @command{make check-all} by
@@ -2665,7 +2664,7 @@ If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, `English'@footnote{with
 Americanisms.} is used.
 
-See @uref{http://developer.r-project.org/@/Translations30.html} for how to
+See @uref{https://developer.r-project.org/@/Translations30.html} for how to
 prepare and install translation catalogues.
 
 @node Choosing between 32- and 64-bit builds, The standalone Rmath library, Internationalization, Top
@@ -4250,7 +4249,7 @@ The ultimate sources for package @pkg{compiler} are in its @file{noweb}
 directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
 @command{notangle} is required.  This is likely to need to be installed
-from the sources at @url{http://www.cs.tufts.edu/~nr/noweb/} (and can
+from the sources at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can
 also be found on CTAN).  The package sources are only re-created even in
 maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
 been updated.
@@ -4562,10 +4561,7 @@ Others have reported success with versions 10.x and 11.x.
 @subsection Oracle Solaris Studio compilers
 
 Brian Ripley tested the Sun Studio 12 compilers, since renamed to Oracle
-Solaris Studio,
-(@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) 
-On
-@cputype{x86_64} Linux with
+Solaris Studio.  On @cputype{x86_64} Linux with
 
 @example
 CC=suncc

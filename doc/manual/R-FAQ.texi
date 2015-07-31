@@ -1525,7 +1525,7 @@ For a very long time, there was no such thing.
 currently beta testing a commercially supported version of R named R+
 (read R plus).
 
-@url{http://www.revolution-computing.com/, REvolution Computing} has
+@url{http://www.revolution-computing.com/, Revolution Analytics} has
 released
 @url{http://www.revolution-computing.com/products/revolution-r.php,
 REvolution R}, an enterprise-class statistical analysis system based on
