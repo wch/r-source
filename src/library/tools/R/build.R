@@ -664,16 +664,18 @@ get_exclude_patterns <- function()
     resave_data_others <- function(pkgname, resave_data)
     {
         if (resave_data == "no") return()
-        ddir <- file.path(pkgname, "data")
+        ddir <- normalizePath(file.path(pkgname, "data"))
         dataFiles <- grep("\\.(rda|RData)$",
                           list_files_with_type(ddir, "data"),
                           invert = TRUE, value = TRUE)
         if (!length(dataFiles)) return()
+        resaved <- character()
+        on.exit(unlink(resaved))
         Rs <- grep("\\.[Rr]$", dataFiles, value = TRUE)
         if (length(Rs)) { # these might use .txt etc
             messageLog(Log, "re-saving .R files as .rda")
             ## ensure utils is visible
-            library("utils")
+            ##   library("utils")
             lapply(Rs, function(x){
                 envir <- new.env(hash = TRUE)
                 sys.source(x, chdir = TRUE, envir = envir)
@@ -681,7 +683,7 @@ get_exclude_patterns <- function()
                      file = sub("\\.[Rr]$", ".rda", x),
                      compress = TRUE, compression_level = 9,
                      envir = envir)
-                unlink(x)
+                resaved <<- c(resaved, x)
             })
             printLog(Log,
                      "  NB: *.R converted to .rda: other files may need to be removed\n")
@@ -696,7 +698,7 @@ get_exclude_patterns <- function()
                     con <- gzfile(paste(nm, "gz", sep = "."), "wb")
                     writeLines(x, con)
                     close(con)
-                    unlink(nm)
+                    resaved <<- c(resaved, nm)
                 })
             } else {
                 OK <- TRUE
@@ -709,7 +711,7 @@ get_exclude_patterns <- function()
                     sizes <- file.size(nm3) * c(0.9, 1, 1)
                     ind <- which.min(sizes)
                     if(ind > 1) OK <<- FALSE
-                    unlink(c(nm, nm3[-ind]))
+                    resaved <<- c(resaved, nm, nm3[-ind])
                 })
                 if (!OK) fixup_R_dep(pkgname, "2.10")
             }
