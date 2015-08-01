@@ -131,8 +131,9 @@ getOption(x, default = NULL)
 
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
-      \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.
-      There is no default for this option, when \code{method = "auto"}
+      \code{"internal"}, \code{"wininet"} (Windows only),
+      \code{"libcurl"}, \code{"wget"} and \code{"curl"} are available.
+      If not set, \code{method = "auto"}
       is chosen: see \code{\link{download.file}}.}
 
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
@@ -320,6 +321,9 @@ getOption(x, default = NULL)
       rendering text help (see \code{\link{Rd2txt}} in package
       \pkg{tools}).  Can be \code{TRUE}, \code{FALSE}, \code{"TeX"} or
       \code{"UTF-8"}.}
+      
+    \item{\code{useHTTPS}:}{logical.  Used by \code{\link{chooseCRANmirror}}:
+      are secure mirrors preferred?  If not set, \code{TRUE} is used.}
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
