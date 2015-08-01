@@ -110,19 +110,21 @@ function(dir,
     ## Build a package db from the source packages in the working
     ## directory.
     write_PACKAGES(dir, type = "source")
-
+    if(dir.exists(depdir <- file.path(dir, "Depends"))) {
+        write_PACKAGES(depdir, type = "source")
+        curl <- c(curl, paste0(curl, "/Depends"))
+    }
     ## Determine packages available locally (for checking) and in the
     ## repositories, and merge the information giving preference to the
     ## former.
-    curls <- utils::contrib.url(getOption("repos"), type = "source")
     localones <- utils::available.packages(contriburl = curl,
                                            type = "source")
+    curls <- utils::contrib.url(getOption("repos"), type = "source")
     available <- utils::available.packages(contriburl = curls,
                                            type = "source")
-    pos <- match(localones[, "Package"], available[, "Package"])
-    if(length(pos <- pos[!is.na(pos)]))
-        available <- available[-pos, , drop = FALSE]
     available <- rbind(localones, available)
+    available <-
+        available[!duplicated(available[, "Package"]), , drop = FALSE]
     curls <- c(curl, curls)
 
     ## As of c52164, packages with OS_type different from the current
