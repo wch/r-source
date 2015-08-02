@@ -52,7 +52,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
                 break
             }
         }
-        ob <- objects(db.pos, all.names = TRUE)
+        ob <- names(as.environment(db.pos))
         if(.isMethodsDispatchOn()) { ## {see note in library() about this}
             these <- ob[substr(ob, 1L, 6L) == ".__T__"]
             gen  <- gsub(".__T__(.*):([^:]+)", "\\1", these)
@@ -62,7 +62,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
         }
         ipos <- seq_along(sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0L))]
         for (i in ipos) {
-            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0L)
+            obj.same <- match(names(as.environment(i)), ob, nomatch = 0L)
             if (any(obj.same > 0L)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
