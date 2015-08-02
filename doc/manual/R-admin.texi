@@ -4452,7 +4452,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 18 we used
+on @cputype{x86_64} with Fedora 21 we used
 
 @example
 CC="gcc -m32"
@@ -4821,8 +4821,7 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @node Java (OS X), Frameworks, Tcl/Tk headers and libraries, OS X
 @subsection Java
 
-The situation with Java support on OS X is messy, with Apple essentially
-no longer supporting Java.
+The situation with Java support on OS X is messy.
 
 OS X no longer comes with an installed JRE, and an OS X upgrade removes
 one if already installed: it is intended to be installed at first use.
@@ -4832,8 +4831,7 @@ you to install it.
 
 You may want/need to install the latest Java from Oracle (currently Java
 8 from
-@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
-this is for Lion and later.
+@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @code{Java For OS X 2014-001} from
@@ -4862,19 +4860,20 @@ JAVA_LD_LIBRARY_PATH=
 JAVA_LIBS="-framework JavaVM"
 @end example
 @noindent
-The Apple developer versions of the JDK install somewhere like
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
-@end example
-@noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 in @file{config.site}.
+@noindent
+The Apple developer versions of the JDK installed somewhere like
+@example
+JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
+@end example
+
 
 Note that it is necessary to set the environment variable @env{NOAWT}
 to @code{1} to install many of the Java-using packages.
@@ -5113,7 +5112,7 @@ is needed for both compiling and linking is best specified as part of
 the compiler.  The examples above use @samp{stlport4}, currently the
 most modern of the options: the default (but still needed to be
 specified as it is needed for linking) is @samp{Cstd}: see
-@uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
+@uref{http://www.oracle.com/technetwork/server-storage/solaris/cmp-stlport-libcstd-142559.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the option @option{-library=stlport4,Crun}
@@ -5132,7 +5131,7 @@ CXXFLAGS="-features=tmplrefstatic"
 
 The performance library @code{sunperf} is available for use with the
 Solaris Studio compilers.  If selected as a @acronym{BLAS}, it must also
-be selected as LAPACK @emph{via} (for Solaris Studio 12.2)
+be selected as LAPACK @emph{via} (for Solaris Studio 12.2 and later)
 
 @example
 ./configure --with-blas='-library=sunperf' --with-lapack
@@ -5267,7 +5266,7 @@ The AIX native @code{iconv} does not support encodings @samp{latin1} nor
 @samp{""} and so cannot be used.  (As far as we know @acronym{GNU}
 @code{libiconv} could be installed.)
 
-Fan Long reports success on AIX 5.3 using
+Fan Long reported success on AIX 5.3 using
 @c https://stat.ethz.ch/pipermail/r-devel/2008-August/050318.html
 
 @example
@@ -5376,7 +5375,10 @@ environment can be found in the ``R on AIX'' project on R-Forge
 @section FreeBSD
 @cindex FreeBSD
 
-There have been no reports for @R{} 3.0.0 or later.
+@c PR16410
+There have been no reports for @R{} 3.0.0 or later, except for an
+configuration failure of @R{} 3.2.0 on FreeBSD 10 (addressed in @R{}
+3.2.2).
 
 @node Cygwin, New platforms, FreeBSD, Platform notes
 @section Cygwin
