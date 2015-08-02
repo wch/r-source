@@ -220,7 +220,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                                        sQuote(package)),
                                               domain = NA)
                     }
-		    msg <- .maskedMsg(same, pkg = sQuote(sp[i]), by = i < lib.pos)
+		    msg <- .maskedMsg(sort(same), pkg = sQuote(sp[i]),
+                                      by = i < lib.pos)
 		    packageStartupMessage(msg, domain = NA)
                 }
             }

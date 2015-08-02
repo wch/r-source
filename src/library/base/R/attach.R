@@ -77,7 +77,8 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
                 if(length(same)) {
 		    pkg <- if (sum(sp == sp[i]) > 1L) # 'pos = *' needs no translation
 			sprintf("%s (pos = %d)", sp[i], i) else sp[i]
-		    message(.maskedMsg(same, pkg, by = i < db.pos), domain=NA)
+		    message(.maskedMsg(sort(same), pkg, by = i < db.pos),
+                            domain = NA)
 		}
             }
         }
