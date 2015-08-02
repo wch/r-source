@@ -249,7 +249,7 @@ void set_iconv(Rconnection con)
 	   Was Windows-only until 2.12.0, but we now require iconv.
 	 */
 	Rboolean useUTF8 = !utf8locale && con->UTF8out;
-	const char *enc = 
+	const char *enc =
 	    streql(con->encname, "UTF-8-BOM") ? "UTF-8" : con->encname;
 	tmp = Riconv_open(useUTF8 ? "UTF-8" : "", enc);
 	if(tmp != (void *)-1) con->inconv = tmp;
@@ -260,7 +260,7 @@ void set_iconv(Rconnection con)
 	con->navail = (short)(50-onb); con->inavail = 0;
 	/* libiconv can handle BOM marks on Windows Unicode files, but
 	   glibc's iconv cannot. Aargh ... */
-	if(streql(con->encname, "UCS-2LE") || 
+	if(streql(con->encname, "UCS-2LE") ||
 	   streql(con->encname, "UTF-16LE")) con->inavail = -2;
 	/* Discaard BOM */
 	if(streql(con->encname, "UTF-8-BOM")) con->inavail = -3;
@@ -598,7 +598,7 @@ static Rboolean file_open(Rconnection con)
 	unlink(name);
 #ifdef Win32
 	strncpy(this->name, name, PATH_MAX);
-        this->name[PATH_MAX - 1] = '\0';
+	this->name[PATH_MAX - 1] = '\0';
 #endif
 	free((char *) name); /* only free if allocated by R_tmpnam */
     }
@@ -633,7 +633,7 @@ static Rboolean file_open(Rconnection con)
 static void file_close(Rconnection con)
 {
     Rfileconn this = con->private;
-    if(con->isopen && strcmp(con->description, "stdin")) 
+    if(con->isopen && strcmp(con->description, "stdin"))
 	con->status = fclose(this->fp);
     con->isopen = FALSE;
 #ifdef Win32
@@ -956,8 +956,8 @@ static char* win_getlasterror_str(void)
     unsigned int err_msg_len;
     char *err_msg = NULL;
 
-    err_msg_len = 
-	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+    err_msg_len =
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		      FORMAT_MESSAGE_FROM_SYSTEM |
 		      FORMAT_MESSAGE_IGNORE_INSERTS, NULL, GetLastError(),
 		      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
@@ -1019,9 +1019,9 @@ static Rboolean	fifo_open(Rconnection con)
 	win_namedpipe_secattr.lpSecurityDescriptor = NULL;
 	win_namedpipe_secattr.bInheritHandle = FALSE;
 
-	this->hdl_namedpipe = 
+	this->hdl_namedpipe =
 	    CreateNamedPipeA(hch_pipename,
-			     (con->canread ? PIPE_ACCESS_DUPLEX : 
+			     (con->canread ? PIPE_ACCESS_DUPLEX :
 			      PIPE_ACCESS_OUTBOUND) | FILE_FLAG_OVERLAPPED,
 			     PIPE_TYPE_BYTE, PIPE_UNLIMITED_INSTANCES , 0, 0,
 			     FILE_FLAG_NO_BUFFERING, &win_namedpipe_secattr);
@@ -1032,7 +1032,7 @@ static Rboolean	fifo_open(Rconnection con)
 	    */
 	    if (GetLastError() != 231) {
 		char *hch_err_msg = win_getlasterror_str();
-		warning(_("cannot create fifo '%s', reason '%s'"), 
+		warning(_("cannot create fifo '%s', reason '%s'"),
 			hch_pipename, hch_err_msg);
 		free(hch_err_msg);
 		boo_retvalue = FALSE;
@@ -1041,20 +1041,20 @@ static Rboolean	fifo_open(Rconnection con)
     }
 
     /* Open existing named pipe */
-    if ((boo_retvalue || GetLastError() == 231) && 
+    if ((boo_retvalue || GetLastError() == 231) &&
 	this->hdl_namedpipe <= (HANDLE)(LONG_PTR) 0) {
 	DWORD dwo_openmode = 0;
 	if (con->canread) dwo_openmode |= GENERIC_READ;
 	if (con->canwrite) dwo_openmode |= GENERIC_WRITE;
-	this->hdl_namedpipe = 
+	this->hdl_namedpipe =
 	    CreateFileA(hch_pipename, dwo_openmode,
 			FILE_SHARE_READ | FILE_SHARE_WRITE,
-			NULL, OPEN_EXISTING, 
+			NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,
 			NULL);
 	if (this->hdl_namedpipe == INVALID_HANDLE_VALUE) {
 	    char *hch_err_msg = win_getlasterror_str();
-	    warning(_("cannot open fifo '%s', reason '%s'"), 
+	    warning(_("cannot open fifo '%s', reason '%s'"),
 		    hch_pipename, hch_err_msg);
 	    free(hch_err_msg);
 	    boo_retvalue = FALSE;
@@ -1096,7 +1096,7 @@ static size_t fifo_read(void* ptr, size_t size, size_t nitems, Rconnection con)
 
     wchar_t *buffer = (wchar_t*)malloc((size * sizeof(wchar_t)) * nitems);
     if (!buffer) error(_("allocation of fifo buffer failed"));
-    ReadFile(this->hdl_namedpipe, buffer, 
+    ReadFile(this->hdl_namedpipe, buffer,
 	     (size * sizeof(wchar_t)) * nitems, (LPDWORD)&read_byte,
 	     this->overlapped_write);
     wcstombs(ptr, buffer, read_byte / sizeof(wchar_t));
@@ -1104,7 +1104,7 @@ static size_t fifo_read(void* ptr, size_t size, size_t nitems, Rconnection con)
     return (read_byte / sizeof(wchar_t)) / size;
 }
 
-static size_t	
+static size_t
 fifo_write(const void *ptr, size_t size, size_t nitems, Rconnection con)
 {
     Rfifoconn this = con->private;
@@ -1123,7 +1123,7 @@ fifo_write(const void *ptr, size_t size, size_t nitems, Rconnection con)
     mbstowcs(buffer, (const char*) ptr, str_len);
 
     /* Write data */
-    if (WriteFile(this->hdl_namedpipe, buffer, 
+    if (WriteFile(this->hdl_namedpipe, buffer,
 		  size * sizeof(wchar_t) * nitems, (LPDWORD) &written_bytes,
 		  NULL) == FALSE && GetLastError() != ERROR_IO_PENDING) {
 	char *hch_err_msg = win_getlasterror_str();
@@ -1672,7 +1672,7 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 		    memcpy(next_unused, unused, nUnused);
 		}
 		if (nUnused > 0 || !feof(bz->fp)) {
-		    BZ2_bzReadClose(&bzerror, bz->bfp);	
+		    BZ2_bzReadClose(&bzerror, bz->bfp);
 		    bz->bfp = BZ2_bzReadOpen(&bzerror, bz->fp, 0, 0, next_unused, nUnused);
 		    if(bzerror != BZ_OK)
 			warning(_("file '%s' has trailing content that appears not to be compressed by bzip2"),
@@ -1689,7 +1689,7 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 	nread += n;
 	nleft -= n;
     }
-    
+
     return nread / size;
 }
 
@@ -2728,12 +2728,12 @@ static void text_init(Rconnection con, SEXP text, int type)
     const void *vmax = vmaxget();
 
     for(i = 0; i < nlines; i++)
-	dnc += 
+	dnc +=
 	    (double) strlen(type == 1 ? translateChar(STRING_ELT(text, i))
 			    : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
 			       : CHAR(STRING_ELT(text, i))) ) + 1;
-    if (dnc >= SIZE_MAX) 
- 	error(_("too many characters for text connection"));
+    if (dnc >= SIZE_MAX)
+	error(_("too many characters for text connection"));
     else nchars = (size_t) dnc;
     this->data = (char *) malloc(nchars+1);
     if(!this->data) {
@@ -3570,7 +3570,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	cntxt.cend = &con_cleanup;
 	cntxt.cenddata = con;
 	if(!con->canread) error(_("cannot read from this connection"));
-    } else { 
+    } else {
 	if(!con->canread) error(_("cannot read from this connection"));
 	/* for a non-blocking connection, more input may
 	   have become available, so re-position */
@@ -3979,20 +3979,20 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {
 	    R_xlen_t s;
-	    union { 
-                signed char sch;
-                unsigned char uch;
-                signed short ssh;
-                unsigned short ush;
-                long l;
-                long long ll;
-                float f;
+	    union {
+		signed char sch;
+		unsigned char uch;
+		signed short ssh;
+		unsigned short ush;
+		long l;
+		long long ll;
+		float f;
 #if HAVE_LONG_DOUBLE
 		long double ld;
 #endif
-            } u;
-            if (size > sizeof u)
-                error(_("size %d is unknown on this machine"), size);
+	    } u;
+	    if (size > sizeof u)
+		error(_("size %d is unknown on this machine"), size);
 	    if(mode == 1) { /* integer result */
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead((char*) &u, size, 1, bytes, nbytes, &np)
@@ -4015,11 +4015,11 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #if SIZEOF_LONG == 8
 		    case sizeof(long):
-			INTEGER(ans)[i] = u.l;
+			INTEGER(ans)[i] = (int) u.l;
 			break;
 #elif SIZEOF_LONG_LONG == 8
 		    case sizeof(_lli_t):
-			INTEGER(ans)[i] = u.ll;
+			INTEGER(ans)[i] = (int) u.ll;
 			break;
 #endif
 		    default:
@@ -4648,8 +4648,8 @@ void con_pushback(Rconnection con, Rboolean newLine, char *line)
 {
     int nexists = con->nPushBack;
     char **q;
-    
-    if (nexists == INT_MAX) 
+
+    if (nexists == INT_MAX)
 	error(_("maximum number of pushback lines exceeded"));
     if(nexists > 0) {
 	q = (char **) realloc(con->PushBack, (nexists+1)*sizeof(char *));
@@ -4903,7 +4903,7 @@ do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     what = asInteger(CAR(args));
     if (what == NA_INTEGER)
 	error(_("there is no connection NA"));
-    if (what < 0 || what >= NCONNECTIONS || !Connections[what]) 
+    if (what < 0 || what >= NCONNECTIONS || !Connections[what])
 	error(_("there is no connection %d"), what);
 
     con = Connections[what];
@@ -4962,7 +4962,7 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 */
 
 // in internet module: 'type' is unused
-extern Rconnection 
+extern Rconnection
 R_newCurlUrl(const char *description, const char * const mode, int type);
 
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -5035,8 +5035,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    urlmeth = 1;
 #else
 	    error(_("method = \"wininet\" is only supported on Windows"));
-#endif    
-	} 
+#endif
+	}
 #ifdef Win32
 	else if (streql(cmeth, "internal")) urlmeth = 0;
 #endif
@@ -5598,7 +5598,7 @@ static unsigned int uiSwap (unsigned int x)
 #define uiSwap(x) (x)
 #endif
 
-/* These are all hidden and used only in serialize.c, 
+/* These are all hidden and used only in serialize.c,
    so managing R_alloc stack is prudence. */
 attribute_hidden
 SEXP R_compress1(SEXP in)
@@ -5918,7 +5918,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	Bytef *buf;
 	/* could use outlen = compressBound(inlen) */
-	uLong inlen = LENGTH(from), 
+	uLong inlen = LENGTH(from),
 	    outlen = (uLong)(1.001*(double)inlen + 20);
 	buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
 	res = compress(buf, &outlen, (Bytef *)RAW(from), inlen);
@@ -5930,7 +5930,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 3: /* bzip */
     {
 	char *buf;
-	unsigned int inlen = LENGTH(from), 
+	unsigned int inlen = LENGTH(from),
 	    outlen = (unsigned int)(1.01*inlen + 600);
 	buf = R_alloc(outlen, sizeof(char));
 	res = BZ2_bzBuffToBuffCompress(buf, &outlen, (char *)RAW(from),
@@ -6059,19 +6059,19 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 		ret = lzma_stream_decoder(&strm, 536870912, LZMA_CONCATENATED);
 	    if (ret != LZMA_OK)
 		error(_("cannot initialize lzma decoder, error %d"), ret);
-	    
+
 	    buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
 	    strm.avail_in = inlen;
 	    strm.avail_out = outlen;
 	    strm.next_in = (unsigned char *) RAW(from);
 	    strm.next_out = buf;
-	    
+
 	    ret = lzma_code(&strm, LZMA_FINISH);
 	    /* Did lzma_code() leave some input? */
 	    if (strm.avail_in > 0) {
 		/* Decompression failed, free lzma_stream. */
 		lzma_end(&strm);
-		/* Because it ran out of output buffer? 
+		/* Because it ran out of output buffer?
 		 *
 		 * This used to only check if LZMA_BUF_ERROR was
 		 * returned, but apparently XZ will also signal an out
@@ -6123,13 +6123,13 @@ SEXP R_new_custom_connection(const char *description, const char *mode, const ch
     if(!new) error(_("allocation of %s connection failed"), class_name);
     new->class = (char *) malloc(strlen(class_name) + 1);
     if(!new->class) {
-        free(new);
-        error(_("allocation of %s connection failed"), class_name);
+	free(new);
+	error(_("allocation of %s connection failed"), class_name);
     }
     strcpy(new->class, class_name);
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
-        free(new->class); free(new);
+	free(new->class); free(new);
 	error(_("allocation of %s connection failed"), class_name);
     }
     init_con(new, description, CE_NATIVE, mode);
@@ -6152,9 +6152,8 @@ SEXP R_new_custom_connection(const char *description, const char *mode, const ch
     setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
     R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
-    
+
     if (ptr) ptr[0] = new;
 
     return ans;
 }
-
