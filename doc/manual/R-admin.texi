@@ -2986,17 +2986,17 @@ that C11 compilers need not be C99-compliant: @R{} requires support for
 @code{double complex} and variable-length arrays which are optional in
 C11 but is mandatory in C99.}  @R{} tries to choose suitable flags for
 the C compilers it knows about, but you may have to set @code{CC} or
-@code{CFLAGS} suitably.  For recent versions of @command{gcc} with
+@code{CFLAGS} suitably.  For many versions of @command{gcc} with
 @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
-extensions to include the POSIX functionality. The default mode for GCC
+extensions to include the POSIX functionality.  The default mode for GCC
 5 is @option{-std=gnu11}.}.  If the compiler is detected as
-@command{gcc}, @option{-std=gnu99} will be appended to @code{CC} unless
-it conflicts with a setting of @code{CFLAGS}.  (Note that options
-essential to run the compiler even for linking, such as those to set the
-architecture, should be specified as part of @code{CC} rather than in
-@code{CFLAGS}.)
+@command{gcc}@tie{}@code{4.x}, @option{-std=gnu99} will be appended to
+@code{CC} unless it conflicts with a setting of @code{CFLAGS}.  (Note
+that options essential to run the compiler even for linking, such as
+those to set the architecture, should be specified as part of @code{CC}
+rather than in @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen (or use a Mac) you need
 @samp{X11} installed, including its headers and client libraries. For
