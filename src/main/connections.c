@@ -4039,7 +4039,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #if HAVE_LONG_DOUBLE && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 		    case sizeof(long double):
-			REAL(ans)[i] = u.ld;
+			REAL(ans)[i] = (double) u.ld;
 			break;
 #endif
 		    default:
