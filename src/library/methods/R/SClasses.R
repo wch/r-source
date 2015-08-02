@@ -236,7 +236,7 @@ getClassDef <-
            inherits = TRUE)
 {
     value <- if(inherits) #includes both the lookup and Class being already a definition
-        .getClassFromCache(Class, where)
+	.getClassFromCache(Class, where, package=package)
     ## else NULL # want to force a search for the metadata in this case (Why?)
     if(is.null(value)) {
 	cname <-

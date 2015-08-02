@@ -134,6 +134,9 @@
       \item A \code{coef()} method for class \code{"maov"} has been
       added to allow \code{vcov()} to work with multivariate
       results. (\PR{16380})
+
+      \item \code{getClass("foo")} now also returns a class definition when it is
+      found in the cache more than once.
     }
   }
 }
