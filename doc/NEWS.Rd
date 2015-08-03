@@ -251,6 +251,18 @@
       %% see https://stat.ethz.ch/pipermail/r-devel/2015-July/071532.html
 
       \item \code{rhyper(nn, <large>)} now works correctly. (\PR{16489})
+
+      \item \code{ttkimage()} did not (and could not) work so was removed. Ditto for
+      \code{tkimage.cget()} and \code{tkimage.configure()}. Added two Ttk widgets and
+      missing subcommands for Tk's \code{image} command:
+      \code{ttkscale()},
+      \code{ttkspinbox()},
+      \code{tkimage.delete()},
+      \code{tkimage.height()},
+      \code{tkimage.inuse()},
+      \code{tkimage.type()},
+      \code{tkimage.types()},
+      \code{tkimage.width()}. (\PR{15372}, \PR{16450})
     }
   }
 }
