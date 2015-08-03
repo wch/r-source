@@ -1607,10 +1607,11 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
+@c As El Capitan is unreleased, we cannot claim that works.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
-El Capitan, @dots{}).
+and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite
+@dots{}).
 
 There may be@footnote{There was for R 3.2.1 but not for R 3.2.0.} a
 separate installer package @file{R-@value{VERSIONno}-snowleopard.pkg},
@@ -4136,7 +4137,7 @@ from @uref{http://www.netlib.org/clapack/}).
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y}.
+@command{gcc}@tie{}4.@var{x}.@var{y} and later.
 
 On Linux @cputype{x86_64} systems there is an incompatibility in the
 return conventions for double-complex functions between
@@ -4709,6 +4710,11 @@ build, use @code{-arch i386} for all compiler commands.)
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
 
+Other builds of @command{gfortran} are available: see
+@uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
+with a binary distribution of @R{} you will probably need to specify the
+name or path in a personal or site @file{Makevars} file
+(@pxref{Customizing package compilation}).
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
