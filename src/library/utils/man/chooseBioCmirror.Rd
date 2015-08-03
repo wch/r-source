@@ -31,6 +31,10 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
   The \sQuote{Bioconductor (World-wide)} mirror provides reliable
   world-wide access; other mirrors may provide faster access on a
   geographically local scale.
+
+  \code{ind} chooses a row in
+  \file{\var{\link{R_HOME}}/doc/BioC_mirrors.csv},
+  by number.
 }
 \value{
   None: this function is invoked for its
