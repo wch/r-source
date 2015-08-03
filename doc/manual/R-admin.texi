@@ -4121,7 +4121,7 @@ from @uref{http://www.netlib.org/clapack/}).
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y}.
+@command{gcc}@tie{}4.@var{x}.@var{y} and later.
 
 On Linux @cputype{x86_64} systems there is an incompatibility in the
 return conventions for double-complex functions between
@@ -4654,6 +4654,12 @@ is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
 not run on Core 2 Duo Macs.}  Apple's builds of @command{clang}
 currently have little or no OpenMP support.
+
+Other builds of @command{gfortran} are available: see
+@uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
+with a binary distribution of @R{} you will probably need to specify the
+name or path in a personal or site @file{Makevars} file
+(@pxref{Customizing package compilation}).
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
