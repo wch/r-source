@@ -153,10 +153,14 @@ tkgrab.release(...)
 tkgrab.set(...)
 tkgrab.status(...)
 
-tkimage.cget(...)
-tkimage.configure(...)
 tkimage.create(...)
+tkimage.delete(...)
+tkimage.height(...)
+tkimage.inuse(...)
 tkimage.names(...)
+tkimage.type(...)
+tkimage.types(...)
+tkimage.width(...)
 
 ## NB: some widgets also have a selection.clear command,
 ## hence the "X".
