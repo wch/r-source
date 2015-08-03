@@ -55,9 +55,10 @@ setRepositories(graphics = getOption("menu.graphics"),
   This function requires the \R session to be interactive unless
   \code{ind} is supplied.
 
-  Some of the entries have \sQuote{secure} versions which use
+  Some of the entries have \code{https} versions which use
   \samp{https://} for access, so if selected need an \R build which
-  supports this.
+  supports this.  (Choosing the \code{https} version provides some
+  guarantees on the identity of the site.)
 }
 \note{
   This does \strong{not} set the list of repositories at startup: to do
