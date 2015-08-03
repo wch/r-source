@@ -27,7 +27,6 @@
 \alias{ttkcombobox}
 \alias{ttkentry}
 \alias{ttkframe}
-\alias{ttkimage}
 \alias{ttklabel}
 \alias{ttklabelframe}
 \alias{ttkmenubutton}
@@ -35,9 +34,11 @@
 \alias{ttkpanedwindow}
 \alias{ttkprogressbar}
 \alias{ttkradiobutton}
+\alias{ttkscale}
 \alias{ttkscrollbar}
 \alias{ttkseparator}
 \alias{ttksizegrip}
+\alias{ttkspinbox}
 \alias{ttktreeview}
 
 \title{Tk widgets}

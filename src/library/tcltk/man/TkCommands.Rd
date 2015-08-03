@@ -33,10 +33,14 @@
 \alias{tkgrab.release}
 \alias{tkgrab.set}
 \alias{tkgrab.status}
-\alias{tkimage.cget}
-\alias{tkimage.configure}
 \alias{tkimage.create}
+\alias{tkimage.delete}
+\alias{tkimage.height}
+\alias{tkimage.inuse}
 \alias{tkimage.names}
+\alias{tkimage.type}
+\alias{tkimage.types}
+\alias{tkimage.width}
 \alias{tkXselection.clear}
 \alias{tkXselection.get}
 \alias{tkXselection.handle}
