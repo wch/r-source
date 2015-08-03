@@ -1608,10 +1608,11 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
+@c As El Capitan is unreleased, we cannot claim that works.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
-El Capitan, @dots{}).
+and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite
+@dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}.
@@ -3770,10 +3771,9 @@ compiled with compatible compilers and flags.  For example, this has
 meant that on Sun Sparc using the native compilers the flag
 @option{-dalign} is needed if @code{sunperf} is to be used.
 
-On some systems it is necessary that an external @acronym{BLAS}/LAPACK
-was built with the same FORTRAN compiler used to build @R{}: known
-problems are with @R{} built with @command{gfortran}, @pxref{Using
-gfortran}.
+On some systems it has been necessary that an external
+@acronym{BLAS}/LAPACK was built with the same FORTRAN compiler used to
+build @R{}.
 
 
 
@@ -4040,10 +4040,6 @@ variable @code{MAKE} at configure time, for example
 @section Using FORTRAN
 @cindex FORTRAN
 
-@menu
-* Using gfortran::              
-@end menu
-
 To compile @R{}, you need a FORTRAN compiler.  The default
 is to search for
 @c F95_compilers in m4/R.m4:
@@ -4115,30 +4111,6 @@ you will need to set
 contain constructs that @command{f2c} is unlikely to be able to process,
 so you would need to use an external LAPACK library (such as CLAPACK
 from @uref{http://www.netlib.org/clapack/}).
-
-
-@node Using gfortran,  , Using FORTRAN, Using FORTRAN
-@subsection Using gfortran
-
-@command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y} and later.
-
-On Linux @cputype{x86_64} systems there is an incompatibility in the
-return conventions for double-complex functions between
-@command{gfortran} and @command{g77} which results in the final example
-in @code{example(eigen)} hanging or segfaulting under external
-@acronym{BLAS}s built under @command{g77} (and also some external
-LAPACKs).  The commonest cases will be detected by a @command{configure}
-test.  Although @command{g77} is long obsolete this is still sometimes
-seen with C versions of external software using @command{g77}
-conventions.
-
-The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
-@command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
--O2}.  This has caused problems (segfaults and infinite loops) on
-@cputype{x86_64} Linux in the past, but seems fine with
-@command{gfortran 4.4.4} and later: for @code{gfortran 4.3.x} set
-@code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
 @node Compile and load flags, Maintainer mode, Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
