@@ -11,7 +11,7 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-INSTFILES = AUTHORS COPYING COPYRIGHTS CRAN_mirrors.csv \
+INSTFILES = AUTHORS COPYING COPYRIGHTS CRAN_mirrors.csv BioC_mirrors.csv \
 	KEYWORDS KEYWORDS.db THANKS NEWS.0 NEWS.1 NEWS.2
 DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux Rscript.1 \
   NEWS.Rd NEWS.2.Rd

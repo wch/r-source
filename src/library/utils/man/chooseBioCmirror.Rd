@@ -11,7 +11,8 @@
   Interact with the user to choose a Bioconductor mirror.
 }
 \usage{
-chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL)
+chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
+                 useHTTPS = getOption("useHTTPS", TRUE))
 }
 \arguments{
   \item{graphics}{logical.  If true, use a graphical list: on Windows or
@@ -20,6 +21,7 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL)
     widget.  Otherwise use a text \code{\link{menu}}.}
   
   \item{ind}{Optional numeric value giving which entry to select.}
+  \item{useHTTPS}{Whether to prefer HTTPS mirrors.}
 }
 \details{
   This sets the option \code{"BioC_mirror"}: it needs to be used before

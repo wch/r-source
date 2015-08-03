@@ -66,6 +66,7 @@ imagedir:
 # copy info and documentation files
 	$(MKDIR) -p $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/CRAN_mirrors.csv $(RPREFIX)/doc
+	$(CP) -p $(R_HOME)/doc/BioC_mirrors.csv $(RPREFIX)/doc
 	$(MKDIR) -p $(RPREFIX)/doc/manual/images
 	$(CP) -pR $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
