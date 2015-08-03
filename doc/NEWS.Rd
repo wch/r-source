@@ -160,8 +160,10 @@
       \code{method = "auto"} now chooses \code{"libcurl"} if that is
       available and a \samp{https://} or \samp{ftps://} url is used.
 
-      \item \code{chooseCRANmirror()} now offers HTTPS mirrors in
-      preference to HTTP mirrors.
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
+      offer HTTPS mirrors in preference to HTTP mirrors.  This changes
+      the intepretation of their \code{ind} arguments: see their help
+      pages.
 
       \item \code{capture.output()} gets optional arguments \code{type}
       and \code{split} to pass to \code{sink()}, and hence can be used
