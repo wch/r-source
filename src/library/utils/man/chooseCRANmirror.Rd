@@ -45,6 +45,10 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   mirror provides some guarantees on the identity of the site chosen and
   so is recommended. (However, most but not all \R builds support
   downloading from HTTPS sites.)
+
+  \code{ind} chooses a row in the list of current mirrors, by number. It
+  is best used with \code{local.only = TRUE} and row numbers in
+   \file{\var{\link{R_HOME}}/doc/CRAN_mirrors.csv}.
 }
 \value{
   None for \code{chooseCRANmirror()}, this function is invoked for its
