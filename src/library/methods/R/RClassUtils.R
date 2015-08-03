@@ -2143,10 +2143,11 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     if(length(classDef@contains)) {
         superclasses <- names(classDef@contains)
         for(what in superclasses) {
-            cdef <- .getClassFromCache(what)
-            ## TODO:  handle the case of multiple packages with this class
-            if(is(cdef, "classRepresentation"))
-                .removeSubClass(what, Class, cdef)
+            cdef <- .getClassFromCache(what, resolve.confl = "all")
+	    if(is(cdef, "classRepresentation"))
+		.removeSubClass(what, Class, cdef)
+	    else if(is.list(cdef))
+		lapply(cdef, function(cl) .removeSubClass(what, Class, cl))
         }
     }
     NULL
@@ -2174,8 +2175,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         if(pos) {
             penv <- as.environment(pname)
             cmeta <- classMetaName(class)
-            if(exists(cmeta, envir = penv, inherits = FALSE)) {
-                cdefp <- get(cmeta, envir = penv)
+            if(!is.null(cdefp <- penv[[cmeta]])) {
                 if(subclass %in% names(cdefp@subclasses)) {
                     newdef <- .deleteSubClass(cdefp, subclass)
                     if(!is.null(newdef)) {
@@ -2185,7 +2185,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                         if(bindingIsLocked(cmeta, penv))
                             .assignOverBinding(cmeta, newdef, penv, FALSE)
                         else
-                            assign(cmeta, newdef, envir = penv)
+                            penv[[cmeta]] <- newdef
                     }
                 }
             }
@@ -2213,8 +2213,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 
 ## remove superclass from  definition of class in the cache & in environments
 ## on search list
-.removeSuperClass <- function(class, superclass) {
-    cdef <- .getClassFromCache(class, where)
+.removeSuperClass <- function(class, superclass, resolve.msg = TRUE) {
+    cdef <- .getClassFromCache(class, where, resolve.msg=resolve.msg)
     if(is.null(cdef)) {}
     else {
         newdef <- .deleteSuperClass(cdef, superclass)
@@ -2230,7 +2230,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     mname <- classMetaName(class)
     for(where in evv) {
         if(!is.null(cdef <- where[[mname]])) {
-            newdef <- .deleteSuperClass(cdef, superclass)
+            newdef <- .deleteSuperClass(cdef, superclass, resolve.msg=resolve.msg)
             if(!is.null(newdef)) {
               assignClassDef(class, newdef,  where, TRUE)
               ## message("deleted ",superclass, " from ",class, "in environment")
@@ -2240,18 +2240,18 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     NULL
 }
 
-.deleteSuperClass <- function(cdef, superclass) {
-        superclasses <- cdef@contains
-        ii <- match(superclass, names(superclasses), 0)
-        if(ii > 0) {
-            cdef@contains <- superclasses[-ii]
-            for(subclass in names(cdef@subclasses))
-              .removeSuperClass(subclass, superclass)
-            cdef
-        }
-        else
-          NULL
+.deleteSuperClass <- function(cdef, superclass, resolve.msg = TRUE) {
+    superclasses <- cdef@contains
+    ii <- match(superclass, names(superclasses), 0L)
+    if(ii) {
+	cdef@contains <- superclasses[-ii]
+	for(subclass in names(cdef@subclasses))
+	    .removeSuperClass(subclass, superclass, resolve.msg=resolve.msg)
+	cdef
     }
+    else
+	NULL
+}
 
 classesToAM <- function(classes, includeSubclasses = FALSE,
                         abbreviate = 2) {
