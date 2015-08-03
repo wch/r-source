@@ -18,6 +18,6 @@ CRANextra	CRAN (extras)	http://www.stats.ox.ac.uk/pub/RWin	FALSE	TRUE	TRUE	TRUE
 Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	FALSE	FALSE
 R-Forge	R-Forge	https://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE
 rforge.net	rforge.net	https://www.rforge.net	FALSE	TRUE	TRUE	TRUE
-CRANextra(secure)	"CRAN (extras, secure)"	"https://www.stats.ox.ac.uk/pub/RWin"	FALSE	TRUE	TRUE	TRUE
-R-Forge(secure)	"R-Forge (secure)"	https://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE
-rforge.net(secure)	"rforge.net (secure)"	https://www.rforge.net	FALSE	TRUE	TRUE	TRUE
+CRANextra[https]	"CRAN (extras, https)"	"https://www.stats.ox.ac.uk/pub/RWin"	FALSE	TRUE	TRUE	TRUE
+R-Forge[https]	"R-Forge [https]"	https://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE
+rforge.net[https]	"rforge.net [https]"	https://www.rforge.net	FALSE	TRUE	TRUE	TRUE

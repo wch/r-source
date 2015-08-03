@@ -15,13 +15,14 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
                  useHTTPS = getOption("useHTTPS", TRUE))
 }
 \arguments{
-  \item{graphics}{logical.  If true, use a graphical list: on Windows or
-    the OS X GUI use a list box, and on a Unix-alike if package
-    \pkg{tcltk} and an X server are available, use a Tk
-    widget.  Otherwise use a text \code{\link{menu}}.}
+  \item{graphics}{Logical.  If true, use a graphical list: on Windows or
+    the OS X GUI use a list box, and on a Unix-alike  use a Tk widget if
+    package \pkg{tcltk} and an X server are available.  Otherwise use a
+    text \code{\link{menu}}.}
   
   \item{ind}{Optional numeric value giving which entry to select.}
-  \item{useHTTPS}{Whether to prefer HTTPS mirrors.}
+  \item{useHTTPS}{Whether to prefer HTTPS mirrors (see
+  \code{\link{chooseCRANmirror}}).}
 }
 \details{
   This sets the option \code{"BioC_mirror"}: it needs to be used before
