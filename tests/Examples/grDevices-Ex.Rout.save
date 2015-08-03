@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2015-07-31 r68768) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-08-03 r68808) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3764,7 +3764,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.809 0.145 7.958 0 0 
+Time elapsed:  7.68 0.144 7.826 0 0 
 > grDevices::dev.off()
 null device 
           1 
