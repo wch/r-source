@@ -315,7 +315,6 @@ ttkcheckbutton <- function(parent, ...) tkwidget(parent, "ttk::checkbutton", ...
 ttkcombobox    <- function(parent, ...) tkwidget(parent, "ttk::combobox", ...)
 ttkentry       <- function(parent, ...) tkwidget(parent, "ttk::entry", ...)
 ttkframe       <- function(parent, ...) tkwidget(parent, "ttk::frame", ...)
-ttkimage       <- function(parent, ...) tkwidget(parent, "ttk::image", ...)
 ttklabel       <- function(parent, ...) tkwidget(parent, "ttk::label", ...)
 ttklabelframe  <- function(parent, ...) tkwidget(parent, "ttk::labelframe", ...)
 ttkmenubutton  <- function(parent, ...) tkwidget(parent, "ttk::menubutton", ...)
@@ -323,9 +322,11 @@ ttknotebook    <- function(parent, ...) tkwidget(parent, "ttk::notebook", ...)
 ttkpanedwindow <- function(parent, ...) tkwidget(parent, "ttk::panedwindow", ...)
 ttkprogressbar <- function(parent, ...) tkwidget(parent, "ttk::progressbar", ...)
 ttkradiobutton <- function(parent, ...) tkwidget(parent, "ttk::radiobutton", ...)
+ttkscale       <- function(parent, ...) tkwidget(parent, "ttk::scale", ...)
 ttkscrollbar   <- function(parent, ...) tkwidget(parent, "ttk::scrollbar", ...)
 ttkseparator   <- function(parent, ...) tkwidget(parent, "ttk::separator", ...)
 ttksizegrip    <- function(parent, ...) tkwidget(parent, "ttk::sizegrip", ...)
+ttkspinbox     <- function(parent, ...) tkwidget(parent, "ttk::spinbox", ...)
 ttktreeview    <- function(parent, ...) tkwidget(parent, "ttk::treeview", ...)
 
 
@@ -385,10 +386,15 @@ tkgrab.release <- function(...) tcl("grab", "release", ...)
 tkgrab.set     <- function(...) tcl("grab", "set", ...)
 tkgrab.status  <- function(...) tcl("grab", "status", ...)
 
-tkimage.cget     <- function(...) tcl("image","cget",...)
-tkimage.configure <- function(...) tcl("image","configure",...)
-tkimage.create   <- function(...) tcl("image","create",...)
-tkimage.names    <- function(...) tcl("image","names",...)
+tkimage.create <- function(...) tcl("image", "create", ...)
+tkimage.delete <- function(...) tcl("image", "delete", ...)
+tkimage.height <- function(...) tcl("image", "height", ...)
+tkimage.inuse  <- function(...) tcl("image", "inuse", ...)
+tkimage.names  <- function(...) tcl("image", "names", ...)
+tkimage.type   <- function(...) tcl("image", "type", ...)
+tkimage.types  <- function(...) tcl("image", "types", ...)
+tkimage.width  <- function(...) tcl("image", "width", ...)
+
 
 ## NB: some widgets also have a selection.clear command, hence the "X".
 ## tkselection.clear might be made a generic function instead.
