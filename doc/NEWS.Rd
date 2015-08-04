@@ -141,7 +141,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.2.1 patched}{
+\section{\Rlogo CHANGES IN R 3.2.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{cmdscale()} gets new option \code{list.} for increased
