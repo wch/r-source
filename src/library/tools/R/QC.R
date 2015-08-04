@@ -7794,7 +7794,7 @@ function(env, verbose = getOption("verbose"))
 function(env)
 {
     env <- as.environment(env)
-    g <- methods::getGenerics(env)
+    g <- suppressMessages(methods::getGenerics(env))
     Map(function(f, p) {
             attr(f, "package") <- p
             f
