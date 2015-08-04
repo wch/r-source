@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -36,7 +36,8 @@ enc2utf8(x)
   encoding, since their representation is the same in all supported
   encodings.  Strings marked as \code{"bytes"} are intended to be
   non-ASCII strings which should be manipulated as bytes, and never
-  converted to a character encoding.
+  converted to a character encoding (so writing them to a text file is
+  not supported). % non-bug report PR#16327
 
   \code{enc2native} and \code{enc2utf8} convert elements of character
   vectors to the native encoding or UTF-8 respectively, taking any
