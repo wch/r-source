@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000-2013 The R Core Team
+ *	Copyright (C) 2000-2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,8 +47,9 @@ double dt(double x, double n, int give_log)
     if(!R_FINITE(n))
 	return dnorm(x, 0., 1., give_log);
 
-    double u, ax, t = -bd0(n/2.,(n+1)/2.) + stirlerr((n+1)/2.) - stirlerr(n/2.),
+    double u, t = -bd0(n/2.,(n+1)/2.) + stirlerr((n+1)/2.) - stirlerr(n/2.),
 	x2n = x*x/n, // in  [0, Inf]
+	ax = 0., // <- -Wpedantic
 	l_x2n; // := log(sqrt(1 + x2n)) = log(1 + x2n)/2
     Rboolean lrg_x2n =  (x2n > 1./DBL_EPSILON);
     if (lrg_x2n) { // large x^2/n :
