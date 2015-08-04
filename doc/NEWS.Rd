@@ -162,7 +162,7 @@
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes
-      the intepretation of their \code{ind} arguments: see their help
+      the interpretation of their \code{ind} arguments: see their help
       pages.
 
       \item \code{capture.output()} gets optional arguments \code{type}

@@ -34,7 +34,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   list of current mirrors is consulted, and the file copy used only if
   the on-line list is inaccessible.
 
-  This function is calle by a Windows GUI menu item and by
+  This function is called by a Windows GUI menu item and by
   \code{\link{contrib.url}} if it finds the initial dummy value of
   \code{\link{options}("repos")}.
   
