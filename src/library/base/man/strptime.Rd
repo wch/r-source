@@ -125,7 +125,7 @@ strptime(x, format, tz = "")
     \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or
       PM).  Only defined in some locales.}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
-    \item{\code{\%S}}{Second as decimal number (00--61), allowing for
+    \item{\code{\%S}}{Second as integer (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant implementations
       will ignore leap seconds).}
     \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
@@ -210,8 +210,8 @@ strptime(x, format, tz = "")
   not followed by a digit, it uses the setting of
   \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n =
   3}).  Further, for \code{strptime} \code{\%OS} will input seconds
-  including fractional seconds.  Note that \code{\%S} ignores (and not
-  rounds) fractional parts on output.
+  including fractional seconds.  Note that \code{\%S} does not read
+  fractional parts on output. 
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
