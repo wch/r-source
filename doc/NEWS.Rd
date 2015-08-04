@@ -253,7 +253,8 @@
       \item \code{rhyper(nn, <large>)} now works correctly. (\PR{16489})
 
       \item \code{ttkimage()} did not (and could not) work so was removed. Ditto for
-      \code{tkimage.cget()} and \code{tkimage.configure()}. Added two Ttk widgets and
+      \code{tkimage.cget()} and \code{tkimage.configure()}.
+      Added two Ttk widgets and
       missing subcommands for Tk's \code{image} command:
       \code{ttkscale()},
       \code{ttkspinbox()},
@@ -263,6 +264,9 @@
       \code{tkimage.type()},
       \code{tkimage.types()},
       \code{tkimage.width()}. (\PR{15372}, \PR{16450})
+      
+      \item \code{read.table()} now allows an unordered named
+      \code{colClasses} argument. (\PR{16478})
     }
   }
 }

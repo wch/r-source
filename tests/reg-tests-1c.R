@@ -857,3 +857,12 @@ stopifnot(all.equal(unname(f20[1:4]), c(39.7703378, 39.7703378, 35.8251359, 21.5
 	  all.equal(f20, predict(alm, stackloss[1:20, ]), tolerance = 1e-14))
 ## the second prediction went off in  R <= 3.2.1
 
+
+## PR#16478
+kkk <- c("a\tb", "3.14\tx")
+z1 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
+                 colClasses = c("numeric", "character"))
+z2 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
+                 colClasses = c(b = "character", a = "numeric"))
+stopifnot(identical(z1, z2))
+## z2 failed in R < 3.2.2.

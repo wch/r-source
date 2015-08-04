@@ -139,7 +139,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     if (rlabp) col.names <- c("row.names", col.names)
 
     nmColClasses <- names(colClasses)
-    if(length(colClasses) < cols)
+    if(length(colClasses) <= cols)
         if(is.null(nmColClasses)) {
             colClasses <- rep_len(colClasses, cols)
         } else {
