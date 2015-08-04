@@ -139,18 +139,17 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     if (rlabp) col.names <- c("row.names", col.names)
 
     nmColClasses <- names(colClasses)
-    if(length(colClasses) <= cols)
-        if(is.null(nmColClasses)) {
-            colClasses <- rep_len(colClasses, cols)
-        } else {
-            tmp <- rep_len(NA_character_, cols)
-            names(tmp) <- col.names
-            i <- match(nmColClasses, col.names, 0L)
-            if(any(i <= 0L))
-                warning("not all columns named in 'colClasses' exist")
-            tmp[ i[i > 0L] ] <- colClasses
-            colClasses <- tmp
-        }
+    if(is.null(nmColClasses)) {
+        if(length(colClasses) < cols) colClasses <- rep_len(colClasses, cols)
+    } else {
+        tmp <- rep_len(NA_character_, cols)
+        names(tmp) <- col.names
+        i <- match(nmColClasses, col.names, 0L)
+        if(any(i <= 0L))
+            warning("not all columns named in 'colClasses' exist")
+        tmp[ i[i > 0L] ] <- colClasses[i > 0L]
+        colClasses <- tmp
+    }
 
 
     ##	set up for the scan of the file.
