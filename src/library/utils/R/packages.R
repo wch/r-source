@@ -838,7 +838,8 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     	}
     }
     if (res > 0L) {
-        URL <- setNames(m[res, "URL"], m[res, "Name"])
+        URL <- m[res, "URL"]
+        names(URL) <- m[res, "Name"]
         sub("/$", "", URL[1L])
     } else character()
 }
