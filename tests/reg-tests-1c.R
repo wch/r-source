@@ -865,4 +865,10 @@ z1 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
 z2 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
                  colClasses = c(b = "character", a = "numeric"))
 stopifnot(identical(z1, z2))
-## z2 failed in R < 3.2.2.
+z3 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
+                 colClasses = c(b = "character"))
+stopifnot(identical(z1, z3))
+z4 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
+                 colClasses = c(c = "integer", b = "character", a = "numeric"))
+stopifnot(identical(z1, z4))
+## z2 and z4 used positional matching (and failed) in R < 3.2.2.

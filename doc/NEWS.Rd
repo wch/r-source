@@ -168,6 +168,10 @@
       \item \code{capture.output()} gets optional arguments \code{type}
       and \code{split} to pass to \code{sink()}, and hence can be used
       capture messages.
+      
+      \item \code{read.table()} now uses the names for a named
+      \code{colClasses} argument (previously names were only used when
+      \code{colClasses} was too short). (Wish of \PR{16478}.)
     }
   }
 
@@ -264,9 +268,6 @@
       \code{tkimage.type()},
       \code{tkimage.types()},
       \code{tkimage.width()}. (\PR{15372}, \PR{16450})
-      
-      \item \code{read.table()} now allows an unordered named
-      \code{colClasses} argument. (\PR{16478})
     }
   }
 }
