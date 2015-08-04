@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -80,11 +80,15 @@ attr.all.equal(target, current, \dots,
   \R 3.1.0.  It is inadvisable to pass unnamed arguments in \code{\dots}
   as these will match different arguments in different methods.
 
-  Numerical comparisons for \code{scale = NULL} (the default) are done
-  by first computing the mean absolute difference of the two numerical
-  vectors.  If this is smaller than \code{tolerance} or not finite,
-  absolute differences are used, otherwise relative differences scaled
-  by the mean absolute difference.
+  Numerical comparisons for \code{scale = NULL} (the default) are
+  typically on \emph{relative difference} scale unless the target values
+  are close to zero:  First, the mean absolute difference of the two
+  numerical vectors is computed.  If this is smaller than
+  \code{tolerance} or not finite, absolute differences are used,
+  otherwise relative differences scaled by the mean absolute
+  \code{target} value.
+  (Note that these comparisons are computed only for those vector elements
+  where \code{target} is not \code{\link{NA}} and differs from \code{current}.)
 
   If \code{scale} is positive, absolute comparisons are made after
   scaling (dividing) by \code{scale}.
