@@ -169,9 +169,9 @@
       and \code{split} to pass to \code{sink()}, and hence can be used
       capture messages.
       
-      \item \code{read.table()} now uses the names for a named
+      \item \code{read.table()} now always uses the names for a named
       \code{colClasses} argument (previously names were only used when
-      \code{colClasses} was too short). (Wish of \PR{16478}.)
+      \code{colClasses} was too short). (In part, wish of \PR{16478}.)
     }
   }
 
@@ -197,8 +197,9 @@
       \item The HTML help page links to demo code failed due to a change
       in \R 3.2.0.  (\PR{16432})
 
-      \item If \code{na.action} was used in \code{model.frame()}, the
-      original data could be modified. (\PR{16436})
+      \item If the \code{na.action} argument was used in
+      \code{model.frame()}, the original data could be
+      modified. (\PR{16436})
 
       \item \code{getGraphicsEvent()} could cause a crash if a graphics
       window was closed while it was in use. (\PR{16438})
