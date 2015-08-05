@@ -230,12 +230,11 @@ makeClassRepresentation <-
 getClassDef <-
   ## Get the definition of the class supplied as a string.
   function(Class, where = topenv(parent.frame()), package = packageSlot(Class),
-           inherits = TRUE)
+           inherits = TRUE, resolve.msg = getOption("getClass.msg", default=TRUE))
 {
-    if(inherits) #includes both the lookup and Class being alread a definition
-      value <- .getClassFromCache(Class, where)
-    else # want to force a search for the metadata in this case (Why?)
-      value <- NULL
+    value <- if(inherits) #includes both the lookup and Class being already a definition
+	.getClassFromCache(Class, where, package=package, resolve.msg=resolve.msg)
+    ## else NULL # want to force a search for the metadata in this case (Why?)
     if(is.null(value)) {
 	cname <-
 	    classMetaName(if(length(Class) > 1L)
@@ -259,11 +258,12 @@ getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
   function(Class, .Force = FALSE,
-	   where = .classEnv(Class, topenv(parent.frame()), FALSE))
+	   where = .classEnv(Class, topenv(parent.frame()), FALSE),
+           resolve.msg = getOption("getClass.msg", default=TRUE))
 {
-    value <- .getClassFromCache(Class, where) # the quick way
+    value <- .getClassFromCache(Class, where, resolve.msg=resolve.msg) # the quick way
     if(is.null(value)) {
-        value <- getClassDef(Class, where) # searches
+        value <- getClassDef(Class, where, resolve.msg=resolve.msg) # searches
         if(is.null(value)) {
             if(!.Force)
                 stop(gettextf("%s is not a defined class",
@@ -375,7 +375,8 @@ slotNames <- function(x)
 }
 
 
-removeClass <-  function(Class, where = topenv(parent.frame())) {
+removeClass <-  function(Class, where = topenv(parent.frame()),
+                         resolve.msg = getOption("removeClass.msg", default=TRUE)) {
     if(missing(where)) {
        classEnv <- .classEnv(Class, where, FALSE)
         classWhere <- findClass(Class, where = classEnv)
@@ -386,7 +387,8 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
             return(FALSE)
         }
         if(length(classWhere) > 1L)
-            warning(gettextf("class %s has multiple definitions visible; only the first removed",
+	    warning(gettextf(
+		"class %s has multiple definitions visible; only the first removed",
                              dQuote(Class)),
                     domain = NA)
         classWhere <- classWhere[[1L]]
@@ -397,7 +399,7 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
       subclasses <- names(classDef@subclasses)
       found <- vapply(subclasses, isClass, NA, where = where, USE.NAMES=TRUE)
       for(what in subclasses[found])
-          .removeSuperClass(what, Class)
+          .removeSuperClass(what, Class, resolve.msg=resolve.msg)
     }
     .removeSuperclassBackRefs(Class, classDef, classWhere)
     .uncacheClass(Class, classDef)

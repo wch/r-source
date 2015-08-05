@@ -39,3 +39,16 @@ setMethod("myGenf",  "pubClass", function(x, y) 2*x)
 assertError(setMethod("pubGenf", "pubClass", function(x, ...) { 10*x } ))
 ## and this is ok
 setMethod("pubGenf", c(x="pubClass"), function(x, y) { 10*x } )
+
+
+### "Same" class as in Matrix (but different 'Extends'!)  {as in Rmpfr}
+
+## "atomic vectors" (-> ?is.atomic ) -- exactly as in "Matrix":
+## ---------------
+setClassUnion("atomicVector", ## "double" is not needed, and not liked by some
+	      members = c("logical", "integer", "numeric",
+			  "complex", "raw", "character"))
+
+setClassUnion("array_or_vector",
+	      members = c("array", "matrix", "atomicVector"))
+

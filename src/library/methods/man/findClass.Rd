@@ -1,27 +1,28 @@
 % File src/library/methods/man/findClass.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{findClass}
+\title{Computations with Classes}
 \alias{removeClass}
 \alias{resetClass}
 \alias{isClass}
 \alias{getClasses}
 \alias{findClass}
 \alias{sealClass}
-\title{Computations with Classes}
 \description{
   Functions to find and manipulate class definitions.
 }
 \usage{
-removeClass(Class, where)
-
 isClass(Class, formal=TRUE, where)
 
 getClasses(where, inherits = missing(where))
 
 findClass(Class, where, unique = "")
+
+removeClass(Class, where,
+            resolve.msg = getOption("removeClass.msg", default=TRUE))
 
 resetClass(Class, classDef, where)
 
@@ -43,6 +44,8 @@ sealClass(Class, where)
     do the search, and the default is to search from the top-level
     environment or namespace of the caller to this function.
   }
+  \item{formal}{\code{\link{logical}} indicating if a formal definition
+    is required.}
   \item{unique}{if \code{findClass} expects a unique location for the
     class, \code{unique} is a character string explaining the purpose
     of the search (and is used in warning and error messages).  By
@@ -54,8 +57,10 @@ sealClass(Class, where)
     environment only?  Defaults to \code{TRUE} if \code{where} is
     omitted, and to \code{FALSE} otherwise.
   }
-  \item{formal}{ Should a formal definition be required? }
-  \item{classDef}{ For \code{removeClass}, the optional class
+  \item{resolve.msg}{\code{\link{logical}} indicating if \R should
+    \code{\link{message}()} its decision if \code{Class} is found in
+    multiple namespaces and one is chosen.}
+  \item{classDef}{ For \code{resetClass}, the optional class
     definition (but usually it's better for \code{Class} to be the
     class definition, and to omit \code{classDef}).
   }

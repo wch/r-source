@@ -977,7 +977,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
 {
     if(.identC(class1[[1L]], class2) || .identC(class2, "ANY"))
         return(TRUE)
-    ext <- TRUE # may become a list of extends definitions
+    ## ext <- TRUE # may become a list of extends definitions
     if(is.null(ClassDef1)) # class1 not defined
         return(FALSE)
     ## else
@@ -992,14 +992,13 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
             if(!.identC(class(ClassDef2), "classRepresentation") &&
                isClassUnion(ClassDef2))
                 ## a simple TRUE iff class1 or one of its superclasses belongs to the union
-		i <- as.logical(anyDuplicated(c(class1, unique(nm1),
-						names(ext))))
+                i <- any(c(class1, nm1) %in% names(ext))
             else {
                 ## class1 could be multiple classes here.
                 ## I think we want to know if any extend
                 i <- match(class1, names(ext))
                 ii <- i[!is.na(i)]
-                i <- if(length(ii))  ii[1L] else i[1L]
+                i <- if(length(ii)) ii[1L] else i[1L]
             }
         }
     }
@@ -2047,18 +2046,30 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 ## in the assumption this is a classRepresentation or subclass of that.
 ## In principle, this could replace the checks on class(name) in getClassDef
 ## and new(), which don't work for subclasses of classRepresentation anyway.
-.getClassFromCache <- function(name, where) {
+.getClassFromCache <- function(name, where, package = packageSlot(name),
+                               resolve.confl = "first", resolve.msg = TRUE) {
 	value <- .Call(C_R_getClassFromCache, name, .classTable)
-	if(is.list(value)) { ## multiple classes with this name
-	    pkg <- packageSlot(name)
-	    if(is.null(pkg))
-		pkg <- if(is.character(where)) where else getPackageName(where, FALSE) # may be ""
+	if(is.list(value)) { ## multiple classes with this name -- choose at most one
+	    if(is.null(package)) package <-
+                if(is.character(where)) where else getPackageName(where, FALSE) # may be ""
 	    pkgs <- names(value)
-	    i <- match(pkg, pkgs, 0L)
-	    if(i == 0L) ## try 'methods':
+	    i <- match(package, pkgs, 0L)
+	    if(i == 0L && package != "methods") ## try 'methods':
 		i <- match("methods", pkgs, 0L)
-	    if(i > 0L) value[[i]]
-            else NULL
+	    if(i > 0L)
+                value[[i]]
+	    else { ## still NULL -- but we *do* want to return one of the class definitions!
+		switch(resolve.confl,
+		       "none" = NULL,
+		       "first" = {
+			   if(resolve.msg)
+			       message(gettextf(
+				"Found more than one class \"%s\" in cache; using the first, from namespace '%s'",
+				name, pkgs[1]), domain=NA)
+			   value[[1]]
+		       },
+		       "all" = value) # return all, a list
+	    }
 	}
 	else #either a class definition or NULL
 	    value
@@ -2134,10 +2145,11 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     if(length(classDef@contains)) {
         superclasses <- names(classDef@contains)
         for(what in superclasses) {
-            cdef <- .getClassFromCache(what)
-            ## TODO:  handle the case of multiple packages with this class
-            if(is(cdef, "classRepresentation"))
-                .removeSubClass(what, Class, cdef)
+            cdef <- .getClassFromCache(what, resolve.confl = "all")
+	    if(is(cdef, "classRepresentation"))
+		.removeSubClass(what, Class, cdef)
+	    else if(is.list(cdef))
+		lapply(cdef, function(cl) .removeSubClass(what, Class, cl))
         }
     }
     NULL
@@ -2165,8 +2177,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         if(pos) {
             penv <- as.environment(pname)
             cmeta <- classMetaName(class)
-            if(exists(cmeta, envir = penv, inherits = FALSE)) {
-                cdefp <- get(cmeta, envir = penv)
+            if(!is.null(cdefp <- penv[[cmeta]])) {
                 if(subclass %in% names(cdefp@subclasses)) {
                     newdef <- .deleteSubClass(cdefp, subclass)
                     if(!is.null(newdef)) {
@@ -2176,7 +2187,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                         if(bindingIsLocked(cmeta, penv))
                             .assignOverBinding(cmeta, newdef, penv, FALSE)
                         else
-                            assign(cmeta, newdef, envir = penv)
+                            penv[[cmeta]] <- newdef
                     }
                 }
             }
@@ -2204,8 +2215,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 
 ## remove superclass from  definition of class in the cache & in environments
 ## on search list
-.removeSuperClass <- function(class, superclass) {
-    cdef <- .getClassFromCache(class, where)
+.removeSuperClass <- function(class, superclass, resolve.msg = TRUE) {
+    cdef <- .getClassFromCache(class, where, resolve.msg=resolve.msg)
     if(is.null(cdef)) {}
     else {
         newdef <- .deleteSuperClass(cdef, superclass)
@@ -2221,7 +2232,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     mname <- classMetaName(class)
     for(where in evv) {
         if(!is.null(cdef <- where[[mname]])) {
-            newdef <- .deleteSuperClass(cdef, superclass)
+            newdef <- .deleteSuperClass(cdef, superclass, resolve.msg=resolve.msg)
             if(!is.null(newdef)) {
               assignClassDef(class, newdef,  where, TRUE)
               ## message("deleted ",superclass, " from ",class, "in environment")
@@ -2231,18 +2242,18 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     NULL
 }
 
-.deleteSuperClass <- function(cdef, superclass) {
-        superclasses <- cdef@contains
-        ii <- match(superclass, names(superclasses), 0)
-        if(ii > 0) {
-            cdef@contains <- superclasses[-ii]
-            for(subclass in names(cdef@subclasses))
-              .removeSuperClass(subclass, superclass)
-            cdef
-        }
-        else
-          NULL
+.deleteSuperClass <- function(cdef, superclass, resolve.msg = TRUE) {
+    superclasses <- cdef@contains
+    ii <- match(superclass, names(superclasses), 0L)
+    if(ii) {
+	cdef@contains <- superclasses[-ii]
+	for(subclass in names(cdef@subclasses))
+	    .removeSuperClass(subclass, superclass, resolve.msg=resolve.msg)
+	cdef
     }
+    else
+	NULL
+}
 
 classesToAM <- function(classes, includeSubclasses = FALSE,
                         abbreviate = 2) {

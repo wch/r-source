@@ -13,3 +13,7 @@ exportMethods(
  ## for other generics:
  plot, show
 )
+
+## The "Matrix-like"
+exportClasses("atomicVector", "array_or_vector")
+

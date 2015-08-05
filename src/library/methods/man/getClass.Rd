@@ -1,6 +1,6 @@
 % File src/library/methods/man/getClass.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getClass}
@@ -11,8 +11,10 @@
   Get the definition of a class.
 }
 \usage{
-getClass(Class, .Force = FALSE, where)
-getClassDef(Class, where, package, inherits = TRUE)
+getClass   (Class, .Force = FALSE, where,
+            resolve.msg = getOption("getClass.msg", default=TRUE))
+getClassDef(Class, where, package, inherits = TRUE,
+            resolve.msg = getOption("getClass.msg", default=TRUE))
 }
 \arguments{
   \item{Class}{ the character-string name of the class, often with a
@@ -30,10 +32,12 @@ getClassDef(Class, where, package, inherits = TRUE)
       used, if any.  There will usually be a package attribute if
       \code{Class} comes from \code{class(x)} for some object.
     }
-  \item{inherits}{ Should the class definition be retrieved from any
-      enclosing environment and also from the cache?  If \code{FALSE}
-      only a definition in the environment \code{where} will be returned.
-    }
+  \item{inherits}{logical; should the class definition be retrieved from
+    any enclosing environment and also from the cache?  If \code{FALSE}
+    only a definition in the environment \code{where} will be returned.}
+  \item{resolve.msg}{\code{\link{logical}} indicating if \R should
+    \code{\link{message}()} its decision if \code{Class} is found in
+    multiple namespaces and one is chosen.}
 }
 \details{
   Class definitions are stored in metadata objects in a package
