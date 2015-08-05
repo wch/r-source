@@ -720,7 +720,7 @@
                 } else { ## no src/Makefile.win
                     srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
                                 all.files = TRUE)
-                    archs <- if (!force_both && !grepl(" x64 ", win.version()))
+                    archs <- if (!force_both && !grepl(" x64 ", utils::win.version()))
                         "i386"
                     else {
                         ## see what is installed
@@ -880,7 +880,7 @@
         if (WINDOWS && "x64" %in% test_archs) {
             ## we cannot actually test x64 unless this is 64-bit
             ## Windows, even if it is installed.
-            if (!grepl(" x64 ", win.version())) test_archs <- "i386"
+            if (!grepl(" x64 ", utils::win.version())) test_archs <- "i386"
         }
 
 

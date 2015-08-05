@@ -58,6 +58,7 @@ if(tools:::.OStype() == "windows") {
 
     S3method("[", SavedPlots)
     S3method(print, SavedPlots)
+    importFrom("utils", "shortPathName")
 } else {
     export(X11.options, X11Font, X11Fonts,
            quartz, quartz.options, quartz.save, quartzFont, quartzFonts)

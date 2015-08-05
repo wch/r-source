@@ -3901,7 +3901,7 @@ function(package, lib.loc = NULL)
             assign("readClipboard", function(format = 1, raw = FALSE) {},
                    envir = compat)
             assign("setWindowTitle",
-                   function(suffix, title = paste(getIdentification(), suffix)) {},
+                   function(suffix, title = paste(utils::getIdentification(), suffix)) {},
                    envir = compat)
             assign("shell",
                    function(cmd, shell, flag = "/c", intern = FALSE,

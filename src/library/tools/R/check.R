@@ -3369,7 +3369,7 @@ setRlibs <-
                 INSTALL_opts <- c(INSTALL_opts,  "--no-multiarch")
             INSTALL_opts <- paste(INSTALL_opts, collapse = " ")
             args <- c("INSTALL", "-l", shQuote(libdir), INSTALL_opts,
-                      shQuote(if (WINDOWS) shortPathName(pkgdir) else pkgdir))
+                      shQuote(if (WINDOWS) utils::shortPathName(pkgdir) else pkgdir))
             if (!use_install_log) {
                 ## Case A: No redirection of stdout/stderr from installation.
                 ## This is very rare: needs _R_CHECK_USE_INSTALL_LOG_ set
@@ -4305,7 +4305,7 @@ setRlibs <-
             f <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             ## if we have x64, can only run it on a 64-bit OS
-            if (length(archs) > 1L && !grepl("x64", utils:::win.version()))
+            if (length(archs) > 1L && !grepl("x64", utils::win.version()))
                 archs <- "i386"
         } else {
             wd2 <- setwd(file.path(R.home("bin"), "exec"))
@@ -4623,7 +4623,7 @@ setRlibs <-
             Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
         }
         if (WINDOWS && grepl(" ", libdir)) # need to avoid spaces in libdir
-            libdir <- gsub("\\", "/", shortPathName(libdir), fixed = TRUE)
+            libdir <- gsub("\\", "/", utils::shortPathName(libdir), fixed = TRUE)
 
         ## Package sources from the R distribution are special.  They
         ## have a 'DESCRIPTION.in' file (instead of 'DESCRIPTION'),
