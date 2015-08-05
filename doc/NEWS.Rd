@@ -108,6 +108,10 @@
       \code{xz} and PCRE have been removed, so system versions are
       required (see the \sQuote{R Installation and Administration}
       manual).
+      
+      \item The unexported and undocumented Windows-only devices
+      \code{cairo_bmp()}, \code{cairo_png()} and \code{cairo_tiff()}
+      have been removed.
     }
   }
 
