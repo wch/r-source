@@ -6308,8 +6308,30 @@ will expand to
 \Sexpr[results=rd]@{tools:::Rd_expr_PR(1234)@}
 @end example
 @noindent
-when parsed.  See the comments in that file for a discussion of what
-macros are available and what they do.
+when parsed.  
+
+Some macros that might be of general use are:
+@ftable @code
+@item \CRANpkg@{pkg@}
+A package on CRAN
+
+@item \sspace
+A single space (used after a period that does not end a sentence).
+
+@item \doi@{numbers@}
+A digital object identifier (DOI).
+@end ftable
+See the @file{system.Rd} file in @file{share/Rd/macros} for more details
+and macro definitions, including macros @code{\packageTitle},
+@code{\packageDescription}, @code{\packageAuthor}, @code{\packageMaintainer},
+@code{\packageDESCRIPTION} and @code{\packageIndices}.
+@findex @code{\packageTitle}
+@findex @code{\packageDescription}
+@findex @code{\packageAuthor}
+@findex @code{\packageMaintainer}
+@findex @code{\packageDESCRIPTION}
+@findex @code{\packageIndices}
+
 
 Packages may also define their own common macros; these would be stored
 in an @file{.Rd} file in @file{man/macros} in the package source and
