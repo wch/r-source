@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/windows/cairo.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ cairo_png <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 2L, width, height, pointsize, bg,
-                        res, antialias, 100L, family))
+                        res, antialias, 100L, family, 300))
 }
 
 cairo_jpeg <-
@@ -55,7 +55,7 @@ cairo_jpeg <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 3L, width, height, pointsize, bg,
-                        res, antialias, quality, family))
+                        res, antialias, quality, family, 300))
 }
 
 cairo_tiff <-
@@ -78,7 +78,7 @@ cairo_tiff <-
     comp <- switch( match.arg(compression),
                    "none" = 1, "rle" = 2, "lzw" = 5, "jpeg" = 7, "zip" = 8)
     invisible(.External(C_devCairo, filename, 8L, width, height, pointsize, bg,
-                        res, antialias, comp, family))
+                        res, antialias, comp, family, 300))
 }
 
 cairo_bmp <-
@@ -98,5 +98,5 @@ cairo_bmp <-
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 9L, width, height, pointsize, bg,
-                        res, antialias, 100L, family))
+                        res, antialias, 100L, family, 300))
 }
