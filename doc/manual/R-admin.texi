@@ -4812,7 +4812,7 @@ You may want/need to install the latest Java from Oracle (currently Java
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
-@code{Java For OS X 2014-001} from
+@code{Java For OS X 2015-001} from
 @uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up
 messages, at least under Yosemite, even if you have a current version
 installed.
