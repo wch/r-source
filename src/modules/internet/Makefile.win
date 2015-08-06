@@ -11,7 +11,7 @@ CPPFLAGS = -I../../include -I../../extra/graphapp -DHAVE_CONFIG_H
 EXTRA_LIBS = -lwininet -lws2_32
 
 ifdef USE_LIBCURL
-libcurl-CPPFLAGS += -DHAVE_CURL_CURL_H -DCURL_STATICLIB -I"$(CURL_PATH)"/include
+libcurl-CPPFLAGS += -DHAVE_CURL_CURL_H -DHAVE_LIBCURL -DCURL_STATICLIB -I"$(CURL_PATH)"/include
 EXTRA_LIBS += -L"$(CURL_PATH)"/lib$(R_ARCH) $(CURL_LIBS)
 endif
 
