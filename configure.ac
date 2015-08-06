@@ -2331,6 +2331,8 @@ r_save_CPPFLAGS="${CPPLAGS}"
 CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
 r_save_LIBS="${LIBS}"
 LIBS="${CURL_LIBS} ${LIBS}"
+AC_CHECK_HEADERS(curl/curl.h, [have_libcurl=yes], [have_libcurl=no])
+if test "x${have_libcurl}" = "xyes"; then
 AC_CACHE_CHECK([if libcurl version >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
@@ -2350,17 +2352,19 @@ int main()
 #endif
 }
 ]])], [r_cv_have_curl728=yes], [r_cv_have_curl728=no], [r_cv_have_curl728=no])])
-if test "x${r_cv_have_curl728}" != xyes; then
-  ac_cv_have_curl_curl_h=0
-  CURL_CPPFLAGS=
-  CURL_LIBS=
-else
-  AC_CHECK_HEADERS(curl/curl.h)
 fi
-CPPFLAGS="${r_save_CPPFLAGS}"
-LIBS="${r_save_LIBS}"
-AC_SUBST(CURL_CPPFLAGS)
-AC_SUBST(CURL_LIBS)
+if test "x${r_cv_have_curl728}" = xno; then
+  have_libcurl=no
+fi
+if test "x${have_libcurl}" = xyes; then
+  AC_DEFINE(HAVE_LIBCURL, 1, [Define if your system has libcurl >= 7.28.0.])
+  CPPFLAGS="${r_save_CPPFLAGS}"
+  LIBS="${r_save_LIBS}"
+  AC_SUBST(CURL_CPPFLAGS)
+  AC_SUBST(CURL_LIBS)
+else
+  AC_MSG_ERROR([libcurl library and headers are required])
+fi
 
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
