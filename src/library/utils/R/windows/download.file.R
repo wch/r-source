@@ -30,7 +30,11 @@ download.file <-
     if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|rda|RData)$", url))) mode <- "wb"
     if(method == "auto") {
 	method <-
-	    if(capabilities("http/ftp"))
+            if(capabilities("libcurl") &&
+               ((grepl("^ftps:", url) ||
+                (grepl("^https:", url) && !setInternet2(NA)))))
+                "libcurl"
+            else if(capabilities("http/ftp"))
 		"internal"
 	    else if(grepl("^file:", url)) {
 		url <- URLdecode(url)
