@@ -85,6 +85,10 @@
       \item Thanks to a patch from Tomas Kalibera, \code{x[x != 0]} is
       now typically \emph{faster} than \code{x[which(x != 0)]} (in the
       case where \code{x} has no NAs, the two are equivalent).
+      
+      \item \code{read.table()} now always uses the names for a named
+      \code{colClasses} argument (previously names were only used when
+      \code{colClasses} was too short). (In part, wish of \PR{16478}.)
     }
   }
 
@@ -111,7 +115,8 @@
 
       \item The unexported and undocumented Windows-only devices
       \code{cairo_bmp()}, \code{cairo_png()} and \code{cairo_tiff()}
-      have been removed.
+      have been removed.  (The devices can be accessed by e.g.
+      \code{bmp{type = "cairo")}.)
     }
   }
 
@@ -169,10 +174,6 @@
       \item \code{capture.output()} gets optional arguments \code{type}
       and \code{split} to pass to \code{sink()}, and hence can be used to
       capture messages.
-
-      \item \code{read.table()} now always uses the names for a named
-      \code{colClasses} argument (previously names were only used when
-      \code{colClasses} was too short). (In part, wish of \PR{16478}.)
     }
   }
 
@@ -258,10 +259,10 @@
 
       \item \code{rhyper(nn, <large>)} now works correctly. (\PR{16489})
 
-      \item \code{ttkimage()} did not (and could not) work so was removed. Ditto for
-      \code{tkimage.cget()} and \code{tkimage.configure()}.
-      Added two Ttk widgets and
-      missing subcommands for Tk's \code{image} command:
+      \item \code{ttkimage()} did not (and could not) work so was
+      removed. Ditto for \code{tkimage.cget()} and
+      \code{tkimage.configure()}. Added two Ttk widgets and missing
+      subcommands for Tk's \code{image} command:
       \code{ttkscale()},
       \code{ttkspinbox()},
       \code{tkimage.delete()},
