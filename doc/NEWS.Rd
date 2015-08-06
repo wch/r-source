@@ -116,7 +116,7 @@
       \item The unexported and undocumented Windows-only devices
       \code{cairo_bmp()}, \code{cairo_png()} and \code{cairo_tiff()}
       have been removed.  (The devices can be accessed by e.g.
-      \code{bmp{type = "cairo")}.)
+      \code{bmp(type = "cairo")}.)
     }
   }
 
