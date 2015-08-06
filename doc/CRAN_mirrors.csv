@@ -84,8 +84,8 @@ Switzerland,Switzerland,Zürich,http://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.
 "Taiwan (Taipei)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 Turkey,Turkey,Denizli,http://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr
-"UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>",1,uk
-"UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>",1,uk
+"UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk
+"UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk
 "UK (Cambridge) [https]",UK,"Cambridge",https://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk
 "UK (Cambridge)",UK,"Cambridge",http://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk
 "UK (Hampshire)",UK,Hampshire,http://mirrors-uk2.go-parts.com/cran/,Go-Parts,"Ray Sison <mirrors # go-parts.com>",1,uk
