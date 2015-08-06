@@ -74,8 +74,8 @@ util-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include
 endif
 
 ifdef USE_LIBCURL
-connections-CPPFLAGS += -DHAVE_CURL_CURL_H
-platform-CPPFLAGS += -DHAVE_CURL_CURL_H
+connections-CPPFLAGS += -DHAVE_CURL_CURL_H -DHAVE_LIBCURL
+platform-CPPFLAGS += -DHAVE_CURL_CURL_H -DHAVE_LIBCURL
 endif
 
 
