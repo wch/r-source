@@ -71,8 +71,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   
   Support for method \code{"libcurl"} is optional: use
   \code{\link{capabilities}("libcurl")} to see if it is supported on
-  your build.  It will usually provide (non-blocking) access to
-  \samp{https://} and \samp{ftps://} URLs.  There is support for
+  your build.  It will provide (non-blocking) access to
+  \samp{https://} and (usually) \samp{ftps://} URLs.  There is support for
   simultaneous downloads, so \code{url} and \code{destfile} can be
   character vectors of the same length greater than one.  For a single
   URL and \code{quiet = FALSE} there a progress bar is shown in
@@ -94,8 +94,6 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"curl"} use argument \code{extra = "-L"}. To disable redirection
   in \command{wget}, use \code{extra = "--max-redirect=0"}.)
 
-  The remaining details apply to method \code{"internal"} only.
-
   Note that \samp{https://} URLs are
 #ifdef unix
   not supported by the internal method.
@@ -110,6 +108,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  This function does decode encoded URLs.
 
+  The remaining details apply to method \code{"internal"} only.
+  
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.
 
@@ -159,14 +159,14 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Methods \code{"wget"} and \code{"curl"} are mainly for historical
   compatibility, but can be used for URLs (e.g., \samp{https://} URLs or
   those that use cookies or redirection) which the internal method does
-  not support where the \code{"libcurl"} method is not available.
+  not support and where the \code{"libcurl"} method is not available.
 
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
   configuration file for \code{wget}.
 
   \command{wget} (\url{http://www.gnu.org/software/wget/}) is commonly
-  installed on Unix-alikes (but not OS X). Windows binaries are
+  installed on Unix-alikes (but not OS X).  Windows binaries are
   available from Cygwin, gnuwin32 and elsewhere.
 
   \command{curl} (\url{http://curl.haxx.se/}) is installed on OS X and
@@ -212,7 +212,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs usually
-  try to verify their certificates. This is usually done using the CA
+  try to verify their certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated).
 

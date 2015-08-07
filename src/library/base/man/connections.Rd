@@ -240,8 +240,8 @@ isIncomplete(con)
 
   Where supported, \code{url(method = "libcurl")} allows more schemes:
   exactly which schemes is platform-dependent (see
-  \code{\link{libcurlVersion}}), but most platforms will support
-  \samp{https://} and \samp{ftps://}.
+  \code{\link{libcurlVersion}}), but all platforms will support
+  \samp{https://} and most \samp{ftps://}.
 
   The default internal method does not follow re-directed HTTP URLs:
   both \code{url(method = "libcurl")} and the use of Windows internal
