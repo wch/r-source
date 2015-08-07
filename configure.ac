@@ -2332,6 +2332,7 @@ CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
 r_save_LIBS="${LIBS}"
 LIBS="${CURL_LIBS} ${LIBS}"
 AC_CHECK_HEADERS(curl/curl.h, [have_libcurl=yes], [have_libcurl=no])
+
 if test "x${have_libcurl}" = "xyes"; then
 AC_CACHE_CHECK([if libcurl version >= 7.28.0], [r_cv_have_curl728],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -2356,14 +2357,34 @@ fi
 if test "x${r_cv_have_curl728}" = xno; then
   have_libcurl=no
 fi
+
+if test "x${have_libcurl}" = "xyes"; then
+AC_CACHE_CHECK([if libcurl supports https], [r_cv_have_curl_https],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <string.h>
+#include <curl/curl.h>
+int main()
+{
+    curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
+    const char * const *p  = data->protocols;
+    int found = 0;
+    for (; *p; p++)
+	if(strcmp(*p, "https") == 0) {found = 1; break;}
+    exit(found ? 0 : 1);
+}
+]])], [r_cv_have_curl_https=yes], [r_cv_have_curl_https=no], [r_cv_have_curl_https=no])])
+fi
+if test "x${r_cv_have_curl_https}" = xno; then
+  have_libcurl=no
+fi
 if test "x${have_libcurl}" = xyes; then
-  AC_DEFINE(HAVE_LIBCURL, 1, [Define if your system has libcurl >= 7.28.0.])
+  AC_DEFINE(HAVE_LIBCURL, 1, [Define if your system has libcurl >= 7.28.0 with support for https.])
   CPPFLAGS="${r_save_CPPFLAGS}"
   LIBS="${r_save_LIBS}"
   AC_SUBST(CURL_CPPFLAGS)
   AC_SUBST(CURL_LIBS)
 else
-  AC_MSG_ERROR([libcurl library and headers are required])
+  AC_MSG_ERROR([libcurl >= 7.28.0 library and headers are required with support for https])
 fi
 
 ## POSIX times.

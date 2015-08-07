@@ -431,7 +431,7 @@
 /* Define to 1 if you have the `cc_dynamic' library (-lcc_dynamic). */
 /* #undef HAVE_LIBCC_DYNAMIC */
 
-/* Define if your system has libcurl >= 7.28.0.
+/* Define if your system has libcurl >= 7.28.0 with support for https.
    Set on the command line where supported.
  */
 /* #undef HAVE_LIBCURL */

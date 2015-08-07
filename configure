@@ -36369,6 +36369,7 @@ fi
 
 done
 
+
 if test "x${have_libcurl}" = "xyes"; then
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl version >= 7.28.0" >&5
 $as_echo_n "checking if libcurl version >= 7.28.0... " >&6; }
@@ -36415,6 +36416,48 @@ fi
 if test "x${r_cv_have_curl728}" = xno; then
   have_libcurl=no
 fi
+
+if test "x${have_libcurl}" = "xyes"; then
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl supports https" >&5
+$as_echo_n "checking if libcurl supports https... " >&6; }
+if ${r_cv_have_curl_https+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  r_cv_have_curl_https=no
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <string.h>
+#include <curl/curl.h>
+int main()
+{
+    curl_version_info_data *data = curl_version_info(CURLVERSION_NOW);
+    const char * const *p  = data->protocols;
+    int found = 0;
+    for (; *p; p++)
+	if(strcmp(*p, "https") == 0) {found = 1; break;}
+    exit(found ? 0 : 1);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  r_cv_have_curl_https=yes
+else
+  r_cv_have_curl_https=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl_https" >&5
+$as_echo "$r_cv_have_curl_https" >&6; }
+fi
+if test "x${r_cv_have_curl_https}" = xno; then
+  have_libcurl=no
+fi
 if test "x${have_libcurl}" = xyes; then
 
 $as_echo "#define HAVE_LIBCURL 1" >>confdefs.h
@@ -36424,7 +36467,7 @@ $as_echo "#define HAVE_LIBCURL 1" >>confdefs.h
 
 
 else
-  as_fn_error $? "libcurl library and headers are required" "$LINENO" 5
+  as_fn_error $? "libcurl >= 7.28.0 library and headers are required with support for https" "$LINENO" 5
 fi
 
 ## POSIX times.
@@ -36694,7 +36737,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
+#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -36748,7 +36791,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
+#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -36780,7 +36823,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
+#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -36833,7 +36876,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
+#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -36865,7 +36908,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
+#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
