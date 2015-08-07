@@ -53,26 +53,30 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   file as described by \code{url} from the internet and store it in
   \code{destfile}.
   The \code{url} must start with a scheme such as
-  \samp{http://}, \samp{ftp://} or \samp{file://}.
+  \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
 
 #ifdef unix
-  If \code{method = "auto"} is chosen (the default), the internal method
-  is chosen for \samp{file://} URLs, and for the others provided
-  \code{\link{capabilities}("http/ftp")} is true (which it almost always
-  is).  Otherwise methods \code{"wget"} and \code{"curl"}.
+  If \code{method = "auto"} is chosen (the default), method
+  \code{"libcurl"} is chosen for \samp{https://} and \samp{ftp://} URLs
+  provided  \code{\link{capabilities}("libcurl")} is true, and the
+  internal method is chosen for \samp{file://} URLs and for the others
+  provided \code{\link{capabilities}("http/ftp")} is true (which it
+  almost always is).
 #endif
 #ifdef windows
-  If \code{method = "auto"} is chosen (the default), the internal method
-  is used on Windows.
+  If \code{method = "auto"} is chosen (the default), the
+  \code{"wininet"} method is used on Windows (unless
+  \code{setInternet2(FALSE)} was used). 
 #endif
   
   Support for method \code{"libcurl"} is optional: use
   \code{\link{capabilities}("libcurl")} to see if it is supported on
-  your build.  It provides (non-blocking) access to \samp{https://} and
-  \samp{ftps://} URLs.  There is support for simultaneous downloads, so
-  \code{url} and \code{destfile} can be character vectors of the same
-  length greater than one.  For a single URL and \code{quiet = FALSE}
-  there a progress bar is shown in interactive use.
+  your build.  It will usually provide (non-blocking) access to
+  \samp{https://} and \samp{ftps://} URLs.  There is support for
+  simultaneous downloads, so \code{url} and \code{destfile} can be
+  character vectors of the same length greater than one.  For a single
+  URL and \code{quiet = FALSE} there a progress bar is shown in
+  interactive use.
   
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -80,14 +84,15 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   They will block all other activity on the \R process until they
   complete: this may make a GUI unresponsive.
 
-  \code{cacheOK = FALSE} is useful for \samp{http://} URLs, and will
-  attempt to get a copy directly from the site rather than from an
-  intermediate cache.  It is used by \code{\link{available.packages}}.
+  \code{cacheOK = FALSE} is useful for \samp{http://} and
+  \samp{https://} URLs: it will attempt to get a copy directly from the
+  site rather than from an intermediate cache.  It is used by
+  \code{\link{available.packages}}.
 
   By default only the \code{"libcurl"} and \code{"wget"} methods follow
-  \samp{http://} redirections.  (For method \code{"curl"} use argument
-  \code{extra = "-L"}. To disable redirection in \command{wget}, use
-  \code{extra = "--max-redirect=0"}.)
+  \samp{http://} and \samp{https://} redirections.  (For method
+  \code{"curl"} use argument \code{extra = "-L"}. To disable redirection
+  in \command{wget}, use \code{extra = "--max-redirect=0"}.)
 
   The remaining details apply to method \code{"internal"} only.
 
@@ -99,9 +104,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   supported by default.  (Prior to \R 3.2.2, this required that
   option \option{--internet2} or environment variable
   \env{R_WIN_INTERNET2} was set or \code{\link{setInternet2}(TRUE)} was
-  used. The option and environment variable are now ignored.)  
-  However, \samp{https://} support only works if the
-  certificate is considered to be valid.
+  used.  That option and environment variable are now ignored.)  
 #endif
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
