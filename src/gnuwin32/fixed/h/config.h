@@ -954,8 +954,7 @@
 /* Define if you have 32 bit ints. */
 #define INT_32_BITS 1
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
 
 /* Define if mktime sets errno. */
