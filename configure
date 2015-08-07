@@ -36282,10 +36282,9 @@ fi
 
 
 
+
 ## libcurl
 ## curl-config might not match the installed libcurl,
-## so we allow the user to set CURL_CPPFLAGS, CURL_LIBS
-## and check the version directly rather than by curl-config --checkfor
 # Extract the first word of "curl-config", so it can be a program name with args.
 set dummy curl-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -36456,6 +36455,7 @@ $as_echo "#define HAVE_LIBCURL 1" >>confdefs.h
 else
   as_fn_error $? "libcurl >= 7.28.0 library and headers are required with support for https" "$LINENO" 5
 fi
+
 
 ## POSIX times.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether leap seconds are treated according to POSIX" >&5
