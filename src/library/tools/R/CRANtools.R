@@ -376,6 +376,54 @@ function(mirrors, db = NULL)
     list(to = to, body = body)
 }
 
+CRAN_mirror_mirmon_status <-
+function()
+{
+    ## See
+    ## <http://www.projects.science.uu.nl/csg/mirmon/mirmon.html#state_file_format>.
+
+    fields <-
+        c("url",
+          "age",
+          "status_last_probe",
+          "time_last_successful_probe",
+          "probe_history",
+          "state_history",
+          "last_probe")
+    ts_to_POSIXct <- function(ts) {
+        suppressWarnings(as.POSIXct(as.numeric(as.character(ts)),
+                                    origin = "1970-01-01"))
+    }
+    read_mirmon_state_file <- function(con) {
+        db <- utils::read.table(con, header = FALSE, col.names = fields)
+        db$url <- as.character(db$url)
+        db$age <- ts_to_POSIXct(db$age)
+        db$time_last_successful_probe <-
+            ts_to_POSIXct(db$time_last_successful_probe)
+        db$last_probe <- ts_to_POSIXct(db$last_probe)
+        db$delta <- difftime(Sys.time(), db$age, units = "days")
+        db
+    }
+    state_files <-
+        c("TIME" = "mirror.state",
+          "TIME_r-release" = "mirror_release.state",
+          "TIME_r-old-release" = "mirror_old_release.state")
+
+    ## Need to always use master for now (the mirrors do not have the
+    ## state files).
+    do.call(rbind,
+            c(Map(function(u, v) {
+                      u <- paste0("https://cran.r-project.org/mirmon/data/", u)
+                      cbind(read_mirmon_state_file(u),
+                            timestamp = v,
+                            stringsAsFactors = FALSE)
+                  },
+                  state_files,
+                  names(state_files)),
+              list(make.row.names = FALSE)))
+}
+
+
 CRAN_Rd_xref_db_with_expansions <-
 function()
 {
