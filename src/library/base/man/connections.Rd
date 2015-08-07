@@ -137,9 +137,9 @@ isIncomplete(con)
   "internal"} is the \sQuote{out of the box} default (and that available
   since connections were introduced): \code{method = "libcurl"} is
   required on a Unix-alike but optional on Windows.  The default can be
-  changed \emph{via} \code{\link{options}(url.method = )} (including for
-  when URLs are passed to \code{file}).  \code{method = "wininet"} is
-  only available on Windows.
+  changed \emph{via} \code{\link{options}(url.method = )}.  \code{method
+    = "wininet"} is only available on Windows, where it is the
+  out-of-the box default.
 #ifdef windows
   (See \code{\link{setInternet2}}, which chooses whether the
   \code{"internal"} method is equivalent to \code{"wininet"}: this is
