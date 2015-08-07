@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{connections}
+\title{Functions to Manipulate Connections (Files, URLs, ...)}
 \alias{connections}
 \alias{connection}
 \alias{file}
@@ -33,9 +34,10 @@
 \concept{gzip}
 \concept{bzip2}
 \concept{lzma}
-\title{Functions to Manipulate Connections}
 \description{
-  Functions to create, open and close connections.
+  Functions to create, open and close connections, i.e.,
+  \dQuote{generalized files}, such as possibly compressed files, URLs,
+  pipes, etc.
 }
 \usage{
 file(description = "", open = "", blocking = TRUE,
@@ -126,18 +128,20 @@ isIncomplete(con)
   the subtly different R-level concept of \code{stdin}.
 
   For \code{url} the description is a complete URL including scheme
-  (such as \samp{http://}, \samp{ftp://} or \samp{file://}).  Proxies
-  can be specified for HTTP and FTP \code{url} connections: see
-  \code{\link{download.file}}.  \code{method = "internal"} is the
-  \sQuote{out of the box} default (and that available since connections
-  were introduced): \code{method = "libcurl"} is optionally supported as
-  from \R 3.2.0.  The default can be changed \emph{via}
-  \code{\link{options}(url.method = )} (including for when URLs are
-  passed to \code{file}).  \code{method = "wininet"} is only available on
-  Windows.
+  (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
+  \samp{file://}).  Proxies can be specified for HTTP and FTP \code{url}
+  connections: see \code{\link{download.file}}.  \code{method =
+  "internal"} is the \sQuote{out of the box} default (and that available
+  since connections were introduced): \code{method = "libcurl"} is
+  optionally supported as from \R 3.2.0.  The default can be changed
+  \emph{via} \code{\link{options}(url.method = )} (including for when
+  URLs are passed to \code{file}).  \code{method = "wininet"} is only
+  available on Windows.
+  
 #ifdef windows
-  (See \code{\link{setInternet2}}, which chooses whether the \code{"internal"}
-  method is equivalent to \code{"wininet"}.)
+  (See \code{\link{setInternet2}}, which chooses whether the
+  \code{"internal"} method is equivalent to \code{"wininet"}: this is
+  true by default as from \R 3.2.2.)
 #endif
 
   For \code{gzfile} the description is the path to a file compressed by
@@ -168,8 +172,8 @@ isIncomplete(con)
   on Windows.)
 
   The intention is that \code{file} and \code{gzfile} can be used
-  generally for text input (from files and \samp{http://} URLs) and
-  binary input respectively.
+  generally for text input (from files, \samp{http://} and
+  \samp{https://} URLs) and binary input respectively.
 
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.
@@ -200,8 +204,8 @@ isIncomplete(con)
 
 \section{URLs}{
   \code{url} and \code{file} support URL schemes \samp{http://},
-  \samp{ftp://} and \samp{file://}: the first two require OS support
-  (which all known \R platforms have).
+  \samp{https://}, \samp{ftp://} and \samp{file://}: the first three
+  require OS support (which all known \R platforms have).
 
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
@@ -224,11 +228,13 @@ isIncomplete(con)
   \code{\link{URLdecode}} if necessary.
 
   Note that the \samp{https://} URL scheme is not supported by the
-  internal method except on Windows.  There it is supported by default, 
+  internal method except on Windows.  There it is supported by default,
   and the \samp{http://user:pass@site} notation for sites requiring
-  authentication is also accepted.  However, if the 
+  authentication is also accepted.  However, if the
   certificate is considered to be invalid, or if
   \code{setInternet2(FALSE)} is run, neither of these will be accepted.
+  On a Unix-alike \code{url(method = "libcurl")} is tried for
+  \samp{https://} URLs.
 
   Where supported, \code{url(method = "libcurl")} allows more schemes:
   exactly which schemes is platform-dependent (see
@@ -238,7 +244,7 @@ isIncomplete(con)
   The default internal method does not follow re-directed HTTP URLs:
   both \code{url(method = "libcurl")} and the use of Windows internal
   functions do.
-  
+
   Function \code{\link{download.file}} and contributed package
   \CRANpkg{RCurl} provide more comprehensive facilities to download
   from URLs.
@@ -249,14 +255,14 @@ isIncomplete(con)
   \code{bzfile}, \code{xzfile}, \code{unz} and \code{socketConnection}
   return a connection object which inherits from class
   \code{"connection"} and has a first more specific class.
-  
+
   \code{open} and \code{flush} return \code{NULL}, invisibly.
 
   \code{close} returns either \code{NULL} or an integer status,
   invisibly. The status is from when the connection was last closed and
   is available only for some types of connections (e.g., pipes, files and
   fifos): typically zero values indicate success.
-  
+
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
 

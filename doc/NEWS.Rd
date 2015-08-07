@@ -6,6 +6,24 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.2.2}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item It is now easier to use secure downloads from
+      \samp{https://} URLs on builds which support them: no longer do
+      non-default options need to be selected to do so.  In particular,
+      packages can be installed from repositories which offer
+      \samp{https://} URLs, and those listed by \code{setRepositories()}
+      now do so (for some of their mirrors).
+      
+      Support for \samp{https://} URLs is available on Windows, and on
+      other platforms if support for \code{libcurl} was compiled in and
+      if that supports the \code{https} protocol (system installations
+      can be expected to do).  So \samp{https://} support can be
+      expected except on rather old OSes (an example being OS X
+      \sQuote{Snow Leopard}).
+    }
+  }
+  
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{cmdscale()} gets new option \code{list.} for increased
@@ -15,14 +33,22 @@
       which (unlike the change from 4.x to 5.0) is a minor update.
       (Wish of \PR{16456}.)
 
-      \item (Windows only) \code{setInternet2(TRUE)} is now the default,
-      so \samp{https://} URLs should be readable.  The command line
-      option \command{--internet2} and the environment variable
-      \env{R_WIN_INTERNET2} are now ignored.
-
       \item (Non-Windows only:) \code{download.file()} with default
       \code{method = "auto"} now chooses \code{"libcurl"} if that is
       available and a \samp{https://} or \samp{ftps://} url is used.
+      
+      \item (Windows only) \code{setInternet2(TRUE)} is now the default.
+      The command-line option \command{--internet2} and environment
+      variable \env{R_WIN_INTERNET2} are now ignored.
+
+      Thus by default the \code{"internal"} method for
+      \code{download.file()} and \code{url()} uses the \code{"wininet"}
+      method: to revert to the previous default use
+      \code{setInternet2(FALSE)}.
+
+      This means that \samp{https://} can be read by default by
+      \code{download.file()} (they have be readable by \code{file()} and
+      \code{url()} since \R 3.2.0).
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes
