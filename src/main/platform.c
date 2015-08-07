@@ -2031,25 +2031,13 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
-#if HAVE_INTERNET
     LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
 
     SET_STRING_ELT(ansnames, i, mkChar("sockets"));
-#ifdef HAVE_SOCKETS
     LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libxml"));
-#ifdef SUPPORT_LIBXML
     LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
 
     SET_STRING_ELT(ansnames, i, mkChar("fifo"));
 #if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)
@@ -2135,7 +2123,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#if defined(HAVE_BSD_NETWORKING) && defined(HAVE_ARPA_INET_H)
+#if defined(HAVE_ARPA_INET_H)
 #include <netdb.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

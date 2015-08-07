@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012   The R Core Team.
+ *  Copyright (C) 2012-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ SEXP crc64(SEXP in)
     return mkString(ans);
 }
 
-#if defined(HAVE_BSD_NETWORKING) && defined(HAVE_ARPA_INET_H)
+#if defined(HAVE_ARPA_INET_H)
 #include <netdb.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

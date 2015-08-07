@@ -60,9 +60,9 @@ capabilities(what = NULL)
     \code{\link{download.file}} support \samp{http://} and \samp{ftp://}
     URLs?  Always \code{TRUE} as from \R 3.3.0.}
   \item{sockets}{Are \code{\link{make.socket}} and related functions
-    available?}
+    available?  Always \code{TRUE} as from \R 3.3.0.}
   \item{libxml}{is there support for integrating \code{libxml} with
-    the \R event loop?}
+    the \R event loop?  \code{TRUE} as from \R 3.3.0.}
   \item{fifo}{are FIFO \link{connections} supported?}
   \item{cledit}{is command-line editing available in the current \R
     session?  This is false in non-interactive sessions.

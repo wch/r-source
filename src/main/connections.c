@@ -3130,7 +3130,6 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = NULL;
 
     checkArity(op, args);
-#ifdef HAVE_SOCKETS
     scmd = CAR(args);
     if(!isString(scmd) || LENGTH(scmd) != 1)
 	error(_("invalid '%s' argument"), "host");
@@ -3185,9 +3184,6 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(3);
-#else
-    error(_("sockets are not available on this system"));
-#endif
     return ans;
 }
 
@@ -4997,7 +4993,6 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     url = translateChar(STRING_ELT(scmd, 0));
 #endif
 
-#ifdef HAVE_INTERNET
     UrlScheme type = HTTPsh;	/* -Wall */
     Rboolean inet = TRUE;
     if (strncmp(url, "http://", 7) == 0)
@@ -5011,7 +5006,6 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	type = FTPSsh;
     else
 	inet = FALSE;
-#endif
 
     // --------- open
     sopen = CADR(args);
@@ -5106,8 +5100,6 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	con = newfile(url + nh, ienc, strlen(open) ? open : "r", raw);
 	class2 = "file";
-#ifdef HAVE_INTERNET
-	// we could pass others to libcurl.
     } else if (inet) {
 	if(meth) {
 # ifdef HAVE_LIBCURL
@@ -5119,7 +5111,6 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    con = R_newurl(url, strlen(open) ? open : "r", urlmeth);
 	    ((Rurlconn)con->private)->type = type;
 	}
-#endif
     } else {
 	if(PRIMVAL(op) == 1) { /* call to file() */
 	    if(strlen(url) == 0) {

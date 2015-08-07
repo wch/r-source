@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001-12   The R Core Team.
+ *  Copyright (C)  2001-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-
-#ifdef HAVE_SOCKETS
 
 
 /* ------------------- socket connections  --------------------- */
@@ -204,5 +202,3 @@ Rconnection in_R_newsock(const char *host, int port, int server,
     ((Rsockconn)new->private)-> timeout = timeout;
     return new;
 }
-
-#endif /* HAVE_SOCKETS */

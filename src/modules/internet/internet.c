@@ -514,7 +514,6 @@ static SEXP in_do_download(SEXP args)
 	}
 	fclose(out); fclose(in);
 
-#ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0
 #ifdef Win32
 	       || ((strncmp(url, "https://", 8) == 0) && meth)
@@ -754,16 +753,12 @@ static SEXP in_do_download(SEXP args)
 	R_Busy(0);
 	fclose(out);
 	if (status == 1) error(_("cannot open URL '%s'"), url);
-#endif
-
     } else
 	error(_("unsupported URL scheme"));
 
     return ScalarInteger(status);
 }
 
-
-#if defined(SUPPORT_LIBXML)
 
 void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 {
@@ -869,7 +864,6 @@ static void in_R_FTPClose(void *ctx)
 	free(ctx);
     }
 }
-#endif /* SUPPORT_LIBXML */
 
 
 #ifdef Win32
@@ -1035,37 +1029,6 @@ static void *in_R_FTPOpen2(const char *url)
     return (void *)wictxt;
 }
 #endif // Win32
-
-#ifndef HAVE_INTERNET
-static void *in_R_HTTPOpen(const char *url, const char *headers,
-			   const int cacheOK)
-{
-    return NULL;
-}
-
-static int in_R_HTTPRead(void *ctx, char *dest, int len)
-{
-    return -1;
-}
-
-static void in_R_HTTPClose(void *ctx)
-{
-}
-
-static void *in_R_FTPOpen(const char *url)
-{
-    return NULL;
-}
-
-static int in_R_FTPRead(void *ctx, char *dest, int len)
-{
-    return -1;
-}
-
-static void in_R_FTPClose(void *ctx)
-{
-}
-#endif
 
 
 #define MBUFSIZE 8192

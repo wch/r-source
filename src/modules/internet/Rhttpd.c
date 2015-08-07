@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2009-12 The R Core Team.
+ *  Copyright (C) 2009-2015 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,12 +64,10 @@
 # ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 # endif
-# ifdef HAVE_BSD_NETWORKING
-#  include <netdb.h>
-#  include <sys/socket.h>
-#  include <netinet/in.h>
-#  include <arpa/inet.h>
-# endif
+# include <netdb.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
 # include <errno.h>
 
 # define sockerrno errno
