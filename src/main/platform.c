@@ -2123,6 +2123,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+// As from 3.3.0 this means on Unix.
 #if defined(HAVE_ARPA_INET_H)
 #include <netdb.h>
 #include <sys/socket.h>

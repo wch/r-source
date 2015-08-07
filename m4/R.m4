@@ -1968,6 +1968,8 @@ AC_DEFUN([R_BSD_NETWORKING],
 [AC_CACHE_CHECK([for BSD networking],
                 [r_cv_bsd_networking],
 [if test "${ac_cv_header_netdb_h}" = yes \
+dnl needed for Rhttpd.c but missed before R 3.3.0
+     && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
      && test "${ac_cv_header_sys_socket_h}" = yes \
      && test "${ac_cv_search_connect}" != no \
