@@ -3038,19 +3038,25 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 @c PCRE 8.10 is from June 2010, 8.32 from May 2013
 @c zlib 1.2.5 is from July 2010, bzip2 1.0.6 from Sept 2010
 @c xz 5.0.3 is from mid 2011 (it was in R 2.13.1).
+@c libcurl 7.28.0 was released in Oct 2012.
 Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 (version 1.0.6 or later: called @pkg{bzip2-libs}/@pkg{bzip2-devel} or
 @pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions),
 @code{liblzma}@footnote{most often distributed as part of @code{xz}:
 possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
-later and PCRE (version 8.10 or later, preferably 8.32 or
+later, PCRE (version 8.10 or later, preferably 8.32 or
 later@footnote{and not PCRE2, which started at version 10.0.  PCRE must
 be built with UTF-8 support (not the default) and support for Unicode
 properties is assumed by some @R{} packages.  Only the first is tested
 by @command{configure}, but both can be checked at run-time by calling
 @code{pcre_config()}. JIT support is desirable for the best
-performance.}) are required.
+performance.}) and @code{libcurl} (version 7.28.0 or later) are
+required.  Information on @code{libcurl} is found from the
+@command{curl-config} script: if that is missing or needs to be
+overridden@footnote{for example to specify static linking with a build
+which has both shared and static libraries.} there are macros to do so
+described in file @file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
@@ -3219,17 +3225,6 @@ Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
 or @code{icu4c}.  It will be used by default where available (including
 on OS X >= 10.4): should a very old or broken version of ICU be found
 this can be suppressed by @option{--without-ICU}.
-
-@c 7.28.0 was released in Oct 2012.
-If @code{libcurl} version 7.28.0 or later is available (including its
-development files), it will be linked in to support
-@code{curlGetHeaders} and the @code{"libcurl"} methods of
-@code{download.file} and @code{url}.  This is recommended as it gives
-access to @samp{https://} and @samp{ftps://} URLs.  Information on
-@code{libcurl} is found from the @command{curl-config} script: if that
-is missing or needs to be overridden@footnote{for example to specify
-static linking with a build which has both shared and static libraries.}
-there are macros described in file @file{config.site}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -4570,9 +4565,10 @@ the configure flag @option{--disable-largefile} was needed (since
 @cindex OS X
 
 The instructions here are for @cputype{x86_64} builds on 10.9
-(Mavericks) or later.  In principle @R{} can be built for 10.4 to 10.8
-and for PowerPC or 32-bit Intel Macs but these has not been tested
-recently.
+(Mavericks) or later.  In principle@footnote{It may be necessary to
+install later versions of software such as @code{libcurl}.} @R{} can be
+built for 10.4 to 10.8 and for PowerPC or 32-bit Intel Macs but these
+has not been tested recently.
 
 You can build @R{} using Apple's `Command Line Tools' and suitable
 compilers.  You will also need @code{readline} (or to configure with
@@ -4661,7 +4657,7 @@ will show the compilers and configuration options used for the
 --enable-memory-profiling
 @end example
 @noindent
-was used for `Mavericks'.
+was used.
 
 Configure option @option{--with-internal-tzcode} is the default on OS X,
 as a 64-bit @code{time_t} is available but the system implementation of
