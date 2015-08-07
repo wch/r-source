@@ -178,14 +178,22 @@
       which (unlike the change from 4.x to 5.0) is a minor update.
       (Wish of \PR{16456}.)
 
-      \item (Windows only) \code{setInternet2(TRUE)} is now the default,
-      so \samp{https://} URLs should be readable.  The command line
-      option \command{--internet2} and the environment variable
-      \env{R_WIN_INTERNET2} are now ignored.
-
       \item (Non-Windows only:) \code{download.file()} with default
       \code{method = "auto"} now chooses \code{"libcurl"} if that is
       available and a \samp{https://} or \samp{ftps://} url is used.
+      
+      \item (Windows only) \code{setInternet2(TRUE)} is now the default.
+      The command-line option \command{--internet2} and environment
+      variable \env{R_WIN_INTERNET2} are now ignored.
+
+      Thus by default the \code{"internal"} method for
+      \code{download.file()} and \code{url()} uses the \code{"wininet"}
+      method: to revert to the previous default use
+      \code{setInternet2(FALSE)}.
+
+      This means that \samp{https://} can be read by default by
+      \code{download.file()} (they have be readable by \code{file()} and
+      \code{url()} since \R 3.2.0).
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes
