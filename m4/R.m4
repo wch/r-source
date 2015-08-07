@@ -1976,17 +1976,6 @@ AC_DEFUN([R_BSD_NETWORKING],
 else
   AC_MSG_ERROR([BSD networking functions are required])
 fi])
-if test "${r_cv_bsd_networking}" = yes; then
-  AC_DEFINE(HAVE_BSD_NETWORKING, 1,
-            [Define if you have BSD networking headers and libraries.])
-  AC_DEFINE(HAVE_SOCKETS, 1,
-            [Define if you have support for sockets.])
-  AC_DEFINE(HAVE_INTERNET, 1,
-            [Define if you have support for ftp/http access.])
-  AC_DEFINE(SUPPORT_LIBXML, 1,
-            [Define if you provide support for the libxml ftp/http
-	     functions.])
-fi
 ])# R_BSD_NETWORKING
 
 ## R_BITMAPS

@@ -35210,25 +35210,11 @@ else
      && test "${ac_cv_search_gethostbyname}" !=  no; then
   r_cv_bsd_networking=yes
 else
-  r_cv_bsd_networking=no
+  as_fn_error $? "BSD networking functions are required" "$LINENO" 5
 fi
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_bsd_networking" >&5
 $as_echo "$r_cv_bsd_networking" >&6; }
-if test "${r_cv_bsd_networking}" = yes; then
-
-$as_echo "#define HAVE_BSD_NETWORKING 1" >>confdefs.h
-
-
-$as_echo "#define HAVE_SOCKETS 1" >>confdefs.h
-
-
-$as_echo "#define HAVE_INTERNET 1" >>confdefs.h
-
-
-$as_echo "#define SUPPORT_LIBXML 1" >>confdefs.h
-
-fi
 
 
 ## Bitmap headers and libraries.
@@ -44884,9 +44870,6 @@ $as_echo "#define HAVE_ICONVLIST 1" >>confdefs.h
 $as_echo "#define HAVE_ICONV_H 1" >>confdefs.h
 
 
-$as_echo "#define HAVE_INTERNET 1" >>confdefs.h
-
-
 $as_echo "#define HAVE_JPEG 1" >>confdefs.h
 
 
@@ -44894,9 +44877,6 @@ $as_echo "#define HAVE_PNG 1" >>confdefs.h
 
 
 $as_echo "#define HAVE_POSIX_SETJMP 1" >>confdefs.h
-
-
-$as_echo "#define HAVE_SOCKETS 1" >>confdefs.h
 
 
 $as_echo "#define HAVE_TCLTK 1" >>confdefs.h
@@ -44910,9 +44890,6 @@ $as_echo "#define HAVE_TIMES 1" >>confdefs.h
     want_R_profiling=yes
 
 $as_echo "#define R_PROFILING 1" >>confdefs.h
-
-
-$as_echo "#define SUPPORT_LIBXML 1" >>confdefs.h
 
     ;;
 esac

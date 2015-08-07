@@ -67,9 +67,6 @@
 /* Define to 1 if you have the `atanpi' function. */
 #undef HAVE_ATANPI
 
-/* Define if you have BSD networking headers and libraries. */
-#undef HAVE_BSD_NETWORKING
-
 /* Define to 1 if the compiler understands __builtin_expect. (For intl) */
 #undef HAVE_BUILTIN_EXPECT
 
@@ -370,9 +367,6 @@
 /* Define to 1 if the system has the type `int64_t'. */
 #undef HAVE_INT64_T
 
-/* Define if you have support for ftp/http access. */
-#undef HAVE_INTERNET
-
 /* Define if you have the 'intmax_t' type in <stdint.h> or <inttypes.h>. (For
    intl) */
 #undef HAVE_INTMAX_T
@@ -664,9 +658,6 @@
 
 /* Define to 1 if you have the `snprintf' function. */
 #undef HAVE_SNPRINTF
-
-/* Define if you have support for sockets. */
-#undef HAVE_SOCKETS
 
 /* Define to 1 if the system has the type `stack_t'. */
 #undef HAVE_STACK_T
@@ -1058,9 +1049,6 @@
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
-
-/* Define if you provide support for the libxml ftp/http functions. */
-#undef SUPPORT_LIBXML
 
 /* Define if you have C/C++/Fortran OpenMP support for package code. */
 #undef SUPPORT_OPENMP
