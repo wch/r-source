@@ -431,6 +431,11 @@
 /* Define to 1 if you have the `cc_dynamic' library (-lcc_dynamic). */
 /* #undef HAVE_LIBCC_DYNAMIC */
 
+/* Define if your system has libcurl >= 7.28.0.
+   Set on the command line where supported.
+ */
+/* #undef HAVE_LIBCURL */
+
 /* Define if __libc_stack_end is visible. */
 /* #undef HAVE_LIBC_STACK_END */
 
