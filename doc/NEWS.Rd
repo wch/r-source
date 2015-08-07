@@ -151,6 +151,24 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.2.2}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item It is now easier to use secure downloads from
+      \samp{https://} URLs on builds which support them: no longer do
+      non-default options need to be selected to do so.  In particular,
+      packages can be installed from repositories which offer
+      \samp{https://} URLs, and those listed by \code{setRepositories()}
+      now do so (for some of their mirrors).
+      
+      Support for \samp{https://} URLs is available on Windows, and on
+      other platforms if support for \code{libcurl} was compiled in and
+      if that supports the \code{https} protocol (system installations
+      can be expected to do).  So \samp{https://} support can be
+      expected except on rather old OSes (an example being OS X
+      \sQuote{Snow Leopard}).
+    }
+  }
+  
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{cmdscale()} gets new option \code{list.} for increased

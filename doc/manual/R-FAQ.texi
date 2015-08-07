@@ -3388,23 +3388,30 @@ When R transfers files over @acronym{HTTP} (e.g., using the
 download method is chosen based on the @option{download.file.method}
 option.  There are several methods available and the default behavior if
 no option is explicitly specified is to use R's internal @acronym{HTTP}
-implementation.  In many circumstances this internal method will not
-support @acronym{HTTPS} connections so you'll need to override the default.
+implementation.  In most circumstances this internal method will not
+support @acronym{HTTPS} URLs so you will need to override the default:
+this is done automatically for such URLs as from R 3.2.2.
 
-R versions 3.2.0 and greater include two download methods (@code{"libcurl"} and
-@code{"wininet"}) that both support @acronym{HTTPS} connections.  We
-recommend that you use these methods.  The requisite code to add to
-@file{.Rprofile} or @file{Rprofile.site} is as follows: 
+R versions 3.2.0 and greater include two download methods
+(@code{"libcurl"} and @code{"wininet"}) that both support
+@acronym{HTTPS} connections.  We recommend that you use these methods.
+The requisite code to add to @file{.Rprofile} or @file{Rprofile.site} is
+as follows:
 
 @example
-options(download.file.method = "wininet")     @r{(Windows)}
-options(download.file.method = "libcurl")     @r{(Linux and OS X)}
+options(download.file.method = "wininet", url.method = "wininet")     @r{(Windows)}
+options(download.file.method = "libcurl", url.method = "libcurl")     @r{(Linux and OS X)}
 @end example
 
-Note that if you built R from source the @code{"libcurl"} method may or
-may not have been compiled in.  In the case that it wasn't,
-i.e.. @code{capabilities("libcurl") == FALSE}, we recommend method
-@code{"wget"} on Linux and @code{"curl"} on OS X.
+@noindent
+(Method @code{"wininet"} is the default on Windows as from R 3.2.2.)
+
+Note that the @code{"libcurl"} method may or may not have been compiled
+in.  In the case that it was not, i.e.. @code{capabilities("libcurl") ==
+FALSE}, we recommend method @code{"wget"} on Linux and @code{"curl"} on
+OS X.  It is possible that system versions of @code{"libcurl"},
+@command{wget} or @command{curl} may have been compiled without
+@acronym{HTTPS} support, but this is unlikely.
 
 
 @node R Programming, R Bugs, R Miscellanea, Top
