@@ -175,6 +175,42 @@ function(x, ...)
     invisible(x)
 }
 
+## Summarize CRAN check status for maintainers matching the given
+## maintainer regexp ...
+
+summarize_CRAN_check_status_for_maintainer <-
+function(maintainer, ...)
+{
+    pdb <- CRAN_package_db()
+
+    ind <- grep(maintainer, pdb[, "Maintainer"], ...)
+
+    summarize_CRAN_check_status(pdb[ind, "Package"])
+}
+
+## Summarize complete CRAN check status according to maintainer.
+
+summarize_CRAN_check_status_according_to_maintainer <-
+function()
+{
+    pdb <- CRAN_package_db()
+    ind <- !duplicated(pdb[, "Package"])
+
+    maintainer <- pdb[, "Maintainer"]
+    maintainer <- tolower(sub(".*<(.*)>.*", "\\1", maintainer))
+
+    results <- CRAN_check_results()
+    details <- CRAN_check_details()
+    mtnotes <- CRAN_memtest_notes()
+
+    split(format(summarize_CRAN_check_status(pdb[ind, "Package"],
+                                             results,
+                                             details,
+                                             mtnotes),
+                 header = TRUE),
+          maintainer[ind])
+}
+
 CRAN_baseurl_for_src_area <-
 function()
     .get_standard_repository_URLs()[1L]
@@ -620,4 +656,27 @@ function(x, ...)
 {
     writeLines(paste(format(x, ...), collapse = "\n\n"))
     invisible(x)
+}
+
+CRAN_package_dependencies_with_dates <-
+function(packages)    
+{
+    a <- utils::available.packages(filters = list(),
+                                   repos = .get_standard_repository_URLs()["CRAN"])
+    p <- CRAN_package_db()
+    d <- package_dependencies(packages, a, which = "most")
+    ## Note that we currently keep the base packages dependencies, which
+    ## have no date.  We could (perhaps at least optionally) do
+    ##   base_packages <- .get_standard_package_names()["base"]
+    ## and then use
+    ##   e <- setdiff(as.character(e), base_packages)
+    ## in the code below.
+    lapply(d,
+           function(e) {
+               y <- data.frame(Package = as.character(e),
+                               stringsAsFactors = FALSE)
+               y$Date <- as.Date(p[match(y$Package, p[, "Package"]),
+                                   "Published"])
+               y[order(y$Date, decreasing = TRUE), ]
+           })
 }
