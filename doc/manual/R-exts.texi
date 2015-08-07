@@ -360,7 +360,7 @@ Suggests: MASS
 Description: A (one paragraph) description of what
   the package does and why it may be useful.
 License: GPL (>= 2)
-URL: http://www.r-project.org, http://www.another.url
+URL: https://www.r-project.org, http://www.another.url
 BugReports: https://pkgname.bugtracker.url
 @end smallexample
 @end cartouche
@@ -433,7 +433,7 @@ with the package name, `This package' or similar.  As with the
 non-English usage, including names of other packages and external
 software.  This field should also be used for explaining the package
 name if necessary.  URLs should be enclosed in angle brackets, e.g.@:
-@samp{<http://www.r-project.org>}: see also @ref{Specifying URLs}.
+@samp{<https://www.r-project.org>}: see also @ref{Specifying URLs}.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
@@ -1426,18 +1426,10 @@ this should be declared in the @samp{SystemRequirements} field of its
 Windows and Mac users should be aware that the Tcl extensions
 @samp{BWidget} and @samp{Tktable} which are currently included with the
 @R{} for Windows and in the OS X installers @emph{are} extensions and do
-need to be declared.  @samp{Tktable} did ship as part of the X11-based
-Tcl/Tk provided on @acronym{CRAN} for OS X prior to @R{} 3.0.0, but you
-will need to tell your users how to make use of it:
-
-@example
-> addTclPath('/usr/local/lib/Tktable2.9')
-> tclRequire('Tktable')
-<Tcl> 2.9
-@end example
-
-@noindent
-It should work with no further user action as from @R{} 3.0.0.
+need to be declared for users of other platforms (and that
+@samp{Tktable} is less widely available than it used to be, including
+not in the main repositories for major Linux distributions).
+@c Not in Fedora since 17, only in launchpad for Ubuntu.
 
 @samp{BWidget} needs to be installed by the user on other OSes.  This is
 fairly easy to do: first find the Tcl/Tk search path:
@@ -1468,8 +1460,8 @@ URLs in many places in the package documentation will be converted to
 clickable hyperlinks in at least some of their renderings.  So care is
 needed that their forms are correct and portable.
 
-The full URL should be given, including the scheme (often
-@samp{http://}) and a final @samp{/} for references to directories.
+The full URL should be given, including the scheme (often @samp{http://}
+or @samp{https://}) and a final @samp{/} for references to directories.
 
 Spaces in URLs are not portable and how they are handled does vary by
 HTTP server and by client.  There should be no space in the host part of
