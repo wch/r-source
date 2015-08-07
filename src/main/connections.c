@@ -5051,7 +5051,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!meth) {
 	if (strncmp(url, "ftps://", 7) == 0)
-#ifdef HAVE_CURL_CURL_H
+#ifdef HAVE_LIBCURL
 	{
 	    // this is slightly optimistic: we did not check the libcurl build
 	    if(!defmeth) {
@@ -5066,7 +5066,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 #ifdef Win32
 	if (!urlmeth && strncmp(url, "https://", 8) == 0) {
-# ifdef HAVE_CURL_CURL_H
+# ifdef HAVE_LIBCURL
 	    // this is slightly optimistic: we did not check the libcurl build
 	    if(!defmeth) {
 		REprintf("https:// URLs are not supported by method \"internal\": trying \"libcurl\"\n");
@@ -5080,7 +5080,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 # endif
 #else
 	if (strncmp(url, "https://", 8) == 0)
-# ifdef HAVE_CURL_CURL_H
+# ifdef HAVE_LIBCURL
 	{
 	    // this is slightly optimistic: we did not check the libcurl build
 	    if(!defmeth) {
@@ -5110,7 +5110,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	// we could pass others to libcurl.
     } else if (inet) {
 	if(meth) {
-# ifdef HAVE_CURL_CURL_H
+# ifdef HAVE_LIBCURL
 	    con = R_newCurlUrl(url, strlen(open) ? open : "r", 0);
 # else
 	    error("url(method = \"libcurl\") is not supported on this platform");
