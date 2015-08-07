@@ -4182,6 +4182,16 @@ bars@footnote{except perhaps the simplest kind as used by
 interactive use, as is displaying help pages or calling @code{View()}
 (see below).
 
+@item
+Be careful with the order of entries in macros such as @code{PKG_LIBS}.
+Some linkers will re-order the entries, and behaviour can differ between
+dynamic and static libraries.  Generally @option{-L} options should
+precede@footnote{Whereas the GNU linker reorders so @option{-L} options
+are processed first, the Solaris one does not.} the libraries (typically
+specified by @option{-l} options) to be found from those directories,
+and libraries are searched once in the order they are specified.  Not
+all linkers allow a space after @option{-L} .
+
 @end itemize
 
 Do be careful in what your tests (and examples) actually test.  Bad
