@@ -17,6 +17,15 @@
       \code{nzchar(x)} gets the same new argument, with default
       \code{keepNA = FALSE} however.  Consequently \code{nzchar(x)} keeps
       returning a non-\code{NA} logical vector, back compatibly.
+
+      \item  All builds have support for \samp{https:} URLs in
+      \code{download.file()}, \code{url()} and code making use of them.
+
+      Unfortunately that cannot guarantee that any particular
+      \samp{https:} URL can be accessed.  For example, server and
+      client have to negotiate a crytpographic protocol (TLS, SSL,
+      \dots) and the server's identity has to be verifiable \emph{via}
+      the available certificates.
     }
   }
   \subsection{NEW FEATURES}{

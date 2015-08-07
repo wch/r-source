@@ -3383,6 +3383,8 @@ actually used memory as well as unused memory that cannot be released.
 @node How can I enable secure https downloads in R?,  , Why is R apparently not releasing memory?, R Miscellanea
 @section How can I enable secure https downloads in R?
 
+@c This should be re-phrased for 3.3.0.
+
 When R transfers files over @acronym{HTTP} (e.g., using the
 @code{install.packages()} or @code{download.file()} function), a
 download method is chosen based on the @option{download.file.method}
@@ -3394,9 +3396,8 @@ this is done automatically for such URLs as from R 3.2.2.
 
 R versions 3.2.0 and greater include two download methods
 (@code{"libcurl"} and @code{"wininet"}) that both support
-@acronym{HTTPS} connections.  We recommend that you use these methods.
-The requisite code to add to @file{.Rprofile} or @file{Rprofile.site} is
-as follows:
+@acronym{HTTPS} connections: we recommend that you use these methods.
+The requisite code to add to @file{.Rprofile} or @file{Rprofile.site} is:
 
 @example
 options(download.file.method = "wininet", url.method = "wininet")     @r{(Windows)}
@@ -3411,7 +3412,9 @@ in.  In the case that it was not, i.e.. @code{capabilities("libcurl") ==
 FALSE}, we recommend method @code{"wget"} on Linux and @code{"curl"} on
 OS X.  It is possible that system versions of @code{"libcurl"},
 @command{wget} or @command{curl} may have been compiled without
-@acronym{HTTPS} support, but this is unlikely.
+@acronym{HTTPS} support, but this is unlikely.  As from R 3.3.0
+@code{"libcurl"} with @acronym{HTTPS} support is required except on
+Windows.
 
 
 @node R Programming, R Bugs, R Miscellanea, Top

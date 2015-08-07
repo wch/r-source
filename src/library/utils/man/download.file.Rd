@@ -57,11 +57,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
 #ifdef unix
   If \code{method = "auto"} is chosen (the default), method
-  \code{"libcurl"} is chosen for \samp{https://} and \samp{ftp://} URLs
-  provided  \code{\link{capabilities}("libcurl")} is true, and the
-  internal method is chosen for \samp{file://} URLs and for the others
-  provided \code{\link{capabilities}("http/ftp")} is true (which it
-  almost always is).
+  \code{"libcurl"} is chosen for \samp{https://} and \samp{ftps://} URLs
+  and the internal method is chosen for \samp{file://} URLs and for the
+  others provided \code{\link{capabilities}("http/ftp")} is true (which
+  it almost always is).
 #endif
 #ifdef windows
   If \code{method = "auto"} is chosen (the default), the
@@ -69,14 +68,14 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{setInternet2(FALSE)} was used). 
 #endif
   
-  Support for method \code{"libcurl"} is optional: use
-  \code{\link{capabilities}("libcurl")} to see if it is supported on
-  your build.  It will provide (non-blocking) access to
-  \samp{https://} and (usually) \samp{ftps://} URLs.  There is support for
-  simultaneous downloads, so \code{url} and \code{destfile} can be
-  character vectors of the same length greater than one.  For a single
-  URL and \code{quiet = FALSE} there a progress bar is shown in
-  interactive use.
+  Support for method \code{"libcurl"} is optional on Windows but
+  required on other platforms: use \code{\link{capabilities}("libcurl")}
+  to see if it is supported on your build.  It will provide
+  (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
+  URLs.  There is support for simultaneous downloads, so \code{url} and
+  \code{destfile} can be character vectors of the same length greater
+  than one.  For a single URL and \code{quiet = FALSE} there a progress
+  bar is shown in interactive use.
   
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -157,9 +156,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   may be truncated on some 32-bit builds.
   
   Methods \code{"wget"} and \code{"curl"} are mainly for historical
-  compatibility, but can be used for URLs (e.g., \samp{https://} URLs or
-  those that use cookies or redirection) which the internal method does
-  not support and where the \code{"libcurl"} method is not available.
+  compatibility but provide may provide capabilities not supported by
+  the \code{"libcurl"} or \code{"wininet"} methods.
 
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
