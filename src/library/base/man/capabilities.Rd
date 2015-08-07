@@ -56,8 +56,9 @@ capabilities(what = NULL)
   \item{X11}{always \code{FALSE} on Windows.}
   \item{aqua}{\code{FALSE} except on OS X.}
 #endif
-  \item{http/ftp}{Are \code{\link{url}} and the internal method for
-    \code{\link{download.file}} available?}
+  \item{http/ftp}{Does the internal method for \code{\link{url}} and
+    \code{\link{download.file}} support \samp{http://} and \samp{ftp://}
+    URLs?}
   \item{sockets}{Are \code{\link{make.socket}} and related functions
     available?}
   \item{libxml}{is there support for integrating \code{libxml} with
