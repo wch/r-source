@@ -206,8 +206,12 @@
       \code{setInternet2(FALSE)}.
 
       This means that \samp{https://} can be read by default by
-      \code{download.file()} (they have be readable by \code{file()} and
+      \code{download.file()} (they have been readable by \code{file()} and
       \code{url()} since \R 3.2.0).
+
+      There are implications for how proxies need to be set (see
+      \code{?download.file}): also, \code{cacheOK = FALSE} is not
+      supported.
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes
