@@ -58,9 +58,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #ifdef unix
   If \code{method = "auto"} is chosen (the default), method
   \code{"libcurl"} is chosen for \samp{https://} and \samp{ftps://} URLs
-  and the internal method is chosen for \samp{file://} URLs and for the
-  others provided \code{\link{capabilities}("http/ftp")} is true (which
-  it almost always is).
+  and the internal method is chosen for other schemes.
 #endif
 #ifdef windows
   If \code{method = "auto"} is chosen (the default), the

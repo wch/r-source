@@ -58,7 +58,7 @@ capabilities(what = NULL)
 #endif
   \item{http/ftp}{Does the internal method for \code{\link{url}} and
     \code{\link{download.file}} support \samp{http://} and \samp{ftp://}
-    URLs?}
+    URLs?  Always \code{TRUE} as from \R 3.3.0.}
   \item{sockets}{Are \code{\link{make.socket}} and related functions
     available?}
   \item{libxml}{is there support for integrating \code{libxml} with
@@ -111,8 +111,8 @@ capabilities(what = NULL)
 \examples{
 capabilities()
 
-if(!capabilities("http/ftp"))
-   warning("internal download.file() method is not available")
+if(!capabilities("ICU"))
+   warning("ICU is not available")
 
 ## See also the examples for 'connections'.
 }

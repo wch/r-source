@@ -532,8 +532,8 @@ isIncomplete(con)
   \code{\link{writeBin}}, \code{\link{writeChar}}, \code{\link{load}}
   and \code{\link{save}}.
 
-  \code{\link{capabilities}} to see if HTTP/FTP \code{url},
-  \code{fifo} and \code{socketConnection} are supported by this build of \R.
+  \code{\link{capabilities}} to see if \code{fifo} and
+  \code{socketConnection} connections are supported by this build of \R.
 
   \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
   connection.

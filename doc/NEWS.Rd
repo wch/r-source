@@ -144,6 +144,9 @@
       \item \code{libcurl} version 7.28.0 or later with support for the
       \code{https} protocol is required for installation (except on
       Windows).
+      
+      \item BSD networking is now required (except on Windows) and so
+      \code{capabilities("http/ftp")} is always true.
     }
   }
 
@@ -477,7 +480,7 @@
       \code{fileEncoding} argument, for convenience.
 
       \item Graphics devices can add attributes to their description in
-      \code{.Device} and \code{.Devices}.  Several of those included with
+s      \code{.Device} and \code{.Devices}.  Several of those included with
       \R use a \code{"filepath"} attribute.
 
       \item \code{pmatch()} uses hashing in more cases and so is faster

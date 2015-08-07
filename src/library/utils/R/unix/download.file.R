@@ -30,17 +30,11 @@ download.file <-
 	method <-
 	    if(capabilities("libcurl") && grepl("^(ht|f)tps:", url))
 		"libcurl"
-	    else if(capabilities("http/ftp"))
-		"internal"
-	    else if(grepl("^file:", url)) {
-		url <- URLdecode(url)
-		"internal"
-	    } else if(system("wget --help > /dev/null") == 0L)
-		"wget"
-	    else if(system("curl --help > /dev/null") == 0L)
-		"curl"
-	    else
-		stop("no download method found")
+## 	    else if(grepl("^file:", url)) {
+## 		url <- URLdecode(url)
+## 		"internal"
+## 	    }
+            else "internal"
     }
 
     switch(method,
@@ -78,7 +72,7 @@ download.file <-
 				      " -o", shQuote(path.expand(destfile))))
 	   },
 	   "lynx" =
-	       stop("method 'lynx' is defunct as from R 3.1.0", domain = NA))
+	       stop("method 'lynx' is defunct", domain = NA))
 
     if(status) warning("download had nonzero exit status")
 

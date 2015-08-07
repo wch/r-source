@@ -1,11 +1,5 @@
-## These are tests that require internet functionality, and
-## a working Internet connection.
-## We attempt to test for those.
-
-if(!capabilities()["http/ftp"]) {
-    warning("no internet capabilities")
-    q()
-}
+## These are tests that require a working Internet connection.
+## We attempt to test for that.
 
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()

@@ -2,11 +2,6 @@
 ## a working Internet connection.
 ## We attempt to test for those.
 
-if(!capabilities()["http/ftp"]) {
-    warning("no internet capabilities")
-    q()
-}
-
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 

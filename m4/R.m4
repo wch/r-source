@@ -1974,7 +1974,7 @@ AC_DEFUN([R_BSD_NETWORKING],
      && test "${ac_cv_search_gethostbyname}" !=  no; then
   r_cv_bsd_networking=yes
 else
-  r_cv_bsd_networking=no
+  AC_MSG_ERROR([BSD networking functions are required])
 fi])
 if test "${r_cv_bsd_networking}" = yes; then
   AC_DEFINE(HAVE_BSD_NETWORKING, 1,
