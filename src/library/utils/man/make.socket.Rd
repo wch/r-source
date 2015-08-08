@@ -1,6 +1,6 @@
 % File src/library/utils/man/make.socket.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{make.socket}
@@ -41,7 +41,10 @@ make.socket(host = "localhost", port, fail = TRUE, server = FALSE)
 }
 
 \seealso{
-  \code{\link{close.socket}}, \code{\link{read.socket}}
+  \code{\link{close.socket}}, \code{\link{read.socket}}.
+
+  Compiling in support for sockets is optional: see
+  \code{\link{capabilities}("sockets")} to see if it is available.
 }
 
 \examples{
