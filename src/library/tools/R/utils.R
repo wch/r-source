@@ -1428,6 +1428,7 @@ nonS3methods <- function(package)
              RCurl = "merge.list",
              RNetCDF = c("close.nc", "dim.def.nc", "dim.inq.nc",
                          "dim.rename.nc", "open.nc", "print.nc"),
+             Rmpfr = c("mpfr.is.0", "mpfr.is.integer"),
              SMPracticals = "exp.gibbs",
              TANOVA = "sigma.hat",
              TeachingDemos = "sigma.test",
