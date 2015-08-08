@@ -1216,13 +1216,12 @@ function(package, lib.loc = NULL)
         var_names_in_docs <- sort(Rd_var_names[[i]])
         ## Try finding the variable or data set given by the alias.
         al <- aliases[i]
-        if(exists(al, envir = code_env, mode = "list",
-                  inherits = FALSE)) {
-            al <- get(al, envir = code_env, mode = "list")
-        } else if(has_namespace && exists(al, envir = ns_env, mode = "list",
-                  inherits = FALSE)) {
-            al <- get(al, envir = ns_env, mode = "list")
-        } else if(has_data) {
+	if(!is.null(A <- get0(al, envir = code_env, mode = "list", inherits = FALSE)))
+	    al <- A
+	else if(has_namespace &&
+		!is.null(A <- get0(al, envir = ns_env, mode = "list", inherits = FALSE)))
+	    al <- A
+	else if(has_data) {
             ## Should be a data set.
             if(!length(dir(data_dir)
                        %in% paste(al, data_exts, sep = "."))) {
@@ -1230,10 +1229,9 @@ function(package, lib.loc = NULL)
             }
             ## Try loading the data set into data_env.
             utils::data(list = al, envir = data_env)
-            if(exists(al, envir = data_env, mode = "list",
-                      inherits = FALSE)) {
-                al <- get(al, envir = data_env, mode = "list")
-            }
+            if(!is.null(A <- get0(al, envir = data_env, mode = "list", inherits = FALSE)))
+		al <- A
+
             ## And clean up data_env.
             rm(list = ls(envir = data_env, all.names = TRUE),
                envir = data_env)
@@ -1819,8 +1817,7 @@ function(package, dir, file, lib.loc = NULL,
         if(basename(dir) != "base") {
             .load_package_quietly(package, lib.loc)
             code_env <- asNamespace(package)
-            if(exists("DLLs", envir = code_env$.__NAMESPACE__.)) {
-                DLLs <- get("DLLs", envir = code_env$.__NAMESPACE__.)
+            if(!is.null(DLLs <- get0("DLLs", envir = code_env$.__NAMESPACE__.))) {
                 ## fake installs have this, of class DLLInfoList
                 if(length(DLLs)) has_namespace <- TRUE
                 if(length(DLLs) && inherits(DLLs[[1L]], "DLLInfo")) {
@@ -2354,7 +2351,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the function objects in the given package.
     functions_in_code <-
-        Filter(function(f) is.function(get(f, envir = code_env)), # get is expensive
+        Filter(function(f) is.function(code_env[[f]]),
                objects_in_code)
 
     ## This is the virtual group generics, not the members
@@ -2384,23 +2381,19 @@ function(package, dir, lib.loc = NULL)
                     if (typeof(genfun) == "closure") environment(genfun)
                     else .BaseNamespaceEnv
                 }
-            if(!exists(".__S3MethodsTable__.", envir = defenv,
-                       inherits = FALSE)) {
+            if(is.null(S3Table <- get0(".__S3MethodsTable__.", envir = defenv,
+                                       inherits = FALSE))) {
                 ## Happens e.g. if for some reason, we get "plot" as
                 ## standardGeneric for "plot" defined from package
                 ## "graphics" with its own environment which does not
                 ## contain an S3 methods table ...
                 return(NULL)
             }
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv,
-                           inherits = FALSE)
-            if(!exists(m, envir = S3Table)) {
-                warning(gettextf("declared S3 method '%s' not found",
-                                 m),
-                        domain = NA,
-                        call. = FALSE)
+            if(is.null(mm <- get0(m, envir = S3Table))) {
+                warning(gettextf("declared S3 method '%s' not found", m),
+                        domain = NA, call. = FALSE)
                 return(NULL)
-            } else get(m, envir = S3Table)
+            } else mm
         } else get(m, envir = code_env)
         mArgs <- omArgs <- names(formals(gm))
         ## If m is a formula method, its first argument *may* be called
@@ -2412,14 +2405,14 @@ function(package, dir, lib.loc = NULL)
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos))
-            seq.int(from = 1L, length.out = dotsPos[1L] - 1L)
+            seq_len(dotsPos[1L] - 1L)
         else
             seq_along(gArgs)
 
         ## careful, this could match multiply in incorrect funs.
         dotsPos <- which(mArgs == "...")
         if(length(dotsPos))
-            ipos <- ipos[seq.int(from = 1L, length.out = dotsPos[1L] - 1L)]
+	    ipos <- ipos[seq_len(dotsPos[1L] - 1L)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0L
         margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
