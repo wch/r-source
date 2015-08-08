@@ -22,7 +22,7 @@ close.socket(socket, \dots)
 }
 \author{Thomas Lumley}
 \seealso{
-  \code{\link{make.socket}}, \code{\link{read.socket}}
+  \code{\link{make.socket}}, \code{\link{read.socket}}.
 
   Compiling in support for sockets is optional: see
   \code{\link{capabilities}("sockets")} to see if it is available.

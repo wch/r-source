@@ -321,9 +321,6 @@ getOption(x, default = NULL)
       rendering text help (see \code{\link{Rd2txt}} in package
       \pkg{tools}).  Can be \code{TRUE}, \code{FALSE}, \code{"TeX"} or
       \code{"UTF-8"}.}
-      
-    \item{\code{useHTTPS}:}{logical.  Used by \code{\link{chooseCRANmirror}}:
-      are secure mirrors preferred?  If not set, \code{TRUE} is used.}
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
@@ -642,6 +639,9 @@ getOption(x, default = NULL)
       used.
 #endif
     }
+      
+    \item{\code{useHTTPS}:}{logical.  Used by \code{\link{chooseCRANmirror}}:
+      are secure mirrors preferred?  If not set, \code{TRUE} is assumed.}
   }
 }
 \section{Options set in package parallel}{
