@@ -1,6 +1,6 @@
 % File src/library/utils/man/close.socket.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{close.socket}
@@ -10,7 +10,7 @@ close.socket(socket, \dots)
 }
 \alias{close.socket}
 \arguments{
-  \item{socket}{A \code{socket} object}
+  \item{socket}{a \code{socket} object}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
@@ -23,6 +23,9 @@ close.socket(socket, \dots)
 \author{Thomas Lumley}
 \seealso{
   \code{\link{make.socket}}, \code{\link{read.socket}}
+
+  Compiling in support for sockets was optional prior to \R 3.3.0: see
+  \code{\link{capabilities}("sockets")} to see if it is available.
 }
 
 \keyword{misc}

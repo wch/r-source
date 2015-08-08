@@ -480,7 +480,7 @@
       \code{fileEncoding} argument, for convenience.
 
       \item Graphics devices can add attributes to their description in
-s      \code{.Device} and \code{.Devices}.  Several of those included with
+      \code{.Device} and \code{.Devices}.  Several of those included with
       \R use a \code{"filepath"} attribute.
 
       \item \code{pmatch()} uses hashing in more cases and so is faster
