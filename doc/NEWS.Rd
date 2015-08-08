@@ -102,6 +102,10 @@
       \item (Windows only) \code{download.file()} with default
       \code{method = "auto"} and a \samp{ftps://} URL chooses
       \code{"libcurl"} if that is available.
+      
+      \item The out-of-the box Bioconductor mirror has been changed to
+      one using \samp{https://}: use \code{chooseBioCmirror()} to choose
+      a \samp{http://} mirror if required.
     }
   }
 

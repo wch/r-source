@@ -16,11 +16,12 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
 }
 \arguments{
   \item{graphics}{Logical.  If true, use a graphical list: on Windows or
-    the OS X GUI use a list box, and on a Unix-alike  use a Tk widget if
+    the OS X GUI use a list box, and on a Unix-alike use a Tk widget if
     package \pkg{tcltk} and an X server are available.  Otherwise use a
     text \code{\link{menu}}.}
   
   \item{ind}{Optional numeric value giving which entry to select.}
+
   \item{useHTTPS}{Whether to prefer HTTPS mirrors (see
   \code{\link{chooseCRANmirror}}).}
 }
@@ -28,7 +29,7 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
   This sets the \link{option} \code{"BioC_mirror"}: it is used
   before a call to \code{\link{setRepositories}}.  The out-of-the-box
   default for that option is \code{NULL}, which currently corresponds to
-  the mirror \url{http://bioconductor.org}.
+  the mirror \url{https://bioconductor.org}.
 
   The \sQuote{Bioconductor (World-wide)} \sQuote{mirror} is a network of
   mirrors providing reliable world-wide access; other mirrors may
