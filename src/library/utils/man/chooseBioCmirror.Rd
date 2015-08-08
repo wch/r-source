@@ -25,12 +25,14 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
   \code{\link{chooseCRANmirror}}).}
 }
 \details{
-  This sets the option \code{"BioC_mirror"}: it needs to be used before
-  a call to \code{\link{setRepositories}}.
+  This sets the \link{option} \code{"BioC_mirror"}: it is used
+  before a call to \code{\link{setRepositories}}.  The out-of-the-box
+  default for that option is \code{NULL}, which currently corresponds to
+  the mirror \url{http://bioconductor.org}.
 
-  The \sQuote{Bioconductor (World-wide)} mirror provides reliable
-  world-wide access; other mirrors may provide faster access on a
-  geographically local scale.
+  The \sQuote{Bioconductor (World-wide)} \sQuote{mirror} is a network of
+  mirrors providing reliable world-wide access; other mirrors may
+  provide faster access on a geographically local scale.
 
   \code{ind} chooses a row in
   \file{\var{\link{R_HOME}}/doc/BioC_mirrors.csv},
