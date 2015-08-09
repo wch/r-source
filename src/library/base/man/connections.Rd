@@ -207,6 +207,10 @@ isIncomplete(con)
   \samp{https://}, \samp{ftp://} and \samp{file://}: the first three
   require OS support (which all known \R platforms have).
 
+  \code{url(method = "libcurl")} allows more schemes: exactly which
+  schemes is platform-dependent (see \code{\link{libcurlVersion}}), but
+  most platforms will support \samp{https://} and \samp{ftps://}.
+
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
@@ -236,14 +240,11 @@ isIncomplete(con)
   On a Unix-alike \code{url(method = "libcurl")} is tried for
   \samp{https://} URLs.
 
-  Where supported, \code{url(method = "libcurl")} allows more schemes:
-  exactly which schemes is platform-dependent (see
-  \code{\link{libcurlVersion}}), but most platforms will support
-  \samp{https://} and \samp{ftps://}.
+  The \code{"internal"} method does not follow re-directed HTTP URLs:
+  both methods \code{"wininet"} (the default on Windows) and
+  \code{"libcurl"} do.
 
-  The default internal method does not follow re-directed HTTP URLs:
-  both \code{url(method = "libcurl")} and the use of Windows internal
-  functions do.
+  Server-side cached data is always accepted.
 
   Function \code{\link{download.file}} and contributed package
   \CRANpkg{RCurl} provide more comprehensive facilities to download
@@ -535,7 +536,10 @@ isIncomplete(con)
 
   \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
   connection.
-
+  
+  \code{\link{options}} \code{HTTPUserAgent}, \code{internet.info} and
+  \code{timeout} are used by some of the methods for URL connections.
+  
   \code{\link{memCompress}} for more ways to (de)compress and references
   on data compression.
 #ifdef windows

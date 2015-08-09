@@ -541,11 +541,11 @@ getOption(x, default = NULL)
     \item{\code{help_type}:}{default for an argument of
     \code{\link{help}}, used also as the help type by \code{\link{?}}.}
 
-    \item{\code{HTTPUserAgent}:}{string used as the user agent in HTTP
-      requests.  If \code{NULL}, HTTP requests will be made without a
-      user agent header.  The default is \code{R (<version> <platform>
-	<arch> <os>)}}
-
+    \item{\code{HTTPUserAgent}:}{string used as the user agent in HTTP(S)
+      requests.  If \code{NULL}, requests will be made without a
+      user agent header.
+      The default is \code{R (<version> <platform> <arch> <os>)} .}
+    
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
       for binary installs on OS X and Windows, but can be used in a
@@ -554,12 +554,11 @@ getOption(x, default = NULL)
       the character string \code{"pkgloack"}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
-      printed on URL downloads etc, using the \code{"internal"} method.
+      printed on URL downloads etc, using the \code{"internal"} and
+      \code{"libcurl"} methods.
       Default is 2, for failure causes.  Set to 1 or 0 to get more
-      detailed information.
-
-      For methods based on \code{libcurl} a value less than 2 (the
-      default) selects verbose output.
+      detailed information (for the \code{"internal"} method 0 provides
+      more information than 1).
     }
 
     \item{\code{install.packages.check.source}:}{Used by
