@@ -27,13 +27,11 @@ download.file <-
         match.arg(method, c("auto", "internal", "libcurl", "wget", "curl", "lynx"))
 
     if(method == "auto") {
+        if(length(url) != 1L || typeof(url) != "character")
+            stop("'url' must be a length-one character vector");
 	method <-
 	    if(capabilities("libcurl") && grepl("^(ht|f)tps:", url))
 		"libcurl"
-## 	    else if(grepl("^file:", url)) {
-## 		url <- URLdecode(url)
-## 		"internal"
-## 	    }
             else "internal"
     }
 

@@ -30,15 +30,13 @@ download.file <-
     if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|rda|RData)$", url)))
         mode <- "wb"
     if(method == "auto") {
+        if(length(url) != 1L || typeof(url) != "character")
+            stop("'url' must be a length-one character vector");
 	method <-
             if(capabilities("libcurl") &&
-               ((grepl("^ftps:", url) ||
-                (grepl("^https:", url) && !setInternet2(NA)))))
+               (grepl("^ftps:", url) ||
+                (grepl("^https:", url) && !setInternet2(NA))))
                 "libcurl"
-##  	    else if(grepl("^file:", url)) {
-## 		url <- URLdecode(url)
-## 		"internal"
-## 	    }
             else "internal"
     }
 

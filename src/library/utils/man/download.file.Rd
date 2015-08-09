@@ -72,7 +72,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
   URLs.  There is support for simultaneous downloads, so \code{url} and
   \code{destfile} can be character vectors of the same length greater
-  than one.  For a single URL and \code{quiet = FALSE} there a progress
+  than one.  For a single URL and \code{quiet = FALSE} a progress
   bar is shown in interactive use.
   
   For methods \code{"wget"} and \code{"curl"} a system call is made to
@@ -103,7 +103,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #endif
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
-  especially on Windows.  This function does decode encoded URLs.
+  especially on Windows.  The \code{"internal"} and \code{"wininet"}
+  methods do not decode \samp{file://} URLs, but the \code{"libcurl"}
+  and \code{"curl"} methods do: method \code{"wget"} does not support
+  them.
 
   The remaining details apply to method \code{"internal"} only.
   
