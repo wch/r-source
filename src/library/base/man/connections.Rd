@@ -132,19 +132,18 @@ isIncomplete(con)
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
-  \samp{file://}).  Proxies can be specified for HTTP and FTP \code{url}
-  connections: see \code{\link{download.file}}.  \code{method =
-  "internal"} is the \sQuote{out of the box} default (and that available
-  since connections were introduced): \code{method = "libcurl"} is
-  required on a Unix-alike but optional on Windows.  The default can be
-  changed \emph{via} \code{\link{options}(url.method = )}.  \code{method
-    = "wininet"} is only available on Windows, where it is the
-  out-of-the box default.
-#ifdef windows
-  (See \code{\link{setInternet2}}, which chooses whether the
-  \code{"internal"} method is equivalent to \code{"wininet"}: this is
-  true by default as from \R 3.2.2.)
-#endif
+  \samp{file://}).  Proxies can be specified for HTTP, HTTPS and FTP
+  \code{url} connections: see \code{\link{download.file}}.  \code{method
+  = "internal"} is that available since connections were introduced),
+  \code{method = "wininet"} is only available on Windows and
+  \code{method = "libcurl"} is required on a Unix-alike but optional on
+  Windows.  Method \code{"default"} uses method \code{"internal"} for
+  \samp{file:} URLs and \code{"libcurl"} for \code{ftps:} URLs.
+  Except on Windows with \code{\link{setInternet2}(TRUE)} (the default
+  there), it uses \code{"internal"} for \samp{http:} and \code{ftp:}
+  URLs and \code{"libcurl"} for \samp{https:} URLs. The default
+  behaviour on Windows is to use \code{"wininet"} for \samp{http:},
+  \code{ftp:} and \samp{https:} URLs.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
