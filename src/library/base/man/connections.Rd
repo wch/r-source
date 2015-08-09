@@ -164,13 +164,9 @@ isIncomplete(con)
   from.  This is run in a shell, on Windows that specified by the
   \env{COMSPEC} environment variable.
 
-  For \code{fifo} the description is the path of the fifo.
-
-  All platforms support \code{file}, \code{pipe}, \code{gzfile},
-  \code{bzfile}, \code{xzfile}, \code{unz} and \code{url("file://")}
-  connections.  The other connections may be partially implemented or
-  not implemented at all.  (They do work on most Unix platforms, and all
-  on Windows.)
+  For \code{fifo} the description is the path of the fifo.  (Support for
+  \code{fifo} connections is optional but they are available on most
+  Unix platforms and on Windows.)
 
   The intention is that \code{file} and \code{gzfile} can be used
   generally for text input (from files, \samp{http://} and
@@ -207,11 +203,10 @@ isIncomplete(con)
   \code{url} and \code{file} support URL schemes \samp{file://},
   \samp{http://}, \samp{https://} and \samp{ftp://}.
 
-  With \code{method = "libcurl"} they will support more schemes: exactly
-  which schemes is platform-dependent (see
-  \code{\link{libcurlVersion}}), but all Unix-alike platforms will
-  support \samp{https://} and most platforms will support
-  \samp{ftps://}.
+  \code{method = "libcurl"} allows more schemes: exactly which schemes
+  is platform-dependent (see \code{\link{libcurlVersion}}), but all
+  Unix-alike platforms will support \samp{https://} and most platforms
+  will support \samp{ftps://}.
 
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
@@ -233,9 +228,11 @@ isIncomplete(con)
   No attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
 
-  The default internal method does not follow re-directed HTTP URLs:
-  both \code{url(method = "libcurl")} and the use of Windows internal
-  functions do.
+  The \code{"internal"} method does not follow re-directed HTTP URLs:
+  both methods \code{"wininet"} (the default on Windows) and
+  \code{"libcurl"} do (including for HTTPS URLs).
+
+  Server-side cached data is always accepted.
 
   Function \code{\link{download.file}} and contributed package
   \CRANpkg{RCurl} provide more comprehensive facilities to download
@@ -522,12 +519,15 @@ isIncomplete(con)
   \code{\link{writeBin}}, \code{\link{writeChar}}, \code{\link{load}}
   and \code{\link{save}}.
 
-  \code{\link{capabilities}} to see if \code{fifo} and
-  \code{socketConnection} connections are supported by this build of \R.
+  \code{\link{capabilities}} to see if \code{fifo} connections are
+  supported by this build of \R.
 
   \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
   connection.
-
+  
+  \code{\link{options}} \code{HTTPUserAgent}, \code{internet.info} and
+  \code{timeout} are used by some of the methods for URL connections.
+  
   \code{\link{memCompress}} for more ways to (de)compress and references
   on data compression.
 #ifdef windows
