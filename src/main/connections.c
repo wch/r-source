@@ -4043,9 +4043,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #endif
 		    default:
-			error(
-				  _("size %d is unknown on this machine"),
-				  size);
+			error(_("size %d is unknown on this machine"), size);
 		    }
 		}
 	    }
@@ -4956,21 +4954,20 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 # define USE_WININET 2
 #endif
 
-
-/* op = 0: url(description, open, blocking, encoding)
-   op = 1: file(description, open, blocking, encoding)
-*/
-
 // in internet module: 'type' is unused
 extern Rconnection
 R_newCurlUrl(const char *description, const char * const mode, int type);
 
+
+/* op = 0: .Internal( url(description, open, blocking, encoding, method))
+   op = 1: .Internal(file(description, open, blocking, encoding, method, raw))
+*/
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     char *class2 = "url";
     const char *url, *open;
-    int ncon, block, raw = 0, meth = 0;
+    int ncon, block, raw = 0, meth = 0, defmeth = 1;
 #ifdef Win32
     int urlmeth = UseInternet2;
 #endif
@@ -4981,6 +4978,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     checkArity(op, args);
+    // --------- description
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) != 1)
 	error(_("invalid '%s' argument"), "description");
@@ -4999,7 +4997,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    url = translateChar(STRING_ELT(scmd, 0));
     }
 #else
-	url = translateChar(STRING_ELT(scmd, 0));
+    url = translateChar(STRING_ELT(scmd, 0));
 #endif
 
 #ifdef HAVE_INTERNET
@@ -5010,26 +5008,31 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (strncmp(url, "ftps://", 7) == 0) type = FTPSsh;
 #endif
 
+    // --------- open
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
+    // --------- blocking
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
-	error(_("invalid '%s' argument"), "block");
+	error(_("invalid '%s' argument"), "blocking");
     enc = CADDDR(args);
     if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     if(PRIMVAL(op) == 1) {
+	// --------- raw, for file() only
 	raw = asLogical(CAD4R(args));
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
     }
 
-    if(PRIMVAL(op) == 0) {
+    if(PRIMVAL(op) == 0) { // url()
+	// --------- method
 	const char *cmeth = CHAR(asChar(CAD4R(args)));
 	meth = streql(cmeth, "libcurl");
+	defmeth = streql(cmeth, "default");
 	if (streql(cmeth, "wininet")) {
 #ifdef Win32
 	    urlmeth = 1;
@@ -5044,6 +5047,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP opt = GetOption1(install("url.method"));
 	if (isString(opt) && LENGTH(opt) >= 1) {
 	    const char *val = CHAR(STRING_ELT(opt, 0));
+	    defmeth = streql(val, "default");
 	    if (streql(val, "libcurl")) meth = 1;
 #ifdef Win32
 	    if (streql(val, "wininet")) urlmeth = 1;
@@ -5055,19 +5059,22 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (strncmp(url, "ftps://", 7) == 0)
 #ifdef HAVE_CURL_CURL_H
 	{
-	    // this is slightly optimistic: we did not check the libcurl build
-	    REprintf("ftps:// URLs are not supported by the default method: trying \"libcurl\"\n");
-	    R_FlushConsole();
+	    if(!defmeth) {
+		// We did not check ftps protocol support
+		REprintf("ftps:// URLs are not supported by method \"internal\": trying \"libcurl\"\n");
+		R_FlushConsole();
+	    }
 	    meth = 1;
 	}
-//	error("ftps:// URLs are not supported by the default method:\n   consider url(method = \"libcurl\")");
 #else
 	error("ftps:// URLs are not supported");
 #endif
 #ifdef Win32
 	if (!urlmeth && strncmp(url, "https://", 8) == 0) {
-	    REprintf("https:// URLs are not supported by the default method: using \"wininet\"\n");
-	    R_FlushConsole();
+	    if(!defmeth) {
+		REprintf("https:// URLs are not supported by method \"internal\": using \"wininet\"\n");
+		R_FlushConsole();
+	    }
 	    urlmeth = 1;
 	}
 	//   error("for https:// URLs use setInternet2(TRUE)");
@@ -5075,12 +5082,14 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (strncmp(url, "https://", 8) == 0)
 # ifdef HAVE_CURL_CURL_H
 	{
-	    // this is slightly optimistic: we did not check the libcurl build
-	    REprintf("https:// URLs are not supported by the default method: trying \"libcurl\"\n");
-	    R_FlushConsole();
+	    // this is slightly optimistic: 
+	    // we did not check the libcurl build supports https
+	    if(!defmeth) {
+		REprintf("https:// URLs are not supported by method \"internal\": trying \"libcurl\"\n");
+		R_FlushConsole();
+	    }
 	    meth = 1;
 	}
-//	    error("https:// URLs are not supported by the default method:\n  consider url(method = \"libcurl\")");
 # else
 	error("https:// URLs are not supported");
 # endif
