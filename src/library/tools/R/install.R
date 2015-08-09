@@ -2284,7 +2284,7 @@ function(name="", version = "0.0")
         "            VALUE \"FileVersion\", \"", version, "\\0\"\n", sep = "")
     writeLines(c(
                  '            VALUE "Compiled under R Version", R_MAJOR "." R_MINOR " (" R_YEAR "-" R_MONTH "-" R_DAY ")\\0"',
-                 '            VALUE "Project info", "http://www.r-project.org\\0"',
+                 '            VALUE "Project info", "https://www.r-project.org\\0"',
                  '        END',
                  '    END',
                  '    BLOCK "VarFileInfo"',
