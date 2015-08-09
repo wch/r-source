@@ -105,7 +105,7 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
                                  gsub("\n", "\n  ", tmp$Output,
                                       perl = TRUE, useBytes = TRUE)),
                          sprintf("See: %s",
-                                 paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+                                 paste(sprintf("<https://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
                                                flavors,
                                                p),
                                        collapse = ",\n     ")))
