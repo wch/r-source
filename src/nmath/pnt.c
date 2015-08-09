@@ -110,21 +110,21 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	    return R_DT_0;
 	}
 #ifdef DEBUG_pnt
-        REprintf("it  1e5*(godd,   geven)|          p           q           s"
-               /* 1.3 1..4..7.9 1..4..7.9|1..4..7.901 1..4..7.901 1..4..7.901 */
-                 "        pnt(*)     errbd\n");
-               /* 1..4..7..0..34 1..4..7.9*/
+	REprintf("it  1e5*(godd,   geven)|          p           q           s"
+	       /* 1.3 1..4..7.9 1..4..7.9|1..4..7.901 1..4..7.901 1..4..7.901 */
+		 "        pnt(*)     errbd\n");
+	       /* 1..4..7..0..34 1..4..7.9*/
 #endif
 	q = M_SQRT_2dPI * p * del;
 	s = .5 - p;
-        /* s = 0.5 - p = 0.5*(1 - exp(-.5 L)) =  -0.5*expm1(-.5 L)) */
-        if(s < 1e-7)
-            s = -0.5 * expm1(-0.5 * lambda);
+	/* s = 0.5 - p = 0.5*(1 - exp(-.5 L)) =  -0.5*expm1(-.5 L)) */
+	if(s < 1e-7)
+	    s = -0.5 * expm1(-0.5 * lambda);
 	a = .5;
 	b = .5 * df;
 	/* rxb = (1 - x) ^ b   [ ~= 1 - b*x for tiny x --> see 'xeven' below]
 	 *       where '(1 - x)' =: rxb {accurately!} above */
-        rxb = pow(rxb, b);
+	rxb = pow(rxb, b);
 	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(.5 + b);
 	xodd = pbeta(x, a, b, /*lower*/TRUE, /*log_p*/FALSE);
 	godd = 2. * rxb * exp(a * log(x) - albeta);

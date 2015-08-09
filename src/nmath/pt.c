@@ -60,7 +60,7 @@ double pt(double x, double n, int lower_tail, int log_p)
 	*/
 	double lval;
 	lval = -0.5*n*(2*log(fabs(x)) - log(n))
-	        - lbeta(0.5*n, 0.5) - log(0.5*n);
+		- lbeta(0.5*n, 0.5) - log(0.5*n);
 	val = log_p ? lval : exp(lval);
     } else {
 	val = (n > x * x)

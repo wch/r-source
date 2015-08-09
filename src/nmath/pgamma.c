@@ -2,7 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 2005-6 Morten Welinder <terra@gnome.org>
  *  Copyright (C) 2005-10 The R Foundation
- *  Copyright (C) 2006-10 The R Core Team
+ *  Copyright (C) 2006-2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -443,7 +443,7 @@ pd_lower_cf (double y, double d)
 
 	if (b2 != 0) {
 	    f = a2 / b2;
- 	    /* convergence check: relative; "absolute" for very small f : */
+	    /* convergence check: relative; "absolute" for very small f : */
 	    if (fabs (f - of) <= DBL_EPSILON * fmax2(f0, fabs(f))) {
 #ifdef DEBUG_p
 		REprintf(" %g iter.\n", i);

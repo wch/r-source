@@ -243,7 +243,7 @@ END:
    *
    * Improved (MM): - only if rel.Err > EPS_N (= 1e-15);
    *		    - also for lower_tail = FALSE	 or log_p = TRUE
-   * 		    - optionally *iterate* Newton
+   *		    - optionally *iterate* Newton
    */
     x = 0.5*scale*ch;
     if(max_it_Newton) {

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1997-1999   Saikat DebRoy
- *  Copyright (C) 1999-2014   The R Core Team
+ *  Copyright (C) 1999-2015   The R Core Team
  *  Copyright (C) 2003-2010   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -986,13 +986,13 @@ hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
 	/*	where h <-- h+amu*(sx**2) [do not actually change (h,udiag)] */
 /* The original code was
    http://people.sc.fsu.edu/~jburkardt/f77_src/uncmin/uncmin.f
-        do 100 j=1,n
-          a(j,j)=udiag(j) + amu*sx(j)*sx(j)
-          if(j.eq.n) go to 100
-          jp1=j+1
-          do i=jp1,n
-            a(i,j)=a(j,i)
-          end do
+	do 100 j=1,n
+	  a(j,j)=udiag(j) + amu*sx(j)*sx(j)
+	  if(j.eq.n) go to 100
+	  jp1=j+1
+	  do i=jp1,n
+	    a(i,j)=a(j,i)
+	  end do
   100   continue
 */
 	for (i = 0; i < n; ++i) {

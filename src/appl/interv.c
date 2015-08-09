@@ -48,13 +48,13 @@ int findInterval(double *xt, int n, double x,
   xt	numeric vector of length  n , assumed to be nondecreasing
   n	length(xt)
   x	the point whose location with respect to the sequence  xt  is
-        to be determined.
+	to be determined.
   rightmost_closed {logical} indicating if the rightmost xt[] interval
-  	should be closed, i.e. result := n-1 if x == x[n]
+	should be closed, i.e. result := n-1 if x == x[n]
   mflag =: all_inside	    {logical} indicating if result should be coerced
 		to lie inside {1, n-1}
   ilo   typically the result of the last call to findInterval(.)
-        `ilo' used to be a static variable (in Fortran) which is not
+	`ilo' used to be a static variable (in Fortran) which is not
 	desirable in R anymore (threads!).
 	Instead, you *should* use a reasonable value, in the first call.
 
@@ -66,11 +66,11 @@ int findInterval(double *xt, int n, double x,
    i      0      if  xt[i]  <= x <  xt[i+1]
    n      1      if  xt[n]  <= x
 
-        in particular,  mflag = 0 is the 'usual' case.  mflag != 0
-        indicates that  x  lies outside the halfopen interval
-        xt[1] <= y < xt[n] . the asymmetric treatment of the
-        interval is due to the decision to make all pp functions cont-
-        inuous from the right.
+	in particular,  mflag = 0 is the 'usual' case.  mflag != 0
+	indicates that  x  lies outside the halfopen interval
+	xt[1] <= y < xt[n] . the asymmetric treatment of the
+	interval is due to the decision to make all pp functions cont-
+	inuous from the right.
 
    Note that if all_inside, left is 1 instead of 0 and n-1 instead of n;
    and if rightmost_closed and x == xt[n],  left is    n-1 instead of n.
@@ -90,7 +90,7 @@ int findInterval(double *xt, int n, double x,
   and are done after just three comparisons.
   otherwise, we repeatedly double the difference  istep = ihi - ilo
   while also moving  ilo  and  ihi  in the direction of  x , until
-                      xt[ilo] <= x < xt[ihi] ,
+		      xt[ilo] <= x < xt[ihi] ,
   after which we use bisection to get, in addition, ilo+1 = ihi .
   left = ilo  is then returned.
 */
