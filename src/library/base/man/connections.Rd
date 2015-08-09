@@ -204,9 +204,14 @@ isIncomplete(con)
 }
 
 \section{URLs}{
-  \code{url} and \code{file} support URL schemes \samp{http://},
-  \samp{https://}, \samp{ftp://} and \samp{file://}: the first three
-  require OS support (which all known \R platforms have).
+  \code{url} and \code{file} support URL schemes \samp{file://},
+  \samp{http://}, \samp{https://} and \samp{ftp://}.
+
+  With \code{method = "libcurl"} they will support more schemes: exactly
+  which schemes is platform-dependent (see
+  \code{\link{libcurlVersion}}), but all Unix-alike platforms will
+  support \samp{https://} and most platforms will support
+  \samp{ftps://}.
 
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
@@ -227,20 +232,6 @@ isIncomplete(con)
 
   No attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
-
-  Note that the \samp{https://} URL scheme is not supported by the
-  internal method except on Windows.  There it is supported by default,
-  and the \samp{http://user:pass@site} notation for sites requiring
-  authentication is also accepted.  However, if the
-  certificate is considered to be invalid, or if
-  \code{setInternet2(FALSE)} is run, neither of these will be accepted.
-  On a Unix-alike \code{url(method = "libcurl")} is tried for
-  \samp{https://} URLs.
-
-  Where supported, \code{url(method = "libcurl")} allows more schemes:
-  exactly which schemes is platform-dependent (see
-  \code{\link{libcurlVersion}}), but all platforms will support
-  \samp{https://} and most \samp{ftps://}.
 
   The default internal method does not follow re-directed HTTP URLs:
   both \code{url(method = "libcurl")} and the use of Windows internal
