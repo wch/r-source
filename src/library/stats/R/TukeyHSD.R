@@ -1,5 +1,5 @@
 #  File src/library/stats/R/TukeyHSD.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 2000-2001  Douglas M. Bates
 #  Copyright (C) 2002-2014  The R Core Team
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ###
 ###               Tukey multiple comparisons for R

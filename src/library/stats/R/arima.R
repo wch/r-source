@@ -1,5 +1,5 @@
 #  File src/library/stats/R/arima.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 2002-2015 The R Core Team
 #
@@ -14,7 +14,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 arima <- function(x, order = c(0L, 0L, 0L),
                   seasonal = list(order = c(0L, 0L, 0L), period = NA),

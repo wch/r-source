@@ -1,5 +1,5 @@
 #  File src/library/stats/R/spectrum.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 #  Copyright (C) 1999-2015 The R Core Team
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ## based on code by Martyn Plummer, plus kernel code by Adrian Trapletti
 spectrum <- function (x, ..., method = c("pgram", "ar"))

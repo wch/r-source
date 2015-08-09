@@ -1,5 +1,5 @@
 % File src/library/parallel/man/makePSOCKcluster.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 2003-2014 R Core Team
 % Distributed under GPL 2 or later
 

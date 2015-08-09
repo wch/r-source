@@ -1,5 +1,5 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 2008-9 R Core Team
 % Distributed under GPL 2 or later
 

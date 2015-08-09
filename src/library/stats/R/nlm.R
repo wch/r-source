@@ -1,5 +1,5 @@
 #  File src/library/stats/R/nlm.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2013 The R Core Team
 #
@@ -14,7 +14,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 nlm <- function(f, p, ..., hessian=FALSE, typsize=rep(1,length(p)),
 		fscale=1, print.level=0, ndigit=12, gradtol=1e-6,

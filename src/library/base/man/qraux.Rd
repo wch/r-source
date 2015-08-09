@@ -1,5 +1,5 @@
 % File src/library/base/man/qraux.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2015 R Core Team
 % Copyright 2002-2015 The R Foundation
 % Distributed under GPL 2 or later

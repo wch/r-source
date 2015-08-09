@@ -1,7 +1,7 @@
 #  Automatically generated from ../noweb/compiler.nw.
 #
 #  File src/library/compiler/R/cmp.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #  Copyright (C) 2001-2014 Luke Tierney
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ##
 ## Compiler options

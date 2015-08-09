@@ -1,5 +1,5 @@
 #  File src/library/utils/R/changedFiles.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 2013 The R Core Team
 #
@@ -14,7 +14,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 fileSnapshot <- function(path = ".", file.info = TRUE, timestamp = NULL, 
 			 md5sum = FALSE, digest = NULL, 
