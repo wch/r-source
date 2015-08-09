@@ -108,17 +108,20 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   and \code{"curl"} methods do: method \code{"wget"} does not support
   them.
 
-  The remaining details apply to method \code{"internal"} only.
+  The remaining details apply to the \code{"internal"}, \code{"wininet"}
+  and \code{"libcurl"} methods only.
   
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.
 
   The level of detail provided during transfer can be set by the
-  \code{quiet} argument and the \code{internet.info} option.  The
-  details depend on the platform and scheme, but setting
-  \code{internet.info} to 0 gives all available details, including
-  all server responses.  Using 2 (the default) gives only serious
-  messages, and 3 or more suppresses all messages.
+  \code{quiet} argument and the \code{internet.info} option: the details
+  depend on the platform and scheme.  For the \code{"internal"} method
+  setting option \code{internet.info} to 0 gives all available details,
+  including all server responses.  Using 2 (the default) gives only
+  serious messages, and 3 or more suppresses all messages.  For the
+  \code{"libcurl"} method values of the option less than 2 give verbose
+  output.
 
 #ifdef windows
   A progress bar tracks the transfer.  If the file length is known, the
@@ -136,12 +139,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   care is needed that other binary file types are transferred with
   \code{mode = "wb"}.
 
-  There is an alternative method \code{"wininet"}. (This selected for
+  There is a Windows-only method \code{"wininet"}.  (This selected for
   \code{method = "internal"} unless \code{\link{setInternet2}(FALSE)} is
   called.)  Then the \sQuote{Internet Options} of the system are used to
   choose proxies and so on; these are set in the Control Panel and are
-  those used for Internet Explorer.  That version does not support
-  \code{cacheOK = FALSE}.
+  those used for Internet Explorer.
 #endif
 #ifdef unix
   A progress bar tracks the transfer.  If the file length is known, an
@@ -210,7 +212,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \url{http://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
 }
 \section{Secure URLs}{
-  Methods which access \samp{https://} and \samp{ftps://} URLs usually
+  Methods which access \samp{https://} and \samp{ftps://} URLs should
   try to verify their certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated).
@@ -231,7 +233,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \seealso{
   \code{\link{options}} to set the \code{HTTPUserAgent}, \code{timeout}
-  and \code{internet.info} options.
+  and \code{internet.info} options used by some of the methods.
 
   \code{\link{url}} for a finer-grained way to read data from URLs.
 
