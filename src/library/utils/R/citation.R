@@ -1161,15 +1161,15 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               )
 
     z$url <- if(identical(meta$Repository, "CRAN"))
-        sprintf("http://CRAN.R-project.org/package=%s", package)
+        sprintf("https://CRAN.R-project.org/package=%s", package)
     else
         meta$URL
 
     if(identical(meta$Repository, "R-Forge")) {
         z$url <- if(!is.null(rfp <- meta$"Repository/R-Forge/Project"))
-            sprintf("http://R-Forge.R-project.org/projects/%s/", rfp)
+            sprintf("https://R-Forge.R-project.org/projects/%s/", rfp)
         else
-            "http://R-Forge.R-project.org/"
+            "https://R-Forge.R-project.org/"
         if(!is.null(rfr <- meta$"Repository/R-Forge/Revision"))
             z$note <- paste(z$note, rfr, sep = "/r")
     }
