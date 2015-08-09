@@ -15,7 +15,7 @@ aggregate(x, \dots)
 
 \method{aggregate}{default}(x, \dots)
 
-\method{aggregate}{data.frame}(x, by, FUN, \dots, simplify = TRUE)
+\method{aggregate}{data.frame}(x, by, FUN, \dots, simplify = TRUE, drop = TRUE)
 
 \method{aggregate}{formula}(formula, data, FUN, \dots,
           subset, na.action = na.omit)
@@ -36,6 +36,8 @@ aggregate(x, \dots)
     applied to all data subsets.}
   \item{simplify}{a logical indicating whether results should be
     simplified to a vector or matrix if possible.}
+  \item{drop}{a logical indicating whether to drop unused combinations
+    of grouping values.}
   \item{formula}{a \link{formula}, such as \code{y ~ x} or
     \code{cbind(y1, y2) ~ x1 + x2}, where the \code{y} variables are
     numeric data to be split into groups according to the grouping

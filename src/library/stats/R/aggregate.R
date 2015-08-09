@@ -30,7 +30,7 @@ function(x, ...)
 }
 
 aggregate.data.frame <-
-function(x, by, FUN, ..., simplify = TRUE)
+function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
 {
     if(!is.data.frame(x)) x <- as.data.frame(x)
     ## Do this here to avoid masking by non-function (could happen)
@@ -65,18 +65,25 @@ function(x, by, FUN, ..., simplify = TRUE)
 
     # Generate a group identifier vector with integers and dots.
     ident <- function(x){
-           y <- as.integer(as.factor(x))
-           z <- gsub(" ", "0", format(y, scientific = FALSE)) # for right sort order
-           return(z)
+        y <- as.integer(as.factor(x))
+        z <- gsub(" ", "0", format(y, scientific = FALSE)) # for right sort order
+        return(z)
        }
     grp <- if(ncol(y)) {
         grp <- lapply(rev(y), ident)
         names(grp) <- NULL
-	do.call(paste, c(grp, list(sep = ".")))
+        do.call(paste, c(grp, list(sep = ".")))
     } else
 	integer(nrx)
 
-    y <- y[match(sort(unique(grp)), grp, 0L), , drop = FALSE]
+    if(!drop && ncol(y)) {
+        y <- expand.grid(lapply(y, function(e) sort(unique(e))))
+        lev <- lapply(rev(y), ident)
+        names(lev) <- NULL
+        lev <- do.call(paste, c(lev, list(sep = ".")))
+        grp <- factor(grp, levels = lev)
+    } else
+        y <- y[match(sort(unique(grp)), grp, 0L), , drop = FALSE]
     nry <- NROW(y)
     z <- lapply(x,
                 function(e) {
