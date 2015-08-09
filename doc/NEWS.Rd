@@ -23,7 +23,7 @@
 
       Unfortunately that cannot guarantee that any particular
       \samp{https:} URL can be accessed.  For example, server and
-      client have to negotiate a crytpographic protocol (TLS, SSL,
+      client have to negotiate a cryptographic protocol (TLS, SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
       the available certificates.
     }
@@ -106,6 +106,11 @@
       \item The out-of-the box Bioconductor mirror has been changed to
       one using \samp{https://}: use \code{chooseBioCmirror()} to choose
       a \samp{http://} mirror if required.
+
+      \item The data frame and formula methods for \code{aggregate()}
+      gain a \code{drop} argument.
+
+      \item \code{available.packages()} gains a \code{repos} argument.
     }
   }
 
