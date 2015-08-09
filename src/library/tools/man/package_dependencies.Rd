@@ -19,7 +19,7 @@ package_dependencies(packages = NULL, db,
   \item{db}{character matrix as from \code{\link{available.packages}()},
     or data frame variants thereof.  Alternatively, a package database
     like the one available from
-    \url{http://cran.r-project.org/web/packages/packages.rds}.
+    \url{https://cran.r-project.org/web/packages/packages.rds}.
   }
   \item{which}{a character vector listing the types of
     dependencies, a subset of

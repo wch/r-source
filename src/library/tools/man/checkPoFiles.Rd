@@ -71,7 +71,7 @@ checkPoFiles(language, dir = ".")
 }
 \references{
   See the GNU gettext manual for the \file{.po} file format:\cr
-  \url{http://www.gnu.org/software/gettext/manual/gettext.html}.
+  \url{https://www.gnu.org/software/gettext/manual/gettext.html}.
 }
 \author{
   Duncan Murdoch

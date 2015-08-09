@@ -111,7 +111,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   For information about registering native routines,
   see \dQuote{In Search of C/C++ & FORTRAN Routines},
   R-News, volume 1, number 3, 2001, p20--23
-  (\url{http://cran.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
+  (\url{https://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
 }
 \author{Duncan Temple Lang}
 \note{

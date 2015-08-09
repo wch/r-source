@@ -101,7 +101,7 @@ write.dcf(x, file = "", append = FALSE,
 }
 
 \references{
-  \url{http://www.debian.org/doc/debian-policy/ch-controlfields.html}.
+  \url{https://www.debian.org/doc/debian-policy/ch-controlfields.html}.
   
   Note that \R does not require encoding in UTF-8, which is a recent
   Debian requirement.  Nor does it use the Debian-specific sub-format

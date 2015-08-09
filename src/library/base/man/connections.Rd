@@ -153,8 +153,8 @@ isIncomplete(con)
   \command{bzip2}.
 
   For \code{xzfile} the description is the path to a file compressed by
-  \command{xz} (\url{http://en.wikipedia.org/wiki/Xz}) or (for reading
-  only) \command{lzma} (\url{http://en.wikipedia.org/wiki/LZMA}).
+  \command{xz} (\url{https://en.wikipedia.org/wiki/Xz}) or (for reading
+  only) \command{lzma} (\url{https://en.wikipedia.org/wiki/LZMA}).
 
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
@@ -382,7 +382,7 @@ isIncomplete(con)
   choose the appropriate byte order, some (including earlier versions of
   \code{glibc}) will not.  There is a subtle distinction between
   \code{"UTF-16"} and \code{"UCS-2"} (see
-  \url{http://en.wikipedia.org/wiki/UTF-16}: the use of characters in
+  \url{https://en.wikipedia.org/wiki/UTF-16}: the use of characters in
   the \sQuote{Supplementary Planes} which need surrogate pairs is very
   rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
   widely implemented).
@@ -504,7 +504,7 @@ isIncomplete(con)
   \emph{Programming with Data.  A Guide to the S Language.} Springer.
 
   Ripley, B. D. (2001) Connections. \emph{R News}, \bold{1/1}, 16--7.
-  \url{http://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 }
 
 \seealso{

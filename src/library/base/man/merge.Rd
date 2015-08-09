@@ -83,7 +83,7 @@ merge(x, y, \dots)
   The complexity of the algorithm used is proportional to the length of
   the answer.
 
-  % Terminology follows http://en.wikipedia.org/wiki/Join_(SQL)
+  % Terminology follows https://en.wikipedia.org/wiki/Join_(SQL)
   In SQL database terminology, the default value of \code{all = FALSE}
   gives a \emph{natural join}, a special case of an \emph{inner
   join}. Specifying \code{all.x = TRUE} gives a \emph{left (outer)

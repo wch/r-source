@@ -50,7 +50,7 @@ shQuote(string, type = c("sh", "csh", "cmd"))
   interpretation of quoted arguments is done by the run-time code of the
   executable.  This may depend on the compiler used: Microsoft's rules
   for the C run-time are given at
-  \url{http://msdn2.microsoft.com/en-us/library/ms880421.aspx}.
+  \url{https://msdn2.microsoft.com/en-us/library/ms880421.aspx}.
 #endif
 }
 \references{

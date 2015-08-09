@@ -35,7 +35,7 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   On 64-bit Windows, this will by default read the 32-bit view of the
   Registry when run from 32-bit \R, and the 64-bit view when run from
   64-bit \R: see
-  \url{http://msdn.microsoft.com/en-us/library/aa384232(VS.85).aspx}.
+  \url{https://msdn.microsoft.com/en-us/library/aa384232(VS.85).aspx}.
 }
 \value{
   A named list of values and subkeys (which may themselves be named

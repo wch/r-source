@@ -28,7 +28,7 @@ writeClipboard(str, format = 1)
 }
 \details{
   The Windows clipboard offers data in a number of formats: see e.g.
-  \url{http://msdn2.microsoft.com/en-us/library/ms649013.aspx}.
+  \url{https://msdn2.microsoft.com/en-us/library/ms649013.aspx}.
 
   The standard formats include
   \tabular{lrl}{

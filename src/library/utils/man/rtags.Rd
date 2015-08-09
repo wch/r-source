@@ -70,7 +70,7 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
 }
 
 \references{
-  \url{http://en.wikipedia.org/wiki/Ctags},
+  \url{https://en.wikipedia.org/wiki/Ctags},
   \url{https://www.gnu.org/software/emacs/manual/html_node/eintr/etags.html}
 }
 \author{Deepayan Sarkar}

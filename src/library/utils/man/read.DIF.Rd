@@ -152,7 +152,7 @@ read.DIF(file, header = FALSE,
   The DIF format specification can be found by searching on
   \url{http://www.wotsit.org/}; the optional header fields are ignored.
   See also
-  \url{http://en.wikipedia.org/wiki/Data_Interchange_Format}.
+  \url{https://en.wikipedia.org/wiki/Data_Interchange_Format}.
 
   The term is likely to lead to confusion: Windows will have a
   \sQuote{Windows Data Interchange Format (DIF) data format} as part of

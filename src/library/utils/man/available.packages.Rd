@@ -82,7 +82,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
     \item{\code{"license/FOSS"}}{Include only packages for which
       installation can proceed solely based on packages which can be
       verified as Free or Open Source Software (FOSS, e.g.,
-      \url{http://en.wikipedia.org/wiki/FOSS}) employing the available
+      \url{https://en.wikipedia.org/wiki/FOSS}) employing the available
       license specifications.  Thus both the package and any packages
       that it depends on to load need to be \emph{known to be} FOSS.
 

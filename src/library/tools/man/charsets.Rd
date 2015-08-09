@@ -35,7 +35,7 @@ Adobe_glyphs
   \file{\var{\link{R_HOME}}/share/encodings/Adobe_glyphlist}.
 }
 \source{
-  \url{http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt}
+  \url{https://partners.adobe.com/public/developer/en/opentype/glyphlist.txt}
 }
 \examples{
 ## find Adobe names for ISOLatin2 chars.

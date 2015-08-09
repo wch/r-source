@@ -27,7 +27,7 @@ as.roman(x)
 \references{
   Wikipedia contributors (2006). Roman numerals.
   Wikipedia, The Free Encyclopedia.
-  \url{http://en.wikipedia.org/w/index.php?title=Roman_numerals&oldid=78252134}.
+  \url{https://en.wikipedia.org/w/index.php?title=Roman_numerals&oldid=78252134}.
   Accessed September 29, 2006.
 }
 \examples{

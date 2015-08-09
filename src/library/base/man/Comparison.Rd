@@ -113,7 +113,7 @@ x != y
 
   Collation of character strings is a complex topic.  For an
   introduction see
-  \url{http://en.wikipedia.org/wiki/Collating_sequence}.  The
+  \url{https://en.wikipedia.org/wiki/Collating_sequence}.  The
   \emph{Unicode Collation Algorithm}
   (\url{http://unicode.org/reports/tr10/}) is likely to be increasingly
   influential.  Where available \R by default makes use of ICU

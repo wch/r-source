@@ -318,7 +318,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   reading files which result in reports of incorrect record lengths (see
   the \sQuote{Examples} below).
 
-  \url{http://tools.ietf.org/html/rfc4180} for the IANA definition of
+  \url{https://tools.ietf.org/html/rfc4180} for the IANA definition of
   CSV files (which requires comma as separator and CRLF line endings).
 }
 

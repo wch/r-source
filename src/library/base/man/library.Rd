@@ -107,7 +107,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   already been accepted.
 
   Free or Open Source Software (FOSS, e.g.,
-  \url{http://en.wikipedia.org/wiki/FOSS}) packages are determined by
+  \url{https://en.wikipedia.org/wiki/FOSS}) packages are determined by
   the same filters used by \code{\link{available.packages}} but applied
   to just the current package, not its dependencies.
 

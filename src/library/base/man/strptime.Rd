@@ -131,7 +131,7 @@ strptime(x, format, tz = "")
     \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
     \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
     \item{\code{\%u}}{Weekday as a decimal number (1--7, Monday is 1).}
-    % see http://en.wikipedia.org/wiki/Week_number#Week_number
+    % see https://en.wikipedia.org/wiki/Week_number#Week_number
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       Sunday as the first day 1 of the week (and typically with the
       first Sunday of the year as day 1 of week 1).  The US convention.}
@@ -157,7 +157,7 @@ strptime(x, format, tz = "")
     \item{\code{\%Y}}{Year with century.  Note that whereas there was no
       zero in the original Gregorian calendar, ISO 8601:2004 defines it
       to be valid (interpreted as 1BC): see
-      \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standards
+      \url{https://en.wikipedia.org/wiki/0_(year)}.  Note that the standards
       also say that years before 1582 in its calendar should only be used
       with agreement of the parties involved.
   
@@ -245,7 +245,7 @@ strptime(x, format, tz = "")
   
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   \sQuote{correctly} (they tend to assume the existence of a year 0: see
-  \url{http://en.wikipedia.org/wiki/0_(year)}, and some OSes get them
+  \url{https://en.wikipedia.org/wiki/0_(year)}, and some OSes get them
   completely wrong).  Common formats are \code{-45} and \code{-045}.
 
   Years after 9999 and before -999 are normally printed with five or

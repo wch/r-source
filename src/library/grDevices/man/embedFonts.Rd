@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/embedFonts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{embedFonts}
@@ -72,6 +72,6 @@ embedFonts(file, format, outfile = file,
 
   Paul Murrell and Brian Ripley (2006) Non-standard fonts in PostScript
   and PDF graphics. \emph{R News}, 6(2):41--47.
-  \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 \keyword{device}

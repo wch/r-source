@@ -138,7 +138,7 @@ env.profile(env)
 }
 \seealso{
   For the performance implications of hashing or not, see
-  \url{http://en.wikipedia.org/wiki/Hash_table}.
+  \url{https://en.wikipedia.org/wiki/Hash_table}.
 
   The \code{envir} argument of \code{\link{eval}}, \code{\link{get}},
   and \code{\link{exists}}.

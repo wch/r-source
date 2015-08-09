@@ -69,7 +69,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
   into \var{t} (so that the transformation exactly matches \var{t}).
   This distance is computed for \code{partial = FALSE}, currently using
   a dynamic programming algorithm (see, e.g.,
-  \url{http://en.wikipedia.org/wiki/Levenshtein_distance}) with space
+  \url{https://en.wikipedia.org/wiki/Levenshtein_distance}) with space
   and time complexity \eqn{O(mn)}, where \eqn{m} and \eqn{n} are the
   lengths of \var{s} and \var{t}, respectively.  Additionally computing
   the transformation sequence and counts is \eqn{O(\max(m, n))}.
@@ -79,7 +79,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
   \var{t} with minimal distance to the pattern \var{s} (which could be
   taken as a regular expression, in which case the principle of using
   the leftmost and longest match applies), see, e.g.,
-  \url{http://en.wikipedia.org/wiki/Approximate_string_matching}.  This
+  \url{https://en.wikipedia.org/wiki/Approximate_string_matching}.  This
   distance is computed for \code{partial = TRUE} using \samp{tre} by
   Ville Laurikari (\url{http://laurikari.net/tre/}) and
   corresponds to the distance used by \code{\link{agrep}}.  In this
@@ -94,7 +94,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
   using the generalized Levenshtein distance.
 }
 \examples{
-## Cf. http://en.wikipedia.org/wiki/Levenshtein_distance
+## Cf. https://en.wikipedia.org/wiki/Levenshtein_distance
 adist("kitten", "sitting")
 ## To see the transformation counts for the Levenshtein distance:
 drop(attr(adist("kitten", "sitting", counts = TRUE), "counts"))

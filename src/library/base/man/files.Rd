@@ -165,8 +165,8 @@ Sys.junction(from, to)
   version of the Unix concept of mounting one directory on another.  One
   way to create, list and delete junctions is \emph{via}
   \file{junction.exe} from
-  \url{http://download.sysinternals.com/Files/Junction.zip} (see
-  \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).  On
+  \url{https://download.sysinternals.com/files/Junction.zip} (see
+  \url{https://technet.microsoft.com/en-us/sysinternals/bb896768}).  On
   recent enough versions of Windows \command{mklink /J} can also be
   used.  Function \code{Sys.junction} creates one or more junctions:
   \code{to} should either specify a single existing directory or a set
@@ -208,8 +208,8 @@ Sys.junction(from, to)
 
   \code{\link{file_test}}, \code{\link{Sys.readlink}}.
 
-  \url{http://en.wikipedia.org/wiki/Hard_link} and
-  \url{http://en.wikipedia.org/wiki/Symbolic_link} for the concepts of
+  \url{https://en.wikipedia.org/wiki/Hard_link} and
+  \url{https://en.wikipedia.org/wiki/Symbolic_link} for the concepts of
   links and their limitations.
 }
 

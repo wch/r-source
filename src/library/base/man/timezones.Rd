@@ -51,7 +51,7 @@ OlsonNames()
 
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
-  \url{http://en.wikipedia.org/wiki/Coordinated_Universal_Time}).  (Some
+  \url{https://en.wikipedia.org/wiki/Coordinated_Universal_Time}).  (Some
   but not all platforms will give a warning for invalid time zones.)
 
   Time zones did not come into use until the second half of the
@@ -130,7 +130,7 @@ OlsonNames()
   \file{zone.tab} under that directory listing the locations known as
   time-zone names (but not for example \code{EST5EDT}): this is read by
   \code{OlsonNames}.  See also
-  \url{http://en.wikipedia.org/wiki/Zone.tab}.
+  \url{https://en.wikipedia.org/wiki/Zone.tab}.
 #ifdef unix
 
   Where \R was configured with option \option{--with-internal-tzcode}
@@ -198,8 +198,8 @@ OlsonNames()
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
 
-  \url{http://en.wikipedia.org/wiki/Time_zone} and
-  \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
+  \url{https://en.wikipedia.org/wiki/Time_zone} and
+  \url{https://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
 \examples{

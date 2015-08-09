@@ -17,7 +17,7 @@
   \code{x11} is recognized as a synonym for \code{X11}.
 
   The \R function is a wrapper for two devices, one based on Xlib
-  (\url{http://en.wikipedia.org/wiki/Xlib}) and one using cairographics
+  (\url{https://en.wikipedia.org/wiki/Xlib}) and one using cairographics
   (\url{http://www.cairographics.org}).
 }
 \usage{
