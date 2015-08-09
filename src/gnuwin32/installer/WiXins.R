@@ -1,6 +1,6 @@
 #  File src/gnuwin32/installer/WiXins.R
 #
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ## Collection of notes about WiX usage
 
