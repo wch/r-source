@@ -129,14 +129,14 @@ isIncomplete(con)
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
-  \samp{file://}).  Proxies can be specified for HTTP and FTP \code{url}
-  connections: see \code{\link{download.file}}.  \code{method =
-  "internal"} is the \sQuote{out of the box} default (and that available
-  since connections were introduced): \code{method = "libcurl"} is
-  optionally supported as from \R 3.2.0.  The default can be changed
-  \emph{via} \code{\link{options}(url.method = )} (including for when
-  URLs are passed to \code{file}).  \code{method = "wininet"} is only
-  available on Windows.
+  \samp{file://}).  Proxies can be specified for HTTP, HTTPS and FTP
+  \code{url} connections: see \code{\link{download.file}}.  \code{method
+  = "internal"} is the \sQuote{out of the box} default (and that
+  available since connections were introduced): \code{method =
+  "libcurl"} is optionally supported as from \R 3.2.0.  The default can
+  be changed \emph{via} \code{\link{options}(url.method = )} (including
+  for when URLs are passed to \code{file}).  \code{method = "wininet"}
+  is only available on Windows.
   
 #ifdef windows
   (See \code{\link{setInternet2}}, which chooses whether the
@@ -207,9 +207,9 @@ isIncomplete(con)
   \samp{https://}, \samp{ftp://} and \samp{file://}: the first three
   require OS support (which all known \R platforms have).
 
-  \code{url(method = "libcurl")} allows more schemes: exactly which
-  schemes is platform-dependent (see \code{\link{libcurlVersion}}), but
-  most platforms will support \samp{https://} and \samp{ftps://}.
+  \code{method = "libcurl"} allows more schemes: exactly which schemes
+  is platform-dependent (see \code{\link{libcurlVersion}}), but most
+  platforms will support \samp{https://} and \samp{ftps://}.
 
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
@@ -242,7 +242,7 @@ isIncomplete(con)
 
   The \code{"internal"} method does not follow re-directed HTTP URLs:
   both methods \code{"wininet"} (the default on Windows) and
-  \code{"libcurl"} do.
+  \code{"libcurl"} do (including for HTTPS URLs).
 
   Server-side cached data is always accepted.
 
