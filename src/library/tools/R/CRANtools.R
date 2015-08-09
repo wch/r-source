@@ -175,19 +175,6 @@ function(x, ...)
     invisible(x)
 }
 
-## Summarize CRAN check status for maintainers matching the given
-## maintainer regexp ...
-
-summarize_CRAN_check_status_for_maintainer <-
-function(maintainer, ...)
-{
-    pdb <- CRAN_package_db()
-
-    ind <- grep(maintainer, pdb[, "Maintainer"], ...)
-
-    summarize_CRAN_check_status(pdb[ind, "Package"])
-}
-
 ## Summarize complete CRAN check status according to maintainer.
 
 summarize_CRAN_check_status_according_to_maintainer <-
@@ -261,8 +248,9 @@ function()
 
 CRAN_package_db <-
 function()
-    read_CRAN_object(CRAN_baseurl_for_web_area(),
-                     "web/packages/packages.rds")
+    as.data.frame(read_CRAN_object(CRAN_baseurl_for_web_area(),
+                                   "web/packages/packages.rds"),
+                  stringsAsFactors = FALSE)
 
 CRAN_aliases_db <-
 function()
@@ -449,7 +437,7 @@ function()
     ## state files).
     do.call(rbind,
             c(Map(function(u, v) {
-                      u <- paste0("https://cran.r-project.org/mirmon/data/", u)
+                      u <- paste0("https://cran.r-project.org/mirmon/state/", u)
                       cbind(read_mirmon_state_file(u),
                             timestamp = v,
                             stringsAsFactors = FALSE)
@@ -549,9 +537,10 @@ function()
     maintainer <- db[, "Maintainer"]
     address <- tolower(sub(".*<(.*)>.*", "\\1", maintainer))
     maintainer <- gsub("\n", " ", maintainer)
-    cbind(Package = db[, "Package"],
-          Address = address,
-          Maintainer = maintainer)
+    data.frame(Package = db[, "Package"],
+               Address = address,
+               Maintainer = maintainer,
+               stringsAsFactors = FALSE)
 }
 
 CRAN_package_maintainers_info <-
@@ -680,3 +669,29 @@ function(packages)
                y[order(y$Date, decreasing = TRUE), ]
            })
 }
+
+CRAN_packages_with_maintainer_matching <-
+function(pattern, ...)
+{
+    pdb <- CRAN_package_db()
+    ind <- grep(pattern, pdb[, "Maintainer"], ...)
+    pdb[ind, "Package"]
+}
+
+write_texts_to_dir <-
+function(lst, dir, verbose = FALSE)
+{
+    dir.create(dir, showWarnings = FALSE, recursive = FALSE)
+
+    Map(function(m, s) {
+        if(verbose)
+            message(sprintf("Processing %s ...", m))
+        writeLines(paste(s, collapse = "\n\n"),
+                   file.path(dir, sprintf("%s.txt", m)))
+    },
+        names(lst),
+        lst)
+
+    invisible()
+}
+
