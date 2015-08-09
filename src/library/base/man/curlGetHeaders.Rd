@@ -64,6 +64,8 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE)
 
 \seealso{
   \code{\link{capabilities}("libcurl")} to see if this is supported.
+
+  \code{\link{options}} \code{HTTPUserAgent} and \code{timeout} are used.
 }
 
 % http://forum.rebex.net/questions/1343/open-ftps-and-sftp-servers-for-testing-our-code-and-connectivity
