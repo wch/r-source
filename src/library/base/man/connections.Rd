@@ -139,7 +139,7 @@ isIncomplete(con)
   \code{method = "libcurl"} is required on a Unix-alike but optional on
   Windows.  Method \code{"default"} uses method \code{"internal"} for
   \samp{file:} URLs and \code{"libcurl"} for \code{ftps:} URLs.
-  Except on Windows with \code{\link{setInternet2}(TRUE)} (the default
+  Except on Windows with \code{setInternet2(TRUE)} (the default
   there), it uses \code{"internal"} for \samp{http:} and \code{ftp:}
   URLs and \code{"libcurl"} for \samp{https:} URLs. The default
   behaviour on Windows is to use \code{"wininet"} for \samp{http:},
