@@ -54,11 +54,11 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_RDEBUG(CAR(args), 0);
 	break;
     case 2: // isdebugged()
-        ans = ScalarLogical(RDEBUG(CAR(args)));
-        break;
+	ans = ScalarLogical(RDEBUG(CAR(args)));
+	break;
     case 3: // debugonce()
-        SET_RSTEP(CAR(args), 1);
-        break;
+	SET_RSTEP(CAR(args), 1);
+	break;
     }
     return ans;
 }
@@ -223,7 +223,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
     static SEXP do_retracemem_formals = NULL;
 
     if (do_retracemem_formals == NULL)
-        do_retracemem_formals = allocFormalsList2(install("x"),
+	do_retracemem_formals = allocFormalsList2(install("x"),
 						  R_PreviousSymbol);
 
     PROTECT(argList =  matchArgs(do_retracemem_formals, args, call));

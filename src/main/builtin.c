@@ -137,7 +137,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     static SEXP do_onexit_formals = NULL;
 
     if (do_onexit_formals == NULL)
-        do_onexit_formals = allocFormalsList2(install("expr"), install("add"));
+	do_onexit_formals = allocFormalsList2(install("expr"), install("add"));
 
     PROTECT(argList =  matchArgs(do_onexit_formals, args, call));
     if (CAR(argList) == R_MissingArg) code = R_NilValue;
@@ -359,19 +359,19 @@ SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 static Rboolean R_IsImportsEnv(SEXP env)
 {
     if (isNull(env) || !isEnvironment(env))
-        return FALSE;
+	return FALSE;
     if (ENCLOS(env) != R_BaseNamespace)
-        return FALSE;
+	return FALSE;
     SEXP name = getAttrib(env, R_NameSymbol);
     if (!isString(name) || LENGTH(name) != 1)
-        return FALSE;
+	return FALSE;
 
     const char *imports_prefix = "imports:";
     const char *name_string = CHAR(STRING_ELT(name, 0));
     if (!strncmp(name_string, imports_prefix, strlen(imports_prefix)))
-        return TRUE;
+	return TRUE;
     else
-        return FALSE;
+	return FALSE;
 }
 
 SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -938,7 +938,7 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef LONG_VECTOR_SUPPORT
 	return xlengthgets(x, len);
 #else
-        error(_("vector size specified is too large"));
+	error(_("vector size specified is too large"));
 	return x; /* -Wall */
 #endif
     }
@@ -983,12 +983,12 @@ static SEXP expandDots(SEXP el, SEXP rho)
 static SEXP setDflt(SEXP arg, SEXP dflt)
 {
     if (dflt) {
-    	SEXP dflt1, dflt2;
-    	PROTECT(dflt1 = deparse1line(dflt, TRUE));
-    	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
-    	error(_("duplicate 'switch' defaults: '%s' and '%s'"),
+	SEXP dflt1, dflt2;
+	PROTECT(dflt1 = deparse1line(dflt, TRUE));
+	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
+	error(_("duplicate 'switch' defaults: '%s' and '%s'"),
 	      CHAR(STRING_ELT(dflt1, 0)), CHAR(STRING_ELT(dflt2, 0)));
-    	UNPROTECT(2); /* won't get here, but just for good form */
+	UNPROTECT(2); /* won't get here, but just for good form */
     }
     return(CAR(arg));
 }
@@ -1063,7 +1063,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		} else
 		    dflt = setDflt(y, dflt);
 	    }
- 	    if (dflt) {
+	    if (dflt) {
 		ans =  eval(dflt, rho);
 		UNPROTECT(2);
 		return ans;

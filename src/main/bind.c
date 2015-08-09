@@ -1035,7 +1035,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     method = R_NilValue;
     for (a = CDR(args); a != R_NilValue; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
-        if (tryS4 && !anyS4 && isS4(obj)) anyS4 = TRUE;
+	if (tryS4 && !anyS4 && isS4(obj)) anyS4 = TRUE;
 	if (compatible && isObject(obj)) {
 	    SEXP classlist = PROTECT(R_data_class2(obj));
 	    for (int i = 0; i < length(classlist); i++) {
@@ -1044,7 +1044,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("class name too long in '%s'"), generic);
 		sprintf(buf, "%s.%s", generic, s);
 		SEXP classmethod = R_LookupMethod(install(buf), env, env,
-                                                  R_BaseNamespace);
+						  R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
 		    if (klass[0] == '\0') {
 			/* There is no previous class */
@@ -1065,7 +1065,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		    break; /* go to next parameter */
 		}
 	    }
-            UNPROTECT(1);
+	    UNPROTECT(1);
 	}
 	UNPROTECT(1);
     }
@@ -1075,7 +1075,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	// keep 'deparse.level' as first arg and *name* it:
 	SET_TAG(args, install("deparse.level"));
 	// and use methods:::cbind / rbind
-        method = findFun(install(generic), R_MethodsNamespace);
+	method = findFun(install(generic), R_MethodsNamespace);
     } else
 	args = CDR(args); // keeping deparse.level for S4 dispatch
     if (method != R_NilValue) { // found an S3 or S4 method
@@ -1277,7 +1277,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			R_xlen_t i, i1;
 			MOD_ITERATE1(idx, k, i, i1, {
 			    SET_VECTOR_ELT(result, n++,
-                                lazy_duplicate(VECTOR_ELT(u, i1)));
+				lazy_duplicate(VECTOR_ELT(u, i1)));
 			});
 		    }
 		    UNPROTECT(1);
@@ -1329,7 +1329,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			R_xlen_t i, i1;
 			MOD_ITERATE1(idx, k, i, i1, {
 			    REAL(result)[n++] =
-			        (INTEGER(u)[i1]) == NA_INTEGER ? NA_REAL : INTEGER(u)[i1];
+				(INTEGER(u)[i1]) == NA_INTEGER ? NA_REAL : INTEGER(u)[i1];
 			});
 		    }
 		}
@@ -1402,7 +1402,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    if (deparse_level == 1 && isSymbol(expr))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2) {
-		        PROTECT(expr);
+			PROTECT(expr);
 			SET_STRING_ELT(nam, j++,
 				       STRING_ELT(deparse1line(expr, TRUE), 0));
 			UNPROTECT(1); /* expr */
@@ -1516,14 +1516,14 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     else if (mode == VECSXP) {
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
- 	    int umatrix = isMatrix(u), urows = umatrix ? nrows(u) : 1; /* coercing to VECSXP will lose these. PR#15468 */
+	    int umatrix = isMatrix(u), urows = umatrix ? nrows(u) : 1; /* coercing to VECSXP will lose these. PR#15468 */
 	    if (umatrix || length(u) >= lenmin) {
 		PROTECT(u = coerceVector(u, mode));
 		R_xlen_t k = XLENGTH(u);
 		R_xlen_t idx = umatrix ? urows : (k > 0);
 		FILL_MATRIX_ITERATE(n, rows, idx, cols, k)
 		    SET_VECTOR_ELT(result, didx,
-		        lazy_duplicate(VECTOR_ELT(u, sidx)));
+			lazy_duplicate(VECTOR_ELT(u, sidx)));
 		n += idx;
 		UNPROTECT(1);
 	    }
@@ -1571,7 +1571,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    else {
 			FILL_MATRIX_ITERATE(n, rows, idx, cols, k)
 			    REAL(result)[didx]
-                                = (INTEGER(u)[sidx]) == NA_INTEGER ? NA_REAL : INTEGER(u)[sidx];
+				= (INTEGER(u)[sidx]) == NA_INTEGER ? NA_REAL : INTEGER(u)[sidx];
 			n += idx;
 		    }
 		}
@@ -1587,7 +1587,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    }
 		    else
 			FILL_MATRIX_ITERATE(n, rows, idx, cols, k)
-                            INTEGER(result)[didx] = (unsigned char) RAW(u)[sidx];
+			    INTEGER(result)[didx] = (unsigned char) RAW(u)[sidx];
 		}
 	    }
 	}
@@ -1640,7 +1640,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    if (deparse_level == 1 && isSymbol(expr))
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2) {
-		        PROTECT(expr);
+			PROTECT(expr);
 			SET_STRING_ELT(nam, j++,
 				       STRING_ELT(deparse1line(expr, TRUE), 0));
 			UNPROTECT(1); /* expr */

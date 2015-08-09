@@ -533,7 +533,7 @@ SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
     } else seed = TimeToSeed();
     skind = CADR(args);
     nkind = CADDR(args);
-    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from 
+    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from
 			       .Random.seed if present */
     if (!isNull(skind)) RNGkind((RNGtype) asInteger(skind));
     if (!isNull(nkind)) Norm_kind((N01type) asInteger(nkind));

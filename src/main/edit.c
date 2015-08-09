@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2014   The R Core Team
+ *  Copyright (C) 1998-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -180,9 +180,9 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	srcfile = eval(srcfile, R_BaseEnv);
 	UNPROTECT(5);
     } else
-    	srcfile = R_NilValue;
+	srcfile = R_NilValue;
     PROTECT(srcfile);
-    
+
     /* <FIXME> setup a context to close the file, and parse and eval
        line by line */
     if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)

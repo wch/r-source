@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-2014	    The R Core Team
+ *  Copyright (C) 2000-2015	    The R Core Team
  *  Copyright (C) 2005		    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -82,7 +82,7 @@
 #endif
 
 
-/* 
+/*
    Note: this could use the C11 CMPLX() macro.
    As could mycpow, z_tan and some of the substitutes.
  */
@@ -99,7 +99,7 @@ static R_INLINE double complex toC99(Rcomplex *x)
 }
 #define C99_COMPLEX2(x, i) toC99(COMPLEX(x) + i)
 
-static R_INLINE void 
+static R_INLINE void
 SET_C99_COMPLEX(Rcomplex *x, R_xlen_t i, double complex value)
 {
     Rcomplex *ans = x+i;
@@ -165,7 +165,7 @@ static R_INLINE double complex R_cpow_n(double complex X, int k)
 static double complex mycpow (double complex X, double complex Y)
 {
     double complex Z;
-    double yr = creal(Y), yi = cimag(Y); 
+    double yr = creal(Y), yi = cimag(Y);
     int k;
     if (X == 0.0) {
 	if (yi == 0.0) Z = R_pow(0.0, yr); else Z = R_NaN + R_NaN*I;
@@ -264,9 +264,9 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     /* Copy attributes from longer argument. */
 
     if (ans != s2 && n == n2 && ATTRIB(s2) != R_NilValue)
-        copyMostAttrib(s2, ans);
+	copyMostAttrib(s2, ans);
     if (ans != s1 && n == n1 && ATTRIB(s1) != R_NilValue)
-        copyMostAttrib(s1, ans); /* Done 2nd so s1's attrs overwrite s2's */
+	copyMostAttrib(s1, ans); /* Done 2nd so s1's attrs overwrite s2's */
 
     return ans;
 }
@@ -326,7 +326,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	n = XLENGTH(x);
 	if(isReal(x)) PROTECT(x);
 	else PROTECT(x = coerceVector(x, REALSXP));
-        y = NO_REFERENCES(x) ? x : allocVector(REALSXP, n);
+	y = NO_REFERENCES(x) ? x : allocVector(REALSXP, n);
 
 	switch(PRIMVAL(op)) {
 	case 1:	/* Re */
@@ -358,10 +358,10 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     else errorcall(call, _("non-numeric argument to function"));
 
     if (x != y && ATTRIB(x) != R_NilValue) {
-        PROTECT(x);
-        PROTECT(y);
-        DUPLICATE_ATTRIB(y, x);
-        UNPROTECT(2);
+	PROTECT(x);
+	PROTECT(y);
+	DUPLICATE_ATTRIB(y, x);
+	UNPROTECT(2);
     }
     return y;
 }
@@ -477,9 +477,9 @@ static double complex casin(double complex z)
     t2 = 0.5 * hypot(x - 1, y);
     alpha = t1 + t2;
     ri = log(alpha + sqrt(alpha*alpha - 1));
-    /* This comes from 
+    /* This comes from
        'z_asin() is continuous from below if x >= 1
-        and continuous from above if x <= -1.'
+	and continuous from above if x <= -1.'
     */
     if(y < 0 || (y == 0 && x > 1)) ri *= -1;
     return asin(t1  - t2) + ri*I;
@@ -717,8 +717,8 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(sb = coerceVector(CADR(args), CPLXSXP));
     na = XLENGTH(sa); nb = XLENGTH(sb);
     if ((na == 0) || (nb == 0)) {
-        UNPROTECT(2);
-        return(allocVector(CPLXSXP, 0));
+	UNPROTECT(2);
+	return(allocVector(CPLXSXP, 0));
     }
     n = (na < nb) ? nb : na;
     PROTECT(sy = allocVector(CPLXSXP, n));
@@ -963,7 +963,7 @@ static void R_cpolyroot(double *opr, double *opi, int *degree,
     pr = tmp; pi = tmp + nn; hr = tmp + 2*nn; hi = tmp + 3*nn;
     qpr = tmp + 4*nn; qpi = tmp + 5*nn; qhr = tmp + 6*nn; qhi = tmp + 7*nn;
     shr = tmp + 8*nn; shi = tmp + 9*nn;
-    
+
     /* make a copy of the coefficients and shr[] = | p[] | */
     for (i = 0; i < nn; i++) {
 	pr[i] = opr[i];

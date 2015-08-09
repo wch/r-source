@@ -39,7 +39,7 @@ static const char * keybdHandler = "onKeybd";
 static void checkHandler(const char * name, SEXP eventEnv)
 {
     SEXP handler = findVar(install(name), eventEnv);
-    if (TYPEOF(handler) == CLOSXP) 
+    if (TYPEOF(handler) == CLOSXP)
 	warning(_("'%s' events not supported in this device"), name);
 }
 
@@ -52,7 +52,7 @@ do_setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     pDevDesc dd;
 
     checkArity(op, args);
-    
+
     devnum = INTEGER(CAR(args))[0] - 1;
     if(devnum < 1 || devnum > R_MaxDevices)
 	error(_("invalid graphical device number"));
@@ -61,24 +61,24 @@ do_setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!gdd) errorcall(call, _("invalid device"));
     dd = gdd->dev;
     args=CDR(args);
-    
+
     eventEnv = CAR(args);
-    if (TYPEOF(eventEnv) != ENVSXP) 
-        error(_("internal error"));
-        
+    if (TYPEOF(eventEnv) != ENVSXP)
+	error(_("internal error"));
+
     if (!dd->canGenMouseDown &&
-    	!dd->canGenMouseUp &&
-    	!dd->canGenMouseMove &&
-    	!dd->canGenKeybd)
-    	error(_("this graphics device does not support event handling"));
-    
+	!dd->canGenMouseUp &&
+	!dd->canGenMouseMove &&
+	!dd->canGenKeybd)
+	error(_("this graphics device does not support event handling"));
+
     if (!dd->canGenMouseDown) checkHandler(mouseHandlers[0], eventEnv);
     if (!dd->canGenMouseUp)   checkHandler(mouseHandlers[1], eventEnv);
     if (!dd->canGenMouseMove) checkHandler(mouseHandlers[2], eventEnv);
     if (!dd->canGenKeybd)     checkHandler(keybdHandler, eventEnv);
 
     dd->eventEnv = eventEnv;
-	
+
     return(R_NilValue);
 }
 
@@ -87,13 +87,13 @@ do_getGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int devnum;
     pGEDevDesc gdd;
-    
+
     checkArity(op, args);
-    
+
     devnum = INTEGER(CAR(args))[0] - 1;
     if(devnum < 1 || devnum > R_MaxDevices)
 	error(_("invalid graphical device number"));
-    
+
     gdd = GEgetDevice(devnum);
     if(!gdd) errorcall(call, _("invalid device"));
     return gdd->dev->eventEnv;
@@ -111,7 +111,7 @@ Rboolean haveListeningDev()
 	for(int i = 1; i < NumDevices(); i++)
 	{
 	    if ((gd = GEgetDevice(i)) && (dd = gd->dev)
-	         && dd->gettingEvent){
+		 && dd->gettingEvent){
 		ret = TRUE;
 		break;
 	    }
@@ -119,7 +119,7 @@ Rboolean haveListeningDev()
     }
     return ret;
 }
-	  
+
 
 SEXP
 do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -128,17 +128,17 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     pDevDesc dd;
     pGEDevDesc gd;
     int i, count=0, devNum;
-    
+
     checkArity(op, args);
-    
+
     prompt = CAR(args);
     if (!isString(prompt) || !length(prompt)) error(_("invalid prompt"));
-    
+
     /* NB:  cleanup of event handlers must be done by driver in onExit handler */
-    
+
     if (!NoDevices()) {
-        /* Initialize all devices */
-        i = 1;
+	/* Initialize all devices */
+	i = 1;
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
 	    if ((gd = GEgetDevice(devNum)) && (dd = gd->dev)) {
@@ -155,14 +155,14 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (!count)
 	    error(_("no graphics event handlers set"));
-	
+
 	Rprintf("%s\n", CHAR(asChar(prompt)));
 	R_FlushConsole();
-	
+
 	/* Poll them */
 	while (result == R_NilValue) {
 	    /* make sure we still have at least one device listening for events, and throw an error if not*/
-	    if(!haveListeningDev()) 
+	    if(!haveListeningDev())
 		return R_NilValue;
 #ifdef Win32
 	    R_WaitEvent();
@@ -185,7 +185,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	/* clean up */
-        i = 1;
+	i = 1;
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
 	    if ((gd = GEgetDevice(devNum)) && (dd = gd->dev)) {
@@ -196,7 +196,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    devNum = nextDevice(devNum);
 	}
-	
+
     }
     return(result);
 }
@@ -217,8 +217,8 @@ void doMouseEvent(pDevDesc dd, R_MouseEvent event,
 	PROTECT(handler);
     }
     if (TYPEOF(handler) == CLOSXP) {
-        SEXP s_which = install("which");
-        defineVar(s_which, ScalarInteger(ndevNumber(dd)+1), dd->eventEnv);
+	SEXP s_which = install("which");
+	defineVar(s_which, ScalarInteger(ndevNumber(dd)+1), dd->eventEnv);
 	// Be portable: see PR#15793
 	int len = ((buttons & leftButton) != 0)
 	  + ((buttons & middleButton) != 0)
@@ -235,7 +235,7 @@ void doMouseEvent(pDevDesc dd, R_MouseEvent event,
 	PROTECT(temp = lang4(handler, bvec, sx, sy));
 	PROTECT(result = eval(temp, dd->eventEnv));
 	defineVar(install("result"), result, dd->eventEnv);
-	UNPROTECT(5);	
+	UNPROTECT(5);
 	R_FlushConsole();
     }
     UNPROTECT(1); /* handler */
@@ -264,13 +264,13 @@ void doKeybd(pDevDesc dd, R_KeyName rkey,
     }
 
     if (TYPEOF(handler) == CLOSXP) {
-        SEXP s_which = install("which");
-        defineVar(s_which, ScalarInteger(ndevNumber(dd)+1), dd->eventEnv);
+	SEXP s_which = install("which");
+	defineVar(s_which, ScalarInteger(ndevNumber(dd)+1), dd->eventEnv);
 	PROTECT(skey = mkString(keyname ? keyname : keynames[rkey]));
 	PROTECT(temp = lang2(handler, skey));
 	PROTECT(result = eval(temp, dd->eventEnv));
-        defineVar(install("result"), result, dd->eventEnv);
-	UNPROTECT(3);	
+	defineVar(install("result"), result, dd->eventEnv);
+	UNPROTECT(3);
 	R_FlushConsole();
     }
     UNPROTECT(1); /* handler */

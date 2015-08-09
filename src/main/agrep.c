@@ -19,7 +19,7 @@
 
 /* This at times needed to be separate from grep.c, as TRE has a
    conflicting regcomp and the two headers cannot both be included in
-   one file 
+   one file
 */
 
 #ifdef HAVE_CONFIG_H
@@ -30,7 +30,7 @@
 #include <Internal.h>
 
 /* This is remapped */
-#undef pmatch 
+#undef pmatch
 
 /* interval at which to check interrupts */
 #define NINTERRUPT 1000000
@@ -131,7 +131,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "pattern");
     if(LENGTH(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
-    
+
     if(!isString(vec)) error(_("invalid '%s' argument"), "x");
 
     if(opt_icase) cflags |= REG_ICASE;
@@ -210,7 +210,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     tre_regaparams_default(&params);
     amatch_regaparams(&params, patlen,
 		      REAL(opt_bounds), INTEGER(opt_costs));
-    
+
     /* Matching. */
     n = LENGTH(vec);
     PROTECT(ind = allocVector(LGLSXP, n));
@@ -230,7 +230,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 			       &match, params, 0);
 	else if(useWC) {
 	    rc = tre_regawexec(&reg,
-			       wtransChar(STRING_ELT(vec, i)), 
+			       wtransChar(STRING_ELT(vec, i)),
 			       &match, params, 0);
 	    vmaxset(vmax);
 	} else {
@@ -320,7 +320,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
     }
 
     for(i = 0; i < nx; i++) {
-	nxi = LENGTH(VECTOR_ELT(x, i));	
+	nxi = LENGTH(VECTOR_ELT(x, i));
 	xi = INTEGER(VECTOR_ELT(x, i));
 	if(nxi && (xi[0] == NA_INTEGER)) {
 	    for(j = 0; j < ny; j++) {
@@ -446,7 +446,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
     PROTECT(x = getAttrib(x, R_NamesSymbol));
     PROTECT(y = getAttrib(y, R_NamesSymbol));
     if(!isNull(x) || !isNull(y)) {
-	PROTECT(dimnames = allocVector(VECSXP, 2));	    
+	PROTECT(dimnames = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	setAttrib(ans, R_DimNamesSymbol, dimnames);
@@ -467,7 +467,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 	setAttrib(ans, install("counts"), counts);
 	UNPROTECT(2); /* names, dimnames */
 	if(!isNull(x) || !isNull(y)) {
-	    PROTECT(dimnames = allocVector(VECSXP, 2));	    
+	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    SET_VECTOR_ELT(dimnames, 0, x);
 	    SET_VECTOR_ELT(dimnames, 1, y);
 	    setAttrib(trafos, R_DimNamesSymbol, dimnames);
@@ -476,7 +476,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 	setAttrib(ans, install("trafos"), trafos);
 	UNPROTECT(2); /* trafos, counts */
     }
-		
+
     UNPROTECT(3); /* y, x, ans */
     return ans;
 }
@@ -508,7 +508,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     y = CAR(args); args = CDR(args);
     opt_costs = CAR(args); args = CDR(args);
     opt_counts = asLogical(CAR(args)); args = CDR(args);
-    opt_fixed = asInteger(CAR(args)); args = CDR(args);    
+    opt_fixed = asInteger(CAR(args)); args = CDR(args);
     opt_partial = asInteger(CAR(args)); args = CDR(args);
     opt_icase = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args));
@@ -536,7 +536,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     nx = length(x);
     ny = length(y);
-    nxy = nx * ny;    
+    nxy = nx * ny;
 
     if(!useBytes) {
 	haveBytes = FALSE;
@@ -652,7 +652,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 			rc = tre_regaexecb(&reg, CHAR(elt),
 					   &match, params, 0);
 		    else if(useWC) {
-			rc = tre_regawexec(&reg, wtransChar(elt), 
+			rc = tre_regawexec(&reg, wtransChar(elt),
 					   &match, params, 0);
 			vmaxset(vmax);
 		    } else {
@@ -696,7 +696,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(x = getAttrib(x, R_NamesSymbol));
     PROTECT(y = getAttrib(y, R_NamesSymbol));
     if(!isNull(x) || !isNull(y)) {
-	PROTECT(dimnames = allocVector(VECSXP, 2));	    
+	PROTECT(dimnames = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	setAttrib(ans, R_DimNamesSymbol, dimnames);
@@ -739,7 +739,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean haveBytes, useWC = FALSE;
     const char *s, *t;
     const void *vmax = NULL;
-    
+
     regex_t reg;
     size_t nmatch;
     regmatch_t *pmatch;
@@ -758,7 +758,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     opt_icase = asLogical(CAR(args)); args = CDR(args);
     opt_fixed = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args));
-    
+
     if(opt_icase == NA_INTEGER) opt_icase = 0;
     if(opt_fixed == NA_INTEGER) opt_fixed = 0;
     if(useBytes == NA_INTEGER) useBytes = 0;
@@ -776,37 +776,37 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "pattern");
     if(length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
-    
+
     if(!isString(vec))
 	error(_("invalid '%s' argument"), "text");
 
     n = XLENGTH(vec);
 
     if(!useBytes) {
-        haveBytes = IS_BYTES(STRING_ELT(pat, 0));
+	haveBytes = IS_BYTES(STRING_ELT(pat, 0));
 	if(!haveBytes)
-            for(i = 0; i < n; i++) {
-                if(IS_BYTES(STRING_ELT(vec, i))) {
-                    haveBytes = TRUE;
-                    break;
-                }
+	    for(i = 0; i < n; i++) {
+		if(IS_BYTES(STRING_ELT(vec, i))) {
+		    haveBytes = TRUE;
+		    break;
+		}
 	    }
 	if(haveBytes) useBytes = TRUE;
     }
 
     if(!useBytes) {
-        useWC = !IS_ASCII(STRING_ELT(pat, 0));
-        if(!useWC) {
-            for(i = 0 ; i < n ; i++) {
-                if(STRING_ELT(vec, i) == NA_STRING) continue;
-                if(!IS_ASCII(STRING_ELT(vec, i))) {
-                    useWC = TRUE;
-                    break;
-                }
-            }
-        }
+	useWC = !IS_ASCII(STRING_ELT(pat, 0));
+	if(!useWC) {
+	    for(i = 0 ; i < n ; i++) {
+		if(STRING_ELT(vec, i) == NA_STRING) continue;
+		if(!IS_ASCII(STRING_ELT(vec, i))) {
+		    useWC = TRUE;
+		    break;
+		}
+	    }
+	}
     }
-    
+
     SEXP s_nchar = install("nchar");
     if(useBytes)
 	PROTECT(call = lang3(s_nchar, pat,
@@ -824,15 +824,15 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(useWC)
 	rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
     else {
-        s = translateChar(STRING_ELT(pat, 0));
-        if(mbcslocale && !mbcsValid(s))
-            error(_("regular expression is invalid in this locale"));
-        rc = tre_regcomp(&reg, s, cflags);
+	s = translateChar(STRING_ELT(pat, 0));
+	if(mbcslocale && !mbcsValid(s))
+	    error(_("regular expression is invalid in this locale"));
+	rc = tre_regcomp(&reg, s, cflags);
     }
     if(rc) {
-        char errbuf[1001];
-        tre_regerror(rc, &reg, errbuf, 1001);
-        error(_("regcomp error: '%s'"), errbuf);
+	char errbuf[1001];
+	tre_regerror(rc, &reg, errbuf, 1001);
+	error(_("regcomp error: '%s'"), errbuf);
     }
 
     nmatch = reg.re_nsub + 1;
@@ -875,7 +875,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 			  i + 1);
 		rc = tre_regaexec(&reg, t,
 				  &match, params, 0);
-		vmaxset(vmax);		
+		vmaxset(vmax);
 	    }
 	    if(rc == REG_OK) {
 		PROTECT(matchpos = allocVector(INTSXP, nmatch));
@@ -903,7 +903,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    
+
     free(pmatch);
 
     tre_regfree(&reg);

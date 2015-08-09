@@ -96,7 +96,7 @@
 #include <R_ext/Callbacks.h>
 
 #define FAST_BASE_CACHE_LOOKUP  /* Define to enable fast lookups of symbols */
-                                /*    in global cache from base environment */
+				/*    in global cache from base environment */
 
 #define IS_USER_DATABASE(rho)  (OBJECT((rho)) && inherits((rho), "UserDefinedDatabase"))
 
@@ -167,8 +167,8 @@ Rboolean R_envHasNoSpecialSymbols (SEXP env)
 	return FALSE;
 
     for (frame = FRAME(env); frame != R_NilValue; frame = CDR(frame))
-        if (IS_SPECIAL_SYMBOL(TAG(frame)))
-            return FALSE;
+	if (IS_SPECIAL_SYMBOL(TAG(frame)))
+	    return FALSE;
 
     return TRUE;
 }
@@ -702,7 +702,7 @@ static void R_FlushGlobalCache(SEXP sym)
     if (entry != R_NilValue) {
 	SETCAR(entry, R_UnboundValue);
 #ifdef FAST_BASE_CACHE_LOOKUP
-        UNSET_BASE_SYM_CACHED(sym);
+	UNSET_BASE_SYM_CACHED(sym);
 #endif
     }
 }
@@ -759,7 +759,7 @@ static SEXP R_GetGlobalCache(SEXP symbol)
 
 #ifdef FAST_BASE_CACHE_LOOKUP
     if (BASE_SYM_CACHED(symbol))
-        return SYMBOL_BINDING_VALUE(symbol);
+	return SYMBOL_BINDING_VALUE(symbol);
 #endif
 
     vl = R_HashGet(hashIndex(symbol, R_GlobalCache), symbol,
@@ -1114,8 +1114,8 @@ void readS3VarsFromFrame(SEXP rho,
     SEXP *dotGenericCallEnv, SEXP *dotGenericDefEnv) {
 
     if (TYPEOF(rho) == NILSXP ||
-        rho == R_BaseNamespace || rho == R_BaseEnv || rho == R_EmptyEnv ||
-        IS_USER_DATABASE(rho) || HASHTAB(rho) != R_NilValue) goto slowpath;
+	rho == R_BaseNamespace || rho == R_BaseEnv || rho == R_EmptyEnv ||
+	IS_USER_DATABASE(rho) || HASHTAB(rho) != R_NilValue) goto slowpath;
 
     SEXP frame = FRAME(rho);
 
@@ -1127,7 +1127,7 @@ void readS3VarsFromFrame(SEXP rho,
     */
 
     for(;TAG(frame) != R_dot_Generic; frame = CDR(frame))
-        if (frame == R_NilValue) goto slowpath;
+	if (frame == R_NilValue) goto slowpath;
     *dotGeneric = BINDING_VALUE(frame);
     frame = CDR(frame);
 
@@ -1430,8 +1430,8 @@ SEXP findFun(SEXP symbol, SEXP rho)
     /* If the symbol is marked as special, skip to the first
        environment that might contain such a symbol. */
     if (IS_SPECIAL_SYMBOL(symbol)) {
-        while (rho != R_EmptyEnv && NO_SPECIAL_SYMBOLS(rho))
-            rho = ENCLOS(rho);
+	while (rho != R_EmptyEnv && NO_SPECIAL_SYMBOLS(rho))
+	    rho = ENCLOS(rho);
     }
 
     while (rho != R_EmptyEnv) {
@@ -1439,10 +1439,10 @@ SEXP findFun(SEXP symbol, SEXP rho)
 #ifdef USE_GLOBAL_CACHE
 	if (rho == R_GlobalEnv)
 #ifdef FAST_BASE_CACHE_LOOKUP
-            if (BASE_SYM_CACHED(symbol))
-                vl = SYMBOL_BINDING_VALUE(symbol);
-            else
-                vl = findGlobalVar(symbol);
+	    if (BASE_SYM_CACHED(symbol))
+		vl = SYMBOL_BINDING_VALUE(symbol);
+	    else
+		vl = findGlobalVar(symbol);
 #else
 	    vl = findGlobalVar(symbol);
 #endif
@@ -1512,8 +1512,8 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	if (IS_GLOBAL_FRAME(rho)) R_FlushGlobalCache(symbol);
 #endif
 
-        if (IS_SPECIAL_SYMBOL(symbol))
-            UNSET_NO_SPECIAL_SYMBOLS(rho);
+	if (IS_SPECIAL_SYMBOL(symbol))
+	    UNSET_NO_SPECIAL_SYMBOLS(rho);
 
 	if (HASHTAB(rho) == R_NilValue) {
 	    /* First check for an existing binding */
@@ -1574,8 +1574,8 @@ void addMissingVarsToNewEnv(SEXP env, SEXP addVars)
     SEXP aprev = addVars;
     SEXP a = CDR(addVars);
     while (a != R_NilValue) {
-        aprev = a;
-        a = CDR(a);
+	aprev = a;
+	a = CDR(a);
     }
     SETCDR(aprev, FRAME(env));
     SET_FRAME(env, addVars);
@@ -1584,20 +1584,20 @@ void addMissingVarsToNewEnv(SEXP env, SEXP addVars)
        variable listed sooner */
     SEXP end;
     for(end = CDR(addVars); end != R_NilValue; end = CDR(end)) {
-        SEXP endTag = TAG(end);
-        SEXP sprev = R_NilValue;
-        SEXP s;
-        for(s = addVars; s != end; s = CDR(s)) {
-            if (TAG(s) == endTag) {
-                /* remove variable s from the list, because it is overriden by "end" */
-                if (sprev == R_NilValue) {
-                    addVars = CDR(s);
-                    SET_FRAME(env, addVars);
-                } else
-                    SETCDR(sprev, CDR(s));
-            } else
-                sprev = s;
-        }
+	SEXP endTag = TAG(end);
+	SEXP sprev = R_NilValue;
+	SEXP s;
+	for(s = addVars; s != end; s = CDR(s)) {
+	    if (TAG(s) == endTag) {
+		/* remove variable s from the list, because it is overriden by "end" */
+		if (sprev == R_NilValue) {
+		    addVars = CDR(s);
+		    SET_FRAME(env, addVars);
+		} else
+		    SETCDR(sprev, CDR(s));
+	    } else
+		sprev = s;
+	}
     }
 }
 
@@ -2104,9 +2104,9 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(gmode == (SEXPTYPE) (-1))
 		error(_("invalid '%s' argument"), "mode");
 	}
-        SEXP ans_i = gfind(translateChar(STRING_ELT(x, i % nvals)), env,
-                           gmode, VECTOR_ELT(ifnotfound, i % nifnfnd),
-                           ginherits, rho);
+	SEXP ans_i = gfind(translateChar(STRING_ELT(x, i % nvals)), env,
+			   gmode, VECTOR_ELT(ifnotfound, i % nifnfnd),
+			   ginherits, rho);
 	SET_VECTOR_ELT(ans, i, lazy_duplicate(ans_i));
     }
 
@@ -2133,9 +2133,9 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static SEXP findRootPromise(SEXP p) {
     if (TYPEOF(p) == PROMSXP) {
-        while(TYPEOF(PREXPR(p)) == PROMSXP) {
-            p = PREXPR(p);
-        }
+	while(TYPEOF(PREXPR(p)) == PROMSXP) {
+	    p = PREXPR(p);
+	}
     }
     return p;
 }
@@ -2175,7 +2175,7 @@ R_isMissing(SEXP symbol, SEXP rho)
 	    return 1;
 	if (IS_ACTIVE_BINDING(vl))
 	    return 0;
-        SETCAR(vl, findRootPromise(CAR(vl)));
+	SETCAR(vl, findRootPromise(CAR(vl)));
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    PRVALUE(CAR(vl)) == R_UnboundValue &&
 	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP) {
@@ -2364,7 +2364,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* FIXME: duplicate the hash table and assign here */
 	    } else {
 		for(p = FRAME(loadenv); p != R_NilValue; p = CDR(p))
-                    defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
+		    defineVar(TAG(p), lazy_duplicate(CAR(p)), s);
 	    }
 	} else {
 	    error(_("'attach' only works for lists, data frames and environments"));
@@ -2790,7 +2790,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ISNULL(env))
 	error(_("use of NULL environment is defunct"));
     if( !isEnvironment(env) ) {
-        SEXP xdata;
+	SEXP xdata;
 	if( IS_S4_OBJECT(env) && TYPEOF(env) == S4SXP &&
 	    (xdata = R_getS4DataSlot(env, ENVSXP)) != R_NilValue)
 	    env = xdata;
@@ -2952,9 +2952,9 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 int Rf_envlength(SEXP rho)
 {
     if(IS_USER_DATABASE(rho)) {
-        R_ObjectTable *tb = (R_ObjectTable*)
+	R_ObjectTable *tb = (R_ObjectTable*)
 	    R_ExternalPtrAddr(HASHTAB(rho));
-        return length(tb->objects(tb));
+	return length(tb->objects(tb));
     } else if( HASHTAB(rho) != R_NilValue)
 	return HashTableSize(HASHTAB(rho), 1);
     else
@@ -2964,9 +2964,9 @@ int Rf_envlength(SEXP rho)
 R_xlen_t Rf_envxlength(SEXP rho)
 {
     if(IS_USER_DATABASE(rho)) {
-        R_ObjectTable *tb = (R_ObjectTable*)
+	R_ObjectTable *tb = (R_ObjectTable*)
 	    R_ExternalPtrAddr(HASHTAB(rho));
-        return xlength(tb->objects(tb));
+	return xlength(tb->objects(tb));
     } else if( HASHTAB(rho) != R_NilValue)
 	return HashTableSize(HASHTAB(rho), 1);
     else

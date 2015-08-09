@@ -187,18 +187,18 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     static SEXP s_S3MethodsTable = NULL;
 
     if (TYPEOF(callrho) != ENVSXP) {
-        if (TYPEOF(callrho) == NILSXP)
+	if (TYPEOF(callrho) == NILSXP)
 	    error(_("use of NULL environment is defunct"));
-        else
+	else
 	    error(_("bad generic call environment"));
     }
     if (defrho == R_BaseEnv)
 	defrho = R_BaseNamespace;
     else if (TYPEOF(defrho) != ENVSXP) {
-        if (TYPEOF(defrho) == NILSXP)
-            error(_("use of NULL environment is defunct"));
-        else
-            error(_("bad generic definition environment"));
+	if (TYPEOF(defrho) == NILSXP)
+	    error(_("use of NULL environment is defunct"));
+	else
+	    error(_("bad generic definition environment"));
     }
 
     /* This evaluates promises */
@@ -220,9 +220,9 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	if (TYPEOF(table) == ENVSXP) {
 	    val = findVarInFrame3(table, method, TRUE);
 	    if (TYPEOF(val) == PROMSXP) {
-	        PROTECT(val);
-	        val = eval(val, rho);
-	        UNPROTECT(1);
+		PROTECT(val);
+		val = eval(val, rho);
+		UNPROTECT(1);
 	    }
 	    return val;
 	}
@@ -274,7 +274,7 @@ SEXP addS3Var(SEXP vars, SEXP name, SEXP value) {
 
 attribute_hidden
 SEXP createS3Vars(SEXP dotGeneric, SEXP dotGroup, SEXP dotClass, SEXP dotMethod,
-                  SEXP dotGenericCallEnv, SEXP dotGenericDefEnv) {
+		  SEXP dotGenericCallEnv, SEXP dotGenericDefEnv) {
 
     SEXP v = R_NilValue;
     v = addS3Var(v, R_dot_GenericDefEnv, dotGenericDefEnv);
@@ -293,12 +293,12 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		    const char *generic, SEXP rho, SEXP callrho, SEXP defrho) {
 
     SEXP newvars = PROTECT(createS3Vars(
-        PROTECT(mkString(generic)),
-        R_BlankScalarString,
-        dotClass,
-        PROTECT(ScalarString(PRINTNAME(method))),
-        callrho,
-        defrho
+	PROTECT(mkString(generic)),
+	R_BlankScalarString,
+	dotClass,
+	PROTECT(ScalarString(PRINTNAME(method))),
+	callrho,
+	defrho
     ));
 
     /* Create a new environment without any */
@@ -312,20 +312,20 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 	for (s = FRAME(cptr->cloenv); s != R_NilValue; s = CDR(s)) {
 	    matched = 0;
 	    for (t = formals; t != R_NilValue; t = CDR(t))
-	        if (TAG(t) == TAG(s)) {
+		if (TAG(t) == TAG(s)) {
 		    matched = 1;
 		    break;
 		}
 	    if (!matched) {
-	        UNPROTECT(1); /* newvars */
-	        newvars = PROTECT(CONS(CAR(s), newvars));
-	        SET_TAG(newvars, TAG(s));
-            }
+		UNPROTECT(1); /* newvars */
+		newvars = PROTECT(CONS(CAR(s), newvars));
+		SET_TAG(newvars, TAG(s));
+	    }
 	}
     }
 
     if( (RDEBUG(op) && R_current_debug_state()) || RSTEP(op) ) {
-        SET_RSTEP(sxp, 1);
+	SET_RSTEP(sxp, 1);
     }
 
     SEXP newcall =  PROTECT(duplicate(cptr->call));
@@ -357,7 +357,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     nclass = length(klass);
     for (i = 0; i < nclass; i++) {
 	const void *vmax = vmaxget();
-        const char *ss = translateChar(STRING_ELT(klass, i));
+	const char *ss = translateChar(STRING_ELT(klass, i));
 	method = installS3Signature(generic, ss);
 	vmaxset(vmax);
 	sxp = R_LookupMethod(method, rho, callrho, defrho);
@@ -365,16 +365,16 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    if(method == R_SortListSymbol && CLOENV(sxp) == R_BaseNamespace)
 		continue; /* kludge because sort.list is not a method */
 	    PROTECT(sxp);
-            if (i > 0) {
+	    if (i > 0) {
 		SEXP dotClass = PROTECT(stringSuffix(klass, i));
 		setAttrib(dotClass, R_PreviousSymbol, klass);
 		*ans = dispatchMethod(op, sxp, dotClass, cptr, method, generic,
 				      rho, callrho, defrho);
 		UNPROTECT(1); /* dotClass */
 	    } else {
-	        *ans = dispatchMethod(op, sxp, klass, cptr, method, generic,
+		*ans = dispatchMethod(op, sxp, klass, cptr, method, generic,
 				      rho, callrho, defrho);
-            }
+	    }
 	    UNPROTECT(2); /* klass, sxp */
 	    return 1;
 	}
@@ -382,7 +382,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     method = installS3Signature(generic, "default");
     PROTECT(sxp = R_LookupMethod(method, rho, callrho, defrho));
     if (isFunction(sxp)) {
-        *ans = dispatchMethod(op, sxp, R_NilValue, cptr, method, generic,
+	*ans = dispatchMethod(op, sxp, R_NilValue, cptr, method, generic,
 			      rho, callrho, defrho);
 	UNPROTECT(2); /* klass, sxp */
 	return 1;
@@ -407,7 +407,7 @@ SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env
     static SEXP do_usemethod_formals = NULL;
 
     if (do_usemethod_formals == NULL)
-        do_usemethod_formals = allocFormalsList2(install("generic"),
+	do_usemethod_formals = allocFormalsList2(install("generic"),
 						 install("object"));
 
     PROTECT(argList = matchArgs(do_usemethod_formals, args, call));
@@ -490,9 +490,9 @@ static SEXP fixcall(SEXP call, SEXP args)
 		found = 0;
 		for(s = call; CDR(s) != R_NilValue; s = CDR(s))
 		    if(TAG(CDR(s)) == TAG(t)) {
-                        found = 1;
-                        break;
-                    }
+			found = 1;
+			break;
+		    }
 		if( !found ) {
 			SETCDR(s, allocList(1));
 			SET_TAG(CDR(s), TAG(t));
@@ -509,20 +509,20 @@ static SEXP fixcall(SEXP call, SEXP args)
 */
 static
 Rboolean equalS3Signature(const char *signature, const char *left,
-                         const char *right) {
+			 const char *right) {
 
     const char *s = signature;
     const char *a;
 
     for(a = left; *a; s++, a++) {
-        if (*s != *a)
-            return FALSE;
+	if (*s != *a)
+	    return FALSE;
     }
     if (*s++ != '.')
-        return FALSE;
+	return FALSE;
     for(a = right; *a; s++, a++) {
-        if (*s != *a)
-            return FALSE;
+	if (*s != *a)
+	    return FALSE;
     }
     return (*s == 0) ? TRUE : FALSE;
 }
@@ -564,7 +564,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
        error(_("'NextMethod' called from an anonymous function"));
 
     readS3VarsFromFrame(sysp, &generic, &group, &klass, &method,
-                        &callenv, &defenv);
+			&callenv, &defenv);
 
     /* Find dispatching environments. Promises shouldn't occur, but
        check to be on the safe side.  If the variables are not in the
@@ -648,7 +648,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	basename = generic;
     } else {
 	if (!isString(group) || LENGTH(group) != 1)
-            error(_("invalid 'group' argument found in 'NextMethod'"));
+	    error(_("invalid 'group' argument found in 'NextMethod'"));
 	if (CHAR(STRING_ELT(group, 0))[0] == '\0') basename = generic;
 	else basename = group;
     }
@@ -703,7 +703,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     sg = translateChar(STRING_ELT(generic, 0));
     for (i = j ; i < LENGTH(klass); i++) {
 	sk = translateChar(STRING_ELT(klass, i));
-        nextfunSignature = installS3Signature(sg, sk);
+	nextfunSignature = installS3Signature(sg, sk);
 	nextfun = R_LookupMethod(nextfunSignature, env, callenv, defenv);
 	if (isFunction(nextfun)) break;
 	if (group != R_UnboundValue) {
@@ -757,12 +757,12 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(method = PRINTNAME(nextfunSignature));
 
     SEXP newvars = PROTECT(createS3Vars(
-        generic,
-        group,
-        s,
-        method,
-        callenv,
-        defenv
+	generic,
+	group,
+	s,
+	method,
+	callenv,
+	defenv
     ));
 
     SETCAR(newcall, nextfunSignature);
@@ -855,7 +855,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
     }
     vmaxset(vmax);
     if(!isvec) {
-    	UNPROTECT(1);
+	UNPROTECT(1);
 	return mkFalse();
     }
     UNPROTECT(2);
@@ -1625,8 +1625,8 @@ SEXP asS4(SEXP s, Rboolean flag, int complete)
 	      error(_("object of class \"%s\" does not correspond to a valid S3 object"),
 		      CHAR(STRING_ELT(R_data_class(s, FALSE), 0)));
 	    else {
-	        UNPROTECT(1);
-	        return s; /*  unchanged */
+		UNPROTECT(1);
+		return s; /*  unchanged */
 	    }
 	}
 	UNSET_S4_OBJECT(s);

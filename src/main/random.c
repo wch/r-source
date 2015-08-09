@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *  Copyright (C) 2003--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -39,7 +39,7 @@ static void NORET invalid(SEXP call)
     error(_("invalid arguments"));
 }
 
-static Rboolean 
+static Rboolean
 random1(double (*f) (double), double *a, R_xlen_t na, double *x, R_xlen_t n)
 {
     Rboolean naflag = FALSE;
@@ -210,8 +210,8 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static Rboolean 
-random3(double (*f) (double, double, double), double *a, 
+static Rboolean
+random3(double (*f) (double, double, double), double *a,
 	R_xlen_t na, double *b, R_xlen_t nb, double *c, R_xlen_t nc,
 	double *x, R_xlen_t n)
 {
@@ -504,7 +504,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {  // uniform sampling
 	double dn = asReal(sn);
 	R_xlen_t k = asVecSize(sk);
-	if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0)) 
+	if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0))
 	    error(_("invalid first argument"));
 	if (k < 0) error(_("invalid '%s' argument"), "size");
 	if (!replace && k > dn)

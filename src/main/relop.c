@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	PROTECT_WITH_INDEX(x, &xpi);
 	PROTECT_WITH_INDEX(y, &ypi);
 	SEXP ans;
-	if (typex == INTSXP && typey == INTSXP) 
+	if (typex == INTSXP && typey == INTSXP)
 	    ans = integer_relop(PRIMVAL(op), x, y);
 	else {
 	    if (typex == INTSXP)
@@ -801,7 +801,7 @@ static SEXP bitwiseShiftL(SEXP a, SEXP b)
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
 	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
-	    INTEGER(ans)[i] = 
+	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa << bb);
 	});
 	break;
@@ -817,7 +817,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     int np = 0;
     if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;}
     if(!isInteger(b)) {b = PROTECT(coerceVector(b, INTSXP)); np++;}
-    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b), 
+    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b),
 	mn = (m && n) ? mymax(m, n) : 0;
     R_xlen_t ia, ib;
     SEXP ans = allocVector(TYPEOF(a), mn);
@@ -825,7 +825,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
 	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
-	    INTEGER(ans)[i] = 
+	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa >> bb);
 	});
 	break;

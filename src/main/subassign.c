@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   The R Core Team
+ *  Copyright (C) 1997-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1246,21 +1246,21 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 static SEXP GetOneIndex(SEXP sub, int ind)
 {
     if (ind < 0 || ind+1 > length(sub))
-    	error("internal error: index %d from length %d", ind, length(sub));
+	error("internal error: index %d from length %d", ind, length(sub));
     if (length(sub) > 1) {
-    	switch (TYPEOF(sub)) {
-    	case INTSXP:
-    	    sub = ScalarInteger(INTEGER(sub)[ind]);
-    	    break;
-    	case REALSXP:
-    	    sub = ScalarReal(REAL(sub)[ind]);
-    	    break;
-    	case STRSXP:
-    	    sub = ScalarString(STRING_ELT(sub, ind));
-    	    break;
-    	default:
-    	    error(_("invalid subscript in list assign"));
-    	}
+	switch (TYPEOF(sub)) {
+	case INTSXP:
+	    sub = ScalarInteger(INTEGER(sub)[ind]);
+	    break;
+	case REALSXP:
+	    sub = ScalarReal(REAL(sub)[ind]);
+	    break;
+	case STRSXP:
+	    sub = ScalarString(STRING_ELT(sub, ind));
+	    break;
+	default:
+	    error(_("invalid subscript in list assign"));
+	}
     }
     return sub;
 }
@@ -1280,7 +1280,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
     n = length(indx);
     if (n > 1)
-    	error(_("invalid subscript in list assign"));
+	error(_("invalid subscript in list assign"));
 
     nx = length(x);
 
@@ -1614,7 +1614,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
 	xOrig = x; /* will be an S4 object */
-        x = R_getS4DataSlot(x, ANYSXP);
+	x = R_getS4DataSlot(x, ANYSXP);
 	if(TYPEOF(x) != ENVSXP)
 	  errorcall(call, _("[[<- defined for objects of type \"S4\" only for subclasses of environment"));
     }
@@ -1662,16 +1662,16 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
 	    error(_("[[ ]] with missing subscript"));
 	if (nsubs == 1) {
-	    offset = OneIndex(x, thesub, xlength(x), 0, &newname, 
+	    offset = OneIndex(x, thesub, xlength(x), 0, &newname,
 			      recursed ? len-1 : -1, R_NilValue);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
 		if(recursed) {
 		    if(isVectorList(xup)) SET_VECTOR_ELT(xup, off, x);
 		    else {
-		        PROTECT(x);
-		        xup = SimpleListAssign(call, xup, subs, x, len-2);
-		        UNPROTECT(1); /* x */
+			PROTECT(x);
+			xup = SimpleListAssign(call, xup, subs, x, len-2);
+			UNPROTECT(1); /* x */
 		    }
 		} else xtop = x;
 		UNPROTECT(3); /* xup, x, args */
@@ -1816,8 +1816,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 2014:	/* expression <- real	    */
 	case 2015:	/* expression <- complex    */
 	case 2016:	/* expression <- character  */
-	case 2024:  	/* expression     <- raw */
-	case 2025:  	/* expression     <- S4 */
+	case 2024:	/* expression     <- raw */
+	case 2025:	/* expression     <- S4 */
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
@@ -2035,7 +2035,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	SEXP names;
 	int type = VECSXP;
 
-	if (isExpression(x)) 
+	if (isExpression(x))
 	    type = EXPRSXP;
 	else if (!isNewList(x)) {
 	    warning(_("Coercing LHS to a list"));

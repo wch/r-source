@@ -661,8 +661,8 @@ FUNTAB R_FunTab[] =
 #endif
 
 {"parse",	do_parse,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
-//{"parse_Rd", 	do_parseRd,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
-//{"deparseRd", 	do_deparseRd, 	0, 	11, 	2,	{PP_FUNCALL, PREC_FN, 	0}},
+//{"parse_Rd",	do_parseRd,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
+//{"deparseRd",	do_deparseRd,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 //{"parseLatex",  do_parseLatex,  0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"saveToConn",	do_saveToConn,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
@@ -701,7 +701,7 @@ FUNTAB R_FunTab[] =
 {"sys.on.exit",	do_sys,		7,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sys.parents",	do_sys,		8,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sys.function",do_sys,		9,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"traceback",	do_traceback,  	0,      11,     1,      {PP_FUNCALL, PREC_FN,   0}},
+{"traceback",	do_traceback,	0,      11,     1,      {PP_FUNCALL, PREC_FN,   0}},
 {"browserText", do_sysbrowser,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"browserCondition", do_sysbrowser,	2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"browserSetDebug", do_sysbrowser,	3,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -915,51 +915,51 @@ FUNTAB R_FunTab[] =
 {"bincode",	do_bincode,	 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"tabulate",	do_tabulate,	 0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"findInterval",do_findinterval, 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"pretty",	do_pretty, 	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
-{"formatC",	do_formatC, 	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
-{"crc64",	do_crc64, 	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"bitwiseAnd",	do_bitwise, 	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"bitwiseNot",	do_bitwise, 	2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"bitwiseOr",	do_bitwise, 	3,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"bitwiseXor",	do_bitwise, 	4,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"bitwiseShiftL", do_bitwise, 	5,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"bitwiseShiftR",  do_bitwise, 	6,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"serialize",	do_serialize, 	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"serializeb",	do_serialize, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"unserialize",	do_serialize, 	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"rowsum_matrix",do_rowsum, 	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"rowsum_df",	do_rowsum, 	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"pretty",	do_pretty,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"formatC",	do_formatC,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
+{"crc64",	do_crc64,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseAnd",	do_bitwise,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseNot",	do_bitwise,	2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseOr",	do_bitwise,	3,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseXor",	do_bitwise,	4,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseShiftL", do_bitwise,	5,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"bitwiseShiftR",  do_bitwise,	6,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"serialize",	do_serialize,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"serializeb",	do_serialize,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"unserialize",	do_serialize,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"rowsum_matrix",do_rowsum,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"rowsum_df",	do_rowsum,	1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"setS4Object",	do_setS4Object, 0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"traceOnOff",	do_traceOnOff, 	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"debugOnOff",	do_traceOnOff, 	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"traceOnOff",	do_traceOnOff,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"debugOnOff",	do_traceOnOff,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"La_qr_cmplx",	do_lapack,     	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_rs",	do_lapack,     	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_rs_cmplx",do_lapack,     	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_rg",	do_lapack,     	3,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_rg_cmplx",do_lapack,     	41,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_rs",	do_lapack,     	5,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_rs_cmplx",	do_lapack,     	51,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_dlange",	do_lapack,     	6,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_dgecon",	do_lapack,     	7,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_dtrcon",	do_lapack,     	8,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_zgecon",	do_lapack,     	9,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_ztrcon",	do_lapack,     	10,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_qr_cmplx",	do_lapack,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_rs",	do_lapack,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_rs_cmplx",do_lapack,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_rg",	do_lapack,	3,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_rg_cmplx",do_lapack,	41,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_rs",	do_lapack,	5,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_rs_cmplx",	do_lapack,	51,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_dlange",	do_lapack,	6,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_dgecon",	do_lapack,	7,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_dtrcon",	do_lapack,	8,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_zgecon",	do_lapack,	9,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_ztrcon",	do_lapack,	10,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"La_solve_cmplx",do_lapack,    11,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_solve",	do_lapack,     	100,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_qr",	do_lapack,     	101,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_chol",	do_lapack,     	200,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_chol2inv",	do_lapack,     	201,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_solve",	do_lapack,	100,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_qr",	do_lapack,	101,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_chol",	do_lapack,	200,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_chol2inv",	do_lapack,	201,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"qr_coef_real",do_lapack,     	300,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"qr_qy_real",	do_lapack,     	301,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"det_ge_real",	do_lapack,     	302,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"qr_coef_cmplx",do_lapack,    	303,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"qr_qy_cmplx",	do_lapack,     	304,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"qr_coef_real",do_lapack,	300,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"qr_qy_real",	do_lapack,	301,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"det_ge_real",	do_lapack,	302,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"qr_coef_cmplx",do_lapack,	303,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"qr_qy_cmplx",	do_lapack,	304,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"La_svd",	do_lapack,     	400,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_svd_cmplx",do_lapack,     	401,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
-{"La_version",	do_lapack,     	1000,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_svd",	do_lapack,	400,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_svd_cmplx",do_lapack,	401,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"La_version",	do_lapack,	1000,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"bcprofcounts",do_bcprofcounts,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"bcprofstart",	do_bcprofstart,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1126,13 +1126,13 @@ static SEXP createDDVALSymbol(int n) {
 
 static void initializeDDVALSymbols() {
     for(int i = 0; i < N_DDVAL_SYMBOLS; i++) {
-        DDVALSymbols[i] = createDDVALSymbol(i);
+	DDVALSymbols[i] = createDDVALSymbol(i);
     }
 }
 
 SEXP attribute_hidden installDDVAL(int n) {
     if (n < N_DDVAL_SYMBOLS)
-        return DDVALSymbols[n];
+	return DDVALSymbols[n];
 
     return createDDVALSymbol(n);
 }
@@ -1185,7 +1185,7 @@ void attribute_hidden InitNames()
 
     /* Special base functions */
     for (int i = 0; Spec_name[i]; i++)
-        SET_SPECIAL_SYMBOL(install(Spec_name[i]));
+	SET_SPECIAL_SYMBOL(install(Spec_name[i]));
 
     R_initAsignSymbols();
     initializeDDVALSymbols();
@@ -1226,34 +1226,34 @@ SEXP installChar(SEXP charSXP)
     int i, hashcode;
 
     if( !HASHASH(charSXP) ) {
-        hashcode = R_Newhashpjw(CHAR(charSXP));
-        SET_HASHVALUE(charSXP, hashcode);
-        SET_HASHASH(charSXP, 1);
+	hashcode = R_Newhashpjw(CHAR(charSXP));
+	SET_HASHVALUE(charSXP, hashcode);
+	SET_HASHASH(charSXP, 1);
     } else {
-        hashcode = HASHVALUE(charSXP);
+	hashcode = HASHVALUE(charSXP);
     }
     i = hashcode % HSIZE;
     /* Check to see if the symbol is already present;  if it is, return it. */
     for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
-        if (strcmp(CHAR(charSXP), CHAR(PRINTNAME(CAR(sym)))) == 0) return (CAR(sym));
+	if (strcmp(CHAR(charSXP), CHAR(PRINTNAME(CAR(sym)))) == 0) return (CAR(sym));
     /* Create a new symbol node and link it into the table. */
     int len = LENGTH(charSXP);
     if (len == 0)
-        error(_("attempt to use zero-length variable name"));
+	error(_("attempt to use zero-length variable name"));
     if (len > MAXIDSIZE)
-        error(_("variable names are limited to %d bytes"), MAXIDSIZE);
+	error(_("variable names are limited to %d bytes"), MAXIDSIZE);
     if (IS_ASCII(charSXP) || (IS_UTF8(charSXP) && utf8locale) ||
-                                        (IS_LATIN1(charSXP) && latin1locale) )
-        sym = mkSYMSXP(charSXP, R_UnboundValue);
+					(IS_LATIN1(charSXP) && latin1locale) )
+	sym = mkSYMSXP(charSXP, R_UnboundValue);
     else {
-        /* This branch is to match behaviour of install (which is older):
-           symbol C-string names are always interpreted as if
-           in the native locale, even when they are not in the native locale */
-        PROTECT(charSXP);
-        sym = mkSYMSXP(mkChar(CHAR(charSXP)), R_UnboundValue);
-        SET_HASHVALUE(PRINTNAME(sym), hashcode);
-        SET_HASHASH(PRINTNAME(sym), 1);
-        UNPROTECT(1);
+	/* This branch is to match behaviour of install (which is older):
+	   symbol C-string names are always interpreted as if
+	   in the native locale, even when they are not in the native locale */
+	PROTECT(charSXP);
+	sym = mkSYMSXP(mkChar(CHAR(charSXP)), R_UnboundValue);
+	SET_HASHVALUE(PRINTNAME(sym), hashcode);
+	SET_HASHASH(PRINTNAME(sym), 1);
+	UNPROTECT(1);
     }
 
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
@@ -1269,23 +1269,23 @@ SEXP installS3Signature(const char *className, const char *methodName) {
 
     int i = 0;
     for(src = className; *src; src++) {
-        if (i == maxLength)
-            error(_("class name too long in '%s'"), className);
-        signature[i++] = *src;
+	if (i == maxLength)
+	    error(_("class name too long in '%s'"), className);
+	signature[i++] = *src;
     }
 
     if (i == maxLength)
-        error(_("class name too long in '%s'"), className);
+	error(_("class name too long in '%s'"), className);
     signature[i++] = '.';
 
     for(src = methodName; *src; src++) {
-        if (i == maxLength)
-            error(_("class name too long in '%s'"), className);
-        signature[i++] = *src;
+	if (i == maxLength)
+	    error(_("class name too long in '%s'"), className);
+	signature[i++] = *src;
     }
 
     if (i == maxLength)
-        error(_("class name too long in '%s'"), className);
+	error(_("class name too long in '%s'"), className);
     signature[i] = 0;
 
     return install(signature);

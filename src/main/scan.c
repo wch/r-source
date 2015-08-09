@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2014   The R Core Team.
+ *  Copyright (C) 1998-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -361,7 +361,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		    buffer->data[m++] = (char) scanchar2(d);
 	    }
 	    if (c == R_EOF)
-	    	warning(_("EOF within quoted string"));
+		warning(_("EOF within quoted string"));
 	    c = scanchar(FALSE, d);
 	    mm = m;
 	}
@@ -411,7 +411,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			    buffer->data[m++] = (char) scanchar2(d);
 		    }
 		    if (c == R_EOF)
-		    	warning(_("EOF within quoted string"));
+			warning(_("EOF within quoted string"));
 		    c = scanchar(TRUE, d); /* only peek at lead byte
 					      unless ASCII */
 		    if (c == quote) {
@@ -453,7 +453,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
     }
     *bufp = '\0';
     /* Remove UTF-8 BOM */
-    if(d->atStart && utf8locale && 
+    if(d->atStart && utf8locale &&
        !memcmp(buffer->data, "\xef\xbb\xbf", 3))
 	memmove(buffer->data, buffer->data+3, strlen(buffer->data) + 1);
     d->atStart = FALSE;
@@ -822,7 +822,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
-    int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, 
+    int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline,
 	escapes, skipNul;
     const char *p, *encoding;
     RCNTXT cntxt;
@@ -936,7 +936,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("cannot read from this connection"));
 	    }
 	} else {
-	    if(!data.con->canread) 
+	    if(!data.con->canread)
 		error(_("cannot read from this connection"));
 	}
 	for (i = 0; i < nskip; i++) /* MBCS-safe */
@@ -984,7 +984,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
     if (data.quoteset[0]) free(data.quoteset);
-    if (!skipNul && data.embedWarn) 
+    if (!skipNul && data.embedWarn)
 	warning(_("embedded nul(s) found in input"));
 
     UNPROTECT(1); /* ans */
@@ -1008,8 +1008,8 @@ SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(length(prompt) > 0) {
 	    strncpy(ConsolePrompt, translateChar(STRING_ELT(prompt, 0)),
 		    CONSOLE_PROMPT_SIZE - 1);
-            ConsolePrompt[CONSOLE_PROMPT_SIZE - 1] = '\0';
-        }
+	    ConsolePrompt[CONSOLE_PROMPT_SIZE - 1] = '\0';
+	}
     }
 
     if(R_Interactive) {

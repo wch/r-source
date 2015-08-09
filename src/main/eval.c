@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2014	The R Core Team.
+ *  Copyright (C) 1998--2015	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -463,7 +463,7 @@ static SEXP forcePromise(SEXP e)
 	R_PendingPromises = prstack.next;
 	SET_PRSEEN(e, 0);
 	SET_PRVALUE(e, val);
-        SET_NAMED (val, 2);
+	SET_NAMED (val, 2);
 	SET_PRENV(e, R_NilValue);
     }
     return PRVALUE(e);
@@ -939,13 +939,13 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
     /*  Fix up any extras that were supplied by usemethod. */
 
     if (suppliedvars != R_NilValue)
-        addMissingVarsToNewEnv(newrho, suppliedvars);
+	addMissingVarsToNewEnv(newrho, suppliedvars);
 
     if (R_envHasNoSpecialSymbols(newrho))
 	SET_NO_SPECIAL_SYMBOLS(newrho);
 
     /*  Terminate the previous context and start a new one with the
-        correct environment. */
+	correct environment. */
 
     endcontext(&cntxt);
 
@@ -1385,7 +1385,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
     Rboolean cond = NA_LOGICAL;
 
     if (length(s) > 1) {
-    	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
+	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
 	warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
 	UNPROTECT(1);
@@ -1638,7 +1638,7 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
-        while (asLogicalNoNA(eval(CAR(args), rho), call)) {
+	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
 	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) {
 		SrcrefPrompt("debug", R_Srcref);
 		PrintValue(body);
@@ -2807,7 +2807,7 @@ static void findmethod(SEXP Class, const char *group, const char *generic,
 static SEXP classForGroupDispatch(SEXP obj) {
 
     return IS_S4_OBJECT(obj) ? R_data_class2(obj)
-            : getAttrib(obj, R_ClassSymbol);
+	    : getAttrib(obj, R_ClassSymbol);
 }
 
 attribute_hidden
@@ -2932,19 +2932,19 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	t = classForGroupDispatch(CAR(s));
 	if (isString(t) && (stringPositionTr(t, dispatchClassName) >= 0))
 	    SET_STRING_ELT(m, i, PRINTNAME(lmeth));
-        else
+	else
 	    SET_STRING_ELT(m, i, R_BlankString);
 	s = CDR(s);
     }
     vmaxset(vmax);
 
     newvars = PROTECT(createS3Vars(
-        PROTECT(mkString(generic)),
-        lgr,
-        PROTECT(stringSuffix(lclass, lwhich)),
-        m,
-        rho,
-        R_BaseEnv
+	PROTECT(mkString(generic)),
+	lgr,
+	PROTECT(stringSuffix(lclass, lwhich)),
+	m,
+	rho,
+	R_BaseEnv
     ));
 
     PROTECT(t = LCONS(lmeth, CDR(call)));
@@ -3691,7 +3691,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	}								\
 	SEXP call = VECTOR_ELT(constants, GETOP());			\
 	SEXP tmp = GETSTACK(-2);					\
-	SEXP args = CONS_NR(tmp, CONS_NR(GETSTACK(-1), R_NilValue)); 	\
+	SEXP args = CONS_NR(tmp, CONS_NR(GETSTACK(-1), R_NilValue));	\
 	R_BCNodeStackTop--;						\
 	SETSTACK(-1, args); /* to protect */				\
 	SEXP op = getPrimitive(R_LogSym, SPECIALSXP);			\
@@ -6465,8 +6465,8 @@ SEXP attribute_hidden do_returnValue(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP val;
     checkArity(op, args);
     if (R_ExitContext && (val = R_ExitContext->returnValue)){
-        MARK_NOT_MUTABLE(val);
-        return val;
+	MARK_NOT_MUTABLE(val);
+	return val;
     }
     return CAR(args); /* default */
 }

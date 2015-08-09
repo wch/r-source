@@ -74,7 +74,7 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(R_compute_identical(x, y, flags));
 }
 
-#define NUM_EQ 		(!(flags & 1))
+#define NUM_EQ		(!(flags & 1))
 #define SINGLE_NA       (!(flags & 2))
 #define ATTR_AS_SET     (!(flags & 4))
 #define IGNORE_BYTECODE (!(flags & 8))
@@ -257,7 +257,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	/*#define PREXPR(x)	((x)->u.promsxp.expr)
 	  #define PRENV(x)	((x)->u.promsxp.env)
 	  return(R_compute_identical(subsititute(PREXPR(x), PRENV(x),
-	                             flags),
+				     flags),
 	  subsititute(PREXPR(y), PRENV(y))));*/
     case S4SXP:
 	/* attributes already tested, so all slots identical */

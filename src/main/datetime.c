@@ -56,7 +56,7 @@
 
 #include <errno.h>
 
-/* 
+/*
 
 There are two implementation paths here.
 
@@ -446,7 +446,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	OK = !have_broken_mktime() || d > 0.;
     else
 #endif
-	OK = d < 2147483647.0 && 
+	OK = d < 2147483647.0 &&
 	    d > (have_broken_mktime() ? 0. : -2147483647.0);
     if(OK) {
 	t = (time_t) d;
@@ -463,7 +463,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 	return local ? localtime(&t) : gmtime(&t);
 #endif
     }
-    
+
     /* internal substitute code.
        Like localtime, this returns a pointer to a static struct tm */
 
@@ -642,11 +642,11 @@ static void glibc_fix(stm *tm, int *invalid)
 
 
 static const char ltnames [][7] =
-{ "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst", 
+{ "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst",
   "zone",  "gmtoff"};
 
 
-static void 
+static void
 makelt(stm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
 {
     if(valid) {
@@ -668,7 +668,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
 }
 
 
-             /* --------- R interfaces --------- */
+	     /* --------- R interfaces --------- */
 
 // We assume time zone names/abbreviations are ASCII, as all known ones are.
 
@@ -746,11 +746,11 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!isgmt) {
 	    char *p = "";
 	    // or ptm->tm_zone
-	    if(valid && ptm->tm_isdst >= 0) 
+	    if(valid && ptm->tm_isdst >= 0)
 		p = R_tzname[ptm->tm_isdst];
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
 #ifdef HAVE_TM_GMTOFF
-	    INTEGER(VECTOR_ELT(ans, 10))[i] = 
+	    INTEGER(VECTOR_ELT(ans, 10))[i] =
 		valid ? (int)ptm->tm_gmtoff : NA_INTEGER;
 #endif
 	}
@@ -928,7 +928,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	if(have_zone) {
 	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i)), 20);
-            tm_zone[20 - 1] = '\0';
+	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
 #elif defined USE_INTERNAL_MKTIME
@@ -959,7 +959,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (p) {
 		    memset(buf2, 0, n);
 		    strncpy(buf2, q, p - q);
-		    if(have_zone) 
+		    if(have_zone)
 			strcat(buf2, tm_zone);
 		    else
 			strcat(buf2, tm.tm_isdst > 0 ? R_tzname[1] : R_tzname[0]);
@@ -1071,7 +1071,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(tzone, 0, mkChar(tz));
 	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));
 	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));
-	
+
     } else PROTECT(tzone); // for balance
 
     n = XLENGTH(x); m = XLENGTH(sformat);
@@ -1157,7 +1157,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
 #ifdef HAVE_TM_GMTOFF
-	    INTEGER(VECTOR_ELT(ans, 10))[i] = 
+	    INTEGER(VECTOR_ELT(ans, 10))[i] =
 		invalid ? NA_INTEGER : (int)tm.tm_gmtoff;
 #endif
 	}

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   The R Core Team
+ *  Copyright (C) 1997-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -860,15 +860,15 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     v = CAR(args);
     if (!isLogical(v))
-        error(_("argument to 'which' is not logical"));
+	error(_("argument to 'which' is not logical"));
     len = length(v);
     buf = (int *) R_alloc(len, sizeof(int));
 
     for (i = 0; i < len; i++) {
-        if (LOGICAL(v)[i] == TRUE) {
-            buf[j] = i + 1;
-            j++;
-        }
+	if (LOGICAL(v)[i] == TRUE) {
+	    buf[j] = i + 1;
+	    j++;
+	}
     }
 
     len = j;
@@ -876,13 +876,13 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
     memcpy(INTEGER(ans), buf, sizeof(int) * len);
 
     if ((v_nms = getAttrib(v, R_NamesSymbol)) != R_NilValue) {
-        PROTECT(ans_nms = allocVector(STRSXP, len));
-        for (i = 0; i < len; i++) {
-            SET_STRING_ELT(ans_nms, i,
-                           STRING_ELT(v_nms, INTEGER(ans)[i] - 1));
-        }
-        setAttrib(ans, R_NamesSymbol, ans_nms);
-        UNPROTECT(1);
+	PROTECT(ans_nms = allocVector(STRSXP, len));
+	for (i = 0; i < len; i++) {
+	    SET_STRING_ELT(ans_nms, i,
+			   STRING_ELT(v_nms, INTEGER(ans)[i] - 1));
+	}
+	setAttrib(ans, R_NamesSymbol, ans_nms);
+	UNPROTECT(1);
     }
     UNPROTECT(1);
     return ans;

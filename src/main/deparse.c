@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -283,21 +283,21 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 	    SEXP s = STRING_ELT(temp, i);
 	    cetype_t thisenc = getCharCE(s);
 	    len += strlen(CHAR(s));  // FIXME: check for overflow?
-	    if (thisenc != CE_NATIVE) 
-	    	enc = thisenc; /* assume only one non-native encoding */ 
-	}    
+	    if (thisenc != CE_NATIVE)
+		enc = thisenc; /* assume only one non-native encoding */
+	}
 	vmax = vmaxget();
 	buf = R_alloc((size_t) len+lines, sizeof(char));
 	*buf = '\0';
 	for (i = 0; i < length(temp); i++) {
 	    strcat(buf, CHAR(STRING_ELT(temp, i)));
 	    if (i < lines - 1)
-	    	strcat(buf, "\n");
+		strcat(buf, "\n");
 	}
 	temp = ScalarString(mkCharCE(buf, enc));
 	vmaxset(vmax);
-    }		
-    UNPROTECT(1);	
+    }
+    UNPROTECT(1);
     return(temp);
 }
 
@@ -453,7 +453,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 			     R_NilValue, R_NilValue);
 		cntxt.cend = &con_cleanup;
 		cntxt.cenddata = con;
-	    } 
+	    }
 	    if(!con->canwrite) error(_("cannot write to this connection"));
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
@@ -567,11 +567,11 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 		default:
 		    return FALSE;
 		}
-	    } else if (isUserBinop(CAR(arg))) { 
-	        if (mainop.precedence > PREC_PERCENT
-	            || (mainop.precedence == PREC_PERCENT && left == mainop.rightassoc)) {
-	            return TRUE;
-	        }
+	    } else if (isUserBinop(CAR(arg))) {
+		if (mainop.precedence > PREC_PERCENT
+		    || (mainop.precedence == PREC_PERCENT && left == mainop.rightassoc)) {
+		    return TRUE;
+		}
 	    }
 	}
     }
@@ -700,26 +700,26 @@ static const char * quotify(SEXP name, int quote)
      etc.
 */
 static Rboolean parenthesizeCaller(SEXP s)
-{   
+{
     SEXP op, sym;
     if (TYPEOF(s) == LANGSXP) { /* unevaluated */
-    	op = CAR(s);
-    	if (TYPEOF(op) == SYMSXP) {
-    	    if (isUserBinop(op)) return TRUE;   /* %foo% */
-    	    sym = SYMVALUE(op);
-    	    if (TYPEOF(sym) == BUILTINSXP
-    	        || TYPEOF(sym) == SPECIALSXP) {
-    	        if (PPINFO(sym).precedence >= PREC_DOLLAR
-    	            || PPINFO(sym).kind == PP_FUNCALL
-    	            || PPINFO(sym).kind == PP_PAREN
-    	            || PPINFO(sym).kind == PP_CURLY) return FALSE; /* x$f(z) or x[n](z) or f(z) or (f) or {f} */
-    	        else return TRUE;		/* (f+g)(z) etc. */
-    	    }
-    	    return FALSE;			/* regular function call */
-    	 } else
-	    return TRUE; 			/* something strange, like (1)(x) */
-    } else 
-        return TYPEOF(s) == CLOSXP;
+	op = CAR(s);
+	if (TYPEOF(op) == SYMSXP) {
+	    if (isUserBinop(op)) return TRUE;   /* %foo% */
+	    sym = SYMVALUE(op);
+	    if (TYPEOF(sym) == BUILTINSXP
+		|| TYPEOF(sym) == SPECIALSXP) {
+		if (PPINFO(sym).precedence >= PREC_DOLLAR
+		    || PPINFO(sym).kind == PP_FUNCALL
+		    || PPINFO(sym).kind == PP_PAREN
+		    || PPINFO(sym).kind == PP_CURLY) return FALSE; /* x$f(z) or x[n](z) or f(z) or (f) or {f} */
+		else return TRUE;		/* (f+g)(z) etc. */
+	    }
+	    return FALSE;			/* regular function call */
+	 } else
+	    return TRUE;			/* something strange, like (1)(x) */
+    } else
+	return TYPEOF(s) == CLOSXP;
 }
 
 /* This is the recursive part of deparsing. */
@@ -792,8 +792,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     case CLOSXP:
 	if (localOpts & SHOWATTRIBUTES) attr1(s, d);
 	if ((d->opts & USESOURCE)
-	    && !isNull(t = getAttrib(s, R_SrcrefSymbol))) 
-	    	src2buff1(t, d);
+	    && !isNull(t = getAttrib(s, R_SrcrefSymbol)))
+		src2buff1(t, d);
 	else {
 	    /* We have established that we don't want to use the
 	       source for this function */
@@ -866,20 +866,20 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    d->opts &= SIMPLE_OPTS;
 	}
 	if (TYPEOF(CAR(s)) == SYMSXP) {
-	    int userbinop = 0; 
+	    int userbinop = 0;
 	    op = CAR(s);
 	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(op)) == SPECIALSXP) ||
 		(userbinop = isUserBinop(op))) {
 		s = CDR(s);
 		if (userbinop) {
-		    if (isNull(getAttrib(s, R_NamesSymbol))) {  
+		    if (isNull(getAttrib(s, R_NamesSymbol))) {
 			fop.kind = PP_BINARY2;    /* not quite right for spacing, but can't be unary */
 			fop.precedence = PREC_PERCENT;
 			fop.rightassoc = 0;
-		    } else 
+		    } else
 			fop.kind = PP_FUNCALL;  /* if args are named, deparse as function call (PR#15350) */
-		} else 
+		} else
 		    fop = PPINFO(SYMVALUE(op));
 		if (fop.kind == PP_BINARY) {
 		    switch (length(s)) {
@@ -898,8 +898,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		else if (fop.kind == PP_BINARY2) {
 		    if (length(s) != 2)
 			fop.kind = PP_FUNCALL;
-	 	    else if (userbinop)
-	 	    	fop.kind = PP_BINARY;
+		    else if (userbinop)
+			fop.kind = PP_BINARY;
 		}
 		switch (fop.kind) {
 		case PP_IF:
@@ -984,10 +984,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_FUNCALL:
 		case PP_RETURN:
-		    if (d->backtick) 
-		        print2buff(quotify(PRINTNAME(op), '`'), d);
-		    else 
-		    	print2buff(quotify(PRINTNAME(op), '"'), d);
+		    if (d->backtick)
+			print2buff(quotify(PRINTNAME(op), '`'), d);
+		    else
+			print2buff(quotify(PRINTNAME(op), '"'), d);
 		    print2buff("(", d);
 		    d->inlist++;
 		    args2buff(s, 0, 0, d);
@@ -1144,9 +1144,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		}
 		else {
 		    if ( isSymbol(CAR(s)) ){
-			if(d->opts & S_COMPAT) 
+			if(d->opts & S_COMPAT)
 			    print2buff(quotify(PRINTNAME(CAR(s)), '\''), d);
-			else 
+			else
 			    print2buff(quotify(PRINTNAME(CAR(s)), '`'), d);
 		    }
 		    else
@@ -1160,22 +1160,22 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	else if (TYPEOF(CAR(s)) == CLOSXP || TYPEOF(CAR(s)) == SPECIALSXP
 		 || TYPEOF(CAR(s)) == BUILTINSXP) {
 	    if (parenthesizeCaller(CAR(s))) {
-	    	print2buff("(", d);
-	    	deparse2buff(CAR(s), d);
-	    	print2buff(")", d);
+		print2buff("(", d);
+		deparse2buff(CAR(s), d);
+		print2buff(")", d);
 	    } else
-	    	deparse2buff(CAR(s), d);
+		deparse2buff(CAR(s), d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
 	}
 	else { /* we have a lambda expression */
 	    if (parenthesizeCaller(CAR(s))) {
-	    	print2buff("(", d);
-	    	deparse2buff(CAR(s), d);
-	    	print2buff(")", d);
+		print2buff("(", d);
+		deparse2buff(CAR(s), d);
+		print2buff(")", d);
 	    } else
-	    	deparse2buff(CAR(s), d);
+		deparse2buff(CAR(s), d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
@@ -1223,13 +1223,13 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff(">", d);
 #else
 	/* somewhat like the  VECSXP [ "list()" ] case : */
-/* 	if (localOpts & SHOWATTRIBUTES) attr1(s, d); */
+/*	if (localOpts & SHOWATTRIBUTES) attr1(s, d); */
 	print2buff("new(\"", d);
 	print2buff(translateChar(STRING_ELT(class, 0)), d);
 	print2buff("\",\n", d);
 //>>>> call vec2buf on the  Attributes >>>>>>>>>  vec2buff(s, d);
 	print2buff(")", d);
-/* 	if (localOpts & SHOWATTRIBUTES) attr2(s, d); */
+/*	if (localOpts & SHOWATTRIBUTES) attr2(s, d); */
 
 #endif
       break;
@@ -1275,7 +1275,7 @@ static void print2buff(const char *strng, LocalParseData *d)
 /*
  * Encodes a complex value as a syntactically correct
  * string that can be reparsed by R. This is required
- * because by default strings like '1+Infi' or '3+NaNi' 
+ * because by default strings like '1+Infi' or '3+NaNi'
  * are produced which are not valid complex literals.
  */
 
@@ -1286,13 +1286,13 @@ static const char *EncodeNonFiniteComplexElement(Rcomplex x, char* buff)
 
     // format a first time to get width/decimals
     formatComplex(&x, 1, &w, &d, &e, &wi, &di, &ei, 0);
-	
+
     char Re[NB];
     char Im[NB];
 
     strcpy(Re, EncodeReal0(x.r, w, d, e, "."));
     strcpy(Im, EncodeReal0(x.i, wi, di, ei, "."));
-    
+
     snprintf(buff, NB, "complex(real=%s, imaginary=%s)", Re, Im);
     buff[NB-1] = '\0';
     return buff;
@@ -1420,10 +1420,10 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		       (ISNA(COMPLEX(vector)[i].r)
 			&& ISNA(COMPLEX(vector)[i].i)) ) {
 		strp = allNA ? "NA_complex_" : EncodeElement(vector, i, quote, '.');
-	    } else if(TYPEOF(vector) == CPLXSXP && 
-	    	      (ISNAN(COMPLEX(vector)[i].r) || !R_FINITE(COMPLEX(vector)[i].i)) ) {
-	    	if (!buff)
-	    	    buff = alloca(NB);
+	    } else if(TYPEOF(vector) == CPLXSXP &&
+		      (ISNAN(COMPLEX(vector)[i].r) || !R_FINITE(COMPLEX(vector)[i].i)) ) {
+		if (!buff)
+		    buff = alloca(NB);
 		strp = EncodeNonFiniteComplexElement(COMPLEX(vector)[i], buff);
 	    } else if (allNA && TYPEOF(vector) == STRSXP &&
 		       STRING_ELT(vector, i) == NA_STRING) {
@@ -1576,11 +1576,11 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 
 	    if( s == R_DotsSymbol )
 		print2buff(CHAR(PRINTNAME(s)), d);
-	    else if(d->backtick) 
+	    else if(d->backtick)
 		print2buff(quotify(PRINTNAME(s), '`'), d);
-	    else 
-	        print2buff(quotify(PRINTNAME(s), '"'), d);
-	    
+	    else
+		print2buff(quotify(PRINTNAME(s), '"'), d);
+
 	    if(formals) {
 		if (CAR(arglist) != R_MissingArg) {
 		    print2buff(" = ", d);

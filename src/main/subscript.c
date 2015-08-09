@@ -314,7 +314,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	PROTECT(x);
 	SEXP names = PROTECT(getAttrib(x, R_NamesSymbol));
 	offset = get1index(thesub, names,
-		           xlength(x), pok, i, call);
+			   xlength(x), pok, i, call);
 	UNPROTECT(2); /* x, names */
 	if(offset < 0 || offset >= xlength(x))
 	    errorcall(call, _("no such index at level %d\n"), i+1);
@@ -340,7 +340,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
 	    }
-    	}
+	}
     }
     return x;
 }
@@ -458,20 +458,20 @@ SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
     PROTECT(si = allocVector(INTSXP, xlength(s)));
     dimgets(si, getAttrib(s, R_DimSymbol));
     for (i = 0; i < length(dnamelist); i++) {
-        dnames = VECTOR_ELT(dnamelist, i);
-        for (j = 0; j < nr; j++)
-            SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * NR)));
-        PROTECT(sicol = match(dnames, snames, 0));
-        for (j = 0; j < nr; j++) {
-            v = INTEGER(sicol)[j];
-            idx = j + (i * NR);
-            s_elt = STRING_ELT(s, idx);
-            if (s_elt == NA_STRING) v = NA_INTEGER;
-            if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
-            if (v == 0) errorcall(call, _("subscript out of bounds"));
-            INTEGER(si)[idx] = v;
-        }
-        UNPROTECT(1);
+	dnames = VECTOR_ELT(dnamelist, i);
+	for (j = 0; j < nr; j++)
+	    SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * NR)));
+	PROTECT(sicol = match(dnames, snames, 0));
+	for (j = 0; j < nr; j++) {
+	    v = INTEGER(sicol)[j];
+	    idx = j + (i * NR);
+	    s_elt = STRING_ELT(s, idx);
+	    if (s_elt == NA_STRING) v = NA_INTEGER;
+	    if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
+	    if (v == 0) errorcall(call, _("subscript out of bounds"));
+	    INTEGER(si)[idx] = v;
+	}
+	UNPROTECT(1);
     }
     UNPROTECT(2);
     return si;
@@ -482,7 +482,7 @@ static SEXP nullSubscript(R_xlen_t n)
     SEXP indx;
 #ifdef LONG_VECTOR_SUPPORT
     if (n > R_SHORT_LEN_MAX) {
- 	indx = allocVector(REALSXP, n);
+	indx = allocVector(REALSXP, n);
 	for (R_xlen_t i = 0; i < n; i++)
 	    REAL(indx)[i] = (double)(i + 1);
     } else
@@ -511,23 +511,23 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     if (ns == 0) return(allocVector(INTSXP, 0));
 #ifdef LONG_VECTOR_SUPPORT
     if (nmax > R_SHORT_LEN_MAX) {
-        if (ns == nmax) { /* no recycling - use fast single-index code */
+	if (ns == nmax) { /* no recycling - use fast single-index code */
 	    const void *vmax = vmaxget();
 	    double *buf = (double *) R_alloc(nmax, sizeof(double));
 	    count = 0;
 	    R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
 		if (LOGICAL(s)[i]) {                                \
 		    if (LOGICAL(s)[i] == NA_LOGICAL)		    \
-			buf[count++] = NA_REAL;        		    \
+			buf[count++] = NA_REAL;		    \
 		    else					    \
-			buf[count++] = (double)(i + 1);      	    \
+			buf[count++] = (double)(i + 1);	    \
 		});
-            PROTECT(indx = allocVector(REALSXP, count));
-            memcpy(REAL(indx), buf, sizeof(double) * count);
-            vmaxset(vmax);
-            UNPROTECT(1);
-            return indx;
-        }
+	    PROTECT(indx = allocVector(REALSXP, count));
+	    memcpy(REAL(indx), buf, sizeof(double) * count);
+	    vmaxset(vmax);
+	    UNPROTECT(1);
+	    return indx;
+	}
 	count = 0;
 	/* we only need to scan s once even if we recycle,
 	   just remember the total count as well as
@@ -548,13 +548,13 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	}
 	PROTECT(indx = allocVector(REALSXP, count));
 	count = 0;
-        MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2, \
-            if (LOGICAL(s)[i1]) {				 \
-                if (LOGICAL(s)[i1] == NA_LOGICAL)		 \
-                    REAL(indx)[count++] = NA_REAL;		 \
-                else						 \
-                    REAL(indx)[count++] = (double)(i + 1);  	 \
-            });
+	MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2, \
+	    if (LOGICAL(s)[i1]) {				 \
+		if (LOGICAL(s)[i1] == NA_LOGICAL)		 \
+		    REAL(indx)[count++] = NA_REAL;		 \
+		else						 \
+		    REAL(indx)[count++] = (double)(i + 1);	 \
+	    });
 
 	UNPROTECT(1);
 	return indx;
@@ -568,9 +568,9 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
 	    if (LOGICAL(s)[i]) {                                \
 		if (LOGICAL(s)[i] == NA_LOGICAL)	        \
-		    buf[count++] = NA_INTEGER;        		\
+		    buf[count++] = NA_INTEGER;		\
 		else                                            \
-		    buf[count++] = (int)(i + 1);      		\
+		    buf[count++] = (int)(i + 1);		\
 	    });
 	PROTECT(indx = allocVector(INTSXP, count));
 	memcpy(INTEGER(indx), buf, sizeof(int) * count);
@@ -600,12 +600,12 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     PROTECT(indx = allocVector(INTSXP, count));
     count = 0;
     MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2,	\
-        if (LOGICAL(s)[i1]) {			        	\
-            if (LOGICAL(s)[i1] == NA_LOGICAL)			\
-                INTEGER(indx)[count++] = NA_INTEGER;		\
-            else						\
-                INTEGER(indx)[count++] = (int)(i + 1);		\
-        });
+	if (LOGICAL(s)[i1]) {				\
+	    if (LOGICAL(s)[i1] == NA_LOGICAL)			\
+		INTEGER(indx)[count++] = NA_INTEGER;		\
+	    else						\
+		INTEGER(indx)[count++] = (int)(i + 1);		\
+	});
 
     UNPROTECT(1);
     return indx;

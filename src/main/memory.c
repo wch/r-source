@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2014  The R Core Team.
+ *  Copyright (C) 1998--2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,9 +48,9 @@
 
    level 0 is no additional instrumentation
    level 1 marks uninitialized numeric, logical, integer, raw,
-           complex vectors and R_alloc memory
+	   complex vectors and R_alloc memory
    level 2 marks the data section of vector nodes as inaccessible
-           when they are freed.
+	   when they are freed.
 
    level 3 was withdrawn in R 3.2.0.
 
@@ -215,7 +215,7 @@ const char *sexptype2char(SEXPTYPE type) {
     case RAWSXP:	return "RAWSXP";
     case NEWSXP:	return "NEWSXP"; /* should never happen */
     case FREESXP:	return "FREESXP";
-    default:	 	return "<unknown>";
+    default:		return "<unknown>";
     }
 }
 
@@ -1611,7 +1611,7 @@ static void RunGenCollect(R_size_t size_needed)
 	    FORWARD_NODE(gdd->displayList);
 	    FORWARD_NODE(gdd->savedSnapshot);
 	    if (gdd->dev)
-	    	FORWARD_NODE(gdd->dev->eventEnv);
+		FORWARD_NODE(gdd->dev->eventEnv);
 	}
     }
 
@@ -1761,11 +1761,11 @@ static void RunGenCollect(R_size_t size_needed)
 
     /* tell Valgrind about free nodes */
 #if VALGRIND_LEVEL > 1
-    for(i = 1; i< NUM_NODE_CLASSES; i++) { 
-	for(s = NEXT_NODE(R_GenHeap[i].New); 
-	    s != R_GenHeap[i].Free; 
+    for(i = 1; i< NUM_NODE_CLASSES; i++) {
+	for(s = NEXT_NODE(R_GenHeap[i].New);
+	    s != R_GenHeap[i].Free;
 	    s = NEXT_NODE(s)) {
-	    VALGRIND_MAKE_MEM_NOACCESS(DATAPTR(s), 
+	    VALGRIND_MAKE_MEM_NOACCESS(DATAPTR(s),
 				       NodeClassSize[i]*sizeof(VECREC));
 	}
     }
@@ -2745,15 +2745,15 @@ SEXP allocFormalsList(int nargs, ...) {
     va_start(syms, nargs);
 
     for(i = 0; i < nargs; i++) {
-        res = CONS(R_NilValue, res);
+	res = CONS(R_NilValue, res);
     }
     R_PreserveObject(res);
 
     n = res;
     for(i = 0; i < nargs; i++) {
-        SET_TAG(n, (SEXP) va_arg(syms, SEXP));
-        MARK_NOT_MUTABLE(n);
-        n = CDR(n);
+	SET_TAG(n, (SEXP) va_arg(syms, SEXP));
+	MARK_NOT_MUTABLE(n);
+	n = CDR(n);
     }
     va_end(syms);
 
@@ -3135,7 +3135,7 @@ void NORET R_signal_reprotect_error(PROTECT_INDEX i)
     error(ngettext("R_Reprotect: only %d protected item, can't reprotect index %d",
 		   "R_Reprotect: only %d protected items, can't reprotect index %d",
 		   R_PPStackTop),
-          R_PPStackTop, i);
+	  R_PPStackTop, i);
 }
 
 #ifndef INLINE_PROTECT
@@ -3883,10 +3883,10 @@ int Seql(SEXP a, SEXP b)
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     else {
-    	SEXP vmax = R_VStack;
-    	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
-    	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
-    	return result;
+	SEXP vmax = R_VStack;
+	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
+	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
+	return result;
     }
 }
 

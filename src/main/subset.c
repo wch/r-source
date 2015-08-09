@@ -172,16 +172,16 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     /* If we do, make a real subscript vector and protect it. */
 
     if (isMatrix(s) && isArray(x) && ncols(s) == length(attrib)) {
-        if (isString(s)) {
-            s = strmat2intmat(s, GetArrayDimnames(x), call);
-            UNPROTECT(1);
-            PROTECT(s);
-        }
-        if (isInteger(s) || isReal(s)) {
-            s = mat2indsub(attrib, s, call);
-            UNPROTECT(1);
-            PROTECT(s);
-        }
+	if (isString(s)) {
+	    s = strmat2intmat(s, GetArrayDimnames(x), call);
+	    UNPROTECT(1);
+	    PROTECT(s);
+	}
+	if (isInteger(s) || isReal(s)) {
+	    s = mat2indsub(attrib, s, call);
+	    UNPROTECT(1);
+	    PROTECT(s);
+	}
     }
 
     /* Convert to a vector of integer subscripts */
@@ -951,7 +951,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* code to allow classes to extend environment */
     if(TYPEOF(x) == S4SXP) {
-        x = R_getS4DataSlot(x, ANYSXP);
+	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	  errorcall(call, _("this S4 class is not subsettable"));
     }
@@ -1190,7 +1190,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     slen = strlen(translateChar(input));
      /* The mechanism to allow a class extending "environment" */
     if( IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP ){
-        x = R_getS4DataSlot(x, ANYSXP);
+	x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	    errorcall(call, "$ operator not defined for this S4 class");
     }

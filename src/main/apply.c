@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014  The R Core Team
+ *  Copyright (C) 2000-2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -117,12 +117,12 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     array_value = (TYPEOF(dim_v) == INTSXP && LENGTH(dim_v) >= 1);
     PROTECT(ans = allocVector(commonType, n*commonLen));
     if (useNames) {
-    	PROTECT(names = getAttrib(XX, R_NamesSymbol));
-    	if (isNull(names) && TYPEOF(XX) == STRSXP) {
-    	    UNPROTECT(1);
-    	    PROTECT(names = XX);
-    	}
-    	PROTECT_WITH_INDEX(rowNames = getAttrib(value,
+	PROTECT(names = getAttrib(XX, R_NamesSymbol));
+	if (isNull(names) && TYPEOF(XX) == STRSXP) {
+	    UNPROTECT(1);
+	    PROTECT(names = XX);
+	}
+	PROTECT_WITH_INDEX(rowNames = getAttrib(value,
 						array_value ? R_DimNamesSymbol
 						: R_NamesSymbol),
 			   &index);
@@ -160,21 +160,21 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		val = lazy_duplicate(val); // Need to duplicate? Copying again anyway
 	    PROTECT_WITH_INDEX(val, &indx);
 	    if (length(val) != commonLen)
-	    	error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
-	               commonLen, i+1, length(val));
+		error(_("values must be length %d,\n but FUN(X[[%d]]) result is length %d"),
+		       commonLen, i+1, length(val));
 	    valType = TYPEOF(val);
 	    if (valType != commonType) {
-	    	Rboolean okay = FALSE;
-	    	switch (commonType) {
-	    	case CPLXSXP: okay = (valType == REALSXP) || (valType == INTSXP)
-	    	                    || (valType == LGLSXP); break;
-	    	case REALSXP: okay = (valType == INTSXP) || (valType == LGLSXP); break;
-	    	case INTSXP:  okay = (valType == LGLSXP); break;
-	        }
-	        if (!okay)
-	            error(_("values must be type '%s',\n but FUN(X[[%d]]) result is type '%s'"),
-	            	  type2char(commonType), i+1, type2char(valType));
-	        REPROTECT(val = coerceVector(val, commonType), indx);
+		Rboolean okay = FALSE;
+		switch (commonType) {
+		case CPLXSXP: okay = (valType == REALSXP) || (valType == INTSXP)
+				    || (valType == LGLSXP); break;
+		case REALSXP: okay = (valType == INTSXP) || (valType == LGLSXP); break;
+		case INTSXP:  okay = (valType == LGLSXP); break;
+		}
+		if (!okay)
+		    error(_("values must be type '%s',\n but FUN(X[[%d]]) result is type '%s'"),
+			  type2char(commonType), i+1, type2char(valType));
+		REPROTECT(val = coerceVector(val, commonType), indx);
 	    }
 	    /* Take row names from the first result only */
 	    if (i == 0 && useNames && isNull(rowNames))
