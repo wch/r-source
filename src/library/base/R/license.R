@@ -1,7 +1,7 @@
 #  File src/library/base/R/license.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ licence <- license <- function() {
     cat("Version 3 of the license can be displayed by RShowDoc(\"GPL-3\").\n")
     cat("\n")
     cat("Copies of both versions 2 and 3 of the license can be found\n")
-    cat("at http://www.R-project.org/Licenses/.\n")
+    cat("at https://www.R-project.org/Licenses/.\n")
     cat("\n")
     cat("A small number of files (the API header files listed in\n")
     cat("R_DOC_DIR/COPYRIGHTS) are distributed under the\n")
