@@ -61,7 +61,7 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
         paste(c(sprintf("Current CRAN status: %s",
                         paste(sprintf("%s: %s", names(tab), tab),
                               collapse = ", ")),
-                sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
+                sprintf("See: <https://CRAN.R-project.org/web/checks/check_results_%s.html>",
                         p)),
               collapse = "\n")
     }
@@ -590,7 +590,7 @@ function(packages, db = NULL)
               )
     list(to = to, body = body)
 }
-    
+
 CRAN_reverse_depends_and_views <-
 function(packages)
 {
@@ -639,7 +639,7 @@ function(packages)
     class(y) <- "CRAN_reverse_depends_and_views"
     y
 }
-    
+
 format.CRAN_reverse_depends_and_views <-
 function(x, ...)
 {
@@ -659,7 +659,7 @@ function(x, ...)
 }
 
 CRAN_package_dependencies_with_dates <-
-function(packages)    
+function(packages)
 {
     a <- utils::available.packages(filters = list(),
                                    repos = .get_standard_repository_URLs()["CRAN"])
