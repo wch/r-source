@@ -32,6 +32,7 @@ download.file <-
 	method <-
 	    if(capabilities("http/ftp"))
 		"internal"
+        ## unused from here down as test is always true.
 	    else if(grepl("^file:", url)) {
 		url <- URLdecode(url)
 		"internal"

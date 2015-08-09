@@ -32,6 +32,7 @@ download.file <-
 		"libcurl"
 	    else if(capabilities("http/ftp"))
 		"internal"
+        ## little used from here down as previous test is almost always true.
 	    else if(grepl("^file:", url)) {
 		url <- URLdecode(url)
 		"internal"
