@@ -21,7 +21,7 @@
 
    You should have received a copy of the GNU Library General Public
    License along with the GNU C Library; see the file COPYING.LIB.  If not,
-   a copy is available at http://www.r-project.org/licenses/
+   a copy is available at https://www.R-project.org/Licenses/
 */
 /* XXX This version of the implementation is not really complete.
    Some of the fields cannot add information alone.  But if seeing
