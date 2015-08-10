@@ -68,6 +68,11 @@ showViewport(vp = NULL, recurse = TRUE, depth = NULL,
 \examples{
 showViewport(viewport(width=.5, height=.5, name="vp"))
 
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5, name="vp"))
+upViewport()
+showViewport(vpPath("vp"))
+
 showViewport(vpStack(viewport(width=.5, height=.5, name="vp1"),
                      viewport(width=.5, height=.5, name="vp2")),
              newpage=TRUE)
