@@ -3838,7 +3838,7 @@ against, and this can lead to symbol conflicts.
 For maximally effective use of @command{valgrind}, @R{} should be
 compiled with valgrind instrumentation. The @command{configure} option
 is @option{--with-valgrind-instrumentation=@var{level}}, where
-@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add any
+@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add
 anything.)  The system headers for @command{valgrind} can be requested
 by option @option{--with-system-valgrind-headers}: they will be used if
 present (on Linux they may be in a separate package such as
