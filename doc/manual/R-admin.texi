@@ -1615,7 +1615,8 @@ and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite
 @dots{}).
 
 Installers for R-patched and R-devel are usually available from
-@uref{http://r.research.att.com}.
+@uref{http://r.research.att.com}@footnote{@samp{https:} access may be
+available.}.
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources.
@@ -3142,13 +3143,7 @@ suitable code can be compiled.  These tests will fail if
 @file{config.site}, on the @command{configure} command line or in the
 environment.}, and are likely to fail if @code{cairo} was built
 statically (unusual).  Most systems with @code{Gtk+} 2.8 or later
-installed will have suitable libraries.  OS X comes with none of these
-libraries (but XQuartz, as used for 10.8 and later, ships @code{cairo}),
-but @code{cairo} support (without @code{Pango}) has been added to the
-binary distribution (see @uref{http://r.research.att.com/libs/} you need
-@code{fontconfig}, @code{freetype} and @code{pixman} too):
-@code{pkg-config} is still needed when building @R{} from source and can
-be installed from its sources.
+installed will have suitable libraries
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -4574,9 +4569,9 @@ You can build @R{} using Apple's `Command Line Tools' and suitable
 compilers.  You will also need @code{readline} (or to configure with
 @option{--without-readline}), and a Fortran compiler.  Those and other
 binary components are available from
-@uref{http://r.research.att.com/libs}: you are likely to need
-@code{pcre} and @code{xz} (recent OS X provides libs but not headers for
-these).
+@uref{http://r.research.att.com/libs}@footnote{@samp{https:} access may
+be available.}: you are likely to need @code{pcre} and @code{xz} (recent
+OS X provides libs but not headers for these).
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): see
@@ -4617,11 +4612,12 @@ FCFLAGS=$F77FLAGS
 @noindent
 with @command{clang} and @command{clang++} from Xcode, and the Fortran
 compiler from
-@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
-is a tarball which needs to be unpacked in the Terminal by e.g.@:
-@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
-not run on Core 2 Duo Macs.}  Apple's builds of @command{clang}
-currently have little or no OpenMP support.
+@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{@samp{https:}
+access may be available.  This is a tarball which needs to be unpacked
+in the Terminal by e.g.@: @command{sudo tar -zxf
+gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does not run on Core 2 Duo
+Macs.}  Apple's builds of @command{clang} currently have little or no
+OpenMP support.
 
 Other builds of @command{gfortran} are available: see
 @uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
@@ -4635,6 +4631,18 @@ most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
 (and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
 and useful for many packages: it will also be used if present when
 configuring the @code{X11()} device.
+
+Support for @code{cairo} (without @code{Pango}) can be enabled in two
+ways: both need @code{pkg-config} available.  XQuartz ships @code{cairo}
+and its version will be selected if its @code{pkg-config} files are
+first on the configuration path: for example by setting
+@example
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+Otherwise the binary libraries at
+@uref{http://r.research.att.com/libs/}@footnote{@samp{https:} access may
+be available.} can be used: @code{cairo}, @code{fontconfig},
+@code{freetype} and @code{pixman} are needed.
 
 @cindex BLAS library
 @cindex LAPACK library
