@@ -178,7 +178,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   commonly on Unix-alikes.  Windows binaries are available at that URL.
 }
 \section{Setting Proxies}{
-  This applies to the internal code only.
+#ifdef windows
+  For the Windows-only method \code{"wininet"}, the \sQuote{Internet
+  Options} of the system are used to choose proxies and so on; these are
+  set in the Control Panel and are those used for Internet Explorer.
+#endif
+  
+  The next two paragraphs apply to the internal code only.
 
   Proxies can be specified via environment variables.
   Setting \env{no_proxy} to \code{*} stops any proxy being tried.
@@ -219,7 +225,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Methods which access \samp{https://} and \samp{ftps://} URLs should
   try to verify their certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
-  in which these got removed rather than updated).
+  in which these got removed rather than updated). For further information
+  see \url{http://curl.haxx.se/docs/sslcerts.html}.
 
   This is an issue for \code{method = "libcurl"} on Windows, where the
   OS does not provide a suitable CA certificate bundle, so by default on
@@ -227,7 +234,14 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   environment variable \env{CURL_CA_BUNDLE} to the path to a certificate
   bundle file, usually named \file{ca-bundle.crt} or
   \file{curl-ca-bundle.crt}.  (This is normally done for a binary
-  installation of \R, which installs \file{etc/curl-ca-bundle.crt}.)
+  installation of \R, which installs
+  \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
+  \env{CURL_CA_BUNDLE} to point to it if that enironment variable is not
+  already set.)  For an updated certificate bundle, see
+  \url{http://curl.haxx.se/docs/sslcerts.html}.
+  Currently one can download a copy from
+  \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
+  and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for

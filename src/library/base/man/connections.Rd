@@ -115,7 +115,7 @@ isIncomplete(con)
 }
 \details{
   The first nine functions create connections.  By default the
-  connection is not opened (except for \code{socketConnection}), but may
+  connection is not opened (except for a \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
   For \code{file} the description is a path to the file to be opened or
@@ -129,18 +129,21 @@ isIncomplete(con)
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
-  \samp{file://}).  Proxies can be specified for HTTP, HTTPS and FTP
-  \code{url} connections: see \code{\link{download.file}}.  \code{method
-  = "internal"} is the \sQuote{out of the box} default (and that
-  available since connections were introduced): \code{method =
-  "libcurl"} is optionally supported as from \R 3.2.0.  The default can
-  be changed \emph{via} \code{\link{options}(url.method = )} (including
-  for when URLs are passed to \code{file}).  \code{method = "wininet"}
-  is only available on Windows.
+  \samp{file://}).  Method \code{"internal"} is that available since
+  connections were introduced, method \code{"wininet"} is only available
+  on Windows and method \code{"libcurl"} is optionally supported as from
+  \R 3.2.0.  Method \code{"default"} (as from \R 3.2.0) selects a
+  suitable method depending on the URL scheme, e.g.\sspace{} method
+  \code{"libcurl"} for \samp{https://} and \samp{ftps://} URLs and
+  \code{"internal"} otherwise.  The default method can be changed
+  \emph{via} \code{\link{options}(url.method = )} (including for when
+  URLs are passed to \code{file}): if unset it is method
+  \code{"default"}.  Proxies can be specified: see
+  \code{\link{download.file}}.
   
 #ifdef windows
   (See \code{\link{setInternet2}}, which chooses whether the
-  \code{"internal"} method is equivalent to \code{"wininet"}: this is
+  \code{"internal"} method is mapped to \code{"wininet"}: this is
   true by default as from \R 3.2.2.)
 #endif
 
@@ -152,8 +155,8 @@ isIncomplete(con)
   \command{bzip2}.
 
   For \code{xzfile} the description is the path to a file compressed by
-  \command{xz} (\url{http://en.wikipedia.org/wiki/Xz}) or (for reading
-  only) \command{lzma} (\url{http://en.wikipedia.org/wiki/LZMA}).
+  \command{xz} (\url{https://en.wikipedia.org/wiki/Xz}) or (for reading
+  only) \command{lzma} (\url{https://en.wikipedia.org/wiki/LZMA}).
 
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
@@ -230,15 +233,6 @@ isIncomplete(con)
 
   No attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
-
-  Note that the \samp{https://} URL scheme is not supported by the
-  internal method except on Windows.  There it is supported by default,
-  and the \samp{http://user:pass@site} notation for sites requiring
-  authentication is also accepted.  However, if the
-  certificate is considered to be invalid, or if
-  \code{setInternet2(FALSE)} is run, neither of these will be accepted.
-  On a Unix-alike \code{url(method = "libcurl")} is tried for
-  \samp{https://} URLs.
 
   The \code{"internal"} method does not follow re-directed HTTP URLs:
   both methods \code{"wininet"} (the default on Windows) and
@@ -394,7 +388,7 @@ isIncomplete(con)
   choose the appropriate byte order, some (including earlier versions of
   \code{glibc}) will not.  There is a subtle distinction between
   \code{"UTF-16"} and \code{"UCS-2"} (see
-  \url{http://en.wikipedia.org/wiki/UTF-16}: the use of characters in
+  \url{https://en.wikipedia.org/wiki/UTF-16}: the use of characters in
   the \sQuote{Supplementary Planes} which need surrogate pairs is very
   rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
   widely implemented).
@@ -516,7 +510,7 @@ isIncomplete(con)
   \emph{Programming with Data.  A Guide to the S Language.} Springer.
 
   Ripley, B. D. (2001) Connections. \emph{R News}, \bold{1/1}, 16--7.
-  \url{http://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 }
 
 \seealso{
