@@ -976,37 +976,28 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
 {
     if(.identC(class1[[1L]], class2) || .identC(class2, "ANY"))
         return(TRUE)
-    ## ext <- TRUE # may become a list of extends definitions
     if(is.null(ClassDef1)) # class1 not defined
         return(FALSE)
     ## else
     ext <- ClassDef1@contains
-    nm1 <- names(ext)
-    i <- match(class2, nm1)
-    if(is.na(i)) {
-        ## look for class1 in the known subclasses of class2
-        if(!is.null(ClassDef2)) {
-            ext <- ClassDef2@subclasses
-            ## check for a classUnion definition, not a plain "classRepresentation"
-            if(!.identC(class(ClassDef2), "classRepresentation") &&
-               isClassUnion(ClassDef2))
-                ## a simple TRUE iff class1 or one of its superclasses belongs to the union
-                i <- any(c(class1, nm1) %in% names(ext))
-            else {
-                ## class1 could be multiple classes here.
-                ## I think we want to know if any extend
-                i <- match(class1, names(ext))
-                ii <- i[!is.na(i)]
-                i <- if(length(ii)) ii[1L] else i[1L]
-            }
-        }
+    if(!is.null(contained <- ext[[class2]]))
+	contained
+    else if (is.null(ClassDef2))
+	FALSE
+    else { ## look for class1 in the known subclasses of class2
+	subs <- ClassDef2@subclasses
+	## check for a classUnion definition, not a plain "classRepresentation"
+	if(!.identC(class(ClassDef2), "classRepresentation") && isClassUnion(ClassDef2))
+	    ## a simple TRUE iff class1 or one of its superclasses belongs to the union
+	    any(c(class1, names(ext)) %in% names(subs))
+	else {
+	    ## class1 could be multiple classes here.
+	    ## I think we want to know if any extend
+	    i <- match(class1, names(subs))
+	    i <- i[!is.na(i)]
+	    if(length(i)) subs[[ i[1L] ]] else FALSE
+	}
     }
-    if(is.na(i))
-        FALSE
-    else if(is.logical(i))
-        i
-    else
-        el(ext, i)
 }
 
   ## complete the extends information in the class definition, by following
