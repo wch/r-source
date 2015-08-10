@@ -56,19 +56,25 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
 
 #ifdef unix
-  If \code{method = "auto"} is chosen (the default), method
-  \code{"libcurl"} is chosen for \samp{https://} and \samp{ftps://} URLs
-  and the internal method is chosen for other schemes.
+  If \code{method = "auto"} is chosen (the default), on a Unix-alike
+  method \code{"libcurl"} is chosen for \samp{https://} and
+  \samp{ftps://} URLs and the \code{"internal"} method is chosen for
+  other schemes.
 #endif
 #ifdef windows
-  If \code{method = "auto"} is chosen (the default), the
-  \code{"wininet"} method is used on Windows (unless
-  \code{setInternet2(FALSE)} was used). 
+  If \code{method = "auto"} is chosen (the default), on Windows the
+  \code{"wininet"} method is used apart from for \samp{ftps://} URLs
+  where \code{"libcurl"} is tried.
 #endif
   
-  Support for method \code{"libcurl"} is optional on Windows but
-  required on other platforms: use \code{\link{capabilities}("libcurl")}
-  to see if it is supported on your build.  It will provide
+#ifdef unix
+  Method \code{"libcurl"} provides
+#endif
+#ifdef windows
+  Support for method \code{"libcurl"} is optional on Windows: use
+  \code{\link{capabilities}("libcurl")} to see if it is supported on
+  your build.  It will provide
+#endif
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
   URLs.  There is support for simultaneous downloads, so \code{url} and
   \code{destfile} can be character vectors of the same length greater
@@ -91,16 +97,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"curl"} use argument \code{extra = "-L"}. To disable redirection
   in \command{wget}, use \code{extra = "--max-redirect=0"}.)
 
-  Note that \samp{https://} URLs are
-#ifdef unix
-  not supported by the internal method.
-#endif
-#ifdef windows
-  supported by default.  (Prior to \R 3.2.2, this required that
-  option \option{--internet2} or environment variable
-  \env{R_WIN_INTERNET2} was set or \code{\link{setInternet2}(TRUE)} was
-  used.  That option and environment variable are now ignored.)  
-#endif
+  Note that \samp{https://} URLs are not supported by the
+  \code{"internal"} method but are supported by the \code{"libcurl"}
+  method and the \code{"wininet"} method on Windows.
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
@@ -138,12 +137,6 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   (unlike Unix-alikes) does distinguish between text and binary files,
   care is needed that other binary file types are transferred with
   \code{mode = "wb"}.
-
-  There is a Windows-only method \code{"wininet"}.  (This selected for
-  \code{method = "internal"} unless \code{\link{setInternet2}(FALSE)} is
-  called.)  Then the \sQuote{Internet Options} of the system are used to
-  choose proxies and so on; these are set in the Control Panel and are
-  those used for Internet Explorer.
 #endif
 #ifdef unix
   A progress bar tracks the transfer.  If the file length is known, an
@@ -174,7 +167,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   commonly on Unix-alikes.  Windows binaries are available at that URL.
 }
 \section{Setting Proxies}{
-  This applies to the internal code only.
+#ifdef windows
+  For the Windows-only method \code{"wininet"}, the \sQuote{Internet
+  Options} of the system are used to choose proxies and so on; these are
+  set in the Control Panel and are those used for Internet Explorer.
+#endif
+  
+  The next two paragraphs apply to the internal code only.
 
   Proxies can be specified via environment variables.
   Setting \env{no_proxy} to \code{*} stops any proxy being tried.
@@ -215,7 +214,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Methods which access \samp{https://} and \samp{ftps://} URLs should
   try to verify their certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
-  in which these got removed rather than updated).
+  in which these got removed rather than updated). For further information
+  see \url{http://curl.haxx.se/docs/sslcerts.html}.
 
   This is an issue for \code{method = "libcurl"} on Windows, where the
   OS does not provide a suitable CA certificate bundle, so by default on
@@ -223,7 +223,14 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   environment variable \env{CURL_CA_BUNDLE} to the path to a certificate
   bundle file, usually named \file{ca-bundle.crt} or
   \file{curl-ca-bundle.crt}.  (This is normally done for a binary
-  installation of \R, which installs \file{etc/curl-ca-bundle.crt}.)
+  installation of \R, which installs
+  \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
+  \env{CURL_CA_BUNDLE} to point to it if that enironment variable is not
+  already set.)  For an updated certificate bundle, see
+  \url{http://curl.haxx.se/docs/sslcerts.html}.
+  Currently one can download a copy from
+  \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
+  and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for

@@ -23,7 +23,7 @@
 
       Unfortunately that cannot guarantee that any particular
       \samp{https:} URL can be accessed.  For example, server and
-      client have to negotiate a cryptographic protocol (TLS, SSL,
+      client have to negotiate a cryptographic protocol (TLS/SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
       the available certificates.
     }
@@ -88,21 +88,22 @@
       now allow non-default values of the cairographics \sQuote{fallback
 	resolution} to be set.
 
-      \item \code{file()} now also gets an explicit \code{method}
-      argument instead of implicitly using \code{getOption("url.method")}.
+      \item \code{file()} gets an explicit \code{method} argument
+      instead of implicitly using
+      \code{getOption("url.method", "default")}.
 
       \item Thanks to a patch from Tomas Kalibera, \code{x[x != 0]} is
       now typically \emph{faster} than \code{x[which(x != 0)]} (in the
       case where \code{x} has no NAs, the two are equivalent).
-      
+
       \item \code{read.table()} now always uses the names for a named
       \code{colClasses} argument (previously names were only used when
       \code{colClasses} was too short). (In part, wish of \PR{16478}.)
-      
+
       \item (Windows only) \code{download.file()} with default
       \code{method = "auto"} and a \samp{ftps://} URL chooses
       \code{"libcurl"} if that is available.
-      
+
       \item The out-of-the box Bioconductor mirror has been changed to
       one using \samp{https://}: use \code{chooseBioCmirror()} to choose
       a \samp{http://} mirror if required.
@@ -111,6 +112,10 @@
       gain a \code{drop} argument.
 
       \item \code{available.packages()} gains a \code{repos} argument.
+
+      \item The undocumented switching of methods for \code{url()} on
+      \samp{https:} and \samp{ftps:} URLs is confined to \code{method =
+      "default"} (and documented).
     }
   }
 
@@ -139,6 +144,14 @@
       \code{cairo_bmp()}, \code{cairo_png()} and \code{cairo_tiff()}
       have been removed.  (The devices should be used as e.g.
       \code{bmp(type = "cairo")}.)
+
+      \item (Windows only)  Function \code{setInternet2()} has no effect
+      and will be removed in due course.  The choice between methods
+      \code{"internal"} and \code{"wininet"} is now made by the
+      \code{method} arguments of \code{url()} and \code{download.file()}
+      and their defaults can be set \emph{via} options.  The
+      out-of-the-box default remains \code{"wininet"} (as it has been
+      since \R 3.2.2).
     }
   }
 

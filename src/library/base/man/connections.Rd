@@ -118,7 +118,7 @@ isIncomplete(con)
 }
 \details{
   The first nine functions create connections.  By default the
-  connection is not opened (except for \code{socketConnection}), but may
+  connection is not opened (except for a \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
   For \code{file} the description is a path to the file to be opened or
@@ -132,18 +132,16 @@ isIncomplete(con)
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
-  \samp{file://}).  Proxies can be specified for HTTP, HTTPS and FTP
-  \code{url} connections: see \code{\link{download.file}}.  \code{method
-  = "internal"} is that available since connections were introduced),
-  \code{method = "wininet"} is only available on Windows and
-  \code{method = "libcurl"} is required on a Unix-alike but optional on
-  Windows.  Method \code{"default"} uses method \code{"internal"} for
-  \samp{file:} URLs and \code{"libcurl"} for \code{ftps:} URLs.
-  Except on Windows with \code{setInternet2(TRUE)} (the default
-  there), it uses \code{"internal"} for \samp{http:} and \code{ftp:}
-  URLs and \code{"libcurl"} for \samp{https:} URLs. The default
-  behaviour on Windows is to use \code{"wininet"} for \samp{http:},
-  \code{ftp:} and \samp{https:} URLs.
+  \samp{file://}).  Method \code{"internal"} is that
+  available since connections were introduced, method \code{"wininet"} is
+  only available on Windows and method \code{"libcurl"} is required on a
+  Unix-alike but optional on Windows.  Method \code{"default"} uses
+  method \code{"internal"} for \samp{file:} URLs and \code{"libcurl"}
+  for \code{ftps:} URLs.  On a Unix-alike it uses \code{"internal"} for
+  \samp{http:} and \code{ftp:} URLs and \code{"libcurl"} for
+  \samp{https:} URLs; on Windows \code{"wininet"} for \samp{http:},
+  \code{ftp:} and \samp{https:} URLs.  Proxies can be specified: see
+  \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and

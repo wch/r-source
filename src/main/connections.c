@@ -4977,7 +4977,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
 #ifdef Win32
-    winmeth = UseInternet2;
+    winmeth = 1;
     if(PRIMVAL(op) == 1 && !IS_ASCII(STRING_ELT(scmd, 0)) ) { // file(<non-ASCII>, *)
 	ienc = CE_UTF8;
 	url = translateCharUTF8(STRING_ELT(scmd, 0));
@@ -5030,7 +5030,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     defmeth = streql(cmeth, "default");
     if (streql(cmeth, "wininet")) {
 #ifdef Win32
-	winmeth = 1;
+	winmeth = 1;  // it already was as this is the default
 #else
 	error(_("method = \"wininet\" is only supported on Windows"));
 #endif
@@ -5047,46 +5047,24 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if(!meth) {
-	if (strncmp(url, "ftps://", 7) == 0)
+	if (strncmp(url, "ftps://", 7) == 0) {
 #ifdef HAVE_LIBCURL
-	{
-	    if(!defmeth) {
-		// We did not check ftps protocol support
-		REprintf("ftps:// URLs are not supported by method \"internal\": trying \"libcurl\"\n");
-		R_FlushConsole();
-	    }
-	    meth = 1;
-	}
-#else
-	error("ftps:// URLs are not supported");
+	    if (defmeth) meth = 1; else
 #endif
+		error("ftps:// URLs are not supported by this method");
+	}
 #ifdef Win32
 	if (!winmeth && strncmp(url, "https://", 8) == 0) {
 # ifdef HAVE_LIBCURL
-	    if(!defmeth) {
-		// We did not check protocol support on Windows.
-		REprintf("https:// URLs are not supported by method \"internal\": trying \"libcurl\"\n");
-		R_FlushConsole();
-	    }
-	    meth = 1;
-# else
-	    error("https:// URLs are not supported");
+	    if (defmeth) meth = 1; else
 # endif
-        }
-#else
-	if (strncmp(url, "https://", 8) == 0)
-# ifdef HAVE_LIBCURL
-	{
-	    // We did check the libcurl build as from R 3.3.0
-	    if(!defmeth) {
-		REprintf("https:// URLs are not supported by method \"internal\": using \"libcurl\"\n");
-		R_FlushConsole();
-	    }
-	    meth = 1;
+		error("https:// URLs are not supported by this method");
+#else // Unix
+	if (strncmp(url, "https://", 8) == 0) {
+	    // We did check the libcurl build support https as from R 3.3.0
+	    if (defmeth) meth = 1; else
+		error("https:// URLs are not supported by the \"internal\" method");
 	}
-# else
-	error("https:// URLs are not supported");
-# endif
 #endif
     }
 
