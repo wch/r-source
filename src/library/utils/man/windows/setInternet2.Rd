@@ -14,7 +14,7 @@ Set or disable the use of Windows internal functions for Internet access.
   \code{method = "wininet"} in functions \code{\link{download.file}} and
   \code{\link{url}}.
 
-  As from \R 3.3.0 it does nothing.
+  As from \R 3.3.0 it changes nothing, and only \code{use = NA} is accepted.
 }
 
 \usage{
@@ -25,10 +25,10 @@ setInternet2(use = TRUE)
     \code{NA}, just return the current setting.}
 }
 \value{
-  The previous setting is returned, invisibly if \code{use} is not \code{NA}.
+  For backwards compatibility, \code{TRUE}.
 }
 \author{
-Duncan Murdoch
+  Duncan Murdoch
 }
 \examples{
 setInternet2(NA)

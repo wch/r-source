@@ -96,28 +96,6 @@ SEXP Rdownload(SEXP args)
     }
 }
 
-#ifdef Win32
-SEXP attribute_hidden do_setInternet2(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    int newUseInternet2;
-    SEXP newval, retval;
-    
-    PROTECT(retval = ScalarLogical(UseInternet2));
-    
-    checkArity(op, args);
-    newval = CAR(args);
-    if (length(newval) != 1) error(_("bad value"));
-    newUseInternet2 = asLogical(newval);
-    
-    if (newUseInternet2 != NA_LOGICAL) {
-    	R_Visible = FALSE;
-	UseInternet2 = newUseInternet2;
-    }
-    UNPROTECT(1);
-    return retval;
-}
-#endif
-
 Rconnection attribute_hidden 
 R_newurl(const char *description, const char * const mode, int type)
 {

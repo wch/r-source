@@ -5059,9 +5059,10 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (defmeth) meth = 1; else
 # endif
 		error("https:// URLs are not supported by this method");
+	}
 #else // Unix
 	if (strncmp(url, "https://", 8) == 0) {
-	    // We did check the libcurl build support https as from R 3.3.0
+	    // We check the libcurl build does support https as from R 3.3.0
 	    if (defmeth) meth = 1; else
 		error("https:// URLs are not supported by the \"internal\" method");
 	}

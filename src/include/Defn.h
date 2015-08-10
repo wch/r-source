@@ -813,10 +813,6 @@ LibExtern SEXP R_TrueValue INI_as(NULL);
 LibExtern SEXP R_FalseValue INI_as(NULL);
 LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 
-#ifdef Win32
-LibExtern Rboolean UseInternet2;
-#endif
-
 #ifdef __MAIN__
 # undef extern
 # undef extern0
