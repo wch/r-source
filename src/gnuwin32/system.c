@@ -57,7 +57,6 @@ void editorcleanall(void);                  /* from editor.c */
 int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
 
 R_size_t R_max_memory = INT_MAX;
-Rboolean UseInternet2 = TRUE; // used in main/internet.c
 
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
@@ -983,7 +982,7 @@ int cmdlineoptions(int ac, char **av)
 		InThreadReadConsole = FileReadConsole;
 		setvbuf(stdout, NULL, _IONBF, 0);
 	    } else if (!strcmp(*av, "--internet2")) {
-/*		UseInternet2 = TRUE;    This is now the default */
+/*	        This is now the default */
 	    } else if (!strcmp(*av, "--mdi")) {
 		MDIset = 1;
 	    } else if (!strcmp(*av, "--sdi") || !strcmp(*av, "--no-mdi")) {
