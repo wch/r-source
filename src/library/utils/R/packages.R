@@ -336,7 +336,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         available <- available.packages(contriburl = contriburl,
                                         method = method)
         if (missing(repos)) repos <- getOption("repos") # May have changed
-    }
+    } 
     if(!is.matrix(oldPkgs) && is.character(oldPkgs)) {
     	subset <- oldPkgs
     	oldPkgs <- NULL
@@ -673,9 +673,9 @@ download.packages <- function(pkgs, destdir, available = NULL,
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(nonlocalcran && !dir.exists(destdir))
         stop("'destdir' is not a directory")
-
+    
     type <- resolvePkgType(type)
-
+    
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
@@ -800,16 +800,18 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 }
 
 getCRANmirrors <- function(all = FALSE, local.only = FALSE)
-    .getMirrors("http://cran.r-project.org/CRAN_mirrors.csv",
+{
+    .getMirrors("https://cran.r-project.org/CRAN_mirrors.csv",
                 file.path(R.home("doc"), "CRAN_mirrors.csv"),
-                all = all, local.only = local.only)
+                all=all, local.only=local.only)
+}
 
 .chooseMirror <- function(m, label, graphics, ind, useHTTPS)
 {
     if(is.null(ind) && !interactive())
         stop("cannot choose a ", label, " mirror non-interactively")
-    if (length(ind))
-        res <- as.integer(ind)[1L]
+    if (length(ind)) 
+        res <- as.integer(ind)[1L] 
     else {
     	isHTTPS <- grepl("^https", m[, "URL"])
     	mHTTPS <- m[isHTTPS,]
@@ -840,7 +842,7 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     } else character()
 }
 
-chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL,
+chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL, 
                              useHTTPS = getOption("useHTTPS", TRUE))
 {
     m <- getCRANmirrors(all = FALSE, local.only = FALSE)
@@ -862,7 +864,7 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"), ind = NULL,
     url <- .chooseMirror(m, "BioC", graphics, ind, useHTTPS)
     if (length(url))
         options(BioC_mirror = url)
-    invisible()
+    invisible()   
 }
 
 setRepositories <-
