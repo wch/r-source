@@ -52,10 +52,9 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \note{
   The online list of mirrors is always accessed using HTTPS.  If your 
-  build of R does not support HTTPS, you will need use the local copy
+  build of R does not support HTTPS, R uses the local copy
   in \file{\var{\link{R_HOME}}/doc/CRAN_mirrors.csv}.  It can be
-  updated by downloading a new copy from 
-  \url{https://cran.r-project.org/CRAN_mirrors.csv}.
+  updated from \url{https://cran.r-project.org/CRAN_mirrors.csv}.
 }
 \value{
   None for \code{chooseCRANmirror()}, this function is invoked for its

@@ -38,6 +38,12 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
   \file{\var{\link{R_HOME}}/doc/BioC_mirrors.csv},
   by number.
 }
+\note{
+  The online list of mirrors is always accessed using HTTPS.  If your 
+  build of R does not support HTTPS, R uses the local copy
+  in \file{\var{\link{R_HOME}}/doc/BioC_mirrors.csv}.  It can be 
+  updated from \url{https://bioconductor.org/BioC_mirrors.csv}.
+}
 \value{
   None: this function is invoked for its
   side effect of updating \code{options("BioC_mirror")}.
