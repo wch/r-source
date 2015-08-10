@@ -1620,7 +1620,8 @@ Mavericks, Yosemite, @dots{}); it is a 64-bit (@cputype{x86_64}) build
 which should run on all Macs from mid-2008 on.
 
 Installers for R-patched and R-devel are usually available from
-@uref{http://r.research.att.com}, including a
+@uref{http://r.research.att.com}@footnote{@samp{https:} access may be
+available.}, including a
 @file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched.
 
 For some older versions of the OS you can in principle (it is little
@@ -3137,13 +3138,7 @@ suitable code can be compiled.  These tests will fail if
 @file{config.site}, on the @command{configure} command line or in the
 environment.}, and are likely to fail if @code{cairo} was built
 statically (unusual).  Most systems with @code{Gtk+} 2.8 or later
-installed will have suitable libraries.  OS X comes with none of these
-libraries (but XQuartz, as used for 10.8 and later, ships @code{cairo}),
-but @code{cairo} support (without @code{Pango}) has been added to the
-binary distribution (see @uref{http://r.research.att.com/libs/} you need
-@code{fontconfig}, @code{freetype} and @code{pixman} too):
-@code{pkg-config} is still needed when building @R{} from source and can
-be installed from its sources.
+installed will have suitable libraries
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  On
@@ -3867,9 +3862,9 @@ For maximally effective use of @command{valgrind}, @R{} should be
 compiled with valgrind instrumentation. The @command{configure} option
 is @option{--with-valgrind-instrumentation=@var{level}}, where
 @var{level} is 0, 1 or 2.  (Level 0 is the default and does not add
-any anything.)  The system headers for @command{valgrind} can be
-requested by option @option{--with-system-valgrind-headers}: they will
-be used if present (on Linux they may be in a separate package such as
+anything.)  The system headers for @command{valgrind} can be requested
+by option @option{--with-system-valgrind-headers}: they will be used if
+present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
 code in @R{} will be compatible with future @command{valgrind} headers.
 
@@ -4617,7 +4612,8 @@ You can build @R{} using Apple's `Command Line Tools' and suitable
 compilers.  You will also need @code{readline} (or to configure with
 @option{--without-readline}), and a Fortran compiler.  Those and other
 binary components are available from
-@uref{http://r.research.att.com/libs}.
+@uref{http://r.research.att.com/libs}@footnote{@samp{https:} access may
+be available.}.
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): X is part of the standard
@@ -4665,11 +4661,12 @@ FCFLAGS=$F77FLAGS
 @noindent
 with @command{clang} and @command{clang++} from Xcode, and the Fortran
 compiler from
-@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
-is a tarball which needs to be unpacked in the Terminal by e.g.@:
-@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
-not run on Core 2 Duo Macs.}  Apple's builds of @command{clang}
-currently have little or no OpenMP support.
+@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{@samp{https:}
+access may be available.  This is a tarball which needs to be unpacked
+in the Terminal by e.g.@: @command{sudo tar -zxf
+gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does not run on Core 2 Duo
+Macs.}  Apple's builds of @command{clang} currently have little or no
+OpenMP support.
 
 The @acronym{CRAN} `Snow Leopard' distribution of @R{} was built using
 
@@ -4728,6 +4725,18 @@ Recent versions of OS X ship with @code{zlib} version 1.2.8 and
 @code{bzlib} version 1.0.6, sufficient for the default
 @command{configure} checks.  Mavericks has a recent enough version of
 @code{libcurl}: Snow Leopard does not.
+
+Support for @code{cairo} (without @code{Pango}) can be enabled in two
+ways: both need @code{pkg-config} available.  XQuartz ships @code{cairo}
+and its version will be selected if its @code{pkg-config} files are
+first on the configuration path: for example by setting
+@example
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+Otherwise the binary libraries at
+@uref{http://r.research.att.com/libs/}@footnote{@samp{https:} access may
+be available.} can be used: @code{cairo}, @code{fontconfig},
+@code{freetype} and @code{pixman} are needed.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4796,7 +4805,7 @@ For these versions Apple makes available compilers based on
 called `Command Line Developer Tools').
 
 These tools can be (re-)installed by @command{xcode-select --install}.
-(If you have a fresh installation of Mavericks or latere, running e.g.@:
+(If you have a fresh installation of Mavericks or later, running e.g.@:
 @command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
 after an OS update, you are advised to re-install them.)
