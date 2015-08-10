@@ -546,33 +546,13 @@ Directly, no.  See packages such as @code{RDCOMClient} from
 for example @code{update.packages()} and the menu items on the Packages menu.
 
 We have had several reports of this, although they do work for us on
-@emph{all} of our machines.  There are two known possible fixes.
+@emph{all} of our machines.  There are two known possible causes.
 
-(a) Use the Windows internet functions by starting R with the flag
-@option{--internet2} (@pxref{How do I install R for Windows?})  or
-calling @code{setInternet2(TRUE)} or setting the environment variable
-@env{R_WIN_INTERNET2} to a non-empty value when starting R.  These cause
-R to use the OS's functions used by Internet Explorer, which may already
-be configured for use with proxies.  Note that this does @emph{not} work
-with proxies that need authentication.
+(a) A proxy needs to be set up: see @code{?download.file}.
 
-(b) A proxy needs to be set up: see @code{?download.file}.  Here are two
-versions of an example (a real one, but from a machine that is only
-available locally) of a command-line in a short cut:
-
-@example
-"path_to_R\bin\x64\Rgui.exe" http_proxy=http://user:pass@@gannet:80/
-
-"path_to_R\bin\x64\Rgui.exe" http_proxy=http://gannet/ http_proxy_user=ask
-@end example
-
-@noindent
-The second version will prompt the user for the proxy username and
-password when HTTP downloads are first used.
-
-Another possibility is that firewall settings are blocking the R
-executables from contacting the Internet, but this should result in
-informative error messages from the firewall program.
+(b) Firewall settings are blocking the R executables from contacting the
+Internet (but this should result in informative error messages from the
+firewall program).
 
 
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
@@ -1874,7 +1854,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2015-01-27    
+@set LASTEDIT 2015-08-10    
 @ifhtml
 @html
 <hr WIDTH="100%">
