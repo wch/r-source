@@ -2766,9 +2766,7 @@ setting environment variables @w{@env{_R_CHECK_*_}:}, as described in
 @end ifclear
 a set of these customizations similar to those used by @acronym{CRAN}
 can be selected by the option @option{--as-cran} (which works best if
-Internet access is available@footnote{Windows users behind proxies may
-want to set environment variable @env{R_WIN_INTERNET2} to a non-empty
-value, e.g.@: in @file{~/.R/check_environ}.}).  Some Windows users may
+Internet access is available).  Some Windows users may
 need to set environment variable @env{R_WIN_NO_JUNCTIONS} to a non-empty
 value.  The test of cyclic declarations@footnote{For example, in early
 2014 @CRANpkg{gdata} declared @samp{Imports: gtools} and @CRANpkg{gtools}
