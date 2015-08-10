@@ -662,11 +662,11 @@ function(packages)
     ## in the code below.
     lapply(d,
            function(e) {
-               y <- data.frame(Package = as.character(e),
-                               stringsAsFactors = FALSE)
-               y$Date <- as.Date(p[match(y$Package, p[, "Package"]),
-                                   "Published"])
-               y[order(y$Date, decreasing = TRUE), ]
+               e <- as.character(e)
+               d <- as.Date(p[match(e, p[, "Package"]), "Published"])
+               o <- order(d, decreasing = TRUE)
+               data.frame(Package = e[o], Date = d[o],
+                          stringsAsFactors = FALSE)
            })
 }
 
