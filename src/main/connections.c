@@ -5069,10 +5069,10 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 		R_FlushConsole();
 	    }
 	    meth = 1;
-	}
 # else
-	error("https:// URLs are not supported");
+	    error("https:// URLs are not supported");
 # endif
+        }
 #else
 	if (strncmp(url, "https://", 8) == 0)
 # ifdef HAVE_LIBCURL
