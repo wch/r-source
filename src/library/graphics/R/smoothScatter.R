@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/smoothScatter.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,14 +19,16 @@
 
 smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
 			  colramp=colorRampPalette(c("white", blues9)),
-			  nrpoints=100, pch=".", cex=1, col="black",
+			  nrpoints=100, ret.selection=FALSE, pch=".", cex=1, col="black",
 			  transformation = function(x) x^.25,
                           postPlotHook = box,
 			  xlab=NULL, ylab=NULL, xlim, ylim,
 			  xaxs=par("xaxs"), yaxs=par("yaxs"), ...)
 {
-    if (!is.numeric(nrpoints) | (nrpoints<0) | (length(nrpoints)!=1) )
+    if (!is.numeric(nrpoints) || nrpoints < 0 || length(nrpoints) != 1)
 	stop("'nrpoints' should be numeric scalar with value >= 0.")
+    nrpoints <- round(nrpoints)
+    ret.selection <- ret.selection && nrpoints > 0
 
     ## similar as in plot.default
     xlabel <- if (!missing(x)) deparse(substitute(x))
@@ -36,18 +38,22 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
     ylab <- if (is.null(ylab)) xy$ylab else ylab
 
     ## eliminate non-finite (incl. NA) values
-    x <- cbind(xy$x, xy$y)[ is.finite(xy$x) & is.finite(xy$y), , drop = FALSE]
+    ## want to keep rownames
+    x <- cbind(xy$x, xy$y)[ I <- is.finite(xy$x) & is.finite(xy$y), , drop=FALSE]
+    if(ret.selection) iS <- which(I)
 
     ## xlim and ylim
     if(!missing(xlim)) {
 	stopifnot(is.numeric(xlim), length(xlim)==2, is.finite(xlim))
-	x <- x[ min(xlim) <= x[,1] & x[,1] <= max(xlim), ]
+	x <- x[ I <- min(xlim) <= x[,1] & x[,1] <= max(xlim), , drop=FALSE]
+        if(ret.selection) iS <- iS[I]
     } else {
 	xlim <- range(x[,1])
     }
     if(!missing(ylim)) {
 	stopifnot(is.numeric(ylim), length(ylim)==2, is.finite(ylim))
-	x <- x[ min(ylim) <= x[,2] & x[,2] <= max(ylim), ]
+	x <- x[ I <- min(ylim) <= x[,2] & x[,2] <= max(ylim), , drop=FALSE]
+        if(ret.selection) iS <- iS[I]
     } else {
 	ylim <- range(x[,2])
     }
@@ -61,7 +67,7 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
 
     ## plot color image
     image(xm, ym, z=dens, col=colramp(256),
-	  xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, xaxs=xaxs, yaxs=yaxs, ...)
+          xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, xaxs=xaxs, yaxs=yaxs, ...)
     if(!is.null(postPlotHook))
 	postPlotHook()
 
@@ -75,6 +81,8 @@ smoothScatter <- function(x, y=NULL, nbin=128, bandwidth,
 	ixm <- 1L + as.integer((nx-1)*(x[,1]-xm[1])/(xm[nx]-xm[1]))
 	iym <- 1L + as.integer((ny-1)*(x[,2]-ym[1])/(ym[ny]-ym[1]))
 	sel <- order(dens[cbind(ixm, iym)])[seq_len(nrpoints)]
-	points(x[sel,], pch=pch, cex=cex, col=col)
+	x <- x[sel, , drop=FALSE]
+	points(x, pch=pch, cex=cex, col=col)
+        if(ret.selection) iS[sel]
     }
 }

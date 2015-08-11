@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plotdefault.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.default}
@@ -117,6 +117,8 @@
 }
 \seealso{
   \code{\link{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.
+  For thousands of points, consider using \code{\link{smoothScatter}}
+  instead.
 }
 \examples{
 Speed <- cars$speed
