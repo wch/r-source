@@ -11,19 +11,20 @@
       \item \code{nchar(x, *)} gains a new argument \code{keepNA} which
       governs how the result for \code{NA}s in \code{x} is determined.
       The new default \code{keepNA = NA} returns \code{NA} where
-      \code{x} is \code{NA}, unless for \code{type = "width"} which still
+      \code{x} is \code{NA}, except for \code{type = "width"} which still
       returns \code{2}, the formatting / printing width of \code{NA}.
 
-      \code{nzchar(x)} gets the same new argument, with default
-      \code{keepNA = FALSE} however.  Consequently \code{nzchar(x)} keeps
-      returning a non-\code{NA} logical vector, back compatibly.
+      \code{nzchar(x)} gets the same new argument, but with default
+      \code{keepNA = FALSE}.  Hence \code{nzchar(x)} still returns a
+      non-\code{NA} logical vector, back compatibly.
 
-      \item  All builds have support for \samp{https:} URLs in
-      \code{download.file()}, \code{url()} and code making use of them.
+      \item All builds have support for \samp{https:} URLs in the
+      default methods for \code{download.file()}, \code{url()} and code
+      making use of them.
 
       Unfortunately that cannot guarantee that any particular
-      \samp{https:} URL can be accessed.  For example, server and
-      client have to negotiate a cryptographic protocol (TLS/SSL,
+      \samp{https:} URL can be accessed.  For example, server and client
+      have to successfully negotiate a cryptographic protocol (TLS/SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
       the available certificates.
     }
@@ -201,8 +202,8 @@
       \item The description of dataset \code{ToothGrowth} has been
       improved/corrected.  (\PR{15953})
       
-      \item \item{model.tables(type = "means")} and hence
-      \item{TukeyHSD()} now support \code{"aov"} fits without an
+      \item \code{model.tables(type = "means")} and hence
+      \code{TukeyHSD()} now support \code{"aov"} fits without an
       intercept term. 
     }
   }
