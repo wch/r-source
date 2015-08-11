@@ -200,6 +200,10 @@
 
       \item The description of dataset \code{ToothGrowth} has been
       improved/corrected.  (\PR{15953})
+      
+      \item \item{model.tables(type = "means")} and hence
+      \item{TukeyHSD()} now support \code{"aov"} fits without an
+      intercept term. 
     }
   }
 }

@@ -2938,3 +2938,17 @@ setNames(TRUE, make_long_name(1000))  # value printed as TRU
 setNames(TRUE, make_long_name(1002))  # value printed as T
 setNames(TRUE, make_long_name(1003))  # value not printed
 ##
+
+
+## PR#16437
+dd <- data.frame(F = factor(rep(c("A","B","C"), each = 3)), num = 1:9)
+cs <- list(F = contr.sum(3, contrasts = FALSE))
+a1 <- aov(num ~ F, data = dd, contrasts = cs)
+model.tables(a1, "means")
+t1 <- TukeyHSD(a1) ## don't print to avoid precision issues.
+a2 <- aov(num ~ 0+F, data = dd, contrasts = cs)
+model.tables(a2, "means")
+t2 <- TukeyHSD(a2)
+attr(t1, "orig.call") <- attr(t2, "orig.call")
+stopifnot(all.equal(t1, t2))
+## functions both failed on a2 in R <= 3.2.2.

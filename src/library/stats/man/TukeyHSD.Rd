@@ -1,6 +1,6 @@
 % File src/library/stats/man/TukeyHSD.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{TukeyHSD}
@@ -35,6 +35,9 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
  \item{\dots}{Optional additional arguments.  None are used at present.}
 }
 \details{
+  This is a generic function: the description here applies to the method
+  for fits of class \code{"aov"}.
+  
   When comparing the means for the levels of a factor in an analysis of
   variance, a simple comparison using t-tests will inflate the
   probability of declaring a significant difference when it is not in
@@ -57,8 +60,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   If \code{which} specifies non-factor terms these will be dropped with
   a warning: if no terms are left this is a an error.
 
-  In \R 2.15.2 and earlier the results were \code{NA} for fits with
-  \code{na.action} methods such as \code{\link{na.exclude}}.
+  Only models with intercepts are supported.
 }
 \value{
   A list of class \code{c("multicomp", "TukeyHSD")},

@@ -66,7 +66,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 	    message("Design is unbalanced - use se.contrast() for se's")
 	    se <- FALSE
 	} else se.tables <- se.aov(x, n, type = type)
-    if(type == "means") {
+    if(type == "means" && "(Intercept)" %in% colnames(prjs)) {
 	gmtable <- mean(prjs[,"(Intercept)"])
 	class(gmtable) <- "mtable"
 	tables <- c("Grand mean" = gmtable, tables)
