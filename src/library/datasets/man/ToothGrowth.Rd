@@ -1,6 +1,6 @@
 % File src/library/datasets/man/ToothGrowth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ToothGrowth}
@@ -8,10 +8,10 @@
 \alias{ToothGrowth}
 \title{The Effect of Vitamin C on Tooth Growth in Guinea Pigs}
 \description{
-  The response is the length of odontoblasts (teeth) in each of 10
-  guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2
-  mg) with each of two delivery methods (orange juice or ascorbic
-  acid).
+  The response is the length of odontoblasts (cells responsible for
+  tooth growth) in 60 guinea pigs.  Each animal received one of three
+  dose levels of Vitamin C (0.5, 1, and 2 mg) by one of two delivery
+  methods (orange juice or ascorbic acid).
 }
 \usage{ToothGrowth}
 \format{
@@ -19,7 +19,7 @@
   \tabular{rlll}{
     [,1]  \tab len   \tab numeric  \tab Tooth length\cr
     [,2]  \tab supp  \tab factor   \tab Supplement type (VC or OJ).\cr
-    [,3]  \tab dose  \tab numeric  \tab Dose in milligrams.
+    [,3]  \tab dose  \tab numeric  \tab Dose in milligrams/day
   }
 }
 \source{
@@ -31,6 +31,12 @@
   McNeil, D. R. (1977)
   \emph{Interactive Data Analysis}.
   New York: Wiley.
+
+  Crampton, E. W. (1947)
+  The growth of the odontoblast of the incisor teeth as a criterion of
+  vitamin C intake of the guinea pig. \emph{The Journal of Nutrition}
+  \bold{33(5)}: 491–-504.
+  \url{http://jn.nutrition.org/content/33/5/491.full.pdf}
 }
 \examples{
 require(graphics)

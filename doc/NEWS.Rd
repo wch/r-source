@@ -197,6 +197,9 @@
       \item \code{regexpr(pat, x, perl = TRUE)} with Python-style
       capture did not work correctly when \code{x} contained \code{NA}
       strings.  (\PR{16484})
+
+      \item The description of dataset \code{ToothGrowth} has been
+      improved/corrected.  (\PR{15953})
     }
   }
 }
