@@ -968,7 +968,7 @@ language characters always being available, which is the case for
 so-called `Unicode' Windows applications.  However, R is primarily
 written for Unix-alikes and is not therefore `Unicode' in the Windows
 sense.)  You can find suitable locale names from
-@urf{https://msdn.microsoft.com/@/en-us/@/library/@/39cwe7zf%28v=vs.80%29.aspx}
+@uref{https://msdn.microsoft.com/@/en-us/@/library/@/39cwe7zf%28v=vs.80%29.aspx}
 and @uref{https://msdn.microsoft.com/@/en-us/@/library/cdax410z%28v=vs.80%29.aspx}
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
