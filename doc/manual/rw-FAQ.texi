@@ -239,7 +239,7 @@ after having checked the command line.
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
 2, 3, 4 or 5.  See the help for Inno Setup
-(@uref{https://jrsoftware.org/@/ishelp.php}) for details.
+(@uref{http://jrsoftware.org/}) for details.
 
 We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation
@@ -636,14 +636,12 @@ software installation to be done by an account which is in the local
 Administrator group with `admin approval mode' turned on.  (The
 Administrator account by default has it turned off.)  Unlike (say)
 Windows XP, such accounts do not run programs with full administrator
-privileges, and this is where the issues arise.  (For background
-information consult e.g.@:
-@url{http://windowsvistablog.com/@/blogs/@/windowsvista/@/archive/@/2007/01/23/@/security-features-vs-convenience.aspx}.)
-These OSes have the concept of `over-the-shoulder' credentials: if you
-are running without full administrator privileges and do something which
-needs them you may be prompted with one or more security-check dialog
-boxes, and may be required to provide administrator credentials or
-confirm that you really want to take that action.
+privileges, and this is where the issues arise.  These OSes have the
+concept of `over-the-shoulder' credentials: if you are running without
+full administrator privileges and do something which needs them you may
+be prompted with one or more security-check dialog boxes, and may be
+required to provide administrator credentials or confirm that you really
+want to take that action.
 
 Vista and later will report that the R installer has an `unidentified
 publisher' or `unknown publisher' and ask if it should be run.  System
@@ -769,11 +767,9 @@ Where tilde does not appear on the main keyboard, it can normally be
 accessed by pressing AltGr (the right Alt key) plus some other key.
 This is @code{]} in Canadian (multilingual), German and Scandinavian
 layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
-@code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  For
-some keyboards the uses of AltGr are shown at
-@url{http://office.microsoft.com/@/en-us/@/word/@/HP052590631033.aspx}:
-you can explore those for your keyboard via the `On-Screen Keyboard'
-(under Ease of access on Windows 7).
+@code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  You
+can explore those for your keyboard via the `On-Screen Keyboard' (under
+Ease of access on Windows 7).
 
 On all Windows versions you should be able to get tilde by holding the
 down the left Alt key and typing 0126 on the numeric keypad (if you have
@@ -972,7 +968,8 @@ language characters always being available, which is the case for
 so-called `Unicode' Windows applications.  However, R is primarily
 written for Unix-alikes and is not therefore `Unicode' in the Windows
 sense.)  You can find suitable locale names from
-@uref{http://msdn.microsoft.com/@/library/@/default.asp?url=/@/library/@/en-us/@/vccore98/@/html/@/_crt_language_and_country_strings.asp}:
+@urf{https://msdn.microsoft.com/@/en-us/@/library/@/39cwe7zf%28v=vs.80%29.aspx}
+and @uref{https://msdn.microsoft.com/@/en-us/@/library/cdax410z%28v=vs.80%29.aspx}
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
 GB2312).
