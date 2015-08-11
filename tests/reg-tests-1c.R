@@ -872,3 +872,9 @@ z4 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
                  colClasses = c(c = "integer", b = "character", a = "numeric"))
 stopifnot(identical(z1, z4))
 ## z2 and z4 used positional matching (and failed) in R < 3.2.2.
+
+
+## PR#16484
+z <- regexpr("(.)", NA_character_, perl = TRUE)
+stopifnot(is.na(attr(z, "capture.start")), is.na(attr(z, "capture.length")))
+## Result was random integers in R <= 3.2.2.

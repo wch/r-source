@@ -191,6 +191,16 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.2.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{regexpr(pat, x, perl = TRUE)} with Python-style
+      capture did not work correctly when \code{x} contained \code{NA}
+      strings.  (\PR{16484})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.2.2}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{

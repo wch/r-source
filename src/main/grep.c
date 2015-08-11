@@ -2482,6 +2482,9 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    UNPROTECT(3);
 	    is = INTEGER(capture_start);
 	    il = INTEGER(capturelen);
+	    // initiialization needed for NA inputs: PR#16484
+	    for (i = 0 ; i < n * capture_count ; i++)
+		is[i] = il[i] = NA_INTEGER;
 	} else is = il = NULL; /* not actually used */
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
