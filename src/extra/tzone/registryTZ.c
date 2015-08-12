@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-8   The R Core Team
+ *  Copyright (C) 2007-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 /*
   From http://unicode.org/cldr/data/diff/supplemental/windows_tzid.html
   Added some entries from the XP Registry (and checked on Vista).
+  Table updated from Unicode in August 2015.
  */
 const static struct {
     const wchar_t * const reg;
@@ -284,6 +285,21 @@ const static struct {
     { L"Yekaterinburg Standard Time", "Asia/Yekaterinburg" },
     { L"Yerevan Standard Time", "Asia/Yerevan" },
     { L"Yukon Standard Time", "America/Yakutat" },
+
+/* 2015 additions, seen in then-current Windows 7 */
+    { L"Argentina Standard Time", "America/Buenos_Aires" }
+    { L"Bahia Standard Time", "America/Bahia" }
+    { L"Belarus Standard Time", "Europe/Minsk" }
+    { L"Kaliningrad Standard Time", "Europe/Kaliningrad" },
+    { L"Kamchatka Standard Time", "Asia/Kamchatka" }
+    { L"Libya Standard Time", "Africa/Tripoli" }
+    { L"Morocco Standard Time", "Africa/Casablanca" }
+    { L"Syria Standard Time", "Asia/Damascus" }
+    { L"Ulaanbaatar Standard Time", "Asia/Ulaanbaatar" }
+    { L"Russia Time Zone 3", "Europe/Samara" }
+    { L"Russia Time Zone 10", "Asia/Srednekolymsk" }
+    { L"Russia Time Zone 11", "Asia/Kamchatka" }
+
     { NULL,  "" }
 };
 
