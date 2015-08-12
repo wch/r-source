@@ -92,10 +92,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   site rather than from an intermediate cache.  It is used by
   \code{\link{available.packages}}.
 
-  By default only the \code{"libcurl"} and \code{"wget"} methods follow
-  \samp{http://} and \samp{https://} redirections.  (For method
-  \code{"curl"} use argument \code{extra = "-L"}. To disable redirection
-  in \command{wget}, use \code{extra = "--max-redirect=0"}.)
+  The \code{"libcurl"} and \code{"wget"} methods follow \samp{http://}
+  and \samp{https://} redirections: the \code{"internal"} does not.
+  (For method \code{"curl"} use argument \code{extra = "-L"}. To disable
+  redirection in \command{wget}, use \code{extra = "--max-redirect=0"}.)
 
   Note that \samp{https://} URLs are not supported by the
   \code{"internal"} method but are supported by the \code{"libcurl"}
