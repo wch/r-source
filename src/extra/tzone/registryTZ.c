@@ -287,18 +287,27 @@ const static struct {
     { L"Yukon Standard Time", "America/Yakutat" },
 
 /* 2015 additions, seen in then-current Windows 7 */
-    { L"Argentina Standard Time", "America/Buenos_Aires" }
-    { L"Bahia Standard Time", "America/Bahia" }
-    { L"Belarus Standard Time", "Europe/Minsk" }
+    { L"Argentina Standard Time", "America/Buenos_Aires" },
+    { L"Bahia Standard Time", "America/Bahia" },
+    { L"Belarus Standard Time", "Europe/Minsk" },
     { L"Kaliningrad Standard Time", "Europe/Kaliningrad" },
-    { L"Kamchatka Standard Time", "Asia/Kamchatka" }
-    { L"Libya Standard Time", "Africa/Tripoli" }
-    { L"Morocco Standard Time", "Africa/Casablanca" }
-    { L"Syria Standard Time", "Asia/Damascus" }
-    { L"Ulaanbaatar Standard Time", "Asia/Ulaanbaatar" }
-    { L"Russia Time Zone 3", "Europe/Samara" }
-    { L"Russia Time Zone 10", "Asia/Srednekolymsk" }
-    { L"Russia Time Zone 11", "Asia/Kamchatka" }
+    { L"Kamchatka Standard Time", "Asia/Kamchatka" },
+    { L"Libya Standard Time", "Africa/Tripoli" },
+    { L"Morocco Standard Time", "Africa/Casablanca" },
+    { L"Syria Standard Time", "Asia/Damascus" },
+    { L"Ulaanbaatar Standard Time", "Asia/Ulaanbaatar" },
+    // See https://support.microsoft.com/en-gb/gp/cp_dst
+    { L"Russia Time Zone 1", "Europe/Kaliningrad" },
+    { L"Russia Time Zone 2", "Europe/Moscow" },
+    { L"Russia Time Zone 3", "Europe/Samara" },
+    { L"Russia Time Zone 4", "Asia/Yekaterinburg" },
+    { L"Russia Time Zone 5", "Asia/Novosibirsk" },
+    { L"Russia Time Zone 6", "Asia/Krasnoyarsk" },
+    { L"Russia Time Zone 7", "Asia/Irtutsk" },
+    { L"Russia Time Zone 8", "Asia/Yakutsk" },
+    { L"Russia Time Zone 9", "Asia/Magadan" },
+    { L"Russia Time Zone 10", "Asia/Srednekolymsk" },
+    { L"Russia Time Zone 11", "Asia/Kamchatka" },
 
     { NULL,  "" }
 };
