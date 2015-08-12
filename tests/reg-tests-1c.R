@@ -421,6 +421,24 @@ stopifnot(identical(pp[1,], c("0", " ", ".", " ")),
 ## all 4 prettyNum() would error out
 
 
+## checking all.equal() with externalptr
+library(methods) # getClass()'s versionKey is an e.ptr
+cA <- getClass("ANY")
+stopifnot(all.equal(cA, cA),
+          is.character(all.equal(cA, getClass("S4"))))
+# both all.equal() failed in R <= 3.1.1
+
+
+## as.hexmode(x), as.octmode(x)  when x is double
+x <- c(NA, 1)
+stopifnot(identical(x == x,
+		    as.hexmode(x) == as.octmode(x)))
+p <- c(1, pi)
+tools::assertError(as.hexmode(p))
+tools::assertError(as.octmode(p))
+## where all "wrong" in R <= 3.1.1
+
+
 ## PR#15935
 y <- 1:3
 drop1(lm(y ~ 1))
