@@ -990,7 +990,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
                  call. = FALSE, domain = NA)
         }
     }
-    expnames <- unlist(lapply(expnames, get, envir = exports, inherits = FALSE))
+    expnames <- unlist(mget(expnames, envir = exports, inherits = FALSE), recursive=FALSE)
     if (is.null(impnames)) impnames <- character()
     if (is.null(expnames)) expnames <- character()
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))

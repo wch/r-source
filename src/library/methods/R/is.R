@@ -1,7 +1,7 @@
 #  File src/library/methods/R/is.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@ function(object, class2)
     cl <- class(object)
     S3Case <- length(cl) > 1L
     if(S3Case)
-      cl <- cl[[1L]]
+        cl <- cl[[1L]]
     if(missing(class2))
         return(extends(cl))
     class1Def <- getClassDef(cl)
     if(is.null(class1Def)) # an unregistered S3 class
-      return(inherits(object, class2))
+        return(inherits(object, class2))
     if(is.character(class2))
-      class2Def <- getClassDef(class2, .classDefEnv(class1Def))
+        class2Def <- getClassDef(class2, .classDefEnv(class1Def))
     else {
         class2Def <- class2
         class2 <- class2Def@ className
@@ -41,18 +41,17 @@ function(object, class2)
     ## class or an S3 class (registered or not)
     S3Case <- S3Case || (is.object(object) && !isS4(object)) # first requirement
     S3Case <- S3Case && (is.null(class2Def) || class2 %in% .BasicClasses ||
-                         extends(class2Def, "oldClass"))
+			 extends(class2Def, "oldClass"))
     if(S3Case)
-        return(inherits(object, class2))
-    if(.identC(cl, class2) || .identC(class2, "ANY"))
-        return(TRUE)
-    ext <- possibleExtends(cl, class2, class1Def, class2Def)
-    if(is.logical(ext))
+        inherits(object, class2)
+    else if(.identC(cl, class2) || .identC(class2, "ANY"))
+        TRUE
+    else if(is.logical(ext <- possibleExtends(cl, class2, class1Def, class2Def)))
         ext
     else if(ext@simple)
         TRUE
     else
-       ext@test(object)
+        ext@test(object)
 }
 
 extends <-
@@ -76,11 +75,11 @@ extends <-
         ext <- classDef1@contains
         if(!identical(maybe, TRUE) && length(ext) > 0)
         {
-            noTest <- sapply(ext, function(obj)identical(body(obj@test), TRUE))
+            noTest <- vapply(ext, function(obj)identical(body(obj@test), TRUE), NA)
             ext <- ext[noTest]
         }
         if(fullInfo) {
-            elNamed(ext, class1) <- TRUE
+            ext[[class1]] <- TRUE
             return(ext)
         }
         else
@@ -172,7 +171,7 @@ setIs <-
     if(!identical(ok, TRUE))
       stop(ok)
     where2 <- .findOrCopyClass(class2, classDef2, where, "subclass")
-    elNamed(classDef2@subclasses, class1) <- obj
+    classDef2@subclasses[[class1]] <- obj
     if(doComplete)
         classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
     ## try to provide a valid prototype for virtual classes
@@ -244,7 +243,7 @@ setIs <-
                                  paste(n2[is.na(match(n2, n1))], collapse = ", "))))
             bad <- character()
             for(what in n2)
-                if(!extends(elNamed(slots1, what), elNamed(slots2, what)))
+                if(!extends(slots1[[what]], slots2[[what]]))
                     bad <- c(bad, what)
             if(length(bad))
                 return(c(.msg(class1, class2), ": ",
@@ -263,7 +262,7 @@ setIs <-
     superclasses <- names(contains)
     if(length(superclasses2) == 0 || length(superclasses) == 0 ||
        all(is.na(match(superclasses2, superclasses))))
-      elNamed(contains, class2) <- value
+      contains[[class2]] <- value
     else {
         sq <- seq_along(superclasses)
         before <- (sq[match(superclasses, superclasses2,0)>0])[[1]]
