@@ -262,6 +262,7 @@ double  Rlog1p(double);
 #define log1pmx		Rf_log1pmx
 #define logspace_add	Rf_logspace_add
 #define logspace_sub	Rf_logspace_sub
+#define logspace_sum	Rf_logspace_sum
 #define pbeta		Rf_pbeta
 #define pbeta_raw	Rf_pbeta_raw
 #define pbinom		Rf_pbinom
@@ -398,7 +399,7 @@ double  log1pexp(double); // <-- ../nmath/plogis.c
 double  lgamma1p(double);
 double  logspace_add(double, double);
 double  logspace_sub(double, double);
-double  logspace_sum(double *, int);
+double  logspace_sum(const double *, int);
 
 	/* Beta Distribution */
 

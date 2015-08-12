@@ -175,6 +175,17 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item The API call \code{logspace_sum} introduced in \R 3.2.0 is
+      now remapped as an entry point to \code{Rf_logspace_sum}, and its
+      first argument has gained a \code{const} qualifier.
+
+      Code using it will need to be reinstalled. (\PR{16470})
+      % no current CRAN packages ....
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
