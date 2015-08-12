@@ -437,7 +437,7 @@ data.frame <-
 	else {
             if(length(namesi)) vnames[[i]] <- namesi
             else if (no.vn[[i]]) {
-                tmpname <- deparse(object[[i]])[1L]
+                tmpname <- deparse(object[[i]], nlines = 1L)[1L]
                 if( substr(tmpname, 1L, 2L) == "I(" ) {
                     ntmpn <- nchar(tmpname, "c")
                     if(substr(tmpname, ntmpn, ntmpn) == ")")
