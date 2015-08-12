@@ -217,7 +217,7 @@ install.packages <-
 	    av <- available.packages(contriburl = contriburl, method = method)
 	    if (missing(repos)) ## Evaluating contriburl may have changed repos, which may be used below
 	      repos <- getOption("repos")
-            if(type != "both") available <- av 
+            if(type != "both") available <- av
         } else av <- available
 	if(NROW(av)) {
             ## avoid duplicate entries in menus, since the latest available
@@ -318,7 +318,7 @@ install.packages <-
            }
         }
     }
-    
+
     ## check if we should infer the type
     if (length(pkgs) == 1L && is.null(repos) && type == "both") {
     	if (  (type2 %in% "win.binary" && grepl("[.]zip$", pkgs))
@@ -799,10 +799,11 @@ install.packages <-
                 file.remove(outfiles)
             }
         }
+        ## Using stderr is the wish of PR#16420
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded source packages are in\n\t%s",
                                sQuote(normalizePath(tmpd, mustWork = FALSE))),
-                "\n", sep = "")
+                "\n", sep = "", file = stderr())
         ## update packages.html on Unix only if .Library was installed into
         libs_used <- unique(update[, 2L])
         if(.Platform$OS.type == "unix" && .Library %in% libs_used) {
