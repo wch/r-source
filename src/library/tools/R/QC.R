@@ -4670,7 +4670,7 @@ function(dir)
                 switch(enc,
                        "latin1" = Sys.setlocale("LC_CTYPE", "en_US"),
                        "utf-8"  =,  # not valid, but used
-                       "UTF-8"  = Sys.setlocale("LC_CTYPE", "en_US.utf8"),
+                       "UTF-8"  = Sys.setlocale("LC_CTYPE", "en_US.UTF-8"),
                        "latin2" = Sys.setlocale("LC_CTYPE", "pl_PL"),
                        "latin9" = Sys.setlocale("LC_CTYPE",
                        "fr_FR.iso885915@euro"),
