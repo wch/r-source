@@ -230,12 +230,12 @@
       (\PR{16481})
 
       \item Coercing a list without names to a data frame is faster if
-      some elements are very long. (\PR{16467})
+      the elements are very long. (\PR{16467})
 
       \item (Unix-only) Under some circumstances piping the output from
       \command{Rscript} or \command{R -f} could result in attempting to
       close the input file twice, possibly crashing the process.
-      (\PR{16500}
+      (\PR{16500})
     }
   }
 }
