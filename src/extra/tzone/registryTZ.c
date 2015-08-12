@@ -398,10 +398,15 @@ static char StandardName[64], DaylightName[64], Olson[64] = "";
 const char *getTZinfo(void)
 {
     if(!Olson[0]) {
-	GetTimeZoneInformation(&tzi);
-	wcstombs(StandardName, tzi.StandardName, 64);
-	wcstombs(DaylightName, tzi.DaylightName, 64);
-	strcpy(Olson, reg2Olson(tzi.StandardName));
+	const char *p = getenv("TZ");
+	if(p) {
+	    strcpy(Olson, p);	    
+	} else {
+	    GetTimeZoneInformation(&tzi);
+	    wcstombs(StandardName, tzi.StandardName, 64);
+	    wcstombs(DaylightName, tzi.DaylightName, 64);
+	    strcpy(Olson, reg2Olson(tzi.StandardName));
+	}
 #ifdef DEBUG
 	printf("names %s, %s\n", StandardName, DaylightName);
 	printf("TZ = %s\n", Olson);
