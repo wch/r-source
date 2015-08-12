@@ -193,9 +193,17 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.2.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item A few more timezone Windows names have been added to the
+      conversion table used to convert these to Olson names.  (Including
+      that from \PR{16503}.)
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{regexpr(pat, x, perl = TRUE)} with Python-style
+      \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
       capture did not work correctly when \code{x} contained \code{NA}
       strings.  (\PR{16484})
 
