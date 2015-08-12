@@ -1612,7 +1612,9 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite
-@dots{}).
+@dots{}@footnote{It seems that because of a security change in El
+Capitan, writing in @file{/usr/bin} is no longer allowed and earlier
+versions of the installer will fail there.}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}@footnote{@samp{https:} access may be
@@ -1664,7 +1666,10 @@ of the OS X FAQ at
 can be viewed from  @Rapp{}'s `Help' menu.
 
 
-You can run command-line @R{} from a Terminal like any other Unix-alike:
+You can run command-line @R{} from a Terminal@footnote{The installer
+currently puts links to @command{R} and @command{Rscript} in
+@file{/usr/bin} so these can be typed as commands.  That may not be the
+case under future OS versions such as El Capitan.} like any other Unix-alike:
 see the next chapter of this manual.  There are some small differences
 which may surprise users of @R{} on other platforms, notably the default
 location of the personal library directory (under @file{~/Library/R},
@@ -1710,7 +1715,9 @@ framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them into the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  This
-does leave some links in @file{/usr/bin}.
+links to @file{R} and @file{Rscript} in @file{/usr/bin} should also be
+removed.@footnote{It is recommended to remove these before upgrading
+in-place to El Capitan as it will be hard to remove them later.}
 
 If you want to get rid of @R{} more completely using a Terminal, simply
 run (prepend @code{sudo} if needed):
