@@ -255,7 +255,15 @@
       if that supports the \code{https} protocol (system installations
       can be expected to do).  So \samp{https://} support can be
       expected except on rather old OSes (an example being OS X
-      \sQuote{Snow Leopard}).
+      \sQuote{Snow Leopard}, where a non-system version of
+      \code{libcurl} can be used).
+
+      (Windows only) The default method for accessing URLs \emph{via}
+      \code{download.file()} and \code{url()} has been changed to be
+      \code{"wininet"} using Windows API calls.  This changes the way
+      proxies need to be set and security settings made: there have been
+      some reports of sites being inaccessible under the new default
+      method (but the previous methods remain available).
     }
   }
 
