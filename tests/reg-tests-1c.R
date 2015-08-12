@@ -896,3 +896,14 @@ stopifnot(identical(z1, z4))
 z <- regexpr("(.)", NA_character_, perl = TRUE)
 stopifnot(is.na(attr(z, "capture.start")), is.na(attr(z, "capture.length")))
 ## Result was random integers in R <= 3.2.2.
+
+
+## PR#14861
+if(.Platform$OS.type == "unix") { # no 'ls /'  on Windows
+    con <- pipe("ls /", open = "rt")
+    data <- readLines(con)
+    z <- close(con)
+    print(z)
+    stopifnot(identical(z, 0L))
+}
+## was NULL in R <= 3.2.2

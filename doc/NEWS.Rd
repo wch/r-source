@@ -195,9 +195,9 @@
 \section{\Rlogo CHANGES IN R 3.2.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item A few more timezone Windows names have been added to the
+      \item Some Windows time zone names have been added to the
       conversion table used to convert these to Olson names.  (Including
-      that from \PR{16503}.)
+      those relating to changes for Russia in Oct 2014, as in \PR{16503}.)
     }
   }
 
@@ -212,7 +212,11 @@
       
       \item \code{model.tables(type = "means")} and hence
       \code{TukeyHSD()} now support \code{"aov"} fits without an
-      intercept term. 
+      intercept term.
+
+      \item \code{close()} now reports the status of a \code{pipe()}
+      connection opened with an explicit \code{open} argument.
+      (\PR{16481})
     }
   }
 }
