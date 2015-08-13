@@ -1315,7 +1315,7 @@ findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits,
 
 
 /*
-   ddVal:
+   ddVal ("dot-dot-value"):
    a function to take a name and determine if it is of the form
    ..x where x is an integer; if so x is returned otherwise 0 is returned
 */
@@ -2948,7 +2948,7 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 
-/* Leaks out via inlining in src/library/tools/src/ */
+/* Leaks out via inlining in ../library/tools/src/ */
 int Rf_envlength(SEXP rho)
 {
     if(IS_USER_DATABASE(rho)) {
@@ -3985,7 +3985,8 @@ void do_write_cache()
 SEXP topenv(SEXP target, SEXP envir) {
     SEXP env = envir;
     while (env != R_EmptyEnv) {
-	if (env == target || env == R_GlobalEnv || env == R_BaseNamespace ||
+	if (env == target || env == R_GlobalEnv ||
+	    env == R_BaseEnv || env == R_BaseNamespace ||
 	    R_IsPackageEnv(env) || R_IsNamespaceEnv(env) ||
 	    existsVarInFrame(env, R_dot_packageName)) {
 	    return env;
@@ -4005,8 +4006,8 @@ SEXP topenv(SEXP target, SEXP envir) {
 SEXP attribute_hidden do_topenv(SEXP call, SEXP op, SEXP args, SEXP rho) {
     checkArity(op, args);
     SEXP envir = CAR(args);
-    SEXP target = CADR(args); // = matchThisEnv
-    if (TYPEOF(envir) != ENVSXP) envir = rho; // target = parent.frame()
+    SEXP target = CADR(args); // = matchThisEnv, typically NULL (R_NilValue)
+    if (TYPEOF(envir) != ENVSXP) envir = rho; // envir = parent.frame()
     if (target != R_NilValue && TYPEOF(target) != ENVSXP)  target = R_NilValue;
     return topenv(target, envir);
 }

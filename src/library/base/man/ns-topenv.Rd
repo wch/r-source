@@ -35,8 +35,10 @@ topenv(new.env()) # also global env
 topenv(environment(ls))# namespace:base
 topenv(environment(lm))# namespace:stats
 \dontshow{
-stopifnot(identical(.GlobalEnv, topenv(.GlobalEnv)),
-          identical(.GlobalEnv, topenv(new.env())),
+stopifnot(identical(.GlobalEnv,        topenv(new.env())),
+          identical(.GlobalEnv,        topenv(.GlobalEnv)),
+          identical(baseenv(),         topenv(baseenv())),
+          identical(.BaseNamespaceEnv, topenv(.BaseNamespaceEnv)),
           identical(topenv(environment(ls)), asNamespace("base")),
           identical(topenv(environment(lm)), asNamespace("stats")))
 }

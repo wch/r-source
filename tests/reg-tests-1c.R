@@ -907,3 +907,10 @@ if(.Platform$OS.type == "unix") { # no 'ls /'  on Windows
     stopifnot(identical(z, 0L))
 }
 ## was NULL in R <= 3.2.2
+
+
+## Sam Steingold:  compiler::enableJIT(3) not working in ~/.Rprofile anymore
+stopifnot(identical(topenv(baseenv()),
+                    baseenv()))
+## accidentally globalenv in R 3.2.[12] only
+

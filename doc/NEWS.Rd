@@ -185,7 +185,7 @@
       % no current CRAN packages ....
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
@@ -220,7 +220,7 @@
 
       \item The description of dataset \code{ToothGrowth} has been
       improved/corrected.  (\PR{15953})
-      
+
       \item \code{model.tables(type = "means")} and hence
       \code{TukeyHSD()} now support \code{"aov"} fits without an
       intercept term.
@@ -236,6 +236,10 @@
       \command{Rscript} or \command{R -f} could result in attempting to
       close the input file twice, possibly crashing the process.
       (\PR{16500})
+
+      \item \code{topenv(baseenv())} returns \code{baseenv()} again as
+      in \R 3.1.0 and earlier.  This also fixes \code{compilerJIT(3)}
+      when used in \file{.Rprofile}.
     }
   }
 }
