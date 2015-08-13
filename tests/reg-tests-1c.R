@@ -889,7 +889,7 @@ stopifnot(identical(z1, z3))
 z4 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
                  colClasses = c(c = "integer", b = "character", a = "numeric"))
 stopifnot(identical(z1, z4))
-## z2 and z4 used positional matching (and failed) in R < 3.2.2.
+## z2 and z4 used positional matching (and failed) in R < 3.3.0.
 
 
 ## PR#16484
