@@ -46,6 +46,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "Germany (Münster)",Germany,Münster,http://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de
 Greece,Greece,Crete,http://cran.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr
 Hungary,Hungary,Budapest,http://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu
+"Iceland [https]",Iceland,Reykjavik,https://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is
 Iceland,Iceland,Reykjavik,http://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is
 India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
 "Indonesia (Jakarta)",Indonesia,Jakarta,http://cran.repo.bppt.go.id/,"Agency for The Application and Assessment of Technology","Imam Cartealy <icx # biotek.bppt.go.id>",1,id,"maintainer_address_bounces"
