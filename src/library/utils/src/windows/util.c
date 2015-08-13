@@ -31,6 +31,7 @@
 
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 
+// keep in step with src/gnuwin32/extra.c
 SEXP winver(void)
 {
     char ver[256];
@@ -55,15 +56,16 @@ SEXP winver(void)
 		     (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
 		     LOWORD(osvi.dwBuildNumber));
 	} else if(osvi.dwMajorVersion == 6) {
+	    // see See https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451%28v=vs.85%29.aspx for the >= here.
 	    if(osvi.wProductType == VER_NT_WORKSTATION) {
 		if(osvi.dwMinorVersion == 0) desc = "Vista";
 		else if(osvi.dwMinorVersion == 1) desc = "7";
-		else if(osvi.dwMinorVersion == 2) desc = "8";
+		else if(osvi.dwMinorVersion == 2) desc = ">= 8";
 		else desc = "> 8";
 	    } else {
 		if(osvi.dwMinorVersion == 0) desc = "Server 2008";
 		else if(osvi.dwMinorVersion == 1) desc = "Server 2008 R2";
-		else if(osvi.dwMinorVersion == 2) desc = "Server 2012";
+		else if(osvi.dwMinorVersion == 2) desc = "Server >= 2012";
 		else desc = "Server > 2012";
 	    }
 	} else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
