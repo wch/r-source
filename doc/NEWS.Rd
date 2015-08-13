@@ -223,7 +223,7 @@
 
       \item \code{model.tables(type = "means")} and hence
       \code{TukeyHSD()} now support \code{"aov"} fits without an
-      intercept term.
+      intercept term.  (\PR{16437})
 
       \item \code{close()} now reports the status of a \code{pipe()}
       connection opened with an explicit \code{open} argument.
@@ -236,6 +236,9 @@
       \command{Rscript} or \command{R -f} could result in attempting to
       close the input file twice, possibly crashing the process.
       (\PR{16500})
+
+      \item (Windows) \code{Sys.info()} was out of step with
+      \code{win.version()} and did not report Windows 8.
 
       \item \code{topenv(baseenv())} returns \code{baseenv()} again as
       in \R 3.1.0 and earlier.  This also fixes \code{compilerJIT(3)}
