@@ -148,7 +148,7 @@ the patched version of the current release being available via
 Subversion.)
 
 The tarballs are available from
-@uref{ftp://ftp.stat.math.ethz.ch/@/pub/@/Software/R/}.  Download
+@uref{https://stat.ethz.ch/R/daily}.  Download
 @file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
 versions) and unpack as described in the previous section.  They are
 built in exactly the same way as distributions of R releases.
