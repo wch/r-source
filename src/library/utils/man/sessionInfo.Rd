@@ -50,9 +50,9 @@ sessionInfo(package = NULL)
 
   How OSes identify themselves and their versions can be arcane: where
   possible \code{running} uses a human-readable form.
-#ifdef win32
-  In particular Windows may report the minimum-compatible version rather
-  than the actual one, and Windows 8.1 and 10 report themselves as 8.
+#ifdef windows
+  Windows may report unexpected versions: see the help for
+  \code{\link{win.version}}.
 #endif
 }
 \seealso{\code{\link{R.version}}

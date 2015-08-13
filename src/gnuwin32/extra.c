@@ -192,8 +192,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PGNSI pGNSI;
 	SYSTEM_INFO si;
 	if(osvi.dwMajorVersion == 6) {
+	    char *desc = "";
 	    if(osvi.wProductType == VER_NT_WORKSTATION) {
-		char *desc = "";
 		if(osvi.dwMinorVersion == 0) desc = "Vista";
 		else if(osvi.dwMinorVersion == 1) desc = "7";
 		else if(osvi.dwMinorVersion == 2) desc = ">= 8";

@@ -60,7 +60,7 @@ Sys.info()
   portable: the POSIX command \code{system("id")} is much more portable
   on Unix-alikes, provided only the POSIX options are used (and not the
   many BSD and GNU extensions).
-#ifdef win32
+#ifdef windows
 
   Windows may report unexpected versions: see the help for
   \code{\link{win.version}}.
