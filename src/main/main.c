@@ -811,6 +811,7 @@ void setup_Rmainloop(void)
     R_Toplevel.nextcontext = NULL;
     R_Toplevel.callflag = CTXT_TOPLEVEL;
     R_Toplevel.cstacktop = 0;
+    R_Toplevel.gcenabled = R_GCEnabled;
     R_Toplevel.promargs = R_NilValue;
     R_Toplevel.callfun = R_NilValue;
     R_Toplevel.call = R_NilValue;
