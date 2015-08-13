@@ -392,7 +392,7 @@ clean:
 	  version.tex version.texi
 	-@rm -f stamp-*
 distclean: clean
-	-@rm -f *.epub *.mobi
+	-@rm -f *.epub *.mobi rw-FAQ rw-FAQ.html rw-FAQ.pdf
 	-@rm -f Makefile
 maintainer-clean: distclean
 
@@ -447,3 +447,27 @@ html-non-svn: ../html/resources.html
 	  $(MAKEINFO) --html --no-split --no-headers \
 	    --css-include=$(top_srcdir)/doc/html/R.css $(srcdir)/resources.texi -o $@; \
 	fi
+
+## Added here to allow testing rw-FAQ changes on Unix.
+Windows-FAQ: rw-FAQ rw-FAQ.html rw-FAQ.pdf
+
+RVER = `cut -d' ' -f1 $(top_srcdir)/VERSION | $(SED) -n 1p`
+RPREFIX = `../../bin$(R_ARCH)/Rscript $(top_srcdir)/src/gnuwin32/fixed/rwver.R`
+SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
+
+rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION $(srcdir)/Rman.css
+	@echo "making rw-FAQ.html"
+	@$(SED) $(SEDVER) $< | \
+	  $(MAKEINFO) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ 
+
+rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
+	@echo "making rw-FAQ"
+	@$(SED) $(SEDVER) $< | \
+	  $(MAKEINFO) --no-headers --number-sections -o $@
+
+rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
+	@$(SED) $(SEDVER) $< > tmp.texi
+	@$(TEXI2DVI) --pdf tmp.texi
+	@$(TEXI2DVI) --pdf tmp.texi
+	@mv tmp.pdf $@
+	@rm tmp.*

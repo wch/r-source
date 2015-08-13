@@ -36518,8 +36518,8 @@ done
 
 
 if test "x${have_libcurl}" = "xyes"; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl version >= 7.28.0" >&5
-$as_echo_n "checking if libcurl version >= 7.28.0... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.28.0" >&5
+$as_echo_n "checking if libcurl is version 7 and >= 7.28.0... " >&6; }
 if ${r_cv_have_curl728+:} false; then :
   $as_echo_n "(cached) " >&6
 else

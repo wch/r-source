@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/winextras.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winextras}
@@ -20,8 +20,8 @@ win.version()
 \note{
 This function is only available on Microsoft Windows.  
     
-The result is based on the Windows
-\code{GetVersionEx} API function which reports 
-erroneous information in Windows 8.1 and later.
+The result is based on the Windows \code{GetVersionEx} API function
+which reports erroneous information in Windows 8.1 and later, so we
+report as \code{>= 8} for versions 8.1 and 10.
 }
 \keyword{utilities}

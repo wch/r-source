@@ -128,7 +128,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{https://cran.r-project.org/@/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win.exe} of about 60MB.
+installer @samp{@RWVER@-win.exe} of about 65MB.
 
 There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of
@@ -151,8 +151,8 @@ We only test on versions of Windows currently supported by Microsoft,
 mainly 64-bit Windows 7 and Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A installation takes
-75--110MB of disk space (up to 150MB if ICU was included in the build)
+except perhaps for some network-mounted systems).  An installation takes
+up to 150MB of disk space.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -1851,7 +1851,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2015-08-10    
+@set LASTEDIT 2015-08-13    
 @ifhtml
 @html
 <hr WIDTH="100%">

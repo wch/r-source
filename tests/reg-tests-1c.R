@@ -889,7 +889,7 @@ stopifnot(identical(z1, z3))
 z4 <- read.table(textConnection(kkk), sep = "\t", header = TRUE,
                  colClasses = c(c = "integer", b = "character", a = "numeric"))
 stopifnot(identical(z1, z4))
-## z2 and z4 used positional matching (and failed) in R < 3.2.2.
+## z2 and z4 used positional matching (and failed) in R < 3.3.0.
 
 
 ## PR#16484
@@ -907,3 +907,10 @@ if(.Platform$OS.type == "unix") { # no 'ls /'  on Windows
     stopifnot(identical(z, 0L))
 }
 ## was NULL in R <= 3.2.2
+
+
+## Sam Steingold:  compiler::enableJIT(3) not working in ~/.Rprofile anymore
+stopifnot(identical(topenv(baseenv()),
+                    baseenv()))
+## accidentally globalenv in R 3.2.[12] only
+
