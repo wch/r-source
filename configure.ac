@@ -2343,7 +2343,7 @@ int main()
 {
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
-  exit(1);
+  exit(0);
 #elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
   exit(0);
 #else
