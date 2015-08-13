@@ -276,6 +276,17 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	}
 	break;
     case GE_CopyState:
+        {
+            /* called from GEcopyDisplayList */
+            pGEDevDesc curdd = GEcurrentDevice();
+            /* See GE_RestoreSnapshotState for explanation of this dirtying */
+            GEdirtyDevice(curdd);
+            dirtyGridDevice(curdd);
+            setGridStateElement(curdd, GSS_DL, 
+                                gridStateElement(dd, GSS_DL));
+            setGridStateElement(curdd, GSS_DLINDEX, 
+                                gridStateElement(dd, GSS_DLINDEX));
+        }
 	break;
     case GE_CheckPlot:
 	PROTECT(valid = allocVector(LGLSXP, 1));
@@ -283,8 +294,31 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	UNPROTECT(1);
 	result = valid;
     case GE_SaveSnapshotState:
+        /*
+         * Save the current 'grid' DL.
+         */
+        PROTECT(result = allocVector(VECSXP, 3));
+        SET_VECTOR_ELT(result, 0, gridStateElement(dd, GSS_DL));
+        SET_VECTOR_ELT(result, 1, gridStateElement(dd, GSS_DLINDEX));
+        UNPROTECT(1);
 	break;
     case GE_RestoreSnapshotState:
+        /* 
+         * Dirty the device (in case this is first drawing on device)
+         * to stop dirtyGridDevice() from starting new page
+         * (because this GE_RestoreSnapshotState will be followed by 
+         *  GE_RestoreState, which will start a new page).
+         * Dirty the device, in a 'grid' sense, (in case this is first
+         * 'grid' drawing on device) to stop first element on 'grid' DL
+         * (which will be a call to L_gridDirty()) from resetting the
+         * 'grid' DL.
+         * Restore the saved 'grid' DL.
+         * (the 'grid' vpTree will be recreated by replay of 'grid' DL)
+         */
+        GEdirtyDevice(dd);
+        dirtyGridDevice(dd);
+        setGridStateElement(dd, GSS_DL, VECTOR_ELT(data, 0));
+        setGridStateElement(dd, GSS_DLINDEX, VECTOR_ELT(data, 1));
 	break;
     case GE_ScalePS:
 	/*

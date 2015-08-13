@@ -611,6 +611,8 @@ void getDeviceSize(pGEDevDesc dd, double *devWidthCM, double *devHeightCM);
 /* This is, confusingly, a wrapper for GEcurrentDevice */
 pGEDevDesc getDevice();
 
+void dirtyGridDevice(pGEDevDesc dd);
+
 void getViewportTransform(SEXP currentvp, 
 			  pGEDevDesc dd, 
 			  double *vpWidthCM, double *vpHeightCM,
