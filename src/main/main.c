@@ -824,10 +824,15 @@ void setup_Rmainloop(void)
     R_Toplevel.intstack = R_BCIntStackTop;
 #endif
     R_Toplevel.cend = NULL;
+    R_Toplevel.cenddata = NULL;
     R_Toplevel.intsusp = FALSE;
     R_Toplevel.handlerstack = R_HandlerStack;
     R_Toplevel.restartstack = R_RestartStack;
     R_Toplevel.srcref = R_NilValue;
+    R_Toplevel.prstack = NULL;
+    R_Toplevel.returnValue = NULL;
+    R_Toplevel.evaldepth = 0;
+    R_Toplevel.browserfinish = 0;
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     R_ExitContext = NULL;
 
