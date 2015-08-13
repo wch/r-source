@@ -58,9 +58,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   designs.
 
   If \code{which} specifies non-factor terms these will be dropped with
-  a warning: if no terms are left this is a an error.
-
-  Only models with intercepts are supported.
+  a warning: if no terms are left this is an error.
 }
 \value{
   A list of class \code{c("multicomp", "TukeyHSD")},
