@@ -2,7 +2,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
+<link rel="stylesheet" type="text/css" href="https://cran.r-project.org/R.css">
 <title>Download the R-@FULLVERSION@ build for Windows.  The R-project for statistical computing.</title>
 <style>
 .download {
@@ -59,7 +59,7 @@ in this version against the official release before reporting them. </p>
 </ul>
   
 <p>Please see the <a
-href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
+href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
 general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 
