@@ -7,21 +7,25 @@
 \alias{win.version}
 \title{Get Windows Version}
 \description{
-Get the self-reported Windows version number.  
+  Get the self-reported Windows version number.  
 }
 \usage{
 win.version()
 }
 \details{
   \code{win.version} is an auxiliary function for
-  \code{\link{bug.report}} which returns a character string describing
-  the version of Windows in use. 
+  \code{\link{sessionInfo}} and \code{\link{bug.report}}.
+}
+\value{
+  A character string describing the version of Windows reported to be in use. 
 }
 \note{
-This function is only available on Microsoft Windows.  
+  This function is only available on Microsoft Windows.  
     
-The result is based on the Windows \code{GetVersionEx} API function
-which may report later versions as Windows 8, so 8 and later may be
-reported as \code{>= 8}.
+  The result is based on the Windows \code{GetVersionEx} API function,
+  which for recent versions of Windows reports the compatibility version,
+  and not necessarily the actual version (hence 8.1 and 10 may be reported
+  as 8). If the API call reports 8, this function returns
+  \code{>= 8}.
 }
 \keyword{utilities}
