@@ -26,7 +26,10 @@
       \samp{https:} URL can be accessed.  For example, server and client
       have to successfully negotiate a cryptographic protocol (TLS/SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
-      the available certificates.
+      the available certificates.  Different access methods may allow
+      different protocols or use certificate bundles: we have experienced a
+      \samp{https:} CRAN mirror which can be accessed by one browser but
+      not another nor by \code{download.file()} on the same Linux machine.
     }
   }
   \subsection{NEW FEATURES}{
