@@ -53,7 +53,7 @@ SEXP winver(void)
 	SYSTEM_INFO si;
 	// future-proof
 	snprintf(ver, 256, "%d.%d",
-		 (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion)
+		 (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion);
 	if(osvi.dwMajorVersion == 10) {
 	    if(osvi.wProductType == VER_NT_WORKSTATION) desc = "10";
 	    else desc = "Server";
