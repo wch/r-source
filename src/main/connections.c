@@ -3371,6 +3371,8 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     if(i == R_ErrorCon)
 	error(_("cannot close 'message' sink connection"));
     Rconnection con = getConnection(i);
+    // close to get the status set for pipes (PR#16481)
+    if(con->isopen && streql(con->class, "pipe")) con->close(con);
     int status = con->status;
     con_close1(con);
     free(Connections[i]);
