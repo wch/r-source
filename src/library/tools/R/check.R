@@ -1506,11 +1506,16 @@ setRlibs <-
                                 paste(utils::tail(out3, -pos),
                                       collapse = " "))
                     miss <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
-                    if(length(miss))
+                    if(length(miss)) {
+                        msg3 <- if(length(grep("^importFrom\\(\"methods\"",
+                                               miss))) {
+                            strwrap("to your NAMESPACE (and ensure that your DESCRIPTION Imports field contains 'methods').")
+                        } else "to your NAMESPACE."
                         out3 <- c(out3,
                                   c("Consider adding",
                                     paste0("  ", miss),
-                                    "to your NAMESPACE."))
+                                    msg3))
+                    }
                 }
             } else
                 out3 <-  R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
