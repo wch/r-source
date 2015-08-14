@@ -543,17 +543,7 @@ function(dir, all = TRUE, full = FALSE)
             "OK")) {
         writeLines(c("", "Check results details:"))
         details <- check_packages_in_dir_details(logs = logs)
-        flags <- details$Flags
-        out <- cbind(sprintf("Package: %s %s",
-                             details$Package, details$Version),
-                     ifelse(nzchar(flags),
-                            sprintf("Flags: %s\n", flags),
-                            ""),
-                     sprintf("Check: %s, Result: %s",
-                             details$Check, details$Status),
-                     c(gsub("\n", "\n  ", details$Output,
-                            perl = TRUE, useBytes = TRUE)))
-        cat(t(out), sep = c("\n", "", "\n  ", "\n\n"))
+        writeLines(paste(format(details), collapse = "\n\n"))
         invisible(TRUE)
     } else {
         invisible(FALSE)
@@ -885,7 +875,36 @@ function(dir, logs = NULL, drop_ok = TRUE)
     db$Check <- as.factor(db$Check)
     db$Status <- as.factor(db$Status)
 
+    class(db) <- c("check_details", "data.frame")
     db
+}
+
+format.check_details <-
+function(x, ...)
+{
+    flags <- x$Flags
+    flavor <- x$Flavor
+    paste(sprintf("Package: %s %s\n",
+                  x$Package, x$Version),
+          ifelse(nzchar(flavor),
+                 sprintf("Flavor: %s\n", flavor),
+                 ""),
+          ifelse(nzchar(flags),
+                 sprintf("Flags: %s\n", flags),
+                 ""),
+          sprintf("Check: %s, Result: %s\n",
+                  x$Check, x$Status),
+          sprintf("  %s",
+                  gsub("\n", "\n  ", x$Output,
+                       perl = TRUE, useBytes = TRUE)),
+          sep = "")
+}
+
+print.check_details <-
+function(x, ...)    
+{
+    writeLines(paste(format(x, ...), collapse = "\n\n"))
+    invisible(x)
 }
 
 ### ** check_packages_in_dir_changes
