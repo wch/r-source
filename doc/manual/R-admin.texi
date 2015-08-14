@@ -4489,6 +4489,17 @@ the installed @command{g++}.  Using the runtime from the @code{libc++}
 project (@url{http://libcxx.llvm.org/}) has also been tested: for some
 @R{} packages only the variant using @code{libcxxabi} was successful.
 
+Most builds of @command{clang} have no OpenMP support.  For builds of
+version 3.7 or later which do, you will probably need to add
+
+@example
+SHLIB_OPENMP_CFLAGS=-fopenmp=libomp
+SHLIB_OPENMP_CXXFLAGS=-fopenmp=libomp
+@end example
+
+@noindent
+in @file{config.site}.
+
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
 
