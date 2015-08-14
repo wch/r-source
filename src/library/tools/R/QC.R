@@ -4323,20 +4323,24 @@ function(x, ...)
     ## not sQuote as we have mucked about with locales.
     iconv0 <- function(x, ...) paste0("'", iconv(x, ...), "'")
 
+    suppress_notes <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_",
+                                         "FALSE"))
+
     c(character(),
-      if(n <- x$latin1) {
+      if((n <- x$latin1) && !suppress_notes) {
           sprintf(
                   ngettext(n,
                    "Note: found %d marked Latin-1 string",
                    "Note: found %d marked Latin-1 strings"), n)
       },
-      if(n <- x$utf8) {
+      if((n <- x$utf8) && !suppress_notes) {
           sprintf(
                   ngettext(n,
                            "Note: found %d marked UTF-8 string",
                            "Note: found %d marked UTF-8 strings"), n)
       },
-      if(n <- x$bytes) {
+      if((n <- x$bytes) && !suppress_notes) {
           sprintf(
                   ngettext(n,
                            "Note: found %d string marked as \"bytes\"",
@@ -5563,6 +5567,10 @@ function(x, ...)
         identical(Sys.getenv("_R_CHECK_PACKAGES_USED_CRAN_INCOMING_NOTES_",
                              "FALSE"),
                   "TRUE")
+    ignore_unused_imports <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_",
+                                         "FALSE"))
+
     c(character(),
       if(length(xx <- x$imports)) {
           if(length(xx) > 1L) {
@@ -5612,7 +5620,7 @@ function(x, ...)
           }
       },
 
-      if(length(xx <- x$unused_imports)) {
+      if(length(xx <- x$unused_imports) && !ignore_unused_imports) {
           msg <- "  All declared Imports should be used."
           if(length(xx) > 1L) {
               c(gettext("Namespaces in Imports field not imported from:"),
