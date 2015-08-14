@@ -2413,12 +2413,11 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *str = translateChar(STRING_ELT(rfun, 0));
     if (streql(str, ".Internal")) error("illegal usage");
     PROTECT(rfun = install(str));
-    PROTECT(evargs = duplicate(CDR(args)));
+    PROTECT(evargs = shallow_duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest)) {
-	PROTECT(tmp = eval(CAR(rest), rho));
-	if (MAYBE_REFERENCED(tmp)) tmp = duplicate(tmp);
+	tmp = eval(CAR(rest), rho);
+	if (NAMED(tmp)) MARK_NOT_MUTABLE(tmp);
 	SETCAR(rest, tmp);
-	UNPROTECT(1);
     }
     rfun = LCONS(rfun, evargs);
     UNPROTECT(3);
