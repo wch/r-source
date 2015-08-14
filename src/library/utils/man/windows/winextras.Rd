@@ -21,7 +21,7 @@ win.version()
 This function is only available on Microsoft Windows.  
     
 The result is based on the Windows \code{GetVersionEx} API function
-which reports erroneous information in Windows 8.1 and later, so we
-report as \code{>= 8} for versions 8.1 and 10.
+which may report later versions as Windows 8, so 8 and later may be
+reported as \code{>= 8}.
 }
 \keyword{utilities}

@@ -45,27 +45,31 @@ SEXP winver(void)
        for ways to get more info.
        Pre-NT versions are all 4.x, so no need to separate test.
        See also http://msdn.microsoft.com/en-us/library/ms724832.aspx
+       https://msdn.microsoft.com/en-us/library/windows/desktop/ms724833%28v=vs.85%29.aspx
        for version number naming.
     */
     if(osvi.dwMajorVersion >= 5) {
 	char *desc = "", *type="";
 	SYSTEM_INFO si;
-	if(osvi.dwMajorVersion > 6 
-	   || (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 2) ) { /* future proof, but see also below */
-	    snprintf(ver, 256, "Windows %d.%d (build %d)",
-		     (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
-		     LOWORD(osvi.dwBuildNumber));
+	// future-proof
+	snprintf(ver, 256, "%d.%d",
+		 (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion)
+	if(osvi.dwMajorVersion == 10) {
+	    if(osvi.wProductType == VER_NT_WORKSTATION) desc = "10";
+	    else desc = "Server";
 	} else if(osvi.dwMajorVersion == 6) {
 	    // see See https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451%28v=vs.85%29.aspx for the >= here.
 	    if(osvi.wProductType == VER_NT_WORKSTATION) {
 		if(osvi.dwMinorVersion == 0) desc = "Vista";
 		else if(osvi.dwMinorVersion == 1) desc = "7";
 		else if(osvi.dwMinorVersion == 2) desc = ">= 8";
-		else desc = "> 8";
+		else if(osvi.dwMinorVersion == 3) desc = "8.1";
+		else desc = "> 8.1";
 	    } else {
 		if(osvi.dwMinorVersion == 0) desc = "Server 2008";
 		else if(osvi.dwMinorVersion == 1) desc = "Server 2008 R2";
 		else if(osvi.dwMinorVersion == 2) desc = "Server >= 2012";
+		else if(osvi.dwMinorVersion == 3) desc = "Server 2012 R2";
 		else desc = "Server > 2012";
 	    }
 	} else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
