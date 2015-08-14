@@ -5,6 +5,42 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.2.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item A few more timezone Windows names have been added to the
+      conversion table used to convert these to Olson names.  (Including
+      that from \PR{16503}.)
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
+      capture did not work correctly when \code{x} contained \code{NA}
+      strings.  (\PR{16484})
+
+      \item The description of dataset \code{ToothGrowth} has been
+      improved/corrected.  (\PR{15953})
+      
+      \item \code{model.tables(type = "means")} and hence
+      \code{TukeyHSD()} now support \code{"aov"} fits without an
+      intercept term.  (\PR{16437})
+
+      \item Coercing a list without names to a data frame is faster if
+      the elements are very long. (\PR{16467})
+
+      \item (Unix-only) Under some circumstances piping the output from
+      \command{Rscript} or \command{R -f} could result in attempting to
+      close the input file twice, possibly crashing the process.
+      (\PR{16500})
+
+      \item (Windows) \code{Sys.info()} was out of step with
+      \code{win.version()} and did not report Windows 8.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.2.2}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -14,7 +50,7 @@
       packages can be installed from repositories which offer
       \samp{https://} URLs, and those listed by \code{setRepositories()}
       now do so (for some of their mirrors).
-      
+
       Support for \samp{https://} URLs is available on Windows, and on
       other platforms if support for \code{libcurl} was compiled in and
       if that supports the \code{https} protocol (system installations
@@ -31,7 +67,7 @@
       method (but the previous methods remain available).
     }
   }
-  
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{cmdscale()} gets new option \code{list.} for increased
@@ -44,7 +80,7 @@
       \item (Non-Windows only) \code{download.file()} with default
       \code{method = "auto"} now chooses \code{"libcurl"} if that is
       available and a \samp{https://} or \samp{ftps://} URL is used.
-      
+
       \item (Windows only) \code{setInternet2(TRUE)} is now the default.
       The command-line option \command{--internet2} and environment
       variable \env{R_WIN_INTERNET2} are now ignored.
