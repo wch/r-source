@@ -32,7 +32,7 @@ topenv(envir = parent.frame(),
 }
 \seealso{
   \code{\link{environment}}, notably \code{parent.env()} on
-  \dQuote{enclosing enviroments};
+  \dQuote{enclosing environments};
   \code{\link{loadNamespace}} for more on namespaces.
 }
 \examples{

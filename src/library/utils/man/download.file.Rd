@@ -225,7 +225,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \file{curl-ca-bundle.crt}.  (This is normally done for a binary
   installation of \R, which installs
   \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
-  \env{CURL_CA_BUNDLE} to point to it if that enironment variable is not
+  \env{CURL_CA_BUNDLE} to point to it if that environment variable is not
   already set.)  For an updated certificate bundle, see
   \url{http://curl.haxx.se/docs/sslcerts.html}.
   Currently one can download a copy from
