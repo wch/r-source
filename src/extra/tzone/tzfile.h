@@ -24,7 +24,7 @@
 #endif /* !defined TZDIR */
 
 #ifndef TZDEFAULT
-#define TZDEFAULT	"localtime"
+#define TZDEFAULT	"UTC" // needs to be a valid timezone, PR#16503
 #endif /* !defined TZDEFAULT */
 
 /* We don't ship posixrules, which is usually a link to a USA timezeone.
