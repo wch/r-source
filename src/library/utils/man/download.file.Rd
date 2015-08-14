@@ -231,6 +231,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Currently one can download a copy from
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
+  
+  Note that the root certificates used by \R may or may not be the same
+  as used in a browser, and indeed different browsers may use different
+  certificate bundles (there is typically a build option to choose
+  either their own or the system ones).
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
