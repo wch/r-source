@@ -3325,7 +3325,7 @@ package should be @emph{exported} to make them available to package
 users, and which variables should be @emph{imported} from other
 packages.
 
-The mechanism for specifying a namespace for a package is to place a
+The namespace for a package is specified by the
 @file{NAMESPACE} file in the top level package directory.  This file
 contains @emph{namespace directives} describing the imports and exports
 of the namespace.  Additional directives register any shared objects to
@@ -3432,7 +3432,8 @@ importFrom(foo, f, g)
 @noindent
 specifies that the exported variables @code{f} and @code{g} of the
 package @pkg{foo} are to be imported.  Using @code{importFrom}
-selectively rather than @code{import} is good practice.
+selectively rather than @code{import} is good practice and recommended
+notably when importing from packages with more than a dozen exports.
 
 It is possible to export variables from a namespace which it has
 imported from other namespaces: this has to be done explicitly and not
