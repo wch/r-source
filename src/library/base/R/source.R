@@ -122,10 +122,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 
     if (chdir){
         if(is.character(ofile)) {
-            isURL <- length(grep("^(ftp|http|file)://", ofile)) > 0L
-            if(isURL)
+	    if(grepl("^(ftp|http|file)://", ofile)) ## is URL
                 warning("'chdir = TRUE' makes no sense for a URL")
-            if(!isURL && (path <- dirname(ofile)) != ".") {
+	    else if((path <- dirname(ofile)) != ".") {
                 owd <- getwd()
                 if(is.null(owd))
                     stop("cannot 'chdir' as current directory is unknown")
@@ -173,7 +172,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	    if (length(dep)) {
 			leading <- if(tail) length(dep) else srcref[1L]-lastshown
 			lastshown <- srcref[3L]
-			while (length(dep) && length(grep("^[[:blank:]]*$", dep[1L]))) {
+			while (length(dep) && grepl("^[[:blank:]]*$", dep[1L])) {
 			    dep <- dep[-1L]
 			    leading <- leading - 1L
 			}
@@ -200,7 +199,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		do.trunc <- nd > max.deparse.length
 		dep <- substr(dep, 1L, if (do.trunc) max.deparse.length else nd)
 		cat("\n", dep, if (do.trunc)
-		    paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
+		    paste(if (grepl(sd, dep) && grepl(oddsd, dep))
 			  " ...\" ..." else " ....", "[TRUNCATED] "),
 		    "\n", sep = "")
 	    }
