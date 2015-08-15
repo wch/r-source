@@ -2440,8 +2440,8 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
        zero-length string check used to be here but install gives
        better error message.
      */
-    if( !(isString(fun) && length(fun) == 1) && !isFunction(fun) )
-	error(_("'what' must be a character string or a function"));
+    if(!(isFunction(fun) || (isString(fun) && length(fun) == 1)))
+	error(_("'what' must be a function or character string"));
 
 #ifdef __maybe_in_the_future__
     if (!isNull(args) && !isVectorList(args))
