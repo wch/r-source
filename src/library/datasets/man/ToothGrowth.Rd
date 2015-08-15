@@ -1,5 +1,5 @@
 % File src/library/datasets/man/ToothGrowth.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
@@ -36,7 +36,7 @@
   Crampton, E. W. (1947)
   The growth of the odontoblast of the incisor teeth as a criterion of
   vitamin C intake of the guinea pig. \emph{The Journal of Nutrition}
-  \bold{33(5)}: 491–-504.
+  \bold{33(5)}: 491--504.
   \url{http://jn.nutrition.org/content/33/5/491.full.pdf}
 }
 \examples{
