@@ -2967,89 +2967,13 @@ setRlibs <-
             ## packages, or just base?
             ## FIXME: should we do this for multiple sub-archs?
 
-            checkingLog(Log, "running R code from vignettes")
-            vigns <- pkgVignettes(dir = pkgdir)
-            res <- character()
-            cat("\n")
-            def_enc <- desc["Encoding"]
-            if( (is.na(def_enc))) def_enc <- ""
-            t1 <- proc.time()
-            for (i in seq_along(vigns$docs)) {
-                file <- vigns$docs[i]
-                name <- vigns$names[i]
-                enc <- vigns$encodings[i]
-                cat("  ", sQuote(basename(file)),
-                    if(nzchar(enc)) paste("using", sQuote(enc)),
-                    "...")
-                Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
-                               basename(file), "', '", vigns$dir, "'",
-                               if (nzchar(enc))
-                                   paste0(", encoding = '", enc, "'"),
-                               ", pkgdir='", vigns$pkgdir, "')")
-                outfile <- paste0(basename(file), ".log")
-                t1b <- proc.time()
-                status <- R_runR(Rcmd,
-                                 if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
-                                 ## add timing as footer, as BATCH does
-                                 env = c(jitstr, "R_BATCH=1234", elibs,
-                                 "_R_CHECK_INTERNALS2_=1"),
-                                 stdout = outfile, stderr = outfile)
-                t2b <- proc.time()
-                out <- readLines(outfile, warn = FALSE)
-                savefile <- file.path(dirname(file), paste0(name, ".Rout.save"))
-                if(length(grep("^  When (running|tangling|sourcing)", out,
-                               useBytes = TRUE))) {
-                    cat(" failed\n")
-                    res <- c(res,
-                             paste("when running code in", sQuote(basename(file))),
-                             "  ...",
-                             utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
-                } else if(status || ! " *** Run successfully completed ***" %in% out) {
-                    ## (Need not be the final line if running under valgrind)
-                    cat(" failed to complete the test\n")
-                    out <- c(out, "", "... incomplete output.  Crash?")
-                    res <- c(res,
-                             paste("when running code in", sQuote(basename(file))),
-                             "  ...",
-                             utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
-                } else if (file.exists(savefile)) {
-                    cmd <- paste0("invisible(tools::Rdiff('",
-                                 outfile, "', '", savefile, "',TRUE,TRUE))")
-                    out2 <- R_runR(cmd, R_opts2)
-                    if(length(out2)) {
-                        print_time(t1b, t2b, NULL)
-                        cat("\ndifferences from ", sQuote(basename(savefile)),
-                            "\n", sep = "")
-                        writeLines(c(out2, ""))
-                    } else {
-                        print_time(t1b, t2b, NULL)
-                        cat(" OK\n")
-                        if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
-                            unlink(outfile)
-                    }
-                } else {
-                    print_time(t1b, t2b, NULL)
-                    cat(" OK\n")
-                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
-                        unlink(outfile)
-                }
-            }
-            t2 <- proc.time()
-            print_time(t1, t2, Log)
-            if (R_check_suppress_RandR_message)
-                res <- grep('^Xlib: *extension "RANDR" missing on display', res,
-                            invert = TRUE, value = TRUE, useBytes = TRUE)
-            if(length(res)) {
-                if(length(grep("there is no package called", res,
-                               useBytes = TRUE))) {
-                    warningLog(Log, "Errors in running code in vignettes:")
-                    printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
-                } else {
-                    errorLog(Log, "Errors in running code in vignettes:")
-                    printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
-		    maybe_exit(1L)
-                }
-            } else resultLog(Log, "OK")
+            ## Re-building the vignette outputs also runs the code, so
+            ## doing so as well creates no additional value unless the
+            ## results are compared against saved results (which could
+            ## perhaps also be integrated into buildVignettes().
+            ## Hence, when re-building, skip running the code when there
+            ## are no saved results.
+            ## Could make this controllable via some env var ...
 
             build_vignettes <-
                 parse_description_field(desc, "BuildVignettes", TRUE)
@@ -3058,7 +2982,102 @@ setRlibs <-
                 info <- analyze_license(desc["License"])
                 build_vignettes <- info$is_verified
             }
-            if (do_build_vignettes && build_vignettes) {
+            do_build_vignettes <- do_build_vignettes && build_vignettes
+
+            vigns <- pkgVignettes(dir = pkgdir)
+            savefiles <- 
+                file.path(dirname(vigns$docs),
+                          paste0(vigns$names, ".Rout.save"))
+
+            if(!do_build_vignettes || any(file.exists(savefiles))) {
+                checkingLog(Log, "running R code from vignettes")
+                res <- character()
+                cat("\n")
+                def_enc <- desc["Encoding"]
+                if( (is.na(def_enc))) def_enc <- ""
+                t1 <- proc.time()
+                iseq <- seq_along(savefiles)
+                if(do_build_vignettes)
+                    iseq <- iseq[file.exists(savefiles)]
+                for (i in iseq) {
+                    file <- vigns$docs[i]
+                    name <- vigns$names[i]
+                    enc <- vigns$encodings[i]
+                    cat("  ", sQuote(basename(file)),
+                        if(nzchar(enc)) paste("using", sQuote(enc)),
+                        "...")
+                    Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
+                                   basename(file), "', '", vigns$dir, "'",
+                                   if (nzchar(enc))
+                                       paste0(", encoding = '", enc, "'"),
+                                   ", pkgdir='", vigns$pkgdir, "')")
+                    outfile <- paste0(basename(file), ".log")
+                    t1b <- proc.time()
+                    status <- R_runR(Rcmd,
+                                     if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
+                                     ## add timing as footer, as BATCH does
+                                     env = c(jitstr, "R_BATCH=1234", elibs,
+                                     "_R_CHECK_INTERNALS2_=1"),
+                                     stdout = outfile, stderr = outfile)
+                    t2b <- proc.time()
+                    out <- readLines(outfile, warn = FALSE)
+                    savefile <- savefiles[i]
+                    if(length(grep("^  When (running|tangling|sourcing)", out,
+                                   useBytes = TRUE))) {
+                        cat(" failed\n")
+                        res <- c(res,
+                                 paste("when running code in", sQuote(basename(file))),
+                                 "  ...",
+                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                    } else if(status || ! " *** Run successfully completed ***" %in% out) {
+                        ## (Need not be the final line if running under valgrind)
+                        cat(" failed to complete the test\n")
+                        out <- c(out, "", "... incomplete output.  Crash?")
+                        res <- c(res,
+                                 paste("when running code in", sQuote(basename(file))),
+                                 "  ...",
+                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                    } else if (file.exists(savefile)) {
+                        cmd <- paste0("invisible(tools::Rdiff('",
+                                      outfile, "', '", savefile, "',TRUE,TRUE))")
+                        out2 <- R_runR(cmd, R_opts2)
+                        if(length(out2)) {
+                            print_time(t1b, t2b, NULL)
+                            cat("\ndifferences from ", sQuote(basename(savefile)),
+                                "\n", sep = "")
+                            writeLines(c(out2, ""))
+                        } else {
+                            print_time(t1b, t2b, NULL)
+                            cat(" OK\n")
+                            if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
+                                unlink(outfile)
+                        }
+                    } else {
+                        print_time(t1b, t2b, NULL)
+                        cat(" OK\n")
+                        if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
+                            unlink(outfile)
+                    }
+                }
+                t2 <- proc.time()
+                print_time(t1, t2, Log)
+                if(R_check_suppress_RandR_message)
+                    res <- grep('^Xlib: *extension "RANDR" missing on display', res,
+                                invert = TRUE, value = TRUE, useBytes = TRUE)
+                if(length(res)) {
+                    if(length(grep("there is no package called", res,
+                                   useBytes = TRUE))) {
+                        warningLog(Log, "Errors in running code in vignettes:")
+                        printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
+                    } else {
+                        errorLog(Log, "Errors in running code in vignettes:")
+                        printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
+                        maybe_exit(1L)
+                    }
+                } else resultLog(Log, "OK")
+            }
+                
+            if (do_build_vignettes) {
                 checkingLog(Log, "re-building of vignette outputs")
                 ## copy the whole pkg directory to check directory
                 ## so we can work in place, and allow ../../foo references.
