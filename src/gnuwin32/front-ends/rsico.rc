@@ -24,7 +24,7 @@ BEGIN
             VALUE "FileVersion", R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY ")\0"
             VALUE "LegalCopyright", "R Core Team 1995-" R_YEAR "\0"
             VALUE "R Version", R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY ")\0"
-            VALUE "Project info", "http://www.r-project.org\0"
+            VALUE "Project info", "https://www.r-project.org\0"
         END
     END
     BLOCK "VarFileInfo"

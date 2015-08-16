@@ -2,7 +2,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
+<link rel="stylesheet" type="text/css" href="https://cran.r-project.org/R.css">
 <title>Download R-@RVER@ for Windows.  The R-project for statistical computing.</title>
 
 <style>
@@ -44,7 +44,7 @@
   </ul>
 </div>
 
-<p>If you want to double-check that the package you have downloaded exactly matches the package distributed by R, you can compare the <a href="http://en.wikipedia.org/wiki/Md5sum">md5sum</a> of the .exe to the <a href="md5sum.txt">true fingerprint</a>.  You will need a version of md5sum for windows: both <a href="http://www.md5summer.org/">graphical</a> and <a href="http://www.etree.org/md5com.html">command line versions</a> are available.</p>
+<p>If you want to double-check that the package you have downloaded exactly matches the package distributed by R, you can compare the <a href="https://en.wikipedia.org/wiki/Md5sum">md5sum</a> of the .exe to the <a href="md5sum.txt">true fingerprint</a>.  You will need a version of md5sum for windows: both <a href="http://www.md5summer.org/">graphical</a> and <a href="http://www.etree.org/md5com.html">command line versions</a> are available.</p>
 
 <h2>Frequently asked questions</h2>
 
@@ -55,7 +55,7 @@
 </ul>
   
 <p>Please see the <a
-href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
+href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
 general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 

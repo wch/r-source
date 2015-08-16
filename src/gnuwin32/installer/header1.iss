@@ -10,9 +10,9 @@ UsePreviousAppDir=no
 ChangesAssociations=yes
 Compression=lzma/ultra
 SolidCompression=yes
-AppPublisherURL=http://www.r-project.org
-AppSupportURL=http://www.r-project.org
-AppUpdatesURL=http://www.r-project.org
+AppPublisherURL=https://www.r-project.org
+AppSupportURL=https://www.r-project.org
+AppUpdatesURL=https://www.r-project.org
 
 [Languages]
 Name: en; MessagesFile: "compiler:Default.isl"
