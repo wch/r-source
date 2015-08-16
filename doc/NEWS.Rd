@@ -175,11 +175,6 @@
 
       \item BSD networking is now required (except on Windows) and so
       \code{capabilities("http/ftp")} is always true.
-
-      \item The included configuration code for \code{libintl} has been
-      updated to that from \code{gettext} version 0.19.5.1 --- this
-      should only affect how an external library is detected. 
-      (Wish of \PR{16464}.)
     }
   }
 
@@ -231,6 +226,15 @@
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included configuration code for \code{libintl} has been
+      updated to that from \code{gettext} version 0.19.5.1 --- this
+      should only affect how an external library is detected. 
+      (Wish of \PR{16464}.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
