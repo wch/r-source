@@ -209,9 +209,10 @@
 \section{\Rlogo CHANGES IN R 3.2.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Some Windows time zone names have been added to the
-      conversion table used to convert these to Olson names.  (Including
-      those relating to changes for Russia in Oct 2014, as in \PR{16503}.)
+      \item Some recently-added Windows time zone names have been added
+      to the conversion table used to convert these to Olson names.
+      (Including those relating to changes for Russia in Oct 2014, as in
+      \PR{16503}.)
     }
   }
 
@@ -276,7 +277,7 @@
       \code{download.file()} and \code{url()} has been changed to be
       \code{"wininet"} using Windows API calls.  This changes the way
       proxies need to be set and security settings made: there have been
-      some reports of sites being inaccessible under the new default
+      some reports of \samp{ftp:} sites being inaccessible under the new default
       method (but the previous methods remain available).
     }
   }
@@ -303,13 +304,12 @@
       method: to revert to the previous default use
       \code{setInternet2(FALSE)}.
 
-      This means that \samp{https://} can be read by default by
-      \code{download.file()} (they have been readable by \code{file()} and
-      \code{url()} since \R 3.2.0).
+      This means that \samp{https://} URLs can be read by default by
+      \code{download.file()} (they have been readable by \code{file()}
+      and \code{url()} since \R 3.2.0).
 
       There are implications for how proxies need to be set (see
-      \code{?download.file}): also, \code{cacheOK = FALSE} is not
-      supported.
+      \code{?download.file}).
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes

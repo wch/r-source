@@ -237,6 +237,15 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   certificate bundles (there is typically a build option to choose
   either their own or the system ones).
 }
+\section{FTP sites}{
+  \samp{ftp:} URLs are accessed using the FTP protocol which has a
+  number of variants.  One distinction is between \sQuote{active} and
+  \sQuote{(extended) passive} modes: which is used is chosen by the
+  client.  The \code{"internal"} and \code{"libcurl"} method use passive
+  mode, and that is almost universally used by browsers.  Prior to \R
+  3.2.3 the \code{"wininet"} method used active mode: since it first
+  tries passive and then active.
+}
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
   failure.  For the \code{"wget"} and \code{"curl"} methods this is the
