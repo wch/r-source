@@ -218,9 +218,15 @@
       to the conversion table used to convert these to Olson names.
       (Including those relating to changes for Russia in Oct 2014, as in
       \PR{16503}.)
+      
+      \item (Windows) Compatibility information has been added to the
+      manifests for \file{Rgui.exe}, \file{Rterm.exe} and
+      \file{Rscript.exe}.  This should allow \code{win.version()} and
+      \code{Sys.info()} to report the actual Windows version up to
+      Windows 10.
 
       \item Windows \code{"wininet"} FTP first tries EPSV / PASV mode
-      (reported by Dan Tenenbaum).
+      rather than only using active mode (reported by Dan Tenenbaum).
       %% https://stat.ethz.ch/pipermail/r-devel/2015-August/071595.html
     }
   }
