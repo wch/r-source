@@ -4979,10 +4979,13 @@ and without declaring it as @samp{SystemRequirements} in the
 Some people have reported that the Solaris @code{libintl} needs to be
 avoided, for example by using @option{--disable-nls} or
 @option{--with-included-gettext} or using @code{libintl} from OpenCSW.
+(On the other hand, there have been many successful installs which
+automatically detected @code{libintl} from OpenCSW or selected the
+included @code{gettext}.)
 
 The support for the C99 @code{long double} type on Sparc hardware uses
 quad-precision arithmetic, and this is usually slow because it is done
-by software emulation.  On such systems @command{configure} option
+by software emulation.  On such systems the @command{configure} option
 @option{--disable-long-double} can be used for faster but less accurate
 computations.
 
