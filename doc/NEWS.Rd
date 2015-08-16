@@ -11,6 +11,10 @@
       \item A few more timezone Windows names have been added to the
       conversion table used to convert these to Olson names.  (Including
       that from \PR{16503}.)
+
+      \item Windows \code{"wininet"} FTP first tries EPSV / PASV mode
+      (reported by Dan Tenenbaum).
+      %% https://stat.ethz.ch/pipermail/r-devel/2015-August/071595.html
     }
   }
 
