@@ -1,5 +1,5 @@
 
-R version 3.2.2 RC (2015-08-08 r68914) -- "Fire Safety"
+R version 3.2.2 Patched (2015-08-17 r69099) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -45,4 +45,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.123   0.023   0.225 
+  0.124   0.012   0.188 
