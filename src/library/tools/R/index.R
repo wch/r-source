@@ -144,13 +144,13 @@ function(demoDir)
 print.check_demo_index <-
 function(x, ...)
 {
-    if(length(x$missing_from_index)) {
-        writeLines("Demos with missing or empty index information:")
-        print(x$missing_from_index, ...)
+    if(length(bad <- x$missing_from_index)) {
+        writeLines(c("Demos with missing or empty index information:",
+                     paste(" ", bad)))
     }
-    if(length(x$missing_from_demos)) {
-        writeLines("Demo index entries without corresponding demo:")
-        print(x$missing_from_demos, ...)
+    if(length(bad <- x$missing_from_demos)) {
+        writeLines(c("Demo index entries without corresponding demo:",
+                     paste(" ", bad)))
     }
     invisible(x)
 }
