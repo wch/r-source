@@ -7853,8 +7853,8 @@ GCC as from 4.9.0.  Its runtime library is linked into each package's
 DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
 
 Some versions have greatly increased compilation times on a few files
-(e.g.@: @file{src/extra/bzip2/decompress.c} in the @R{} sources with
-@command{clang} 3.5).
+(e.g.@: @file{src/main/dotcode.c} and parts of the @pkg{Matrix} sources
+with @command{clang} 3.7.0).
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address}.
@@ -7864,10 +7864,10 @@ Finer control of what is checked can be achieved by other options: for
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
 The current set for @command{clang} is (on a single line):
 @example
--fsanitize=alignment,bounds,bool,enum,float-cast-overflow,
-float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
-return,returns-nonnull-attribute,shift,signed-integer-overflow,
-unreachable,vla-bound,vptr
+-fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
+float-divide-by-zero,function,integer-divide-by-zero,non-null-attribute,
+null,object-size,return,returns-nonnull-attribute,shift,
+signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
 
 @noindent
