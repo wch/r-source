@@ -26,7 +26,7 @@
 
       \item The description of dataset \code{ToothGrowth} has been
       improved/corrected.  (\PR{15953})
-      
+
       \item \code{model.tables(type = "means")} and hence
       \code{TukeyHSD()} now support \code{"aov"} fits without an
       intercept term.  (\PR{16437})
