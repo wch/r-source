@@ -704,7 +704,8 @@
             if (WINDOWS) {
                 owd <- setwd("src")
                 makefiles <- character()
-                if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+                if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER",
+                                           NA_character_))) {
                     if (file.exists(f))  makefiles <- f
                 } else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
                     makefiles <- f
@@ -785,12 +786,13 @@
                     owd <- setwd("src")
                     system_makefile <-
                         file.path(R.home(), paste0("etc", rarch), "Makeconf")
-                    site <- Sys.getenv("R_MAKEVARS_SITE", NA)
+                    site <- Sys.getenv("R_MAKEVARS_SITE", NA_character_)
                     if (is.na(site)) site <- file.path(paste0(R.home("etc"), rarch), "Makevars.site")
                     makefiles <- c(system_makefile,
                                    if(file.exists(site)) site,
                                    "Makefile")
-                    if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+                    if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER",
+                                               NA_character_))) {
                         if (file.exists(f))  makefiles <- c(makefiles, f)
                     } else if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                                   Sys.getenv("R_PLATFORM"), sep = "-"))))
@@ -1709,7 +1711,7 @@
         SHLIB_LIBADD <- ""
         MAKE <- "make"
         ## Formerly for winshlib.mk to pick up Makeconf
-        rarch <- Sys.getenv("R_ARCH", NA)
+        rarch <- Sys.getenv("R_ARCH", NA_character_)
         if(is.na(rarch)) {
             if (nzchar(.Platform$r_arch)) {
                 rarch <- paste0("/", .Platform$r_arch)
@@ -1722,7 +1724,7 @@
 
     objs <- character()
     shlib <- ""
-    site <- Sys.getenv("R_MAKEVARS_SITE", NA)
+    site <- Sys.getenv("R_MAKEVARS_SITE", NA_character_)
     if (is.na(site))
         site <- file.path(paste0(R.home("etc"), rarch), "Makevars.site")
     makefiles <-
@@ -1811,7 +1813,7 @@
     if (length(objs)) objs <- paste0(objs, OBJ_EXT, collapse = " ")
 
     if (WINDOWS) {
-        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA_character_))) {
             if (file.exists(f))  makefiles <- c(makefiles, f)
         } else if (rarch == "/x64" &&
                    file.exists(f <- path.expand("~/.R/Makevars.win64")))
@@ -1821,7 +1823,7 @@
         else if (file.exists(f <- path.expand("~/.R/Makevars")))
             makefiles <- c(makefiles, f)
     } else {
-        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA))) {
+        if (!is.na(f <- Sys.getenv("R_MAKEVARS_USER", NA_character_))) {
             if (file.exists(f))  makefiles <- c(makefiles, f)
         } else if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                Sys.getenv("R_PLATFORM"),
@@ -1860,7 +1862,7 @@
         }
     }
     if (!use_cxx1x) {
-        val <- Sys.getenv("USE_CXX1X", NA)
+        val <- Sys.getenv("USE_CXX1X", NA_character_)
         if(!is.na(val)) {
             use_cxx1x <- TRUE
         }

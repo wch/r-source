@@ -44,7 +44,7 @@ massageExamples <-
     lines <- c(paste0('pkgname <- "', pkg, '"'),
                'source(file.path(R.home("share"), "R", "examples-header.R"))',
                if (use_gct) {
-                   gct_n <- as.integer(Sys.getenv("_R_CHECK_GCT_N_", 0))
+                   gct_n <- as.integer(Sys.getenv("_R_CHECK_GCT_N_", "0"))
                    if(!is.na(gct_n) && gct_n > 0L)
                        sprintf("gctorture2(%s)", gct_n)
                    else "gctorture(TRUE)"
@@ -246,7 +246,7 @@ testInstalledPackages <-
         pkgs <- known_packages$base
     if (scope %in% c("both", "recommended"))
         pkgs <- c(pkgs, known_packages$recommended)
-    mc.cores <- as.integer(Sys.getenv("TEST_MC_CORES", 1L))
+    mc.cores <- as.integer(Sys.getenv("TEST_MC_CORES", "1L"))
     if (.Platform$OS.type != "windows" &&
         !is.na(mc.cores) && mc.cores > 1L) {
         do_one <- function(pkg) {
@@ -292,7 +292,7 @@ testInstalledPackage <-
     pkgdir <- find.package(pkg, lib.loc)
     owd <- setwd(outDir)
     on.exit(setwd(owd))
-    strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", FALSE))
+    strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
 
     if ("examples" %in% types) {
         message(gettextf("Testing examples for package %s", sQuote(pkg)),

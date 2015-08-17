@@ -727,7 +727,7 @@ get_exclude_patterns <- function()
     options(showErrorCalls = FALSE, warn = 1)
 
     ## Read in build environment file.
-    Renv <- Sys.getenv("R_BUILD_ENVIRON", unset = NA)
+    Renv <- Sys.getenv("R_BUILD_ENVIRON", unset = NA_character_)
     if(!is.na(Renv)) {
         ## Do not read any build environment file if R_BUILD_ENVIRON is
         ## set to empty of something non-existent.

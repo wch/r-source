@@ -644,7 +644,7 @@ setRlibs <-
         ## entries because these really are a part of R: hence, skip the
         ## check.
         check_license <- if (!is_base_pkg) {
-            Check_license <- Sys.getenv("_R_CHECK_LICENSE_", NA)
+            Check_license <- Sys.getenv("_R_CHECK_LICENSE_", NA_character_)
             if(is.na(Check_license)) {
                 ## The check code conditionalizes *output* on _R_CHECK_LICENSE_.
                 Sys.setenv('_R_CHECK_LICENSE_' = "TRUE")
@@ -3028,7 +3028,7 @@ setRlibs <-
                         res <- c(res,
                                  paste("when running code in", sQuote(basename(file))),
                                  "  ...",
-                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "10"))))
                     } else if(status || ! " *** Run successfully completed ***" %in% out) {
                         ## (Need not be the final line if running under valgrind)
                         cat(" failed to complete the test\n")
@@ -3036,7 +3036,7 @@ setRlibs <-
                         res <- c(res,
                                  paste("when running code in", sQuote(basename(file))),
                                  "  ...",
-                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 10))))
+                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "10"))))
                     } else if (file.exists(savefile)) {
                         cmd <- paste0("invisible(tools::Rdiff('",
                                       outfile, "', '", savefile, "',TRUE,TRUE))")
@@ -3117,7 +3117,7 @@ setRlibs <-
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
                     noteLog(Log)
-                    out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", 25)))
+                    out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "25")))
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
@@ -4154,7 +4154,7 @@ setRlibs <-
     options(showErrorCalls=FALSE, warn = 1)
 
     ## Read in check environment file.
-    Renv <- Sys.getenv("R_CHECK_ENVIRON", unset = NA)
+    Renv <- Sys.getenv("R_CHECK_ENVIRON", unset = NA_character_)
     if(!is.na(Renv)) {
         ## Do not read any check environment file if R_CHECK_ENVIRON is
         ## set to empty of something non-existent.
@@ -4452,9 +4452,9 @@ setRlibs <-
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
         Sys.setenv("_R_CHECK_DOT_FIRSTLIB_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_CRAN_INCOMING_NOTES_" = "TRUE")
-        prev <- Sys.getenv("_R_CHECK_LIMIT_CORES_", NA)
+        prev <- Sys.getenv("_R_CHECK_LIMIT_CORES_", NA_character_)
         if(is.na(prev)) Sys.setenv("_R_CHECK_LIMIT_CORES_" = "TRUE")
-        prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
+        prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA_character_)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
         Sys.setenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_" = "TRUE")
@@ -4474,7 +4474,8 @@ setRlibs <-
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
-        if(is.na(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", NA)))
+        if(is.na(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
+                            NA_character_)))
             Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
     }
 

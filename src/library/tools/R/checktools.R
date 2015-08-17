@@ -418,7 +418,7 @@ function(options)
         options <- c(num, options)
     }
 
-    dis <- Sys.getenv("DISPLAY", unset = NA)
+    dis <- Sys.getenv("DISPLAY", unset = NA_character_)
 
     ## We need to start Xvfb with the given options and obtain its pid
     ## so that we can terminate it when done checking.
