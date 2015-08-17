@@ -7153,11 +7153,11 @@ function(x, ...)
     }
     
     c(character(),
-      fmt(c(if(length(x$Maintainer))
-                sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
-            else
-                "No maintainer field in DESCRIPTION file",
-            if(x$empty_Maintainer_name)
+      if(length(x$Maintainer))
+          sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
+      else
+          "No maintainer field in DESCRIPTION file",
+      fmt(c(if(x$empty_Maintainer_name)
                 'The maintainer field lacks a name',
             if(x$Maintainer_needs_quotes)
                 'The display-name part of the maintainer field should be enclosed in ""')
