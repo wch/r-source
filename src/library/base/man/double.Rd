@@ -107,10 +107,10 @@ as.single(x, \dots)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  \url{http://en.wikipedia.org/wiki/IEEE_754-1985},
-  \url{http://en.wikipedia.org/wiki/IEEE_754-2008},
-  \url{http://en.wikipedia.org/wiki/Double_precision},
-  \url{http://en.wikipedia.org/wiki/Denormal_number}.
+  \url{https://en.wikipedia.org/wiki/IEEE_754-1985},
+  \url{https://en.wikipedia.org/wiki/IEEE_754-2008},
+  \url{https://en.wikipedia.org/wiki/Double_precision},
+  \url{https://en.wikipedia.org/wiki/Denormal_number}.
 
   \url{http://grouper.ieee.org/groups/754/} for links to information
   on the standards.

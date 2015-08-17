@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
-% Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Part of the R package, https://www.R-project.org
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -50,6 +50,10 @@ sessionInfo(package = NULL)
 
   How OSes identify themselves and their versions can be arcane: where
   possible \code{running} uses a human-readable form.
+#ifdef windows
+  Windows may report unexpected versions: see the help for
+  \code{\link{win.version}}.
+#endif
 }
 \seealso{\code{\link{R.version}}
 }

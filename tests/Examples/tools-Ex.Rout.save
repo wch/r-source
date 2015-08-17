@@ -175,7 +175,7 @@ Error in assertWarning(ff()) :
 +     organization = "R Foundation for Statistical Computing",
 +     address = "Vienna, Austria",
 +     year = 2013,
-+     url = "http://www.R-project.org"),
++     url = "https://www.R-project.org"),
 +   bibentry(bibtype = "article",
 +     author = c(person(c("George", "E.", "P."), "Box"),
 +                person(c("David",  "R."),      "Cox")),
@@ -192,7 +192,7 @@ Error in assertWarning(ff()) :
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
-<URL: http://www.R-project.org>.
+<URL: https://www.R-project.org>.
 
 [2] Box GEP and Cox DR (1964). "An Analysis of Transformations."
 _Journal of the Royal Statistical Society, Series B_, *26*, pp.

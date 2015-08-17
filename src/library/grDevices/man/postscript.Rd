@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -307,7 +307,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   only greyscales (and converts other colours to a luminance), and
   \code{"cmyk"}.  The simplest possible conversion from sRGB to CMYK is
   used
-  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
+  (\url{https://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
   and raster images are output in RGB.
 
   Color models provided for backwards compatibility are \code{"rgb"})
@@ -391,7 +391,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 
   Paul Murrell and Brian Ripley (2006) Non-standard fonts in PostScript
   and PDF graphics. \emph{R News}, 6(2):41--47.
-  \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 
 \author{

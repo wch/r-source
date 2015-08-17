@@ -202,7 +202,7 @@ arima(x, order = c(0L, 0L, 0L),
 
   Ripley, B. D. (2002) Time series in \R 1.5.0.
   \emph{R News}, \bold{2/2}, 2--7.
-  \url{http://www.r-project.org/doc/Rnews/Rnews_2002-2.pdf}
+  \url{https://www.r-project.org/doc/Rnews/Rnews_2002-2.pdf}
 }
 
 \note{

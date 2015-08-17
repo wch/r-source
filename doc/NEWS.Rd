@@ -4,20 +4,35 @@
 \name{NEWS}
 \title{R News}
 \encoding{UTF-8}
-
 \section{\Rlogo CHANGES IN R 3.2.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item A few more timezone Windows names have been added to the
-      conversion table used to convert these to Olson names.  (Including
-      that from \PR{16503}.)
+      \item Some recently-added Windows time zone names have been added
+      to the conversion table used to convert these to Olson names.
+      (Including those relating to changes for Russia in Oct 2014, as in
+      \PR{16503}.)
+      
+      \item (Windows) Compatibility information has been added to the
+      manifests for \file{Rgui.exe}, \file{Rterm.exe} and
+      \file{Rscript.exe}.  This should allow \code{win.version()} and
+      \code{Sys.info()} to report the actual Windows version up to
+      Windows 10.
 
       \item Windows \code{"wininet"} FTP first tries EPSV / PASV mode
-      (reported by Dan Tenenbaum).
+      rather than only using active mode (reported by Dan Tenenbaum).
       %% https://stat.ethz.ch/pipermail/r-devel/2015-August/071595.html
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included configuration code for \code{libintl} has been
+      updated to that from \code{gettext} version 0.19.5.1 --- this
+      should only affect how an external library is detected. 
+      (Wish of \PR{16464}.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
@@ -30,6 +45,10 @@
       \item \code{model.tables(type = "means")} and hence
       \code{TukeyHSD()} now support \code{"aov"} fits without an
       intercept term.  (\PR{16437})
+
+      \item \code{close()} now reports the status of a \code{pipe()}
+      connection opened with an explicit \code{open} argument.
+      (\PR{16481})
 
       \item Coercing a list without names to a data frame is faster if
       the elements are very long. (\PR{16467})
@@ -71,7 +90,7 @@
       \code{download.file()} and \code{url()} has been changed to be
       \code{"wininet"} using Windows API calls.  This changes the way
       proxies need to be set and security settings made: there have been
-      some reports of sites being inaccessible under the new default
+      some reports of \samp{ftp:} sites being inaccessible under the new default
       method (but the previous methods remain available).
     }
   }
@@ -98,13 +117,12 @@
       method: to revert to the previous default use
       \code{setInternet2(FALSE)}.
 
-      This means that \samp{https://} can be read by default by
-      \code{download.file()} (they have been readable by \code{file()} and
-      \code{url()} since \R 3.2.0).
+      This means that \samp{https://} URLs can be read by default by
+      \code{download.file()} (they have been readable by \code{file()}
+      and \code{url()} since \R 3.2.0).
 
       There are implications for how proxies need to be set (see
-      \code{?download.file}): also, \code{cacheOK = FALSE} is not
-      supported.
+      \code{?download.file}).
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes

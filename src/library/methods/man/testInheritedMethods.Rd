@@ -101,7 +101,7 @@ testInheritedMethods(f, signatures, test = TRUE, virtual = FALSE,
 
   Chambers, John M. (2009)
   \emph{Class Inheritance in R}
-  \url{http://statweb.stanford.edu/~jmc4/classInheritance.pdf}.
+  \url{https://statweb.stanford.edu/~jmc4/classInheritance.pdf}.
 }
 \examples{
 ## if no other attached packages have methods for `+` or its group

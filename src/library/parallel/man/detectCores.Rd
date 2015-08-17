@@ -45,7 +45,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
   or Server 2003: however it reported correctly on the XP systems we
   tested.
 #endif
-% http://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
+% https://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
 
   Currently \code{logical} makes a difference on Sparc Solaris: there
   \code{logical = FALSE} returns the number of physical cores and

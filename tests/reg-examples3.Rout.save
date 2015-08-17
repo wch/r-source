@@ -529,7 +529,8 @@ pckgDs>
 > library(tools)
 > ## there are few dependencies in a vanilla R installation:
 > ## lattice may not be installed
-> dependsOnPkgs("lattice")
+> ## Avoid possibly large list from R_HOME/site-library, which --vanilla includes.
+> dependsOnPkgs("lattice", lib.loc = .Library)
 [1] "Matrix" "nlme"   "mgcv"  
 > 
 > ## This may not be installed

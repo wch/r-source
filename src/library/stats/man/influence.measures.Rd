@@ -164,7 +164,7 @@ hat(x, intercept = TRUE)
   Fox, J. and Weisberg, S. (2011)
   \emph{An R Companion to Applied Regression}, second edition.
   Sage Publ;
-  \url{http://socserv.mcmaster.ca/jfox/Books/Companion/index.html}.
+  \url{https://socserv.mcmaster.ca/jfox/Books/Companion/index.html}.
 }
 \seealso{
   \code{\link{influence}} (containing \code{\link{lm.influence}}).

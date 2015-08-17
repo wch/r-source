@@ -73,11 +73,11 @@ weekdays(.leap.seconds)
 months(.leap.seconds)
 quarters(.leap.seconds)
 
-## Julian Day Number (JDN, http://en.wikipedia.org/wiki/Julian_day)
+## Julian Day Number (JDN, https://en.wikipedia.org/wiki/Julian_day)
 ## is the number of days since noon UTC on the first day of 4317 BC.
 ## in the proleptic Julian calendar.  To more recently, in
 ## 'Terrestrial Time' which differs from UTC by a few seconds
-## See http://en.wikipedia.org/wiki/Terrestrial_Time
+## See https://en.wikipedia.org/wiki/Terrestrial_Time
 julian(Sys.Date(), -2440588) # from a day
 floor(as.numeric(julian(Sys.time())) + 2440587.5) # from a date-time
 }}

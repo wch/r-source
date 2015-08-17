@@ -128,7 +128,7 @@ tar(tarfile, files = NULL,
 }
 
 \seealso{
-  \url{http://en.wikipedia.org/wiki/Tar_(file_format)},
+  \url{https://en.wikipedia.org/wiki/Tar_(file_format)},
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_06}
   for the way the POSIX utility \command{pax} handles \command{tar} formats.
 

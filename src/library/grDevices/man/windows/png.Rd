@@ -189,7 +189,7 @@ tiff(filename = "Rplot\%03d.tif",
   The PNG specification, \url{http://www.w3.org/TR/PNG/}.
   
   The TIFF specification, including extensions, at
-  \url{http://partners.adobe.com/public/developer/tiff/}.
+  \url{https://partners.adobe.com/public/developer/tiff/}.
 }
 \seealso{
   \code{\link{Devices}}, \code{\link{dev.print}}

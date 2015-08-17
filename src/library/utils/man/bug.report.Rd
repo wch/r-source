@@ -33,7 +33,7 @@ bug.report(subject = "",  address,
 }
 \details{
   If \code{package} is \code{NULL} or a base package, this opens the R
-  bugs tracker at \url{http://bugs.r-project.org/}.
+  bugs tracker at \url{https://bugs.r-project.org/}.
 
   If \code{package} is specified, it is assumed that the bug report is
   about that package, and parts of its \file{DESCRIPTION} file are
@@ -131,7 +131,7 @@ bug.report(subject = "",  address,
 
   A bug report can be generated using the function \code{bug.report()}.
   For reports on \R this will open the Web page at
-  \url{http://bugs.r-project.org/}: for a contributed package it will
+  \url{https://bugs.r-project.org/}: for a contributed package it will
   open the package's bug tracker Web page or help you compose an email
   to the maintainer.
 

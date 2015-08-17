@@ -71,7 +71,7 @@ simulate(object, nsim = 1, seed = NULL, \dots)
 
   For an inverse gaussian GLM the model assumed is
   \eqn{IG(\mu_i, \lambda w_i)} (see
-  \url{http://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
+  \url{https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
   where \eqn{\lambda} is estimated by the inverse of the dispersion
   estimate for the fit.  The variance is
   \eqn{\mu_i^3/(\lambda w_i)} and

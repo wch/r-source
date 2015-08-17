@@ -1,6 +1,6 @@
 % File src/library/utils/man/bibentry.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibentry}
@@ -134,7 +134,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{chapter:}{A chapter (or section or whatever) number.}
 
     \item{doi:}{The DOI
-      (\url{http://en.wikipedia.org/wiki/Digital_Object_Identifier})
+      (\url{https://en.wikipedia.org/wiki/Digital_Object_Identifier})
       for the reference.}
 
     \item{editor:}{Name(s) of editor(s), same format as \code{author}.}
@@ -180,7 +180,7 @@ rref <- bibentry(
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
    year = 2014,
-   url = "http://www.R-project.org/")
+   url = "https://www.R-project.org/")
 
 ## Different printing styles
 print(rref)
@@ -204,7 +204,7 @@ bref <- c(
      ),
      year = "2012",
      note = "R package version 1.3-4",
-     url = "http://CRAN.R-project.org/package=boot",
+     url = "https://CRAN.R-project.org/package=boot",
      key = "boot-package"
    ),
 

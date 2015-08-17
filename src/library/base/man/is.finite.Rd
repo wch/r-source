@@ -94,7 +94,7 @@ NaN
   The IEC 60559 standard, also known as the
   ANSI/IEEE 754 Floating-Point Standard.
 
-  \url{http://en.wikipedia.org/wiki/NaN}.
+  \url{https://en.wikipedia.org/wiki/NaN}.
 
   D. Goldberg (1991) \emph{What Every Computer Scientist Should Know
     about Floating-Point Arithmetic}  ACM Computing Surveys, \bold{23(1)}.\cr

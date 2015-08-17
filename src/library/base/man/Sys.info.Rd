@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Copyright      2008 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -29,43 +29,57 @@ Sys.info()
     \code{"unknown"} if it
     cannot be ascertained.  This may differ from the real user in
     \sQuote{set-user-ID} processes.}
-#ifdef unix
 
+#ifdef unix
   The first five fields come from the \code{uname(2)} system call.  The
   login name comes from \code{getlogin(2)}, and the user names from
   \code{getpwuid(getuid())} and \code{getpwuid(geteuid())}
 #endif
+#ifdef windows
+  The last three fields give the same value on Windows.
+#endif  
 }
 \details{
-  This function is not implemented on all \R platforms, and returns
-  \code{NULL} when not available.  Where possible it is based on POSIX
-  system calls.  (Under Windows, it is obtained by Windows system
-  calls and the last three values are the same.)
+  This uses POSIX or Windows system calls.  Note that OS names might not
+  be what you expect: for example OS X identifies itself as
+  \samp{Darwin} and Solaris as \samp{SunOS}.
 
   \code{Sys.info()} returns details of the platform \R is running on,
   whereas \code{\link{R.version}} gives details of the platform \R was
   built on: the \code{release} and \code{version} may well be different.
-
-  Note that OS names might not be what you expect: for example OS X
-  identifies itself as \samp{Darwin} and Solaris as \samp{SunOS}.
 }
 \note{
-  The meaning of OS \sQuote{release} and \sQuote{version} is
-  system-dependent and there is no guarantee that the node or
-  login or user names will be what you might reasonably expect.
-  (In particular on some Linux distributions the login name is unknown
-  from sessions with re-directed inputs.)
+  The meaning of \code{release} and \code{version} is system-dependent:
+  on a Unix-alike they normally refer to the kernel.  There, usually
+  \code{release} contains a numeric version and \code{version} gives
+  additional information.  Examples for \code{release}:
+\preformatted{
+  "4.1.3-100.fc21.x86_64"   # Linux (Fedora)
+  "3.2.0-4-amd64"           # Linux (Debian)
+  "14.5.0"                  # OS X 10.10.5
+  "5.11"                    # Solaris
+}
+  
+  There is no guarantee that the node or login or user names will be
+  what you might reasonably expect.  (In particular on some Linux
+  distributions the login name is unknown from sessions with re-directed
+  inputs.)
 
   The use of alternatives such as \code{system("whoami")} is not
   portable: the POSIX command \code{system("id")} is much more portable
   on Unix-alikes, provided only the POSIX options are used (and not the
   many BSD and GNU extensions).
+#ifdef win32
+
+  Windows may report unexpected versions: see the help for
+  \code{\link{win.version}}.
+#endif
 }
 
 \seealso{
   \code{\link{.Platform}}, and \code{\link{R.version}}.
   \code{\link{sessionInfo}()} gives a synopsis of both your system and
-  the \R session.
+  the \R session (and gives the OS version in a human-readable form).
 }
 
 \examples{

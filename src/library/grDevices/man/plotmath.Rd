@@ -242,9 +242,9 @@
 
   The symbol codes can be found in octal in the Adobe reference manuals,
   e.g.\sspace{}for Postscript
-  \url{http://www.adobe.com/products/postscript/pdfs/PLRM.pdf}
+  \url{https://www.adobe.com/products/postscript/pdfs/PLRM.pdf}
   or PDF
-  \url{http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
+  \url{https://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
   and in decimal, octal and hex at
   \url{http://www.stat.auckland.ac.nz/~paul/R/CM/AdobeSym.html}.
 }

@@ -1,6 +1,6 @@
 % File src/library/utils/man/cite.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012-2014 R Core Team
+% Copyright 2012-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cite}
@@ -102,7 +102,7 @@ rref <- bibentry(
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
    year = 2013,
-   url = "http://www.R-project.org/",
+   url = "https://www.R-project.org/",
    key = "R")
 
 ## References for boot package and associated book
@@ -119,7 +119,7 @@ bref <- c(
      ),
      year = "2012",
      note = "R package version 1.3-4",
-     url = "http://CRAN.R-project.org/package=boot",
+     url = "https://CRAN.R-project.org/package=boot",
      key = "boot-package"
    ),
 

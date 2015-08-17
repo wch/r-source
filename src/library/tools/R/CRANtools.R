@@ -61,7 +61,7 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
         paste(c(sprintf("Current CRAN status: %s",
                         paste(sprintf("%s: %s", names(tab), tab),
                               collapse = ", ")),
-                sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
+                sprintf("See: <https://CRAN.R-project.org/web/checks/check_results_%s.html>",
                         p)),
               collapse = "\n")
     }
@@ -105,7 +105,7 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
                                  gsub("\n", "\n  ", tmp$Output,
                                       perl = TRUE, useBytes = TRUE)),
                          sprintf("See: %s",
-                                 paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+                                 paste(sprintf("<https://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
                                                flavors,
                                                p),
                                        collapse = ",\n     ")))
@@ -124,7 +124,7 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
         paste(c(paste("Memtest notes:",
                       paste(unique(tests), collapse = " ")),
                 sprintf("See: %s",
-                        paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
+                        paste(sprintf("<https://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
                                       tests,
                                       paths),
                               collapse = ",\n     "))),
@@ -352,7 +352,7 @@ function(mirrors = NULL, verbose = FALSE)
              )
     }
 
-    master <- "http://CRAN.R-project.org/"
+    master <- "https://CRAN.R-project.org/"
     path_ts1 <- "TIME"
     path_ts2 <- "bin/windows/contrib/r-release/TIME_r-release"
     path_ts3 <- "bin/windows/contrib/r-old-release/TIME_r-old-release"

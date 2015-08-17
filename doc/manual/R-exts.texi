@@ -2004,7 +2004,7 @@ OpenMP@footnote{@uref{http://www.openmp.org/},
 @example
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
-Shlib_OPENMP_FCFLAGS
+SHLIB_OPENMP_FCFLAGS
 SHLIB_OPENMP_FFLAGS
 @end example
 
@@ -2016,7 +2016,11 @@ conditioned on the use of OpenMP can be used inside @code{#ifdef
 SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
 (@pxref{Platform and version information}) or @code{_OPENMP}: note that
 some toolchains used for @R{} (including most of those using
-@command{clang}) have no OpenMP support at all, not even @file{omp.h}.
+@command{clang}@footnote{Some builds of @command{clang} 3.7 will have
+support for OpenMP 3.1. However, this needs the compiler/linker flag
+@option{-fopenmp=libomp} which is not currently added by
+@command{configure}.}) have no OpenMP support at all, not even
+@file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -2033,10 +2037,8 @@ should do their own @command{configure} checks.
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  OS X nowadays uses @command{clang}, and the Apple
-builds currently@footnote{Projects to add it has been announced, but it
-is unknown when or even if the Apple builds will incorporate them.}
-have no OpenMP support.
+have recent versions.  OS X currently uses Apple builds of
+@command{clang} with no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and earlier Apple OS X implementations have substantial
@@ -4388,9 +4390,10 @@ language of the UTF-8 locale, and your users would need to be told how
 to select the @samp{encoding} argument.
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
-that sets a package encoding in its @file{DESCRIPTION} file you may need
-to specify a suitable locale @emph{via} environment variable
-@env{R_ENCODING_LOCALES}.  The default is equivalent to the value
+that sets a package encoding in its @file{DESCRIPTION} file @emph{and do
+not use a UTF-8 locale} you may need to specify a suitable locale
+@emph{via} environment variable @env{R_ENCODING_LOCALES}.  The default
+is equivalent to the value
 
 @example
 "latin1=en_US:latin2=pl_PL:UTF-8=en_US.UTF-8:latin9=fr_FR.iso885915@@euro"
@@ -7849,8 +7852,8 @@ GCC as from 4.9.0.  Its runtime library is linked into each package's
 DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
 
 Some versions have greatly increased compilation times on a few files
-(e.g.@: @file{src/extra/bzip2/decompress.c} in the @R{} sources with
-@command{clang} 3.5).
+(e.g.@: @file{src/main/dotcode.c} and parts of the @pkg{Matrix} sources
+with @command{clang} 3.7.0).
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address}.
@@ -7860,10 +7863,10 @@ Finer control of what is checked can be achieved by other options: for
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
 The current set for @command{clang} is (on a single line):
 @example
--fsanitize=alignment,bounds,bool,enum,float-cast-overflow,
-float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
-return,returns-nonnull-attribute,shift,signed-integer-overflow,
-unreachable,vla-bound,vptr
+-fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
+float-divide-by-zero,function,integer-divide-by-zero,non-null-attribute,
+null,object-size,return,returns-nonnull-attribute,shift,
+signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
 
 @noindent

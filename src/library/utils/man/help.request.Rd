@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.request.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-11 R Core Team
+% Copyright 2008-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help.request}
@@ -29,7 +29,7 @@ help.request(subject = "",
 \details{
   This function is not intended to replace the posting
   guide.  Please read the guide before posting to R-help or using this
-  function (see \url{http://www.r-project.org/posting-guide.html}).
+  function (see \url{https://www.r-project.org/posting-guide.html}).
 
   The \code{help.request} function:
   \itemize{
@@ -50,7 +50,7 @@ help.request(subject = "",
 \value{
   Nothing useful.
 }
-\seealso{The posting guide (\url{http://www.r-project.org/posting-guide.html}),
+\seealso{The posting guide (\url{https://www.r-project.org/posting-guide.html}),
   also \code{\link{sessionInfo}()} from which you may add to the help request.
 
   \code{\link{create.post}}.

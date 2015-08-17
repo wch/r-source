@@ -50,7 +50,7 @@
   Dawson, Robert J. MacG. (1995),
   The \sQuote{Unusual Episode} Data Revisited.
   \emph{Journal of Statistics Education}, \bold{3}.
-  \url{http://www.amstat.org/publications/jse/v3n3/datasets.dawson.html}
+  \url{https://www.amstat.org/publications/jse/v3n3/datasets.dawson.html}
 
   The source provides a data set recording class, sex, age, and survival
   status for each person on board of the Titanic, and is based on data
