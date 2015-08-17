@@ -360,7 +360,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     if (x != y && ATTRIB(x) != R_NilValue) {
 	PROTECT(x);
 	PROTECT(y);
-	DUPLICATE_ATTRIB(y, x);
+	SHALLOW_DUPLICATE_ATTRIB(y, x);
 	UNPROTECT(2);
     }
     return y;
@@ -644,7 +644,7 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (naflag)
 	warningcall(call, "NaNs produced in function \"%s\"", PRIMNAME(op));
-    DUPLICATE_ATTRIB(y, x);
+    SHALLOW_DUPLICATE_ATTRIB(y, x);
     UNPROTECT(2);
     return y;
 }
@@ -738,9 +738,9 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     if (naflag)
 	warningcall(call, "NaNs produced in function \"%s\"", PRIMNAME(op));
     if(n == na) {
-	DUPLICATE_ATTRIB(sy, sa);
+	SHALLOW_DUPLICATE_ATTRIB(sy, sa);
     } else if(n == nb) {
-	DUPLICATE_ATTRIB(sy, sb);
+	SHALLOW_DUPLICATE_ATTRIB(sy, sb);
     }
     UNPROTECT(3);
     return sy;

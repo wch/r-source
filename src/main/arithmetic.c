@@ -1116,7 +1116,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     if(naflag) warningcall(lcall, R_MSG_NA);
 
     if (sa != sy && ATTRIB(sa) != R_NilValue)
-	DUPLICATE_ATTRIB(sy, sa);
+	SHALLOW_DUPLICATE_ATTRIB(sy, sa);
     UNPROTECT(2);
     return sy;
 }
@@ -1238,7 +1238,7 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_NONNUM_MATH);
 
     if (x != s && ATTRIB(x) != R_NilValue)
-	DUPLICATE_ATTRIB(s, x);
+	SHALLOW_DUPLICATE_ATTRIB(s, x);
     UNPROTECT(1);
     return s;
 }
@@ -1266,22 +1266,22 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 
     /* for 0-length a we want the attributes of a, not those of b
        as no recycling will occur */
-#define SETUP_Math2				\
-    na = XLENGTH(sa);				\
-    nb = XLENGTH(sb);				\
-    if ((na == 0) || (nb == 0))	{		\
-	PROTECT(sy = allocVector(REALSXP, 0));	\
-	if (na == 0) DUPLICATE_ATTRIB(sy, sa);	\
-	UNPROTECT(1);				\
-	return(sy);				\
-    }						\
-    n = (na < nb) ? nb : na;			\
-    PROTECT(sa = coerceVector(sa, REALSXP));	\
-    PROTECT(sb = coerceVector(sb, REALSXP));	\
-    PROTECT(sy = allocVector(REALSXP, n));	\
-    a = REAL(sa);				\
-    b = REAL(sb);				\
-    y = REAL(sy);				\
+#define SETUP_Math2					\
+    na = XLENGTH(sa);					\
+    nb = XLENGTH(sb);					\
+    if ((na == 0) || (nb == 0))	{			\
+	PROTECT(sy = allocVector(REALSXP, 0));		\
+	if (na == 0) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+	UNPROTECT(1);					\
+	return(sy);					\
+    }							\
+    n = (na < nb) ? nb : na;				\
+    PROTECT(sa = coerceVector(sa, REALSXP));		\
+    PROTECT(sb = coerceVector(sb, REALSXP));		\
+    PROTECT(sy = allocVector(REALSXP, n));		\
+    a = REAL(sa);					\
+    b = REAL(sb);					\
+    y = REAL(sy);					\
     naflag = 0
 
     SETUP_Math2;
@@ -1297,10 +1297,10 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 	}
     });
 
-#define FINISH_Math2				\
-    if(naflag) warning(R_MSG_NA);		\
-    if (n == na)  DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
+#define FINISH_Math2					\
+    if(naflag) warning(R_MSG_NA);			\
+    if (n == na)  SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
     UNPROTECT(3)
 
     FINISH_Math2;
@@ -1683,12 +1683,12 @@ SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
     y = REAL(sy);						\
     naflag = 0
 
-#define FINISH_Math3				\
-    if(naflag) warning(R_MSG_NA);		\
-						\
-    if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
-    else if (n == nc) DUPLICATE_ATTRIB(sy, sc);	\
+#define FINISH_Math3					\
+    if(naflag) warning(R_MSG_NA);			\
+    							\
+    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
+    else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
     UNPROTECT(4)
 
 static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
@@ -1929,13 +1929,13 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
 	}
     });
 
-#define FINISH_Math4				\
-    if(naflag) warning(R_MSG_NA);		\
-						\
-    if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
-    else if (n == nc) DUPLICATE_ATTRIB(sy, sc);	\
-    else if (n == nd) DUPLICATE_ATTRIB(sy, sd);	\
+#define FINISH_Math4					\
+    if(naflag) warning(R_MSG_NA);			\
+    							\
+    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
+    else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
+    else if (n == nd) SHALLOW_DUPLICATE_ATTRIB(sy, sd);	\
     UNPROTECT(5)
 
     FINISH_Math4;
@@ -2108,14 +2108,14 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 	}
     });
 
-#define FINISH_Math5				\
-    if(naflag) warning(R_MSG_NA);		\
-						\
-    if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
-    else if (n == nc) DUPLICATE_ATTRIB(sy, sc);	\
-    else if (n == nd) DUPLICATE_ATTRIB(sy, sd);	\
-    else if (n == ne) DUPLICATE_ATTRIB(sy, se);	\
+#define FINISH_Math5					\
+    if(naflag) warning(R_MSG_NA);			\
+    							\
+    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
+    else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
+    else if (n == nd) SHALLOW_DUPLICATE_ATTRIB(sy, sd);	\
+    else if (n == ne) SHALLOW_DUPLICATE_ATTRIB(sy, se);	\
     UNPROTECT(6)
 
     FINISH_Math5;

@@ -49,28 +49,28 @@
 	i2 = (++i2 == n2) ? 0 : i2,\
 	++i)
 
-#define SETUP_Math2				\
-    na = XLENGTH(sa);				\
-    nb = XLENGTH(sb);				\
-    if ((na == 0) || (nb == 0))	{		\
-	PROTECT(sy = allocVector(REALSXP, 0));	\
-	if (na == 0) DUPLICATE_ATTRIB(sy, sa);	\
-	UNPROTECT(1);				\
-	return(sy);				\
-    }						\
-    n = (na < nb) ? nb : na;			\
-    PROTECT(sa = coerceVector(sa, REALSXP));	\
-    PROTECT(sb = coerceVector(sb, REALSXP));	\
-    PROTECT(sy = allocVector(REALSXP, n));	\
-    a = REAL(sa);				\
-    b = REAL(sb);				\
-    y = REAL(sy);				\
+#define SETUP_Math2					\
+    na = XLENGTH(sa);					\
+    nb = XLENGTH(sb);					\
+    if ((na == 0) || (nb == 0))	{			\
+	PROTECT(sy = allocVector(REALSXP, 0));		\
+	if (na == 0) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+	UNPROTECT(1);					\
+	return(sy);					\
+    }							\
+    n = (na < nb) ? nb : na;				\
+    PROTECT(sa = coerceVector(sa, REALSXP));		\
+    PROTECT(sb = coerceVector(sb, REALSXP));		\
+    PROTECT(sy = allocVector(REALSXP, n));		\
+    a = REAL(sa);					\
+    b = REAL(sb);					\
+    y = REAL(sy);					\
     naflag = 0
 
-#define FINISH_Math2				\
-    if(naflag) warning(R_MSG_NA);		\
-    if (n == na)  DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
+#define FINISH_Math2					\
+    if(naflag) warning(R_MSG_NA);			\
+    if (n == na)  SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
     UNPROTECT(3)
 
 #define if_NA_Math2_set(y,a,b)				\
@@ -199,12 +199,12 @@ DEFMATH2_2(qsignrank)
     y = REAL(sy);						\
     naflag = 0
 
-#define FINISH_Math3				\
-    if(naflag)  warning(R_MSG_NA);		\
-						\
-    if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
-    else if (n == nc) DUPLICATE_ATTRIB(sy, sc);	\
+#define FINISH_Math3					\
+    if(naflag)  warning(R_MSG_NA);			\
+    							\
+    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
+    else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
     UNPROTECT(4)
 
 static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
@@ -360,13 +360,13 @@ DEFMATH3_2(qwilcox)
     y = REAL(sy);							\
     naflag = 0
 
-#define FINISH_Math4				\
-    if(naflag) warning(R_MSG_NA);		\
-						\
-    if (n == na) DUPLICATE_ATTRIB(sy, sa);	\
-    else if (n == nb) DUPLICATE_ATTRIB(sy, sb);	\
-    else if (n == nc) DUPLICATE_ATTRIB(sy, sc);	\
-    else if (n == nd) DUPLICATE_ATTRIB(sy, sd);	\
+#define FINISH_Math4					\
+    if(naflag) warning(R_MSG_NA);			\
+    							\
+    if (n == na) SHALLOW_DUPLICATE_ATTRIB(sy, sa);	\
+    else if (n == nb) SHALLOW_DUPLICATE_ATTRIB(sy, sb);	\
+    else if (n == nc) SHALLOW_DUPLICATE_ATTRIB(sy, sc);	\
+    else if (n == nd) SHALLOW_DUPLICATE_ATTRIB(sy, sd);	\
     UNPROTECT(5)
 
 static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(double, double, double, double, int))
