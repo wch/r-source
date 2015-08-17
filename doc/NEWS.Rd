@@ -41,6 +41,10 @@
 
       \item (Windows) \code{Sys.info()} was out of step with
       \code{win.version()} and did not report Windows 8.
+
+      \item \code{detach()}ing the \pkg{methods} package keeps
+      \code{.isMethodsDispatchOn()} true, as long as the methods
+      namespace is not unloaded.% This keeps a sane state, see the regr-S4 test
     }
   }
 }

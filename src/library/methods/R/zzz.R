@@ -132,20 +132,18 @@
     if(methods:::.hasS4MetaData(.GlobalEnv)) {
         result <- try(cacheMetaData(.GlobalEnv, TRUE))
         ## still attach  methods package if global env has bad objets
-        if(is(result, "try-error"))
+        if(inherits(result, "try-error"))
           warning("apparently bad method or class metadata in saved environment;\n",
                   "move the file or remove the class/method")
     }
 }
 
-.onDetach <- function(libpath) methods:::.onUnload(libpath)
-
-## redefining it here, invalidates the one above:
-## Why don't we unload "methods" on detach() ?
-.onDetach <- function(libpath) .isMethodsDispatchOn(FALSE)
+## Q: Why don't we unload "methods" on detach() ?
+## A: Because the user chooses detach(*, unload= .), so detach() will unload if ..
+## .onDetach <- function(libpath) { <nothing> }
 
 ## used for .methodsIsLoaded
 .saveImage <- FALSE
 
-## want ASCII quotes, not fancy nor translated ones
+## cheap dQuote(): want ASCII quotes, not fancy nor translated ones
 .dQ <- function (x) paste0('"', x, '"')

@@ -4,6 +4,15 @@ require(methods)
 assertError <- tools::assertError # "import"
 ##too fragile: showMethods(where = "package:methods")
 
+## When this test comes too late, it fails too early in R <= 3.2.2
+require(stats4)
+detach("package:methods")
+require("methods")
+cc <- methods::getClassDef("standardGeneric")
+cc ## (auto) print failed here, in R <= 3.2.2
+stopifnot(.isMethodsDispatchOn()) ## was FALSE in R <= 3.2.2
+
+
 ## Needs cached primitive generic for '$'
 new("envRefClass")# failed in R <= 3.2.0
 
