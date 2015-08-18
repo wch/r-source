@@ -39,7 +39,7 @@ SEXP attribute_hidden do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument should be a character vector of length 1\nall but the first element will be ignored"));
     nc = LENGTH(STRING_ELT(x, 0));
     ans = allocVector(RAWSXP, nc);
-    memcpy(RAW(ans), CHAR(STRING_ELT(x, 0)), nc);
+    if (nc) memcpy(RAW(ans), CHAR(STRING_ELT(x, 0)), nc);
     return ans;
 }
 
@@ -285,7 +285,7 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (used < 0) error(_("invalid UTF-8 string"));
     ans = allocVector(INTSXP, j);
-    memcpy(INTEGER(ans), ians, sizeof(int) * j);
+    if (j) memcpy(INTEGER(ans), ians, sizeof(int) * j);
     return ans;
 }
 
