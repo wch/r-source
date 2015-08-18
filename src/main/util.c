@@ -2213,7 +2213,7 @@ SEXP attribute_hidden do_tabulate(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "nbin");
     SEXP ans = allocVector(INTSXP, nb);
     int *x = INTEGER(in), *y = INTEGER(ans);
-    memset(y, 0, nb * sizeof(int));
+    if (nb) memset(y, 0, nb * sizeof(int));
     for(R_xlen_t i = 0 ; i < n ; i++)
 	if (x[i] != NA_INTEGER && x[i] > 0 && x[i] <= nb) y[x[i] - 1]++;
     return ans;

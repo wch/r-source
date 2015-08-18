@@ -339,7 +339,7 @@ static R_INLINE int R_integer_times(int x, int y, Rboolean *pnaflag)
     if (x == NA_INTEGER || y == NA_INTEGER)
 	return NA_INTEGER;
     else {
-	int z = x * y;
+	int z = x * y;  // UBSAN will warn if this overflows (happens in bda)
 	if (GOODIPROD(x, y, z) && z != NA_INTEGER)
 	    return z;
 	else {

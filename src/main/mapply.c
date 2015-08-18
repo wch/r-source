@@ -58,7 +58,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("zero-length inputs cannot be mixed with those of non-zero length"));
 
     counters = (R_xlen_t *) R_alloc(m, sizeof(R_xlen_t));
-    memset(counters, 0, m * sizeof(R_xlen_t));
+    if (m) memset(counters, 0, m * sizeof(R_xlen_t));
 
     SEXP mindex = PROTECT(allocVector(VECSXP, m));
     SEXP nindex = PROTECT(allocVector(VECSXP, m));
