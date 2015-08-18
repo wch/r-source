@@ -7709,15 +7709,21 @@ threaded programs.
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently only on @cputype{ix86}/@cputype{x86_64} Linux
-and OS X, not including the versions distributed by Apple in
-@code{Xcode} 4.6 or 5. On some platforms, e.g.@: Fedora, the runtime
-library, @pkg{libasan}, needs to be installed separately. OS X users can
-install a suitable @command{clang} from the sources or possibly
-distributions such as MacPorts or Homebrew.} of @command{gcc} 4.8.0 or
-@command{clang} 3.1 and later on common Linux and OS X platforms.  See
+and OS X, not currently including the versions released by Apple (it is
+included in Xcode 7 beta).  On some platforms, e.g.@: Fedora, the
+runtime library, @pkg{libasan}, needs to be installed separately. OS X
+users can install a suitable @command{clang} from the sources,
+@url{http://llvm.org/releases/} or possibly distributions such as
+MacPorts or Homebrew.} of @command{gcc} 4.8.0 or @command{clang} 3.1 and
+later on common Linux and OS X platforms.  See
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{http://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://code.google.com/p/address-sanitizer/}.
+
+More thorough checks of C++ code are done if the C++ library has been
+`annotated': at the time of writing this applied to @code{std::vector}
+in @code{libc++} for use with @command{clang} and gives rise to
+@samp{container-overflow} reports.
 
 It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address}@footnote{@option{-faddress-sanitizer} in
@@ -7733,7 +7739,7 @@ detect misuse of stack and global variables but not the use of
 uninitialized memory.
 
 @command{gcc} as from version 4.9.0 returns symbolic addresses for the
-location of the error, but most other versions do not.  For the latter,
+location of the error, but some other versions do not.  For the latter,
 one possibility is to use an external symbolizer.  Depending on the
 version, this can be done @emph{via} an environment variable, e.g.@:
 
@@ -7753,7 +7759,7 @@ The simplest way to make use of this is to build a version of @R{} with
 something like
 
 @example
-CC="gcc-4.9 -std=gnu99 -fsanitize=address"
+CC="gcc -std=gnu99 -fsanitize=address"
 CFLAGS="-fno-omit-frame-pointer -g -O2 -Wall -pedantic -mtune=native"
 @end example
 
@@ -7857,7 +7863,7 @@ Some versions have greatly increased compilation times on a few files
 with @command{clang} 3.7.0).
 
 This sanitizer can be combined with the Address Sanitizer by
-@option{-fsanitize=undefined,address}.
+@option{-fsanitize=undefined,address} (where both are supported).
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
