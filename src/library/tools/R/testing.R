@@ -246,7 +246,7 @@ testInstalledPackages <-
         pkgs <- known_packages$base
     if (scope %in% c("both", "recommended"))
         pkgs <- c(pkgs, known_packages$recommended)
-    mc.cores <- as.integer(Sys.getenv("TEST_MC_CORES", "1L"))
+    mc.cores <- as.integer(Sys.getenv("TEST_MC_CORES", 1L))
     if (.Platform$OS.type != "windows" &&
         !is.na(mc.cores) && mc.cores > 1L) {
         do_one <- function(pkg) {
