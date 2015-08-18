@@ -1617,8 +1617,7 @@ Capitan earlier versions of the installer will fail there, but those as
 from @R{} 3.2.2 are expected to work.}).
 
 Installers for R-patched and R-devel are usually available from
-@uref{http://r.research.att.com}@footnote{@samp{https:} access may be
-available.}.
+@uref{https://r.research.att.com}.
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources.
@@ -1767,7 +1766,7 @@ A version of @R{} can be run directly from the command-line as e.g.@:
 @noindent
 However, @Rapp{} will always run the `current' version, that is the last
 installed version.  A small utility, @command{Rswitch.app} (available at
-@url{http://r.research.att.com/#other}), can be used to change the
+@url{https://r.research.att.com/#other}), can be used to change the
 `current' version.  This is of limited use as @Rapp{} is compiled
 against a particular version of @R{} and will likely crash if switched
 to an earlier version.  This may allow you to install a development
@@ -2137,9 +2136,9 @@ of @acronym{CRAN} and Bioconductor packages.
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
-framework installed from @uref{http://r.research.att.com/libs/}: the
+framework installed from @uref{https://r.research.att.com/libs/}: the
 appropriate version at the time of writing was
-@uref{http://r.research.att.com/libs/GTK_2.24.17-X11.pkg}
+@uref{https://r.research.att.com/libs/GTK_2.24.17-X11.pkg}
 
 The default compilers specified in
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
@@ -4588,9 +4587,9 @@ You can build @R{} using Apple's `Command Line Tools' and suitable
 compilers.  You will also need @code{readline} (or to configure with
 @option{--without-readline}), and a Fortran compiler.  Those and other
 binary components are available from
-@uref{http://r.research.att.com/libs}@footnote{@samp{https:} access may
-be available.}: you are likely to need @code{pcre} and @code{xz} (recent
-OS X provides libs but not headers for these).
+@uref{https://r.research.att.com/libs}: you are likely to need
+@code{pcre} and @code{xz} (recent OS X provides libs but not headers for
+these).
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): see
@@ -4631,12 +4630,11 @@ FCFLAGS=$F77FLAGS
 @noindent
 with @command{clang} and @command{clang++} from Xcode, and the Fortran
 compiler from
-@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{@samp{https:}
-access may be available.  This is a tarball which needs to be unpacked
-in the Terminal by e.g.@: @command{sudo tar -zxf
-gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does not run on Core 2 Duo
-Macs.}  Apple's builds of @command{clang} currently have little or no
-OpenMP support.
+@uref{https://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
+is a tarball which needs to be unpacked in the Terminal by e.g.@:
+@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
+not run on Core 2 Duo Macs.}  Apple's builds of @command{clang}
+currently have little or no OpenMP support.
 
 Other builds of @command{gfortran} are available: see
 @uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
@@ -4645,7 +4643,7 @@ name or path in a personal or site @file{Makevars} file
 (@pxref{Customizing package compilation}).
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{http://r.research.att.com/libs/}.  You will
+are available from @uref{https://r.research.att.com/libs/}.  You will
 most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
 (and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
 and useful for many packages: it will also be used if present when
@@ -4659,9 +4657,8 @@ first on the configuration path: for example by setting
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 Otherwise the binary libraries at
-@uref{http://r.research.att.com/libs/}@footnote{@samp{https:} access may
-be available.} can be used: @code{cairo}, @code{fontconfig},
-@code{freetype} and @code{pixman} are needed.
+@uref{https://r.research.att.com/libs/} can be used: @code{cairo},
+@code{fontconfig}, @code{freetype} and @code{pixman} are needed.
 
 @cindex BLAS library
 @cindex LAPACK library
