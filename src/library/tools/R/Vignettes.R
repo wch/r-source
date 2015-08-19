@@ -760,8 +760,11 @@ getVignetteEncoding <-  function(file, ...)
 .get_vignette_metadata <-
 function(lines, tag)
 {
-    meta_RE <- paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
-                     "\\{([^}]*)\\}", sep = "")
+    ## <FIXME>
+    ## Why don't we anchor this to the beginning of a line?
+    meta_RE <- paste0("[[:space:]]*%+[[:space:]]*\\\\Vignette", 
+                      tag, "\\{([^}]*(\\{[^}]*\\})*[^}]*)\\}.*")
+    ## </FIXME>
     meta <- grep(meta_RE, lines, value = TRUE, useBytes = TRUE)
     trimws(gsub(meta_RE, "\\1", meta))
 }
