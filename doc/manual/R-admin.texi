@@ -1642,7 +1642,9 @@ be installed: @pxref{OS X}.)
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
-``Show All Log'') is useful for tracking down problems.
+``Show All Log'') is useful for tracking down problems.  Note the the
+installer is clever enough to try to upgrade the last-installed version
+of the application.
 
 If you update your OS X version, you should re-install @R{}: the
 installer tailors the installation to the current version of the OS.
@@ -1664,9 +1666,10 @@ distribution.
 
 There is a GUI console normally installed with the @R{} icon in
 @file{/Applications} which you can run by double-clicking (e.g. from
-Launchpad or Finder).  This is usually referred to as @Rapp{} to
-distinguish it from command-line @R{}: its user manual is currently part
-of the OS X FAQ at
+Launchpad or Finder).  (If you cannot find there it was possibly
+installed elsewhere so try searching for it in Spotlight.) This is
+usually referred to as @Rapp{} to distinguish it from command-line @R{}:
+its user manual is currently part of the OS X FAQ at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
 can be viewed from  @Rapp{}'s `Help' menu.
 
@@ -1678,7 +1681,7 @@ currently puts links to @command{R} and @command{Rscript} in
 see the next chapter of this manual.  There are some small differences
 which may surprise users of @R{} on other platforms, notably the default
 location of the personal library directory (under @file{~/Library/R},
-e.g. @file{~/Library/R/3.1/library}), and that warnings, messages and
+e.g. @file{~/Library/R/3.2/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -1728,9 +1731,9 @@ framework. The un-installation is as simple as removing those folders
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
 links to @file{R} and @file{Rscript} in @file{/usr/bin} (or
-@file{/usr/local/bin}) should also be removed.@footnote{It is
+@file{/usr/local/bin} from El Capitan) should also be removed.@footnote{It is
 recommended to remove those in @file{/usr/bin} before upgrading in-place
-to El Capitan as it will be hard to remove them later.}
+to El Capitan as it may be hard to remove them later.}
 
 If you want to get rid of @R{} more completely using a Terminal, simply
 run (prepend @code{sudo} if needed):
@@ -1767,13 +1770,13 @@ The installer will remove any previous version of the @R{} framework
 which it finds installed.  This can be avoided by using @command{pkgutil
 --forget} (see the previous section).  However, note that different
 versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{3.0},
-@file{3.1} and so on, so it is not possible to have different
+@file{/Library/Frameworks/R.framework/Versions} as @file{3.2},
+@file{3.3} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.1/Resources/bin/R
+/Library/Frameworks/R.framework/Versions/3.2/Resources/bin/R
 @end example
 
 @noindent
@@ -2785,7 +2788,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"3.1.0"}.
+string containing the current @R{} version, for example @code{"3.2.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -3086,7 +3089,7 @@ make PDF versions of the manuals you will also need file
 @pkg{texinfo} distribution but is often made part of the @TeX{} package
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a and 5.2)
+script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a, 5.2 and 6.0)
 need to be run under @command{bash} rather than a Bourne shell.}
 Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
 to be compatible: we have seen problems with older @TeX{} distributions.
@@ -5538,7 +5541,7 @@ never worked well enough to pass @R{}'s @command{make check}.
 
 @R{} requires C99 complex type support, which is available as from
 Cygwin 1.7.8 (March 2011).  However, the (then) implementation of
-@code{cacos} gives incorrect results, so we undefine @code{HAVE_CACOS}
+@code{cacos} gave incorrect results, so we undefine @code{HAVE_CACOS}
 in @file{src/main/complex.c} on that platform.  It has been reported
 that some C99 long double mathematical functions are missing, so
 configuring with @option{--disable-long-double} was required.
