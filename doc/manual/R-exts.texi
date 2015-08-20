@@ -2016,8 +2016,8 @@ conditioned on the use of OpenMP can be used inside @code{#ifdef
 SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
 (@pxref{Platform and version information}) or @code{_OPENMP}: note that
 some toolchains used for @R{} (including most of those using
-@command{clang}@footnote{Some builds of @command{clang} 3.7 will have
-support for OpenMP 3.1. However, this needs the compiler/linker flag
+@command{clang}@footnote{Some builds of @command{clang} 3.7 have support
+for OpenMP 3.1. However, this needs the compiler/linker flag
 @option{-fopenmp=libomp} which is not currently added by
 @command{configure}.}) have no OpenMP support at all, not even
 @file{omp.h}.
@@ -4463,8 +4463,8 @@ provides the portable @code{R_PosInf} (and @code{R_NegInf} for
 available.
 
 Some (but not all) extensions are listed at
-@uref{https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html} and
-@uref{https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Extensions.html}.
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C_002b_002b-Extensions.html}.
 
 @item
 Including C headers in C++ code is not portable.  Including the C
@@ -4679,7 +4679,7 @@ the default).
 The procedures make use of @code{msgfmt} and @code{xgettext} which are
 part of @acronym{GNU} @code{gettext} and this will need to be installed:
 Windows users can find pre-compiled binaries at
-@uref{https://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
+@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies/@/gettext-tools.zip}.
 
 @menu
 * C-level messages::            
@@ -6467,7 +6467,7 @@ separately).
 
 Another is the Eclipse IDE with the Stat-ET plugin
 (@uref{http://www.walware.de/goto/statet}), and (on Windows only)
-Tinn-R (@uref{http://sourceforge.net/projects/tinn-r/}).
+Tinn-R (@uref{http://sourceforge.net/@/projects/@/tinn-r/}).
 
 People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
@@ -7711,16 +7711,16 @@ threaded programs.
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently only on @cputype{ix86}/@cputype{x86_64} Linux
-and OS X, not currently including the versions released by Apple (it is
-included in Xcode 7 beta).  On some platforms, e.g.@: Fedora, the
-runtime library, @pkg{libasan}, needs to be installed separately. OS X
-users can install a suitable @command{clang} from the sources,
+and OS X (including the builds in Xcode 7 beta but not earlier Apple
+releases).  On some platforms, e.g.@: Fedora, the runtime library,
+@pkg{libasan}, needs to be installed separately. OS X users can install
+a suitable @command{clang} from the sources,
 @url{http://llvm.org/releases/} or possibly distributions such as
-MacPorts or Homebrew.} of @command{gcc} 4.8.0 or @command{clang} 3.1 and
-later on common Linux and OS X platforms.  See
-@uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
-@uref{http://clang.llvm.org/docs/AddressSanitizer.html} and
-@uref{https://code.google.com/p/address-sanitizer/}.
+MacPorts or Homebrew.} of @command{gcc} and @command{clang} on common
+Linux and OS X platforms.  See
+@uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
+@uref{http://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
+@uref{https://code.google.com/@/p/@/address-sanitizer/}.
 
 More thorough checks of C++ code are done if the C++ library has been
 `annotated': at the time of writing this applied to @code{std::vector}
@@ -7728,8 +7728,7 @@ in @code{libc++} for use with @command{clang} and gives rise to
 @samp{container-overflow} reports.
 
 It requires code to have been compiled @emph{and linked} with
-@option{-fsanitize=address}@footnote{@option{-faddress-sanitizer} in
-@command{clang} 3.1}, and compiling with @code{-fno-omit-frame-pointer}
+@option{-fsanitize=address} and compiling with @code{-fno-omit-frame-pointer}
 will give more legible reports.  It has a runtime penalty of 2--3x,
 extended compilation times and uses substantially more memory, often
 1--2GB, at run time.  On 64-bit platforms it reserves (but does not
@@ -7740,22 +7739,25 @@ By comparison with @command{valgrind}, ASan can
 detect misuse of stack and global variables but not the use of
 uninitialized memory.
 
-@command{gcc} as from version 4.9.0 returns symbolic addresses for the
-location of the error, but some other versions do not.  For the latter,
-one possibility is to use an external symbolizer.  Depending on the
-version, this can be done @emph{via} an environment variable, e.g.@:
+Recent versions return symbolic addresses for the location of the error
+provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
+in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
+currently shipped by Apple.} is on the path: if it is available but not
+on the path or has been renamed@footnote{as Ubuntu does.}, one can use an
+environment variable, e.g.@:
 
 @example
 ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
 @end example
 
 @noindent
-or by piping the output through
+An alternative is to pipe the output through
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
-@uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
-it makes use of @command{llvm-symbolizer} if available.} and
-perhaps then (for compiled C++ code) @command{c++filt}.
+@uref{https://llvm.org/@/svn/@/llvm-project/@/compiler-rt/@/trunk/@/lib/@/asan/scripts/@/asan_symbolize.py}:
+it makes use of @command{llvm-symbolizer} if available.} and perhaps
+then (for compiled C++ code) @command{c++filt}.  (On OS X, you may need
+to run @command{dsymutil} to get line-number reports.)
 
 The simplest way to make use of this is to build a version of @R{} with
 something like
@@ -7790,7 +7792,7 @@ specified as part of @samp{CC} when @R{} was built.
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
-@uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
+@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/Flags#Run-time_flags}.
 With @command{gcc} additional control is available @emph{via} the
 @option{--params} flag: see its @command{man} page.
 
@@ -7801,7 +7803,7 @@ produced: for @command{gdb} or @command{lldb} you could use
 break __asan_report_error
 @end example
 (See
-@uref{https://code.google.com/p/address-sanitizer/wiki/AddressSanitizer#gdb}.)
+@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
 
 @menu
 * Using Leak Sanitizer::        
@@ -7811,7 +7813,7 @@ break __asan_report_error
 @subsubsection Using the Leak Sanitizer
 
 For @code{x86_64} Linux there is a leak sanitizer, `LSan': see
-@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}.
+@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/LeakSanitizer}.
 This is available on recent versions of @code{gcc} and @code{clang}, and
 where available is compiled in as part of ASan.
 
@@ -7863,14 +7865,16 @@ package's DLL, so it is less often needed to be included in
 
 Some versions have greatly increased compilation times on a few
 files@footnote{e.g.@: @file{src/main/dotcode.c} and parts of the
-@pkg{Matrix} sources with @command{clang} 3.7.0)}.
+@pkg{Matrix} sources with @command{clang} 3.7.0).}.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
-@uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
+@uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
+the user manual for your version of @command{clang}, e.g.@:
+@uref{http://llvm.org/@/releases/@/3.6.2@//tools/@/clang/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
@@ -7888,7 +7892,7 @@ like
 @end example
 
 @noindent
-In addition,
+(@code{return} and @code{vptr} apply to C++).  In addition,
 @example
 -fsanitize=unsigned-integer-overflow
 @end example
@@ -7912,14 +7916,14 @@ MAIN_LD="clang++ -fsanitize=undefined"
 or add @code{-lclang_rt.asan_cxx-x86_64}@footnote{This includes the C++
 UBSAN handlers, despite its name.} to @code{LD_FLAGS} or similar).
 
-See @uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or
+See @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Debugging-Options.html} (or
 the manual for your version of GCC, installed or @emph{via}
-@uref{https://gcc.gnu.org/onlinedocs/}) for the options supported by
+@uref{https://gcc.gnu.org/@/onlinedocs/}) for the options supported by
 GCC: 5.2.0 supports
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
 integer-divide-by-zero,non-null-attribute,null,object-size,
-returns,returns-nonnull-attribute,shift,signed-integer-overflow,
+return,returns-nonnull-attribute,shift,signed-integer-overflow,
 unreachable,vla-bound,vptr
 @end example
 @noindent
@@ -7958,7 +7962,7 @@ and @option{-ftrapv}, said to be more reliable in @command{clang} than
 
 For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
-@uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
+@uref{http://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
 
@@ -7966,10 +7970,10 @@ For more details on the topic see
 @subsection Other analyses with `clang'
 
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
-`ThreadSanitizer' (@uref{https://code.google.com/p/thread-sanitizer/}),
+`ThreadSanitizer' (@uref{https://code.google.com/@/p/@/thread-sanitizer/}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
-(@uref{http://clang.llvm.org/docs/MemorySanitizer.html},
-@uref{https://code.google.com/p/memory-sanitizer/wiki/MemorySanitizer})
+(@uref{http://clang.llvm.org/@/docs/@/MemorySanitizer.html},
+@uref{https://code.google.com/@/p/@/memory-sanitizer/@/wiki/@/MemorySanitizer})
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
 
@@ -8014,11 +8018,10 @@ when you run @command{R CMD check}.
 
 This may report incorrectly errors with the way that Fortran character
 variables are passed, particularly when Fortran subroutines are called
-from C code.  This may include@footnote{depending on the compiler
-version, with @command{gfortran} @code{4.8.x} doing this less than
-@code{4.7.x}.} the use of BLAS and LAPACK subroutines in @R{}, so it is
-not advisable to build @R{} itself with bounds checking (and may not
-even be possible as these subroutines are called during the @R{} build).
+from C code.  This may include the use of BLAS and LAPACK subroutines in
+@R{}, so it is not advisable to build @R{} itself with bounds checking
+(and may not even be possible as these subroutines are called during the
+@R{} build).
 
 
 @node Debugging compiled code,  , Checking memory access, Debugging
@@ -8811,7 +8814,7 @@ symbol.
 Examples of registering routines can be found in the different packages
 in the @R{} source tree (e.g., @pkg{stats}).  Also, there is a
 brief, high-level introduction in @emph{R News} (volume 1/3, September
-2001, pages 20--23, @uref{https://www.r-project.org/doc/Rnews/Rnews_2001-3.pdf}).
+2001, pages 20--23, @uref{https://www.r-project.org/@/doc/@/Rnews/Rnews_2001-3.pdf}).
 
 Once routines are registered, they can be referred to as @R{} objects if
 they this is arranged in the @code{useDynLib} call in the package's
