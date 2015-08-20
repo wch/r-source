@@ -1914,7 +1914,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
     } else tre_regfree(&reg);
-    DUPLICATE_ATTRIB(ans, text);
+    SHALLOW_DUPLICATE_ATTRIB(ans, text);
     /* This copied the class, if any */
     UNPROTECT(1);
     return ans;

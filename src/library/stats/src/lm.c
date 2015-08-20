@@ -83,12 +83,12 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol, SEXP chk)
     const char *ansNms[] = {"qr", "coefficients", "residuals", "effects",
 			    "rank", "pivot", "qraux", "tol", "pivoted", ""};
     PROTECT(ans = mkNamed(VECSXP, ansNms));
-    SET_VECTOR_ELT(ans, 0, qr = duplicate(x));
+    SET_VECTOR_ELT(ans, 0, qr = shallow_duplicate(x));
     coefficients = (ny > 1) ? allocMatrix(REALSXP, p, ny) : allocVector(REALSXP, p);
     PROTECT(coefficients);
     SET_VECTOR_ELT(ans, 1, coefficients);
-    SET_VECTOR_ELT(ans, 2, residuals = duplicate(y));
-    SET_VECTOR_ELT(ans, 3, effects = duplicate(y));
+    SET_VECTOR_ELT(ans, 2, residuals = shallow_duplicate(y));
+    SET_VECTOR_ELT(ans, 3, effects = shallow_duplicate(y));
     PROTECT(pivot = allocVector(INTSXP, p));
     int *ip = INTEGER(pivot);
     for(int i = 0; i < p; i++) ip[i] = i+1;

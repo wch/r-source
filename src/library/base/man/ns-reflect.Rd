@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-reflect.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2007, 2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-reflect.Rd}
@@ -28,7 +28,10 @@ getNamespaceVersion(ns)
   \item{name}{string or name.}
 }
 \description{
-  Functions to support reflection on namespace objects.
+  Internal functions to support reflection on namespace objects.
+}
+\seealso{
+  \code{\link{loadNamespace}} for more about namespaces.
 }
 \details{
   \code{getExportedValue} returns the value of the exported variable

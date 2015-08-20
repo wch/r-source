@@ -225,12 +225,26 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \file{curl-ca-bundle.crt}.  (This is normally done for a binary
   installation of \R, which installs
   \file{\var{R_HOME}/etc/curl-ca-bundle.crt} and sets
-  \env{CURL_CA_BUNDLE} to point to it if that enironment variable is not
+  \env{CURL_CA_BUNDLE} to point to it if that environment variable is not
   already set.)  For an updated certificate bundle, see
   \url{http://curl.haxx.se/docs/sslcerts.html}.
   Currently one can download a copy from
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
+  
+  Note that the root certificates used by \R may or may not be the same
+  as used in a browser, and indeed different browsers may use different
+  certificate bundles (there is typically a build option to choose
+  either their own or the system ones).
+}
+\section{FTP sites}{
+  \samp{ftp:} URLs are accessed using the FTP protocol which has a
+  number of variants.  One distinction is between \sQuote{active} and
+  \sQuote{(extended) passive} modes: which is used is chosen by the
+  client.  The \code{"internal"} and \code{"libcurl"} method use passive
+  mode, and that is almost universally used by browsers.  Prior to \R
+  3.2.3 the \code{"wininet"} method used active mode: since it first
+  tries passive and then active.
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for

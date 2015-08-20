@@ -873,7 +873,7 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     len = j;
     PROTECT(ans = allocVector(INTSXP, len));
-    memcpy(INTEGER(ans), buf, sizeof(int) * len);
+    if(len) memcpy(INTEGER(ans), buf, sizeof(int) * len);
 
     if ((v_nms = getAttrib(v, R_NamesSymbol)) != R_NilValue) {
 	PROTECT(ans_nms = allocVector(STRSXP, len));

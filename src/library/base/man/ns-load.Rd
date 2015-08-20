@@ -5,7 +5,8 @@
 
 \name{ns-load}
 \title{Loading and Unloading Name Spaces}
-
+%% Currently considered "main" help page on namespaces
+%%                       --------------- -> \references{}, \seealso{}
 \alias{attachNamespace}
 \alias{loadNamespace}
 \alias{requireNamespace}
@@ -46,7 +47,7 @@ isNamespaceLoaded(name)
 }
 \details{
   The functions \code{loadNamespace} and \code{attachNamespace} are
-  usually called implicitly when \code{library} is used to load a name
+  usually called implicitly when \code{\link{library}} is used to load a name
   space and any imports needed.  However it may be useful at times to
   call these functions directly.
 
@@ -102,7 +103,13 @@ isNamespaceLoaded(name)
 
   \code{unloadNamespace} returns \code{NULL}, invisibly.
 }
-\seealso{ \code{\link{getNamespace}}
+\seealso{
+  \code{\link{getNamespace}}, \code{\link{asNamespace}},
+  \code{\link{topenv}}, \code{\link{.onLoad}} (etc);
+  further \code{\link{environment}}.
+}
+\references{
+  The \sQuote{Writing R Extensions} manual, section \dQuote{Package namespaces}.
 }
 \author{Luke Tierney and R-core}
 \examples{

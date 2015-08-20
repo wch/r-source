@@ -50,11 +50,11 @@
    assignment functions when possible, since the write barrier (and
    possibly cache behavior on some architectures) makes assigning more
    costly than dereferencing. */
-#define DUPLICATE_ATTRIB(to, from) do {\
+#define SHALLOW_DUPLICATE_ATTRIB(to, from) do {\
   SEXP __from__ = (from); \
   if (ATTRIB(__from__) != R_NilValue) { \
     SEXP __to__ = (to); \
-    (DUPLICATE_ATTRIB)(__to__, __from__);	\
+    (SHALLOW_DUPLICATE_ATTRIB)(__to__, __from__);	\
   } \
 } while (0)
 
@@ -433,7 +433,7 @@ static SEXP coerceToLogical(SEXP v)
        SET_RTRACE(ans,1);
     }
 #endif
-    DUPLICATE_ATTRIB(ans, v);
+    SHALLOW_DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case INTSXP:
 	for (i = 0; i < n; i++) {
@@ -485,7 +485,7 @@ static SEXP coerceToInteger(SEXP v)
        SET_RTRACE(ans,1);
     }
 #endif
-    DUPLICATE_ATTRIB(ans, v);
+    SHALLOW_DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++) {
@@ -537,7 +537,7 @@ static SEXP coerceToReal(SEXP v)
        SET_RTRACE(ans,1);
     }
 #endif
-    DUPLICATE_ATTRIB(ans, v);
+    SHALLOW_DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++) {
@@ -589,7 +589,7 @@ static SEXP coerceToComplex(SEXP v)
        SET_RTRACE(ans,1);
     }
 #endif
-    DUPLICATE_ATTRIB(ans, v);
+    SHALLOW_DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++) {
@@ -642,7 +642,7 @@ static SEXP coerceToRaw(SEXP v)
        SET_RTRACE(ans,1);
     }
 #endif
-    DUPLICATE_ATTRIB(ans, v);
+    SHALLOW_DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++) {
@@ -720,7 +720,7 @@ static SEXP coerceToString(SEXP v)
        SET_RTRACE(ans,1);
     }
 #endif
-    DUPLICATE_ATTRIB(ans, v);
+    SHALLOW_DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++) {
@@ -2413,12 +2413,11 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *str = translateChar(STRING_ELT(rfun, 0));
     if (streql(str, ".Internal")) error("illegal usage");
     PROTECT(rfun = install(str));
-    PROTECT(evargs = duplicate(CDR(args)));
+    PROTECT(evargs = shallow_duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest)) {
-	PROTECT(tmp = eval(CAR(rest), rho));
-	if (MAYBE_REFERENCED(tmp)) tmp = duplicate(tmp);
+	tmp = eval(CAR(rest), rho);
+	if (NAMED(tmp)) MARK_NOT_MUTABLE(tmp);
 	SETCAR(rest, tmp);
-	UNPROTECT(1);
     }
     rfun = LCONS(rfun, evargs);
     UNPROTECT(3);
@@ -2441,8 +2440,8 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
        zero-length string check used to be here but install gives
        better error message.
      */
-    if( !(isString(fun) && length(fun) == 1) && !isFunction(fun) )
-	error(_("'what' must be a character string or a function"));
+    if(!(isFunction(fun) || (isString(fun) && length(fun) == 1)))
+	error(_("'what' must be a function or character string"));
 
 #ifdef __maybe_in_the_future__
     if (!isNull(args) && !isVectorList(args))
@@ -2816,7 +2815,7 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isFactor(obj))
 	error(_("invalid to change the storage mode of a factor"));
     PROTECT(ans = coerceVector(obj, type));
-    DUPLICATE_ATTRIB(ans, obj);
+    SHALLOW_DUPLICATE_ATTRIB(ans, obj);
     UNPROTECT(1);
     return ans;
 }

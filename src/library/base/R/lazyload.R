@@ -44,8 +44,8 @@ lazyLoadDBexec <- function(filebase, fun, filter)
     `parent.env<-` <-
         function (env, value) .Internal(`parent.env<-`(env, value))
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
-    getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
-    set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
+    ## getFromFrame <- function (x,  env) .Internal(get(x,  env,  "any",  FALSE))
+    ## set <- function (x,  value,  env) .Internal(assign(x,  value,  env,  FALSE))
     environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
 
@@ -57,18 +57,16 @@ lazyLoadDBexec <- function(filebase, fun, filter)
     env <- mkenv()
     map <- readRDS(mapfile)
     vars <- names(map$variables)
-    rvars <- names(map$references)
     compressed <- map$compressed
-    for (i in seq_along(rvars))
-        set(rvars[i], map$references[[i]], env)
+    list2env(map$references, env)
     envenv <- mkenv()
     envhook <- function(n) {
         if (existsInFrame(n, envenv))
-            getFromFrame(n, envenv)
+            envenv[[n]]
         else {
             e <- mkenv()
-            set(n, e, envenv)           # MUST do this immediately
-            key <- getFromFrame(n, env)
+            envenv[[n]] <- e           # MUST do this immediately
+            key <- env[[n]]
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
             ## comment from r41494
             ## modified the loading of old environments, so that those
@@ -76,13 +74,8 @@ lazyLoadDBexec <- function(filebase, fun, filter)
             ## parent.env=emptyenv(); and yes an alternative would have been
             ## baseenv(), but that was seldom the intention of folks that
             ## set the environment to NULL.
-            if (is.null(data$enclos))
-                parent.env(e) <- emptyenv()
-            else
-                parent.env(e) <- data$enclos
-            vars <- names(data$bindings)
-            for (i in seq_along(vars))
-                set(vars[i], data$bindings[[i]], e)
+            parent.env(e) <- if(!is.null(data$enclos)) data$enclos else emptyenv()
+            list2env(data$bindings, e)
             if (! is.null(data$attributes))
                 attributes(e) <- data$attributes
             if (! is.null(data$isS4) && data$isS4)

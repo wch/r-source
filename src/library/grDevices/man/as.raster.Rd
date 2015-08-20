@@ -1,6 +1,6 @@
 % File src/library/grid/man/as.raster.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.raster}
@@ -8,6 +8,7 @@
 \alias{as.raster}
 \alias{as.raster.logical}
 \alias{as.raster.numeric}
+\alias{as.raster.raw}
 \alias{as.raster.character}
 \alias{as.raster.matrix}
 \alias{as.raster.array}
@@ -21,16 +22,16 @@
 is.raster(x)
 as.raster(x, \dots)
 
+\method{as.raster}{matrix}(x, max = 1, \dots)
+\method{as.raster}{array}(x, max = 1, \dots)
+
 \method{as.raster}{logical}(x, max = 1, \dots)
 \method{as.raster}{numeric}(x, max = 1, \dots)
 \method{as.raster}{character}(x, max = 1, \dots)
-\method{as.raster}{matrix}(x, max = 1, \dots)
-\method{as.raster}{array}(x, max = 1, \dots)
+\method{as.raster}{raw}(x, max = 255L, \dots)
 }
 \arguments{
-  \item{x}{
-    Any R object.
-  }
+  \item{x}{any \R object.}
   \item{max}{number giving the maximum of the color values range.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -43,8 +44,8 @@ as.raster(x, \dots)
   make use of the \code{as.raster()} function to generate a raster
   object from their input.
 
-  The \code{as.raster()} function is generic so methods can be
-  written to convert other R objects to a raster object.
+  The \code{as.raster()} function is (S3) generic so methods can be
+  written to convert other \R objects to a raster object.
 
   The default implementation for numeric matrices interprets scalar
   values on black-to-white scale.
@@ -52,12 +53,11 @@ as.raster(x, \dots)
   Raster objects can be subsetted like a matrix and it is
   possible to assign to a subset of a raster object.
 
-  There is a method for converting a raster object to a matrix
-  (of colour strings).
+  There is a method for converting a raster object to a
+  \code{\link{matrix}} (of colour strings).
 
-  Raster objects can be compared
-  for equality or inequality (with each other or with a
-  colour string).
+  Raster objects can be compared for equality or inequality (with each
+  other or with a colour string).
 
   There is a \code{\link{is.na}} method which returns a logical matrix
   of the same dimensions as the raster object.  Note that \code{NA}
@@ -86,13 +86,13 @@ as.raster(matrix(hcl(0, 80, seq(50, 80, 10)),
 as.raster(hcl(0, 80, seq(50, 80, 10)))
 #   numeric vectors are greyscale ...
 as.raster(1:5, max = 5)
-#   locigal vectors are black and white ...
+#   logical vectors are black and white ...
 as.raster(1:10 \%\% 2 == 0)
 
 # ... unless nrow/ncol are supplied ...
 as.raster(1:10 \%\% 2 == 0, nrow = 1)
 
-# Matrix can also be logical or numeric ...
+# Matrix can also be logical or numeric (or raw) ...
 as.raster(matrix(c(TRUE, FALSE), nrow = 3, ncol = 2))
 as.raster(matrix(1:3/4, nrow = 3, ncol = 4))
 

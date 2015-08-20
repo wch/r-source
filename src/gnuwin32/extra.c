@@ -191,17 +191,23 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     if((int)osvi.dwMajorVersion >= 5) {
 	PGNSI pGNSI;
 	SYSTEM_INFO si;
+	if(osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0) {
+	    if(osvi.wProductType == VER_NT_WORKSTATION) strcpy(ver, "10");
+	    else strcpy(ver, "Server");
+	}
 	if(osvi.dwMajorVersion == 6) {
 	    char *desc = "";
 	    if(osvi.wProductType == VER_NT_WORKSTATION) {
 		if(osvi.dwMinorVersion == 0) desc = "Vista";
 		else if(osvi.dwMinorVersion == 1) desc = "7";
 		else if(osvi.dwMinorVersion == 2) desc = ">= 8";
-		else desc = "> 8";
+		else if(osvi.dwMinorVersion == 3) desc = "8.1";
+		else desc = "> 8.1";
 	    } else {
 		if(osvi.dwMinorVersion == 0) desc = "Server 2008";
 		else if(osvi.dwMinorVersion == 1) desc = "Server 2008 R2";
 		else if(osvi.dwMinorVersion == 2) desc = "Server >= 2012";
+		else if(osvi.dwMinorVersion == 3) desc = "Server 2012 R2";
 		else desc = "Server > 2012";
 	    }
 	    strcpy(ver, desc);

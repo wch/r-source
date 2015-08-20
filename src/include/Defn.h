@@ -1272,12 +1272,12 @@ void invalidate_cached_recodings(void);  /* from sysutils.c */
 void resetICUcollator(void); /* from util.c */
 void dt_invalidate_locale(); /* from Rstrptime.h */
 int R_OutputCon; /* from connections.c */
-int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
+extern int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
 void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
 unsigned long get_duplicate_counter(void);  /* from duplicate.c */
 void reset_duplicate_counter(void);  /* from duplicate.c */
 void BindDomain(char *); /* from main.c */
-Rboolean LoadInitFile;  /* from startup.c */
+extern Rboolean LoadInitFile;  /* from startup.c */
 
 // Unix and Windows versions
 double R_getClockIncrement(void);

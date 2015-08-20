@@ -181,7 +181,8 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	errorcall(call, _("invalid argument type"));
     }
     if (isLogical(arg) || isRaw(arg))
-	x = PROTECT(duplicate(arg));  // copy all attributes in this case
+	// copy all attributes in this case
+	x = PROTECT(shallow_duplicate(arg));
     else {
 	x = PROTECT(allocVector(isRaw(arg) ? RAWSXP : LGLSXP, len));
 	PROTECT(names = getAttrib(arg, R_NamesSymbol));

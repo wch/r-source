@@ -1,7 +1,7 @@
 #  File src/library/base/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,17 +27,16 @@ shQuote <- function(string, type = c("sh", "csh", "cmd"))
     if(type == "cmd") {
         paste0('"', gsub('"', '\\\\"', string), '"')
     } else {
-        if(!length(string)) return("")
-        has_single_quote <- grep("'", string)
-        if(!length(has_single_quote))
-            return(paste0("'", string, "'"))
-        if(type == "sh")
-            paste0('"', gsub('(["$`\\])', "\\\\\\1", string), '"')
-        else {
-            if(!length(grep("([$`])", string))) {
-                paste0('"', gsub('(["!\\])', "\\\\\\1", string), '"')
-            } else vapply(string, cshquote, "")
-        }
+	if(!length(string))
+	    ""
+	else if(!any(grepl("'", string))) # has single quote
+	    paste0("'", string, "'")
+	else if(type == "sh")
+	    paste0('"', gsub('(["$`\\])', "\\\\\\1", string), '"')
+	else if(!any(grepl("([$`])", string)))
+	    paste0('"', gsub('(["!\\])' , "\\\\\\1", string), '"')
+	else
+	    vapply(string, cshquote, "")
     }
 }
 

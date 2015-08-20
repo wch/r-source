@@ -3871,7 +3871,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	if (TYPEOF(val) != CHARSXP) break; /* sanity check */
 	if (need_enc == (ENC_KNOWN(val) | IS_BYTES(val)) &&
 	    LENGTH(val) == len &&  /* quick pretest */
-	    memcmp(CHAR(val), name, len) == 0) {
+	    (!len || (memcmp(CHAR(val), name, len) == 0))) { // called with len = 0
 	    cval = val;
 	    break;
 	}

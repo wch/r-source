@@ -60,6 +60,7 @@
  NO_SPECIAL_SYMBOLS
  PrintUsage
  ProfileEvent
+ RExitContext
  R_BCNodeStackBase
  R_BCNodeStackEnd
  R_BCNodeStackTop
@@ -89,6 +90,7 @@
  R_FinalizeSrcRefState
  R_FreeSEXP
  R_FreeStringBufferL
+ R_GCEnabled
  R_GE_VStrHeight
  R_GE_VStrWidth
  R_GE_VText
@@ -192,8 +194,10 @@
  R_decompress2
  R_decompress3
  R_dlsym
+ R_doDotCall
  R_do_data_class
  R_do_set_class
+ R_dotCallFn
  R_dot_Class
  R_dot_Generic
  R_dot_GenericCallEnv
@@ -639,6 +643,9 @@
  do_copyDFattr
  do_crc64
  do_cum
+ do_curlDownload
+ do_curlGetHeaders
+ do_curlVersion
  do_date
  do_debug
  do_delayed
@@ -704,6 +711,7 @@
  do_first_min
  do_flush
  do_for
+ do_forceAndCall
  do_formals
  do_format
  do_formatC
@@ -721,6 +729,7 @@
  do_getIdentification
  do_getNSRegistry
  do_getNumRtoCConverters
+ do_getOption
  do_getRegNS
  do_getRegisteredRoutines
  do_getRestart
@@ -738,7 +747,6 @@
  do_geterrmessage
  do_getfmts
  do_getlocale
- do_getOption
  do_gettext
  do_getwd
  do_glob
@@ -785,6 +793,7 @@
  do_lazyLoadDBinsertValue
  do_length
  do_lengthgets
+ do_lengths
  do_levelsgets
  do_list2env
  do_listdirs
@@ -974,6 +983,7 @@
  do_stopHTTPD
  do_storage_mode
  do_strptime
+ do_strrep
  do_strsplit
  do_strtoi
  do_strtrim
@@ -1003,6 +1013,7 @@
  do_system
  do_systime
  do_sysumask
+ do_syswhich
  do_tabulate
  do_tempdir
  do_tempfile
@@ -1361,6 +1372,7 @@
  process_site_Renviron
  process_system_Renviron
  process_user_Renviron
+ qbeta_raw
  raise
  realp0_
  registerBase
@@ -1507,6 +1519,13 @@
  xbufdel
  xbufgrow
  xcalloc_impl
+ xcopyComplexWithRecycle
+ xcopyIntegerWithRecycle
+ xcopyLogicalWithRecycle
+ xcopyRawWithRecycle
+ xcopyRealWithRecycle
+ xcopyStringWithRecycle
+ xcopyVectorWithRecycle
  xdr_bool
  xdr_bytes
  xdr_char
@@ -1526,6 +1545,13 @@
  xdr_void
  xdr_wrapstring
  xdrstdio_create
+ xfillComplexMatrixWithRecycle
+ xfillIntegerMatrixWithRecycle
+ xfillLogicalMatrixWithRecycle
+ xfillRawMatrixWithRecycle
+ xfillRealMatrixWithRecycle
+ xfillStringMatrixWithRecycle
+ xfillVectorMatrixWithRecycle
  xfree_impl
  xmalloc_configure
  xmalloc_current

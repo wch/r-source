@@ -501,7 +501,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     }
     if(ifile[0]) {
 	unlink(ifile); /* input file from -e */
-	ifile[0] = NULL;
+	ifile[0] = '\0';
     }
     exit(status);
 }

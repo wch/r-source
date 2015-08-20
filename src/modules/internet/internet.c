@@ -1003,9 +1003,11 @@ static void *in_R_FTPOpen2(const char *url)
 	return NULL;
     }
 
+    DWORD flag = INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE;
     wictxt->session = InternetOpenUrl(wictxt->hand, url, NULL, 0,
-	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
-				      0);
+    	flag | INTERNET_FLAG_PASSIVE, 0);
+    if(!wictxt->session)
+    	wictxt->session = InternetOpenUrl(wictxt->hand, url, NULL, 0, flag, 0);
     if(!wictxt->session) {
 	char buf[256];
 	DWORD err1 = GetLastError(), err2, blen = 256;

@@ -59,7 +59,7 @@ smoothScatter(x, y = NULL, nbin = 128, bandwidth,
   If \code{ret.selection} is true, a vector of integers of length
   \code{nrpoints} (or smaller, if there are less finite points inside
   \code{xlim} and \code{ylim}) with the indices of the low-density
-  points drawn, ordered with lowwest density first.
+  points drawn, ordered with lowest density first.
 }
 \details{
   \code{smoothScatter} produces a smoothed version of a scatter plot.

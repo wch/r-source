@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-dblcolon.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-dblcolon}
@@ -8,7 +8,8 @@
 \alias{::}
 \alias{:::}
 \description{
-  Accessing exported and internal variables in a namespace.
+  Accessing exported and internal variables, .i.e., \R objects
+  (including lazy loaded data sets) in a namespace.
 }
 \usage{
 pkg::name
@@ -19,11 +20,11 @@ pkg:::name
   \item{name}{variable name: symbol or literal character string.}
 }
 \details{
-  For a package \pkg{pkg}, \code{pkg::name} returns the value of
-  the exported variable \code{name} in namespace \code{pkg}, whereas
+  For a package \pkg{pkg}, \code{pkg::name} returns the value of the
+  exported variable \code{name} in namespace \code{pkg}, whereas
   \code{pkg:::name} returns the value of the internal variable
-  \code{name}. The namespace will be loaded if it was not loaded
-  before the call, but the package will not be attached to the
+  \code{name}.  The package namespace will be loaded if it was not
+  loaded before the call, but the package will not be attached to the
   search path.
 
   Specifying a variable or package that does not exist is an error.
@@ -39,11 +40,13 @@ pkg:::name
   It is typically a design mistake to use \code{:::}
   in your code since the corresponding object has probably been kept
   internal for a good reason.  Consider contacting the package
-  maintainer if you feel the need to access the object for anything but
-  mere inspection.
+  \code{\link{maintainer}} if you feel the need to access the object for
+  anything but mere inspection.
 }
 \seealso{
   \code{\link{get}} to access an object masked by another of the same name.
+  \code{\link{loadNamespace}}, \code{\link{asNamespace}} for more about
+  namespaces.
 }
 \examples{
 base::log

@@ -26,7 +26,10 @@
       \samp{https:} URL can be accessed.  For example, server and client
       have to successfully negotiate a cryptographic protocol (TLS/SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
-      the available certificates.
+      the available certificates.  Different access methods may allow
+      different protocols or use certificate bundles: we have experienced a
+      \samp{https:} CRAN mirror which can be accessed by one browser but
+      not another nor by \code{download.file()} on the same Linux machine.
     }
   }
   \subsection{NEW FEATURES}{
@@ -206,12 +209,32 @@
 \section{\Rlogo CHANGES IN R 3.2.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Some Windows time zone names have been added to the
-      conversion table used to convert these to Olson names.  (Including
-      those relating to changes for Russia in Oct 2014, as in \PR{16503}.)
+      \item Some recently-added Windows time zone names have been added
+      to the conversion table used to convert these to Olson names.
+      (Including those relating to changes for Russia in Oct 2014, as in
+      \PR{16503}.)
+      
+      \item (Windows) Compatibility information has been added to the
+      manifests for \file{Rgui.exe}, \file{Rterm.exe} and
+      \file{Rscript.exe}.  This should allow \code{win.version()} and
+      \code{Sys.info()} to report the actual Windows version up to
+      Windows 10.
+
+      \item Windows \code{"wininet"} FTP first tries EPSV / PASV mode
+      rather than only using active mode (reported by Dan Tenenbaum).
+      %% https://stat.ethz.ch/pipermail/r-devel/2015-August/071595.html
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included configuration code for \code{libintl} has been
+      updated to that from \code{gettext} version 0.19.5.1 --- this
+      should only affect how an external library is detected. 
+      (Wish of \PR{16464}.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
@@ -223,7 +246,7 @@
 
       \item \code{model.tables(type = "means")} and hence
       \code{TukeyHSD()} now support \code{"aov"} fits without an
-      intercept term.
+      intercept term.  (\PR{16437})
 
       \item \code{close()} now reports the status of a \code{pipe()}
       connection opened with an explicit \code{open} argument.
@@ -236,6 +259,9 @@
       \command{Rscript} or \command{R -f} could result in attempting to
       close the input file twice, possibly crashing the process.
       (\PR{16500})
+
+      \item (Windows) \code{Sys.info()} was out of step with
+      \code{win.version()} and did not report Windows 8.
 
       \item \code{topenv(baseenv())} returns \code{baseenv()} again as
       in \R 3.1.0 and earlier.  This also fixes \code{compilerJIT(3)}
@@ -270,7 +296,7 @@
       \code{download.file()} and \code{url()} has been changed to be
       \code{"wininet"} using Windows API calls.  This changes the way
       proxies need to be set and security settings made: there have been
-      some reports of sites being inaccessible under the new default
+      some reports of \samp{ftp:} sites being inaccessible under the new default
       method (but the previous methods remain available).
     }
   }
@@ -297,13 +323,12 @@
       method: to revert to the previous default use
       \code{setInternet2(FALSE)}.
 
-      This means that \samp{https://} can be read by default by
-      \code{download.file()} (they have been readable by \code{file()} and
-      \code{url()} since \R 3.2.0).
+      This means that \samp{https://} URLs can be read by default by
+      \code{download.file()} (they have been readable by \code{file()}
+      and \code{url()} since \R 3.2.0).
 
       There are implications for how proxies need to be set (see
-      \code{?download.file}): also, \code{cacheOK = FALSE} is not
-      supported.
+      \code{?download.file}).
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} now
       offer HTTPS mirrors in preference to HTTP mirrors.  This changes

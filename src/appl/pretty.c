@@ -143,8 +143,8 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	      eps_correction,	dx, (int)i_small, cell, unit);
 #endif
     if(eps_correction && (eps_correction > 1 || !i_small)) {
-	if(*lo) *lo *= (1- DBL_EPSILON); else *lo = -DBL_MIN;
-	if(*up) *up *= (1+ DBL_EPSILON); else *up = +DBL_MIN;
+	if(*lo != 0.) *lo *= (1- DBL_EPSILON); else *lo = -DBL_MIN;
+	if(*up != 0.) *up *= (1+ DBL_EPSILON); else *up = +DBL_MIN;
     }
 
 #ifdef DEBUGpr

@@ -334,7 +334,7 @@ prettyNum <-
 	ina <- is.na(x) | x == "NA"
 	is.cmplx <-
 	    if(all(ina)) FALSE
-	    else length(grep("[0-9].*[-+][0-9].*i$", x)) > 0
+	    else any(grepl("[0-9].*[-+][0-9].*i$", x))
     }
     preserve.width <- match.arg(preserve.width)
     if(is.cmplx) {

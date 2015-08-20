@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-hooks.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-hooks}
@@ -40,8 +40,8 @@
 
   If a function \code{.onDetach} (as from \R 3.0.0) is in the namespace
   or \code{.Last.lib} is exported from the package, it will be called
-  (with a single argument) when the package is detached.  Beware that it
-  might be called if \code{.onAttach} has failed, so it should be
+  (with a single argument) when the package is \code{\link{detach}}ed.
+  Beware that it might be called if \code{.onAttach} has failed, so it should be
   written defensively.  (It is called within \code{\link{tryCatch}}, so
   errors will not stop the package being detached.)
 
@@ -54,7 +54,7 @@
   Objects in the current package will be visible (unless this is
   circumvented), but objects from other packages should be imported or
   the double colon operator should be used.
-  
+
   \code{.onLoad}, \code{.onUnload}, \code{.onAttach} and
   \code{.onDetach} are looked for as internal objects in the namespace
   and should not be exported (whereas \code{.Last.lib} should be).
@@ -105,11 +105,12 @@
   \code{\link{library.dynam.unload}}) in \code{.Last.lib} nor
   \code{.onDetach}, only in \code{.onUnload}.
 }
-
 \seealso{
   \code{\link{setHook}} shows how users can set hooks on the same events, and
   lists the sequence of events involving all of the hooks.
 
   \code{\link{reg.finalizer}} for hooks to be run at the end of a session.
+
+  \code{\link{loadNamespace}} for more about namespaces.
 }
 \keyword{utilities}

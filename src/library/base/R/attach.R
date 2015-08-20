@@ -218,7 +218,7 @@ ls <- objects <-
     all.names <- .Internal(ls(envir, all.names, sorted))
     if (!missing(pattern)) {
         if ((ll <- length(grep("[", pattern, fixed = TRUE))) &&
-            ll != length(grep("]", pattern, fixed = TRUE))) {
+             ll != length(grep("]", pattern, fixed = TRUE))) {
             if (pattern == "[") {
                 pattern <- "\\["
                 warning("replaced regular expression pattern '[' by  '\\\\['")
