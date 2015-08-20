@@ -4435,11 +4435,13 @@ A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 
 @item
 Function @code{fabs} is defined only for floating-point types, except in
-C++11 which has overloads in @file{<cmath>} for integer types.  Function
-@code{abs} is defined in C99's @file{<stdlib.h>} for @code{int} and in
-C++98's @file{<cstdlib>} for integer types, overloaded in @file{<cmath>}
-for floating-point types.  C++11 has additional overloads for @code{abs}
-in @file{<cmath>} for integer types.
+C++11 which has overloads for @code{std::fabs} in @file{<cmath>} for
+integer types.  Function @code{abs} is defined in C99's
+@file{<stdlib.h>} for @code{int} and in C++98's @file{<cstdlib>} for
+integer types, overloaded in @file{<cmath>} for floating-point types.
+C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
+integer types.  The effect of calling @code{abs} for a floating-point
+type is implementation-specific: it may truncate to an integer.
 
 @item
 Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
@@ -7827,12 +7829,12 @@ When LSan is enabled, leaks give the process a failure error status (by
 default @code{23}).  For an @R{} package this means the @R{} process,
 and as the parser retains some memory to the end of the process, if @R{}
 itself was built against ASan, all runs will have a failure error status
-(and that includes running @R{} as part of building @R{} itself).
+(which may include running @R{} as part of building @R{} itself).
 
 To disable both this and some strict checking use
 
 @example
-setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
+setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0:detect_odr_violation=0'
 @end example
 
 LSan also has a `stand-alone' mode where it is compiled in using
@@ -7855,12 +7857,13 @@ might be @code{NA_INTEGER}.
 
 `UBSanitizer' is a tool for C/C++ source code selected by
 @option{-fsanitize=undefined} in suitable builds of @command{clang}, and
-GCC as from 4.9.0.  Its runtime library is linked into each package's
-DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
+GCC as from 4.9.0.  Its (main) runtime library is linked into each
+package's DLL, so it is less often needed to be included in
+@env{MAIN_LDFLAGS}.
 
-Some versions have greatly increased compilation times on a few files
-(e.g.@: @file{src/main/dotcode.c} and parts of the @pkg{Matrix} sources
-with @command{clang} 3.7.0).
+Some versions have greatly increased compilation times on a few
+files@footnote{e.g.@: @file{src/main/dotcode.c} and parts of the
+@pkg{Matrix} sources with @command{clang} 3.7.0)}.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
@@ -7892,40 +7895,44 @@ In addition,
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
-@command{clang} 3.5 and later seem to need
+@command{clang} 3.5 and later need
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
 @end example
 
 @noindent
-for C++ code (in @code{CXX} and @code{CXX1X}).
-
-A smaller selection is currently released for GCC, for 4.9.x defaulting
-to
+for C++ code (in @code{CXX} and @code{CXX1X}) as the run-time library
+for @code{vptr} needs to be linked into the main @R{} executable (and
+that would need to be linked by @code{clang++}, not @code{clang}: you
+could try building @R{} with
 @example
--fsanitize=integer-divide-by-zero,null,
-return,shift,signed-integer-overflow,unreachable,vla-bound
+MAIN_LD="clang++ -fsanitize=undefined"
 @end example
+or add @code{-lclang_rt.asan_cxx-x86_64}@footnote{This includes the C++
+UBSAN handlers, despite its name.} to @code{LD_FLAGS} or similar).
 
-See
-@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
-manual for your version of GCC).  GCC 5.1.0 added
+See @uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or
+the manual for your version of GCC, installed or @emph{via}
+@uref{https://gcc.gnu.org/onlinedocs/}) for the options supported by
+GCC: 5.2.0 supports
 @example
--fsanitize=alignment,bounds,float-cast-overflow,object-size,
-nonnull-attribute,returns-nonnull-attribute,bool,enum,vptr
+-fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
+integer-divide-by-zero,non-null-attribute,null,object-size,
+returns,returns-nonnull-attribute,shift,signed-integer-overflow,
+unreachable,vla-bound,vptr
 @end example
 @noindent
 with
 @example
 -fsanitize=float-divide-by-zero
 @end example
-
 @noindent
 as a separate option not enabled by @code{-fsanitize=undefined} (and not
 desirable for @R{} uses).  At the time of writing the @code{object-size}
 and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 so should be disabled.
+
 
 Other useful flags include
 @example
