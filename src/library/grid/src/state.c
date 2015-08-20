@@ -240,26 +240,41 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 		/* The graphics engine is about to replay the display list
 		 * So we "clear" the device and reset the grid graphics state
 		 */
-		/* There are two main situations in which this occurs:
-		 * (i) a screen is resized
-		 *     In this case, it is ok-ish to do a GENewPage
-		 *     because that has the desired effect and no 
-		 *     undesirable effects because it only happens on
-		 *     a screen device -- a new page is the same as
-		 *     clearing the screen
-		 * (ii) output on one device is copied to another device
-		 *     In this case, a GENewPage is NOT a good thing, however,
-		 *     here we will start with a new device and it will not
-		 *     have any grid output so this section will not get called
-		 *     SO we will not get any unwanted blank pages.
-		 *
-		 * All this is a bit fragile;  ultimately, what would be ideal
-		 * is a dev->clearPage primitive for all devices in addition
-		 * to the dev->newPage primitive
+		/* 
+                 * ONLY start a new page if 'grid' drawing is first entry
+                 * on the DL.
+                 * Determine this by checking for "C_par" or "C_plot_new"
+                 * at head of DL (assumes that 'graphics' is only other
+                 * possible graphics system).
+                 * This is a NASTY solution to a RARE problem.
+                 * RARE because it will only occur when resizing a 
+                 * window, copying between devices, or replaying a
+                 * recorded plot when the engine DL contains a mix
+                 * of 'graphics' and 'grid'.
+                 * NASTY because it requires 'grid' to know about
+                 * 'graphics' internals and the engine DL internals.
 		 */ 
-		currentgp = gridStateElement(dd, GSS_GPAR);
-		gcontextFromgpar(currentgp, 0, &gc, dd);
-		GENewPage(&gc, dd);
+                /* 'data' is engine DL */
+                if (data != R_NilValue) {
+                    SEXP firstDLentry = CAR(data);
+                    SEXP args = CADR(firstDLentry);
+                    int newpage = 1;
+                    if (isVector(CAR(args))) {
+                        SEXP name = VECTOR_ELT(CAR(args), 0);
+                        if (isString(name) &&
+                            (!strcmp(CHAR(STRING_ELT(name, 0)), 
+                                     "C_par") ||
+                             !strcmp(CHAR(STRING_ELT(name, 0)), 
+                                     "C_plot_new"))) {
+                            newpage = 0;
+                        }
+                    }
+                    if (newpage) {
+                        currentgp = gridStateElement(dd, GSS_GPAR);
+                        gcontextFromgpar(currentgp, 0, &gc, dd);
+                        GENewPage(&gc, dd);
+                    }
+                }
 		initGPar(dd);
 		initVP(dd);
 		initOtherState(dd);
@@ -276,16 +291,21 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	}
 	break;
     case GE_CopyState:
-        {
-            /* called from GEcopyDisplayList */
-            pGEDevDesc curdd = GEcurrentDevice();
-            /* See GE_RestoreSnapshotState for explanation of this dirtying */
-            GEdirtyDevice(curdd);
-            dirtyGridDevice(curdd);
-            setGridStateElement(curdd, GSS_DL, 
-                                gridStateElement(dd, GSS_DL));
-            setGridStateElement(curdd, GSS_DLINDEX, 
-                                gridStateElement(dd, GSS_DLINDEX));
+        { 
+            int dlIndex = INTEGER(gridStateElement(dd, GSS_DLINDEX))[0];
+            if (dlIndex > 0) {
+                /* called from GEcopyDisplayList */
+                pGEDevDesc curdd = GEcurrentDevice();
+                /* See GE_RestoreSnapshotState for explanation of this 
+                 * dirtying 
+                 */
+                GEdirtyDevice(curdd);
+                dirtyGridDevice(curdd);
+                setGridStateElement(curdd, GSS_DL, 
+                                    gridStateElement(dd, GSS_DL));
+                setGridStateElement(curdd, GSS_DLINDEX, 
+                                    gridStateElement(dd, GSS_DLINDEX));
+            }
         }
 	break;
     case GE_CheckPlot:
@@ -303,23 +323,30 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
         UNPROTECT(1);
 	break;
     case GE_RestoreSnapshotState:
-        /* 
-         * Dirty the device (in case this is first drawing on device)
-         * to stop dirtyGridDevice() from starting new page
-         * (because this GE_RestoreSnapshotState will be followed by 
-         *  GE_RestoreState, which will start a new page).
-         * Dirty the device, in a 'grid' sense, (in case this is first
-         * 'grid' drawing on device) to stop first element on 'grid' DL
-         * (which will be a call to L_gridDirty()) from resetting the
-         * 'grid' DL.
-         * Restore the saved 'grid' DL.
-         * (the 'grid' vpTree will be recreated by replay of 'grid' DL)
-         */
-        GEdirtyDevice(dd);
-        dirtyGridDevice(dd);
-        setGridStateElement(dd, GSS_DL, VECTOR_ELT(data, 0));
-        setGridStateElement(dd, GSS_DLINDEX, VECTOR_ELT(data, 1));
-	break;
+        { 
+            int dlIndex = INTEGER(VECTOR_ELT(data, 1))[0];
+            if (dlIndex > 0) {
+                /* 
+                 * Dirty the device (in case this is first drawing on device)
+                 * to stop dirtyGridDevice() from starting new page
+                 * (because this GE_RestoreSnapshotState will be followed by 
+                 *  GE_RestoreState, which will start a new page).
+                 * Dirty the device, in a 'grid' sense, (in case this is first
+                 * 'grid' drawing on device) to stop first element on 'grid' DL
+                 * (which will be a call to L_gridDirty()) from resetting the
+                 * 'grid' DL.
+                 */
+                GEdirtyDevice(dd);
+                dirtyGridDevice(dd);
+                /*
+                 * Restore the saved 'grid' DL.
+                 * (the 'grid' vpTree will be recreated by replay of 'grid' DL)
+                 */
+                setGridStateElement(dd, GSS_DL, VECTOR_ELT(data, 0));
+                setGridStateElement(dd, GSS_DLINDEX, VECTOR_ELT(data, 1));
+            }
+        }
+        break;
     case GE_ScalePS:
 	/*
 	 * data is a numeric scale factor

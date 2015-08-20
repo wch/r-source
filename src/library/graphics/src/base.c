@@ -273,9 +273,15 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	/* called from GEplaySnapshot */
 	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
 	copyGPar((GPar*) RAW(data), &(bss->dpSaved));
+        /* RestoreState will follow and do these ...
 	restoredpSaved(dd);
 	copyGPar(&(bss->dp), &(bss->gp));
 	GReset(dd);
+        */
+        /* Make the device "clean" with respect to 'graphics'
+         * so that the display list replay starts from scratch
+         */
+	bss->baseDevice = FALSE;
 	break;
     case GE_CheckPlot:
 	/* called from GEcheckState:
