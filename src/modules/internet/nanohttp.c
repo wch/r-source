@@ -544,6 +544,7 @@ RxmlNanoHTTPFreeCtxt(RxmlNanoHTTPCtxtPtr ctxt)
     if (ctxt->mimeType != NULL) xmlFree(ctxt->mimeType);
     if (ctxt->location != NULL) xmlFree(ctxt->location);
     if (ctxt->authHeader != NULL) xmlFree(ctxt->authHeader);
+    if (ctxt->statusMsg != NULL) xmlFree(ctxt->statusMsg);
 #ifdef HAVE_ZLIB_H
     if (ctxt->strm != NULL) {
 	inflateEnd(ctxt->strm);
