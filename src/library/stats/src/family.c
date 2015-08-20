@@ -109,7 +109,7 @@ SEXP logit_mu_eta(SEXP eta)
 static R_INLINE
 double y_log_y(double y, double mu)
 {
-    return (y) ? (y * log(y/mu)) : 0;
+    return (y != 0.) ? (y * log(y/mu)) : 0;
 }
 
 SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt)
