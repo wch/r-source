@@ -83,7 +83,7 @@ void rmultinom(int n, double* prob, int K, int* rN)
     /* Generate the first K-1 obs. via binomials */
 
     for(k = 0; k < K-1; k++) { /* (p_tot, n) are for "remaining binomial" */
-	if(prob[k]) {
+	if(prob[k] != 0.) {
 	    pp = (double)(prob[k] / p_tot);
 	    /* printf("[%d] %.17f\n", k+1, pp); */
 	    rN[k] = ((pp < 1.) ? (int) rbinom((double) n,  pp) :
