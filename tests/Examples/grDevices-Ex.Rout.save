@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-08-17 r69099) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-08-20 r69127) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -236,7 +236,7 @@ $allowed
 > ### Name: as.raster
 > ### Title: Create a Raster Object
 > ### Aliases: is.raster as.raster as.raster.logical as.raster.numeric
-> ###   as.raster.character as.raster.matrix as.raster.array
+> ###   as.raster.raw as.raster.character as.raster.matrix as.raster.array
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -266,7 +266,7 @@ $allowed
 [3,] "#999999"
 [4,] "#CCCCCC"
 [5,] "#FFFFFF"
-> #   locigal vectors are black and white ...
+> #   logical vectors are black and white ...
 > as.raster(1:10 %% 2 == 0)
       [,1]     
  [1,] "#000000"
@@ -287,7 +287,7 @@ $allowed
      [,8]      [,9]      [,10]    
 [1,] "#FFFFFF" "#000000" "#FFFFFF"
 > 
-> # Matrix can also be logical or numeric ...
+> # Matrix can also be logical or numeric (or raw) ...
 > as.raster(matrix(c(TRUE, FALSE), nrow = 3, ncol = 2))
      [,1]      [,2]     
 [1,] "#FFFFFF" "#000000"
@@ -3764,7 +3764,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.701 0.141 7.845 0 0 
+Time elapsed:  8.548 0.31 8.861 0 0 
 > grDevices::dev.off()
 null device 
           1 
