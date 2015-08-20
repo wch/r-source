@@ -23,8 +23,8 @@
 
 
 double private_rint(double x);
-N01type N01_kind;
-double BM_norm_keep;
+extern N01type N01_kind;
+extern double BM_norm_keep;
 
 
 #endif /* MATHLIB_PRIVATE2_H */
