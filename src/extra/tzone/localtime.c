@@ -78,8 +78,16 @@ use of tm_zone and tm_gmtoff on all platforms.
 #endif /* !defined FALSE */
 
 /* merged from private.h */
+#ifndef TYPE_BIT
 #define TYPE_BIT(type)	(sizeof (type) * CHAR_BIT)
+#endif /* !defined TYPE_BIT */
+
+#ifndef TYPE_SIGNED
 #define TYPE_SIGNED(type) (((type) -1) < 0)
+#endif /* !defined TYPE_SIGNED */
+
+#define TWOS_COMPLEMENT(t) ((t) ~ (t) 0 < 0)
+
 #define GRANDPARENTED	"Local time zone must be set--see zic manual page"
 #define YEARSPERREPEAT	 400	/* years before a Gregorian repeat */
 #define AVGSECSPERYEAR	 31556952L
@@ -87,15 +95,20 @@ use of tm_zone and tm_gmtoff on all platforms.
 #define SECSPERREPEAT_BITS  34	/* ceil(log2(SECSPERREPEAT)) */
 #define is_digit(c) ((unsigned)(c) - '0' <= 9)
 #define INITIALIZE(x) (x = 0)
-/* The minimum and maximum finite time values.  */
-static time_t const time_t_min =
-  (TYPE_SIGNED(time_t)
-   ? (time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1)
-   : 0);
-static time_t const time_t_max =
-  (TYPE_SIGNED(time_t)
-   ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
-   : -1);
+
+/* Max and min values of the integer type T, of which only the bottom
+   B bits are used, and where the highest-order used bit is considered
+   to be a sign bit if T is signed.  */
+#define MAXVAL(t, b)						\
+  ((t) (((t) 1 << ((b) - 1 - TYPE_SIGNED(t)))			\
+	- 1 + ((t) 1 << ((b) - 1 - TYPE_SIGNED(t)))))
+#define MINVAL(t, b)						\
+  ((t) (TYPE_SIGNED(t) ? - TWOS_COMPLEMENT(t) - MAXVAL(t, b) : 0))
+
+/* The minimum and maximum finite time values.  This assumes no padding.  */
+static time_t const time_t_min = MINVAL(time_t, TYPE_BIT(time_t));
+static time_t const time_t_max = MAXVAL(time_t, TYPE_BIT(time_t));
+
 
 #include "tzfile.h"
 
@@ -739,10 +752,10 @@ getsecs(const char *strp, int_fast32_t *const secsp)
     int	num;
 
     /*
-    ** `HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-Posix rules like
+    ** 'HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-Posix rules like
     ** "M10.4.6/26", which does not conform to Posix,
     ** but which specifies the equivalent of
-    ** ``02:00 on the first Sunday on or after 23 Oct''.
+    ** "02:00 on the first Sunday on or after 23 Oct".
     */
     strp = getnum(strp, &num, 0, HOURSPERDAY * DAYSPERWEEK - 1);
     if (strp == NULL)
@@ -756,7 +769,7 @@ getsecs(const char *strp, int_fast32_t *const secsp)
 	*secsp += num * SECSPERMIN;
 	if (*strp == ':') {
 	    ++strp;
-	    /* `SECSPERMIN' allows for leap seconds. */
+	    /* 'SECSPERMIN' allows for leap seconds.  */
 	    strp = getnum(strp, &num, 0, SECSPERMIN);
 	    if (strp == NULL)
 		return NULL;
