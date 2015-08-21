@@ -4808,6 +4808,7 @@ versions.
 * Mavericks and later::         
 * Lion and Mountain Lion::      
 * Snow Leopard::                
+* El Capitan::                  
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
@@ -4854,13 +4855,13 @@ when installing on Mavericks.
 
 See the comments under Mountain Lion about X11 and GTK.
 
-If you upgrade to Yosemite you should re-install any of XQuartz, the
-`Command Line Tools' and Java which you have installed.  (Upgrading may
-partially remove previous versions which can be confusing.)
+If you upgrade the OS you should re-install any of XQuartz, the `Command
+Line Tools' and Java which you have installed.  (Upgrading may partially
+remove previous versions which can be confusing.)
 
-There are some problems with the recommended @command{gfortran} builds
-under Yosemite.  They give warnings and @command{gfortran-4.8} is
-reported to be unable to link packages containing Fortran 9x code.  (The
+There are some problems with the recommended @command{gfortran} build
+under Yosemite.  It gives warning and is reported
+to be unable to link some packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
 @node Lion and Mountain Lion, Snow Leopard, Mavericks and later, OS X
@@ -4905,7 +4906,7 @@ compilers used for the CRAN binary distribution: those for Xcode 5 can
 be installed afterwards.
 
 
-@node Snow Leopard, Tcl/Tk headers and libraries, Lion and Mountain Lion, OS X
+@node Snow Leopard, El Capitan, Lion and Mountain Lion, OS X
 @subsection Snow Leopard
 
 A quirk on Snow Leopard is that the X11 libraries are not in the default
@@ -4914,12 +4915,33 @@ required in @file{config.site}, or you can use the @command{configure}
 options @option{--x-includes=/usr/X11/include
 --x-libraries=/usr/X11/lib} .
 
-The @acronym{CRAN} binaries are built using Xcode 4.2, a version
+The @acronym{CRAN} binaries were built using Xcode 4.2, a version
 available only to subscribing developers.  It is believed that 3.2.6 (the
 last public free version for Snow Leopard) will work.
 
+@node El Capitan, Tcl/Tk headers and libraries, Snow Leopard, OS X
+@subsection El Capitan
 
-@node Tcl/Tk headers and libraries, Java (OS X), Snow Leopard, OS X
+[This is provisional information as El Capitan is not yet released.]
+
+@c XQuartz does not install out-of-the-box:
+@c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
+
+There are likely to be problems from the restriction that only Apple is
+allowed to install software under @file{/usr}: this affects @emph{inter
+alia} @code{MacTeX} and @code{XQuartz}.  For @code{MacTeX} it is
+necessary to include @file{/Library/TeX/texbin} in your path rather the
+@file{/usr/texbin} (and at the time of writing this only worked for
+@code{MacTeX} 2015 and not @code{BasicTeX} 2015).
+
+@command{configure} may need to be told to look for @code{X11} in
+@code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
+@example
+--x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
+@end example
+
+
+@node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
