@@ -270,6 +270,9 @@
       \item \code{detach()}ing the \pkg{methods} package keeps
       \code{.isMethodsDispatchOn()} true, as long as the methods
       namespace is not unloaded.% This keeps a sane state, see the regr-S4 test
+      
+      \item Removed some spurious warnings from \command{configure} about the
+      preprocessor not finding header files.  (\PR{15989})
     }
   }
 }
