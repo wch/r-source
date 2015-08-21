@@ -2376,13 +2376,11 @@ wise to have a @file{src/contrib} area with a possibly empty
 @file{.tgz} files.
 
 @item 
-@code{"mac.binary.leopard"}: located at
-@file{bin/macosx/leopard/contrib/@var{2.y}} for @R{} versions
-@var{2.y.z} and containing @file{.tgz} files.
+@code{"mac.binary"}: located at
+@file{bin/macosx/contrib/@var{3.y}} for a CRAN build for
+`Snow Leopard' (and later) for @R{} versions @var{3.y.z}, containing
+@file{.tgz} files.
 @end itemize
-
-(Areas @code{"mac.binary.leopard"} and @code{"mac.binary"} are no longer
-in use.)
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
 can be a concatenation of the @file{DESCRIPTION} files of the packages
@@ -2728,9 +2726,9 @@ appreciable fraction of the address limit, fragmentation of the address
 space becomes an issue and there may be no hole available that is the
 size requested.  This can cause more frequent garbage collection or the
 inability to allocate large objects.  As a guide, this will become an
-issue with objects more than 10% of the size of the address space
-(around 300Mb) or when the total size of objects in use is around one
-third (around 1Gb).
+issue for 32-bit builds with objects more than 10% of the size of the
+address space (around 300Mb) or when the total size of objects in use is
+around one third (around 1Gb).
 
 @item
 Only 64-bit builds support `long vectors', those with @math{2^{31}} or
