@@ -1787,11 +1787,6 @@ if(FALSE) {
     if(!exists(actionListName, envir = where, inherits = FALSE))
         return(list())
     actions <- get(actionListName, envir = where)
-    ## check sanity:  methods must be loaded
-    if(! "package:methods" %in% search()) {
-        warning("trying to execute load actions without 'methods' package")
-        library(methods)
-    }
     for(what in actions) {
         aname <- .actionMetaName(what)
         if(!exists(aname, envir = where, inherits = FALSE)) {
