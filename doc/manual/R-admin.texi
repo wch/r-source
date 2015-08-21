@@ -4710,15 +4710,16 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 @menu
-* Mavericks and later::         
+* Mavericks and Yosemite::      
+* El Capitan::                  
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Mavericks and later, Tcl/Tk headers and libraries, OS X, OS X
-@subsection Mavericks and later
+@node Mavericks and Yosemite, El Capitan, OS X, OS X
+@subsection Mavericks and Yosemite
 
 For these versions Apple makes available compilers based on
 @command{clang}, and C++ headers and runtime are from LLVM's
@@ -4777,7 +4778,30 @@ under Yosemite.  They give warnings and @command{gfortran-4.8} is
 reported to be unable to link packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mavericks and later, OS X
+@node El Capitan, Tcl/Tk headers and libraries, Mavericks and Yosemite, OS X
+@subsection El Capitan
+
+[This is provisional information as El Capitan is not yet released.]
+
+@c XQuartz does not install out-of-the-box:
+@c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
+
+There are likely to be problems from the restriction that only Apple is
+allowed to install software under @file{/usr}: this affects @emph{inter
+alia} @code{MacTeX} and @code{XQuartz}.  For @code{MacTeX} it is
+necessary to include @file{/Library/TeX/texbin} in your path rather the
+@file{/usr/texbin} (and at the time of writing this only worked for
+@code{MacTeX} 2015 and not @code{BasicTeX} 2015).
+
+@command{configure} may need to be told to look for @code{X11} in
+@code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
+@example
+--x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
+@end example
+
+See also the information on `Mavericks and Yosemite'.
+
+@node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
