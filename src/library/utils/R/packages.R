@@ -56,37 +56,40 @@ function(contriburl = contrib.url(repos, type), method,
             } else {
                 tmpf <- tempfile()
                 on.exit(unlink(tmpf))
-                op <- options("warn")
-                options(warn = -1)
 
-                ## Two kinds of errors can happen:  PACKAGES.gz may not exist,
-                ## or a junk error page that is not a valid dcf file may be
-                ## returned.  Handle both...
+                ## Two kinds of errors can happen: PACKAGES.gz may not
+                ## exist, or a junk error page that is not a valid dcf
+                ## file may be returned.  Handle both, and continue to
+                ## subsequent repositories...
 
-                ## This is a binary file
-                z <- tryCatch(download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
-                                            destfile = tmpf, method = method,
-                                            cacheOK = FALSE, quiet = TRUE, mode = "wb"),
-                              error = identity)
-		if(!inherits(z, "error"))
-		    z <- res0 <- tryCatch(read.dcf(file = tmpf), error = identity)
-                if(inherits(z, "error")) {
-                    ## read.dcf is going to interpret CRLF as LF, so use
-                    ## binary mode to avoid CRCRLF.
-                    z <- tryCatch(download.file(url = paste(repos, "PACKAGES", sep = "/"),
-                                                destfile = tmpf, method = method,
-                                                cacheOK = FALSE, quiet = TRUE,
-                                                mode = "wb"),
-                                  error = identity)
-		    options(op)
-		    if(inherits(z, "error")) {
-			warning(gettextf("unable to access index for repository %s", repos),
-				call. = FALSE, immediate. = TRUE, domain = NA)
-			next
-		    }
-		    res0 <- read.dcf(file = tmpf)
-		} else
-		    options(op)
+                op <- options(warn = -1L)
+                z <- tryCatch({
+                    ## This is a binary file
+                    download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
+                                  destfile = tmpf, method = method,
+                                  cacheOK = FALSE, quiet = TRUE, mode = "wb")
+                }, error = identity)
+                if (inherits(z, "error"))
+                    z <- tryCatch({
+                        ## read.dcf is going to interpret CRLF as LF, so use
+                        ## binary mode to avoid CRLF.
+                        download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                                      destfile = tmpf, method = method,
+                                      cacheOK = FALSE, quiet = TRUE, mode = "wb")
+                    }, error=identity)
+                options(op)
+
+                if (!inherits(z, "error"))
+                    z <- res0 <- tryCatch(read.dcf(file = tmpf), error=identity)
+
+                if (inherits(z, "error")) {
+                    warning(gettextf("unable to access index for repository %s",
+                                     repos),
+                            ":\n  ", conditionMessage(z),
+                            call.=FALSE, immediate. = TRUE, domain = NA)
+                    next
+                }
+
                 ## Do we want to cache an empty result?
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 saveRDS(res0, dest, compress = TRUE)
