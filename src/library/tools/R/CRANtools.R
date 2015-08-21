@@ -379,6 +379,9 @@ function(mirrors, db = NULL)
     to <- paste(unique(unlist(strsplit(addresses,
                                        "[[:space:]]*,[[:space:]]*"))),
                 collapse = ",\n    ")
+    head <- c(paste("To:", to),
+              "CC: CRAN@R-project.org",
+              "Subject: CRAN mirrors maintained by you")
     len <- length(addresses)
     body <- c(if(len > 1L) {
                   "Dear maintainers,"
@@ -397,7 +400,7 @@ function(mirrors, db = NULL)
               "",
               paste0("  ", formatDL(mirrors, addresses, style = "list"))
               )
-    list(to = to, body = body)
+    list(head = head, body = body)
 }
 
 CRAN_mirror_mirmon_status <-
@@ -551,6 +554,9 @@ function(packages, db = NULL)
     ind <- match(packages, db[, "Package"])
     addresses <- db[ind, "Address"]
     to <- paste(sort(unique(addresses)), collapse = ",\n    ")
+    head <- c(paste("To:", to),
+              "CC: CRAN@R-project.org",
+              "Subject: CRAN packages maintained by you")
     lst <- split(db[ind, "Package"], db[ind, "Maintainer"])
     len <- length(addresses)
     body <- c(if(len > 1L) {
@@ -577,7 +583,7 @@ function(packages, db = NULL)
                      formatDL(vapply(lst, paste, "", collapse = " "),
                               style = "list"))
               )
-    list(to = to, body = body)
+    list(head = head, body = body)
 }
 
 CRAN_reverse_depends_and_views <-
