@@ -2983,13 +2983,15 @@ setRlibs <-
                 build_vignettes <- info$is_verified
             }
             do_build_vignettes <- do_build_vignettes && build_vignettes
+            skip_run_maybe <-
+                R_check_vignettes_skip_run_maybe && do_build_vignettes
 
             vigns <- pkgVignettes(dir = pkgdir)
             savefiles <- 
                 file.path(dirname(vigns$docs),
                           paste0(vigns$names, ".Rout.save"))
 
-            if(!do_build_vignettes || any(file.exists(savefiles))) {
+            if(!skip_run_maybe || any(file.exists(savefiles))) {
                 checkingLog(Log, "running R code from vignettes")
                 res <- character()
                 cat("\n")
@@ -2997,7 +2999,7 @@ setRlibs <-
                 if( (is.na(def_enc))) def_enc <- ""
                 t1 <- proc.time()
                 iseq <- seq_along(savefiles)
-                if(do_build_vignettes)
+                if(skip_run_maybe)
                     iseq <- iseq[file.exists(savefiles)]
                 for (i in iseq) {
                     file <- vigns$docs[i]
@@ -3116,13 +3118,13 @@ setRlibs <-
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
-                    noteLog(Log)
+                    if(skip_run_maybe) warningLog(Log) else noteLog(Log)
                     out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "25")))
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
-                    noteLog(Log)
+                    if(skip_run_maybe) warningLog(Log) else noteLog(Log)
                     msg <- ngettext(nw,
                                     "Warning in re-building vignettes:\n",
                                     "Warnings in re-building vignettes:\n",
@@ -4438,7 +4440,10 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
     R_check_exit_on_first_error <-
 	config_val_to_logical(Sys.getenv("_R_CHECK_EXIT_ON_FIRST_ERROR_", "FALSE"))
-
+    R_check_vignettes_skip_run_maybe <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_",
+                                         "FALSE"))
+    
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
     if (as_cran) {
@@ -4459,6 +4464,8 @@ setRlibs <-
         Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
         Sys.setenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_" = "TRUE")
         Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
+        Sys.setenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_" = "TRUE")
+        Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -4471,6 +4478,7 @@ setRlibs <-
         R_check_FF <- "registration"
         do_timings <- TRUE
         R_check_toplevel_files <- TRUE
+        R_check_vignettes_skip_run_maybe <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
