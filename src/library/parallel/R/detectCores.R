@@ -30,9 +30,10 @@ detectCores <-
             ## Commoner OSes first
             systems <-
                 list(linux = "grep processor /proc/cpuinfo 2>/dev/null | wc -l",
-darwin = "/usr/sbin/sysctl -n hw.ncpu 2>/dev/null",
+                     darwin = "/usr/sbin/sysctl -n hw.ncpu 2>/dev/null",
                      solaris = if(logical) "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l" else "/bin/kstat -p -m cpu_info | grep :core_id | cut -f2 | uniq | wc -l",
                      freebsd = "/sbin/sysctl -n hw.ncpu 2>/dev/null",
+                     openbsd = "/sbin/sysctl -n hw.ncpu 2>/dev/null",
                      irix  = c("hinv | grep Processors | sed 's: .*::'", "hinv | grep '^Processor '| wc -l"))
             for (i in seq(systems))
                 if(all.tests ||
