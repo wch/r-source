@@ -3087,7 +3087,7 @@ make PDF versions of the manuals you will also need file
 @pkg{texinfo} distribution but is often made part of the @TeX{} package
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a, 5.2 and 6.0)
+script.  Some versions (including that from @pkg{texinfo} 5.2 and 6.0)
 need to be run under @command{bash} rather than a Bourne shell.}
 Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
 to be compatible: we have seen problems with older @TeX{} distributions.
@@ -4938,6 +4938,10 @@ necessary to include @file{/Library/TeX/texbin} in your path rather the
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 
+It may be necessary to replace @file{/usr/X11} by @file{/opt/X11} in
+file @file{/usr/local/lib/tkConfig.sh}.
+
+See also the information on `Mavericks and Yosemite'.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4964,7 +4968,7 @@ conflicts over the OS X menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
 are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mountain Lion
-and Mavericks).  It is better to install Tcl/Tk 8.6.x from the sources
+and later).  It is better to install Tcl/Tk 8.6.x from the sources
 or a binary distribution from
 @uref{https://www.activestate.com/activetcl/downloads}.  Configure @R{}
 with
