@@ -1282,6 +1282,24 @@ function(fname, envir, mustMatch = TRUE)
     if(mustMatch) res == fname else nzchar(res)
 }
 
+### ** .load_namespace_rather_quietly
+
+.load_namespace_rather_quietly <-
+function(package)
+{
+    ## Suppress messages and warnings from loading namespace
+    ## dependencies.
+    .whandler <- function(e) {
+        calls <- sys.calls()
+        if(sum(.call_names(calls) == "loadNamespace") == 1L)
+            signalCondition(e)
+        else
+            invokeRestart("muffleWarning")
+    }
+    invisible(withCallingHandlers(suppressMessages(loadNamespace(package)),
+                                  warning = .whandler))
+}
+
 ### ** .load_package_quietly
 
 .load_package_quietly <-
