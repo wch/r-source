@@ -103,7 +103,7 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 #endif
 
     if(theta < 80) { /* use 110 for Inf, as ppois(110, 80/2, lower.tail=FALSE) is 2e-20 */
-	LDOUBLE lambda = 0.5 * theta, ans;
+	LDOUBLE ans;
 	int i;
 	// Have  pgamma(x,s) < x^s / Gamma(s+1) (< and ~= for small x)
 	// ==> pchisq(x, f) = pgamma(x, f/2, 2) = pgamma(x/2, f/2)
@@ -115,10 +115,11 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 	   log(x) < M_LN2 + 2/f*(lgamma(f/2. + 1) + _dbl_min_exp)) {
 	    // all  pchisq(x, f+2*i, lower_tail, FALSE), i=0,...,110 would underflow to 0.
 	    // ==> work in log scale
+	    double lambda = 0.5 * theta;
 	    double sum, sum2, pr = -lambda;
 	    sum = sum2 = ML_NEGINF;
 	    /* we need to renormalize here: the result could be very close to 1 */
-	    for(i = 0; i < 110;  pr += LOG(lambda) - LOG(++i)) {
+	    for(i = 0; i < 110;  pr += log(lambda) - log(++i)) {
 		sum2 = logspace_add(sum2, pr);
 		sum = logspace_add(sum, pr + pchisq(x, f+2*i, lower_tail, TRUE));
 		if (sum2 >= -1e-15) /*<=> EXP(sum2) >= 1-1e-15 */ break;
@@ -131,6 +132,7 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 	    return (double) (log_p ? ans : EXP(ans));
 	}
 	else {
+	    LDOUBLE lambda = 0.5 * theta;
 	    LDOUBLE sum = 0, sum2 = 0, pr = EXP(-lambda); // does this need a feature test?
 	    /* we need to renormalize here: the result could be very close to 1 */
 	    for(i = 0; i < 110;  pr *= lambda/++i) {
@@ -294,5 +296,6 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 #ifdef DEBUG_pnch
     REprintf("\n == L_End: n=%d; term= %g; bound=%g\n",n,term,bound);
 #endif
-    return (double) R_DT_val(ans);
+    double dans = (double) ans;
+    return R_DT_val(dans);
 }
