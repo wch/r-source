@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/raster.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,9 +42,13 @@ as.raster.raster <- function(x, ...)  x
 as.raster.logical <- function(x, max = 1, ...)
     as.raster(matrix(x, ...), max)
 
+as.raster.raw <- function(x, max = 255L, ...)
+    as.raster(matrix(x, ...), max=max)
+
 as.raster.numeric <- as.raster.logical
 
 as.raster.character <- as.raster.logical
+
 
 as.raster.matrix <- function(x, max = 1, ...)
 {
@@ -60,6 +64,10 @@ as.raster.matrix <- function(x, max = 1, ...)
         if (length(tx.na)) tx[tx.na] <- 0
         r <- rgb(tx, tx, tx, maxColorValue = max)
         if (length(tx.na)) r[tx.na] <- NA
+    } else if (is.raw(x)) { ## non NA's here
+	storage.mode(x) <- "integer"
+	tx <- t(x)
+	r <- rgb(tx, tx, tx, maxColorValue = 255L)
     } else
         stop("a raster matrix must be character, or numeric, or logical")
     ## Transposed, but retain original dimensions
@@ -70,17 +78,22 @@ as.raster.matrix <- function(x, max = 1, ...)
 
 as.raster.array <- function(x, max = 1, ...)
 {
-    if (!is.numeric(x))
-        stop("a raster array must be numeric")
-    if (length(dim(x)) != 3L)
+    if (!is.numeric(x)) {
+	if (is.raw(x)) {
+	    storage.mode(x) <- "integer" # memory x 4 (!)
+	    max <- 255L
+	} else
+	    stop("a raster array must be numeric")
+    }
+    if (length(d <- dim(x)) != 3L)
         stop("a raster array must have exactly 3 dimensions")
-    r <- if (dim(x)[3L] == 3L)
+    r <- array(if (d[3L] == 3L)
         rgb(t(x[,,1L]), t(x[,,2L]), t(x[,,3L]), maxColorValue = max)
-    else if (dim(x)[3] == 4L)
+    else if (d[3L] == 4L)
         rgb(t(x[,,1L]), t(x[,,2L]), t(x[,,3L]), t(x[,,4L]), maxColorValue = max)
     else
-        stop("a raster array must have exactly 3 or 4 planes")
-    dim(r) <- dim(x)[1:2]
+        stop("a raster array must have exactly 3 or 4 planes"),
+    dim = d[1:2])
     class(r) <- "raster"
     r
 }
@@ -89,8 +102,7 @@ as.raster.array <- function(x, max = 1, ...)
 as.matrix.raster <- function(x, ...)
 {
     dim <- dim(x)
-    m <- matrix(x, nrow = dim[1L], ncol = dim[2L], byrow = TRUE)
-    m
+    matrix(x, nrow = dim[1L], ncol = dim[2L], byrow = TRUE)
 }
 
 is.na.raster <- function(x) is.na(as.matrix(x))
