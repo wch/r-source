@@ -2357,15 +2357,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 @file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN build for
 `Mavericks' (and later) for @R{} versions @var{3.y.z}, containing
 @file{.tgz} files.
-
-@item 
-@code{"mac.binary.leopard"}: located at
-@file{bin/macosx/leopard/contrib/@var{2.y}} for @R{} versions
-@var{2.y.z} and containing @file{.tgz} files.
 @end itemize
-
-(Areas @code{"mac.binary.leopard"} and @code{"mac.binary"} are no longer
-in use.)
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
 can be a concatenation of the @file{DESCRIPTION} files of the packages
@@ -2711,9 +2703,9 @@ appreciable fraction of the address limit, fragmentation of the address
 space becomes an issue and there may be no hole available that is the
 size requested.  This can cause more frequent garbage collection or the
 inability to allocate large objects.  As a guide, this will become an
-issue with objects more than 10% of the size of the address space
-(around 300Mb) or when the total size of objects in use is around one
-third (around 1Gb).
+issue for 32-bit builds with objects more than 10% of the size of the
+address space (around 300Mb) or when the total size of objects in use is
+around one third (around 1Gb).
 
 @item
 Only 64-bit builds support `long vectors', those with @math{2^{31}} or
@@ -3095,10 +3087,10 @@ make PDF versions of the manuals you will also need file
 @pkg{texinfo} distribution but is often made part of the @TeX{} package
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (including that from @pkg{texinfo} 5.2) need to
-be run under @command{bash} rather than a Bourne shell.}  Further, the
-versions of @command{texi2dvi} and @file{texinfo.tex} need to be
-compatible: we have seen problems with older @TeX{} distributions.
+script.  Some versions (including that from @pkg{texinfo} 5.2 and 6.0)
+need to be run under @command{bash} rather than a Bourne shell.}
+Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
+to be compatible: we have seen problems with older @TeX{} distributions.
 
 @cindex Subversion
 If you want to build from the @R{} Subversion repository then
@@ -4581,13 +4573,17 @@ the configure flag @option{--disable-largefile} was needed (since
 @cindex OS X
 
 The instructions here are for @cputype{x86_64} builds on 10.9
-(Mavericks) or later.  In principle@footnote{It may be necessary to
+(Mavericks) or later.  In principle@footnote{It will be necessary to
 install later versions of software such as @code{libcurl}.} @R{} can be
-built for 10.4 to 10.8 and for PowerPC or 32-bit Intel Macs but these
-has not been tested recently.
+built for 10.6 to 10.8 but these has not been tested recently.
 
 You can build @R{} using Apple's `Command Line Tools' and suitable
-compilers.  You will also need @code{readline} (or to configure with
+compilers.  These tools can be (re-)installed by @command{xcode-select
+--install}.  (If you have a fresh installation, running e.g.@:
+@command{make} in a terminal will offer the installation of the
+command-line tools.)
+
+You will also need @code{readline} (or to configure with
 @option{--without-readline}), and a Fortran compiler.  Those and other
 binary components are available from
 @uref{https://r.research.att.com/libs}: you are likely to need
@@ -4596,8 +4592,7 @@ these).
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): see
-@uref{https://xquartz.macosforge.org/}.  (Note that XQuartz will likely
-need to be re-installed after an OS upgrade.)
+@uref{https://xquartz.macosforge.org/}.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4631,8 +4626,8 @@ FCFLAGS=$F77FLAGS
 @end example
 
 @noindent
-with @command{clang} and @command{clang++} from Xcode, and the Fortran
-compiler from
+with @command{clang} and @command{clang++} from the `Command Line
+Tools' and the Fortran compiler from
 @uref{https://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
@@ -4691,15 +4686,12 @@ as a 64-bit @code{time_t} is available but the system implementation of
 time zones does not work correctly for times before 1902 or after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
-(@uref{https://www.tug.org/mactex/}): the full installation is about 4GB,
-but a smaller version is available at
-@uref{https://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: for the 2015 version we needed to add
+(@uref{https://www.tug.org/mactex/}): the full installation is about
+4GB, but a smaller version is available at
+@uref{https://www.tug.org/mactex/morepackages.html}: you will need to
+add some packages, e.g.@: for the 2015 version we needed to add
 @pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
-which brought this to about 410MB (or package @pkg{texinfo} and the
-collections @pkg{collection-fontsrecommended},
-@pkg{collection-fontsextra} and @pkg{collection-latexextra} which will
-take this up to about 1GB).  @samp{TeX Live Utility} (available
+which brought this to about 410MB.  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.
 
@@ -4709,8 +4701,12 @@ that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
 versions.
 
+If you upgrade your OS you should re-install any of XQuartz, the
+`Command Line Tools' and Java which you have installed.  (Upgrading may
+partially remove previous versions which can be confusing.)
+
+
 @menu
-* Mavericks and Yosemite::      
 * El Capitan::                  
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
@@ -4718,67 +4714,7 @@ versions.
 * Building R.app::              
 @end menu
 
-@node Mavericks and Yosemite, El Capitan, OS X, OS X
-@subsection Mavericks and Yosemite
-
-For these versions Apple makes available compilers based on
-@command{clang}, and C++ headers and runtime are from LLVM's
-@samp{libc++} project, as part of the `Command Line Tools' (sometimes
-called `Command Line Developer Tools').
-
-These tools can be (re-)installed by @command{xcode-select --install}.
-(If you have a fresh installation, running e.g.@: @command{make} in a
-terminal will offer the installation of the command-line tools, or
-perhaps use the versions from Xcode.  However, after an OS update, you
-are advised to re-install them.)
-
-To use the compilers from the command-line tools with the recommended
-Fortran compiler, have in @file{config.site} something like
-
-@example
-CC=clang
-CXX=clang++
-F77=gfortran-4.8
-FC=$F77
-OBJC=clang
-@end example
-@noindent
-(@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
-the same compilers.)
-
-To build the graphics devices depending on cairographics, the XQuartz
-path for @command{pkg-config} files needs to be known to
-@command{pkg-config} when @command{configure} is run: this usually means
-adding it to the @env{PKG_CONFIG_PATH} environment variable, e.g.
-
-@example
-export PKG_CONFIG_PATH= \
-  /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-
-@noindent
-or putting
-@example
-PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-
-@noindent
-in @file{config.site}.
-
-For some pre-compiled software, for example the GTK framework,
-@file{/opt/X11/include} may need to be added to the include paths.
-
-
-If you upgrade your OS you should re-install any of XQuartz, the
-`Command Line Tools' and Java which you have installed.  (Upgrading may
-partially remove previous versions which can be confusing.)
-
-There are some problems with the recommended @command{gfortran} builds
-under Yosemite.  They give warnings and @command{gfortran-4.8} is
-reported to be unable to link packages containing Fortran 9x code.  (The
-solution is to use a compiler built under Yosemite.)
-
-@node El Capitan, Tcl/Tk headers and libraries, Mavericks and Yosemite, OS X
+@node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
 @subsection El Capitan
 
 [This is provisional information as El Capitan is not yet released.]
@@ -4799,7 +4735,8 @@ necessary to include @file{/Library/TeX/texbin} in your path rather the
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 
-See also the information on `Mavericks and Yosemite'.
+It may be necessary to replace @file{/usr/X11} by @file{/opt/X11} in
+file @file{/usr/local/lib/tkConfig.sh}.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4824,10 +4761,11 @@ in the native OS X style: this will not work with @Rapp{} because of
 conflicts over the OS X menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mavericks).
-It is better to install Tcl/Tk 8.6.x from the sources or a binary
-distribution from @uref{https://www.activestate.com/activetcl/downloads}.
-Configure @R{} with
+are not current (nor recent) versions of Tcl/Tk (8.5.9 in Yosemite).  It
+is better to install Tcl/Tk 8.6.x from the sources or a binary
+distribution from
+@uref{https://www.activestate.com/activetcl/downloads}.  Configure @R{}
+with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
@@ -4930,7 +4868,7 @@ make prefix=/where/you/want/R.framework/to/go install
 @end example
 
 Note that installation as a framework is non-standard (especially to a
-non-standard location) and utilities may not support it (e.g.@: the
+non-standard location) and Unix utilities may not support it (e.g.@: the
 @command{pkg-config} file @file{libR.pc} will be put somewhere unknown
 to @command{pkg-config}).
 
