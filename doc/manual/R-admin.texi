@@ -4717,7 +4717,8 @@ partially remove previous versions which can be confusing.)
 @node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
 @subsection El Capitan
 
-[This is provisional information as El Capitan is not yet released.]
+[This is provisional information about OS X 10.11 aka El Capitan as it
+is not yet released.]
 
 @c XQuartz does not install out-of-the-box:
 @c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
@@ -4736,7 +4737,10 @@ necessary to include @file{/Library/TeX/texbin} in your path rather the
 @end example
 
 It may be necessary to replace @file{/usr/X11} by @file{/opt/X11} in
-file @file{/usr/local/lib/tkConfig.sh}.
+file @file{/usr/local/lib/tkConfig.sh}, and to use
+@command{install_name_tool} to adjust
+@file{/usr/local/lib/libtk8.6.dylib} to link to libraries under
+@file{/opt/X11} rather than @file{/usr/X11}.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
