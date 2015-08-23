@@ -1628,20 +1628,27 @@ is fully updated: look at `Updates' from the `App Store' to be sure.
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
-currently shows three components.  Everyone will need the `R Framework'
-component: the `R GUI' and `Tcl/Tk' components are optional (the latter
-being needed to use package @pkg{tcltk}, and requires an X sub-system to
-be installed: @pxref{OS X}.)
+currently shows four components: everyone will need the `R Framework'
+component: the remaining components are optional. (The `Tcl/Tk' component
+is needed to use package @pkg{tcltk}. The `Texinfo' component is only
+needed by those installing source packages.)
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.  Note the the
 installer is clever enough to try to upgrade the last-installed version
-of the application.
+of the application where you installed it (which may not be where you
+want this time @dots{}).
 
-If you update your OS X version, you should re-install @R{}: the
-installer tailors the installation to the current version of the OS.
+Various parts of the build require XQuartz to be installed: : see
+@uref{https://xquartz.macosforge.org/}.  These include the @pkg{tcltk}
+package and the @code{X11} device: attempting to use these without
+XQuartz will remind you.
+
+If you update your OS X version, you should re-install @R{} (and
+XQuartz): the installer tailors the installation to the current version
+of the OS.
 
 For building @R{} from source, see @ref{OS X}.
 
@@ -1732,23 +1739,36 @@ rm -rf /Library/Frameworks/R.framework /Applications/R.app \
 
 The installation consisted of three Apple packages:
 @code{org.r-project.R.x86_64.fw.pkg},
-@code{org.r-project.R.x86_64.GUI.pkg} and
-@code{org.r-project.x86_64.tcltk.x11} (not all of which need be
+@code{org.r-project.R.x86_64.GUI.pkg},
+@code{org.r-project.x86_64.tcltk.x11} and
+@code{org.r-project.x86_64.texinfo} (not all of which need be
 installed). You can use @code{pkgutil --forget} if you want the Apple
 Installer to forget about the package without deleting its files (useful
 for the @R{} framework when installing multiple R versions in parallel),
 or after you have deleted the files.
 
-Uninstalling the Tcl/Tk component (which is installed under
-@file{/usr/local}) is not simple.  You can list the files it installed
+Uninstalling the Tcl/Tk or Texinfo components (which are installed under
+@file{/usr/local}) is not simple.  You can list the files they installed
 in a Terminal by
 
 @example
 pkgutil --files org.r-project.x86_64.tcltk.x11
+pkgutil --files org.r-project.x86_64.texinfo
 @end example
 
 @noindent
 These are paths relative to @file{/}, the root of the file system.
+@c Maybe too dangerous of naive users.
+@c The second could be uninstalled by an @R{} script like
+
+@c @example
+@c lis <- system2("pkgutil", "--files org.r-project.x86_64.texinfo", stdout = TRUE)
+@c setwd("/")
+@c unlink(rev(lis))
+@c @end example
+
+@c @noindent
+@c run as the owner of @file{/usr/local}.
 
 @node Multiple versions,  , Uninstalling under OS X, Installing R under OS X
 @section Multiple versions
