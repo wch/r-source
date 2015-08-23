@@ -4575,24 +4575,23 @@ the configure flag @option{--disable-largefile} was needed (since
 The instructions here are for @cputype{x86_64} builds on 10.9
 (Mavericks) or later.  In principle@footnote{It will be necessary to
 install later versions of software such as @code{libcurl}.} @R{} can be
-built for 10.6 to 10.8 but these has not been tested recently.
+built for 10.4 to 10.8 but these has not been tested recently.
 
-You can build @R{} using Apple's `Command Line Tools' and suitable
-compilers.  These tools can be (re-)installed by @command{xcode-select
---install}.  (If you have a fresh installation, running e.g.@:
-@command{make} in a terminal will offer the installation of the
-command-line tools.)
+To build @R{} you need Apple's `Command Line Tools': these can be
+(re-)installed by @command{xcode-select --install}.  (If you have a
+fresh installation, running e.g.@: @command{make} in a terminal will
+offer the installation of the command-line tools.  If you have installed
+Xcode, this provides the command-line tools.)
 
-You will also need @code{readline} (or to configure with
+You need @code{readline} (or to configure using
 @option{--without-readline}), and a Fortran compiler.  Those and other
 binary components are available from
 @uref{https://r.research.att.com/libs}: you are likely to need
 @code{pcre} and @code{xz} (recent OS X provides libs but not headers for
 these).
 
-You may also need to install an X sub-system (or you will need to
-configure using option @option{--without-x}): see
-@uref{https://xquartz.macosforge.org/}.
+An X sub-system is required unless configuring using
+@option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4631,8 +4630,7 @@ Tools' and the Fortran compiler from
 @uref{https://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
-not run on Core 2 Duo Macs.}  Apple's builds of @command{clang}
-currently have little or no OpenMP support.
+not run on Core 2 Duo Macs.}
 
 Other builds of @command{gfortran} are available: see
 @uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
@@ -4640,12 +4638,17 @@ with a binary distribution of @R{} you will probably need to specify the
 name or path in a personal or site @file{Makevars} file
 (@pxref{Customizing package compilation}).
 
+More recent and complete distributions of @command{clang} are usually
+available from @uref{http://llvm.org/releases/}.  In particular, these
+include support for the `Address Sanitizer' (not included by Apple until
+Xcode 7) and for OpenMP in version 3.7.0 and later.
+
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
-(and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
-and useful for many packages: it will also be used if present when
-configuring the @code{X11()} device.
+most likely want at least @code{jpeg}, @code{libpng} and @code{tiff}.
+@code{pkg-config} is not provided by Apple and used for many packages:
+it will also be used if present when configuring the @code{X11()}
+device.
 
 Support for @code{cairo} (without @code{Pango}) can be enabled in two
 ways: both need @code{pkg-config} available.  XQuartz ships @code{cairo}
@@ -4682,8 +4685,8 @@ will show the compilers and configuration options used for the
 was used.
 
 Configure option @option{--with-internal-tzcode} is the default on OS X,
-as a 64-bit @code{time_t} is available but the system implementation of
-time zones does not work correctly for times before 1902 or after 2037.
+as the system implementation of time zones does not work correctly for
+times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
@@ -4758,18 +4761,17 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this requires a fully-updated XQuartz installation.
+Note that this requires a matching XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
 conflicts over the OS X menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not current (nor recent) versions of Tcl/Tk (8.5.9 in Yosemite).  It
-is better to install Tcl/Tk 8.6.x from the sources or a binary
-distribution from
-@uref{https://www.activestate.com/activetcl/downloads}.  Configure @R{}
-with
+are not at all recent versions of Tcl/Tk (8.5.9 in Yosemite).  It is
+better to install Tcl/Tk 8.6.x from the sources or a binary distribution
+from @uref{https://www.activestate.com/activetcl/downloads}.  Configure
+@R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
@@ -4779,7 +4781,8 @@ with
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
 
-If you need to find out which version of Tk in use at run time, use
+If you need to find out which distribution of Tk is in use at run time,
+use
 @example
 library(tcltk)
 tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
@@ -4790,21 +4793,18 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 
 The situation with Java support on OS X is messy.
 
-OS X no longer comes with an installed JRE, and an OS X upgrade removes
-one if already installed: it is intended to be installed at first use.
-Check if a JRE is installed by running @command{java -version} in a
-@command{Terminal} window: if Java is not installed this should prompt
-you to install it.
-
-You may want/need to install the latest Java from Oracle (currently Java
-8 from
+OS X no longer comes with an installed Java runtime (JRE), and an OS X
+upgrade removes one if already installed: it is intended to be installed
+at first use.  Check if a JRE is installed by running @command{java
+-version} in a @command{Terminal} window: if Java is not installed this
+should prompt you to install it.  You can also install directly the
+latest Java from Oracle (currently Java 8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @code{Java For OS X 2015-001} from
 @uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up
-messages, at least under Yosemite, even if you have a current version
-installed.
+messages, even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
@@ -4835,12 +4835,6 @@ JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 in @file{config.site}.
-@noindent
-The Apple developer versions of the JDK installed somewhere like
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
-@end example
-
 
 Note that it is necessary to set the environment variable @env{NOAWT}
 to @code{1} to install many of the Java-using packages.
@@ -4889,7 +4883,7 @@ The current sources can be checked out by
 svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
 @noindent
-This can be built by loading the @code{R.xcodeproj} project (select the
+and built by loading the @code{R.xcodeproj} project (select the
 @code{R} target and a suitable configuration), or from the command-line
 by e.g.@:
 @example
