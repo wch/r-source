@@ -1296,7 +1296,8 @@ function(package)
         else
             invokeRestart("muffleWarning")
     }
-    invisible(withCallingHandlers(suppressMessages(loadNamespace(package)),
+    expr <- substitute(loadNamespace(package), list(package = package))
+    invisible(withCallingHandlers(suppressMessages(eval(expr)),
                                   warning = .whandler))
 }
 
