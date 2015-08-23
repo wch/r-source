@@ -4627,18 +4627,15 @@ the configure flag @option{--disable-largefile} was needed (since
 @section OS X
 @cindex OS X
 
-You can build @R{} using Apple's `Command Line Tools' and suitable
-compilers.  You will also need @code{readline} (or to configure with
-@option{--without-readline}), and a Fortran compiler.  Those and other
-binary components are available from
-@uref{https://r.research.att.com/libs}.
+To build @R{} you need to have installed Apple's `Command Line Tools'
+(on some versions installing Xcode suffices).  You also need
+@code{readline} (or to configure using @option{--without-readline}), and
+a Fortran compiler.  Those and other binary components are available
+from @uref{https://r.research.att.com/libs}.
 
-You may also need to install an X sub-system (or you will need to
-configure using option @option{--without-x}): X is part of the standard
-OS X distribution in versions prior to Mountain Lion, but not always
-installed.  For Mountain Lion and later, see
-@uref{https://xquartz.macosforge.org/}.  (Note that XQuartz will likely
-need to be re-installed after an OS upgrade.)
+An X sub-system is required unless configuring using
+@option{--without-x}: see @uref{https://xquartz.macosforge.org/}.  (Note
+that XQuartz will likely need to be re-installed after an OS upgrade.)
 
 The instructions here are for @cputype{x86_64} builds on 10.6 (Snow
 Leopard) or later.  In principle @R{} can be built for 10.4.x, 10.5.x
@@ -4677,8 +4674,8 @@ FCFLAGS=$F77FLAGS
 @end example
 
 @noindent
-with @command{clang} and @command{clang++} from Xcode, and the Fortran
-compiler from
+with @command{clang} and @command{clang++} from the `Command Line
+Tools' and the Fortran compiler from
 @uref{https://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
@@ -4784,15 +4781,12 @@ as a 64-bit @code{time_t} is available but the system implementation of
 time zones does not work correctly for times before 1902 or after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
-(@uref{https://www.tug.org/mactex/}): the full installation is about 4GB,
-but a smaller version is available at
-@uref{https://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: for the 2015 version we needed to add
+(@uref{https://www.tug.org/mactex/}): the full installation is about
+4GB, but a smaller version is available at
+@uref{https://www.tug.org/mactex/morepackages.html}: you will need to
+add some packages, e.g.@: for the 2015 version we needed to add
 @pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
-which brought this to about 410MB (or package @pkg{texinfo} and the
-collections @pkg{collection-fontsrecommended},
-@pkg{collection-fontsextra} and @pkg{collection-latexextra} which will
-take this up to about 1GB).  @samp{TeX Live Utility} (available
+which brought this to about 410MB.  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.
 
@@ -4819,7 +4813,8 @@ versions.
 For these versions Apple makes available compilers based on
 @command{clang}, and C++ headers and runtime are from LLVM's
 @samp{libc++} project, as part of the `Command Line Tools' (sometimes
-called `Command Line Developer Tools').
+called `Command Line Developer Tools') and of Xcode (you only need one
+or the other).
 
 These tools can be (re-)installed by @command{xcode-select --install}.
 (If you have a fresh installation of Mavericks or later, running e.g.@:
@@ -4837,19 +4832,12 @@ F77=gfortran-4.8
 FC=$F77
 OBJC=clang
 @end example
-@noindent
-(@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
-the same compilers.)  Recent versions of the @acronym{CRAN} binary package
-installer for `Snow Leopard' change the settings in @file{etc/Makeconf}
-to
-@example
-CC = gcc -arch x86_64 -std=gnu99
-CXX g++ -arch x86_64
-F77 = gfortran-4.2 -arch x86_64
-OBJC = gcc -arch x86_64
-OBJCXX = g++ -arch x86_64
-@end example
-when installing on Mavericks.
+
+More recent and complete distributions of @command{clang} are usually
+available from @uref{http://llvm.org/releases/}.  In particular, these
+include support for the `Address Sanitizer' (not included by Apple until
+Xcode 7) and for OpenMP in versions 3.7.0 and later.
+
 
 See the comments under Mountain Lion about X11 and GTK.
 
@@ -4857,10 +4845,9 @@ If you upgrade the OS you should re-install any of XQuartz, the `Command
 Line Tools' and Java which you have installed.  (Upgrading may partially
 remove previous versions which can be confusing.)
 
-There are some problems with the recommended @command{gfortran} build
-under Yosemite.  It gives warning and is reported
-to be unable to link some packages containing Fortran 9x code.  (The
-solution is to use a compiler built under Yosemite.)
+There are some warnings using the recommended @command{gfortran} build
+under Yosemite.
+
 
 @node Lion and Mountain Lion, Snow Leopard, Mavericks and later, OS X
 @subsection Lion and Mountain Lion
@@ -4920,7 +4907,8 @@ last public free version for Snow Leopard) will work.
 @node El Capitan, Tcl/Tk headers and libraries, Snow Leopard, OS X
 @subsection El Capitan
 
-[This is provisional information as El Capitan is not yet released.]
+[This is provisional information about OS X 10.11 aka El Capitan as it
+is not yet released.]
 
 @c XQuartz does not install out-of-the-box:
 @c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
@@ -4939,9 +4927,10 @@ necessary to include @file{/Library/TeX/texbin} in your path rather the
 @end example
 
 It may be necessary to replace @file{/usr/X11} by @file{/opt/X11} in
-file @file{/usr/local/lib/tkConfig.sh}.
-
-See also the information on `Mavericks and Yosemite'.
+file @file{/usr/local/lib/tkConfig.sh}, and to use
+@command{install_name_tool} to adjust
+@file{/usr/local/lib/libtk8.6.dylib} to link to libraries under
+@file{/opt/X11} rather than @file{/usr/X11}.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4967,9 +4956,9 @@ in the native OS X style: this will not work with @Rapp{} because of
 conflicts over the OS X menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mountain Lion
-and later).  It is better to install Tcl/Tk 8.6.x from the sources
-or a binary distribution from
+are not recent versions of Tcl/Tk (8.5.9 in Mountain Lion and later).
+It is better to install Tcl/Tk 8.6.x from the sources or a binary
+distribution from
 @uref{https://www.activestate.com/activetcl/downloads}.  Configure @R{}
 with
 @example
@@ -4981,7 +4970,8 @@ with
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
 
-If you need to find out which version of Tk in use at run time, use
+If you need to find out which distribution of Tk is in use at run time,
+use
 @example
 library(tcltk)
 tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
@@ -4997,17 +4987,14 @@ Lion and later do not come with an installed JRE, and an OS X upgrade
 removes one if already installed: it is intended to be installed at
 first use.  Check if a JRE is installed by running @command{java
 -version} in a @command{Terminal} window: if Java is not installed this
-should prompt you to install it.
-
-You may want/need to install the latest Java from Oracle (currently Java
-8 from
+should prompt you to install it.  You can also install directly the
+latest Java from Oracle (currently Java 8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @code{Java For OS X 2015-001} from
 @uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up
-messages, at least under Yosemite, even if you have a current version
-installed.
+messages, even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
@@ -5038,12 +5025,6 @@ JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 in @file{config.site}.
-@noindent
-The Apple developer versions of the JDK installed somewhere like
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
-@end example
-
 
 Note that it is necessary to set the environment variable @env{NOAWT}
 to @code{1} to install many of the Java-using packages.
@@ -5075,7 +5056,7 @@ make prefix=/where/you/want/R.framework/to/go install
 @end example
 
 Note that installation as a framework is non-standard (especially to a
-non-standard location) and utilities may not support it (e.g.@: the
+non-standard location) and Unix utilities may not support it (e.g.@: the
 @command{pkg-config} file @file{libR.pc} will be put somewhere unknown
 to @command{pkg-config}).
 
@@ -5092,7 +5073,7 @@ The current sources can be checked out by
 svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
 @noindent
-This can be built by loading the @code{R.xcodeproj} project (select the
+and built by loading the @code{R.xcodeproj} project (select the
 @code{R} target and a suitable configuration), or from the command-line
 by e.g.@:
 @example
