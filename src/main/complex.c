@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -80,7 +80,7 @@
 #endif
 
 
-/* 
+/*
    Note: this could use the C11 CMPLX() macro.
    As could mycpow, z_tan and some of the substitutes.
  */
@@ -97,7 +97,7 @@ static R_INLINE double complex toC99(Rcomplex *x)
 }
 #define C99_COMPLEX2(x, i) toC99(COMPLEX(x) + i)
 
-static R_INLINE void 
+static R_INLINE void
 SET_C99_COMPLEX(Rcomplex *x, R_xlen_t i, double complex value)
 {
     Rcomplex *ans = x+i;
@@ -163,7 +163,7 @@ static R_INLINE double complex R_cpow_n(double complex X, int k)
 static double complex mycpow (double complex X, double complex Y)
 {
     double complex Z;
-    double yr = creal(Y), yi = cimag(Y); 
+    double yr = creal(Y), yi = cimag(Y);
     int k;
     if (X == 0.0) {
 	if (yi == 0.0) Z = R_pow(0.0, yr); else Z = R_NaN + R_NaN*I;
@@ -482,7 +482,7 @@ static double complex casin(double complex z)
     t2 = 0.5 * hypot(x - 1, y);
     alpha = t1 + t2;
     ri = log(alpha + sqrt(alpha*alpha - 1));
-    /* This comes from 
+    /* This comes from
        'z_asin() is continuous from below if x >= 1
         and continuous from above if x <= -1.'
     */
@@ -968,7 +968,7 @@ static void R_cpolyroot(double *opr, double *opi, int *degree,
     pr = tmp; pi = tmp + nn; hr = tmp + 2*nn; hi = tmp + 3*nn;
     qpr = tmp + 4*nn; qpi = tmp + 5*nn; qhr = tmp + 6*nn; qhi = tmp + 7*nn;
     shr = tmp + 8*nn; shi = tmp + 9*nn;
-    
+
     /* make a copy of the coefficients and shr[] = | p[] | */
     for (i = 0; i < nn; i++) {
 	pr[i] = opr[i];

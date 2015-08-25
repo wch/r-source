@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -258,7 +258,7 @@ static int findTypeInTypeTable(SEXPTYPE t)
 }
 
 // called from main.c
-attribute_hidden 
+attribute_hidden
 void InitTypeTables(void) {
 
     /* Type2Table */
@@ -314,7 +314,7 @@ SEXP type2rstr(SEXPTYPE t) /* returns a STRSXP */
         SEXP res = Type2Table[t].rstrName;
         if (res != NULL) return res;
     }
-    error(_("type %d is unimplemented in '%s'"), t, 
+    error(_("type %d is unimplemented in '%s'"), t,
 	  "type2ImmutableScalarString");
     return R_NilValue; /* for -Wall */
 }
@@ -1638,7 +1638,7 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    case '+': p++;
 	    default: ;
 	    }
-	    /* The test for n is in response to PR#16358; it's not right if the exponent is 
+	    /* The test for n is in response to PR#16358; it's not right if the exponent is
 	       very large, but the overflow or underflow below will handle it. */
 #define MAX_EXPONENT_PREFIX 9999
 	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
@@ -1747,7 +1747,7 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (PRIMVAL(op) || known_to_be_utf8) { /* enc2utf8 */
 	    if (IS_UTF8(el) || IS_ASCII(el) || IS_BYTES(el)) continue;
 	    if (!duped) { ans = PROTECT(duplicate(ans)); duped = TRUE; }
-	    SET_STRING_ELT(ans, i, 
+	    SET_STRING_ELT(ans, i,
 			   mkCharCE(translateCharUTF8(el), CE_UTF8));
 	} else if (ENC_KNOWN(el)) { /* enc2native */
 	    if (IS_ASCII(el) || IS_BYTES(el)) continue;
@@ -1948,7 +1948,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 		collationLocaleSet = 2;
 	    } else {
 		if(strcmp(s, "none")) {
-		    if(streql(s, "default")) 
+		    if(streql(s, "default"))
 			uloc_setDefault(getLocale(), &status);
 		    else uloc_setDefault(s, &status);
 		    if(U_FAILURE(status))
@@ -1998,9 +1998,9 @@ SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int type = asInteger(CAR(args));
 	if (type < 1 || type > 2)
 	    error(_("invalid '%s' value"), "type");
-	
-	res = ucol_getLocaleByType(collator, 
-				   type == 1 ? ULOC_ACTUAL_LOCALE : ULOC_VALID_LOCALE, 
+
+	res = ucol_getLocaleByType(collator,
+				   type == 1 ? ULOC_ACTUAL_LOCALE : ULOC_VALID_LOCALE,
 				   &status);
 	if(!U_FAILURE(status) && res) ans = res;
     } else ans = "ICU not in use";
@@ -2013,7 +2013,7 @@ attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
     if (!collationLocaleSet) {
-    	int errsv = errno;      /* OSX may set errno in the operations below. */
+	int errsv = errno;      /* OSX may set errno in the operations below. */
 	collationLocaleSet = 1;
 #ifndef Win32
 	if (strcmp("C", getLocale()) ) {

@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* <UTF8> char here is mainly handled as a whole string.
@@ -379,7 +379,7 @@ void R_runHandlers(InputHandler *handlers, fd_set *readMask)
 	R_PolledEvents();
     } else
 	while(tmp) {
-	    /* Do this way as the handler function might call 
+	    /* Do this way as the handler function might call
 	       removeInputHandlers */
 	    next = tmp->next;
 	    if(FD_ISSET(tmp->fileDescriptor, readMask)
@@ -1082,7 +1082,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
 	    R_setupHistory(); /* re-read the history size and filename */
 	    stifle_history(R_HistorySize);
 	    err = write_history(R_HistoryFile);
-	    if(err) warning(_("problem in saving the history file '%s'"), 
+	    if(err) warning(_("problem in saving the history file '%s'"),
 			    R_HistoryFile);
 	}
 # endif /* HAVE_READLINE_HISTORY_H */
@@ -1101,9 +1101,9 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
     R_CleanTempDir();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and (if run) .Last */
-    if(ifp) { 
+    if(ifp) {
 	fclose(ifp);    /* input file from -f or --file= */
-	ifp = NULL; 	/* To avoid trying to close it again */
+	ifp = NULL;	/* To avoid trying to close it again */
     }
     fpu_setup(FALSE);
 
@@ -1291,7 +1291,7 @@ void Rsleep(double timeint)
     for (;;) {
 	fd_set *what;
 	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
-	
+
 	int wt = -1;
 	if (R_wait_usec > 0) wt = R_wait_usec;
 	if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))

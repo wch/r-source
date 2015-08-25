@@ -1,5 +1,5 @@
 #  File src/library/stats/R/mlm.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1998 B. D. Ripley
 #  Copyright (C) 1998-2012 The R Core Team
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ## mlm := multivariate lm()
 summary.mlm <- function(object, ...)

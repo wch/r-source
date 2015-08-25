@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* Notes on so-called 'Large File Support':
@@ -5084,7 +5084,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (strncmp(url, "https://", 8) == 0)
 # ifdef HAVE_CURL_CURL_H
 	{
-	    // this is slightly optimistic: 
+	    // this is slightly optimistic:
 	    // we did not check the libcurl build supports https
 	    if(!defmeth) {
 		REprintf("https:// URLs are not supported by method \"internal\": trying \"libcurl\"\n");

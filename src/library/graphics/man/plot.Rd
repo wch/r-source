@@ -1,5 +1,5 @@
 % File src/library/graphics/man/plot.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
@@ -65,6 +65,8 @@ plot(x, y, \dots)
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.formula}} and other
   methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
+  For thousands of points, consider using \code{\link{smoothScatter}()}
+  instead of \code{plot()}.
 
   For X-Y-Z plotting see \code{\link{contour}}, \code{\link{persp}} and
   \code{\link{image}}.

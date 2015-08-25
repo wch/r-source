@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* <UTF8>
@@ -361,7 +361,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		    buffer->data[m++] = (char) scanchar2(d);
 	    }
 	    if (c == R_EOF)
-	    	warning(_("EOF within quoted string"));
+		warning(_("EOF within quoted string"));
 	    c = scanchar(FALSE, d);
 	    mm = m;
 	}
@@ -411,7 +411,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			    buffer->data[m++] = (char) scanchar2(d);
 		    }
 		    if (c == R_EOF)
-		    	warning(_("EOF within quoted string"));
+			warning(_("EOF within quoted string"));
 		    c = scanchar(TRUE, d); /* only peek at lead byte
 					      unless ASCII */
 		    if (c == quote) {
@@ -453,7 +453,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
     }
     *bufp = '\0';
     /* Remove UTF-8 BOM */
-    if(d->atStart && utf8locale && 
+    if(d->atStart && utf8locale &&
        !memcmp(buffer->data, "\xef\xbb\xbf", 3))
 	memmove(buffer->data, buffer->data+3, strlen(buffer->data) + 1);
     d->atStart = FALSE;
@@ -822,7 +822,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
-    int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, 
+    int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline,
 	escapes, skipNul;
     const char *p, *encoding;
     RCNTXT cntxt;
@@ -936,7 +936,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("cannot read from this connection"));
 	    }
 	} else {
-	    if(!data.con->canread) 
+	    if(!data.con->canread)
 		error(_("cannot read from this connection"));
 	}
 	for (i = 0; i < nskip; i++) /* MBCS-safe */
@@ -984,7 +984,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
     if (data.quoteset[0]) free(data.quoteset);
-    if (!skipNul && data.embedWarn) 
+    if (!skipNul && data.embedWarn)
 	warning(_("embedded nul(s) found in input"));
 
     UNPROTECT(1); /* ans */

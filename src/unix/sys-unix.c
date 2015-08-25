@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* <UTF8>
@@ -286,16 +286,16 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("error in running command"));
 	} else if (res) {
 	    if (errno)
-		warningcall(R_NilValue, 
-			    _("running command '%s' had status %d and error message '%s'"), 
-			    cmd, res, 
+		warningcall(R_NilValue,
+			    _("running command '%s' had status %d and error message '%s'"),
+			    cmd, res,
 			    strerror(errno));
-	    else 
-		warningcall(R_NilValue, 
-			    _("running command '%s' had status %d"), 
+	    else
+		warningcall(R_NilValue,
+			    _("running command '%s' had status %d"),
 			    cmd, res);
 	}
-	
+
 	rval = PROTECT(allocVector(STRSXP, i));
 	for (j = (i - 1); j >= 0; j--) {
 	    SET_STRING_ELT(rval, j, CAR(tlist));

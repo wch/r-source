@@ -1,5 +1,5 @@
 #  File src/library/stats/R/lsfit.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2013 The R Core Team
 #
@@ -14,7 +14,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 lsfit <- function(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
                   yname = NULL)

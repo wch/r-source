@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /*		Warnings/Errors
@@ -1234,21 +1234,21 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 static SEXP GetOneIndex(SEXP sub, int ind)
 {
     if (ind < 0 || ind+1 > length(sub))
-    	error("internal error: index %d from length %d", ind, length(sub));
+	error("internal error: index %d from length %d", ind, length(sub));
     if (length(sub) > 1) {
-    	switch (TYPEOF(sub)) {
-    	case INTSXP:
-    	    sub = ScalarInteger(INTEGER(sub)[ind]);
-    	    break;
-    	case REALSXP:
-    	    sub = ScalarReal(REAL(sub)[ind]);
-    	    break;
-    	case STRSXP:
-    	    sub = ScalarString(STRING_ELT(sub, ind));
-    	    break;
-    	default:
-    	    error(_("invalid subscript in list assign"));
-    	}
+	switch (TYPEOF(sub)) {
+	case INTSXP:
+	    sub = ScalarInteger(INTEGER(sub)[ind]);
+	    break;
+	case REALSXP:
+	    sub = ScalarReal(REAL(sub)[ind]);
+	    break;
+	case STRSXP:
+	    sub = ScalarString(STRING_ELT(sub, ind));
+	    break;
+	default:
+	    error(_("invalid subscript in list assign"));
+	}
     }
     return sub;
 }
@@ -1268,7 +1268,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
     n = length(indx);
     if (n > 1)
-    	error(_("invalid subscript in list assign"));
+	error(_("invalid subscript in list assign"));
 
     nx = length(x);
 
@@ -1650,7 +1650,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
 	    error(_("[[ ]] with missing subscript"));
 	if (nsubs == 1) {
-	    offset = OneIndex(x, thesub, xlength(x), 0, &newname, 
+	    offset = OneIndex(x, thesub, xlength(x), 0, &newname,
 			      recursed ? len-1 : -1, R_NilValue);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
@@ -1804,8 +1804,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 2014:	/* expression <- real	    */
 	case 2015:	/* expression <- complex    */
 	case 2016:	/* expression <- character  */
-	case 2024:  	/* expression     <- raw */
-	case 2025:  	/* expression     <- S4 */
+	case 2024:	/* expression     <- raw */
+	case 2025:	/* expression     <- S4 */
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
@@ -2023,7 +2023,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	SEXP names;
 	int type = VECSXP;
 
-	if (isExpression(x)) 
+	if (isExpression(x))
 	    type = EXPRSXP;
 	else if (!isNewList(x)) {
 	    warning(_("Coercing LHS to a list"));

@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -338,11 +338,11 @@ SEXP DropDims(SEXP x)
 	   subset.c & others have a contrary version that leaves the
 	   S4 class in, incorrectly, in the case of vectors.  JMC
 	   3/3/09 */
-/* 	if(IS_S4_OBJECT(x)) {/\* no longer valid subclass of array or
- 	matrix *\/ */
-/* 	    setAttrib(x, R_ClassSymbol, R_NilValue); */
-/* 	    UNSET_S4_OBJECT(x); */
-/* 	} */
+/*	if(IS_S4_OBJECT(x)) {/\* no longer valid subclass of array or
+	matrix *\/ */
+/*	    setAttrib(x, R_ClassSymbol, R_NilValue); */
+/*	    UNSET_S4_OBJECT(x); */
+/*	} */
 	UNPROTECT(1); /* newnames */
     } else {
 	/* We have a lower dimensional array. */
@@ -1181,7 +1181,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    iip[itmp]++;				\
 	    break;					\
 	}						\
-    for (lj = 0, itmp = 0; itmp < n; itmp++)	       	\
+    for (lj = 0, itmp = 0; itmp < n; itmp++)		\
 	lj += iip[itmp] * stride[itmp];
 
 /* aperm (a, perm, resize = TRUE) */
@@ -1378,7 +1378,7 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'x' must be numeric"));
     }
     if (n * (double)p > XLENGTH(x)) // can only happen for "dotted" versions: .colSums() ...
-    	error(_("'X' is too short")); /* PR#16367 */
+	error(_("'X' is too short")); /* PR#16367 */
 
     int OP = PRIMVAL(op);
     if (OP == 0 || OP == 1) { /* columns */

@@ -1,5 +1,5 @@
 % File src/library/utils/man/packageDescription.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2014 R Core Team
 % Copyright 2005-2010 The R Foundation
 % Distributed under GPL 2 or later

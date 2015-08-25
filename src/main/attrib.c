@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1517,7 +1517,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	SETCADR(args, input);
 	UNPROTECT(1); // 'input' is now protected
 
- 	if(DispatchOrEval(call, op, "@<-", args, env, &ans, 0, 0))
+	if(DispatchOrEval(call, op, "@<-", args, env, &ans, 0, 0))
 	    return(ans);
 
 	PROTECT(obj = CAR(ans));

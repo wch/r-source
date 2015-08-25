@@ -1,5 +1,5 @@
 % File src/library/methods/man/cbind2.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2015 R Core Team
 % Copyright 2001-2011 The R Foundation
 % Distributed under GPL 2 or later

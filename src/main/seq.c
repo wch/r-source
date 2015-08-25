@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* The x:y  primitive calls do_colon(); do_colon() calls cross_colon() if
@@ -96,7 +96,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 static SEXP seq_colon(double n1, double n2, SEXP call)
 {
     double r = fabs(n2 - n1);
-    if(r >= R_XLEN_T_MAX) 
+    if(r >= R_XLEN_T_MAX)
 	errorcall(call, _("result would be too long a vector"));
 
     SEXP ans;
@@ -158,14 +158,14 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n1 == 0 || n2 == 0)
 	errorcall(call, _("argument of length 0"));
     if (n1 > 1)
-	warningcall(call, 
+	warningcall(call,
 		    ngettext("numerical expression has %d element: only the first used",
 			     "numerical expression has %d elements: only the first used",
 			     (int) n1), (int) n1);
     if (n2 > 1)
-	warningcall(call, 
-		    ngettext("numerical expression has %d element: only the first used", 
-			     "numerical expression has %d elements: only the first used", 
+	warningcall(call,
+		    ngettext("numerical expression has %d element: only the first used",
+			     "numerical expression has %d elements: only the first used",
 			     (int) n2), (int) n2);
     n1 = asReal(s1);
     n2 = asReal(s2);
@@ -337,15 +337,15 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("incorrect type for second argument"));
 
     if (!isVector(s) && s != R_NilValue)
-	error(_("attempt to replicate an object of type '%s'"), 
+	error(_("attempt to replicate an object of type '%s'"),
 	      type2char(TYPEOF(s)));
 
     nc = xlength(ncopy); // might be 0
-    if (nc == xlength(s)) 
+    if (nc == xlength(s))
 	PROTECT(a = rep2(s, ncopy));
     else {
 	if (nc != 1) error(_("invalid '%s' value"), "times");
-	
+
 #ifdef LONG_VECTOR_SUPPORT
 	double snc = asReal(ncopy);
 	if (!R_FINITE(snc) || snc < 0)
@@ -627,7 +627,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, _("invalid '%s' argument"), "length.out");
     }
     if(length(CADDR(args)) != 1)
-	warningcall(call, _("first element used of '%s' argument"), 
+	warningcall(call, _("first element used of '%s' argument"),
 		    "length.out");
 
     each = asInteger(CADDDR(args));
@@ -638,7 +638,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(each == NA_INTEGER) each = 1;
 
     if(lx == 0) {
-	if(len > 0 && x == R_NilValue) 
+	if(len > 0 && x == R_NilValue)
 	    warningcall(call, "'x' is NULL so the result will be NULL");
 	SEXP a;
 	PROTECT(a = duplicate(x));
@@ -763,7 +763,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(ISNAN(rout) || rout <= -0.5)
 	    errorcall(call, _("'length.out' must be a non-negative number"));
 	if(length(len) != 1)
-	    warningcall(call, _("first element used of '%s' argument"), 
+	    warningcall(call, _("first element used of '%s' argument"),
 			"length.out");
 	lout = (R_xlen_t) ceil(rout);
     }
@@ -993,7 +993,7 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(REALSXP, len);
 	double *p = REAL(ans);
 	for(R_xlen_t i = 0; i < len; i++) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();	    
+//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    p[i] = (double) (i+1);
 	}
     } else

@@ -93,7 +93,7 @@ valid_utf8(const char *string, size_t length) // R change int->size_t
 	    /* 2-byte character. No further bytes to check for
 	       0x80. Check first byte for for xx00 000x (overlong
 	       sequence). */
-	case 1: 
+	case 1:
 	    if ((c & 0x3e) == 0) return 1;
 	    break;
 

@@ -1,5 +1,5 @@
 #  File src/library/stats/R/nlsFunc.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1997,1999 Jose C. Pinheiro and  Douglas M. Bates
 #            (C) 1999 Saikat DebRoy
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ###
 ###            Utility functions used with nls

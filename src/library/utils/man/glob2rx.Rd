@@ -1,5 +1,5 @@
 % File src/library/utils/man/glob2rx.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2008 R Core Team
 % Copyright 2002-2008 The R Foundation
 % Distributed under GPL 2 or later

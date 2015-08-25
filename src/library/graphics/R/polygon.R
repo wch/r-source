@@ -1,5 +1,5 @@
 #  File src/library/graphics/R/polygon.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright 1995-2012 The R Core Team
 #  In part (C) 2001 Kevin Buhr
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ### polyhatch -  a pure R implementation of polygon hatching
 ### Copyright (C) 2001 Kevin Buhr

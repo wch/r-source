@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -75,8 +75,8 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     if (isRaw(x) && isRaw(y)) {
     }
     else if (!isNumber(x) || !isNumber(y))
-    	errorcall(call,
-    		  _("operations are possible only for numeric, logical or complex types"));
+	errorcall(call,
+		  _("operations are possible only for numeric, logical or complex types"));
     tsp = R_NilValue;		/* -Wall */
     klass = R_NilValue;		/* -Wall */
     xarray = isArray(x);

@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  *
  *
@@ -2952,7 +2952,7 @@ int envlength(SEXP rho)
 	    R_ExternalPtrAddr(HASHTAB(rho));
         return (int) xlength(tb->objects(tb));
     } else if( HASHTAB(rho) != R_NilValue)
-        return HashTableSize(HASHTAB(rho), 1);       
+        return HashTableSize(HASHTAB(rho), 1);
     else
 	return FrameSize(FRAME(rho), 1);
 }

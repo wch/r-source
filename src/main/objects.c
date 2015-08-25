@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /*  This module contains support for S-style generic */
@@ -855,7 +855,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
     }
     vmaxset(vmax);
     if(!isvec) {
-    	UNPROTECT(1);
+	UNPROTECT(1);
 	return mkFalse();
     }
     UNPROTECT(2);

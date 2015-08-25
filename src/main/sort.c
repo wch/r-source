@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -181,7 +181,7 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isObject(x)) {
 	// try dispatch -- fails entirely for S4: need "DispatchOrEval()" ?
 	SEXP call;
-	PROTECT(call = 	// R>  .gtn(x, strictly) :
+	PROTECT(call =	// R>  .gtn(x, strictly) :
 		lang3(install(".gtn"), x, CADR(args)));
 	ans = eval(call, rho);
 	UNPROTECT(2);

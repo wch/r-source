@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -983,12 +983,12 @@ static SEXP expandDots(SEXP el, SEXP rho)
 static SEXP setDflt(SEXP arg, SEXP dflt)
 {
     if (dflt) {
-    	SEXP dflt1, dflt2;
-    	PROTECT(dflt1 = deparse1line(dflt, TRUE));
-    	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
-    	error(_("duplicate 'switch' defaults: '%s' and '%s'"),
+	SEXP dflt1, dflt2;
+	PROTECT(dflt1 = deparse1line(dflt, TRUE));
+	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
+	error(_("duplicate 'switch' defaults: '%s' and '%s'"),
 	      CHAR(STRING_ELT(dflt1, 0)), CHAR(STRING_ELT(dflt2, 0)));
-    	UNPROTECT(2); /* won't get here, but just for good form */
+	UNPROTECT(2); /* won't get here, but just for good form */
     }
     return(CAR(arg));
 }
@@ -1063,7 +1063,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		} else
 		    dflt = setDflt(y, dflt);
 	    }
- 	    if (dflt) {
+	    if (dflt) {
 		ans =  eval(dflt, rho);
 		UNPROTECT(2);
 		return ans;

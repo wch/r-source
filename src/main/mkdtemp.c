@@ -17,7 +17,7 @@
    Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 /* Extracted from misc/mkdtemp.c and sysdeps/posix/tempname.c,
-   with R modifications for randomness and Win32.  
+   with R modifications for randomness and Win32.
 
    mkdtemp was required by POSIX 2008: we use this substitute on
    Windows and Solaris 10.

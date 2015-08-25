@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -150,7 +150,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	PROTECT_WITH_INDEX(x, &xpi);
 	PROTECT_WITH_INDEX(y, &ypi);
 	SEXP ans;
-	if (typex == INTSXP && typey == INTSXP) 
+	if (typex == INTSXP && typey == INTSXP)
 	    ans = integer_relop(PRIMVAL(op), x, y);
 	else {
 	    if (typex == INTSXP)
@@ -800,14 +800,14 @@ static SEXP bitwiseShiftL(SEXP a, SEXP b)
     int np = 0;
     if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;}
     if(!isInteger(b)) {b = PROTECT(coerceVector(b, INTSXP)); np++;}
-    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b), 
+    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b),
 	mn = (m && n) ? mymax(m, n) : 0;
     SEXP ans = allocVector(TYPEOF(a), mn);
     switch(TYPEOF(a)) {
     case INTSXP:
 	for(i = 0; i < mn; i++) {
 	    int aa = INTEGER(a)[i%m], bb = INTEGER(b)[i%n];
-	    INTEGER(ans)[i] = 
+	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa << bb);
 	}
 	break;
@@ -823,14 +823,14 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     int np = 0;
     if(isReal(a)) {a = PROTECT(coerceVector(a, INTSXP)); np++;}
     if(!isInteger(b)) {b = PROTECT(coerceVector(b, INTSXP)); np++;}
-    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b), 
+    R_xlen_t i, m = XLENGTH(a), n = XLENGTH(b),
 	mn = (m && n) ? mymax(m, n) : 0;
     SEXP ans = allocVector(TYPEOF(a), mn);
     switch(TYPEOF(a)) {
     case INTSXP:
 	for(i = 0; i < mn; i++) {
 	    int aa = INTEGER(a)[i%m], bb = INTEGER(b)[i%n];
-	    INTEGER(ans)[i] = 
+	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa >> bb);
 	}
 	break;

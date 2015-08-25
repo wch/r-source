@@ -14,10 +14,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
-/* This should be regarded as part of the graphics engine: 
+/* This should be regarded as part of the graphics engine:
    it is now a stub for code in grDevices */
 
 #ifdef HAVE_CONFIG_H

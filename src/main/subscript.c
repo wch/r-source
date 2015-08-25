@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  * EXPORTS:
  *
@@ -66,7 +66,7 @@ static R_INLINE int integerOneIndex(int i, R_xlen_t len, SEXP call)
 
 /* Utility used (only in) do_subassign2_dflt(), i.e. "[[<-" in ./subassign.c : */
 R_xlen_t attribute_hidden
-OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname, 
+OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	 int pos, SEXP call)
 {
     SEXP names;
@@ -288,13 +288,13 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 }
 
 /* This is used for [[ and [[<- with a vector of indices of length > 1 .
-   x is a list or pairlist, and it is indexed recusively from 
+   x is a list or pairlist, and it is indexed recusively from
    level start to level stop-1.  ( 0...len-1 or 0..len-2 then len-1).
    For [[<- it needs to duplicate if substructure might be shared.
  */
 SEXP attribute_hidden
 vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
-	    Rboolean dup) 
+	    Rboolean dup)
 {
     int i;
     R_xlen_t offset;
@@ -340,7 +340,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
 	    }
-    	}
+	}
     }
     return x;
 }
@@ -482,10 +482,10 @@ static SEXP nullSubscript(R_xlen_t n)
     SEXP indx;
 #ifdef LONG_VECTOR_SUPPORT
     if (n > R_SHORT_LEN_MAX) {
- 	indx = allocVector(REALSXP, n);
+	indx = allocVector(REALSXP, n);
 	for (R_xlen_t i = 0; i < n; i++)
 	    REAL(indx)[i] = (double)(i + 1);
-    } else 
+    } else
 #endif
     {
 	indx = allocVector(INTSXP, n);
@@ -496,7 +496,7 @@ static SEXP nullSubscript(R_xlen_t n)
 }
 
 
-static SEXP 
+static SEXP
 logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 {
     R_xlen_t count, i, nmax, i1, i2;
@@ -627,7 +627,7 @@ static SEXP positiveSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx)
     } else return s;
 }
 
-static SEXP 
+static SEXP
 integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 {
     R_xlen_t i;
@@ -662,7 +662,7 @@ integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     return R_NilValue;
 }
 
-static SEXP 
+static SEXP
 realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 {
     R_xlen_t i;

@@ -1,5 +1,5 @@
 #  File src/library/base/R/jitter.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2012 The R Core Team
 #
@@ -14,7 +14,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 ### Unimplemented Idea {for amount = NULL ?}
 ### Really "optimal" (e.g. for rug()), use a non-constant amount,

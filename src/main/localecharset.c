@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /*  This file was contributed by Ei-ji Nakama.
@@ -617,7 +617,7 @@ const char *locale2charset(const char *locale)
 	p = strrchr(la_loc, '.');
 	if(p) *p = '\0';
     }
-    
+
 #ifdef Win32
     /*
       ## PUTTY suggests mapping Windows code pages as

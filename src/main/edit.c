@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* <UTF8> char here is handled as a whole string, but note that
@@ -180,9 +180,9 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	srcfile = eval(srcfile, R_BaseEnv);
 	UNPROTECT(5);
     } else
-    	srcfile = R_NilValue;
+	srcfile = R_NilValue;
     PROTECT(srcfile);
-    
+
     /* <FIXME> setup a context to close the file, and parse and eval
        line by line */
     if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)

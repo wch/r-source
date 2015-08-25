@@ -313,7 +313,7 @@ step_computing(int k,
    * It is possible for origin and extremity to be very remote
    * indeed (if the control points are located WAY off the device).
    * In order to avoid having ridiculously many steps, limit
-   * the start_to_end_dist to being the length of the diagonal of the 
+   * the start_to_end_dist to being the length of the diagonal of the
    * device.
    */
   devWidth = fromDeviceWidth(toDeviceWidth(1, GE_NDC, dd),

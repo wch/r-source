@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  *
  * Application Routines, typically implemented in  ../appl/
@@ -42,7 +42,7 @@ extern "C" {
 
 /* Entry points in the R API */
 
-/* appl/integrate.c */
+/* ../../appl/integrate.c */
 typedef void integr_fn(double *x, int n, void *ex);
 /* vectorizing function   f(x[1:n], ...) -> x[]  {overwriting x[]}. */
 
@@ -135,7 +135,7 @@ void optif9(int nr, int n, double *x,
 	    double steptl, double *xpls, double *fpls, double *gpls,
 	    int *itrmcd, double *a, double *wrk, int *itncnt);
 
-/* find qr decomposition, dqrdc2() is basis of R's qr(), 
+/* find qr decomposition, dqrdc2() is basis of R's qr(),
    also used by nlme and many other packages. */
 void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
 		      double *tol, int *rank,

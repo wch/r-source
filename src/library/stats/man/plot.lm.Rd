@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.lm.Rd
-% Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Part of the R package, https://www.R-project.org
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
@@ -51,7 +51,7 @@
     points will be chosen.  \code{NULL} uses observation numbers.}
   \item{cex.id}{magnification of point labels.}
   \item{qqline}{logical indicating if a \code{\link{qqline}()} should be
-  added to the normal Q-Q plot.}
+    added to the normal Q-Q plot.}
   \item{cook.levels}{levels of Cook's distance at which to draw contours.}
   \item{add.smooth}{logical indicating if a smoother should be added to
     most plots; see also \code{panel} above.}

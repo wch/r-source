@@ -1,4 +1,4 @@
-/* For inclusion by datetime.c. 
+/* For inclusion by datetime.c.
 
    A modified version of code from the GNU C library with locale
    support removed and wchar support added.
@@ -280,12 +280,12 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	/* try full name first */
 	    for (cnt = 0; cnt < 7; ++cnt)
 		if (w_match_string (w_weekday_name[cnt], rp)) break;
-	    
+
 	    if (cnt == 7) {
 		for (cnt = 0; cnt < 7; ++cnt)
 		    if (w_match_string (w_ab_weekday_name[cnt], rp)) break;
 	    }
-		
+
 	    if (cnt == 7)
 		/* Does not match a weekday name.  */
 		return NULL;
@@ -1253,7 +1253,7 @@ static void get_locale_w_strings(void)
 
 /* We only care if the result is null or not */
 static void *
-R_strptime (const char *buf, const char *format, stm *tm, 
+R_strptime (const char *buf, const char *format, stm *tm,
 	    double *psecs, int *poffset)
 {
 #if defined(HAVE_WCSTOD)

@@ -1,5 +1,5 @@
 #  File src/library/utils/R/unix/help.request.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2013 The R Core Team
 #
@@ -14,7 +14,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 help.request <- function (subject = "", address = "r-help@R-project.org",
 			  file = "R.help.request", ...)
@@ -67,14 +67,14 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 
     cat("Checklist:\n")
     post <- readline("Have you read the posting guide? (y/n) ")
-    if (no(post)) return(go("http://www.r-project.org/posting-guide.html"))
+    if (no(post)) return(go("https://www.r-project.org/posting-guide.html"))
     FAQ <- readline("Have you checked the FAQ? (y/n) ")
     if (no(FAQ)) return(go("http://cran.r-project.org/faqs.html"))
     intro <- readline("Have you checked An Introduction to R? (y/n) ")
     if (no(intro))
-	return(go("http://cran.r-project.org/manuals.html"))
+	return(go("https://cran.r-project.org/manuals.html"))
     NEWS <- readMyLine("Have you checked the NEWS of the latest development release?")
-    if (no(NEWS)) return(go("http://cran.r-project.org/doc/manuals/r-devel/NEWS.html"))
+    if (no(NEWS)) return(go("https://cran.r-project.org/doc/manuals/r-devel/NEWS.html"))
     rsitesearch <- readline("Have you looked on RSiteSearch? (y/n) ")
     if (no(rsitesearch)) {
 	catPlease()
@@ -95,7 +95,7 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 	if(no(other)) return("Please do this first.")
     }
 
-    page <- url("http://cran.r-project.org/bin/windows/base")
+    page <- url("https://cran.r-project.org/bin/windows/base")
     title <- grep("<title>", readLines(page, 10L), fixed = TRUE, value = TRUE)
     ver <- sub("^.*R-([^ ]*) for Windows.*$", "\\1", title)
     if (getRversion() < numeric_version(ver)) {

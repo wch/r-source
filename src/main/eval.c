@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -1385,7 +1385,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
     Rboolean cond = NA_LOGICAL;
 
     if (length(s) > 1) {
-    	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
+	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
 	warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
 	UNPROTECT(1);
@@ -3658,7 +3658,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	}								\
 	SEXP call = VECTOR_ELT(constants, GETOP());			\
 	SEXP tmp = GETSTACK(-2);					\
-	SEXP args = CONS_NR(tmp, CONS_NR(GETSTACK(-1), R_NilValue)); 	\
+	SEXP args = CONS_NR(tmp, CONS_NR(GETSTACK(-1), R_NilValue));	\
 	R_BCNodeStackTop--;						\
 	SETSTACK(-1, args); /* to protect */				\
 	SEXP op = getPrimitive(R_LogSym, SPECIALSXP);			\

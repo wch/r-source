@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /*
@@ -220,7 +220,7 @@ const char *sexptype2char(SEXPTYPE type) {
     case RAWSXP:	return "RAWSXP";
     case NEWSXP:	return "NEWSXP"; /* should never happen */
     case FREESXP:	return "FREESXP";
-    default:	 	return "<unknown>";
+    default:		return "<unknown>";
     }
 }
 
@@ -1613,7 +1613,7 @@ static void RunGenCollect(R_size_t size_needed)
 	    FORWARD_NODE(gdd->displayList);
 	    FORWARD_NODE(gdd->savedSnapshot);
 	    if (gdd->dev)
-	    	FORWARD_NODE(gdd->dev->eventEnv);
+		FORWARD_NODE(gdd->dev->eventEnv);
 	}
     }
 
@@ -1760,11 +1760,11 @@ static void RunGenCollect(R_size_t size_needed)
 
     /* tell Valgrind about free nodes */
 #if VALGRIND_LEVEL > 1
-    for(i = 1; i< NUM_NODE_CLASSES; i++) { 
-	for(s = NEXT_NODE(R_GenHeap[i].New); 
-	    s != R_GenHeap[i].Free; 
+    for(i = 1; i< NUM_NODE_CLASSES; i++) {
+	for(s = NEXT_NODE(R_GenHeap[i].New);
+	    s != R_GenHeap[i].Free;
 	    s = NEXT_NODE(s)) {
-	    VALGRIND_MAKE_MEM_NOACCESS(DATAPTR(s), 
+	    VALGRIND_MAKE_MEM_NOACCESS(DATAPTR(s),
 				       NodeClassSize[i]*sizeof(VECREC));
 	}
     }
@@ -3877,10 +3877,10 @@ int Seql(SEXP a, SEXP b)
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     else {
-    	SEXP vmax = R_VStack;
-    	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
-    	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
-    	return result;
+	SEXP vmax = R_VStack;
+	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
+	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
+	return result;
     }
 }
 

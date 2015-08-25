@@ -453,6 +453,7 @@ make pdf      @r{to create PDF versions}
 make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).}
 @end example
 
+@c texi2any from Mar 2013.
 You will not be able to build any of these unless you have
 @command{texi2any} version 5.1 or later installed, and for PDF you must
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
@@ -1678,7 +1679,7 @@ installed elsewhere so try searching for it in Spotlight.) This is
 usually referred to as @Rapp{} to distinguish it from command-line @R{}:
 its user manual is currently part of the OS X FAQ at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
-can be viewed from  @Rapp{}'s `Help' menu.
+can be viewed from @Rapp{}'s `Help' menu.
 
 
 You can run command-line @R{} from a Terminal@footnote{The installer
@@ -1750,7 +1751,7 @@ rm -rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/bin/R /usr/bin/Rscript
 @end example
 
-The installation consisted of three Apple packages:
+The installation consisted of four Apple packages:
 @code{org.r-project.R.x86_64.fw.pkg},
 @code{org.r-project.R.x86_64.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
@@ -3800,10 +3801,9 @@ compiled with compatible compilers and flags.  For example, this has
 meant that on Sun Sparc using the native compilers the flag
 @option{-dalign} is needed if @code{sunperf} is to be used.
 
-On some systems it is necessary that an external @acronym{BLAS}/LAPACK
-was built with the same FORTRAN compiler used to build @R{}: known
-problems are with @R{} built with @command{gfortran}, @pxref{Using
-gfortran}.
+On some systems it has been necessary that an external
+@acronym{BLAS}/LAPACK was built with the same FORTRAN compiler used to
+build @R{}.
 
 
 
@@ -4068,10 +4068,6 @@ variable @code{MAKE} at configure time, for example
 @section Using FORTRAN
 @cindex FORTRAN
 
-@menu
-* Using gfortran::              
-@end menu
-
 To compile @R{}, you need a FORTRAN compiler.  The default
 is to search for
 @c F95_compilers in m4/R.m4:
@@ -4143,30 +4139,6 @@ you will need to set
 contain constructs that @command{f2c} is unlikely to be able to process,
 so you would need to use an external LAPACK library (such as CLAPACK
 from @uref{http://www.netlib.org/clapack/}).
-
-
-@node Using gfortran,  , Using FORTRAN, Using FORTRAN
-@subsection Using gfortran
-
-@command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y} and later.
-
-On Linux @cputype{x86_64} systems there is an incompatibility in the
-return conventions for double-complex functions between
-@command{gfortran} and @command{g77} which results in the final example
-in @code{example(eigen)} hanging or segfaulting under external
-@acronym{BLAS}s built under @command{g77} (and also some external
-LAPACKs).  The commonest cases will be detected by a @command{configure}
-test.  Although @command{g77} is long obsolete this is still sometimes
-seen with C versions of external software using @command{g77}
-conventions.
-
-The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
-@command{autoconf}) for a @acronym{GNU} FORTRAN compiler is @samp{-g
--O2}.  This has caused problems (segfaults and infinite loops) on
-@cputype{x86_64} Linux in the past, but seems fine with
-@command{gfortran 4.4.4} and later: for @code{gfortran 4.3.x} set
-@code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
 @node Compile and load flags, Maintainer mode, Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
@@ -4663,7 +4635,7 @@ strongly recommended to use that.} which can compile the source code of
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
-library (see @code{?.libPaths()}).  Also use
+library (see @code{?.libPaths}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
 Various compilers can be used.  The current @acronym{CRAN} `Mavericks'
@@ -4786,8 +4758,8 @@ will show the compilers and configuration options used for the
 was used for `Mavericks'.
 
 Configure option @option{--with-internal-tzcode} is the default on OS X,
-as a 64-bit @code{time_t} is available but the system implementation of
-time zones does not work correctly for times before 1902 or after 2037.
+as the system implementation of time zones does not work correctly for
+times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about

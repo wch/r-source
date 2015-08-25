@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -37,7 +37,7 @@ static void NORET invalid(SEXP call)
     error(_("invalid arguments"));
 }
 
-static Rboolean 
+static Rboolean
 random1(double (*f) (double), double *a, R_xlen_t na, double *x, R_xlen_t n)
 {
     Rboolean naflag = FALSE;
@@ -207,8 +207,8 @@ SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-static Rboolean 
-random3(double (*f) (double, double, double), double *a, 
+static Rboolean
+random3(double (*f) (double, double, double), double *a,
 	R_xlen_t na, double *b, R_xlen_t nb, double *c, R_xlen_t nc,
 	double *x, R_xlen_t n)
 {
@@ -501,7 +501,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {  // uniform sampling
 	double dn = asReal(sn);
 	R_xlen_t k = asVecSize(sk);
-	if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0)) 
+	if (!R_FINITE(dn) || dn < 0 || dn > 4.5e15 || (k > 0 && dn == 0))
 	    error(_("invalid first argument"));
 	if (k < 0) error(_("invalid '%s' argument"), "size");
 	if (!replace && k > dn)

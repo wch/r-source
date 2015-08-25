@@ -1,5 +1,5 @@
 #  File src/library/stats/R/vcov.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1994-2002 W. N. Venables and B. D. Ripley
 #  Copyright (C) 2002-11 The R Core Team
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 vcov <- function(object, ...) UseMethod("vcov")
 

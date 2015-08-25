@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  *
  *  I/O Support Code
@@ -169,12 +169,12 @@ int attribute_hidden R_IoBufferReadOffset(IoBuffer *iob)
     int result = iob->read_offset;
     BufferListItem* buf = iob->start_buf;
     while(buf && buf != iob->read_buf) {
-    	result += IOBSIZE;
-    	buf = buf->next;
+	result += IOBSIZE;
+	buf = buf->next;
     }
     return result;
 }
-    
+
 /* Initialization code for text buffers */
 
 static void transferChars(unsigned char *p, const char *q)

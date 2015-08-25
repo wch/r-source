@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  *
  *  Contexts:
@@ -246,7 +246,7 @@ void begincontext(RCNTXT * cptr, int flags,
 #ifdef BC_INT_STACK
     cptr->intstack = R_BCIntStackTop;
 #endif
-    cptr->srcref = R_Srcref;    
+    cptr->srcref = R_Srcref;
     cptr->browserfinish = R_GlobalContext->browserfinish;
     cptr->nextcontext = R_GlobalContext;
     cptr->returnValue = NULL;
@@ -274,7 +274,7 @@ void endcontext(RCNTXT * cptr)
 	R_Visible = savevis;
     }
     if (R_ExitContext == cptr)
-    	R_ExitContext = NULL;
+	R_ExitContext = NULL;
     R_GlobalContext = cptr->nextcontext;
 }
 
@@ -412,7 +412,7 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
     /* negative n counts back from the current frame */
     /* positive n counts up from the globalEnv */
     SEXP result;
-    
+
     if (n > 0)
 	n = framedepth(cptr) - n;
     else
@@ -423,11 +423,11 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0) {
-	    	PROTECT(result = shallow_duplicate(cptr->call));
-	    	if (cptr->srcref && !isNull(cptr->srcref))
-	    	    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
-	    	UNPROTECT(1);
-	    	return result;
+		PROTECT(result = shallow_duplicate(cptr->call));
+		if (cptr->srcref && !isNull(cptr->srcref))
+		    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
+		UNPROTECT(1);
+		return result;
 	    } else
 		n--;
 	}
@@ -504,7 +504,7 @@ int countContexts(int ctxttype, int browser) {
 
     cptr = R_GlobalContext;
     while( cptr != R_ToplevelContext) {
-        if( cptr->callflag == ctxttype ) 
+        if( cptr->callflag == ctxttype )
             n++;
         else if( browser ) {
            if(cptr->callflag & CTXT_FUNCTION && RDEBUG(cptr->cloenv) )
@@ -514,8 +514,8 @@ int countContexts(int ctxttype, int browser) {
     }
     return n;
 }
-  
-   
+
+
 /* functions to support looking up information about the browser */
 /* contexts that are in the evaluation stack */
 
@@ -567,10 +567,10 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
         break;
     case 3: /* turn on debugging n levels up */
         while ( (cptr != R_ToplevelContext) && n > 0 ) {
-            if (cptr->callflag & CTXT_FUNCTION) 
+            if (cptr->callflag & CTXT_FUNCTION)
                   n--;
             cptr = cptr->nextcontext;
-        } 
+        }
         if( !(cptr->callflag & CTXT_FUNCTION) )
            error(_("not that many functions on the call stack"));
         else

@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -533,7 +533,7 @@ SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
     } else seed = TimeToSeed();
     skind = CADR(args);
     nkind = CADDR(args);
-    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from 
+    GetRNGkind(R_NilValue); /* pull RNG_kind, N01_kind from
 			       .Random.seed if present */
     if (!isNull(skind)) RNGkind((RNGtype) asInteger(skind));
     if (!isNull(nkind)) Norm_kind((N01type) asInteger(nkind));

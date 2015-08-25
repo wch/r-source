@@ -1,5 +1,5 @@
 #  File src/library/stats/R/spline.R
-#  Part of the R package, http://www.R-project.org
+#  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2012 The R Core Team
 #                2002 Simon N. Wood
@@ -15,7 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+#  https://www.R-project.org/Licenses/
 
 #### 'spline' and 'splinefun' are very similar --- keep in sync!
 ####               --------- has more

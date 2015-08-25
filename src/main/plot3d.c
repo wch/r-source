@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -115,7 +115,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		    s = s->next;
 		}
 		if(ns == max_contour_segments)
-		    warning(_("contour(): circular/long seglist -- set %s > %d?"), 
+		    warning(_("contour(): circular/long seglist -- set %s > %d?"),
 		            "options(\"max.contour.segments\")", max_contour_segments);
 		/*
 		 * "write" the contour locations into the list of contours

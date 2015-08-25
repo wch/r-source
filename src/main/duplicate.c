@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -221,7 +221,7 @@ Rboolean R_cycle_detected(SEXP s, SEXP child) {
 	case BCODESXP:
 	case WEAKREFSXP:
 	    /* it's a cycle but one that is OK */
-	    return FALSE; 
+	    return FALSE;
 	default:
         return TRUE;
 	}
@@ -236,7 +236,7 @@ Rboolean R_cycle_detected(SEXP s, SEXP child) {
 	    if (s == el || R_cycle_detected(s, CAR(el)))
                 return TRUE;
 	    if (ATTRIB(el) != R_NilValue && R_cycle_detected(s, ATTRIB(el)))
-		return TRUE;		
+		return TRUE;
 	    el = CDR(el);
 	}
     } else if (isVectorList(child)) {

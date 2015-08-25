@@ -1,4 +1,4 @@
-/* 
+/*
    Based on gzio.c from zlib 1.2.3, but considerably modified!
 
    Copyright (C) 1995-2005 Jean-loup Gailly.
@@ -40,7 +40,7 @@
 #ifdef Win32
 # define OS_CODE  0x06
 #else
-# define OS_CODE  0x03 
+# define OS_CODE  0x03
 #endif
 
 /* R ADDITION */
@@ -245,7 +245,7 @@ gzFile R_gzopen (const char *path, const char *mode)
     if (s->mode == 'w') {
         /* Write a very simple .gz header */
         fprintf(s->file, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
-		Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/, 
+		Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/,
 		OS_CODE);
         s->start = 10L;
     } else {
@@ -539,7 +539,7 @@ int R_gzclose (gzFile file)
     gz_stream *s = (gz_stream*) file;
     if (s == NULL) return Z_STREAM_ERROR;
     if (s->mode == 'w') {
-        if (gz_flush (file, Z_FINISH) != Z_OK) 
+        if (gz_flush (file, Z_FINISH) != Z_OK)
 	    return destroy((gz_stream*) file);
         z_putLong (s->file, s->crc);
         z_putLong (s->file, (uLong) (s->in & 0xffffffff));

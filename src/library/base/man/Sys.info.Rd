@@ -1,5 +1,5 @@
 % File src/library/base/man/Sys.info.Rd
-% Part of the R package, http://www.R-project.org
+% Part of the R package, https://www.R-project.org
 % Copyright 1995-2015 R Core Team
 % Copyright      2008 The R Foundation
 % Distributed under GPL 2 or later
@@ -69,7 +69,7 @@ Sys.info()
   portable: the POSIX command \code{system("id")} is much more portable
   on Unix-alikes, provided only the POSIX options are used (and not the
   many BSD and GNU extensions).
-#ifdef win32
+#ifdef windows
 
   Windows may report unexpected versions: see the help for
   \code{\link{win.version}}.

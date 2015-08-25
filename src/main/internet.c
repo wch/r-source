@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -101,16 +101,16 @@ SEXP attribute_hidden do_setInternet2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int newUseInternet2;
     SEXP newval, retval;
-    
+
     PROTECT(retval = ScalarLogical(UseInternet2));
-    
+
     checkArity(op, args);
     newval = CAR(args);
     if (length(newval) != 1) error(_("bad value"));
     newUseInternet2 = asLogical(newval);
-    
+
     if (newUseInternet2 != NA_LOGICAL) {
-    	R_Visible = FALSE;
+	R_Visible = FALSE;
 	UseInternet2 = newUseInternet2;
     }
     UNPROTECT(1);
@@ -118,7 +118,7 @@ SEXP attribute_hidden do_setInternet2(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 #endif
 
-Rconnection attribute_hidden 
+Rconnection attribute_hidden
 R_newurl(const char *description, const char * const mode, int type)
 {
     if(!initialized) internet_Init();
@@ -254,7 +254,7 @@ SEXP Rsockread(SEXP ssock, SEXP smaxlen)
     SET_STRING_ELT(ans, 0, mkCharLen(buf, maxlen));
     UNPROTECT(1);
     return ans;
-		       
+
 }
 
 SEXP Rsockclose(SEXP ssock)
@@ -374,4 +374,3 @@ R_newCurlUrl(const char *description, const char * const mode, int type)
     }
     return (Rconnection)0; /* -Wall */
 }
-

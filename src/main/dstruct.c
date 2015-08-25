@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -40,7 +40,7 @@ SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
     SEXPTYPE type = eval ? BUILTINSXP : SPECIALSXP;
     static SEXP PrimCache = NULL;
     static int FunTabSize = 0;
-    
+
     if (PrimCache == NULL) {
 	/* compute the number of entires in R_FunTab */
 	while (R_FunTab[FunTabSize].name)

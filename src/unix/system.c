@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 /* <UTF8> char here is handled as a whole string */
@@ -102,7 +102,7 @@ Rboolean useaqua = FALSE;
 #include <R_ext/Rdynload.h>
 DL_FUNC ptr_do_flushconsole;
 void R_FlushConsole(void) {
-    if (ptr_R_FlushConsole) ptr_R_FlushConsole(); 
+    if (ptr_R_FlushConsole) ptr_R_FlushConsole();
     else if (ptr_do_flushconsole) ptr_do_flushconsole();
 }
 #endif
@@ -171,7 +171,7 @@ int Rf_initialize_R(int ac, char **av)
     {
 	uintptr_t ii = dummy_ii();
 	/* 1 is downwards */
-	
+
 	R_CStackDir = ((uintptr_t)&i > ii) ? 1 : -1;
     }
 
@@ -411,7 +411,7 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_AQUA
     /* for Aqua and non-dumb terminal use callbacks instead of connections
        and pretty-print warnings/errors (ESS = dumb terminal) */
-    if(useaqua || 
+    if(useaqua ||
        (R_Interactive && getenv("TERM") && strcmp(getenv("TERM"), "dumb"))) {
 	R_Outputfile = NULL;
 	R_Consolefile = NULL;

@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  *  EXPORTS	printVector()
  *		printNamedVector()
@@ -272,7 +272,7 @@ static void printNamedIntegerVector(int * x, int n, SEXP * names)
 
 static void printNamedRealVector(double * x, int n, SEXP * names)
     PRINT_N_VECTOR(INI_F_REAL,
-		   Rprintf("%s%*s", 
+		   Rprintf("%s%*s",
 			   EncodeReal0(x[k],w,d,e, OutDec),R_print.gap,""))
 
 #undef INI_F_CPLX

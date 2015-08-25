@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  *
  *
  *  print.default()  ->	 do_printdefault (with call tree below)
@@ -456,7 +456,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    */
 		    const char *ss = EncodeChar(STRING_ELT(names, i));
 		    if (taglen + strlen(ss) > TAGBUFLEN) {
-		    	if (taglen <= TAGBUFLEN)
+			if (taglen <= TAGBUFLEN)
 			    sprintf(ptag, "$...");
 		    } else {
 			/* we need to distinguish character NA from "NA", which
@@ -472,7 +472,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		}
 		else {
 		    if (taglen + IndexWidth(i) > TAGBUFLEN) {
-		    	if (taglen <= TAGBUFLEN)
+			if (taglen <= TAGBUFLEN)
 			    sprintf(ptag, "$...");
 		    } else
 			sprintf(ptag, "[[%d]]", i+1);

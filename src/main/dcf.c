@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -116,7 +116,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(retval = allocMatrixNA(STRSXP, LENGTH(what), nret));
 
     /* These used to use [:blank:] but that can match \xa0 as part of
-       a UTF-8 character (and is nbspace on Windows). */ 
+       a UTF-8 character (and is nbspace on Windows). */
     tre_regcomp(&blankline, "^[[:blank:]]*$", REG_NOSUB & REG_EXTENDED);
     tre_regcomp(&trailblank, "[ \t]+$", REG_EXTENDED);
     tre_regcomp(&contline, "^[[:blank:]]+", REG_EXTENDED);

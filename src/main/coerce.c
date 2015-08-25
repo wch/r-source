@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 #ifdef HAVE_CONFIG_H
@@ -2188,7 +2188,7 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(length(args) == 1) {
 	check1arg(args, call, "x");
- 	ans = ScalarLogical(anyNA(call, op, args, rho));
+	ans = ScalarLogical(anyNA(call, op, args, rho));
    } else {
 	/* This is a primitive, so we manage argument matching ourselves.
 	   But this takes a little time.

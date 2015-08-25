@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
- *  http://www.r-project.org/Licenses/
+ *  https://www.R-project.org/Licenses/
  */
 
 
@@ -216,7 +216,7 @@ const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
     return out;
 }
 
-static const char 
+static const char
 *EncodeRealDrop0(double x, int w, int d, int e, const char *dec)
 {
     static char buff[NB], buff2[2*NB];
@@ -749,7 +749,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
 /* EncodeElement is called by cat(), write.table() and deparsing. */
 
-/* NB this is called by R.app even though it is in no public header, so 
+/* NB this is called by R.app even though it is in no public header, so
    alter there if you alter this */
 const char *EncodeElement(SEXP x, int indx, int quote, char cdec)
 {
