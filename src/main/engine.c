@@ -113,11 +113,11 @@ static void registerOne(pGEDevDesc dd, int systemNumber, GEcallback cb) {
 	error(_("unable to allocate memory (in GEregister)"));
     result = cb(GE_InitState, dd, R_NilValue);
     if (isNull(result)) {
-        /* tidy up */
-        free(dd->gesd[systemNumber]);
+	/* tidy up */
+	free(dd->gesd[systemNumber]);
 	error(_("unable to allocate memory (in GEregister)"));
     } else {
-        dd->gesd[systemNumber]->callback = cb;
+	dd->gesd[systemNumber]->callback = cb;
     }
 }
 
@@ -160,7 +160,7 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
      */
     *systemRegisterIndex = 0;
     while (registeredSystems[*systemRegisterIndex] != NULL) {
-        (*systemRegisterIndex)++;
+	(*systemRegisterIndex)++;
     }
     /* Run through the existing devices and add the new information
      * to any GEDevDesc's
@@ -1377,9 +1377,9 @@ void GERect(double x0, double y0, double x1, double y1,
  */
 
 void GEPath(double *x, double *y,
-            int npoly, int *nper,
-            Rboolean winding,
-            const pGEcontext gc, pGEDevDesc dd)
+	    int npoly, int *nper,
+	    Rboolean winding,
+	    const pGEcontext gc, pGEDevDesc dd)
 {
     /* safety check: this will be NULL if the device did not set it. */
     if (!dd->dev->path) {
@@ -1393,18 +1393,18 @@ void GEPath(double *x, double *y,
     if (ISNAN(gc->lwd) || gc->lty == LTY_BLANK)
 	gc->col = R_TRANWHITE;
     if (npoly > 0) {
-        int i;
-        int draw = 1;
-        for (i=0; i < npoly; i++) {
-            if (nper[i] < 2) {
-                draw = 0;
-            }
-        }
-        if (draw) {
-            dd->dev->path(x, y, npoly, nper, winding, gc, dd->dev);
-        } else {
+	int i;
+	int draw = 1;
+	for (i=0; i < npoly; i++) {
+	    if (nper[i] < 2) {
+		draw = 0;
+	    }
+	}
+	if (draw) {
+	    dd->dev->path(x, y, npoly, nper, winding, gc, dd->dev);
+	} else {
 	    error(_("Invalid graphics path"));
-        }
+	}
     }
 }
 
@@ -1414,11 +1414,11 @@ void GEPath(double *x, double *y,
  */
 
 void GERaster(unsigned int *raster, int w, int h,
-              double x, double y,
-              double width, double height,
-              double angle,
-              Rboolean interpolate,
-              const pGEcontext gc, pGEDevDesc dd)
+	      double x, double y,
+	      double width, double height,
+	      double angle,
+	      Rboolean interpolate,
+	      const pGEcontext gc, pGEDevDesc dd)
 {
     /* safety check: this will be NULL if the device did not set it. */
     if (!dd->dev->raster) {
@@ -1432,8 +1432,8 @@ void GERaster(unsigned int *raster, int w, int h,
      * rectangular clipping regions) */
 
     if (width != 0 && height != 0) {
-        dd->dev->raster(raster, w, h, x, y, width, height,
-                        angle, interpolate, gc, dd->dev);
+	dd->dev->raster(raster, w, h, x, y, width, height,
+			angle, interpolate, gc, dd->dev);
     }
 }
 
@@ -1505,10 +1505,10 @@ static int clipTextCode(double x, double y, const char *str, cetype_t enc,
     bottom = fmin2(fmin2(y0, y1), fmin2(y2, y3));
     top = fmax2(fmax2(y0, y1), fmax2(y2, y3));
     return clipRectCode(toDeviceX(left, GE_INCHES, dd),
-                        toDeviceY(bottom, GE_INCHES, dd),
-                        toDeviceX(right, GE_INCHES, dd),
-                        toDeviceY(top, GE_INCHES, dd),
-                        toDevice, dd);
+			toDeviceY(bottom, GE_INCHES, dd),
+			toDeviceX(right, GE_INCHES, dd),
+			toDeviceY(top, GE_INCHES, dd),
+			toDevice, dd);
 }
 
 static void clipText(double x, double y, const char *str, cetype_t enc,
@@ -2406,21 +2406,21 @@ void GEMetricInfo(int c, const pGEcontext gc,
 	   cache that value.  Depends on the context through cex, ps,
 	   fontface, family, and also on the device.
 
-           PAUL 2008-11-27
-           The point of checking dd == last_dd is to check for
-           a different TYPE of device (e.g., PDF vs. PNG).
-           Checking just the pGEDevDesc pointer is not a good enough
-           test;  it is possible for that to be the same when one
-           device is closed and a new one is opened (I have seen
-           it happen!).
-           So, ALSO compare dd->dev->close function pointer
-           which really should be different for different devices.
+	   PAUL 2008-11-27
+	   The point of checking dd == last_dd is to check for
+	   a different TYPE of device (e.g., PDF vs. PNG).
+	   Checking just the pGEDevDesc pointer is not a good enough
+	   test;  it is possible for that to be the same when one
+	   device is closed and a new one is opened (I have seen
+	   it happen!).
+	   So, ALSO compare dd->dev->close function pointer
+	   which really should be different for different devices.
 	*/
 	static pGEDevDesc last_dd= NULL;
 #if R_USE_PROTOTYPES
-        static void (*last_close)(pDevDesc dd);
+	static void (*last_close)(pDevDesc dd);
 #else
-        static void (*last_close)();
+	static void (*last_close)();
 #endif
 	static int last_face = 1;
 	static double last_cex = 0.0, last_ps = 0.0,
@@ -2435,7 +2435,7 @@ void GEMetricInfo(int c, const pGEcontext gc,
 	dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
 	if(abs(c) == 77) {
 	    last_dd = dd;  last_close = dd->dev->close;
-            last_cex = gc->cex; last_ps = gc->ps;
+	    last_cex = gc->cex; last_ps = gc->ps;
 	    last_face = gc->fontface;
 	    strcpy(last_family, gc->fontfamily);
 	    a = *ascent; d = *descent; w = *width;
@@ -2557,8 +2557,8 @@ double GEStrHeight(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDes
  * \n) and we assume they are never part of an mbc.
  */
 void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
-                 double *ascent, double *descent, double *width,
-                 pGEDevDesc dd)
+		 double *ascent, double *descent, double *width,
+		 pGEDevDesc dd)
 {
     /*
      * If the fontfamily is a Hershey font family, call R_GE_VStrHeight
@@ -2583,35 +2583,35 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
 	 * performed using a device call that responds with
 	 * the current font pointsize in device coordinates.
 	 */
-        double lineheight = gc->lineheight * gc->cex * dd->dev->cra[1] *
-                            gc->ps/dd->dev->startps;
+	double lineheight = gc->lineheight * gc->cex * dd->dev->cra[1] *
+			    gc->ps/dd->dev->startps;
 	int n;
 	/* Count the lines of text minus one */
 	n = 0;
 	for(s = str; *s ; s++)
 	    if (*s == '\n')
 		n++;
-        /* Where is the start of the last line? */
-        if (n > 0) {
-            while (*s != '\n')
-                s--;
-            s++;
-        } else {
-            s = str;
-        }
+	/* Where is the start of the last line? */
+	if (n > 0) {
+	    while (*s != '\n')
+		s--;
+	    s++;
+	} else {
+	    s = str;
+	}
 	h = n * lineheight;
-        /* Find the largest ascent and descent for the last line of text
-         */
-        while (*s) {
-            GEMetricInfo(*s, gc, &asc, &dsc, &wid, dd);
-            if (asc > *ascent)
-                *ascent = asc;
-            if (dsc > *descent)
-                *descent = dsc;
-            s++;
-        }
-        *ascent = *ascent + h;
-        *width = GEStrWidth(str, enc, gc ,dd);
+	/* Find the largest ascent and descent for the last line of text
+	 */
+	while (*s) {
+	    GEMetricInfo(*s, gc, &asc, &dsc, &wid, dd);
+	    if (asc > *ascent)
+		*ascent = asc;
+	    if (dsc > *descent)
+		*descent = dsc;
+	    s++;
+	}
+	*ascent = *ascent + h;
+	*width = GEStrWidth(str, enc, gc ,dd);
     }
 }
 
@@ -3210,23 +3210,23 @@ SEXP GE_LTYget(unsigned int lty)
  * draster must be pre-allocated.
  */
 void R_GE_rasterScale(unsigned int *sraster, int sw, int sh,
-                      unsigned int *draster, int dw, int dh) {
+		      unsigned int *draster, int dw, int dh) {
     int i, j;
     int sx, sy;
     unsigned int pixel;
 
     /* Iterate over the destination pixels */
     for (i = 0; i < dh; i++) {
-        for (j = 0; j < dw; j++) {
-            sy = i * sh / dh;
-            sx = j * sw / dw;
-            if ((sx >= 0) && (sx < sw) && (sy >= 0) && sy < sh) {
-                pixel = sraster[sy * sw + sx];
-            } else {
-                pixel = 0;
-            }
-            draster[i * dw + j] = pixel;
-        }
+	for (j = 0; j < dw; j++) {
+	    sy = i * sh / dh;
+	    sx = j * sw / dw;
+	    if ((sx >= 0) && (sx < sw) && (sy >= 0) && sy < sh) {
+		pixel = sraster[sy * sw + sx];
+	    } else {
+		pixel = 0;
+	    }
+	    draster[i * dw + j] = pixel;
+	}
     }
 }
 
@@ -3244,7 +3244,7 @@ void R_GE_rasterScale(unsigned int *sraster, int sw, int sh,
  * draster must be pre-allocated.
  */
 void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
-                            unsigned int *draster, int dw, int dh) {
+			    unsigned int *draster, int dw, int dh) {
     int i, j;
     double scx, scy;
     int wm2, hm2;
@@ -3268,65 +3268,65 @@ void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
 
     /* Iterate over the destination pixels */
     for (i = 0; i < dh; i++) {
-        ypm = (int) fmax2(scy * i - 8, 0);
-        yp = ypm >> 4;
-        yf = ypm & 0x0f;
-        dline = draster + i * dw;
-        sline = sraster + yp * sw;
-        for (j = 0; j < dw; j++) {
-            xpm = (int) fmax2(scx * j - 8, 0);
-            xp = xpm >> 4;
-            xf = xpm & 0x0f;
+	ypm = (int) fmax2(scy * i - 8, 0);
+	yp = ypm >> 4;
+	yf = ypm & 0x0f;
+	dline = draster + i * dw;
+	sline = sraster + yp * sw;
+	for (j = 0; j < dw; j++) {
+	    xpm = (int) fmax2(scx * j - 8, 0);
+	    xp = xpm >> 4;
+	    xf = xpm & 0x0f;
 
-            pixels1 = *(sline + xp);
+	    pixels1 = *(sline + xp);
 
-            if (xp > wm2 || yp > hm2) {
-                if (yp > hm2 && xp <= wm2) {  /* pixels near bottom */
-                    pixels2 = *(sline + xp + 1);
-                    pixels3 = pixels1;
-                    pixels4 = pixels2;
-                }
-                else if (xp > wm2 && yp <= hm2) {  /* pixels near right side */
-                    pixels2 = pixels1;
-                    pixels3 = *(sline + sw + xp);
-                    pixels4 = pixels3;
-                }
-                else {  /* pixels at LR corner */
-                    pixels4 = pixels3 = pixels2 = pixels1;
-                }
-            }
-            else {
-                pixels2 = *(sline + xp + 1);
-                pixels3 = *(sline + sw + xp);
-                pixels4 = *(sline + sw + xp + 1);
-            }
+	    if (xp > wm2 || yp > hm2) {
+		if (yp > hm2 && xp <= wm2) {  /* pixels near bottom */
+		    pixels2 = *(sline + xp + 1);
+		    pixels3 = pixels1;
+		    pixels4 = pixels2;
+		}
+		else if (xp > wm2 && yp <= hm2) {  /* pixels near right side */
+		    pixels2 = pixels1;
+		    pixels3 = *(sline + sw + xp);
+		    pixels4 = pixels3;
+		}
+		else {  /* pixels at LR corner */
+		    pixels4 = pixels3 = pixels2 = pixels1;
+		}
+	    }
+	    else {
+		pixels2 = *(sline + xp + 1);
+		pixels3 = *(sline + sw + xp);
+		pixels4 = *(sline + sw + xp + 1);
+	    }
 
-            area00 = (16 - xf) * (16 - yf);
-            area10 = xf * (16 - yf);
-            area01 = (16 - xf) * yf;
-            area11 = xf * yf;
-            v00r = area00 * R_RED(pixels1);
-            v00g = area00 * R_GREEN(pixels1);
-            v00b = area00 * R_BLUE(pixels1);
-            v00a = area00 * R_ALPHA(pixels1);
-            v10r = area10 * R_RED(pixels2);
-            v10g = area10 * R_GREEN(pixels2);
-            v10b = area10 * R_BLUE(pixels2);
-            v10a = area10 * R_ALPHA(pixels2);
-            v01r = area01 * R_RED(pixels3);
-            v01g = area01 * R_GREEN(pixels3);
-            v01b = area01 * R_BLUE(pixels3);
-            v01a = area01 * R_ALPHA(pixels3);
-            v11r = area11 * R_RED(pixels4);
-            v11g = area11 * R_GREEN(pixels4);
-            v11b = area11 * R_BLUE(pixels4);
-            v11a = area11 * R_ALPHA(pixels4);
-            pixel = (((v00r + v10r + v01r + v11r + 128) >>  8) & 0x000000ff) |
-                    (((v00g + v10g + v01g + v11g + 128)      ) & 0x0000ff00) |
-                    (((v00b + v10b + v01b + v11b + 128) <<  8) & 0x00ff0000) |
-                    (((v00a + v10a + v01a + v11a + 128) << 16) & 0xff000000);
-            *(dline + j) = pixel;
-        }
+	    area00 = (16 - xf) * (16 - yf);
+	    area10 = xf * (16 - yf);
+	    area01 = (16 - xf) * yf;
+	    area11 = xf * yf;
+	    v00r = area00 * R_RED(pixels1);
+	    v00g = area00 * R_GREEN(pixels1);
+	    v00b = area00 * R_BLUE(pixels1);
+	    v00a = area00 * R_ALPHA(pixels1);
+	    v10r = area10 * R_RED(pixels2);
+	    v10g = area10 * R_GREEN(pixels2);
+	    v10b = area10 * R_BLUE(pixels2);
+	    v10a = area10 * R_ALPHA(pixels2);
+	    v01r = area01 * R_RED(pixels3);
+	    v01g = area01 * R_GREEN(pixels3);
+	    v01b = area01 * R_BLUE(pixels3);
+	    v01a = area01 * R_ALPHA(pixels3);
+	    v11r = area11 * R_RED(pixels4);
+	    v11g = area11 * R_GREEN(pixels4);
+	    v11b = area11 * R_BLUE(pixels4);
+	    v11a = area11 * R_ALPHA(pixels4);
+	    pixel = (((v00r + v10r + v01r + v11r + 128) >>  8) & 0x000000ff) |
+		    (((v00g + v10g + v01g + v11g + 128)      ) & 0x0000ff00) |
+		    (((v00b + v10b + v01b + v11b + 128) <<  8) & 0x00ff0000) |
+		    (((v00a + v10a + v01a + v11a + 128) << 16) & 0xff000000);
+	    *(dline + j) = pixel;
+	}
     }
 }
 
@@ -3337,7 +3337,7 @@ void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
  * New width/height based on max of rotated corners
  */
 void R_GE_rasterRotatedSize(int w, int h, double angle,
-                            int *wnew, int *hnew) {
+			    int *wnew, int *hnew) {
     double diag = sqrt(w*w + h*h);
     double theta = atan2((double) h, (double) w);
     double trx1 = diag*cos(theta + angle);
@@ -3359,22 +3359,22 @@ void R_GE_rasterRotatedSize(int w, int h, double angle,
  * to account for image rotation
  */
 void R_GE_rasterRotatedOffset(int w, int h, double angle,
-                              int botleft,
-                              double *xoff, double *yoff) {
+			      int botleft,
+			      double *xoff, double *yoff) {
     double hypot = .5*sqrt(w*w + h*h);
     double theta, dw, dh;
     if (botleft) {
-        theta = M_PI + atan2(h, w);
-        dw = hypot*cos(theta + angle);
-        dh = hypot*sin(theta + angle);
-        *xoff = dw + w/2;
-        *yoff = dh + h/2;
+	theta = M_PI + atan2(h, w);
+	dw = hypot*cos(theta + angle);
+	dh = hypot*sin(theta + angle);
+	*xoff = dw + w/2;
+	*yoff = dh + h/2;
     } else {
-        theta = -M_PI - atan2(h, w);
-        dw = hypot*cos(theta + angle);
-        dh = hypot*sin(theta + angle);
-        *xoff = dw + w/2;
-        *yoff = dh - h/2;
+	theta = -M_PI - atan2(h, w);
+	dw = hypot*cos(theta + angle);
+	dh = hypot*sin(theta + angle);
+	*xoff = dw + w/2;
+	*yoff = dh - h/2;
     }
 }
 
@@ -3385,26 +3385,26 @@ void R_GE_rasterRotatedOffset(int w, int h, double angle,
  * newRaster must be pre-allocated.
  */
 void R_GE_rasterResizeForRotation(unsigned int *sraster,
-                                  int w, int h,
-                                  unsigned int *newRaster,
-                                  int wnew, int hnew,
-                                  const pGEcontext gc)
+				  int w, int h,
+				  unsigned int *newRaster,
+				  int wnew, int hnew,
+				  const pGEcontext gc)
 {
     int i, j, inew, jnew;
     int xoff = (wnew - w)/2;
     int yoff = (hnew - h)/2;
 
     for (i=0; i<hnew; i++) {
-        for (j=0; j<wnew; j++) {
-            newRaster[i*wnew + j] = gc->fill;
-        }
+	for (j=0; j<wnew; j++) {
+	    newRaster[i*wnew + j] = gc->fill;
+	}
     }
     for (i=0; i<h; i++) {
-        for (j=0; j<w; j++) {
-            inew = i+yoff;
-            jnew = j+xoff;
-            newRaster[inew*wnew + jnew] = sraster[i*w + j];
-        }
+	for (j=0; j<w; j++) {
+	    inew = i+yoff;
+	    jnew = j+xoff;
+	    newRaster[inew*wnew + jnew] = sraster[i*w + j];
+	}
 
     }
 }
@@ -3424,8 +3424,8 @@ void R_GE_rasterResizeForRotation(unsigned int *sraster,
  * and semitransparency become semitransparent.
  */
 void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
-                       unsigned int *draster, const pGEcontext gc,
-                       Rboolean smoothAlpha) {
+		       unsigned int *draster, const pGEcontext gc,
+		       Rboolean smoothAlpha) {
     int i, j;
     int xcen, ycen, wm2, hm2;
     int xdif, ydif, xpm, ypm, xp, yp, xf, yf;
@@ -3445,51 +3445,51 @@ void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
     cosa = 16. * cos(angle);
 
     for (i = 0; i < h; i++) {
-        ydif = ycen - i;
-        dline = draster + i * w;
-        for (j = 0; j < w; j++) {
-            xdif = xcen - j;
-            xpm = (int) (-xdif * cosa - ydif * sina);
-            ypm = (int) (-ydif * cosa + xdif * sina);
-            xp = xcen + (xpm >> 4);
-            yp = ycen + (ypm >> 4);
-            xf = xpm & 0x0f;
-            yf = ypm & 0x0f;
+	ydif = ycen - i;
+	dline = draster + i * w;
+	for (j = 0; j < w; j++) {
+	    xdif = xcen - j;
+	    xpm = (int) (-xdif * cosa - ydif * sina);
+	    ypm = (int) (-ydif * cosa + xdif * sina);
+	    xp = xcen + (xpm >> 4);
+	    yp = ycen + (ypm >> 4);
+	    xf = xpm & 0x0f;
+	    yf = ypm & 0x0f;
 
-                /* if off the edge, use transparent */
-            if (xp < 0 || yp < 0 || xp > wm2 || yp > hm2) {
-                *(dline + j) = gc->fill;
-                continue;
-            }
+		/* if off the edge, use transparent */
+	    if (xp < 0 || yp < 0 || xp > wm2 || yp > hm2) {
+		*(dline + j) = gc->fill;
+		continue;
+	    }
 
-            sline = sraster + yp * w;
+	    sline = sraster + yp * w;
 
-            word00 = *(sline + xp);
-            word10 = *(sline + xp + 1);
-            word01 = *(sline + w + xp);
-            word11 = *(sline + w + xp + 1);
-            rval = ((16 - xf) * (16 - yf) * R_RED(word00) +
-                    xf * (16 - yf) * R_RED(word10) +
-                    (16 - xf) * yf * R_RED(word01) +
-                    xf * yf * R_RED(word11) + 128) / 256;
-            gval = ((16 - xf) * (16 - yf) * R_GREEN(word00) +
-                    xf * (16 - yf) * R_GREEN(word10) +
-                    (16 - xf) * yf * R_GREEN(word01) +
-                    xf * yf * R_GREEN(word11) + 128) / 256;
-            bval = ((16 - xf) * (16 - yf) * R_BLUE(word00) +
-                    xf * (16 - yf) * R_BLUE(word10) +
-                    (16 - xf) * yf * R_BLUE(word01) +
-                    xf * yf * R_BLUE(word11) + 128) / 256;
-            if (smoothAlpha) {
-                aval = ((16 - xf) * (16 - yf) * R_ALPHA(word00) +
-                        xf * (16 - yf) * R_ALPHA(word10) +
-                        (16 - xf) * yf * R_ALPHA(word01) +
-                        xf * yf * R_ALPHA(word11) + 128) / 256;
-            } else {
-                aval = (int)fmax2(fmax2(R_ALPHA(word00), R_ALPHA(word10)),
+	    word00 = *(sline + xp);
+	    word10 = *(sline + xp + 1);
+	    word01 = *(sline + w + xp);
+	    word11 = *(sline + w + xp + 1);
+	    rval = ((16 - xf) * (16 - yf) * R_RED(word00) +
+		    xf * (16 - yf) * R_RED(word10) +
+		    (16 - xf) * yf * R_RED(word01) +
+		    xf * yf * R_RED(word11) + 128) / 256;
+	    gval = ((16 - xf) * (16 - yf) * R_GREEN(word00) +
+		    xf * (16 - yf) * R_GREEN(word10) +
+		    (16 - xf) * yf * R_GREEN(word01) +
+		    xf * yf * R_GREEN(word11) + 128) / 256;
+	    bval = ((16 - xf) * (16 - yf) * R_BLUE(word00) +
+		    xf * (16 - yf) * R_BLUE(word10) +
+		    (16 - xf) * yf * R_BLUE(word01) +
+		    xf * yf * R_BLUE(word11) + 128) / 256;
+	    if (smoothAlpha) {
+		aval = ((16 - xf) * (16 - yf) * R_ALPHA(word00) +
+			xf * (16 - yf) * R_ALPHA(word10) +
+			(16 - xf) * yf * R_ALPHA(word01) +
+			xf * yf * R_ALPHA(word11) + 128) / 256;
+	    } else {
+		aval = (int)fmax2(fmax2(R_ALPHA(word00), R_ALPHA(word10)),
 				  fmax2(R_ALPHA(word01), R_ALPHA(word11)));
-            }
-            *(dline + j) = R_RGBA(rval, gval, bval, aval);
-        }
+	    }
+	    *(dline + j) = R_RGBA(rval, gval, bval, aval);
+	}
     }
 }

@@ -98,7 +98,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 
     /*OLD: cell = FLT_EPSILON+ dx / *ndiv; FLT_EPSILON = 1.192e-07 */
     if(i_small) {
-        if(cell > 10)
+	if(cell > 10)
 	    cell = 9 + cell/10;
 	cell *= shrink_sml;
 	if(min_n > 1) cell /= min_n;
@@ -180,10 +180,10 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	*ndiv = k;
     }
     if(return_bounds) { /* if()'s to ensure that result covers original range */
-        if(ns * unit < *lo) *lo = ns * unit;
-        if(nu * unit > *up) *up = nu * unit;
+	if(ns * unit < *lo) *lo = ns * unit;
+	if(nu * unit > *up) *up = nu * unit;
     } else {
-        *lo = ns;
+	*lo = ns;
 	*up = nu;
     }
 #ifdef DEBUGpr

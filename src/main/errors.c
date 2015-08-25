@@ -342,7 +342,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 
     if(w >= 2) { /* make it an error */
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
-        RprintTrunc(buf);
+	RprintTrunc(buf);
 	inWarning = 0; /* PR#1570 */
 	errorcall(call, _("(converted from warning) %s"), buf);
     }
@@ -352,7 +352,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	} else dcall = "";
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-        RprintTrunc(buf);
+	RprintTrunc(buf);
 
 	if(dcall[0] == '\0') REprintf(_("Warning:"));
 	else {
@@ -373,7 +373,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	if(R_CollectWarnings < R_nwarnings) {
 	    SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
 	    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-            RprintTrunc(buf);
+	    RprintTrunc(buf);
 	    if(R_ShowWarnCalls && call != R_NilValue) {
 		char *tr =  R_ConciseTraceback(call, 0);
 		size_t nc = strlen(tr);
@@ -467,7 +467,7 @@ void PrintWarnings(void)
 	else {
 	    const char *dcall, *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, 0)), 0));
-            REprintf(_("In %s :"), dcall);
+	    REprintf(_("In %s :"), dcall);
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(msg, '\n');
@@ -506,14 +506,14 @@ void PrintWarnings(void)
 		    } else msgline1 = wd(msg);
 		    if (10 + wd(dcall) + msgline1 > LONGWARN) {
 			REprintf("\n ");
-                    }
+		    }
 		} else {
 		    size_t msgline1 = strlen(msg);
 		    char *p = strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
 		    if (10 + strlen(dcall) + msgline1 > LONGWARN) {
 			REprintf("\n ");
-                    }
+		    }
 		}
 		REprintf(" %s\n", msg);
 	    }
@@ -1921,6 +1921,6 @@ R_GetSrcFilename(SEXP srcref)
 	return ScalarString(mkChar(""));
     srcfile = findVar(install("filename"), srcfile);
     if (TYPEOF(srcfile) != STRSXP)
-        return ScalarString(mkChar(""));
+	return ScalarString(mkChar(""));
     return srcfile;
 }
