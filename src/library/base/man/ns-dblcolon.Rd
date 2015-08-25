@@ -8,7 +8,7 @@
 \alias{::}
 \alias{:::}
 \description{
-  Accessing exported and internal variables, .i.e., \R objects
+  Accessing exported and internal variables, i.e.\sspace{}\R objects
   (including lazy loaded data sets) in a namespace.
 }
 \usage{
