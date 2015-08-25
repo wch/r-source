@@ -16,7 +16,7 @@ ALL_FFLAGS = $(ALL_FFLAGS_LO)
 
 SOURCES = blas00.c blas.f cmplxblas.f
 
-Rblas_la = libRblas$(DYLIB_EXT)
+Rblas_la = libRblas$(R_DYLIB_EXT)
 ## @RBLAS_LDFLAGS@ is used on Mac OS X
 ## first for internal BLAS
 Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO)
