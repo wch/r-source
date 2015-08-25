@@ -1758,7 +1758,7 @@ pkgutil --files org.r-project.x86_64.texinfo
 
 @noindent
 These are paths relative to @file{/}, the root of the file system.
-@c Maybe too dangerous of naive users.
+@c Maybe too dangerous for naive users.
 @c The second could be uninstalled by an @R{} script like
 
 @c @example

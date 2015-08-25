@@ -122,6 +122,11 @@
 	"default"} (and documented).
 
       \item \code{smoothScatter()} gains a \code{ret.selection} argument.
+      
+      \item \code{qr()} no longer has a \code{\dots} argument to pass
+      addiitonal arguments to methods.
+
+      \item \code{[} has a method for class \code{"table"}.
     }
   }
 
@@ -232,6 +237,9 @@
       updated to that from \code{gettext} version 0.19.5.1 --- this
       should only affect how an external library is detected. 
       (Wish of \PR{16464}.)
+
+      \item \command{configure} has a new argument
+      \option{--disable-java} to disable the checks for Java.
     }
   }
   
