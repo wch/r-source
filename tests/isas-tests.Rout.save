@@ -1,5 +1,5 @@
 
-R version 3.2.2 Patched (2015-08-17 r69099) -- "Fire Safety"
+R version 3.2.2 Patched (2015-08-25 r69170) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2568,6 +2568,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.141 0.002 0.143 0 0 
+Time elapsed:  0.144 0.007 0.151 0 0 
 > 
 > 
