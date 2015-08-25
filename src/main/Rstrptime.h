@@ -1,4 +1,4 @@
-/* For inclusion by datetime.c. 
+/* For inclusion by datetime.c.
 
    A modified version of code from the GNU C library with locale
    support removed and wchar support added.
@@ -280,12 +280,12 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	/* try full name first */
 	    for (cnt = 0; cnt < 7; ++cnt)
 		if (w_match_string (w_weekday_name[cnt], rp)) break;
-	    
+
 	    if (cnt == 7) {
 		for (cnt = 0; cnt < 7; ++cnt)
 		    if (w_match_string (w_ab_weekday_name[cnt], rp)) break;
 	    }
-		
+
 	    if (cnt == 7)
 		/* Does not match a weekday name.  */
 		return NULL;
@@ -540,7 +540,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    case L'e':
 		/* Match day of month using alternate numeric symbols.  */
 		get_alt_number (1, 31, 2);
-	        tm->tm_mday = val;
+		tm->tm_mday = val;
 		have_mday = 1;
 		want_xday = 1;
 		break;
@@ -548,27 +548,27 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		/* Match hour in 24-hour clock using alternate numeric
 		   symbols.  */
 		get_alt_number (0, 23, 2);
-	        tm->tm_hour = val;
+		tm->tm_hour = val;
 		have_I = 0;
 		break;
 	    case L'I':
 		/* Match hour in 12-hour clock using alternate numeric
 		   symbols.  */
 		get_alt_number (1, 12, 2);
-	        tm->tm_hour = val % 12;
+		tm->tm_hour = val % 12;
 		have_I = 1;
 		break;
 	    case L'm':
 		/* Match month using alternate numeric symbols.  */
 		get_alt_number (1, 12, 2);
-	        tm->tm_mon = val - 1;
+		tm->tm_mon = val - 1;
 		have_mon = 1;
 		want_xday = 1;
 		break;
 	    case L'M':
 		/* Match minutes using alternate numeric symbols.  */
 		get_alt_number (0, 59, 2);
-	        tm->tm_min = val;
+		tm->tm_min = val;
 		break;
 	    case L'S':
 		/* Match seconds using alternate numeric symbols.
@@ -608,8 +608,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    case L'y':
 		/* Match year within century using alternate numeric symbols.  */
 		get_alt_number (0, 99, 2);
-	        int ival = val;
-	        tm->tm_year = ival >= 69 ? ival : ival + 100;
+		int ival = val;
+		tm->tm_year = ival >= 69 ? ival : ival + 100;
 		want_xday = 1;
 		break;
 	    default:
@@ -1253,7 +1253,7 @@ static void get_locale_w_strings(void)
 
 /* We only care if the result is null or not */
 static void *
-R_strptime (const char *buf, const char *format, stm *tm, 
+R_strptime (const char *buf, const char *format, stm *tm,
 	    double *psecs, int *poffset)
 {
 #if defined(HAVE_WCSTOD)

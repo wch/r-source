@@ -17,7 +17,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* This should be regarded as part of the graphics engine: 
+/* This should be regarded as part of the graphics engine:
    it is now a stub for code in grDevices */
 
 #ifdef HAVE_CONFIG_H

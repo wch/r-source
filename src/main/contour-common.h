@@ -39,9 +39,9 @@ typedef struct SEG {
 
 static int ctr_intersect(double z0, double z1, double zc, double *f)
 {
-/*  Old test was  ((z0 - zc) * (z1 - zc) < 0.0), but rounding led to inconsistencies 
+/*  Old test was  ((z0 - zc) * (z1 - zc) < 0.0), but rounding led to inconsistencies
     in PR#15454 */
-    if ( (z0 < zc) != (z1 < zc) && z0 != zc && z1 != zc ) { 
+    if ( (z0 < zc) != (z1 < zc) && z0 != zc && z1 != zc ) {
 	*f = (zc - z0) / (z1 -	z0);
 	return 1;
     }
