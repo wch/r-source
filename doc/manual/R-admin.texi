@@ -1737,7 +1737,7 @@ rm -rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/bin/R /usr/bin/Rscript
 @end example
 
-The installation consisted of three Apple packages:
+The installation consisted of four Apple packages:
 @code{org.r-project.R.x86_64.fw.pkg},
 @code{org.r-project.R.x86_64.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
@@ -4625,7 +4625,7 @@ strongly recommended to use that.} which can compile the source code of
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
-library (see @code{?.libPaths()}).  Also use
+library (see @code{?.libPaths}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
 Various compilers can be used.  The current @acronym{CRAN} `Mavericks'
