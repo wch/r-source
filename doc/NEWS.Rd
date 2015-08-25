@@ -30,6 +30,9 @@
       updated to that from \code{gettext} version 0.19.5.1 --- this
       should only affect how an external library is detected. 
       (Wish of \PR{16464}.)
+
+      \item \command{configure} has a new argument
+      \option{--disable-java} to disable the checks for Java.
     }
   }
   
