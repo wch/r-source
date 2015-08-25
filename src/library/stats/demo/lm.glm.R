@@ -3,7 +3,7 @@
 ###
 ### == with some additions ==
 
-#  Copyright (C) 1997-2008 The R Core Team
+#  Copyright (C) 1997-2015 The R Core Team
 
 require(stats); require(graphics)
 
@@ -102,8 +102,7 @@ anova(z, update(z, dead ~ dose -1))
 ## Anther Data (Page 84)
 ## Note that the proportions below are not exactly
 ## in accord with the sample sizes quoted below.
-## In particular, the value 0.555 does not seem sensible.
-##	[MM: huh?  round(round(n*p)/n, 3) looks almost exactly like "p" !]
+## In particular, the last value, 5/9, should have been 0.556 instead of 0.555:
 n <- c(102,  99,   108,	 76,   81,   90)
 p <- c(0.539,0.525,0.528,0.724,0.617,0.555)
 x <- round(n*p)

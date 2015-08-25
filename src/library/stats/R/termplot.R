@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-termplot <- function(model, data = NULL,envir = environment(formula(model)),
+termplot <- function(model, data = NULL, envir = environment(formula(model)),
                      partial.resid = FALSE,
 		     rug = FALSE, terms = NULL, se = FALSE,
                      xlabs = NULL, ylabs = NULL,
