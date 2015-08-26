@@ -101,7 +101,7 @@ menuShowCRAN <- function()
 {
     CRAN <- getOption("repos")[["CRAN"]] # drop name for identical()
     if(is.na(CRAN) || identical(CRAN, "@CRAN@"))
-        CRAN <- "http://cran.r-project.org"
+        CRAN <- "https://cran.r-project.org"
     shell.exec(CRAN)
 }
 
