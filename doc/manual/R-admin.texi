@@ -645,8 +645,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} @command{make} and current Solaris
-@command{make} (but not some older Unix makes).
+at least with @acronym{GNU} or Solaris @command{make} (but not some
+older Unix makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -3344,8 +3344,7 @@ configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
 similar.  Again, @command{configure} will normally find a suitable value
 for @code{CXX1XSTD} if the compiler given by @code{CXX} is capable of
 compiling C++11 code, but it is possible that a completely different
-compiler will be needed (it is for OS X < 10.9 and Solaris, for
-example).
+compiler will be needed.
 
 Other packages need full Fortran 90 (or later) support.  For source
 files with extension @file{.f90} or @file{.f95}, the compiler defined by
@@ -4029,13 +4028,12 @@ path to a shell, e.g. @file{/usr/local/bin/bash}).
 
 To compile @R{}, you will most likely find it easiest to use
 @acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris, as does the native FreeBSD @command{make}.  The native
-@command{make} has been reported to fail on SGI Irix 6.5 and Alpha/OSF1
-(aka Tru64).
+Solaris.  The native @command{make} has been reported to fail on SGI
+Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
-To build in a separate directory you need a @command{make} that uses the
-@code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
-@command{make} on Solaris 7 or later.
+To build in a separate directory you need a @command{make} that supports
+the @code{VPATH} variable, for example @acronym{GNU} @command{make} and
+Sun @command{make}.
 
 @command{dmake} has also been used. e.g,@: on Solaris 10.
 
@@ -4677,6 +4675,8 @@ first on the configuration path: for example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
+@noindent
+or appending that variable to the @command{configure} command.
 Otherwise the binary libraries at
 @uref{https://r.research.att.com/libs/} can be used: @code{cairo},
 @code{fontconfig}, @code{freetype} and @code{pixman} are needed.
