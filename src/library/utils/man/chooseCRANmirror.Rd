@@ -12,7 +12,8 @@
 }
 \usage{
 chooseCRANmirror(graphics = getOption("menu.graphics"), ind = NULL,
-                 useHTTPS = getOption("useHTTPS", TRUE))
+                 useHTTPS = getOption("useHTTPS", TRUE),
+                 local.only = FALSE)
 
 getCRANmirrors(all = FALSE, local.only = FALSE)
 }
@@ -25,8 +26,8 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   \item{ind}{Optional numeric value giving which entry to select.}
   \item{useHTTPS}{Whether to prefer HTTPS mirrors.}
   \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
-  \item{local.only}{Logical, try to get most recent list from CRAN or
-    use file on local disk only.}
+  \item{local.only}{Logical, try to get most recent list from the CRAN
+    master or use file on local disk only.}
 }
 \details{
   A list of mirrors is stored in file
