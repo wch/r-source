@@ -850,24 +850,26 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
 }
 
 chooseCRANmirror <- function(graphics = getOption("menu.graphics"), ind = NULL,
-                             useHTTPS = getOption("useHTTPS", TRUE))
+                             useHTTPS = getOption("useHTTPS", TRUE),
+                             local.only = FALSE)
 {
-    m <- getCRANmirrors(all = FALSE, local.only = FALSE)
+    m <- getCRANmirrors(all = FALSE, local.only = local.only)
     url <- .chooseMirror(m, "CRAN", graphics, ind, useHTTPS)
     if (length(url)) {
         repos <- getOption("repos")
         repos["CRAN"] <- url
-        options(repos=repos)
+        options(repos = repos)
     }
     invisible()
 }
 
 chooseBioCmirror <- function(graphics = getOption("menu.graphics"), ind = NULL,
-                             useHTTPS = getOption("useHTTPS", TRUE))
+                             useHTTPS = getOption("useHTTPS", TRUE),
+                             local.only = FALSE)
 {
     m <- .getMirrors("https://bioconductor.org/BioC_mirrors.csv",
                      file.path(R.home("doc"), "BioC_mirrors.csv"),
-                     all=FALSE, local.only=FALSE)
+                     all = FALSE, local.only = local.only)
     url <- .chooseMirror(m, "BioC", graphics, ind, useHTTPS)
     if (length(url))
         options(BioC_mirror = url)
