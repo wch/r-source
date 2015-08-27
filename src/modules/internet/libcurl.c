@@ -69,6 +69,37 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+static const char *http_errstr(const long status)
+{
+    const char *str;
+    switch(status) {
+    case 400: str = "Bad Request"; break;
+    case 401: str = "Unauthorized"; break;
+    case 402: str = "Payment Required"; break;
+    case 403: str = "Forbidden"; break;
+    case 404: str = "Not Found"; break;
+    case 405: str = "Method Not Allowed"; break;
+    case 406: str = "Not Acceptable"; break;
+    case 407: str = "Proxy Authentication Required"; break;
+    case 408: str = "Request Timeout"; break;
+    case 409: str = "Conflict"; break;
+    case 410: str = "Gone"; break;
+    case 411: str = "Length Required"; break;
+    case 412: str = "Precondition Failed"; break;
+    case 413: str = "Request Entity Too Large"; break;
+    case 414: str = "Request-URI Too Long"; break;
+    case 415: str = "Unsupported Media Type"; break;
+    case 416: str = "Requested Range Not Satisfiable"; break;
+    case 417: str = "Expectation Failed"; break;
+    case 500: str = "Internal Server Error"; break;
+    case 501: str = "Not Implemented"; break;
+    case 502: str = "Bad Gateway"; break;
+    case 503: str = "Service Unavailable"; break;
+    case 504: str = "Gateway Timeout"; break;
+    default: str = "Unknown Error"; break;
+    }
+    return str;
+}
 
 #ifdef HAVE_LIBCURL
 static void curlCommon(CURL *hnd, int redirect, int verify)
@@ -85,6 +116,7 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
     }
+    curl_easy_setopt(hnd, CURLOPT_FAILONERROR, 1L);
     // for consistency, but all that does is look up an option.
     SEXP sMakeUserAgent = install("makeUserAgent");
     SEXP agentFun = PROTECT(lang2(sMakeUserAgent, ScalarLogical(0)));
@@ -464,6 +496,16 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(int n = 1; n > 0;) {
 	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
 	if (msg) {
+	    long status = 0;
+	    curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE,
+			      &status);
+	    if (status >= 400) {
+		if (!quiet) REprintf("\n");
+		char *err;
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &err);
+		error(_("cannot open URL '%s': HTTP status was '%d %s'"),
+		      err, status, http_errstr(status));
+	    }
 	    CURLcode ret = msg->data.result;
 	    if (ret != CURLE_OK) {
 		if (!quiet) REprintf("\n"); // clear progress display
@@ -568,6 +610,15 @@ void fetchData(RCurlconn ctxt)
     for(int msg = 1; msg > 0;) {
 	CURLMsg *out = curl_multi_info_read(ctxt->mh, &msg);
 	if (out) {
+	    long status = 0;
+	    curl_easy_getinfo(out->easy_handle, CURLINFO_RESPONSE_CODE,
+			      &status);
+	    if (status >= 400) {
+		char *err;
+		curl_easy_getinfo(out->easy_handle, CURLINFO_EFFECTIVE_URL, &err);
+		error(_("cannot open URL '%s': HTTP status was '%d %s'"),
+		      err, status, http_errstr(status));
+	    }
 	    CURLcode ret = out->data.result;
 	    if (ret != CURLE_OK) error(curl_easy_strerror(ret));
 	}
