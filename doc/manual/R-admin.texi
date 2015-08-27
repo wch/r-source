@@ -4665,8 +4665,8 @@ Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
 most likely want at least @code{jpeg} and @code{tiff}.
 @code{pkg-config} is not provided by Apple and used for many packages:
-it will also be used if present when configuring the @code{X11()}
-device.
+it will also be used if present when configuring the @code{X11()} and
+bitmap devices.
 
 Support for @code{cairo} (without @code{Pango}) can be enabled in two
 ways: both need @code{pkg-config} available.  XQuartz ships @code{cairo}

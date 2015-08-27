@@ -180,6 +180,10 @@
 
       \item BSD networking is now required (except on Windows) and so
       \code{capabilities("http/ftp")} is always true.
+      
+      \item \command{configure} uses \command{pkg-config} for PNG, TIFF
+      and JPEG where this is available.  This should work better with
+      multiple installs and static libs.
     }
   }
 
