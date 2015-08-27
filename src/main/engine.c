@@ -2837,6 +2837,7 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
     int i;
     SEXP snapshot, tmp;
     SEXP state;
+    SEXP engineVersion;
     /* Create a list with one spot for the display list
      * and one spot each for the registered graphics systems
      * to put their graphics state
@@ -2859,7 +2860,10 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
 	    SET_VECTOR_ELT(snapshot, i + 1, state);
 	    UNPROTECT(1);
 	}
-    UNPROTECT(1);
+    engineVersion = PROTECT(allocVector(INTSXP, 1));
+    INTEGER(engineVersion)[0] = R_GE_getVersion();
+    setAttrib(snapshot, install("engineVersion"), engineVersion);
+    UNPROTECT(2);
     return snapshot;
 }
 
@@ -2878,6 +2882,22 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
      * as were registered when the snapshot was taken.
      */
     int i, numSystems = LENGTH(snapshot) - 1;
+    /* Check graphics engine version matches.
+     * If it does not, things still might work, so just a warning.
+     * NOTE though, that if it does not work, the results could be fatal.
+     */
+    SEXP snapshotEngineVersion;
+    int engineVersion = R_GE_getVersion();
+    PROTECT(snapshotEngineVersion = getAttrib(snapshot, 
+                                              install("engineVersion")));
+    if (isNull(snapshotEngineVersion)) {
+        warning(_("snapshot recorded with different graphics engine version (pre 11 - this is version %d)"),
+                engineVersion);
+    } else if (INTEGER(snapshotEngineVersion)[0] != engineVersion) {
+        int snapshotVersion = INTEGER(snapshotEngineVersion)[0];
+        warning(_("snapshot recorded with different graphics engine version (%d - this is version %d)"), 
+                snapshotVersion, engineVersion);
+    }
     /* "clean" the device
      */
     GEcleanDevice(dd);
@@ -2894,6 +2914,7 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
     dd->DLlastElt = lastElt(dd->displayList);
     GEplayDisplayList(dd);
     if (!dd->displayListOn) GEinitDisplayList(dd);
+    UNPROTECT(1);
 }
 
 /* recordPlot() */

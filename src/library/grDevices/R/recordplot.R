@@ -22,6 +22,7 @@ recordPlot <- function()
         stop("no current device to record from")
     res <- .External2(C_getSnapshot)
     attr(res, "pid") <- Sys.getpid()
+    attr(res, "Rversion") <- getRversion()
     class(res) <- "recordedplot"
     res
 }
@@ -47,10 +48,16 @@ print.recordedplot <- function(x, ...)
 
 # If this is a "recordedplot" that has been saved and reloaded
 # (possibly across sessions) then we need to ...
-# - check that the graphics API version matches the current session
+# - warn if have R version mismatch
 # - restore NativeSymbolInfo on each element of the snapshot display list
 # - bail out gracefully if something is not right
 restoreRecordedPlot <- function(x) {
+    if (is.null(attr(x, "Rversion"))) {
+        warning("snapshot recorded in different R version (pre 3.3.0)")
+    } else if (attr(x, "Rversion") != getRversion()) {
+        warning(gettextf("snapshot recorded in different R version (%s)",
+                         attr(x, "Rversion")))
+    }
     # The display list is the first component of the snapshot
     plot <- x
     for (i in 1:length(plot[[1]])) {
@@ -67,6 +74,13 @@ restoreRecordedPlot <- function(x) {
             nativeSymbol <- getNativeSymbolInfo(name = symbol$name,
                                                 PACKAGE = pkgDLL,
                                                 withRegistrationInfo = TRUE)
+            # Check that the 'numParameters' matches.
+            # If it does not, we would also receive a redundant WARNING
+            # about R version or graphics engine version mismatch,
+            # but this mismatch is serious enough to put a STOP to things.
+            if (nativeSymbol$numParameters != symbol$numParameters) {
+                stop("snapshot contains invalid graphics call")
+            }
             plot[[1]][[i]][[2]][[1]] <- nativeSymbol
         }
     }
