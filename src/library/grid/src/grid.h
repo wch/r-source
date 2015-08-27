@@ -18,6 +18,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
+#include <R.h>
 #include <Rconfig.h>
 #include <Rinternals.h>
 #include <Rmath.h>

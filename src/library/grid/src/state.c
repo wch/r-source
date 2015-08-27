@@ -314,18 +314,48 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	UNPROTECT(1);
 	result = valid;
     case GE_SaveSnapshotState:
-        /*
-         * Save the current 'grid' DL.
-         */
-        PROTECT(result = allocVector(VECSXP, 3));
-        SET_VECTOR_ELT(result, 0, gridStateElement(dd, GSS_DL));
-        SET_VECTOR_ELT(result, 1, gridStateElement(dd, GSS_DLINDEX));
-        UNPROTECT(1);
+        {
+            SEXP pkgName;
+            /*
+             * Save the current 'grid' DL.
+             */
+            PROTECT(result = allocVector(VECSXP, 3));
+            SET_VECTOR_ELT(result, 0, gridStateElement(dd, GSS_DL));
+            SET_VECTOR_ELT(result, 1, gridStateElement(dd, GSS_DLINDEX));
+            PROTECT(pkgName = mkString("grid"));
+            setAttrib(result, install("pkgName"), pkgName);
+            UNPROTECT(2);
+        }
 	break;
     case GE_RestoreSnapshotState:
         { 
-            int dlIndex = INTEGER(VECTOR_ELT(data, 1))[0];
-            if (dlIndex > 0) {
+            int i, nState = LENGTH(data) - 1;
+            SEXP gridState, snapshotEngineVersion;
+            PROTECT(gridState = R_NilValue);
+            /* Prior to engine version 11, "pkgName" was not stored.
+             * (can tell because "engineVersion" was not stored either.)
+             * Assume 'grid' is second state in snapshot
+             * (or first, if only one state)
+             * (though this could be fatal).
+             */
+            PROTECT(snapshotEngineVersion = 
+                    getAttrib(data, install("engineVersion")));
+            if (isNull(snapshotEngineVersion)) {
+                gridState = VECTOR_ELT(data, imin2(nState, 2));
+            } else {
+                for (i=0; i<nState; i++) {
+                    SEXP state = VECTOR_ELT(data, i + 1);
+                    if (!strcmp(CHAR(STRING_ELT(getAttrib(state, 
+                                                          install("pkgName")), 
+                                                0)), 
+                                "grid")) {
+                        gridState = state;
+                    }
+                }
+            }
+            if (!isNull(gridState)) {
+                int dlIndex = INTEGER(VECTOR_ELT(gridState, 1))[0];
+                if (dlIndex > 0) {
                 /* 
                  * Dirty the device (in case this is first drawing on device)
                  * to stop dirtyGridDevice() from starting new page
@@ -336,15 +366,19 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
                  * (which will be a call to L_gridDirty()) from resetting the
                  * 'grid' DL.
                  */
-                GEdirtyDevice(dd);
-                dirtyGridDevice(dd);
+                    GEdirtyDevice(dd);
+                    dirtyGridDevice(dd);
                 /*
                  * Restore the saved 'grid' DL.
                  * (the 'grid' vpTree will be recreated by replay of 'grid' DL)
                  */
-                setGridStateElement(dd, GSS_DL, VECTOR_ELT(data, 0));
-                setGridStateElement(dd, GSS_DLINDEX, VECTOR_ELT(data, 1));
+                    setGridStateElement(dd, GSS_DL, 
+                                        VECTOR_ELT(gridState, 0));
+                    setGridStateElement(dd, GSS_DLINDEX, 
+                                        VECTOR_ELT(gridState, 1));
+                }
             }
+            UNPROTECT(2);
         }
         break;
     case GE_ScalePS:

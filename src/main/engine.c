@@ -2860,7 +2860,7 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
 	    SET_VECTOR_ELT(snapshot, i + 1, state);
 	    UNPROTECT(1);
 	}
-    engineVersion = PROTECT(allocVector(INTSXP, 1));
+    PROTECT(engineVersion = allocVector(INTSXP, 1));
     INTEGER(engineVersion)[0] = R_GE_getVersion();
     setAttrib(snapshot, install("engineVersion"), engineVersion);
     UNPROTECT(2);
@@ -2906,8 +2906,7 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
      */
     for (i = 0; i < numSystems; i++)
 	if (dd->gesd[i] != NULL)
-	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd,
-				    VECTOR_ELT(snapshot, i + 1));
+	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd, snapshot);
     /* Replay the display list
      */
     dd->displayList = duplicate(VECTOR_ELT(snapshot, 0));

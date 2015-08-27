@@ -52,11 +52,22 @@ print.recordedplot <- function(x, ...)
 # - restore NativeSymbolInfo on each element of the snapshot display list
 # - bail out gracefully if something is not right
 restoreRecordedPlot <- function(x) {
-    if (is.null(attr(x, "Rversion"))) {
+    snapshotRversion <- attr(x, "Rversion")
+    if (is.null(snapshotRversion)) {
         warning("snapshot recorded in different R version (pre 3.3.0)")
-    } else if (attr(x, "Rversion") != getRversion()) {
+    } else if (snapshotRversion != getRversion()) {
         warning(gettextf("snapshot recorded in different R version (%s)",
-                         attr(x, "Rversion")))
+                         snapshotRversion))
+    }
+    # Ensure that all graphics systems in the snapshot are available
+    # (snapshots only started recording pkgName in R 3.3.0)
+    n <- length(x)
+    if (n > 1 &&
+        !is.null(snapshotRversion) &&
+        snapshotRversion >= R_system_version("3.3.0")) {
+        for (i in 2:n) {
+            library(attr(x[[i]], "pkgName"), character.only=TRUE)
+        }
     }
     # The display list is the first component of the snapshot
     plot <- x
