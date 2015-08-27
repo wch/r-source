@@ -63,6 +63,7 @@ extern "C" {
  *             - added grid DL to snapshots (used to be NULL)
  *             - added this version number to snapshots (as attribute)
  *             - added R version number to snapshots (as attribute)
+ *             - added pkgName to graphics system state info (as attribute)
  */
 
 #define R_GE_version 11

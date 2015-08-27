@@ -301,6 +301,14 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
                 }
             }
             if (!isNull(graphicsState)) {
+                /* Check that RAW blob being restored is same size
+                 * as GPar struct in current R version.
+                 * Any version difference will have been warned about,
+                 * but a difference here means STOP.
+                 */
+                if (LENGTH(graphicsState) != sizeof(GPar)) {
+                    error(_("Incompatible graphics state"));
+                }
                 bss = dd->gesd[baseRegisterIndex]->systemSpecific;
                 copyGPar((GPar*) RAW(graphicsState), &(bss->dpSaved));
                 /* RestoreState will follow and do these ...

@@ -82,6 +82,9 @@ restoreRecordedPlot <- function(x) {
                 name <- symbol$dll[["name"]]
             pkgDLL <- getLoadedDLLs()[[name]]
             # reconstruct the native symbol and assign it into the plot
+            # This will error out if it fails to find the symbol, which
+            # is some protection against running "recordedplot" in
+            # R session where the recorded function does not exist!
             nativeSymbol <- getNativeSymbolInfo(name = symbol$name,
                                                 PACKAGE = pkgDLL,
                                                 withRegistrationInfo = TRUE)
