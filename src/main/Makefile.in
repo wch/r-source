@@ -88,7 +88,7 @@ ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
 
 
-## use an explicit library: there might be an unsatisfactory -lz around
+## use an explicit library: there might be an unsatisfactory -lintl around
 R_TRE = @BUILD_TRE_TRUE@ ../extra/tre/libtre.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a

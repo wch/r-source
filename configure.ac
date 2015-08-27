@@ -2289,9 +2289,6 @@ R_TCLTK
 ## BSD networking.
 R_BSD_NETWORKING
 
-## Bitmap headers and libraries.
-R_BITMAPS
-
 ## XDR headers and library routines.
 R_XDR
 
@@ -2310,9 +2307,16 @@ R_PCRE
 ## tre headers and libraries.
 R_TRE
 
-
 ## libcurl
 R_LIBCURL
+
+
+## Bitmap headers and libraries.
+if test -n "${PKGCONF}"; then
+R_BITMAPS2
+else
+R_BITMAPS
+fi
 
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS

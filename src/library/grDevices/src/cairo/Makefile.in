@@ -24,8 +24,9 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o) $(top_builddir)/src/modules/X11/rbitmap.o
 
 cairo_la = cairo$(SHLIB_EXT)
+## This order has to be consistent with the other use of rbitmap.o
 ## AIX needs LIBM
-cairo_la_LIBADD = @CAIRO_LIBS@ @BITMAP_LIBS@ $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+cairo_la_LIBADD = @BITMAP_LIBS@ @CAIRO_LIBS@ $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 all: Makedeps
 	@$(MAKE) R

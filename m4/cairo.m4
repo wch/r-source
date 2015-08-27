@@ -126,6 +126,7 @@ int main(void) {
       case "${host_os}" in
         darwin*)
           ## This is for static OS X build
+	  ## FIXME: doing that unconditionally is really not a good idea
           CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKGCONF}" --static --libs ${xmodlist}`
           ;;

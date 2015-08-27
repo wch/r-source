@@ -11,7 +11,10 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIROX11_CPPFLAGS@ \
+## When compiling rbitmap.c it is essential that we find the
+## png.h matching BITMAP_LIBS.  Since /opt/X11 on OS X contains libpng
+## and we might want our own version, we give priority to BITMAP_*
+ALL_CPPFLAGS = @BITMAP_CPPFLAGS@ $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIROX11_CPPFLAGS@ \
   -I$(top_srcdir)/src/library/grDevices/src/cairo $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_X_LIBS = $(X_PRE_LIBS) @CAIROX11_LIBS@ $(X_LIBS) $(X_EXTRA_LIBS)
@@ -28,8 +31,9 @@ DISTFILES = \
 	Makefile.in $(SOURCES) $(HEADERS) $(DE_SOURCES)
 
 R_X11_la = R_X11$(SHLIB_EXT)
+## Note that this is used after LDFLAGS, which usually contains -L flags.
 ## AIX needs LIBM
-R_X11_la_LIBADD = $(ALL_X_LIBS) @BITMAP_LIBS@ $(LIBR1) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+R_X11_la_LIBADD = @BITMAP_LIBS@ $(ALL_X_LIBS) $(LIBR1) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 R_de_la = R_de$(SHLIB_EXT)
 R_de_la_LIBADD = $(ALL_X_LIBS) $(LIBR1) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)

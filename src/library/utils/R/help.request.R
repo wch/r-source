@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/help.request.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
     post <- readline("Have you read the posting guide? (y/n) ")
     if (no(post)) return(go("https://www.r-project.org/posting-guide.html"))
     FAQ <- readline("Have you checked the FAQ? (y/n) ")
-    if (no(FAQ)) return(go("http://cran.r-project.org/faqs.html"))
+    if (no(FAQ)) return(go("https://cran.r-project.org/faqs.html"))
     intro <- readline("Have you checked An Introduction to R? (y/n) ")
     if (no(intro))
 	return(go("https://cran.r-project.org/manuals.html"))

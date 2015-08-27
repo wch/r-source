@@ -107,8 +107,8 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
   /* Of the following two words, `fontword' is updated whenever an escape
      sequence like \f0, \f1, \f2 etc. is seen, since raw_fontnum is itself
      updated.  But `symbol_fontword' is fixed */
-  fontword = ((unsigned short)raw_fontnum) << FONT_SHIFT;
-  symbol_fontword = ((unsigned short)raw_symbol_fontnum) << FONT_SHIFT;
+      fontword = (unsigned short)(raw_fontnum << FONT_SHIFT);
+      symbol_fontword = (unsigned short)(raw_symbol_fontnum << FONT_SHIFT);
 
   while (*src != (unsigned char)'\0')
     {
@@ -144,7 +144,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		    }
 		  if (matched)
 		    {
-		      dest[j++] = RAW_ORIENTAL_HERSHEY_GLYPH | (kanji->nelson);
+		      dest[j++] = (unsigned short)( RAW_ORIENTAL_HERSHEY_GLYPH | (kanji->nelson));
 		      src += 2;
 		      continue;	/* back to top of while loop */
 		    }
@@ -185,7 +185,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			dest[j++] = RAW_HERSHEY_GLYPH | charnum;
 		      else
 			/* a character in one of the fonts in g_fontdb.c */
-			dest[j++] = (((unsigned short)fontnum) << FONT_SHIFT) | charnum;
+			  dest[j++] = (unsigned short)((fontnum << FONT_SHIFT) | charnum);
 		      src += 2;
 		      continue; /* back to top of while loop */
 		    }
@@ -346,7 +346,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		+ 100 * (src[1] - '0') + 1000 * (src[0] - '0');
 	      if (glyphindex < NUM_OCCIDENTAL_HERSHEY_GLYPHS)
 		{
-		  dest[j++] = RAW_HERSHEY_GLYPH | glyphindex;
+		  dest[j++] = (unsigned short)(RAW_HERSHEY_GLYPH | glyphindex);
 		  src += 4;
 		  continue;	/* back to top of while loop */
 		}
@@ -368,7 +368,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		+ 100 * (src[1] - '0') + 1000 * (src[0] - '0');
 	      if (glyphindex < NUM_ORIENTAL_HERSHEY_GLYPHS)
 		{
-		  dest[j++] = RAW_ORIENTAL_HERSHEY_GLYPH | glyphindex;
+		  dest[j++] = (unsigned short)(RAW_ORIENTAL_HERSHEY_GLYPH | glyphindex);
 		  src += 4;
 		  continue;	/* back to top of while loop */
 		}
@@ -429,7 +429,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			}
 		      if (matched)
 			{
-			  dest[j++] = RAW_ORIENTAL_HERSHEY_GLYPH | (kanji->nelson);
+			  dest[j++] = (unsigned short)(RAW_ORIENTAL_HERSHEY_GLYPH | (kanji->nelson));
 			  src += 4;
 			  continue;	/* back to top of while loop */
 			}
@@ -470,7 +470,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 			    dest[j++] = RAW_HERSHEY_GLYPH | charnum;
 			  else
 			    /* a character in one of the fonts in g_fontdb.c */
-			    dest[j++] = (((unsigned short)fontnum) << FONT_SHIFT) | charnum;
+			    dest[j++] = (unsigned short)((fontnum << FONT_SHIFT) | charnum);
 			  src += 4;
 			  continue; /* back to top of while loop */
 			}
@@ -497,7 +497,7 @@ unsigned short * _controlify (pGEDevDesc dd, const unsigned char *src,
 		}
 	    if (matched)		/* it's a control code */
 	      {
-		dest[j++] = CONTROL_CODE | i;
+		dest[j++] = (unsigned short)(CONTROL_CODE | i);
 		continue;	/* back to top of while loop */
 	      }
 	  }

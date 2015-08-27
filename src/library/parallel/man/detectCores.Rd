@@ -1,6 +1,6 @@
 % File src/library/parallel/man/detectCores.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2014 R Core Team
+% Copyright 2011-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detectCores}
@@ -26,7 +26,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
   This attempts to detect the number of CPU cores in the current
   machine.
 
-  It has methods to do so for Linux, OS X, FreeBSD, Solaris,
+  It has methods to do so for Linux, OS X, FreeBSD, OpenBSD, Solaris,
   Irix and Windows.  \code{detectCores(TRUE)} could be tried on other
   Unix-alike systems.
 }

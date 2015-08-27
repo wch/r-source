@@ -1982,13 +1982,15 @@ fi])
 
 ## R_BITMAPS
 ## ---------
+## This is the version used without png-config
 ## Here we only need any old -lz, and don't need zlib.h.
 ## However, we do need recent enough libpng and jpeg, and so check both
 ## the header versions and for key routines in the library.
 ## The png code will do a run-time check of the consistency of libpng
 ## versions.
 AC_DEFUN([R_BITMAPS],
-[BITMAP_LIBS=
+[BITMAP_CPPFLAGS=
+BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
   _R_HEADER_JPEGLIB
   have_jpeg=${r_cv_header_jpeglib_h}
@@ -2043,8 +2045,103 @@ if test "${use_libtiff}" = yes; then
     fi
   fi
 fi
+AC_SUBST(BITMAP_CPPFLAGS)
 AC_SUBST(BITMAP_LIBS)
 ])# R_BITMAPS
+
+## R_BITMAPS2
+## ---------
+## This is the version used with png-config
+AC_DEFUN([R_BITMAPS2],
+[BITMAP_CPPFLAGS=
+BITMAP_LIBS=
+if test "${use_jpeglib}" = yes; then
+   save_CPPFLAGS=${CPPFLAGS}
+  ## jpeglib does not support pkg-config, although some OSes add it.
+  ## This is untested.
+  if "${PKGCONF}" --exists jpeg; then
+    JPG_CPPFLAGS=`"${PKGCONF}" --cflags jpeg`
+    JPG_LIBS=`"${PKGCONF}" --libs jpeg`
+    CPPFLAGS="${CPPFLAGS} ${JPG_CPPFLAGS}"
+  fi
+  _R_HEADER_JPEGLIB
+  CPPFLAGS=${save_CPPFLAGS}
+  have_jpeg=${r_cv_header_jpeglib_h}
+  if test "${have_jpeg}" = yes; then
+    AC_CHECK_LIB(jpeg, jpeg_destroy_compress,
+		 [have_jpeg=yes], [have_jpeg=no], [${JPG_LIBS} ${LIBS}])
+  fi
+  if test "${have_jpeg}" = yes; then
+    if test -n "${JPG_LIBS}"; then
+      BITMAP_LIBS="${JPG_LIBS}"
+    else
+      BITMAP_LIBS=-ljpeg
+    fi
+    AC_DEFINE(HAVE_JPEG, 1,
+	      [Define if you have the JPEG headers and libraries.])
+  fi
+fi
+if test "${use_libpng}" = yes; then
+  if "${PKGCONF}" --exists libpng; then
+    save_CPPFLAGS=${CPPFLAGS}
+    PNG_CPPFLAGS=`"${PKGCONF}" --cflags libpng`
+    CPPFLAGS="${CPPFLAGS} ${PNG_CPPFLAGS}"
+    _R_HEADER_PNG
+    have_png=${r_cv_header_png_h}
+    CPPFLAGS=${save_CPPFLAGS}
+    if test "${have_png}" = yes; then
+      PNG_LIBS=`"${PKGCONF}" --libs libpng`
+      AC_CHECK_LIB(png, png_create_write_struct, 
+                   [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
+      if test "${have_png}" = no; then
+        PNG_LIBS=`"${PKGCONF}" --static --libs libpng`
+        AC_CHECK_LIB(png, png_create_write_struct, 
+                     [have_png=yes], [have_png=no], [${PNG_LIBS} ${LIBS}])
+      fi
+    fi
+    if test "${have_png}" = yes; then
+      BITMAP_CPPFLAGS="${BITMAP_CPPFLAGS} ${PNG_CPPFLAGS}"
+      BITMAP_LIBS="${BITMAP_LIBS} ${PNG_LIBS}"
+      AC_DEFINE(HAVE_PNG, 1,
+	        [Define if you have the PNG headers and libraries.])
+    fi
+  fi
+fi
+if test "${use_libtiff}" = yes; then
+  mod=
+  ## pkg-config support was introduced in libtiff 4.0.0
+  ## I guess the module name might change in future, so
+  ## program defensively here.
+  if "${PKGCONF}" --exists libtiff-4; then
+    mod=libtiff-4
+  fi  
+  if test -n "${mod}"; then
+    save_CPPFLAGS=${CPPFLAGS}
+    TIF_CPPFLAGS=`"${PKGCONF}" --cflags ${mod}`
+    CPPFLAGS="${CPPFLAGS} ${TIF_CPPFLAGS}"
+    AC_CHECK_HEADERS(tiffio.h)
+    CPPFLAGS=${save_CPPFLAGS}
+    if test "x${ac_cv_header_tiffio_h}" = xyes ; then
+      TIF_LIBS=`"${PKGCONF}" --libs ${mod}`
+      AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
+                   [${TIF_LIBS} ${BITMAP_LIBS}])
+      if test "x${have_tiff}" = xno; then
+        TIF_LIBS=`"${PKGCONF}" --static --libs ${mod}`
+        AC_CHECK_LIB(tiff, TIFFOpen, [have_tiff=yes], [have_tiff=no],
+                     [${TIF_LIBS} ${BITMAP_LIBS}])
+      fi
+      if test "x${have_tiff}" = xyes; then
+        AC_DEFINE(HAVE_TIFF, 1, [Define this if libtiff is available.])
+        BITMAP_LIBS="${TIF_LIBS} ${BITMAP_LIBS}"
+        BITMAP_CPPFLAGS="${BITMAP_CPPFLAGS} ${TIF_CPPFLAGS}"
+      fi
+    fi
+  fi
+fi
+AC_SUBST(BITMAP_CPPFLAGS)
+AC_SUBST(BITMAP_LIBS)
+])# R_BITMAPS2
+
 
 ## _R_HEADER_JPEGLIB
 ## -----------------

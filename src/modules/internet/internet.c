@@ -776,8 +776,8 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
     if(ctxt != NULL) {
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
-	    warning(_("cannot open: HTTP status was '%d %s'"), rc,
-		    RxmlNanoHTTPStatusMsg(ctxt));
+	    warning(_("cannot open URL '%s': HTTP status was '%d %s'"), 
+		    url, rc, RxmlNanoHTTPStatusMsg(ctxt));
 	    RxmlNanoHTTPClose(ctxt);
 	    return NULL;
 	} else {
@@ -941,7 +941,8 @@ static void *in_R_HTTPOpen2(const char *url, const char *headers,
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	warning(_("cannot open: HTTP status was '%d %s'"), status, buf);
+	warning(_("cannot open URL '%s': HTTP status was '%d %s'"), 
+		url, status, buf);
 	return NULL;
     }
 

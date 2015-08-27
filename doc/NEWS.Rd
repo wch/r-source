@@ -122,6 +122,11 @@
 	"default"} (and documented).
 
       \item \code{smoothScatter()} gains a \code{ret.selection} argument.
+      
+      \item \code{qr()} no longer has a \code{\dots} argument to pass
+      addiitonal arguments to methods.
+
+      \item \code{[} has a method for class \code{"table"}.
     }
   }
 
@@ -175,6 +180,10 @@
 
       \item BSD networking is now required (except on Windows) and so
       \code{capabilities("http/ftp")} is always true.
+      
+      \item \command{configure} uses \command{pkg-config} for PNG, TIFF
+      and JPEG where this is available.  This should work better with
+      multiple installs and static libs.
     }
   }
 
@@ -232,6 +241,9 @@
       updated to that from \code{gettext} version 0.19.5.1 --- this
       should only affect how an external library is detected. 
       (Wish of \PR{16464}.)
+
+      \item \command{configure} has a new argument
+      \option{--disable-java} to disable the checks for Java.
     }
   }
   
@@ -270,6 +282,9 @@
       \item \code{detach()}ing the \pkg{methods} package keeps
       \code{.isMethodsDispatchOn()} true, as long as the methods
       namespace is not unloaded.% This keeps a sane state, see the regr-S4 test
+      
+      \item Removed some spurious warnings from \command{configure} about the
+      preprocessor not finding header files.  (\PR{15989})
     }
   }
 }

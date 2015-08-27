@@ -12,7 +12,8 @@
 }
 \usage{
 chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
-                 useHTTPS = getOption("useHTTPS", TRUE))
+                 useHTTPS = getOption("useHTTPS", TRUE),
+                 local.only = FALSE)
 }
 \arguments{
   \item{graphics}{Logical.  If true, use a graphical list: on Windows or
@@ -23,7 +24,10 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL,
   \item{ind}{Optional numeric value giving which entry to select.}
 
   \item{useHTTPS}{Whether to prefer HTTPS mirrors (see
-  \code{\link{chooseCRANmirror}}).}
+    \code{\link{chooseCRANmirror}}).}
+  
+  \item{local.only}{Logical, try to get most recent list from the
+    Bioconductor master or use file on local disk only.}
 }
 \details{
   This sets the \link{option} \code{"BioC_mirror"}: it is used
