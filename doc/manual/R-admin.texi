@@ -4663,7 +4663,7 @@ Xcode 7) and for OpenMP in version 3.7.0 and later.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg}, @code{libpng} and @code{tiff}.
+most likely want at least @code{jpeg} and @code{tiff}.
 @code{pkg-config} is not provided by Apple and used for many packages:
 it will also be used if present when configuring the @code{X11()}
 device.
@@ -4679,7 +4679,9 @@ export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/
 or appending that variable to the @command{configure} command.
 Otherwise the binary libraries at
 @uref{https://r.research.att.com/libs/} can be used: @code{cairo},
-@code{fontconfig}, @code{freetype} and @code{pixman} are needed.
+@code{fontconfig}, @code{freetype}, @code{pixman} and
+@file{pkgconfig-system-stubs-darwin13.tar.gz} are needed, plus
+@code{libpng} for PNG support.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4750,8 +4752,7 @@ There are likely to be problems from the restriction that only Apple is
 allowed to install software under @file{/usr}: this affects @emph{inter
 alia} @code{MacTeX} and @code{XQuartz}.  For @code{MacTeX} it is
 necessary to include @file{/Library/TeX/texbin} in your path rather the
-@file{/usr/texbin} (and at the time of writing this only worked for
-@code{MacTeX} 2015 and not @code{BasicTeX} 2015).
+@file{/usr/texbin}.
 
 @command{configure} may need to be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
