@@ -2436,9 +2436,18 @@ setRlibs <-
             if (any(grepl("^Error", out)) || length(attr(out, "status"))) {
                 warningLog(Log)
                 any <- TRUE
-            } else if(any(grepl("^Warning", out))) {
-                noteLog(Log)
-                any <- TRUE
+            } else {
+                ## Drop warnings about replacing previous imports unless
+                ## these were disabled for the installation check.
+                check_imports_flag <-
+                    Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "TRUE")
+                if(config_val_to_logical(check_imports_flag))
+                    out <- grep("Warning: replacing previous import", out,
+                                fixed = TRUE, invert = TRUE, value = TRUE)
+                if(any(grepl("^Warning", out))) {
+                    noteLog(Log)
+                    any <- TRUE
+                }
             }
             if(any) {
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
