@@ -214,6 +214,10 @@ isIncomplete(con)
   is platform-dependent (see \code{\link{libcurlVersion}}), but most
   platforms will support \samp{https://} and \samp{ftps://}.
 
+  Most methods do not percent-encode special characters such as spaces
+  in \samp{http://} URLs (see \code{\link{URLencode}}), but it seems the
+  \code{"wininet"} method does.
+
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
@@ -231,7 +235,7 @@ isIncomplete(con)
   plus \code{path_to_file}.  Also, backslashes are accepted within the
   path even though RFC1738 does not allow them.
 
-  No attempt is made to decode an encoded URL: call
+  No attempt is made to decode a percent-encoded \samp{file:} URL: call
   \code{\link{URLdecode}} if necessary.
 
   The \code{"internal"} method does not follow re-directed HTTP URLs:
