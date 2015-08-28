@@ -111,7 +111,10 @@ if(dir.exists(file.path("myLib", "pkgA"))) {
   tools::assertError(is.null(pkgA:::nilData))
 }
 
-if(dir.exists(file.path("myLib", "exNSS4"))) {
+## tests here should *NOT* assume recommended packages,
+## let alone where they are installed
+if(dir.exists(file.path("myLib", "exNSS4")) &&
+   dir.exists(file.path(.Library, "Matrix"))) {
     for(ns in c("pkgB", "pkgA", "Matrix", "exNSS4")) unloadNamespace(ns)
     ## Both exNSS4 and Matrix define "atomicVector" *the same*,
     ## but  'exNSS4'  has it extended - and hence *both* are registered in cache -> "conflicts"
