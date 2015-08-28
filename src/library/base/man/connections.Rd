@@ -132,12 +132,14 @@ isIncomplete(con)
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
-  \samp{file://}).  Method \code{"internal"} is that
-  available since connections were introduced, method \code{"wininet"} is
-  only available on Windows and method \code{"libcurl"} is required on a
-  Unix-alike but optional on Windows.  Method \code{"default"} uses
-  method \code{"internal"} for \samp{file:} URLs and \code{"libcurl"}
-  for \code{ftps:} URLs.  On a Unix-alike it uses \code{"internal"} for
+  \samp{file://}).  Method \code{"internal"} is that available since
+  connections were introduced, method \code{"wininet"} is only available
+  on Windows (it uses the WinInet functions of that OS) and method
+  \code{"libcurl"} (using the library of that name:
+  \url{http://curl.haxx.se/libcurl/}) is required on a Unix-alike but
+  optional on Windows.  Method \code{"default"} uses method
+  \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
+  \code{ftps:} URLs.  On a Unix-alike it uses \code{"internal"} for
   \samp{http:} and \code{ftp:} URLs and \code{"libcurl"} for
   \samp{https:} URLs; on Windows \code{"wininet"} for \samp{http:},
   \code{ftp:} and \samp{https:} URLs.  Proxies can be specified: see
@@ -206,6 +208,10 @@ isIncomplete(con)
   Unix-alike platforms will support \samp{https://} and most platforms
   will support \samp{ftps://}.
 
+  Most methods do not percent-encode special characters such as spaces
+  in \samp{http://} URLs (see \code{\link{URLencode}}), but it seems the
+  \code{"wininet"} method does.
+
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
@@ -223,7 +229,7 @@ isIncomplete(con)
   plus \code{path_to_file}.  Also, backslashes are accepted within the
   path even though RFC1738 does not allow them.
 
-  No attempt is made to decode an encoded URL: call
+  No attempt is made to decode a percent-encoded \samp{file:} URL: call
   \code{\link{URLdecode}} if necessary.
 
   The \code{"internal"} method does not follow re-directed HTTP URLs:

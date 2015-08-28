@@ -64,16 +64,23 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #ifdef windows
   If \code{method = "auto"} is chosen (the default), on Windows the
   \code{"wininet"} method is used apart from for \samp{ftps://} URLs
-  where \code{"libcurl"} is tried.
+  where \code{"libcurl"} is tried.  The \code{"wininet"} method uses the
+  WinInet functions which are part of the OS and underlie Internet
+  Explorer.
 #endif
+% https://msdn.microsoft.com/en-us/library/windows/desktop/aa383630%28v=vs.85%29.aspx
   
 #ifdef unix
-  Method \code{"libcurl"} provides
+  Method \code{"libcurl"} uses the library of that name
+  (\url{http://curl.haxx.se/libcurl/}).
+  It provides
 #endif
 #ifdef windows
   Support for method \code{"libcurl"} is optional on Windows: use
   \code{\link{capabilities}("libcurl")} to see if it is supported on
-  your build.  It will provide
+  your build.  It used an external library of that name
+  (\url{http://curl.haxx.se/libcurl/}) against which \R can be compiled.
+  If supported it will provide
 #endif
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
   URLs.  There is support for simultaneous downloads, so \code{url} and
@@ -103,9 +110,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   See \code{\link{url}} for how \samp{file://} URLs are interpreted,
   especially on Windows.  The \code{"internal"} and \code{"wininet"}
-  methods do not decode \samp{file://} URLs, but the \code{"libcurl"}
-  and \code{"curl"} methods do: method \code{"wget"} does not support
-  them.
+  methods do not percent-decode \samp{file://} URLs, but the
+  \code{"libcurl"} and \code{"curl"} methods do: method \code{"wget"}
+  does not support them.
+
+  Most methods do not percent-encode special characters such as spaces
+  in URLs (see \code{\link{URLencode}}), but it seems the
+  \code{"wininet"} method does.
 
   The remaining details apply to the \code{"internal"}, \code{"wininet"}
   and \code{"libcurl"} methods only.
