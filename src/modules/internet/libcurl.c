@@ -69,6 +69,7 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#ifdef HAVE_LIBCURL
 static const char *http_errstr(const long status)
 {
     const char *str;
@@ -101,7 +102,75 @@ static const char *http_errstr(const long status)
     return str;
 }
 
-#ifdef HAVE_LIBCURL
+static const char *ftp_errstr(const long status)
+{
+    const char *str;
+    switch (status) {
+    case 421: str = "Service not available, closing control connection"; break;
+    case 425: str = "Cannot open data connection"; break;
+    case 426: str = "Connection closed; transfer aborted"; break;
+    case 430: str = "Invalid username or password"; break;
+    case 434: str = "Requested host unavailable"; break;
+    case 450: str = "Requested file action not taken"; break;
+    case 451: str = "Requested action aborted; local error in processing"; break;
+    case 452:
+        str = "Requested action not taken; insufficient storage space in system";
+        break;
+    case 501: str = "Syntax error in parameters or arguments"; break;
+    case 502: str = "Command not implemented"; break;
+    case 503: str = "Bad sequence of commands"; break;
+    case 504: str = "Command not implemented for that parameter"; break;
+    case 530: str = "Not logged in"; break;
+    case 532: str = "Need account for storing files"; break;
+    case 550:
+        str = "Requested action not taken; file unavailable";
+        break;
+    case 551: str = "Requested action aborted; page type unknown"; break;
+    case 552:
+        str = "Requested file action aborted; exceeded storage allocation";
+        break;
+    case 553: str = "Requested action not taken; file name not allowed"; break;
+    default: str = "Unknown Error"; break;
+    }
+    return str;
+}
+
+/*
+  Check curl_multi_info_read for errors, reporting as warnings
+
+  Return: number of errors encountered
+ */
+static int curlMultiCheckerrs(CURLM *mhnd)
+{
+    int retval = 0;
+    for(int n = 1; n > 0;) {
+	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
+	if (msg && (msg->data.result != CURLE_OK)) {
+	    const char *url, *strerr;
+	    long status = 0;
+	    curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &url);
+	    curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE,
+			      &status);
+	    if (status >= 400) {
+		if (url && url[0] == 'h')
+		    strerr = http_errstr(status);
+		else
+		    strerr = ftp_errstr(status);
+	    } else {
+		strerr = curl_easy_strerror(msg->data.result);
+		status = -1;
+	    }
+
+	    /* FIXME: clean up multi-handle */
+
+	    warning(_("URL '%s': HTTP status was '%d %s'"), url,
+		    status, strerr);
+	    retval += 1;
+	}
+    }
+    return retval;
+}
+
 static void curlCommon(CURL *hnd, int redirect, int verify)
 {
     const char *capath = getenv("CURL_CA_BUNDLE");
@@ -492,27 +561,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
     }
 
-    // report all the pending messages.
-    for(int n = 1; n > 0;) {
-	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
-	if (msg) {
-	    long status = 0;
-	    curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE,
-			      &status);
-	    if (status >= 400) {
-		if (!quiet) REprintf("\n");
-		char *err;
-		curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &err);
-		error(_("cannot open URL '%s': HTTP status was '%d %s'"),
-		      err, status, http_errstr(status));
-	    }
-	    CURLcode ret = msg->data.result;
-	    if (ret != CURLE_OK) {
-		if (!quiet) REprintf("\n"); // clear progress display
-		error("  %s\n", curl_easy_strerror(ret));
-	    }
-	}
-    }
+    int n_err = curlMultiCheckerrs(mhnd);
 
     for (int i = 0; i < nurls; i++) {
 	fclose(out[i]);
@@ -521,6 +570,9 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     curl_multi_cleanup(mhnd);
     if (!cacheOK) curl_slist_free_all(slist1);
+
+    if (n_err != 0)
+	error(_("cannot download file"), n_err);
 
     return ScalarInteger(0);
 #endif
@@ -591,38 +643,40 @@ static size_t consumeData(void *ptr, size_t max, RCurlconn ctxt)
     return size;
 }
 
-void fetchData(RCurlconn ctxt)
+/*
+  return: number of errors encountered
+ */
+static int fetchData(RCurlconn ctxt)
 {
     int repeats = 0;
+    CURLM *mhnd = ctxt->mh;
+    
     do {
 	int numfds;
-	CURLMcode mc = curl_multi_wait(ctxt->mh, NULL, 0, 100, &numfds);
+	CURLMcode mc = curl_multi_wait(mhnd, NULL, 0, 100, &numfds);
 	if (mc != CURLM_OK)
 	    error("curl_multi_wait() failed, code %d", mc);
 	if (!numfds) {
 	    if (repeats++ > 0) Rsleep(0.1);
 	} else repeats = 0;
-	curl_multi_perform(ctxt->mh, &ctxt->sr);
+	curl_multi_perform(mhnd, &ctxt->sr);
 	if (ctxt->available) break;
 	R_ProcessEvents();
     } while(ctxt->sr);
 
-    for(int msg = 1; msg > 0;) {
-	CURLMsg *out = curl_multi_info_read(ctxt->mh, &msg);
-	if (out) {
-	    long status = 0;
-	    curl_easy_getinfo(out->easy_handle, CURLINFO_RESPONSE_CODE,
-			      &status);
-	    if (status >= 400) {
-		char *err;
-		curl_easy_getinfo(out->easy_handle, CURLINFO_EFFECTIVE_URL, &err);
-		error(_("cannot open URL '%s': HTTP status was '%d %s'"),
-		      err, status, http_errstr(status));
-	    }
-	    CURLcode ret = out->data.result;
-	    if (ret != CURLE_OK) error(curl_easy_strerror(ret));
-	}
-    }
+    return curlMultiCheckerrs(mhnd);
+}
+
+static void Curl_close(Rconnection con)
+{
+    RCurlconn ctxt = (RCurlconn)(con->private);
+
+    curl_multi_remove_handle(ctxt->mh, ctxt->hnd);
+    curl_easy_cleanup(ctxt->hnd);
+    curl_multi_cleanup(ctxt->mh);
+    free(ctxt->buf);
+
+    con->isopen = FALSE;
 }
 
 static size_t Curl_read(void *ptr, size_t size, size_t nitems,
@@ -632,9 +686,14 @@ static size_t Curl_read(void *ptr, size_t size, size_t nitems,
     size_t nbytes = size*nitems;
     char *p = (char *) ptr;
     size_t total = consumeData(ptr, nbytes, ctxt);
+    int n_err = 0;
     while((total < nbytes) && ctxt->sr) {
-	fetchData(ctxt);
+	n_err += fetchData(ctxt);
 	total += consumeData(p + total, (nbytes - total), ctxt);
+    }
+    if (n_err != 0) {
+	Curl_close(con);
+	error(_("cannot read from connection"), n_err);
     }
     return total/size;
 }
@@ -664,7 +723,13 @@ static Rboolean Curl_open(Rconnection con)
 
     // Establish the connection: not clear if we should do this now.
     ctxt->sr = 1;
-    while(ctxt->sr && !ctxt->available) fetchData(ctxt);
+    int n_err = 0;
+    while(ctxt->sr && !ctxt->available)
+	n_err += fetchData(ctxt);
+    if (n_err != 0) {
+	Curl_close(con);
+	error(_("cannot open connection"), n_err);
+    }
 
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
@@ -674,18 +739,6 @@ static Rboolean Curl_open(Rconnection con)
     con->save = -1000;
     set_iconv(con);
     return TRUE;
-}
-
-static void Curl_close(Rconnection con)
-{
-    RCurlconn ctxt = (RCurlconn)(con->private);
-
-    curl_multi_remove_handle(ctxt->mh, ctxt->hnd);
-    curl_easy_cleanup(ctxt->hnd);
-    curl_multi_cleanup(ctxt->mh);
-    free(ctxt->buf);
-
-    con->isopen = FALSE;
 }
 
 static int Curl_fgetc_internal(Rconnection con)
