@@ -127,12 +127,12 @@ iconvlist()
   or if \code{to = ""} and the current locale's encoding is detected as
   Latin-1 (or its superset CP1252 on Windows) or UTF-8.
 
-  If \code{toRaw = TRUE}, the value is a vector of the same length and
+  If \code{toRaw = TRUE}, the value is a list of the same length and
   the same attributes as \code{x} whose elements are either \code{NULL}
   (if conversion fails) or a raw vector.
 
   For \code{iconvlist()}, a character vector (typically of a few hundred
-  elements).
+  elements) of known encoding names.
 }
 \note{
   The only reasonably portable name for the ISO 8859-15 encoding,
