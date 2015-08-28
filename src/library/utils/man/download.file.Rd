@@ -78,7 +78,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #ifdef windows
   Support for method \code{"libcurl"} is optional on Windows: use
   \code{\link{capabilities}("libcurl")} to see if it is supported on
-  your build.  It used an external library of that name
+  your build.  It uses an external library of that name
   (\url{http://curl.haxx.se/libcurl/}) against which \R can be compiled.
   If supported it will provide
 #endif
