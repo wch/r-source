@@ -7,7 +7,8 @@ Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technol
 "Australia (Melbourne)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au
 "Austria [https]",Austria,Wien,https://cran.r-project.org/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at
-Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
+"Belgium (Antwerp)",Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
+"Belgium (Ghent)",Belgium,Ghent,http://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo Justiniano Ribeiro Junior <paulojus # ufpr.br>",1,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
