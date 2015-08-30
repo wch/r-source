@@ -2,10 +2,8 @@
 
 options(digits = 5)
 
-# recommended packages should be present
-if(!require("MASS")) q()
-
 ## cases should be named
+load("hills.rda") # copied from package MASS
 fit1 <- lm(time ~ dist, data = hills)
 set.seed(1)
 simulate(fit1, nsim = 3)
@@ -19,6 +17,7 @@ for(i in seq_len(3))
     print(coef(summary(update(fit2, ys[, i] ~ .))))
 
 ## Poisson fit
+load("anorexia.rda") # copied from package MASS
 fit3 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
             family = gaussian, data = anorexia)
 coef(summary(fit3))
@@ -47,6 +46,7 @@ for(i in seq_len(3))
 
 
 ## factor binomial fit
+load("birthwt.rda") # copied from package MASS
 bwt <- with(birthwt, {
     race <- factor(race, labels = c("white", "black", "other"))
     table(ptl)
@@ -65,11 +65,13 @@ ys[1:10, ]
 for(i in seq_len(3))
     print(coef(summary(update(fit6, ys[, i] ~ .))))
 
+## This requires MASS::gamma.shape
+if(!require("MASS")) q()
 
 ## gamma fit, from example(glm)
 clotting <- data.frame(u = c(5,10,15,20,30,40,60,80,100),
                        lot1 = c(118,58,42,35,27,25,21,19,18))
-fit7 <- glm(lot1 ~ log(u), data=clotting, family=Gamma)
+fit7 <- glm(lot1 ~ log(u), data = clotting, family = Gamma)
 coef(summary(fit7))
 set.seed(1)
 ( ys <- simulate(fit7, nsim = 3) )
