@@ -706,7 +706,7 @@ void tcltk_init(int *TkUp)
     }
 #if !defined(Win32) && !defined(HAVE_AQUA)
     else
-	warning(_("no DISPLAY variable so Tk is not available"));
+	warningcall(R_NilValue, _("no DISPLAY variable so Tk is not available"));
 #endif
 
     Tcl_CreateCommand(RTcl_interp,

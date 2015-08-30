@@ -2437,6 +2437,10 @@ setRlibs <-
                 warningLog(Log)
                 any <- TRUE
             } else {
+		## Drop tcltk warning if no DISPLAY variable
+		if(pkgname == "tcltk")
+		    out <- grep("Warning: no DISPLAY variable so Tk is not available",
+				out, fixed = TRUE, invert = TRUE, value = TRUE)
                 ## Drop warnings about replacing previous imports unless
                 ## these were disabled for the installation check.
                 check_imports_flag <-
