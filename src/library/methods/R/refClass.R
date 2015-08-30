@@ -772,6 +772,7 @@ class method modifies a field.
             if(missing(value))
                 dummyFieldName
             else {
+                ## this is not eval()ed in this namespace
                 methods:::.setDummyField(.self, dummyField, dummyClass, thisField, TRUE, value)
                 value
             }
@@ -782,6 +783,7 @@ class method modifies a field.
             if(missing(value))
                 dummyFieldName
             else {
+                ## this is not eval()ed in this namespace
                 methods:::.setDummyField(.self, dummyField, dummyClass, thisField, FALSE, value)
                 value
             }

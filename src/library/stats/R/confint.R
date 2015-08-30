@@ -42,12 +42,23 @@ confint.lm <- function(object, parm, level = 0.95, ...)
     ci
 }
 
-
+## loading the MASS namespace will overwrite these in the registry,
+## so there are stubs to do just that.
 confint.glm <- function(object, parm, level = 0.95, ...)
-    try(MASS:::confint.glm(object, parm, level, ...))
+{
+    if(!requireNamespace("MASS", quietly = TRUE))
+        stop("package 'MASS' must be installed")
+    confint.glm <- getS3method("confint", "glm")
+    confint.glm(object, parm, level, ...)
+}
 
 confint.nls <- function(object, parm, level = 0.95, ...)
-    try(MASS:::confint.nls(object, parm, level, ...))
+{
+    if(!requireNamespace("MASS", quietly = TRUE))
+        stop("package 'MASS' must be installed")
+    confint.nls <- getS3method("confint", "nls")
+    confint.nls(object, parm, level, ...)
+}
 
 confint.default <- function (object, parm, level = 0.95, ...)
 {

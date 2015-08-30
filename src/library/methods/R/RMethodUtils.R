@@ -1558,8 +1558,8 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 {
     env <- sys.frame(sys.parent())
     dots <- eval(quote(list(...)), env)
-    classes <- unique(unlist(lapply(dots, methods:::.class1)))
-    method <- methods:::.selectDotsMethod(classes, .MTable, .AllMTable)
+    classes <- unique(unlist(lapply(dots, .class1)))
+    method <- .selectDotsMethod(classes, .MTable, .AllMTable)
     if(is.null(method))
         stop(gettextf("no method or default matching the \"...\" arguments in %s",
                       deparse(sys.call(sys.parent()), nlines = 1)), domain = NA)
@@ -1571,7 +1571,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 .quoteCall <- quote(.Method(...))
 .makeDotsCall <- function(formals)
 {
-    call <- methods:::.quoteCall
+    call <- .quoteCall
     if(length(formals)  > 1L) {
         idots <- match("...", formals)
         for(what in formals[-idots]) {

@@ -112,14 +112,14 @@
     ## assign to baseenv also, signalling methods loaded
     assign(".methodsNamespace", where, baseenv())
     if(Sys.getenv("R_S4_BIND") == "active")
-        methods:::bind_activation(TRUE)
+        bind_activation(TRUE)
 }
 
 .onUnload <- function(libpath)
 {
     message("unloading 'methods' package ...") # see when this is called
     .isMethodsDispatchOn(FALSE)
-    methods:::bind_activation(FALSE)
+    bind_activation(FALSE)
     library.dynam.unload("methods", libpath)
 }
 
@@ -129,7 +129,7 @@
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", env)
-    if(methods:::.hasS4MetaData(.GlobalEnv)) {
+    if(.hasS4MetaData(.GlobalEnv)) {
         result <- try(cacheMetaData(.GlobalEnv, TRUE))
         ## still attach  methods package if global env has bad objets
         if(inherits(result, "try-error"))
