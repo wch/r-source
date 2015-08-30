@@ -1,7 +1,7 @@
 ### This is the system Rprofile file. It is always run on startup.
 ### Additional commands can be placed in site or user Rprofile files
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 ### (see ?Rprofile).
 
 ### Notice that it is a bad idea to use this file as a template for
@@ -40,7 +40,7 @@ if(!interactive() && is.null(getOption("showErrorCalls")))
     options(showErrorCalls = TRUE)
 
 local({dp <- Sys.getenv("R_DEFAULT_PACKAGES")
-       if(identical(dp, "")) # marginally faster to do methods last
+       if(identical(dp, "")) ## it fact methods is done first
            dp <- c("datasets", "utils", "grDevices", "graphics",
                    "stats", "methods")
        else if(identical(dp, "NULL")) dp <- character(0)
@@ -62,18 +62,19 @@ Sys.setenv(R_LIBS_USER =
                        character.only = TRUE)
         if(!res)
             warning(gettextf('package %s in options("defaultPackages") was not found', sQuote(pkg)),
-                    call.=FALSE, domain = NA)
+                    call. = FALSE, domain = NA)
     }
 }
 
+## called at C level in the startup process prior to .First.sys
 .OptRequireMethods <- function()
 {
-      if("methods" %in% getOption("defaultPackages")) {
-        res <- require("methods", quietly = TRUE, warn.conflicts = FALSE,
-                       character.only = TRUE)
-        if(!res)
-            warning('package "methods" in options("defaultPackages") was not found', call.=FALSE)
-    }
+    pkg <- "methods" # done this way to avoid R CMD check warning
+    if(pkg %in% getOption("defaultPackages"))
+        if(!require(pkg, quietly = TRUE, warn.conflicts = FALSE,
+                    character.only = TRUE))
+            warning('package "methods" in options("defaultPackages") was not found',
+                    call. = FALSE)
 }
 
 if(nzchar(Sys.getenv("R_BATCH"))) {
