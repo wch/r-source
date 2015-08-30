@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-08-23 r69165) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-08-30 r69214) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -64,7 +64,7 @@ Two Breweries    152.8438 174.3537 126.9294
 Cockleroi         31.5726  35.7046  35.7999
 Moffat Chase     134.2882 205.1244 148.7057
 > 
-> ## and weights should be takedn into account
+> ## and weights should be taken into account
 > fit2 <- lm(time ~ -1 + dist + climb, hills[-18, ], weight = 1/dist^2)
 > coef(summary(fit2))
        Estimate Std. Error t value   Pr(>|t|)
@@ -406,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.152   0.014   0.155 
+  0.153   0.013   0.156 
