@@ -4651,10 +4651,11 @@ is a tarball which needs to be unpacked in the Terminal by e.g.@:
 not run on Core 2 Duo Macs.}
 
 Other builds of @command{gfortran} are available: see
-@uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
-with a binary distribution of @R{} you will probably need to specify the
-name or path in a personal or site @file{Makevars} file
-(@pxref{Customizing package compilation}).
+@uref{https://gcc.gnu.org/wiki/GFortranBinaries} and
+@uref{http://coudert.name/software.html}.  To use one of these with a
+binary distribution of @R{} you will probably need to specify the name
+or path in a personal or site @file{Makevars} file (@pxref{Customizing
+package compilation}).
 
 More recent and complete distributions of @command{clang} are usually
 available from @uref{http://llvm.org/releases/}.  In particular, these
