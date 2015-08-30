@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-08-23 r69165) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-08-30 r69212) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -38,6 +38,9 @@ Type 'q()' to quit R.
 > options(useFancyQuotes = FALSE) # avoid fancy quotes in o/p
 > options(show.nls.convergence = FALSE) # avoid non-diffable output
 > options(warn = 1)
+> 
+> have_MASS <- requireNamespace('MASS', quietly = TRUE)
+> 
 > pdf("nls-test.pdf")
 > 
 > ## utility for comparing nls() results:  [TODO: use more often below]
@@ -88,13 +91,12 @@ Nonlinear regression model
  residual sum-of-squares: 0.468
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
-> confint(fm)
+> if(have_MASS) print(confint(fm))
 Waiting for profiling to be done...
      2.5%    97.5%
 a 1.00875 1.037847
 b 0.84138 0.914645
 c      NA 0.042807
-> 
 > 
 > ## weighted nls fit: unsupported < 2.3.0
 > set.seed(123)
@@ -342,18 +344,20 @@ Algorithm "port", convergence message: relative convergence (4)
 > pfm5 <- profile(fm5)
 > for(m in names(pfm1))
 +     stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tolerance = 1e-5))
-> (c1 <- confint(fm1))
+> if(have_MASS) {
++     print(c1 <- confint(fm1))
++     print(c4 <- confint(fm4, 1:2))
++     stopifnot(all.equal(c1[2:3, ], c4, tolerance = 1e-3))
++ }
 Waiting for profiling to be done...
         2.5%  97.5%
 Asym 2.14936 2.5724
 xmid 1.28535 1.6966
 scal 0.97526 1.1068
-> (c4 <- confint(fm4, 1:2))
 Waiting for profiling to be done...
        2.5%  97.5%
 xmid 1.2866 1.6949
 scal 0.9757 1.1063
-> stopifnot(all.equal(c1[2:3, ], c4, tolerance = 1e-3))
 > 
 > ## some low-dimensional examples
 > npts <- 1000
@@ -372,10 +376,10 @@ scal 0.9757 1.1063
 > for(p in 1:3) {
 +     fm <- nls(m1[[p]], start = s1[[p]])
 +     print(fm)
-+     print(confint(fm))
-+     fm <- nls(m1[[p]], start = s1[[p]], algorithm="port")
++     if(have_MASS) print(confint(fm))
++     fm <- nls(m1[[p]], start = s1[[p]], algorithm = "port")
 +     print(fm)
-+     print(confint(fm))
++     if(have_MASS) print(confint(fm))
 + }
 Nonlinear regression model
   model: y ~ x^b
@@ -444,12 +448,14 @@ a     0.35006 0.66057
 b     0.45107 0.91473
 logc -0.64627 0.40946
 > 
-> fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
-> confint(profile(fm))
+> if(have_MASS) {
++     fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
++     print(confint(profile(fm)))
++     fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
++     print(confint(profile(fm)))
++ }
    2.5%   97.5% 
 0.70019 0.74767 
-> fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
-> confint(profile(fm))
          2.5%   97.5%
 b     0.45105 0.91471
 logc -0.64625 0.40933
@@ -522,7 +528,7 @@ Algorithm "port", convergence message: relative convergence (4)
 
 attr(,"class")
 [1] "profile.nls" "profile"    
-> confint(pr1)
+> if(have_MASS) print(confint(pr1))
   2.5% 97.5%
 a 0.96  5.20
 b   NA  1.07
@@ -576,7 +582,7 @@ Algorithm "port", convergence message: relative convergence (4)
 
 attr(,"class")
 [1] "profile.nls" "profile"    
-> confint(m2)
+> if(have_MASS) print(confint(m2))
 Waiting for profiling to be done...
    2.5% 97.5%
 a 0.907    NA

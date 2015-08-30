@@ -4076,6 +4076,8 @@ function(package, dir, lib.loc = NULL)
     ## and recommended packages.
     base <- unlist(.get_standard_package_names()[c("base", "recommended")],
                    use.names = FALSE)
+    ## May not have recommended packages
+    base <- base[dir.exists(file.path(.Library, base))]
     aliases <- lapply(base, Rd_aliases, lib.loc = NULL)
     ## (Don't use lib.loc = .Library, as recommended packages may have
     ## been installed to a different place.)

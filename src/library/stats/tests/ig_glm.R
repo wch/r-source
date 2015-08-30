@@ -39,11 +39,13 @@ fit2 <- glm(y ~ I(1/x) - 1, weights = x^2,
             epsilon = 1e-12)
 coef(summary(fit2))
 ## which gives the same CIs both ways
-ci1 <- rev(1/(confint(fit2, 1, level = 0.95)))
-sterr <- (summary(fit2)$coefficients)[, "Std. Error"]
-ci2 <- 1/(coef(fit2) - (1.96 * sterr * c(-1, 1)))
-stopifnot(all.equal(as.vector(ci), as.vector(ci1), tolerance = 1e-5),
-          all.equal(as.vector(ci), ci2, tolerance = 1e-3))
+if(requireNamespace('MASS', quietly = TRUE)) {
+    ci1 <- rev(1/(confint(fit2, 1, level = 0.95)))
+    sterr <- (summary(fit2)$coefficients)[, "Std. Error"]
+    ci2 <- 1/(coef(fit2) - (1.96 * sterr * c(-1, 1)))
+    stopifnot(all.equal(as.vector(ci), as.vector(ci1), tolerance = 1e-5),
+              all.equal(as.vector(ci), ci2, tolerance = 1e-3))
+}
 
 ##  because the log likelihood for 1/beta is exactly quadratic.
 
