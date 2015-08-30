@@ -64,7 +64,7 @@ Two Breweries    152.8438 174.3537 126.9294
 Cockleroi         31.5726  35.7046  35.7999
 Moffat Chase     134.2882 205.1244 148.7057
 > 
-> ## and weights should be takedn into account
+> ## and weights should be taken into account
 > fit2 <- lm(time ~ -1 + dist + climb, hills[-18, ], weight = 1/dist^2)
 > coef(summary(fit2))
        Estimate Std. Error t value   Pr(>|t|)

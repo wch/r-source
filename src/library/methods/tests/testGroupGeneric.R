@@ -14,11 +14,11 @@ stopifnot(logical() == a & a)
 removeClass("A")
 
 ### Find inherited group methods:
-stopifnot(require(Matrix))
-sm <- selectMethod("-", c("dgCMatrix", "numeric"))# direct match with "Arith"
-s2 <- selectMethod("-", c("dtCMatrix", "numeric"))# ambiguity match with "Arith"
-stopifnot(sm@generic == "Arith",
-          s2@generic == "Arith")
+if(require(Matrix)) {
+    sm <- selectMethod("-", c("dgCMatrix", "numeric"))# direct match with "Arith"
+    s2 <- selectMethod("-", c("dtCMatrix", "numeric"))# ambiguity match with "Arith"
+    stopifnot(sm@generic == "Arith", s2@generic == "Arith")
+}
 ## was not ok in R 2.14.x
 
 ## some tests of callGeneric().  It's reccommended for use with group generics

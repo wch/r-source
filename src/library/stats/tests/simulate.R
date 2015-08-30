@@ -10,7 +10,7 @@ fit1 <- lm(time ~ dist, data = hills)
 set.seed(1)
 simulate(fit1, nsim = 3)
 
-## and weights should be takedn into account
+## and weights should be taken into account
 fit2 <- lm(time ~ -1 + dist + climb, hills[-18, ], weight = 1/dist^2)
 coef(summary(fit2))
 set.seed(1)

@@ -1934,7 +1934,7 @@ function(package, dir, file, lib.loc = NULL,
     	if (is.symbol(sym)) { # it might be something like pkg::sym (that's a call)
 	    if (!exists(name, code_env, inherits = FALSE)) {
 		if (allow_suppress &&
-                    name %in% suppressForeignCheck(, package))
+                    name %in% utils::suppressForeignCheck(, package))
 		    return ("SYMBOL OK") # skip false positives
                 if (have_registration) {
                     if (name %in% fr) {
@@ -2379,8 +2379,8 @@ function(package, dir, lib.loc = NULL)
                     .BaseNamespaceEnv
                 else {
                     if(.isMethodsDispatchOn()
-                       && methods:::is(genfun, "genericFunction"))
-                        genfun <- methods:::finalDefaultMethod(genfun@default)
+                       && methods::is(genfun, "genericFunction"))
+                        genfun <- methods::finalDefaultMethod(genfun@default)
                     if (typeof(genfun) == "closure") environment(genfun)
                     else .BaseNamespaceEnv
                 }
@@ -2412,14 +2412,14 @@ function(package, dir, lib.loc = NULL)
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos))
-            seq.int(from = 1L, length.out = dotsPos[1L] - 1L)
+            seq_len(dotsPos[1L] - 1L)
         else
             seq_along(gArgs)
 
         ## careful, this could match multiply in incorrect funs.
         dotsPos <- which(mArgs == "...")
         if(length(dotsPos))
-            ipos <- ipos[seq.int(from = 1L, length.out = dotsPos[1L] - 1L)]
+	    ipos <- ipos[seq_len(dotsPos[1L] - 1L)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0L
         margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
@@ -2529,7 +2529,7 @@ function(x, ...)
 
     report_S3_methods_not_registered <-
         config_val_to_logical(Sys.getenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_",
-                                         FALSE))
+                                         "FALSE"))
 
     c(as.character(unlist(lapply(x, .fmt))),
       if(report_S3_methods_not_registered &&
@@ -2822,7 +2822,7 @@ function(x, ...)
 function(dir, force_suggests = TRUE, check_incoming = FALSE)
 {
     .check_dependency_cycles <-
-        function(db, available = available.packages(),
+        function(db, available = utils::available.packages(),
                  dependencies = c("Depends", "Imports", "LinkingTo"))
         {
             ## given a package, find its recursive dependencies.
@@ -3861,7 +3861,7 @@ function(package, lib.loc = NULL)
                                                           silent = TRUE)))
             }, type = "output")
         }
-        runif(1) # create .Random.seed
+        stats::runif(1)                 # create .Random.seed
         compat <- new.env(hash=TRUE)
         if(.Platform$OS.type != "unix") {
             assign("nsl", function(hostname) {}, envir = compat)
@@ -3880,7 +3880,7 @@ function(package, lib.loc = NULL)
                    envir = compat)
         }
         if(.Platform$OS.type != "windows") {
-            assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
+            assign("bringToTop", function (which = grDevices::dev.cur(), stay = FALSE) {},
                    envir = compat)
             assign("choose.dir",
                    function (default = "", caption = "Select folder") {},
@@ -3899,7 +3899,7 @@ function(package, lib.loc = NULL)
             assign("readClipboard", function(format = 1, raw = FALSE) {},
                    envir = compat)
             assign("setWindowTitle",
-                   function(suffix, title = paste(getIdentification(), suffix)) {},
+                   function(suffix, title = paste(utils::getIdentification(), suffix)) {},
                    envir = compat)
             assign("shell",
                    function(cmd, shell, flag = "/c", intern = FALSE,
@@ -3914,7 +3914,7 @@ function(package, lib.loc = NULL)
                    function (filename = "Rplot",
                              type = c("wmf", "emf", "png", "jpeg", "jpg",
                                       "bmp", "ps", "eps", "pdf"),
-                             device = dev.cur(), restoreConsole = TRUE) {},
+                             device = grDevices::dev.cur(), restoreConsole = TRUE) {},
                    envir = compat)
             assign("win.graph",
                    function(width = 7, height = 7, pointsize = 12,
@@ -3962,7 +3962,7 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign(".install.winbinary",
                    function(pkgs, lib, repos = getOption("repos"),
-                            contriburl = contrib.url(repos),
+                            contriburl = utils::contrib.url(repos),
                             method, available = NULL, destdir = NULL,
                             dependencies = FALSE, libs_only = FALSE,
                             ...) {}, envir = compat)
@@ -4062,6 +4062,8 @@ function(package, dir, lib.loc = NULL)
     ## and recommended packages.
     base <- unlist(.get_standard_package_names()[c("base", "recommended")],
                    use.names = FALSE)
+    ## May not have recommended packages
+    base <- base[dir.exists(file.path(.Library, base))]
     aliases <- lapply(base, Rd_aliases, lib.loc = NULL)
     ## (Don't use lib.loc = .Library, as recommended packages may have
     ## been installed to a different place.)
@@ -4131,7 +4133,7 @@ function(package, dir, lib.loc = NULL)
 
     use_aliases_from_CRAN <-
         config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_",
-                                         FALSE))
+                                         "FALSE"))
     if(use_aliases_from_CRAN) {
         aliases_db <- NULL
     }
@@ -4635,7 +4637,7 @@ function(dir)
                    Sys.setlocale("LC_CTYPE", "C")
                    )
         } else {
-            loc <- Sys.getenv("R_ENCODING_LOCALES", NA)
+            loc <- Sys.getenv("R_ENCODING_LOCALES", NA_character_)
             if(!is.na(loc)) {
                 loc <- strsplit(strsplit(loc, ":")[[1L]], "=")
                 nm <- lapply(loc, "[[", 1L)
@@ -5523,6 +5525,8 @@ function(package, dir, lib.loc = NULL)
             imp3f <- imp3f[(maintainers != db["Maintainer"])]
         }
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
+    ## An unexported function only available on Windows, used in tools
+    imp3ff <- setdiff(sort(unique(imp3ff)), "utils:::unpackPkgZip")
     res <- list(others = unique(bad_exprs),
                 bad_practice = unique(bad_prac),
                 imports = unique(bad_imports),
@@ -5533,8 +5537,7 @@ function(package, dir, lib.loc = NULL)
                 imp2un = sort(unique(imp2un)),
                 imp32 = sort(unique(imp32)),
                 imp3 = imp3, imp3f = sort(unique(imp3f)),
-                imp3ff = sort(unique(imp3ff)),
-                imp3self = imp3self,
+                imp3ff = imp3ff, imp3self = imp3self,
                 imp3selfcalls = sort(unique(imp3selfcalls)),
                 imp3unknown = unknown,
                 methods_message = methods_message)
@@ -7068,7 +7071,7 @@ function(dir)
     v_d <- max(package_version(db[, "Version"]))
     if((v_m <= v_d) &&
        !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_VERSIONS_",
-                                         FALSE)))
+                                         "FALSE")))
         out$bad_version <- list(v_m, v_d)
     if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
         out$version_with_jump_in_minor <- list(v_m, v_d)

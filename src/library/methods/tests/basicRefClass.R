@@ -325,7 +325,8 @@ ff <- mv( data = xMat)
 stopifnot(identical(markViewer, "ON")) # check initialize
 ff$edit(2,2,0)
 ff$data
-stopifnot(identical(ff$counts(), length(ff$edits[[1]][[3]])))
+if(methods:::.hasCodeTools())  # otherwise 'counter' is not visible
+    stopifnot(identical(ff$counts(), length(ff$edits[[1]][[3]])))
 ff$undo()
 stopifnot(all.equal(ff$data, xMat))
 rm(ff)

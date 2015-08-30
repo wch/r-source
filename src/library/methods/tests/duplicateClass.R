@@ -1,7 +1,7 @@
 ## Tests for handling classes with same name & different package slots
 ## First:  Can we define the classes and get the separate definitions
 ## from the appropriate namespace or from the package slot in class(x)?
-stopifnot(require(Matrix))
+if(!require(Matrix)) q()
 
 ## from: example(chol)
 sy2 <- new("dsyMatrix", Dim = as.integer(c(2,2)), x = c(14, NA,32,77))

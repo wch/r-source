@@ -1,5 +1,8 @@
 ## tests of offsets, and prediction from them.
 
+have_MASS <- requireNamespace('MASS', quietly = TRUE)
+if(!have_MASS) q()
+
 data(anorexia, package = "MASS")
 
 ## via formula
