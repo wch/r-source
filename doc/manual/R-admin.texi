@@ -4701,10 +4701,11 @@ The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
 
 Other builds of @command{gfortran} are available: see
-@uref{https://gcc.gnu.org/wiki/GFortranBinaries}.  To use one of these
-with a binary distribution of @R{} you will probably need to specify the
-name or path in a personal or site @file{Makevars} file
-(@pxref{Customizing package compilation}).
+@uref{https://gcc.gnu.org/wiki/GFortranBinaries} and
+@uref{http://coudert.name/software.html}.  To use one of these with a
+binary distribution of @R{} you will probably need to specify the name
+or path in a personal or site @file{Makevars} file (@pxref{Customizing
+package compilation}).
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
