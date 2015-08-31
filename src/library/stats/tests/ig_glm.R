@@ -2,6 +2,7 @@
 ## David Firth, Feb 2009.
 
 options(digits=5)
+have_MASS <- requireNamespace('MASS', quietly = TRUE)
 
 ##  Data from Whitmore, G A (1986), Inverse Gaussian Ratio Estimation.
 ##  Applied Statistics 35(1), 8-15.
@@ -27,7 +28,10 @@ coef(summary(fit))
 (beta.exact <- sum(y)/sum(x))
 stopifnot(all.equal(beta.exact, as.vector(coef(fit))))
 ## and for a confidence interval via confint
-(ci <- confint(fit, 1, level = 0.95))
+if(have_MASS) {
+    ci <- confint(fit, 1, level = 0.95)
+    print(ci)
+}
 ## and via asymptotic normality
 sterr <- coef(summary(fit))[, "Std. Error"]
 coef(fit) + (1.96 * sterr * c(-1, 1))
@@ -39,14 +43,15 @@ fit2 <- glm(y ~ I(1/x) - 1, weights = x^2,
             epsilon = 1e-12)
 coef(summary(fit2))
 ## which gives the same CIs both ways
-if(requireNamespace('MASS', quietly = TRUE)) {
+if(have_MASS) {
     ci1 <- rev(1/(confint(fit2, 1, level = 0.95)))
+    print(ci1)
     sterr <- (summary(fit2)$coefficients)[, "Std. Error"]
     ci2 <- 1/(coef(fit2) - (1.96 * sterr * c(-1, 1)))
+    print(ci2)
     stopifnot(all.equal(as.vector(ci), as.vector(ci1), tolerance = 1e-5),
               all.equal(as.vector(ci), ci2, tolerance = 1e-3))
 }
-
 ##  because the log likelihood for 1/beta is exactly quadratic.
 
 ##  The approximate intervals above differ slightly from the exact
@@ -56,7 +61,7 @@ if(requireNamespace('MASS', quietly = TRUE)) {
 
 
 ## Now simulate from this model
-if(require("SuppDists")) {
+if(requireNamespace("SuppDists")) {
     print( ys <- simulate(fit, nsim = 3, seed = 1) )
     for(i in seq_len(3))
         print(coef(summary(update(fit, ys[, i] ~ .))))
