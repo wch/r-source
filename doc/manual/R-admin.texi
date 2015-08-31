@@ -5366,6 +5366,14 @@ There have been no reports for @R{} 3.0.0 or later, except for an
 configuration failure of @R{} 3.2.0 on FreeBSD 10 (addressed in @R{}
 3.2.2).
 
+@section OpenBSD
+@cindex OpenBSD
+
+Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
+@cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
+(and patches applied) are at
+@uref{http://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}.
+
 @node Cygwin, New platforms, FreeBSD, Platform notes
 @section Cygwin
 
