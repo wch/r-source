@@ -135,9 +135,10 @@ fi
 libnn=lib
 case "${host_os}" in
   linux*)
-    ## Not all distros use this: some choose to march out of step  
+    ## Not all distros use this: some choose to march out of step
+    ## Allow for ppc64le (Debian calls ppc64el), powerpc64le ...
     case "${host_cpu}" in
-      x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
+      x86_64|mips64|ppc64*|powerpc64*|sparc64|s390x)
         if test -d /usr/lib64; then
           libnn=lib64
 	fi
@@ -1263,7 +1264,7 @@ if test "${GCC}" = yes; then
 ## has 32k and so can use -fpic.
 ## However, although the gcc docs do not mention it, it seems s390/s390x
 ## also supports and needs -fPIC
-    sparc*|ppc64|powerpc64|s390*)
+    sparc*|ppc64*|powerpc64*|s390*)
       cpicflags="-fPIC"
       ;;
     *)
@@ -1274,7 +1275,7 @@ if test "${GCC}" = yes; then
 fi
 if test "${G77}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|powerpc64|s390*)
+    sparc*|ppc64*|powerpc64*|s390*)
       fpicflags="-fPIC"
       ;;
     *)
@@ -1284,7 +1285,7 @@ if test "${G77}" = yes; then
 fi
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|powerpc64|s390*)
+    sparc*|ppc64*|powerpc64*|s390*)
       cxxpicflags="-fPIC"
       ;;
     *)
@@ -1424,11 +1425,13 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     fi
     ;;
   freebsd*)
-    main_ldflags="-export-dynamic"
+    ## maybe this needs to depend on the compiler:
+    ## -export-dynamic used to work, but does not with clang.
+    main_ldflags="-Wl,--export-dynamic"
     shlib_ldflags="-shared"
     ;;
-  gnu*)				# GNU Hurd
-    main_ldflags="-export-dynamic"
+  gnu*)				# GNU Hurd, see FreeBSD comment
+    main_ldflags="-Wl,--export-dynamic"
     ;;
   hpux*)
     SHLIB_EXT=".sl"
@@ -1500,8 +1503,8 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         ;;
     esac
     ## Luke Tierney says that just '-export-dynamic' does not work for
-    ## Intel compilers (icc).
-    ## Could also use -rdynamic
+    ## Intel compilers (icc).  It is accepted by clang but ignored.
+    ## Could also use -rdynamic, at least for gcc and clang.
     main_ldflags="-Wl,--export-dynamic"
     STATICR1="-Wl,--whole-archive"
     STATICR2="-Wl,--no-whole-archive"
@@ -1514,15 +1517,18 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     fcpicflags=
     ;;
   netbsd*)
+    ## See the comments about FreeBSD
     if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
-      main_ldflags="-export-dynamic"
+      main_ldflags="-Wl,--export-dynamic"
       shlib_ldflags="-shared"
     else
       shlib_ldflags="-Bshareable"
     fi
     ;;
   openbsd*)
-    ## looks like ${wl} is not defined here.  Perhaps in libtool code?
+    ## ${wl} is defined by libtool configuration code.
+    ## Both -Wl,-export-dynamic and -Wl,--export-dynamic seem to
+    ## work with the GNU linker, but the second is what is documented.
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
       main_ldflags="${wl}-export-dynamic"
       shlib_ldflags="-shared -fPIC"
@@ -1853,11 +1859,11 @@ AC_CHECK_DECLS([alloca], , ,
 ## C99 functions: 
 ## not all C99 runtimes are complete,
 ## but we have substitutes for expm1 hypot log1p and (internally) nearbyint[l]
-## FreeBSD 10 still lacks log1pl
+## FreeBSD used to lack log1pl, but 10 seems to have it.
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
-## Cygwin and FreeBSD lack powl
+## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
 ## Cygwin has rintl but not nearbyintl
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
 ## va_copy is C99: required as from R 2.13.0
@@ -2541,7 +2547,7 @@ AC_SUBST(SHLIB_OPENMP_FFLAGS)
 ## use this to pick out gfortran (even though it is unreliable).
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|powerpc64|s390*)
+    sparc*|ppc64*|powerpc64*|s390*)
       fcpicflags="-fPIC"
       ;;
     *)

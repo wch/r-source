@@ -232,12 +232,12 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @c (see e.g.@:  @uref{https://buildd.debian.org/build.php?&pkg=r-base}),
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
-@c has x86_64 <=> amd, ix86 <=> i386.
+@c has x86_64 <=> amd64, ix86 <=> i386.
 @samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris} and
 @samp{sparc-@/sun-@/solaris} as well as
 perhaps (it is tested less frequently on these platforms)
 @samp{i386-@/apple-@/darwin}, @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
-@samp{i386-@/*-@/netbsd}, @samp{i386-@/*-@/openbsd} and
+@samp{i386-@/*-@/netbsd}, @samp{x86_64/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
