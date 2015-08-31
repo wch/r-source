@@ -1408,10 +1408,12 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     fi
     ;;
   freebsd*)
+    ## maybe this needs to depend on the compiler:
+    ## -Wl,-export-dynamic might be needed, as the GNU linker is used.
     main_ldflags="-export-dynamic"
     shlib_ldflags="-shared"
     ;;
-  gnu*)				# GNU Hurd
+  gnu*)				# GNU Hurd, see FreeBSD comment
     main_ldflags="-export-dynamic"
     ;;
   hpux*)
@@ -1484,8 +1486,8 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         ;;
     esac
     ## Luke Tierney says that just '-export-dynamic' does not work for
-    ## Intel compilers (icc).
-    ## Could also use -rdynamic
+    ## Intel compilers (icc).  It is not accepted by clang.
+    ## Could also use -rdynamic, at least for gcc and clang.
     main_ldflags="-Wl,--export-dynamic"
     STATICR1="-Wl,--whole-archive"
     STATICR2="-Wl,--no-whole-archive"
@@ -1498,6 +1500,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     fcpicflags=
     ;;
   netbsd*)
+    ## See the comments about FreeBSD
     if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
       main_ldflags="-export-dynamic"
       shlib_ldflags="-shared"
@@ -1837,11 +1840,11 @@ AC_CHECK_DECLS([alloca], , ,
 ## C99 functions: 
 ## not all C99 runtimes are complete,
 ## but we have substitutes for expm1 hypot log1p and (internally) nearbyint[l]
-## FreeBSD 10 still lacks log1pl
+## FreeBSD used to lack log1pl, but 10 seems to have it.
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
-## Cygwin and FreeBSD lack powl
+## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
 ## Cygwin has rintl but not nearbyintl
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
 ## va_copy is C99: required as from R 2.13.0
