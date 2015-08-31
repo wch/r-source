@@ -1410,12 +1410,12 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ;;
   freebsd*)
     ## maybe this needs to depend on the compiler:
-    ## -Wl,-export-dynamic might be needed, as the GNU linker is used.
-    main_ldflags="-export-dynamic"
+    ## -export-dynamic used to work, but does not with clang.
+    main_ldflags="-Wl,--export-dynamic"
     shlib_ldflags="-shared"
     ;;
   gnu*)				# GNU Hurd, see FreeBSD comment
-    main_ldflags="-export-dynamic"
+    main_ldflags="-Wl,--export-dynamic"
     ;;
   hpux*)
     SHLIB_EXT=".sl"
@@ -1487,7 +1487,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         ;;
     esac
     ## Luke Tierney says that just '-export-dynamic' does not work for
-    ## Intel compilers (icc).  It is not accepted by clang.
+    ## Intel compilers (icc).  It is accepted by clang but ignored.
     ## Could also use -rdynamic, at least for gcc and clang.
     main_ldflags="-Wl,--export-dynamic"
     STATICR1="-Wl,--whole-archive"
@@ -1503,14 +1503,16 @@ rm -f libconftest${DYLIB_EXT} conftest.c
   netbsd*)
     ## See the comments about FreeBSD
     if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
-      main_ldflags="-export-dynamic"
+      main_ldflags="-Wl,--export-dynamic"
       shlib_ldflags="-shared"
     else
       shlib_ldflags="-Bshareable"
     fi
     ;;
   openbsd*)
-    ## looks like ${wl} is not defined here.  Perhaps in libtool code?
+    ## ${wl} is defined by libtool configuration code.
+    ## Both -Wl,-export-dynamic and -Wl,--export-dynamic seem to
+    ## work with the GNU linker, but the second is what is documented.
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
       main_ldflags="${wl}-export-dynamic"
       shlib_ldflags="-shared -fPIC"

@@ -244,6 +244,11 @@
 
       \item \command{configure} has a new argument
       \option{--disable-java} to disable the checks for Java.
+
+      \item The \command{configure} default for \code{MAIN_LDFLAGS} has
+      been changed for FreeBSD, NetBSD and Hurd OSes to one more likely
+      to work with compilers other than \command{gcc} (FreeBSD 10
+      defaults to \command{clang}).
     }
   }
 
@@ -281,7 +286,7 @@
 
       \item \code{detach()}ing the \pkg{methods} package keeps
       \code{.isMethodsDispatchOn()} true, as long as the methods
-      namespace is not unloaded.% This keeps a sane state, see the regr-S4 test
+      namespace is not unloaded.% This keeps a sane state, see the reg-S4 test
 
       \item Removed some spurious warnings from \command{configure} about the
       preprocessor not finding header files.  (\PR{15989})
