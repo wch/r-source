@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -42,8 +42,8 @@ rchisq(n, df, ncp = 0)
 
   The length of the result is determined by \code{n} for
   \code{rchisq}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -72,6 +72,11 @@ rchisq(n, df, ncp = 0)
   non-integer, and also \eqn{n = 0} which is relevant for
   non-centrality \eqn{\lambda > 0},
   see Johnson \emph{et al} (1995, chapter 29).
+  In that (noncentral, zero df) case, the distribution is a mixture of a
+  point mass at \eqn{x = 0} (of size \code{pchisq(0, df=0, ncp=ncp)} and
+  a continuous part, and \code{dchisq()} is \emph{not} a density with
+  respect to that mixture measure but rather the limit of the density
+  for \eqn{df \to 0}{df -> 0}.
 
   Note that \code{ncp} values larger than about 1e5 may give inaccurate
   results with many warnings for \code{pchisq} and \code{qchisq}.

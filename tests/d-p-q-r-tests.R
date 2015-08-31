@@ -943,5 +943,10 @@ stopifnot(rhyper(1, 3024, 27466, 251) == 25,
           rhyper(1,  329,  3059, 225) == 22)
 ## failed for a day after a "thinko" in the above bug fix.
 
+## *chisq(*, df=0, ncp=0) == Point mass at 0
+stopifnot(rchisq(32,        df=0, ncp=0) == 0,
+          dchisq((0:16)/16, df=0, ncp=0) == c(Inf, rep(0, 16)))
+## gave all NaN's  for R <= 3.2.2
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
