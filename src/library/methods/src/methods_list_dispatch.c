@@ -822,7 +822,12 @@ static const char *class_string(SEXP obj)
 }
 
 /* internal version of paste(".", prefix, name, sep="__"),
-   for speed so few checks */
+   for speed so few checks 
+
+   If you decide to change this:
+   - don't, you will break all installed S4-using packages!
+   - change the hard-coded ".__M__" in namespace.R
+*/
 SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name, SEXP pkg)
 {
     char str[501];
