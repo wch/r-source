@@ -1,6 +1,6 @@
 % File src/library/stats/man/confint.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{confint}
@@ -38,9 +38,11 @@ confint(object, parm, level = 0.95, \dots)
   For objects of class \code{"lm"} the direct formulae based on \eqn{t}
   values are used.
 
-  There are stub methods for classes \code{"glm"} and \code{"nls"} which
-  invoke those in package \CRANpkg{MASS} which are based on profile
-  likelihoods.
+  There are stub methods in package \pkg{stats} for classes \code{"glm"}
+  and \code{"nls"} which call those in package \CRANpkg{MASS} (if
+  installed): if the \CRANpkg{MASS} namespace has been loaded, its
+  methods will be used directly.  (Those methods are based on profile
+  likelihood.)
 }
 \seealso{
   \code{\link[MASS:confint]{confint.glm}} and
@@ -55,7 +57,7 @@ confint(fit, "wt")
 counts <- c(18,17,15,20,10,20,25,13,12)
 outcome <- gl(3, 1, 9); treatment <- gl(3, 3)
 glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
-confint(glm.D93) # needs MASS to be present on the system
+confint(glm.D93) # needs MASS to be installed
 confint.default(glm.D93)  # based on asymptotic normality}
 }
 \keyword{models}

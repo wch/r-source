@@ -9,4 +9,5 @@ Description: Support for parallel computation, including by forking
    and random-number generation.
 License: Part of R @VERSION@
 Imports: tools
+Suggests: methods
 Enhances: snow, nws, Rmpi
