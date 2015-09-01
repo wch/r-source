@@ -948,5 +948,11 @@ stopifnot(rchisq(32,        df=0, ncp=0) == 0,
           dchisq((0:16)/16, df=0, ncp=0) == c(Inf, rep(0, 16)))
 ## gave all NaN's  for R <= 3.2.2
 
+## pchisq(*, df=0, ncp > 0, log.p=TRUE) :
+th <- 10*c(1:9,10^c(1:3,7))
+pp <- pchisq(0, df = 0, ncp=th, log.p=TRUE)
+stopifnot(all.equal(pp, -th/2, tol=1e-15))
+## underflowed at about th ~= 60  in R <= 3.2.2
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

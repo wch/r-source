@@ -296,7 +296,11 @@
 
       \item \code{rchisq(*, df=0, ncp=0)} now returns \code{0} instead
       of \code{NaN}, and \code{dchisq(*, df=0, ncp=*)} also no longer
-      returns \code{NaN} in limit cases (where the limit is unique).  (\PR{16521})
+      returns \code{NaN} in limit cases (where the limit is unique).
+      (\PR{16521})
+
+      \item \code{pchisq(*, df=0, ncp > 0, log.p=TRUE)} no longer
+      underflows (for ncp > ~60).
     }
   }
 }
