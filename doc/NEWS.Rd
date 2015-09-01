@@ -11,7 +11,7 @@
       to the conversion table used to convert these to Olson names.
       (Including those relating to changes for Russia in Oct 2014, as in
       \PR{16503}.)
-      
+
       \item (Windows) Compatibility information has been added to the
       manifests for \file{Rgui.exe}, \file{Rterm.exe} and
       \file{Rscript.exe}.  This should allow \code{win.version()} and
@@ -28,7 +28,7 @@
     \itemize{
       \item The included configuration code for \code{libintl} has been
       updated to that from \code{gettext} version 0.19.5.1 --- this
-      should only affect how an external library is detected. 
+      should only affect how an external library is detected.
       (Wish of \PR{16464}.)
 
       \item \command{configure} has a new argument
@@ -40,7 +40,7 @@
       defaults to \command{clang}).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
@@ -76,9 +76,13 @@
       \item \code{detach()}ing the \pkg{methods} package keeps
       \code{.isMethodsDispatchOn()} true, as long as the methods
       namespace is not unloaded.% This keeps a sane state, see the reg-S4 test
-      
+
       \item Removed some spurious warnings from \command{configure} about the
       preprocessor not finding header files.  (\PR{15989})
+
+      \item \code{rchisq(*, df=0, ncp=0)} now returns \code{0} instead
+      of \code{NaN}, and \code{dchisq(*, df=0, ncp=*)} also no longer
+      returns \code{NaN} in limit cases (where the limit is unique).  (\PR{16521})
     }
   }
 }
