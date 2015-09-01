@@ -189,12 +189,12 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
     if(swap_tail) { /* change tail, swap  p <-> q :*/
 	a = R_DT_CIv(alpha); // = 1 - p_ < 1/2
 	/* la := log(a), but without numerical cancellation: */
-	la = lower_tail ? R_D_LExp(alpha) : R_D_log(alpha);
+	la = R_DT_Clog(alpha);
 	pp = q; qq = p;
     }
     else {
 	a = p_;
-	la = lower_tail ? R_D_log(alpha) : R_D_LExp(alpha);
+	la = R_DT_log(alpha);
 	pp = p; qq = q;
     }
 
@@ -286,9 +286,9 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	    double l1ma;/* := log(1-a), directly from alpha (as 'la' above):
 			 * FIXME: not worth it? log1p(-a) always the same ?? */
 	    if(swap_tail)
-		l1ma = lower_tail ? R_D_log(alpha) : R_D_LExp(alpha);
+		l1ma = R_DT_log(alpha);
 	    else
-		l1ma = lower_tail ? R_D_LExp(alpha) : R_D_log(alpha);
+		l1ma = R_DT_Clog(alpha);
 	    R_ifDEBUG_printf(" t <= 0 : log1p(-a)=%.15g, better l1ma=%.15g\n", log1p(-a), l1ma);
 	    double xx = (l1ma + log(qq) + logbeta) / qq;
 	    if(xx <= 0.) {
@@ -320,12 +320,12 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	R_ifDEBUG_printf(" u = %g (e^u = xinbta = %.16g) ==> ", u, xinbta);
 	if(swap_tail) {
 	    a = R_DT_CIv(alpha); // needed ?
-	    la = lower_tail ? R_D_LExp(alpha) : R_D_log(alpha);
+	    la = R_DT_Clog(alpha);
 	    pp = q; qq = p;
 	}
 	else {
 	    a = p_;
-	    la = lower_tail ? R_D_log(alpha) : R_D_LExp(alpha);
+	    la = R_DT_log(alpha);
 	    pp = p; qq = q;
 	}
 	R_ifDEBUG_printf("\"%s\"; la = %g\n",
