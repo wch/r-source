@@ -303,12 +303,18 @@
 
 .makeTracedFunction <- function(def, tracer, exit, at, print, doEdit) {
     switch(typeof(def),
-           builtin = , special = {
+           builtin = {
                fBody <- substitute({.prim <- DEF; .prim(...)},
                                    list(DEF = def))
                def <- eval(function(...)NULL)
                body(def, envir = .GlobalEnv) <- fBody
-               warning("making a traced version of a primitive; arguments will be treated as '...'")
+           },
+           special = {
+               fBody <- substitute({do.call(DEF, list(...))},
+                                   list(DEF = def))
+               def <- eval(function(...)NULL)
+               body(def, envir = .GlobalEnv) <- fBody
+               warning("making a traced version of a special; arguments may be altered")
            }
            )
     if(!identical(doEdit, FALSE)) {
