@@ -2558,7 +2558,8 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
 fi
 case "${host_os}" in
   darwin*)
-    fcpicflags="-fno-common"
+     ## OS X does not have a Fortran compiler, so this is speculative
+    fcpicflags="${darwin_pic}"
     ;;
   hpux*)
     case "${FC}" in
@@ -2619,19 +2620,15 @@ LIBS="${LIBS1} ${LIBS2}"
 ## On Linux, do not add the ld.so system directories such as '/lib' and
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
-## On OS X (Darwin) /usr/X11R6/lib shadows the OpenGL framework and is not
-## needed in DYLD_LIBRARY_PATH.
+
+## On OS X (Darwin) this used to have /usr/X11R6/lib
+## which shadows the OpenGL framework but we add nothing on OS X ....
 case "${host_os}" in
   linux*)
     r_ld_library_defaults="/usr/lib64:/lib64:/usr/lib:/lib"
     ;;
   solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
-    ;;
-  darwin*)
-    ## FIXME: that is a link to /opt/X11, and /usr/X11R6 may not exist on 10.11
-    ## and it is not used below ....
-    r_ld_library_defaults="/usr/X11R6/lib"
     ;;
   *)
     r_ld_library_defaults=
