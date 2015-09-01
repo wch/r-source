@@ -184,6 +184,9 @@
       \item \command{configure} uses \command{pkg-config} for PNG, TIFF
       and JPEG where this is available.  This should work better with
       multiple installs and static libs.
+      
+      \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
+	Leopard}): even that has been unsupported by Apple since 2012.
     }
   }
 

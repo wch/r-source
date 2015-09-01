@@ -4593,7 +4593,7 @@ the configure flag @option{--disable-largefile} was needed (since
 The instructions here are for @cputype{x86_64} builds on 10.9
 (Mavericks) or later.  In principle@footnote{It will be necessary to
 install later versions of software such as @code{libcurl}.} @R{} can be
-built for 10.4 to 10.8 but these has not been tested recently.
+built for 10.6 to 10.8 but these has not been tested recently.
 
 To build @R{} you need Apple's `Command Line Tools': these can be
 (re-)installed by @command{xcode-select --install}.  (If you have a

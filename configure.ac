@@ -76,13 +76,13 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 13 being 10.9.  We no longer support < 10.4 (Tiger)
+   ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard)
    ## http://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
-     AC_MSG_ERROR([The earliest supported OS X is 10.4.]
+     AC_MSG_ERROR([The earliest supported OS X is 10.6.]
      ;; 
-  darwin[[567]]*)
-     AC_MSG_ERROR([The earliest supported OS X is 10.4.]
+  darwin[[56789]]*)
+     AC_MSG_ERROR([The earliest supported OS X is 10.6.]
      ;; 
   aix[123]*|aix4.[01]*)
     ## These need a form of linking we no longer support
@@ -729,8 +729,8 @@ AC_SUBST(LIBM)
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
   darwin*)
-    ## OS X <= 10.2 dlcompat, >= 10.3 included dlcompat in libSystem
-    AC_SEARCH_LIBS(dlopen, dl,,[AC_MSG_ERROR([Your OS X is too old.])])
+    ## OS X >= 10.3 include dlcompat in libSystem
+    ## This is ancient history
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com/documentation/MacOSX/ has nothing
     ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
@@ -738,7 +738,7 @@ case "${host_os}" in
     if test "${GCC}" = yes; then
       case "${CC_VERSION}" in
         2.*|3.*)
-          AC_CHECK_LIB(cc_dynamic, main) ;;
+	  AC_MSG_ERROR([Your gcc is too old.])
       esac
     fi
     ;;
@@ -1327,49 +1327,21 @@ case "${host_os}" in
     darwin_pic="-fPIC"
     dylib_undefined_allowed=no
     darwin_dylib_ldflags="-dynamiclib"
-    ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
-    if test "${GCC}" = yes; then
-      case "${CC_VERSION}" in
-        3.*)
-          R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic]) ;;
-      esac
-    fi
-    ## some linkers are broken and need to be set to a specific
-    ## OS X version to work better
-    case "${host_os}" in
-       darwin8*)
-          # this is the 'old' way and it doesn't work with recent gcc as the driver
-	  # prepends its own version
-	  ### darwin_min_flag='Wl,-macosx_version_min -Wl,10.4'
-	  # this is the 'new' way, but it's not clear which driver version
-	  # started to support it (Xcode 2.5 is known to work and 2.4 should)
-	  # A work-around for older Xcode is to set MACOSX_DEPLOYMENT_TARGET
-	  # environment variable. It has its own problems, but we may as well
-	  # honor it, assuming that it fixes things.
-	  if test -z "${MACOSX_DEPLOYMENT_TARGET}"; then
-	      darwin_min_flag='-mmacosx-version-min=10.4'
-	  fi
-	  ;;
-       *)
-	  darwin_min_flag=''
-	  ;;
-    esac
-    case "${host_os}" in
-      ## * recent ld has -single_module so it doesn't need -fno-common
-      ##   we have to use dylib instead of a bundle
-      ## * dylib+single_module+flat_namespace=pretty much what other platforms call .so
-      ##   but there can be no multiple symbols (due to flat namespace)
-      ## * since 10.3 we can also use -undefined dynamic_lookup which allows us to
-      ##   use two-level namespace and still have undefined symbols
-      *)
-        ## FIXME: strictly speaking it should be "yes" but libRblas still
-	## needs -lgfortran because the sharing is a one-way street
-        ## dylib_undefined_allowed=yes
+    shlib_ldflags="-dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress"
+    ## * recent ld has -single_module so it doesn't need -fno-common
+    ##   we have to use dylib instead of a bundle
+    ## * dylib+single_module+flat_namespace=pretty much what other platforms call .so
+    ##   but there can be no multiple symbols (due to flat namespace)
+    ## * since 10.3 we can also use -undefined dynamic_lookup which allows us to
+    ##   use two-level namespace and still have undefined symbols
 
-	## we have to test this in case an outdated linker or non-Apple compiler is used
-	AC_MSG_CHECKING([whether linker supports dynamic lookup])
-	shlib_ldflags="-dynamiclib -Wl,-headerpad_max_install_names ${darwin_min_flag} -undefined dynamic_lookup -single_module -multiply_defined suppress"
-	AC_CACHE_VAL([r_cv_has_dynlookup],[
+    ## FIXME: strictly speaking it should be "yes" but libRblas still
+    ## needs -lgfortran because the sharing is a one-way street
+    ## dylib_undefined_allowed=yes
+
+    ## we have to test this in case an outdated linker or non-Apple compiler is used
+    AC_MSG_CHECKING([whether linker supports dynamic lookup])
+    AC_CACHE_VAL([r_cv_has_dynlookup],[
 [cat > conftest.c <<EOF
   void dummy() { }
 EOF]
@@ -1384,34 +1356,30 @@ else
 fi
 rm -f libconftest${DYLIB_EXT} conftest.c
 ])
-	if test -n "${FORCE_FLAT_NAMESPACE}"; then
-	   AC_MSG_WARN([Use of flat namespace is requested by user.])
-	   r_cv_has_dynlookup=forced-no
-	fi
-	if test "${r_cv_has_dynlookup}" != "yes"; then
-	   shlib_ldflags="-dynamiclib -flat_namespace -undefined suppress -single_module -multiply_defined suppress"
-	   dylib_undefined_allowed=yes
-	fi
+    if test -n "${FORCE_FLAT_NAMESPACE}"; then
+       AC_MSG_WARN([Use of flat namespace is requested by user.])
+       r_cv_has_dynlookup=forced-no
+    fi
+    if test "${r_cv_has_dynlookup}" != "yes"; then
+       shlib_ldflags="-dynamiclib -flat_namespace -undefined suppress -single_module -multiply_defined suppress"
+       dylib_undefined_allowed=yes
+    fi
 	
-	## we use the same method for shlib and dylib now
-	darwin_dylib_ldflags="${shlib_ldflags}"
-	## side note: we could use flat namespace instead, but there is an exception:
-	## * libRblas must be 2-level, dyn lookup because of xerbla which is undefined
-        ;;
-    esac
+    ## we use the same method for shlib and dylib now
+    darwin_dylib_ldflags="${shlib_ldflags}"
+    ## side note: we could use flat namespace instead, but there is an exception:
+    ## * libRblas must be 2-level, dyn lookup because of xerbla which is undefined
     cpicflags="${darwin_pic}"
     cxxpicflags="${darwin_pic}"
+    ## OS X does not have a Fortran compiler, so this is speculative
     fpicflags="${darwin_pic}"
     shlib_cxxldflags="${shlib_ldflags}"
-    if test "${ac_cv_lib_cc_dynamic_main}" = yes; then
-      ## Could also try grepping LIBS for '-lcc_dynamic' ...
-      SHLIB_LIBADD="-lcc_dynamic"
-    fi
     ;;
   freebsd*)
     ## maybe this needs to depend on the compiler:
     ## -export-dynamic used to work, but does not with clang.
     ## Seems FreeBSD has used the GNU linker since at least 3.0 (Oct 1998)
+    ## We could also use -rdynamic, which seems to work with clang and gcc.
     main_ldflags="-Wl,--export-dynamic"
     shlib_ldflags="-shared"
     ;;
@@ -2499,7 +2467,8 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
 fi
 case "${host_os}" in
   darwin*)
-    fcpicflags="-fno-common"
+     ## OS X does not have a Fortran compiler, so this is speculative
+    fcpicflags="${darwin_pic}"
     ;;
   hpux*)
     case "${FC}" in
@@ -2560,19 +2529,15 @@ LIBS="${LIBS1} ${LIBS2}"
 ## On Linux, do not add the ld.so system directories such as '/lib' and
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
-## On OS X (Darwin) /usr/X11R6/lib shadows the OpenGL framework and is not
-## needed in DYLD_LIBRARY_PATH.
+
+## On OS X (Darwin) this used to have /usr/X11R6/lib
+## which shadows the OpenGL framework but we add nothing on OS X ....
 case "${host_os}" in
   linux*)
     r_ld_library_defaults="/usr/lib64:/lib64:/usr/lib:/lib"
     ;;
   solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
-    ;;
-  darwin*)
-    ## FIXME: that is a link to /opt/X11, and /usr/X11R6 may not exist on 10.11
-    ## and it is not used below ....
-    r_ld_library_defaults="/usr/X11R6/lib"
     ;;
   *)
     r_ld_library_defaults=
