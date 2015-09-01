@@ -3239,9 +3239,9 @@ Components for Unicode, @uref{http://site.icu-project.org/}), and this
 provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
-or @code{icu4c}.  It will be used by default where available (including
-on OS X >= 10.4): should a very old or broken version of ICU be found
-this can be suppressed by @option{--without-ICU}.
+or @code{icu4c}.  It will be used by default where available: should a
+very old or broken version of ICU be found this can be suppressed by
+@option{--without-ICU}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -5364,7 +5364,17 @@ environment can be found in the ``R on AIX'' project on R-Forge
 @c PR16410
 There have been no reports for @R{} 3.0.0 or later, except for an
 configuration failure of @R{} 3.2.0 on FreeBSD 10 (addressed in @R{}
-3.2.2).
+3.2.2).  However, there is a `port' at
+@uref{https://www.freebsd.org/ports/math.html}, for @R{} 3.0.2 at the
+time of writing.
+
+It appears that versions of FreeBSD using @command{clang} as the compiler
+(the default as from 10.0) need
+@example
+MAIN_LDFLAGS=-Wl,--export-dynamic
+@end example
+@noindent
+for @R{} releases up to 3.2.2.
 
 @section OpenBSD
 @cindex OpenBSD

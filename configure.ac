@@ -1411,6 +1411,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
   freebsd*)
     ## maybe this needs to depend on the compiler:
     ## -export-dynamic used to work, but does not with clang.
+    ## Seems FreeBSD has used the GNU linker since at least 3.0 (Oct 1998)
     main_ldflags="-Wl,--export-dynamic"
     shlib_ldflags="-shared"
     ;;
@@ -1513,6 +1514,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ## ${wl} is defined by libtool configuration code.
     ## Both -Wl,-export-dynamic and -Wl,--export-dynamic seem to
     ## work with the GNU linker, but the second is what is documented.
+    ## libtool seems to use -Wl-E , a GNU ld alias of -Wl,--export-dynamic
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
       main_ldflags="${wl}-export-dynamic"
       shlib_ldflags="-shared -fPIC"
@@ -2237,7 +2239,6 @@ if test "$use_ICU" = yes ; then
   R_ICU
   if test "$use_ICU" = no ; then
     case "${host_os}" in
-      ## darwin has ICU 3.2 in 10.4, 3.6 in 10.5
       darwin*)
         AC_CHECK_LIB(icucore, ucol_open, [],
             [AC_MSG_ERROR([library 'icucore' is required for ICU])])
@@ -2569,6 +2570,8 @@ case "${host_os}" in
     r_ld_library_defaults="/usr/lib:/lib"
     ;;
   darwin*)
+    ## FIXME: that is a link to /opt/X11, and /usr/X11R6 may not exist on 10.11
+    ## and it is not used below ....
     r_ld_library_defaults="/usr/X11R6/lib"
     ;;
   *)
