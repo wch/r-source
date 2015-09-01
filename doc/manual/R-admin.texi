@@ -5361,12 +5361,11 @@ environment can be found in the ``R on AIX'' project on R-Forge
 @section FreeBSD
 @cindex FreeBSD
 
-@c PR16410
-There have been no reports for @R{} 3.0.0 or later, except for an
-configuration failure of @R{} 3.2.0 on FreeBSD 10 (addressed in @R{}
-3.2.2).  However, there is a `port' at
-@uref{https://www.freebsd.org/ports/math.html}, for @R{} 3.0.2 at the
-time of writing.
+There have been few recent reports on FreeBSD.
+
+There is a `port' at @uref{https://www.freebsd.org/ports/math.html}, for
+@R{} 3.0.2 at the time of writing.  Davor Cubranic reported some success
+on x86_64 FreeBSD 10.2 for @R{} 3.2.2.
 
 It appears that versions of FreeBSD using @command{clang} as the compiler
 (the default as from 10.0) need
@@ -5375,6 +5374,9 @@ MAIN_LDFLAGS=-Wl,--export-dynamic
 @end example
 @noindent
 for @R{} releases up to 3.2.2.
+
+Use of ICU for collation and the @command{configure} option
+@option{--with-internal-tzcode} are desirable workarounds.
 
 @section OpenBSD
 @cindex OpenBSD

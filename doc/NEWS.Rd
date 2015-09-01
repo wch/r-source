@@ -242,8 +242,8 @@
     \itemize{
       \item The included configuration code for \code{libintl} has been
       updated to that from \code{gettext} version 0.19.5.1 --- this
-      should only affect how an external library is detected.
-      (Wish of \PR{16464}.)
+      should only affect how an external library is detected (and the
+      only known instance is under OpenBSD).  (Wish of \PR{16464}.)
 
       \item \command{configure} has a new argument
       \option{--disable-java} to disable the checks for Java.
