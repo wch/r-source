@@ -20,8 +20,12 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
-PKG_CPPFLAGS = @TCLTK_CPPFLAGS@ \
-  -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
+## -I../../../include is for config.h.
+## Circumvent conflicts by having external paths last, as we
+## need them only for tcl.h, tk.h.
+PKG_CPPFLAGS = \
+  -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H \
+  @TCLTK_CPPFLAGS@
 PKG_LIBS = @TCLTK_LIBS@ @LIBM@
 
 all: Makedeps
