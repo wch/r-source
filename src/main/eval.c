@@ -5042,7 +5042,7 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
-  SEXP value, constants;
+  SEXP value = R_NilValue, constants;
   BCODE *pc, *codebase;
   R_bcstack_t *oldntop = R_BCNodeStackTop;
   static int evalcount = 0;
