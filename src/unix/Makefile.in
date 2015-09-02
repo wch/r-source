@@ -16,6 +16,9 @@ STATIC_LIBR_PC = @WANT_R_STATIC_TRUE@ $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBI
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
+## Rscript should not be linked to OpenMP
+ALL_CFLAGS0 = $(R_XTRA_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
+
 SOURCES_C_BASE = Rembedded.c dynload.c system.c sys-unix.c sys-std.c X11.c
 SOURCES = $(SOURCES_C_BASE)
 DEPENDS = $(SOURCES:.c=.d)
@@ -64,7 +67,7 @@ maintainer-clean: distclean
 
 ## we need to build at install time to capture the correct 'rhome'
 install-Rscript:
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(LDFLAGS) -DR_HOME='"$(rhome)"' \
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS0) $(LDFLAGS) -DR_HOME='"$(rhome)"' \
 	  -o Rscript $(srcdir)/Rscript.c
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(Rexecbindir)/Rscript"
