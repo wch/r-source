@@ -150,13 +150,13 @@
 /* Define to 1 if you have the `ctan' function. */
 #define HAVE_CTAN 1
 
+/* Define to 1 if you have the `ctanh' function. */
+#define HAVE_CTANH 1
+
 /* Define to 1 if you have the <curl/curl.h> header file.
    Set on the command line where supported.
 */
 /* #undef HAVE_CURL_CURL_H */
-
-/* Define to 1 if you have the `ctanh' function. */
-#define HAVE_CTANH 1
 
 /* define if the compiler supports basic C++11 syntax */
 #define HAVE_CXX11 1
@@ -421,9 +421,6 @@
 
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 /* #undef HAVE_LC_MESSAGES */
-
-/* Define to 1 if you have the `cc_dynamic' library (-lcc_dynamic). */
-/* #undef HAVE_LIBCC_DYNAMIC */
 
 /* Define if your system has libcurl >= 7.28.0 with support for https.
    Set on the command line where supported.
