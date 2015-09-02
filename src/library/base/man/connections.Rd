@@ -478,9 +478,10 @@ isIncomplete(con)
   not work as one might expect.
 #endif
 #ifdef unix
-  Unix users wishing to \emph{write} to one of the selections may be
-  able to do so via \code{xclip}
-  (\url{http://sourceforge.net/projects/xclip/}), for example by
+  Unix users wishing to \emph{write} to one of the X11 selections may be
+  able to do so via \command{xclip}
+  (\url{http://sourceforge.net/projects/xclip/}) or \command{xsel}
+  (\url{http://www.vergenet.net/~conrad/software/xsel/}), for example by
   \code{pipe("xclip -i", "w")} for the primary selection.
 
   OS X users can use \code{pipe("pbpaste")} and
