@@ -17,6 +17,7 @@ Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversität Wien
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","gripe # sfu.ca",1,ca,"maintainer_address_bounces"
 "Canada (NS)",Canada,Halifax,http://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",1,ca
 "Canada (ON)",Canada,Toronto,http://cran.utstat.utoronto.ca/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
+"Chile [https]",Chile,Santiago,https://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 2)",China,Bejing,http://mirror.bjtu.edu.cn/cran/,"Beijing Jiaotong University, Beijing","idealities # gmail.com",1,cn
 "China (Beijing 3)",China,Beijing,http://mirrors.opencas.cn/cran/,"Chinese Academy of Sciences, Beijing","admin # opencas.cn",1,cn
@@ -52,6 +53,7 @@ India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology 
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
+"Italy (Padua) [https]",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","angelo.mineo # unipa.it, apontillo # gmail.com",1,it
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
