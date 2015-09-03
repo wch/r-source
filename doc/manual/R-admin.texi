@@ -3281,18 +3281,26 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.12 and 8.6.0 have been tested (including
+Versions of Tcl/Tk up to 8.5.18 and 8.6.4 have been tested (including
 most versions of 8.4.x, but not recently).
+
+Note that the @file{tk.h} header includes@footnote{This is true even for
+the `Aqua' version of Tk on OS X, but distributions of that include a
+copy of the X11 files needed.} X11 headers, so you will need X11 and its
+development files installed.
 
 @node Java support, Other compiled languages, Tcl/Tk, Useful libraries and programs
 @subsection Java support
 
 The build process looks for Java support on the host system, and if it
-finds it sets some settings which are useful for Java-using packages.
+finds it sets some settings which are useful for Java-using packages
+(such as @CRANpkg{rJava} and @CRANpkg{JavaGD}).  This check can be
+suppressed by configure option @option{--disable-java}.
 @enindex JAVA_HOME
-@env{JAVA_HOME} can be set to point to a specific JRE/JDK.
+Configure variable @env{JAVA_HOME} can be set to point to a specific
+JRE/JDK, on the @command{configure} command line or in the environment.
 
-Principal amongst these are setting some library paths to the Java
+Principal amongst these settings are some library paths to the Java
 libraries and JVM, which are stored in environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
 @env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
@@ -3300,7 +3308,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-4.b16.fc21.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -3318,15 +3326,16 @@ Another way of overriding those settings is to set the environment variable
 Java-using packages.  For example
 
 @example
-R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.7.0/jre/lib/amd64/server
+R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0/jre/lib/amd64/server
 @end example
 
 It may be possible to avoid this by specifying an invariant link as the
-path. For example, on that system either of
+path. For example, on that system any of
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0
-JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
+JAVA_HOME=/usr/lib/jvm/java
+JAVA_HOME=/usr/lib/jvm/java-1.8.0
+JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
 @end example
 
 @noindent
