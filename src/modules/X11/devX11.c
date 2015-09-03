@@ -1015,6 +1015,8 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 	   If we can't find a "fixed" font then something is seriously
 	   wrong */
 	if ( ADOBE_SIZE(pixelsize) ) {
+	    if(tmp)
+		R_XFreeFont(display, tmp);
 	    if(mbcslocale)
 		tmp = (void*) R_XLoadQueryFontSet(display,
 		   "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");

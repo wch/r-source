@@ -4076,6 +4076,8 @@ function(package, dir, lib.loc = NULL)
     ## and recommended packages.
     base <- unlist(.get_standard_package_names()[c("base", "recommended")],
                    use.names = FALSE)
+    ## May not have recommended packages
+    base <- base[dir.exists(file.path(.Library, base))]
     aliases <- lapply(base, Rd_aliases, lib.loc = NULL)
     ## (Don't use lib.loc = .Library, as recommended packages may have
     ## been installed to a different place.)
@@ -5541,6 +5543,8 @@ function(package, dir, lib.loc = NULL)
             imp3f <- imp3f[(maintainers != db["Maintainer"])]
         }
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
+    ## An unexported function only available on Windows, used in tools
+    imp3ff <- setdiff(sort(unique(imp3ff)), "utils:::unpackPkgZip")
     res <- list(others = unique(bad_exprs),
                 bad_practice = unique(bad_prac),
                 imports = unique(bad_imports),
@@ -5551,8 +5555,7 @@ function(package, dir, lib.loc = NULL)
                 imp2un = sort(unique(imp2un)),
                 imp32 = sort(unique(imp32)),
                 imp3 = imp3, imp3f = sort(unique(imp3f)),
-                imp3ff = sort(unique(imp3ff)),
-                imp3self = imp3self,
+                imp3ff = imp3ff, imp3self = imp3self,
                 imp3selfcalls = sort(unique(imp3selfcalls)),
                 imp3unknown = unknown,
                 methods_message = methods_message)
@@ -7151,7 +7154,7 @@ function(x, ...)
     fmt <- function(x) {
         if(length(x)) paste(x, collapse = "\n") else character()
     }
-    
+
     c(character(),
       if(length(x$Maintainer))
           sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))

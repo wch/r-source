@@ -11,8 +11,8 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2014  The R Core Team
- *  Copyright (C) 2003-2014  The R Foundation
+ *  Copyright (C) 2000-2015  The R Core Team
+ *  Copyright (C) 2003-2015  The R Foundation
  */
 
 
@@ -23,7 +23,7 @@
 /*----------- DEBUGGING -------------
  *
  *	make CFLAGS='-DDEBUG_pnch ....'
-(cd ~/R/D/r-devel/debian-64-inst/src/nmath; gcc -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DHAVE_CONFIG_H -DDEBUG_pnch -fopenmp -g -pedantic -Wall --std=gnu99 -DDEBUG_q -Wcast-align -Wclobbered  -c ../../../R/src/nmath/pnchisq.c -o pnchisq.o )
+(cd `R-devel RHOME`/src/nmath; gcc -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DHAVE_CONFIG_H -fopenmp -g -O0 -pedantic -Wall --std=gnu99 -DDEBUG_pnch -DDEBUG_q -Wcast-align -Wclobbered  -c ../../../R/src/nmath/pnchisq.c -o pnchisq.o )
 
  * -- Feb.6, 2000 (R pre0.99); M.Maechler:  still have
  * bad precision & non-convergence in some cases (x ~= f, both LARGE)
@@ -90,12 +90,14 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
     LDOUBLE ans, u, v, t, lt, lu =-1;
 
     if (x <= 0.) {
-	if(x == 0. && f == 0.)
-	    return lower_tail ? exp(-0.5*theta) : -expm1(-0.5*theta);
+	if(x == 0. && f == 0.) {
+#define _L  (-0.5 * theta) // = -lambda
+	    return lower_tail ? R_D_exp(_L) : (log_p ? R_Log1_Exp(_L) : -expm1(_L));
+	}
 	/* x < 0  or {x==0, f > 0} */
-	return lower_tail ? 0. : 1.;
+	return R_DT_0;
     }
-    if(!R_FINITE(x))	return lower_tail ? 1. : 0.;
+    if(!R_FINITE(x))	return R_DT_1;
 
     /* This is principally for use from qnchisq */
 #ifndef MATHLIB_STANDALONE

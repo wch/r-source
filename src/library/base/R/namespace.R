@@ -1042,9 +1042,11 @@ namespaceExport <- function(ns, vars) {
     }
 }
 
-.mergeExportMethods <- function(new, ns) {
-##    if(!.isMethodsDispatchOn()) return(FALSE)
-    mm <- methods:::methodsPackageMetaName("M","")
+.mergeExportMethods <- function(new, ns)
+{
+    ## avoid bootstrapping issues
+    ##    mm <- methods:::methodsPackageMetaName("M","")
+    mm <- ".__M__"
     newMethods <- new[substr(new, 1L, nchar(mm, type = "c")) == mm]
     nsimports <- parent.env(ns)
     for(what in newMethods) {
@@ -1055,13 +1057,8 @@ namespaceExport <- function(ns, vars) {
     }
 }
 
-
-## NB this needs a decorated name, foo_ver, if appropriate
-packageHasNamespace <- function(package, package.lib) {
-    namespaceFilePath <- function(package, package.lib)
-        file.path(package.lib, package, "NAMESPACE")
-    file.exists(namespaceFilePath(package, package.lib))
-}
+packageHasNamespace <- function(package, package.lib)
+    file.exists(file.path(package.lib, package, "NAMESPACE"))
 
 parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 {

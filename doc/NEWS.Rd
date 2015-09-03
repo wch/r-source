@@ -122,7 +122,7 @@
 	"default"} (and documented).
 
       \item \code{smoothScatter()} gains a \code{ret.selection} argument.
-      
+
       \item \code{qr()} no longer has a \code{\dots} argument to pass
       addiitonal arguments to methods.
 
@@ -180,10 +180,13 @@
 
       \item BSD networking is now required (except on Windows) and so
       \code{capabilities("http/ftp")} is always true.
-      
+
       \item \command{configure} uses \command{pkg-config} for PNG, TIFF
       and JPEG where this is available.  This should work better with
       multiple installs and static libs.
+      
+      \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
+	Leopard}): even that has been unsupported by Apple since 2012.
     }
   }
 
@@ -222,7 +225,7 @@
       to the conversion table used to convert these to Olson names.
       (Including those relating to changes for Russia in Oct 2014, as in
       \PR{16503}.)
-      
+
       \item (Windows) Compatibility information has been added to the
       manifests for \file{Rgui.exe}, \file{Rterm.exe} and
       \file{Rscript.exe}.  This should allow \code{win.version()} and
@@ -239,14 +242,19 @@
     \itemize{
       \item The included configuration code for \code{libintl} has been
       updated to that from \code{gettext} version 0.19.5.1 --- this
-      should only affect how an external library is detected. 
-      (Wish of \PR{16464}.)
+      should only affect how an external library is detected (and the
+      only known instance is under OpenBSD).  (Wish of \PR{16464}.)
 
       \item \command{configure} has a new argument
       \option{--disable-java} to disable the checks for Java.
+
+      \item The \command{configure} default for \code{MAIN_LDFLAGS} has
+      been changed for FreeBSD, NetBSD and Hurd OSes to one more likely
+      to work with compilers other than \command{gcc} (FreeBSD 10
+      defaults to \command{clang}).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{regexpr(pat, x, perl = TRUE)} with Python-style named
@@ -281,10 +289,18 @@
 
       \item \code{detach()}ing the \pkg{methods} package keeps
       \code{.isMethodsDispatchOn()} true, as long as the methods
-      namespace is not unloaded.% This keeps a sane state, see the regr-S4 test
-      
+      namespace is not unloaded.% This keeps a sane state, see the reg-S4 test
+
       \item Removed some spurious warnings from \command{configure} about the
       preprocessor not finding header files.  (\PR{15989})
+
+      \item \code{rchisq(*, df=0, ncp=0)} now returns \code{0} instead
+      of \code{NaN}, and \code{dchisq(*, df=0, ncp=*)} also no longer
+      returns \code{NaN} in limit cases (where the limit is unique).
+      (\PR{16521})
+
+      \item \code{pchisq(*, df=0, ncp > 0, log.p=TRUE)} no longer
+      underflows (for ncp > ~60).
     }
   }
 }

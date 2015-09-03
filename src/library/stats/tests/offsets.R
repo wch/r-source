@@ -1,6 +1,6 @@
 ## tests of offsets, and prediction from them.
 
-data(anorexia, package = "MASS")
+load("anorexia.rda") # copied from package MASS
 
 ## via formula
 fit1 <- lm(Postwt ~ Prewt + Treat + offset(Prewt), data = anorexia)

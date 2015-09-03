@@ -21,6 +21,9 @@ options(digits = 5) # to avoid trivial printed differences
 options(useFancyQuotes = FALSE) # avoid fancy quotes in o/p
 options(show.nls.convergence = FALSE) # avoid non-diffable output
 options(warn = 1)
+
+have_MASS <- requireNamespace('MASS', quietly = TRUE)
+
 pdf("nls-test.pdf")
 
 ## utility for comparing nls() results:  [TODO: use more often below]
@@ -52,8 +55,7 @@ curve(a+b*x+c*x^2, add = TRUE)
 nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1), algorithm = "port")
 (fm <- nls(y ~ a+b*x+c*I(x^2), start = c(a=1, b=1, c=0.1),
            algorithm = "port", lower = c(0, 0, 0)))
-confint(fm)
-
+if(have_MASS) print(confint(fm))
 
 ## weighted nls fit: unsupported < 2.3.0
 set.seed(123)
@@ -149,9 +151,11 @@ for(m in names(pfm1))
 pfm5 <- profile(fm5)
 for(m in names(pfm1))
     stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tolerance = 1e-5))
-(c1 <- confint(fm1))
-(c4 <- confint(fm4, 1:2))
-stopifnot(all.equal(c1[2:3, ], c4, tolerance = 1e-3))
+if(have_MASS) {
+    print(c1 <- confint(fm1))
+    print(c4 <- confint(fm4, 1:2))
+    stopifnot(all.equal(c1[2:3, ], c4, tolerance = 1e-3))
+}
 
 ## some low-dimensional examples
 npts <- 1000
@@ -170,16 +174,18 @@ s1 <- list(c(b=1), c(a=1,b=1), c(a=1,b=1,logc=0))
 for(p in 1:3) {
     fm <- nls(m1[[p]], start = s1[[p]])
     print(fm)
-    print(confint(fm))
-    fm <- nls(m1[[p]], start = s1[[p]], algorithm="port")
+    if(have_MASS) print(confint(fm))
+    fm <- nls(m1[[p]], start = s1[[p]], algorithm = "port")
     print(fm)
-    print(confint(fm))
+    if(have_MASS) print(confint(fm))
 }
 
-fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
-confint(profile(fm))
-fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
-confint(profile(fm))
+if(have_MASS) {
+    fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
+    print(confint(profile(fm)))
+    fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
+    print(confint(profile(fm)))
+}
 
 
 ## more profiling with bounds
@@ -197,7 +203,7 @@ gfun <- function(a,b,x) {
 m1 <- nls(y ~ gfun(a,b,x), algorithm = "port",
           lower = c(0,0), start = c(a=1, b=1))
 (pr1 <- profile(m1))
-confint(pr1)
+if(have_MASS) print(confint(pr1))
 
 gfun <- function(a,b,x) {
     if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
@@ -206,7 +212,7 @@ gfun <- function(a,b,x) {
 m2 <- nls(y ~ gfun(a,b,x), algorithm = "port",
           lower = c(0, 0), upper=c(1.5, 1), start = c(a=1, b=1))
 profile(m2)
-confint(m2)
+if(have_MASS) print(confint(m2))
 options(op)
 
 ## scoping problems

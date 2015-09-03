@@ -1283,9 +1283,12 @@ requireMethods <-
         method <- getMethod(f, optional = TRUE)
         if(!is.function(method))
             method <- getGeneric(f, where = where)
-	body(method) <- substitute(stop(methods:::.missingMethod(FF, MESSAGE,
-								 if(exists(".Method")).Method),
-					domain=NA), list(FF=f, MESSAGE=message))
+        ## this is not eval()ed in this namespace
+	body(method) <-
+            substitute(stop(methods:::.missingMethod(FF, MESSAGE,
+                                                     if(exists(".Method")) .Method),
+                            domain = NA),
+                       list(FF = f, MESSAGE = message))
         environment(method) <- .GlobalEnv
         setMethod(f, signature, method, where = where)
     }

@@ -7,7 +7,8 @@ Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technol
 "Australia (Melbourne)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au
 "Austria [https]",Austria,Wien,https://cran.r-project.org/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at
-Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
+"Belgium (Antwerp)",Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
+"Belgium (Ghent)",Belgium,Ghent,http://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo Justiniano Ribeiro Junior <paulojus # ufpr.br>",1,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
@@ -16,6 +17,7 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","gripe # sfu.ca",1,ca,"maintainer_address_bounces"
 "Canada (NS)",Canada,Halifax,http://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",1,ca
 "Canada (ON)",Canada,Toronto,http://cran.utstat.utoronto.ca/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
+"Chile [https]",Chile,Santiago,https://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 2)",China,Bejing,http://mirror.bjtu.edu.cn/cran/,"Beijing Jiaotong University, Beijing","idealities # gmail.com",1,cn
 "China (Beijing 3)",China,Beijing,http://mirrors.opencas.cn/cran/,"Chinese Academy of Sciences, Beijing","admin # opencas.cn",1,cn
@@ -51,6 +53,7 @@ India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology 
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
+"Italy (Padua) [https]",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","angelo.mineo # unipa.it, apontillo # gmail.com",1,it
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
@@ -74,6 +77,7 @@ Portugal,Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc #
 Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
 "South Africa (Cape Town)","South Africa","Cape Town",http://r.adu.org.za/,"University of Cape Town","michael.brooks # uct.ac.za",1,za
 "South Africa (Johannesburg)","South Africa",Johannesburg,http://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za
+"Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (A Coruña)","Spain","A Coruña",http://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
 Sweden,Sweden,Umeå,http://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se

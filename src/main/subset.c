@@ -1202,13 +1202,13 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
     if (isPairList(x)) {
 	SEXP xmatch = R_NilValue;
 	int havematch;
-	UNPROTECT(2); /* input, x */
 	havematch = 0;
 	for (y = x ; y != R_NilValue ; y = CDR(y)) {
 	    switch(pstrmatch(TAG(y), input, slen)) {
 	    case EXACT_MATCH:
 		y = CAR(y);
 		if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
+		UNPROTECT(2); /* input, x */
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
@@ -1235,15 +1235,17 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    }
 	    y = CAR(xmatch);
 	    if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
+	    UNPROTECT(2); /* input, x */
 	    return y;
 	}
+	UNPROTECT(2); /* input, x */
 	return R_NilValue;
     }
     else if (isVectorList(x)) {
 	R_xlen_t i, n, imatch = -1;
 	int havematch;
 	nlist = getAttrib(x, R_NamesSymbol);
-	UNPROTECT(2); /* input, x */
+
 	n = xlength(nlist);
 	havematch = 0;
 	for (i = 0 ; i < n ; i = i + 1) {
@@ -1252,6 +1254,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		y = VECTOR_ELT(x, i);
 		if (NAMED(x) > NAMED(y))
 		    SET_NAMED(y, NAMED(x));
+		UNPROTECT(2); /* input, x */
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
@@ -1286,8 +1289,10 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    }
 	    y = VECTOR_ELT(x, imatch);
 	    if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
+	    UNPROTECT(2); /* input, x */
 	    return y;
 	}
+	UNPROTECT(2); /* input, x */
 	return R_NilValue;
     }
     else if( isEnvironment(x) ){

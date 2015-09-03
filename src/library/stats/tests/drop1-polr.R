@@ -2,7 +2,7 @@
 ### correct formula environment
 
 library(stats)
-stopifnot(require(MASS))
+if(!require(MASS)) q()
 
 regr <- function(formula, data, ...)
 {
@@ -16,17 +16,15 @@ i.polr <- function(form, data, ...)
     lfo <- form
     d2 <- data
     environment(lfo) <- environment()
-    lreg <- polr(lfo, data=d2, ...)
-    do.drop(lreg, lreg1$coef, ltesttype="Chisq")
+    lreg <- polr(lfo, data = d2, ...)
+    do.drop(lreg, lreg1$coef, ltesttype = "Chisq")
 }
 
 do.drop <- function(lreg, lcoeftab, ltesttype)
-{
-    drop1(lreg, test=ltesttype, scope=terms(lreg), trace=FALSE)
-}
+    drop1(lreg, test = ltesttype, scope = terms(lreg), trace = FALSE)
 
 m  <- polr(Sat ~ Infl + Type + Cont, data = housing)
 rr <- regr(formula(m), data = housing)
 dr1 <- drop1(m)
 stopifnot(is.data.frame(rr),
-	  all.equal(rr[-(3:4)], dr1, check.attributes=FALSE))
+	  all.equal(rr[-(3:4)], dr1, check.attributes = FALSE))

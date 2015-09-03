@@ -41,6 +41,8 @@
     lockdir <- ""
     is_first_package <- TRUE
     stars <- "*"
+    user.tmpdir <- Sys.getenv("PKG_BUILD_DIR")
+    keep.tmpdir <- nzchar(user.tmpdir)
 
     ## Need these here in case of an early error, e.g. missing etc/Makeconf
     tmpdir <- ""
@@ -79,7 +81,7 @@
 
     do_cleanup <- function()
     {
-        if(nzchar(tmpdir)) do_cleanup_tmpdir()
+        if(!keep.tmpdir && nzchar(tmpdir)) do_cleanup_tmpdir()
         if (!is_first_package) {
             ## Only need to do this in case we successfully installed
             ## at least one package
@@ -93,7 +95,7 @@
     {
         ## Solaris will not remove any directory in the current path
         setwd(startdir)
-        if (dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
+        if (!keep.tmpdir && dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
     on.exit(do_exit_on_error())
@@ -1415,9 +1417,23 @@
         args <- args[-1L]
     }
 
-    tmpdir <- tempfile("R.INSTALL")
-    if (!dir.create(tmpdir))
-        stop("cannot create temporary directory")
+    if (keep.tmpdir) {
+      make_tmpdir <- function(prefix, nchars = 8, ntries = 100) {
+        for(i in 1:ntries) {
+          name = paste(sample(c(0:9, letters, LETTERS), nchars, replace=TRUE), collapse="")
+          path = paste(prefix, name, sep = "/")
+          if (dir.create(path, showWarnings = FALSE, recursive = T)) {
+            return(path)
+          }
+        }
+        stop("cannot create unique directory for build")
+      }
+      tmpdir <- make_tmpdir(user.tmpdir)
+    } else {
+      tmpdir <- tempfile("R.INSTALL")
+      if (!dir.create(tmpdir))
+          stop("cannot create temporary directory")
+    }
 
     if (merge) {
         if (length(pkgs) != 1L || !file_test("-f", pkgs))

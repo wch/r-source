@@ -527,6 +527,30 @@ Rboolean equalS3Signature(const char *signature, const char *left,
     return (*s == 0) ? TRUE : FALSE;
 }
 
+
+static R_INLINE SEXP getPrimitive(SEXP symbol)
+{
+    SEXP value = SYMVALUE(symbol);
+    if (TYPEOF(value) == PROMSXP) {
+	PROTECT(value);
+	value = eval(value, R_GlobalEnv);
+	UNPROTECT(1);
+	SET_NAMED(value, 2);
+    }
+    if (TYPEOF(value) == BUILTINSXP || TYPEOF(value) == SPECIALSXP)
+        return value;
+
+    if (TYPEOF(value) == CLOSXP) {
+	/* probably means a package redefined the base function so
+	   try to get the real thing from the internal table of
+	   primitives */
+	value = R_Primitive(CHAR(PRINTNAME(symbol)));
+    } else
+	value = R_NilValue;
+
+    return value;
+}
+
 /* If NextMethod has any arguments the first must be the generic */
 /* the second the object and any remaining are matched with the */
 /* formals of the chosen method. */
@@ -736,8 +760,11 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (TYPEOF(nextfun) == CLOSXP) {
 		if (INTERNAL(t) != R_NilValue)
 		    nextfun = INTERNAL(t);
-		else
-		    error(_("no method to invoke"));
+		else {
+		    nextfun = getPrimitive(t);
+		    if (nextfun == R_NilValue)
+		        error(_("no method to invoke"));
+		}
 	    }
 	}
     }

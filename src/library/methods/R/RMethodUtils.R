@@ -1554,6 +1554,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 
 utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 
+## NB this is used with a modified environment in .dotsGeneric,
+## so methods::: calls are necessary.
 .standardGenericDots <- function(name)
 {
     env <- sys.frame(sys.parent())
@@ -1571,7 +1573,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 .quoteCall <- quote(.Method(...))
 .makeDotsCall <- function(formals)
 {
-    call <- methods:::.quoteCall
+    call <- .quoteCall
     if(length(formals)  > 1L) {
         idots <- match("...", formals)
         for(what in formals[-idots]) {
