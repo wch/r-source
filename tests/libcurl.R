@@ -43,9 +43,44 @@ head(readLines(zz <- url("http://bugs.r-project.org", method = "libcurl"),
 close(zz)
 
 
-## check graceful failure:
-try(zz <- url("http://foo.bar", "r", method = "libcurl"))
-close(zz)
+## check graceful failure: warnings leading to error
+testUnknownUrlError <- tryCatch(suppressWarnings({
+    zz <- url("http://foo.bar", "r", method = "libcurl")
+}), error=function(e) {
+    conditionMessage(e) == "cannot open connection"
+})
+stopifnot(testUnknownUrlError)
+
+tf <- tempfile()
+testDownloadFileError <- tryCatch(suppressWarnings({
+    download.file("http://foo.bar", tf, method="libcurl")
+}), error=function(e) {
+    conditionMessage(e) == "cannot download all files"
+})
+stopifnot(testDownloadFileError, !file.exists(tf))
+
+tf <- tempfile()
+testDownloadFile404 <- tryCatch(suppressWarnings({
+    download.file("http://httpbin.org/status/404", tf, method="libcurl")
+}), error=function(e) {
+    conditionMessage(e) == "cannot download all files"
+})
+stopifnot(testDownloadFile404, !file.exists(tf))
+
+## check specific warnings
+testUnknownUrl <- tryCatch({
+    zz <- url("http://foo.bar", "r", method = "libcurl")
+}, warning=function(e) {
+    grepl("Couldn't resolve host name", conditionMessage(e))
+})
+stopifnot(testUnknownUrl)
+
+test404.1 <- tryCatch({
+    open(zz <- url("http://httpbin.org/status/404", method="libcurl"))
+}, warning=function(w) {
+    grepl("404 Not Found", conditionMessage(w))
+})
+stopifnot(test404.1)
 
 ##  via read.table (which closes the connection)
 tail(read.table(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
@@ -57,9 +92,14 @@ showConnections(all = TRUE)
 
 ## check option works
 options(url.method = "libcurl")
-zz <- url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
-          method = "libcurl")
+zz <- url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
 stopifnot(identical(summary(zz)$class, "url-libcurl"))
 close(zz)
 head(readLines("https://httpbin.org", warn = FALSE))
 
+test404.2 <- tryCatch({
+    open(zz <- url("http://httpbin.org/status/404"))
+}, warning=function(w) {
+    grepl("404 Not Found", conditionMessage(w))
+})
+stopifnot(test404.2)

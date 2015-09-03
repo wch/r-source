@@ -306,6 +306,9 @@
 
       \item \code{pchisq(*, df=0, ncp > 0, log.p=TRUE)} no longer
       underflows (for ncp > ~60).
+
+      \item \code{libcurl} connections signal errors rather than
+      retrieving http error pages.
     }
   }
 }

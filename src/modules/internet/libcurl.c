@@ -156,12 +156,12 @@ static int curlMultiCheckerrs(CURLM *mhnd)
 		    strerr = http_errstr(status);
 		else
 		    strerr = ftp_errstr(status);
+		warning(_("URL '%s': status was '%d %s'"), url, status,
+			strerr);
 	    } else {
 		strerr = curl_easy_strerror(msg->data.result);
-		status = -1;
+		warning(_("URL '%s': status was '%s'"), url, strerr);
 	    }
-	    warning(_("URL '%s': HTTP status was '%d %s'"), url,
-		    status, strerr);
 	    retval += 1;
 	}
     }
@@ -222,6 +222,7 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
     used++;
     return result;
 }
+
 static size_t
 rcvBody(void *buffer, size_t size, size_t nmemb, void *userp)
 {
@@ -440,16 +441,52 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     CURLM *mhnd = curl_multi_init();
-    int still_running, repeats = 0;
+    int still_running, repeats = 0, n_err = 0;
     CURL **hnd[nurls];
     FILE *out[nurls];
 
     for(int i = 0; i < nurls; i++) {
-	hnd[i] = curl_easy_init();
-	curl_multi_add_handle(mhnd, hnd[i]);
-
+	out[i] = NULL;
 	url = CHAR(STRING_ELT(scmd, i));
+	hnd[i] = curl_easy_init();
 	curl_easy_setopt(hnd[i], CURLOPT_URL, url);
+	curl_easy_setopt(hnd[i], CURLOPT_FAILONERROR, 1L);
+	/* Users will normally expect to follow redirections, although
+	   that is not the default in either curl or libcurl. */
+	curlCommon(hnd[i], 1, 1);
+	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
+	if (!cacheOK)
+	    curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
+
+	/* check that connection can be opened... */
+	curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
+	curl_easy_setopt(hnd[i], CURLOPT_NOBODY, 1L);
+	curl_easy_setopt(hnd[i], CURLOPT_HEADERFUNCTION, &rcvHeaders);
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEHEADER, &headers);
+	char *errbuf = calloc(CURL_ERROR_SIZE, sizeof(char));
+	curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
+	/* libcurl (at least 7.40.0) does not respect CURLOPT_NOBODY
+	   for some ftp header info (Content-Length and Accept-ranges). */
+	curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
+	CURLcode ret = curl_easy_perform(hnd[i]);
+	curl_multi_add_handle(mhnd, hnd[i]);
+	if (ret != CURLE_OK) {
+	    n_err += 1;
+	    /* warning signalled via curlMultiCheckerrs */
+	    continue;
+	}
+	/* ...and that destfile can be written */
+	file = translateChar(STRING_ELT(sfile, i));
+	out[i] = R_fopen(R_ExpandFileName(file), mode);
+	if (!out[i]) {
+	    n_err += 1;
+	    warning(_("URL %s: cannot open destfile '%s', reason '%s'"),
+		    url, file, strerror(errno));
+	    continue;
+	}
+	curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, NULL); /* necessary? */
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
+	curl_easy_setopt(hnd[i], CURLOPT_NOBODY, 0L);
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
 
 	total = 0.;
@@ -485,27 +522,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
-	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
-
-	curl_easy_setopt(hnd[i], CURLOPT_FAILONERROR, 1L);
-	/* Users will normally expect to follow redirections, although
-	   that is not the default in either curl or libcurl. */
-	curlCommon(hnd[i], 1, 1);
-	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
-	if (!cacheOK) curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
+	}
 
 	/* This would allow the negotiation of compressed HTTP transfers,
 	   but it is not clear it is always a good idea.
 	   curl_easy_setopt(hnd[i], CURLOPT_ACCEPT_ENCODING, "gzip, deflate");
 	*/
-
-
-	file = translateChar(STRING_ELT(sfile, i));
-	out[i] = R_fopen(R_ExpandFileName(file), mode);
-	if (!out[i])
-	    error(_("cannot open destfile '%s', reason '%s'"),
-		  file, strerror(errno));
-	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
 
 	if (!quiet) REprintf(_("trying URL '%s'\n"), url);
     }
@@ -558,10 +580,11 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
     }
 
-    int n_err = curlMultiCheckerrs(mhnd);
+    n_err += curlMultiCheckerrs(mhnd);
 
     for (int i = 0; i < nurls; i++) {
-	fclose(out[i]);
+	if (out[i])
+            fclose(out[i]);
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);
     }
@@ -569,7 +592,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!cacheOK) curl_slist_free_all(slist1);
 
     if (n_err != 0)
-	error(_("cannot download file"), n_err);
+	error(_("cannot download all files"));
 
     return ScalarInteger(0);
 #endif
