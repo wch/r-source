@@ -198,6 +198,9 @@
 
       Code using it will need to be reinstalled. (\PR{16470})
       % no current CRAN packages ....
+
+      \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
+      deprecated in favour of the standard OpenMP define \samp{_OPENMP}.
     }
   }
 
