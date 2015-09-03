@@ -2443,14 +2443,8 @@ if test -z "${TCLTK_CPPFLAGS}"; then
     fi
   fi
 fi
-## TK_XINCLUDES should be empty for Aqua Tk, so earlier test was wrong
-if test "${have_tcltk}" = yes; then
-  if test "${found_tk_by_config}" = yes; then
-    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
-  else
-    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
-  fi
-fi
+## This used to add the X11 include path, but the code in the package
+## did not use any X11 headers ....
 ])# _R_TCLTK_CPPFLAGS
 
 ## _R_TCLTK_LIBS
