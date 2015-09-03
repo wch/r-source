@@ -1561,8 +1561,8 @@ if test -z "${MAIN_LD}"; then
   else
      MAIN_LD="${main_ld}"
   fi
-  R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 fi
+R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
