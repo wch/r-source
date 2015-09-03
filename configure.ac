@@ -2423,6 +2423,7 @@ AC_SUBST(FCLIBS)
 
 ## OpenMP package stuff (needs to come *after* configuration of all
 ## compilers).
+## We allow the users to override this for packages only (for now)
 if test "x${shlib_ld_was_given}" = xno -a \
         "${SHLIB_LD}" = "\$(CC)" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
@@ -2433,18 +2434,18 @@ if test "x${shlib_ld_was_given}" = xno -a \
         "x${shlib_fcld_was_given}" = xno -a \
         "${SHLIB_FCLD}" = "\$(FC)" -a \
         "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
-  SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
-  SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
-  SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"
-  SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+:  ${SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"}
+:  ${SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"}
+:  ${SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"}
+:  ${SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"}
   ## next macro is copied into Rconfig.h
   AC_DEFINE(SUPPORT_OPENMP, 1,
             [Define if you have C/C++/Fortran OpenMP support for package code.])
 else
-  SHLIB_OPENMP_CFLAGS=
-  SHLIB_OPENMP_CXXFLAGS=
-  SHLIB_OPENMP_FCFLAGS=
-  SHLIB_OPENMP_FFLAGS=
+:  ${SHLIB_OPENMP_CFLAGS=}
+:  ${SHLIB_OPENMP_CXXFLAGS=}
+:  ${SHLIB_OPENMP_FCFLAGS=}
+:  ${SHLIB_OPENMP_FFLAGS=}
 fi
 AC_SUBST(SHLIB_OPENMP_CFLAGS)
 AC_SUBST(SHLIB_OPENMP_CXXFLAGS)

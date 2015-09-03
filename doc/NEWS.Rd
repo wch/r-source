@@ -252,6 +252,11 @@
       been changed for FreeBSD, NetBSD and Hurd OSes to one more likely
       to work with compilers other than \command{gcc} (FreeBSD 10
       defaults to \command{clang}).
+
+      \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
+      e.g.\sspace{} \file{config.site}.  This is needed for
+      \command{clang} 3.7.0 which needs a compiler option not known to
+      by the standard \command{autoconf} macro used.
     }
   }
 
