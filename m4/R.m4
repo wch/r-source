@@ -2443,8 +2443,17 @@ if test -z "${TCLTK_CPPFLAGS}"; then
     fi
   fi
 fi
-## This used to add the X11 include path, but the code in the package
-## did not use any X11 headers ....
+## TK_XINCLUDES should be empty for Aqua Tk, so earlier test was wrong
+## Our code does not include any X headers, but tk.h may ....
+## That is true even on OS X, but Aqua Tk has a private version of
+## X11 headers, and we want that one and not the XQuartz one.
+if test "${have_tcltk}" = yes; then
+  if test "${found_tk_by_config}" = yes; then
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
+  else
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
+  fi
+fi
 ])# _R_TCLTK_CPPFLAGS
 
 ## _R_TCLTK_LIBS
