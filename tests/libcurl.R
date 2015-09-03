@@ -49,6 +49,7 @@ testUnknownUrlError <- tryCatch(suppressWarnings({
 }), error=function(e) {
     conditionMessage(e) == "cannot open connection"
 })
+close(zz)
 stopifnot(testUnknownUrlError)
 
 tf <- tempfile()
@@ -73,6 +74,7 @@ testUnknownUrl <- tryCatch({
 }, warning=function(e) {
     grepl("Couldn't resolve host name", conditionMessage(e))
 })
+close(zz)
 stopifnot(testUnknownUrl)
 
 test404.1 <- tryCatch({
@@ -80,6 +82,7 @@ test404.1 <- tryCatch({
 }, warning=function(w) {
     grepl("404 Not Found", conditionMessage(w))
 })
+close(zz)
 stopifnot(test404.1)
 
 ##  via read.table (which closes the connection)
@@ -87,8 +90,6 @@ tail(read.table(url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
                     method = "libcurl")))
 tail(read.table(url("ftp://ftp.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
                     method = "libcurl")))
-
-showConnections(all = TRUE)
 
 ## check option works
 options(url.method = "libcurl")
@@ -102,4 +103,7 @@ test404.2 <- tryCatch({
 }, warning=function(w) {
     grepl("404 Not Found", conditionMessage(w))
 })
+close(zz)
 stopifnot(test404.2)
+
+showConnections(all = TRUE)

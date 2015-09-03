@@ -464,10 +464,10 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd[i], CURLOPT_HEADERFUNCTION, &rcvHeaders);
 	curl_easy_setopt(hnd[i], CURLOPT_WRITEHEADER, &headers);
 	char *errbuf = calloc(CURL_ERROR_SIZE, sizeof(char));
-	curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
+	curl_easy_setopt(hnd[i], CURLOPT_ERRORBUFFER, errbuf);
 	/* libcurl (at least 7.40.0) does not respect CURLOPT_NOBODY
 	   for some ftp header info (Content-Length and Accept-ranges). */
-	curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEFUNCTION, &rcvBody);
 	CURLcode ret = curl_easy_perform(hnd[i]);
 	curl_multi_add_handle(mhnd, hnd[i]);
 	if (ret != CURLE_OK) {
@@ -484,7 +484,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    url, file, strerror(errno));
 	    continue;
 	}
-	curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, NULL); /* necessary? */
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEFUNCTION, NULL); /* necessary? */
 	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
 	curl_easy_setopt(hnd[i], CURLOPT_NOBODY, 0L);
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
