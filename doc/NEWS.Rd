@@ -255,8 +255,8 @@
 
       \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
       e.g.\sspace{} \file{config.site}.  This is needed for
-      \command{clang} 3.7.0 which needs a compiler option not known to
-      by the standard \command{autoconf} macro used.
+      \command{clang} 3.7.0 which needs a compiler option for OpenMP not
+      known to the standard \command{autoconf} macro used.
     }
   }
 
