@@ -207,14 +207,14 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
     curl_easy_setopt(hnd, CURLOPT_COOKIEFILE, "");
 }
 
-static char headers[500][2048];
+static char headers[500][2049]; // allow for terminator
 static int used;
 
 static size_t
 rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
 {
     char *d = (char*)buffer;
-    size_t result = size * nmemb, res = result > (2048 - 1) ? (2048 - 1) : result;
+    size_t result = size * nmemb, res = result > 2048 ? 2048 : result;
     if (used >= 500) return result;
     strncpy(headers[used], d, res);
     // 'Do not assume that the header line is zero terminated!'
