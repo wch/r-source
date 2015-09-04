@@ -2015,9 +2015,9 @@ and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
 _OPENMP}: note that some toolchains used for @R{} (including most of
 those using @command{clang}@footnote{Some builds of @command{clang} 3.7
-have support for OpenMP 3.1. However, this needs the compiler/linker
-flag @option{-fopenmp=libomp} which is not currently added by
-@command{configure}.}) have no OpenMP support at all, not even
+have support for OpenMP 3.1. However, this needs (for a default build)
+the compiler/linker flag @option{-fopenmp=libomp} which is not currently
+added by @command{configure}.}) have no OpenMP support at all, not even
 @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
