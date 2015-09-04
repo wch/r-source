@@ -3561,7 +3561,7 @@ or as a shared BLAS.
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
-For Intel processors, and perhaps others, and some distributions of
+For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library.  You are strongly
 encouraged to read the MKL User's Guide, which is installed with the
 library, before attempting to link to MKL.  There are also versions of
@@ -3635,7 +3635,17 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
 
 @noindent
 (Thanks to Ei-ji Nakama.  The @code{-ldl} was needed on a Centos 5
-systems and may not be needed everywhere.)
+system and may not be needed everywhere.)
+
+% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+It has been reported that
+
+@example
+--with-blas='-mkl=parallel' --with-lapack
+@end example
+
+@noindent
+worked with the Intel 2015.3 compilers on Centos 6.
 
 The MKL documentation includes a `link line advisor' which will suggest
 appropriate incantations.
@@ -4556,7 +4566,22 @@ need add flags to @code{CFLAGS}, @code{FFLAGS} and @code{CXXFLAGS} such
 as @option{-mp} (shown above) or @option{-fp-model precise -fp-model
 source}, depending on the compiler version.
 
-Others have reported success with versions 10.x and 11.x.
+Others have reported success with versions 10.x and 11.x.  
+% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+Bjørn-Helge Mevik reported success with version 2015.3 of the compilers,
+using (for a SandyBridge CPU on Centos 6.x)
+
+@example
+fast="-fp-model precise -ip -O3 -opt-mem-layout-trans=3 -xHost -mavx"
+CC=icc
+CFLAGS="$fast -wd188"
+F77=ifort
+FFLAGS="$fast"
+CXX=icpc
+CXXFLAGS="$fast"
+FC=$F77
+FCFLAGS=$F77FLAGS
+@end example
 
 
 @node Oracle Solaris Studio compilers,  , Intel compilers, Linux
