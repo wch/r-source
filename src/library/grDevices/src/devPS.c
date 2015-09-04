@@ -1936,6 +1936,7 @@ static cidfontfamily addCIDFont(const char *name, Rboolean isPDF)
 		if (!afmpath) {
 		    freeCIDFontFamily(fontfamily);
 		    fontfamily = NULL;
+		    freeType1Font(font);
 		    break;
 		}
 		fontfamily->symfont = font;
@@ -2014,6 +2015,7 @@ static type1fontfamily addFont(const char *name, Rboolean isPDF,
 		    if (!afmpath) {
 			freeFontFamily(fontfamily);
 			fontfamily = NULL;
+			freeType1Font(font);
 			break;
 		    }
 		    fontfamily->fonts[i] = font;

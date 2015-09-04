@@ -31,7 +31,7 @@ select.list <-
         ## this will work for Aqua Tcl/Tk.
         ## OTOH, we do want to check Tk works!
         else if(graphics && capabilities("tcltk") &&
-                capabilities("X11") && suppressWarnings(tcltk:::.TkUp))
+                capabilities("X11") && suppressWarnings(tcltk::.TkUp))
             return(tcltk::tk_select.list(choices, preselect, multiple, title))
     }
     ## simple text-based alternatives.

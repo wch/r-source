@@ -110,7 +110,7 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
     curl_easy_setopt(hnd, CURLOPT_COOKIEFILE, "");
 }
 
-static char headers[500][2048];
+static char headers[500][2049]; // allow for terminator
 static int used;
 
 static size_t
@@ -125,6 +125,7 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
     used++;
     return result;
 }
+
 static size_t
 rcvBody(void *buffer, size_t size, size_t nmemb, void *userp)
 {

@@ -1007,13 +1007,16 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 #define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
 		sort2_with_index
 #undef less
-		    if(nalast) hi -= numna; else lo += numna;
+		if (n - numna < 2) {
+		    Free(isna);
+		    return;
+		}
+		if (nalast) hi -= numna; else lo += numna;
 	    }
     }
 
     /* Shell sort isn't stable, so add test on index */
 
-    /* FIXME: check hi-lo + 1 > 1 ? */
     for (t = 0; sincs[t] > hi-lo+1; t++);
 
     if (isObject(key) && !isNull(rho)) {
@@ -1141,13 +1144,16 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 #define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
 		sort2_with_index
 #undef less
-		    if(nalast) hi -= numna; else lo += numna;
+		if (n - numna < 2) {
+		    Free(isna);
+		    return;
+		}
+		if (nalast) hi -= numna; else lo += numna;
 	    }
     }
 
     /* Shell sort isn't stable, so add test on index */
 
-    /* FIXME: check hi-lo + 1 > 1 ? */
     for (t = 0; sincs[t] > hi-lo+1; t++);
 
     if (isObject(key) && !isNull(rho)) {

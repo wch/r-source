@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseRd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -168,8 +168,11 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
     		dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))
     	    	result <- dep[[1L]]
     	    	state <<- dep[[2L]][1L:2L]
-    	    } else
+    	    } else {
+	        if (inherits(x, "Rd"))
+		    class(x) <- setdiff(class(x), "Rd") # Avoid infinite recursion from misuse (PR#16448)
     	    	result <- as.character(x)
+	    }
     	    if (needBraces) {
     	    	if (grepl("^[[:alpha:]]", result)) result <- c("{}", result)
     	    	needBraces <<- FALSE
@@ -191,18 +194,18 @@ deparseRdElement <- function(element, state)
 permissify <- function(Rd) {  
     tags <- RdTags(Rd)
     oldclass <- class(Rd)
-    oldsrcref <- getSrcref(Rd)
+    oldsrcref <- utils::getSrcref(Rd)
     oldtag <- attr(Rd, "Rd_tag")
     i <- 0
     while (i < length(tags)) {
         i <- i+1
    	if (tags[i] == "UNKNOWN") {
-   	    Rd[[i]] <- tagged(Rd[[i]], "TEXT", getSrcref(Rd[[i]]))
+   	    Rd[[i]] <- tagged(Rd[[i]], "TEXT", utils::getSrcref(Rd[[i]]))
             while (i < length(tags)) {
 		if (tags[i+1] == "LIST") {
-		    Rd <- c(Rd[seq_len(i)], list(tagged("{", "TEXT", getSrcref(Rd[[i+1]]))), 
+		    Rd <- c(Rd[seq_len(i)], list(tagged("{", "TEXT", utils::getSrcref(Rd[[i+1]]))), 
 		                        permissify(Rd[[i+1]]), 
-            	                        list(tagged("}", "TEXT", getSrcref(Rd[[i+1]]))), 
+            	                        list(tagged("}", "TEXT", utils::getSrcref(Rd[[i+1]]))), 
 			    Rd[seq_along(Rd)[-seq_len(i+1)]])
 		    tags <- RdTags(Rd)
 		    i <- i+3

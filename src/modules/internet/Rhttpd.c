@@ -686,6 +686,7 @@ static void process_request_(void *ptr)
 				    free(fbuf);
 				    UNPROTECT(7);
 				    c->attr |= CONNECTION_CLOSE;
+				    fclose(f);
 				    return;
 				}
 				send_response(c->sock, fbuf, rd);
@@ -695,6 +696,7 @@ static void process_request_(void *ptr)
 			} else { /* allocation error - get out */
 			    UNPROTECT(7);
 			    c->attr |= CONNECTION_CLOSE;
+			    fclose(f);
 			    return;
 			}
 		    }

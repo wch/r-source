@@ -561,7 +561,7 @@ buildVignettes <-
     } else {
         ## Badly-written vignettes open a pdf() device on Rplots.pdf and
         ## fail to close it.
-        graphics.off()
+        grDevices::graphics.off()
 
         keep <- c(outputs, unlist(sourceList))
         if(clean) {
@@ -760,8 +760,11 @@ getVignetteEncoding <-  function(file, ...)
 .get_vignette_metadata <-
 function(lines, tag)
 {
-    meta_RE <- paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
-                     "\\{([^}]*)\\}", sep = "")
+    ## <FIXME>
+    ## Why don't we anchor this to the beginning of a line?
+    meta_RE <- paste0("[[:space:]]*%+[[:space:]]*\\\\Vignette", 
+                      tag, "\\{([^}]*(\\{[^}]*\\})*[^}]*)\\}.*")
+    ## </FIXME>
     meta <- grep(meta_RE, lines, value = TRUE, useBytes = TRUE)
     trimws(gsub(meta_RE, "\\1", meta))
 }
@@ -894,9 +897,8 @@ print.check_vignette_index <-
 function(x, ...)
 {
     if(length(x)) {
-        writeLines(paste("Vignettes with missing or empty",
-                         "\\VignetteIndexEntry:"))
-        print(basename(unclass(x)), ...)
+        writeLines(c("Vignettes with missing or empty \\VignetteIndexEntry:",
+                     paste(" ", basename(unclass(x)))))
     }
     invisible(x)
 }

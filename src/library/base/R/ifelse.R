@@ -34,7 +34,7 @@ ifelse <- function (test, yes, no)
         }
     }
     else ## typically a "class"; storage.mode<-() typically fails
-	test <- if(isS4(test)) as(test, "logical") else as.logical(test)
+	test <- if(isS4(test)) methods::as(test, "logical") else as.logical(test)
     ans <- test
     ok <- !(nas <- is.na(test))
     if (any(test[ok]))

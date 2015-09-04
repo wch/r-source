@@ -1,4 +1,4 @@
-#  File src/library/tools/R/writePACKAGES.R
+#  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1995-2015 The R Core Team
@@ -200,7 +200,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
 dependsOnPkgs <-
 function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
          recursive = TRUE, lib.loc = NULL,
-         installed = installed.packages(lib.loc, fields = "Enhances"))
+         installed = utils::installed.packages(lib.loc, fields = "Enhances"))
 {
     if(identical(dependencies, "all"))
         dependencies <-
@@ -372,7 +372,7 @@ function(packages = NULL, db,
         new <- do.call(rbind,
                        Map(function(i, k)
                            cbind(rep.int(i, length(k)),
-                                     rep(k, each = length(i))),
+                                 rep(k, each = length(i))),
                            p_L, tab[as.integer(names(p_L))]))
         npos <- unique(rbind(pos, new))
         nnew <- nrow(npos) - nrow(pos)

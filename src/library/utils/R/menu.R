@@ -25,7 +25,7 @@ menu <- function(choices, graphics = FALSE, title = NULL)
            ## this will work for Aqua Tcl/Tk.
            ## OTOH, we do want to check Tk works!
            || (capabilities("tcltk") && capabilities("X11") &&
-               suppressWarnings(tcltk:::.TkUp))) {
+               suppressWarnings(tcltk::.TkUp))) {
             res <- select.list(choices, multiple = FALSE, title = title,
                                graphics = TRUE)
             return(match(res, choices, nomatch = 0L))

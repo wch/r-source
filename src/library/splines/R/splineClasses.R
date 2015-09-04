@@ -93,19 +93,18 @@ splineDesign <-
 	if(need.outer) { ## shift column numbers and drop those "outside"
 	    jj <- jj - o1 - 1L
 	    ok <- 0 <= jj & jj < ncoef
-	    as(new("dgTMatrix",
-		   i = ii[ok] - 1L,
-		   j = jj[ok],
-		   x = as.double(temp[ok]),
-		   Dim = c(nx, ncoef)), "CsparseMatrix")
+	    methods::as(methods::new("dgTMatrix",
+                                     i = ii[ok] - 1L,
+                                     j = jj[ok],
+                                     x = as.double(temp[ok]),
+                                     Dim = c(nx, ncoef)), "CsparseMatrix")
 	}
 	else
-	    as(new("dgTMatrix",
-		   i = ii - 1L,
-		   j = jj - 1L,
-		   x = as.double(temp),
-		   Dim = c(nx, ncoef)), "CsparseMatrix")
-
+	    methods::as(methods::new("dgTMatrix",
+                                     i = ii - 1L,
+                                     j = jj - 1L,
+                                     x = as.double(temp),
+                                     Dim = c(nx, ncoef)), "CsparseMatrix")
     } else { ## traditional (dense) matrix
 	design <- matrix(double(nx * ncoef), nx, ncoef)
 	if(need.outer) { ## shift column numbers and drop those "outside"
