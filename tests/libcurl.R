@@ -52,13 +52,13 @@ close(zz)
 ## close(zz)
 ## stopifnot(testUnknownUrlError)
 
-tf <- tempfile()
-testDownloadFileError <- tryCatch(suppressWarnings({
-    download.file("http://foo.bar", tf, method="libcurl")
-}), error=function(e) {
-    conditionMessage(e) == "cannot download all files"
-})
-stopifnot(testDownloadFileError, !file.exists(tf))
+## tf <- tempfile()
+## testDownloadFileError <- tryCatch(suppressWarnings({
+##     download.file("http://foo.bar", tf, method="libcurl")
+## }), error=function(e) {
+##     conditionMessage(e) == "cannot download all files"
+## })
+## stopifnot(testDownloadFileError, !file.exists(tf))
 
 tf <- tempfile()
 testDownloadFile404 <- tryCatch(suppressWarnings({
