@@ -4022,11 +4022,9 @@ function(package, lib.loc = NULL)
     ## (This loads the namespace if not already loaded.)
     .glbs <- suppressMessages(utils::globalVariables(, package))
     if(length(.glbs)) {
-        ## codetools doesn't allow adding to its unexported default,
-        ## so codetools:::dfltSuppressUndefined is copied here
-        dflt <- c(".Generic", ".Method", ".Class", ".split.valid.screens",
-                  ".split.cur.screen", ".split.saved.pars", ".split.screens",
-                  ".split.par.list", "last.dump")
+        ## codetools:::dfltSuppressUndefined is copied & pruned here
+        ## We need exceptions for base (and potentially tools and utils)
+        dflt <- c(".Generic", ".Method", ".Class", "last.dump")
         args$suppressUndefined <- c(dflt, .glbs)
     }
 
