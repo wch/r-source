@@ -889,7 +889,7 @@ fi
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
 
-AC_OPENMP
+R_OPENMP
 
 ### *** Fortran 77 compiler.
 
@@ -907,7 +907,7 @@ AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
                [test "x${HAVE_FORTRAN_DOUBLE_COMPLEX}" != x])
 
 AC_LANG_PUSH(Fortran 77)
-AC_OPENMP
+R_OPENMP
 AC_LANG_POP(Fortran 77)
 
 
@@ -916,7 +916,7 @@ AC_LANG_POP(Fortran 77)
 R_PROG_CXX_MAKEFRAG
 
 AC_LANG_PUSH(C++)
-AC_OPENMP
+R_OPENMP
 AC_LANG_POP(C++)
 
 ### *** ObjC compiler
@@ -2408,7 +2408,7 @@ AC_PROG_FC()
 AC_LANG_PUSH(Fortran)
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
-AC_OPENMP
+R_OPENMP
 AC_LANG_POP()
 if test -z "${SHLIB_FCLD}"; then
   shlib_fcld_was_given=no
@@ -2434,19 +2434,41 @@ if test "x${shlib_ld_was_given}" = xno -a \
         "x${shlib_fcld_was_given}" = xno -a \
         "${SHLIB_FCLD}" = "\$(FC)" -a \
         "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
-:  ${SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"}
-:  ${SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"}
-:  ${SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"}
-:  ${SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"}
   ## next macro is copied into Rconfig.h
   AC_DEFINE(SUPPORT_OPENMP, 1,
             [Define if you have C/C++/Fortran OpenMP support for package code.])
+fi
+## This assumes that OpenMP support in the C compiler includes compilation by F77
+if test "x${shlib_ld_was_given}" = xno -a \
+        "${SHLIB_LD}" = "\$(CC)" -a \
+        "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
+        "x${ac_cv_prog_c_openmp}" != "x"; then
+:  ${SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"}
+  if test "x${ac_cv_prog_f77_openmp}" != "xunsupported"; then
+:  ${SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"}
+  else
+:  ${SHLIB_OPENMP_FFLAGS=}
+  fi
 else
 :  ${SHLIB_OPENMP_CFLAGS=}
-:  ${SHLIB_OPENMP_CXXFLAGS=}
-:  ${SHLIB_OPENMP_FCFLAGS=}
 :  ${SHLIB_OPENMP_FFLAGS=}
 fi
+if test "x${shlib_cxxld_was_given}" = xno -a \
+        "${SHLIB_CXXLD}" = "\$(CXX)" -a \
+        "x${ac_cv_prog_cxx_openmp}" != "xunsupported"; then
+:  ${SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"}
+else
+:  ${SHLIB_OPENMP_CXXFLAGS=}
+fi
+if test "x${shlib_fcld_was_given}" = xno -a \
+        "${SHLIB_FCLD}" = "\$(FC)" -a \
+        "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
+:  ${SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"}
+else
+:  ${SHLIB_OPENMP_FCFLAGS=}
+fi
+
+
 AC_SUBST(SHLIB_OPENMP_CFLAGS)
 AC_SUBST(SHLIB_OPENMP_CXXFLAGS)
 AC_SUBST(SHLIB_OPENMP_FCFLAGS)
