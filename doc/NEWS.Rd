@@ -187,6 +187,10 @@
       
       \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
 	Leopard}): even that has been unsupported by Apple since 2012.
+      
+      \item \command{configure} now supports the OpenMP flags
+      \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
+      
     }
   }
 
