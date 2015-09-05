@@ -44,13 +44,13 @@ close(zz)
 
 
 ## check graceful failure: warnings leading to error
-testUnknownUrlError <- tryCatch(suppressWarnings({
-    zz <- url("http://foo.bar", "r", method = "libcurl")
-}), error=function(e) {
-    conditionMessage(e) == "cannot open connection"
-})
-close(zz)
-stopifnot(testUnknownUrlError)
+## testUnknownUrlError <- tryCatch(suppressWarnings({
+##     zz <- url("http://foo.bar", "r", method = "libcurl")
+## }), error=function(e) {
+##     conditionMessage(e) == "cannot open connection"
+## })
+## close(zz)
+## stopifnot(testUnknownUrlError)
 
 tf <- tempfile()
 testDownloadFileError <- tryCatch(suppressWarnings({
@@ -69,13 +69,13 @@ testDownloadFile404 <- tryCatch(suppressWarnings({
 stopifnot(testDownloadFile404, !file.exists(tf))
 
 ## check specific warnings
-testUnknownUrl <- tryCatch({
-    zz <- url("http://foo.bar", "r", method = "libcurl")
-}, warning=function(e) {
-    grepl("Couldn't resolve host name", conditionMessage(e))
-})
-close(zz)
-stopifnot(testUnknownUrl)
+## testUnknownUrl <- tryCatch({
+##     zz <- url("http://foo.bar", "r", method = "libcurl")
+## }, warning=function(e) {
+##     grepl("Couldn't resolve host name", conditionMessage(e))
+## })
+## close(zz)
+## stopifnot(testUnknownUrl)
 
 test404.1 <- tryCatch({
     open(zz <- url("http://httpbin.org/status/404", method="libcurl"))
