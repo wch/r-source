@@ -2034,6 +2034,21 @@ Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the C++98
 compiler and not necessarily to the C++11 compiler: users of the latter
 should do their own @command{configure} checks.
 
+Some care is needed when compilers are from different families which may
+use different OpenMP runtimes (e.g.@: @command{clang} and GCC, including
+@command{gfortran} do).  For a package with Fortran 77 code using OpenMP
+the approproate lines are
+
+@example
+PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
+@end example
+
+@noindent
+as the C compiler is used to link the package code (and there is no
+guarantee that this will work everywhere).
+
+
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
