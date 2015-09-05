@@ -4021,10 +4021,14 @@ function(package, lib.loc = NULL)
     ## look for globalVariables declaration in package
     ## (This loads the namespace if not already loaded.)
     .glbs <- suppressMessages(utils::globalVariables(, package))
-    if(length(.glbs))
-        ## codetools doesn't allow adding to its default
-        args$suppressUndefined <-
-            c(codetools:::dfltSuppressUndefined, .glbs)
+    if(length(.glbs)) {
+        ## codetools doesn't allow adding to its unexported default,
+        ## so codetools:::dfltSuppressUndefined is copied here
+        dflt <- c(".Generic", ".Method", ".Class", ".split.valid.screens",
+                  ".split.cur.screen", ".split.saved.pars", ".split.screens",
+                  ".split.par.list", "last.dump")
+        args$suppressUndefined <- c(dflt, .glbs)
+    }
 
     if(check_without_loading) {
         args <- c(list(env, report = foo), args)
