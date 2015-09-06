@@ -4022,10 +4022,10 @@ function(package, lib.loc = NULL)
     ## (This loads the namespace if not already loaded.)
     .glbs <- suppressMessages(utils::globalVariables(, package))
     if(length(.glbs)) {
-        ## We need exceptions for base (and potentially tools and utils)
-        dflt <- if(package == "base")
-            c(".Generic", ".Method", ".Class", "last.dump")
-        else character()
+        ## Cannot use globalVariables() for base
+        ## (and potentially tools and utils)
+        dflt <- c(if(package == "base") "last.dump",
+                  ".Generic", ".Method", ".Class")
         args$suppressUndefined <- c(dflt, .glbs)
     }
 
