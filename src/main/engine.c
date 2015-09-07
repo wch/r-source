@@ -2650,6 +2650,11 @@ void GEdirtyDevice(pGEDevDesc dd)
     dd->dirty = TRUE;
 }
 
+void GEcleanDevice(pGEDevDesc dd)
+{
+    dd->dirty = FALSE;
+}
+
 /****************************************************************
  * GEcheckState
  ****************************************************************
@@ -2752,7 +2757,7 @@ void GEplayDisplayList(pGEDevDesc dd)
      */
     for (i = 0; i < MAX_GRAPHICS_SYSTEMS; i++)
 	if (dd->gesd[i] != NULL)
-	    (dd->gesd[i]->callback)(GE_RestoreState, dd, R_NilValue);
+	    (dd->gesd[i]->callback)(GE_RestoreState, dd, theList);
     /* Play the display list
      */
     PROTECT(theList);
@@ -2832,6 +2837,7 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
     int i;
     SEXP snapshot, tmp;
     SEXP state;
+    SEXP engineVersion;
     /* Create a list with one spot for the display list
      * and one spot each for the registered graphics systems
      * to put their graphics state
@@ -2854,7 +2860,10 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
 	    SET_VECTOR_ELT(snapshot, i + 1, state);
 	    UNPROTECT(1);
 	}
-    UNPROTECT(1);
+    PROTECT(engineVersion = allocVector(INTSXP, 1));
+    INTEGER(engineVersion)[0] = R_GE_getVersion();
+    setAttrib(snapshot, install("engineVersion"), engineVersion);
+    UNPROTECT(2);
     return snapshot;
 }
 
@@ -2865,25 +2874,6 @@ SEXP GEcreateSnapshot(pGEDevDesc dd)
 
 /* Recreate a saved display using the information in a structure
  * created by GEcreateSnapshot.
- *
- * The graphics engine assumes that it is getting a snapshot
- * that was created in THE CURRENT R SESSION
- * (Thus, it can assume that registered graphics systems are
- *  in the same order as they were when the snapshot was
- *  created -- in patricular, state information will be sent
- *  to the appropriate graphics system.)
- * [With only two systems and base registered on each device at
- * creation, that has to be true: and grid does not save any state.]
- *
- *  It also assumes that the system that created the snapshot is
- *  still loaded (e.g. the grid namespace has not been unloaded).
- *
- * It is possible to save a snapshot to an R variable
- * (and therefore save and reload it between sessions and
- *  even possibly into a different R version),
- * BUT this is strongly discouraged
- * (in the documentation for recordPlot() and replayPlot()
- *  and in the documentation for the Rgui interface on Windows)
  */
 
 void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
@@ -2892,19 +2882,38 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
      * as were registered when the snapshot was taken.
      */
     int i, numSystems = LENGTH(snapshot) - 1;
+    /* Check graphics engine version matches.
+     * If it does not, things still might work, so just a warning.
+     * NOTE though, that if it does not work, the results could be fatal.
+     */
+    SEXP snapshotEngineVersion;
+    int engineVersion = R_GE_getVersion();
+    PROTECT(snapshotEngineVersion = getAttrib(snapshot, 
+                                              install("engineVersion")));
+    if (isNull(snapshotEngineVersion)) {
+        warning(_("snapshot recorded with different graphics engine version (pre 11 - this is version %d)"),
+                engineVersion);
+    } else if (INTEGER(snapshotEngineVersion)[0] != engineVersion) {
+        int snapshotVersion = INTEGER(snapshotEngineVersion)[0];
+        warning(_("snapshot recorded with different graphics engine version (%d - this is version %d)"), 
+                snapshotVersion, engineVersion);
+    }
+    /* "clean" the device
+     */
+    GEcleanDevice(dd);
     /* Reset the snapshot state information in each registered
      * graphics system
      */
     for (i = 0; i < numSystems; i++)
 	if (dd->gesd[i] != NULL)
-	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd,
-				    VECTOR_ELT(snapshot, i + 1));
+	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd, snapshot);
     /* Replay the display list
      */
     dd->displayList = duplicate(VECTOR_ELT(snapshot, 0));
     dd->DLlastElt = lastElt(dd->displayList);
     GEplayDisplayList(dd);
     if (!dd->displayListOn) GEinitDisplayList(dd);
+    UNPROTECT(1);
 }
 
 /* recordPlot() */

@@ -29,10 +29,25 @@ replayPlot(x)
   \code{\link{str}} are liable to mislead.
 }
 \section{Warning}{
-  The format of recorded plots may change between \R versions.
-  Recorded plots can \strong{not} be used as a permanent
-  storage format for \R plots.  There were extensive changes in \R
-  3.0.0, and now only plots from the current session can be replayed.
+  The format of recorded plots may change between \R versions, so
+  recorded plots should \strong{not} be used as a permanent
+  storage format for \R plots.
+  
+  As of \R 3.3.0, it is possible (again)
+  to replay a plot from another \R session using, for example,
+  \code{\link{saveRDS}} and \code{\link{readRDS}}.
+  It is even possible to replay a plot from another \R version,
+  however, this will produce warnings, may produce errors,
+  or something worse.
+}
+\section{Note}{
+  Replay of a recorded plot may not produce the correct result
+  (or may just fail) if the display list contains a call to
+  \code{\link{recordGraphics}} which in turn contains an expression
+  that calls code from a non-base package other than \pkg{graphics}
+  or \pkg{grid}.  The most well-known example of this is a plot
+  drawn with the package \pkg{ggplot2}.  The solution is to load
+  the relevant package(s) before replaying the recorded plot.
 }
 \value{
   \code{recordPlot} returns an object of class \code{"recordedplot"}.

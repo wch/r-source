@@ -127,6 +127,22 @@
       addiitonal arguments to methods.
 
       \item \code{[} has a method for class \code{"table"}.
+
+      \item It is now possible (again) to \code{replayPlot()} a
+      display list snapshot that was created by \code{recordPlot()}
+      in a different R session.
+
+      It is still not a good idea to use snapshots as a persistent
+      storage format for R plots, but it is now not completely silly to
+      use a snapshot as a format for transferring an R plot between two
+      R sessions.
+
+      Code for restoring snapshots was contributed by from Jeroen Ooms
+      and JJ Allaire.
+
+      Some testing code is available at
+      \url{https://github.com/pmur002/R-display-list}
+      
     }
   }
 

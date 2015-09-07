@@ -261,21 +261,68 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	GReset(dd);
 	break;
     case GE_SaveSnapshotState:
-	/* called from GEcreateSnapshot */
-	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-	/* Changed from INTSXP in 2.7.0: but saved graphics lists
-	   are protected by an R version number */
-	PROTECT(result = allocVector(RAWSXP, sizeof(GPar)));
-	copyGPar(&(bss->dpSaved), (GPar*) RAW(result));
-	UNPROTECT(1);
+        /* called from GEcreateSnapshot */
+        { 
+            SEXP pkgName;
+            bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+            /* Changed from INTSXP in 2.7.0: but saved graphics lists
+               are protected by an R version number */
+            PROTECT(result = allocVector(RAWSXP, sizeof(GPar)));
+            copyGPar(&(bss->dpSaved), (GPar*) RAW(result));
+            PROTECT(pkgName = mkString("graphics"));
+            setAttrib(result, install("pkgName"), pkgName);
+            UNPROTECT(2);
+        }
 	break;
     case GE_RestoreSnapshotState:
-	/* called from GEplaySnapshot */
-	bss = dd->gesd[baseRegisterIndex]->systemSpecific;
-	copyGPar((GPar*) RAW(data), &(bss->dpSaved));
-	restoredpSaved(dd);
-	copyGPar(&(bss->dp), &(bss->gp));
-	GReset(dd);
+        /* called from GEplaySnapshot */
+        {
+            int i, nState = LENGTH(data) - 1;
+            SEXP graphicsState, snapshotEngineVersion;
+            PROTECT(graphicsState = R_NilValue);
+            /* Prior to engine version 11, "pkgName" was not stored.
+             * (can tell because "engineVersion" was not stored either.)
+             * Assume 'graphics' is first state in snapshot
+             * (though this could be fatal).
+             */
+            PROTECT(snapshotEngineVersion = 
+                    getAttrib(data, install("engineVersion")));
+            if (isNull(snapshotEngineVersion)) {
+                graphicsState = VECTOR_ELT(data, 1);
+            } else {
+                for (i=0; i<nState; i++) {
+                    SEXP state = VECTOR_ELT(data, i + 1);
+                    if (!strcmp(CHAR(STRING_ELT(getAttrib(state, 
+                                                          install("pkgName")), 
+                                                0)), 
+                                "graphics")) {
+                        graphicsState = state;
+                    }
+                }
+            }
+            if (!isNull(graphicsState)) {
+                /* Check that RAW blob being restored is same size
+                 * as GPar struct in current R version.
+                 * Any version difference will have been warned about,
+                 * but a difference here means STOP.
+                 */
+                if (LENGTH(graphicsState) != sizeof(GPar)) {
+                    error(_("Incompatible graphics state"));
+                }
+                bss = dd->gesd[baseRegisterIndex]->systemSpecific;
+                copyGPar((GPar*) RAW(graphicsState), &(bss->dpSaved));
+                /* RestoreState will follow and do these ...
+                   restoredpSaved(dd);
+                   copyGPar(&(bss->dp), &(bss->gp));
+                   GReset(dd);
+                */
+                /* Make the device "clean" with respect to 'graphics'
+                 * so that the display list replay starts from scratch
+                 */
+                bss->baseDevice = FALSE;
+            }
+            UNPROTECT(2);
+        }
 	break;
     case GE_CheckPlot:
 	/* called from GEcheckState:
