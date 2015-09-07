@@ -4021,10 +4021,13 @@ function(package, lib.loc = NULL)
     ## look for globalVariables declaration in package
     ## (This loads the namespace if not already loaded.)
     .glbs <- suppressMessages(utils::globalVariables(, package))
-    if(length(.glbs))
-        ## codetools doesn't allow adding to its default
-        args$suppressUndefined <-
-            c(codetools:::dfltSuppressUndefined, .glbs)
+    if(length(.glbs)) {
+        ## Cannot use globalVariables() for base
+        ## (and potentially tools and utils)
+        dflt <- c(if(package == "base") "last.dump",
+                  ".Generic", ".Method", ".Class")
+        args$suppressUndefined <- c(dflt, .glbs)
+    }
 
     if(check_without_loading) {
         args <- c(list(env, report = foo), args)

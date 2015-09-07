@@ -187,6 +187,12 @@
       
       \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
 	Leopard}): even that has been unsupported by Apple since 2012.
+      
+      \item \command{configure} now supports the OpenMP flags
+      \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
+      
+      \item Various OpenMP macros can be set to override the default
+      behaviour of \command{configure}: see file \file{config.site}.
     }
   }
 
@@ -198,6 +204,9 @@
 
       Code using it will need to be reinstalled. (\PR{16470})
       % no current CRAN packages ....
+
+      \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
+      deprecated in favour of the standard OpenMP define \samp{_OPENMP}.
     }
   }
 
@@ -252,6 +261,11 @@
       been changed for FreeBSD, NetBSD and Hurd OSes to one more likely
       to work with compilers other than \command{gcc} (FreeBSD 10
       defaults to \command{clang}).
+
+      \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
+      e.g.\sspace{} \file{config.site}.  This is needed for
+      \command{clang} 3.7.0 which needs a compiler option for OpenMP not
+      known to the standard \command{autoconf} macro used.
     }
   }
 
@@ -301,6 +315,9 @@
 
       \item \code{pchisq(*, df=0, ncp > 0, log.p=TRUE)} no longer
       underflows (for ncp > ~60).
+
+      \item \code{libcurl} connections signal errors rather than
+      retrieving http error pages.
     }
   }
 }

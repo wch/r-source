@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/screen.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+utils::globalVariables(c(".split.valid.screens", ".split.cur.screen",
+                         ".split.saved.pars", ".split.screens",
+                         ".split.par.list"))
 ## An environment not exported from namespace:graphics used to
 ## store the split.screen settings
 .SSenv <- new.env()

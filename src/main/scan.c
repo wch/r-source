@@ -696,7 +696,10 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 
     if (d->ttyflag) sprintf(ConsolePrompt, "1: ");
 
-    strip = asLogical(stripwhite);
+    // we checked its type in do_scan
+    int *lstrip = LOGICAL(stripwhite);
+    Rboolean vec_strip = (length(stripwhite) == length(what));
+    strip = lstrip[0];
 
     for (;;) {
 	if(linesread % 1000 == 999) R_CheckUserInterrupt();
@@ -741,6 +744,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    }
 	}
 
+	if (vec_strip) strip = lstrip[colsread];
 	buffer = fillBuffer(TYPEOF(VECTOR_ELT(ans, ii)), strip, &bch, d, &buf);
 	if (colsread == 0 &&
 	    strlen(buffer) == 0 &&
@@ -752,8 +756,6 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    extractItem(buffer, VECTOR_ELT(ans, ii), n, d);
 	    ii++;
 	    colsread++;
-	    if (length(stripwhite) == length(what))
-		strip = LOGICAL(stripwhite)[colsread];
 	    /* increment n and reset i after filling a row */
 	    if (colsread == nc) {
 		n++;
@@ -763,8 +765,6 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		    while ((c = scanchar(FALSE, d)) != '\n' && c != R_EOF);
 		    bch = c;
 		}
-		if (length(stripwhite) == length(what))
-		    strip = LOGICAL(stripwhite)[0];
 	    }
 	}
     }

@@ -936,6 +936,45 @@ deduced correctly, but if necessary it can be set as the value of
 environment variable @env{TZ}.
 
 
+@menu
+* OpenMP Support::              
+@end menu
+
+@node OpenMP Support,  , Other Options, Other Options
+@subsection OpenMP Support
+
+By default @command{configure} searches for suitable
+options@footnote{for example, @option{-fopenmp}, @option{-xopenmp} or
+@option{-qopenmp}.  This includes for 2015 versions of @command{clang}
+and the Intel C compiler.} for OpenMP support for the C, C++98, FORTRAN
+77 and Fortran compilers.
+
+Only the C result is currently used for @R{} itself, and only if
+@code{MAIN_LD}/@code{DYLIB_LD} were not specified.  This can be
+overridden by specifying
+@example
+R_OPENMP_CFLAGS
+@end example
+
+Use for packages has similar restrictions (involving @code{SHLIB_LD} and
+similar: note that as FORTRAN 77 code is normally linked by the C
+compiler, both need to support OpenMP) and can be overridden by
+specifying some of
+@example
+SHLIB_OPENMP_CFLAGS
+SHLIB_OPENMP_CXXFLAGS
+SHLIB_OPENMP_FCFLAGS
+SHLIB_OPENMP_FFLAGS
+@end example
+
+@noindent
+Setting to an empty value will disable OpenMP for that compiler (and
+configuring with @option{--disable-openmp} will disable all detection of
+OpenMP).  Note that the @command{configure} detection test is to compile
+and link a standalone OpenMP program, which is not the same as compiling
+a shared object and loading it into the C program of @R{}'s executable.
+Note that overridden values are not tested.
+
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
 
@@ -3281,18 +3320,26 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.12 and 8.6.0 have been tested (including
+Versions of Tcl/Tk up to 8.5.18 and 8.6.4 have been tested (including
 most versions of 8.4.x, but not recently).
+
+Note that the @file{tk.h} header includes@footnote{This is true even for
+the `Aqua' version of Tk on OS X, but distributions of that include a
+copy of the X11 files needed.} X11 headers, so you will need X11 and its
+development files installed.
 
 @node Java support, Other compiled languages, Tcl/Tk, Useful libraries and programs
 @subsection Java support
 
 The build process looks for Java support on the host system, and if it
-finds it sets some settings which are useful for Java-using packages.
+finds it sets some settings which are useful for Java-using packages
+(such as @CRANpkg{rJava} and @CRANpkg{JavaGD}).  This check can be
+suppressed by configure option @option{--disable-java}.
 @enindex JAVA_HOME
-@env{JAVA_HOME} can be set to point to a specific JRE/JDK.
+Configure variable @env{JAVA_HOME} can be set to point to a specific
+JRE/JDK, on the @command{configure} command line or in the environment.
 
-Principal amongst these are setting some library paths to the Java
+Principal amongst these settings are some library paths to the Java
 libraries and JVM, which are stored in environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
 @env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
@@ -3300,7 +3347,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-4.b16.fc21.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -3318,15 +3365,16 @@ Another way of overriding those settings is to set the environment variable
 Java-using packages.  For example
 
 @example
-R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.7.0/jre/lib/amd64/server
+R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0/jre/lib/amd64/server
 @end example
 
 It may be possible to avoid this by specifying an invariant link as the
-path. For example, on that system either of
+path. For example, on that system any of
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.7.0
-JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
+JAVA_HOME=/usr/lib/jvm/java
+JAVA_HOME=/usr/lib/jvm/java-1.8.0
+JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
 @end example
 
 @noindent
@@ -3552,7 +3600,7 @@ or as a shared BLAS.
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
-For Intel processors, and perhaps others, and some distributions of
+For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library.  You are strongly
 encouraged to read the MKL User's Guide, which is installed with the
 library, before attempting to link to MKL.  There are also versions of
@@ -3626,7 +3674,17 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
 
 @noindent
 (Thanks to Ei-ji Nakama.  The @code{-ldl} was needed on a Centos 5
-systems and may not be needed everywhere.)
+system and may not be needed everywhere.)
+
+% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+It has been reported that
+
+@example
+--with-blas='-mkl=parallel' --with-lapack
+@end example
+
+@noindent
+worked with the Intel 2015.3 compilers on Centos 6.
 
 The MKL documentation includes a `link line advisor' which will suggest
 appropriate incantations.
@@ -4501,16 +4559,10 @@ the installed @command{g++}.  Using the runtime from the @code{libc++}
 project (@url{http://libcxx.llvm.org/}) has also been tested: for some
 @R{} packages only the variant using @code{libcxxabi} was successful.
 
-Most builds of @command{clang} have no OpenMP support.  For builds of
-version 3.7 or later which do, you will probably need to add
-
-@example
-SHLIB_OPENMP_CFLAGS=-fopenmp=libomp
-SHLIB_OPENMP_CXXFLAGS=-fopenmp=libomp
-@end example
-
-@noindent
-in @file{config.site}.
+Most builds of @command{clang} have no OpenMP support.  Builds of
+version 3.7.0 or later may.@footnote{This also needs the OpenMP runtime,
+which is usually distributed separately, e.g.@: at
+@uref{http://llvm.org/releases}.}
 
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
@@ -4547,7 +4599,22 @@ need add flags to @code{CFLAGS}, @code{FFLAGS} and @code{CXXFLAGS} such
 as @option{-mp} (shown above) or @option{-fp-model precise -fp-model
 source}, depending on the compiler version.
 
-Others have reported success with versions 10.x and 11.x.
+Others have reported success with versions 10.x and 11.x.  
+% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+Bjørn-Helge Mevik reported success with version 2015.3 of the compilers,
+using (for a SandyBridge CPU on Centos 6.x)
+
+@example
+fast="-fp-model precise -ip -O3 -opt-mem-layout-trans=3 -xHost -mavx"
+CC=icc
+CFLAGS="$fast -wd188"
+F77=ifort
+FFLAGS="$fast"
+CXX=icpc
+CXXFLAGS="$fast"
+FC=$F77
+FCFLAGS=$F77FLAGS
+@end example
 
 
 @node Oracle Solaris Studio compilers,  , Intel compilers, Linux
@@ -4660,7 +4727,8 @@ package compilation}).
 More recent and complete distributions of @command{clang} are usually
 available from @uref{http://llvm.org/releases/}.  In particular, these
 include support for the `Address Sanitizer' (not included by Apple until
-Xcode 7) and for OpenMP in version 3.7.0 and later.
+Xcode 7) and for OpenMP@footnote{This also needs the OpenMP runtime,
+which is distributed separately at that site.} in version 3.7.0 and later.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
