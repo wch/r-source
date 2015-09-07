@@ -1764,7 +1764,7 @@ else
   R_OPENMP_CFLAGS= 
 fi
 ## Currently unused: see comment in Makeconf.in
-if test -z "${R_OPENMP_FFLAGS+set}"
+if test -z "${R_OPENMP_FFLAGS+set}" -a \
         "x${ac_cv_prog_f77_openmp}" != "xunsupported"; then
   R_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
 fi
