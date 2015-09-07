@@ -191,6 +191,8 @@
       \item \command{configure} now supports the OpenMP flags
       \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
       
+      \item Various OpenMP macros can be set to override the default
+      behaviour of \command{configure}: see file \file{config.site}.
     }
   }
 
