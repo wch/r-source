@@ -7903,14 +7903,15 @@ like
 @end example
 
 @noindent
-(@code{return} and @code{vptr} apply to C++).  In addition,
+(@code{function}, @code{return} and @code{vptr} apply only to C++).  In
+addition,
 @example
 -fsanitize=unsigned-integer-overflow
 @end example
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
-@command{clang} 3.5 and later need
+@command{clang} 3.5 and later may need
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
@@ -7920,12 +7921,13 @@ is available as a separate option in some versions of @command{clang}
 for C++ code (in @code{CXX} and @code{CXX1X}) as the run-time library
 for @code{vptr} needs to be linked into the main @R{} executable (and
 that would need to be linked by @code{clang++}, not @code{clang}: you
-could try building @R{} with
+could try building @R{} with something like
 @example
 MAIN_LD="clang++ -fsanitize=undefined"
+R_OPENMP_CFLAGS="-fopenmp=libomp"
 @end example
 or add @code{-lclang_rt.asan_cxx-x86_64}@footnote{This includes the C++
-UBSAN handlers, despite its name.} to @code{LD_FLAGS} or similar).
+UBSAN handlers, despite its name.} or similar to @code{LD_FLAGS}).
 
 See @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Debugging-Options.html} (or
 the manual for your version of GCC, installed or @emph{via}
