@@ -280,8 +280,9 @@
 ## and possibly jpeg, libpng and libtiff.
 ## PKGCONF=
 
-## OpenMP settings.  The configure code is conservative about
-## using OpenMP, so use can be forced here, or non-use if set but empty.
+## OpenMP settings.
+## The configure code is conservative about enabling OpenMP 
+## so use can be forced here (or non-use if set but empty).
 ## For packages
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
