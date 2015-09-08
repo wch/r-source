@@ -914,3 +914,7 @@ stopifnot(identical(topenv(baseenv()),
                     baseenv()))
 ## accidentally globalenv in R 3.2.[12] only
 
+
+## widths of unknown Unicode characters
+stopifnot(nchar("\u200b", "w") == 0)
+## was -1 in R 3.2.2

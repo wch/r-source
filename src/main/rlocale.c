@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2014   The R Core Team
+ *  Copyright (C) 2005-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,6 +54,26 @@
 #include <locale.h>
 #include <limits.h>
 #include <R_ext/Riconv.h>
+
+static int wcsearch(int wint, const struct interval *table, int max)
+{
+    int min = 0;
+    int mid;
+    max--;
+
+    if (wint < table[0].first || wint > table[max].last)
+	return 0;
+    while (max >= min) {
+	mid = (min + max) / 2;
+	if (wint > table[mid].last)
+	    min = mid + 1;
+	else if (wint < table[mid].first)
+	    max = mid - 1;
+	else
+	    return 1;
+    }
+    return 0;
+}
 
 static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
 			 int max, int locale)
@@ -134,9 +154,12 @@ int Ri18n_wcwidth(wchar_t c)
 	}
     }
 
-    return(wcwidthsearch(c, table_wcwidth,
-			 (sizeof(table_wcwidth)/sizeof(struct interval_wcwidth)),
-			 lc));
+    int wd = wcwidthsearch(c, table_wcwidth,
+			   (sizeof(table_wcwidth)/sizeof(struct interval_wcwidth)),
+			   lc);
+    if (wd >= 0) return wd; // currently all are 1 or 2.
+    int zw = wcsearch(c, zero_width, zero_width_count);
+    return zw ? 0 : 1; // assume unknown chars are width one.
 }
 
 /* Used in character.c, errors.c, ../gnuwin32/console.c */
@@ -154,27 +177,6 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
     return rs;
 }
 
-#if defined(Win32) || defined(_AIX) || defined(__APPLE__)
-static int wcsearch(int wint, const struct interval *table, int max)
-{
-    int min = 0;
-    int mid;
-    max--;
-
-    if (wint < table[0].first || wint > table[max].last)
-	return 0;
-    while (max >= min) {
-	mid = (min + max) / 2;
-	if (wint > table[mid].last)
-	    min = mid + 1;
-	else if (wint < table[mid].first)
-	    max = mid - 1;
-	else
-	    return 1;
-    }
-    return 0;
-}
-#endif
 
 
 /*********************************************************************
