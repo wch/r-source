@@ -19,7 +19,7 @@
 
 
 /*  This file was contributed by Ei-ji Nakama.
- *  See also the comments in src/main/rlocale.c.
+ *  See also the comments in  ../main/rlocale.c.
 
  *  It does 2 things:
  * (a) supplies wrapper/substitute wc[s]width functions for use in 

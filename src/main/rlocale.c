@@ -18,7 +18,7 @@
  */
 
 /*  This file was contributed by Ei-ji Nakama.
- *  See also the comments in rlocale.h.
+ *  See also the comments in ../include/rlocale.h.
  *
  *  It provides replacements for the wctype functions on
  *  Windows (where they are not correct in e.g. Japanese)
@@ -102,10 +102,10 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"ZH_CN.BIG5",                              MB_zh_TW},
     {"ZH_HK",                                   MB_zh_HK},
     {"ZH_SG",                                   MB_zh_SG},
-    {"JA_JP",				MB_ja_JP},
+    {"JA_JP",					MB_ja_JP},
     {"KO_KR",				        MB_ko_KR},
     {"ZH",				        MB_zh_CN},
-    {"JA",				MB_ja_JP},
+    {"JA",					MB_ja_JP},
     {"KO",				        MB_ko_KR},
     {"",				        MB_UTF8},
 };
