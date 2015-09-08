@@ -136,6 +136,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int addit = 0;
     static SEXP do_onexit_formals = NULL;
 
+    checkArity(op, args);
     if (do_onexit_formals == NULL)
 	do_onexit_formals = allocFormalsList2(install("expr"), install("add"));
 

@@ -1847,6 +1847,7 @@ SEXP attribute_hidden do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
     char buff[20];
 
+    checkArity(op, args);
     PROTECT(ans = allocVector(STRSXP, 18));
     PROTECT(ansnames = allocVector(STRSXP, 18));
     SET_STRING_ELT(ans, i, mkChar(lc->decimal_point));
@@ -1948,6 +1949,7 @@ static Rboolean R_can_use_X11(void)
 /* only actually used on Unix */
 SEXP attribute_hidden do_capabilitiesX11(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
 #ifdef Unix
     return ScalarLogical(R_can_use_X11());
 #else

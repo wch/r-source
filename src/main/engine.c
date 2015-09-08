@@ -2965,6 +2965,8 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     /*
      * First arg is an expression, second arg is a list, third arg is an env
      */
+
+    checkArity(op, args);
     SEXP code = CAR(args);
     SEXP list = CADR(args);
     SEXP parentenv = CADDR(args);

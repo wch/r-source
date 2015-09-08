@@ -475,6 +475,7 @@ static SEXP do_lengths_long(SEXP x, SEXP call, SEXP rho)
 
 SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     SEXP x = CAR(args), ans;
     R_xlen_t x_len, i;
     int *ans_elt;
@@ -742,6 +743,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (value) return value;
     }
 
+    checkArity(op, args);
     sym = isNull(y);
     if (sym && (PRIMVAL(op) > 0)) y = x;
     if ( !(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)) )

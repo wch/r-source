@@ -407,6 +407,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* updated := 1 , as soon as (i)tmp (do_summary),
 	   or *value ([ir]min / max) is assigned */
 
+    checkArity(op, args);
     if(PRIMVAL(op) == 1) { /* mean */
 	LDOUBLE s = 0., si = 0., t = 0., ti = 0.;
 	R_xlen_t i, n = XLENGTH(CAR(args));

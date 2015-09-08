@@ -6181,6 +6181,7 @@ SEXP attribute_hidden do_disassemble(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+  checkArity(op, args);
   SEXP ans = allocVector(INTSXP, 1);
   INTEGER(ans)[0] = R_bcVersion;
   return ans;
@@ -6354,6 +6355,7 @@ SEXP do_bcprofcounts(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP val;
     int i;
 
+    checkArity(op, args);
     val = allocVector(INTSXP, OPCOUNT);
     for (i = 0; i < OPCOUNT; i++)
 	INTEGER(val)[i] = opcode_counts[i];
@@ -6374,6 +6376,7 @@ SEXP do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env)
     double dinterval = 0.02;
     int i;
 
+    checkArity(op, args);
     if (R_Profiling)
 	error(_("profile timer in use"));
     if (bc_profiling)
@@ -6411,6 +6414,7 @@ SEXP do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     struct itimerval itv;
 
+    checkArity(op, args);
     if (! bc_profiling)
 	error(_("not byte code profiling"));
 
@@ -6427,12 +6431,15 @@ SEXP do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 #else
 SEXP NORET do_bcprofcounts(SEXP call, SEXP op, SEXP args, SEXP env) {
+    checkArity(op, args);
     error(_("byte code profiling is not supported in this build"));
 }
 SEXP NORET do_bcprofstart(SEXP call, SEXP op, SEXP args, SEXP env) {
+    checkArity(op, args);
     error(_("byte code profiling is not supported in this build"));
 }
 SEXP NORET do_bcprofstop(SEXP call, SEXP op, SEXP args, SEXP env) {
+    checkArity(op, args);
     error(_("byte code profiling is not supported in this build"));
 }
 #endif

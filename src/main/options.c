@@ -360,6 +360,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
        would apply to R_SetOption* too.
     */
 
+    checkArity(op, args);
     if (args == R_NilValue) {
 	/* This is the zero argument case.
 	   We alloc up a vector list and write the system values into it.

@@ -2991,6 +2991,7 @@ SEXP attribute_hidden do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, nms;
     int i, tmp;
 
+    checkArity(op, args);
     PROTECT(ans = allocVector(INTSXP, 24));
     PROTECT(nms = allocVector(STRSXP, 24));
     for (i = 0; i < 24; i++) {

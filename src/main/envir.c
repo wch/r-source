@@ -3690,6 +3690,7 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
        returns R_NilValue.  This seems appropriate since there is no
        way to test whether an environment is hashed at the R level.
     */
+    checkArity(op, args);
     SEXP env, ans = R_NilValue /* -Wall */;
     env = CAR(args);
     if (isEnvironment(env)) {

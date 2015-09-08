@@ -167,6 +167,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* .Internal( print.function(f, useSource, ...)) */
 SEXP attribute_hidden do_printfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op,args);
     SEXP s = CAR(args);
     switch (TYPEOF(s)) {
     case CLOSXP:

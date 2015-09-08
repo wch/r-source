@@ -137,6 +137,7 @@ double currentTime(void)
 
 SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    checkArity(op, args);
     return ScalarReal(currentTime());
 }
 

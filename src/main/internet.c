@@ -309,6 +309,7 @@ int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 
 SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     if(!initialized) internet_Init();
     if(initialized > 0)
 	return (*ptr->curlVersion)(call, op, args, rho);
@@ -320,6 +321,7 @@ SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     if(!initialized) internet_Init();
     if(initialized > 0)
 	return (*ptr->curlGetHeaders)(call, op, args, rho);
@@ -331,6 +333,7 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     if(!initialized) internet_Init();
     if(initialized > 0)
 	return (*ptr->curlDownload)(call, op, args, rho);

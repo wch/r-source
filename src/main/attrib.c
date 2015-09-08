@@ -1770,6 +1770,7 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans, klass;
 
+    checkArity(op, args);
     if(!isMethodsDispatchOn())
 	error(_("formal classes cannot be used without the 'methods' package"));
     nlist = CADR(args);

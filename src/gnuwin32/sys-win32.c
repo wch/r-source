@@ -107,6 +107,7 @@ const char *R_ExpandFileName(const char *s)
 
 SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    checkArity(op, args);
     return mkString("Win32");
 }
 

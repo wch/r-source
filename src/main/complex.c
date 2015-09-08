@@ -751,6 +751,8 @@ SEXP attribute_hidden do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* complex(length, real, imaginary) */
     SEXP ans, re, im;
     R_xlen_t i, na, nr, ni;
+
+    checkArity(op, args);
     na = asInteger(CAR(args));
     if(na == NA_INTEGER || na < 0)
 	error(_("invalid length"));

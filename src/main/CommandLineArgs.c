@@ -73,6 +73,7 @@ do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     SEXP vals;
 
+    checkArity(op, args);
     /* need protection as mkChar allocates */
     vals = PROTECT(allocVector(STRSXP, NumCommandLineArgs));
     for(i = 0; i < NumCommandLineArgs; i++)
