@@ -96,6 +96,10 @@
 
       \item \code{pchisq(*, df=0, ncp > 0, log.p=TRUE)} no longer
       underflows (for ncp > ~60).
+      
+      \item \code{nchar(x, "w")} assumed -1 for characters it did not
+      know about (e.g.\sspace{}zero-width spaces): it now assumes 1 (and
+      knows about zero-width characters).
     }
   }
 }
