@@ -355,6 +355,10 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
                     }
                 }
             }
+            /* The recorded plot may have been recorded WITHOUT 'grid' loaded
+             * OR it might have been recorded with 'grid' loaded, but WITHOUT
+             * any grid drawing
+             */
             if (!isNull(gridState) && !isNull(VECTOR_ELT(gridState, 0))) {
                 int dlIndex = INTEGER(VECTOR_ELT(gridState, 1))[0];
                 if (dlIndex > 0) {

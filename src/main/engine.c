@@ -2881,7 +2881,7 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
     /* Only have to set up information for as many graphics systems
      * as were registered when the snapshot was taken.
      */
-    int i, numSystems = LENGTH(snapshot) - 1;
+    int i;
     /* Check graphics engine version matches.
      * If it does not, things still might work, so just a warning.
      * NOTE though, that if it does not work, the results could be fatal.
@@ -2902,9 +2902,12 @@ void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd)
      */
     GEcleanDevice(dd);
     /* Reset the snapshot state information in each registered
-     * graphics system
+     * graphics system.
+     * This may try to restore state for a system that was NOT 
+     * registered when the snapshot was taken, but the systems
+     * should protect themselves from that situation.
      */
-    for (i = 0; i < numSystems; i++)
+    for (i = 0; i < MAX_GRAPHICS_SYSTEMS; i++)
 	if (dd->gesd[i] != NULL)
 	    (dd->gesd[i]->callback)(GE_RestoreSnapshotState, dd, snapshot);
     /* Replay the display list
