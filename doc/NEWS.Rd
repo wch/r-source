@@ -40,9 +40,13 @@
       defaults to \command{clang}).
 
       \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
-      e.g.\sspace{} \file{config.site}.  This is needed for
-      \command{clang} 3.7.0 which needs a compiler option for OpenMP not
-      known to the standard \command{autoconf} macro used.
+      e.g.\sspace{} \file{config.site}.
+      
+      \item \command{configure} now supports the OpenMP flags
+      \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
+      
+      \item Various OpenMP macros can be set to override the default
+      behaviour of \command{configure}: see file \file{config.site}.
     }
   }
 
