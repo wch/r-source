@@ -3603,55 +3603,39 @@ or as a shared BLAS.
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library.  You are strongly
 encouraged to read the MKL User's Guide, which is installed with the
-library, before attempting to link to MKL.  There are also versions of
-MKL for OS X and Windows, but they did not work with the standard
-compilers used for @R{} on those platforms.
+library, before attempting to link to MKL.  This includes a `link line
+advisor' which will suggest appropriate incantations: its use is
+recommended.  Or see
+@uref{https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor}.
 
-The MKL interface has changed several times, and may change again: the
-following notes apply exactly only to version 10.3 but have been used
-with version 11.1.
+There are also versions of MKL for OS X and Windows, but at the time
+these were tried they did not work with the standard compilers used for
+@R{} on those platforms.
 
-Versions 10 and later of MKL support two linking models.  Only the
-layered model is described here as it gives the user fine-grained
-control over four different library layers: interface, threading,
-computation, and run-time library support.  The choice of interface
-layer is important on @cputype{x86_64} since the Intel Fortran compiler
-returns complex values in different registers from the @acronym{GNU}
-Fortran compiler: you must therefore use the interface layer that
-matches your compiler (@code{mkl_intel*} or @code{mkl_gf*}).
+The MKL interface has changed several times and may change again: the
+following examples have been used with versions 10.3 to 11.3, for GCC
+compilers on @cputype{x86_64}.
 
-These examples are for GCC compilers on @cputype{x86_64}.
-
-@R{} can be linked to a sequential version of MKL by something like
+To a sequential version of MKL we used
 
 @example
-MKL_LIB_PATH=/opt/intel/mkl/10.311.339/lib/intel64/
+MKL_LIB_PATH=/path/to/intel_mkl/lib/intel64
 export LD_LIBRARY_PATH=$MKL_LIB_PATH
-MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_sequential -lmkl_core"
+MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
 @end example
 
 @noindent
-where some versions may need @code{-lmkl_lapack} before
-@code{-lmkl_core}.  The order of the libraries is important.  The option
-@option{--with-lapack} is used since MKL contains a tuned copy of LAPACK
-as well as @acronym{BLAS} (@pxref{LAPACK}), although this can be
-omitted.
+The option @option{--with-lapack} is used since MKL contains a tuned
+copy of LAPACK as well as @acronym{BLAS} (@pxref{LAPACK}), although this
+can be omitted.
 
-Threaded MKL may be used (according to Zhang Zhang of Intel) by
-replacing the line defining the variable @code{MKL} with (Intel OMP)
+Threaded MKL may be used by replacing the line defining the variable
+@code{MKL} by
 
 @example
-MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_intel_thread \
-     -lmkl_core -liomp5 -lpthread"
-@end example
-
-@noindent
-or (GNU OMP)
-
-@example
-MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
-     -lmkl_core -fopenmp -lpthread"
+MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
+     -lmkl_gnu_thread -dl -lpthread"
 @end example
 
 @noindent
@@ -3660,23 +3644,7 @@ can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.
 
-Static threaded MKL may be used (GNU OpenMP) with something like
-
-@example
-MKL="   -L$@{MKL_LIB_PATH@}                               \
-        -Wl,--start-group                               \
-                $@{MKL_LIB_PATH@}/libmkl_gf_lp64.a        \
-                $@{MKL_LIB_PATH@}/libmkl_gnu_thread.a     \
-                $@{MKL_LIB_PATH@}/libmkl_core.a           \
-        -Wl,--end-group                                 \
-        -lgomp -ldl -lpthread"
-@end example
-
-@noindent
-(Thanks to Ei-ji Nakama.  The @code{-ldl} was needed on a Centos 5
-system and may not be needed everywhere.)
-
-% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+@c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It has been reported that
 
 @example
@@ -3685,9 +3653,6 @@ It has been reported that
 
 @noindent
 worked with the Intel 2015.3 compilers on Centos 6.
-
-The MKL documentation includes a `link line advisor' which will suggest
-appropriate incantations.
 
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS

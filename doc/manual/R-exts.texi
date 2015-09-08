@@ -2031,9 +2031,10 @@ compiler and not necessarily to the C++11 compiler: users of the latter
 should do their own @command{configure} checks.
 
 Some care is needed when compilers are from different families which may
-use different OpenMP runtimes (e.g.@: @command{clang} and GCC, including
-@command{gfortran} do).  For a package with Fortran 77 code using OpenMP
-the approproate lines are
+use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
+including @command{gfortran}, although it is currently possible to use
+the @command{clang} runtime with GCC but not @emph{vice versa}).  For a
+package with Fortran 77 code using OpenMP the approproate lines are
 
 @example
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
@@ -2041,7 +2042,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 @noindent
-as the C compiler is used to link the package code (and there is no
+as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).
 
 
@@ -2055,8 +2056,8 @@ The performance of OpenMP varies substantially between platforms.  Both
 the Windows and earlier Apple OS X implementations have substantial
 overheads and are only beneficial if quite substantial tasks are run in
 parallel.  Also, on Windows new threads are started with the
-default@footnote{Windows, not MinGW-w64 default.} FPU control word, so
-computations done on OpenMP threads will not make use of
+default@footnote{Windows default, not MinGW-w64 default.} FPU control
+word, so computations done on OpenMP threads will not make use of
 extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
 @c http://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
@@ -2079,8 +2080,8 @@ dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
 can be done via environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
-Solaris Studio and Intel compilers.}  Alternatively, the number of
-threads per region can be limited by the environment variable
+Solaris Studio, Intel and Clang 3.7.x compilers.}  Alternatively, the
+number of threads per region can be limited by the environment variable
 @env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
 better, for the regions in your code as part of their
 specification. E.g.@: @R{} uses
