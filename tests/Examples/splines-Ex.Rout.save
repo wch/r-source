@@ -1,5 +1,5 @@
 
-R version 3.2.2 Patched (2015-08-25 r69170) -- "Fire Safety"
+R version 3.2.2 Patched (2015-09-08 r69318) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -576,7 +576,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.128 0.002 0.13 0 0 
+Time elapsed:  0.111 0.005 0.114 0 0 
 > grDevices::dev.off()
 null device 
           1 
