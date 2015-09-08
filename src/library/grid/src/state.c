@@ -353,7 +353,7 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
                     }
                 }
             }
-            if (!isNull(VECTOR_ELT(gridState, 0))) {
+            if (!isNull(gridState) && !isNull(VECTOR_ELT(gridState, 0))) {
                 int dlIndex = INTEGER(VECTOR_ELT(gridState, 1))[0];
                 if (dlIndex > 0) {
                 /* 
