@@ -110,7 +110,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"",				        MB_UTF8},
 };
 
-/* used in grDevices */
+// used in character.c, ../gnuwin32/console.c , ../library/grDevices/src/devP*.c :
 int Ri18n_wcwidth(wchar_t c)
 {
     char lc_str[128];
@@ -139,7 +139,7 @@ int Ri18n_wcwidth(wchar_t c)
 			 lc));
 }
 
-/* Used in charcter.c, gnuwin32/console.c */
+/* Used in character.c, errors.c, ../gnuwin32/console.c */
 attribute_hidden
 int Ri18n_wcswidth (const wchar_t *s, size_t n)
 {
