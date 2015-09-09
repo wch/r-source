@@ -311,11 +311,16 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
                 }
                 bss = dd->gesd[baseRegisterIndex]->systemSpecific;
                 copyGPar((GPar*) RAW(graphicsState), &(bss->dpSaved));
-                /* RestoreState will follow and do these ...
-                   restoredpSaved(dd);
-                   copyGPar(&(bss->dp), &(bss->gp));
-                   GReset(dd);
-                */
+                /* These are probably redundant because GE_RestoreState
+                 * will follow from GEplayDisplayList(), but no harm
+                 * is done 
+                 * AND there is at least one place that
+                 * depends on this ('gridGraphics' package replays
+                 * an empty DL to do restoredpSaved() on new page)
+                 */
+                restoredpSaved(dd);
+                copyGPar(&(bss->dp), &(bss->gp));
+                GReset(dd);
                 /* Make the device "clean" with respect to 'graphics'
                  * so that the display list replay starts from scratch
                  */
