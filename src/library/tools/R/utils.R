@@ -1576,6 +1576,12 @@ function(con)
     .try_quietly(readLines(con, warn=FALSE))
 }
 
+### ** .read_additional_repositories_field
+
+.read_additional_repositories_field <-
+function(txt)
+    unique(unlist(strsplit(txt, ",[[:space:]]*")))
+
 ### ** .read_citation_quietly
 
 .read_citation_quietly <-

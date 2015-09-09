@@ -586,7 +586,7 @@ function(packages, db = NULL)
     list(head = head, body = body)
 }
 
-CRAN_reverse_depends_and_views <-
+CRAN_package_reverse_depends_and_views <-
 function(packages)
 {
     a <- utils::available.packages(filters = list())
@@ -631,11 +631,11 @@ function(packages)
                           c("Views" = paste(sort(z), collapse = " "))
                       })
                 })
-    class(y) <- "CRAN_reverse_depends_and_views"
+    class(y) <- "CRAN_package_reverse_depends_and_views"
     y
 }
 
-format.CRAN_reverse_depends_and_views <-
+format.CRAN_package_reverse_depends_and_views <-
 function(x, ...)
 {
     vapply(x,
@@ -646,7 +646,7 @@ function(x, ...)
            "")
 }
 
-print.CRAN_reverse_depends_and_views <-
+print.CRAN_package_reverse_depends_and_views <-
 function(x, ...)
 {
     writeLines(paste(format(x, ...), collapse = "\n\n"))

@@ -4214,8 +4214,7 @@ function(package, dir, lib.loc = NULL)
         ## Also allow for additionally specified repositories.
         aurls <- pkgInfo[["DESCRIPTION"]]["Additional_repositories"]
         if(!is.na(aurls)) {
-            repos <- c(repos,
-                       unique(unlist(strsplit(aurls, ",[[:space:]]*"))))
+            repos <- c(repos, .read_additional_repositories_field(aurls))
         }
         known <-
             try(suppressWarnings(utils::available.packages(utils::contrib.url(repos, "source"),
@@ -6747,7 +6746,7 @@ function(dir)
             suggests_or_enhances
     }
     if(!is.na(aurls <- meta["Additional_repositories"])) {
-        aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
+        aurls <- .read_additional_repositories_field(aurls)
         ## Get available packages separately for each given URL, so that
         ## we can spot the ones which do not provide any packages.
         adb <-

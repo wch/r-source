@@ -4857,8 +4857,6 @@ setRlibs <-
             }
         }
         summaryLog(Log)
-        if (Log$errors > 0L)
-            do_exit(1L)
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
                                             "FALSE"))) {
@@ -4868,6 +4866,9 @@ setRlibs <-
             }
         }
 
+        if(Log$errors > 0L)
+            do_exit(1L)
+        
         closeLog(Log)
         message("")
 
