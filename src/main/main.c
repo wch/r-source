@@ -1116,7 +1116,9 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     int savestack, browselevel;
     SEXP ap, topExp, argList;
 
-    checkArity(op, args);
+    /* Cannot call checkArity(op, args), because "op" may be a closure  */
+    /* or a primitive other than "browser".  */
+
     /* argument matching */
     PROTECT(ap = list4(R_NilValue, R_NilValue, R_NilValue, R_NilValue));
     SET_TAG(ap,  install("text"));
