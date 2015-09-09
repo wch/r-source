@@ -23,7 +23,7 @@
  *  It provides replacements for the wctype functions on
  *  Windows (where they are not correct in e.g. Japanese)
  *  AIX (missing)
- *  MacOS X in CJK (where these just call the ctype functions)
+ *  OS X in CJK (where these just call the ctype functions)
  *
  *  It also provides wc[s]width, where widths of CJK fonts are often
  *  wrong in vendor-supplied versions and in Marcus Kuhn's version

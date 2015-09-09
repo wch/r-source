@@ -26,13 +26,14 @@ struct interval {
 };
 
 
+/* ------------------- wcwidth -------------------- */
 struct interval_wcwidth {
     int first;
     int last;
     char mb[MB_SIZE];
 };
 
-/* ------------------- wcwidth -------------------- */
+/* Anything not in this table nor the zero-width one is width one */
 static const struct interval_wcwidth table_wcwidth[] = {
     {0x20,0x7e,{1,1,1,1,1,1,1}},
     {0xa0,0xa0,{1,1,1,1,1,1,1}},
@@ -880,6 +881,10 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x4e00,0x9fa5,{2,2,2,2,2,2,2}},
     {0xa000,0xa48c,{2,2,2,2,2,2,2}},
     {0xa490,0xa4c6,{2,2,2,2,2,2,2}},
+    // glibc thinks
+    // 0x312d, 31c0-f, 321d-e, 3250, 327c-e, 3377-a, 33de-f, 4dc0-ff, 
+    // 9fa6-bb, fa70-d9, fe10-9, fe47-8
+    // are double-width
     {0xac00,0xd7a3,{2,2,2,2,2,2,2}},
     {0xe000,0xe002,{1,1,1,1,2,1,1}},
     {0xe003,0xe003,{1,1,1,1,2,2,1}},
@@ -3999,6 +4004,8 @@ static const int table_wxdigit_count =
  */
 
 static const struct interval zero_width[] = {
+    // added for our purposes, the Unicode control characters
+    { 0x0000, 0x001F }, { 0x007F, 0x009F },
     { 0x0300, 0x036F }, { 0x0483, 0x0486 }, { 0x0488, 0x0489 },
     { 0x0591, 0x05BD }, { 0x05BF, 0x05BF }, { 0x05C1, 0x05C2 },
     { 0x05C4, 0x05C5 }, { 0x05C7, 0x05C7 }, { 0x0600, 0x0603 },
