@@ -68,8 +68,8 @@
       \item New function \code{strrep()} for repeating the elements of a
       character vector.
 
-      \item \code{rapply} preserves attributes on the list when
-      \code{how="replace"}.
+      \item \code{rapply()} preserves attributes on the list when
+      \code{how = "replace"}.
 
       \item New S3 generic function \code{sigma()} with methods for
       extracting the estimated standard deviation aka \dQuote{residual
