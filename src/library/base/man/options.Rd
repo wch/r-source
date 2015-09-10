@@ -364,7 +364,8 @@ getOption(x, default = NULL)
       line used in printing vectors, matrices and arrays, and when
       filling by \code{\link{cat}}.
 
-      Columns are normally the same as characters except in CJK languages.
+      Columns are normally the same as characters except in East Asian
+      languages.
 
       You may want to change this if you re-size the window that \R is
       running in.  Valid values are 10\dots10000 with default normally

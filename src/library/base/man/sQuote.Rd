@@ -72,7 +72,7 @@ dQuote(x)
   To work around this, the default for \code{options("useFancyQuotes")}
   is \code{FALSE} on Windows except for the \code{Rgui} console.  There
   fancy quotes work with the default Courier New font and more elegantly with
-  Lucida Console and standard the CJK fonts, but directional double
+  Lucida Console and default East Asian fonts, but directional double
   quotes are missing in raster fonts such as Courier and FixedSys.
 #endif
 }

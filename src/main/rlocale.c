@@ -55,6 +55,7 @@
 #include <limits.h>
 #include <R_ext/Riconv.h>
 
+// This seems based on Markus Kuhn's function but with 1-based 'max'
 static int wcsearch(int wint, const struct interval *table, int max)
 {
     int min = 0;

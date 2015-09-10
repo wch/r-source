@@ -63,8 +63,9 @@ nzchar(x, keepNA = FALSE)
   \code{nchar()} returns \code{\link{NA_integer_}} if \code{keepNA} is
   true, and \code{2}, the number of printing characters, if false.
 
-  \code{nchar(x, "width")} gives (an approximation to) the number of
-  columns taken used in  printing an element in a terminal font.
+  \code{type = "width"} gives (an approximation to) the number of
+  columns used in printing each element in a terminal font, taking into
+  account double-width, zero-width and \sQuote{composing} characters.
   
   If \code{allowNA = TRUE} and an element is detected as invalid in a
   multi-byte character set such as UTF-8, its number of characters and
@@ -87,8 +88,7 @@ nzchar(x, keepNA = FALSE)
 \note{
   This does \strong{not} by default give the number of characters that
   will be used to \code{print()} the string.  Use
-  \code{\link{encodeString}} to find the characters used to print the
-  string.
+  \code{\link{encodeString}} to find that.
 #ifdef windows
   This is particularly important on Windows when \samp{\\uxxxx}
   sequences have been used to enter Unicode characters not representable
@@ -119,11 +119,12 @@ nzchar(x, keepNA = FALSE)
   a \sQuote{Western} font.  Unicode has encodings for \sQuote{fullwidth}
   versions of ASCII characters and \sQuote{halfwidth} versions of
   Katakana (Japanese) and Hangul (Korean) characters.  Then there is the
-  East Asian Ambiguous class (Greek, Cyrillic, signs, some accented
-  Latin chars, etc), for which the historical practice was to use two
-  columns in East Asia and one in the West.  The width quoted by
-  \code{nchar} for characters in that class depends on the locale, being
-  one except in some East Asian locales on some OSes (notably Windows).
+  \sQuote{East Asian Ambiguous class} (Greek, Cyrillic, signs, some
+  accented Latin chars, etc), for which the historical practice was to
+  use two columns in East Asia and one elsewhere.  The width quoted by
+  \code{nchar} for characters in that class (and some others) depends on
+  the locale, being one except in some East Asian locales on some OSes
+  (notably Windows).
 
   Control characters are given width zero.
 }

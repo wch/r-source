@@ -122,8 +122,8 @@ pdfFonts(\dots)
 
   You may well find that your postscript/PDF interpreters has been set
   up to provide aliases for many of these fonts.  For example,
-  ghostscript on Windows can optionally be installed to map common CJK
-  fonts names to Windows TrueType fonts.  (You may want to add the
+  ghostscript on Windows can optionally be installed to map common East
+  Asian fonts names to Windows TrueType fonts.  (You may want to add the
   \code{-Acro} versions as well.)
 
   Adding a mapping for a CID-keyed font is for gurus only.
