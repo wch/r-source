@@ -41,10 +41,10 @@
 
       \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
       e.g.\sspace{} \file{config.site}.
-      
+
       \item \command{configure} now supports the OpenMP flags
       \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
-      
+
       \item Various OpenMP macros can be set to override the default
       behaviour of \command{configure}: see file \file{config.site}.
     }
@@ -101,6 +101,9 @@
       know about (e.g.\sspace{}zero-width spaces): it now assumes 1.
       It now knows about most zero-width characters and a few more
       double-width characters.
+
+      \item Help for \code{which.min} is now more precise about behavior
+      with logical arguments.  (\PR{16532})
     }
   }
 }
