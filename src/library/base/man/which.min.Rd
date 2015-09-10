@@ -1,6 +1,6 @@
 % File src/library/base/man/which.min.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{which.min}
@@ -16,9 +16,6 @@
 \description{
   Determines the location, i.e., index of the (first) minimum or maximum
   of a numeric (or logical) vector.
-
-  For a logical vector \code{x}, \code{which.min(x)} and \code{which.max(x)}
-  return the index of the first \code{FALSE} or \code{TRUE}, respectively.
 }
 \usage{
 which.min(x)
@@ -28,6 +25,12 @@ which.max(x)
   \item{x}{numeric (integer or double) vector, whose
     \code{\link{min}} or \code{\link{max}} is searched for.}
 }
+\note{
+  For a \code{\link{logical}} vector \code{x} with both \code{FALSE} and
+  \code{TRUE} values, \code{which.min(x)} and \code{which.max(x)} return
+  the index of the first \code{FALSE} or \code{TRUE}, respectively, as
+  \code{FALSE < TRUE}.
+}
 \value{
   Missing and \code{NaN} values are discarded.
 
@@ -36,8 +39,8 @@ which.max(x)
   maximum respectively of \code{x}.
 
   If this extremum is unique (or empty), the results are the same as
-  (but more efficient than) \code{which(x == min(x))} or
-  \code{which(x == max(x))} respectively.
+  (but more efficient than) \code{which(x == min(x, na.rm = TRUE))} or
+  \code{which(x == max(x, na.rm = TRUE))} respectively.
 }
 \author{Martin Maechler}
 \seealso{
@@ -61,7 +64,7 @@ range(presidents, na.rm = TRUE)
 which.min(presidents) # 28
 which.max(presidents) #  2
 
-## Find the first occurrence, i.e. the first TRUE:
+## Find the first occurrence, i.e. the first TRUE, if there is at least one:
 x <- rpois(10000, lambda = 10); x[sample.int(50, 20)] <- NA
 ## where is the first value >= 20 ?
 which.max(x >= 20)

@@ -141,13 +141,13 @@
       devices (e.g., \CRANpkg{Cairo}, \CRANpkg{RSvgDevice},
       \CRANpkg{cairoDevice}, \CRANpkg{tikzDevice}) will need to be
       reinstalled.
-       
+
       Code for restoring snapshots was contributed by Jeroen Ooms
       and JJ Allaire.
 
       Some testing code is available at
       \url{https://github.com/pmur002/R-display-list}
-      
+
     }
   }
 
@@ -205,7 +205,7 @@
       \item \command{configure} uses \command{pkg-config} for PNG, TIFF
       and JPEG where this is available.  This should work better with
       multiple installs and static libs.
-      
+
       \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
 	Leopard}): even that has been unsupported by Apple since 2012.
     }
@@ -281,10 +281,10 @@
 
       \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
       e.g.\sspace{} \file{config.site}.
-      
+
       \item \command{configure} now supports the OpenMP flags
       \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
-      
+
       \item Various OpenMP macros can be set to override the default
       behaviour of \command{configure}: see file \file{config.site}.
     }
@@ -339,11 +339,14 @@
 
       \item \code{libcurl} connections signal errors rather than
       retrieving http error pages.
-      
+
       \item \code{nchar(x, "w")} returned -1 for characters it did not
       know about (e.g.\sspace{}zero-width spaces): it now assumes 1.
       It now knows about most zero-width characters and a few more
       double-width characters.
+
+      \item Help for \code{which.min} is now more precise about behavior
+      with logical arguments.  (\PR{16532})
     }
   }
 }
