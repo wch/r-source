@@ -94,7 +94,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 #endif
 #ifdef windows
   the current locale uses a single-byte encoding (except C).
-  (Directional quotes are not attempted in CJK locales as they are
+  (Directional quotes are not attempted in East Asian locales as they are
   usually double-width, which looks wrong with English text.)
 #endif
 

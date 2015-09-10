@@ -70,9 +70,9 @@
 \section{Chinese/Japanese/Korean}{
   Users of these languages will need to select a suitable font for the
   console (perhaps \code{MS Mincho}) and for the graphics device
-  (although the default \code{Arial} has many CJK characters).  It is
-  essential that the font selected for the console has double-width CJK
-  characters -- many monospaced fonts do not.
+  (although the default \code{Arial} has many East Asian characters).
+  It is essential that the font selected for the console has
+  double-width East Asian characters -- many monospaced fonts do not.
 }
 \note{
   The \code{GUI preferences} item on the \code{Edit} menu brings up an

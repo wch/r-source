@@ -57,21 +57,22 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
   The CMap file maps encoded strings (usually in a MBCS) to IDs, so
   \code{cmap} and \code{cmapEncoding} specifications must match.  There
   are no real bold or italic versions of CID fonts (bold/italic were
-  very rarely used in traditional CJK topography), and for the
+  very rarely used in traditional East Asian topography), and for the
   \code{\link{pdf}} device all four font faces will be identical.
   However, for the \code{\link{postscript}} device, bold and italic (and
   bold italic) are emulated.
 
-  CID-keyed fonts are intended only for use for the glyphs of CJK
+  CID-keyed fonts are intended only for use for the glyphs of East Asian
   languages, which are all monospaced and are all treated as filling the
   same bounding box.  (Thus \code{\link{plotmath}} will work with such
   characters, but the spacing will be less carefully controlled than
   with Western glyphs.)  The CID-keyed fonts do contain other
-  characters, including a Latin alphabet:  non-CJK glyphs are regarded
-  as monospaced with half the width of CJK glyphs.  This is often the
-  case, but sometimes Latin glyphs designed for proportional spacing are
-  used (and may look odd).  We strongly recommend that CID-keyed fonts
-  are \bold{only} used for CJK glyphs.
+  characters, including a Latin alphabet: non-East-Asian glyphs are
+  regarded as monospaced with half the width of East Asian glyphs.  This
+  is often the case, but sometimes Latin glyphs designed for
+  proportional spacing are used (and may look odd).  We strongly
+  recommend that CID-keyed fonts are \bold{only} used for East Asian
+  glyphs.
 }
 \value{
   A list of class \code{"Type1Font"} or \code{"CIDFont"}.
