@@ -17,7 +17,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/*  This file was contributed by Ei-ji Nakama.
+/*  The original version of this file was contributed by Ei-ji Nakama.
  *  See also the comments in ../include/rlocale.h.
  *
  *  It provides replacements for the wctype functions on
@@ -26,7 +26,7 @@
  *  OS X in CJK (where these just call the ctype functions)
  *
  *  It also provides wc[s]width, where widths of CJK fonts are often
- *  wrong in vendor-supplied versions and in Marcus Kuhn's version
+ *  wrong in vendor-supplied versions and in Markus Kuhn's version
  *  used for Windows in R 2.[12].x.
  */
 
@@ -82,7 +82,9 @@ static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
     int mid;
     max--;
 
-    if (wint < table[0].first || wint > table[max].last) return 0;
+    /* This quickly gives one for ASCII characters since the table
+       starts at 0xa0 */
+    if (wint < table[0].first || wint > table[max].last) return 1;
     while (max >= min) {
 	mid = (min + max) / 2;
 	if (wint > table[mid].last)
@@ -96,12 +98,28 @@ static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
     return -1;
 }
 
+/* The idea here here has never been explained.
+   See also the comments in ../include/rlocale.h.
+
+  That does not explain the separate entries for Singapore
+   (simplified) and Hong Kong/Macau (traditional) where it seems the
+   Windows system font is not different from PRC/Taiwan respectively,
+   nor what font was used for non-Windows, nor where the values came
+   from.
+
+   Except perhaps on OS X, the non-Windows locale names are for the
+   default MBCS encodings (e.g. GBK, GB1312, BIG5, EUCJP, EUCKR).
+   There are other non-UTF-8 encodings for those locales,
+   e.g. ja_JP.SJIS, ko_KR.CP949, zh_CN.eucCN, zh_HK.Big5HKSCS.
+*/
+
 typedef struct {
     char *name;
     int locale;
 } cjk_locale_name_t;
 
 static cjk_locale_name_t cjk_locale_name[] = {
+    // Windows locale names
     {"CHINESE(SINGAPORE)_SIGNAPORE",		MB_zh_SG},
     {"CHINESE_SIGNAPORE",			MB_zh_SG},
     {"CHINESE(PRC)_PEOPLE'S REPUBLIC OF CHINA",	MB_zh_CN},
@@ -117,6 +135,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"JAPANESE",				MB_ja_JP},
     {"KOREAN_KOREA",				MB_ko_KR},
     {"KOREAN",				        MB_ko_KR},
+    // Other OSes, but only in default encodings.
     {"ZH_TW",                                   MB_zh_TW},
     {"ZH_CN",                                   MB_zh_CN},
     {"ZH_CN.BIG5",                              MB_zh_TW},
@@ -127,7 +146,8 @@ static cjk_locale_name_t cjk_locale_name[] = {
     {"ZH",				        MB_zh_CN},
     {"JA",					MB_ja_JP},
     {"KO",				        MB_ko_KR},
-    {"",				        MB_UTF8},
+    // Default, where all EA Ambiguous characters have width one.
+    {"",				        MB_Default},
 };
 
 // used in character.c, ../gnuwin32/console.c , ../library/grDevices/src/devP*.c :
@@ -177,15 +197,13 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
     return rs;
 }
 
-
-
 /*********************************************************************
- *  There is MacOS with a CSI(CodeSet Independence) system.
- *  (wchar_t != unicode)
- *  However, it is Unicode at the time of UTF-8.
+ *  OS X's wide character type functions are based on FreeBSD
+ *  and only work correctly for Latin-1 characters.
+ *  So we replace them.  May also be needed on FreeBSD.
  ********************************************************************/
 #if defined(__APPLE__)
-/* allow for both PPC and Intel platforms */
+/* allow for both PowerPC and Intel platforms */
 #ifdef WORDS_BIGENDIAN
 static const char UNICODE[] = "UCS-4BE";
 #else
@@ -194,7 +212,6 @@ static const char UNICODE[] = "UCS-4LE";
 
 /* in Defn.h which is not included here */
 extern const char *locale2charset(const char *);
-
 
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {	                                                             \
@@ -228,7 +245,7 @@ extern const char *locale2charset(const char *);
   }                                                                  \
   return(-1);                                                        \
 }
-#endif
+#endif // __APPLE__
 
 /*********************************************************************
  *  iswalpha etc. does not function correctly for Windows
@@ -243,14 +260,14 @@ extern const char *locale2charset(const char *);
 #endif
 
 /*********************************************************************
- *  iswalpha etc. does function normally for Linux
+ *  iswalpha etc. do function correctly for Linux
  ********************************************************************/
 #ifndef ISWFUNC
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {                                                                       \
     return isw ## ISWNAME (wc); \
 }
-/* Solaris 8 is missing iswblank.  Its man page is missing iswcntrl,
+/* Solaris 8 was missing iswblank.  Its man page was missing iswcntrl,
    but the function is there.  MinGW used not to have iswblank until
    mingw-runtime-3.11. */
 #ifndef HAVE_ISWBLANK

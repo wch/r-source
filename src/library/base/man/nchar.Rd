@@ -63,6 +63,9 @@ nzchar(x, keepNA = FALSE)
   \code{nchar()} returns \code{\link{NA_integer_}} if \code{keepNA} is
   true, and \code{2}, the number of printing characters, if false.
 
+  \code{nchar(x, "width")} gives (an approximation to) the number of
+  columns taken used in  printing an element in a terminal font.
+  
   If \code{allowNA = TRUE} and an element is detected as invalid in a
   multi-byte character set such as UTF-8, its number of characters and
   the width will be \code{NA}.  Otherwise the number of characters will
@@ -99,11 +102,38 @@ nzchar(x, keepNA = FALSE)
   characters and widths will be computed in UTF-8, even though printing
   may use escapes such as \samp{<U+2642>} in a non-UTF-8 locale.
 #endif
+  
+  The concept of \sQuote{width} is a slippery one even in a monospaced
+  font. Some human languages have the concept of \emph{combining}
+  characters, in which two or more characters are rendered together: an
+  example would be \code{"y\u306"}, which is two characters of width
+  one: combining characters are given width zero, and there are other
+  zero-width characters such as the zero-width space \code{"\u200b"}.
+
+  Some East Asian languages have \sQuote{wide} characters, ideographs
+  which are conventionally printed across two columns when mixed with
+  ASCII and other \sQuote{narrow} characters in those languages.  The
+  problem is that whether a computer prints wide characters over two or
+  one columns depends on the font, with it not being uncommon to use two
+  columns in a font intended for East Asian users and a single column in
+  a \sQuote{Western} font.  Unicode has encodings for \sQuote{fullwidth}
+  versions of ASCII characters and \sQuote{halfwidth} versions of
+  Katakana (Japanese) and Hangul (Korean) characters.  Then there is the
+  East Asian Ambiguous class (Greek, Cyrillic, signs, some accented
+  Latin chars, etc), for which the historical practice was to use two
+  columns in East Asia and one in the West.  The width quoted by
+  \code{nchar} for characters in that class depends on the locale, being
+  one except in some East Asian locales on some OSes (notably Windows).
+
+  Control characters are given width zero.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
+  
+  Unicode Standard Annex #11: \emph{East Asian Width.}
+  \url{http://www.unicode.org/reports/tr11/}
 }
 \seealso{
   \code{\link{strwidth}} giving width of strings for plotting;

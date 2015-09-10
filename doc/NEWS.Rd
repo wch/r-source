@@ -137,12 +137,12 @@
       use a snapshot as a format for transferring an R plot between two
       R sessions.
 
-      The underlying changes mean that
-      packages providing graphics devices (e.g., \code{Cairo},
-      \code{RSvgDevice}, \code{cairoDevice}) will need to be
+      The underlying changes mean that packages providing graphics
+      devices (e.g., \CRANpkg{Cairo}, \CRANpkg{RSvgDevice},
+      \CRANpkg{cairoDevice}, \CRANpkg{tikzDevice}) will need to be
       reinstalled.
        
-      Code for restoring snapshots was contributed by from Jeroen Ooms
+      Code for restoring snapshots was contributed by Jeroen Ooms
       and JJ Allaire.
 
       Some testing code is available at
@@ -340,9 +340,9 @@
       \item \code{libcurl} connections signal errors rather than
       retrieving http error pages.
       
-      \item \code{nchar(x, "w")} assumed -1 for characters it did not
+      \item \code{nchar(x, "w")} returned -1 for characters it did not
       know about (e.g.\sspace{}zero-width spaces): it now assumes 1.
-      It now  knows about zero-width characters and a few extra
+      It now knows about most zero-width characters and a few more
       double-width characters.
     }
   }
