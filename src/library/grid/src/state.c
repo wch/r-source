@@ -300,8 +300,13 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
                     /* See GE_RestoreSnapshotState for explanation of this 
                      * dirtying 
                      */
+                    SEXP gsd, griddev;
+                    gsd = (SEXP) curdd->gesd[gridRegisterIndex]->systemSpecific;
+                    PROTECT(griddev = allocVector(LGLSXP, 1));
+                    LOGICAL(griddev)[0] = TRUE;
+                    SET_VECTOR_ELT(gsd, GSS_GRIDDEVICE, griddev);
+                    UNPROTECT(1);
                     GEdirtyDevice(curdd);
-                    dirtyGridDevice(curdd);
                     setGridStateElement(curdd, GSS_DL, 
                                         gridStateElement(dd, GSS_DL));
                     setGridStateElement(curdd, GSS_DLINDEX, 
@@ -362,22 +367,42 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
             if (!isNull(gridState) && !isNull(VECTOR_ELT(gridState, 0))) {
                 int dlIndex = INTEGER(VECTOR_ELT(gridState, 1))[0];
                 if (dlIndex > 0) {
-                /* 
-                 * Dirty the device (in case this is first drawing on device)
-                 * to stop dirtyGridDevice() from starting new page
-                 * (because this GE_RestoreSnapshotState will be followed by 
-                 *  GE_RestoreState, which will start a new page).
-                 * Dirty the device, in a 'grid' sense, (in case this is first
-                 * 'grid' drawing on device) to stop first element on 'grid' DL
-                 * (which will be a call to L_gridDirty()) from resetting the
-                 * 'grid' DL.
-                 */
-                    GEdirtyDevice(dd);
-                    dirtyGridDevice(dd);
-                /*
-                 * Restore the saved 'grid' DL.
-                 * (the 'grid' vpTree will be recreated by replay of 'grid' DL)
-                 */
+                    /*
+                     * Dirty the device, in a 'grid' sense, 
+                     * (in case this is first 'grid' drawing on device) 
+                     * to stop first element on 'grid' DL
+                     * (which will be a call to L_gridDirty()) 
+                     * from resetting the 'grid' DL.
+                     * This will have the side effect of stopping L_gridDirty()
+                     * from starting a new page (if the device is clean)
+                     * which is important because this 
+                     * GE_RestoreSnapshotState will be followed by 
+                     * GE_RestoreState, which will start a new page
+                     * (and which will call initVP() by the way).
+                     *
+                     * NOTE to my future self:  don't try to do this with
+                     * a call to dirtyGridDevice() - seriously, I tried it
+                     * and it's a BAD idea.  The logic and interactions
+                     * with device drivers is just insanely complicated.
+                     * Leave it alone.
+                     */
+                    if (!LOGICAL(gridStateElement(dd, GSS_GRIDDEVICE))[0]) {
+                        SEXP gsd, griddev;
+                        gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+                        PROTECT(griddev = allocVector(LGLSXP, 1));
+                        LOGICAL(griddev)[0] = TRUE;
+                        SET_VECTOR_ELT(gsd, GSS_GRIDDEVICE, griddev);
+                        UNPROTECT(1);
+                        /* If the device is 'grid' dirty, make sure it is
+                         * also dirty overall
+                         */
+                        GEdirtyDevice(dd);
+                    }
+                    /*
+                     * Restore the saved 'grid' DL.
+                     * (the 'grid' vpTree will be recreated by replay of 
+                     *  'grid' DL)
+                     */
                     setGridStateElement(dd, GSS_DL, 
                                         VECTOR_ELT(gridState, 0));
                     setGridStateElement(dd, GSS_DLINDEX, 
