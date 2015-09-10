@@ -34,7 +34,9 @@ which.max(x)
 \value{
   Missing and \code{NaN} values are discarded.
 
-  an \code{\link{integer}} of length 1 or 0 (iff \code{x} has no
+  an \code{\link{integer}} or on 64-bit platforms, if
+  \code{\link{length}(x) =: n}\eqn{\ge 2^{31}}{>= 2^31} an integer
+  valued \code{\link{double}} of length 1 or 0 (iff \code{x} has no
   non-\code{NA}s), giving the index of the \emph{first} minimum or
   maximum respectively of \code{x}.
 

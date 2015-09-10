@@ -807,39 +807,85 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
     return(ans);
 }
 
-/* which.min(x) : The index (starting at 1), of the first min(x) in x */
+// which.min(x) : The index (starting at 1), of the first min(x) in x
+// which.max(x) : The index (starting at 1), of the first max(x) in x
 SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP sx, ans;
-    double s, *r;
-    int i, n, indx;
+    SEXP sx = CAR(args), ans;
+    R_xlen_t i, n = XLENGTH(CAR(args)), indx = -1;
 
     checkArity(op, args);
-    PROTECT(sx = coerceVector(CAR(args), REALSXP));
     if (!isNumeric(sx))
 	error(_("non-numeric argument"));
-    r = REAL(sx);
-    n = LENGTH(sx);
-    indx = NA_INTEGER;
-
-    if(PRIMVAL(op) == 0) { /* which.min */
-	s = R_PosInf;
-	for (i = 0; i < n; i++)
-	    if ( !ISNAN(r[i]) && (r[i] < s || indx == NA_INTEGER) ) {
-		s = r[i]; indx = i;
-	    }
-    } else { /* which.max */
-	s = R_NegInf;
-	for (i = 0; i < n; i++)
-	    if ( !ISNAN(r[i]) && (r[i] > s || indx == NA_INTEGER) ) {
-		s = r[i]; indx = i;
-	    }
+    switch(TYPEOF(sx)) {
+    case LGLSXP: // with only (TRUE, FALSE, NA) -- may be fast
+    {
+	int *r = LOGICAL(sx);
+	if(PRIMVAL(op) == 0) { /* which.min */
+	    for (i = 0; i < n; i++)
+		if (r[i] == FALSE) {
+		    indx = i; break; // found FALSE: done
+		} else if (indx == -1 && r[i] != NA_LOGICAL) {
+		    indx = i; // first TRUE
+		}
+	} else { /* which.max */
+	    for (i = 0; i < n; i++)
+		if (r[i] == TRUE) {
+		    indx = i; break; // found TRUE: done
+		} else if (indx == -1 && r[i] != NA_LOGICAL) {
+		    indx = i; // first FALSE
+		}
+	}
     }
+    break;
 
-    i = (indx != NA_INTEGER);
-    PROTECT(ans = allocVector(INTSXP, i ? 1 : 0));
+    case INTSXP:
+    {
+	int s, *r = INTEGER(sx);
+	if(PRIMVAL(op) == 0) { /* which.min */
+	    s = INT_MAX;
+	    for (i = 0; i < n; i++)
+		if (r[i] != NA_INTEGER && (r[i] < s || indx == -1)) {
+		    s = r[i]; indx = i;
+		}
+	} else { /* which.max */
+	    s = INT_MIN;
+	    for (i = 0; i < n; i++)
+		if (r[i] != NA_INTEGER && (r[i] > s || indx == -1)) {
+		    s = r[i]; indx = i;
+		}
+	}
+    }
+    break;
+
+    case REALSXP:
+    {
+	double s, *r = REAL(sx);
+	if(PRIMVAL(op) == 0) { /* which.min */
+	    s = R_PosInf;
+	    for (i = 0; i < n; i++)
+		if ( !ISNAN(r[i]) && (r[i] < s || indx == -1) ) {
+		    s = r[i]; indx = i;
+		}
+	} else { /* which.max */
+	    s = R_NegInf;
+	    for (i = 0; i < n; i++)
+		if ( !ISNAN(r[i]) && (r[i] > s || indx == -1) ) {
+		    s = r[i]; indx = i;
+		}
+	}
+    }
+    } // switch()
+
+
+    i = (indx != -1);
+    Rboolean large = (indx + 1) > INT_MAX;
+    PROTECT(ans = allocVector(large ? REALSXP : INTSXP, i ? 1 : 0));
     if (i) {
-	INTEGER(ans)[0] = indx + 1;
+	if(large)
+	    REAL(ans)[0] = (double)indx + 1;
+	else
+	    INTEGER(ans)[0] = (int)indx + 1;
 	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* preserve names */
 	    SEXP ansnam;
 	    PROTECT(ansnam =
@@ -848,7 +894,7 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);
 	}
     }
-    UNPROTECT(2);
+    UNPROTECT(1);
     return ans;
 }
 

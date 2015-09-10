@@ -261,6 +261,9 @@
       \item Windows \code{"wininet"} FTP first tries EPSV / PASV mode
       rather than only using active mode (reported by Dan Tenenbaum).
       %% https://stat.ethz.ch/pipermail/r-devel/2015-August/071595.html
+
+      \item \code{which.min(x)} and \code{which.max(x)} may be much
+      faster for logical and integer \code{x} and now also work for long vectors.
     }
   }
 
