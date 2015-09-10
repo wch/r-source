@@ -137,6 +137,11 @@
       use a snapshot as a format for transferring an R plot between two
       R sessions.
 
+      The underlying changes mean that
+      packages providing graphics devices (e.g., \code{Cairo},
+      \code{RSvgDevice}, \code{cairoDevice}) will need to be
+      reinstalled.
+       
       Code for restoring snapshots was contributed by from Jeroen Ooms
       and JJ Allaire.
 
@@ -217,6 +222,8 @@
 
       \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
       deprecated in favour of the standard OpenMP define \samp{_OPENMP}.
+
+      \item \code{R_GE_version} has been increased to \code{11}.
     }
   }
 
