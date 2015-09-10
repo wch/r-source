@@ -1640,8 +1640,9 @@ static const struct interval table_wblank[] = {
   { 0x20, 0x20 },
   { 0xa0, 0xa0 }, /* non-breaking space */
   { 0x1680, 0x1680 }, /* ogham space mark */
-  { 0x2000, 0x2006 }, /* why not figure space, 2007? */
+  { 0x2000, 0x2006 }, /* why not figure space, 2007? Not in glibc */
   { 0x2008, 0x200b },
+//  { 0x202f, 0x202f }, /* narrow no-break space, not in glibc */
   { 0x205f, 0x205f }, /* medium mathematical space */
   { 0x3000, 0x3000 }  /* (CJK) ideographic space */
 };
