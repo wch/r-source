@@ -22,7 +22,8 @@ which.min(x)
 which.max(x)
 }
 \arguments{
-  \item{x}{numeric (integer or double) vector, whose
+  \item{x}{numeric (logical, integer or double) vector or an \R object
+    for which the internal coercion to \code{\link{double}} works whose
     \code{\link{min}} or \code{\link{max}} is searched for.}
 }
 \note{
@@ -70,5 +71,9 @@ which.max(presidents) #  2
 x <- rpois(10000, lambda = 10); x[sample.int(50, 20)] <- NA
 ## where is the first value >= 20 ?
 which.max(x >= 20)
+
+## Also works for lists (which can be coerced to numeric vectors):
+which.min(list(A = 7, pi = pi)) ##  ->  c(pi = 2L)
+\dontshow{stopifnot(identical(which.min(list(A = 7, pi = pi)), c(pi = 2L)))}
 }
 \keyword{utilities}

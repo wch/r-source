@@ -812,11 +812,13 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP sx = CAR(args), ans;
+    int nprot = 1;
     R_xlen_t i, n = XLENGTH(CAR(args)), indx = -1;
 
     checkArity(op, args);
-    if (!isNumeric(sx))
-	error(_("non-numeric argument"));
+    if (!isNumeric(sx)) {
+	PROTECT(sx = coerceVector(CAR(args), REALSXP)); nprot++;
+    }
     switch(TYPEOF(sx)) {
     case LGLSXP: // with only (TRUE, FALSE, NA) -- may be fast
     {
@@ -894,7 +896,7 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);
 	}
     }
-    UNPROTECT(1);
+    UNPROTECT(nprot);
     return ans;
 }
 
