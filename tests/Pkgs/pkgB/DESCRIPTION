@@ -1,7 +1,6 @@
 Package: pkgB
 Title: Simple Package with NameSpace and S4 Methods and Classes
 Type: Package
-noDepends_we_have_Imports:
 Imports: methods, graphics, pkgA
 Version: 1.0
 Date: 2009-08-17
