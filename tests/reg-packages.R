@@ -98,10 +98,15 @@ stopifnot(identical(res[,"Package"], setNames(,sort(c(p.lis, "myTst")))),
 	  res[,"LibPath"] == "myLib")
 ### Specific Tests on our "special" packages: ------------------------------
 
-## Find objects which are NULL via "::" -- not to be expected often
-## we have one in our pkgA, but only if Matrix is present
+## - Check conflict message.
+## - Find objects which are NULL via "::" -- not to be expected often
+##   we have one in our pkgA, but only if Matrix is present.
 if(dir.exists(file.path("myLib", "pkgA"))) {
-  require(pkgA, lib="myLib")
+  msgs <- capture.output(require(pkgA, lib="myLib"), type = "message")
+  writeLines(msgs)
+  stopifnot(length(msgs) > 2,
+            length(grep("The following object is masked.*package:base", msgs)) > 0,
+            length(grep("\\bsearch\\b", msgs)) > 0)
   data(package = "pkgA") # -> nilData
   stopifnot(is.null( pkgA::  nil),
 	    is.null( pkgA::: nil),
