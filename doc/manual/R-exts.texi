@@ -2034,7 +2034,7 @@ Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is currently possible to use
 the @command{clang} runtime with GCC but not @emph{vice versa}).  For a
-package with Fortran 77 code using OpenMP the approproate lines are
+package with Fortran 77 code using OpenMP the appropriate lines are
 
 @example
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)

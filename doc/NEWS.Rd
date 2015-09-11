@@ -124,7 +124,7 @@
       \item \code{smoothScatter()} gains a \code{ret.selection} argument.
 
       \item \code{qr()} no longer has a \code{\dots} argument to pass
-      addiitonal arguments to methods.
+      additional arguments to methods.
 
       \item \code{[} has a method for class \code{"table"}.
 
