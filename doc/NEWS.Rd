@@ -8,7 +8,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-      \item \code{nchar(x, *)} gains a new argument \code{keepNA} which
+      \item \code{nchar(x)} gains a new argument \code{keepNA} which
       governs how the result for \code{NA}s in \code{x} is determined.
       The new default \code{keepNA = NA} returns \code{NA} where
       \code{x} is \code{NA}, except for \code{type = "width"} which still
@@ -16,7 +16,7 @@
 
       \code{nzchar(x)} gets the same new argument, but with default
       \code{keepNA = FALSE}.  Hence \code{nzchar(x)} still returns a
-      non-\code{NA} logical vector, back compatibly.
+      non-\code{NA} logical vector.
 
       \item All builds have support for \samp{https:} URLs in the
       default methods for \code{download.file()}, \code{url()} and code
@@ -130,10 +130,10 @@
 
       \item It is now possible (again) to \code{replayPlot()} a
       display list snapshot that was created by \code{recordPlot()}
-      in a different R session.
+      in a different \R session.
 
       It is still not a good idea to use snapshots as a persistent
-      storage format for R plots, but it is now not completely silly to
+      storage format for \R plots, but it is now not completely silly to
       use a snapshot as a format for transferring an R plot between two
       R sessions.
 
@@ -146,11 +146,17 @@
       and JJ Allaire.
 
       Some testing code is available at
-      \url{https://github.com/pmur002/R-display-list}
+      \url{https://github.com/pmur002/R-display-list} .
 
       \item \code{tools::undoc(dir = D)} and \code{codoc(dir = D)} now
       also work when \code{D} is a directory whose \code{normalizePath()}ed
-      version no longer ends in the package name, as, e.g., from a symlink.
+      version no longer ends in the package name, e.g.\sspace{}from a symlink.
+
+      \item \code{abbreviate()} has more support for multi-byte
+      character sets -- it no longer removes bytes within characters and
+      it knows about (English) vowels with accents.  It is still only
+      really suitable for (most) European languages, and still warns on
+      non-ASCII input.
     }
   }
 
@@ -170,10 +176,10 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item The previously included versions of \code{zlib}, \code{bzip2},
-      \code{xz} and PCRE have been removed, so system versions are
-      required (see the \sQuote{R Installation and Administration}
-      manual).
+      \item The previously included versions of \code{zlib},
+      \code{bzip2}, \code{xz} and PCRE have been removed, so suitable
+      external (usuallly system) versions are required (see the
+      \sQuote{R Installation and Administration} manual).
 
       \item The unexported and undocumented Windows-only devices
       \code{cairo_bmp()}, \code{cairo_png()} and \code{cairo_tiff()}
@@ -207,7 +213,7 @@
 
       \item \command{configure} uses \command{pkg-config} for PNG, TIFF
       and JPEG where this is available.  This should work better with
-      multiple installs and static libs.
+      multiple installs and with static libs.
 
       \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
 	Leopard}): even that has been unsupported by Apple since 2012.
@@ -233,8 +239,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
-      vector, and it returns \dQuote{TRUE}/\dQuote{FALSE} instead of
-      \dQuote{T}/\dQuote{F} for logical vectors.
+      vector, and it returns \code{"TRUE"}/\code{"FALSE"} instead of
+      \code{"T"}/\code{"F"} for logical vectors.
 
       \item \code{.colSums()} etc (with an initial dot) first argument
       name \code{x} matches \code{colSums()} such that error messages
@@ -281,12 +287,9 @@
       \option{--disable-java} to disable the checks for Java.
 
       \item The \command{configure} default for \code{MAIN_LDFLAGS} has
-      been changed for FreeBSD, NetBSD and Hurd OSes to one more likely
-      to work with compilers other than \command{gcc} (FreeBSD 10
+      been changed for the FreeBSD, NetBSD and Hurd OSes to one more
+      likely to work with compilers other than \command{gcc} (FreeBSD 10
       defaults to \command{clang}).
-
-      \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
-      e.g.\sspace{} \file{config.site}.
 
       \item \command{configure} now supports the OpenMP flags
       \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
@@ -316,10 +319,10 @@
       \item Coercing a list without names to a data frame is faster if
       the elements are very long. (\PR{16467})
 
-      \item (Unix-only) Under some circumstances piping the output from
-      \command{Rscript} or \command{R -f} could result in attempting to
-      close the input file twice, possibly crashing the process.
-      (\PR{16500})
+      \item (Unix-only) Under some rare circumstances piping the output
+      from \command{Rscript} or \command{R -f} could result in
+      attempting to close the input file twice, possibly crashing the
+      process.  (\PR{16500})
 
       \item (Windows) \code{Sys.info()} was out of step with
       \code{win.version()} and did not report Windows 8.
@@ -344,7 +347,7 @@
       underflows (for ncp > ~60).
 
       \item \code{libcurl} connections signal errors rather than
-      retrieving http error pages.
+      retrieving HTTP error pages.
 
       \item \code{nchar(x, "w")} returned -1 for characters it did not
       know about (e.g.\sspace{}zero-width spaces): it now assumes 1.

@@ -486,11 +486,11 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 */
 
 
-#define FIRSTCHAR(i) (isspace((int)buff1[i-1]))
-#define LASTCHAR(i) (!isspace((int)buff1[i-1]) && (!buff1[i+1] || isspace((int)buff1[i+1])))
-#define LOWVOW(i) (buff1[i] == 'a' || buff1[i] == 'e' || buff1[i] == 'i' || \
-		   buff1[i] == 'o' || buff1[i] == 'u')
-
+#define FIRSTCHAR(i) (isspace((int)s[i-1]))
+#define LASTCHAR(i) (!isspace((int)s[i-1]) && (!s[i+1] || isspace((int)s[i+1])))
+#define LOWVOW(i) (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || \
+		   s[i] == 'o' || s[i] == 'u')
+#define UPPER (int)(strlen(s) - 1)
 
 /* memmove does allow overlapping src and dest */
 static void mystrcpy(char *dest, const char *src)
@@ -498,139 +498,241 @@ static void mystrcpy(char *dest, const char *src)
     memmove(dest, src, strlen(src)+1);
 }
 
-
-/* abbreviate(inchar, minlen) */
 static SEXP stripchars(const char * const inchar, int minlen)
 {
 /* This routine used to use strcpy with overlapping dest and src.
    That is not allowed by ISO C.
  */
-    int i, j, nspace = 0, upper;
-    char *buff1 = cbuff.data;
+    int i, j, nspace = 0;
+    char *s = cbuff.data;
 
-    mystrcpy(buff1, inchar);
-    upper = (int)(strlen(buff1) - 1);
+    mystrcpy(s, inchar);
 
     /* remove leading blanks */
     j = 0;
-    for (i = 0 ; i < upper ; i++)
-	if (isspace((int)buff1[i]))
-	    j++;
-	else
-	    break;
+    for (i = 0 ; i < UPPER ; i++)
+	if (isspace((int)s[i])) j++; else break;
 
-    mystrcpy(buff1, &buff1[j]);
-    upper = (int)(strlen(buff1) - 1);
-
-    if (strlen(buff1) < minlen)
+    mystrcpy(s, s + j);
+    if (strlen(s) < minlen)
 	goto donesc;
 
-    for (i = upper, j = 1; i > 0; i--) {
-	if (isspace((int)buff1[i])) {
-	    if (j)
-		buff1[i] = '\0' ;
-	    else
-		nspace++;
-	}
-	else
-	    j = 0;
-	/*strcpy(buff1[i],buff1[i+1]);*/
-	if (strlen(buff1) - nspace <= minlen)
+    /* remove trailing spaces.
+       record others for final removal (as they act as word boundaries) */
+    for (i = UPPER, j = 1; i > 0; i--) {
+	if (isspace((int)s[i])) {
+	    if (j) s[i] = '\0'; // trailing space
+	    else nspace++;
+	} else j = 0;
+	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
-    upper = (int)(strlen(buff1) - 1);
-    for (i = upper; i > 0; i--) {
+    for (i = UPPER; i > 0; i--) {
 	if (LOWVOW(i) && LASTCHAR(i))
-	    mystrcpy(&buff1[i], &buff1[i + 1]);
-	if (strlen(buff1) - nspace <= minlen)
+	    mystrcpy(s + i, s + i + 1);
+	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
-    upper = (int)(strlen(buff1) - 1);
-   for (i = upper; i > 0; i--) {
+    for (i = UPPER; i > 0; i--) {
 	if (LOWVOW(i) && !FIRSTCHAR(i))
-	    mystrcpy(&buff1[i], &buff1[i + 1]);
-	if (strlen(buff1) - nspace <= minlen)
+	    mystrcpy(s + i, s + i + 1);
+	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
-    upper = (int)(strlen(buff1) - 1);
-    for (i = upper; i > 0; i--) {
-	if (islower((int)buff1[i]) && LASTCHAR(i))
-	    mystrcpy(&buff1[i], &buff1[i + 1]);
-	if (strlen(buff1) - nspace <= minlen)
+    for (i = UPPER; i > 0; i--) {
+	if (islower((int)s[i]) && LASTCHAR(i))
+	    mystrcpy(s + i, s + i + 1);
+	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
-    upper = (int)(strlen(buff1) - 1);
-    for (i = upper; i > 0; i--) {
-	if (islower((int)buff1[i]) && !FIRSTCHAR(i))
-	    mystrcpy(&buff1[i], &buff1[i + 1]);
-	if (strlen(buff1) - nspace <= minlen)
+    for (i = UPPER; i > 0; i--) {
+	if (islower((int)s[i]) && !FIRSTCHAR(i))
+	    mystrcpy(s + i, s + i + 1);
+	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
     /* all else has failed so we use brute force */
 
-    upper = (int)(strlen(buff1) - 1);
-    for (i = upper; i > 0; i--) {
-	if (!FIRSTCHAR(i) && !isspace((int)buff1[i]))
-	    mystrcpy(&buff1[i], &buff1[i + 1]);
-	if (strlen(buff1) - nspace <= minlen)
+    for (i = UPPER; i > 0; i--) {
+	if (!FIRSTCHAR(i) && !isspace((int)s[i]))
+	    mystrcpy(s + i, s + i + 1);
+	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
 donesc:
+    {  // remove internal spaces as required
+	int upper = (int) strlen(s);
+	if (upper > minlen)
+	    for (i = upper - 1; i > 0; i--)
+		if (isspace((int)s[i]))
+		    mystrcpy(s + i, s + i + 1);
+    }
 
-    upper = (int) strlen(buff1);
-    if (upper > minlen)
-	for (i = upper - 1; i > 0; i--)
-	    if (isspace((int)buff1[i]))
-		mystrcpy(&buff1[i], &buff1[i + 1]);
+    return mkChar(s);
+}
 
-    return(mkChar(buff1));
+#define FIRSTCHARW(i) (iswspace((int)wc[i-1]))
+#define LASTCHARW(i) (!iswspace((int)wc[i-1]) && (!wc[i+1] || iswspace((int)wc[i+1])))
+#define LOWVOWW(i) (wc[i] == L'a' || wc[i] == L'e' || \
+                    wc[i] == L'i' || wc[i] == L'o' || wc[i] == L'u')
+#define WUP (int)(wcslen(wc) - 1)
+
+static int vowels[] = {
+    0x61, 0x65, 0x69, 0x6f, 0x75,
+    0xe0, 0xe1, 0x2e, 0xe3, 0xe4, 0xe5, 
+    0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef, 
+    0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc,
+    0x101, 0x103, 0x105, 0x113, 0x115, 0x117, 0x118, 0x11b,
+    0x129, 0x12b, 0x12d, 0x12f, 0x131, 0x14d, 0x14f, 0x151, 
+    0x169, 0x16b, 0x16d, 0x16f, 0x171, 0x173
+};
+
+static Rboolean iswvowel(wchar_t w)
+{
+    int v = (int) w, n = sizeof(vowels)/sizeof(int);
+    Rboolean found = FALSE;
+    for(int i = 0; i < n; i++)
+	if(v == vowels[i]) {found = TRUE; break;}
+	
+    return found;
+}
+
+static void mywcscpy(wchar_t *dest, const wchar_t *src)
+{
+    memmove(dest, src, sizeof(wchar_t) * (wcslen(src)+1));
+}
+
+static SEXP wstripchars(const wchar_t * const inchar, int minlen)
+{
+    int i, j, nspace = 0;
+    wchar_t *wc = (wchar_t *)cbuff.data;
+
+    mywcscpy(wc, inchar);
+
+    /* remove leading wide character */
+    j = 0;
+    for (i = 0 ; i < WUP ; i++)
+	if (iswspace((int)wc[i])) j++; else break;
+
+    mywcscpy(wc, wc + j);
+
+    if (wcslen(wc) < minlen)
+	goto donewsc;
+
+    for (i = WUP, j = 1; i > 0; i--) {
+	if (iswspace((int)wc[i])) {
+	    if (j) wc[i] = '\0' ; else nspace++;
+	} else j = 0;
+	if (wcslen(wc) - nspace <= minlen)
+	    goto donewsc;
+    }
+
+    for (i = WUP; i > 0; i--) {
+	if (iswvowel(wc[i]) && LASTCHARW(i))
+	    mywcscpy(wc + i, wc + i + 1);
+	if (wcslen(wc) - nspace <= minlen)
+	    goto donewsc;
+    }
+
+    for (i = WUP; i > 0; i--) {
+	if (iswvowel(wc[i]) && !FIRSTCHARW(i))
+	    mywcscpy(wc + i, wc + i + 1);
+	if (wcslen(wc) - nspace <= minlen)
+	    goto donewsc;
+    }
+
+    for (i = WUP; i > 0; i--) {
+	if (islower((int)wc[i]) && LASTCHARW(i))
+	    mywcscpy(wc + i, wc + i + 1);
+	if (wcslen(wc) - nspace <= minlen)
+	    goto donewsc;
+    }
+
+    for (i = WUP; i > 0; i--) {
+	if (islower((int)wc[i]) && !FIRSTCHARW(i))
+	    mywcscpy(wc + i, wc + i + 1);
+	if (wcslen(wc) - nspace <= minlen)
+	    goto donewsc;
+    }
+
+    /* all else has failed so we use brute force */
+
+    for (i = WUP; i > 0; i--) {
+	if (!FIRSTCHARW(i) && !iswspace((int)wc[i]))
+	    mywcscpy(wc + i, wc + i + 1);
+	if (wcslen(wc) - nspace <= minlen)
+	    goto donewsc;
+    }
+
+donewsc:
+
+    {
+	int upper = (int) wcslen(wc);
+	if (upper > minlen)
+	    for (i = upper - 1; i > 0; i--)
+		if (iswspace((int)wc[i])) mywcscpy(wc + i, wc + i + 1);
+    }
+    
+    int nb = (int) wcstoutf8(NULL, wc, 0);
+    char *cbuf = CallocCharBuf(nb+1);
+    wcstoutf8(cbuf, wc, nb + 1);
+    SEXP ans = mkCharCE(cbuf, CE_UTF8);
+    Free(cbuf);
+    return ans;
 }
 
 
 SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, ans;
-    R_xlen_t i, len;
-    int minlen;
     Rboolean warn = FALSE;
-    const char *s;
-    const void *vmax;
 
     checkArity(op,args);
-    x = CAR(args);
+    SEXP x = CAR(args);
 
     if (!isString(x))
 	error(_("the first argument must be a character vector"));
-    len = XLENGTH(x);
+    R_xlen_t len = XLENGTH(x);
 
-    PROTECT(ans = allocVector(STRSXP, len));
-    minlen = asInteger(CADR(args));
-    vmax = vmaxget();
-    for (i = 0 ; i < len ; i++) {
-	if (STRING_ELT(x, i) == NA_STRING)
+    SEXP ans = PROTECT(allocVector(STRSXP, len));
+    int minlen = asInteger(CADR(args));
+    const void *vmax = vmaxget();
+    for (R_xlen_t i = 0 ; i < len ; i++) {
+	SEXP el = STRING_ELT(x, i);
+	if (el  == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    s = translateChar(STRING_ELT(x, i));
-	    if(strlen(s) > minlen) {
-		warn = warn | !strIsASCII(s);
-		R_AllocStringBuffer(strlen(s), &cbuff);
-		SET_STRING_ELT(ans, i, stripchars(s, minlen));
-	    } else SET_STRING_ELT(ans, i, mkChar(s));
+	    const char *s = CHAR(el);
+	    if (strIsASCII(s)) {
+		if(strlen(s) > minlen) {
+		    R_AllocStringBuffer(strlen(s)+1, &cbuff);
+		    SET_STRING_ELT(ans, i, stripchars(s, minlen));
+		} else SET_STRING_ELT(ans, i, el);
+	    } else {
+		s = translateCharUTF8(el);
+		int nc = (int) utf8towcs(NULL, s, 0);
+		if (nc > minlen) {
+		    warn = TRUE;
+		    const wchar_t *wc = wtransChar(el);
+		    nc = (int) wcslen(wc);
+		    R_AllocStringBuffer(sizeof(wchar_t)*(nc+1), &cbuff);
+		    SET_STRING_ELT(ans, i, wstripchars(wc, minlen));
+		} else SET_STRING_ELT(ans, i, el);
+	    }
 	}
-	vmaxset(vmax);
+	vmaxset(vmax); // this throws away the result of wtransChar
     }
     if (warn) warning(_("abbreviate used with non-ASCII chars"));
     SHALLOW_DUPLICATE_ATTRIB(ans, x);
     /* This copied the class, if any */
     R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);
-    return(ans);
+    return ans;
 }
 
 SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)

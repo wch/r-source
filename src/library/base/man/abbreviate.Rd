@@ -1,6 +1,6 @@
 % File src/library/base/man/abbreviate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Copyright 2008      The R Foundation
 % Distributed under GPL 2 or later
 
@@ -50,24 +50,30 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   be between letters and space.  This has NOT been implemented.
 }
 \value{
-  A character vector containing abbreviations for the strings in its
-  first argument.  Duplicates in the original \code{names.arg} will be
-  given identical abbreviations.  If any non-duplicated elements have
-  the same \code{minlength} abbreviations then, if \code{method =
-  "both.sides"} the basic internal \code{abbreviate()} algorithm is
-  applied to the characterwise \emph{reversed} strings; if there are
-  still duplicated abbreviations and if \code{strict = FALSE} as by
-  default, \code{minlength} is incremented by one and new abbreviations
-  are found for those elements only.  This process is repeated until all
-  unique elements of \code{names.arg} have unique abbreviations.
+  A character vector containing abbreviations for the character strings
+  in its first argument, with names the original strings.  Duplicates in
+  the original \code{names.arg} will be given identical abbreviations.
+  If any non-duplicated elements have the same \code{minlength}
+  abbreviations then, if \code{method = "both.sides"} the basic internal
+  \code{abbreviate()} algorithm is applied to the characterwise
+  \emph{reversed} strings; if there are still duplicated abbreviations
+  and if \code{strict = FALSE} as by default, \code{minlength} is
+  incremented by one and new abbreviations are found for those elements
+  only.  This process is repeated until all unique elements of
+  \code{names.arg} have unique abbreviations.
 
   The character version of \code{names.arg} is attached to the returned
   value as a names argument: no other attributes are retained.
 }
 \section{Warning}{
-  This is really only suitable for English, and does not work correctly with
-  non-ASCII characters in multibyte locales.  It will warn if used with
-  non-ASCII characters (and required to reduce the length).
+  This is really only suitable for English, and prior to \R 3.3.0 did
+  not work correctly with non-ASCII characters in multibyte locales.  It
+  will warn if used with non-ASCII characters (and required to reduce
+  the length).
+
+  As from \R 3.3.0 the concept of \sQuote{vowel} is extended from
+  English vowels by including characters which are accented versions of
+  lower-case English vowels (including \sQuote{o with stroke}).
 }
 \seealso{
   \code{\link{substr}}.
