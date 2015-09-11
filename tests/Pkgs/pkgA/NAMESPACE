@@ -12,3 +12,5 @@ exportClasses("classA")
 exportMethods("plot")
 
 export(nil)
+
+export(search)# --> "conflict message"

@@ -5,3 +5,6 @@ setClass("classA", contains = "matrix")
 setMethod("plot", "classA", function(x, y, ...) NULL)
 
 nil <- NULL # see if we can use '::' on it
+
+## Export, so we get a *conflict* message on attaching:
+search <- function(...) base::search(...)
