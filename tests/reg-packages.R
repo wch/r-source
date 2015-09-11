@@ -68,7 +68,9 @@ options(oo)
 ## NB: tests were added here for 2.11.0.
 ## NB^2: do not do this in the R sources!
 ## and this testdir is not installed.
-pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs")
+if(interactive() && Sys.getenv("USER") == "maechler")
+    Sys.setenv(SRCDIR = normalizePath("~/R/D/r-devel/R/tests"))
+(pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs"))
 if(!file_test("-d", pkgSrcPath) && !interactive()) {
     unlink("myTst", recursive=TRUE)
     print(proc.time())
@@ -97,6 +99,13 @@ for(p. in p.lis) {
 stopifnot(identical(res[,"Package"], setNames(,sort(c(p.lis, "myTst")))),
 	  res[,"LibPath"] == "myLib")
 ### Specific Tests on our "special" packages: ------------------------------
+
+## These used to fail because of the sym.link in pkgA
+(pkgApath <- file.path(pkgPath, "pkgA"))
+(uA <- tools::undoc(dir = pkgApath))
+(cA <- tools::codoc(dir = pkgApath))
+stopifnot(identical(uA$`code objects`, c("nil", "search")),
+	  identical(uA$`data sets`,    "nilData"))
 
 ## - Check conflict message.
 ## - Find objects which are NULL via "::" -- not to be expected often

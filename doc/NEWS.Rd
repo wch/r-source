@@ -148,6 +148,9 @@
       Some testing code is available at
       \url{https://github.com/pmur002/R-display-list}
 
+      \item \code{tools::undoc(dir = D)} and \code{codoc(dir = D)} now
+      also work when \code{D} is a directory whose \code{normalizePath()}ed
+      version no longer ends in the package name, as, e.g., from a symlink.
     }
   }
 
