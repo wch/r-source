@@ -37,8 +37,10 @@
 
 #include <stdlib.h> /* for div() */
 
-/* FIXME: sort out encodings */
-/* We need display width of a string */
+/* We need display width of a string.
+   Used only for row/column names found by GetMatrixDimnames,
+   so in native encoding.  (NULL ones from do_prmatrix are skipped.)
+*/
 int Rstrwid(const char *str, int slen, int enc, int quote);  /* from printutils.c */
 #define strwidth(x) Rstrwid(x, (int) strlen(x), CE_NATIVE, 0)
 
@@ -312,6 +314,7 @@ static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 		   Rprintf("%*s%s", w[j]-2, "", EncodeRaw(x[i + j * r], "")) );
 }
 
+/* rm and cn are found by GetMatrixDimnames so in native encoding */
 attribute_hidden
 void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 		 SEXP rl, SEXP cl, const char *rn, const char *cn)
