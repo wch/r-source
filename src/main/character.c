@@ -488,7 +488,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define FIRSTCHAR(i) (isspace((int)s[i-1]))
 #define LASTCHAR(i) (!isspace((int)s[i-1]) && (!s[i+1] || isspace((int)s[i+1])))
-#define LOWVOW(i) (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || \
+#define LC_VOWEL(i) (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || \
 		   s[i] == 'o' || s[i] == 'u')
 #define UPPER (int)(strlen(s) - 1)
 
@@ -517,8 +517,10 @@ static SEXP stripchars(const char * const inchar, int minlen)
     if (strlen(s) < minlen)
 	goto donesc;
 
+    /* From here on the for() loops never touch the first character */
+
     /* remove trailing spaces.
-       record others for final removal (as they act as word boundaries) */
+       record others for removal later (as they act as word boundaries) */
     for (i = UPPER, j = 1; i > 0; i--) {
 	if (isspace((int)s[i])) {
 	    if (j) s[i] = '\0'; // trailing space
@@ -528,20 +530,24 @@ static SEXP stripchars(const char * const inchar, int minlen)
 	    goto donesc;
     }
 
+    /* remove l/case vowels,
+       which are not at the beginning of a word but are at the end */
     for (i = UPPER; i > 0; i--) {
-	if (LOWVOW(i) && LASTCHAR(i))
+	if (LC_VOWEL(i) && LASTCHAR(i))
 	    mystrcpy(s + i, s + i + 1);
 	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
+    /* remove those not at the beginning of a word */
     for (i = UPPER; i > 0; i--) {
-	if (LOWVOW(i) && !FIRSTCHAR(i))
+	if (LC_VOWEL(i) && !FIRSTCHAR(i))
 	    mystrcpy(s + i, s + i + 1);
 	if (strlen(s) - nspace <= minlen)
 	    goto donesc;
     }
 
+    /* Now do the same for remaining l/case chars */
     for (i = UPPER; i > 0; i--) {
 	if (islower((int)s[i]) && LASTCHAR(i))
 	    mystrcpy(s + i, s + i + 1);
@@ -579,10 +585,9 @@ donesc:
 
 #define FIRSTCHARW(i) (iswspace((int)wc[i-1]))
 #define LASTCHARW(i) (!iswspace((int)wc[i-1]) && (!wc[i+1] || iswspace((int)wc[i+1])))
-#define LOWVOWW(i) (wc[i] == L'a' || wc[i] == L'e' || \
-                    wc[i] == L'i' || wc[i] == L'o' || wc[i] == L'u')
 #define WUP (int)(wcslen(wc) - 1)
 
+// lower-case vowels in English plus accented versions
 static int vowels[] = {
     0x61, 0x65, 0x69, 0x6f, 0x75,
     0xe0, 0xe1, 0x2e, 0xe3, 0xe4, 0xe5, 
