@@ -134,7 +134,7 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 int R_nchar(SEXP string, nchar_type type_,
-            Rboolean allowNA, Rboolean keepNA, const char* msg_name)
+	    Rboolean allowNA, Rboolean keepNA, const char* msg_name)
 {
     if (string == NA_STRING)
 	return keepNA ? NA_INTEGER : 2;
@@ -249,7 +249,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     int keepNA;
     if(nargs >= 4) {
 	keepNA = asLogical(CADDDR(args));
-	if (keepNA == NA_LOGICAL)
+	if (keepNA == NA_LOGICAL) // default
 	    keepNA = (type_ == Width) ? FALSE : TRUE;
     } else  keepNA = FALSE; // default
     PROTECT(s = allocVector(INTSXP, len));
@@ -498,8 +498,6 @@ static void mystrcpy(char *dest, const char *src)
     memmove(dest, src, strlen(src)+1);
 }
 
-
-/* abbreviate(inchar, minlen) */
 static SEXP stripchars(const char * const inchar, int minlen)
 {
 /* This routine used to use strcpy with overlapping dest and src.
@@ -548,7 +546,7 @@ static SEXP stripchars(const char * const inchar, int minlen)
     }
 
     upper = (int)(strlen(buff1) - 1);
-   for (i = upper; i > 0; i--) {
+    for (i = upper; i > 0; i--) {
 	if (LOWVOW(i) && !FIRSTCHAR(i))
 	    mystrcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
@@ -630,7 +628,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     /* This copied the class, if any */
     R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);
-    return(ans);
+    return ans;
 }
 
 SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1420,7 +1418,7 @@ SEXP attribute_hidden stringSuffix(SEXP string, int fromIndex) {
     SEXP res = PROTECT(allocVector(STRSXP, newLen));
     int i;
     for(i = 0; i < newLen; i++) {
-        SET_STRING_ELT(res, i, STRING_ELT(string, fromIndex++));
+	SET_STRING_ELT(res, i, STRING_ELT(string, fromIndex++));
     }
 
     UNPROTECT(1); /* res */

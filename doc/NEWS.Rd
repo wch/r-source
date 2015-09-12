@@ -38,12 +38,9 @@
       \option{--disable-java} to disable the checks for Java.
 
       \item The \command{configure} default for \code{MAIN_LDFLAGS} has
-      been changed for FreeBSD, NetBSD and Hurd OSes to one more likely
-      to work with compilers other than \command{gcc} (FreeBSD 10
+      been changed for the FreeBSD, NetBSD and Hurd OSes to one more
+      likely to work with compilers other than \command{gcc} (FreeBSD 10
       defaults to \command{clang}).
-
-      \item The macros \samp{SHLIB_OPENMP_CFLAGS} etc can be set in
-      e.g.\sspace{} \file{config.site}.
 
       \item \command{configure} now supports the OpenMP flags
       \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
@@ -73,10 +70,10 @@
       \item Coercing a list without names to a data frame is faster if
       the elements are very long. (\PR{16467})
 
-      \item (Unix-only) Under some circumstances piping the output from
-      \command{Rscript} or \command{R -f} could result in attempting to
-      close the input file twice, possibly crashing the process.
-      (\PR{16500})
+      \item (Unix-only) Under some rare circumstances piping the output
+      from \command{Rscript} or \command{R -f} could result in
+      attempting to close the input file twice, possibly crashing the
+      process.  (\PR{16500})
 
       \item (Windows) \code{Sys.info()} was out of step with
       \code{win.version()} and did not report Windows 8.
@@ -107,6 +104,10 @@
 
       \item Help for \code{which.min} is now more precise about behavior
       with logical arguments.  (\PR{16532})
+
+      \item The print width of character strings marked as
+      \code{"latin1"} or \code{"bytes"} was in some cases computed
+      incorrectly.
     }
   }
 }
