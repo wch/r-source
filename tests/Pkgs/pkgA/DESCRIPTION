@@ -1,0 +1,14 @@
+Package: pkgA
+Title: Simple Package with NameSpace and S4 Methods and Classes
+Version: 1.2
+Date: 2015-02-05
+Type: Package
+Depends: methods
+Imports: Matrix
+LazyData: true
+Author: Yohan Chalabi and R-core
+Maintainer: R Core <R-core@almost.r-project.org>
+Description: Example package with a namespace, and S4 method for "plot".
+ used for regression testing the correct working of tools::codoc(), undoc()
+ etc, but also S4 in connection with other packages.
+License: GPL (>= 2)
