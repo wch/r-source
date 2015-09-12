@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             stop(gettextf("there is no package called '%s'", package),
                  domain = NA)
         dataDir <- file.path(pkgpath, "data")
-    } else {
+    } else if(missing(package)) {
+        ## <FIXME> making assumptions about dataDir (e.g., pkgpath *NOT* from R-forge symlink)
         pkgpath <- sub("/data$", "", dataDir)
         package <- basename(pkgpath)
 	# avoid builddir != srcdir problems -- assume package has been installed
