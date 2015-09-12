@@ -356,6 +356,10 @@
 
       \item Help for \code{which.min} is now more precise about behavior
       with logical arguments.  (\PR{16532})
+
+      \item The print width of character strings marked as
+      \code{"latin1"} or \code{"bytes"} was in some cases computed
+      incorrectly.
     }
   }
 }

@@ -363,8 +363,7 @@ const char
 
    On Windows with surrogate pairs it will not be canonical, but AFAIK
    they do not occur in any MBCS (so it would only matter if we implement
-   UTF-8, and then only if Windows has surrogate pairs switched on,
-   which Western versions at least do not.).
+   UTF-8, and then only if Windows has surrogate pairs switched on.).
 */
 
 #include <rlocale.h> /* redefines isw* functions */
@@ -373,10 +372,11 @@ const char
 #include "rgui_UTF8.h"
 #endif
 
-/* strlen() using escaped rather than literal form,
-   and allowing for embedded nuls.
+/* strlen() using escaped rather than literal form.
    In MBCS locales it works in characters, and reports in display width.
-   Also used in printarray.c.
+   Rstrwid is also used in printarray.c.
+
+   This supported embedded nuls when we had those.
  */
 attribute_hidden
 int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
@@ -384,6 +384,18 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
     const char *p = str;
     int len = 0, i;
 
+    if(ienc == CE_BYTES) { // not currently used for that encoding
+	for (i = 0; i < slen; i++) {
+	    unsigned char k = str[i];
+	    if (k >= 0x20 && k < 0x80) len += 1;
+	    else len += 4;
+	}
+	return len;
+    }
+    /* Future-proof: currently that is all Rstrlen calls it with,
+       and printarray has CE_NATIVE explicitly */
+    if(ienc > 2) // CE_NATIVE, CE_UTF8, CE_BYTES are supported
+	warning("unsupported encoding (%d) in Rstrwid", ienc);
     if(mbcslocale || ienc == CE_UTF8) {
 	int res;
 	mbstate_t mb_st;
@@ -442,10 +454,10 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		p++;
 	    }
 	}
-    } else
+    } else // not MBCS nor marked as UTF-8
 	for (i = 0; i < slen; i++) {
-	    /* ASCII */
 	    if((unsigned char) *p < 0x80) {
+		/* ASCII */
 		if(isprint((int)*p)) {
 		    switch(*p) {
 		    case '\\':
@@ -485,10 +497,18 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
     return len;
 }
 
+/* Match what EncodeString does with encodings */
 attribute_hidden
 int Rstrlen(SEXP s, int quote)
 {
-    return Rstrwid(CHAR(s), LENGTH(s), getCharCE(s), quote);
+    cetype_t ienc = getCharCE(s);
+    if (ienc == CE_UTF8 || ienc == CE_BYTES)
+	return Rstrwid(CHAR(s), LENGTH(s), ienc, quote);
+    const void *vmax = vmaxget();
+    const char *p = translateChar(s);
+    int len = Rstrwid(p, (int)strlen(p), CE_NATIVE, quote);
+    vmaxset(vmax);
+    return len;
 }
 
 /* Here w is the minimum field width
