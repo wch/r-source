@@ -41,8 +41,10 @@ abbreviate <-
              strict = FALSE, method = c("left.kept", "both.sides"))
 {
     ## we just ignore use.classes
-    if(minlength <= 0L)
-	return(rep.int("", length(names.arg)))
+    if(minlength <= 0L) {
+        x <- rep.int("", length(names.arg)); names(x) <- names.arg
+        return(x)
+    }
     ## need to remove leading/trailing spaces before we check for dups
     ## This is inefficient but easier than modifying do_abbrev (=> FIXME !)
     names.arg <- sub("^ +", "", sub(" +$", "", as.character(names.arg)))
@@ -77,7 +79,7 @@ abbreviate <-
 	}
     }
     if(any(dups))
-	x <- x[match(old,names.arg)]
+	x <- x[match(old, names.arg)]
     if(dot) {			    # add "." where we did abbreviate:
 	chgd <- x != old
 	x[chgd] <- paste0(x[chgd],".")
