@@ -918,3 +918,12 @@ stopifnot(identical(topenv(baseenv()),
 ## widths of unknown Unicode characters
 stopifnot(nchar("\u200b", "w") == 0)
 ## was -1 in R 3.2.2
+
+
+## abbreviate dropped names in some cases
+x <- c("AA", "AB", "AA", "CBA") # also test handling of duplicates
+for(m in 2:0) {
+    print(y <- abbreviate(x, m))
+    stopifnot(identical(names(y), x))
+}
+## dropped for 0 in R <= 3.2.2
