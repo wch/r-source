@@ -279,6 +279,8 @@
 ## Path to the version of pkg-config to be used for locating cairographics,
 ## and possibly jpeg, libpng and libtiff.
 ## PKGCONF=
+## search path for pkg-config
+## PKG_CONFIG_PATH=
 
 ## OpenMP settings.
 ## The configure code is conservative about enabling OpenMP 

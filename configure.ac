@@ -613,6 +613,9 @@ AC_PATH_PROG(REALPATH, realpath, false)
 ## cairographics needs pkg-config
 AC_PATH_PROG(PKGCONF, pkg-config , [], 
 	     [$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
+AC_ARG_VAR([PKGCONF], [path to pkg-config utility])
+AC_ARG_VAR([PKG_CONFIG_PATH], [directories to add to pkg-config's search path])
+AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search path])
 
 AC_PROG_CC
 

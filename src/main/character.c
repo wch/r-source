@@ -683,10 +683,10 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(x))
 	error(_("the first argument must be a character vector"));
     int minlen = asInteger(CADR(args));
-    if(minlen == NA_INTEGER)
+    if (minlen == NA_INTEGER)
 	error(_("invalid '%s' argument"), "minlength");
     int usecl = asLogical(CADDR(args));
-    if(usecl == NA_INTEGER)
+    if (usecl == NA_INTEGER)
 	error(_("invalid '%s' argument"), "use.classes");
 
     R_xlen_t len = XLENGTH(x);
