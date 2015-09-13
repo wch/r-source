@@ -498,29 +498,18 @@ static void mystrcpy(char *dest, const char *src)
     memmove(dest, src, strlen(src)+1);
 }
 
-static SEXP stripchars(const char * const inchar, int minlen)
+static SEXP stripchars(const char * const inchar, int minlen, int usecl)
 {
-/* This routine used to use strcpy with overlapping dest and src.
-   That is not allowed by ISO C.
- */
     int i, j, nspace = 0;
     char *s = cbuff.data;
 
+    /* The R wrapper removed leading and trailing spces */
     mystrcpy(s, inchar);
+    if (strlen(s) < minlen) goto donesc;
 
-    /* remove leading blanks */
-    j = 0;
-    for (i = 0 ; i < UPPER ; i++)
-	if (isspace((int)s[i])) j++; else break;
+    /* The for() loops never touch the first character */
 
-    mystrcpy(s, s + j);
-    if (strlen(s) < minlen)
-	goto donesc;
-
-    /* From here on the for() loops never touch the first character */
-
-    /* remove trailing spaces.
-       record others for removal later (as they act as word boundaries) */
+    /*  record spaces for removal later (as they act as word boundaries) */
     for (i = UPPER, j = 1; i > 0; i--) {
 	if (isspace((int)s[i])) {
 	    if (j) s[i] = '\0'; // trailing space
@@ -530,36 +519,38 @@ static SEXP stripchars(const char * const inchar, int minlen)
 	    goto donesc;
     }
 
-    /* remove l/case vowels,
-       which are not at the beginning of a word but are at the end */
-    for (i = UPPER; i > 0; i--) {
-	if (LC_VOWEL(i) && LASTCHAR(i))
-	    mystrcpy(s + i, s + i + 1);
-	if (strlen(s) - nspace <= minlen)
-	    goto donesc;
-    }
+    if(usecl) {
+	/* remove l/case vowels,
+	   which are not at the beginning of a word but are at the end */
+	for (i = UPPER; i > 0; i--) {
+	    if (LC_VOWEL(i) && LASTCHAR(i))
+		mystrcpy(s + i, s + i + 1);
+	    if (strlen(s) - nspace <= minlen)
+		goto donesc;
+	}
 
-    /* remove those not at the beginning of a word */
-    for (i = UPPER; i > 0; i--) {
-	if (LC_VOWEL(i) && !FIRSTCHAR(i))
-	    mystrcpy(s + i, s + i + 1);
-	if (strlen(s) - nspace <= minlen)
-	    goto donesc;
-    }
+	/* remove those not at the beginning of a word */
+	for (i = UPPER; i > 0; i--) {
+	    if (LC_VOWEL(i) && !FIRSTCHAR(i))
+		mystrcpy(s + i, s + i + 1);
+	    if (strlen(s) - nspace <= minlen)
+		goto donesc;
+	}
 
-    /* Now do the same for remaining l/case chars */
-    for (i = UPPER; i > 0; i--) {
-	if (islower((int)s[i]) && LASTCHAR(i))
-	    mystrcpy(s + i, s + i + 1);
-	if (strlen(s) - nspace <= minlen)
-	    goto donesc;
-    }
+	/* Now do the same for remaining l/case chars */
+	for (i = UPPER; i > 0; i--) {
+	    if (islower((int)s[i]) && LASTCHAR(i))
+		mystrcpy(s + i, s + i + 1);
+	    if (strlen(s) - nspace <= minlen)
+		goto donesc;
+	}
 
-    for (i = UPPER; i > 0; i--) {
-	if (islower((int)s[i]) && !FIRSTCHAR(i))
-	    mystrcpy(s + i, s + i + 1);
-	if (strlen(s) - nspace <= minlen)
-	    goto donesc;
+	for (i = UPPER; i > 0; i--) {
+	    if (islower((int)s[i]) && !FIRSTCHAR(i))
+		mystrcpy(s + i, s + i + 1);
+	    if (strlen(s) - nspace <= minlen)
+		goto donesc;
+	}
     }
 
     /* all else has failed so we use brute force */
@@ -613,22 +604,13 @@ static void mywcscpy(wchar_t *dest, const wchar_t *src)
     memmove(dest, src, sizeof(wchar_t) * (wcslen(src)+1));
 }
 
-static SEXP wstripchars(const wchar_t * const inchar, int minlen)
+static SEXP wstripchars(const wchar_t * const inchar, int minlen, int usecl)
 {
     int i, j, nspace = 0;
     wchar_t *wc = (wchar_t *)cbuff.data;
 
     mywcscpy(wc, inchar);
-
-    /* remove leading wide character */
-    j = 0;
-    for (i = 0 ; i < WUP ; i++)
-	if (iswspace((int)wc[i])) j++; else break;
-
-    mywcscpy(wc, wc + j);
-
-    if (wcslen(wc) < minlen)
-	goto donewsc;
+    if (wcslen(wc) < minlen) goto donewsc;
 
     for (i = WUP, j = 1; i > 0; i--) {
 	if (iswspace((int)wc[i])) {
@@ -638,35 +620,35 @@ static SEXP wstripchars(const wchar_t * const inchar, int minlen)
 	    goto donewsc;
     }
 
-    for (i = WUP; i > 0; i--) {
-	if (iswvowel(wc[i]) && LASTCHARW(i))
-	    mywcscpy(wc + i, wc + i + 1);
-	if (wcslen(wc) - nspace <= minlen)
-	    goto donewsc;
-    }
+    if(usecl) {
+	for (i = WUP; i > 0; i--) {
+	    if (iswvowel(wc[i]) && LASTCHARW(i))
+		mywcscpy(wc + i, wc + i + 1);
+	    if (wcslen(wc) - nspace <= minlen)
+		goto donewsc;
+	}
 
-    for (i = WUP; i > 0; i--) {
-	if (iswvowel(wc[i]) && !FIRSTCHARW(i))
-	    mywcscpy(wc + i, wc + i + 1);
-	if (wcslen(wc) - nspace <= minlen)
-	    goto donewsc;
-    }
+	for (i = WUP; i > 0; i--) {
+	    if (iswvowel(wc[i]) && !FIRSTCHARW(i))
+		mywcscpy(wc + i, wc + i + 1);
+	    if (wcslen(wc) - nspace <= minlen)
+		goto donewsc;
+	}
 
-    for (i = WUP; i > 0; i--) {
-	if (islower((int)wc[i]) && LASTCHARW(i))
-	    mywcscpy(wc + i, wc + i + 1);
-	if (wcslen(wc) - nspace <= minlen)
-	    goto donewsc;
-    }
+	for (i = WUP; i > 0; i--) {
+	    if (islower((int)wc[i]) && LASTCHARW(i))
+		mywcscpy(wc + i, wc + i + 1);
+	    if (wcslen(wc) - nspace <= minlen)
+		goto donewsc;
+	}
 
-    for (i = WUP; i > 0; i--) {
-	if (islower((int)wc[i]) && !FIRSTCHARW(i))
-	    mywcscpy(wc + i, wc + i + 1);
-	if (wcslen(wc) - nspace <= minlen)
-	    goto donewsc;
+	for (i = WUP; i > 0; i--) {
+	    if (islower((int)wc[i]) && !FIRSTCHARW(i))
+		mywcscpy(wc + i, wc + i + 1);
+	    if (wcslen(wc) - nspace <= minlen)
+		goto donewsc;
+	}
     }
-
-    /* all else has failed so we use brute force */
 
     for (i = WUP; i > 0; i--) {
 	if (!FIRSTCHARW(i) && !iswspace((int)wc[i]))
@@ -695,18 +677,22 @@ donewsc:
 
 SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    Rboolean warn = FALSE;
-
     checkArity(op,args);
     SEXP x = CAR(args);
 
     if (!isString(x))
 	error(_("the first argument must be a character vector"));
-    R_xlen_t len = XLENGTH(x);
-
-    SEXP ans = PROTECT(allocVector(STRSXP, len));
     int minlen = asInteger(CADR(args));
+    if(minlen == NA_INTEGER)
+	error(_("invalid '%s' argument"), "minlength");
+    int usecl = asLogical(CADDR(args));
+    if(usecl == NA_INTEGER)
+	error(_("invalid '%s' argument"), "use.classes");
+
+    R_xlen_t len = XLENGTH(x);
+    SEXP ans = PROTECT(allocVector(STRSXP, len));
     const void *vmax = vmaxget();
+    Rboolean warn = FALSE;
     for (R_xlen_t i = 0 ; i < len ; i++) {
 	SEXP el = STRING_ELT(x, i);
 	if (el  == NA_STRING)
@@ -716,7 +702,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (strIsASCII(s)) {
 		if(strlen(s) > minlen) {
 		    R_AllocStringBuffer(strlen(s)+1, &cbuff);
-		    SET_STRING_ELT(ans, i, stripchars(s, minlen));
+		    SET_STRING_ELT(ans, i, stripchars(s, minlen, usecl));
 		} else SET_STRING_ELT(ans, i, el);
 	    } else {
 		s = translateCharUTF8(el);
@@ -726,13 +712,13 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 		    const wchar_t *wc = wtransChar(el);
 		    nc = (int) wcslen(wc);
 		    R_AllocStringBuffer(sizeof(wchar_t)*(nc+1), &cbuff);
-		    SET_STRING_ELT(ans, i, wstripchars(wc, minlen));
+		    SET_STRING_ELT(ans, i, wstripchars(wc, minlen, usecl));
 		} else SET_STRING_ELT(ans, i, el);
 	    }
 	}
 	vmaxset(vmax); // this throws away the result of wtransChar
     }
-    if (warn) warning(_("abbreviate used with non-ASCII chars"));
+    if (usecl && warn) warning(_("abbreviate used with non-ASCII chars"));
     SHALLOW_DUPLICATE_ATTRIB(ans, x);
     /* This copied the class, if any */
     R_FreeStringBufferL(&cbuff);

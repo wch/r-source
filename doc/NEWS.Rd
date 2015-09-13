@@ -154,9 +154,12 @@
 
       \item \code{abbreviate()} has more support for multi-byte
       character sets -- it no longer removes bytes within characters and
-      it knows about (English) vowels with accents.  It is still only
+      knows about Latin vowels with accents.  It is still only
       really suitable for (most) European languages, and still warns on
       non-ASCII input.
+
+      \code{abbreviate(use.classes = FALSE)} is now implemented, and
+      that is more suitable for non-European languages.
     }
   }
 
