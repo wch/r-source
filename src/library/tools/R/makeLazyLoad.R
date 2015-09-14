@@ -51,12 +51,18 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             stop(gettextf("there is no package called '%s'", package),
                  domain = NA)
         dataDir <- file.path(pkgpath, "data")
-    } else if(missing(package)) {
-        ## <FIXME> making assumptions about dataDir (e.g., pkgpath *NOT* from R-forge symlink)
-        pkgpath <- sub("/data$", "", dataDir)
-        package <- basename(pkgpath)
-	# avoid builddir != srcdir problems -- assume package has been installed
-        lib.loc <- c(dirname(pkgpath), .libPaths())
+    } else {
+	if(has.pkg <- !missing(package)) ## try with default lib.loc
+	    pkgpath <- find.package(package, lib.loc, quiet = TRUE)
+	if(!has.pkg || !length(pkgpath)) {
+	   ## <FIXME> making assumptions about dataDir (e.g., pkgpath *NOT* from R-forge symlink)
+	    pkgpath <- sub("/data$", "", dataDir)
+	    ## avoid builddir != srcdir problems -- assume package has been installed
+	    ## making use of the fact that utils::data() works with *source* package:
+	    lib.loc <- c(dirname(pkgpath), .libPaths())
+	    if(!has.pkg)
+		package <- basename(pkgpath)
+	}
     }
     if(dir.exists(dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
