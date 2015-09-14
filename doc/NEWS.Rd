@@ -252,6 +252,9 @@
       \item A \code{coef()} method for class \code{"maov"} has been
       added to allow \code{vcov()} to work with multivariate
       results. (\PR{16380})
+
+      \item \code{libcurl} connections signal errors rather than
+      retrieving HTTP error pages.
     }
   }
 }
@@ -348,9 +351,6 @@
 
       \item \code{pchisq(*, df=0, ncp > 0, log.p=TRUE)} no longer
       underflows (for ncp > ~60).
-
-      \item \code{libcurl} connections signal errors rather than
-      retrieving HTTP error pages.
 
       \item \code{nchar(x, "w")} returned -1 for characters it did not
       know about (e.g.\sspace{}zero-width spaces): it now assumes 1.
