@@ -124,9 +124,9 @@ static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
 
     SEXP val = PROTECT(allocVector(VECSXP, 3));
     SEXP nm = PROTECT(allocVector(STRSXP, 3));
-    SET_STRING_ELT(nm, 0, mkChar("d"));
-    SET_STRING_ELT(nm, 1, mkChar("u"));
-    SET_STRING_ELT(nm, 2, mkChar("vt"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "d");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "u");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "vt");
     setAttrib(val, R_NamesSymbol, nm);
     SET_VECTOR_ELT(val, 0, s);
     SET_VECTOR_ELT(val, 1, u);
@@ -196,14 +196,14 @@ static SEXP La_rs(SEXP x, SEXP only_values)
     if (!ov) {
 	ret = PROTECT(allocVector(VECSXP, 2));
 	nm = PROTECT(allocVector(STRSXP, 2));
-	SET_STRING_ELT(nm, 1, mkChar("vectors"));
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "vectors");
 	SET_VECTOR_ELT(ret, 1, z);
 	UNPROTECT_PTR(z);
     } else {
 	ret = PROTECT(allocVector(VECSXP, 1));
 	nm = PROTECT(allocVector(STRSXP, 1));
     }
-    SET_STRING_ELT(nm, 0, mkChar("values"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "values");
     setAttrib(ret, R_NamesSymbol, nm);
     SET_VECTOR_ELT(ret, 0, values);
     UNPROTECT(4);
@@ -289,8 +289,8 @@ static SEXP La_rg(SEXP x, SEXP only_values)
 	}
     SEXP ret = PROTECT(allocVector(VECSXP, 2));
     SEXP nm = PROTECT(allocVector(STRSXP, 2));
-    SET_STRING_ELT(nm, 0, mkChar("values"));
-    SET_STRING_ELT(nm, 1, mkChar("vectors"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "values");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "vectors");
     setAttrib(ret, R_NamesSymbol, nm);
     SET_VECTOR_ELT(ret, 1, R_NilValue);
     if (complexValues) {
@@ -623,10 +623,10 @@ static SEXP La_qr_cmplx(SEXP Ain)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgeqp3");
     SEXP val = PROTECT(allocVector(VECSXP, 4));
     SEXP nm = PROTECT(allocVector(STRSXP, 4));
-    SET_STRING_ELT(nm, 0, mkChar("qr"));
-    SET_STRING_ELT(nm, 1, mkChar("rank"));
-    SET_STRING_ELT(nm, 2, mkChar("qraux"));
-    SET_STRING_ELT(nm, 3, mkChar("pivot"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "qr");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "rank");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "qraux");
+    SET_STRING_ELT_FROM_CSTR(nm, 3, "pivot");
     setAttrib(val, R_NamesSymbol, nm);
     // Fix up dimnames(A)
     if(!isNull(Adn)) {
@@ -634,7 +634,7 @@ static SEXP La_qr_cmplx(SEXP Ain)
 	SEXP cn = VECTOR_ELT(Adn, 1), cn2 = VECTOR_ELT(Adn2, 1);
 	if(!isNull(cn)) { // pivot them
 	    for (int j = 0; j < n; j++)
-		SET_STRING_ELT(cn2, j, STRING_ELT(cn, INTEGER(jpvt)[j]-1));
+		COPY_STRING_ELT(cn2, j, cn, INTEGER(jpvt)[j]-1);
 	}
 	setAttrib(A, R_DimNamesSymbol, Adn2);
     }
@@ -787,9 +787,9 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP v)
 
     SEXP val = PROTECT(allocVector(VECSXP, 3));
     SEXP nm = PROTECT(allocVector(STRSXP, 3));
-    SET_STRING_ELT(nm, 0, mkChar("d"));
-    SET_STRING_ELT(nm, 1, mkChar("u"));
-    SET_STRING_ELT(nm, 2, mkChar("vt"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "d");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "u");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "vt");
     setAttrib(val, R_NamesSymbol, nm);
     SET_VECTOR_ELT(val, 0, s);
     SET_VECTOR_ELT(val, 1, u);
@@ -842,13 +842,13 @@ static SEXP La_rs_cmplx(SEXP xin, SEXP only_values)
     if (!ov) {
 	ret = PROTECT(allocVector(VECSXP, 2));
 	nm = PROTECT(allocVector(STRSXP, 2));
-	SET_STRING_ELT(nm, 1, mkChar("vectors"));
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "vectors");
 	SET_VECTOR_ELT(ret, 1, x);
     } else {
 	ret = PROTECT(allocVector(VECSXP, 1));
 	nm = PROTECT(allocVector(STRSXP, 1));
     }
-    SET_STRING_ELT(nm, 0, mkChar("values"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "values");
     setAttrib(ret, R_NamesSymbol, nm);
     SET_VECTOR_ELT(ret, 0, values);
     UNPROTECT(4);
@@ -902,13 +902,13 @@ static SEXP La_rg_cmplx(SEXP x, SEXP only_values)
     if(!ov){
 	ret = PROTECT(allocVector(VECSXP, 2));
 	nm = PROTECT(allocVector(STRSXP, 2));
-	SET_STRING_ELT(nm, 1, mkChar("vectors"));
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "vectors");
 	SET_VECTOR_ELT(ret, 1, val);
     } else {
 	ret = PROTECT(allocVector(VECSXP, 1));
 	nm = PROTECT(allocVector(STRSXP, 1));
     }
-    SET_STRING_ELT(nm, 0, mkChar("values"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "values");
     SET_VECTOR_ELT(ret, 0, values);
     setAttrib(ret, R_NamesSymbol, nm);
     UNPROTECT(ov ? 3 : 4);
@@ -971,7 +971,7 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 	    SEXP dn2 = PROTECT(duplicate(dn));
 	    SEXP cn2 = VECTOR_ELT(dn2, 1);
 	    for(int i = 0; i < m; i++) 
-		SET_STRING_ELT(cn2, i, STRING_ELT(cn, ip[i] - 1)); // base 1
+		COPY_STRING_ELT(cn2, i, cn, ip[i] - 1); // base 1
 	    setAttrib(ans, R_DimNamesSymbol, dn2);
 	    UNPROTECT(1);
 	}
@@ -1141,10 +1141,10 @@ static SEXP La_qr(SEXP Ain)
 	error(_("error code %d from Lapack routine '%s'"), info, "dgeqp3");
     SEXP val = PROTECT(allocVector(VECSXP, 4));
     SEXP nm = PROTECT(allocVector(STRSXP, 4));
-    SET_STRING_ELT(nm, 0, mkChar("qr"));
-    SET_STRING_ELT(nm, 1, mkChar("rank"));
-    SET_STRING_ELT(nm, 2, mkChar("qraux"));
-    SET_STRING_ELT(nm, 3, mkChar("pivot"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "qr");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "rank");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "qraux");
+    SET_STRING_ELT_FROM_CSTR(nm, 3, "pivot");
     setAttrib(val, R_NamesSymbol, nm);
     // Fix up dimnames(A)
     if(!isNull(Adn)) {
@@ -1152,7 +1152,7 @@ static SEXP La_qr(SEXP Ain)
 	SEXP cn = VECTOR_ELT(Adn, 1), cn2 = VECTOR_ELT(Adn2, 1);
 	if(!isNull(cn)) { // pivot them
 	    for (int j = 0; j < n; j++)
-		SET_STRING_ELT(cn2, j, STRING_ELT(cn, INTEGER(jpvt)[j]-1));
+		COPY_STRING_ELT(cn2, j, cn, INTEGER(jpvt)[j]-1);
 	}
 	setAttrib(A, R_DimNamesSymbol, Adn2);
     }
@@ -1284,8 +1284,8 @@ static SEXP det_ge_real(SEXP Ain, SEXP logarithm)
     }
     SEXP val = PROTECT(allocVector(VECSXP, 2));
     SEXP nm = PROTECT(allocVector(STRSXP, 2));
-    SET_STRING_ELT(nm, 0, mkChar("modulus"));
-    SET_STRING_ELT(nm, 1, mkChar("sign"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "modulus");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "sign");
     setAttrib(val, R_NamesSymbol, nm);
     SET_VECTOR_ELT(val, 0, ScalarReal(modulus));
     SEXP s_logarithm = install("logarithm");

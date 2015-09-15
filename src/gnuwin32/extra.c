@@ -182,7 +182,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!GetVersionEx((OSVERSIONINFO *)&osvi))
 	error(_("unsupported version of Windows"));
 
-    SET_STRING_ELT(ans, 0, mkChar("Windows"));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, "Windows");
 
     /* Here for unknown future versions */
     snprintf(ver, 256, "%d.%d", 
@@ -229,7 +229,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 	    strcat(ver, " x64");
     }
-    SET_STRING_ELT(ans, 1, mkChar(ver));
+    SET_STRING_ELT_FROM_CSTR(ans, 1, ver);
 
     if((int)osvi.dwMajorVersion >= 5) {
 	if(osvi.wServicePackMajor > 0)
@@ -240,29 +240,29 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
 	snprintf(ver, 256, "build %d, %s",
 		 LOWORD(osvi.dwBuildNumber), osvi.szCSDVersion);
-    SET_STRING_ELT(ans, 2, mkChar(ver));
+    SET_STRING_ELT_FROM_CSTR(ans, 2, ver);
     GetComputerNameW(name, &namelen);
     wcstoutf8(buf, name, 1000);
-    SET_STRING_ELT(ans, 3, mkCharCE(buf, CE_UTF8));
+    SET_STRING_ELT_FROM_CSTR_CE(ans, 3, buf, CE_UTF8);
 #ifdef _WIN64
-    SET_STRING_ELT(ans, 4, mkChar("x86-64"));
+    SET_STRING_ELT_FROM_CSTR(ans, 4, "x86-64");
 #else
-    SET_STRING_ELT(ans, 4, mkChar("x86"));
+    SET_STRING_ELT_FROM_CSTR(ans, 4, "x86");
 #endif
     GetUserNameW(user, &userlen);
     wcstoutf8(buf, user, 1000);
-    SET_STRING_ELT(ans, 5, mkCharCE(buf, CE_UTF8));
-    SET_STRING_ELT(ans, 6, STRING_ELT(ans, 5));
-    SET_STRING_ELT(ans, 7, STRING_ELT(ans, 5));
+    SET_STRING_ELT_FROM_CSTR_CE(ans, 5, buf, CE_UTF8);
+    COPY_STRING_ELT(ans, 6, ans, 5);
+    COPY_STRING_ELT(ans, 7, ans, 5);
     PROTECT(ansnames = allocVector(STRSXP, 8));
-    SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
-    SET_STRING_ELT(ansnames, 1, mkChar("release"));
-    SET_STRING_ELT(ansnames, 2, mkChar("version"));
-    SET_STRING_ELT(ansnames, 3, mkChar("nodename"));
-    SET_STRING_ELT(ansnames, 4, mkChar("machine"));
-    SET_STRING_ELT(ansnames, 5, mkChar("login"));
-    SET_STRING_ELT(ansnames, 6, mkChar("user"));
-    SET_STRING_ELT(ansnames, 7, mkChar("effective_user"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 0, "sysname");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 1, "release");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 2, "version");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 3, "nodename");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 4, "machine");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 5, "login");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 6, "user");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 7, "effective_user");
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;
@@ -349,8 +349,8 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     dll = filenameToWchar(STRING_ELT(path, 0), FALSE);
     dwVerInfoSize = GetFileVersionInfoSizeW(dll, &dwVerHnd);
     PROTECT(ans = allocVector(STRSXP, 2));
-    SET_STRING_ELT(ans, 0, mkChar(""));
-    SET_STRING_ELT(ans, 1, mkChar(""));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, "");
+    SET_STRING_ELT_FROM_CSTR(ans, 1, "");
     if (dwVerInfoSize) {
 	BOOL  fRet;
 	LPSTR lpstrVffInfo;
@@ -363,17 +363,17 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
 				 (LPVOID)&lszVer, &cchVer);
-	    if(fRet) SET_STRING_ELT(ans, 0, mkChar(lszVer));
+	    if(fRet) SET_STRING_ELT_FROM_CSTR(ans, 0, lszVer);
 
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\R Version"),
 				 (LPVOID)&lszVer, &cchVer);
-	    if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
+	    if(fRet) SET_STRING_ELT_FROM_CSTR(ans, 1, lszVer);
 	    else {
 		fRet = VerQueryValue(lpstrVffInfo,
 				     TEXT("\\StringFileInfo\\040904E4\\Compiled under R Version"),
 				     (LPVOID)&lszVer, &cchVer);
-		if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
+		if(fRet) SET_STRING_ELT_FROM_CSTR(ans, 1, lszVer);
 	    }
 
 	} else ans = R_NilValue;
@@ -539,14 +539,14 @@ SEXP in_shortpath(SEXP paths)
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
-	    SET_STRING_ELT(ans, i, mkCharCE(tmp, CE_UTF8));
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, i, tmp, CE_UTF8);
 	} else {
 	    res = GetShortPathName(translateChar(el), tmp, MAX_PATH);
 	    if (res == 0 || res > MAX_PATH) strcpy(tmp, translateChar(el));
 	    /* documented to return paths using \, which the API call does
 	       not necessarily do */
 	    R_fixbackslash(tmp);
-	    SET_STRING_ELT(ans, i, mkChar(tmp));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, tmp);
 	}
     }
     UNPROTECT(1);
@@ -827,7 +827,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("file choice cancelled"));
     wcstoutf8(str, fn, 4*MAX_PATH+1);
     PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkCharCE(str, CE_UTF8));
+    SET_STRING_ELT_FROM_CSTR_CE(ans, 0, str, CE_UTF8);
     UNPROTECT(1);
     return ans;
 }

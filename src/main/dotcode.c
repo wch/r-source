@@ -1459,7 +1459,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(names = allocVector(STRSXP, nargs));
 	for (na = 0, pa = args ; pa != R_NilValue ; pa = CDR(pa), na++) {
 	    if (TAG(pa) == R_NilValue)
-		SET_STRING_ELT(names, na, R_BlankString);
+		SET_STRING_ELT_TO_BLANK_STRING(names, na);
 	    else
 		SET_STRING_ELT(names, na, PRINTNAME(TAG(pa)));
 	}
@@ -2429,7 +2429,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strncpy(buf, (char*)p, 255);
 		    buf[255] = '\0';
 		    PROTECT(s = allocVector(type, 1));
-		    SET_STRING_ELT(s, 0, mkChar(buf));
+		    SET_STRING_ELT_FROM_CSTR(s, 0, buf);
 		    UNPROTECT(1);
 		} else if (copy) {
 		    SEXP ss = arg;
@@ -2437,7 +2437,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    char **cptr = (char**) p, **cptr0 = (char**) cargs0[na];
 		    for (R_xlen_t i = 0 ; i < n ; i++) {
 			unsigned char *ptr = (unsigned char *) cptr[i];
-			SET_STRING_ELT(s, i, mkChar(cptr[i]));
+			SET_STRING_ELT_FROM_CSTR(s, i, cptr[i]);
 			if (cptr[i] == cptr0[i]) {
 			    const char *z = translateChar(STRING_ELT(ss, i));
 			    for (int j = 0; j < NG; j++)
@@ -2463,7 +2463,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		    PROTECT(s = allocVector(type, n));
 		    char **cptr = (char**) p;
 		    for (R_xlen_t i = 0 ; i < n ; i++)
-			SET_STRING_ELT(s, i, mkChar(cptr[i]));
+			SET_STRING_ELT_FROM_CSTR(s, i, cptr[i]);
 		    UNPROTECT(1);
 		}
 		break;
@@ -2608,7 +2608,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	    SETCAR(pcall, allocVector(STRSXP, n));
 	    for (j = 0 ; j < n ; j++) {
 		char *str = (char*)(arguments[i]);
-		SET_STRING_ELT(CAR(pcall), i, mkChar(str));
+		SET_STRING_ELT_FROM_CSTR(CAR(pcall), i, str);
 	    }
 	    break;
 	default:

@@ -83,8 +83,8 @@ SEXP ksmooth(SEXP x, SEXP y, SEXP xp, SEXP skrn, SEXP sbw)
     SET_VECTOR_ELT(ans, 1, yp);
     SEXP nm = allocVector(STRSXP, 2);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("x"));
-    SET_STRING_ELT(nm, 1, mkChar("y"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "x");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "y");
     UNPROTECT(5);
     return ans;
 }

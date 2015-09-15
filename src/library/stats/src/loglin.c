@@ -383,9 +383,9 @@ SEXP LogLin(SEXP dtab, SEXP conf, SEXP table, SEXP start,
     SET_VECTOR_ELT(ans, 2, ScalarInteger(nlast));
     nm = allocVector(STRSXP, 3);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("fit"));
-    SET_STRING_ELT(nm, 1, mkChar("dev"));
-    SET_STRING_ELT(nm, 2, mkChar("nlast"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "fit");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "dev");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "nlast");
     UNPROTECT(9);
     return ans;
 }

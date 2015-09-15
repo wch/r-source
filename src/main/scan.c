@@ -80,14 +80,6 @@ typedef struct {
     char convbuf[100];
 } LocalData;
 
-static SEXP insertString(char *str, LocalData *l)
-{
-    cetype_t enc = CE_NATIVE;
-    if (l->con->UTF8out || l->isUTF8) enc = CE_UTF8;
-    else if (l->isLatin1) enc = CE_LATIN1;
-    return mkCharCE(str, enc);
-}
-
 static R_INLINE Rboolean Rspace(unsigned int c)
 {
     if (c == ' ' || c == '\t' || c == '\n' || c == '\r') return TRUE;
@@ -528,9 +520,13 @@ static void extractItem(char *buffer, SEXP ans, int i, LocalData *d)
 	break;
     case STRSXP:
 	if (isNAstring(buffer, 1, d))
-	    SET_STRING_ELT(ans, i, NA_STRING);
-	else
-	    SET_STRING_ELT(ans, i, insertString(buffer, d));
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
+	else {
+	    cetype_t enc = CE_NATIVE;
+	    if (d->con->UTF8out || d->isUTF8) enc = CE_UTF8;
+	    else if (d->isLatin1) enc = CE_LATIN1;
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, i, buffer, enc);
+	}
 	break;
     case RAWSXP:
 	if (isNAstring(buffer, 0, d))
@@ -641,7 +637,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	break;
     case STRSXP:
 	for (i = 0; i < n; i++)
-	    SET_STRING_ELT(bns, i, STRING_ELT(ans, i));
+	    COPY_STRING_ELT(bns, i, ans, i);
 	break;
     case RAWSXP:
 	for (i = 0; i < n; i++)
@@ -801,7 +797,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    break;
 	case STRSXP:
 	    for (j = 0; j < n; j++)
-		SET_STRING_ELT(new, j, STRING_ELT(old, j));
+		COPY_STRING_ELT(new, j, old, j);
 	    break;
 	case RAWSXP:
 	    for (j = 0; j < n; j++)

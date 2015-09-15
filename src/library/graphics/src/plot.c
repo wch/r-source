@@ -622,7 +622,7 @@ SEXP labelformat(SEXP labels)
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeLogical(LOGICAL(labels)[i], 0);
-	    SET_STRING_ELT(ans, i, mkChar(strp));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, strp);
 	}
 	UNPROTECT(1);
 	break;
@@ -630,7 +630,7 @@ SEXP labelformat(SEXP labels)
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeInteger(INTEGER(labels)[i], 0);
-	    SET_STRING_ELT(ans, i, mkChar(strp));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, strp);
 	}
 	UNPROTECT(1);
 	break;
@@ -639,7 +639,7 @@ SEXP labelformat(SEXP labels)
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeReal0(REAL(labels)[i], 0, d, e, OutDec);
-	    SET_STRING_ELT(ans, i, mkChar(strp));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, strp);
 	}
 	UNPROTECT(1);
 	break;
@@ -649,14 +649,14 @@ SEXP labelformat(SEXP labels)
 	for (i = 0; i < n; i++) {
 	    strp = EncodeComplex(COMPLEX(labels)[i], 0, d, e, 0, di, ei,
 				 OutDec);
-	    SET_STRING_ELT(ans, i, mkChar(strp));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, strp);
 	}
 	UNPROTECT(1);
 	break;
     case STRSXP:
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
-	    SET_STRING_ELT(ans, i, STRING_ELT(labels, i));
+	    COPY_STRING_ELT(ans, i, labels, i);
 	}
 	UNPROTECT(1);
 	break;
@@ -3985,8 +3985,8 @@ SEXP C_xspline(SEXP args)
 	double *xx, *yy, *x0, *y0;
 	PROTECT(ans = res);
 	PROTECT(nm = allocVector(STRSXP, 2));
-	SET_STRING_ELT(nm, 0, mkChar("x"));
-	SET_STRING_ELT(nm, 1, mkChar("y"));
+	SET_STRING_ELT_FROM_CSTR(nm, 0, "x");
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "y");
 	setAttrib(ans, R_NamesSymbol, nm);
 	nx = LENGTH(VECTOR_ELT(ans, 0));
 	x0 = REAL(VECTOR_ELT(ans, 0));

@@ -3876,12 +3876,12 @@ SEXP bmVersion(void)
     SEXP ans = PROTECT(allocVector(STRSXP, 3)),
 	nms = PROTECT(allocVector(STRSXP, 3));
     setAttrib(ans, R_NamesSymbol, nms);
-    SET_STRING_ELT(nms, 0, mkChar("libpng"));
-    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
-    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
-    SET_STRING_ELT(ans, 0, mkChar((R_pngVersion)()));
-    SET_STRING_ELT(ans, 1, mkChar((R_jpegVersion)()));
-    SET_STRING_ELT(ans, 2, mkChar((R_tiffVersion)()));
+    SET_STRING_ELT_FROM_CSTR(nms, 0, "libpng");
+    SET_STRING_ELT_FROM_CSTR(nms, 1, "jpeg");
+    SET_STRING_ELT_FROM_CSTR(nms, 2, "libtiff");
+    SET_STRING_ELT_FROM_CSTR(ans, 0, (R_pngVersion()));
+    SET_STRING_ELT_FROM_CSTR(ans, 1, (R_jpegVersion()));
+    SET_STRING_ELT_FROM_CSTR(ans, 2, (R_tiffVersion()));
     UNPROTECT(2);
     return ans;
 }

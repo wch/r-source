@@ -380,7 +380,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP value2 = PROTECT(allocVector(VECSXP, n));
 	SEXP names2 = PROTECT(allocVector(STRSXP, n));
 	for(int i = 0; i < n; i++) {
-	    SET_STRING_ELT(names2, i, STRING_ELT(names, indx[i]));
+	    COPY_STRING_ELT(names2, i, names, indx[i]);
 	    SET_VECTOR_ELT(value2, i, VECTOR_ELT(value, indx[i]));
 	}
 	setAttrib(value2, R_NamesSymbol, names2);
@@ -663,7 +663,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(FindTaggedItem(options, install(tag)))));
-	    SET_STRING_ELT(names, i, STRING_ELT(argi, 0));
+	    COPY_STRING_ELT(names, i, argi, 0);
 	    R_Visible = TRUE;
 	}
     } /* for() */

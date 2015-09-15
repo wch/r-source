@@ -88,16 +88,16 @@ SEXP call_dqags(SEXP args)
 
     PROTECT(ans = allocVector(VECSXP, 4));
     PROTECT(ansnames = allocVector(STRSXP, 4));
-    SET_STRING_ELT(ansnames, 0, mkChar("value"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 0, "value");
     SET_VECTOR_ELT(ans, 0, allocVector(REALSXP, 1));
     REAL(VECTOR_ELT(ans, 0))[0] = result;
-    SET_STRING_ELT(ansnames, 1, mkChar("abs.error"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 1, "abs.error");
     SET_VECTOR_ELT(ans, 1, allocVector(REALSXP, 1));
     REAL(VECTOR_ELT(ans, 1))[0] = abserr;
-    SET_STRING_ELT(ansnames, 2, mkChar("subdivisions"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 2, "subdivisions");
     SET_VECTOR_ELT(ans, 2, allocVector(INTSXP, 1));
     INTEGER(VECTOR_ELT(ans, 2))[0] = last;
-    SET_STRING_ELT(ansnames, 3, mkChar("ierr"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 3, "ierr");
     SET_VECTOR_ELT(ans, 3, allocVector(INTSXP, 1));
     INTEGER(VECTOR_ELT(ans, 3))[0] = ier;
     setAttrib(ans, R_NamesSymbol, ansnames);
@@ -129,16 +129,16 @@ SEXP call_dqagi(SEXP args)
 
     PROTECT(ans = allocVector(VECSXP, 4));
     PROTECT(ansnames = allocVector(STRSXP, 4));
-    SET_STRING_ELT(ansnames, 0, mkChar("value"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 0, "value");
     SET_VECTOR_ELT(ans, 0, allocVector(REALSXP, 1));
     REAL(VECTOR_ELT(ans, 0))[0] = result;
-    SET_STRING_ELT(ansnames, 1, mkChar("abs.error"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 1, "abs.error");
     SET_VECTOR_ELT(ans, 1, allocVector(REALSXP, 1));
     REAL(VECTOR_ELT(ans, 1))[0] = abserr;
-    SET_STRING_ELT(ansnames, 2, mkChar("subdivisions"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 2, "subdivisions");
     SET_VECTOR_ELT(ans, 2, allocVector(INTSXP, 1));
     INTEGER(VECTOR_ELT(ans, 2))[0] = last;
-    SET_STRING_ELT(ansnames, 3, mkChar("ierr"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 3, "ierr");
     SET_VECTOR_ELT(ans, 3, allocVector(INTSXP, 1));
     INTEGER(VECTOR_ELT(ans, 3))[0] = ier;
     setAttrib(ans, R_NamesSymbol, ansnames);

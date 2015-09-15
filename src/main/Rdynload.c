@@ -1042,10 +1042,10 @@ Rf_MakeDLLInfo(DllInfo *info)
     PROTECT(ref = allocVector(VECSXP, n));
     SET_VECTOR_ELT(ref, 0, tmp = allocVector(STRSXP, 1));
     if(info->name)
-	SET_STRING_ELT(tmp, 0, mkChar(info->name));
+	SET_STRING_ELT_FROM_CSTR(tmp, 0, info->name);
     SET_VECTOR_ELT(ref, 1, tmp = allocVector(STRSXP, 1));
     if(info->path)
-	SET_STRING_ELT(tmp, 0, mkChar(info->path));
+	SET_STRING_ELT_FROM_CSTR(tmp, 0, info->path);
     SET_VECTOR_ELT(ref, 2, ScalarLogical(info->useDynamicLookup));
 
     SET_VECTOR_ELT(ref, 3, Rf_makeDllObject(info->handle));
@@ -1054,7 +1054,7 @@ Rf_MakeDLLInfo(DllInfo *info)
 
     PROTECT(elNames = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
-	SET_STRING_ELT(elNames, i, mkChar(names[i]));
+	SET_STRING_ELT_FROM_CSTR(elNames, i, names[i]);
     setAttrib(ref, R_NamesSymbol, elNames);
 
     setAttrib(ref, R_ClassSymbol, mkString("DLLInfo"));
@@ -1155,21 +1155,21 @@ createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol,
     }
 
     SET_VECTOR_ELT(sym, 0, sname);
-    SET_STRING_ELT(names, 0, mkChar("name"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "name");
 
     SET_VECTOR_ELT(sym, 1,
 		   withRegistrationInfo && symbol && symbol->symbol.c && symbol->dll
 		   ? Rf_MakeRegisteredNativeSymbol(symbol)
 		   : Rf_MakeNativeSymbolRef(f));
-    SET_STRING_ELT(names, 1, mkChar("address"));
+    SET_STRING_ELT_FROM_CSTR(names, 1, "address");
     if(symbol->dll)
 	SET_VECTOR_ELT(sym, 2, Rf_MakeDLLInfo(symbol->dll));
-    SET_STRING_ELT(names, 2, mkChar("dll"));
+    SET_STRING_ELT_FROM_CSTR(names, 2, "dll");
 
 
     PROTECT(klass = allocVector(STRSXP, (symbol->type != R_ANY_SYM ? 2 : 1)));
     numProtects++;
-    SET_STRING_ELT(klass, LENGTH(klass) - 1, mkChar("NativeSymbolInfo"));
+    SET_STRING_ELT_FROM_CSTR(klass, LENGTH(klass) - 1, "NativeSymbolInfo");
 
     if(n > 3) {
 	/* Add the registration information:
@@ -1201,8 +1201,8 @@ createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol,
 	    break;
 	}
 	SET_VECTOR_ELT(sym, 3, tmp = ScalarInteger(nargs));
-	SET_STRING_ELT(klass, 0, mkChar(className));
-	SET_STRING_ELT(names, 3, mkChar("numParameters"));
+	SET_STRING_ELT_FROM_CSTR(klass, 0, className);
+	SET_STRING_ELT_FROM_CSTR(names, 3, "numParameters");
     }
 
     setAttrib(sym, R_ClassSymbol, klass);
@@ -1293,7 +1293,7 @@ R_getRegisteredRoutines(SEXP dll)
 
     PROTECT(snames = allocVector(STRSXP, 4));
     for(i = 0; i < 4; i++)
-	SET_STRING_ELT(snames, i, mkChar(names[i]));
+	SET_STRING_ELT_FROM_CSTR(snames, i, names[i]);
     setAttrib(ans, R_NamesSymbol, snames);
     UNPROTECT(2);
     return(ans);
@@ -1356,8 +1356,7 @@ do_getDllTable(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(nm = allocVector(STRSXP, CountDLL));
     setAttrib(ans, R_NamesSymbol, nm);
     for(int i = 0; i < CountDLL; i++)
-	SET_STRING_ELT(nm, i,
-		       STRING_ELT(VECTOR_ELT(VECTOR_ELT(ans, i), 0), 0));
+	COPY_STRING_ELT(nm, i, VECTOR_ELT(VECTOR_ELT(ans, i), 0), 0);
     UNPROTECT(2);
     return ans;
 }
@@ -1387,7 +1386,7 @@ do_getRegisteredRoutines(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(snames = allocVector(STRSXP, 4));
     for(int i = 0; i < 4; i++)
-	SET_STRING_ELT(snames, i, mkChar(names[i]));
+	SET_STRING_ELT_FROM_CSTR(snames, i, names[i]);
     setAttrib(ans, R_NamesSymbol, snames);
     UNPROTECT(2);
     return(ans);

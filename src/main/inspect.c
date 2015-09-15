@@ -188,7 +188,25 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    {
 		unsigned int i = 0;
 		while (i < XLENGTH(v) && i < pvec) {
-		    inspect_tree(pre+2, STRING_ELT(v, i), deep - 1, pvec);
+		    if (SE_TYPE(&(STRING_PTR(v)[i])) == SETYPE_BOXED)
+			inspect_tree(pre+2, STRING_ELT(v, i), deep - 1, pvec);
+		    else {
+			pp(pre + 2);
+			switch (SE_TYPE(&(STRING_PTR(v)[i]))) {
+			case SETYPE_INT:
+			    Rprintf("[unboxed string (int)] %d\n",
+				    SE_IVAL(&(STRING_PTR(v)[i])));
+			    break;
+			case SETYPE_REAL:
+			    Rprintf("[unboxed string (real)] %f\n",
+				    SE_DVAL(&(STRING_PTR(v)[i])));
+			    break;
+			case SETYPE_STRING:
+			    Rprintf("[unboxed string] \"%s\"\n",
+				    SE_STRING_DATA(&(STRING_PTR(v)[i])));
+			    break;
+			}
+		    }
 		    i++;
 		}
 		if (i < XLENGTH(v)) { pp(pre+2); Rprintf("...\n"); }

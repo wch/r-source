@@ -186,7 +186,7 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 	    if (err < BUF_SIZE) { err = 0; break; }
 	}
 	fclose(fout);
-	SET_STRING_ELT(names, (*nnames)++, mkChar(outname));
+	SET_STRING_ELT_FROM_CSTR(names, (*nnames)++, outname);
     }
     unzCloseCurrentFile(uf);
 #ifdef Win32
@@ -277,7 +277,7 @@ static SEXP ziplist(const char *zipname)
 	    error("error %d with zipfile in unzGetCurrentFileInfo\n", err);
 	/* In theory at least bit 11 of the flag tells us that the
 	   filename is in UTF-8, so FIXME */
-	SET_STRING_ELT(names, i, mkChar(filename_inzip));
+	SET_STRING_ELT_FROM_CSTR(names, i, filename_inzip);
 	REAL(lengths)[i] = file_info.uncompressed_size;
 	snprintf(date, 50, "%d-%02d-%02d %02d:%02d",
 		 file_info.tmu_date.tm_year,
@@ -285,7 +285,7 @@ static SEXP ziplist(const char *zipname)
 		 file_info.tmu_date.tm_mday,
 		 file_info.tmu_date.tm_hour,
 		 file_info.tmu_date.tm_min);
-	SET_STRING_ELT(dates, i, mkChar(date));
+	SET_STRING_ELT_FROM_CSTR(dates, i, date);
 
 	if (i < nfiles - 1) {
 	    err = unzGoToNextFile(uf);

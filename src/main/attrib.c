@@ -121,7 +121,7 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    any = 0;
 	    for ( ; vec != R_NilValue; vec = CDR(vec), i++) {
 		if (TAG(vec) == R_NilValue)
-		    SET_STRING_ELT(s, i, R_BlankString);
+		    SET_STRING_ELT_TO_BLANK_STRING(s, i);
 		else if (isSymbol(TAG(vec))) {
 		    any = 1;
 		    SET_STRING_ELT(s, i, PRINTNAME(TAG(vec)));
@@ -312,7 +312,7 @@ void copyMostAttribNoTs(SEXP inp, SEXP ans)
 		PROTECT(new_cl = allocVector(STRSXP, l - 1));
 		for (i = 0, j = 0; i < l; i++)
 		    if (strcmp(CHAR(STRING_ELT(cl, i)), "ts")) /* ASCII */
-			SET_STRING_ELT(new_cl, j++, STRING_ELT(cl, i));
+			COPY_STRING_ELT(new_cl, j++, cl, i);
 		installAttrib(ans, TAG(s), new_cl);
 		UNPROTECT(1);
 	    }
@@ -906,7 +906,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 		 i < length(vec) && tval != R_NilValue;
 		 i++, tval = CDR(tval)) {
 		s = coerceVector(CAR(tval), STRSXP);
-		SET_STRING_ELT(rval, i, STRING_ELT(s, 0));
+		COPY_STRING_ELT(rval, i, s, 0);
 	    }
 	    UNPROTECT(1);
 	    val = rval;
@@ -1220,7 +1220,7 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
 	if (TAG(attrs) == R_NilValue)
-	    SET_STRING_ELT(names, nvalues, R_BlankString);
+	    SET_STRING_ELT_TO_BLANK_STRING(names, nvalues);
 	else
 	    SET_STRING_ELT(names, nvalues, PRINTNAME(TAG(attrs)));
 	attrs = CDR(attrs);
@@ -1506,7 +1506,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (isSymbol(nlist))
 	    SET_STRING_ELT(input, 0, PRINTNAME(nlist));
 	else if(isString(nlist) )
-	    SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
+	    COPY_STRING_ELT(input, 0, nlist, 0);
 	else {
 	    error(_("invalid type '%s' for slot name"),
 		  type2char(TYPEOF(nlist)));

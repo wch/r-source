@@ -150,9 +150,9 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	break;
     case STRSXP:
 	for (i = 0; i < len; i++)
-	    SET_STRING_ELT(newx, i, STRING_ELT(x, i));
+	    COPY_STRING_ELT(newx, i, x, i);
 	for (i = len; i < newlen; i++)
-	    SET_STRING_ELT(newx, i, NA_STRING); /* was R_BlankString  < 1.6.0 */
+	    SET_STRING_ELT_TO_NA_STRING(newx, i); /* was R_BlankString  < 1.6.0 */
 	break;
     case EXPRSXP:
     case VECSXP:
@@ -176,9 +176,9 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     if (!isNull(names)) {
 	PROTECT(newnames = allocVector(STRSXP, newlen));
 	for (i = 0; i < len; i++)
-	    SET_STRING_ELT(newnames, i, STRING_ELT(names, i));
+	    COPY_STRING_ELT(newnames, i, names, i);
 	for (i = len; i < newlen; i++)
-	    SET_STRING_ELT(newnames, i, R_BlankString);
+	    SET_STRING_ELT_TO_BLANK_STRING(newnames, i);
 	setAttrib(newx, R_NamesSymbol, newnames);
 	UNPROTECT(1);
     }
@@ -440,7 +440,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	ii = 0;
 	for (i = 0; i < len; i++) {
 	    if (INTEGER(include)[i] == 1) {
-		SET_STRING_ELT(xnewnames, ii, STRING_ELT(xnames, i));
+		COPY_STRING_ELT(xnewnames, ii, xnames, i);
 		ii++;
 	    }
 	}
@@ -647,7 +647,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    ii = gi(indx, i);
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
-	    SET_STRING_ELT(x, ii, STRING_ELT(y, iny));
+	    COPY_STRING_ELT(x, ii, y, iny);
 	});
 	break;
 
@@ -738,7 +738,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	else {
 	    PROTECT(oldnames = allocVector(STRSXP, nx));
 	    for (i = 0; i < nx; i++)
-		SET_STRING_ELT(oldnames, i, R_BlankString);
+		SET_STRING_ELT_TO_BLANK_STRING(oldnames, i);
 	    for (i = 0; i < n; i++) {
 		if (VECTOR_ELT(newnames, i) != R_NilValue) {
 		    ii = gi(indx, i);
@@ -980,7 +980,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * NR;
-		SET_STRING_ELT(x, ij, STRING_ELT(y, k));
+		COPY_STRING_ELT(x, ij, y, k);
 		k++;
 		if (k == ny) k = 0;
 	    }
@@ -1204,7 +1204,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	/* case 1416:	   real	     <- character */
 	/* case 1516:	   complex   <- character */
 
-	    SET_STRING_ELT(x, ii, STRING_ELT(y, iny));
+	    COPY_STRING_ELT(x, ii, y, iny);
 	    break;
 
 	case 1919: /* vector <- vector */
@@ -1550,7 +1550,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 	    k = 0;
 	    for (i = 0 ; i < n; i++)
 		if(i != which)
-		    SET_STRING_ELT(ynames, k++, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(ynames, k++, xnames, i);
 	    setAttrib(y, R_NamesSymbol, ynames);
 	    UNPROTECT(1);
 	}
@@ -1779,7 +1779,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* case 1416:	   real	     <- character */
 	/* case 1516:	   complex   <- character */
 
-	    SET_STRING_ELT(x, offset, STRING_ELT(y, 0));
+	    COPY_STRING_ELT(x, offset, y, 0);
 	    break;
 
 	case 1019:      /* logical    <- vector     */
@@ -1930,7 +1930,7 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     if (iS)
 	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
     else if(isString(nlist) )
-	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
+	COPY_STRING_ELT(input, 0, nlist, 0);
     else {
 	error(_("invalid subscript type '%s'"), type2char(TYPEOF(nlist)));
 	return R_NilValue; /*-Wall*/
@@ -2063,7 +2063,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		    for (i = 0, ii = 0; i < nx; i++)
 			if (i != imatch) {
 			    SET_VECTOR_ELT(ans, ii, VECTOR_ELT(x, i));
-			    SET_STRING_ELT(ansnames, ii, STRING_ELT(names, i));
+			    COPY_STRING_ELT(ansnames, ii, names, i);
 			    ii++;
 			}
 		    setAttrib(ans, R_NamesSymbol, ansnames);
@@ -2103,11 +2103,11 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		    SET_VECTOR_ELT_NR(ans, i, VECTOR_ELT(x, i));
 		if (isNull(names)) {
 		    for (i = 0; i < nx; i++)
-			SET_STRING_ELT(ansnames, i, R_BlankString);
+			SET_STRING_ELT_TO_BLANK_STRING(ansnames, i);
 		}
 		else {
 		    for (i = 0; i < nx; i++)
-			SET_STRING_ELT(ansnames, i, STRING_ELT(names, i));
+			COPY_STRING_ELT(ansnames, i, names, i);
 		}
 		SET_VECTOR_ELT(ans, nx, val);
 		SET_STRING_ELT(ansnames, nx,  nlist);

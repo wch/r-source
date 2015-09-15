@@ -418,7 +418,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    }
 	    UNPROTECT(1); /* tmp */
 	    pbuf[114] = '\0';
-	    SET_STRING_ELT(t, i, mkChar(pbuf));
+	    SET_STRING_ELT_FROM_CSTR(t, i, pbuf);
 	}
 	if (LENGTH(dims) == 2) {
 	    SEXP rl, cl;
@@ -584,7 +584,7 @@ static void printList(SEXP s, SEXP env)
 		break;
 	    }
 	    pbuf[100] ='\0';
-	    SET_STRING_ELT(t, i++, mkChar(pbuf));
+	    SET_STRING_ELT_FROM_CSTR(t, i++, pbuf);
 	    s = CDR(s);
 	}
 	if (LENGTH(dims) == 2) {

@@ -249,7 +249,8 @@ SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 str
     	    input++;
     	}
     	*b = '\0';
-    	SET_STRING_ELT(result, i, mkCharCE(buffer, Rf_getCharCE(STRING_ELT(strings, i))));
+    	SET_STRING_ELT_FROM_CSTR_CE(result, i, buffer,
+				    Rf_getCharCE(STRING_ELT(strings, i)));
     }
     UNPROTECT(1);
     free(buffer);
@@ -279,9 +280,9 @@ SEXP splitString(SEXP string, SEXP delims)
 	if(strchr(del, *p)) {
 	    // put out current string (if any)
 	    if(nthis) 
-		SET_STRING_ELT(out, used++, mkCharLenCE(tmp, nthis, ienc));
+		SET_STRING_ELT_FROM_CSTR_LEN_CE(out, used++, tmp, nthis, ienc);
 	    // put out delimiter
-	    SET_STRING_ELT(out, used++, mkCharLen(p, 1));
+	    SET_STRING_ELT_FROM_CSTR_LEN(out, used++, p, 1);
 	    // restart
 	    this = tmp; nthis = 0;
 	} else {
@@ -289,7 +290,7 @@ SEXP splitString(SEXP string, SEXP delims)
 	    nthis++;
 	}
     }
-    if(nthis) SET_STRING_ELT(out, used++, mkCharLenCE(tmp, nthis, ienc));
+    if(nthis) SET_STRING_ELT_FROM_CSTR_LEN_CE(out, used++, tmp, nthis, ienc);
 
     SEXP ans = lengthgets(out, used);
     UNPROTECT(1);

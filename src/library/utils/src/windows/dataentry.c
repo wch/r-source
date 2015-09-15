@@ -250,7 +250,7 @@ SEXP Win_dataentry(SEXP args)
 			   &DE->npi);
 	for(i = 0; i < DE->xmaxused; i++) {
 	    snprintf(clab, 25, "var%d", i);
-	    SET_STRING_ELT(DE->names, i, mkChar(clab));
+	    SET_STRING_ELT_FROM_CSTR(DE->names, i, clab);
 	}
     } else
 	PROTECT_WITH_INDEX(DE->names = duplicate(tnames), &DE->npi);
@@ -307,7 +307,7 @@ SEXP Win_dataentry(SEXP args)
 	    if(!isNull(VECTOR_ELT(DE->work, i))) {
 		SET_VECTOR_ELT(work2, j, VECTOR_ELT(DE->work, i));
 		INTEGER(DE->lens)[j] = INTEGER(DE->lens)[i];
-		SET_STRING_ELT(DE->names, j, STRING_ELT(DE->names, i));
+		COPY_STRING_ELT(DE->names, j, DE->names, i);
 		j++;
 	    }
 	}
@@ -324,9 +324,9 @@ SEXP Win_dataentry(SEXP args)
 			REAL(tvec2)[j] = REAL(tvec)[j];
 		} else if (TYPEOF(tvec) == STRSXP) {
 		    if (STRING_ELT(tvec, j) != DE->ssNA_STRING)
-			SET_STRING_ELT(tvec2, j, STRING_ELT(tvec, j));
+			COPY_STRING_ELT(tvec2, j, tvec, j);
 		    else
-			SET_STRING_ELT(tvec2, j, NA_STRING);
+			SET_STRING_ELT_TO_NA_STRING(tvec2, j);
 		} else
 		    error(G_("dataentry: internal memory problem"));
 	    }
@@ -742,7 +742,7 @@ static Rboolean getccol(DEstruct DE)
 	REPROTECT(DE->names = lengthgets(DE->names, wcol), DE->npi);
 	for (i = DE->xmaxused; i < wcol; i++) {
 	    snprintf(clab, 25, "var%d", i + 1);
-	    SET_STRING_ELT(DE->names, i, mkChar(clab));
+	    SET_STRING_ELT_FROM_CSTR(DE->names, i, clab);
 	}
 	REPROTECT(DE->lens = lengthgets(DE->lens, wcol), DE->lpi);
 	DE->xmaxused = wcol;
@@ -765,7 +765,7 @@ static Rboolean getccol(DEstruct DE)
 	    if (type == REALSXP)
 		REAL(tmp2)[i] = REAL(tmp)[i];
 	    else if (type == STRSXP)
-		SET_STRING_ELT(tmp2, i, STRING_ELT(tmp, i));
+		COPY_STRING_ELT(tmp2, i, tmp, i);
 	    else
 		error(G_("internal type error in dataentry"));
 	SET_VECTOR_ELT(DE->work, wcol - 1, tmp2);
@@ -848,7 +848,7 @@ static void closerect(DEstruct DE)
 	    	PROTECT( newval = mkString(DE->buf) );
 	    	PROTECT( newval = processEscapes(newval) );
 	    	if (TYPEOF(newval) == STRSXP && length(newval) == 1)
-		    SET_STRING_ELT(cvec, wrow - 1, STRING_ELT(newval, 0));
+		    COPY_STRING_ELT(cvec, wrow - 1, newval, 0);
 		else
 		    warning(G_("dataentry: parse error on string"));
 		UNPROTECT(2);
@@ -857,12 +857,12 @@ static void closerect(DEstruct DE)
 	    if (newcol && warn) {
 		/* change mode to character */
 		SEXP tmp = coerceVector(cvec, STRSXP);
-		SET_STRING_ELT(tmp, wrow - 1, mkChar(DE->buf));
+		SET_STRING_ELT_FROM_CSTR(tmp, wrow - 1, DE->buf);
 		SET_VECTOR_ELT(DE->work, wcol - 1, tmp);
 	    }
 	} else {
 	    if (TYPEOF(cvec) == STRSXP)
-		SET_STRING_ELT(cvec, wrow - 1, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(cvec, wrow - 1);
 	    else
 		REAL(cvec)[wrow - 1] = NA_REAL;
 	}
@@ -1480,7 +1480,7 @@ static void popupclose(control c)
 	/* Last col name is set later */
 	for (i = DE->xmaxused+1; i < popupcol - 1; i++) {
 	    snprintf(clab, 25, "var%d", i + 1);
-	    SET_STRING_ELT(DE->names, i, mkChar(clab));
+	    SET_STRING_ELT_FROM_CSTR(DE->names, i, clab);
 	}
 	REPROTECT(DE->lens = lengthgets(DE->lens, popupcol), DE->lpi);
 	DE->xmaxused = popupcol;
@@ -1499,7 +1499,7 @@ static void popupclose(control c)
 	else
 	    SET_VECTOR_ELT(DE->work, popupcol - 1, coerceVector(tvec, STRSXP));
     }
-    SET_STRING_ELT(DE->names, popupcol - 1, mkChar(buf));
+    SET_STRING_ELT_FROM_CSTR(DE->names, popupcol - 1, buf);
     hide(wconf);
     del(wconf);
 }

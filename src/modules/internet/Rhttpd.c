@@ -443,8 +443,8 @@ static SEXP parse_query(char *query)
 	    int last_entry = !*s;
 	    *(t++) = 0;
 	    if (!key) key = "";
-	    SET_STRING_ELT(names, parts, mkChar(key));
-	    SET_STRING_ELT(res, parts, mkChar(value));
+	    SET_STRING_ELT_FROM_CSTR(names, parts, key);
+	    SET_STRING_ELT_FROM_CSTR(res, parts, value);
 	    parts++;
 	    if (last_entry) break;
 	    key = 0;

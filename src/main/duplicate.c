@@ -342,7 +342,7 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
 	/* direct copying and bypassing the write barrier is OK since
 	   t was just allocated and so it cannot be older than any of
 	   the elements in s.  LT */
-	DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, t, s, deep);
+	DUPLICATE_ATOMIC_VECTOR(R_string_elt_rec_t, STRING_PTR, t, s, deep);
 	break;
     case PROMSXP:
 	return s;
@@ -437,7 +437,7 @@ void copyMatrix(SEXP s, SEXP t, Rboolean byrow)
 	switch (TYPEOF(s)) {
 	case STRSXP:
 	    FILL_MATRIX_BYROW_ITERATE(0, nr, nc, nt)
-		SET_STRING_ELT(s, didx, STRING_ELT(t, sidx));
+		COPY_STRING_ELT(s, didx, t, sidx);
 	    break;
 	case LGLSXP:
 	    FILL_MATRIX_BYROW_ITERATE(0, nr, nc, nt)
@@ -477,9 +477,9 @@ void attribute_hidden \
 xcopy##TNAME##WithRecycle(VALTYPE *dst, VALTYPE *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc) { \
 							\
     if (nsrc >= n) { /* no recycle needed */		\
-	for(R_xlen_t i = 0; i < n; i++)		\
+	for(R_xlen_t i = 0; i < n; i++)			\
 	    dst[dstart + i] = src[i];			\
-	return;					\
+	return;						\
     }							\
     if (nsrc == 1) {					\
 	VALTYPE val = src[0];				\
@@ -487,7 +487,7 @@ xcopy##TNAME##WithRecycle(VALTYPE *dst, VALTYPE *src, R_xlen_t dstart, R_xlen_t 
 	    dst[dstart + i] = val;			\
 	return;						\
     }							\
-							\
+    							\
     /* recycle needed */					\
     R_xlen_t sidx = 0;					\
     for(R_xlen_t i = 0; i < n; i++, sidx++) {		\
@@ -507,9 +507,9 @@ void attribute_hidden \
 xcopy##TNAME##WithRecycle(SEXP dst, SEXP src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc) { \
 							\
     if (nsrc >= n) { /* no recycle needed */		\
-	for(R_xlen_t i = 0; i < n; i++)		\
+	for(R_xlen_t i = 0; i < n; i++)			\
 	    SETELT(dst, dstart + i, GETELT(src, i));	\
-	return;					\
+	return;						\
     }							\
     if (nsrc == 1) {					\
 	SEXP val = GETELT(src, 0);			\

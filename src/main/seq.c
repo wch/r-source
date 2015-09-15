@@ -76,7 +76,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 		size_t vt = strlen(vj), len = vs + vt + 2;
 		cbuf = R_AllocStringBuffer(len, &cbuff);
 		snprintf(cbuf, len, "%s:%s", vi, vj);
-		SET_STRING_ELT(la, k, mkChar(cbuf));
+		SET_STRING_ELT_FROM_CSTR(la, k, cbuf);
 		k++;
 	    }
 	}
@@ -233,7 +233,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	for (i = 0; i < nc; i++) {
 //	    if ((i+1) % ni == 0) R_CheckUserInterrupt();
 	    for (j = 0; j < INTEGER(t)[i]; j++)
-		SET_STRING_ELT(a, n++, STRING_ELT(s, i));
+		COPY_STRING_ELT(a, n++, s, i);
 	}
 	break;
     case VECSXP:
@@ -302,7 +302,7 @@ static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
     case STRSXP:
 	MOD_ITERATE1(na, ns, i, j, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    SET_STRING_ELT(a, i, STRING_ELT(s, j));
+	    COPY_STRING_ELT(a, i, s, j);
 	});
 	break;
     case VECSXP:
@@ -363,8 +363,8 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP tmp;
 	if(inherits(s, "ordered")) {
 	    PROTECT(tmp = allocVector(STRSXP, 2));
-	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
-	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
+	    SET_STRING_ELT_FROM_CSTR(tmp, 0, "ordered");
+	    SET_STRING_ELT_FROM_CSTR(tmp, 1, "factor");
 	} else PROTECT(tmp = mkString("factor"));
 	setAttrib(a, R_ClassSymbol, tmp);
 	UNPROTECT(1);
@@ -421,8 +421,8 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP tmp;
 	if(inherits(s, "ordered")) {
 	    PROTECT(tmp = allocVector(STRSXP, 2));
-	    SET_STRING_ELT(tmp, 0, mkChar("ordered"));
-	    SET_STRING_ELT(tmp, 1, mkChar("factor"));
+	    SET_STRING_ELT_FROM_CSTR(tmp, 0, "ordered");
+	    SET_STRING_ELT_FROM_CSTR(tmp, 1, "factor");
 	} else PROTECT(tmp = mkString("factor"));
 	setAttrib(a, R_ClassSymbol, tmp);
 	UNPROTECT(1);
@@ -517,14 +517,14 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, int each, R_xlen_t nt)
 	if(nt == 1)
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		SET_STRING_ELT(a, i, STRING_ELT(x, (i/each) % lx));
+		COPY_STRING_ELT(a, i, x, (i/each) % lx);
 	    }
 	else {
 	    for(i = 0, k = 0, k2 = 0; i < lx; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		for(j = 0, sum = 0; j < each; j++) sum += INTEGER(times)[k++];
 		for(k3 = 0; k3 < sum; k3++) {
-		    SET_STRING_ELT(a, k2++, STRING_ELT(x, i));
+		    COPY_STRING_ELT(a, k2++, x, i);
 		    if(k2 == len) goto done;
 		}
 	    }

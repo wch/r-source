@@ -123,12 +123,13 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(LGLSXP, len));
     if (keepNA)
 	for (i = 0; i < len; i++) {
-	    SEXP sxi = STRING_ELT(x, i);
-	    LOGICAL(ans)[i] = (sxi == NA_STRING) ? NA_LOGICAL : LENGTH(sxi) > 0;
+	    R_string_elt_ptr_t x_elt = SE_STRING_ELT_PTR(x, i);
+	    LOGICAL(ans)[i] = (SE_IS_NA(x_elt)) ? NA_LOGICAL :
+		SE_LENGTH(x_elt) > 0;
 	}
     else
 	for (i = 0; i < len; i++)
-	    LOGICAL(ans)[i] = LENGTH(STRING_ELT(x, i)) > 0;
+	    LOGICAL(ans)[i] = SE_LENGTH(SE_STRING_ELT_PTR(x, i)) > 0;
     UNPROTECT(2);
     return ans;
 }
@@ -302,7 +303,7 @@ static void substr(char *buf, const char *str, int ienc, int sa, int so)
 
 SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, x, sa, so, el;
+    SEXP s, x, sa, so;
     R_xlen_t i, len;
     int start, stop, k, l;
     size_t slen;
@@ -328,13 +329,13 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < len; i++) {
 	    start = INTEGER(sa)[i % k];
 	    stop = INTEGER(so)[i % l];
-	    el = STRING_ELT(x,i);
-	    if (el == NA_STRING || start == NA_INTEGER || stop == NA_INTEGER) {
-		SET_STRING_ELT(s, i, NA_STRING);
+	    R_string_elt_ptr_t el = SE_STRING_ELT_PTR(x,i);;
+	    if (SE_IS_NA(el) || start == NA_INTEGER || stop == NA_INTEGER) {
+		SET_STRING_ELT_TO_NA_STRING(s, i);
 		continue;
 	    }
-	    ienc = getCharCE(el);
-	    ss = CHAR(el);
+	    ienc = SE_getCharCE(el);
+	    ss = SE_CHAR(el);
 	    slen = strlen(ss); /* FIXME -- should handle embedded nuls */
 	    buf = R_AllocStringBuffer(slen+1, &cbuff);
 	    if (start < 1) start = 1;
@@ -344,7 +345,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (stop > slen) stop = (int) slen;
 		substr(buf, ss, ienc, start, stop);
 	    }
-	    SET_STRING_ELT(s, i, mkCharCE(buf, ienc));
+	    SET_STRING_ELT_FROM_CSTR_CE(s, i, buf, ienc);
 	}
 	R_FreeStringBufferL(&cbuff);
     }
@@ -395,7 +396,7 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
 
 SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, x, sa, so, value, el, v_el;
+    SEXP s, x, sa, so, value;
     R_xlen_t i, len;
     int start, stop, k, l, v;
     size_t slen;
@@ -425,41 +426,41 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	vmax = vmaxget();
 	for (i = 0; i < len; i++) {
-	    el = STRING_ELT(x, i);
-	    v_el = STRING_ELT(value, i % v);
+	    R_string_elt_ptr_t el = SE_STRING_ELT_PTR(x, i);
+	    R_string_elt_ptr_t v_el = SE_STRING_ELT_PTR(value, i % v);
 	    start = INTEGER(sa)[i % k];
 	    stop = INTEGER(so)[i % l];
-	    if (el == NA_STRING || v_el == NA_STRING ||
+	    if (SE_IS_NA(el) || SE_IS_NA(v_el) ||
 		start == NA_INTEGER || stop == NA_INTEGER) {
-		SET_STRING_ELT(s, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(s, i);
 		continue;
 	    }
-	    ienc = getCharCE(el);
-	    ss = CHAR(el);
+	    ienc = SE_getCharCE(el);
+	    ss = SE_CHAR(el);
 	    slen = strlen(ss);
 	    if (start < 1) start = 1;
 	    if (stop > slen) stop = (int) slen; /* SBCS optimization */
 	    if (start > stop) {
 		/* just copy element across */
-		SET_STRING_ELT(s, i, STRING_ELT(x, i));
+		COPY_STRING_ELT(s, i, x, i);
 	    } else {
 		int ienc2 = ienc;
-		v_ss = CHAR(v_el);
+		v_ss = SE_CHAR(v_el);
 		/* is the value in the same encoding?
 		   FIXME: could prefer UTF-8 here
 		 */
-		venc = getCharCE(v_el);
+		venc = SE_getCharCE(v_el);
 		if (venc != ienc && !strIsASCII(v_ss)) {
-		    ss = translateChar(el);
+		    ss = SE_translateChar(el);
 		    slen = strlen(ss);
-		    v_ss = translateChar(v_el);
+		    v_ss = SE_translateChar(v_el);
 		    ienc2 = CE_NATIVE;
 		}
 		/* might expand under MBCS */
 		buf = R_AllocStringBuffer(slen+strlen(v_ss), &cbuff);
 		strcpy(buf, ss);
 		substrset(buf, v_ss, ienc2, start, stop);
-		SET_STRING_ELT(s, i, mkCharCE(buf, ienc2));
+		SET_STRING_ELT_FROM_CSTR_CE(s, i, buf, ienc2);
 	    }
 	    vmaxset(vmax);
 	}
@@ -498,7 +499,9 @@ static void mystrcpy(char *dest, const char *src)
     memmove(dest, src, strlen(src)+1);
 }
 
-static SEXP stripchars(const char * const inchar, int minlen, int usecl)
+static void set_string_elt_stripchars(SEXP ans, R_xlen_t idx,
+				      const char * const inchar,
+				      int minlen, int usecl)
 {
     int i, j, nspace = 0;
     char *s = cbuff.data;
@@ -571,7 +574,7 @@ donesc:
 		    mystrcpy(s + i, s + i + 1);
     }
 
-    return mkChar(s);
+    SET_STRING_ELT_FROM_CSTR(ans, idx, s);
 }
 
 #define FIRSTCHARW(i) (iswspace((int)wc[i-1]))
@@ -604,7 +607,9 @@ static void mywcscpy(wchar_t *dest, const wchar_t *src)
     memmove(dest, src, sizeof(wchar_t) * (wcslen(src)+1));
 }
 
-static SEXP wstripchars(const wchar_t * const inchar, int minlen, int usecl)
+static void set_string_elt_wstripchars(SEXP ans, R_xlen_t idx,
+				       const wchar_t * const inchar,
+				       int minlen, int usecl)
 {
     int i, j, nspace = 0;
     wchar_t *wc = (wchar_t *)cbuff.data;
@@ -669,9 +674,8 @@ donewsc:
     int nb = (int) wcstoutf8(NULL, wc, 0);
     char *cbuf = CallocCharBuf(nb+1);
     wcstoutf8(cbuf, wc, nb + 1);
-    SEXP ans = mkCharCE(cbuf, CE_UTF8);
+    SET_STRING_ELT_FROM_CSTR_CE(ans, idx, cbuf, CE_UTF8);
     Free(cbuf);
-    return ans;
 }
 
 
@@ -694,26 +698,26 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     const void *vmax = vmaxget();
     Rboolean warn = FALSE;
     for (R_xlen_t i = 0 ; i < len ; i++) {
-	SEXP el = STRING_ELT(x, i);
-	if (el  == NA_STRING)
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	R_string_elt_ptr_t x_elt = SE_STRING_ELT_PTR(x, i);
+	if (SE_IS_NA(x_elt))
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	else {
-	    const char *s = CHAR(el);
+	    const char *s = SE_CHAR(x_elt);
 	    if (strIsASCII(s)) {
 		if(strlen(s) > minlen) {
 		    R_AllocStringBuffer(strlen(s)+1, &cbuff);
-		    SET_STRING_ELT(ans, i, stripchars(s, minlen, usecl));
-		} else SET_STRING_ELT(ans, i, el);
+		    set_string_elt_stripchars(ans, i, s, minlen, usecl);
+		} else COPY_STRING_ELT(ans, i, x, i);
 	    } else {
-		s = translateCharUTF8(el);
+		s = SE_translateCharUTF8(x_elt);
 		int nc = (int) utf8towcs(NULL, s, 0);
 		if (nc > minlen) {
 		    warn = TRUE;
-		    const wchar_t *wc = wtransChar(el);
+		    const wchar_t *wc = SE_wtransChar(x_elt);
 		    nc = (int) wcslen(wc);
 		    R_AllocStringBuffer(sizeof(wchar_t)*(nc+1), &cbuff);
-		    SET_STRING_ELT(ans, i, wstripchars(wc, minlen, usecl));
-		} else SET_STRING_ELT(ans, i, el);
+		    set_string_elt_wstripchars(ans, i, wc, minlen, usecl);
+		} else COPY_STRING_ELT(ans, i, x, i);
 	    }
 	}
 	vmaxset(vmax); // this throws away the result of wtransChar
@@ -747,7 +751,8 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, n));
     vmax = vmaxget();
     for (i = 0 ; i < n ; i++) {
-	This = translateChar(STRING_ELT(arg, i));
+	R_string_elt_ptr_t arg_elt = SE_STRING_ELT_PTR(arg, i);
+	This = SE_translateChar(arg_elt);
 	l = (int) strlen(This);
 	/* need to prefix names not beginning with alpha or ., as
 	   well as . followed by a number */
@@ -774,10 +779,10 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (need_prefix) {
 	    tmp = Calloc(l+2, char);
 	    strcpy(tmp, "X");
-	    strcat(tmp, translateChar(STRING_ELT(arg, i)));
+	    strcat(tmp, SE_translateChar(arg_elt));
 	} else {
 	    tmp = Calloc(l+1, char);
-	    strcpy(tmp, translateChar(STRING_ELT(arg, i)));
+	    strcpy(tmp, SE_translateChar(arg_elt));
 	}
 	if (mbcslocale) {
 	    /* This cannot lengthen the string, so safe to overwrite it.
@@ -810,14 +815,14 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	l = (int) strlen(tmp);        /* needed? */
-	SET_STRING_ELT(ans, i, mkChar(tmp));
+	SET_STRING_ELT_FROM_CSTR(ans, i, tmp);
 	/* do we have a reserved word?  If so the name is invalid */
 	if (!isValidName(tmp)) {
 	    /* FIXME: could use R_Realloc instead */
 	    cbuf = CallocCharBuf(strlen(tmp) + 1);
 	    strcpy(cbuf, tmp);
 	    strcat(cbuf, ".");
-	    SET_STRING_ELT(ans, i, mkChar(cbuf));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, cbuf);
 	    Free(cbuf);
 	}
 	Free(tmp);
@@ -834,7 +839,6 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t i, n;
     int ul;
     char *p;
-    SEXP el;
     cetype_t ienc;
     Rboolean use_UTF8 = FALSE;
     const void *vmax;
@@ -850,7 +854,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(Win32) || defined(__STDC_ISO_10646__) || defined(__APPLE__) || defined(__FreeBSD__)
     /* utf8towcs is really to UCS-4/2 */
     for (i = 0; i < n; i++)
-	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
+	if (SE_getCharCE(SE_STRING_ELT_PTR(x, i)) == CE_UTF8) use_UTF8 = TRUE;
     if (mbcslocale || use_UTF8 == TRUE)
 #else
     if (mbcslocale)
@@ -864,16 +868,16 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmax = vmaxget();
 	/* the translated string need not be the same length in bytes */
 	for (i = 0; i < n; i++) {
-	    el = STRING_ELT(x, i);
-	    if (el == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+	    R_string_elt_ptr_t el = SE_STRING_ELT_PTR(x, i);
+	    if (SE_IS_NA(el)) SET_STRING_ELT_TO_NA_STRING(y, i);
 	    else {
 		const char *xi;
-		ienc = getCharCE(el);
+		ienc = SE_getCharCE(el);
 		if (use_UTF8 && ienc == CE_UTF8) {
-		    xi = CHAR(el);
+		    xi = SE_CHAR(el);
 		    nc = (int) utf8towcs(NULL, xi, 0);
 		} else {
-		    xi = translateChar(el);
+		    xi = SE_translateChar(el);
 		    nc = (int) mbstowcs(NULL, xi, 0);
 		    ienc = CE_NATIVE;
 		}
@@ -887,14 +891,15 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 			nb = (int) wcstoutf8(NULL, wc, 0);
 			cbuf = CallocCharBuf(nb);
 			wcstoutf8(cbuf, wc, nb + 1);
-			SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
+			SET_STRING_ELT_FROM_CSTR_CE(y, i, cbuf, CE_UTF8);
 		    } else {
 			mbstowcs(wc, xi, nc + 1);
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = (int) wcstombs(NULL, wc, 0);
 			cbuf = CallocCharBuf(nb);
 			wcstombs(cbuf, wc, nb + 1);
-			SET_STRING_ELT(y, i, markKnown(cbuf, el));
+			SET_STRING_ELT_FROM_CSTR_CE(y, i, cbuf,
+						    markKnownEltEnc(x, i));
 		    }
 		    Free(cbuf);
 		} else {
@@ -908,14 +913,16 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	char *xi;
 	vmax = vmaxget();
 	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(x, i) == NA_STRING)
-		SET_STRING_ELT(y, i, NA_STRING);
+	    R_string_elt_ptr_t x_elt = SE_STRING_ELT_PTR(x, i);
+	    if (SE_IS_NA(x_elt))
+		SET_STRING_ELT_TO_NA_STRING(y, i);
 	    else {
-		xi = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
-		strcpy(xi, translateChar(STRING_ELT(x, i)));
+		xi = CallocCharBuf(strlen(SE_CHAR(x_elt)));
+		strcpy(xi, SE_translateChar(x_elt));
 		for (p = xi; *p != '\0'; p++)
 		    *p = (char) (ul ? toupper(*p) : tolower(*p));
-		SET_STRING_ELT(y, i, markKnown(xi, STRING_ELT(x, i)));
+		SET_STRING_ELT_FROM_CSTR_CE(y, i, xi,
+					    markKnownEltEnc(x, i));
 		Free(xi);
 	    }
 	    vmaxset(vmax);
@@ -1174,7 +1181,6 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP old, _new, x, y;
     R_xlen_t i, n;
     char *cbuf;
-    SEXP el;
     cetype_t ienc;
     Rboolean use_UTF8 = FALSE;
     const void *vmax;
@@ -1197,10 +1203,10 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     /* utf8towcs is really to UCS-4/2 */
 #if defined(Win32) || defined(__STDC_ISO_10646__) || defined(__APPLE__)  || defined(__FreeBSD__)
     for (i = 0; i < n; i++)
-	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
+	if (SE_getCharCE(SE_STRING_ELT_PTR(x, i)) == CE_UTF8) use_UTF8 = TRUE;
 
-    if (getCharCE(STRING_ELT(old, 0)) == CE_UTF8) use_UTF8 = TRUE;
-    if (getCharCE(STRING_ELT(_new, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    if (SE_getCharCE(SE_STRING_ELT_PTR(old, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    if (SE_getCharCE(SE_STRING_ELT_PTR(_new, 0)) == CE_UTF8) use_UTF8 = TRUE;
 
     if (mbcslocale || use_UTF8 == TRUE)
 #else
@@ -1224,7 +1230,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	trs_new->type = WTR_INIT;
 	trs_new->next = NULL;
 	/* Build the old and new wtr_spec lists. */
-	if (use_UTF8 && getCharCE(STRING_ELT(old, 0)) == CE_UTF8) {
+	if (use_UTF8 && SE_getCharCE(SE_STRING_ELT_PTR(old, 0)) == CE_UTF8) {
 	    s = CHAR(STRING_ELT(old, 0));
 	    nc = (int) utf8towcs(NULL, s, 0);
 	    if (nc < 0) error(_("invalid UTF-8 string 'old'"));
@@ -1243,7 +1249,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	trs_cnt->next = NULL;
 	wtr_build_spec(wc, trs_cnt); /* use count only */
 
-	if (use_UTF8 && getCharCE(STRING_ELT(_new, 0)) == CE_UTF8) {
+	if (use_UTF8 && SE_getCharCE(SE_STRING_ELT_PTR(_new, 0)) == CE_UTF8) {
 	    s = CHAR(STRING_ELT(_new, 0));
 	    nc = (int) utf8towcs(NULL, s, 0);
 	    if (nc < 0) error(_("invalid UTF-8 string 'new'"));
@@ -1298,16 +1304,16 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = allocVector(STRSXP, n));
 	vmax = vmaxget();
 	for (i = 0; i < n; i++) {
-	    el = STRING_ELT(x,i);
-	    if (el == NA_STRING)
-		SET_STRING_ELT(y, i, NA_STRING);
+	    R_string_elt_ptr_t el = SE_STRING_ELT_PTR(x,i);
+	    if (SE_IS_NA(el))
+		SET_STRING_ELT_TO_NA_STRING(y, i);
 	    else {
-		ienc = getCharCE(el);
+		ienc = SE_getCharCE(el);
 		if (use_UTF8 && ienc == CE_UTF8) {
-		    xi = CHAR(el);
+		    xi = SE_CHAR(el);
 		    nc = (int) utf8towcs(NULL, xi, 0);
 		} else {
-		    xi = translateChar(el);
+		    xi = SE_translateChar(el);
 		    nc = (int) mbstowcs(NULL, xi, 0);
 		    ienc = CE_NATIVE;
 		}
@@ -1326,12 +1332,13 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nb = (int) wcstoutf8(NULL, wc, 0);
 		    cbuf = CallocCharBuf(nb);
 		    wcstoutf8(cbuf, wc, nb + 1);
-		    SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
+		    SET_STRING_ELT_FROM_CSTR_CE(y, i, cbuf, CE_UTF8);
 		} else {
 		    nb = (int) wcstombs(NULL, wc, 0);
 		    cbuf = CallocCharBuf(nb);
 		    wcstombs(cbuf, wc, nb + 1);
-		    SET_STRING_ELT(y, i, markKnown(cbuf, el));
+		    SET_STRING_ELT_FROM_CSTR_CE(y, i, cbuf,
+						markKnownEltEnc(x, i));
 		}
 		Free(cbuf);
 	    }
@@ -1382,15 +1389,16 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = allocVector(STRSXP, n));
 	vmax = vmaxget();
 	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(x,i) == NA_STRING)
-		SET_STRING_ELT(y, i, NA_STRING);
+	    R_string_elt_ptr_t x_elt = SE_STRING_ELT_PTR(x,i);
+	    if (SE_IS_NA(x_elt))
+		SET_STRING_ELT_TO_NA_STRING(y, i);
 	    else {
-		const char *xi = translateChar(STRING_ELT(x, i));
+		const char *xi = SE_translateChar(x_elt);
 		cbuf = CallocCharBuf(strlen(xi));
 		strcpy(cbuf, xi);
 		for (p = (unsigned char *) cbuf; *p != '\0'; p++)
 		    *p = xtable[*p];
-		SET_STRING_ELT(y, i, markKnown(cbuf, STRING_ELT(x, i)));
+		SET_STRING_ELT_FROM_CSTR_CE(y, i, cbuf, markKnownEltEnc(x, i));
 		Free(cbuf);
 	    }
 	}
@@ -1432,12 +1440,13 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(STRSXP, len));
     vmax = vmaxget();
     for (i = 0; i < len; i++) {
-	if (STRING_ELT(x, i) == NA_STRING) {
-	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
+	R_string_elt_ptr_t x_elt = SE_STRING_ELT_PTR(x, i);
+	if (SE_IS_NA(x_elt)) {
+	    COPY_STRING_ELT(s, i, x, i);
 	    continue;
 	}
 	w = INTEGER(width)[i % nw];
-	This = translateChar(STRING_ELT(x, i));
+	This = SE_translateChar(x_elt);
 	nc = (int) strlen(This);
 	buf = R_AllocStringBuffer(nc, &cbuff);
 	wsum = 0;
@@ -1452,7 +1461,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else break;
 	}
 	*q = '\0';
-	SET_STRING_ELT(s, i, markKnown(buf, STRING_ELT(x, i)));
+	SET_STRING_ELT_FROM_CSTR_CE(s, i, buf, markKnownEltEnc(x, i));
 	vmaxset(vmax);
     }
     if (len > 0) R_FreeStringBufferL(&cbuff);
@@ -1513,7 +1522,7 @@ SEXP attribute_hidden stringSuffix(SEXP string, int fromIndex) {
     SEXP res = PROTECT(allocVector(STRSXP, newLen));
     int i;
     for(i = 0; i < newLen; i++) {
-	SET_STRING_ELT(res, i, STRING_ELT(string, fromIndex++));
+	COPY_STRING_ELT(res, i, string, fromIndex++);
     }
 
     UNPROTECT(1); /* res */
@@ -1546,21 +1555,22 @@ SEXP attribute_hidden do_strrep(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     is = ix = in = 0;
     for(; is < ns; is++) {
+	R_string_elt_ptr_t x_elt = SE_STRING_ELT_PTR(x, ix);
 	ni = INTEGER(n)[in];
-	if((STRING_ELT(x, ix) == NA_STRING) || (ni == NA_INTEGER)) {
-	    SET_STRING_ELT(s, is, NA_STRING);
+	if(SE_IS_NA(x_elt) || (ni == NA_INTEGER)) {
+	    SET_STRING_ELT_TO_NA_STRING(s, is);
 	    continue;
 	}
 	if(ni < 0)
 	    error(_("invalid '%s' value"), "times");
-	xi = CHAR(STRING_ELT(x, ix));
+	xi = SE_CHAR(x_elt);
 	nc = (int) strlen(xi);
 	cbuf = buf = CallocCharBuf(nc * ni);
 	for(j = 0; j < ni; j++) {
 	    strcpy(buf, xi);
 	    buf += nc;
 	}
-	SET_STRING_ELT(s, is, markKnown(cbuf, STRING_ELT(x, ix)));
+	SET_STRING_ELT_FROM_CSTR_CE(s, is, cbuf, markKnownEltEnc(x, ix));
 	Free(cbuf);
 	vmaxset(vmax);
 	ix = (++ix == nx) ? 0 : ix;

@@ -59,7 +59,7 @@ static int R_eval(ClientData clientData,
 
     text = PROTECT(allocVector(STRSXP, argc - 1));
     for (i = 1 ; i < argc ; i++)
-	SET_STRING_ELT(text, i-1, mkChar(argv[i]));
+	SET_STRING_ELT_FROM_CSTR(text, i-1, argv[i]);
 
     expr = PROTECT(R_ParseVector(text, -1, &status, R_NilValue));
     if (status != PARSE_OK) {
@@ -338,7 +338,7 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
 	s = Tcl_UtfToExternalDString(NULL,
 				     (Tcl_GetStringFromObj(elem[i], NULL)),
 				     -1, &s_ds);
-	SET_STRING_ELT(ans, i, mkChar(s));
+	SET_STRING_ELT_FROM_CSTR(ans, i, s);
 	Tcl_DStringFree(&s_ds);
     }
     UNPROTECT(1);

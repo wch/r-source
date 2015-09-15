@@ -390,13 +390,13 @@ SEXP SplineCoef(SEXP method, SEXP x, SEXP y)
     SET_VECTOR_ELT(ans, 6, d);
     nm = allocVector(STRSXP, 7);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("method"));
-    SET_STRING_ELT(nm, 1, mkChar("n"));
-    SET_STRING_ELT(nm, 2, mkChar("x"));
-    SET_STRING_ELT(nm, 3, mkChar("y"));
-    SET_STRING_ELT(nm, 4, mkChar("b"));
-    SET_STRING_ELT(nm, 5, mkChar("c"));
-    SET_STRING_ELT(nm, 6, mkChar("d"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "method");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "n");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "x");
+    SET_STRING_ELT_FROM_CSTR(nm, 3, "y");
+    SET_STRING_ELT_FROM_CSTR(nm, 4, "b");
+    SET_STRING_ELT_FROM_CSTR(nm, 5, "c");
+    SET_STRING_ELT_FROM_CSTR(nm, 6, "d");
     UNPROTECT(6);
     return ans;
 }

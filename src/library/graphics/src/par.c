@@ -1111,7 +1111,7 @@ SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, R_NilValue);
-		SET_STRING_ELT(newnames, i, R_BlankString);
+		SET_STRING_ELT_TO_BLANK_STRING(newnames, i);
 	    }
 	}
 	setAttrib(value, R_NamesSymbol, newnames);

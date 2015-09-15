@@ -185,7 +185,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strcpy(buf,CHAR(STRING_ELT(retval, lastm + nwhat * k)));
 		    strcat(buf, "\n");
 		    if(!is_eblankline) strcat(buf, line + offset);
-		    SET_STRING_ELT(retval, lastm + nwhat * k, mkChar(buf));
+		    SET_STRING_ELT_FROM_CSTR(retval, lastm + nwhat * k, buf);
 		}
 	    } else {
 		if(tre_regexecb(&regline, line, 1, regmatch, 0) == 0) {
@@ -213,8 +213,8 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			    } else {
 				offset = 0;
 			    }
-			    SET_STRING_ELT(retval, m + nwhat * k,
-					   mkChar(line + offset));
+			    SET_STRING_ELT_FROM_CSTR(retval, m + nwhat * k,
+						     line + offset);
 			    break;
 			} else {
 			    /* This is a field, but not one prespecified */
@@ -234,9 +234,9 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			    copyVector(what2, what);
 			    for(nr = 0; nr < nrows(retval); nr++){
 				for(nc = 0; nc < ncols(retval); nc++){
-				    SET_STRING_ELT(retval2, nr+nc*nrows(retval2),
-						   STRING_ELT(retval,
-							      nr+nc*nrows(retval)));
+				    COPY_STRING_ELT(retval2, nr+nc*nrows(retval2),
+						    retval,
+						    nr+nc*nrows(retval));
 				}
 			    }
 			}
@@ -256,7 +256,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			strncpy(buf, line, Rf_strchr(line, ':') - line);
 			buf[Rf_strchr(line, ':') - line] = '\0';
-			SET_STRING_ELT(what, nwhat, mkChar(buf));
+			SET_STRING_ELT_FROM_CSTR(what, nwhat, buf);
 			nwhat++;
 			/* lastm uses C indexing, hence nwhat - 1 */
 			lastm = nwhat - 1;
@@ -273,8 +273,8 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 					     regmatch, 0) == 0))
 				line[regmatch[0].rm_so] = '\0';
 			}
-			SET_STRING_ELT(retval, lastm + nwhat * k,
-				       mkChar(line + offset));
+			SET_STRING_ELT_FROM_CSTR(retval, lastm + nwhat * k,
+						 line + offset);
 		    }
 		} else {
 		    /* Must be a regular line with no tag ... */
@@ -318,7 +318,7 @@ static SEXP allocMatrixNA(SEXPTYPE mode, int nrow, int ncol)
 
     PROTECT(retval = allocMatrix(mode, nrow, ncol));
     for(k = 0; k < LENGTH(retval); k++)
-	SET_STRING_ELT(retval, k, NA_STRING);
+	SET_STRING_ELT_TO_NA_STRING(retval, k);
     UNPROTECT(1);
     return(retval);
 }
@@ -329,7 +329,7 @@ static SEXP allocMatrixNA(SEXPTYPE mode, int nrow, int ncol)
 static void transferVector(SEXP s, SEXP t)
 {
     for (int i = 0; i < LENGTH(t); i++)
-	SET_STRING_ELT(s, i, STRING_ELT(t, i));
+	COPY_STRING_ELT(s, i, t, i);
 }
 
 static Rboolean field_is_foldable_p(const char *field, SEXP excludes)

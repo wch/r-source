@@ -80,6 +80,23 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     return Scollate(x, y);
 }
 
+static R_INLINE int ptr_SE_scmp(R_string_elt_ptr_t x, R_string_elt_ptr_t y,
+				Rboolean nalast)
+{
+    if (SE_TYPE(x) != SETYPE_BOXED || SE_TYPE(y) != SETYPE_BOXED)
+	error("for now SE_scnm needs expanded strings");
+    return scmp(SE_CSXP(x), SE_CSXP(y), nalast);
+}
+
+#define SE_scmp(x, y, nalast) ptr_SE_scmp(&(x), &(y), nalast)
+
+static R_INLINE int SE_Scollate(R_string_elt_ptr_t x, R_string_elt_ptr_t y)
+{
+    if (SE_TYPE(x) != SETYPE_BOXED || SE_TYPE(y) != SETYPE_BOXED)
+	error("for now SE_collate needs expanded strings");
+    return Scollate(SE_CSXP(x), SE_CSXP(y));
+}
+
 Rboolean isUnsorted(SEXP x, Rboolean strictly)
 {
     R_xlen_t n, i;
@@ -237,10 +254,15 @@ void R_csort(Rcomplex *x, int n)
 
 
 /* used in platform.c */
-void attribute_hidden ssort(SEXP *x, int n)
+void attribute_hidden ssort(SEXP s)
 {
-    SEXP v;
-#define TYPE_CMP scmp
+    if (TYPEOF(s) != STRSXP)
+	error("argument must be a character string");
+    R_BoxStrings(s);
+    R_string_elt_rec_t *x = STRING_PTR(s);
+    int n = LENGTH(s);
+    R_string_elt_rec_t v;
+#define TYPE_CMP SE_scmp
     sort_body
 #undef TYPE_CMP
 }
@@ -425,9 +447,9 @@ static void R_csort2(Rcomplex *x, R_xlen_t n, Rboolean decreasing)
 	}
 }
 
-static void ssort2(SEXP *x, R_xlen_t n, Rboolean decreasing)
+static void ssort2(R_string_elt_rec_t *x, R_xlen_t n, Rboolean decreasing)
 {
-    SEXP v;
+    R_string_elt_rec_t v;
     R_xlen_t i, j, h, t;
 
     if (n < 2) error("'n >= 2' is required");
@@ -437,10 +459,10 @@ static void ssort2(SEXP *x, R_xlen_t n, Rboolean decreasing)
 	    v = x[i];
 	    j = i;
 	    if(decreasing)
-		while (j >= h && scmp(x[j - h], v, TRUE) < 0)
+		while (j >= h && SE_scmp(x[j - h], v, TRUE) < 0)
 		{ x[j] = x[j - h]; j -= h; }
 	    else
-		while (j >= h && scmp(x[j - h], v, TRUE) > 0)
+		while (j >= h && SE_scmp(x[j - h], v, TRUE) > 0)
 		{ x[j] = x[j - h]; j -= h; }
 	    x[j] = v;
 	}
@@ -463,6 +485,7 @@ void sortVector(SEXP s, Rboolean decreasing)
 	    R_csort2(COMPLEX(s), n, decreasing);
 	    break;
 	case STRSXP:
+	    R_BoxStrings(s);
 	    ssort2(STRING_PTR(s), n, decreasing);
 	    break;
 	default:
@@ -521,10 +544,10 @@ static void cPsort2(Rcomplex *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 }
 
 
-static void sPsort2(SEXP *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
+static void sPsort2(R_string_elt_rec_t *x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 {
-    SEXP v, w;
-#define TYPE_CMP scmp
+    R_string_elt_rec_t v, w;
+#define TYPE_CMP SE_scmp
     psort_body
 #undef TYPE_CMP
 }
@@ -562,6 +585,7 @@ static void Psort(SEXP x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 	cPsort2(COMPLEX(x), lo, hi, k);
 	break;
     case STRSXP:
+	R_BoxStrings(x);
 	sPsort2(STRING_PTR(x), lo, hi, k);
 	break;
     default:
@@ -954,7 +978,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
     int *ix = NULL /* -Wall */;
     double *x = NULL /* -Wall */;
     Rcomplex *cx = NULL /* -Wall */;
-    SEXP *sx = NULL /* -Wall */;
+    R_string_elt_rec_t *sx = NULL /* -Wall */;
 
     if (n < 2) return;
     switch (TYPEOF(key)) {
@@ -966,6 +990,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 	x = REAL(key);
 	break;
     case STRSXP:
+	R_BoxStrings(key);
 	sx = STRING_PTR(key);
 	break;
     case CPLXSXP:
@@ -985,7 +1010,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
 	    break;
 	case STRSXP:
-	    for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
+	    for (i = 0; i < n; i++) isna[i] = SE_IS_NA(&(sx[i]));
 	    break;
 	case CPLXSXP:
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
@@ -1062,11 +1087,11 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 	    break;
 	case STRSXP:
 	    if (decreasing)
-#define less(a, b) (c = Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
+#define less(a, b) (c = SE_Scollate(&(sx[a]), &(sx[b])), c < 0 || (c == 0 && a > b))
 		sort2_with_index
 #undef less
 	    else
-#define less(a, b) (c = Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
+#define less(a, b) (c = SE_Scollate(&(sx[a]), &(sx[b])), c > 0 || (c == 0 && a > b))
 		sort2_with_index
 #undef less
 	    break;
@@ -1090,7 +1115,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
     int *ix = NULL /* -Wall */;
     double *x = NULL /* -Wall */;
     Rcomplex *cx = NULL /* -Wall */;
-    SEXP *sx = NULL /* -Wall */;
+    R_string_elt_rec_t *sx = NULL /* -Wall */;
     R_xlen_t itmp;
 
     if (n < 2) return;
@@ -1103,6 +1128,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 	x = REAL(key);
 	break;
     case STRSXP:
+	R_BoxStrings(key);
 	sx = STRING_PTR(key);
 	break;
     case CPLXSXP:
@@ -1122,7 +1148,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
 	    break;
 	case STRSXP:
-	    for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
+	    for (i = 0; i < n; i++) isna[i] = SE_IS_NA(&(sx[i]));
 	    break;
 	case CPLXSXP:
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
@@ -1199,11 +1225,11 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 	    break;
 	case STRSXP:
 	    if (decreasing)
-#define less(a, b) (c=Scollate(sx[a], sx[b]), c < 0 || (c == 0 && a > b))
+#define less(a, b) (c=SE_Scollate(&(sx[a]), &(sx[b])), c < 0 || (c == 0 && a > b))
 		sort2_with_index
 #undef less
 	    else
-#define less(a, b) (c=Scollate(sx[a], sx[b]), c > 0 || (c == 0 && a > b))
+#define less(a, b) (c=SE_Scollate(&(sx[a]), &(sx[b])), c > 0 || (c == 0 && a > b))
 		sort2_with_index
 #undef less
 	    break;

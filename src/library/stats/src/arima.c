@@ -94,9 +94,9 @@ KalmanLike(SEXP sy, SEXP mod, SEXP sUP, SEXP op, SEXP update)
 	SET_VECTOR_ELT(ans, 1, resid = allocVector(REALSXP, n));
 	SET_VECTOR_ELT(ans, 2, states = allocMatrix(REALSXP, n, p));
 	SEXP nm = PROTECT(allocVector(STRSXP, 3));
-	SET_STRING_ELT(nm, 0, mkChar("values"));
-	SET_STRING_ELT(nm, 1, mkChar("resid"));
-	SET_STRING_ELT(nm, 2, mkChar("states"));
+	SET_STRING_ELT_FROM_CSTR(nm, 0, "values");
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "resid");
+	SET_STRING_ELT_FROM_CSTR(nm, 2, "states");
 	setAttrib(ans, R_NamesSymbol, nm);
 	UNPROTECT(1);
     }
@@ -204,8 +204,8 @@ KalmanSmooth(SEXP sy, SEXP mod, SEXP sUP)
 
     PROTECT(res = allocVector(VECSXP, 2));
     SEXP nm = PROTECT(allocVector(STRSXP, 2));
-    SET_STRING_ELT(nm, 0, mkChar("smooth"));
-    SET_STRING_ELT(nm, 1, mkChar("var"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "smooth");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "var");
     setAttrib(res, R_NamesSymbol, nm);
     UNPROTECT(1);
     SET_VECTOR_ELT(res, 0, states = allocMatrix(REALSXP, n, p));
@@ -390,8 +390,8 @@ KalmanFore(SEXP nahead, SEXP mod, SEXP update)
     SET_VECTOR_ELT(res, 1, se = allocVector(REALSXP, n));
     {
 	SEXP nm = PROTECT(allocVector(STRSXP, 2));
-	SET_STRING_ELT(nm, 0, mkChar("pred"));
-	SET_STRING_ELT(nm, 1, mkChar("var"));
+	SET_STRING_ELT_FROM_CSTR(nm, 0, "pred");
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "var");
 	setAttrib(res, R_NamesSymbol, nm);
 	UNPROTECT(1);
     }

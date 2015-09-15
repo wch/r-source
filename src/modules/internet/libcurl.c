@@ -47,7 +47,7 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans = PROTECT(allocVector(STRSXP, 1));
 #ifdef HAVE_LIBCURL
     curl_version_info_data *d = curl_version_info(CURLVERSION_NOW);
-    SET_STRING_ELT(ans, 0, mkChar(d->version));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, d->version);
     SEXP sSSLVersion = install("ssl_version");
     setAttrib(ans, sSSLVersion,
 	      mkString(d->ssl_version ? d->ssl_version : "none"));
@@ -59,11 +59,11 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (p = d->protocols, n = 0; *p; p++, n++) ;
     SEXP protocols = PROTECT(allocVector(STRSXP, n));
     for (p = d->protocols, i = 0; i < n; i++, p++)
-	SET_STRING_ELT(protocols, i, mkChar(*p));
+	SET_STRING_ELT_FROM_CSTR(protocols, i, *p);
     setAttrib(ans, install("protocols"), protocols);
     UNPROTECT(1);
 #else
-    SET_STRING_ELT(ans, 0, mkChar(""));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, "");
 #endif
     UNPROTECT(1);
     return ans;
@@ -273,7 +273,7 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SEXP ans = PROTECT(allocVector(STRSXP, used));
     for (int i = 0; i < used; i++)
-	SET_STRING_ELT(ans, i, mkChar(headers[i]));
+	SET_STRING_ELT_FROM_CSTR(ans, i, headers[i]);
     SEXP sStatus = install("status");
     setAttrib(ans, sStatus, ScalarInteger((int) http_code));
     UNPROTECT(1);

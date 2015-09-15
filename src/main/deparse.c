@@ -239,7 +239,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 	if (strlen(CHAR(STRING_ELT(svec, 0))) > 10) strcat(data, "...");
 	svec = mkString(data);
     } else if(need_ellipses) {
-	SET_STRING_ELT(svec, R_BrowseLines, mkChar("  ..."));
+	SET_STRING_ELT_FROM_CSTR(svec, R_BrowseLines, "  ...");
     }
     if(nlines > 0 && localData.linenumber < nlines) {
 	UNPROTECT(1); /* old svec value */
@@ -428,7 +428,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		if (CAR(o) == R_UnboundValue) continue;
 		obj_name = translateChar(STRING_ELT(names, i));
-		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
+		COPY_STRING_ELT(outnames, nout++, names, i);
 		if(isValidName(obj_name)) Rprintf("%s <-\n", obj_name);
 		else if(opts & S_COMPAT) Rprintf("\"%s\" <-\n", obj_name);
 		else Rprintf("`%s` <-\n", obj_name);
@@ -459,7 +459,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		const char *s;
 		unsigned int extra = 6;
 		if (CAR(o) == R_UnboundValue) continue;
-		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
+		COPY_STRING_ELT(outnames, nout++, names, i);
 		s = translateChar(STRING_ELT(names, i));
 		if(isValidName(s)) {
 		    extra = 4;
@@ -716,7 +716,7 @@ static Rboolean parenthesizeCaller(SEXP s)
 		else return TRUE;		/* (f+g)(z) etc. */
 	    }
 	    return FALSE;			/* regular function call */
-	 } else
+	} else
 	    return TRUE;			/* something strange, like (1)(x) */
     } else
 	return TYPEOF(s) == CLOSXP;
@@ -1247,7 +1247,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 static void writeline(LocalParseData *d)
 {
     if (d->strvec != R_NilValue && d->linenumber < d->maxlines)
-	SET_STRING_ELT(d->strvec, d->linenumber, mkChar(d->buffer.data));
+	SET_STRING_ELT_FROM_CSTR(d->strvec, d->linenumber, d->buffer.data);
     d->linenumber++;
     if (d->linenumber >= d->maxlines) d->active = FALSE;
     /* reset */

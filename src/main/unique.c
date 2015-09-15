@@ -744,7 +744,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     case STRSXP:
 	for (i = 0; i < n; i++)
 	    if (LOGICAL(dup)[i] == 0)
-		SET_STRING_ELT(ans, k++, STRING_ELT(x, i));
+		COPY_STRING_ELT(ans, k++, x, i);
 	break;
     case VECSXP:
 	for (i = 0; i < n; i++)
@@ -1580,7 +1580,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, n));
     vmax = vmaxget();
     for(i = 0; i < n; i++) {
-	SET_STRING_ELT(ans, i, STRING_ELT(names, i));
+	COPY_STRING_ELT(ans, i, names, i);
 	len = (int) strlen(translateChar(STRING_ELT(names, i)));
 	if(len > maxlen) maxlen = len;
 	vmaxset(vmax);
@@ -1610,10 +1610,10 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
 	    for(cnt = cnts[dp - 1]; cnt < n; cnt++) {
 		sprintf(buf, "%s%s%d", ss, csep, cnt);
-		SET_STRING_ELT(newx, 0, mkChar(buf));
+		SET_STRING_ELT_FROM_CSTR(newx, 0, buf);
 		if(Lookup(ans, newx, 0, &data) == data.nomatch) break;
 	    }
-	    SET_STRING_ELT(ans, i, STRING_ELT(newx, 0));
+	    COPY_STRING_ELT(ans, i, newx, 0);
 	    /* insert it */ (void) isDuplicated(ans, i, &data);
 	    cnts[dp - 1] = cnt+1; /* cache the first unused cnt value */
 	    vmaxset(vmax);

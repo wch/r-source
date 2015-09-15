@@ -37,6 +37,7 @@
 
 #include <R_ext/RS.h> /* for S4 allocation */
 #include <R_ext/Print.h>
+#include <float.h> /* for DBL_DIG */
 
 /* Declarations for Valgrind.
 
@@ -646,12 +647,19 @@ static R_size_t R_NodesInUse = 0;
   case S4SXP: \
     break; \
   case STRSXP: \
+    { \
+      int i; \
+      for (i = 0; i < LENGTH(__n__); i++) \
+	  if (SE_TYPE(&(STRING_PTR(__n__)[i])) == SETYPE_BOXED)		\
+	      dc__action__(SE_CSXP(&(STRING_PTR(__n__)[i])), dc__extra__); \
+    } \
+    break; \
   case EXPRSXP: \
   case VECSXP: \
     { \
       int i; \
       for (i = 0; i < LENGTH(__n__); i++) \
-	dc__action__(STRING_ELT(__n__, i), dc__extra__); \
+	dc__action__(VECTOR_ELT(__n__, i), dc__extra__); \
     } \
     break; \
   case ENVSXP: \
@@ -986,6 +994,8 @@ static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 	size = XLENGTH(s) * sizeof(Rcomplex);
 	break;
     case STRSXP:
+	size = XLENGTH(s) * sizeof(R_string_elt_rec_t);
+	break;
     case EXPRSXP:
     case VECSXP:
 	size = XLENGTH(s) * sizeof(SEXP);
@@ -2515,6 +2525,18 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	}
 	break;
     case STRSXP:
+	if (length <= 0)
+	    size = 0;
+	else {
+	    if (length > R_SIZE_T_MAX / sizeof(R_string_elt_rec_t))
+		errorcall(R_GlobalContext->call,
+			  _("cannot allocate vector of length %d"), length);
+	    size = STRINGELT2VEC(length);
+#if VALGRIND_LEVEL > 0
+	    actual_size = length * sizeof(SEXP);
+#endif
+	}
+	break;
     case EXPRSXP:
     case VECSXP:
 	if (length <= 0)
@@ -2677,7 +2699,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
     /* Direct assignment is OK since the node was just allocated and */
     /* so is at least as new as R_NilValue and R_BlankString */
     if (type == EXPRSXP || type == VECSXP) {
-	SEXP *data = STRING_PTR(s);
+	SEXP *data = VECTOR_PTR(s);
 #if VALGRIND_LEVEL > 1
 	VALGRIND_MAKE_MEM_DEFINED(STRING_PTR(s), actual_size);
 #endif
@@ -2685,12 +2707,14 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    data[i] = R_NilValue;
     }
     else if(type == STRSXP) {
-	SEXP *data = STRING_PTR(s);
+	R_string_elt_rec_t *data = STRING_PTR(s);
 #if VALGRIND_LEVEL > 1
 	VALGRIND_MAKE_MEM_DEFINED(STRING_PTR(s), actual_size);
 #endif
-	for (i = 0; i < length; i++)
-	    data[i] = R_BlankString;
+	for (i = 0; i < length; i++) {
+	    SET_SE_TYPE(&(data[i]), SETYPE_BOXED);
+	    SET_SE_CSXP(&(data[i]), R_BlankString);
+	}
     }
     else if (type == CHARSXP || type == intCHARSXP) {
 #if VALGRIND_LEVEL > 0
@@ -3385,12 +3409,14 @@ const char *(R_CHAR)(SEXP x) {
     return (const char *)CHAR(x);
 }
 
+#ifdef OLDSTRSXP
 SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
     return CHK(STRING_ELT(x, i));
 }
+#endif
 
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
     /* We need to allow vector-like types here */
@@ -3438,7 +3464,7 @@ Rcomplex *(COMPLEX)(SEXP x) {
     return COMPLEX(x);
 }
 
-SEXP *(STRING_PTR)(SEXP x) { return STRING_PTR(CHK(x)); }
+R_string_elt_rec_t *(STRING_PTR)(SEXP x) { return STRING_PTR(CHK(x)); }
 
 SEXP * NORET (VECTOR_PTR)(SEXP x)
 {
@@ -3457,7 +3483,8 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	      i, XLENGTH(x));
     FIX_REFCNT(x, STRING_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
-    STRING_ELT(x, i) = v;
+    SET_SE_TYPE(&(STRING_PTR(x)[i]), SETYPE_BOXED);
+    SET_SE_CSXP(&(STRING_PTR(x)[i]), v);
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
@@ -3893,6 +3920,41 @@ int Seql(SEXP a, SEXP b)
     }
 }
 
+void R_BoxStringElt(SEXP x, R_xlen_t i)
+{
+    R_string_elt_rec_t *xi = &(STRING_PTR(x)[i]);
+    if (SE_TYPE(xi) != SETYPE_BOXED) {
+	int warn = 0;
+	int enabled = R_GCEnabled;
+	R_GCEnabled = FALSE;
+	switch(SE_TYPE(xi)) {
+	case SETYPE_INT:
+	    SET_STRING_ELT(x, i, StringFromInteger(SE_IVAL(xi), &warn));
+	    break;
+	case SETYPE_REAL:
+	    {
+		int savedigits = R_print.digits;
+		R_print.digits = DBL_DIG;/* MAX precision */
+		SET_STRING_ELT(x, i, StringFromReal(SE_DVAL(xi), &warn));
+		R_print.digits = savedigits;
+	    }
+	    break;
+	case SETYPE_STRING:
+	    SET_STRING_ELT(x, i, mkChar(SE_STRING_DATA(xi)));
+	    break;
+	default: error("unknown immediate string type");
+	}
+	if (warn) CoercionWarning(warn);
+	SET_SE_TYPE(xi, SETYPE_BOXED);
+	R_GCEnabled = enabled;
+    }
+}
+
+void R_BoxStrings(SEXP x) {
+    R_xlen_t n = XLENGTH(x);
+    for (R_xlen_t i = 0; i < n; i++)
+	R_BoxStringElt(x, i);
+}
 
 #ifdef LONG_VECTOR_SUPPORT
 R_len_t NORET R_BadLongVector(SEXP x, const char *file, int line)

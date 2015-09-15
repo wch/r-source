@@ -707,7 +707,7 @@ SEXP attribute_hidden do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (TAG(args) != R_NilValue)
 		SET_STRING_ELT(names, i, PRINTNAME(TAG(args)));
 	    else
-		SET_STRING_ELT(names, i, R_BlankString);
+		SET_STRING_ELT_TO_BLANK_STRING(names, i);
 	}
 	if (NAMED(CAR(args)))
 	    INCREMENT_NAMED(CAR(args));
@@ -745,7 +745,7 @@ SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (TAG(a) != R_NilValue)
 		SET_STRING_ELT(nms, i, PRINTNAME(TAG(a)));
 	    else
-		SET_STRING_ELT(nms, i, R_BlankString);
+		SET_STRING_ELT_TO_BLANK_STRING(nms, i);
 	    a = CDR(a);
 	}
 	setAttrib(ans, R_NamesSymbol, nms);
@@ -830,7 +830,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	    if (i < lenx) {
 		INTEGER(rval)[i] = INTEGER(x)[i];
 		if (xnames != R_NilValue)
-		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(names, i, xnames, i);
 	    }
 	    else
 		INTEGER(rval)[i] = NA_INTEGER;
@@ -840,7 +840,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	    if (i < lenx) {
 		REAL(rval)[i] = REAL(x)[i];
 		if (xnames != R_NilValue)
-		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(names, i, xnames, i);
 	    }
 	    else
 		REAL(rval)[i] = NA_REAL;
@@ -850,7 +850,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	    if (i < lenx) {
 		COMPLEX(rval)[i] = COMPLEX(x)[i];
 		if (xnames != R_NilValue)
-		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(names, i, xnames, i);
 	    }
 	    else {
 		COMPLEX(rval)[i].r = NA_REAL;
@@ -860,12 +860,12 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
     case STRSXP:
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
-		SET_STRING_ELT(rval, i, STRING_ELT(x, i));
+		COPY_STRING_ELT(rval, i, x, i);
 		if (xnames != R_NilValue)
-		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(names, i, xnames, i);
 	    }
 	    else
-		SET_STRING_ELT(rval, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(rval, i);
 	break;
     case LISTSXP:
 	for (t = rval; t != R_NilValue; t = CDR(t), x = CDR(x)) {
@@ -877,7 +877,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	    if (i < lenx) {
 		SET_VECTOR_ELT(rval, i, VECTOR_ELT(x, i));
 		if (xnames != R_NilValue)
-		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(names, i, xnames, i);
 	    }
 	break;
     case RAWSXP:
@@ -885,7 +885,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	    if (i < lenx) {
 		RAW(rval)[i] = RAW(x)[i];
 		if (xnames != R_NilValue)
-		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
+		    COPY_STRING_ELT(names, i, xnames, i);
 	    }
 	    else
 		RAW(rval)[i] = (Rbyte) 0;

@@ -147,14 +147,12 @@ IntegerFromComplex(Rcomplex x, int *warn)
     return (int) x.r;
 }
 
-
-int attribute_hidden
-IntegerFromString(SEXP x, int *warn)
+static int IntegerFromChar(const char *x, int * warn)
 {
-    double xdouble;
-    char *endp;
-    if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
-	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
+    if (! isBlankString(x)) {
+	double xdouble;
+	char *endp;
+	xdouble = R_strtod(x, &endp); /* ASCII */
 	if (isBlankString(endp)) {
 #ifdef _R_pre_Version_3_3_0
 	    if (xdouble > INT_MAX) {
@@ -178,6 +176,15 @@ IntegerFromString(SEXP x, int *warn)
 	else *warn |= WARN_NA;
     }
     return NA_INTEGER;
+}
+
+int attribute_hidden
+IntegerFromString(SEXP x, int *warn)
+{
+    if (x != R_NaString) /* ASCII */
+	return IntegerFromChar(CHAR(x), warn);
+    else
+	return NA_INTEGER;
 }
 
 double attribute_hidden
@@ -206,19 +213,29 @@ RealFromComplex(Rcomplex x, int *warn)
     return x.r;
 }
 
+static double RealFromChar(const char *x, int *warn)
+{
+    if (!isBlankString(x)) {
+	double xdouble;
+	char *endp;
+	if (!isBlankString(x)) { /* ASCII */
+	    xdouble = R_strtod(x, &endp); /* ASCII */
+	    if (isBlankString(endp))
+		return xdouble;
+	    else
+		*warn |= WARN_NA;
+	}
+    }
+    return NA_REAL;
+}
+
 double attribute_hidden
 RealFromString(SEXP x, int *warn)
 {
-    double xdouble;
-    char *endp;
-    if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
-	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
-	if (isBlankString(endp))
-	    return xdouble;
-	else
-	    *warn |= WARN_NA;
-    }
-    return NA_REAL;
+    if (x != R_NaString) /* ASCII */
+	return RealFromChar(CHAR(x), warn);
+    else
+	return NA_REAL;
 }
 
 Rcomplex attribute_hidden
@@ -310,6 +327,14 @@ SEXP attribute_hidden StringFromInteger(int x, int *warn)
     else return mkChar(EncodeInteger(x, w));
 }
 
+attribute_hidden const char *CharFromInteger(int x, int *warn)
+{
+    int w;
+    formatInteger(&x, 1, &w);
+    if (x == NA_INTEGER) return CHAR(NA_STRING);
+    else return EncodeInteger(x, w);
+}
+
 // dropTrailing0 and StringFromReal moved to printutils.c
 
 SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
@@ -347,7 +372,7 @@ SEXP PairToVectorList(SEXP x)
 	xptr = x;
 	for (i = 0, xptr = x; i < len; i++, xptr = CDR(xptr)) {
 	    if(TAG(xptr) == R_NilValue)
-		SET_STRING_ELT(xnames, i, R_BlankString);
+		SET_STRING_ELT_TO_BLANK_STRING(xnames, i);
 	    else
 		SET_STRING_ELT(xnames, i, PRINTNAME(TAG(xptr)));
 	}
@@ -508,7 +533,21 @@ static SEXP coerceToInteger(SEXP v)
     case STRSXP:
 	for (i = 0; i < n; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    INTEGER(ans)[i] = IntegerFromString(STRING_ELT(v, i), &warn);
+	    R_string_elt_ptr_t vi = SE_STRING_ELT_PTR(v, i);
+	    switch(SE_TYPE(vi)) {
+	    case SETYPE_INT:
+		INTEGER(ans)[i] = SE_IVAL(vi);
+		if (SE_IVAL(vi) == NA_INTEGER) warn |= WARN_NA;
+		break;
+	    case SETYPE_REAL:
+		INTEGER(ans)[i] = IntegerFromReal(REAL(v)[i], &warn);
+		break;
+	    case SETYPE_STRING:
+		INTEGER(ans)[i] = IntegerFromChar(SE_STRING_DATA(vi), &warn);
+		break;
+	    default:
+		INTEGER(ans)[i] = IntegerFromString(STRING_ELT(v, i), &warn);
+	    }
 	}
 	break;
     case RAWSXP:
@@ -560,7 +599,20 @@ static SEXP coerceToReal(SEXP v)
     case STRSXP:
 	for (i = 0; i < n; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    REAL(ans)[i] = RealFromString(STRING_ELT(v, i), &warn);
+	    R_string_elt_ptr_t vi = SE_STRING_ELT_PTR(v, i);
+	    switch (SE_TYPE(vi)) {
+	    case SETYPE_INT:
+		REAL(ans)[i] = RealFromInteger(SE_IVAL(vi), &warn);
+		break;
+	    case SETYPE_REAL:
+		REAL(ans)[i] = SE_DVAL(vi);
+		break;
+	    case SETYPE_STRING:
+		REAL(ans)[i] = RealFromChar(SE_STRING_DATA(vi), &warn);
+		break;
+	    default:
+		REAL(ans)[i] = RealFromString(STRING_ELT(v, i), &warn);
+	    }
 	}
 	break;
     case RAWSXP:
@@ -731,7 +783,23 @@ static SEXP coerceToString(SEXP v)
     case INTSXP:
 	for (i = 0; i < n; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    SET_STRING_ELT(ans, i, StringFromInteger(INTEGER(v)[i], &warn));
+	    //SET_STRING_ELT(ans, i, StringFromInteger(INTEGER(v)[i], &warn));
+#define UNBOX_AS_INTEGER
+#ifdef UNBOX_AS_INTEGER
+	    SET_SE_TYPE(&(STRING_PTR(ans)[i]), SETYPE_INT);
+	    SET_SE_IVAL(&(STRING_PTR(ans)[i]), INTEGER(v)[i]);
+#else
+	    R_string_elt_t *si = &(STRING_PTR(ans)[i]);
+	    SET_SE_TYPE(si, SETYPE_STRING);
+#ifdef STANDARD_STRING_CONVERT
+	    strncpy(SE_STRING_DATA(si), CharFromInteger(INTEGER(v)[i], &warn),
+		    SE_UNBOXED_MAXLEN);
+#else
+	    snprintf(SE_STRING_DATA(si), SE_UNBOXED_MAXLEN,
+		     "%d", INTEGER(v)[i]);
+#endif
+	    SE_STRING_DATA(si)[SE_UNBOXED_MAXLEN] = 0;
+#endif
 	}
 	break;
     case REALSXP:
@@ -739,7 +807,9 @@ static SEXP coerceToString(SEXP v)
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    SET_STRING_ELT(ans, i, StringFromReal(REAL(v)[i], &warn));
+	    //SET_STRING_ELT(ans, i, StringFromReal(REAL(v)[i], &warn));
+	    SET_SE_TYPE(&(STRING_PTR(ans)[i]), SETYPE_REAL);
+	    SET_SE_DVAL(&(STRING_PTR(ans)[i]), REAL(v)[i]);
 	}
 	R_print.digits = savedigits;
 	break;
@@ -954,9 +1024,9 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	PROTECT(rval = allocVector(type, n));
 	for (vp = v, i = 0; vp != R_NilValue; vp = CDR(vp), i++) {
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
-		SET_STRING_ELT(rval, i, STRING_ELT(CAR(vp), 0));
+		COPY_STRING_ELT(rval, i, CAR(vp), 0);
 	    else
-		SET_STRING_ELT(rval, i, STRING_ELT(deparse1line(CAR(vp), 0), 0));
+		COPY_STRING_ELT(rval, i, deparse1line(CAR(vp), 0), 0);
 	}
     }
     else if (type == VECSXP) {
@@ -1048,7 +1118,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 #endif
 	for (i = 0; i < n;  i++) {
 	    if (isString(VECTOR_ELT(v, i)) && xlength(VECTOR_ELT(v, i)) == 1)
-		SET_STRING_ELT(rval, i, STRING_ELT(VECTOR_ELT(v, i), 0));
+		COPY_STRING_ELT(rval, i, VECTOR_ELT(v, i), 0);
 #if 0
 	    /* this will make as.character(list(s)) not backquote
 	     * non-syntactic name s. It is not entirely clear that
@@ -1058,8 +1128,8 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 		SET_STRING_ELT(rval, i, PRINTNAME(VECTOR_ELT(v, i)));
 #endif
 	    else
-		SET_STRING_ELT(rval, i,
-			       STRING_ELT(deparse1line(VECTOR_ELT(v, i), 0), 0));
+		COPY_STRING_ELT(rval, i,
+				deparse1line(VECTOR_ELT(v, i), 0), 0);
 	}
     }
     else if (type == LISTSXP) {
@@ -1201,9 +1271,9 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	 * and x <- "a" come out identical. Won't fix just now. */
 	for (vp = v;  vp != R_NilValue; vp = CDR(vp), i++) {
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
-		SET_STRING_ELT(ans, i, STRING_ELT(CAR(vp), 0));
+		COPY_STRING_ELT(ans, i, CAR(vp), 0);
 	    else
-		SET_STRING_ELT(ans, i, STRING_ELT(deparse1line(CAR(vp), 0), 0));
+		COPY_STRING_ELT(ans, i, deparse1line(CAR(vp), 0), 0);
 	}
 	UNPROTECT(1);
 	break;
@@ -1365,9 +1435,9 @@ SEXP asCharacterFactor(SEXP x)
     for(i = 0; i < n; i++) {
       int ii = INTEGER(x)[i];
       if (ii == NA_INTEGER)
-	  SET_STRING_ELT(ans, i, NA_STRING);
+	  SET_STRING_ELT_TO_NA_STRING(ans, i);
       else if (ii >= 1 && ii <= nl)
-	  SET_STRING_ELT(ans, i, STRING_ELT(labels, ii - 1));
+	  COPY_STRING_ELT(ans, i, labels, ii - 1);
       else
 	  error(_("malformed factor"));
     }

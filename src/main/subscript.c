@@ -460,7 +460,7 @@ SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
     for (i = 0; i < length(dnamelist); i++) {
 	dnames = VECTOR_ELT(dnamelist, i);
 	for (j = 0; j < nr; j++)
-	    SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * NR)));
+	    COPY_STRING_ELT(snames, j, s, j + (i * NR));
 	PROTECT(sicol = match(dnames, snames, 0));
 	for (j = 0; j < nr; j++) {
 	    v = INTEGER(sicol)[j];
@@ -518,9 +518,9 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	    R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
 		if (LOGICAL(s)[i]) {                                \
 		    if (LOGICAL(s)[i] == NA_LOGICAL)		    \
-			buf[count++] = NA_REAL;		    \
+			buf[count++] = NA_REAL;			    \
 		    else					    \
-			buf[count++] = (double)(i + 1);	    \
+			buf[count++] = (double)(i + 1);		    \
 		});
 	    PROTECT(indx = allocVector(REALSXP, count));
 	    memcpy(REAL(indx), buf, sizeof(double) * count);
@@ -568,7 +568,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
 	    if (LOGICAL(s)[i]) {                                \
 		if (LOGICAL(s)[i] == NA_LOGICAL)	        \
-		    buf[count++] = NA_INTEGER;		\
+		    buf[count++] = NA_INTEGER;			\
 		else                                            \
 		    buf[count++] = (int)(i + 1);		\
 	    });
@@ -600,7 +600,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     PROTECT(indx = allocVector(INTSXP, count));
     count = 0;
     MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2,	\
-	if (LOGICAL(s)[i1]) {				\
+	if (LOGICAL(s)[i1]) {					\
 	    if (LOGICAL(s)[i1] == NA_LOGICAL)			\
 		INTEGER(indx)[count++] = NA_INTEGER;		\
 	    else						\

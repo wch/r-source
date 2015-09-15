@@ -217,8 +217,8 @@ SEXP hsv(SEXP h, SEXP s, SEXP v, SEXP a)
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1)
 	    error(_("invalid hsv color"));
 	hsv2rgb(hh, ss, vv, &r, &g, &b);
-	SET_STRING_ELT(c, i, mkChar(RGB2rgb(ScaleColor(r), ScaleColor(g),
-					    ScaleColor(b))));
+	SET_STRING_ELT_FROM_CSTR(c, i, RGB2rgb(ScaleColor(r), ScaleColor(g),
+					       ScaleColor(b)));
 
 	}
     } else {
@@ -231,8 +231,8 @@ SEXP hsv(SEXP h, SEXP s, SEXP v, SEXP a)
 	    aa < 0 || aa > 1)
 	    error(_("invalid hsv color"));
 	hsv2rgb(hh, ss, vv, &r, &g, &b);
-	SET_STRING_ELT(c, i, mkChar(RGBA2rgb(ScaleColor(r), ScaleColor(g),
-					     ScaleColor(b), ScaleAlpha(aa))));
+	SET_STRING_ELT_FROM_CSTR(c, i, RGBA2rgb(ScaleColor(r), ScaleColor(g),
+						ScaleColor(b), ScaleAlpha(aa)));
 	}
     }
     UNPROTECT(5);
@@ -347,10 +347,10 @@ SEXP hcl(SEXP h, SEXP c, SEXP l, SEXP a, SEXP sfixup)
 		ig = (int) (255 * g + .5);
 		ib = (int) (255 * b + .5);
 		if (FixupColor(&ir, &ig, &ib) && !fixup)
-		    SET_STRING_ELT(ans, i, NA_STRING);
+		    SET_STRING_ELT_TO_NA_STRING(ans, i);
 		else
-		    SET_STRING_ELT(ans, i, mkChar(RGB2rgb(ir, ig, ib)));
-	    } else SET_STRING_ELT(ans, i, NA_STRING);
+		    SET_STRING_ELT_FROM_CSTR(ans, i, RGB2rgb(ir, ig, ib));
+	    } else SET_STRING_ELT_TO_NA_STRING(ans, i);
 	}
     } else {
 	for (i = 0; i < max; i++) {
@@ -367,11 +367,11 @@ SEXP hcl(SEXP h, SEXP c, SEXP l, SEXP a, SEXP sfixup)
 		ig = (int) (255 * g + .5);
 		ib = (int) (255 * b + .5);
 		if (FixupColor(&ir, &ig, &ib) && !fixup)
-		    SET_STRING_ELT(ans, i, NA_STRING);
+		    SET_STRING_ELT_TO_NA_STRING(ans, i);
 		else
-		    SET_STRING_ELT(ans, i, mkChar(RGBA2rgb(ir, ig, ib,
-							   ScaleAlpha(A))));
-	    } else SET_STRING_ELT(ans, i, NA_STRING);
+		    SET_STRING_ELT_FROM_CSTR(ans, i, RGBA2rgb(ir, ig, ib,
+							      ScaleAlpha(A)));
+	    } else SET_STRING_ELT_TO_NA_STRING(ans, i);
 	}
     }
     UNPROTECT(5);
@@ -380,11 +380,11 @@ SEXP hcl(SEXP h, SEXP c, SEXP l, SEXP a, SEXP sfixup)
 
 #define _R_set_c_RGB(_R,_G,_B) \
     { for (i = 0; i < l_max; i++)  \
-	    SET_STRING_ELT(c, i, mkChar(RGB2rgb(_R,_G,_B))); }
+	    SET_STRING_ELT_FROM_CSTR(c, i, RGB2rgb(_R,_G,_B)); }
 
 #define _R_set_c_RGBA(_R,_G,_B,_A) \
     { for (i = 0; i < l_max; i++)  \
-	    SET_STRING_ELT(c, i, mkChar(RGBA2rgb(_R,_G,_B,_A))); }
+	    SET_STRING_ELT_FROM_CSTR(c, i, RGBA2rgb(_R,_G,_B,_A)); }
 
 SEXP rgb(SEXP r, SEXP g, SEXP b, SEXP a, SEXP MCV, SEXP nam)
 {
@@ -482,7 +482,7 @@ SEXP gray(SEXP lev, SEXP a)
 	    if (ISNAN(level) || level < 0 || level > 1)
 		error(_("invalid gray level, must be in [0,1]."));
 	    ilevel = (int)(255 * level + 0.5);
-	    SET_STRING_ELT(ans, i, mkChar(RGB2rgb(ilevel, ilevel, ilevel)));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, RGB2rgb(ilevel, ilevel, ilevel));
 	}
     } else {
 	int na = length(a);
@@ -492,8 +492,8 @@ SEXP gray(SEXP lev, SEXP a)
 		error(_("invalid gray level, must be in [0,1]."));
 	    ilevel = (int)(255 * level + 0.5);
 	    double aa = REAL(a)[i % na];
-	    SET_STRING_ELT(ans, i, mkChar(RGBA2rgb(ilevel, ilevel, ilevel,
-						   ScaleAlpha(aa))));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, RGBA2rgb(ilevel, ilevel, ilevel,
+						      ScaleAlpha(aa)));
 	}
     }
     UNPROTECT(3);
@@ -520,9 +520,9 @@ SEXP RGB2hsv(SEXP rgb)
     PROTECT(dmns = allocVector(VECSXP, 2));
     /* row names: */
     PROTECT(names = allocVector(STRSXP, 3));
-    SET_STRING_ELT(names, 0, mkChar("h"));
-    SET_STRING_ELT(names, 1, mkChar("s"));
-    SET_STRING_ELT(names, 2, mkChar("v"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "h");
+    SET_STRING_ELT_FROM_CSTR(names, 1, "s");
+    SET_STRING_ELT_FROM_CSTR(names, 2, "v");
     SET_VECTOR_ELT(dmns, 0, names);
     /* column names if input has: */
     if ((dd = getAttrib(rgb, R_DimNamesSymbol)) != R_NilValue &&
@@ -564,10 +564,10 @@ SEXP col2rgb(SEXP colors, SEXP alpha)
     PROTECT(ans = allocMatrix(INTSXP, 3+alph, n));
     PROTECT(dmns = allocVector(VECSXP, 2));
     PROTECT(names = allocVector(STRSXP, 3+alph));
-    SET_STRING_ELT(names, 0, mkChar("red"));
-    SET_STRING_ELT(names, 1, mkChar("green"));
-    SET_STRING_ELT(names, 2, mkChar("blue"));
-    if(alph) SET_STRING_ELT(names, 3, mkChar("alpha"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "red");
+    SET_STRING_ELT_FROM_CSTR(names, 1, "green");
+    SET_STRING_ELT_FROM_CSTR(names, 2, "blue");
+    if(alph) SET_STRING_ELT_FROM_CSTR(names, 3, "alpha");
     SET_VECTOR_ELT(dmns, 0, names);
     if ((names = getAttrib(colors, R_NamesSymbol)) != R_NilValue)
 	SET_VECTOR_ELT(dmns, 1, names);
@@ -1496,7 +1496,7 @@ SEXP palette(SEXP val)
     /* Record the current palette */
     PROTECT(ans = allocVector(STRSXP, PaletteSize));
     for (i = 0; i < PaletteSize; i++)
-	SET_STRING_ELT(ans, i, mkChar(incol2name(Palette[i])));
+	SET_STRING_ELT_FROM_CSTR(ans, i, incol2name(Palette[i]));
     if ((n = length(val)) == 1) {
 	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) {
 	    int i;
@@ -1544,7 +1544,7 @@ SEXP colors(void)
     for (n = 0; ColorDataBase[n].name != NULL; n++) ;
     SEXP ans = PROTECT(allocVector(STRSXP, n));
     for (n = 0; ColorDataBase[n].name != NULL; n++)
-	SET_STRING_ELT(ans, n, mkChar(ColorDataBase[n].name));
+	SET_STRING_ELT_FROM_CSTR(ans, n, ColorDataBase[n].name);
     UNPROTECT(1);
     return ans;
 }

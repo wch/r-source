@@ -544,7 +544,7 @@ SEXP in_Cairo(SEXP args)
 SEXP in_CairoVersion(void)
 {
     SEXP ans = PROTECT(allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkChar(cairo_version_string()));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, cairo_version_string());
     UNPROTECT(1);
     return ans;
 }

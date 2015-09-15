@@ -61,7 +61,7 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
 	    buf[0] = (char) RAW(x)[i];
-	    SET_STRING_ELT(ans, i, mkChar(buf));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, buf);
 	}
 	/* do we want to copy e.g. names here? */
     } else {
@@ -71,8 +71,8 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0, j = -1; i < nc; i++) if(RAW(x)[i]) j = i;
 	nc = j + 1;
 	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0,
-		       mkCharLenCE((const char *)RAW(x), j+1, CE_NATIVE));
+	SET_STRING_ELT_FROM_CSTR_LEN_CE(ans, 0,	(const char *) RAW(x),
+					j+1, CE_NATIVE);
     }
     UNPROTECT(1);
     return ans;
@@ -339,11 +339,11 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
 	    if (INTEGER(x)[i] == NA_INTEGER)
-		SET_STRING_ELT(ans, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(ans, i);
 	    else {
 		used = inttomb(buf, INTEGER(x)[i]);
 		buf[used] = '\0';
-		SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
+		SET_STRING_ELT_FROM_CSTR_CE(ans, i, buf, CE_UTF8);
 	    }
 	}
 	/* do we want to copy e.g. names here? */
@@ -357,7 +357,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (haveNA) {
 	    PROTECT(ans = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(ans, 0, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, 0);
 	    UNPROTECT(2);
 	    return ans;
 	}
@@ -373,7 +373,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	    len += used;
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkCharLenCE(tmp, (int) len, CE_UTF8));
+	SET_STRING_ELT_FROM_CSTR_LEN_CE(ans, 0, tmp, len, CE_UTF8);
 	if(len >= 10000) Free(tmp);
     }
     UNPROTECT(2);

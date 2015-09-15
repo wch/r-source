@@ -48,15 +48,15 @@ SEXP influence(SEXP mqr, SEXP do_coef, SEXP e, SEXP stol)
     setAttrib(ans, R_NamesSymbol, nm);
     int m = 0;
     SET_VECTOR_ELT(ans, m, hat);
-    SET_STRING_ELT(nm, m++, mkChar("hat"));
+    SET_STRING_ELT_FROM_CSTR(nm, m++, "hat");
     if (docoef) {
 	SET_VECTOR_ELT(ans, m, coefficients);
-	SET_STRING_ELT(nm, m++, mkChar("coefficients"));
+	SET_STRING_ELT_FROM_CSTR(nm, m++, "coefficients");
     }
     SET_VECTOR_ELT(ans, m, sigma);
-    SET_STRING_ELT(nm, m++, mkChar("sigma"));
+    SET_STRING_ELT_FROM_CSTR(nm, m++, "sigma");
     SET_VECTOR_ELT(ans, m, e);
-    SET_STRING_ELT(nm, m, mkChar("wt.res"));
+    SET_STRING_ELT_FROM_CSTR(nm, m, "wt.res");
     UNPROTECT(4);
     return ans;
 }

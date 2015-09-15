@@ -352,40 +352,40 @@ SEXP attribute_hidden do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return R_NilValue;
     }
-    SET_STRING_ELT(ans, 0, mkChar(name.sysname));
-    SET_STRING_ELT(ans, 1, mkChar(name.release));
-    SET_STRING_ELT(ans, 2, mkChar(name.version));
-    SET_STRING_ELT(ans, 3, mkChar(name.nodename));
-    SET_STRING_ELT(ans, 4, mkChar(name.machine));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, name.sysname);
+    SET_STRING_ELT_FROM_CSTR(ans, 1, name.release);
+    SET_STRING_ELT_FROM_CSTR(ans, 2, name.version);
+    SET_STRING_ELT_FROM_CSTR(ans, 3, name.nodename);
+    SET_STRING_ELT_FROM_CSTR(ans, 4, name.machine);
     login = getlogin();
-    SET_STRING_ELT(ans, 5, login ? mkChar(login) : mkChar("unknown"));
+    SET_STRING_ELT_FROM_CSTR(ans, 5, login ? login : "unknown");
 #if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
     {
 	struct passwd *stpwd;
 	stpwd = getpwuid(getuid());
-	SET_STRING_ELT(ans, 6, stpwd ? mkChar(stpwd->pw_name) : mkChar("unknown"));
+	SET_STRING_ELT_FROM_CSTR(ans, 6, stpwd ? stpwd->pw_name : "unknown");
     }
 #else
-    SET_STRING_ELT(ans, 6, mkChar("unknown"));
+    SET_STRING_ELT_FROM_CSTR(ans, 6, "unknown");
 #endif
 #if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID) && defined(HAVE_GETEUID)
     {
 	struct passwd *stpwd;
 	stpwd = getpwuid(geteuid());
-	SET_STRING_ELT(ans, 7, stpwd ? mkChar(stpwd->pw_name) : mkChar("unknown"));
+	SET_STRING_ELT_FROM_CSTR(ans, 7, stpwd ? stpwd->pw_name : "unknown");
     }
 #else
-    SET_STRING_ELT(ans, 7, mkChar("unknown"));
+    SET_STRING_ELT_FROM_CSTR(ans, 7, "unknown");
 #endif
     PROTECT(ansnames = allocVector(STRSXP, 8));
-    SET_STRING_ELT(ansnames, 0, mkChar("sysname"));
-    SET_STRING_ELT(ansnames, 1, mkChar("release"));
-    SET_STRING_ELT(ansnames, 2, mkChar("version"));
-    SET_STRING_ELT(ansnames, 3, mkChar("nodename"));
-    SET_STRING_ELT(ansnames, 4, mkChar("machine"));
-    SET_STRING_ELT(ansnames, 5, mkChar("login"));
-    SET_STRING_ELT(ansnames, 6, mkChar("user"));
-    SET_STRING_ELT(ansnames, 7, mkChar("effective_user"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 0, "sysname");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 1, "release");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 2, "version");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 3, "nodename");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 4, "machine");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 5, "login");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 6, "user");
+    SET_STRING_ELT_FROM_CSTR(ansnames, 7, "effective_user");
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

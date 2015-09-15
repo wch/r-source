@@ -44,16 +44,16 @@ SEXP Rmd5(SEXP files)
 	fp = fopen(path, "r");
 #endif
 	if(!fp) {
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	} else {
 	    res = md5_stream(fp, &resblock);
 	    if(res) {
 		warning(_("md5 failed on file '%s'"), path);
-		SET_STRING_ELT(ans, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(ans, i);
 	    } else {
 		for(j = 0; j < 16; j++)
 		    sprintf (out+2*j, "%02x", resblock[j]);
-		SET_STRING_ELT(ans, i, mkChar(out));
+		SET_STRING_ELT_FROM_CSTR(ans, i, out);
 	    }
 	    fclose(fp);
 	}

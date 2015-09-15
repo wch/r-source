@@ -726,7 +726,7 @@ SEXP static intern_getwd(void)
 	    wcstoutf8(buf, wbuf, PATH_MAX+1);
 	    R_UTF8fixslash(buf);
 	    PROTECT(rval = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(rval, 0, mkCharCE(buf, CE_UTF8));
+	    SET_STRING_ELT_FROM_CSTR_CE(rval, 0, buf, CE_UTF8);
 	    UNPROTECT(1);
 	}
     }
@@ -797,7 +797,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
 	if (STRING_ELT(s, i) == NA_STRING)
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	else {
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
 	    if (wcslen(pp) > PATH_MAX - 1) error(_("path too long"));
@@ -811,7 +811,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
 	    memset(sp, 0, 4*PATH_MAX); /* safety */
 	    wcstoutf8(sp, p, 4*wcslen(p) + 1);
-	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, i, sp, CE_UTF8);
 	}
     }
     UNPROTECT(1);
@@ -831,7 +831,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
 	if (STRING_ELT(s, i) == NA_STRING)
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	else {
 	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
 	    if (strlen(pp) > PATH_MAX - 1)
@@ -845,7 +845,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 		p++;
 	    else
 		p = buf;
-	    SET_STRING_ELT(ans, i, mkChar(p));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, p);
 	}
     }
     UNPROTECT(1);
@@ -872,7 +872,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
 	if (STRING_ELT(s, i) == NA_STRING)
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	else {
 	    memset(sp, 0, 4*PATH_MAX);
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
@@ -894,7 +894,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		wcstoutf8(sp, buf, 4*wcslen(buf)+1);
 	    }
-	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, i, sp, CE_UTF8);
 	}
     }
     UNPROTECT(1);
@@ -914,7 +914,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
 	if (STRING_ELT(s, i) == NA_STRING)
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	else {
 	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
 	    if (strlen(pp) > PATH_MAX - 1)
@@ -932,7 +932,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    p[1] = '\0';
 		}
 	    } else buf[0] = '\0';
-	    SET_STRING_ELT(ans, i, mkChar(buf));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, buf);
 	}
     }
     UNPROTECT(1);
@@ -966,9 +966,9 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	path = translateChar(STRING_ELT(paths, i));
 	char *res = realpath(path, abspath);
 	if (res)
-	    SET_STRING_ELT(ans, i, mkChar(abspath));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, abspath);
 	else {
-	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+	    COPY_STRING_ELT(ans, i, paths, i);
 	    /* and report the problem */
 	    if (mustWork == 1)
 		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
@@ -993,9 +993,9 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	/* we need to check that this exists */
 	if (OK) OK = (access(abspath, 0 /* F_OK */) == 0);
-	if (OK) SET_STRING_ELT(ans, i, mkChar(abspath));
+	if (OK) SET_STRING_ELT_FROM_CSTR(ans, i, abspath);
 	else {
-	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+	    COPY_STRING_ELT(ans, i, paths, i);
 	    /* and report the problem */
 	    if (mustWork == 1)
 		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
@@ -1079,10 +1079,10 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(ienc == CE_UTF8) {
 		const char *ss = EncodeString(s, w-1000000, quote,
 					      (Rprt_adj) justify);
-		SET_STRING_ELT(ans, i, mkCharCE(ss, ienc));
+		SET_STRING_ELT_FROM_CSTR_CE(ans, i, ss, ienc);
 	    } else {
 		const char *ss = EncodeString(s, w, quote, (Rprt_adj) justify);
-		SET_STRING_ELT(ans, i, mkChar(ss));
+		SET_STRING_ELT_FROM_CSTR(ans, i, ss);
 	    }
 	}
     }
@@ -1106,7 +1106,7 @@ SEXP attribute_hidden do_encoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if(IS_LATIN1(STRING_ELT(x, i))) tmp = "latin1";
 	else if(IS_UTF8(STRING_ELT(x, i))) tmp = "UTF-8";
 	else tmp = "unknown";
-	SET_STRING_ELT(ans, i, mkChar(tmp));
+	SET_STRING_ELT_FROM_CSTR(ans, i, tmp);
     }
     UNPROTECT(1);
     return ans;
@@ -1142,10 +1142,24 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 	       (ienc == CE_UTF8 && IS_UTF8(tmp)) ||
 	       (ienc == CE_BYTES && IS_BYTES(tmp)) ||
 	       (ienc == CE_NATIVE && ! IS_LATIN1(tmp) && ! IS_UTF8(tmp))))
-	    SET_STRING_ELT(x, i, mkCharLenCE(CHAR(tmp), LENGTH(tmp), ienc));
+	    SET_STRING_ELT_FROM_CSTR_LEN_CE(x, i, CHAR(tmp), LENGTH(tmp), ienc);
     }
     UNPROTECT(1);
     return x;
+}
+
+int attribute_hidden markKnownEltEnc(SEXP x, R_xlen_t i)
+{
+    if (SE_TYPE(&(STRING_PTR(x)[i])) == SETYPE_BOXED) {
+	SEXP ref = SE_CSXP(&(STRING_PTR(x)[i]));
+	int ienc = 0;
+	if(ENC_KNOWN(ref)) {
+	    if(known_to_be_latin1) ienc = CE_LATIN1;
+	    if(known_to_be_utf8) ienc = CE_UTF8;
+	}
+	return ienc;
+    }
+    else return CE_NATIVE;
 }
 
 SEXP attribute_hidden markKnown(const char *s, SEXP ref)
@@ -1778,16 +1792,16 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (PRIMVAL(op) || known_to_be_utf8) { /* enc2utf8 */
 	    if (IS_UTF8(el) || IS_ASCII(el) || IS_BYTES(el)) continue;
 	    if (!duped) { ans = PROTECT(duplicate(ans)); duped = TRUE; }
-	    SET_STRING_ELT(ans, i,
-			   mkCharCE(translateCharUTF8(el), CE_UTF8));
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, i, translateCharUTF8(el), CE_UTF8);
 	} else if (ENC_KNOWN(el)) { /* enc2native */
 	    if (IS_ASCII(el) || IS_BYTES(el)) continue;
 	    if (known_to_be_latin1 && IS_LATIN1(el)) continue;
 	    if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
 	    if (known_to_be_latin1)
-		SET_STRING_ELT(ans, i, mkCharCE(translateChar(el), CE_LATIN1));
+		SET_STRING_ELT_FROM_CSTR_CE(ans, i, translateChar(el),
+					    CE_LATIN1);
 	    else
-		SET_STRING_ELT(ans, i, mkChar(translateChar(el)));
+		SET_STRING_ELT_FROM_CSTR(ans, i, translateChar(el));
 	}
     }
     if(duped) UNPROTECT(1);
@@ -2292,9 +2306,9 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_VECTOR_ELT(ans, 2, ScalarInteger(n));
     nm = allocVector(STRSXP, 3);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("l"));
-    SET_STRING_ELT(nm, 1, mkChar("u"));
-    SET_STRING_ELT(nm, 2, mkChar("n"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "l");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "u");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "n");
     UNPROTECT(2);
     return ans;
 }
@@ -2335,7 +2349,7 @@ SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     str_signif(px, n, type, width, digits, fmt, flag, cptr);
     SEXP ans = PROTECT(allocVector(STRSXP, n));
-    for (R_xlen_t i = 0; i < n; i++) SET_STRING_ELT(ans, i, mkChar(cptr[i]));
+    for (R_xlen_t i = 0; i < n; i++) SET_STRING_ELT_FROM_CSTR(ans, i, cptr[i]);
     UNPROTECT(2);
     return ans;
 }

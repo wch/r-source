@@ -54,40 +54,40 @@ SEXP attribute_hidden do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(value = allocVector(VECSXP,14));
     PROTECT(names = allocVector(STRSXP,14));
 
-    SET_STRING_ELT(names, 0, mkChar("platform"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "platform");
     SET_VECTOR_ELT(value, 0, mkString(R_PLATFORM));
-    SET_STRING_ELT(names, 1, mkChar("arch"));
+    SET_STRING_ELT_FROM_CSTR(names, 1, "arch");
     SET_VECTOR_ELT(value, 1, mkString(R_CPU));
-    SET_STRING_ELT(names, 2, mkChar("os"));
+    SET_STRING_ELT_FROM_CSTR(names, 2, "os");
     SET_VECTOR_ELT(value, 2, mkString(R_OS));
 
     snprintf(buf, 128, "%s, %s", R_CPU, R_OS);
-    SET_STRING_ELT(names, 3, mkChar("system"));
+    SET_STRING_ELT_FROM_CSTR(names, 3, "system");
     SET_VECTOR_ELT(value, 3, mkString(buf));
 
-    SET_STRING_ELT(names, 4, mkChar("status"));
+    SET_STRING_ELT_FROM_CSTR(names, 4, "status");
     SET_VECTOR_ELT(value, 4, mkString(R_STATUS));
-    SET_STRING_ELT(names, 5, mkChar("major"));
+    SET_STRING_ELT_FROM_CSTR(names, 5, "major");
     SET_VECTOR_ELT(value, 5, mkString(R_MAJOR));
-    SET_STRING_ELT(names, 6, mkChar("minor"));
+    SET_STRING_ELT_FROM_CSTR(names, 6, "minor");
     SET_VECTOR_ELT(value, 6, mkString(R_MINOR));
-    SET_STRING_ELT(names, 7, mkChar("year"));
+    SET_STRING_ELT_FROM_CSTR(names, 7, "year");
     SET_VECTOR_ELT(value, 7, mkString(R_YEAR));
-    SET_STRING_ELT(names, 8, mkChar("month"));
+    SET_STRING_ELT_FROM_CSTR(names, 8, "month");
     SET_VECTOR_ELT(value, 8, mkString(R_MONTH));
-    SET_STRING_ELT(names, 9, mkChar("day"));
+    SET_STRING_ELT_FROM_CSTR(names, 9, "day");
     SET_VECTOR_ELT(value, 9, mkString(R_DAY));
-    SET_STRING_ELT(names, 10, mkChar("svn rev"));
+    SET_STRING_ELT_FROM_CSTR(names, 10, "svn rev");
 
     snprintf(buf, 128, "%d", R_SVN_REVISION);
     SET_VECTOR_ELT(value, 10, mkString(buf));
-    SET_STRING_ELT(names, 11, mkChar("language"));
+    SET_STRING_ELT_FROM_CSTR(names, 11, "language");
     SET_VECTOR_ELT(value, 11, mkString("R"));
 
     PrintVersionString(buf, 128);
-    SET_STRING_ELT(names, 12, mkChar("version.string"));
+    SET_STRING_ELT_FROM_CSTR(names, 12, "version.string");
     SET_VECTOR_ELT(value, 12, mkString(buf));
-    SET_STRING_ELT(names, 13, mkChar("nickname"));
+    SET_STRING_ELT_FROM_CSTR(names, 13, "nickname");
     SET_VECTOR_ELT(value, 13, mkString(R_NICK));
 
     setAttrib(value, R_NamesSymbol, names);

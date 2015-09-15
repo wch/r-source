@@ -252,7 +252,7 @@ StringAnswer(SEXP x, struct BindData *data, SEXP call)
     default:
 	PROTECT(x = coerceVector(x, STRSXP));
 	for (i = 0; i < XLENGTH(x); i++)
-	    SET_STRING_ELT(data->ans_ptr, data->ans_length++, STRING_ELT(x, i));
+	    COPY_STRING_ELT(data->ans_ptr, data->ans_length++, x, i);
 	UNPROTECT(1);
 	break;
     }
@@ -1382,11 +1382,11 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		tnam = GetColNames(v);
 		if (tnam != R_NilValue) {
 		    for (int i = 0; i < length(tnam); i++)
-			SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
+			COPY_STRING_ELT(nam, j++, tnam, i);
 		}
 		else if (have_cnames) {
 		    for (int i = 0; i < ncols(u); i++)
-			SET_STRING_ELT(nam, j++, R_BlankString);
+			SET_STRING_ELT_TO_BLANK_STRING(nam, j++);
 		}
 	    } else if (length(u) >= lenmin) {
 		u = getAttrib(u, R_NamesSymbol);
@@ -1403,11 +1403,11 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2) {
 			PROTECT(expr);
-			SET_STRING_ELT(nam, j++,
-				       STRING_ELT(deparse1line(expr, TRUE), 0));
+			COPY_STRING_ELT(nam, j++,
+					deparse1line(expr, TRUE), 0);
 			UNPROTECT(1); /* expr */
 		    } else if (have_cnames)
-			SET_STRING_ELT(nam, j++, R_BlankString);
+			SET_STRING_ELT_TO_BLANK_STRING(nam, j++);
 		}
 	    }
 	}
@@ -1618,11 +1618,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		if (have_rnames) {
 		    if (tnam != R_NilValue) {
 			for (int i = 0; i < length(tnam); i++)
-			    SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
+			    COPY_STRING_ELT(nam, j++, tnam, i);
 		    }
 		    else {
 			for (int i = 0; i < nrows(u); i++)
-				SET_STRING_ELT(nam, j++, R_BlankString);
+				SET_STRING_ELT_TO_BLANK_STRING(nam, j++);
 		    }
 		}
 	    }
@@ -1641,11 +1641,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
 		    else if (deparse_level == 2) {
 			PROTECT(expr);
-			SET_STRING_ELT(nam, j++,
-				       STRING_ELT(deparse1line(expr, TRUE), 0));
+			COPY_STRING_ELT(nam, j++,
+					deparse1line(expr, TRUE), 0);
 			UNPROTECT(1); /* expr */
 		    } else if (have_rnames)
-			SET_STRING_ELT(nam, j++, R_BlankString);
+			SET_STRING_ELT_TO_BLANK_STRING(nam, j++);
 		}
 	    }
 	}

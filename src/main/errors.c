@@ -385,7 +385,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 		}
 	    }
 	    names = CAR(ATTRIB(R_Warnings));
-	    SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
+	    SET_STRING_ELT_FROM_CSTR(names, R_CollectWarnings++, buf);
 	}
     }
     /* else:  w <= -1 */
@@ -535,7 +535,7 @@ void PrintWarnings(void)
     names = CAR(ATTRIB(R_Warnings));
     for(i = 0; i < R_CollectWarnings; i++) {
 	SET_VECTOR_ELT(s, i, VECTOR_ELT(R_Warnings, i));
-	SET_STRING_ELT(t, i, STRING_ELT(names, i));
+	COPY_STRING_ELT(t, i, names, i);
     }
     setAttrib(s, R_NamesSymbol, t);
     SET_SYMVALUE(install("last.warning"), s);
@@ -750,7 +750,7 @@ SEXP attribute_hidden do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     PROTECT(res = allocVector(STRSXP, 1));
-    SET_STRING_ELT(res, 0, mkChar(errbuf));
+    SET_STRING_ELT_FROM_CSTR(res, 0, errbuf);
     UNPROTECT(1);
     return res;
 }
@@ -1018,9 +1018,9 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(ihead > 0) strcat(tmp, head);
 		strcat(tmp, tr);
 		if(itail > 0) strcat(tmp, tail);
-		SET_STRING_ELT(ans, i, mkChar(tmp));
+		SET_STRING_ELT_FROM_CSTR(ans, i, tmp);
 	    } else
-		SET_STRING_ELT(ans, i, mkChar(This));
+		SET_STRING_ELT_FROM_CSTR(ans, i, This);
 	}
 	UNPROTECT(1);
 	return ans;
@@ -1677,8 +1677,8 @@ static SEXP getInterruptCondition(void)
     SEXP cond, klass;
     PROTECT(cond = allocVector(VECSXP, 0));
     PROTECT(klass = allocVector(STRSXP, 2));
-    SET_STRING_ELT(klass, 0, mkChar("interrupt"));
-    SET_STRING_ELT(klass, 1, mkChar("condition"));
+    SET_STRING_ELT_FROM_CSTR(klass, 0, "interrupt");
+    SET_STRING_ELT_FROM_CSTR(klass, 1, "condition");
     classgets(cond, klass);
     UNPROTECT(2);
     return cond;

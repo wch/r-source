@@ -773,7 +773,7 @@ na_answer: /* only sum(INTSXP, ...) case currently used */
     case INTSXP:	INTEGER(ans)[0] = NA_INTEGER; break;
     case REALSXP:	REAL(ans)[0] = NA_REAL; break;
     case CPLXSXP:	COMPLEX(ans)[0].r = COMPLEX(ans)[0].i = NA_REAL; break;
-    case STRSXP:        SET_STRING_ELT(ans, 0, NA_STRING); break;
+    case STRSXP:        SET_STRING_ELT_TO_NA_STRING(ans, 0); break;
     }
     UNPROTECT(2); /* scum, args */
     return ans;
@@ -928,8 +928,7 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((v_nms = getAttrib(v, R_NamesSymbol)) != R_NilValue) {
 	PROTECT(ans_nms = allocVector(STRSXP, len));
 	for (i = 0; i < len; i++) {
-	    SET_STRING_ELT(ans_nms, i,
-			   STRING_ELT(v_nms, INTEGER(ans)[i] - 1));
+	    COPY_STRING_ELT(ans_nms, i, v_nms, INTEGER(ans)[i] - 1);
 	}
 	setAttrib(ans, R_NamesSymbol, ans_nms);
 	UNPROTECT(1);

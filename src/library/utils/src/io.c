@@ -711,7 +711,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(rval = duplicate(cvec));
 	    for (i = 0; i < len; i++)
 		if(isNAstring(CHAR(STRING_ELT(rval, i)), 1, &data))
-		    SET_STRING_ELT(rval, i, NA_STRING);
+		    SET_STRING_ELT_TO_NA_STRING(rval, i);
 	}
 	else {
 	    PROTECT(dup = duplicated(cvec, FALSE));
@@ -728,7 +728,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (i = 0; i < len; i++) {
 		if (STRING_ELT(cvec, i) == NA_STRING) continue;
 		if (LOGICAL(dup)[i] == 0 && !isNAstring(CHAR(STRING_ELT(cvec, i)), 1, &data))
-		    SET_STRING_ELT(levs, j++, STRING_ELT(cvec, i));
+		    COPY_STRING_ELT(levs, j++, cvec, i);
 	    }
 
 	    /* We avoid an allocation by reusing dup,
@@ -922,7 +922,7 @@ SEXP readtablehead(SEXP args)
 	buf[nbuf] = '\0';
 	if(data.ttyflag && empty) goto no_more_lines;
 	if(!empty || (c != R_EOF && !blskip)) { /* see previous comment */
-	    SET_STRING_ELT(ans, nread, mkChar(buf));
+	    SET_STRING_ELT_FROM_CSTR(ans, nread, buf);
 	    nread++;
 	    if (strlen(buf) < nbuf) // PR#15625
 		warning("line %d appears to contain embedded nulls", nread);
@@ -948,7 +948,7 @@ no_more_lines:
     free(buf);
     PROTECT(ans2 = allocVector(STRSXP, nread));
     for(i = 0; i < nread; i++)
-	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+	COPY_STRING_ELT(ans2, i, ans, i);
     UNPROTECT(2);
     if (data.quoteset[0]) free(data.quoteset);
     return ans2;

@@ -88,7 +88,7 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 		COMPLEX(VECTOR_ELT(vec, j - 1))[k] = COMPLEX(x)[i];
 		break;
 	    case STRSXP:
-		SET_STRING_ELT(VECTOR_ELT(vec, j - 1), k, STRING_ELT(x, i));
+		COPY_STRING_ELT(VECTOR_ELT(vec, j - 1), k, x, i);
 		break;
 	    case VECSXP:
 		SET_VECTOR_ELT(VECTOR_ELT(vec, j - 1), k, VECTOR_ELT(x, i));
@@ -101,7 +101,7 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    if(have_names) {
 		nmj = getAttrib(VECTOR_ELT(vec, j - 1), R_NamesSymbol);
-		SET_STRING_ELT(nmj, k, STRING_ELT(nm, i));
+		COPY_STRING_ELT(nmj, k, nm, i);
 	    }
 	    INTEGER(counts)[j - 1] += 1;
 	}

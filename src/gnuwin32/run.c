@@ -792,11 +792,11 @@ SEXP do_syswhich(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
 	if (STRING_ELT(nm, i) == NA_STRING) {
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	} else {
 	    const char *this = CHAR(STRING_ELT(nm, i));
 	    char *that = expandcmd(this, 1);
-	    SET_STRING_ELT(ans, i, mkChar(that ? that : ""));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, that ? that : "");
 	    free(that);
 	}
     }

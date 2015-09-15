@@ -934,7 +934,7 @@ static SEXP mkString2(const char *s, size_t len, Rboolean escaped)
     else if(!escaped && known_to_be_utf8) enc = CE_UTF8;
 
     PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkCharLenCE(s, (int) len, enc));
+    SET_STRING_ELT_FROM_CSTR_LEN_CE(t, 0, s, len, enc);
     UNPROTECT(1);
     return t;
 }
@@ -1209,7 +1209,7 @@ void R_FinalizeSrcRefState(void)
 	    ParseState.data = NULL;
 	} else /* Remove all the strings from the text vector so they don't take up memory, and clean up data */
 	    for (int i=0; i < ParseState.data_count; i++) {
-	    	SET_STRING_ELT(ParseState.text, i, R_BlankString);
+	    	SET_STRING_ELT_TO_BLANK_STRING(ParseState.text, i);
 		_PARENT(i) = 0;
 	    }
     } 
@@ -1398,8 +1398,8 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 	    SEXP s_lines = install("lines");
 	    defineVar(s_lines, ScalarString(mkChar(buf)), ParseState.Original);
     	    PROTECT(class = allocVector(STRSXP, 2));
-            SET_STRING_ELT(class, 0, mkChar("srcfilecopy"));
-            SET_STRING_ELT(class, 1, mkChar("srcfile"));
+            SET_STRING_ELT_FROM_CSTR(class, 0, "srcfilecopy");
+            SET_STRING_ELT_FROM_CSTR(class, 1, "srcfile");
 	    setAttrib(ParseState.Original, R_ClassSymbol, class);
 	    UNPROTECT(1);
 	}
@@ -1760,7 +1760,7 @@ static int KeywordLookup(const char *s)
 			break;
 		    case 8:
 			PROTECT(yylval = allocVector(STRSXP, 1));
-			SET_STRING_ELT(yylval, 0, NA_STRING);
+			SET_STRING_ELT_TO_NA_STRING(yylval, 0);
 			break;
 		    case 9:
 			PROTECT(yylval = allocVector(CPLXSXP, 1));
@@ -2287,7 +2287,7 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
     wcstoutf8(s, wcs, nb);
 #endif
     PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));
+    SET_STRING_ELT_FROM_CSTR_CE(t, 0, s, CE_UTF8);
     UNPROTECT(1);
     return t;
 }
@@ -2664,8 +2664,8 @@ static void setParseFilename(SEXP newname) {
 	defineVar(install("original"), ParseState.Original, ParseState.SrcFile);
 
 	PROTECT(class = allocVector(STRSXP, 2));
-	SET_STRING_ELT(class, 0, mkChar("srcfilealias"));
-	SET_STRING_ELT(class, 1, mkChar("srcfile"));
+	SET_STRING_ELT_FROM_CSTR(class, 0, "srcfilealias");
+	SET_STRING_ELT_FROM_CSTR(class, 1, "srcfile");
 	setAttrib(ParseState.SrcFile, R_ClassSymbol, class);
 	UNPROTECT(1);
     } else {
@@ -3223,9 +3223,9 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 	_ID( ParseState.data_count )           = id ;          
 	_PARENT(ParseState.data_count)         = 0 ; 
 	if ( text_in )
-	    SET_STRING_ELT(ParseState.text, ParseState.data_count, mkChar(text_in));
+	    SET_STRING_ELT_FROM_CSTR(ParseState.text, ParseState.data_count, text_in);
 	else
-	    SET_STRING_ELT(ParseState.text, ParseState.data_count, mkChar(""));
+	    SET_STRING_ELT_FROM_CSTR(ParseState.text, ParseState.data_count, "");
 	
 	if( id > ID_COUNT ){
 		growID(id) ;
@@ -3319,7 +3319,7 @@ static SEXP lengthgets2(SEXP x, int len) {
     	    break;
     	case STRSXP:
     	    for (int i = 0; i < len; i++)
-    	    	SET_STRING_ELT(result, i, STRING_ELT(x, i));
+    	    	COPY_STRING_ELT(result, i, x, i);
     	    break;
     	default:
 	    UNIMPLEMENTED_TYPE("lengthgets2", x);
@@ -3416,12 +3416,12 @@ static void finalizeData( ){
         if (xlat == 2) /* "unknown" */
             xlat = token;
         if (xlat < YYNTOKENS + YYNNTS)
-    	    SET_STRING_ELT(tokens, i, mkChar(yytname[xlat]));
+    	    SET_STRING_ELT_FROM_CSTR(tokens, i, yytname[xlat]);
     	else { /* we have a token which doesn't have a name, e.g. an illegal character as in PR#15518 */
     	    char name[2];
     	    name[0] = (char) xlat;
     	    name[1] = 0;
-    	    SET_STRING_ELT(tokens, i, mkChar(name));
+    	    SET_STRING_ELT_FROM_CSTR(tokens, i, name);
     	}
     	_TERMINAL(i) = xlat < YYNTOKENS;
     }

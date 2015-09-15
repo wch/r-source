@@ -120,14 +120,14 @@ SEXP do_bmVersion(void)
    SEXP ans = PROTECT(allocVector(STRSXP, 3)),
 	nms = PROTECT(allocVector(STRSXP, 3));
     setAttrib(ans, R_NamesSymbol, nms);
-    SET_STRING_ELT(nms, 0, mkChar("libpng"));
-    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
-    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
+    SET_STRING_ELT_FROM_CSTR(nms, 0, "libpng");
+    SET_STRING_ELT_FROM_CSTR(nms, 1, "jpeg");
+    SET_STRING_ELT_FROM_CSTR(nms, 2, "libtiff");
     R_X11_Init();
     if(initialized > 0) {
-	SET_STRING_ELT(ans, 0, mkChar((*ptr->R_pngVersion)()));
-	SET_STRING_ELT(ans, 1, mkChar((*ptr->R_jpegVersion)()));
-	SET_STRING_ELT(ans, 2, mkChar((*ptr->R_tiffVersion)()));
+	SET_STRING_ELT_FROM_CSTR(ans, 0, (*ptr->R_pngVersion)());
+	SET_STRING_ELT_FROM_CSTR(ans, 1, (*ptr->R_jpegVersion)());
+	SET_STRING_ELT_FROM_CSTR(ans, 2, (*ptr->R_tiffVersion)());
     }
     UNPROTECT(2);
     return ans;
@@ -168,9 +168,9 @@ SEXP do_bmVersion(void)
     SEXP ans = PROTECT(allocVector(STRSXP, 3)),
 	nms = PROTECT(allocVector(STRSXP, 3));
     setAttrib(ans, R_NamesSymbol, nms);
-    SET_STRING_ELT(nms, 0, mkChar("libpng"));
-    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
-    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
+    SET_STRING_ELT_FROM_CSTR(nms, 0, "libpng");
+    SET_STRING_ELT_FROM_CSTR(nms, 1, "jpeg");
+    SET_STRING_ELT_FROM_CSTR(nms, 2, "libtiff");
     UNPROTECT(2);
     return ans;
 }

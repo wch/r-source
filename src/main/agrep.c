@@ -164,7 +164,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(opt_value) {
 	    PROTECT(ans = allocVector(STRSXP, n));
 	    for(i = 0; i < n; i++)
-		SET_STRING_ELT(ans, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(ans, i);
 	    SEXP nms = getAttrib(vec, R_NamesSymbol);
 	    if(!isNull(nms))
 		setAttrib(ans, R_NamesSymbol, nms);
@@ -257,14 +257,14 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
 	for (j = i = 0 ; i < n ; i++) {
 	    if(LOGICAL(ind)[i])
-		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
+		COPY_STRING_ELT(ans, j++, vec, i);
 	}
 	/* copy across names and subset */
 	if(!isNull(nmold)) {
 	    nm = allocVector(STRSXP, nmatches);
 	    for (i = 0, j = 0; i < n ; i++)
 		if(LOGICAL(ind)[i])
-		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
+		    COPY_STRING_ELT(nm, j++, nmold, i);
 	    setAttrib(ans, R_NamesSymbol, nm);
 	}
     }
@@ -399,7 +399,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 			    for(m = 0; m < 3; m++) {
 				COUNTS(i, j, m) = NA_INTEGER;
 			    }
-			    SET_STRING_ELT(trafos, i + nx * j, NA_STRING);
+			    SET_STRING_ELT_TO_NA_STRING(trafos, i + nx * j);
 			} else {
 			    nins = ndel = nsub = 0;
 			    k = nxi; l = nyj; m = k + l; nz = m;
@@ -433,7 +433,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 			    COUNTS(i, j, 0) = nins;
 			    COUNTS(i, j, 1) = ndel;
 			    COUNTS(i, j, 2) = nsub;
-			    SET_STRING_ELT(trafos, i + nx * j, mkChar(buf));
+			    SET_STRING_ELT_FROM_CSTR(trafos, i + nx * j, buf);
 			}
 			Free(paths);
 		    }
@@ -457,9 +457,9 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 	Free(buf);
 	PROTECT(dimnames = allocVector(VECSXP, 3));
 	PROTECT(names = allocVector(STRSXP, 3));
-	SET_STRING_ELT(names, 0, mkChar("ins"));
-	SET_STRING_ELT(names, 1, mkChar("del"));
-	SET_STRING_ELT(names, 2, mkChar("sub"));
+	SET_STRING_ELT_FROM_CSTR(names, 0, "ins");
+	SET_STRING_ELT_FROM_CSTR(names, 1, "del");
+	SET_STRING_ELT_FROM_CSTR(names, 2, "sub");
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	SET_VECTOR_ELT(dimnames, 2, names);
@@ -705,9 +705,9 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     if(opt_counts) {
 	PROTECT(dimnames = allocVector(VECSXP, 3));
 	PROTECT(names = allocVector(STRSXP, 3));
-	SET_STRING_ELT(names, 0, mkChar("ins"));
-	SET_STRING_ELT(names, 1, mkChar("del"));
-	SET_STRING_ELT(names, 2, mkChar("sub"));
+	SET_STRING_ELT_FROM_CSTR(names, 0, "ins");
+	SET_STRING_ELT_FROM_CSTR(names, 1, "del");
+	SET_STRING_ELT_FROM_CSTR(names, 2, "sub");
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	SET_VECTOR_ELT(dimnames, 2, names);
@@ -716,8 +716,8 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2); /* names, dimnames */
 	PROTECT(dimnames = allocVector(VECSXP, 3));
 	PROTECT(names = allocVector(STRSXP, 2));
-	SET_STRING_ELT(names, 0, mkChar("first"));
-	SET_STRING_ELT(names, 1, mkChar("last"));
+	SET_STRING_ELT_FROM_CSTR(names, 0, "first");
+	SET_STRING_ELT_FROM_CSTR(names, 1, "last");
 	SET_VECTOR_ELT(dimnames, 0, x);
 	SET_VECTOR_ELT(dimnames, 1, y);
 	SET_VECTOR_ELT(dimnames, 2, names);

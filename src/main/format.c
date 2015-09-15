@@ -53,15 +53,17 @@ void formatRaw(Rbyte *x, R_xlen_t n, int *fieldwidth)
 }
 
 attribute_hidden
-void formatString(SEXP *x, R_xlen_t n, int *fieldwidth, int quote)
+void formatString(R_string_elt_ptr_t x, R_xlen_t n, int *fieldwidth, int quote)
 {
     int xmax = 0;
     int l;
 
     for (R_xlen_t i = 0; i < n; i++) {
-	if (x[i] == NA_STRING) {
+	if (SE_TYPE(&(x[i])) != SETYPE_BOXED)
+	    error("for now formatString needs expanded strings");
+	if (SE_CSXP(&(x[i])) == NA_STRING) {
 	    l = quote ? R_print.na_width : R_print.na_width_noquote;
-	} else l = Rstrlen(x[i], quote) + (quote ? 2 : 0);
+	} else l = Rstrlen(SE_CSXP(&(x[i])), quote) + (quote ? 2 : 0);
 	if (l > xmax) xmax = l;
     }
     *fieldwidth = xmax;

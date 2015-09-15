@@ -145,9 +145,9 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		 * meaningful names
 		 */
 		PROTECT(names = allocVector(STRSXP, 3));
-		SET_STRING_ELT(names, 0, mkChar("level"));
-		SET_STRING_ELT(names, 1, mkChar("x"));
-		SET_STRING_ELT(names, 2, mkChar("y"));
+		SET_STRING_ELT_FROM_CSTR(names, 0, "level");
+		SET_STRING_ELT_FROM_CSTR(names, 1, "x");
+		SET_STRING_ELT_FROM_CSTR(names, 2, "y");
 		setAttrib(ctr, R_NamesSymbol, names);
 		/*
 		 * We're about to add another line to the list ...

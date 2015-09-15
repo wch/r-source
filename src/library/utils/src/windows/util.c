@@ -118,8 +118,8 @@ SEXP dllversion(SEXP path)
     dll = filenameToWchar(STRING_ELT(path, 0), FALSE);
     dwVerInfoSize = GetFileVersionInfoSizeW(dll, &dwVerHnd);
     SEXP ans = PROTECT(allocVector(STRSXP, 2));
-    SET_STRING_ELT(ans, 0, mkChar(""));
-    SET_STRING_ELT(ans, 1, mkChar(""));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, "");
+    SET_STRING_ELT_FROM_CSTR(ans, 1, "");
     if (dwVerInfoSize) {
 	BOOL  fRet;
 	LPSTR lpstrVffInfo;
@@ -132,17 +132,17 @@ SEXP dllversion(SEXP path)
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
 				 (LPVOID)&lszVer, &cchVer);
-	    if(fRet) SET_STRING_ELT(ans, 0, mkChar(lszVer));
+	    if(fRet) SET_STRING_ELT_FROM_CSTR(ans, 0, lszVer);
 
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\R Version"),
 				 (LPVOID)&lszVer, &cchVer);
-	    if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
+	    if(fRet) SET_STRING_ELT_FROM_CSTR(ans, 1, lszVer);
 	    else {
 		fRet = VerQueryValue(lpstrVffInfo,
 				     TEXT("\\StringFileInfo\\040904E4\\Compiled under R Version"),
 				     (LPVOID)&lszVer, &cchVer);
-		if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
+		if(fRet) SET_STRING_ELT_FROM_CSTR(ans, 1, lszVer);
 	    }
 
 	} else ans = R_NilValue;
@@ -208,7 +208,7 @@ static SEXP splitClipboardText(const char *s, int ienc)
     for(p = s, q = line, nl = 0; *p; p++) {
 	if (*p == eol) {
 	    *q = '\0';
-	    SET_STRING_ELT(ans, nl++, mkCharCE(line, ienc));
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, nl++, line, ienc);
 	    q = line;
 	    *q = '\0';
 	} else if(CRLF && *p == '\r')
@@ -217,7 +217,7 @@ static SEXP splitClipboardText(const char *s, int ienc)
     }
     if (!last) {
 	*q = '\0';
-	SET_STRING_ELT(ans, nl, mkCharCE(line, ienc));
+	SET_STRING_ELT_FROM_CSTR_CE(ans, nl, line, ienc);
     }
     R_chk_free(line);
     UNPROTECT(1);
@@ -482,7 +482,7 @@ static BOOL CALLBACK EnumWindowsProc(HWND handle, LPARAM param)
     	}
     	SET_VECTOR_ELT(EnumResult, EnumCount, R_MakeExternalPtr(handle,R_NilValue,R_NilValue));
     	if (GetWindowText(handle, title, 1024)) 
-    	    SET_STRING_ELT(getAttrib(EnumResult, R_NamesSymbol), EnumCount, mkChar(title));
+    	    SET_STRING_ELT_FROM_CSTR(getAttrib(EnumResult, R_NamesSymbol), EnumCount, title);
     	EnumCount++;
     }
     return TRUE;

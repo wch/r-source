@@ -75,62 +75,62 @@ static void Init_R_Machine(SEXP rho)
     R_dec_min_exponent = (int) floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
     PROTECT(ans = allocVector(VECSXP, 18));
     PROTECT(nms = allocVector(STRSXP, 18));
-    SET_STRING_ELT(nms, 0, mkChar("double.eps"));
+    SET_STRING_ELT_FROM_CSTR(nms, 0, "double.eps");
     SET_VECTOR_ELT(ans, 0, ScalarReal(R_AccuracyInfo.eps));
 
-    SET_STRING_ELT(nms, 1, mkChar("double.neg.eps"));
+    SET_STRING_ELT_FROM_CSTR(nms, 1, "double.neg.eps");
     SET_VECTOR_ELT(ans, 1, ScalarReal(R_AccuracyInfo.epsneg));
 
-    SET_STRING_ELT(nms, 2, mkChar("double.xmin"));
+    SET_STRING_ELT_FROM_CSTR(nms, 2, "double.xmin");
     SET_VECTOR_ELT(ans, 2, ScalarReal(R_AccuracyInfo.xmin));
 
-    SET_STRING_ELT(nms, 3, mkChar("double.xmax"));
+    SET_STRING_ELT_FROM_CSTR(nms, 3, "double.xmax");
     SET_VECTOR_ELT(ans, 3, ScalarReal(R_AccuracyInfo.xmax));
 
-    SET_STRING_ELT(nms, 4, mkChar("double.base"));
+    SET_STRING_ELT_FROM_CSTR(nms, 4, "double.base");
     SET_VECTOR_ELT(ans, 4, ScalarInteger(R_AccuracyInfo.ibeta));
 
-    SET_STRING_ELT(nms, 5, mkChar("double.digits"));
+    SET_STRING_ELT_FROM_CSTR(nms, 5, "double.digits");
     SET_VECTOR_ELT(ans, 5, ScalarInteger(R_AccuracyInfo.it));
 
-    SET_STRING_ELT(nms, 6, mkChar("double.rounding"));
+    SET_STRING_ELT_FROM_CSTR(nms, 6, "double.rounding");
     SET_VECTOR_ELT(ans, 6, ScalarInteger(R_AccuracyInfo.irnd));
 
-    SET_STRING_ELT(nms, 7, mkChar("double.guard"));
+    SET_STRING_ELT_FROM_CSTR(nms, 7, "double.guard");
     SET_VECTOR_ELT(ans, 7, ScalarInteger(R_AccuracyInfo.ngrd));
 
-    SET_STRING_ELT(nms, 8, mkChar("double.ulp.digits"));
+    SET_STRING_ELT_FROM_CSTR(nms, 8, "double.ulp.digits");
     SET_VECTOR_ELT(ans, 8, ScalarInteger(R_AccuracyInfo.machep));
 
-    SET_STRING_ELT(nms, 9, mkChar("double.neg.ulp.digits"));
+    SET_STRING_ELT_FROM_CSTR(nms, 9, "double.neg.ulp.digits");
     SET_VECTOR_ELT(ans, 9, ScalarInteger(R_AccuracyInfo.negep));
 
-    SET_STRING_ELT(nms, 10, mkChar("double.exponent"));
+    SET_STRING_ELT_FROM_CSTR(nms, 10, "double.exponent");
     SET_VECTOR_ELT(ans, 10, ScalarInteger(R_AccuracyInfo.iexp));
 
-    SET_STRING_ELT(nms, 11, mkChar("double.min.exp"));
+    SET_STRING_ELT_FROM_CSTR(nms, 11, "double.min.exp");
     SET_VECTOR_ELT(ans, 11, ScalarInteger(R_AccuracyInfo.minexp));
 
-    SET_STRING_ELT(nms, 12, mkChar("double.max.exp"));
+    SET_STRING_ELT_FROM_CSTR(nms, 12, "double.max.exp");
     SET_VECTOR_ELT(ans, 12, ScalarInteger(R_AccuracyInfo.maxexp));
 
-    SET_STRING_ELT(nms, 13, mkChar("integer.max"));
+    SET_STRING_ELT_FROM_CSTR(nms, 13, "integer.max");
     SET_VECTOR_ELT(ans, 13, ScalarInteger(INT_MAX));
 
-    SET_STRING_ELT(nms, 14, mkChar("sizeof.long"));
+    SET_STRING_ELT_FROM_CSTR(nms, 14, "sizeof.long");
     SET_VECTOR_ELT(ans, 14, ScalarInteger(SIZEOF_LONG));
 
-    SET_STRING_ELT(nms, 15, mkChar("sizeof.longlong"));
+    SET_STRING_ELT_FROM_CSTR(nms, 15, "sizeof.longlong");
     SET_VECTOR_ELT(ans, 15, ScalarInteger(SIZEOF_LONG_LONG));
 
-    SET_STRING_ELT(nms, 16, mkChar("sizeof.longdouble"));
+    SET_STRING_ELT_FROM_CSTR(nms, 16, "sizeof.longdouble");
 #ifdef HAVE_LONG_DOUBLE
     SET_VECTOR_ELT(ans, 16, ScalarInteger(SIZEOF_LONG_DOUBLE));
 #else
     SET_VECTOR_ELT(ans, 16, ScalarInteger(0));
 #endif
 
-    SET_STRING_ELT(nms, 17, mkChar("sizeof.pointer"));
+    SET_STRING_ELT_FROM_CSTR(nms, 17, "sizeof.pointer");
     SET_VECTOR_ELT(ans, 17, ScalarInteger(sizeof(SEXP)));
     setAttrib(ans, R_NamesSymbol, nms);
     defineVar(install(".Machine"), ans, rho);
@@ -153,14 +153,14 @@ static void Init_R_Platform(SEXP rho)
 
     PROTECT(value = allocVector(VECSXP, 8));
     PROTECT(names = allocVector(STRSXP, 8));
-    SET_STRING_ELT(names, 0, mkChar("OS.type"));
-    SET_STRING_ELT(names, 1, mkChar("file.sep"));
-    SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
-    SET_STRING_ELT(names, 3, mkChar("GUI"));
-    SET_STRING_ELT(names, 4, mkChar("endian"));
-    SET_STRING_ELT(names, 5, mkChar("pkgType"));
-    SET_STRING_ELT(names, 6, mkChar("path.sep"));
-    SET_STRING_ELT(names, 7, mkChar("r_arch"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "OS.type");
+    SET_STRING_ELT_FROM_CSTR(names, 1, "file.sep");
+    SET_STRING_ELT_FROM_CSTR(names, 2, "dynlib.ext");
+    SET_STRING_ELT_FROM_CSTR(names, 3, "GUI");
+    SET_STRING_ELT_FROM_CSTR(names, 4, "endian");
+    SET_STRING_ELT_FROM_CSTR(names, 5, "pkgType");
+    SET_STRING_ELT_FROM_CSTR(names, 6, "path.sep");
+    SET_STRING_ELT_FROM_CSTR(names, 7, "r_arch");
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
     SET_VECTOR_ELT(value, 2, mkString(SHLIB_EXT));
@@ -809,31 +809,31 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, ncols));
     PROTECT(ansnames = allocVector(STRSXP, ncols));
     fsize = SET_VECTOR_ELT(ans, 0, allocVector(REALSXP, n));
-    SET_STRING_ELT(ansnames, 0, mkChar("size"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 0, "size");
     isdir = SET_VECTOR_ELT(ans, 1, allocVector(LGLSXP, n));
-    SET_STRING_ELT(ansnames, 1, mkChar("isdir"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 1, "isdir");
     mode  = SET_VECTOR_ELT(ans, 2, allocVector(INTSXP, n));
-    SET_STRING_ELT(ansnames, 2, mkChar("mode"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 2, "mode");
     mtime = SET_VECTOR_ELT(ans, 3, allocVector(REALSXP, n));
-    SET_STRING_ELT(ansnames, 3, mkChar("mtime"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 3, "mtime");
     ctime = SET_VECTOR_ELT(ans, 4, allocVector(REALSXP, n));
-    SET_STRING_ELT(ansnames, 4, mkChar("ctime"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 4, "ctime");
     atime = SET_VECTOR_ELT(ans, 5, allocVector(REALSXP, n));
-    SET_STRING_ELT(ansnames, 5, mkChar("atime"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, 5, "atime");
     if (extras) {
 #ifdef UNIX_EXTRAS
 	uid = SET_VECTOR_ELT(ans, 6, allocVector(INTSXP, n));
-	SET_STRING_ELT(ansnames, 6, mkChar("uid"));
+	SET_STRING_ELT_FROM_CSTR(ansnames, 6, "uid");
 	gid = SET_VECTOR_ELT(ans, 7, allocVector(INTSXP, n));
-	SET_STRING_ELT(ansnames, 7, mkChar("gid"));
+	SET_STRING_ELT_FROM_CSTR(ansnames, 7, "gid");
 	uname = SET_VECTOR_ELT(ans, 8, allocVector(STRSXP, n));
-	SET_STRING_ELT(ansnames, 8, mkChar("uname"));
+	SET_STRING_ELT_FROM_CSTR(ansnames, 8, "uname");
 	grname = SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
-	SET_STRING_ELT(ansnames, 9, mkChar("grname"));
+	SET_STRING_ELT_FROM_CSTR(ansnames, 9, "grname");
 #endif
 #ifdef Win32
 	exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
-	SET_STRING_ELT(ansnames, 6, mkChar("exe"));
+	SET_STRING_ELT_FROM_CSTR(ansnames, 6, "exe");
 #endif
     }
     for (int i = 0; i < n; i++) {
@@ -895,19 +895,23 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 		 * on some systems.  (PR#15804)
 		 */
 		if (i && INTEGER(uid)[i - 1] == (int) sb.st_uid)
-		    SET_STRING_ELT(uname, i, STRING_ELT(uname, i - 1));
+		    COPY_STRING_ELT(uname, i, uname, i - 1);
 		else {
 		    struct passwd *stpwd = getpwuid(sb.st_uid);
-		    SET_STRING_ELT(uname, i,
-				   stpwd ? mkChar(stpwd->pw_name): NA_STRING);
+		    if (stpwd)
+			SET_STRING_ELT_FROM_CSTR(uname, i, stpwd->pw_name);
+		    else
+			SET_STRING_ELT_TO_NA_STRING(uname, i);
 		}
 
 		if (i && INTEGER(gid)[i - 1] == (int) sb.st_gid)
-		    SET_STRING_ELT(grname, i, STRING_ELT(grname, i - 1));
+		    COPY_STRING_ELT(grname, i, grname, i - 1);
 		else {
 		    struct group *stgrp = getgrgid(sb.st_gid);
-		    SET_STRING_ELT(grname, i,
-				   stgrp ? mkChar(stgrp->gr_name): NA_STRING);
+		    if (stgrp)
+			SET_STRING_ELT_FROM_CSTR(grname, i, stgrp->gr_name);
+		    else
+			SET_STRING_ELT_TO_NA_STRING(grname, i);
 		}
 #endif
 #ifdef Win32
@@ -932,7 +936,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 			default:
 			    s = "unknown";
 			}
-		    SET_STRING_ELT(exe, i, mkChar(s));
+		    SET_STRING_ELT_FROM_CSTR(exe, i, s);
 		}
 #endif
 	    }
@@ -947,11 +951,11 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef UNIX_EXTRAS
 		INTEGER(uid)[i] = NA_INTEGER;
 		INTEGER(gid)[i] = NA_INTEGER;
-		SET_STRING_ELT(uname, i, NA_STRING);
-		SET_STRING_ELT(grname, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(uname, i);
+		SET_STRING_ELT_TO_NA_STRING(grname, i);
 #endif
 #ifdef Win32
-		SET_STRING_ELT(exe, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(exe, i);
 #endif
 	    }
 	}
@@ -1179,7 +1183,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     REPROTECT(ans = lengthgets(ans, count), idx);
     if (pattern) tre_regfree(&reg);
-    ssort(STRING_PTR(ans), count);
+    ssort(ans);
     UNPROTECT(1);
     return ans;
 }
@@ -1206,7 +1210,7 @@ static void list_dirs(const char *dnp, const char *nm,
 		*countmax *= 2;
 		REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
 	    }
-	    SET_STRING_ELT(*pans, (*count)++, mkChar(full ? dnp : nm));
+	    SET_STRING_ELT_FROM_CSTR(*pans, (*count)++, full ? dnp : nm);
 	}
 	while ((de = readdir(dir))) {
 #ifdef Win32
@@ -1236,8 +1240,8 @@ static void list_dirs(const char *dnp, const char *nm,
 			    *countmax *= 2;
 			    REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
 			}
-			SET_STRING_ELT(*pans, (*count)++,
-				       mkChar(full ? p : de->d_name));
+			SET_STRING_ELT_FROM_CSTR(*pans, (*count)++, 
+						 full ? p : de->d_name);
 		    }
 		}
 	    }
@@ -1272,7 +1276,7 @@ SEXP attribute_hidden do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
 	list_dirs(dnp, "", fullnames, &count, &ans, &countmax, idx, recursive);
     }
     REPROTECT(ans = lengthgets(ans, count), idx);
-    ssort(STRING_PTR(ans), count);
+    ssort(ans);
     UNPROTECT(1);
     return ans;
 }
@@ -1826,9 +1830,9 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "category");
     }
     PROTECT(ans = allocVector(STRSXP, 1));
-    if (p) SET_STRING_ELT(ans, 0, mkChar(p));
+    if (p) SET_STRING_ELT_FROM_CSTR(ans, 0, p);
     else  {
-	SET_STRING_ELT(ans, 0, mkChar(""));
+	SET_STRING_ELT_FROM_CSTR(ans, 0, "");
 	warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
 		CHAR(STRING_ELT(locale, 0)));
     }
@@ -1850,50 +1854,50 @@ SEXP attribute_hidden do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     PROTECT(ans = allocVector(STRSXP, 18));
     PROTECT(ansnames = allocVector(STRSXP, 18));
-    SET_STRING_ELT(ans, i, mkChar(lc->decimal_point));
-    SET_STRING_ELT(ansnames, i++, mkChar("decimal_point"));
-    SET_STRING_ELT(ans, i, mkChar(lc->thousands_sep));
-    SET_STRING_ELT(ansnames, i++, mkChar("thousands_sep"));
-    SET_STRING_ELT(ans, i, mkChar(lc->grouping));
-    SET_STRING_ELT(ansnames, i++, mkChar("grouping"));
-    SET_STRING_ELT(ans, i, mkChar(lc->int_curr_symbol));
-    SET_STRING_ELT(ansnames, i++, mkChar("int_curr_symbol"));
-    SET_STRING_ELT(ans, i, mkChar(lc->currency_symbol));
-    SET_STRING_ELT(ansnames, i++, mkChar("currency_symbol"));
-    SET_STRING_ELT(ans, i, mkChar(lc->mon_decimal_point));
-    SET_STRING_ELT(ansnames, i++, mkChar("mon_decimal_point"));
-    SET_STRING_ELT(ans, i, mkChar(lc->mon_thousands_sep));
-    SET_STRING_ELT(ansnames, i++, mkChar("mon_thousands_sep"));
-    SET_STRING_ELT(ans, i, mkChar(lc->mon_grouping));
-    SET_STRING_ELT(ansnames, i++, mkChar("mon_grouping"));
-    SET_STRING_ELT(ans, i, mkChar(lc->positive_sign));
-    SET_STRING_ELT(ansnames, i++, mkChar("positive_sign"));
-    SET_STRING_ELT(ans, i, mkChar(lc->negative_sign));
-    SET_STRING_ELT(ansnames, i++, mkChar("negative_sign"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->decimal_point);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "decimal_point");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->thousands_sep);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "thousands_sep");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->grouping);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "grouping");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->int_curr_symbol);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "int_curr_symbol");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->currency_symbol);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "currency_symbol");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->mon_decimal_point);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "mon_decimal_point");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->mon_thousands_sep);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "mon_thousands_sep");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->mon_grouping);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "mon_grouping");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->positive_sign);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "positive_sign");
+    SET_STRING_ELT_FROM_CSTR(ans, i, lc->negative_sign);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "negative_sign");
     sprintf(buff, "%d", (int)lc->int_frac_digits);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("int_frac_digits"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "int_frac_digits");
     sprintf(buff, "%d", (int)lc->frac_digits);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("frac_digits"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "frac_digits");
     sprintf(buff, "%d", (int)lc->p_cs_precedes);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("p_cs_precedes"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "p_cs_precedes");
     sprintf(buff, "%d", (int)lc->p_sep_by_space);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("p_sep_by_space"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "p_sep_by_space");
     sprintf(buff, "%d", (int)lc->n_cs_precedes);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("n_cs_precedes"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "n_cs_precedes");
     sprintf(buff, "%d", (int)lc->n_sep_by_space);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("n_sep_by_space"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "n_sep_by_space");
     sprintf(buff, "%d", (int)lc->p_sign_posn);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("p_sign_posn"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "p_sign_posn");
     sprintf(buff, "%d", (int)lc->n_sign_posn);
-    SET_STRING_ELT(ans, i, mkChar(buff));
-    SET_STRING_ELT(ansnames, i++, mkChar("n_sign_posn"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, buff);
+    SET_STRING_ELT_FROM_CSTR(ansnames, i++, "n_sign_posn");
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;
@@ -1974,7 +1978,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(LGLSXP, 18));
     PROTECT(ansnames = allocVector(STRSXP, 18));
 
-    SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "jpeg");
 #ifdef HAVE_JPEG
 # if defined Unix && !defined HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = X11;
@@ -1985,7 +1989,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("png"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "png");
 #ifdef HAVE_PNG
 # if defined Unix && !defined HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = X11;
@@ -1996,7 +2000,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("tiff"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "tiff");
 #ifdef HAVE_TIFF
 # if defined Unix && !defined HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = X11;
@@ -2007,14 +2011,14 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("tcltk"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "tcltk");
 #ifdef HAVE_TCLTK
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("X11"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "X11");
 #ifdef HAVE_X11
 # if defined(Unix)
     LOGICAL(ans)[i++] = X11;
@@ -2025,23 +2029,23 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("aqua"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "aqua");
 #ifdef HAVE_AQUA
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "http/ftp");
     LOGICAL(ans)[i++] = TRUE;
 
-    SET_STRING_ELT(ansnames, i, mkChar("sockets"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "sockets");
     LOGICAL(ans)[i++] = TRUE;
 
-    SET_STRING_ELT(ansnames, i, mkChar("libxml"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "libxml");
     LOGICAL(ans)[i++] = TRUE;
 
-    SET_STRING_ELT(ansnames, i, mkChar("fifo"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "fifo");
 #if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)
     LOGICAL(ans)[i++] = TRUE;
 #else
@@ -2051,7 +2055,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This one is complex.  Set it to be true only in interactive use,
        with the Windows and GNOME GUIs (but not Tk GUI) or under Unix
        if readline is available and in use. */
-    SET_STRING_ELT(ansnames, i, mkChar("cledit"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "cledit");
     LOGICAL(ans)[i] = FALSE;
 #if defined(Win32)
     if (R_Interactive) LOGICAL(ans)[i] = TRUE;
@@ -2069,24 +2073,24 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     i++;
 
 /* always true as from R 2.10.0 */
-    SET_STRING_ELT(ansnames, i, mkChar("iconv"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "iconv");
     LOGICAL(ans)[i++] = TRUE;
 
-    SET_STRING_ELT(ansnames, i, mkChar("NLS"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "NLS");
 #ifdef ENABLE_NLS
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("profmem"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "profmem");
 #ifdef R_MEMORY_PROFILING
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("cairo"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "cairo");
 #ifdef HAVE_WORKING_CAIRO
     LOGICAL(ans)[i++] = TRUE;
 #elif defined(Win32)
@@ -2102,17 +2106,17 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("ICU"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "ICU");
 #ifdef USE_ICU
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
-    SET_STRING_ELT(ansnames, i, mkChar("long.double"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "long.double");
     LOGICAL(ans)[i++] = sizeof(LDOUBLE) > sizeof(double);
 
-    SET_STRING_ELT(ansnames, i, mkChar("libcurl"));
+    SET_STRING_ELT_FROM_CSTR(ansnames, i, "libcurl");
 #ifdef HAVE_LIBCURL
     LOGICAL(ans)[i++] = TRUE;
 #else
@@ -2714,14 +2718,14 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = allocVector(VECSXP, len));
     PROTECT(names = allocVector(STRSXP, len));
-    SET_STRING_ELT(names, 0, mkChar("MBCS"));
-    SET_STRING_ELT(names, 1, mkChar("UTF-8"));
-    SET_STRING_ELT(names, 2, mkChar("Latin-1"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "MBCS");
+    SET_STRING_ELT_FROM_CSTR(names, 1, "UTF-8");
+    SET_STRING_ELT_FROM_CSTR(names, 2, "Latin-1");
     SET_VECTOR_ELT(ans, 0, ScalarLogical(mbcslocale));
     SET_VECTOR_ELT(ans, 1, ScalarLogical(utf8locale));
     SET_VECTOR_ELT(ans, 2, ScalarLogical(latin1locale));
 #ifdef Win32
-    SET_STRING_ELT(names, 3, mkChar("codepage"));
+    SET_STRING_ELT_FROM_CSTR(names, 3, "codepage");
     SET_VECTOR_ELT(ans, 3, ScalarInteger(localeCP));
 #endif
     setAttrib(ans, R_NamesSymbol, names);
@@ -2843,9 +2847,9 @@ SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	memset(buf, 0, PATH_MAX+1);
 	res = readlink(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
 		       buf, PATH_MAX);
-	if (res >= 0) SET_STRING_ELT(ans, i, mkChar(buf));
-	else if (errno == EINVAL) SET_STRING_ELT(ans, i, mkChar(""));
-	else SET_STRING_ELT(ans, i,  NA_STRING);
+	if (res >= 0) SET_STRING_ELT_FROM_CSTR(ans, i, buf);
+	else if (errno == EINVAL) SET_STRING_ELT_FROM_CSTR(ans, i, "");
+	else SET_STRING_ELT_TO_NA_STRING(ans, i);
     }
 #endif
     UNPROTECT(1);
@@ -2866,10 +2870,10 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 	(R_CStackDir * (R_CStackStart - (uintptr_t) &ans));
     INTEGER(ans)[2] = R_CStackDir;
     INTEGER(ans)[3] = R_EvalDepth;
-    SET_STRING_ELT(nms, 0, mkChar("size"));
-    SET_STRING_ELT(nms, 1, mkChar("current"));
-    SET_STRING_ELT(nms, 2, mkChar("direction"));
-    SET_STRING_ELT(nms, 3, mkChar("eval_depth"));
+    SET_STRING_ELT_FROM_CSTR(nms, 0, "size");
+    SET_STRING_ELT_FROM_CSTR(nms, 1, "current");
+    SET_STRING_ELT_FROM_CSTR(nms, 2, "direction");
+    SET_STRING_ELT_FROM_CSTR(nms, 3, "eval_depth");
 
     UNPROTECT(2);
     setAttrib(ans, R_NamesSymbol, nms);
@@ -3025,30 +3029,30 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     unsigned int i = 0;
     char p[256];
     snprintf(p, 256, "%s", zlibVersion());
-    SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("zlib"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, p);
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "zlib");
     snprintf(p, 256, "%s", BZ2_bzlibVersion());
-    SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("bzlib"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, p);
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "bzlib");
     snprintf(p, 256, "%s", lzma_version_string());
-    SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("xz"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, p);
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "xz");
     snprintf(p, 256, "%s", pcre_version());
-    SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("PCRE"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, p);
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "PCRE");
 #ifdef USE_ICU
     UVersionInfo icu;
     char pu[U_MAX_VERSION_STRING_LENGTH];
     u_getVersion(icu);
     u_versionToString(icu, pu);
-    SET_STRING_ELT(ans, i, mkChar(pu));
+    SET_STRING_ELT_FROM_CSTR(ans, i, pu);
 #else
-    SET_STRING_ELT(ans, i, mkChar(""));
+    SET_STRING_ELT_FROM_CSTR(ans, i, "");
 #endif
-    SET_STRING_ELT(nms, i++, mkChar("ICU"));
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "ICU");
     snprintf(p, 256, "%s", tre_version());
-    SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("TRE"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, p);
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "TRE");
 #ifdef _LIBICONV_VERSION
     {
 	int ver = _libiconv_version;
@@ -3061,8 +3065,8 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     snprintf(p, 256, "%s", "unknown");
 #endif
-    SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("iconv"));
+    SET_STRING_ELT_FROM_CSTR(ans, i, p);
+    SET_STRING_ELT_FROM_CSTR(nms, i++, "iconv");
     UNPROTECT(2);
     return ans;
 }

@@ -265,7 +265,7 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	te = translateChar( STRING_ELT( fileext , i%n3 ) );
 	/* try to get a new file name */
 	tm = R_tmpnam2(tn, td, te);
-	SET_STRING_ELT(ans, i, mkChar(tm));
+	SET_STRING_ELT_FROM_CSTR(ans, i, tm);
 	if(tm) free(tm);
     }
     UNPROTECT(1);
@@ -365,14 +365,14 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, w = _wenviron; *w != NULL; i++, w++) {
 	    wcstoutf8(buf, *w, N); buf[N-1] = '\0';
-	    SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
+	    SET_STRING_ELT_FROM_CSTR_CE(ans, i, buf, CE_UTF8);
 	}
 #else
 	char **e;
 	for (i = 0, e = environ; *e != NULL; i++, e++);
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, e = environ; *e != NULL; i++, e++)
-	    SET_STRING_ELT(ans, i, mkChar(*e));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, *e);
 #endif
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
@@ -381,24 +381,25 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    const wchar_t *wnm = wtransChar(STRING_ELT(CAR(args), j));
 	    wchar_t *w = _wgetenv(wnm);
 	    if (w == NULL)
-		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
+		COPY_STRING_ELT(ans, j, CADR(args), 0);
 	    else {
 		int n = wcslen(w), N = 3*n+1; /* UCS-2 maps to <=3 UTF-8 */
 		R_CheckStack2(N);
 		char buf[N];
 		wcstoutf8(buf, w, N); buf[N-1] = '\0'; /* safety */
-		SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
+		SET_STRING_ELT_FROM_CSTR_CE(ans, j, buf, CE_UTF8);
 	    }
 #else
 	    char *s = getenv(translateChar(STRING_ELT(CAR(args), j)));
 	    if (s == NULL)
-		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
+		COPY_STRING_ELT(ans, j, CADR(args), 0);
 	    else {
-		SEXP tmp;
-		if(known_to_be_latin1) tmp = mkCharCE(s, CE_LATIN1);
-		else if(known_to_be_utf8) tmp = mkCharCE(s, CE_UTF8);
-		else tmp = mkChar(s);
-		SET_STRING_ELT(ans, j, tmp);
+		if(known_to_be_latin1)
+		    SET_STRING_ELT_FROM_CSTR_CE(ans, j, s, CE_LATIN1);
+		else if(known_to_be_utf8)
+		    SET_STRING_ELT_FROM_CSTR_CE(ans, j, s, CE_UTF8);
+		else
+		    SET_STRING_ELT_FROM_CSTR(ans, j, s);
 	    }
 #endif
 	}
@@ -551,7 +552,7 @@ write_one (unsigned int namescount, const char * const *names, void *data)
   SEXP ans = (SEXP) data;
 
   for (i = 0; i < namescount; i++)
-      SET_STRING_ELT(ans, cnt++, mkChar(names[i]));
+      SET_STRING_ELT_FROM_CSTR(ans, cnt++, names[i]);
   return 0;
 }
 #endif
@@ -646,14 +647,14 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (isRawlist) {
 		si = VECTOR_ELT(x, i);
 		if (TYPEOF(si) == NILSXP) {
-		    if (!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
+		    if (!toRaw) SET_STRING_ELT_TO_NA_STRING(ans, i);
 		    continue;
 		} else if (TYPEOF(si) != RAWSXP)
 		    error(_("'x' must be a list of NULL or raw vectors"));
 	    } else {
 		si = STRING_ELT(x, i);
 		if (si == NA_STRING) {
-		    if(!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
+		    if(!toRaw) SET_STRING_ELT_TO_NA_STRING(ans, i);
 		    continue;
 		}
 	    }
@@ -712,9 +713,9 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(isLatin1) ienc = CE_LATIN1;
 			else if(isUTF8) ienc = CE_UTF8;
 		    }
-		    SET_STRING_ELT(ans, i, 
-				   mkCharLenCE(cbuff.data, (int) nout, ienc));
-		} else SET_STRING_ELT(ans, i, NA_STRING);
+		    SET_STRING_ELT_FROM_CSTR_LEN_CE(ans, i, cbuff.data,
+						    nout, ienc);
+		} else SET_STRING_ELT_TO_NA_STRING(ans, i);
 	    }
 	}
 	Riconv_close(obj);
@@ -734,6 +735,13 @@ cetype_t getCharCE(SEXP x)
     else return CE_NATIVE;
 }
 
+cetype_t SE_getCharCE(R_string_elt_ptr_t x)
+{
+    if(SE_IS_UTF8(x)) return CE_UTF8;
+    else if(SE_IS_LATIN1(x)) return CE_LATIN1;
+    else if(SE_IS_BYTES(x)) return CE_BYTES;
+    else return CE_NATIVE;
+}
 
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
@@ -796,6 +804,22 @@ static R_INLINE nttype_t needsTranslation(SEXP x) {
         return NT_FROM_LATIN1;
     }
     if (IS_BYTES(x))
+        error(_("translating strings with \"bytes\" encoding is not allowed"));
+    return NT_NONE;
+}
+
+static R_INLINE nttype_t SE_needsTranslation(R_string_elt_ptr_t x) {
+
+    if (SE_IS_ASCII(x)) return NT_NONE;
+    if (SE_IS_UTF8(x)) {
+        if (utf8locale || SE_IS_NA(x)) return NT_NONE;
+        return NT_FROM_UTF8;
+    }
+    if (SE_IS_LATIN1(x)) {
+        if (SE_IS_NA(x) || latin1locale) return NT_NONE;
+        return NT_FROM_LATIN1;
+    }
+    if (SE_IS_BYTES(x))
         error(_("translating strings with \"bytes\" encoding is not allowed"));
     return NT_NONE;
 }
@@ -902,6 +926,20 @@ next_char:
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
    R_alloc stack */
+static const char *translateCharCore(const char *s, nttype_t t)
+{
+    if (t == NT_NONE) return s;
+
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+    translateToNative(s, &cbuff, t);
+
+    size_t res = strlen(cbuff.data) + 1;
+    char *p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
+
 const char *translateChar(SEXP x)
 {
     if(TYPEOF(x) != CHARSXP)
@@ -909,15 +947,15 @@ const char *translateChar(SEXP x)
     nttype_t t = needsTranslation(x);
     const char *ans = CHAR(x);
     if (t == NT_NONE) return ans;
+    else return translateCharCore(ans, t);
+}
 
-    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-    translateToNative(ans, &cbuff, t);
-
-    size_t res = strlen(cbuff.data) + 1;
-    char *p = R_alloc(res, 1);
-    memcpy(p, cbuff.data, res);
-    R_FreeStringBuffer(&cbuff);
-    return p;
+const char *SE_translateChar(R_string_elt_ptr_t x)
+{
+    nttype_t t = SE_needsTranslation(x);
+    const char *ans = SE_CHAR(x);
+    if (t == NT_NONE) return ans;
+    else return translateCharCore(ans, t);
 }
 
 SEXP installTrChar(SEXP x)
@@ -947,23 +985,15 @@ const char *translateChar0(SEXP x)
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
    R_alloc stack */
-const char *translateCharUTF8(SEXP x)
+static const char *translateCharUTF8Core(const char *ans, int isLatin1)
 {
     void *obj;
-    const char *inbuf, *ans = CHAR(x);
+    const char *inbuf;
     char *outbuf, *p;
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-    if(TYPEOF(x) != CHARSXP)
-	error(_("'%s' must be called on a CHARSXP"), "translateCharUTF8");
-    if(x == NA_STRING) return ans;
-    if(IS_UTF8(x)) return ans;
-    if(IS_ASCII(x)) return ans;
-    if(IS_BYTES(x))
-	error(_("translating strings with \"bytes\" encoding is not allowed"));
-
-    obj = Riconv_open("UTF-8", IS_LATIN1(x) ? "latin1" : "");
+    obj = Riconv_open("UTF-8", isLatin1 ? "latin1" : "");
     if(obj == (void *)(-1)) 
 #ifdef Win32
 	error(_("unsupported conversion from '%s' in codepage %d"),
@@ -1002,6 +1032,34 @@ next_char:
     return p;
 }
 
+const char *translateCharUTF8(SEXP x)
+{
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "translateCharUTF8");
+
+    const char *ans = CHAR(x);
+
+    if(x == NA_STRING) return ans;
+    if(IS_UTF8(x)) return ans;
+    if(IS_ASCII(x)) return ans;
+    if(IS_BYTES(x))
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
+
+    return translateCharUTF8Core(ans, IS_LATIN1(x));
+}
+
+const char *SE_translateCharUTF8(R_string_elt_ptr_t x)
+{
+    const char *ans = SE_CHAR(x);
+
+    if(SE_IS_NA(x)) return ans;
+    if(SE_IS_UTF8(x)) return ans;
+    if(SE_IS_ASCII(x)) return ans;
+    if(SE_IS_BYTES(x))
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
+
+    return translateCharUTF8Core(ans, SE_IS_LATIN1(x));
+}
 
 #ifdef Win32
 static const char TO_WCHAR[] = "UCS-2LE";
@@ -1021,24 +1079,20 @@ static void *latin1_wobj = NULL, *utf8_wobj=NULL;
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
    R_alloc stack */
-attribute_hidden /* but not hidden on Windows, where it was used in tcltk.c */
-const wchar_t *wtransChar(SEXP x)
+static const wchar_t *wtransCharCore(const char *ans, cetype_t type)
 {
     void * obj;
-    const char *inbuf, *ans = CHAR(x);
+    const char *inbuf;
     char *outbuf;
     wchar_t *p;
     size_t inb, outb, res, top;
     Rboolean knownEnc = FALSE;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
-    if(TYPEOF(x) != CHARSXP)
-	error(_("'%s' must be called on a CHARSXP"), "wtransChar");
-
-    if(IS_BYTES(x))
+    if (type == CE_BYTES)
 	error(_("translating strings with \"bytes\" encoding is not allowed"));
 
-    if(IS_LATIN1(x)) {
+    if (type == CE_LATIN1) {
 	if(!latin1_wobj) {
 	    obj = Riconv_open(TO_WCHAR, "latin1");
 	    if(obj == (void *)(-1))
@@ -1048,7 +1102,7 @@ const wchar_t *wtransChar(SEXP x)
 	} else
 	    obj = latin1_wobj;
 	knownEnc = TRUE;
-    } else if(IS_UTF8(x)) {
+    } else if (type == CE_UTF8) {
 	if(!utf8_wobj) {
 	    obj = Riconv_open(TO_WCHAR, "UTF-8");
 	    if(obj == (void *)(-1)) 
@@ -1101,6 +1155,28 @@ next_char:
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
     return p;
+}
+
+attribute_hidden /* but not hidden on Windows, where it was used in tcltk.c */
+const wchar_t *wtransChar(SEXP x)
+{
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP"), "wtransChar");
+
+    const char *ans = CHAR(x);
+    cetype_t type = getCharCE(x);
+
+    return wtransCharCore(ans, type);
+}
+
+
+attribute_hidden
+const wchar_t *SE_wtransChar(R_string_elt_ptr_t x)
+{
+    const char *ans = SE_CHAR(x);
+    cetype_t type = SE_getCharCE(x);
+
+    return wtransCharCore(ans, type);
 }
 
 
@@ -1671,11 +1747,11 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(REALSXP, 5));
     PROTECT(nm = allocVector(STRSXP, 5));
     R_getProcTime(REAL(ans));
-    SET_STRING_ELT(nm, 0, mkChar("user.self"));
-    SET_STRING_ELT(nm, 1, mkChar("sys.self"));
-    SET_STRING_ELT(nm, 2, mkChar("elapsed"));
-    SET_STRING_ELT(nm, 3, mkChar("user.child"));
-    SET_STRING_ELT(nm, 4, mkChar("sys.child"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "user.self");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "sys.self");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "elapsed");
+    SET_STRING_ELT_FROM_CSTR(nm, 3, "user.child");
+    SET_STRING_ELT_FROM_CSTR(nm, 4, "sys.child");
     setAttrib(ans, R_NamesSymbol, nm);
     setAttrib(ans, R_ClassSymbol, mkString("proc_time"));
     UNPROTECT(2);
@@ -1826,10 +1902,10 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 	int nb = wcstoutf8(NULL, w, 0);
 	buf = R_AllocStringBuffer(nb+1, &cbuff);
 	wcstoutf8(buf, w, nb+1); buf[nb] = '\0'; /* safety check */
-	SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
+	SET_STRING_ELT_FROM_CSTR_CE(ans, i, buf, CE_UTF8);
     }
 #else
-	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
+	SET_STRING_ELT_FROM_CSTR(ans, i, globbuf.gl_pathv[i]);
 #endif
     UNPROTECT(1);
 #ifdef Win32

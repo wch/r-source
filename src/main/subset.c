@@ -113,9 +113,9 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    break;
 	case STRSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
-		SET_STRING_ELT(result, i, STRING_ELT(x, ii));
+		COPY_STRING_ELT(result, i, x, ii);
 	    else
-		SET_STRING_ELT(result, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(result, i);
 	    break;
 	case VECSXP:
 	case EXPRSXP:
@@ -293,7 +293,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    COMPLEX(result)[ij].i = NA_REAL;
 		    break;
 		case STRSXP:
-		    SET_STRING_ELT(result, ij, NA_STRING);
+		    SET_STRING_ELT_TO_NA_STRING(result, ij);
 		    break;
 		case VECSXP:
 		case EXPRSXP:
@@ -323,7 +323,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    COMPLEX(result)[ij] = COMPLEX(x)[iijj];
 		    break;
 		case STRSXP:
-		    SET_STRING_ELT(result, ij, STRING_ELT(x, iijj));
+		    COPY_STRING_ELT(result, ij, x, iijj);
 		    break;
 		case VECSXP:
 		case EXPRSXP:
@@ -472,9 +472,9 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    break;
 	case STRSXP:
 	    if (ii != NA_INTEGER)
-		SET_STRING_ELT(result, i, STRING_ELT(x, ii));
+		COPY_STRING_ELT(result, i, x, ii);
 	    else
-		SET_STRING_ELT(result, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(result, i);
 	    break;
 	case VECSXP:
 	case EXPRSXP:
@@ -1077,7 +1077,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    COMPLEX(ans)[0] = COMPLEX(x)[offset];
 	    break;
 	case STRSXP:
-	    SET_STRING_ELT(ans, 0, STRING_ELT(x, offset));
+	    COPY_STRING_ELT(ans, 0, x, offset);
 	    break;
 	case RAWSXP:
 	    RAW(ans)[0] = RAW(x)[offset];
@@ -1147,7 +1147,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isSymbol(nlist) )
 	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
     else if(isString(nlist) )
-	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
+	COPY_STRING_ELT(input, 0, nlist, 0);
     else {
 	errorcall(call,_("invalid subscript type '%s'"),
 		  type2char(TYPEOF(nlist)));

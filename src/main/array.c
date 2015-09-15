@@ -161,7 +161,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch(TYPEOF(vals)) {
 	case STRSXP:
 	    for (i = 0; i < N; i++)
-		SET_STRING_ELT(ans, i, NA_STRING);
+		SET_STRING_ELT_TO_NA_STRING(ans, i);
 	    break;
 	case LGLSXP:
 	    for (i = 0; i < N; i++)
@@ -367,8 +367,7 @@ SEXP DropDims(SEXP x)
 		for (i = 0, n = 0; i < ndims; i++) {
 		    if (INTEGER(dims)[i] != 1) {
 			if(!isNull(dnn))
-			    SET_STRING_ELT(newnamesnames, n,
-					   STRING_ELT(dnn, i));
+			    COPY_STRING_ELT(newnamesnames, n, dnn, i);
 			SET_VECTOR_ELT(newnames, n++, VECTOR_ELT(dimnames, i));
 		    }
 		}
@@ -900,7 +899,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
 		    dnx = getAttrib(xdims, R_NamesSymbol);
 		    if(!isNull(dnx))
-			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
+			COPY_STRING_ELT(dimnamesnames, 0, dnx, 0);
 		}
 	    }
 
@@ -910,12 +909,12 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));	\
 		    dny = getAttrib(ydims, R_NamesSymbol);		\
 		    if(!isNull(dny))					\
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1)); \
+			COPY_STRING_ELT(dimnamesnames, 1, dny, 1);	\
 		} else if (nry == 1) {					\
 		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));	\
 		    dny = getAttrib(ydims, R_NamesSymbol);		\
 		    if(!isNull(dny))					\
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0)); \
+			COPY_STRING_ELT(dimnamesnames, 1, dny, 0);	\
 		}							\
 	    }								\
 									\
@@ -972,7 +971,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
 		    dnx = getAttrib(xdims, R_NamesSymbol);
 		    if(!isNull(dnx))
-			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 1));
+			COPY_STRING_ELT(dimnamesnames, 0, dnx, 1);
 		}
 	    }
 
@@ -1017,7 +1016,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
 		    dnx = getAttrib(xdims, R_NamesSymbol);
 		    if(!isNull(dnx))
-			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
+			COPY_STRING_ELT(dimnamesnames, 0, dnx, 0);
 		}
 	    }
 	    if (ydims != R_NilValue) {
@@ -1025,7 +1024,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));
 		    dny = getAttrib(ydims, R_NamesSymbol);
 		    if(!isNull(dny))
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));
+			COPY_STRING_ELT(dimnamesnames, 1, dny, 0);
 		}
 	    }
 	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||
@@ -1118,7 +1117,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     case STRSXP:
 	for (i = 0, j = 0; i < len; i++, j += nrow) {
 	    if (j > l_1) j -= l_1;
-	    SET_STRING_ELT(r, i, STRING_ELT(a,j));
+	    COPY_STRING_ELT(r, i, a, j);
 	}
 	break;
     case VECSXP:
@@ -1298,7 +1297,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     case STRSXP:
 	for (lj = 0, li = 0; li < len; li++) {
-	    SET_STRING_ELT(r, li, STRING_ELT(a, lj));
+	    COPY_STRING_ELT(r, li, a, lj);
 	    CLICKJ;
 	}
 	break;
@@ -1338,7 +1337,7 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 		PROTECT(dnnr = allocVector(STRSXP, n));
 		for (i = 0; i < n; i++) {
 		    SET_VECTOR_ELT(dnr, i, VECTOR_ELT(dna, pp[i]));
-		    SET_STRING_ELT(dnnr, i, STRING_ELT(dnna, pp[i]));
+		    COPY_STRING_ELT(dnnr, i, dnna, pp[i]);
 		}
 		setAttrib(dnr, R_NamesSymbol, dnnr);
 		UNPROTECT(1);

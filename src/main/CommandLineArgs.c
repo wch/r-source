@@ -77,7 +77,7 @@ do_commandArgs(SEXP call, SEXP op, SEXP args, SEXP env)
     /* need protection as mkChar allocates */
     vals = PROTECT(allocVector(STRSXP, NumCommandLineArgs));
     for(i = 0; i < NumCommandLineArgs; i++)
-	SET_STRING_ELT(vals, i, mkChar(CommandLineArgs[i]));
+	SET_STRING_ELT_FROM_CSTR(vals, i, CommandLineArgs[i]);
     UNPROTECT(1);
     return vals;
 }

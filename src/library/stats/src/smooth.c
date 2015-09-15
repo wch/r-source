@@ -254,7 +254,7 @@ SEXP Rsm(SEXP x, SEXP stype, SEXP send)
     SET_VECTOR_ELT(ans, 0, y);
     SEXP nm = allocVector(STRSXP, 2);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("y"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "y");
     if (type <= 5) {
 	int iter = 0 /* -Wall */;
 	switch(type){
@@ -291,11 +291,11 @@ SEXP Rsm(SEXP x, SEXP stype, SEXP send)
 	    iter = sm_3(REAL(x), REAL(y), n, iend);
 	}
 	SET_VECTOR_ELT(ans, 1, ScalarInteger(iter));
-	SET_STRING_ELT(nm, 1, mkChar("iter"));	
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "iter");	
     } else {
 	int changed = sm_split3(REAL(x), REAL(y), n, (Rboolean) iend);
 	SET_VECTOR_ELT(ans, 1, ScalarLogical(changed));
-	SET_STRING_ELT(nm, 1, mkChar("changed"));	
+	SET_STRING_ELT_FROM_CSTR(nm, 1, "changed");	
     }
     UNPROTECT(1);
     return ans;

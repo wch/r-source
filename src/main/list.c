@@ -128,7 +128,7 @@ SEXP attribute_hidden do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(expr = data.ans);
 	data.ans = allocVector(STRSXP, data.ItemCounts);
 	for(i = 0 ; i < data.ItemCounts ; i++)
-	    SET_STRING_ELT(data.ans, i, STRING_ELT(expr, i));
+	    COPY_STRING_ELT(data.ans, i, expr, i);
 	UNPROTECT(1);
     }
 

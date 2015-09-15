@@ -189,7 +189,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		case INTSXP:  INTEGER(ans)[i] = INTEGER(val)[0]; break;
 		case LGLSXP:  LOGICAL(ans)[i] = LOGICAL(val)[0]; break;
 		case RAWSXP:  RAW(ans)    [i] = RAW    (val)[0]; break;
-		case STRSXP:  SET_STRING_ELT(ans, i, STRING_ELT(val, 0)); break;
+		case STRSXP:  COPY_STRING_ELT(ans, i, val, 0);   break;
 		case VECSXP:  SET_VECTOR_ELT(ans, i, VECTOR_ELT(val, 0)); break;
 		}
 	    } else { // commonLen > 1 (typically, or == 0) :
@@ -211,7 +211,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 			   COMPLEX(val), commonLen * sizeof(Rcomplex)); break;
 		case STRSXP:
 		    for (int j = 0; j < commonLen; j++)
-			SET_STRING_ELT(ans, common_len_offset + j, STRING_ELT(val, j));
+			COPY_STRING_ELT(ans, common_len_offset + j, val, j);
 		    break;
 		case VECSXP:
 		    for (int j = 0; j < commonLen; j++)

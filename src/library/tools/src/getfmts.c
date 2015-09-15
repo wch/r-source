@@ -60,7 +60,7 @@ SEXP getfmts(SEXP format)
 #define SET_RESULT(n, s) {						\
      if (n >= MAXNARGS) error(_("only %d arguments are allowed"), MAXNARGS); \
 	maxlen = (n) < maxlen ? maxlen : (n) + 1;			\
-	SET_STRING_ELT(res, (n), mkChar(s));				\
+	SET_STRING_ELT_FROM_CSTR(res, (n), s);				\
     }
     
     if (!isString(format)) error(_("'fmt' is not a character vector"));

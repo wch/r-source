@@ -1449,7 +1449,7 @@ R_getTaskCallbackNames(void)
     n = 0;
     el = Rf_ToplevelTaskHandlers;
     while(el) {
-	SET_STRING_ELT(ans, n, mkChar(el->name));
+	SET_STRING_ELT_FROM_CSTR(ans, n, el->name);
 	n++;
 	el = el->next;
     }

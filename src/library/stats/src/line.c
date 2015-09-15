@@ -116,10 +116,10 @@ SEXP tukeyline(SEXP x, SEXP y, SEXP call)
     ans = PROTECT(allocVector(VECSXP, 4));
     SEXP nm = allocVector(STRSXP, 4);
     setAttrib(ans, R_NamesSymbol, nm);
-    SET_STRING_ELT(nm, 0, mkChar("call"));
-    SET_STRING_ELT(nm, 1, mkChar("coefficients"));
-    SET_STRING_ELT(nm, 2, mkChar("residuals"));
-    SET_STRING_ELT(nm, 3, mkChar("fitted.values"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "call");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "coefficients");
+    SET_STRING_ELT_FROM_CSTR(nm, 2, "residuals");
+    SET_STRING_ELT_FROM_CSTR(nm, 3, "fitted.values");
     SET_VECTOR_ELT(ans, 0, call);
     SEXP coef = allocVector(REALSXP, 2);
     SET_VECTOR_ELT(ans, 1, coef);

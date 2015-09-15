@@ -1245,8 +1245,8 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("fifo"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "fifo");
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
@@ -1410,12 +1410,12 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("pipe"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "pipe");
 #ifdef Win32
     if(CharacterMode != RTerm)
-	SET_STRING_ELT(class, 0, mkChar("pipeWin32"));
+	SET_STRING_ELT_FROM_CSTR(class, 0, "pipeWin32");
 #endif
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
@@ -2063,16 +2063,16 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(class = allocVector(STRSXP, 2));
     switch(type) {
     case 0:
-	SET_STRING_ELT(class, 0, mkChar("gzfile"));
+	SET_STRING_ELT_FROM_CSTR(class, 0, "gzfile");
 	break;
     case 1:
-	SET_STRING_ELT(class, 0, mkChar("bzfile"));
+	SET_STRING_ELT_FROM_CSTR(class, 0, "bzfile");
 	break;
     case 2:
-	SET_STRING_ELT(class, 0, mkChar("xzfile"));
+	SET_STRING_ELT_FROM_CSTR(class, 0, "xzfile");
 	break;
     }
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
@@ -2427,8 +2427,8 @@ SEXP attribute_hidden do_stdin(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = ScalarInteger(0));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, con->class);
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     UNPROTECT(2);
     return ans;
@@ -2442,8 +2442,8 @@ SEXP attribute_hidden do_stdout(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = ScalarInteger(R_OutputCon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, con->class);
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     UNPROTECT(2);
     return ans;
@@ -2458,8 +2458,8 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(ans = ScalarInteger(2));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, con->class);
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     UNPROTECT(2);
     return ans;
@@ -2674,8 +2674,8 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("rawConnection"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "rawConnection");
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"), R_NilValue);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
@@ -3091,8 +3091,8 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("textConnection"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "textConnection");
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"), R_NilValue);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
@@ -3178,8 +3178,8 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("sockconn"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "sockconn");
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
@@ -3229,8 +3229,8 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("unz"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "unz");
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
@@ -3591,7 +3591,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (dnn > R_XLEN_T_MAX) error("too many items");
 	    ans2 = allocVector(STRSXP, 2*nn);
 	    for(i = 0; i < nn; i++)
-		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+		COPY_STRING_ELT(ans2, i, ans, i);
 	    nn *= 2;
 	    UNPROTECT(1); /* old ans */
 	    PROTECT(ans = ans2);
@@ -3614,7 +3614,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	const char *qbuf = buf;
 	if (nread == 0 && utf8locale &&
 	    !memcmp(buf, "\xef\xbb\xbf", 3)) qbuf = buf + 3;
-	SET_STRING_ELT(ans, nread, mkCharCE(qbuf, oenc));
+	SET_STRING_ELT_FROM_CSTR_CE(ans, nread, qbuf, oenc);
 	if (warn && strlen(buf) < nbuf)
 	    warning(_("line %d appears to contain an embedded nul"), nread + 1);
 	if(c == R_EOF) goto no_more_lines;
@@ -3642,7 +3642,7 @@ no_more_lines:
 	error(_("too few lines read in readLines"));
     PROTECT(ans2 = allocVector(STRSXP, nread));
     for(i = 0; i < nread; i++)
-	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+	COPY_STRING_ELT(ans2, i, ans, i);
     UNPROTECT(2);
     return ans2;
 }
@@ -4907,8 +4907,8 @@ do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     con = Connections[what];
     PROTECT(ans = ScalarInteger(what));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(con->class));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, con->class);
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     if (what > 2)
 	setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
@@ -4925,24 +4925,24 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     Rcon = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(VECSXP, 7));
     PROTECT(names = allocVector(STRSXP, 7));
-    SET_STRING_ELT(names, 0, mkChar("description"));
+    SET_STRING_ELT_FROM_CSTR(names, 0, "description");
     PROTECT(tmp = allocVector(STRSXP, 1));
     if(Rcon->enc == CE_UTF8)
-	SET_STRING_ELT(tmp, 0, mkCharCE(Rcon->description, CE_UTF8));
+	SET_STRING_ELT_FROM_CSTR_CE(tmp, 0, Rcon->description, CE_UTF8);
     else
-	SET_STRING_ELT(tmp, 0, mkChar(Rcon->description));
+	SET_STRING_ELT_FROM_CSTR(tmp, 0, Rcon->description);
     SET_VECTOR_ELT(ans, 0, tmp);
-    SET_STRING_ELT(names, 1, mkChar("class"));
+    SET_STRING_ELT_FROM_CSTR(names, 1, "class");
     SET_VECTOR_ELT(ans, 1, mkString(Rcon->class));
-    SET_STRING_ELT(names, 2, mkChar("mode"));
+    SET_STRING_ELT_FROM_CSTR(names, 2, "mode");
     SET_VECTOR_ELT(ans, 2, mkString(Rcon->mode));
-    SET_STRING_ELT(names, 3, mkChar("text"));
+    SET_STRING_ELT_FROM_CSTR(names, 3, "text");
     SET_VECTOR_ELT(ans, 3, mkString(Rcon->text? "text":"binary"));
-    SET_STRING_ELT(names, 4, mkChar("opened"));
+    SET_STRING_ELT_FROM_CSTR(names, 4, "opened");
     SET_VECTOR_ELT(ans, 4, mkString(Rcon->isopen? "opened":"closed"));
-    SET_STRING_ELT(names, 5, mkChar("can read"));
+    SET_STRING_ELT_FROM_CSTR(names, 5, "can read");
     SET_VECTOR_ELT(ans, 5, mkString(Rcon->canread? "yes":"no"));
-    SET_STRING_ELT(names, 6, mkChar("can write"));
+    SET_STRING_ELT_FROM_CSTR(names, 6, "can write");
     SET_VECTOR_ELT(ans, 6, mkString(Rcon->canwrite? "yes":"no"));
     setAttrib(ans, R_NamesSymbol, names);
     UNPROTECT(3);
@@ -5183,8 +5183,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(class2));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, class2);
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, con->ex_ptr);
     R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
@@ -5549,8 +5549,8 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(ans = ScalarInteger(icon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("gzcon"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, "gzcon");
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
     /* Disable, as e.g. load() leaves no reference to the new connection */
@@ -6122,8 +6122,8 @@ SEXP R_new_custom_connection(const char *description, const char *mode, const ch
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar(class_name));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
+    SET_STRING_ELT_FROM_CSTR(class, 0, class_name);
+    SET_STRING_ELT_FROM_CSTR(class, 1, "connection");
     classgets(ans, class);
     setAttrib(ans, R_ConnIdSymbol, new->ex_ptr);
     R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);

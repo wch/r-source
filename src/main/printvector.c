@@ -136,7 +136,15 @@ void printComplexVector(Rcomplex *x, R_xlen_t n, int indx)
     Rprintf("\n");
 }
 
-static void printStringVector(SEXP *x, R_xlen_t n, int quote, int indx)
+static R_INLINE
+const char *EncodeStringElt(R_string_elt_ptr_t s, int w, int quote, Rprt_adj justify)
+{
+    if (SE_TYPE(s) != SETYPE_BOXED)
+	error("for now EncodeStringElt needs expanded strings");
+    return EncodeString(SE_CSXP(s), w, quote, justify);
+}
+
+static void printStringVector(R_string_elt_rec_t *x, R_xlen_t n, int quote, int indx)
 {
     int w, labwidth=0, width;
 
@@ -148,7 +156,7 @@ static void printStringVector(SEXP *x, R_xlen_t n, int quote, int indx)
 	    DO_newline;
 	}
 	Rprintf("%*s%s", R_print.gap, "",
-		EncodeString(x[i], w, quote, R_print.right));
+		EncodeStringElt(&(x[i]), w, quote, R_print.right));
 	width += w + R_print.gap;
     }
     Rprintf("\n");
@@ -192,6 +200,7 @@ void printVector(SEXP x, int indx, int quote)
 	    printRealVector(REAL(x), n_pr, indx);
 	    break;
 	case STRSXP:
+	    R_BoxStrings(x);
 	    if (quote)
 		printStringVector(STRING_PTR(x), n_pr, '"', indx);
 	    else
@@ -249,7 +258,7 @@ void printVector(SEXP x, int indx, int quote)
 	if (i) Rprintf("\n");						\
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++)	\
 	    Rprintf("%s%*s",						\
-		    EncodeString(names[k], w, 0, Rprt_adj_right),	\
+		    EncodeStringElt(&(names[k]), w, 0, Rprt_adj_right),	\
 		    R_print.gap, "");					\
 	Rprintf("\n");							\
 	for (j = 0; j < nperline && (k = i * nperline + j) < n; j++)	\
@@ -259,18 +268,18 @@ void printVector(SEXP x, int indx, int quote)
 }
 
 
-static void printNamedLogicalVector(int * x, int n, SEXP * names)
+static void printNamedLogicalVector(int * x, int n, R_string_elt_rec_t * names)
     PRINT_N_VECTOR(formatLogical(x, n, &w),
 		   Rprintf("%s%*s", EncodeLogical(x[k],w), R_print.gap,""))
 
-static void printNamedIntegerVector(int * x, int n, SEXP * names)
+static void printNamedIntegerVector(int * x, int n, R_string_elt_rec_t * names)
     PRINT_N_VECTOR(formatInteger(x, n, &w),
 		   Rprintf("%s%*s", EncodeInteger(x[k],w), R_print.gap,""))
 
 #undef INI_F_REAL
 #define INI_F_REAL	int d, e; formatReal(x, n, &w, &d, &e, 0)
 
-static void printNamedRealVector(double * x, int n, SEXP * names)
+static void printNamedRealVector(double * x, int n, R_string_elt_rec_t * names)
     PRINT_N_VECTOR(INI_F_REAL,
 		   Rprintf("%s%*s", 
 			   EncodeReal0(x[k],w,d,e, OutDec),R_print.gap,""))
@@ -287,7 +296,7 @@ static void printNamedRealVector(double * x, int n, SEXP * names)
 		Rprintf("+%si", "NaN");		\
 	    else
 
-static void printNamedComplexVector(Rcomplex * x, int n, SEXP * names)
+static void printNamedComplexVector(Rcomplex * x, int n, R_string_elt_rec_t * names)
     PRINT_N_VECTOR(INI_F_CPLX,
 	{ /* PRINT_1 */
 	    if(j) Rprintf("%*s", R_print.gap, "");
@@ -304,19 +313,20 @@ static void printNamedComplexVector(Rcomplex * x, int n, SEXP * names)
 	    }
 	})
 
-static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
+static void printNamedStringVector(R_string_elt_rec_t * x, int n, int quote, R_string_elt_rec_t * names)
     PRINT_N_VECTOR(formatString(x, n, &w, quote),
 		   Rprintf("%s%*s",
-			   EncodeString(x[k], w, quote, Rprt_adj_right),
+			   EncodeStringElt(&(x[k]), w, quote, Rprt_adj_right),
 			   R_print.gap, ""))
 
-static void printNamedRawVector(Rbyte * x, int n, SEXP * names)
+static void printNamedRawVector(Rbyte * x, int n, R_string_elt_rec_t * names)
     PRINT_N_VECTOR(formatRaw(x, n, &w),
 		   Rprintf("%s%*s", EncodeRaw(x[k], ""), R_print.gap,""))
 
 attribute_hidden
 void printNamedVector(SEXP x, SEXP names, int quote, const char *title)
 {
+    R_BoxStrings(names);
     int n;
 
     if (title != NULL)
@@ -340,6 +350,7 @@ void printNamedVector(SEXP x, SEXP names, int quote, const char *title)
 	    break;
 	case STRSXP:
 	    if(quote) quote = '"';
+	    R_BoxStrings(x);
 	    printNamedStringVector(STRING_PTR(x), n_pr, quote, STRING_PTR(names));
 	    break;
 	case RAWSXP:

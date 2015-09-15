@@ -137,7 +137,7 @@ SEXP Win_selectlist(SEXP args)
 	    PROTECT(ans = allocVector(STRSXP, nsel));
 	    for(i = 0, j = 0; i < n; i++)
 		if(isselected(f_list, i))
-		    SET_STRING_ELT(ans, j++, mkChar(clist[i]));
+		    SET_STRING_ELT_FROM_CSTR(ans, j++, clist[i]);
 	} else { /* cancel */
 	    PROTECT(ans = allocVector(STRSXP, 0));
 	}
@@ -254,7 +254,10 @@ SEXP chooseDir(SEXP def, SEXP caption)
     p = askcdstring(translateChar(STRING_ELT(caption, 0)), path);
 
     SEXP ans = PROTECT(allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, p ? mkChar(p): NA_STRING);
+    if (p)
+	SET_STRING_ELT_FROM_CSTR(ans, 0, p);
+    else
+	SET_STRING_ELT_TO_NA_STRING(ans, 0);
     UNPROTECT(1);
     return ans;
 }

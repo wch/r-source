@@ -378,9 +378,9 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define RAW(x)		((Rbyte *) DATAPTR(x))
 #define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define REAL(x)		((double *) DATAPTR(x))
-#define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
+//#define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
-#define STRING_PTR(x)	((SEXP *) DATAPTR(x))
+#define STRING_PTR(x)	((R_string_elt_rec_t *) DATAPTR(x))
 #define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
 
 /* List Access Macros */
@@ -453,6 +453,34 @@ Rboolean (Rf_isObject)(SEXP s);
 
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
+
+typedef enum {
+    SETYPE_BOXED = 0,
+    SETYPE_INT = 1,
+    SETYPE_REAL = 2,
+    SETYPE_STRING = 3
+} SEtype_t;
+#define SE_UNBOXED_MAXLEN (14+16)
+typedef union {
+    struct {
+	char SEtype;
+	union {
+	    int ival;
+	    double dval;
+	    SEXP csxp;
+	} D;
+    } V;
+    char str[SE_UNBOXED_MAXLEN + 2];
+} R_string_elt_rec_t, *R_string_elt_ptr_t;
+#define SE_TYPE(x) ((x)->V.SEtype)
+#define SE_IVAL(x) ((x)->V.D.ival)
+#define SE_DVAL(x) ((x)->V.D.dval)
+#define SE_CSXP(x) ((x)->V.D.csxp)
+#define SET_SE_TYPE(x, t) ((x)->V.SEtype = (t))
+#define SET_SE_IVAL(x, i) ((x)->V.D.ival = (i))
+#define SET_SE_DVAL(x, d) ((x)->V.D.dval = (d))
+#define SET_SE_CSXP(x, c) ((x)->V.D.csxp = (c))
+#define SE_STRING_DATA(x) ((x)->str + 1)
 
 #define IS_SIMPLE_SCALAR(x, type) \
     (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
@@ -550,11 +578,11 @@ int  *(INTEGER)(SEXP x);
 Rbyte *(RAW)(SEXP x);
 double *(REAL)(SEXP x);
 Rcomplex *(COMPLEX)(SEXP x);
-SEXP (STRING_ELT)(SEXP x, R_xlen_t i);
+//SEXP (STRING_ELT)(SEXP x, R_xlen_t i);
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i);
 void SET_STRING_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP SET_VECTOR_ELT(SEXP x, R_xlen_t i, SEXP v);
-SEXP *(STRING_PTR)(SEXP x);
+R_string_elt_rec_t *(STRING_PTR)(SEXP x);
 SEXP * NORET (VECTOR_PTR)(SEXP x);
 
 /* List Access Functions */
@@ -850,6 +878,8 @@ const char * Rf_translateChar(SEXP);
 const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);
 const char * Rf_type2char(SEXPTYPE);
+const char * Rf_SE_translateChar(R_string_elt_ptr_t);
+const char * Rf_SE_translateCharUTF8(R_string_elt_ptr_t);
 SEXP Rf_type2rstr(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
 SEXP Rf_type2str_nowarn(SEXPTYPE);
@@ -887,6 +917,7 @@ typedef enum {
 } cetype_t;
 
 cetype_t Rf_getCharCE(SEXP);
+cetype_t Rf_SE_getCharCE(R_string_elt_ptr_t);
 SEXP Rf_mkCharCE(const char *, cetype_t);
 SEXP Rf_mkCharLenCE(const char *, int, cetype_t);
 const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
@@ -935,6 +966,9 @@ SEXP R_bcEncode(SEXP);
 SEXP R_bcDecode(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
 #define BODY_EXPR(e) R_ClosureExpr(e)
+
+void R_BoxStringElt(SEXP, R_xlen_t);
+void R_BoxStrings(SEXP);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
@@ -1146,6 +1180,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define GetArrayDimnames	Rf_GetArrayDimnames
 #define getAttrib		Rf_getAttrib
 #define getCharCE		Rf_getCharCE
+#define SE_getCharCE		Rf_SE_getCharCE
 #define GetColNames		Rf_GetColNames
 #define GetMatrixDimnames	Rf_GetMatrixDimnames
 #define GetOption1		Rf_GetOption1
@@ -1254,6 +1289,8 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define translateChar		Rf_translateChar
 #define translateChar0		Rf_translateChar0
 #define translateCharUTF8      	Rf_translateCharUTF8
+#define SE_translateChar	Rf_SE_translateChar
+#define SE_translateCharUTF8    Rf_SE_translateCharUTF8
 #define type2char		Rf_type2char
 #define type2rstr		Rf_type2rstr
 #define type2str		Rf_type2str
@@ -1335,7 +1372,16 @@ void Rf_unprotect(int);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
+SEXP STRING_ELT(SEXP x, R_xlen_t i);
 SEXP R_FixupRHS(SEXP x, SEXP y);
+void SET_STRING_ELT_FROM_CSTR_LEN_CE(SEXP, R_xlen_t, const char *, size_t,
+				     cetype_t);
+void SET_STRING_ELT_FROM_CSTR(SEXP, R_xlen_t, const char *);
+void SET_STRING_ELT_FROM_CSTR_CE(SEXP, R_xlen_t, const char *, cetype_t);
+void SET_STRING_ELT_FROM_CSTR_LEN(SEXP, R_xlen_t, const char *, size_t);
+void SET_STRING_ELT_TO_NA_STRING(SEXP, R_xlen_t);
+void SET_STRING_ELT_TO_BLANK_STRING(SEXP, R_xlen_t);
+void COPY_STRING_ELT(SEXP, R_xlen_t, SEXP, R_xlen_t);
 #endif
 
 #ifdef USE_RINTERNALS

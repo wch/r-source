@@ -59,7 +59,7 @@ SEXP attribute_hidden getParseContext(void)
 	if(nread >= nn) {
 	    ans2 = allocVector(STRSXP, 2*nn);
 	    for(i = 0; i < nn; i++)
-		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+		COPY_STRING_ELT(ans2, i, ans, i);
 	    nn *= 2;
 	    UNPROTECT(1); /* old ans */
 	    PROTECT(ans = ans2);
@@ -69,7 +69,7 @@ SEXP attribute_hidden getParseContext(void)
 	    if(c == '\n') break;
 	}
 	context[i-1] = '\0';
-	SET_STRING_ELT(ans, nread-1, mkChar(context + last));
+	SET_STRING_ELT_FROM_CSTR(ans, nread-1, context + last);
 	last = i;
     }
     /* get rid of empty line after last newline */
@@ -79,7 +79,7 @@ SEXP attribute_hidden getParseContext(void)
     }
     PROTECT(ans2 = allocVector(STRSXP, nread));
     for(i = 0; i < nread; i++)
-	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+	COPY_STRING_ELT(ans2, i, ans, i);
     UNPROTECT(2);
     return ans2;
 }
@@ -120,7 +120,8 @@ static SEXP tabExpand(SEXP strings)
 	    else *b++ = *input;
 	}
 	*b = '\0';
-	SET_STRING_ELT(result, i, mkCharCE(buffer, Rf_getCharCE(STRING_ELT(strings, i))));
+    	SET_STRING_ELT_FROM_CSTR_CE(result, i, buffer,
+				    Rf_getCharCE(STRING_ELT(strings, i)));
     }
     UNPROTECT(2);
     return result;

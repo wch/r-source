@@ -72,6 +72,13 @@
 
 /* define inline-able functions */
 
+INLINE_FUN SEXP STRING_ELT(SEXP x, R_xlen_t i)
+{
+    if (SE_TYPE(&(STRING_PTR(x)[i])) != SETYPE_BOXED)
+	R_BoxStringElt(x, i);
+    return SE_CSXP(&(STRING_PTR(x)[i]));
+}
+
 #ifdef INLINE_PROTECT
 extern int R_PPStackSize;
 extern int R_PPStackTop;
@@ -662,6 +669,7 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
  *
  * @return (pointer to a) named vector of type TYP
  */
+INLINE_FUN void SET_STRING_ELT_FROM_CSTR(SEXP, R_xlen_t, const char *);
 INLINE_FUN SEXP mkNamed(SEXPTYPE TYP, const char **names)
 {
     SEXP ans, nms;
@@ -671,7 +679,7 @@ INLINE_FUN SEXP mkNamed(SEXPTYPE TYP, const char **names)
     ans = PROTECT(allocVector(TYP, n));
     nms = PROTECT(allocVector(STRSXP, n));
     for (i = 0; i < n; i++)
-	SET_STRING_ELT(nms, i, mkChar(names[i]));
+	SET_STRING_ELT_FROM_CSTR(nms, i, names[i]);
     setAttrib(ans, R_NamesSymbol, nms);
     UNPROTECT(2);
     return ans;
@@ -723,4 +731,131 @@ INLINE_FUN SEXP R_FixupRHS(SEXP x, SEXP y)
     }
     return y;
 }
+
+INLINE_FUN void SET_STRING_ELT_FROM_CSTR_LEN_CE(SEXP x, R_xlen_t i,
+						const char *s, size_t len,
+						cetype_t ce)
+{
+    if (len > INT_MAX)
+	error("R character strings are limited to 2^31-1 bytes");
+    if (len <= SE_UNBOXED_MAXLEN) {
+	Rboolean embedNul = FALSE, is_ascii = TRUE;
+	for (int slen = 0; slen < len; slen++) {
+	    if ((unsigned int) s[slen] > 127) is_ascii = FALSE;
+	    if (! s[slen]) embedNul = TRUE;
+	}
+	if (! embedNul && (ce == CE_NATIVE || is_ascii)) {
+	    R_string_elt_ptr_t si = &(STRING_PTR(x)[i]);
+	    SET_SE_TYPE(si, SETYPE_STRING);
+	    memcpy(SE_STRING_DATA(si), s, len);
+	    SE_STRING_DATA(si)[len] = 0;
+	    return;
+	}
+    }
+    SET_STRING_ELT(x, i, mkCharLenCE(s, (int) len, ce));
+}
+
+INLINE_FUN void SET_STRING_ELT_FROM_CSTR(SEXP x, R_xlen_t i, const char *s)
+{
+    SET_STRING_ELT_FROM_CSTR_LEN_CE(x, i, s, strlen(s), CE_NATIVE);
+}
+
+INLINE_FUN void SET_STRING_ELT_FROM_CSTR_CE(SEXP x, R_xlen_t i, const char *s,
+					    cetype_t ce)
+{
+    SET_STRING_ELT_FROM_CSTR_LEN_CE(x, i, s, strlen(s), ce);
+}
+
+INLINE_FUN void SET_STRING_ELT_FROM_CSTR_LEN(SEXP x, R_xlen_t i,
+					     const char *s, size_t len)
+{
+    SET_STRING_ELT_FROM_CSTR_LEN_CE(x, i, s, len, CE_NATIVE);
+}
+
+INLINE_FUN void SET_STRING_ELT_TO_NA_STRING(SEXP x, R_xlen_t i)
+{
+    SET_STRING_ELT(x, i, NA_STRING);
+}
+
+INLINE_FUN void SET_STRING_ELT_TO_BLANK_STRING(SEXP x, R_xlen_t i)
+{
+    SET_STRING_ELT(x, i, R_BlankString);
+}
+
+INLINE_FUN void COPY_STRING_ELT(SEXP dest, R_xlen_t i, SEXP src, R_xlen_t j)
+{
+    if (SE_TYPE(&(STRING_PTR(src)[j])) != SETYPE_BOXED)
+	STRING_PTR(dest)[i] = STRING_PTR(src)[j];
+    else
+	SET_STRING_ELT(dest, i, STRING_ELT(src, j));
+}
+
+#define SE_IS_ASCII(e) (SE_TYPE(e) != SETYPE_BOXED || IS_ASCII(SE_CSXP(e)))
+#define SE_IS_BYTES(e) (SE_TYPE(e) == SETYPE_BOXED && IS_BYTES(SE_CSXP(e)))
+#define SE_IS_UTF8(e) (SE_TYPE(e) == SETYPE_BOXED && IS_UTF8(SE_CSXP(e)))
+#define SE_IS_LATIN1(e) (SE_TYPE(e) == SETYPE_BOXED && IS_LATIN1(SE_CSXP(e)))
+#define SE_ENC_KNOWN(e) (SE_IS_LATIN1(e) || SE_IS_UTF8(e))
+
+INLINE_FUN int SE_IS_NA(R_string_elt_ptr_t e)
+{
+    switch(SE_TYPE(e)) {
+    case SETYPE_INT: return SE_IVAL(e) == NA_INTEGER;
+    case SETYPE_REAL: return ISNA(SE_DVAL(e));
+    case SETYPE_BOXED: return SE_CSXP(e) == NA_STRING;
+    default: return FALSE; /* SETYPE_STRING */
+    }
+}
+
+INLINE_FUN void SE_STRINGIFY_IVAL(R_string_elt_ptr_t x)
+{
+    /**** use snprintf and check count?*/
+    sprintf(SE_STRING_DATA(x), "%d", SE_IVAL(x));
+    SET_SE_TYPE(x, SETYPE_STRING);
+}
+
+INLINE_FUN const char *SE_CHAR(R_string_elt_ptr_t e)
+{
+    switch(SE_TYPE(e)) {
+    case SETYPE_STRING: return SE_STRING_DATA(e);
+    case SETYPE_BOXED: return CHAR(SE_CSXP(e));
+    case SETYPE_INT:
+	SE_STRINGIFY_IVAL(e);
+	return SE_STRING_DATA(e);
+    default: error("need to stringify first"); return NULL;
+    }
+}
+
+INLINE_FUN int SE_LENGTH(R_string_elt_ptr_t e)
+{
+    switch(SE_TYPE(e)) {
+    case SETYPE_STRING: return strlen(SE_STRING_DATA(e));
+    case SETYPE_BOXED: return LENGTH(SE_CSXP(e));
+    case SETYPE_INT:
+	SE_STRINGIFY_IVAL(e);
+	return strlen(SE_STRING_DATA(e));
+    default: error("need to stringify first"); return 0;
+    }
+}
+
+/**** need overflow check in case we change the size of integers */
+#define SE_IVAL_NEEDS_BOXING(i) ((i) == NA_INTEGER)
+
+INLINE_FUN R_string_elt_ptr_t SE_STRING_ELT_PTR(SEXP x, R_xlen_t i)
+{
+    /* boxing has to be done here to maintain the write barrier and
+       reference counts */
+    R_string_elt_ptr_t xi = &(STRING_PTR(x)[i]);
+    switch(SE_TYPE(xi)) {
+    case SETYPE_INT:
+	if (SE_IVAL_NEEDS_BOXING(SE_IVAL(xi)))
+	    R_BoxStringElt(x, i);
+	break;
+    case SETYPE_REAL:
+	R_BoxStringElt(x, i); /**** cause boxing for now */
+	break;
+    }
+    return &(STRING_PTR(x)[i]);
+}
+
+#define SE_STRING_ELT_REC(x, i) (*SE_STRING_ELT_PTR(x, i))
 #endif /* R_INLINES_H_ */

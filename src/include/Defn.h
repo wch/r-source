@@ -406,6 +406,7 @@ typedef struct {
 #define FLOAT2VEC(n)	(((n)>0)?(((n)*sizeof(double)-1)/sizeof(VECREC)+1):0)
 #define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(Rcomplex)-1)/sizeof(VECREC)+1):0)
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
+#define STRINGELT2VEC(n)(((n)>0)?(((n)*sizeof(R_string_elt_rec_t)-1)/sizeof(VECREC)+1):0)
 
 /* Bindings */
 /* use the same bits (15 and 14) in symbols and bindings */
@@ -903,6 +904,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define mainloop		Rf_mainloop
 # define makeSubscript		Rf_makeSubscript
 # define markKnown		Rf_markKnown
+# define markKnownEltEnc	Rf_markKnownEltEnc
 # define mat2indsub		Rf_mat2indsub
 # define matchArg		Rf_matchArg
 # define matchArgExact		Rf_matchArgExact
@@ -965,6 +967,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define WarningMessage		Rf_WarningMessage
 # define wcstoutf8		Rf_wcstoutf8
 # define wtransChar		Rf_wtransChar
+# define SE_wtransChar		Rf_SE_wtransChar
 # define yychar			Rf_yychar
 # define yylval			Rf_yylval
 # define yynerrs		Rf_yynerrs
@@ -1100,6 +1103,7 @@ SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
 SEXP makeSubscript(SEXP, SEXP, R_xlen_t *, SEXP);
 SEXP markKnown(const char *, SEXP);
+int  markKnownEltEnc(SEXP, R_xlen_t);
 SEXP mat2indsub(SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
@@ -1158,7 +1162,7 @@ int R_isMissing(SEXP symbol, SEXP rho);
 const char *sexptype2char(SEXPTYPE type);
 void sortVector(SEXP, Rboolean);
 void SrcrefPrompt(const char *, SEXP);
-void ssort(SEXP*,int);
+void ssort(SEXP);
 int StrToInternal(const char *);
 SEXP strmat2intmat(SEXP, SEXP, SEXP);
 SEXP substituteList(SEXP, SEXP);
@@ -1259,6 +1263,7 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
 SEXP Rf_installTrChar(SEXP);
 
 const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
+const wchar_t *SE_wtransChar(R_string_elt_ptr_t x); /* from sysutils.c */
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);

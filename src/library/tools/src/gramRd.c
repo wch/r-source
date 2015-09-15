@@ -3189,14 +3189,14 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
     PROTECT(ans = allocVector(STRSXP, len + 1));
     value = UserMacroLookup(CHAR(STRING_ELT(macro,0)));
     if (TYPEOF(value) == STRSXP)
-    	SET_STRING_ELT(ans, 0, STRING_ELT(value, 0));
+    	COPY_STRING_ELT(ans, 0, value, 0);
     else
     	error(_("No macro definition for '%s'."), CHAR(STRING_ELT(macro,0)));
 /*    Rprintf("len = %d", len); */
     for (i = 0, nextarg=args; i < len; i++, nextarg = CDR(nextarg)) {
 /*        Rprintf("arg i is");
         PrintValue(CADR(CADR(nextarg))); */
-	SET_STRING_ELT(ans, i+1, STRING_ELT(CADR(CADR(nextarg)), 0));
+	COPY_STRING_ELT(ans, i+1, CADR(CADR(nextarg)), 0);
     }	
     UNPROTECT_PTR(args);
     UNPROTECT_PTR(macro);    
@@ -3483,7 +3483,7 @@ static SEXP mkString2(const char *s, size_t len)
     cetype_t enc = CE_UTF8;
 
     PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkCharLenCE(s, (int) len, enc));
+    SET_STRING_ELT_FROM_CSTR_LEN_CE(t, 0, s, len, enc);
     UNPROTECT(1);
     return t;
 }

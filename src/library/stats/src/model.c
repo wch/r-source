@@ -120,7 +120,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < nvars; i++) {
 	SET_VECTOR_ELT(data, i, VECTOR_ELT(variables, i));
-	SET_STRING_ELT(names, i, STRING_ELT(varnames, i));
+	COPY_STRING_ELT(names, i, varnames, i);
     }
     for (i = 0,j = 0; i < ndots; i++) {
 	const char *ss;
@@ -129,7 +129,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(strlen(ss) + 3 > 256) error(_("overlong names in '%s'"), ss);
 	snprintf(buf, 256, "(%s)", ss);
 	SET_VECTOR_ELT(data, nvars + j, VECTOR_ELT(dots, i));
-	SET_STRING_ELT(names, nvars + j,  mkChar(buf));
+	SET_STRING_ELT_FROM_CSTR(names, nvars + j,  buf);
 	j++;
     }
     setAttrib(data, R_NamesSymbol, names);
@@ -593,7 +593,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     k = 0;
     if (intrcept)
-	SET_STRING_ELT(xnames, k++, mkChar("(Intercept)"));
+	SET_STRING_ELT_FROM_CSTR(xnames, k++, "(Intercept)");
 
     for (j = 0; j < nterms; j++) {
 	if (j == rhs_response) continue;
@@ -664,7 +664,7 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    indx /= ll;
 		}
 	    }
-	    SET_STRING_ELT(xnames, k++, mkChar(buf));
+	    SET_STRING_ELT_FROM_CSTR(xnames, k++, buf);
 	}
     }
 
@@ -1079,9 +1079,9 @@ static void CheckRHS(SEXP v)
 		t = allocVector(STRSXP, length(framenames) - 1);
 		for (j = 0; j < length(t); j++) {
 		    if (j < i)
-			SET_STRING_ELT(t, j, STRING_ELT(framenames, j));
+			COPY_STRING_ELT(t, j, framenames, j);
 		    else
-			SET_STRING_ELT(t, j, STRING_ELT(framenames, j+1));
+			COPY_STRING_ELT(t, j, framenames, j+1);
 		}
 		REPROTECT(framenames = t, vpi);
 	    }
@@ -1760,7 +1760,7 @@ SEXP termsform(SEXP args)
 
     PROTECT(varnames = allocVector(STRSXP, nvar));
     for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v))
-	SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
+	COPY_STRING_ELT(varnames, i++, deparse1line(CAR(v), 0), 0);
 
     /* Step 2b: Find and remove any offset(s) */
 
@@ -1887,7 +1887,7 @@ SEXP termsform(SEXP args)
 		l++;
 	    }
 	}
-	SET_STRING_ELT(termlabs, n, mkChar(cbuf));
+	SET_STRING_ELT_FROM_CSTR(termlabs, n, cbuf);
 	n++;
     }
     PROTECT(v = allocVector(VECSXP, 2));

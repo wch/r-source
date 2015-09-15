@@ -192,8 +192,8 @@ SEXP devcapture(SEXP args)
     for (i = 0; i < size; i++) {
 	col = i % ncol + 1;
 	row = i / ncol + 1;
-	SET_STRING_ELT(image, (col - 1) * nrow + row - 1, 
-		       mkChar(col2name(rint[i])));
+	SET_STRING_ELT_FROM_CSTR(image, (col - 1) * nrow + row - 1, 
+				 col2name(rint[i]));
     }
         
     PROTECT(idim = allocVector(INTSXP, 2));

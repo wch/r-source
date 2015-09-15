@@ -1586,7 +1586,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    case STRSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		SET_STRING_ELT(v, 0, STRING_ELT(val, i));
+		COPY_STRING_ELT(v, 0, val, i);
 		break;
 	    case RAWSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
@@ -2507,8 +2507,8 @@ SEXP attribute_hidden do_withVisible(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(x);
     PROTECT(ret = allocVector(VECSXP, 2));
     PROTECT(nm = allocVector(STRSXP, 2));
-    SET_STRING_ELT(nm, 0, mkChar("value"));
-    SET_STRING_ELT(nm, 1, mkChar("visible"));
+    SET_STRING_ELT_FROM_CSTR(nm, 0, "value");
+    SET_STRING_ELT_FROM_CSTR(nm, 1, "visible");
     SET_VECTOR_ELT(ret, 0, x);
     SET_VECTOR_ELT(ret, 1, ScalarLogical(R_Visible));
     setAttrib(ret, R_NamesSymbol, nm);
@@ -2933,7 +2933,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if (isString(t) && (stringPositionTr(t, dispatchClassName) >= 0))
 	    SET_STRING_ELT(m, i, PRINTNAME(lmeth));
 	else
-	    SET_STRING_ELT(m, i, R_BlankString);
+	    SET_STRING_ELT_TO_BLANK_STRING(m, i);
 	s = CDR(s);
     }
     vmaxset(vmax);
@@ -5245,7 +5245,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    break;
 	  case STRSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_STRING_ELT(value, 0, STRING_ELT(seq, i));
+	    COPY_STRING_ELT(value, 0, seq, i);
 	    break;
 	  case RAWSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);

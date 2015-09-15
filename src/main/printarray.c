@@ -123,6 +123,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 /* initialization; particularly of row labels, rl= dimnames(.)[[1]] and
  * rn = names(dimnames(.))[1] : */
 #define _PRINT_INIT_rl_rn				\
+    if (TYPEOF(rl) == STRSXP) R_BoxStrings(rl);		\
     int *w = (int *) R_alloc(c, sizeof(int));		\
     int width, rlabw = -1, clabw = -1; /* -Wall */	\
     int i, j, jmin = 0, jmax = 0, lbloff = 0;		\
@@ -281,8 +282,9 @@ static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			      int quote, int right, SEXP rl, SEXP cl,
 			      const char *rn, const char *cn, Rboolean print_ij)
 {
+    R_BoxStrings(sx);
     _PRINT_INIT_rl_rn;
-    SEXP *x = STRING_PTR(sx)+offset;
+    R_string_elt_rec_t *x = STRING_PTR(sx)+offset;
 
     _COMPUTE_W2_( formatString(&x[j * r], (R_xlen_t) r, &w[j], quote), );
 
@@ -298,7 +300,7 @@ static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 		   },
 		   /* ENCODE_I = */
 		   Rprintf("%*s%s", R_print.gap, "",
-			   EncodeString(x[i + j * r], w[j], quote, right)) );
+			   EncodeString(SE_CSXP(&(x[i + j * r])), w[j], quote, right)) );
 }
 
 static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,

@@ -868,37 +868,37 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     k = 0;
 
-    SET_STRING_ELT(names, k, mkChar("minimum"));
+    SET_STRING_ELT_FROM_CSTR(names, k, "minimum");
     SET_VECTOR_ELT(value, k, ScalarReal(fpls));
     k++;
 
-    SET_STRING_ELT(names, k, mkChar("estimate"));
+    SET_STRING_ELT_FROM_CSTR(names, k, "estimate");
     SET_VECTOR_ELT(value, k, allocVector(REALSXP, n));
     for (i = 0; i < n; i++)
 	REAL(VECTOR_ELT(value, k))[i] = xpls[i];
     k++;
 
-    SET_STRING_ELT(names, k, mkChar("gradient"));
+    SET_STRING_ELT_FROM_CSTR(names, k, "gradient");
     SET_VECTOR_ELT(value, k, allocVector(REALSXP, n));
     for (i = 0; i < n; i++)
 	REAL(VECTOR_ELT(value, k))[i] = gpls[i];
     k++;
 
     if (want_hessian) {
-	SET_STRING_ELT(names, k, mkChar("hessian"));
+	SET_STRING_ELT_FROM_CSTR(names, k, "hessian");
 	SET_VECTOR_ELT(value, k, allocMatrix(REALSXP, n, n));
 	for (i = 0; i < n * n; i++)
 	    REAL(VECTOR_ELT(value, k))[i] = a[i];
 	k++;
     }
 
-    SET_STRING_ELT(names, k, mkChar("code"));
+    SET_STRING_ELT_FROM_CSTR(names, k, "code");
     SET_VECTOR_ELT(value, k, allocVector(INTSXP, 1));
     INTEGER(VECTOR_ELT(value, k))[0] = code;
     k++;
 
     /* added by Jim K Lindsey */
-    SET_STRING_ELT(names, k, mkChar("iterations"));
+    SET_STRING_ELT_FROM_CSTR(names, k, "iterations");
     SET_VECTOR_ELT(value, k, allocVector(INTSXP, 1));
     INTEGER(VECTOR_ELT(value, k))[0] = itncnt;
     k++;

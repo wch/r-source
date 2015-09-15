@@ -548,9 +548,9 @@ static SEXP R_HashProfile(SEXP table)
 
     PROTECT(ans = allocVector(VECSXP, 3));
     PROTECT(nms = allocVector(STRSXP, 3));
-    SET_STRING_ELT(nms, 0, mkChar("size"));    /* size of hashtable */
-    SET_STRING_ELT(nms, 1, mkChar("nchains")); /* number of non-null chains */
-    SET_STRING_ELT(nms, 2, mkChar("counts"));  /* length of each chain */
+    SET_STRING_ELT_FROM_CSTR(nms, 0, "size");    /* size of hashtable */
+    SET_STRING_ELT_FROM_CSTR(nms, 1, "nchains"); /* number of non-null chains */
+    SET_STRING_ELT_FROM_CSTR(nms, 2, "counts");  /* length of each chain */
     setAttrib(ans, R_NamesSymbol, nms);
     UNPROTECT(1);
 
@@ -2504,15 +2504,15 @@ SEXP attribute_hidden do_search(SEXP call, SEXP op, SEXP args, SEXP env)
 	n++;
     PROTECT(ans = allocVector(STRSXP, n));
     /* TODO - what should the name of this be? */
-    SET_STRING_ELT(ans, 0, mkChar(".GlobalEnv"));
-    SET_STRING_ELT(ans, n-1, mkChar("package:base"));
+    SET_STRING_ELT_FROM_CSTR(ans, 0, ".GlobalEnv");
+    SET_STRING_ELT_FROM_CSTR(ans, n-1, "package:base");
     i = 1;
     for (t = ENCLOS(R_GlobalEnv); t != R_BaseEnv ; t = ENCLOS(t)) {
 	name = getAttrib(t, R_NameSymbol);
 	if (!isString(name) || length(name) < 1)
-	    SET_STRING_ELT(ans, i, mkChar("(unknown)"));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, "(unknown)");
 	else
-	    SET_STRING_ELT(ans, i, STRING_ELT(name, 0));
+	    COPY_STRING_ELT(ans, i, name, 0);
 	i++;
     }
     UNPROTECT(1);
@@ -2844,7 +2844,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP ans2   = PROTECT(allocVector(VECSXP, k));
 	SEXP names2 = PROTECT(allocVector(STRSXP, k));
 	for(int i = 0; i < k; i++) {
-	    SET_STRING_ELT(names2, i, STRING_ELT(names, indx[i]));
+	    COPY_STRING_ELT(names2, i, names, indx[i]);
 	    SET_VECTOR_ELT(ans2,   i, VECTOR_ELT(ans,   indx[i]));
 	}
 	setAttrib(ans2, R_NamesSymbol, names2);

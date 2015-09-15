@@ -447,8 +447,8 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(ans = allocVector(STRSXP, maxlen));
 	    nprotect++;
 	}
-	SET_STRING_ELT(ans, ns, mkCharCE(outputString,
-					 use_UTF8 ? CE_UTF8 : CE_NATIVE));
+	SET_STRING_ELT_FROM_CSTR_CE(ans, ns, outputString,
+				    use_UTF8 ? CE_UTF8 : CE_NATIVE);
     } /* end for(ns ...) */
 
     UNPROTECT(nprotect);

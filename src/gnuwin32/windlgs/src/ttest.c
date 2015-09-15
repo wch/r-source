@@ -183,7 +183,7 @@ SEXP menu_ttest3()
     delobj(win);
     if(done == 1) {
 	PROTECT(cmdSexp = allocVector(STRSXP, 1));
-	SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
+	SET_STRING_ELT_FROM_CSTR(cmdSexp, 0, cmd);
 	cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
 	if (status != PARSE_OK) {
 	    UNPROTECT(2);

@@ -433,7 +433,7 @@ static SEXP mkString2(const char *s, size_t len)
     cetype_t enc = CE_UTF8;
 
     PROTECT(t = allocVector(STRSXP, 1));
-    SET_STRING_ELT(t, 0, mkCharLenCE(s, (int) len, enc));
+    SET_STRING_ELT_FROM_CSTR_LEN_CE(t, 0, s, len, enc);
     UNPROTECT(1);
     return t;
 }

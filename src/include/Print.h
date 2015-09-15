@@ -54,7 +54,7 @@ extern R_print_par_t R_print;
 
 /* Computation of printing formats */
 void formatRaw(Rbyte *, R_xlen_t, int *);
-void formatString(SEXP*, R_xlen_t, int*, int);
+void formatString(R_string_elt_ptr_t, R_xlen_t, int*, int);
 
 /* Formating of values */
 const char *EncodeElement0(SEXP, int, int, const char *);

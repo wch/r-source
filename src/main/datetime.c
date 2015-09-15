@@ -707,9 +707,9 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(tzone = mkString(tz));
     } else {
 	PROTECT(tzone = allocVector(STRSXP, 3));
-	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));
+	SET_STRING_ELT_FROM_CSTR(tzone, 0, tz);
+	SET_STRING_ELT_FROM_CSTR(tzone, 1, R_tzname[0]);
+	SET_STRING_ELT_FROM_CSTR(tzone, 2, R_tzname[1]);
     }
 
     R_xlen_t n = XLENGTH(x);
@@ -730,7 +730,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ansnames = allocVector(STRSXP, nans));
     for(int i = 0; i < nans; i++)
-	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
+	SET_STRING_ELT_FROM_CSTR(ansnames, i, ltnames[i]);
 
     for(R_xlen_t i = 0; i < n; i++) {
 	stm dummy, *ptm = &dummy;
@@ -748,7 +748,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    // or ptm->tm_zone
 	    if(valid && ptm->tm_isdst >= 0)
 		p = R_tzname[ptm->tm_isdst];
-	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
+	    SET_STRING_ELT_FROM_CSTR(VECTOR_ELT(ans, 9), i, p);
 #ifdef HAVE_TM_GMTOFF
 	    INTEGER(VECTOR_ELT(ans, 10))[i] =
 		valid ? (int)ptm->tm_gmtoff : NA_INTEGER;
@@ -757,8 +757,8 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(klass = allocVector(STRSXP, 2));
-    SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
-    SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
+    SET_STRING_ELT_FROM_CSTR(klass, 0, "POSIXlt");
+    SET_STRING_ELT_FROM_CSTR(klass, 1, "POSIXt");
     classgets(ans, klass);
     setAttrib(ans, install("tzone"), tzone);
     SEXP nm = getAttrib(x, R_NamesSymbol);
@@ -945,9 +945,9 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!R_FINITE(secs) || tm.tm_min == NA_INTEGER ||
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER) {
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT_TO_NA_STRING(ans, i);
 	} else {
-	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
+	    if(validate_tm(&tm) < 0) SET_STRING_ELT_TO_NA_STRING(ans, i);
 	    else {
 		const char *q = translateChar(STRING_ELT(sformat, i%m));
 		int n = (int) strlen(q) + 50;
@@ -1017,7 +1017,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
 		    }
 		}
-		SET_STRING_ELT(ans, i, mkChar(buff));
+		SET_STRING_ELT_FROM_CSTR(ans, i, buff);
 	    }
 	}
     }
@@ -1068,9 +1068,9 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(tzone = mkString(tz));
     } else if(strlen(tz)) {
 	PROTECT(tzone = allocVector(STRSXP, 3));
-	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));
+	SET_STRING_ELT_FROM_CSTR(tzone, 0, tz);
+	SET_STRING_ELT_FROM_CSTR(tzone, 1, R_tzname[0]);
+	SET_STRING_ELT_FROM_CSTR(tzone, 2, R_tzname[1]);
 
     } else PROTECT(tzone); // for balance
 
@@ -1094,7 +1094,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ansnames = allocVector(STRSXP, nans));
     for(int i = 0; i < nans; i++)
-	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
+	SET_STRING_ELT_FROM_CSTR(ansnames, i, ltnames[i]);
 
 
     for(R_xlen_t i = 0; i < N; i++) {
@@ -1155,7 +1155,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		    p = R_tzname[tm.tm_isdst];
 	    }
-	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
+	    SET_STRING_ELT_FROM_CSTR(VECTOR_ELT(ans, 9), i, p);
 #ifdef HAVE_TM_GMTOFF
 	    INTEGER(VECTOR_ELT(ans, 10))[i] =
 		invalid ? NA_INTEGER : (int)tm.tm_gmtoff;
@@ -1165,8 +1165,8 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(klass = allocVector(STRSXP, 2));
-    SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
-    SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
+    SET_STRING_ELT_FROM_CSTR(klass, 0, "POSIXlt");
+    SET_STRING_ELT_FROM_CSTR(klass, 1, "POSIXt");
     classgets(ans, klass);
     if(settz) reset_tz(oldtz);
     if(isString(tzone)) setAttrib(ans, install("tzone"), tzone);
@@ -1191,7 +1191,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ansnames = allocVector(STRSXP, 9));
     for(int i = 0; i < 9; i++)
-	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
+	SET_STRING_ELT_FROM_CSTR(ansnames, i, ltnames[i]);
 
     for(R_xlen_t i = 0; i < n; i++) {
 	if(R_FINITE(REAL(x)[i])) {
@@ -1225,8 +1225,8 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(klass = allocVector(STRSXP, 2));
-    SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
-    SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
+    SET_STRING_ELT_FROM_CSTR(klass, 0, "POSIXlt");
+    SET_STRING_ELT_FROM_CSTR(klass, 1, "POSIXt");
     classgets(ans, klass);
     SEXP s_tzone = install("tzone");
     setAttrib(ans, s_tzone, mkString("UTC"));

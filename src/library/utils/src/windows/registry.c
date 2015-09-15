@@ -120,7 +120,7 @@ static SEXP readRegistryKey1(HKEY hkey, const wchar_t *name)
     case REG_EXPAND_SZ:
     {
 	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkCharUcs((wchar_t *)d));
+	SET_STRING_ELT_FROM_CSTR(ans, 0, cs((wchar_t *d));
 	UNPROTECT(1);
 	break;
     }
@@ -135,7 +135,7 @@ static SEXP readRegistryKey1(HKEY hkey, const wchar_t *name)
 	for (n = 0; *p; n++) { for(; *p; p++) {}; p++; }
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0, p = (wchar_t *)d; i < n; i++) {
-	    SET_STRING_ELT(ans, i, mkCharUcs(p));
+	    SET_STRING_ELT_FROM_CSTR(ans, i, cs(p);
 	    for(; *p; p++) {};
 	    p++;
 	}
@@ -189,7 +189,7 @@ static SEXP readRegistryKey(HKEY hkey, int depth, int view)
 				 NULL, NULL, NULL, NULL);
 	    if (res != ERROR_SUCCESS) break;
 	    SET_VECTOR_ELT(ans0, i, readRegistryKey1(hkey, name));
-	    SET_STRING_ELT(nm0, i, mkCharUcs(name));
+	    SET_STRING_ELT_FROM_CSTR(nm0, i, cs(name);
 	}
 	/* now sort by name */
 	PROTECT(sind = allocVector(INTSXP, nval));  indx = INTEGER(sind);
@@ -200,7 +200,7 @@ static SEXP readRegistryKey(HKEY hkey, int depth, int view)
 	    if (LENGTH(tmp = STRING_ELT(nm0, indx[i])))
 	    	SET_STRING_ELT(nm, k, tmp);
 	    else
-	    	SET_STRING_ELT(nm, k, mkChar("(Default)"));
+	    	SET_STRING_ELT_FROM_CSTR(nm, k, "(Default)");
 	}
 	UNPROTECT(3);
     }
@@ -215,7 +215,7 @@ static SEXP readRegistryKey(HKEY hkey, int depth, int view)
 	    res = RegOpenKeyExW(hkey, (LPWSTR) name, 0, acc, &sub);
 	    if (res != ERROR_SUCCESS) break;
 	    SET_VECTOR_ELT(ans0, i, readRegistryKey(sub, depth-1, view));
-	    SET_STRING_ELT(nm0, i, mkCharUcs(name));
+	    SET_STRING_ELT_FROM_CSTR(nm0, i, cs(name);
 	    RegCloseKey(sub);
 	}
 	/* now sort by name */
@@ -224,7 +224,7 @@ static SEXP readRegistryKey(HKEY hkey, int depth, int view)
 	orderVector1(indx, nsubkeys, nm0, TRUE, FALSE, R_NilValue);
 	for (i = 0; i < nsubkeys; i++, k++) {
 	    SET_VECTOR_ELT(ans, k, VECTOR_ELT(ans0, indx[i]));
-	    SET_STRING_ELT(nm, k, STRING_ELT(nm0, indx[i]));
+	    COPY_STRING_ELT(nm, k, nm0, indx[i]);
 	}
 	UNPROTECT(3);
     }
