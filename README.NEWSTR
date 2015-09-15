@@ -1,8 +1,8 @@
-THis branch contains modifications to the representation of data in
+This branch contains modifications to the representation of data in
 STRSXPs that tries to avoid creation of CHARSXP objects, or at least
 defer their creation until they are needed. Integers that are
-converted to strings are initially sotred as integers unless/until
-they are needed, thus avoidnign the sprintf as well as creating the
+converted to strings are initially stored as integers unless/until
+they are needed, thus avoiding the sprintf as well as creating the
 CHARSXP. (This is also done for doubles, but that probably isn't all
 that useful.) Short ASCII strings are stored directly rather than
 being boxed in CHARSXPs. The hope is that reducing the number of
@@ -43,5 +43,5 @@ so the question is whether there are benefits in other settings.
 Avoiding CHARSXP creation only for shorter strings may not be enough;
 an alternative is to initially allocate all string data contiguously,
 and only create CHARSXPs if elements are modified and new values do
-not fit. To go further it would be usefl to have some benchmarks of
+not fit. To go further it would be useful to have some benchmarks of
 code using character data.
