@@ -18,18 +18,6 @@ creating case labels in lm(). In R-devel,
 > 
 > system.time(lm(y ~ x))
    user  system elapsed 
-  8.889   3.422  12.308 
-> system.time(lm(y ~ x))
-   user  system elapsed 
-  8.688   3.400  12.083 
-> system.time(lm(y ~ x))
-   user  system elapsed 
-  8.657   3.381  12.035 
-
-With these changes, the timings are
-
-> system.time(lm(y ~ x))
-   user  system elapsed 
  34.039   3.584  37.611 
 > system.time(lm(y ~ x))
    user  system elapsed 
@@ -37,6 +25,18 @@ With these changes, the timings are
 > system.time(lm(y ~ x))
    user  system elapsed 
  20.743   2.735  23.471 
+
+With these changes, the timings are
+
+> system.time(lm(y ~ x))
+   user  system elapsed 
+  8.889   3.422  12.308 
+> system.time(lm(y ~ x))
+   user  system elapsed 
+  8.688   3.400  12.083 
+> system.time(lm(y ~ x))
+   user  system elapsed 
+  8.657   3.381  12.035 
 
 This is clearly a useful improvement, but it can be had in other ways,
 so the question is whether there are benefits in other settings.
