@@ -78,7 +78,7 @@ if(!file_test("-d", pkgSrcPath) && !interactive()) {
 }
 
 ## else w/o clause:
-## could use file.copy(recursive = TRUE)
+## file.copy(pkgSrcPath, tempdir(), recursive = TRUE) - not ok: replaces symlink by copy
 system(paste('cp -R', shQuote(pkgSrcPath), shQuote(tempdir())))
 pkgPath <- file.path(tempdir(), "Pkgs")
 ## pkgB tests an empty R directory
@@ -86,6 +86,12 @@ dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
 	   showWarnings = FALSE)
 p.lis <- if("Matrix" %in% row.names(installed.packages(.Library)))
 	     c("pkgA", "pkgB", "exNSS4") else "exNSS4"
+if("pkgA" %in% p.lis && !dir.exists(d <- file.path(pkgPath, "pkgA"))) {
+    cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
+    file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
+    ## if even the copy failed :
+    if(!dir.exists(d)) p.lis <- p.lis[p.lis != "pkgA"]
+}
 for(p. in p.lis) {
     cat("building package", p., "...\n")
     r <- build.pkg(file.path(pkgPath, p.))
