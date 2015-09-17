@@ -824,7 +824,7 @@ static SEXP match_transform(SEXP s, SEXP env)
     return duplicate(s);
 }
 
-/* currently used by fastmatch */
+// workhorse of R's match() and hence also  " ix %in% itable "
 SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 {
     SEXP ans, x, table;
@@ -854,6 +854,51 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     else type = TYPEOF(x) < TYPEOF(table) ? TYPEOF(table) : TYPEOF(x);
     PROTECT(x	  = coerceVector(x,	type)); nprot++;
     PROTECT(table = coerceVector(table, type)); nprot++;
+
+    // special case scalar x -- for speed only :
+    if(LENGTH(x) == 1 && !incomp) {
+      PROTECT(ans = ScalarInteger(nmatch)); nprot++;
+      switch (type) {
+      case STRSXP: {
+	  SEXP x_val = STRING_ELT(x,0);
+	  for (int i=0; i < LENGTH(itable); i++) if (STRING_ELT(table,i) == x_val) {
+		  INTEGER(ans)[0] = i + 1; break;
+	      }
+	  break; }
+      case LGLSXP:
+      case INTSXP: {
+	  int x_val = INTEGER(x)[0],
+	      *table_p = INTEGER(table);
+	  for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
+		  INTEGER(ans)[0] = i + 1; break;
+	      }
+	  break; }
+      case REALSXP: {
+	  double x_val = REAL(x)[0],
+	      *table_p = REAL(table);
+	  for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
+		  INTEGER(ans)[0] = i + 1; break;
+	      }
+	  break; }
+      case CPLXSXP: {
+	  Rcomplex x_val = COMPLEX(x)[0],
+	      *table_p = COMPLEX(table);
+	  for (int i=0; i < LENGTH(itable); i++)
+	      if (table_p[i].r == x_val.r && table_p[i].i == x_val.i) {
+		  INTEGER(ans)[0] = i + 1; break;
+	      }
+	  break; }
+      case RAWSXP: {
+	  Rbyte x_val = RAW(x)[0],
+	      *table_p = RAW(table);
+	  for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
+		  INTEGER(ans)[0] = i + 1; break;
+	      }
+	  break; }
+      }
+    }
+    else { // regular case
+
     if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
     data.nomatch = nmatch;
     HashTableSetup(table, &data, NA_INTEGER);
@@ -900,6 +945,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     DoHashing(table, &data);
     if (incomp) UndoHashing(incomp, table, &data);
     ans = HashLookup(table, x, &data);
+}
     UNPROTECT(nprot);
     return ans;
 }
@@ -916,6 +962,7 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
 }
 
 
+// .Internal(match(x, table, nomatch, incomparables)) :
 SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -927,11 +974,11 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
     int nomatch = asInteger(CADDR(args));
     SEXP incomp = CADDDR(args);
 
-    if(length(incomp) && /* S has FALSE to mean empty */
-       !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0))
-	return match5(CADR(args), CAR(args), nomatch, incomp, env);
+    if (isNull(incomp) || /* S has FALSE to mean empty */
+	(length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0))
+	return match5(CADR(args), CAR(args), nomatch, NULL, env);
     else
-	return matchE(CADR(args), CAR(args), nomatch, env);
+	return match5(CADR(args), CAR(args), nomatch, incomp, env);
 }
 
 /* pmatch and charmatch return integer positions, so cannot be used
@@ -1668,12 +1715,14 @@ SEXP Rf_csduplicated(SEXP x)
 
 #include <R_ext/Random.h>
 
+// more fine-grained  unif_rand() for n > INT_MAX
 static R_INLINE double ru()
 {
     double U = 33554432.0;
     return (floor(U*unif_rand()) + unif_rand())/U;
 }
 
+// sample.int(.) --> .Internal(sample2(n, size)) :
 SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);

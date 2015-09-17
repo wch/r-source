@@ -160,6 +160,10 @@
 
       \code{abbreviate(use.classes = FALSE)} is now implemented, and
       that is more suitable for non-European languages.
+
+      \code{match(x, table)} is faster, sometimes by an order of magnitude,
+      when \code{x} is of length one, % and \code{incomparables} is unchanged
+      thanks to Haverty's \PR{16491}.
     }
   }
 
