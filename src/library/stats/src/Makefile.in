@@ -12,6 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 ## for $(R_HOME)/etc${R_ARCH}/Makeconf
 R_SHARE_DIR = $(R_HOME)/share
+R_INCLUDE_DIR = $(R_HOME)/include
 
 SOURCES_C = init.c kmeans.c \
   ansari.c bandwidths.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
