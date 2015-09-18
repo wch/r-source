@@ -2281,8 +2281,13 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     res = _wmkdir(dir);
     serrno = errno;
-    if (show && res && serrno == EEXIST)
-	warning(_("'%ls' already exists"), dir);
+    if (show && res) {
+    	if (serrno == EEXIST)
+	    warning(_("'%ls' already exists"), dir);
+        else
+            warning(_("cannot create dir '%ls', reason '%s'"), dir,
+            	    strerror(serrno));
+    }
     return ScalarLogical(res == 0);
 end:
     if (show && res && serrno != EEXIST)

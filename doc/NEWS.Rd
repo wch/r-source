@@ -370,6 +370,9 @@
 
       \item \code{abbreviate()} did not give names to the return value
       if \code{minlength} was zero, unlike when it was positive.
+      
+      \item (Windows only) \code{dir.create()} did not always warn
+      when it failed to create a directory.  (\PR{16537})
     }
   }
 }
