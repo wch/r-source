@@ -373,6 +373,10 @@
       
       \item (Windows only) \code{dir.create()} did not always warn
       when it failed to create a directory.  (\PR{16537})
+      
+      \item When operating in a multibyte locale, \code{grep()}
+      and related functions did not handle UTF-8 strings properly.
+      (\PR{16264})
     }
   }
 }

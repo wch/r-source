@@ -665,7 +665,19 @@ static int fgrep_one(const char *pat, const char *target,
 	    }
 	return -1;
     }
-    if (!useBytes && mbcslocale) { /* skip along by chars */
+    if (!useBytes && use_UTF8) {	
+        int ib, used;
+	for (ib = 0, i = 0; ib <= len-plen; i++) {
+	    if (strncmp(pat, target+ib, plen) == 0) {
+		if (next != NULL) *next = ib + plen;
+		return i;
+	    }
+	    used = utf8clen(target[ib]);
+	    if (used <= 0) break;
+	    ib += used;
+	}
+    } else if (!useBytes && use_UTF8) {
+    } else if (!useBytes && mbcslocale) { /* skip along by chars */
 	mbstate_t mb_st;
 	int ib, used;
 	mbs_init(&mb_st);
@@ -675,17 +687,6 @@ static int fgrep_one(const char *pat, const char *target,
 		return i;
 	    }
 	    used = (int) Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
-	    if (used <= 0) break;
-	    ib += used;
-	}
-    } else if (!useBytes && use_UTF8) {
-	int ib, used;
-	for (ib = 0, i = 0; ib <= len-plen; i++) {
-	    if (strncmp(pat, target+ib, plen) == 0) {
-		if (next != NULL) *next = ib + plen;
-		return i;
-	    }
-	    used = utf8clen(target[ib]);
 	    if (used <= 0) break;
 	    ib += used;
 	}
@@ -715,21 +716,21 @@ static int fgrep_one_bytes(const char *pat, const char *target, int len,
 	    if (*p == pat[0]) return i;
 	return -1;
     }
-    if (!useBytes && mbcslocale) { /* skip along by chars */
+    if (!useBytes && use_UTF8) { /* not really needed */
+	int ib, used;
+	for (ib = 0, i = 0; ib <= len-plen; i++) {
+	    if (strncmp(pat, target+ib, plen) == 0) return ib;
+	    used = utf8clen(target[ib]);
+	    if (used <= 0) break;
+	    ib += used;
+	}
+    } else if (!useBytes && mbcslocale) { /* skip along by chars */
 	mbstate_t mb_st;
 	int ib, used;
 	mbs_init(&mb_st);
 	for (ib = 0, i = 0; ib <= len-plen; i++) {
 	    if (strncmp(pat, target+ib, plen) == 0) return ib;
 	    used = (int) Mbrtowc(NULL, target+ib, MB_CUR_MAX, &mb_st);
-	    if (used <= 0) break;
-	    ib += used;
-	}
-    } else if (!useBytes && use_UTF8) { /* not really needed */
-	int ib, used;
-	for (ib = 0, i = 0; ib <= len-plen; i++) {
-	    if (strncmp(pat, target+ib, plen) == 0) return ib;
-	    used = utf8clen(target[ib]);
 	    if (used <= 0) break;
 	    ib += used;
 	}
