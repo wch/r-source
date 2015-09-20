@@ -1490,6 +1490,22 @@ rm -f libconftest${DYLIB_EXT} conftest.c
       main_ldflags="${wl}-export-dynamic"
       shlib_ldflags="-shared -fPIC"
     fi
+    case "${host_cpu}" in 
+      powerpc*)
+	## GCC -fpic limits to 2**16 on OpenBSD powerpc.
+	## Error message without -fPIC:
+	##   relocation truncated to fit: R_PPC_GOT16...
+        if test "${GCC}" = yes; then
+          cpicflags="-fPIC"
+        fi  
+        if test "${G77}" = yes; then
+          fpicflags="-fPIC"
+        fi
+        if test "${GXX}" = yes; then
+          cxxpicflags="-fPIC"
+        fi
+        ;;
+    esac
     ;;
   osf*)
     cpicflags=
