@@ -7098,6 +7098,8 @@ function(dir)
         out$bad_version <- list(v_m, v_d)
     if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
         out$version_with_jump_in_minor <- list(v_m, v_d)
+    if(any(unlist(v_m) >= 1234))
+        out$version_with_large_components <- meta["Version"]
 
     ## Check submission recency and frequency.
     current_db <- CRAN_current_db()
@@ -7175,6 +7177,8 @@ function(x, ...)
                         y[[1L]], y[[2L]]),
             if(length(y <- x$version_with_leading_zeroes))
                 sprintf("Version contains leading zeroes (%s)", y),
+            if(length(y <- x$version_with_large_components))
+                sprintf("Version contains large components (%s)", y),
             if(length(y <- x$version_with_jump_in_minor))
                 sprintf("Version jumps in minor (submitted: %s, existing: %s)",
                         y[[1L]], y[[2L]]))),
