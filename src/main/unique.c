@@ -874,11 +874,24 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	      }
 	  break; }
       case REALSXP: {
-	  double x_val = REAL(x)[0],
+	  double x_val = (REAL(x)[0] == 0.) ? 0. : REAL(x)[0],// pblm with signed 0s under IEC60559
 	      *table_p = REAL(table);
-	  for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
-		  INTEGER(ans)[0] = i + 1; break;
+	  /* we want all NaNs except NA equal, and all NAs equal */
+	  if (R_IsNA(x_val)) {
+	      for (int i=0; i < LENGTH(itable); i++) if (R_IsNA(table_p[i])) {
+		      INTEGER(ans)[0] = i + 1; break;
+		  }
+	  }
+	  else if (R_IsNaN(x_val)) {
+	      for (int i=0; i < LENGTH(itable); i++) if (R_IsNaN(table_p[i])) {
+		      INTEGER(ans)[0] = i + 1; break;
+		  }
+	  }
+	  else {
+	      for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
+		      INTEGER(ans)[0] = i + 1; break;
 	      }
+	  }
 	  break; }
       case CPLXSXP: {
 	  Rcomplex x_val = COMPLEX(x)[0],

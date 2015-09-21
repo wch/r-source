@@ -927,3 +927,21 @@ for(m in 2:0) {
     stopifnot(identical(names(y), x))
 }
 ## dropped for 0 in R <= 3.2.2
+
+
+## match(<NA>, <NA>)
+stopifnot(
+    isTRUE(NA          %in% c(NA, TRUE)),
+    isTRUE(NA_integer_ %in% c(TRUE, NA)),
+    isTRUE(NA_real_    %in% c(NA, FALSE)),# !
+    isTRUE(!(NaN       %in% c(NA, FALSE))),
+    isTRUE(NA          %in% c(3L, NA)),
+    isTRUE(NA_integer_ %in% c(NA, 3L)),
+    isTRUE(NA_real_    %in% c(3L, NA)),# !
+    isTRUE(!(NaN       %in% c(3L, NA))),
+    isTRUE(NA          %in% c(2., NA)),# !
+    isTRUE(NA_integer_ %in% c(NA, 2.)),# !
+    isTRUE(NA_real_    %in% c(2., NA)),# !
+    isTRUE(!(NaN       %in% c(2., NA))))
+## the "!" gave FALSE in R-devel (around 20.Sep.2015)
+
