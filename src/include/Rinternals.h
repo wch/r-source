@@ -356,6 +356,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
   } while (0)
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
 #else
+# define SHORT_VEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
 # define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
 # define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
 # define XLENGTH(x) LENGTH(x)
@@ -1050,6 +1051,8 @@ SEXP R_Unserialize(R_inpstream_t ips);
 SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 int R_has_slot(SEXP obj, SEXP name);
+/* S3-S4 class (inheritance), attrib.c */
+SEXP R_S4_extends(SEXP klass, SEXP useTable);
 
 /* class definition, new objects (objects.c) */
 SEXP R_do_MAKE_CLASS(const char *what);
