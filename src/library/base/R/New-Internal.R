@@ -292,5 +292,7 @@ curlGetHeaders <- function(url, redirect = TRUE, verify = TRUE)
     .Internal(curlGetHeaders(url, redirect, verify))
 
 
+lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))
+
 ## base has no S4 generics
 .noGenerics <- TRUE
