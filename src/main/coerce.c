@@ -201,6 +201,8 @@ RealFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_REAL;
+    if (ISNAN(x.r)) return x.r;
+    if (ISNAN(x.i)) return NA_REAL;
     if (x.i != 0)
 	*warn |= WARN_IMAG;
     return x.r;
@@ -255,14 +257,18 @@ Rcomplex attribute_hidden
 ComplexFromReal(double x, int *warn)
 {
     Rcomplex z;
+#ifdef PRE_R_3_3_0
     if (ISNAN(x)) {
 	z.r = NA_REAL;
 	z.i = NA_REAL;
     }
     else {
+#endif
 	z.r = x;
 	z.i = 0;
+#ifdef PRE_R_3_3_0
     }
+#endif
     return z;
 }
 
@@ -316,7 +322,8 @@ SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
-    if (ISNA(x.r) || ISNA(x.i)) return NA_STRING;
+    if (ISNA(x.r) || ISNA(x.i)) // "NA" if Re or Im is (but not if they're just NaN)
+	return NA_STRING;
     else /* EncodeComplex has its own anti-trailing-0 care :*/
 	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei, OutDec));
 }
@@ -2024,8 +2031,8 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    LOGICAL(ans)[i] = (STRING_ELT(s, 0) == NA_STRING);	\
 		    break;						\
 		case CPLXSXP:						\
-		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r)		\
-				       || ISNAN(COMPLEX(s)[0].i));	\
+		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r) || 	\
+				       ISNAN(COMPLEX(s)[0].i));		\
 		    break;						\
 		default:						\
 		    LOGICAL(ans)[i] = 0;				\
@@ -2247,7 +2254,8 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 			       R_IsNaN(COMPLEX(x)[i].i));
 	break;
     default:
-	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
+	errorcall(call, _("default method not implemented for type '%s'"),
+		  type2char(TYPEOF(x)));
     }
     if (dims != R_NilValue)
 	setAttrib(ans, R_DimSymbol, dims);
@@ -2310,7 +2318,8 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = (R_FINITE(COMPLEX(x)[i].r) && R_FINITE(COMPLEX(x)[i].i));
 	break;
     default:
-	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
+	errorcall(call, _("default method not implemented for type '%s'"),
+		  type2char(TYPEOF(x)));
     }
     if (dims != R_NilValue)
 	setAttrib(ans, R_DimSymbol, dims);
@@ -2381,7 +2390,8 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
+	errorcall(call, _("default method not implemented for type '%s'"),
+		  type2char(TYPEOF(x)));
     }
     if (!isNull(dims))
 	setAttrib(ans, R_DimSymbol, dims);

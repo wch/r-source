@@ -164,6 +164,10 @@
       \code{match(x, table)} is faster, sometimes by an order of magnitude,
       when \code{x} is of length one, % and \code{incomparables} is unchanged
       thanks to Haverty's \PR{16491}.
+
+      More consistent, partly not back-compatible behavior of \code{NA}
+      and \code{NaN} coercion to complex numbers, operations less often
+      resulting in complex \code{NA} (\code{NA_complex_}).
     }
   }
 
@@ -370,10 +374,10 @@
 
       \item \code{abbreviate()} did not give names to the return value
       if \code{minlength} was zero, unlike when it was positive.
-      
+
       \item (Windows only) \code{dir.create()} did not always warn
       when it failed to create a directory.  (\PR{16537})
-      
+
       \item When operating in a multibyte locale, \code{grep()}
       and related functions did not handle UTF-8 strings properly.
       (\PR{16264})

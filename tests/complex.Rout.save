@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-09-22 r69408) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-09-22 r69407) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -260,4 +260,34 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 > ## but they seem to assume signed zeros.
 > ## Windows gave incorrect (NaN) values on the cuts.
 > 
+> ## Not a regression test, but rather one of the good cases:
+> (cNaN <- as.complex("NaN"))
+[1] NaN+0i
+> stopifnot(identical(cNaN, complex(re = NaN)), is.nan(Re(cNaN)), Im(cNaN) == 0)
+> dput(cNaN) ## (real = NaN, imaginary = 0)
+complex(real=NaN, imaginary=0)
+> ## Partly new behavior:
+> (c0NaN  <- complex(real=0, im=NaN))
+[1] 0+NaNi
+> (cNaNaN <- complex(re=NaN, im=NaN))
+[1] NaN+NaNi
+> stopifnot(identical(cNaN, as.complex(NaN)),
++           identical(vapply(c(cNaN, c0NaN, cNaNaN), format, ""),
++                     c("NaN+0i", "0+NaNi", "NaN+NaNi")),
++           identical(cNaN, NaN + 0i),
++           identical(cNaN, Conj(cNaN)),
++           identical(cNaN, cNaN+cNaN),
++ 
++           identical(cNaNaN, 1i * NaN),
++           identical(cNaNaN, complex(modulus= NaN)),
++           identical(cNaNaN, complex(argument= NaN)),
++           identical(cNaNaN, complex(arg=NaN, mod=NaN)),
++ 
++           identical(c0NaN, c0NaN+c0NaN), # !
++           identical(NA_complex_, NaN + NA_complex_ ),
++           ## Probably TRUE, but by a standard ??
++           ## identical(cNaNaN, 2 * c0NaN), # C-library arithmetic
++           ## identical(cNaNaN, 2 * cNaN),  # C-library arithmetic
++           ## identical(cNaNaN, NA_complex_ * Inf),
++           TRUE)
 > 

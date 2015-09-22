@@ -127,3 +127,29 @@ atan(z)
 ## but they seem to assume signed zeros.
 ## Windows gave incorrect (NaN) values on the cuts.
 
+## Not a regression test, but rather one of the good cases:
+(cNaN <- as.complex("NaN"))
+stopifnot(identical(cNaN, complex(re = NaN)), is.nan(Re(cNaN)), Im(cNaN) == 0)
+dput(cNaN) ## (real = NaN, imaginary = 0)
+## Partly new behavior:
+(c0NaN  <- complex(real=0, im=NaN))
+(cNaNaN <- complex(re=NaN, im=NaN))
+stopifnot(identical(cNaN, as.complex(NaN)),
+          identical(vapply(c(cNaN, c0NaN, cNaNaN), format, ""),
+                    c("NaN+0i", "0+NaNi", "NaN+NaNi")),
+          identical(cNaN, NaN + 0i),
+          identical(cNaN, Conj(cNaN)),
+          identical(cNaN, cNaN+cNaN),
+
+          identical(cNaNaN, 1i * NaN),
+          identical(cNaNaN, complex(modulus= NaN)),
+          identical(cNaNaN, complex(argument= NaN)),
+          identical(cNaNaN, complex(arg=NaN, mod=NaN)),
+
+          identical(c0NaN, c0NaN+c0NaN), # !
+          identical(NA_complex_, NaN + NA_complex_ ),
+          ## Probably TRUE, but by a standard ??
+          ## identical(cNaNaN, 2 * c0NaN), # C-library arithmetic
+          ## identical(cNaNaN, 2 * cNaN),  # C-library arithmetic
+          ## identical(cNaNaN, NA_complex_ * Inf),
+          TRUE)

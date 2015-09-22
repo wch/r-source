@@ -1,10 +1,10 @@
 % File src/library/base/man/complex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{complex}
-\title{Complex Vectors}
+\title{Complex Numbers and Basic Functionality}
 \alias{complex}
 \alias{as.complex}
 \alias{is.complex}
@@ -14,7 +14,8 @@
 \alias{Arg}
 \alias{Conj}
 \description{
-  Basic functions which support complex arithmetic in R.
+  Basic functions which support complex arithmetic in \R, in addition to
+  the arithmetic operators \code{+}, \code{-}, \code{*}, \code{/}, and \code{^}.
 }
 \usage{
 complex(length.out = 0, real = numeric(), imaginary = numeric(),
@@ -48,8 +49,15 @@ Conj(z)
 
   \code{as.complex} attempts to coerce its argument to be of complex
   type: like \code{\link{as.vector}} it strips attributes including
-  names.  All forms of \code{NA} and \code{NaN} are coerced to a complex
-  \code{NA}, for which both the real and imaginary parts are \code{NA}.
+  names.  Up to \R versions 3.2.x, all forms of \code{NA} and \code{NaN}
+  were coerced to a complex \code{NA}, i.e., the \code{\link{NA_complex_}}
+  constant, for which both the real and imaginary parts are \code{NA}.
+  Since \R 3.3.0, typically only objects which are \code{NA} in parts
+  are coerced to complex \code{NA}, but others with \code{NaN} parts,
+  are \emph{not}.  As a consequence, complex arithmetic where only
+  \code{NaN}'s (but no \code{NA}'s) are involved typically will
+  \emph{not} give complex \code{NA} but complex numbers with real or
+  imaginary parts of \code{NaN}.
 
   Note that \code{is.complex} and \code{is.numeric} are never both
   \code{TRUE}.
@@ -67,13 +75,35 @@ Conj(z)
   individually or \emph{via} the \code{\link[=S3groupGeneric]{Complex}}
   group generic.
 
-  In addition, the elementary trigonometric, logarithmic, exponential,
-  square root and hyperbolic functions are implemented for complex
-  values.
+  In addition to the arithmetic operators (see \link{Arithmetic})
+  \code{+}, \code{-}, \code{*}, \code{/}, and \code{^}, the elementary
+  trigonometric, logarithmic, exponential, square root and hyperbolic
+  functions are implemented for complex values.
+
+  Matrix multiplications (\code{\link{\%*\%}}, \code{\link{crossprod}},
+  \code{\link{tcrossprod}}) are also defined for complex matrices
+  (\code{\link{matrix}}), and so are \code{\link{solve}},
+  \code{\link{eigen}} or \code{\link{svd}}.
 
   Internally, complex numbers are stored as a pair of \link{double}
-  precision numbers, either or both of which can be \code{\link{NaN}} or
+  precision numbers, either or both of which can be \code{\link{NaN}}
+  (including \code{NA}, see \code{\link{NA_complex_}} and above) or
   plus or minus infinity.
+}
+\note{
+  Operations and functions involving complex \code{\link{NaN}} mostly
+  rely on the C library's handling of \samp{double complex} arithmetic,
+  which typically returns \code{complex(re=NaN, im=NaN)} (but we have
+  not seen a guarantee for that).
+  For \code{+} and \code{-}, \R's own handling works strictly
+  \dQuote{coordinate wise}.
+
+  Operations involving complex \code{NA}, i.e., \code{\link{NA_complex_}}, return
+  \code{\link{NA_complex_}}.
+}
+\seealso{
+  \code{\link{Arithmetic}}; \code{\link{polyroot}} finds all \eqn{n}
+  complex roots of a polynomial of degree \eqn{n}.
 }
 \section{S4 methods}{
   \code{as.complex} is primitive and can have S4 methods set.
