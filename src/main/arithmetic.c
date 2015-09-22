@@ -214,7 +214,11 @@ double R_pow(double x, double y) /* = x ^ y */
 	/* There was a special case for y == 0.5 here, but
 	   gcc 4.3.0 -g -O2 mis-compiled it.  Showed up with
 	   100^0.5 as 3.162278, example(pbirthday) failed. */
-	return pow(x, y);
+#ifdef USE_POWL_IN_R_POW
+    return powl(x, y);
+#else
+    return pow(x, y);
+#endif
     }
     if (ISNAN(x) || ISNAN(y))
 	return(x + y);

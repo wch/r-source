@@ -1062,6 +1062,11 @@
 /* The size of `size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T @ST@
 
+/* Workaround for win64 pow() precision issue in Mingw-w64 V3 and higher
+   See http://sourceforge.net/p/mingw-w64/bugs/466 for discussion. */
+#if defined(_WIN64) && defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 3
+#define USE_POWL_IN_R_POW 1
+#endif
 
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. (For intl) */
