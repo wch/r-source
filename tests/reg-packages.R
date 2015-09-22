@@ -108,7 +108,7 @@ stopifnot(identical(res[,"Package"], setNames(,sort(c(p.lis, "myTst")))),
 ### Specific Tests on our "special" packages: ------------------------------
 
 ## These used to fail because of the sym.link in pkgA
-if(dir.exists(pkgApath)) {
+if("pkgA" %in% p.lis && dir.exists(pkgApath)) {
     cat("undoc(pkgA):\n"); print(uA <- tools::undoc(dir = pkgApath))
     cat("codoc(pkgA):\n"); print(cA <- tools::codoc(dir = pkgApath))
     stopifnot(identical(uA$`code objects`, c("nil", "search")),
