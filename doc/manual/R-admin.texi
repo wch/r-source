@@ -4846,14 +4846,15 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @node Java (OS X), Frameworks, Tcl/Tk headers and libraries, OS X
 @subsection Java
 
-The situation with Java support on OS X is messy.
+The situation with Java support on OS X is messy.@footnote{For more
+detals see @uref{http://www.macstrategy.com/article.php?3}.}
 
 OS X no longer comes with an installed Java runtime (JRE), and an OS X
 upgrade removes one if already installed: it is intended to be installed
 at first use.  Check if a JRE is installed by running @command{java
 -version} in a @command{Terminal} window: if Java is not installed this
 should prompt you to install it.  You can also install directly the
-latest Java from Oracle (currently Java 8 from
+latest Java from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
