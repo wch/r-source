@@ -45,8 +45,8 @@ en_quote <- function(potfile, outfile)
         nc <- nchar(this); n <- length(nc)
         this <- paste0(this, collapse="")
         ## This is the fixup: need to avoid apostrophes, which follow alnum
-        this <- gsub("^'([^`']*)'",'‘\\1’', this)
-        this <- gsub("([^[:alpha:]]|\\\\n)'([^`']*)'",'\\1‘\\2’', this)
+        this <- gsub("^'([^`']*)'",'\u2018\\1\u2019', this)
+        this <- gsub("([^[:alpha:]]|\\\\n)'([^`']*)'",'\\1\u2018\\2\u2019', this)
         out <- if (n > 1L) {
             ## now split where it was before
             this1 <- character()
