@@ -381,6 +381,9 @@
       \item When operating in a multibyte locale, \code{grep()}
       and related functions did not handle UTF-8 strings properly.
       (\PR{16264})
+      
+      \item \code{read.dcf()} misread lines longer than 8191 characters.
+      (Reported by Hervé Pagès with a patch.)
     }
   }
 }
