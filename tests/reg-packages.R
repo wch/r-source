@@ -90,8 +90,8 @@ pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
     file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
-    ## if even the copy failed :
-    if(!dir.exists(d)) p.lis <- p.lis[p.lis != "pkgA"]
+    ## if even the copy failed (NB: pkgB depends on pkgA)
+    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", "pkgB"))]
 }
 for(p. in p.lis) {
     cat("building package", p., "...\n")
