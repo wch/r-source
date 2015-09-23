@@ -138,5 +138,15 @@ plot(zz, xlim = c(-1,1), ylim = c(-1,1), col = "red", asp = 1,
      main = expression(paste("Rotation by "," ", pi == 180^o)))
 abline(h = 0, v = 0, col = "blue", lty = 3)
 points(zz.shift, col = "orange")
+
+showC <- function(z) noquote(sprintf("(R = %g, I = %g)", Re(z), Im(z)))
+
+## The exact result of this *depends* on the platform, compiler, math-library:
+(NpNA <- NaN + NA_complex_) ; str(NpNA) # *behaves* as 'cplx NA' ..
+stopifnot(is.na(NpNA), is.na(NA_complex_), is.na(Re(NA_complex_)), is.na(Im(NA_complex_)))
+showC(NpNA)# but not always is {shows  '(R = NaN, I = NA)' on some platforms}
+## and this is not TRUE everywhere:
+identical(NpNA, NA_complex_)
+showC(NA_complex_) # always == (R = NA, I = NA)
 }
 \keyword{complex}

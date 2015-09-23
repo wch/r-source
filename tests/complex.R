@@ -147,7 +147,8 @@ stopifnot(identical(cNaN, as.complex(NaN)),
           identical(cNaNaN, complex(arg=NaN, mod=NaN)),
 
           identical(c0NaN, c0NaN+c0NaN), # !
-          identical(NA_complex_, NaN + NA_complex_ ),
+          ## Platform dependent, not TRUE e.g. on F21 gcc 4.9.2:
+          ## identical(NA_complex_, NaN + NA_complex_ ) ,
           ## Probably TRUE, but by a standard ??
           ## identical(cNaNaN, 2 * c0NaN), # C-library arithmetic
           ## identical(cNaNaN, 2 * cNaN),  # C-library arithmetic
