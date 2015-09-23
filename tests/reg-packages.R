@@ -137,7 +137,7 @@ if(dir.exists(file.path("myLib", "pkgA"))) {
 ## let alone where they are installed
 if(dir.exists(file.path("myLib", "exNSS4")) &&
    dir.exists(file.path(.Library, "Matrix"))) {
-    for(ns in c("pkgB", "pkgA", "Matrix", "exNSS4")) unloadNamespace(ns)
+    for(ns in c(rev(p.lis), "Matrix")) unloadNamespace(ns)
     ## Both exNSS4 and Matrix define "atomicVector" *the same*,
     ## but  'exNSS4'  has it extended - and hence *both* are registered in cache -> "conflicts"
     requireNamespace("exNSS4", lib= "myLib")
