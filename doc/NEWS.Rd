@@ -387,6 +387,10 @@
 
       \item \code{within(df, ..)} no longer drops columns whose name
       start with a \code{"."}.
+
+      \item The built-in \code{HTTP} server converted entire
+      \code{Content-Type} to lowercase including paramters which
+      can cause issues for multi-part form boundaries (\PR{16541}).
     }
   }
 }

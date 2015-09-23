@@ -108,7 +108,6 @@ static void terminated_child(int pid) {
 	if (ci->pid == pid) {
 	    if (ci->pfd > 0) { close(ci->pfd); ci->pfd = -1; }
             if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
-	    ci->pid = 0;
 	    break;
 	}
 	ci = ci->next;
@@ -208,7 +207,6 @@ static void parent_sig_handler(int sig, siginfo_t *info, void *context) {
 #endif			
 			if (ci->pfd > 0)  { close(ci->pfd); ci->pfd = -1; }
 			if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
-			ci->pid = 0;
 		    }
 		    break;
 		}
