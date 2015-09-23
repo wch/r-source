@@ -945,3 +945,10 @@ stopifnot(
     isTRUE(!(NaN       %in% c(2., NA))))
 ## the "!" gave FALSE in R-devel (around 20.Sep.2015)
 
+
+## oversight in  within.data.frame()  [R-help, Sep 20 2015 14:23 -04]
+df <- data.frame(.id = 1:3 %% 3 == 2, a = 1:3)
+d2 <- within(df, {d = a + 2})
+stopifnot(identical(names(d2), c(".id", "a", "d")))
+## lost the '.id' column in R <= 3.2.2
+
