@@ -139,7 +139,7 @@ plot(zz, xlim = c(-1,1), ylim = c(-1,1), col = "red", asp = 1,
 abline(h = 0, v = 0, col = "blue", lty = 3)
 points(zz.shift, col = "orange")
 
-showC <- function(z) noquote(sprintf("(R = %g, I = %g)", Re(z), Im(z)))
+showC <- function(z) noquote(sprintf("(R = \%g, I = \%g)", Re(z), Im(z)))
 
 ## The exact result of this *depends* on the platform, compiler, math-library:
 (NpNA <- NaN + NA_complex_) ; str(NpNA) # *behaves* as 'cplx NA' ..
