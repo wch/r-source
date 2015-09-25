@@ -27,9 +27,10 @@
       have to successfully negotiate a cryptographic protocol (TLS/SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
       the available certificates.  Different access methods may allow
-      different protocols or use certificate bundles: we have experienced a
-      \samp{https:} CRAN mirror which can be accessed by one browser but
-      not another nor by \code{download.file()} on the same Linux machine.
+      different protocols or use private certificate bundles: we have
+      experienced a \samp{https:} CRAN mirror which can be accessed by
+      one browser but not another nor by \code{download.file()} on the
+      same Linux machine.
     }
   }
   \subsection{NEW FEATURES}{
@@ -92,13 +93,17 @@
       now allow non-default values of the cairographics \sQuote{fallback
 	resolution} to be set.
 
-      \item \code{file()} gets an explicit \code{method} argument
-      instead of implicitly using
+      This now defaults to 300 on all platforms: that is the default
+      documented by cairographics, but apparently was not used by all
+      system installations.
+
+      \item \code{file()} gains an explicit \code{method} argument
+      rather than implicitly using
       \code{getOption("url.method", "default")}.
 
       \item Thanks to a patch from Tomas Kalibera, \code{x[x != 0]} is
-      now typically \emph{faster} than \code{x[which(x != 0)]} (in the
-      case where \code{x} has no NAs, the two are equivalent).
+      now typically faster than \code{x[which(x != 0)]} (in the case
+      where \code{x} has no NAs, the two are equivalent).
 
       \item \code{read.table()} now always uses the names for a named
       \code{colClasses} argument (previously names were only used when
@@ -161,13 +166,13 @@
       \code{abbreviate(use.classes = FALSE)} is now implemented, and
       that is more suitable for non-European languages.
 
-      \code{match(x, table)} is faster, sometimes by an order of magnitude,
-      when \code{x} is of length one, % and \code{incomparables} is unchanged
-      thanks to Haverty's \PR{16491}.
+      \item \code{match(x, table)} is faster, sometimes by an order of
+      magnitude, when \code{x} is of length one, % and
+      \code{incomparables} is unchanged thanks to Haverty's \PR{16491}.
 
-      More consistent, partly not back-compatible behavior of \code{NA}
-      and \code{NaN} coercion to complex numbers, operations less often
-      resulting in complex \code{NA} (\code{NA_complex_}).
+      \item More consistent, partly not back-compatible behavior of
+      \code{NA} and \code{NaN} coercion to complex numbers, operations
+      less often resulting in complex \code{NA} (\code{NA_complex_}).
     }
   }
 
@@ -194,8 +199,8 @@
 
       \item The unexported and undocumented Windows-only devices
       \code{cairo_bmp()}, \code{cairo_png()} and \code{cairo_tiff()}
-      have been removed.  (The devices should be used as e.g.
-      \code{bmp(type = "cairo")}.)
+      have been removed.  (These devices should be used as
+      e.g.\sspace{}\code{bmp(type = "cairo")}.)
 
       \item (Windows only)  Function \code{setInternet2()} has no effect
       and will be removed in due course.  The choice between methods
@@ -224,7 +229,7 @@
 
       \item \command{configure} uses \command{pkg-config} for PNG, TIFF
       and JPEG where this is available.  This should work better with
-      multiple installs and with static libs.
+      multiple installs and with those using static libraries.
 
       \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
 	Leopard}): even that has been unsupported by Apple since 2012.
@@ -254,15 +259,16 @@
       \code{"T"}/\code{"F"} for logical vectors.
 
       \item \code{.colSums()} etc (with an initial dot) first argument
-      name \code{x} matches \code{colSums()} such that error messages
-      are correct.
+      is now named \code{x} rather than \code{X} (matching
+      \code{colSums()}): error messages are thereby corrected.
 
       \item A \code{coef()} method for class \code{"maov"} has been
       added to allow \code{vcov()} to work with multivariate
       results. (\PR{16380})
 
-      \item \code{libcurl} connections signal errors rather than
-      retrieving HTTP error pages.
+      \item \code{method = "libcurl"} connections signal errors rather
+      than retrieving HTTP error pages (where the ISP reports the
+      error).
     }
   }
 }
