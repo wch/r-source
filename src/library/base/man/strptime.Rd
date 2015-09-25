@@ -96,8 +96,9 @@ strptime(x, format, tz = "")
     \item{\code{\%C}}{Century (00--99): the integer part of the year
       divided by 100.}
     \item{\code{\%d}}{Day of the month as decimal number (01--31).}
-    \item{\code{\%D}}{Date format such as \code{\%m/\%d/\%y}: ISO C99
-      says it should be that exact format.}
+    \item{\code{\%D}}{Date format such as \code{\%m/\%d/\%y}: the C99
+      standard says it should be that exact format (but not all OSes
+      comply).}
     \item{\code{\%e}}{Day of the month as decimal number (1--31), with
       a leading space for a single-digit number.}
     \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date

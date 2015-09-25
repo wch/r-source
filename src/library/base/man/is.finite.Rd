@@ -102,7 +102,7 @@ NaN
   \url{http://www.validlab.com/goldberg/paper.ps}
   Extended PDF version at \url{http://www.validlab.com/goldberg/paper.pdf}
 
-  The C99 function \code{isfinite} is used for \code{is.finite} if available.
+  The C99 function \code{isfinite} is used for \code{is.finite}.
 }
 \examples{
 pi / 0 ## = Inf a non-zero number divided by zero creates infinity

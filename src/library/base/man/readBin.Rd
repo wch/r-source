@@ -1,6 +1,6 @@
 % File src/library/base/man/readBin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readBin}
@@ -8,7 +8,7 @@
 \alias{writeBin}
 \title{Transfer Binary Data To and From Connections}
 \description{
-  Read binary data from a connection, or write binary data to a connection.
+  Read binary data from or write binary data to a connection or raw vector.
 }
 \usage{
 readBin(con, what, n = 1L, size = NA_integer_, signed = TRUE,
@@ -69,13 +69,18 @@ writeBin(object, con, size = NA_integer_,
   zero-terminated character strings.  Input strings are limited to 10000
   characters.  \code{\link{readChar}} and \code{\link{writeChar}} can
   be used to read and write fixed-length strings.  No check is made that
-  the string is valid in the current locale.
+  the string is valid in the current locale's encoding.
 
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
   \code{NaN}) values is discussed in the \sQuote{R Data Import/Export} manual.
 
   Only \eqn{2^{31}-1}{2^31 - 1} bytes can be written in a single
-  call (and that is the maximum capacity of a raw vector).
+  call (and that is the maximum capacity of a raw vector on 32-bit
+  platforms).
+
+  \sQuote{Endian-ness} is relevant for \code{size > 1}, and should
+  always be set for portable code (the default is only appopriate when
+  writing and then reading files on the same platform).
 }
 
 \note{
