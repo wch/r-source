@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -62,15 +62,15 @@ OlsonNames()
   affiliation between major time zones, have opted out of (or in to) DST
   in various years or adopted DST rule changes late or not at all.
   
-  The most common system implementation of \code{POSIXct} is as signed
-  32-bit integers and so only goes back to the end of 1901: on such
-  systems \R assumes that dates prior to that are in the same time zone
-  as they were in 1902.  Most of the world had not adopted time zones by
-  1902 (so used local \sQuote{mean time} based on longitude) but for
-  some places there had been time-zone changes before then.  64-bit
-  representations are becoming common; unfortunately on some 64-bit OSes
-  (notably OS X) the database information is only available for the
-  range 1901--2038, and incompletely for the end years.
+  A quite common system implementation of \code{POSIXct} is as
+  signed 32-bit integers and so only goes back to the end of 1901: on
+  such systems \R assumes that dates prior to that are in the same time
+  zone as they were in 1902.  Most of the world had not adopted time
+  zones by 1902 (so used local \sQuote{mean time} based on longitude)
+  but for a few places there had been time-zone changes before then.
+  64-bit representations are becoming common; unfortunately on some
+  64-bit OSes (notably OS X) the database information is only available
+  for the range 1901--2038, and incompletely for the end years.
 }
 
 \value{
@@ -85,7 +85,7 @@ OlsonNames()
 }
 
 \section{Time zone names}{
-  Names \code{"UTC"} and (its synonym) \code{"GMT"} are accepted on all
+  Names \code{"UTC"} and its synonym \code{"GMT"} are accepted on all
   platforms.
 
   Where OSes describe their valid time zones can be obscure.  The help
@@ -119,8 +119,7 @@ OlsonNames()
   \samp{WET/WEST} up to 1940 and \samp{CET/CEST} from 1946.  (In almost
   all time zones they have been stable since 1970.)  The POSIX standard
   allows only one or two abbreviations per time zone, so you may see the
-  current abbreviation(s) used for older times: more so in versions of
-  \R prior to 3.1.0.
+  current abbreviation(s) used for older times.
   
   The function \code{OlsonNames} returns the time-zone names known to
   the Olson/IANA database on the current system. The system-specific
@@ -131,34 +130,22 @@ OlsonNames()
   time-zone names (but not for example \code{EST5EDT}): this is read by
   \code{OlsonNames}.  See also
   \url{https://en.wikipedia.org/wiki/Zone.tab}.
-#ifdef unix
 
   Where \R was configured with option \option{--with-internal-tzcode}
-  (the default on OS X: recommended on Solaris), the database at
+  (the default on OS X and Windows: recommended on Solaris), the database at
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
   \file{VERSION} in that directory states the version.  Environment
   variable \env{TZDIR} can be used to point to a different
   \file{zoneinfo} directory: this is also supported by the native
   services on some OSes, e.g.\sspace{}Linux).
-#endif
 #ifdef windows
 
-  Under Windows the current version of the database is stated in
-  file \file{\var{\link{R_HOME}}\\share\\zoneinfo\\VERSION}.
-  Environment variable \env{TZDIR} can be used to point to a different
-  \file{zoneinfo} directory.
-
   An attempt is made (once only per session) to map Windows' idea of the
-  current time zone to a location, following an earlier version of
+  current time zone to a location, following a version of
   \url{http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml}
+  with additional values deduced from the Windows Registry and documentation.
   It can be overridden by setting the \env{TZ} environment variable
   before any date-times are used in the session.
-
-  Windows documents a specification of the form \code{GST-1GDT}: this is
-  interpreted as POSIX-like and hence the \sQuote{US rules} for changing
-  to/from DST are applied (and are incorrect for Germany).  This is
-  accepted for backwards compatibility but is unreliable and gives a
-  warning.
 #endif
 
   Most platforms support time zones of the form \samp{GMT+n} and
@@ -167,25 +154,26 @@ OlsonNames()
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
   positive offsets are times behind (west of) UTC.
   
-  Immediately prior to the advent of legislated time zones, people used
-  time based on their longitude, known as \sQuote{Local Mean Time} and
-  abbreviated as \samp{LMT} in the databases.  Often this was codified
-  by a name such as \sQuote{Copenhagen Mean Time} for a period before
-  the switch to standard time zones (such as \samp{GMT+5}).  For
-  example, Paris codified its LMT as \sQuote{Paris Mean Time} in 1891,
-  switched to \samp{GMT+0} in 1911 and to \samp{GMT-1} in 1945.
+  Immediately prior to the advent of legislated time zones, most people
+  used time based on their longitude (or that of a nearby town), known
+  as \sQuote{Local Mean Time} and abbreviated as \samp{LMT} in the
+  databases: in many countries that was codified with a specific name
+  before the switch to a standard time.  For example, Paris codified its
+  LMT as \sQuote{Paris Mean Time} in 1891 (to be used throughout
+  mainland France) and switched to \samp{GMT+0} in 1911.
 }
 
 \note{
   Since 2007 there has been considerable disruption over changes to the
   timings of the DST transitions, aimed at energy conservation.  These
   often have short notice and time-zone databases may not be up to date.
-  (Chile has in the recent past announced changes at \emph{5 days}
-  notice, and in 2014 Turkey gave only a month's notice.)
+  (Morocco in 2013 announced a change to the end of DST at \emph{a days}
+  notice, and in 2015 North Korea gave imprecise information about a
+  change a week in advance.)
 
   On platforms with case-insensitive file systems, time zone names will be
   case-insensitive.  They may or may not be on other platforms and so,
-  for example,  \code{"gmt"} is valid on some platforms and not on others.
+  for example, \code{"gmt"} is valid on some platforms and not on others.
 
   Note that except where replaced, the operation of time zones is an OS
   service, and even where replaced a third-party database is used and
