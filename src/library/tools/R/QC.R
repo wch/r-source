@@ -6531,7 +6531,9 @@ function(dir)
         stop("Package has no 'Version' field", call. = FALSE)
     if(grepl("(^|[.-])0[0-9]+", ver))
         out$version_with_leading_zeroes <- ver
-
+    if(any(unlist(package_version(ver)) >= 1234))
+        out$version_with_large_components <- ver
+    
     language <- meta["Language"]
     if((is.na(language) || language == "en") &&
        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
@@ -7098,8 +7100,6 @@ function(dir)
         out$bad_version <- list(v_m, v_d)
     if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
         out$version_with_jump_in_minor <- list(v_m, v_d)
-    if(any(unlist(v_m) >= 1234))
-        out$version_with_large_components <- meta["Version"]
 
     ## Check submission recency and frequency.
     current_db <- CRAN_current_db()
