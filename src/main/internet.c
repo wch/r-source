@@ -239,6 +239,7 @@ SEXP Rsockclose(SEXP ssock)
 {
     if (length(ssock) != 1) error("invalid 'socket' argument");
     int sock = asInteger(ssock);
+    if (sock <= 0) error(_("attempt to close invalid socket"));
     if(!initialized) internet_Init();
     if(initialized > 0)
 	(*ptr->sockclose)(&sock);
