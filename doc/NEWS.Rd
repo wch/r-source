@@ -292,7 +292,8 @@
       %% https://stat.ethz.ch/pipermail/r-devel/2015-August/071595.html
 
       \item \code{which.min(x)} and \code{which.max(x)} may be much
-      faster for logical and integer \code{x} and now also work for long vectors.
+      faster for logical and integer \code{x} and now also work for long
+      vectors.
     }
   }
 
@@ -314,8 +315,9 @@
       \item \command{configure} now supports the OpenMP flags
       \option{-fopenmp=libomp} (clang) and \option{-qopenmp} (Intel C).
 
-      \item Various OpenMP macros can be set to override the default
-      behaviour of \command{configure}: see file \file{config.site}.
+      \item Various macros can be set to override the default
+      behaviour of \command{configure} when detecting OpenMP: see file
+      \file{config.site}.
     }
   }
 
@@ -384,12 +386,13 @@
       \item (Windows only) \code{dir.create()} did not always warn
       when it failed to create a directory.  (\PR{16537})
 
-      \item When operating in a multibyte locale, \code{grep()}
-      and related functions did not handle UTF-8 strings properly.
+      \item When operating in a non-UTF-8 multibyte locale
+      (e.g.\sspace{}an East Asian locale on Windows), \code{grep()} and
+      related functions did not handle UTF-8 strings properly.
       (\PR{16264})
 
-      \item \code{read.dcf()} misread lines longer than 8191 characters.
-      (Reported by Hervé Pagès with a patch.)
+      \item \code{read.dcf()} sometimes misread lines longer than 8191
+      characters.  (Reported by Hervé Pagès with a patch.)
 
       \item \code{within(df, ..)} no longer drops columns whose name
       start with a \code{"."}.
