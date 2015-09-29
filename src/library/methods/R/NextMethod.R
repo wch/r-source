@@ -123,6 +123,8 @@ callNextMethod <- function(...) {
                    length(fnames) <- i
                    fnames <- c(fnames, rep("", length(call) - i))
                }
+               if (substring(f, nchar(f)-1L) == "<-")
+                   fnames[length(fnames)] <- "value"
                names(call) <- fnames
                call <- as.call(call)
            }
