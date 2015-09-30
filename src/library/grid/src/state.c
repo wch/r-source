@@ -320,6 +320,7 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	LOGICAL(valid)[0] = TRUE;
 	UNPROTECT(1);
 	result = valid;
+        break;
     case GE_SaveSnapshotState:
         {
             SEXP pkgName;
