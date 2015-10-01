@@ -96,9 +96,9 @@ x != y
   always preferable.  See the examples.  (This also applies to the other
   comparison operators.)
   
-  These operators are sometimes called as functions as e.g.
-  \code{`<`(x, y)}: see the description of how argument-matching is done
-  in \code{\link[base]{Ops}}.
+  These operators are sometimes called as functions as
+  e.g.\sspace{}\code{`<`(x, y)}: see the description of how
+  argument-matching is done in \code{\link[base]{Ops}}.
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Compare}} group generic,

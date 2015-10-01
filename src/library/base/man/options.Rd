@@ -152,9 +152,9 @@ getOption(x, default = NULL)
       value is \code{NULL}: see \code{\link{stop}} for the behaviour in
       that case.  The functions \code{\link{dump.frames}} and
       \code{\link{recover}} provide alternatives that allow post-mortem
-      debugging.  Note that these need to specified as e.g.
-      \code{options(error = utils::recover)} in startup files such as
-      \file{\link{.Rprofile}}.}
+      debugging.  Note that these need to specified as
+      e.g.\sspace{}\code{options(error = utils::recover)} in startup
+      files such as \file{\link{.Rprofile}}.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  Valid values are

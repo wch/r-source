@@ -100,9 +100,9 @@ isTRUE(x)
   hence methods need argument names \code{e1, e2}).
 }
 \note{
-  The elementwise operators are sometimes called as functions as e.g.
-  \code{`&`(x, y)}: see the description of how argument-matching is done
-  in \code{\link[base]{Ops}}.
+  The elementwise operators are sometimes called as functions as
+  e.g.\sspace{}\code{`&`(x, y)}: see the description of how
+  argument-matching is done in \code{\link[base]{Ops}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -1,6 +1,6 @@
 % File src/library/methods/man/setSClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{makeClassRepresentation}
@@ -24,7 +24,7 @@ makeClassRepresentation(name, slots=list(), superClasses=character(),
     superClasses if any.}
   \item{superClasses}{what classes does this class extend}
   \item{prototype}{an object providing the default data for the class,
-    e.g, the result of a call to \code{\link{prototype}}.}
+    e.g., the result of a call to \code{\link{prototype}}.}
   \item{package}{The character string name for the package in which
     the class will be stored; see \code{\link{getPackageName}}.}
   \item{validity}{Optional validity method.  See

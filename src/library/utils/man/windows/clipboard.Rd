@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/clipboard.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{clipboard}
@@ -27,8 +27,8 @@ writeClipboard(str, format = 1)
   \item{str}{a character vector or a raw vector.}
 }
 \details{
-  The Windows clipboard offers data in a number of formats: see e.g.
-  \url{https://msdn2.microsoft.com/en-us/library/ms649013.aspx}.
+  The Windows clipboard offers data in a number of formats: see
+  e.g.\sspace{}\url{https://msdn2.microsoft.com/en-us/library/ms649013.aspx}.
 
   The standard formats include
   \tabular{lrl}{
