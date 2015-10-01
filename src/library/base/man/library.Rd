@@ -106,10 +106,11 @@ require(package, lib.loc = NULL, quietly = FALSE,
   session it is an error to use such a package whose license has not
   already been accepted.
 
-  Free or Open Source Software (FOSS, e.g.,
-  \url{https://en.wikipedia.org/wiki/FOSS}) packages are determined by
-  the same filters used by \code{\link{available.packages}} but applied
-  to just the current package, not its dependencies.
+  Free or Open Source Software (FOSS,
+  e.g.\sspace{}\url{https://en.wikipedia.org/wiki/FOSS}) packages are
+  determined by the same filters used by
+  \code{\link{available.packages}} but applied to just the current
+  package, not its dependencies.
 
   There can also be a site-wide file \file{R_HOME/etc/licensed.site} of
   packages (one per line).
@@ -139,8 +140,8 @@ require(package, lib.loc = NULL, quietly = FALSE,
   compiled code can be shared between Unix-alikes, but not to other OSes
   because of potential problems with line endings and OS-specific help
   files.  If sub-architectures are used, the OS similarity is not
-  checked since the OS used to build may differ (e.g.
-  \code{i386-pc-linux-gnu} code can be built on an
+  checked since the OS used to build may differ
+  (e.g.\sspace{}\code{i386-pc-linux-gnu} code can be built on an
   \code{x86_64-unknown-linux-gnu} OS).
 
   The package name given to \code{library} and \code{require} must match

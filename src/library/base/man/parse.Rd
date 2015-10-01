@@ -53,11 +53,11 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},
   \code{\link{deparse}}.
 
-  The source reference information can be used for debugging (see e.g.
-  \code{\link{setBreakpoint}}) and profiling (see
+  The source reference information can be used for debugging (see
+  e.g.\sspace{}\code{\link{setBreakpoint}}) and profiling (see
   \code{\link{Rprof}}). It can be examined by \code{\link{getSrcref}}
   and related functions.  More detailed information is available through
-  \code{\link{getParseData}}.  
+  \code{\link{getParseData}}.
 }
 \details{
   If \code{text} has length greater than zero (after coercion) it is used in

@@ -23,9 +23,8 @@ shell.exec(file)
   \R versions 2.13.0 and earlier interpreted \code{file} relative to
   the \R home directory, so a complete path was usually needed.
 
-  Encoded \samp{file://} URLs should be in the Windows standard form, e.g.
-  \code{"file:///c:/path/to/file.txt"}.
-
+  Encoded \samp{file://} URLs should be in the Windows standard form,
+  e.g.\sspace{}\code{"file:///c:/path/to/file.txt"}.
 }
 \value{
   No value, but informative error messages will be given if the
