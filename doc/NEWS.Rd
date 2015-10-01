@@ -173,6 +173,11 @@
       \item More consistent, partly not back-compatible behavior of
       \code{NA} and \code{NaN} coercion to complex numbers, operations
       less often resulting in complex \code{NA} (\code{NA_complex_}).
+
+      \item \code{lengths()} considers methods for \code{length} and
+      \code{[[} on \code{x}, so it should work automatically on any
+      objects for which appropriate methods on those generics are
+      defined.
     }
   }
 
