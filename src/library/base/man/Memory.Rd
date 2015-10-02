@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -31,7 +31,7 @@
   bytes on a 64-bit build.
 
   The default values are (currently) an initial setting of 350k cons
-  cell sand 6Mb of vector heap.  Note that the areas are not actually
+  cells and 6Mb of vector heap.  Note that the areas are not actually
   allocated initially: rather these values are the sizes for triggering
   garbage collection.  These values can be set by the command line
   options \option{--min-nsize} and \option{--min-vsize} (or if they are
