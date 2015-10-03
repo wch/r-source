@@ -1647,13 +1647,12 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-@c As El Capitan is unreleased, we cannot claim that works.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite
 @dots{}@footnote{It seems that because of a security change in El
 Capitan earlier versions of the installer will fail there, but those as
-from @R{} 3.2.2 are expected to work.}).
+from @R{} 3.2.2 should work.}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
@@ -1714,15 +1713,16 @@ its user manual is currently part of the OS X FAQ at
 can be viewed from @Rapp{}'s `Help' menu.
 
 
-You can run command-line @R{} from a Terminal@footnote{The installer
-currently puts links to @command{R} and @command{Rscript} in
-@file{/usr/bin} so these can be typed as commands.  This will change to
-@file{/usr/local/bin} under El Capitan and later.} like any other Unix-alike:
-see the next chapter of this manual.  There are some small differences
-which may surprise users of @R{} on other platforms, notably the default
-location of the personal library directory (under @file{~/Library/R},
-e.g. @file{~/Library/R/3.3/library}), and that warnings, messages and
-other output to @file{stderr} are highlighted in bold.
+You can run command-line @R{} from a Terminal@footnote{The installer as
+from @R{} 3.2.2 puts links to @command{R} and @command{Rscript} in
+@file{/usr/bin} (Mavericks, Yosemite) or @file{/usr/local/bin} (El
+Capitan and later).} so these can be typed as commands like any other
+Unix-alike: see the next chapter of this manual.  There are some small
+differences which may surprise users of @R{} on other platforms, notably
+the default location of the personal library directory (under
+@file{~/Library/R}, e.g. @file{~/Library/R/3.3/library}), and that
+warnings, messages and other output to @file{stderr} are highlighted in
+bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
 It has been reported that running @Rapp{} under Yosemite may fail if no
@@ -1763,10 +1763,8 @@ framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them into the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
-links to @file{R} and @file{Rscript} in @file{/usr/bin} (or
-@file{/usr/local/bin} from El Capitan) should also be removed.@footnote{It is
-recommended to remove those in @file{/usr/bin} before upgrading in-place
-to El Capitan as it may be hard to remove them later.}
+links to @file{R} and @file{Rscript} in @file{/usr/bin} or
+@file{/usr/local/bin} should also be removed.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
 run (prepend @code{sudo} if needed):
@@ -4776,29 +4774,36 @@ partially remove previous versions which can be confusing.)
 @node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
 @subsection El Capitan
 
-[This is provisional information about OS X 10.11 aka El Capitan as it
-is not yet released.]
-
 @c XQuartz does not install out-of-the-box:
 @c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
 
-There are likely to be problems from the restriction that only Apple is
-allowed to install software under @file{/usr}: this affects @emph{inter
-alia} @code{MacTeX} and @code{XQuartz}.  For @code{MacTeX} it is
-necessary to include @file{/Library/TeX/texbin} in your path rather the
-@file{/usr/texbin}.
+[El Capitan was released at the end of September 2015, and experience to
+date is with systems which have been updated from Mavericks.  Upgraded
+systems need at least the Command Line Tools reinstalled.]
 
-@command{configure} may need to be told to look for @code{X11} in
+There are problems resulting from the new-to-El-Capitan restriction that
+only Apple is allowed to install software under @file{/usr}: this
+affects @emph{inter alia} @code{MacTeX} and @code{XQuartz}.  For
+@code{MacTeX} it is necessary to include @file{/Library/TeX/texbin} in
+your path rather than @file{/usr/texbin}.  It is not currently possible
+to install @code{XQuartz} cleanly on El Capitan as is tries to make
+links under @file{/usr}, but a pre-existing installation will continue
+to work.
+
+@command{configure} should to be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
 @example
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 
-It may be necessary to replace @file{/usr/X11} by @file{/opt/X11} in
-file @file{/usr/local/lib/tkConfig.sh}, and to use
+It may be necessary for a clean installation for @code{XQuartz} to
+replace @file{/usr/X11} by @file{/opt/X11} in file
+@file{/usr/local/lib/tkConfig.sh}, and to use
 @command{install_name_tool} to adjust
 @file{/usr/local/lib/libtk8.6.dylib} to link to libraries under
-@file{/opt/X11} rather than @file{/usr/X11}.
+@file{/opt/X11} rather than @file{/usr/X11}.  Updated installations seem
+to preserve @file{/usr/X11}, but there are packages assuming
+@file{/usr/X11R6}, a link that no longer exists.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4859,8 +4864,9 @@ latest Java from Oracle (currently from
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @code{Java For OS X 2015-001} from
-@uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up
-messages, even if you have a current version installed.
+@uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up messages
+from running @command{java}, even if you have a current version
+installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
