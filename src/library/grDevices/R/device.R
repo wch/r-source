@@ -282,7 +282,7 @@ dev.new <- function(..., noRStudioGD = FALSE)
     if(!is.character(dev) && !is.function(dev))
         stop("invalid setting for 'getOption(\"device\")'")
     if(is.character(dev) && noRStudioGD && dev == "RStudioGD") {
-        ## copied from zzz.R
+        ## keep in step with .onLoad in zzz.R
         if(!nzchar(defdev <- Sys.getenv("R_DEFAULT_DEVICE"))) defdev <- pdf
         dev <- if(interactive()) {
             if(nzchar(intdev <- Sys.getenv("R_INTERACTIVE_DEVICE"))) intdev
@@ -290,8 +290,8 @@ dev.new <- function(..., noRStudioGD = FALSE)
                 dsp <- Sys.getenv("DISPLAY")
                 if(.Platform$OS.type == "windows") windows
                 else if (.Platform$GUI == "AQUA" ||
-                         ((!nzchar(dsp) || grepl("^/tmp/launch-", dsp))
-                          && .Call(C_makeQuartzDefault))) quartz
+                         ((!nzchar(dsp) || grepl("^/tmp/launch-|^/private/tmp/com.apple.launchd", dsp))
+                           && .Call(C_makeQuartzDefault))) quartz
                 else if (nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
                 else defdev
             }

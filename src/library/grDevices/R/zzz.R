@@ -37,6 +37,7 @@ if (.Platform$OS.type == "windows") {
         intdev <- Sys.getenv("R_INTERACTIVE_DEVICE")
         if(nzchar(intdev)) intdev
         else {
+            ## keep in step with dev.new in device.R
             dsp <- Sys.getenv("DISPLAY")
             if(.Platform$OS.type == "windows") windows
             else if (.Platform$GUI == "AQUA" ||
