@@ -4786,9 +4786,9 @@ only Apple is allowed to install software under @file{/usr}: this
 affects @emph{inter alia} @code{MacTeX} and @code{XQuartz}.  For
 @code{MacTeX} it is necessary to include @file{/Library/TeX/texbin} in
 your path rather than @file{/usr/texbin}.  It is not currently possible
-to install @code{XQuartz} cleanly on El Capitan as is tries to make
-links under @file{/usr}, but a pre-existing installation will continue
-to work.
+to install @code{XQuartz} cleanly on El Capitan as the installer tries
+to make links under @file{/usr}, but a pre-existing installation will
+continue to work.
 
 @command{configure} should to be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
@@ -4865,8 +4865,7 @@ latest Java from Oracle (currently from
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @code{Java For OS X 2015-001} from
 @uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up messages
-from running @command{java}, even if you have a current version
-installed.
+even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
