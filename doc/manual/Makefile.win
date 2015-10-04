@@ -8,10 +8,10 @@ include ../../src/gnuwin32/MkRules
 
 ifeq "$(MIKTEX)" "TRUE"
 R_TEXOPTS = --include-directory=../../share/texmf/tex/latex
-TEXI2DVI = texi2dvi
+# TEXI2DVI = texi2dvi
 else
 R_TEXOPTS =
-TEXI2DVI =
+# TEXI2DVI =
 endif
 
 R_EXE = ../../$(BINDIR)/Rterm

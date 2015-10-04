@@ -111,6 +111,8 @@
 
 # unset this if you are *not* using MiKTeX
 # MIKTEX = TRUE
+# Recent MiKTEX does not provide texi2dvi and needs something like
+# TEXI2DVI = TEXINDEX=/Rtools/bin/texindex.exe texify
 
 # for texinfo >= 5.1. If the texinfo files are installed at /packages/texinfo,
 # TEXI2ANY = /path/to/perl -I/packages/texinfo /packages/texinfo/texi2any

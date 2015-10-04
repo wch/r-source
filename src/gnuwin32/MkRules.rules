@@ -22,6 +22,7 @@ CAIRO_HOME ?=
 BUILD_HTML ?= NO
 MIKTEX ?= TRUE
 TEXI2ANY ?= missing
+TEXI2DVI ?= texi2dvi
 EOPTS ?= -mtune=core2
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
