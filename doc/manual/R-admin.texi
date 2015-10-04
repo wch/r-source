@@ -1649,10 +1649,10 @@ Windows' CRLF line endings.
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite
-@dots{}@footnote{It seems that because of a security change in El
-Capitan earlier versions of the installer will fail there, but those as
-from @R{} 3.2.2 should work.}).
+and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
+El Capitan@footnote{for @R{} 3.2.1 and earlier, the installer will
+attempt unsuccessfully to install @command{R} and @command{Rscript} in
+@file{/usr/bin}.}, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
@@ -1684,7 +1684,7 @@ Various parts of the build require XQuartz to be installed: : see
 package and the @code{X11} device: attempting to use these without
 XQuartz will remind you.
 
-If you update your OS X version, you should re-install @R{} (and
+If you update your OS X version, you should re-install @R{} (and perhaps
 XQuartz): the installer tailors the installation to the current version
 of the OS.
 
@@ -1705,7 +1705,7 @@ distribution.
 
 There is a GUI console normally installed with the @R{} icon in
 @file{/Applications} which you can run by double-clicking (e.g. from
-Launchpad or Finder).  (If you cannot find there it was possibly
+Launchpad or Finder).  (If you cannot find it there it was possibly
 installed elsewhere so try searching for it in Spotlight.) This is
 usually referred to as @Rapp{} to distinguish it from command-line @R{}:
 its user manual is currently part of the OS X FAQ at
@@ -1716,13 +1716,14 @@ can be viewed from @Rapp{}'s `Help' menu.
 You can run command-line @R{} from a Terminal@footnote{The installer as
 from @R{} 3.2.2 puts links to @command{R} and @command{Rscript} in
 @file{/usr/bin} (Mavericks, Yosemite) or @file{/usr/local/bin} (El
-Capitan and later).} so these can be typed as commands like any other
-Unix-alike: see the next chapter of this manual.  There are some small
-differences which may surprise users of @R{} on other platforms, notably
-the default location of the personal library directory (under
-@file{~/Library/R}, e.g. @file{~/Library/R/3.3/library}), and that
-warnings, messages and other output to @file{stderr} are highlighted in
-bold.
+Capitan and later). If these are missing, you can run directly the
+versions in @file{/Library/Frameworks/R.framework/Resources/}.} so these
+can be typed as commands like any other Unix-alike: see the next chapter
+of this manual.  There are some small differences which may surprise
+users of @R{} on other platforms, notably the default location of the
+personal library directory (under @file{~/Library/R},
+e.g. @file{~/Library/R/3.3/library}), and that warnings, messages and
+other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
 It has been reported that running @Rapp{} under Yosemite may fail if no
@@ -1767,14 +1768,14 @@ links to @file{R} and @file{Rscript} in @file{/usr/bin} or
 @file{/usr/local/bin} should also be removed.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
-run (prepend @code{sudo} if needed):
+run (use @file{/usr/local/bin} on El Capitan):
 
 @example
-rm -rf /Library/Frameworks/R.framework /Applications/R.app \
+sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/bin/R /usr/bin/Rscript
 @end example
 
-The installation consisted of four Apple packages:
+The installation consists of four Apple packages:
 @code{org.r-project.R.x86_64.fw.pkg},
 @code{org.r-project.R.x86_64.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
@@ -1785,7 +1786,7 @@ for the @R{} framework when installing multiple R versions in parallel),
 or after you have deleted the files.
 
 Uninstalling the Tcl/Tk or Texinfo components (which are installed under
-@file{/usr/local}) is not simple.  You can list the files they installed
+@file{/usr/local}) is not as simple.  You can list the files they installed
 in a Terminal by
 
 @example
@@ -4627,9 +4628,10 @@ built for 10.6 to 10.8 but these has not been tested recently.
 
 To build @R{} you need Apple's `Command Line Tools': these can be
 (re-)installed by @command{xcode-select --install}.  (If you have a
-fresh installation, running e.g.@: @command{make} in a terminal will
+fresh OS installation, running e.g.@: @command{make} in a terminal will
 offer the installation of the command-line tools.  If you have installed
-Xcode, this provides the command-line tools.)
+Xcode, this provides the command-line tools.  The tools will need to be
+reinstalled when OS X is upgraded, as upgrading partially removes them.)
 
 You need @code{readline} (or to configure using
 @option{--without-readline}), and a Fortran compiler.  Those and other
@@ -4758,9 +4760,9 @@ that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
 versions.
 
-If you upgrade your OS you should re-install any of XQuartz, the
-`Command Line Tools' and Java which you have installed.  (Upgrading may
-partially remove previous versions which can be confusing.)
+If you upgrade your OS you should re-install the `Command Line Tools'
+and may need to re-install XQuartz and Java (this has been needed for
+some upgrades but not others).
 
 
 @menu
@@ -4774,36 +4776,40 @@ partially remove previous versions which can be confusing.)
 @node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
 @subsection El Capitan
 
-@c XQuartz does not install out-of-the-box:
+@c Claimed that XQuartz does not install out-of-the-box:
 @c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
 
-[El Capitan was released at the end of September 2015, and experience to
-date is with systems which have been updated from Mavericks.  Upgraded
-systems need at least the Command Line Tools reinstalled.]
+El Capitan was released at the end of September 2015, and experience to
+date is with systems which have been updated from Yosemite or earlier.
+Upgraded systems need the Command Line Tools reinstalled.
 
 There are problems resulting from the new-to-El-Capitan restriction that
 only Apple is allowed to install software under @file{/usr}: this
 affects @emph{inter alia} @code{MacTeX} and @code{XQuartz}.  For
 @code{MacTeX} it is necessary to include @file{/Library/TeX/texbin} in
-your path rather than @file{/usr/texbin}.  It is not currently possible
-to install @code{XQuartz} cleanly on El Capitan as the installer tries
-to make links under @file{/usr}, but a pre-existing installation will
-continue to work.
+your path rather than @file{/usr/texbin}.  Upgrading will move
+disallowed files to under @file{/Library/SystemMigration/usr}: this
+includes @file{/usr/X11R6}, @file{/usr/texbin}, @file{/usr/bin/R},
+@file{/usr/bin/Rscript} but not the link @file{/usr/X11}.
 
-@command{configure} should to be told to look for @code{X11} in
+@command{configure} can be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
 @example
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
 @end example
 
-It may be necessary for a clean installation for @code{XQuartz} to
-replace @file{/usr/X11} by @file{/opt/X11} in file
-@file{/usr/local/lib/tkConfig.sh}, and to use
-@command{install_name_tool} to adjust
-@file{/usr/local/lib/libtk8.6.dylib} to link to libraries under
-@file{/opt/X11} rather than @file{/usr/X11}.  Updated installations seem
-to preserve @file{/usr/X11}, but there are packages assuming
-@file{/usr/X11R6}, a link that no longer exists.
+@noindent
+although the linked versions under @file{/usr/X11} will be found (if the
+link is present).
+
+@c It may be necessary for a clean installation for @code{XQuartz} to
+@c replace @file{/usr/X11} by @file{/opt/X11} in file
+@c @file{/usr/local/lib/tkConfig.sh}, and to use
+@c @command{install_name_tool} to adjust
+@c @file{/usr/local/lib/libtk8.6.dylib} to link to libraries under
+@c @file{/opt/X11} rather than @file{/usr/X11}.  Updated installations seem
+@c to preserve @file{/usr/X11}, but there are packages assuming
+@c @file{/usr/X11R6}, a link that no longer exists.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4828,10 +4834,11 @@ in the native OS X style: this will not work with @Rapp{} because of
 conflicts over the OS X menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not at all recent versions of Tcl/Tk (8.5.9 in Yosemite).  It is
-better to install Tcl/Tk 8.6.x from the sources or a binary distribution
-from @uref{https://www.activestate.com/activetcl/downloads}.  Configure
-@R{} with
+are not at all recent versions of Tcl/Tk (8.5.9 in El Capitan, which is
+not even the latest patched version in that series).  It is better to
+install Tcl/Tk 8.6.x from the sources or a binary distribution from
+@uref{https://www.activestate.com/activetcl/downloads}.  Configure @R{}
+with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
