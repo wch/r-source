@@ -3162,14 +3162,14 @@ Building PDF package manuals (including the @R{} reference manual) and
 vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
-(including @pkg{fancyvrb}, @pkg{url} and some of the font packages such
-as @pkg{times}, @pkg{helvetic}, @pkg{ec} and @pkg{cm-super}) and others
-such as @pkg{hyperref} and @pkg{inconsolata} are desirable (and without
-them you may need to change @R{}'s defaults: @pxref{Making the
-manuals}).  Note that package @pkg{hyperref} (currently) requires
-packages @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For
-distributions based on TeXLive the simplest approach may be to install
-collections @pkg{collection-latex}, @pkg{collection-fontsrecommended},
+(including @pkg{url} and some of the font packages such as @pkg{times},
+@pkg{helvetic}, @pkg{ec} and @pkg{cm-super}) and others such as
+@pkg{hyperref} and @pkg{inconsolata} are desirable (and without them you
+may need to change @R{}'s defaults: @pxref{Making the manuals}).  Note
+that package @pkg{hyperref} (currently) requires packages
+@pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For distributions
+based on TeXLive the simplest approach may be to install collections
+@pkg{collection-latex}, @pkg{collection-fontsrecommended},
 @pkg{collection-latexrecommended}, @pkg{collection-fontsextra} and
 @pkg{collection-latexextra} (assuming they are not installed by
 default): Fedora uses names like @pkg{texlive-collection-fontsextra} and
@@ -5642,10 +5642,10 @@ The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
 @LaTeX{} includes a suitable port of @code{pdftex}.  This can be set up
 to install extra packages `on the fly', which is the simplest way to use
 it (and the default).  The `basic' version of @samp{MiKTeX} almost
-suffices: when last tested packages
+suffices: when last checked packages
 
 @example
-epsf fancyvrb inconsolata listings mptopdf natbib url
+epsf inconsolata mptopdf url
 @end example
 
 @noindent
