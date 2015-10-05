@@ -52,8 +52,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   path.  Analogous changes are made to \env{BIBINPUTS} and
   \env{BSTINPUTS} settings.
 
-  MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
-  installation that we know of does, so emulation is used on
+  MiKTeX had a \code{texi2dvi} executable until Sept 2015, but no other
+  Windows TeX installation that we know of does, so emulation is used on
   e.g.\sspace{}TeXLive installations on Windows.
 
   Occasionally indices contain special characters which cause indexing
@@ -67,7 +67,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   this \R wrapper works around.
 
   One that was present with \command{texi2dvi} version \code{4.8} (as
-  supplied on OS X) is that it will not work correctly for paths which
+  supplied by OS X) is that it will not work correctly for paths which
   contain spaces, nor if the absolute path to a file would contain
   spaces.
 
@@ -76,7 +76,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   exist but the other two approaches do not (and may get confused by
   such files).
   
-  Where supported (\command{texi2dvi} 5.x and \command{texify}),
+  Where supported (\command{texi2dvi} 5.x and MiKTeX),
   option \option{--max-iterations=20} is used to avoid infinite retries.
 }
 \value{
