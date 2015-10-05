@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/device.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -281,25 +281,11 @@ dev.new <- function(..., noRStudioGD = FALSE)
     dev <- getOption("device")
     if(!is.character(dev) && !is.function(dev))
         stop("invalid setting for 'getOption(\"device\")'")
-    if(is.character(dev) && noRStudioGD && dev == "RStudioGD") {
-        ## keep in step with .onLoad in zzz.R
-        if(!nzchar(defdev <- Sys.getenv("R_DEFAULT_DEVICE"))) defdev <- pdf
-        dev <- if(interactive()) {
-            if(nzchar(intdev <- Sys.getenv("R_INTERACTIVE_DEVICE"))) intdev
-            else {
-                dsp <- Sys.getenv("DISPLAY")
-                if(.Platform$OS.type == "windows") windows
-                else if (.Platform$GUI == "AQUA" ||
-                         ((!nzchar(dsp) || grepl("^/tmp/launch-|^/private/tmp/com.apple.launchd", dsp))
-                           && .Call(C_makeQuartzDefault))) quartz
-                else if (nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
-                else defdev
-            }
-        } else defdev
-    }
+    if(noRStudioGD && is.character(dev) && dev == "RStudioGD")
+        dev <- .select_device()
     if(is.character(dev)) {
         ## this is documented to be searched for from workspace,
-        ## then in graphics namespace.
+        ## then in the grDevices namespace.
         ## We could restrict the search to functions, but the C
         ## code in devices.c does not.
         dev <- if(exists(dev, .GlobalEnv)) get(dev, .GlobalEnv)
@@ -385,4 +371,28 @@ dev.capabilities <- function(what = NULL)
                   if (zz[8L]) "MouseUp",
                   if (zz[9L]) "Keybd" )[-1L]
     if (!is.null(what)) z[charmatch(what, names(z), 0L)] else z
+}
+
+## for use in dev.new and .onLoad
+.select_device <- function() {
+    ## Use device functions rather than names to make it harder to get masked.
+    if(!nzchar(defdev <- Sys.getenv("R_DEFAULT_DEVICE"))) defdev <- pdf
+    if(interactive()) {
+        if(nzchar(intdev <- Sys.getenv("R_INTERACTIVE_DEVICE"))) intdev
+        else {
+            if(.Platform$OS.type == "windows") windows
+            else {
+                dsp <- Sys.getenv("DISPLAY")
+                ## the first condition is running under R.app.
+                ## Recentish OS X with XQuartz installed sets DISPLAY on startup
+                ## and what this is set to changed ca Yosemite
+                ## It would be better to grep for org.macosforge.xquartz .
+                if(.Platform$GUI == "AQUA" ||
+                    ((!nzchar(dsp) || grepl("^/tmp/launch-|^/private/tmp/com.apple.launchd", dsp))
+                     && .Call(C_makeQuartzDefault))) quartz
+                else if(nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
+                else defdev
+            }
+        }
+    } else defdev
 }
