@@ -1,6 +1,6 @@
 % File src/library/base/man/userhooks.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{userhooks}
@@ -90,11 +90,22 @@ packageEvent(pkgname,
   The hooks are stored in the environment \code{.userHooksEnv} in the
   base package, with \sQuote{mangled} names.
 }
+
 \value{
   For \code{getHook} function, a list of functions (possibly empty).
   For \code{setHook} function, no return value.
   For \code{packageEvent}, the derived hook name (a character string).
 }
+
+\note{
+  Hooks need to be set before the event they modify: for standard
+  packages this can be problematic as \pkg{methods} is loaded and
+  attached early in the startup sequence and currently that loads the
+  \pkg{utils} namepace.   The usual place to set hooks such as the
+  example below is in the \file{.Rprofile} file, but that will not work
+  for \pkg{methods} and \pkg{utils}.
+}
+
 \seealso{
   \code{\link{library}}, \code{\link{detach}}, \code{\link{loadNamespace}}.
 
