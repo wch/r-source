@@ -896,7 +896,7 @@ signature <-
 		i), domain = NA)
 
     }
-    setNames(as.character(value), names)
+    stats::setNames(as.character(value), names)
 }
 
 showMethods <-
@@ -998,7 +998,7 @@ showMethods <-
 
     classes <- c(class, names(getClass(class)@contains))
     generics <- as.vector(getGenerics(where=search()))
-    nms <- setNames(generics, generics)
+    nms <- stats::setNames(generics, generics)
 
     packages <- lapply(nms, function(generic) {
 	table <- environment(getGeneric(generic))[[".MTable"]]
@@ -1008,7 +1008,7 @@ showMethods <-
 	table <- environment(getGeneric(generic))[[".MTable"]]
 	lapply(table, function(m) {
             if (is(m, "MethodDefinition") && any(m@defined %in% classes))
-                setNames(as.vector(m@defined), names(m@defined))
+                stats::setNames(as.vector(m@defined), names(m@defined))
             ## else NULL
         })
     })
@@ -1076,7 +1076,7 @@ showMethods <-
     signatures <- lapply(methods, function(method, classes) {
         m <- table[[method]]
         if (is(m, "MethodDefinition"))
-            setNames(as.vector(m@defined), names(m@defined))
+            stats::setNames(as.vector(m@defined), names(m@defined))
         else
             NULL
     })

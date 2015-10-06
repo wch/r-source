@@ -351,7 +351,7 @@ conformMethod <- function(signature, mnames, fnames,
         n <- n - 1L
     length(signature) <- n
     length(fsig) <- n
-    setNames(signature, fsig)
+    stats::setNames(signature, fsig)
 }
 
 rematchDefinition <- function(definition, generic, mnames, fnames, signature)
