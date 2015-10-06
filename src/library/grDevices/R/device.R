@@ -387,7 +387,7 @@ dev.capabilities <- function(what = NULL)
                 ## Recentish OS X with XQuartz installed sets DISPLAY
                 ## on X11 startup: we ignore such a setting
                 if(.Platform$GUI == "AQUA" ||
-                    ((!nzchar(dsp) || grepl("org.macosforge.xquartz", dsp))
+                    ((!nzchar(dsp) || grepl("org.macosforge.xquartz", dsp, fixed = TRUE))
                      && .Call(C_makeQuartzDefault))) quartz
                 else if(nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
                 else defdev
