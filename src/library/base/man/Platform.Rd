@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -43,15 +43,16 @@
   }
   \item{endian}{
     character string, \code{"big"} or \code{"little"}, giving the
-    endianness of the processor in use.  This is relevant when it is
-    necessary to know the order to read/write bytes of e.g.\sspace{}an integer or
-    double from/to a \link{connection}: see \code{\link{readBin}}.
+    \sQuote{endianness} of the processor in use.  This is relevant when it is
+    necessary to know the order to read/write bytes of e.g.\sspace{}an
+    integer or double from/to a \link{connection}: see
+    \code{\link{readBin}}.
   }
   \item{pkgType}{
     character string, the preferred setting for
     \code{\link{options}("pkgType")}.  Values \code{"source"},
-    \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
-    \code{"win.binary"} are currently in use.
+    \code{"mac.binary.mavericks"} and \code{"win.binary"} are currently
+    in use.
 
     This should \strong{not} be used to identify the OS.
   }
@@ -77,7 +78,7 @@
     \item selects native (rather than Tk) widgets for the \code{graphics
       = TRUE} options of \code{\link{menu}} and \code{\link{select.list}}.
     \item HTML help is displayed in the internal browser.
-    \item The spreadsheet-like data editor/viewer uses a Quartz version
+    \item the spreadsheet-like data editor/viewer uses a Quartz version
     rather than the X11 one.
   }
 }
