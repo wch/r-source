@@ -16,6 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## copy here to avoid importing from stats and hence loading stats
+## namespace when methods if loaded
+setNames <- stats::setNames
+
 
 setGeneric <-
   ## Define `name' to be a generic  function, for which methods will be defined.
@@ -896,7 +900,7 @@ signature <-
 		i), domain = NA)
 
     }
-    stats::setNames(as.character(value), names)
+    setNames(as.character(value), names)
 }
 
 showMethods <-
@@ -998,7 +1002,7 @@ showMethods <-
 
     classes <- c(class, names(getClass(class)@contains))
     generics <- as.vector(getGenerics(where=search()))
-    nms <- stats::setNames(generics, generics)
+    nms <- setNames(generics, generics)
 
     packages <- lapply(nms, function(generic) {
 	table <- environment(getGeneric(generic))[[".MTable"]]
@@ -1008,7 +1012,7 @@ showMethods <-
 	table <- environment(getGeneric(generic))[[".MTable"]]
 	lapply(table, function(m) {
             if (is(m, "MethodDefinition") && any(m@defined %in% classes))
-                stats::setNames(as.vector(m@defined), names(m@defined))
+                setNames(as.vector(m@defined), names(m@defined))
             ## else NULL
         })
     })
@@ -1076,7 +1080,7 @@ showMethods <-
     signatures <- lapply(methods, function(method, classes) {
         m <- table[[method]]
         if (is(m, "MethodDefinition"))
-            stats::setNames(as.vector(m@defined), names(m@defined))
+            setNames(as.vector(m@defined), names(m@defined))
         else
             NULL
     })

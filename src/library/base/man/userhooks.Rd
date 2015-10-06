@@ -100,10 +100,9 @@ packageEvent(pkgname,
 \note{
   Hooks need to be set before the event they modify: for standard
   packages this can be problematic as \pkg{methods} is loaded and
-  attached early in the startup sequence and currently that loads the
-  \pkg{utils} namepace.   The usual place to set hooks such as the
-  example below is in the \file{.Rprofile} file, but that will not work
-  for \pkg{methods} and \pkg{utils}.
+  attached early in the startup sequence.   The usual place to set hooks
+  such as the example below is in the \file{.Rprofile} file, but that
+  will not work for \pkg{methods}.
 }
 
 \seealso{

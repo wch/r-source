@@ -4,7 +4,6 @@ useDynLib(methods, .registration = TRUE, .fixes = "C_")
 ## (if in R_DEFAULT_PACKAGES), so adding other namespaces here has the
 ## undesirable effect of loading them early too (e.g. onLoad hooks are
 ## likely to be not yet set).
-importFrom(utils, find, prompt, tail)
 
 
 exportPattern("^\\.__C__")

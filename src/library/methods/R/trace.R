@@ -624,7 +624,8 @@ utils::globalVariables("fdef")
     allObjects <- names(env)
     allObjects <- allObjects[is.na(match(allObjects, .functionsOverriden))]
     ## counts of packaages containing objects; objects not found don't count
-    possible <- sort(table(unlist(lapply(allObjects, find))), decreasing = TRUE)
+    possible <- sort(table(unlist(lapply(allObjects, utils::find))),
+                     decreasing = TRUE)
 ##    message <- ""
     if(length(possible) == 0)
         stop("none of the objects in the source code could be found:  need to attach or specify the package")

@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+
 ## a few class name definitions needed elsewhere
 .anyClassName <- structure("ANY", package = "methods")
 .signatureClassName <- structure("signature", package = "methods")
