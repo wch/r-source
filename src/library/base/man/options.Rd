@@ -429,6 +429,12 @@ getOption(x, default = NULL)
       configurable via environment variables
       \env{R_INTERACTIVE_DEVICE} and \env{R_DEFAULT_DEVICE}
       respectively.
+
+      The search logic for \sQuote{the normal screen device} is that
+      this is \code{windows} on Windows, and \code{quartz} if available
+      on OS X (running at the console, and compiled into the build).
+      Otherwise \code{X11} is used if environment variable \env{DISPLAY}
+      is set.
     }
 
     \item{\code{device.ask.default}:}{logical.  The default for

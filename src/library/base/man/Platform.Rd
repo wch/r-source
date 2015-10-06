@@ -72,8 +72,11 @@
   \code{.Platform$GUI} is set to \code{"AQUA"} under the OS X GUI,
   \code{R.app}. This has a number of consequences:
   \itemize{
-    \item the \env{DISPLAY} environment variable is set to \code{":0"} if unset.
-    \item appends \file{/usr/local/bin} to the \env{PATH} environment variable.
+%%     \item the \env{DISPLAY} environment variable is set to \code{":0"}
+%%     if unset. (However, it will be set on a machine which has
+%%     XQuartz installed.)
+    \item \file{/usr/local/bin} is \emph{appended} to the \env{PATH}
+    environment variable.
     \item the default graphics device is set to \code{quartz}.
     \item selects native (rather than Tk) widgets for the \code{graphics
       = TRUE} options of \code{\link{menu}} and \code{\link{select.list}}.
