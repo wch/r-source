@@ -384,11 +384,10 @@ dev.capabilities <- function(what = NULL)
             else {
                 dsp <- Sys.getenv("DISPLAY")
                 ## the first condition is running under R.app.
-                ## Recentish OS X with XQuartz installed sets DISPLAY on startup
-                ## and what this is set to changed ca Yosemite
-                ## It would be better to grep for org.macosforge.xquartz .
+                ## Recentish OS X with XQuartz installed sets DISPLAY
+                ## on X11 startup: we ignore such a setting
                 if(.Platform$GUI == "AQUA" ||
-                    ((!nzchar(dsp) || grepl("^/tmp/launch-|^/private/tmp/com.apple.launchd", dsp))
+                    ((!nzchar(dsp) || grepl("org.macosforge.xquartz", dsp))
                      && .Call(C_makeQuartzDefault))) quartz
                 else if(nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
                 else defdev
