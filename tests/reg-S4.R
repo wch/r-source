@@ -803,3 +803,9 @@ cl4 <- getClasses("package:stats4")
 stopifnot(identical(getClasses(which(search() == "package:stats4")), cl4),
 	  c("mle", "profile.mle", "summary.mle") %in% cl4)
 ## failed after an optimization patch
+
+detach("package:methods", force=TRUE)
+C1@slot1 <- pi
+stopifnot(identical(C1@slot1, pi))
+stopifnot(require("methods"))
+## Slot assignment failed in R <= 3.2.2, C code calling checkAtAssignment()

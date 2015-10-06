@@ -658,8 +658,7 @@ static SEXP cache_class(const char *class, SEXP klass)
 	R_PreserveObject(R_S4_extends_table);
     }
     if(isNull(klass)) { /* retrieve cached value */
-	SEXP val;
-	val = findVarInFrame(R_S4_extends_table, install(class));
+	SEXP val = findVarInFrame(R_S4_extends_table, install(class));
 	return (val == R_UnboundValue) ? klass : val;
     }
     defineVar(install(class), klass, R_S4_extends_table);
@@ -1487,23 +1486,30 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env)
 {
-    SEXP valueClass, objClass, e;
-
-    valueClass = PROTECT(R_data_class(value, FALSE));
-    objClass = PROTECT(R_data_class(obj, FALSE));
-    e = PROTECT(lang4(install("checkAtAssignment"),
-		      objClass, input, valueClass));
+    SEXP
+	valueClass = PROTECT(R_data_class(value, FALSE)),
+	objClass   = PROTECT(R_data_class(obj, FALSE));
+    static SEXP checkAt = NULL;
+    // 'methods' may *not* be in search() ==> do as if calling  methods::checkAtAssignment(..)
+    if(!isMethodsDispatchOn()) { // needed?
+	SEXP e = PROTECT(lang1(install("initMethodDispatch")));
+	eval(e, R_MethodsNamespace); // only works with methods loaded
+	UNPROTECT(1);
+    }
+    if(checkAt == NULL)
+	checkAt = findFun(install("checkAtAssignment"), R_MethodsNamespace);
+    SEXP e = PROTECT(lang4(checkAt, objClass, input, valueClass));
     eval(e, env);
     UNPROTECT(3);
 }
 
 
+/* attr(obj, which = "<name>")  <-  value    (op == 0)  and
+        obj @ <name>            <-  value    (op == 1)
+*/
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /*  attr(x, which = "<name>")  <-  value  */
-    SEXP obj, name, argList;
-    static SEXP do_attrgets_formals = NULL;
-
+    SEXP obj, name;
     checkArity(op, args);
 
     if(PRIMVAL(op)) { /* @<- */
@@ -1535,32 +1541,35 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
 	return value;
     }
+    else { // attr(obj, "name") <- value :
+	SEXP argList;
+	static SEXP do_attrgets_formals = NULL;
 
+	obj = CAR(args);
+	if (MAYBE_SHARED(obj))
+	    PROTECT(obj = shallow_duplicate(obj));
+	else
+	    PROTECT(obj);
 
-    obj = CAR(args);
-    if (MAYBE_SHARED(obj))
-	PROTECT(obj = shallow_duplicate(obj));
-    else
-	PROTECT(obj);
+	/* argument matching */
+	if (do_attrgets_formals == NULL)
+	    do_attrgets_formals = allocFormalsList3(install("x"), install("which"),
+						    install("value"));
+	argList = matchArgs(do_attrgets_formals, args, call);
+	PROTECT(argList);
 
-    /* argument matching */
-    if (do_attrgets_formals == NULL)
-	do_attrgets_formals = allocFormalsList3(install("x"), install("which"),
-						install("value"));
-    argList = matchArgs(do_attrgets_formals, args, call);
-    PROTECT(argList);
-
-    name = CADR(argList);
-    if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
-	error(_("'name' must be non-null character string"));
-    /* TODO?  if (isFactor(obj) && !strcmp(asChar(name), "levels"))
-     * ---         if(any_duplicated(CADDR(args)))
-     *                  error(.....)
-     */
-    setAttrib(obj, name, CADDR(args));
-    UNPROTECT(2);
-    SET_NAMED(obj, 0);
-    return obj;
+	name = CADR(argList);
+	if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
+	    error(_("'name' must be non-null character string"));
+	/* TODO?  if (isFactor(obj) && !strcmp(asChar(name), "levels"))
+	 * ---         if(any_duplicated(CADDR(args)))
+	 *                  error(.....)
+	 */
+	setAttrib(obj, name, CADDR(args));
+	UNPROTECT(2);
+	SET_NAMED(obj, 0);
+	return obj;
+    }
 }
 
 
