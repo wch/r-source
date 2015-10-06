@@ -382,14 +382,12 @@ dev.capabilities <- function(what = NULL)
         else {
             if(.Platform$OS.type == "windows") windows
             else {
-                dsp <- Sys.getenv("DISPLAY")
-                ## the first condition is running under R.app.
-                ## Recentish OS X with XQuartz installed sets DISPLAY
-                ## on X11 startup: we ignore such a setting
-                if(.Platform$GUI == "AQUA" ||
-                    ((!nzchar(dsp) || grepl("org.macosforge.xquartz", dsp, fixed = TRUE))
-                     && .Call(C_makeQuartzDefault))) quartz
-                else if(nzchar(dsp) && .Platform$GUI %in% c("X11", "Tk")) X11
+                ## This detects if quartz() was built and if we are
+                ## running at the OS X console (both of which have to
+                ## be true under R.app).
+                if(.Platform$GUI == "AQUA" ||.Call(C_makeQuartzDefault)) quartz
+                else if(nzchar(Sys.getenv("DISPLAY"))
+                        && .Platform$GUI %in% c("X11", "Tk")) X11
                 else defdev
             }
         }
