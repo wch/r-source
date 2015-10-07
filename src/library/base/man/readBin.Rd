@@ -79,7 +79,7 @@ writeBin(object, con, size = NA_integer_,
   platforms).
 
   \sQuote{Endian-ness} is relevant for \code{size > 1}, and should
-  always be set for portable code (the default is only appopriate when
+  always be set for portable code (the default is only appropriate when
   writing and then reading files on the same platform).
 }
 

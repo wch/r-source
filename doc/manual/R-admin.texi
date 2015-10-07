@@ -5023,7 +5023,7 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @subsection Java
 
 The situation with Java support on OS X is messy.@footnote{For more
-detals see @uref{http://www.macstrategy.com/article.php?3}.}
+details see @uref{http://www.macstrategy.com/article.php?3}.}
 
 Snow Leopard and Lion shipped with a Java 6 runtime (JRE).  Mountain
 Lion and later do not come with an installed JRE, and an OS X upgrade
