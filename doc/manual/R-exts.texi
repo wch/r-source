@@ -4209,7 +4209,7 @@ all linkers allow a space after @option{-L} .
 Some people have a need to set a locale.  Locale names are not portable,
 and e.g.@: @samp{fr_FR.utf8} is common used on Linux but not accepted on
 either Solaris or OS X.  @samp{fr_FR.UTF-8} is more portable, being
-accepted on recent Linux, AIX, FreBSD, OS X and Solaris (at least).
+accepted on recent Linux, AIX, FreeBSD, OS X and Solaris (at least).
 However, some Linux distributions micro-package, so locales defined by
 @pkg{glibc} (including these examples) may not be installed.
 

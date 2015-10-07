@@ -4859,7 +4859,7 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @subsection Java
 
 The situation with Java support on OS X is messy.@footnote{For more
-detals see @uref{http://www.macstrategy.com/article.php?3}.}
+details see @uref{http://www.macstrategy.com/article.php?3}.}
 
 OS X no longer comes with an installed Java runtime (JRE), and an OS X
 upgrade removes one if already installed: it is intended to be installed
