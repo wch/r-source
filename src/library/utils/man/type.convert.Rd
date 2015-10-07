@@ -1,6 +1,6 @@
 % File src/library/utils/man/type.convert.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{type.convert}
@@ -58,9 +58,9 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".",
   followed by other decimal or hexadecimal constants (see
   \link{NumericConstants}), or \code{NaN}, \code{Inf} or \code{infinity}
   (ignoring case) or values from \code{na.strings} are converted to
-  numeric.  As from \R 3.1.0, where converting inputs to numeric or
-  complex would result in loss of accuracy they are returned as strings
-  (for \code{as.is = TRUE}) or factors.
+  numeric.  Where converting inputs to numeric or complex would result
+  in loss of accuracy they can optionally be returned as strings (for
+  \code{as.is = TRUE}) or factors.
 
   Since this is a helper function, the caller should always pass an
   appropriate value of \code{as.is}.
