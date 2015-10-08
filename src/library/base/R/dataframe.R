@@ -449,9 +449,7 @@ data.frame <-
 	if(mirn && nrows[i] > 0L) {
             rowsi <- attr(xi, "row.names")
             ## Avoid all-blank names
-            nc <- nchar(rowsi, allowNA = FALSE)
-            nc <- nc[!is.na(nc)]
-            if(length(nc) && any(nc))
+            if(any(nzchar(rowsi)))
                 row.names <- data.row.names(row.names, rowsi, i)
         }
         nrows[i] <- abs(nrows[i])
