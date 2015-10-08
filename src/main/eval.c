@@ -491,7 +491,7 @@ SEXP eval(SEXP e, SEXP rho)
 	evalcount = 0 ;
     }
 
-    /* handle self-evluating objects with minimal overhead */
+    /* handle self-evaluating objects with minimal overhead */
     switch (TYPEOF(e)) {
     case NILSXP:
     case LISTSXP:

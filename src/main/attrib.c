@@ -658,8 +658,7 @@ static SEXP cache_class(const char *class, SEXP klass)
 	R_PreserveObject(R_S4_extends_table);
     }
     if(isNull(klass)) { /* retrieve cached value */
-	SEXP val;
-	val = findVarInFrame(R_S4_extends_table, install(class));
+	SEXP val = findVarInFrame(R_S4_extends_table, install(class));
 	return (val == R_UnboundValue) ? klass : val;
     }
     defineVar(install(class), klass, R_S4_extends_table);
@@ -1479,20 +1478,29 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env)
 {
-    SEXP valueClass, objClass, e;
-
-    valueClass = PROTECT(R_data_class(value, FALSE));
-    objClass = PROTECT(R_data_class(obj, FALSE));
-    e = PROTECT(lang4(install("checkAtAssignment"),
-		      objClass, input, valueClass));
+    SEXP
+	valueClass = PROTECT(R_data_class(value, FALSE)),
+	objClass   = PROTECT(R_data_class(obj, FALSE));
+    static SEXP checkAt = NULL;
+    // 'methods' may *not* be in search() ==> do as if calling  methods::checkAtAssignment(..)
+    if(!isMethodsDispatchOn()) { // needed?
+	SEXP e = PROTECT(lang1(install("initMethodDispatch")));
+	eval(e, R_MethodsNamespace); // only works with methods loaded
+	UNPROTECT(1);
+    }
+    if(checkAt == NULL)
+	checkAt = findFun(install("checkAtAssignment"), R_MethodsNamespace);
+    SEXP e = PROTECT(lang4(checkAt, objClass, input, valueClass));
     eval(e, env);
     UNPROTECT(3);
 }
 
 
+/* attr(obj, which = "<name>")  <-  value    (op == 0)  and
+        obj @ <name>            <-  value    (op == 1)
+*/
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /*  attr(x, which = "<name>")  <-  value  */
     SEXP obj, name, argList;
     static SEXP do_attrgets_formals = NULL;
 

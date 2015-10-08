@@ -124,6 +124,9 @@
 
       \item \code{read.dcf()} sometimes misread lines longer than 8191
       characters.  (Reported by Hervé Pagès with a patch.)
+
+      \item Modifying slots of S4 objects could fail when the
+      \pkg{methods} package was not attached (\PR{16545}).
     }
   }
 }
