@@ -81,7 +81,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
 
   \item{numerals}{string indicating how to convert numbers whose conversion
     to double precision would lose accuracy, see \code{\link{type.convert}}.
-    Can be abbreviated.}
+    Can be abbreviated.  (Applies also to complex-number imputs.)}
 
   \item{row.names}{a vector of row names.  This can be a vector giving
     the actual row names, or a single number giving the column of the
@@ -226,10 +226,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   which they are printed.  If \code{row.names} is specified and does
   not refer to the first column, that column is discarded from such files.
 
-  The number of data columns is determined by looking at the first five lines
-  of input (or the whole file if it has less than five lines), or from
-  the length of \code{col.names} if it is specified and
-  is longer.  This could conceivably be wrong if \code{fill} or
+  The number of data columns is determined by looking at the first five
+  lines of input (or the whole input if it has less than five lines), or
+  from the length of \code{col.names} if it is specified and is longer.
+  This could conceivably be wrong if \code{fill} or
   \code{blank.lines.skip} are true, so specify \code{col.names} if
   necessary (as in the \sQuote{Examples}).
 
