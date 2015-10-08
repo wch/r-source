@@ -416,6 +416,10 @@
 
       \item Modifying slots of S4 objects could fail when the
       \pkg{methods} package was not attached (\PR{16545}).
+
+      \item \code{splineDesign(*, outer.ok=TRUE)} (\pkg{splines}) is better now
+      (\PR{16549}), and \code{interpSpline()} now allows \code{sparse=TRUE}
+      for speedup with non-small sizes.
     }
   }
 }

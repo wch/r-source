@@ -1,6 +1,6 @@
 % File src/library/splines/man/splineDesign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splineDesign}
@@ -18,12 +18,12 @@ spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
              sparse = FALSE)
 }
 \arguments{
-  \item{knots}{a numeric vector of knot positions with non-decreasing
-    values.}
+  \item{knots}{a numeric vector of knot positions (which will be sorted
+    increasingly if needed).}
   \item{x}{a numeric vector of values at which to evaluate the B-spline
     functions or derivatives.  Unless \code{outer.ok} is true, the
-    values in \code{x} must be between \code{knots[ord]} and
-    \code{knots[ length(knots) + 1 - ord ]}.}
+    values in \code{x} must be between the \dQuote{inner} knots
+    \code{knots[ord]} and \code{knots[ length(knots) - (ord-1)]}.}
   \item{ord}{a positive integer giving the order of the spline function.
     This is the number of coefficients in each piecewise polynomial
     segment, thus a cubic spline has order 4.  Defaults to 4.}

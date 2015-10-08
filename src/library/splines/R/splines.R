@@ -1,7 +1,7 @@
 #  File src/library/splines/R/splines.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
             if(nIknots > 0L) {
                 knots <- seq.int(from = 0, to = 1,
                                  length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
-                stats::quantile(x[!outside], knots)
+                quantile(x[!outside], knots)
             }
     }
     Aknots <- sort(c(rep(Boundary.knots, ord), knots))
@@ -108,7 +108,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         knots <- if(nIknots > 0L) {
             knots <- seq.int(0, 1,
                              length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
-            stats::quantile(x[!outside], knots)
+            quantile(x[!outside], knots)
         } ## else  NULL
     } else nIknots <- length(knots)
     Aknots <- sort(c(rep(Boundary.knots, 4L), knots))
@@ -193,8 +193,10 @@ makepredictcall.bs <- function(var, call)
 spline.des <- function(knots, x, ord = 4, derivs = integer(length(x)),
 		       outer.ok = FALSE, sparse = FALSE)
 {
-    list(knots = sort(as.vector(knots)), order = ord, derivs = derivs,
+    if(is.unsorted(knots <- as.numeric(knots)))
+	knots <- sort.int(knots)
+    list(knots = knots, order = ord, derivs = derivs,
 	 design = splineDesign(knots, x, ord, derivs,
-	 outer.ok = outer.ok, sparse = sparse))
+			       outer.ok = outer.ok, sparse = sparse))
 }
 ## splineDesign() is in ./splineClasses.R

@@ -1,6 +1,6 @@
 % File src/library/splines/man/interpSpline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{interpSpline}
@@ -8,21 +8,22 @@
 \title{Create an Interpolation Spline}
 \description{
   Create an interpolation spline, either from \code{x} and \code{y}
-  vectors, or from a formula/data.frame combination.
+  vectors (\code{default} method), or from a \code{formula} / \code{data.frame}
+  combination (\code{formula} method).
 }
 \usage{
 interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
-             na.action = na.fail)
+             na.action = na.fail, sparse = FALSE)
 }
 \arguments{
- \item{obj1}{Either a numeric vector of \code{x} values or a formula.}
- \item{obj2}{If \code{obj1} is numeric this should be a numeric vector
+ \item{obj1}{either a numeric vector of \code{x} values or a formula.}
+ \item{obj2}{if \code{obj1} is numeric this should be a numeric vector
    of the same length.  If \code{obj1} is a formula this can be an
    optional data frame in which to evaluate the names in the formula.}
- \item{bSpline}{If \code{TRUE} the b-spline representation is returned,
+ \item{bSpline}{if \code{TRUE} the b-spline representation is returned,
    otherwise the piecewise polynomial representation is returned.
    Defaults to \code{FALSE}.}
- \item{period}{An optional positive numeric value giving a period for a
+ \item{period}{an optional positive numeric value giving a period for a
    periodic interpolation spline.}
  \item{na.action}{a optional function which indicates what should happen
    when the data contain \code{NA}s.  The default action
@@ -30,9 +31,12 @@ interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
    alternative action \code{na.fail} causes \code{interpSpline} to print
    an error message and terminate if there are any incomplete
    observations.}
+ \item{sparse}{logical indicating if the result should be a
+   \code{"sparseMatrix"}, see \code{\link{splineDesign}} on which
+   \code{interpSpline()} builds.}
 }
 \value{
-  An object that inherits from class \code{spline}. The object can be in
+  An object that inherits from (S3) class \code{spline}. The object can be in
   the B-spline representation, in which case it will be of class
   \code{nbSpline} for natural B-spline, or in the piecewise polynomial
   representation, in which case it will be of class \code{npolySpline}.
