@@ -31,9 +31,9 @@ interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
    alternative action \code{na.fail} causes \code{interpSpline} to print
    an error message and terminate if there are any incomplete
    observations.}
- \item{sparse}{logical indicating if the result should be a
-   \code{"sparseMatrix"}, see \code{\link{splineDesign}} on which
-   \code{interpSpline()} builds.}
+ \item{sparse}{logical passed to the underlying
+   \code{\link{splineDesign}}.  If true, saves memory and is faster when
+   there are more than a few hundred points.}
 }
 \value{
   An object that inherits from (S3) class \code{spline}. The object can be in
@@ -47,7 +47,7 @@ interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
   \code{\link{splineOrder}},
   \code{\link{periodicSpline}}.
 }
-\examples{
+\examples{% tests also in ../tests/spline-tst.R
 require(graphics); require(stats)
 ispl <- interpSpline( women$height, women$weight )
 ispl2 <- interpSpline( weight ~ height,  women )
