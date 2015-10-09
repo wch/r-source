@@ -238,8 +238,13 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     ## Run texi2dvi on a latex file, or emulate it.
 
-    if(is.null(texi2dvi) || !nzchar(texi2dvi) || texi2dvi == "texi2dvi")
-        texi2dvi <- Sys.which("texi2dvi")
+    if(identical(texi2dvi, "emulation")) texi2dvi <- ""
+    else {
+        if(is.null(texi2dvi) || !nzchar(texi2dvi) || texi2dvi == "texi2dvi")
+            texi2dvi <- Sys.which("texi2dvi")
+        if(.Platform$OS.type == "windows" && !nzchar(texi2dvi))
+            texi2dvi <- Sys.which("texify")
+    }
 
     envSep <- .Platform$path.sep
     texinputs0 <- texinputs
@@ -285,14 +290,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         opt_quiet <- if(quiet) "--quiet" else ""
         opt_extra <- ""
         out <- .system_with_capture(texi2dvi, "--help")
+
         if(length(grep("--no-line-error", out$stdout)))
             opt_extra <- "--no-line-error"
-        ## This is present in texinfo after late 2009, so really 5.x.
-        if(length(grep("--max-iterations=N", out$stdout)))
-            opt_extra <- c(opt_extra, "--max-iterations=20")
         ## (Maybe change eventually: the current heuristics for finding
         ## error messages in log files should work for both regular and
         ## file line error indicators.)
+
+        ## This is present in texinfo after late 2009, so really >= 5.0.
+        if(any(grepl("--max-iterations=N", out$stdout)))
+            opt_extra <- c(opt_extra, "--max-iterations=20")
 
         ## and work around a bug in texi2dvi
         ## https://stat.ethz.ch/pipermail/r-devel/2011-March/060262.html
@@ -374,7 +381,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
             paths <- paste ("-I", shQuote(texinputs))
             extra <- "--max-iterations=20"
-           extra <- paste(extra, paste(paths, collapse = " "))
+            extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## 'file' could be a file path
         base <- basename(file_path_sans_ext(file))
@@ -412,11 +419,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         }
     } else {
         ## Do not have texi2dvi or don't want to index
-        ## Needed on Windows except for MiKTeX
-        ## Note that this does not do anything about running quietly,
-        ## nor cleaning, but is probably not used much anymore.
-
-        ## If it is called with MiKTeX then TEXINPUTS etc will be ignored.
+        ## Needed on Windows except for MiKTeX (prior to Sept 2015)
 
         texfile <- shQuote(file)
         ## 'file' could be a file path
@@ -427,27 +430,33 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(!nzchar(Sys.which(latex)))
             stop(if(pdf) "pdflatex" else "latex", " is not available",
                  domain = NA)
+
+        sys2 <- if(quiet)
+            function(...) system2(..., stdout = FALSE, stderr = FALSE)
+        else system2
         bibtex <- Sys.getenv("BIBTEX", "bibtex")
         makeindex <- Sys.getenv("MAKEINDEX", "makeindex")
-        if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
+        ltxargs <- c("-interaction=nonstopmode", texfile)
+        if(sys2(latex, ltxargs))
             stop(gettextf("unable to run '%s' on '%s'", latex, file),
                  domain = NA)
-        nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
+        nmiss <- length(grep("Warning:.*Citation.*undefined",
                              readLines(paste0(base, ".log"))))
         for(iter in 1L:10L) { ## safety check
             ## This might fail as the citations have been included in the Rnw
-            if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
+            if(nmiss) sys2(bibtex, shQuote(base))
             nmiss_prev <- nmiss
             if(index && file.exists(idxfile)) {
-                if(system(paste(shQuote(makeindex), shQuote(idxfile))))
+                if(sys2(makeindex, shQuote(idxfile)))
                     stop(gettextf("unable to run '%s' on '%s'",
                                   makeindex, idxfile),
                          domain = NA)
             }
-            if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
-                stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
+            if(sys2(latex, ltxargs))
+                stop(gettextf("unable to run %s on '%s'", latex, file),
+                     domain = NA)
             Log <- readLines(paste0(base, ".log"))
-            nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined", Log))
+            nmiss <- length(grep("Warning:.*Citation.*undefined", Log))
             if(nmiss == nmiss_prev &&
                !length(grep("Rerun to get", Log)) ) break
         }

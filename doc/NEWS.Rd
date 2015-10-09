@@ -307,6 +307,14 @@
       \item \code{which.min(x)} and \code{which.max(x)} may be much
       faster for logical and integer \code{x} and now also work for long
       vectors.
+      
+      \item The \sQuote{emulation} part of \code{tools::texi2dvi()} has
+      been somewhat enhanced, including supporting \code{quiet = TRUE}.
+      It can be selected by \code{texi2dvi = "emulation"}.
+
+      (Windows) MiKTeX removed its \code{texi2dvi.exe} command in Sept
+      2015: \code{tools::texi2dvi()} tries \code{texify.exe} if it is
+      not found.
     }
   }
 
