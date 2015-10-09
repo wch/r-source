@@ -26,13 +26,13 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
     the default dvi file (\code{texi2dvi} command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
     during the conversion are removed.}
-  \item{quiet}{logical.  No output unless an error occurs.  Ignored if
-    emulation (see the \code{texi2dvi} argument) is used.}
+  \item{quiet}{logical.  No output unless an error occurs.}
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program used to
-    compile a TeX file to dvi or PDF, respectively.
-    The default (selected by \code{""} or \code{NULL}) is to look for an
-    executable on the path and otherwise emulate the script with
-    \code{system} calls.}
+    compile a TeX file to dvi or PDF.
+    The default (selected by \code{""} or \code{NULL}) is to look for a
+    program or script named \file{texi2dvi} on the path and otherwise
+    emulate the script with \code{system2} calls (which can be selected
+    by the value \code{"emulation"}).} 
   \item{texinputs}{\code{NULL} or a character vector of paths to add to
     the LaTeX and bibtex input search paths.}
   \item{index}{logical: should indices be prepared?}
@@ -52,15 +52,31 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   path.  Analogous changes are made to \env{BIBINPUTS} and
   \env{BSTINPUTS} settings.
 
+#ifdef unix
+  The default option for \code{texi2dvi} is set from environmnt variable
+  \env{R_TEXI2DVICMD}, and the default for that is set from environment
+  variable \env{TEXI2DVI} or if that is unset, from a value chosen when
+  \R is configured.  A shell script \command{texi2dvi} is part of GNU's
+  \pkg{texinfo}.
+#endif
+
+#ifdef windows
+  On Windows the option \code{"texi2dvi"} is normally unset.  The MiKTeX
+  command \command{texify.exe} is a suitable choice for \code{texi2dvi},
+  and is tried as from \R 3.2.3 if the argument is blank or \code{NULL}
+  and \code{texi2dvi} is not found.
+
   MiKTeX had a \code{texi2dvi} executable until Sept 2015, but no other
   Windows TeX installation that we know of does, so emulation is used on
   e.g.\sspace{}TeXLive installations on Windows.
+#endif
 
   Occasionally indices contain special characters which cause indexing
   to fail (particularly when using the \samp{hyperref} LaTeX package)
   even on valid input.  The argument \code{index = FALSE} is provided to
   allow package manuals to be made when this happens: it uses emulation.
 }
+
 \note{
   There are various versions of the \command{texi2dvi} script on
   Unix-alikes and quite a number of bugs have been seen, some of which
@@ -76,8 +92,11 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   exist but the other two approaches do not (and may get confused by
   such files).
   
-  Where supported (\command{texi2dvi} 5.x and MiKTeX),
-  option \option{--max-iterations=20} is used to avoid infinite retries.
+  Where supported (\command{texi2dvi} 5.0 and later, and
+  \command{texi2dvi.exe} and \command{texify.exe} from MiKTeX), option
+  \option{--max-iterations=20} is used to avoid infinite retries.
+  
+  The emulation mode supports \code{quiet = TRUE} from \R 3.2.3 only.
 }
 \value{
   Invisible \code{NULL}.  Used for the side effect of creating a dvi or
