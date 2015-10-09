@@ -28,7 +28,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
     during the conversion are removed.}
   \item{quiet}{logical.  No output unless an error occurs.}
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program used to
-    compile a TeX file to dvi or PDF, respectively.
+    compile a TeX file to dvi or PDF.
     The default (selected by \code{""} or \code{NULL}) is to look for a
     program or script named \file{texi2dvi} on the path and otherwise
     emulate the script with \code{system2} calls (which can be selected
@@ -56,9 +56,10 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   The default option for \code{texi2dvi} is set from environmnt variable
   \env{R_TEXI2DVICMD}, and the default for that is set from environment
   variable \env{TEXI2DVI} or if that is unset, from a value chosen when
-  \R is configured.
+  \R is configured.  A shell script \command{texi2dvi} is part of GNU's
+  \pkg{texinfo}.
 #endif
-  
+
 #ifdef windows
   On Windows the option \code{"texi2dvi"} is normally unset.  The MiKTeX
   command \command{texify.exe} is a suitable choice for \code{texi2dvi},
@@ -75,6 +76,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   even on valid input.  The argument \code{index = FALSE} is provided to
   allow package manuals to be made when this happens: it uses emulation.
 }
+
 \note{
   There are various versions of the \command{texi2dvi} script on
   Unix-alikes and quite a number of bugs have been seen, some of which
@@ -90,8 +92,9 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   exist but the other two approaches do not (and may get confused by
   such files).
   
-  Where supported (\command{texi2dvi} 5.x and MiKTeX),
-  option \option{--max-iterations=20} is used to avoid infinite retries.
+  Where supported (\command{texi2dvi} 5.0 and later, and
+  \command{texi2dvi.exe} and \command{texify.exe} from MiKTeX), option
+  \option{--max-iterations=20} is used to avoid infinite retries.
   
   The emulation mode supports \code{quiet = TRUE} from \R 3.2.3 only.
 }
