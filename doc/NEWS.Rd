@@ -49,6 +49,10 @@
       \item Various macros can be set to override the default
       behaviour of \command{configure} when detecting OpenMP: see file
       \file{config.site}.
+      
+      \item Source installation on Windows has been modified to allow
+      for MiKTeX installations without \command{texi2dvi.exe}.  See file
+      \file{MkRules.dist}.
     }
   }
 
