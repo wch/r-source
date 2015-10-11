@@ -314,6 +314,14 @@ function(x)
                  regmatches(x, gregexpr(pattern, y), invert = TRUE))
     x <- x[!sapply(x, .is_not_nonempty_text)]
 
+    ## don't expect Jr. to be a person
+    jr <- which(!is.na(match(x, c("Jr", "Jr.", "jr", "jr."))))
+    if(length(jr)) {
+        jr <- jr[jr > 1L]
+        x[jr - 1L] <- paste(x[jr - 1L], x[jr], sep = ", ")
+        x <- x[-jr]
+    }
+
     if(!length(x)) return(person())
 
     ## Step C.
@@ -333,7 +341,29 @@ function(x)
         else NULL
         x <- sub("[[:space:]]*\\[[^)]*\\]", "", x)
         x <- unlist(strsplit(x, "[[:space:]]+"))
-        z <- person(given = x[-length(x)], family = x[length(x)],
+
+	## try to correctly guess von/van/de, Jr., etc.
+	jr <- c("Jr", "Jr.")
+	von <- c("De", "Den", "Der", "La", "Le", "Ten", "Van", "Von")
+	family <- x[length(x)]
+	given <- x[-length(x)]
+	if(!is.null(family) &&
+           !is.na(match(family, c(jr, tolower(jr))))) {
+            family <- paste(given[length(given)], family)
+            given <- given[-length(given)]
+	}
+	if((ng <- length(given)) &&
+           !is.na(match(gng <- given[ng], c(von, tolower(von))))) {
+            family <- paste(gng, family)
+            given <- given[-ng]
+	}
+	if((ng <- length(given)) &&
+           !is.na(match(gng <- given[ng], c(von, tolower(von))))) {
+            family <- paste(gng, family)
+            given <- given[-ng]
+	}
+	
+        z <- person(given = given, family = family,
                     email = email, role = role, comment = comment)
         return(z)
     }
