@@ -34,7 +34,7 @@
  *
  *    Devroye, L. (1986).
  *    Non-Uniform Random Variate Generation.
- *    New York:Springer-Verlag. Page 480.
+ *    New York:Springer-Verlag.  Pages 488 and 543.
  *
  *  METHOD
  *
