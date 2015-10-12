@@ -395,8 +395,11 @@ function(file, out = stdout(), codify = FALSE)
             file_test("-f", dfile <- file.path(dirname(dir),
                                                "DESCRIPTION")))
         meta <- .read_description(dfile)
-    else
-        format <- "R"
+    else {
+        ## readNEWS() is defunct now, so throw an error (PR #16556).
+        ##   format <- "R"
+        stop("DESCRIPTION file not found")
+    }
 
     wto <- function(x) writeLines(x, con = out, useBytes = TRUE)
     cre <- "(\\W|^)(\"[[:alnum:]_.]*\"|[[:alnum:]_.:]+\\(\\))(\\W|$)"
