@@ -458,8 +458,14 @@ function(x, ...)
 
 toBibtex.person <-
 function(object, ...)
-    paste(format(object, include = c("given", "family")),
-          collapse = " and ")
+{
+    object <- sapply(object, function(p) {
+         br <- if(is.null(p$family)) c("{", "}") else c("", "")
+         format(p, include = c("family", "given"),
+                braces = list(given = br, family = c("", ",")))
+    })
+    paste(object, collapse = " and ")
+}
 
 ######################################################################
 
