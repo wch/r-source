@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-10-06 r69476) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-10-12 r69509) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -478,6 +478,12 @@ attr(,"class")
 [2,] 0.0000000 0.1666667 0.6666667 0.1666667 0.0000000 0.0000000
 [3,] 0.0000000 0.0000000 0.1666667 0.6666667 0.1666667 0.0000000
 [4,] 0.0000000 0.0000000 0.0000000 0.1666667 0.6666667 0.1666667
+> splineDesign(knots = 1:10, x = 4:7, deriv = 1)
+     [,1] [,2] [,3] [,4] [,5] [,6]
+[1,] -0.5  0.0  0.5  0.0  0.0  0.0
+[2,]  0.0 -0.5  0.0  0.5  0.0  0.0
+[3,]  0.0  0.0 -0.5  0.0  0.5  0.0
+[4,]  0.0  0.0  0.0 -0.5  0.0  0.5
 > ## visualize band structure
 > 
 > knots <- c(1,1.8,3:5,6.5,7,8.1,9.2,10)  # 10 => 10-4 = 6 Basis splines
@@ -576,7 +582,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.099 0.007 0.106 0 0 
+Time elapsed:  0.201 0.015 0.234 0 0 
 > grDevices::dev.off()
 null device 
           1 

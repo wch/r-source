@@ -27,10 +27,11 @@ spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
   \item{ord}{a positive integer giving the order of the spline function.
     This is the number of coefficients in each piecewise polynomial
     segment, thus a cubic spline has order 4.  Defaults to 4.}
-  \item{derivs}{an integer vector of the same length as \code{x} and with
-    values between \code{0} and \code{ord - 1}.  The derivative of the
-    given order is evaluated at the \code{x} positions.  Defaults to a
-    vector of zeroes of the same length as \code{x}.}
+  \item{derivs}{an integer vector with values between \code{0} and
+    \code{ord - 1}, conceptually recycled to the length of \code{x}.
+    The derivative of the given order is evaluated at the \code{x}
+    positions.  Defaults to zero (or a vector of zeroes of the same
+    length as \code{x}).}
   \item{outer.ok}{logical indicating if \code{x} should be allowed
     outside the \emph{inner} knots, see the \code{x} argument.}
   \item{sparse}{logical indicating if the result should inherit from class
@@ -55,6 +56,7 @@ spline.des  (knots, x, ord = 4, derivs, outer.ok = FALSE,
 \examples{
 require(graphics)
 splineDesign(knots = 1:10, x = 4:7)
+splineDesign(knots = 1:10, x = 4:7, deriv = 1)
 ## visualize band structure
 \donttest{Matrix::drop0(zapsmall(6*splineDesign(knots = 1:40, x = 4:37, sparse = TRUE)))}
 

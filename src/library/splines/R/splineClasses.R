@@ -37,7 +37,7 @@
 
 splineDesign <-
     ## Creates the "design matrix" for a collection of B-splines.
-    function(knots, x, ord = 4, derivs = integer(nx), outer.ok = FALSE,
+    function(knots, x, ord = 4, derivs = 0L, outer.ok = FALSE,
              sparse = FALSE)
 {
     if((nk <- length(knots <- as.numeric(knots))) <= 0)
@@ -45,8 +45,10 @@ splineDesign <-
     if(is.unsorted(knots)) knots <- sort.int(knots)
     x <- as.numeric(x)
     nx <- length(x)
-    if(length(derivs) != nx)
-	stop("length of 'derivs' must match length of 'x'")
+    ## derivs is re-cycled to length(x) in C
+    if(length(derivs) > nx)
+	stop("length of 'derivs' is larger than length of 'x'")
+    if(length(derivs) < 1L) stop("empty 'derivs'")
     ord <- as.integer(ord)
     if(ord > nk || ord < 1)
 	stop("'ord' must be positive integer, at most the number of knots")
@@ -62,13 +64,17 @@ splineDesign <-
 ###        in the underlying C code - with some programming effort though..
     if(need.outer <- any(x < knots[ord] | knots[nk - o1] < x)) {
         if(outer.ok) { ## x[] is allowed to be 'anywhere'
-	    ## extend knots set "temporarily"
-	    in.x <- knots[1L] <= x & x < knots[nk]
-	    knots <- knots[c(rep.int(1L, o1), seq_len(nk), rep.int(nk, o1))]
+	    in.x <- knots[1L] <= x & x <= knots[nk]
 	    if((x.out <- !all(in.x))) {
 		x <- x[in.x]
 		nnx <- length(x)
 	    }
+	    ## extend knots set "temporarily": the boundary knots must be repeated >= 'ord' times.
+            ## NB: If these are already repeated originally, then, on the *right* only, we need
+            ##    to make sure not to add more than needed
+            dkn <- diff(knots)[(nk-1L):1] # >= 0, since they are sorted
+	    knots <- knots[c(rep.int(1L, o1), seq_len(nk),
+                             rep.int(nk, max(0L, ord - match(TRUE, dkn > 0))))]
 	} else
 	    stop(gettextf("the 'x' data must be in the range %g to %g unless you set '%s'",
 			  knots[ord], knots[nk - o1], "outer.ok = TRUE"),
@@ -88,22 +94,17 @@ splineDesign <-
 	    stop(gettextf("%s needs package 'Matrix' correctly installed",
                           "splineDesign(*, sparse=TRUE)"),
                  domain = NA)
-
 	if(need.outer) { ## shift column numbers and drop those "outside"
 	    jj <- jj - o1 - 1L
 	    ok <- 0 <= jj & jj < ncoef
-	    methods::as(methods::new("dgTMatrix",
-                                     i = ii[ok] - 1L,
-                                     j = jj[ok],
-                                     x = as.double(temp[ok]),
-                                     Dim = c(nx, ncoef)), "CsparseMatrix")
+	    methods::as(methods::new("dgTMatrix", i = ii[ok] - 1L, j = jj[ok],
+				     x = as.double(temp[ok]), # vector, not matrix
+				     Dim = c(nx, ncoef)), "CsparseMatrix")
 	}
 	else
-	    methods::as(methods::new("dgTMatrix",
-                                     i = ii - 1L,
-                                     j = jj - 1L,
-                                     x = as.double(temp),
-                                     Dim = c(nx, ncoef)), "CsparseMatrix")
+	    methods::as(methods::new("dgTMatrix", i = ii - 1L, j = jj - 1L,
+				     x = as.double(temp), # vector
+				     Dim = c(nx, ncoef)), "CsparseMatrix")
     } else { ## traditional (dense) matrix
 	design <- matrix(double(nx * ncoef), nx, ncoef)
 	if(need.outer) { ## shift column numbers and drop those "outside"
