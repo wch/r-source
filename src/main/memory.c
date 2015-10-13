@@ -221,6 +221,7 @@ const char *sexptype2char(SEXPTYPE type) {
 
 #define GC_TORTURE
 
+static int gc_pending = 0;
 #ifdef GC_TORTURE
 /* **** if the user specified a wait before starting to force
    **** collections it might make sense to also wait before starting
@@ -228,9 +229,9 @@ const char *sexptype2char(SEXPTYPE type) {
 static int gc_force_wait = 0;
 static int gc_force_gap = 0;
 static Rboolean gc_inhibit_release = FALSE;
-#define FORCE_GC (gc_force_wait > 0 ? (--gc_force_wait > 0 ? 0 : (gc_force_wait = gc_force_gap, 1)) : 0)
+#define FORCE_GC (gc_pending || (gc_force_wait > 0 ? (--gc_force_wait > 0 ? 0 : (gc_force_wait = gc_force_gap, 1)) : 0))
 #else
-# define FORCE_GC 0
+# define FORCE_GC gc_pending
 #endif
 
 #ifdef R_MEMORY_PROFILING
@@ -2850,9 +2851,14 @@ static void gc_end_timing(void)
 static void R_gc_internal(R_size_t size_needed)
 {
     if (!R_GCEnabled) {
-      AdjustHeapSize(size_needed);
+      if (NO_FREE_NODES())
+	R_NSize = R_NodesInUse + 1;
+      if (size_needed > VHEAP_FREE())
+	R_VSize += size_needed - VHEAP_FREE();
+      gc_pending = TRUE;
       return;
     }
+    gc_pending = FALSE;
 
     R_size_t onsize = R_NSize /* can change during collection */;
     double ncells, vcells, vfrac, nfrac;
