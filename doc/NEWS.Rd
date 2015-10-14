@@ -186,6 +186,10 @@
 
       The choice can easily be overridden \emph{via} environment
       variable \env{R_INTERACTIVE_DEVICE}.
+
+      \item On unixy platforms (with the \command{getline} C library function),
+      \code{system(*,intern=TRUE)} no longer truncates (output) lines
+      longer than 8192 characters, thanks to Karl Millar's \PR{16544}.
     }
   }
 
@@ -307,7 +311,7 @@
       \item \code{which.min(x)} and \code{which.max(x)} may be much
       faster for logical and integer \code{x} and now also work for long
       vectors.
-      
+
       \item The \sQuote{emulation} part of \code{tools::texi2dvi()} has
       been somewhat enhanced, including supporting \code{quiet = TRUE}.
       It can be selected by \code{texi2dvi = "emulation"}.
@@ -339,7 +343,7 @@
       \item Various macros can be set to override the default
       behaviour of \command{configure} when detecting OpenMP: see file
       \file{config.site}.
-      
+
       \item Source installation on Windows has been modified to allow
       for MiKTeX installations without \command{texi2dvi.exe}.  See file
       \file{MkRules.dist}.
@@ -431,7 +435,7 @@
 
       \item \code{splineDesign(*, outer.ok=TRUE)} (\pkg{splines}) is better now
       (\PR{16549}), and \code{interpSpline()} now allows \code{sparse=TRUE}
-      for speedup with non-small sizes.
+      for speedup with non-small sizes.% to be ported from R-devel!
     }
   }
 }

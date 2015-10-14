@@ -337,6 +337,9 @@
    problem with getting the prototype of strptime(). */
 #undef HAVE_GLIBC2
 
+/* Define to 1 if you have the `getline' function. */
+#undef HAVE_GETLINE
+
 /* Define to 1 if you have the `glob' function. */
 #undef HAVE_GLOB
 

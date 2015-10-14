@@ -1881,6 +1881,7 @@ R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
 if test "${ac_cv_have_decl_popen}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'popen' system call])
 fi
+R_CHECK_FUNCS([getline], [#include <stdio.h>])
 ## Windows has neither setenv nor unsetenv
 R_CHECK_FUNCS([setenv unsetenv], [#include <stdlib.h>])
 R_CHECK_FUNCS([getrlimit getrusage getpriority], [#include <sys/resource.h>])
