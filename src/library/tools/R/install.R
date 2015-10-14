@@ -1933,7 +1933,7 @@
     } else {
         if (preclean) system(paste(cmd, "shlib-clean"))
         res <- system(cmd)
-        if(build_objects_symbol_tables) {
+        if((res == 0L) && build_objects_symbol_tables) {
             ## Should only do this if the previous one went ok.
             system(paste(cmd, "symbols.rds"))
         }
