@@ -664,18 +664,22 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static R_INLINE R_xlen_t scalarIndex(SEXP s)
 {
-    if (ATTRIB(s) == R_NilValue)
-	switch (TYPEOF(s)) {
-	case REALSXP: // treat infinite indices as NA, like asInteger
-	    if (XLENGTH(s) == 1 && R_FINITE(REAL(s)[0]))
-		return (R_xlen_t) REAL(s)[0];
+    if (ATTRIB(s) == R_NilValue) {
+	if (IS_SCALAR(s, INTSXP)) {
+	    int ival = INTEGER(s)[0];
+	    if (ival != NA_INTEGER)
+		return ival;
 	    else return -1;
-	case INTSXP:
-	    if (XLENGTH(s) == 1 && INTEGER(s)[0] != NA_INTEGER)
-		return INTEGER(s)[0];
-	    else return -1;
-	default: return -1;
 	}
+	else if (IS_SCALAR(s, REALSXP)) {
+	    double rval = REAL(s)[0];
+	    // treat infinite indices as NA, like asInteger
+	    if (R_FINITE(rval))
+		return (R_xlen_t) rval;
+	    else return -1;
+	}
+	else return -1;
+    }
     else return -1;
 }
 

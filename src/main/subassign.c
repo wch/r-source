@@ -470,6 +470,29 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     R_xlen_t stretch;
     double ry;
 
+    /* try for quick return for simple scalar case */
+    if (ATTRIB(s) == R_NilValue) {
+	if (TYPEOF(x) == REALSXP && IS_SCALAR(y, REALSXP)) {
+	    if (IS_SCALAR(s, INTSXP)) {
+		R_xlen_t ival = INTEGER(s)[0];
+		if (1 <= ival && ival <= XLENGTH(x)) {
+		    REAL(x)[ival - 1] = REAL(y)[0];
+		    return x;
+		}
+	    }
+	    else if (IS_SCALAR(s, REALSXP)) {
+		double dval = REAL(s)[0];
+		if (R_FINITE(dval)) {
+		    R_xlen_t ival = (R_xlen_t) dval;
+		    if (1 <= ival && ival <= XLENGTH(x)) {
+			REAL(x)[ival - 1] = REAL(y)[0];
+			return x;
+		    }
+		}
+	    }
+	}
+    }
+		
     if (isNull(x) && isNull(y)) {
 	return R_NilValue;
     }
