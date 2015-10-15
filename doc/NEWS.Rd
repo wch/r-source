@@ -435,7 +435,7 @@
 
       \item \code{splineDesign(*, outer.ok=TRUE)} (\pkg{splines}) is better now
       (\PR{16549}), and \code{interpSpline()} now allows \code{sparse=TRUE}
-      for speedup with non-small sizes.% to be ported from R-devel!
+      for speedup with non-small sizes.
     }
   }
 }
