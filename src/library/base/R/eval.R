@@ -61,7 +61,7 @@ within.data.frame <- function(data, expr, ...)
     parent <- parent.frame()
     e <- evalq(environment(), data, parent)
     eval(substitute(expr), e)
-    l <- as.list(e)
+    l <- as.list(e, all.names=TRUE)
     l <- l[!vapply(l, is.null, NA, USE.NAMES=FALSE)]
     ## del: variables to *del*ete from data[]
     nD <- length(del <- setdiff(names(data), (nl <- names(l))))
