@@ -55,13 +55,15 @@ X11.options <- function(..., reset = FALSE)
 
 check_for_XQuartz <- function()
 {
-    DSO <- file.path(R.home("modules"), "R_X11.so")
-    out <- system2("otool", c("-L", shQuote(DSO)), stdout = TRUE)
-    ind <- grep("libX11[.][0-9]+[.]dylib", out)
-    if(length(ind)) {
-        this <- sub(" .*", "", sub("^\t", "", out[ind]))
-        if(!file.exists(this))
-            stop("X11 library is missing: install XQuartz from xquartz.macosforge.org", domain = NA)
+    if (file.exists("/usr/bin/otool") &&
+        file.exists(DSO <- file.path(R.home("modules"), "R_X11.so"))) {
+        out <- system2("otool", c("-L", shQuote(DSO)), stdout = TRUE)
+        ind <- grep("libX11[.][0-9]+[.]dylib", out)
+        if(length(ind)) {
+            this <- sub(" .*", "", sub("^\t", "", out[ind]))
+            if(!file.exists(this))
+                stop("X11 library is missing: install XQuartz from xquartz.macosforge.org", domain = NA)
+        }
     }
 }
 
