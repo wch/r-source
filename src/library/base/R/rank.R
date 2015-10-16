@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 rank <- function(x, na.last = TRUE,
-		 ties.method = c("average", "first", "random", "max", "min"))
+		 ties.method = c("average", "first", "last", "random", "max", "min"))
 {
     nas <- is.na(x)
     nm <- names(x)
@@ -30,6 +30,8 @@ rank <- function(x, na.last = TRUE,
 		"average" = , "min" = , "max" =
 		.Internal(rank(x, length(x), ties.method)),
 		"first" = sort.list(sort.list(x)),
+                "last"  = sort.list(sort.list(x, decreasing=TRUE),
+                                    decreasing=TRUE),
 		"random" = sort.list(order(x, stats::runif(sum(!nas)))))
     ## the internal code has ranks in [1, length(y)]
     if(!is.na(na.last) && any(nas)) {

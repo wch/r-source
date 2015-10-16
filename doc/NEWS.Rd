@@ -190,6 +190,9 @@
       \item On unixy platforms (with the \command{getline} C library function),
       \code{system(*,intern=TRUE)} no longer truncates (output) lines
       longer than 8192 characters, thanks to Karl Millar's \PR{16544}.
+
+      \item \code{rank()} gains a \code{ties.method = "last"} option,
+      for convenience (and symmetry), as proposed by Marius Hofert.
     }
   }
 
