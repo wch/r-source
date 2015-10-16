@@ -4527,9 +4527,14 @@ typically upper-case, may be defined by the compiler or system headers
 and can cause problems.
 @c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
 The most common issue involves the names of the Intel CPU registers such
-as @code{CS}, @code{DS} and @code{SS} defined on i586/x64 Solaris in
+as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
+(and more with longer abbreviations) defined on i586/x64 Solaris in
 @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
 and other core headers.
+
+@item
+@code{typedef}s in OS headers can conflict with those in the package: an
+example is @code{index_t} defined in @file{<sys/types.h>} on Solaris.
 @end itemize
 
 Some additional information for C++ is available at
