@@ -141,7 +141,7 @@ by spaces.)
 
 A patched version of the current release, @samp{r-patched}, and the
 current development version, @samp{r-devel}, are available as daily
-tarballs and via access to the R Subversion repository.  (For the two
+tarballs and via access to the @R{} Subversion repository.  (For the two
 weeks prior to the release of a minor (3.x.0) version, @samp{r-patched}
 tarballs may refer to beta/release candidates of the upcoming release,
 the patched version of the current release being available via
@@ -151,7 +151,7 @@ The tarballs are available from
 @uref{https://stat.ethz.ch/R/daily}.  Download
 @file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
 versions) and unpack as described in the previous section.  They are
-built in exactly the same way as distributions of R releases.
+built in exactly the same way as distributions of @R{} releases.
 
 @menu
 * Using Subversion and rsync::  
@@ -184,8 +184,8 @@ the four-week period prior to the release.
 
 Note that @samp{https:} is required@footnote{for some Subversion clients
 @samp{http:} may appear to work, but requires continual redirection.},
-and that the SSL certificate for the Subversion server of the R project
-should be recognized as from a trusted source.
+and that the SSL certificate for the Subversion server of the @R{}
+project should be recognized as from a trusted source.
 
 Note that retrieving the sources by e.g.@: @command{wget -r} or
 @command{svn export} from that URL will not work (and will give a error
@@ -209,7 +209,7 @@ respectively, to directory @file{src/library/Recommended} in the sources
 you have unpacked.  After downloading manually you need to execute
 @command{tools/link-recommended} from the top level of the sources to
 make the requisite links in @file{src/library/Recommended}.  A suitable
-incantation from the top level of the R sources using @command{wget}
+incantation from the top level of the @R{} sources using @command{wget}
 might be (for the correct value of @file{@var{dir}})
 
 @example
@@ -1085,7 +1085,7 @@ perhaps for some network-mounted systems).
 Installation is @emph{via} the installer
 @file{@value{RWVERSION}-win.exe}.  Just double-click on the icon and
 follow the instructions.  When installing on a 64-bit version of Windows
-the options will include 32- or 64-bit versions of R (and the default is
+the options will include 32- or 64-bit versions of @R{} (and the default is
 to install both).  You can uninstall @R{} from the Control Panel.
 
 Note that you will be asked to choose a language for installation, and
@@ -1445,7 +1445,7 @@ Strawberry Perl, @uref{http://strawberryperl.com/} and ActivePerl,
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
 
-You need to have the files for a complete R build, including bitmap and
+You need to have the files for a complete @R{} build, including bitmap and
 Tcl/Tk support and the manuals (which requires @pkg{texinfo} installed),
 as well as the recommended packages and Inno Setup (@pxref{The Inno
 Setup installer}).
@@ -1493,10 +1493,10 @@ make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 
 
 An alternative way to customize the installer starting with a binary
-distribution is to first make an installation of R from the standard
+distribution is to first make an installation of @R{} from the standard
 installer, then add packages and make other customizations to that
 installation.  Then (after having customized file @file{MkRules},
-possibly @emph{via} @file{MkRules.local}, and having made R in the
+possibly @emph{via} @file{MkRules.local}, and having made @R{} in the
 source tree) in @file{src/gnuwin32/installer} run
 
 @example
@@ -1513,7 +1513,7 @@ it is customized.  If you intend to @emph{distribute} a customized
 installer please do check that license requirements are met -- note that
 the installer will state that the contents are distributed under GPL
 and this has a requirement for @emph{you} to supply the complete sources
-(including the R sources even if you started with a binary distribution
+(including the @R{} sources even if you started with a binary distribution
 of R, and also the sources of any extra packages (including their
 external software) which are included).
 
@@ -1530,14 +1530,14 @@ mode.  See @file{src/@/gnuwin32/installer/Makefile} for the names and
 values that can be set.
 
 The standard @acronym{CRAN} distribution of a 32/64-bit installer is
-made by first building 32-bit R (just
+made by first building 32-bit @R{} (just
 
 @example
 make 32-bit
 @end example
 
 @noindent
-is needed), and then (in a separate directory) building 64-bit R with
+is needed), and then (in a separate directory) building 64-bit @R{} with
 the macro @code{HOME32} set in file @file{MkRules.local} to the
 top-level directory of the 32-bit build.  Then the @command{make
 rinstaller} step copies the files that differ between architectures from
@@ -1555,7 +1555,7 @@ It makes use of the Windows Installer XML (WiX) toolkit @emph{version
 @uref{http://wixtoolset.org/}.  Once WiX is installed, set the path to
 its home directory in @file{MkRules.local}.
 
-You need to have the files for a complete R build, including bitmap and
+You need to have the files for a complete @R{} build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.
 There is no option in the installer to customize startup options, so
 edit @file{etc/Rconsole} and @file{etc/Rprofile.site} to set these as
@@ -1591,15 +1591,15 @@ for suggesting WiX and building a prototype installer.
 @node 64-bit Windows builds,  , Building the MSI installer, Building from source
 @subsection 64-bit Windows builds
 
-To build a 64-bit version of R you need a 64-bit toolchain: the only one
+To build a 64-bit version of @R{} you need a 64-bit toolchain: the only one
 discussed here is based on the work of the MinGW-w64 project
 (@uref{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
 compilers such as those from Intel and PGI could be used (and have been
 by @R{} redistributors).
 
-Support for MinGW-w64 was developed in the R sources over the period
+Support for MinGW-w64 was developed in the @R{} sources over the period
 2008--10 and was first released as part of @R{} 2.11.0.  The assistance
-of Yu Gong at a crucial step in porting R to MinGW-w64 is gratefully
+of Yu Gong at a crucial step in porting @R{} to MinGW-w64 is gratefully
 acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
 
@@ -1782,7 +1782,7 @@ The installation consists of four Apple packages:
 @code{org.r-project.x86_64.texinfo} (not all of which need be
 installed). You can use @code{pkgutil --forget} if you want the Apple
 Installer to forget about the package without deleting its files (useful
-for the @R{} framework when installing multiple R versions in parallel),
+for the @R{} framework when installing multiple @R{} versions in parallel),
 or after you have deleted the files.
 
 Uninstalling the Tcl/Tk or Texinfo components (which are installed under
@@ -2231,13 +2231,13 @@ FLIBS=-lgfortran
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
 @subsection Customizing package compilation
 
-The R system and package-specific compilation flags can be overridden or
+The @R{} system and package-specific compilation flags can be overridden or
 added to by setting the appropriate Make variables in the personal file
 @file{@var{HOME}/.R/Makevars-@var{R_PLATFORM}} (but
 @file{@var{HOME}/.R/Makevars.win} or @file{@var{HOME}/.R/Makevars.win64}
 on Windows), or if that does not exist, @file{@var{HOME}/.R/Makevars},
-where @samp{R_PLATFORM} is the platform for which R was built, as
-available in the @code{platform} component of the R variable
+where @samp{R_PLATFORM} is the platform for which @R{} was built, as
+available in the @code{platform} component of the @R{} variable
 @code{R.version}.  An alternative personal file can be specified
 @emph{via} the environment variable @env{R_MAKEVARS_USER}.
 
@@ -2260,11 +2260,28 @@ FFLAGS=-g -O -mtune=native
 FCFLAGS=-g -O -mtune=native
 @end example
 
+Another use is to override the settings in a binary installation of R.
+For example, to use a different Fortran compiler on OS X
+
+@example
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin14/5.2.0 
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+
+@noindent
+(line split for legibility here).
+
 There is also provision for a site-wide @file{Makevars.site} file under
 @file{@var{R_HOME}/etc} (in a sub-architecture-specific directory if
 appropriate).  This is read immediately after @file{Makeconf}, and an
 alternative file can be specified by environment variable
 @env{R_MAKEVARS_SITE}.
+
+Note that these mechanisms do not work with packages which fail to pass
+settings down to sub-makes, perhaps reading @file{etc/Makeconf} in
+makefiles in subdirectories.  Fortunately such packages are unusual.
 
 @node Multiple sub-architectures, Byte-compilation, Customizing package compilation, Installing packages
 @subsection Multiple sub-architectures
@@ -2620,7 +2637,7 @@ in most of the Chinese-speaking world.
 @node Locales under OS X,  , Locales under Windows, Locales
 @subsection Locales under OS X
 
-OS X supports locales in its own particular way, but the R GUI tries to
+OS X supports locales in its own particular way, but the @R{} GUI tries to
 make this easier for users. See
 @uref{https://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
 for how users can set their locales.  As with Windows, end users will
@@ -2676,7 +2693,7 @@ Domain @code{R} for the C-level error and warning messages from the @R{}
 interpreter.
 
 @item
-Domain @code{R-@var{pkg}} for the R @code{stop}, @code{warning} and
+Domain @code{R-@var{pkg}} for the @R{} @code{stop}, @code{warning} and
 @code{message} messages in each package, including @code{R-base} for the
 @pkg{base} package.
 
@@ -2684,7 +2701,7 @@ Domain @code{R-@var{pkg}} for the R @code{stop}, @code{warning} and
 Domain @code{@var{pkg}} for the C-level messages in each package.
 
 @item
-Domain @code{RGui} for the menus etc of the R for Windows GUI front-end.
+Domain @code{RGui} for the menus etc of the @R{} for Windows GUI front-end.
 
 @end itemize
 
@@ -2734,7 +2751,7 @@ prepare and install translation catalogues.
 
 Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions.  Most OSes running on such @acronym{CPU}s offer the choice
-of building a 32-bit or a 64-bit version of R (and details are given
+of building a 32-bit or a 64-bit version of @R{} (and details are given
 below under specific OSes).  For most a 32-bit version is the default,
 but for some (e.g., @cputype{x86_64} Linux and OS X >= 10.6)
 64-bit is.
@@ -4192,7 +4209,7 @@ special flags for compiling C++ code to be turned into a shared object
 @item FCPICFLAGS
 special flags for compiling Fortran 95 code to be turned into a shared object
 @item DEFS
-defines to be used when compiling C code in R itself
+defines to be used when compiling C code in @R{} itself
 @end table
 
 @noindent
@@ -4961,7 +4978,7 @@ See also the @file{INSTALL} file in the checkout or directly at
 @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
 
 @Rapp{} does not need to be installed in any specific way. Building
-@Rapp{} results in the @Rapp{} bundle which appears as one R icon. This
+@Rapp{} results in the @Rapp{} bundle which appears as one @R{} icon. This
 application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
@@ -5319,13 +5336,13 @@ On one AIX 6.x system it was necessary to use @env{R_SHELL} to set the
 default shell to be Bash rather than Zsh.
 
 Kurt Hornik and Stefan Theussl at WU (Wirtschaftsuniversit@"at Wien)
-successfully built R on a @cputype{powerpc} (8-@acronym{CPU} Power6
+successfully built @R{} on a @cputype{powerpc} (8-@acronym{CPU} Power6
 system) running AIX 6.1, configuring with or without
 @option{--enable-R-shlib} (Ei-ji Nakama's support is gratefully
 acknowledged).
 
 It helps to describe the WU build environment first.  A small part of
-the software needed to build R and/or install packages is available
+the software needed to build @R{} and/or install packages is available
 directly from the AIX Installation DVDs, e.g., Java 6 and  X11.
 Additional open source software (OSS) is packaged for AIX in @file{.rpm}
 files and available from both IBM's ``AIX Toolbox for Linux
@@ -5347,7 +5364,7 @@ binaries for various platforms which in case of AIX can be installed via
 unpacking the tarball to the root file system.  For full @LaTeX{}
 support one can install the @TeX{} Live DVD distribution
 (@uref{https://www.tug.org/@/texlive/}): it is recommended to update the
-distribution using the @code{tlmgr} update manager.  For 64-bit R builds
+distribution using the @code{tlmgr} update manager.  For 64-bit @R{} builds
 supporting Tcl/Tk this needs to installed from the sources as available
 pre-compiled binaries supply only 32-bit shared objects.
 
@@ -5390,7 +5407,7 @@ the decision for generating 32-bit or 64-bit code is done by setting the
 @enindex OBJECT_MODE
 @env{OBJECT_MODE} environment variable appropriately (recommended) or
 using an additional compiler flag (@option{-q32} or @option{-q64}).  By
-default the IBM XL compilers produce 32 bit code.  Thus, to build R with
+default the IBM XL compilers produce 32 bit code.  Thus, to build @R{} with
 64-bit support one needs to either export @env{OBJECT_MODE=64} in the
 environment or, alternatively, use the @option{-q64} compiler options.
 
@@ -5399,7 +5416,7 @@ shell, e.g., via setting @code{CONFIG_SHELL=/usr/bin/bash} in the
 environment, and to use @acronym{GNU} Make (e.g., via
 (@code{MAKE=/opt/freeware/bin/make}).
 
-Further installation instructions to set up a proper R development
+Further installation instructions to set up a proper @R{} development
 environment can be found in the ``R on AIX'' project on R-Forge
 (@uref{https://R-Forge.R-project.org/@/projects/@/aix/}).
 
