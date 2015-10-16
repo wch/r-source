@@ -16,8 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## utils::globalVariables("...onLoad")
-
 ## Initial version of .onLoad
 ...onLoad  <-
   ## Initialize the methods package.
