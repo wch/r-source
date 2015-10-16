@@ -18,8 +18,8 @@
 
 check_for_XQuartz <- function()
 {
-    if (file.exists("/usr/bin/otool")) {
-        DSO <- file.path(R.home("modules"), "R_de.so")
+    if (file.exists("/usr/bin/otool") &&
+        file.exists(DSO <- file.path(R.home("modules"), "R_de.so"))) {
         out <- system2("/usr/bin/otool", c("-L", shQuote(DSO)), stdout = TRUE)
         ind <- grep("libX11[.][0-9]+[.]dylib", out)
         if(length(ind)) {
