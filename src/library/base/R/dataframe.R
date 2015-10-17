@@ -1182,7 +1182,9 @@ xpdrows.data.frame <- function(x, old.rows, new.rows)
 	    x[[i]] <- y
 	}
     }
-    attr(x, "row.names") <- c(old.rows, new.rows)
+    nm <- c(old.rows, new.rows)
+    if (any(duplicated(nm))) nm <- make.unique(nm)
+    attr(x, "row.names") <- nm
     x
 }
 

@@ -289,6 +289,10 @@
       \item \code{method = "libcurl"} connections signal errors rather
       than retrieving HTTP error pages (where the ISP reports the
       error).
+
+      \item \code{xpdrows.data.frame()} was not checking for unique
+      row names; in particular, this affected assignment to non-existing
+      rows via numerical indexing. (\PR{16570})
     }
   }
 }
