@@ -1,5 +1,5 @@
 
-R version 3.2.2 Patched (2015-10-06 r69484) -- "Fire Safety"
+R version 3.2.2 Patched (2015-10-16 r69533) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.181   0.016   0.188 
+  0.184   0.011   0.185 
