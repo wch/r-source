@@ -2800,10 +2800,9 @@ function(x, ...)
     as.character(unlist(lapply(names(x), .fmt)))
 }
 
-### * .check__depends
+### * .check_package_depends
 
 ## changed in 2.3.0 to refer to a source dir.
-
 
 .check_package_depends <-
 function(dir, force_suggests = TRUE, check_incoming = FALSE,
@@ -3009,7 +3008,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## check header-only packages
     if (check_incoming) {
         hdOnly <- c("BH", "RcppArmadillo", "RcppEigen")
-        hd <- intersect(hdOnly, c(depends, imports))
+        hd <- setdiff(intersect(hdOnly, c(depends, imports)),
+                      .get_namespace_package_depends(dir, TRUE))
         if(length(hd)) bad_depends$hdOnly <- hd
     }
 
