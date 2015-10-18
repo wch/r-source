@@ -22,6 +22,7 @@ all:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/doc
 	@$(MAKE) -f Makefile.win mkR1 mkdesc instdirs
 	@$(MAKE) -f Makefile.win mksrc-win2
+	@$(MAKE) -f Makefile.win sysdata
 	@$(MAKE) -f Makefile.win mklazycomp
 
 include $(top_srcdir)/share/make/basepkg.mk
