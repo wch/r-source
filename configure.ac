@@ -224,7 +224,7 @@ AC_ARG_ENABLE([R-framework],
 [AS_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],[OS X only: build R framework (if possible), and specify
                  its installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
-[want_R_framework=yes])
+[want_R_framework=no])
 ## Can only build frameworks on Darwin.
 if test "${want_R_framework}" != no; then
   case "${host_os}" in

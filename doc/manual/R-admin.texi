@@ -4672,8 +4672,7 @@ strongly recommended to use that.} which can compile the source code of
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
-library (see @code{?.libPaths}).  Also use
-@option{--disable-R-framework} to install in the standard layout.
+library (see @code{?.libPaths}).
 
 Various compilers can be used.  The current @acronym{CRAN} `Mavericks'
 distribution of @R{} is built using
@@ -4929,14 +4928,14 @@ to @code{1} to install many of the Java-using packages.
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
-selected by the default option
+selected by the option
 
 @example
 ./configure --enable-R-framework
 @end example
 
 (This is intended to be used with an Apple toolchain: other compilers may
-not support frameworks correctly.)
+not support frameworks correctly. It was the default prior to @R{} 3.3.0.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
@@ -4944,7 +4943,8 @@ dynamic library.  This option configures @R{} to be built and installed
 as a framework called @file{R.framework}.  The default installation path
 for @file{R.framework} is @file{/Library/Frameworks} but this can be
 changed at configure time by specifying the flag
-@option{--enable-R-framework[=@var{DIR}]} or at install time as
+@option{--enable-R-framework[=@var{DIR}]} (or @option{--prefix}) or at
+install time @emph{via}
 
 @example
 make prefix=/where/you/want/R.framework/to/go install

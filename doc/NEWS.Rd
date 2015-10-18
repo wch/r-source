@@ -253,6 +253,10 @@
 
       \item The minimum supported version of OS X is 10.6 (\sQuote{Snow
 	Leopard}): even that has been unsupported by Apple since 2012.
+      
+      \item The \command{configure} default on OS X is
+      \option{--disable-R-framework}: enable this if you intend to
+      install under \file{/Library/Frameworks} and use with \code{R.app}.
     }
   }
 
