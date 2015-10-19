@@ -1,6 +1,6 @@
 % File src/library/methods/man/setGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setGeneric}
@@ -48,7 +48,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
 
   }
   \item{group}{ Optionally, a character string giving the name of the group
-    generic function to which this function belongs.    See
+    generic function to which this function belongs.  See
     \link{Methods} for details of group generic functions in method selection.
   }
   \item{valueClass}{ An optional character vector of one or more class
@@ -68,32 +68,31 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   \item{signature}{
     Optionally, the vector of names, from among the formal arguments to
     the function, that can appear in the signature of methods for this
-    function, in calls to \code{\link{setMethod}}.  If \dots is one of
-    the formal arguments, it is treated specially.  Starting with
-    version 2.8.0 of \R, \dots may be signature of the generic function.
-    Methods will then be selected if their signature matches all the
-    \dots arguments.  See the documentation for topic \link{dotsMethods}
-    for details.  In the present version, it is not possible to mix
-    \dots and other arguments in the signature (this restriction may be
-    lifted in later versions).
+    function, in calls to \code{\link{setMethod}}.  If \code{\dots} is
+    one of the formal arguments, it is treated specially.  Starting with
+    version 2.8.0 of \R, \code{\dots} may be signature of the generic
+    function.  Methods will then be selected if their signature matches
+    all the \code{\dots} arguments.  See the documentation for topic
+    \link{dotsMethods} for details.  In the present version, it is not
+    possible to mix \code{\dots} and other arguments in the signature
+    (this restriction may be lifted in later versions).
 
     By default, the signature is inferred from the implicit generic
     function corresponding to a non-generic function.  If no implicit
     generic function has been defined, the default is all the formal
-    arguments except \dots, in the order they appear in the function
-    definition. In the case that \dots is the only formal argument, that
-    is also the default signature.  To use \dots as the signature in a
-    function that has any other arguments, you must supply the signature
-    argument explicitly.  See the \dQuote{Implicit Generic} section
-    below for more details.
+    arguments except \code{\dots}, in the order they appear in the
+    function definition. In the case that \code{\dots} is the only
+    formal argument, that is also the default signature.  To use
+    \code{\dots} as the signature in a function that has any other
+    arguments, you must supply the signature argument explicitly.  See
+    the \dQuote{Implicit Generic} section below for more details.
   }
   \item{useAsDefault}{
     Override the usual choice of default argument.
     Argument \code{useAsDefault} can be supplied, either as a function
     to use for the default, or as a logical value.
     This argument is now rarely needed.
-    See
-    the section on details.
+    See the section \sQuote{Details}.
   }
   \item{simpleInheritanceOnly}{
     Supply this argument as \code{TRUE} to require that methods selected
@@ -140,7 +139,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   the example only on the definition of \code{print} and where it is
   found.  The \code{signature} of the generic function, defining which
   of the formal arguments can be used in specifying methods, is set by
-  default to all the formal arguments except \dots.
+  default to all the formal arguments except \code{\dots}.
 
   Note that calling \code{setGeneric()} in this form is not strictly
   necessary before calling \code{setMethod()} for the same function.  If
@@ -242,8 +241,8 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   corresponding \emph{implicit} generic function.  If no special action
   has been taken, any function corresponds implicitly to a generic
   function with the same arguments, in which all arguments other than
-  \dots can be used.  The signature of this generic function is the
-  vector of formal arguments, in order, except for \dots.
+  \code{\dots} can be used.  The signature of this generic function is the
+  vector of formal arguments, in order, except for \code{\dots}.
 
   The source code for a package can define an implicit generic function
   version of any function in that package (see \link{implicitGeneric}
@@ -351,7 +350,7 @@ stopifnot(identical(authorNames(c("me", "you")), c("me", "you")),
 }
 
 ## An example of group generic methods, using the class
-## "track"; see the documentation of \link{setClass} for its definition
+## "track"; see the documentation of 'setClass' for its definition
 
 ## define a method for the Arith group
 
@@ -385,7 +384,7 @@ removeGeneric("increment")
 \seealso{
   \code{\link{Methods}} and the links there for a general discussion,
   \code{\link{dotsMethods}} for methods that dispatch on
-  \dQuote{\dots}, and \code{\link{setMethod}} for method definitions.
+  \code{\dots}, and \code{\link{setMethod}} for method definitions.
 }
 \keyword{ programming }
 \keyword{ methods }
