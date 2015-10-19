@@ -927,6 +927,12 @@ GREATER_2_SUB_DEF(intdbl2greater,    int, double, icmp, rcmp)
     }
 
 
+/* TODO: once LONG_VECTOR_SUPPORT and  R_xlen_t  belong to the R API,
+ * ----  also add "long" versions, say,
+ *    R_orderVectorl (R_xlen_t *indx, R_xlen_t n, SEXP arglist, ...)
+ *    R_orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP arg,  ...)
+ * to the API */
+
 // Usage:  R_orderVector(indx, n,  Rf_lang2(x,y),  nalast, decreasing)
 void R_orderVector(int *indx, // must be pre-allocated to length >= n
 		   int n,
@@ -937,6 +943,14 @@ void R_orderVector(int *indx, // must be pre-allocated to length >= n
     for(int i = 0; i < n; i++) indx[i] = i;
     orderVector(indx, n, arglist, nalast, decreasing, listgreater);
     return;
+}
+
+// Fast version of 1-argument case of R_orderVector()
+void R_orderVector1(int *indx, int n, SEXP arg,
+		    Rboolean nalast, Rboolean decreasing)
+{
+    for(int i = 0; i < n; i++) indx[i] = i;
+    orderVector1(indx, n, arg, nalast, decreasing, R_NilValue);
 }
 
 

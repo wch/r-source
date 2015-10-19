@@ -12422,13 +12422,17 @@ available to users' C code.
 The following is declared in header file @file{Rinternals.h}.
 
 @deftypefun void  R_orderVector (int* @var{indx}, int @var{n}, SEXP @var{arglist}, Rboolean @var{nalast}, Rboolean @var{decreasing})
+@deftypefunx void R_orderVector1 (int* @var{indx}, int @var{n}, SEXP @var{x}, Rboolean @var{nalast}, Rboolean @var{decreasing})
 
-This corresponds to @R{}'s @code{order(..., na.last, decreasing)}.
+@code{R_orderVector()} corresponds to @R{}'s @code{order(..., na.last, decreasing)}.
 More specifically, @code{indx <- order(x, y, na.last, decreasing)} corresponds to
 @code{R_orderVector(indx, n, Rf_lang2(x, y), nalast, decreasing)} and for
 three vectors, @code{Rf_lang3(x,y,z)} is used as @var{arglist}.
 
-Note that  @code{R_orderVector()} assumes the vector @code{indx}
+When ordering only one vector, @code{R_orderVector1()} is faster and
+corresponds to @R{}'s @code{indx <- order(x, na.last, decreasing)}.
+
+Note that both @code{R_orderVector*()} assume the vector @code{indx}
 to be allocated to length @eqn{\ge n, >= n}.  On return, @code{indx[]}
 contains a permutation of @code{0:(n-1)}, i.e., 0-based C indices (and not
 1-based @R{} indices, as @R{}'s @code{order()}).
