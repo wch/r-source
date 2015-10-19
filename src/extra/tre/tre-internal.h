@@ -48,7 +48,17 @@
 
 /* Wide characters. */
 typedef wint_t tre_cint_t;
-#define TRE_CHAR_MAX WCHAR_MAX
+/* Workaround problem seen on AIX, (2010 & 2015), e.g.,
+    https://stat.ethz.ch/pipermail/r-devel/2015-October/071902.html
+  WCHAR_MAX = UINT32_MAX on AIX and that is "not possible to work"
+  Solaris-sparcv9   WCHAR_MAX = INT32_MAX
+  Linux amd64       WCHAR_MAX = INT32_MAX
+*/
+#if WCHAR_MAX == UINT32_MAX
+# define TRE_CHAR_MAX INT32_MAX
+#else
+# define TRE_CHAR_MAX WCHAR_MAX
+#endif
 
 #ifdef TRE_MULTIBYTE
 #define TRE_MB_CUR_MAX MB_CUR_MAX
