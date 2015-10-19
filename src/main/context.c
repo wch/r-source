@@ -470,32 +470,6 @@ SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
     return R_NilValue;	/* just for -Wall */
 }
 
-/* some real insanity to keep Duncan sane */
-
-/* This should find the caller's environment (it's a .Internal) and
-   then get the context of the call that owns the environment.  As it
-   is, it will restart the wrong function if used in a promise.
-   L.T. */
-SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    RCNTXT *cptr;
-
-    checkArity(op, args);
-
-    if( !isLogical(CAR(args)) || LENGTH(CAR(args))!= 1 )
-	return(R_NilValue);
-    for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
-	    cptr = cptr->nextcontext) {
-	if (cptr->callflag & CTXT_FUNCTION) {
-	    SET_RESTART_BIT_ON(cptr->callflag);
-	    break;
-	}
-    }
-    if( cptr == R_ToplevelContext )
-	error(_("no function to restart"));
-    return(R_NilValue);
-}
-
 /* count how many contexts of the specified type are present on the stack */
 /* browser contexts are a bit special because they are transient and for  */
 /* any closure context with the debug bit set one will be created; so we  */

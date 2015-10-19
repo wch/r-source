@@ -853,7 +853,6 @@
  do_nextn
  do_ngettext
  do_normalizepath
- do_nsl
  do_nzchar
  do_onexit
  do_open

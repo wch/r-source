@@ -1646,69 +1646,6 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 #endif
 
-#if 0
-static void chmod_one(const char *name)
-{
-    DIR *dir;
-    struct dirent *de;
-    char p[PATH_MAX];
-#ifdef Win32
-    struct _stati64 sb;
-#else
-    struct stat sb;
-#endif
-#ifndef Win32
-    mode_t mask = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR, /* 0644 */
-	dirmask = mask | S_IXUSR | S_IXGRP | S_IXOTH; /* 0755 */
-#endif
-
-    if (streql(name, ".") || streql(name, "..")) return;
-    if (!R_FileExists(name)) return;
-#ifdef Win32
-    _stati64(name, &sb);
-    chmod(name, _S_IWRITE);
-#else
-    stat(name, &sb);
-    chmod(name, (sb.st_mode | mask) & dirmask);
-#endif
-    if ((sb.st_mode & S_IFDIR) > 0) { /* a directory */
-#ifndef Win32
-	chmod(name, dirmask);
-#endif
-	if ((dir = opendir(name)) != NULL) {
-	    while ((de = readdir(dir))) {
-		if (streql(de->d_name, ".") || streql(de->d_name, ".."))
-		    continue;
-		size_t n = strlen(name);
-		if (name[n-1] == R_FileSep[0])
-		    snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
-		else
-		    snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, de->d_name);
-		chmod_one(p);
-	    }
-	    closedir(dir);
-	} else {
-	    /* we were unable to read a dir */
-	}
-    }
-}
-
-/* recursively fix up permissions: used for R CMD INSTALL and build.
-   NB: this overrides umask. */
-SEXP attribute_hidden do_dirchmod(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP dr;
-    checkArity(op, args);
-    dr = CAR(args);
-    if(!isString(dr) || LENGTH(dr) != 1)
-	error(_("invalid '%s' argument"), "dir");
-    chmod_one(translateChar(STRING_ELT(dr, 0)));
-
-    return R_NilValue;
-}
-#endif
-
-
 SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int cat;
@@ -2124,48 +2061,6 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return ans;
 }
-
-// As from 3.3.0 this means on Unix.
-#if defined(HAVE_ARPA_INET_H)
-#include <netdb.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-SEXP attribute_hidden do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP ans = R_NilValue;
-    const char *name; char ip[] = "xxx.xxx.xxx.xxx";
-    struct hostent *hp;
-
-    checkArity(op, args);
-    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	error(_("'hostname' must be a character vector of length 1"));
-    name = translateChar(STRING_ELT(CAR(args), 0));
-
-    hp = gethostbyname(name);
-
-    if (hp == NULL) {		/* cannot resolve the address */
-	warning(_("nsl() was unable to resolve host '%s'"), name);
-    } else {
-	if (hp->h_addrtype == AF_INET) {
-	    struct in_addr in;
-	    memcpy(&in.s_addr, *(hp->h_addr_list), sizeof (in.s_addr));
-	    strcpy(ip, inet_ntoa(in));
-	} else {
-	    warning(_("unknown format returned by C function 'gethostbyname'"));
-	}
-	ans = mkString(ip);
-    }
-    return ans;
-}
-#else
-SEXP attribute_hidden do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    warning(_("nsl() is not supported on this platform"));
-    return R_NilValue;
-}
-#endif
 
 SEXP attribute_hidden do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

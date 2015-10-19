@@ -145,7 +145,6 @@ FUNTAB R_FunTab[] =
 {"seterrmessage",do_seterrmessage, 0,	111,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"printDeferredWarnings",do_printDeferredWarnings, 0,	111,	0,	{PP_FUNCALL, PREC_FN,	  0}},
 {"interruptsSuspended",do_interruptsSuspended, 0,	11,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
-{"restart",	do_restart,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"as.function.default",do_asfunction,0,	11,	2,	{PP_FUNCTION,PREC_FN,	  0}},
 {"debug",	do_debug,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	  0}},
 {"undebug",	do_debug,	1,	111,	1,	{PP_FUNCALL, PREC_FN,	  0}},
@@ -606,9 +605,6 @@ FUNTAB R_FunTab[] =
 /* Primitive */
 {"proc.time",	do_proctime,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"gc.time",	do_gctime,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-#if 0
-{"visibleflag", do_visibleflag,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
-#endif
 {"withVisible", do_withVisible,	1,	10,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"expression",	do_expression,	1,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"interactive",	do_interactive,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
