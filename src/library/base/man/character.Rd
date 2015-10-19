@@ -1,6 +1,6 @@
 % File src/library/base/man/character.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{character}
@@ -61,6 +61,9 @@ is.character(x)
   truncated.
 }
 \seealso{
+  \code{\link{options}}: option \code{scipen} affects the conversion of
+  numbers.
+  
   \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
   for character concatenation and splitting,
   \code{\link{chartr}} for character translation and casefolding (e.g.,
