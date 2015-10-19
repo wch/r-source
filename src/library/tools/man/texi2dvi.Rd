@@ -53,7 +53,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \env{BSTINPUTS} settings.
 
 #ifdef unix
-  The default option for \code{texi2dvi} is set from environmnt variable
+  The default option for \code{texi2dvi} is set from environment variable
   \env{R_TEXI2DVICMD}, and the default for that is set from environment
   variable \env{TEXI2DVI} or if that is unset, from a value chosen when
   \R is configured.  A shell script \command{texi2dvi} is part of GNU's
