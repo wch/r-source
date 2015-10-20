@@ -1,22 +1,26 @@
 % File src/library/utils/man/vignette.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vignette}
+\title{View, List or Get R Source of Package Vignettes}
 \alias{vignette}
 \alias{edit.vignette}
 \alias{print.vignette}
 \alias{vignettes} % to link to from e.g. grid-package.Rd
-\title{View or List Package Vignettes}
+\alias{getSource}
+\alias{getSource.vignette}%hidden
 \description{
-  View a specified package vignette, or list the available ones.
+  View a specified package vignette, or list the available ones;
+  display it rendered in a viewer, and get or edit its \R source file.
 }
 \usage{
 vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 
 \S3method{print}{vignette}(x, \dots)
 \S3method{edit}{vignette}(name, \dots)
+\S3method{getSource}{vignette}(x, strict=TRUE, \dots)
 }
 \arguments{
   \item{topic}{a character string giving the (base) name of the vignette
@@ -31,8 +35,8 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
   \item{all}{logical; if \code{TRUE} search all available packages in
     the library trees specified by \code{lib.loc}, and if \code{FALSE},
     search only attached packages.}
-  \item{x, name}{Object of class \code{vignette}.}
-  \item{\ldots}{Ignored by the \code{print} method, passed on to
+  \item{x, name}{object of class \code{vignette}.}
+  \item{\dots}{ignored by the \code{print} method, passed on to
     \code{\link{file.edit}} by the \code{edit} method.}
 }
 \details{
@@ -49,11 +53,12 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
   corresponding information is returned in an object of class
   \code{"packageIQR"}.
 
-  The \code{edit} method copies the \R code extracted from the vignette
+  \code{getSource(x)} gets the (full path) file name of the \R code
+  extracted from the vignette, and the \code{edit} method that  \R code
   to a temporary file and opens the file in an editor (see
   \code{\link{edit}}). This makes it very easy to execute the commands
   line by line, modify them in any way you want to help you test
-  variants, etc.  
+  variants, etc.
 }
 \seealso{
   \code{\link{browseVignettes}} for an HTML-based vignette browser.
@@ -65,26 +70,25 @@ vignette(all = FALSE)
 ## List vignettes from all *installed* packages (can take a long time!):
 vignette(all = TRUE)
 
-\dontrun{
-## Open the grid intro vignette
-vignette("grid")
-
-## The same
+## The grid intro vignette -- open it
+\dontrun{vignette("grid") # calling print()}
+## the same:
 v1 <- vignette("grid")
-print(v1)
-
+\dontrun{v1 # calling print(.)}
+str(v1)
 ## Now let us have a closer look at the code
-edit(v1)
-
-## An alternative way of extracting the code,
-## R file is written to current working directory
-Stangle(v1$file)
+getSource(v1) # the R file name
+if(interactive()) # "display" it
+  file.show(getSource(v1))
+## or even more interactively:
+\dontrun{edit(v1) # e.g., to send lines ...}
 
 ## A package can have more than one vignette (package grid has several):
 vignette(package = "grid")
-vignette("rotated")
-## The same, but without searching for it:
-vignette("rotated", package = "grid")
+if(interactive()) {
+   ## vignette("rotated")
+   ## The same, but without searching for it:
+   vignette("rotated", package = "grid")
 }
 }
 \keyword{documentation}

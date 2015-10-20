@@ -18,7 +18,7 @@ export("?", .DollarNames, .S3methods, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        file_test, file.edit, fileSnapshot, find, fix, fixInNamespace, findLineNum,
        flush.console, formatOL, formatUL, getAnywhere, getCRANmirrors,
        getFromNamespace, getParseData, getParseText, getS3method,
-       getSrcDirectory, getSrcFilename, getSrcLocation, getSrcref,
+       getSrcDirectory, getSrcFilename, getSrcLocation, getSrcref, getSource,
        glob2rx, globalVariables, head, head.matrix, help,
        help.request, help.search, help.start, history,
        install.packages, installed.packages, is.relistable, isS3method,
@@ -61,6 +61,7 @@ S3method(format, "aspell")
 S3method(format, "news_db")
 S3method(format, "object_size")
 S3method(format, "roman")
+S3method(getSource, vignette)
 S3method(head, data.frame)
 S3method(head, default)
 S3method(head, "function")
