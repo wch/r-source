@@ -961,3 +961,61 @@ if(.Platform$OS.type == "unix") { # only works when platform has getline() in st
     stopifnot(identical(rs, cn))
 }
 options(op)
+
+
+## tail.matrix()
+B <- 100001; op <- options(max.print = B + 99)
+mat.l <- list(m0  = matrix(, 0,2),
+              m0n = matrix(, 0,2, dimnames = list(NULL, paste0("c",1:2))),
+              m2  = matrix(1:2,   2,1),
+              m2n = matrix(1:2,   2,3, dimnames = list(NULL, paste0("c",1:3))),
+              m9n = matrix(1:9,   9,1, dimnames = list(paste0("r",1:9),"CC")),
+              m12 = matrix(1:12, 12,1),
+              mBB = matrix(1:B, B, 1))
+## tail() used to fail for 0-rows matrices m0*
+n.s <- -3:3
+hl <- lapply(mat.l, function(M) lapply(n.s, function(n) head(M, n)))
+tl <- lapply(mat.l, function(M) lapply(n.s, function(n) tail(M, n)))
+## Check dimensions of resulting matrices --------------
+## ncol:
+Mnc <- do.call(rbind, rep(list(vapply(mat.l, ncol, 1L)), length(n.s)))
+stopifnot(identical(Mnc, sapply(hl, function(L) vapply(L, ncol, 1L))),
+          identical(Mnc, sapply(tl, function(L) vapply(L, ncol, 1L))))
+## nrow:
+fNR <- function(L) vapply(L, nrow, 1L)
+tR <- sapply(tl, fNR)
+stopifnot(identical(tR, sapply(hl, fNR)), # head() & tail  both
+          tR[match(0, n.s),] == 0, ## tail(*,0) has always 0 rows
+          identical(tR, outer(n.s, fNR(mat.l), function(x,y)
+              ifelse(x < 0, pmax(0L, y+x), pmin(y,x)))))
+for(j in c("m0", "m0n")) { ## 0-row matrices: tail() and head() look like identity
+    co <- capture.output(mat.l[[j]])
+    stopifnot(vapply(hl[[j]], function(.) identical(co, capture.output(.)), NA),
+              vapply(tl[[j]], function(.) identical(co, capture.output(.)), NA))
+}
+
+CO1 <- function(.) capture.output(.)[-1] # drop the printed column names
+## checking tail(.) rownames formatting
+nP <- n.s > 0
+for(nm in c("m9n", "m12", "mBB")) { ## rownames: rather [100000,] than [1e5,]
+    tf <- file(); capture.output(mat.l[[nm]], file=tf)
+    co <- readLines(tf); close(tf)
+    stopifnot(identical(# tail(.) of full output == output of tail(.) :
+        lapply(n.s[nP], function(n) tail(co, n)),
+        lapply(tl[[nm]][nP], CO1)))
+}
+
+identCO <- function(x,y, ...) identical(capture.output(x), capture.output(y), ...)
+headI <- function(M, n) M[head(seq_len(nrow(M)), n), , drop=FALSE]
+tailI <- function(M, n) M[tail(seq_len(nrow(M)), n), , drop=FALSE]
+for(mat in mat.l) {
+    ## do not capture.output for  tail(<large>, <small negative>)
+    n.set <- if(nrow(mat) < 999) -3:3 else 0:3
+    stopifnot(
+        vapply(n.set, function(n) identCO (head(mat, n), headI(mat, n)), NA),
+        vapply(n.set, function(n) identCO (tail (mat, n, addrownums=FALSE),
+                                           tailI(mat, n)), NA),
+        vapply(n.set, function(n) all.equal(tail(mat, n), tailI(mat, n),
+                                            check.attributes=FALSE), NA))
+}
+options(op)

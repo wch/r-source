@@ -303,6 +303,9 @@
       \item \code{xpdrows.data.frame()} was not checking for unique
       row names; in particular, this affected assignment to non-existing
       rows via numerical indexing. (\PR{16570})
+
+      \item \code{tail.matrix()} did not work for zero rows matrices,
+      and produced \code{"[1e+05,]"} row \dQuote{labels}.
     }
   }
 }
