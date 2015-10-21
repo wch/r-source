@@ -81,5 +81,14 @@ rank(x2, ties.method= "random") # and again
 (rma <- rank(x2, ties.method= "max"))  # as used classically
 (rmi <- rank(x2, ties.method= "min"))  # as in Sports
 stopifnot(rma + rmi == round(r2 + r2))
+
+## Comparing all tie.methods:
+tMeth <- eval(formals(rank)$ties.method)
+rx2 <- sapply(tMeth, function(M) rank(x2, ties.method=M))
+cbind(x2, rx2)
+## ties.method's does not matter w/o ties:
+x <- sample(47)
+rx <- sapply(tMeth, function(MM) rank(x, ties.method=MM))
+stopifnot(all(rx[,1] == rx))
 }
 \keyword{univar}

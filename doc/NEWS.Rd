@@ -192,7 +192,7 @@
       longer than 8192 characters, thanks to Karl Millar's \PR{16544}.
 
       \item \code{rank()} gains a \code{ties.method = "last"} option,
-      for convenience (and symmetry), as proposed by Marius Hofert.
+      for convenience (and symmetry).
 
       \item \code{getSource(vignette(..))} is the \R source file name of
       a vignette.
