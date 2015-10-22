@@ -793,13 +793,20 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     if(!local.only) {
         ## Try to handle explicitly failure to connect to CRAN.
         f <- tempfile()
-        m <- try(download.file(url, destfile = f, quiet = TRUE))
-        if(!inherits(m, "try-error") && m == 0L)
-            m <- try(read.csv(f, as.is = TRUE, encoding = "UTF-8"))
-        else m <- NULL
-        unlink(f)
+        on.exit(unlink(f))
+        m <- tryCatch({
+            m <- download.file(url, destfile = f, quiet = TRUE)
+            if(m != 0L)
+                stop(gettextf("'download.file()' error code '%d'", m))
+            read.csv(f, as.is = TRUE, encoding = "UTF-8")
+        }, error=function(err) {
+            warning(gettextf("failed to download mirrors file (%s); using local file '%s'",
+                             conditionMessage(err), local.file),
+                    call.=FALSE, immediate.=TRUE)
+            NULL
+        })
     }
-    if(is.null(m) || inherits(m, "try-error"))
+    if(is.null(m))
         m <- read.csv(local.file, as.is = TRUE, encoding = "UTF-8")
     if(!all) m <- m[as.logical(m$OK), ]
     m
