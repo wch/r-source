@@ -10,6 +10,9 @@ Changes from grid_3.2.* to grid_3.3.0:
     example, a call to absolute.size(unit(1,"npc") + unit(2,"mm"))
     works outside of 'grid' (reported by Baptiste Auguie).
 
+3.  Refactored grid.draw() so that grid.draw(NULL) now works 
+    (by doing nothing).  Reported by Hadley Wickham.
+
 
 Changes from grid_3.1.* to grid_3.2.0:
 -------------------------------------
