@@ -456,6 +456,10 @@
       \item \code{splineDesign(*, outer.ok=TRUE)} (\pkg{splines}) is better now
       (\PR{16549}), and \code{interpSpline()} now allows \code{sparse=TRUE}
       for speedup with non-small sizes.
+      
+      \item If the expression in the traceback was too long, 
+      \code{traceback()} did not report the source line number.  (Patch 
+      by Kirill Müller.)
     }
   }
 }
