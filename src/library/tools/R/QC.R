@@ -6996,6 +6996,10 @@ function(dir)
         language <- meta["Language"]
         if(is.na(language) || (language == "en")) {
             title2 <- toTitleCase(title)
+            ## Keep single quoted elements unchanged.
+            p <- "(^|(?<=[ \t[:punct:]]))'[^']*'($|(?=[ \t[:punct:]]))"
+            m <- gregexpr(p, title, perl = TRUE)
+            regmatches(title2, m) <- regmatches(title, m)
             if(title != title2)
                 out$title_case <- c(title, title2)
         }
