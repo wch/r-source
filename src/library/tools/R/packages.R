@@ -41,6 +41,7 @@ function(dir = ".", fields = NULL,
         this <- if(nzchar(path)) file.path(dir, path) else dir
         desc <- .build_repository_package_db(this, fields, type, verbose,
                                              unpacked)
+        desc <- Filter(length, desc)
 
         if(length(desc)) {
             Files <- names(desc)
@@ -156,6 +157,11 @@ function(dir, fields = NULL,
                     }
                     temp["MD5sum"] <- md5sum(files[i])
                     db[[i]] <- temp
+                } else {
+                    message(gettextf("reading DESCRIPTION for package %s failed with message:\n  %s",
+                                     sQuote(basename(dirname(p))),
+                                     conditionMessage(temp)),
+                            domain = NA)
                 }
             }
             unlink(packages[i], recursive = TRUE)
@@ -190,6 +196,11 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
             ## Cannot compute MD5 sum of the source tar.gz when working
             ## on the unpacked sources ...
             db[[i]] <- temp
+        } else {
+            warning(gettextf("reading DESCRIPTION for package %s failed with message:\n  %s",
+                             sQuote(basename(paths[i])),
+                             conditionMessage(temp)),
+                    domain = NA)
         }
     }
     if(verbose) message("done")
