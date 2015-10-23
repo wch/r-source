@@ -194,8 +194,8 @@
       \item \code{rank()} gains a \code{ties.method = "last"} option,
       for convenience (and symmetry).
 
-      \item \code{getSource(vignette(..))} is the \R source file name of
-      a vignette.
+      %% \item \code{getSource(vignette(..))} is the \R source file name of
+      %% a vignette.
     }
   }
 

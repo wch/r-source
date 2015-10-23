@@ -9,8 +9,8 @@
 \alias{edit.vignette}
 \alias{print.vignette}
 \alias{vignettes} % to link to from e.g. grid-package.Rd
-\alias{getSource}
-\alias{getSource.vignette}%hidden
+%% \alias{getSource}
+%% \alias{getSource.vignette}%hidden
 \description{
   View a specified package vignette, or list the available ones;
   display it rendered in a viewer, and get or edit its \R source file.
@@ -20,7 +20,7 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 
 \S3method{print}{vignette}(x, \dots)
 \S3method{edit}{vignette}(name, \dots)
-\S3method{getSource}{vignette}(x, strict=TRUE, \dots)
+%% \S3method{getSource}{vignette}(x, strict=TRUE, \dots)
 }
 \arguments{
   \item{topic}{a character string giving the (base) name of the vignette
@@ -53,12 +53,12 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
   corresponding information is returned in an object of class
   \code{"packageIQR"}.
 
-  \code{getSource(x)} gets the (full path) file name of the \R code
-  extracted from the vignette, and the \code{edit} method that  \R code
-  to a temporary file and opens the file in an editor (see
-  \code{\link{edit}}). This makes it very easy to execute the commands
-  line by line, modify them in any way you want to help you test
-  variants, etc.
+  %% \code{getSource(x)} gets the (full path) file name of the \R code
+  %% extracted from the vignette, and the \code{edit} method that  \R code
+  %% to a temporary file and opens the file in an editor (see
+  %% \code{\link{edit}}). This makes it very easy to execute the commands
+  %% line by line, modify them in any way you want to help you test
+  %% variants, etc.
 }
 \seealso{
   \code{\link{browseVignettes}} for an HTML-based vignette browser.
@@ -72,17 +72,18 @@ vignette(all = TRUE)
 
 ## The grid intro vignette -- open it
 \dontrun{vignette("grid") # calling print()}
-## the same:
-v1 <- vignette("grid")
+## The same (conditional on existence of the vignettte).
+## Note that 'package = *' is much faster in the case of many installed packages:
+if(!is.null(v1 <- vignette("grid", package="grid"))) {
 \dontrun{v1 # calling print(.)}
-str(v1)
-## Now let us have a closer look at the code
-getSource(v1) # the R file name
-if(interactive()) # "display" it
-  file.show(getSource(v1))
-## or even more interactively:
+  str(v1)
+  ## Now let us have a closer look at the code
+  %% print(utils:::getSource(v1)) # the R file name
+  %% if(interactive()) # "display" it
+  %%   file.show(utils:::getSource(v1))
+  %% ## or even more interactively:
 \dontrun{edit(v1) # e.g., to send lines ...}
-
+}# if( has vignette "installed")
 ## A package can have more than one vignette (package grid has several):
 vignette(package = "grid")
 if(interactive()) {
