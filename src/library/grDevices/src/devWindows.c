@@ -1663,7 +1663,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     MCHECK(xd->mclpwm = newmenuitem(G_("as a Metafile\tCTRL+W"), 0, menuclpwm));
     addto(m);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mprint = newmenuitem(G_("Print...\tCTRL+P"), 0, menuprint));
+    MCHECK(xd->mprint = newmenuitem(G_("Print..."), 'P', menuprint));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(xd->mclose = newmenuitem(G_("close Device"), 0, menuclose));
     MCHECK(newmenu(G_("History")));
@@ -1705,7 +1705,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     MCHECK(xd->grmenustayontop = newmenuitem(G_("Stay on top"), 0, menustayontop));
     setdata(xd->grmenustayontop, (void *) dd);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem(G_("Print..."), 0, menuprint));
+    MCHECK(m = newmenuitem(G_("Print..."), 'P', menuprint));
     setdata(m, (void *) dd);
     gchangepopup(xd->gawin, xd->grpopup);
 

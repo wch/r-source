@@ -1126,7 +1126,7 @@ int setupui(void)
     MCHECK(mdisplay = newmenuitem(G_("Display file(s)..."), 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mload = newmenuitem(G_("Load Workspace..."), 0, menuloadimage));
-    MCHECK(msave = newmenuitem(G_("Save Workspace..."), 0, menusaveimage));
+    MCHECK(msave = newmenuitem(G_("Save Workspace..."), 'S', menusaveimage));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mloadhistory = newmenuitem(G_("Load History..."), 0,
 				      menuloadhistory));
@@ -1135,7 +1135,7 @@ int setupui(void)
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem(G_("Change dir..."), 0, menuchangedir));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem(G_("Print..."), 0, menuprint));
+    MCHECK(newmenuitem(G_("Print..."), 'P', menuprint));
     MCHECK(newmenuitem(G_("Save to File..."), 0, menusavefile));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem(G_("Exit"), 0, menuexit));
