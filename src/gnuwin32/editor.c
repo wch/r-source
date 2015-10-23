@@ -738,7 +738,7 @@ static editor neweditor(void)
     MCHECK(m = newmenuitem(G_("Save as..."), 0, menueditorsaveas));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem(G_("Print..."), 0, editorprint));
+    MCHECK(m = newmenuitem(G_("Print..."), 'P', editorprint));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem(G_("Close script"), 0, menueditorclose));

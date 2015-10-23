@@ -339,6 +339,9 @@
       (Windows) MiKTeX removed its \code{texi2dvi.exe} command in Sept
       2015: \code{tools::texi2dvi()} tries \code{texify.exe} if it is
       not found.
+      
+      \item (Windows only) Shortcuts for printing and saving have
+      been added to menus in \command{Rgui.exe}.  (Request of \PR{16572}.)
     }
   }
 
