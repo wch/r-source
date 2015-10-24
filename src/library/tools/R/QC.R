@@ -7036,6 +7036,14 @@ function(dir)
             out$bad_urls <- bad
     } else out$no_url_checks <- TRUE
 
+    ## Check DOIs.
+    if(capabilities("libcurl")) {
+        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir)),
+                        error = identity)
+        if(inherits(bad, "error") || NROW(bad))
+            out$bad_dois <- bad
+    }
+
     ## Are there non-ASCII characters in the R source code without a
     ## package encoding in DESCRIPTION?
     ## Note that checking always runs .check_package_ASCII_code() which
@@ -7359,7 +7367,7 @@ function(x, ...)
                             conditionMessage(y)),
                           collapse = "\n")
                 else
-                    paste(c(if (length(y) > 1L)
+                    paste(c(if(length(y) > 1L)
                                 "Found the following (possibly) invalid URLs:"
                             else
                                 "Found the following (possibly) invalid URL:",
@@ -7377,6 +7385,19 @@ function(x, ...)
             if(length(y <- x$no_url_checks) && y) {
                 "Checking URLs requires 'libcurl' support in the R build"
             })),
+      fmt(if(length(y <- x$bad_dois)) {
+              if(inherits(y, "error"))
+                  paste(c("Checking DOIs failed with message:",
+                          conditionMessage(y)),
+                        collapse = "\n")
+              else
+                  paste(c(if(length(y) > 1L)
+                              "Found the following (possibly) invalid DOIs:"
+                          else
+                              "Found the following (possibly) invalid DOI:",
+                          paste(" ", gsub("\n", "\n    ", format(y)))),
+                        collapse = "\n")
+          }),
       if(length(y <- x$R_files_non_ASCII)) {
           paste(c("No package encoding and non-ASCII characters in the following R files:",
                   paste0("  ", names(y), "\n    ",
