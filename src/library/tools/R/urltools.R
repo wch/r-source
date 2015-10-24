@@ -19,20 +19,11 @@
 get_IANA_URI_scheme_db <-
 function()
 {
-    ## See <http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml>.
+    ## See
+    ## <http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml>.
     baseurl <- "http://www.iana.org/assignments/uri-schemes/"
-    permanent <- utils::read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
-                                 stringsAsFactors = FALSE)
-    provisional <- utils::read.csv(url(paste0(baseurl, "uri-schemes-2.csv")),
-                                   stringsAsFactors = FALSE)
-    historical <- utils::read.csv(url(paste0(baseurl, "uri-schemes-3.csv")),
-                                  stringsAsFactors = FALSE)
-    db <- rbind(permanent, provisional, historical)
-    db$Category <-
-        rep.int(c("permanent", "provisional", "historical"),
-                c(nrow(permanent),
-                  nrow(provisional),
-                  nrow(historical)))
+    db <- utils::read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
+                          stringsAsFactors = FALSE)
     names(db) <- chartr(".", "_", names(db))
     db
 }
