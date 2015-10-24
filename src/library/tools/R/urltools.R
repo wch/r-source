@@ -435,10 +435,12 @@ function(db, verbose = FALSE)
     ind <- is.na(match(schemes, c("", IANA_URI_scheme_db$URI_Scheme)))
     if(any(ind)) {
         len <- sum(ind)
+        msg <- rep.int("Invalid URI scheme", len)
+        doi <- schemes[ind] == "doi"
+        if(any(doi))
+            msg[doi] <- paste(msg[doi], "(use \\doi for DOIs)")
         bad <- rbind(bad,
-                     .gather(urls[ind],
-                             parents[ind],
-                             m = rep.int("Invalid URI scheme", len)))
+                     .gather(urls[ind], parents[ind], m = msg))
     }
 
     ## ftp.
