@@ -22,7 +22,7 @@
     [, 3] \tab disp \tab Displacement (cu.in.) \cr
     [, 4] \tab hp   \tab Gross horsepower \cr
     [, 5] \tab drat \tab Rear axle ratio \cr
-    [, 6] \tab wt   \tab Weight (lb/1000) \cr
+    [, 6] \tab wt   \tab Weight (1000 lbs) \cr
     [, 7] \tab qsec \tab 1/4 mile time \cr
     [, 8] \tab vs   \tab V/S \cr
     [, 9] \tab am   \tab Transmission (0 = automatic, 1 = manual) \cr
