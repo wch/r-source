@@ -31,9 +31,7 @@ rank <- function(x, na.last = TRUE,
 		.Internal(rank(x, length(x), ties.method)),
 		"first" = sort.list(sort.list(x)),
 		"last"  = ## == rev(sort.list(sort.list(rev(x)))) :
-                    if(length(x) == 0) integer(0)
-                    else { i <- length(x):1L
-                        sort.list(sort.list(x[i]))[i] },
+		    sort.list(rev.default(sort.list(x, decreasing=TRUE))),
 		"random" = sort.list(order(x, stats::runif(sum(!nas)))))
     ## the internal code has ranks in [1, length(y)]
     if(!is.na(na.last) && any(nas)) {
