@@ -6584,7 +6584,7 @@ expression: to select by wildcards use @code{Sys.glob}.
 Many types of information on a filepath (including for example if it is
 a file or directory) can be found by @code{file.info}.
 
-There are several ways to find out if a file `exists' (and file can
+There are several ways to find out if a file `exists' (a file can
 exist on the filesystem and not be visible to the current user).
 There are functions @code{file.exists}, @code{file.access} and
 @code{file_test} with various versions of this test: @code{file_test} is
