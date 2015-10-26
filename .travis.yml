@@ -1,0 +1,97 @@
+language: c
+env:
+- CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - git-svn
+    - bash-completion
+    - bison
+    - debhelper
+    - default-jdk
+    - g++
+    - gcc
+    - gdb
+    - gfortran
+    - groff-base
+    - libblas-dev
+    - libbz2-dev
+    - libcurl4-openssl-dev
+    - libjpeg-dev
+    - liblapack-dev
+    - liblzma-dev
+    - libncurses5-dev
+    - libpango1.0-dev
+    - libpcre3-dev
+    - libpng-dev
+    - libreadline-dev
+    - libx11-dev
+    - libxt-dev
+    - subversion
+    - texinfo
+    - texlive-base
+    - texlive-extra-utils
+    - texlive-fonts-extra
+    - texlive-fonts-recommended
+    - texlive-generic-recommended
+    - texlive-latex-base
+    - texlive-latex-extra
+    - texlive-latex-recommended
+    - x11proto-core-dev
+    - xauth
+    - xdg-utils
+    - xfonts-base
+    - xvfb
+    - zlib1g-dev
+cache:
+  - ccache
+
+before_install:
+  - tools/rsync-recommended
+  - mkdir -p extra
+  - pushd extra
+  - wget --no-check-certificate http://zlib.net/zlib-$ZLIB_VERSION.tar.gz
+  - tar xzf zlib-$ZLIB_VERSION.tar.gz
+  - pushd "zlib-$ZLIB_VERSION"
+  - ./configure --prefix=$PREFIX && make && make install
+  - popd
+  - wget --no-check-certificate "http://curl.haxx.se/download/curl-$CURL_VERSION.tar.gz"
+  - tar zxf "curl-$CURL_VERSION.tar.gz"
+  - pushd "curl-$CURL_VERSION"
+  - ./configure --prefix=$PREFIX && make && make install
+  - popd
+  - wget --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-$PCRE_VERSION.tar.gz
+  - tar xzf pcre-$PCRE_VERSION.tar.gz
+  - pushd pcre-$PCRE_VERSION
+  - ./configure --prefix=$PREFIX --enable-utf && make && make install
+  - popd
+  - popd
+
+script:
+  - git svn init https://svn.r-project.org/R/trunk
+  - git update-ref refs/remotes/git-svn refs/remotes/origin/HEAD
+  - git svn rebase
+  - mkdir build;pushd build
+  - ../configure --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
+  - make
+  - make check || true
+  - make install
+
+before_deploy:
+  - mkdir -p /tmp/R-bin
+  - tar cJf /tmp/R-bin/R-devel.xz -C $(dirname $PREFIX) $(basename $PREFIX)
+
+deploy:
+  provider: s3
+  local_dir: /tmp/R-bin
+  on:
+    repo: wch/r-source
+    branch: trunk
+  skip_cleanup: true
+  bucket: "rstudio-travis"
+  access_key_id:
+    secure: zwn4aB0vKLZsrNZ06kREfUjJWf4HIqvSAbToNWyk1L23s/E79wqI58LVnwgIGTEBdRDZTnRnadFxjmJjq/0oP9xLugmw3/EA8T2cA+DQ2HqVLW9b1Fk34qmN7txRlAAQlZCGboXJq+FHbZWZnsMXFaYG1D/W/hTzhyEFQ3b96aM3c3o4c4CprgaDHgY27UjCbX8AbbvS1niKiMBzPRvZLWJuVdNggAokUQh3MbSBCsiNvnChZRbNwHoy2WqN30yPk0AuJ91a4jzRvPKgTISZkhva9qvUZK8NlAg1fzcZkM+INlL93W3QVJy48bPvbyg0Qyeyq9J0VDWfF+3a1KwMuNz73sSe4SUj5SN40u5s47EZfoeuixKRvVwthEJkJgg3JGDJR91RRwdGCBetxwSjdyq7LSAYstx40Rj2fLDrl1jt0EiKM8U8OVoJBRG8CsgCzSlRzEVMDvJjXjhvnWvoM2AY4a7rpaVGh7Qn4PyZeOxGf0z5Fy32MzcFGy9fRkArB1210lfa5GcZnKcls41xhd+OUP34DR95pme3zlKM31msjf1Q2Nb19T46KdEa9Pf8iQs/mkLGGsn8wlZnpXK4rXbF7ggxUhKDg3q/Z6EH3DQYBoq/JA1sA9zl7Kay5m85bdToDr0HjhgHqRhyDmKBnFWrqYOKyzKV9x4WEK2sBG0=
+  secret_access_key:
+    secure: TddHhBXkeZGMSjmawHAKEcyO1nZF7YhmnhNblH/CAr5Eh2Y5IDoRVtH0xJ117r4m2vfajct5iBViefM5GTkJegGgn01+3357RcK7JYvHeZXVYyuUtn8c5HujV+lVQfqh0ctTz5jLZwHNX4etiZkmYpa/1GTiNJaDFmiDCC7vwxyxY3wuAbDpdqMICCzYzsDnHqNfRf+5htBHj1q9ssZtxtNHbBi14wcS2acW/1Vf+apr0YH+/ZNOzUmN9wjHIERR1rpq28agiCwSRNE8kbav+uqU0zDLf2jopwtDbhfET1ErQjxKb7MGO30StPp0ZZSIFPnloj6ijbVDYsxMVTyCpCN7tF6zK99181lbTepp6euFyOktGm+42QREBXhLEkDBqNWjNk7ahRZJqRUydOoSuYPq7AxJQeMJN00jp4676GoeCtrqOvhKZetW8C8k1F5j+O0l+W2wj1YgA7+NGXi8AgMCCX7Rfl4xa6OI7O5zOND0wzqd5yFtwE1fGw8+J3YlhApLooApsrJSQxCTZIday4FmK/zO95BtVBiZk+qmWZ6mG6JS5W/T51qZLKX0009a6kiK/vfrSNSudCBvoE2dO/vThXLOjvW3Z5NW9Qhxnmg39sPMkbHKx389OVVn7rA2p2dWtXnzVtVmWamI5G3iqyP1IFBFVbDdvFLpM/1EIBg=
