@@ -25,7 +25,7 @@
       \item \code{which.min(x)} and \code{which.max(x)} may be much
       faster for logical and integer \code{x} and now also work for long
       vectors.
-      
+
       \item The \sQuote{emulation} part of \code{tools::texi2dvi()} has
       been somewhat enhanced, including supporting \code{quiet = TRUE}.
       It can be selected by \code{texi2dvi = "emulation"}.
@@ -33,7 +33,7 @@
       (Windows) MiKTeX removed its \code{texi2dvi.exe} command in Sept
       2015: \code{tools::texi2dvi()} tries \code{texify.exe} if it is
       not found.
-      
+
       \item (Windows only) Shortcuts for printing and saving have
       been added to menus in \command{Rgui.exe}.  (Request of \PR{16572}.)
     }
@@ -60,7 +60,7 @@
       \item Various macros can be set to override the default
       behaviour of \command{configure} when detecting OpenMP: see file
       \file{config.site}.
-      
+
       \item Source installation on Windows has been modified to allow
       for MiKTeX installations without \command{texi2dvi.exe}.  See file
       \file{MkRules.dist}.
@@ -149,14 +149,18 @@
       \item \code{splineDesign(*, outer.ok=TRUE)} (\pkg{splines}) is better now
       (\PR{16549}), and \code{interpSpline()} now allows \code{sparse=TRUE}
       for speedup with non-small sizes.
-      
-      \item If the expression in the traceback was too long, 
-      \code{traceback()} did not report the source line number.  (Patch 
+
+      \item If the expression in the traceback was too long,
+      \code{traceback()} did not report the source line number.  (Patch
       by Kirill Müller.)
-      
+
       \item The browser did not truncate the display of the function when
       exiting with \code{options("deparse.max.lines")} set.
       (\PR{16581})
+
+      \item When \code{bs(*, Boundary.knots=)} had boundary knots inside
+      the data range, extrapolation was somewhat off.  (Patch by Trevor
+      Hastie.)
     }
   }
 }

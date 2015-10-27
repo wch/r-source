@@ -1,6 +1,6 @@
 % File src/library/splines/man/bs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bs}
@@ -30,9 +30,10 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   \item{intercept}{if \code{TRUE}, an intercept is included in the
     basis; default is \code{FALSE}.}
   \item{Boundary.knots}{boundary points at which to anchor the B-spline
-    basis (default the range of the data). If both \code{knots} and
-    \code{Boundary.knots} are supplied, the basis parameters do not
-    depend on \code{x}. Data can extend beyond \code{Boundary.knots}.}
+    basis (default the range of the non-\code{\link{NA}} data).  If both
+    \code{knots} and \code{Boundary.knots} are supplied, the basis
+    parameters do not depend on \code{x}.  Data can extend beyond
+    \code{Boundary.knots}.}
 }
 \details{
   \code{bs} is based on the function \code{\link{spline.des}}.
@@ -41,6 +42,12 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   interior knots and degree, evaluated at the values of \code{x}.  A
   primary use is in modeling formulas to directly specify a piecewise
   polynomial term in a model.
+
+  When \code{Boundary.knots} are set \emph{inside} \code{range(x)},
+  \code{bs()} now uses a \sQuote{pivot} inside the respective boundary
+  knot which is important for derivative exvaluation.  In \R versions
+  \eqn{\le}{<=} 3.2.2, the boundary knot itself had been used as
+  pivot, which lead to somewhat wrong extrapolations.
 }
 \value{
   A matrix of dimension \code{c(length(x), df)}, where either \code{df}
@@ -53,6 +60,10 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 \seealso{
   \code{\link{ns}}, \code{\link{poly}}, \code{\link{smooth.spline}},
   \code{\link{predict.bs}}, \code{\link{SafePrediction}}
+}
+\author{Douglas Bates and Bill Venables.  Tweaks by R Core, and a patch
+  fixing extrapolation \dQuote{outside} \code{Boundary.knots} by Trevor
+  Hastie.
 }
 \references{
   Hastie, T. J. (1992)
