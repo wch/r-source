@@ -218,3 +218,32 @@ sapply(ipL, function(ip) round(ip$d.time / ip$s.time, 1)[c(1,3)])
 ##           n=50 n=75 n=100 n=150 n=200 n=275 n=400 n=575 n=800 n=1125 n=1600 -- nb-mm4, i7-5600U
 ## user.self  0.5  0.5   0.5   0.5   0.7   2.5   4.3  12.3  33.7   70.5  116.1
 ## elapsed    0.5  0.3   0.5   0.7   1.0   2.5   4.3  13.0  26.2   57.4  117.3
+
+###---- "Bug report" (to R-core) from Trevor Hastie ---
+###---->  bs(*, Boundary.knots = .)
+### needing boundary ajustment for correct extrapolation
+
+## Trevor's Example, slightly modified and extended:
+x <- seq(1.5, 8.5, by = 1/4)
+set.seed(13)
+y <- x + .01*(x - 5)^3 + rnorm(x)
+
+fit0 <- lm(y ~ bs(x, degree=3, knots=4))
+fit0.<- lm(y ~ bs(x, degree=3, knots=4, Boundary.knots=c(1,9)))# *NOT* outside
+fit1 <- lm(y ~ bs(x, degree=3, knots=4, Boundary.knots=c(1,8)))# warning
+fit2 <- lm(y ~ bs(x, degree=3, knots=4, Boundary.knots=c(2,8)))# warning "2 x"
+
+jx <- seq(from=-2,to=12, by=0.1)
+p0 <- predict(fit0, list(x=jx))
+p0.<- predict(fit0, list(x=jx))
+p1 <- predict(fit1, list(x=jx))
+p2 <- predict(fit2, list(x=jx))
+stopifnot(all.equal(p0, p0.,tol=1e-14),
+          all.equal(p0, p1, tol=1e-14),
+          all.equal(p0, p2, tol=1e-14))
+## ^^  p1 and p2 differed from p0 in R <= 3.2.2
+## See numerical fuzz:
+all.equal(p0, p0., tol=0)
+all.equal(p0, p1,  tol=0)
+all.equal(p0, p2,  tol=0)
+all.equal(p1, p2,  tol=0)# interestingly almost the same
