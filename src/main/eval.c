@@ -862,6 +862,17 @@ static R_INLINE SEXP getSrcref(SEXP srcrefs, int ind)
 	return R_NilValue;
 }
 
+/* There's another copy of this in main.c */
+static void PrintCall(SEXP call, SEXP rho)
+{
+    int old_bl = R_BrowseLines,
+        blines = asInteger(GetOption1(install("deparse.max.lines")));
+    if(blines != NA_INTEGER && blines > 0)
+	R_BrowseLines = blines;
+    PrintValueRec(call, rho);
+    R_BrowseLines = old_bl;
+}
+
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 {
     SEXP formals, actuals, savedrho;
@@ -974,18 +985,13 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 		     || (RDEBUG(rho) && R_BrowserLastCommand == 's')) ;
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     if (RDEBUG(newrho)) {
-	int old_bl = R_BrowseLines,
-	    blines = asInteger(GetOption1(install("deparse.max.lines")));
 	SEXP savesrcref;
 	cntxt.browserfinish = 0; /* Don't want to inherit the "f" */
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
 	    body = bytecodeExpr(body);
 	Rprintf("debugging in: ");
-	if(blines != NA_INTEGER && blines > 0)
-	    R_BrowseLines = blines;
-	PrintValueRec(call, rho);
-	R_BrowseLines = old_bl;
+	PrintCall(call, rho);
 
 	/* Is the body a bare symbol (PR#6804) */
 	if (!isSymbol(body) & !isVectorAtomic(body)){
@@ -1043,7 +1049,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 
     if (RDEBUG(op) && R_current_debug_state()) {
 	Rprintf("exiting from: ");
-	PrintValueRec(call, rho);
+	PrintCall(call, rho);
     }
     UNPROTECT(3);
     return (tmp);
@@ -1086,18 +1092,13 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     if( RSTEP(op) ) SET_RSTEP(op, 0);
     //  RDEBUG(op) .. FIXME? applyClosure has RDEBUG(newrho) which has just been set
     if (RDEBUG(op) && R_current_debug_state()) {
-	int old_bl = R_BrowseLines,
-	    blines = asInteger(GetOption1(install("deparse.max.lines")));
 	SEXP savesrcref;
 	cntxt.browserfinish = 0; /* Don't want to inherit the "f" */
 	/* switch to interpreted version when debugging compiled code */
 	if (TYPEOF(body) == BCODESXP)
 	    body = bytecodeExpr(body);
 	Rprintf("debugging in: ");
-	if(blines != NA_INTEGER && blines > 0)
-	    R_BrowseLines = blines;
-	PrintValueRec(call,rho);
-	R_BrowseLines = old_bl;
+	PrintCall(call,rho);
 
 	/* Is the body a bare symbol (PR#6804) */
 	if (!isSymbol(body) & !isVectorAtomic(body)){
@@ -1151,7 +1152,7 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 
     if (RDEBUG(op) && R_current_debug_state()) {
 	Rprintf("exiting from: ");
-	PrintValueRec(call, rho);
+	PrintCall(call, rho);
     }
     UNPROTECT(1);
     return (tmp);
