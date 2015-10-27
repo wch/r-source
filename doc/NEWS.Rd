@@ -144,7 +144,7 @@
       start with a \code{"."}.
 
       \item Modifying slots of S4 objects could fail when the
-      \pkg{methods} package was not attached (\PR{16545}).
+      \pkg{methods} package was not attached. (\PR{16545})
 
       \item \code{splineDesign(*, outer.ok=TRUE)} (\pkg{splines}) is better now
       (\PR{16549}), and \code{interpSpline()} now allows \code{sparse=TRUE}
@@ -153,6 +153,10 @@
       \item If the expression in the traceback was too long, 
       \code{traceback()} did not report the source line number.  (Patch 
       by Kirill Müller.)
+      
+      \item The browser did not truncate the display of the function when
+      exiting with \code{options("deparse.max.lines")} set.
+      (\PR{16581})
     }
   }
 }
