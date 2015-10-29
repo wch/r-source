@@ -316,7 +316,7 @@
       \item \code{tail.matrix()} did not work for zero rows matrices,
       and produced \code{"[1e+05,]"} row \dQuote{labels}.
 
-      \item Data frames with column name \code{"StringsAsFactors"} now
+      \item Data frames with column name \code{"stringsAsFactors"} now
       format and print correctly.  (\PR{16580})
     }
   }
