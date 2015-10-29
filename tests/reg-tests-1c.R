@@ -1019,3 +1019,22 @@ for(mat in mat.l) {
                                             check.attributes=FALSE), NA))
 }
 options(op)
+## end{tail.matrix check} ------------------
+
+## format.data.frame() & as.data.frame.list() - PR#16544
+myL <- list(x=1:20, y=rnorm(20), stringsAsFactors = gl(4,5))
+names(myL)[1:2] <- lapply(1:2, function(i)
+    paste(sample(letters, 300, replace=TRUE), collapse=""))
+nD  <- names(myD  <- as.data.frame(myL))
+nD2 <- names(myD2 <- as.data.frame(myL, cut.names = 280))
+nD3 <- names(myD3 <- as.data.frame(myL, cut.names = TRUE))
+stopifnot(nchar(nD) == c(300,300,16), is.data.frame(myD),  dim(myD) == c(20,3),
+	  nchar(nD2)== c(278,278,16), is.data.frame(myD2), dim(myD2) == c(20,3),
+	  nchar(nD3)== c(254,254,16), is.data.frame(myD3), dim(myD3) == c(20,3),
+	  identical(nD[3], "stringsAsFactors"),
+	  identical(nD[3], nD2[3]), identical(nD[3], nD3[3]))
+
+names(myD)[1:2] <- c("Variable.1", "")# 2nd col.name is "empty"
+stopifnot(identical(names(myD), names(format(head(myD)))),
+	  identical(names(myD), c("Variable.1", "", "stringsAsFactors")))
+## format.data.frame() did not show "stringsAsFactors" in R <= 3.2.2

@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -38,6 +38,10 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
 \method{as.data.frame}{character}(x, \dots,
               stringsAsFactors = default.stringsAsFactors())
 
+\method{as.data.frame}{list}(x, row.names = NULL, optional = FALSE, \dots,
+              cut.names = FALSE, col.names = names(x), fix.empty.names = FALSE,
+              stringsAsFactors = default.stringsAsFactors())
+
 \method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots,
               stringsAsFactors = default.stringsAsFactors())
 
@@ -49,10 +53,20 @@ is.data.frame(x)
     names for the data frame.  Missing values are not allowed.}
   \item{optional}{logical. If \code{TRUE}, setting row names and
     converting column names (to syntactic names: see
-    \code{\link{make.names}}) is optional.}
+    \code{\link{make.names}}) is optional.  Note that all of \R's
+    \pkg{base} package \code{as.data.frame()} methods use
+    \code{optional} only for column names treatment, basically with the
+    meaning of \code{\link{data.frame}(*, check.names = !optional)}.}
   \item{\dots}{additional arguments to be passed to or from methods.}
   \item{stringsAsFactors}{logical: should the character vector be converted
     to a factor?}
+  %% list method:
+  \item{cut.names}{logical or integer; indicating if column names with
+    more than 256 (or \code{cut.names} if that is numeric) characters
+    should be shortened (and the last 6 characters replaced by \code{" ..."}).}
+  \item{col.names}{(optional) character vector of column names.}
+  \item{fix.empty.names}{logical indicating if empty column names, i.e.,
+    \code{""} should be fixed up (in \code{\link{data.frame}}) or not.}
 }
 \value{
   \code{as.data.frame} returns a data frame, normally with all row names
@@ -65,7 +79,7 @@ is.data.frame(x)
 \details{
   \code{as.data.frame} is a generic function with many methods, and
   users and packages can supply further methods.  For classes that act
-  as vectors, often a copy of \code{as.data.frame.vector} will work 
+  as vectors, often a copy of \code{as.data.frame.vector} will work
   as the method.
 
   If a list is supplied, each element is converted to a column in the

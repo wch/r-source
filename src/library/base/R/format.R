@@ -246,20 +246,9 @@ format.data.frame <- function(x, ..., justify = "none")
 	if(is.character(rval[[i]]) && inherits(rval[[i]], "character"))
 	    oldClass(rval[[i]]) <- "AsIs"
     }
-    cn <- names(x)
-    m <- match(c("row.names", "check.rows", "check.names", ""), cn, 0L)
-    if(any(m)) cn[m] <- paste0("..dfd.", cn[m])
-    ## This requires valid symbols for the columns, so we need to
-    ## truncate any of more than 256 bytes.
-    long <- nchar(cn, "bytes", keepNA = FALSE) > 256L
-    cn[long] <- paste(substr(cn[long], 1L, 250L), "...")
-    names(rval) <- cn
-    rval$check.names <- FALSE
-    rval$row.names <- row.names(x)
-    x <- do.call("data.frame", rval)
-    ## x will have more cols than rval if there are matrix/data.frame cols
-    if(any(m)) names(x) <- sub("^..dfd.", "", names(x))
-    x
+    as.data.frame.list(rval, row.names = row.names(x), col.names = names(x),
+		       optional = TRUE, # <=> check.names = FALSE
+		       cut.names = TRUE)
 }
 
 format.AsIs <- function(x, width = 12, ...)

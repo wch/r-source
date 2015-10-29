@@ -1,6 +1,6 @@
 % File src/library/base/man/data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data.frame}
@@ -8,14 +8,14 @@
 \alias{data.frame}
 \alias{default.stringsAsFactors}
 \description{
-  This function creates data frames, tightly coupled
+  The function \code{data.frame()} creates data frames, tightly coupled
   collections of variables which share many of the properties of
   matrices and of lists, used as the fundamental data structure by most
   of \R's modeling software.
 }
 \usage{
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
-           check.names = TRUE,
+           check.names = TRUE, fix.empty.names = TRUE,
            stringsAsFactors = default.stringsAsFactors())
 
 default.stringsAsFactors()
@@ -34,6 +34,11 @@ default.stringsAsFactors()
     syntactically valid variable names and are not duplicated.
     If necessary they are adjusted (by \code{\link{make.names}})
     so that they are.}
+  \item{fix.empty.names}{logical indicating if arguments which are
+    \dQuote{unnamed} (in the sense of not being formally called as
+    \code{someName = arg}) get an automatically constructed name or
+    rather name \code{""}.  Needs to be set to \code{FALSE} even when
+    \code{check.names} is false if \code{""} names should be kept.}
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?  The \sQuote{factory-fresh} default is \code{TRUE}, but
     this can be changed by setting \code{\link{options}(stringsAsFactors
