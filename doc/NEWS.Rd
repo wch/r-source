@@ -483,6 +483,9 @@
       \item When \code{bs(*, Boundary.knots=)} had boundary knots inside
       the data range, extrapolation was somewhat off.  (Patch by Trevor
       Hastie.)
+
+      \item \code{var()} hence \code{sd()} now signal an error for
+      \code{factor()} arguments. (\PR{16564})
     }
   }
 }

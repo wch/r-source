@@ -1038,3 +1038,10 @@ names(myD)[1:2] <- c("Variable.1", "")# 2nd col.name is "empty"
 stopifnot(identical(names(myD), names(format(head(myD)))),
 	  identical(names(myD), c("Variable.1", "", "stringsAsFactors")))
 ## format.data.frame() did not show "stringsAsFactors" in R <= 3.2.2
+
+
+## var(x) and hence sd(x)  with factor x, PR#16564
+tools::assertError(var(f <- gl(2,3)))
+tools::assertError(cov(1:6, f <- gl(2,3)))# was ok already
+tools::assertError(sd(f))
+## var() "worked" in R <= 3.2.2  using the underlying integer codes

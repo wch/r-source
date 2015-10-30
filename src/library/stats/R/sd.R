@@ -1,7 +1,7 @@
 #  File src/library/stats/R/sd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,5 +17,5 @@
 #  https://www.R-project.org/Licenses/
 
 sd <- function(x, na.rm = FALSE)
-    sqrt(var(if(is.vector(x)) x else as.double(x), na.rm = na.rm))
+    sqrt(var(if(is.vector(x) || is.factor(x)) x else as.double(x), na.rm = na.rm))
 
