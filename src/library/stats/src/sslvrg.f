@@ -1,4 +1,7 @@
 C Output from Public domain Ratfor, version 1.0
+
+c Smoothing Spline LeVeRaGes = SSLVRG
+c ----------------------------------- leverages = H_ii = diagonal entries of Hat matrix
       subroutine sslvrg(penalt,dofoff,x,y,w,ssw, n, knot,nk,coef,
      *     sz,lev, crit,icrit, lambda, xwy, hs0,hs1,hs2,hs3,
      *     sg0,sg1,sg2,sg3, abd,p1ip,p2ip,ld4,ldnk,info)
@@ -60,11 +63,9 @@ C     Value of smooth at the data points
          xv = x(i)
  12      sz(i) = bvalue(knot,coef,nk,4,xv,0)
 
-C     Compute the criterion function if requested
+C     Compute the criterion function if requested (icrit > 0) :
+      if(icrit .ge. 1) then
 
-      if(icrit .eq. 0)then
-         return
-      else
 C --- Ordinary or Generalized CV or "df match" ---
 
 C     Get Leverages First
@@ -97,10 +98,9 @@ C           call bspvd(knot,4,1,xv,ileft,4,vnikx,work)
 
 C     Evaluate Criterion
 
-         if(icrit .eq. 1)then
-C     Generalized CV
+         df = 0d0
+         if(icrit .eq. 1) then ! Generalized CV --------------------
             rss = ssw
-            df = 0d0
             sumw = 0d0
 c       w(i) are sqrt( wt[i] ) weights scaled in ../R/smspline.R such
 c       that sumw =  number of observations with w(i) > 0
@@ -114,22 +114,24 @@ c       that sumw =  number of observations with w(i) > 0
 c            call dblepr("spar", 4, spar, 1)
 c            call dblepr("crit", 4, crit, 1)
 
-         else if(icrit .eq. 2) then
-C     Ordinary CV
-               crit = 0d0
-               do 30 i = 1,n
- 30               crit = crit + (((y(i)-sz(i))*w(i))/(1-lev(i)))**2
-               crit = crit/n
+         else if(icrit .eq. 2) then ! Ordinary CV ------------------
+            crit = 0d0
+            do 30 i = 1,n
+ 30            crit = crit + (((y(i)-sz(i))*w(i))/(1-lev(i)))**2
+            crit = crit/n
 c            call dblepr("spar", 4, spar, 1)
 c            call dblepr("crit", 4, crit, 1)
-            else
-C     df matching
-            crit = 0d0
+
+         else ! df := sum( lev[i] )
             do 32 i=1,n
- 32            crit = crit+lev(i)
-            crit = 3 + (dofoff-crit)**2
+ 32            df = df + lev(i)
+            if(icrit .eq. 3) then ! df matching --------------------
+               crit = 3 + (dofoff-df)**2
+            else ! if(icrit .eq. 4) then df - dofoff (=> zero finding)
+               crit = df - dofoff
+            endif
          endif
-         return
       endif
 C     Criterion evaluation
+      return
       end

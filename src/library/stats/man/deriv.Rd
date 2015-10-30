@@ -1,6 +1,6 @@
 % File src/library/stats/man/deriv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deriv}
@@ -158,5 +158,3 @@ DD(expression(sin(x^2)), "x", 3)
 }
 \keyword{math}
 \keyword{nonlinear}
-
-

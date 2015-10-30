@@ -520,7 +520,7 @@ setMethod <-
     }
     else if(identical(gwhere, NA)) {
         ## better be a primitive since getGeneric returned a generic, but none was found
-        if(is.null(elNamed(.BasicFunsList, f)))
+        if(is.null(.BasicFunsList[[f]]))
             stop(sprintf("apparent internal error: a generic function was found for \"%s\", but no corresponding object was found searching from \"%s\"",
                           f, getPackageName(where)), domain = NA)
         if(!isGeneric(f))
@@ -893,7 +893,7 @@ signature <-
     value <- list(...)
     names <- names(value)
     for(i in seq_along(value)) {
-        sigi <- el(value, i)
+        sigi <- value[[i]]
         if(!is.character(sigi) || length(sigi) != 1L)
             stop(gettextf(
 		"bad class specified for element %d (should be a single character string)",

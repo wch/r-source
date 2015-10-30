@@ -21,7 +21,8 @@
 ## R developers can use this to debug the function by running it
 ## directly as tools:::.check_packages(args), where the args should
 ## be what commandArgs(TRUE) would return, that is a character vector
-## of (space-delimited) terms that would be passed to R CMD checks.
+## of (space-delimited) terms that would be passed to R CMD check , e.g.,
+## tools:::.check_packages(c("--no-install", "..../pkgDir"))
 
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "", env = "")
@@ -3008,7 +3009,7 @@ setRlibs <-
                 R_check_vignettes_skip_run_maybe && do_build_vignettes
 
             vigns <- pkgVignettes(dir = pkgdir)
-            savefiles <- 
+            savefiles <-
                 file.path(dirname(vigns$docs),
                           paste0(vigns$names, ".Rout.save"))
 
@@ -3099,7 +3100,7 @@ setRlibs <-
                     }
                 } else resultLog(Log, "OK")
             }
-                
+
             if (do_build_vignettes) {
                 checkingLog(Log, "re-building of vignette outputs")
                 ## copy the whole pkg directory to check directory
@@ -3898,7 +3899,7 @@ setRlibs <-
             OK <- TRUE
             ## Look for empty importFrom
             imp <- ns$imports
-            lens <- lengths(imp)
+            lens <- sapply(imp, length)
             imp <- imp[lens == 2L]
             nm <- sapply(imp, "[[", 1)
             lens <- sapply(imp, function(x) length(x[[2]]))
@@ -3954,7 +3955,7 @@ setRlibs <-
         ## Namespace imports must really be in Depends.
         res <- .check_package_depends(pkgdir, R_check_force_suggests,
                                       check_incoming, ignore_vignettes)
-        if(any(lengths(res) > 0L)) {
+        if(any(sapply(res, length) > 0L)) {
             out <- format(res)
             allowed <- c("suggests_but_not_installed",
                          "enhances_but_not_installed",
@@ -4465,7 +4466,7 @@ setRlibs <-
     R_check_vignettes_skip_run_maybe <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_",
                                          "FALSE"))
-    
+
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
     if (as_cran) {
@@ -4869,7 +4870,7 @@ setRlibs <-
 
         if(Log$errors > 0L)
             do_exit(1L)
-        
+
         closeLog(Log)
         message("")
 

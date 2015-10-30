@@ -241,7 +241,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	REprintf(" ==> new w1=%.15g", *w1);
 	if(ierr1) REprintf(" ERROR(code=%d)\n", ierr1) ; else REprintf("\n");
 #endif
-	if(*w1 == 0 || (0 < *w1 && *w1 < 1e-310)) { // w1=0 or very close:
+	if(*w1 == 0 || (0 < *w1 && *w1 < DBL_MIN)) { // w1=0 or very close:
 	    // "almost surely" from underflow, try more: [2013-03-04]
 // FIXME: it is even better to do this in bgrat *directly* at least for the case
 //  !did_bup, i.e., where *w1 = (0 or -Inf) on entry
@@ -286,7 +286,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	if (b0 < 40.) {
 	    R_ifDEBUG_printf("  b0 < 40;");
 	    if (b0 * x0 <= 0.7
-		|| (log_p && lambda > 650.)) /* << added 2010-03-18 */
+		|| (log_p && lambda > 650.)) // << added 2010-03; svn r51327
 		goto L_w_bpser;
 	    else
 		goto L140;
@@ -344,12 +344,13 @@ L140:
 
     *w = bup(b0, a0, y0, x0, n, eps, FALSE);
 
-    R_ifDEBUG_printf(" L140: *w := bup(b0=%g,..) = %.15g; ", b0, *w);
     if(*w < DBL_MIN && log_p) { /* do not believe it; try bpser() : */
+	R_ifDEBUG_printf(" L140: bup(b0=%g,..)=%.15g < DBL_MIN - not used; ", b0, *w);
 	/*revert: */ b0 += n;
 	/* which is only valid if b0 <= 1 || b0*x0 <= 0.7 */
 	goto L_w_bpser;
     }
+    R_ifDEBUG_printf(" L140: *w := bup(b0=%g,..) = %.15g; ", b0, *w);
     if (x0 <= 0.7) {
 	/* log_p :  TODO:  w = bup(.) + bpser(.)  -- not so easy to use log-scale */
 	*w += bpser(a0, b0, x0, eps, /* log_p = */ FALSE);
@@ -512,10 +513,11 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 /* -----------------------------------------------------------------------
  * Power SERies expansion for evaluating I_x(a,b) when
  *	       b <= 1 or b*x <= 0.7.   eps is the tolerance used.
+ * NB: if log_p is TRUE, also use it if   (b < 40  & lambda > 650)
  * ----------------------------------------------------------------------- */
 
     int i, m;
-    double ans, c, n, t, u, w, z, a0, b0, apb, tol, sum;
+    double ans, c, t, u, z, a0, b0, apb;
 
     if (x == 0.) {
 	return R_D__0;
@@ -605,12 +607,11 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 /* ----------------------------------------------------------------------- */
 /*		       COMPUTE THE SERIES */
 /* ----------------------------------------------------------------------- */
-    sum = 0.;
-    n = 0.;
+    double tol = eps / a,
+	n = 0.,
+	sum = 0., w;
     c = 1.;
-    tol = eps / a;
-
-    do {
+    do { // sum is alternating as long as n < b (<==> 1 - b/n < 0)
 	n += 1.;
 	c *= (0.5 - b / n + 0.5) * x;
 	w = c / (a + n);
@@ -619,7 +620,7 @@ static double bpser(double a, double b, double x, double eps, int log_p)
     if(fabs(w) > tol) { // the series did not converge (in time)
 	// warn only when the result seems to matter:
 	if(( log_p && !(a*sum > -1. && fabs(log1p(a * sum)) < eps*fabs(ans))) ||
-	   (!log_p && fabs(a*sum + 1) != 1.))
+	   (!log_p && fabs(a*sum + 1.) != 1.))
 	    MATHLIB_WARNING5(
 		" bpser(a=%g, b=%g, x=%g,...) did not converge (n=1e7, |w|/tol=%g > 1; A=%g)",
 		a,b,x, fabs(w)/tol, ans);
@@ -629,9 +630,17 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 		     tol, a*sum);
     if(log_p) {
 	if (a*sum > -1.) ans += log1p(a * sum);
-	else ans = ML_NEGINF;
-    } else
-	ans *= a * sum + 1.;
+	else {
+	    if(ans > ML_NEGINF)
+		MATHLIB_WARNING3(
+		    "pbeta(*, log.p=TRUE) -> bpser(a=%g, b=%g, x=%g,...) underflow to -Inf",
+		    a,b,x);
+	    ans = ML_NEGINF;
+	}
+    } else if (a*sum > -1.)
+	ans *= (a * sum + 1.);
+    else // underflow to
+	ans = 0.;
     return ans;
 } /* bpser */
 
@@ -648,7 +657,7 @@ static double bup(double a, double b, double x, double y, int n, double eps,
 
     /* Local variables */
     int i, k, mu;
-    double d, l, r, t;
+    double d, l;
 
 // Obtain the scaling factor exp(-mu) and exp(mu)*(x^a * y^b / beta(a,b))/a
 
@@ -659,8 +668,7 @@ static double bup(double a, double b, double x, double y, int n, double eps,
 	k = (int) exparg(0);
 	if (mu > k)
 	    mu = k;
-	t = (double) mu;
-	d = exp(-t);
+ 	d = exp(-(double) mu);
     }
     else {
 	mu = 0;
@@ -681,42 +689,31 @@ static double bup(double a, double b, double x, double y, int n, double eps,
 /*          LET K BE THE INDEX OF THE MAXIMUM TERM */
 
     k = 0;
-    if (b <= 1.) {
-	goto L40;
-    }
-    if (y > 1e-4) {
-	r = (b - 1.) * x / y - a;
-	if (r < 1.) {
-	    goto L40;
-	}
-	k = nm1;
-	t = (double) nm1;
-	if (r < t) {
-	    k = (int) r;
-	}
-    } else {
-	k = nm1;
-    }
+    if (b > 1.) {
+	if (y > 1e-4) {
+	    double r = (b - 1.) * x / y - a;
+	    if (r >= 1.)
+		k = (r < nm1) ? (int) r : nm1;
+	} else
+	    k = nm1;
 
-/*          ADD THE INCREASING TERMS OF THE SERIES */
-
+//          ADD THE INCREASING TERMS OF THE SERIES - if k > 0
 /* L30: */
-    for (i = 1; i <= k; ++i) {
-	l = (double) (i - 1);
-	d = (apb + l) / (ap1 + l) * x * d;
-	w += d;
-	/* L31: */
-    }
-    if (k != nm1) {
-	/*          ADD THE REMAINING TERMS OF THE SERIES */
-    L40:
-	for (i = k+1; i <= nm1; ++i) {
-	    l = (double) (i - 1);
-	    d = (apb + l) / (ap1 + l) * x * d;
+	for (i = 0; i < k; ++i) {
+	    l = (double) i;
+	    d *= (apb + l) / (ap1 + l) * x;
 	    w += d;
-	    if (d <= eps * w) /* relativ convergence (eps) */
-		break;
 	}
+    }
+
+// L40:     ADD THE REMAINING TERMS OF THE SERIES
+
+    for (i = k; i < nm1; ++i) {
+	l = (double) i;
+	d *= (apb + l) / (ap1 + l) * x;
+	w += d;
+	if (d <= eps * w) /* relativ convergence (eps) */
+	    break;
     }
 
     // L50: TERMINATE THE PROCEDURE
@@ -741,8 +738,10 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 
     double brc = brcomp(a, b, x, y, log_p);
 
-    if (!log_p && brc == 0.) /* already underflowed to 0 */
+    if (!log_p && brc == 0.) {
+	R_ifDEBUG_printf("  in bfrac(): brcomp() underflowed to 0.\n");
 	return 0.;
+    }
 
     c = lambda + 1.;
     c0 = b / a;
@@ -773,18 +772,13 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 
 	/* update an, bn, anp1, and bnp1 */
 
-	t = alpha * an + beta * anp1;
-	an = anp1;
-	anp1 = t;
-	t = alpha * bn + beta * bnp1;
-	bn = bnp1;
-	bnp1 = t;
+	t = alpha * an + beta * anp1;	an = anp1;	anp1 = t;
+	t = alpha * bn + beta * bnp1;	bn = bnp1;	bnp1 = t;
 
 	r0 = r;
 	r = anp1 / bnp1;
-	if (fabs(r - r0) <= eps * r) {
+	if (fabs(r - r0) <= eps * r)
 	    break;
-	}
 
 	/* rescale an, bn, anp1, and bnp1 */
 
@@ -794,6 +788,8 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 	bnp1 = 1.;
     } while (1);
 
+    R_ifDEBUG_printf("  in bfrac(): n=%.0f terms cont.frac.; brc=%g, r=%g\n",
+		     n, brc, r);
     return (log_p ? brc + log(r) : brc * r);
 } /* bfrac */
 

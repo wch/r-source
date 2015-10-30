@@ -42,8 +42,7 @@
  *
  * @return ans
  */
-static double
-*std_rWishart_factor(double nu, int p, int upper, double ans[])
+double* std_rWishart_factor(double nu, int p, int upper, double ans[])
 {
     int pp1 = p + 1;
 

@@ -38,27 +38,27 @@
 .InvalidTracedFunctions <- c("if", "where", "for", "repeat", "(", "{",
                             "next", "break", ".Call", ".Internal", ".Primitive")
 
-.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at =
-                              numeric(), print = TRUE, signature =
-                              NULL, where = .GlobalEnv, edit = FALSE,
-                              from = NULL, untrace = FALSE, classMethod = FALSE) {
-    if(is.function(where)) {
-        ## start from the function's environment:  important for
-        ## tracing from a namespace
-        if(is(where, "genericFunction"))
-            where <- parent.env(environment(where))
-        else
-            where <- environment(where)
-        fromPackage <- getPackageName(where)
-    }
-    else fromPackage <- ""
+.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at = numeric(),
+			      print = TRUE, signature = NULL,
+			      where = .GlobalEnv, edit = FALSE, from = NULL,
+			      untrace = FALSE, classMethod = FALSE) {
+    fromPackage <-
+        if(is.function(where)) {
+            ## start from the function's environment:  important for
+            ## tracing from a namespace
+            where <- if(is(where, "genericFunction"))
+                parent.env(environment(where))
+            else
+                environment(where)
+            getPackageName(where)
+        } else ""
     doEdit <- !identical(edit, FALSE)
     whereF <- NULL
     pname <- character()
     def <- NULL
     tracingWhere <- "in package"
     refCase <- isS4(where) && (is(where, "envRefClass") ||
-                       is(where, "refClassRepresentation"))
+                               is(where, "refClassRepresentation"))
     if(refCase) {
         ## some error checking
         if(!is.null(signature))
@@ -81,7 +81,8 @@
         if(!is(def, "refMethodDef")) {
             thisName <- substitute(what)
             stop(gettextf("%s is not a method for reference class %s",
-                          sQuote(as.character(if(is.symbol(thisName)) thisName else what)),
+			  sQuote(as.character(if(is.symbol(thisName)) thisName
+					      else what)),
                           dQuote(class(where))),
                  domain = NA)
         }
@@ -136,18 +137,19 @@
     }
     if(what %in% .InvalidTracedFunctions)
         stop(gettextf("tracing the internal function %s is not allowed",
-                      sQuote(what)))
+		      sQuote(what)), domain = NA)
     if(.traceTraceState) {
         message(".TraceWithMethods: after computing what, whereF", domain = NA)
         browser()
     }
-    if(nargs() == 1)
-        return(.primTrace(what)) # for back compatibility
+    if(nargs() == 1) # for back compatibility
+	return(if(untrace) .primUntrace(what) else .primTrace(what))
+## FIXME: for trace(stats:::.....)  we really want -- how can this be solved
+##    	return(if(untrace) .primUntrace(frame) else .primTrace(fname))
     if(is.null(whereF)) {
         allWhere <- findFunction(what, where = where)
         if(length(allWhere)==0)
-            stop(gettextf("no function definition for %s found",
-                          sQuote(what)),
+	    stop(gettextf("no function definition for %s found", sQuote(what)),
                  domain = NA)
         whereF <- as.environment(allWhere[[1L]])
     }
@@ -183,7 +185,9 @@
                 newFun <- .untracedFunction(def)
             }
             else {
-                .primUntrace(what) # to be safe--no way to know if it's traced or not
+		.primUntrace(what) # to be safe--no way to know if it's traced or not
+### or sometimes rather
+###             .primUntrace(fname) # to be safe--no way to know if it's traced or not
                 return(what)
             }
         }
@@ -289,13 +293,16 @@
             }
         }
         else paste0(" as seen from package \"", fromPackage, "\"")
-        object <- if(refCase) "reference method" else if(is.null(signature)) "function" else "specified method for function"
+	object <- if(refCase) "reference method"
+		  else if(is.null(signature)) "function"
+		  else "specified method for function"
         object <- paste0(" ", object, " \"", what, "\" ")
         .message(action, object, location)
         if(nameSpaceCase && !untrace && exists(what, envir = .GlobalEnv)) {
-            untcall<- paste("untrace(\"", what, "\", where = getNamespace(\"",
-                            pname, "\"))", sep="")
-            .message("Warning: Tracing only in the namespace; to untrace you will need:\n    ",untcall, "\n")
+	    untcall <- paste0("untrace(\"", what,
+			      "\", where = getNamespace(\"", pname, "\"))")
+            .message("Warning: Tracing only in the namespace; to untrace you will need:\n    ",
+                     untcall, "\n")
         }
     }
     what
@@ -456,8 +463,8 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
         as(.Object, oldClass) <- def # to get other slots in def
     .Object@original <- def
     if(nargs() > 2) {
-        if(!is.null(elNamed(getSlots(getClass(class(def))), ".Data")))
-          def <- def@.Data
+	if(!is.null(elNamed(getSlots(getClass(class(def))), ".Data")))
+	    def <- def@.Data
         .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print, doEdit)
     }
     .Object

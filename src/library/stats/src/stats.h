@@ -29,6 +29,9 @@
 #define _(String) (String)
 #endif
 
+// -> put into ../../../include/R_ext/stats_stubs.h
+double* std_rWishart_factor(double nu, int p, int upper, double ans[]);
+
 #include <R_ext/RS.h>
 void
 F77_SUB(hclust)(int *n, int *len, int *iopt, int *ia, int *ib,

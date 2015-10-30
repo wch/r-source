@@ -1,7 +1,7 @@
 #  File src/library/methods/R/show.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -162,7 +162,7 @@ show <- function(object)
 .showPackage <- function(className) {
     if(is.logical(opt <- getOption("showPackageForClass")))
         opt
-    else
+    else ## TRUE iff more than one namespace/package for the class:
         is.list(.Call(C_R_getClassFromCache, as.character(className), .classTable))
 }
 ## an informative string label for a class
@@ -178,7 +178,8 @@ classLabel <- function(Class) {
             className <- Class@className
             packageName <- Class@package
         }
-        else stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class %s", classLabel(class(Class))), domain = NA)
+        else stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class %s",
+                           classLabel(class(Class))), domain = NA)
     }
     if(.showPackage(className)) {
 	packageName <-

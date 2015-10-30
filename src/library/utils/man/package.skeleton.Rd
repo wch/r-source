@@ -16,7 +16,7 @@
 package.skeleton(name = "anRpackage", list,
                  environment = .GlobalEnv,
                  path = ".", force = FALSE,
-                 code_files = character())
+                 code_files = character(), encoding = "unknown")
 }
 \arguments{
   \item{name}{character string: the package name and directory name for
@@ -30,6 +30,7 @@ package.skeleton(name = "anRpackage", list,
   \item{force}{If \code{FALSE} will not overwrite an existing directory.}
   \item{code_files}{a character vector with the paths to R code files to
     build the package around.  See \sQuote{Details}.}
+  \item{encoding}{........ not yet implemented ... FIXME ....}
 }
 \value{
   Used for its side-effects.

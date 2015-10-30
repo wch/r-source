@@ -252,11 +252,11 @@
         supers <- args[!which]
         thisExtends <- names(ClassDef@contains)
         slotDefs <- ClassDef@slots
-        dataPart <- elNamed(slotDefs, ".Data")
+        dataPart <- slotDefs[[".Data"]]
         if(is.null(dataPart))
           dataPart <- "missing" # nothing will extend this => no data part args allowed
         for(i in rev(seq_along(supers))) {
-            obj <- el(supers, i)
+            obj <- supers[[i]]
             Classi <- class(obj)
             defi <- getClassDef(Classi)
             if(is.null(defi))
@@ -639,7 +639,7 @@
                       localObjs <- is.na(match(objs, slots))
                       if(any(localObjs)) {
                           for(what in objs[localObjs])
-                              assign(what, elNamed(args, what), envir = selfEnv)
+                              selfEnv[[what]] <- args[[what]]
                           objs <- objs[!localObjs]
                           args <- args[!localObjs]
                       }

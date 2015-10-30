@@ -125,7 +125,7 @@ as <-
     ## be the equivalent of new("toClass", fromObject)
     ## But must check that replacement is defined, in the case
     ## of nonstandard superclass relations
-    replaceMethod <- elNamed(ClassDef@contains, fromClass)
+    replaceMethod <- ClassDef@contains[[fromClass]]
     if(is(replaceMethod, "SClassExtension") &&
        !identical(as(replaceMethod@replace, "function"), .ErrorReplace)) {
         f <- function(from, to) NULL

@@ -1,6 +1,6 @@
 % File src/library/stats/man/Beta.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Beta}
@@ -84,14 +84,15 @@ rbeta(n, shape1, shape2, ncp = 0)
   values of \code{ncp} very near zero.
 }
 \source{
-  The central \code{dbeta} is based on a binomial probability, using code
+ \itemize{
+  \item The central \code{dbeta} is based on a binomial probability, using code
   contributed by Catherine Loader (see \code{\link{dbinom}}) if either
   shape parameter is larger than one, otherwise directly from the definition.
   The non-central case is based on the derivation as a Poisson
   mixture of betas (Johnson \emph{et al}, 1995, pp.\sspace{}502--3).
 
-  The central \code{pbeta} uses a C translation (and enhancement for
-  \code{log_p = TRUE}) of
+  \item The central \code{pbeta} for the default \code{log_p = FALSE})
+  uses a C translation based on
 
   Didonato, A. and Morris, A., Jr, (1992)
   Algorithm 708: Significant digit computation of the incomplete beta
@@ -102,8 +103,15 @@ rbeta(n, shape1, shape2, ncp = 0)
   Certification of algorithm 708: Significant digit computation of the
   incomplete beta,
   \emph{ACM Transactions on Mathematical Software}, \bold{20}, 393--397.)
+  \cr %%
+  We have slightly tweaked the original \dQuote{TOMS 708} algorithm, and
+  enhanced for \code{log.p = TRUE}.  For that (log-scale) case,
+  underflow to \code{-Inf} (i.e., \eqn{P = 0}) or \code{0}, (i.e.,
+  \eqn{P = 1}) still happens because the original algorithm was designed
+  without log-scale considerations.  Underflow to \code{-Inf} now
+  typically signals a \code{\link{warning}}.
 
-  The non-central \code{pbeta} uses a C translation of
+  \item The non-central \code{pbeta} uses a C translation of
 
   Lenth, R. V. (1987) Algorithm AS226: Computing noncentral beta
   probabilities. \emph{Appl. Statist}, \bold{36}, 241--244,
@@ -116,18 +124,19 @@ rbeta(n, shape1, shape2, ncp = 0)
   cancellation and a warning will be given when this is likely to be
   significant.
 
-  The central case of \code{qbeta} is based on a C translation of
+  \item The central case of \code{qbeta} is based on a C translation of
 
   Cran, G. W., K. J. Martin and G. E. Thomas (1977).
   Remark AS R19 and Algorithm AS 109,
   \emph{Applied Statistics},  \bold{26}, 111--114,
   and subsequent remarks (AS83 and correction).
 
-  The central case of \code{rbeta} is based on a C translation of
+  \item  The central case of \code{rbeta} is based on a C translation of
 
   R. C. H. Cheng (1978).
   Generating beta variates with nonintegral shape parameters.
   \emph{Communications of the ACM}, \bold{21}, 317--322.
+ }
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

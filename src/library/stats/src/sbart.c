@@ -82,8 +82,8 @@ void F77_SUB(sbart)
 
  Working arrays/matrix
    xwy			X'Wy
-   hs0,hs1,hs2,hs3	the diagonals of the X'WX matrix
-   sg0,sg1,sg2,sg3	the diagonals of the Gram matrix SIGMA
+   hs0,hs1,hs2,hs3	the non-zero diagonals of the X'WX matrix
+   sg0,sg1,sg2,sg3	the non-zero diagonals of the Gram matrix SIGMA
    abd (ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
    p1ip(ld4,nk)		inner products between columns of L inverse
    p2ip(ldnk,nk)	all inner products between columns of L inverse
@@ -145,30 +145,74 @@ void F77_SUB(sbart)
     }
 /*     Compute estimate */
 
-    if (*ispar == 1) { /* Value of spar supplied */
-	*lspar = ratio * R_pow(16., *spar * 6. - 2.);
-	F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,
-			 knot, nk,
-			 coef, sz, lev, crit, icrit, lspar, xwy,
-			 hs0, hs1, hs2, hs3,
-			 sg0, sg1, sg2, sg3, abd,
+// Compute SSPLINE(SPAR), assign result to *crit (and the auxil.variables)
+#define SSPLINE_COMP(_SPAR_)						\
+	*lspar = ratio * R_pow(16., (_SPAR_) * 6. - 2.);		\
+	F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,		\
+			 knot, nk,					\
+			 coef, sz, lev, crit, icrit, lspar, xwy,	\
+			 hs0, hs1, hs2, hs3,				\
+			 sg0, sg1, sg2, sg3, abd,			\
 			 p1ip, p2ip, ld4, ldnk, ier);
+
+    if (*ispar == 1) { /* Value of spar supplied */
+	SSPLINE_COMP(*spar);
 	/* got through check 2 */
 	return;
     }
 
 /* ELSE ---- spar not supplied --> compute it ! ---------------------------
+ */
+    ax = *lspar;
+    bx = *uspar;
 
+    if(*icrit == 4) { // find zero s* F(s*) == 0,  F(spar) := df(spar) - dofoff
+	SSPLINE_COMP(ax); double fa = *crit;
+	if(*ier) {
+	    warning(_("finding df(spar) == df: too small left boundary 'low=%g'"),
+		    ax);
+	    goto L_do_minimize;
+	}
+	if(tracing) {
+	    Rprintf("sbart (ratio = %15.8g) uniroot iterations; f(low=%g) = %g\n",
+		    ratio, ax, fa); // TODO: add more, incl  HEADER for subseqent
+	}
+	SSPLINE_COMP(bx); double fb = *crit;
+	if(*ier) {
+	    warning(_("finding df(spar) == df: too large right boundary 'high=%g'"),
+		    bx);
+	    goto L_do_minimize;
+	}
+	if(tracing) Rprintf(" ... f(high=%g) = %g\n", bx, fb);
+	double *Tol = tol;
+#define	Maxit iter
+
+//  here we assume knowing that zeroin has    b += new_step; ZEROIN_FN_GET(fb, b);
+#define ZEROIN_MY_TRACE if(tracing) \
+	    Rprintf("%3d(%3d): [%11.6g %11.6g] -> (%9.5g %9.5g) \n", \
+		    *Maxit-maxit+1, *ier, b,c, fb,fc)
+
+#define ZEROIN_RETURN(R) x = R; goto L_Zero_End;
+#define ZEROIN_FN_GET(_FX_, _X_) SSPLINE_COMP(_X_); _FX_ = *crit; ZEROIN_MY_TRACE
+#define ZEROIN_TRACE
+
+#include "zeroin.h"
+	/*========*/
+ L_Zero_End:
+	fx = (x == a) ? fa : fb;
+	goto L_End;
+    }
+
+L_do_minimize:
+/*
        Use Forsythe Malcom and Moler routine to MINIMIZE criterion
        f denotes the value of the criterion
 
        an approximation	x  to the point where	f  attains a minimum  on
        the interval  (ax,bx)  is determined.
-    */
-    ax = *lspar;
-    bx = *uspar;
 
-/* INPUT
+
+   INPUT
 
    ax	 left endpoint of initial interval
    bx	 right endpoint of initial interval
@@ -229,14 +273,7 @@ void F77_SUB(sbart)
     w = v;
     x = v;
     e = 0.;
-    *spar = x;
-    *lspar = ratio * R_pow(16., *spar * 6. - 2.);
-    F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,
-		     knot, nk,
-		     coef, sz, lev, crit, icrit, lspar, xwy,
-		     hs0, hs1, hs2, hs3,
-		     sg0, sg1, sg2, sg3, abd,
-		     p1ip, p2ip, ld4, ldnk, ier);
+    SSPLINE_COMP(x);
     fx = *crit;
     fv = fx;
     fw = fx;
@@ -336,14 +373,7 @@ void F77_SUB(sbart)
 	u = x + ((fabs(d) >= tol1) ? d : fsign(tol1, d));
 	/*  tol1 check : f must not be evaluated too close to x */
 
-	*spar = u;
-	*lspar = ratio * R_pow(16., *spar * 6. - 2.);
-	F77_CALL(sslvrg)(penalt, dofoff, xs, ys, ws, ssw, n,
-			 knot, nk,
-			 coef, sz, lev, crit, icrit, lspar, xwy,
-			 hs0, hs1, hs2, hs3,
-			 sg0, sg1, sg2, sg3, abd,
-			 p1ip, p2ip, ld4, ldnk, ier);
+	SSPLINE_COMP(u);
 	fu = *crit;
 	if(tracing) Rprintf("%11g %12g\n", *lspar, CRIT(fu));
 	if(!R_FINITE(fu)) {

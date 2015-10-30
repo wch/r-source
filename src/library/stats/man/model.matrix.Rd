@@ -12,7 +12,7 @@
 model.matrix(object, \dots)
 
 \method{model.matrix}{default}(object, data = environment(object),
-             contrasts.arg = NULL, xlev = NULL, \dots)
+             contrasts.arg = NULL, xlev = NULL, sparse = FALSE, \dots)
 }
 \arguments{
   \item{object}{an object of an appropriate class.  For the default
@@ -26,6 +26,12 @@ model.matrix(object, \dots)
     columns of \code{data} containing \code{\link{factor}}s.}
   \item{xlev}{to be used as argument of \code{\link{model.frame}} if
     \code{data} is such that \code{model.frame} is called.}
+  \item{sparse}{logical indicating if the result should be sparse
+    (of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}), using
+    package \pkg{Matrix}.}
+%% FIXME: not yet implemented --- wait till we have Matrix >= ..*-30
+%% with  sparse.model.matrix()
+%%
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{

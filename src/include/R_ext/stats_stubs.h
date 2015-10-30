@@ -66,3 +66,13 @@ S_nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
     fun(b, d, dr, iv, liv, lv, n, nd, p, r, rd, v, x);
 }
 
+double* attribute_hidden
+S_std_rWishart_factor(double nu, int p, int upper, double ans[])
+{
+    static void(*fun)(double nu, int p, int upper, double ans[]) = NULL;
+    if (fun == NULL)
+	fun = (void(*)(double nu, int p, int upper, double ans[]))
+	    R_GetCCallable("stats", "std_rWishart_factor");
+    fun(nu, p, upper, ans);
+}
+

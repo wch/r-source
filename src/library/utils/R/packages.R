@@ -161,7 +161,7 @@ function(db)
     x <- lapply(strsplit(sub("^[[:space:]]*", "", depends),
                              "[[:space:]]*,[[:space:]]*"),
                 function(s) s[grepl("^R[[:space:]]*\\(", s)])
-    lens <- lengths(x)
+    lens <- sapply(x, length)
     pos <- which(lens > 0L)
     if(!length(pos)) return(db)
     lens <- lens[pos]
@@ -1072,7 +1072,7 @@ compareVersion <- function(a, b)
     ## some of the packages may be already installed, but the
     ## dependencies apply to those being got from CRAN.
     DL <- lapply(DL, function(x) x[x %in% pkgs])
-    lens <- lengths(DL)
+    lens <- sapply(DL, length)
     if(all(lens > 0L)) {
         warning("every package depends on at least one other")
         return(pkgs)

@@ -230,6 +230,30 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     }
 } ## {Rdiff}
 
+showSys.time <- function(expr, ..., prefix = "Time") {
+    ## prepend 'Time' for R CMD Rdiff
+    st <- system.time(expr, ...)
+    writeLines(paste(prefix, utils::capture.output(st)))
+    invisible(st)
+}
+
+## NB: the first pct <- proc.time() call should only happen when
+## showProc.time() is called the first time in an R session,
+## (not already at package build or package install time !)
+## ==> "replaced" at .onLoad() in ./zzz.R
+showProc.time <-
+## a closure: function with its own 'pct' variable
+.showProc.time <- local({
+    pct <- proc.time()
+    ##' Report CPU elapsed __since last called__
+    function(final = "\n", prefix = "Time elapsed: ") {
+	## NB: tools::Rdiff() skips its lines only if prefix starts with "Time"
+	ot <- pct ; pct <<- proc.time()
+	cat(prefix, (pct - ot)[1:3], final)
+    }
+})
+
+
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
              scope = c("both", "base", "recommended"),

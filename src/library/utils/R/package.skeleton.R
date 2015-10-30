@@ -19,7 +19,7 @@
 package.skeleton <-
     function(name = "anRpackage", list = character(), environment = .GlobalEnv,
 	     path = ".", force = FALSE,
-             code_files = character())
+             code_files = character(), encoding = "unknown")
 {
     safe.dir.create <- function(path)
     {

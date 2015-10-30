@@ -261,14 +261,14 @@ mergeMethods <-
     if(is.null(m1) || is(m1, "EmptyMethodsList"))
         return(m2)
     tmp <- listFromMlist(m2)
-    sigs <- el(tmp, 1)
-    methods <- el(tmp, 2)
+    sigs <- tmp[[1]]
+    methods <- tmp[[2]]
     for(i in seq_along(sigs)) {
-        sigi <- el(sigs, i)
+        sigi <- sigs[[i]]
         if(.noMlists() && !identical(unique(sigi), "ANY"))
           next
         args <- names(sigi)
-        m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
+        m1 <- insertMethod(m1, as.character(sigi), args, methods[[i]], FALSE)
     }
     m1
 }
@@ -491,7 +491,7 @@ getGeneric <-
         value <- .Call(C_R_getGeneric, f, FALSE, as.environment(where), package)
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
-        if(!is.null(value) && !is.null(vv <- get0(f, .GlobalEnv)) &&
+        if(!is.null(value) && !is.null(vv <- .GlobalEnv[[f]]) &&
            identical(vv, value))
             .cacheGeneric(f, value)
     }
@@ -761,7 +761,7 @@ getGenerics <- function(where, searchForm = FALSE)
     }
     else {
         if(is.environment(where)) where <- list(where)
-        these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
+        these <- unlist(lapply(where, names), use.names=FALSE)
         metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
     }
 }
@@ -1595,7 +1595,8 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     direct <- classes %in% methods
     if(all(direct)) {
         if(length(classes) > 1L) {
-            warning(gettextf("multiple direct matches: %s; using the first of these", .pasteC(classes)), domain = NA)
+            warning(gettextf("multiple direct matches: %s; using the first of these",
+                             .pasteC(classes)), domain = NA)
             classes <- classes[1L]
         }
         else if(length(classes) == 0L)
@@ -1773,7 +1774,7 @@ if(FALSE) {
     }
     list(signature = signature, message = msgs, level = level)
 }
-}
+}# if(FALSE)
 
 .ActionMetaPattern <- function()
     paste0("^[.]",substring(methodsPackageMetaName("A",""),2))

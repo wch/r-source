@@ -57,7 +57,8 @@ function(dataDir, contents)
     if(!length(datasets)) return(matrix("", 0L, 2L))
     names(datasets) <- sub("/[^/]*$", "", names(datasets))
     datasets <- sort(datasets)
-    dataIndex <- cbind(datasets, "")
+    dataIndex <- cbind(datasets, "", deparse.level = 0L)
+    dimnames(dataIndex) <- NULL
     ## Note that NROW(contents) might be 0.
     if(length(datasets) && NROW(contents)) {
         aliasIndices <-
@@ -70,7 +71,6 @@ function(dataDir, contents)
         dataIndex[, 1L] <-
             as.vector(ifelse(datasets == names(datasets), datasets,
                              paste0(datasets, " (", names(datasets), ")")))
-    dimnames(dataIndex) <- NULL
     dataIndex
 }
 
