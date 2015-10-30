@@ -203,6 +203,9 @@
       \item \code{data.frame()} gains argument \code{fix.empty.names};
       \code{as.data.frame.list()} gets new \code{cut.names},
       \code{col.names} and \code{fix.empty.names}.
+
+      \item \code{plot(x ~ x, *)} now warns that it is the same as
+      \code{plot(x ~ 1, *)}.
     }
   }
 
