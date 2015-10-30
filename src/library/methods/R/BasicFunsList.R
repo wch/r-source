@@ -94,7 +94,7 @@ list(
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
     deflt <- .derivedDefaultMethod(deflt)
-    funslist[[f]] <- makeGeneric(f, fdef, deflt, group = group, package = "base",
+    elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base",
                                         signature = signature)
     funslist
 }

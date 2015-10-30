@@ -508,12 +508,12 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	    const void *vmax = vmaxget();
 	    double *buf = (double *) R_alloc(nmax, sizeof(double));
 	    count = 0;
-	    R_ITERATE_CHECK(NINTERRUPT, nmax, i,	\
-		if (LOGICAL(s)[i]) {			\
-		    if (LOGICAL(s)[i] == NA_LOGICAL)	\
-			buf[count++] = NA_REAL;		\
-		    else				\
-			buf[count++] = (double)(i + 1);	\
+	    R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
+		if (LOGICAL(s)[i]) {                                \
+		    if (LOGICAL(s)[i] == NA_LOGICAL)		    \
+			buf[count++] = NA_REAL;		    \
+		    else					    \
+			buf[count++] = (double)(i + 1);	    \
 		});
 	    PROTECT(indx = allocVector(REALSXP, count));
 	    memcpy(REAL(indx), buf, sizeof(double) * count);
@@ -558,12 +558,12 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	const void *vmax = vmaxget();
 	int *buf = (int *) R_alloc(nmax, sizeof(int));
 	count = 0;
-	R_ITERATE_CHECK(NINTERRUPT, nmax, i,		\
-	    if (LOGICAL(s)[i]) {			\
-		if (LOGICAL(s)[i] == NA_LOGICAL)	\
+	R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
+	    if (LOGICAL(s)[i]) {                                \
+		if (LOGICAL(s)[i] == NA_LOGICAL)	        \
 		    buf[count++] = NA_INTEGER;		\
-		else					\
-		    buf[count++] = (int)(i + 1);	\
+		else                                            \
+		    buf[count++] = (int)(i + 1);		\
 	    });
 	PROTECT(indx = allocVector(INTSXP, count));
 	memcpy(INTEGER(indx), buf, sizeof(int) * count);
@@ -593,7 +593,7 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     PROTECT(indx = allocVector(INTSXP, count));
     count = 0;
     MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2,	\
-	if (LOGICAL(s)[i1]) {					\
+	if (LOGICAL(s)[i1]) {				\
 	    if (LOGICAL(s)[i1] == NA_LOGICAL)			\
 		INTEGER(indx)[count++] = NA_INTEGER;		\
 	    else						\

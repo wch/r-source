@@ -57,7 +57,7 @@ makeMethodsList <- function(object, level=1)
     i <- match("", mnames)
     if(!is.na(i)) {
         ## convert to ANY
-        mnames[[i]] <- "ANY"
+        el(mnames, i) <- "ANY"
         names(object) <- mnames
     }
     if(anyDuplicated(mnames))
@@ -65,12 +65,12 @@ makeMethodsList <- function(object, level=1)
              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
                           collapse=", ")), domain = NA)
     for(i in seq_along(object)) {
-        eli <- object[[i]]
+        eli <- el(object, i)
         if(is(eli, "function")
            || is(eli, "MethodsList")) {}
         else if(is(eli, "list") ||
                 is(eli, "named"))
-            object[[i]] <- Recall(eli, NULL, level+1)
+            el(object, i) <- Recall(eli, NULL, level+1)
         else
             stop(gettextf("element %d at level %d (class %s) cannot be interpreted as a function or named list",
                           i, level, dQuote(class(eli))),
@@ -97,10 +97,10 @@ SignatureMethod <-
         stop("arguments 'names' and 'signature' must have the same length")
     if(n == 0)
         return(definition)
-    Class <- signature[[n]]
-    name <- names[[n]]
+    Class <- el(signature,n)
+    name <- el(names, n)
     m <- MethodsList(name)
-    slot(m, "methods")[[Class]] <- definition
+    elNamed(slot(m, "methods"), Class) <- definition
     slot(m, "argument") <- as.name(name)
     SignatureMethod(names[-n], signature[-n], m)
 }
@@ -134,9 +134,9 @@ insertMethod <-
              domain = NA)
     if(length(args) > 1 && !cacheOnly)
         mlist <- balanceMethodsList(mlist, args)
-    Class <- signature[[1]]
+    Class <- el(signature, 1)
     methods <- if(cacheOnly) mlist@allMethods else mlist@methods
-    current <- methods[[Class]]
+    current <- elNamed(methods, Class)
     if(is(current, "MethodsList")) {
         nextArg <- as.character(current@argument)
         sigArgs <- args
@@ -155,7 +155,7 @@ insertMethod <-
     if(length(signature) == 1) {
         if(is.null(current)) {
             if(!is.null(def))
-                methods[[Class]] <- def
+                elNamed(methods, Class) <- def
             ## else, no change
         }
         else {
@@ -164,7 +164,7 @@ insertMethod <-
                 ## delete the method
                 methods <- methods[-which]
             else
-                methods[[which]] <- def
+                el(methods, which) <- def
         }
     }
     else { ## recursively merge, initializing current if necessary
@@ -173,7 +173,7 @@ insertMethod <-
         else if(is.function(current))
             current <- new("MethodsList", argument = as.name(args[2L]),
 			   methods = list(ANY = current))
-        methods[[Class]] <-
+        elNamed(methods, Class) <-
             Recall(current, signature[-1L], args[-1L], def, cacheOnly)
     }
     mlist@allMethods <- methods
@@ -391,7 +391,7 @@ finalDefaultMethod <-
           break
         if(is(method, "MethodsList")) {
 	    .MlistDeprecated()
-            method <-  slot(method, "methods")[["ANY"]]
+            method <-  elNamed(slot(method, "methods"), "ANY")
         } else
           stop(gettextf(
 	"default method must be a method definition, a primitive or NULL: got an object of class %s",
@@ -414,7 +414,7 @@ inheritedSubMethodLists <-
 {
   .MlistDeprecated("inheritedSubMethodLists()")
   methods <- slot(mlist, "methods")## only direct methods
-  defaultMethod <- methods[["ANY"]]## maybe NULL
+  defaultMethod <- elNamed(methods, "ANY")## maybe NULL
   classes <- names(methods)
   value <- list()
   if(.identC(thisClass, "missing")) {
@@ -433,28 +433,28 @@ inheritedSubMethodLists <-
           superClasses <- names(classDef@contains)
           classes <- superClasses[!is.na(match(superClasses, classes))]
           for(which in seq_along(classes)) {
-              tryClass <- classes[[which]]
+              tryClass <- el(classes, which)
               ## TODO:  There is potential bug here:  If the is relation is conditional,
               ## we should not cache this selection.  Needs another trick in the environment
               ## to FORCE no caching regardless of what happens elsewhere; e.g., storing a
               ## special object in .Class
               if(is.null(object) || is(object, tryClass)) {
-                  value[[tryClass]] <- methods[[tryClass]]
+                  elNamed(value, tryClass) <- elNamed(methods, tryClass)
               }
           }
       }
       else {
           for(which in seq_along(classes)) {
-              tryClass <- classes[[which]]
+              tryClass <- el(classes, which)
               tryClassDef <- getClassDef(tryClass, ev)
               if(!is.null(tryClassDef) &&
                  !is.na(match(thisClass, names(tryClassDef@subclasses))))
-                  value[[tryClass]] <- methods[[which]]
+                  elNamed(value, tryClass) <- el(methods, which)
           }
       }
   }
   if(!is.null(defaultMethod))
-      value[["ANY"]] <- defaultMethod
+      elNamed(value, "ANY") <- defaultMethod
   value
 }
 
@@ -812,17 +812,17 @@ listFromMlist <-
     sigs <- list()
     methods <- list()
     for(i in seq_along(methodSlot)) {
-        thisMethod <- methodSlot[i]
-        thisClass <- mnames[[i]]
-        prefix[[argName]] <- thisClass
+        thisMethod <- el(methodSlot, i)
+        thisClass <- el(mnames, i)
+        elNamed(prefix, argName) <- thisClass
         if(is.function(thisMethod)) {
             if(sigs.) sigs <- c(sigs, list(prefix))
             if(methods.) methods <- c(methods, list(thisMethod))
         }
         else {
             more <- Recall(thisMethod, prefix)
-            if(sigs.) sigs <- c(sigs, more[[1]])
-            if(methods.) methods <- c(methods, more[[2]])
+            if(sigs.) sigs <- c(sigs, el(more, 1))
+            if(methods.) methods <- c(methods, el(more, 2))
         }
     }
     list(sigs, methods)

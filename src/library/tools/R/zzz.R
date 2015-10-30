@@ -52,11 +52,4 @@ rm(PS_sigs)
 	    Rd2txt_options(itemBullet = "\u2022 ")
     } else if (!is.na(iconv("\u2022", "UTF-8", "")))
 	Rd2txt_options(itemBullet = "\u2022 ")
-
-    ## showProc.time(): see notes in ./testing.R
-    where <- environment(sys.function())  # the namespace
-    if(exists(".showProc.time")) {
-	delayedAssign("showProc.time", .showProc.time, assign.env=where)
-    } else ## [not seen; just in case]
-	warning(".onLoad(): could not see .showProc.time")
 }

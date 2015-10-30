@@ -129,11 +129,9 @@ ts.plot(AirPassengers, 10^tl, 10^tu, log = "y", lty = c(1,2,2))
 ## full ML fit is the same if the series is reversed, CSS fit is not
 ap0 <- rev(log10(AirPassengers))
 attributes(ap0) <- attributes(AirPassengers)
-fr1 <- arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12))
-fr2 <- arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12),
-             method = "CSS")
-i <- c("coef", "sigma2", "var.coef")
-stopifnot(all.equal(fr1[i], fit[i], tol=4e-4))# 64b: 9e-5 is ok
+arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12))
+arima(ap0, c(0, 1, 1), seasonal = list(order=c(0, 1 ,1), period=12),
+      method = "CSS")
 
 ## Structural Time Series
 ap <- log10(AirPassengers) - 2

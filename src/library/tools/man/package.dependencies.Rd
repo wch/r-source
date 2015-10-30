@@ -1,6 +1,6 @@
 % File src/library/tools/man/package.dependencies.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package.dependencies}
@@ -27,8 +27,6 @@ package.dependencies(x, check = FALSE,
   Currently we only check if the package conforms with the currently
   running version of R.  In the future we might add checks for
   inter-package dependencies.
-}
-\value{
 }
 \seealso{
   \code{\link{update.packages}}

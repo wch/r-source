@@ -14,10 +14,8 @@
 convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 }
 \arguments{
-  \item{x, y}{numeric sequences to be convolved, \emph{of the same
-      length} for \code{type = "circular"}, the default.  For \code{type
-      = "filter"}, \code{y} must not be longer than \code{y} (and
-    typically is much shorter).}
+  \item{x, y}{numeric sequences \emph{of the same length} to be
+    convolved.}
   \item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
     before back-transforming (default, and used for usual convolution).}
   \item{type}{character; partially matched to \code{"circular"}, \code{"open"},
@@ -69,16 +67,6 @@ x <- rnorm(50)
 y <- rnorm(50)
 # Circular convolution *has* this symmetry:
 all.equal(convolve(x, y, conj = FALSE), rev(convolve(rev(y),x)))
-
-
-(ctypes <- eval(formals(convolve)$type)[-1]) # all but "circular"
-for(n in 1:500) {%% <- FIXME ?  \dontshow{..} ??
- x <- rnorm(1+ rpois(1, 20))
- y <- rnorm(1+ rpois(1, sample(c(4,40), 1)))
- Lxy <- sapply(ctypes, function(T) convolve(x,y, type=T), simplify=FALSE)
- stopifnot(all.equal(Lxy$open,   Lxy$`1+open`,   tol=1e-14))
- stopifnot(all.equal(Lxy$filter, Lxy$`1+filter`, tol=1e-14))
-}
 
 n <- length(x <- -20:24)
 y <- (x-10)^2/1000 + rnorm(x)/8

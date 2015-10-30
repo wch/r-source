@@ -48,21 +48,12 @@ package_dependencies(packages = NULL, db,
   dependencies.
 }
 \examples{
-\donttest{
-myPkgs <- c("MASS", "Matrix", "KernSmooth", "class", "cluster", "codetools")
+\dontrun{
 pdb <- available.packages()
-system.time(
-dep1 <- package_dependencies(myPkgs, db = pdb) # all arguments at default
-) # very fast
-utils::str(dep1, vec.len=10)
-
-system.time( ## reverse dependencies, recursively --- takes much longer:
-deps <- package_dependencies(myPkgs, db = pdb,
+deps <- package_dependencies(packages = "MASS", pdb,
                     which = c("Depends", "Imports", "LinkingTo", "Suggests"),
                     recursive = TRUE, reverse = TRUE)
-) # seen ~ 10 seconds
-
-lengths(deps) # 2015-01-14: all are 7040, but codetools with 7046
-}% dont test
+length(deps$MASS)
+}
 }
 \keyword{utilities}

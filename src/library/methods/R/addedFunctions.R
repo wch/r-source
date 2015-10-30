@@ -85,7 +85,7 @@ elNamed <-
         else NULL
     }
     else
-        x[[i]]
+        el(x,i)
 }
 
 "elNamed<-" <-

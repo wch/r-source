@@ -116,11 +116,11 @@ versions:
 \begin{verbatim}
 > x <- as.double(1 : 10000000)
 > system.time(f(x))
-   user  system elapsed
-  6.470   0.010   6.483
+   user  system elapsed 
+  6.470   0.010   6.483 
 > system.time(fc(x))
-   user  system elapsed
-  1.870   0.000   1.865
+   user  system elapsed 
+  1.870   0.000   1.865 
 \end{verbatim}
 
 A source file can be compiled with [[cmpfile]].  For now, the resulting
@@ -291,7 +291,7 @@ else if (typeof(e) == "promise")
                cntxt)
 else
     cmpConst(e, cb, cntxt)
-@
+@ 
 The function [[cmp]] is then defined as
 <<[[cmp]] function>>=
 cmp <- function(e, cb, cntxt, missingOK = FALSE) {
@@ -564,7 +564,7 @@ else {
     else
         checkCall(def, call, function(w) notifyBadCall(w, cntxt))
 }
-@
+@ 
 and [[checkCall]] is defined as
 <<[[checkCall]] function>>=
 ## **** clean up to use tryCatch
@@ -608,7 +608,7 @@ syntax errors.
 if (typeof(fun) == "language" && typeof(fun[[1]]) == "symbol" &&
     as.character(fun[[1]]) %in% c("break", "next"))
     return(cmp(fun, cb, cntxt))
-@
+@ 
 
 
 \subsection{Compiling call arguments}
@@ -781,7 +781,7 @@ core functions like the sequencing function [[{]] and the conditional
   be addressed by defining inlining rules that allow functions like
   [[{]] and [[if]] to be compiled properly.
 
-
+  
 \section{The code buffer}
 \label{sec:codebuf}
 The code buffer is a collection of closures that accumulate code and
@@ -833,7 +833,7 @@ putcode <- function(...) {
     codeCount <<- codeCount + newLen
 }
 getcode <- function() as.integer(codeBuf[1 : codeCount])
-@
+@ 
 
 The constant pool is accumulated into a list buffer.  The zero-based
 index of the constant in the pool is returned by the insertion
@@ -869,7 +869,7 @@ idx <- 0
 labels <- vector("list")
 makelabel <- function() { idx <<- idx + 1; paste0("L", idx) }
 putlabel <- function(name) labels[[name]] <<- codeCount
-@
+@ 
 
 Once code generation is complete the symbolic labels in the code
 stream need to be converted to numerical offset values.  This is done
@@ -1587,7 +1587,7 @@ findLocals1 <- function(e, shadowed = character(0)) {
     }
     else character(0)
 }
-@ %def findLocals1
+@ %def findLocals1 
 %% **** merge into single chunk??
 <<[[findLocalsList1]] function>>=
 findLocalsList1 <- function(elist, shadowed)
@@ -1822,7 +1822,7 @@ if (! isNamespace(frame)) {
         cntxt$stop(gettext("bad namespace import frame"))
     frame <- top
 }
-@
+@ 
 
 For this version of the compiler the inline handler data base is
 managed as an environment in which handlers are entered and looked up
@@ -1879,7 +1879,7 @@ local({
     <<install default [[SPECIAL]] handlers>>
     <<install default [[BUILTIN]] handlers>>
 })
-@
+@ 
 The handler installations are wrapped in a [[local]] call to reduce
 environment pollution.
 
@@ -1957,7 +1957,7 @@ if (missing(a)) {
     else
         cntxt$stop(gettext("missing arguments are not allowed"), cntxt)
 }
-@
+@ 
 The error case should not be reached as [[cmpBuiltinArgs]] should not
 be called with missing arguments unless [[missingOK]] is [[TRUE]].
 
@@ -2219,7 +2219,7 @@ setInlineHandler("return", function(e, cb, cntxt) {
     }
     TRUE
 })
-@
+@ 
 
 
 \section{Branching and labels}
@@ -2238,7 +2238,7 @@ invisibly return [[NULL]] if the test is [[FALSE]], but the visible
 flag setting only matters if the [[if]] expression is in tail
 position.  So the case of no [[else]] clause will be handled slightly
 differently in tail and non-tail contexts.
-%% **** In no value contexts it would be good to avoid pushing and
+%% **** In no value contexts it would be good to avoid pushing and 
 %% **** immediately popping constants. Alternatively a peephole optimizer
 %% **** could clean these up.
 %% **** Should there be error checking for either two or three arguments here??
@@ -2273,7 +2273,7 @@ if (! is.null(ct) && is.logical(ct$value) && length(ct$value) == 1
     else cb$putcode(LDNULL.OP)
     return(TRUE)
 }
-@
+@ 
 
 Next, the test code is compiled, a label for the start of code for the
 [[else]] clause is generated, and a conditional branch instruction
@@ -2290,7 +2290,7 @@ callidx <- cb$putconst(e)
 else.label <- cb$makelabel()
 cb$putcode(BRIFNOT.OP, callidx, else.label)
 cmp(then.expr, cb, cntxt)
-@
+@ 
 
 The code for the alternative [[else]] expression will be placed after
 the code for the consequent expression.  If the [[if]] expression
@@ -2909,7 +2909,7 @@ setInlineHandler("exp", function(e, cb, cntxt)
 
 setInlineHandler("sqrt", function(e, cb, cntxt)
     cmpPrim1(e, cb, SQRT.OP, cntxt))
-@
+@ 
 
 The [[log]] function is currently defined as a [[SPECIAL]].  The
 default inline handler action is therefore to use [[cmpSpecial]]. For
@@ -2938,7 +2938,7 @@ setInlineHandler("log", function(e, cb, cntxt) {
         TRUE
     }
 })
-@
+@ 
 
 A number of one argument math functions are handled by the interpreter
 using the function [[math1]] in [[arithmetic.c]]. The [[MATH1.OP]]
@@ -3073,7 +3073,7 @@ and other operations is then generated by
 # **** this is now handled differently; see "Improved subset ..."
 # setInlineHandler("[[", function(e, cb, cntxt)
 #     cmpDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, e, cb, cntxt))
-@
+@ 
 
 The [[cmpDispatch]] function takes the two opcodes as arguments.  It
 declines to handle cases with [[...]] arguments in the call or with a
@@ -3165,7 +3165,7 @@ A number of functions are defined as simple wrappers around
 [[.Internal]] calls. One example is [[dnorm]], which is currently
 defined as
 \begin{verbatim}
-dnorm <- function (x, mean = 0, sd = 1, log = FALSE)
+dnorm <- function (x, mean = 0, sd = 1, log = FALSE) 
     .Internal(dnorm(x, mean, sd, log))
 \end{verbatim}
 The implementation of [[.Internal]] functions can be of type
@@ -3467,7 +3467,7 @@ Code generators are then registered by
 <<inlining handlers for [[::]] and [[:::]]>>=
 setInlineHandler("::", cmpMultiColon)
 setInlineHandler(":::", cmpMultiColon)
-@
+@ 
 
 Calls to with will often generate spurious undefined variable warning
 for variables appearing in the expression argument.  A crude approach
@@ -3479,7 +3479,7 @@ setInlineHandler("with", function(e, cb, cntxt) {
     cmpCallSymFun(e[[1]], e[-1], e, cb, cntxt)
     TRUE
 })
-@
+@ 
 
 A similar issue arises for [[require]], where an unquoted argument is
 often used.
@@ -3489,7 +3489,7 @@ setInlineHandler("require", function(e, cb, cntxt) {
     cmpCallSymFun(e[[1]], e[-1], e, cb, cntxt)
     TRUE
 })
-@
+@ 
 
 
 \section{The [[switch]] function}
@@ -3543,7 +3543,7 @@ setInlineHandler("switch", function(e, cb, cntxt) {
     }
     TRUE
 })
-@
+@ 
 
 The first step in processing the [[switch]] expression is to extract
 the selector expression [[expr]] and the case expressions, to identify
@@ -3774,7 +3774,7 @@ setInlineHandler("<<-", cmpAssign)
 @ %def
 
 The function [[checkAssign]] is used to check that an assignment
-expression is well-formed.
+expression is well-formed. 
 <<[[checkAssign]] function>>=
 checkAssign <- function(e, cntxt) {
     if (length(e) != 3)
@@ -3891,7 +3891,7 @@ f(x, y[] <- 1) <- 3
   to ensure that the variable is removed in the event of a non-local
   exit. Implementing this in the compiler would introduce significant
   overhead.
-
+  
 \item The asymmetry of handling the pre-evaluated right hand side
   value via an evaluated promise and the pre-evaluated left hand side
   via a temporary variable makes the code harder to understand and the
@@ -4294,7 +4294,7 @@ setSetterInlineHandler("@<-", function(afun, place, acall, cb, cntxt) {
     }
     else FALSE
 }, "methods")
-@
+@ 
 
 
 \subsection{Compiling getter calls}
@@ -5294,7 +5294,7 @@ while (! identical(env, empty)) {
     env <- parent.env(env)
     ng <- ng + 1
 }
-@
+@ 
 
 The function [[findHomeNS]] takes a variable name and a namespace
 frame, or a namespace imports frame, and returns the namespace frame
@@ -5713,7 +5713,7 @@ COLON.OP = 1,
 SEQALONG.OP = 1,
 SEQLEN.OP = 1
 )
-@
+@ 
 
 <<opcode names>>=
 Opcodes.names <- names(Opcodes.argc)

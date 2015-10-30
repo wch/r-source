@@ -204,7 +204,7 @@ makeClassRepresentation <-
 		getClass(what)
         what <- whatClassDef@className # includes package name as attribute
         ## Create the SClassExtension objects (will be simple, possibly dataPart).
-        ## The slots are supplied explicitly, since 'name' is currently an undefined class
+        ## The slots are supplied explicitly, since `name' is currently an undefined class
         elNamed(contains, what) <- makeExtends(name, what, slots = slots,
                                               classDef2 = whatClassDef, package = package)
     }
@@ -423,19 +423,18 @@ isClass <-
 new <-
   ## Generate an object from the specified class.
   ##
-  ## Note that the basic vector classes, '"numeric"', etc. are implicitly defined,
-  ## so one can use 'new' for these classes.
+  ## Note that the basic vector classes, `"numeric"', etc. are implicitly defined,
+  ## so one can use `new' for these classes.
   ##
   function(Class, ...)
 {
-    ## ClassDef <- getClass(Class, where = topenv(parent.frame()), resolve.msg=FALSE)
     ClassDef <- getClass(Class, where = topenv(parent.frame()))
     value <- .Call(C_new_object, ClassDef)
     initialize(value, ...)
 }
 
 getClasses <-
-  ## The names of all the classes formally defined on 'where'.
+  ## The names of all the classes formally defined on `where'.
   ## If called with no argument, all the classes currently known in the session
   ## (which does not include classes that may be defined on one of the attached
   ## libraries, but have not yet been used in the session).

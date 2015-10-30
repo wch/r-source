@@ -62,7 +62,7 @@
 ##  anyLabel <- .sigLabel(anySig)
   newMethods <- names(newtable)
   for(what in newMethods) {
-    obj <- newtable[[what]]
+    obj <- get(what, envir = newtable)
     if(is.primitive(obj))
       sig <- anySig
     else if(is(obj, "MethodDefinition"))
@@ -103,7 +103,7 @@
         signames <- generic@signature
         length(signames) <- ns
         .resetTable(table, ns, signames)
-        fenv[[".SigLength"]] <- ns
+        assign(".SigLength", ns, envir = fenv)
         n <- ns
       }
     }
@@ -113,9 +113,9 @@
             ## must replace in .AllMTable also
             if(is.null(allTable))
                 allTable <- get(".AllMTable", envir = fenv)
-            allTable[[what]] <- obj
+            assign(what, obj, envir = allTable)
         }
-        table[[what]] <- obj
+        assign(what, obj, envir = table)
     }
     else if(exists(what, envir = table, inherits = FALSE) &&
             !all(obj@defined == "ANY") ) {
@@ -148,7 +148,7 @@
                 objw@defined <- objw@target <- sigw
                 remove(list = what, envir = obj)
                 var <- .pkgMethodLabel(objw)
-                if(nzchar(var)) obj[[var]] <- objw
+                if(nzchar(var)) assign(var, objw, envir = obj)
             }
         }
     }

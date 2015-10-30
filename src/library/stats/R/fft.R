@@ -22,8 +22,7 @@ mvfft <- function(z, inverse=FALSE) .Call(C_mvfft, z, inverse)
 
 nextn <- function(n, factors=c(2,3,5)) .Call(C_nextn, n, factors)
 
-convolve <- function(x, y, conj=TRUE,
-                     type=c("circular", "open", "filter", "1+open", "1+filter"))
+convolve <- function(x, y, conj=TRUE, type=c("circular","open","filter"))
 {
     type <- match.arg(type)
     n <- length(x)
@@ -34,21 +33,15 @@ convolve <- function(x, y, conj=TRUE,
         if(ny != n)
             stop("length mismatch in convolution")
     }
-    else { ## "open" or "filter": Pad with zeros to common length
-        if((do.filt <- grepl("filter", type)) && ny > n)
-	    return(if(Real) numeric(0) else complex(0))
-	oneP <- grepl("^1\\+", type)
-	n1 <- if(oneP) ny else ny - 1L
-	x <- c(rep.int(0, n1), x)
-	n <- length(y <- c(y, rep.int(0, if(oneP) n else n - 1L)))# n = nx+ny {-1}
+    else { ## "open" or "filter": Pad with zeros
+        n1 <- ny - 1
+        x <- c(rep.int(0, n1), x)
+        n <- length(y <- c(y, rep.int(0, n - 1)))# n = nx+ny-1
     }
-    x <- if(Real) Re(fft(fft(x) * (if(conj) Conj(fft(y)) else fft(y)), inverse=TRUE))
-         else        fft(fft(x) * (if(conj) Conj(fft(y)) else fft(y)), inverse=TRUE)
-    switch(type,
-           "filter"   = x[(n1+1L):(n-n1)],
-           "1+filter" = x[(n1+1L):(n-n1+1L)],
-           "circular" = x,
-           "open"     = x,
-           "1+open"   = x[-1L]) / n
+    x <- fft(fft(x)* (if(conj)Conj(fft(y)) else fft(y)), inverse=TRUE)
+    if(type == "filter")
+        (if(Real) Re(x) else x)[-c(1L:n1, (n-n1+1L):n)]/n
+    else
+        (if(Real) Re(x) else x)/n
 }
 

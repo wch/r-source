@@ -3949,13 +3949,6 @@ indicate that no report is required, a value of @samp{0} that a report
 is always required.
 Default: @code{""}. (@code{10} for CRAN checks.)
 
-@item _R_CHECK_LEVEL_
-Control the intensity of testing performed by 'R CMD check'.  This is
-intended to allow package developers to specify how shallow or deep
-tests should be performed, for instance to limit the computational
-load on CRAN servers.  Must be a non-negative number.
-Default: @code{1}.
-
 @item _R_CHECK_INSTALL_DEPENDS_
 If set to a true value and a test installation is to be done, this is
 done with @code{.libPaths()} containing just a temporary library

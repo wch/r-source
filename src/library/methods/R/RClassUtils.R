@@ -308,7 +308,7 @@ completeClassDefinition <-
                 if(is.null(cliDef))
                     undefClasses[[i]] <- TRUE
                 else
-                    packageSlot(cli) <- cliDef@package
+                    packageSlot(properties[[i]]) <- cliDef@package
             }
             else {
                 cliDef <- getClassDef(cli)
@@ -317,12 +317,9 @@ completeClassDefinition <-
             }
         }
         if(any(undefClasses))
-            warning(gettextf("undefined slot classes in definition of %s: %s",
+            warning(sprintf(gettext("undefined slot classes in definition of %s: %s", domain = "R-methods"),
                              .dQ(ClassDef@className),
-                             paste0(names(properties)[undefClasses],
-                                    gettextf("(class %s)",
-                                             .dQ(unlist(properties, recursive = FALSE)[undefClasses])),
-                                    collapse = ", ")),
+                             paste(names(properties)[undefClasses], gettextf("(class %s)", .dQ(unlist(properties, recursive = FALSE)[undefClasses])), collapse = ", ", sep = "")),
                     call. = FALSE, domain = NA)
         ClassDef@slots <- properties
         ClassDef

@@ -15,9 +15,8 @@
   call to \code{\link{browser}} or \code{\link{recover}}) at chosen
   places in any function.  A call to \code{untrace} cancels the tracing.
   Specified methods can be traced the same way, without tracing all
-  calls to the generic function.  Trace code (\code{tracer}) can be any
-  \R expression.  Tracing can be temporarily turned on or off globally
-  by calling \code{tracingState}.
+  calls to the function.  Trace code can be any \R expression.  Tracing
+  can be temporarily turned on or off globally by calling \code{tracingState}.
 }
 \usage{
 trace(what, tracer, exit, at, print, signature,
@@ -76,7 +75,7 @@ returnValue(default = NULL)
   (Yes, it's subtle, but the semantics here are central to how
   namespaces work in R.)
   }
-  \item{on}{logical; a call to the support function \code{tracingState} returns \code{TRUE}
+  \item{on}{logical; a call to  the support function \code{tracingState} returns \code{TRUE}
     if tracing is globally turned on, \code{FALSE} otherwise.  An
     argument of one or the other of those values sets the state.  If the
     tracing state is \code{FALSE}, none of the trace actions will
@@ -304,7 +303,7 @@ untrace(c("f", "as.matrix"))
 ## has a namespace, so the where= argument must be used
 ## to get the right version of lm)
 
-trace(lm, exit = recover, where = asNamespace("nlme"))
+trace(lm, exit = recover, where = nlme)
 }
 %%}% only if 'methods'
 }

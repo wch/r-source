@@ -56,10 +56,6 @@ S_nlminb_iterate(double b[], double d[], double fx, double g[],
 		 double h[], int iv[], int liv, int lv, int n,
 		 double v[], double x[]);
 
-double* attribute_hidden
-S_std_rWishart_factor(double nu, int p, int upper, double ans[]);
-
-
 static R_INLINE int S_v_length(int alg, int n)
 {
     return (alg - 1) ? (105 + (n * (2 * n + 20))) :

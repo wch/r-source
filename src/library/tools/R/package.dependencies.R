@@ -22,8 +22,6 @@ package.dependencies <-
     function(x, check = FALSE, depLevel = c("Depends", "Imports", "Suggests"))
 {
     depLevel <- match.arg(depLevel)
-    ## only one 'depLevel' at a time .. Rather use
-    .Deprecated("package_dependencies")
 
     if(!is.matrix(x))
         x <- matrix(x, nrow = 1L, dimnames = list(NULL, names(x)))

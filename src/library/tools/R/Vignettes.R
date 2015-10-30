@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -416,10 +416,10 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     stopifnot(length(names)    == length(docs),
 	      length(engines)  == length(docs),
 	      length(patterns) == length(docs), !anyDuplicated(docs))
-
-    defaultEncoding <- .get_package_metadata(dir)["Encoding"]
+	      
+    defaultEncoding <- .get_package_metadata(dir)["Encoding"]	      
     encodings <- vapply(docs, getVignetteEncoding, "", default = defaultEncoding)
-
+    
     z <- list(docs=docs, names=names, engines=engines, patterns=patterns, encodings = encodings,
 	      dir = docdir, pkgdir = dir, msg = msg)
 
@@ -508,10 +508,10 @@ buildVignettes <-
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engine[i])
         enc <- vigns$encodings[i]
-        if (enc == "non-ASCII")
-            stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding",
+        if (enc == "non-ASCII") 
+            stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", 
                  file), domain = NA, call. = FALSE)
-
+        
         output <- tryCatch({
             ## FIXME: run this in a separate process
             engine$weave(file, quiet = quiet, encoding = enc)
@@ -596,7 +596,7 @@ buildVignettes <-
 buildVignette <-
     function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
              quiet = TRUE, clean = TRUE, keep = character(),
-             engine = NULL, buildPkg = NULL,
+             engine = NULL, buildPkg = NULL, 
 	     encoding = getVignetteEncoding(file), ...)
 {
     if (!file_test("-f", file))
@@ -626,7 +626,7 @@ buildVignette <-
 		file, paste(engine$package, engine$name, sep="::")),
 		domain = NA)
 
-    if (encoding == "non-ASCII")
+    if (encoding == "non-ASCII") 
     	stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", name))
 
     # Set output directory temporarily
@@ -703,7 +703,7 @@ getVignetteEncoding <-  function(file, ...)
 
     if(is.na(res)) {
         poss <- grep("^[[:space:]]*%+[[:space:]]*\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
-        if (length(poss))
+        if (length(poss)) 
             res <- "UTF-8"
         else {
             ## Look for input enc lines using inputenc or inputenx
@@ -714,7 +714,7 @@ getVignetteEncoding <-  function(file, ...)
             ## Check it is in the preamble
             start <- grep("^[[:space:]]*\\\\begin\\{document\\}",
                           lines, useBytes = TRUE)
-            if(length(start))
+            if(length(start)) 
                 poss <- poss[poss < start[1L]]
             if(length(poss)) {
         	poss <- lines[poss[1L]]
@@ -745,7 +745,7 @@ getVignetteEncoding <-  function(file, ...)
             } else { # Nothing else has indicated an encoding, maybe it's just ASCII
                 asc <- iconv(lines, "latin1", "ASCII")
                 ind <- is.na(asc) | asc != lines
-                if(any(ind))
+                if(any(ind)) 
                     res <- "non-ASCII"
                 else
                     res <- "" # or "ASCII"
@@ -762,7 +762,7 @@ function(lines, tag)
 {
     ## <FIXME>
     ## Why don't we anchor this to the beginning of a line?
-    meta_RE <- paste0("[[:space:]]*%+[[:space:]]*\\\\Vignette",
+    meta_RE <- paste0("[[:space:]]*%+[[:space:]]*\\\\Vignette", 
                       tag, "\\{([^}]*(\\{[^}]*\\})*[^}]*)\\}.*")
     ## </FIXME>
     meta <- grep(meta_RE, lines, value = TRUE, useBytes = TRUE)
@@ -802,8 +802,9 @@ function(file)
          keywords = keywords, engine = engine)
 }
 
-## builds vignette indices from 'vigns', a pkgVignettes() result
-.build_vignette_index <- function(vigns)
+## The below builds vignette indices via 'pkgVignettes' objects.
+.build_vignette_index <-
+function(vigns)
 {
     stopifnot(inherits(vigns, "pkgVignettes"))
 
@@ -848,7 +849,11 @@ function(file)
     ## by 'R CMD build' (via 'R CMD INSTALL -l <lib>)
     ## which in case vignettes have not been built.
     outputs <- vigns$outputs
-    outputs <- if(!is.null(outputs)) basename(outputs) else character(nvigns)
+    if (!is.null(outputs)) {
+        outputs <- basename(outputs)
+    } else {
+        outputs <- character(nvigns)
+    }
 
     out <- data.frame(File = unlist(contents[, "File"]),
                       Title = unlist(contents[, "Title"]),
@@ -941,8 +946,8 @@ function(pkg, con, vignetteIndex = NULL)
 }
 
 vignetteDepends <-
-    function(vignette, recursive = TRUE, reduce = TRUE,
-             local = TRUE, lib.loc = NULL)
+function(vignette, recursive = TRUE, reduce = TRUE,
+         local = TRUE, lib.loc = NULL)
 {
     if (length(vignette) != 1L)
         stop("argument 'vignette' must be of length 1")
@@ -954,7 +959,8 @@ vignetteDepends <-
 
     depMtrx <- getVigDepMtrx(vigDeps)
     instPkgs <- utils::installed.packages(lib.loc=lib.loc)
-    getDepList(depMtrx, instPkgs, recursive, local, reduce)
+    getDepList(depMtrx, instPkgs, recursive, local, reduce,
+               lib.loc)
 }
 
 getVigDepMtrx <-

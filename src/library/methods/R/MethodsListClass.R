@@ -193,7 +193,7 @@
                   args <- list(...)
                   objs <- names(args)
                   for(what in objs)
-                      value[[what]] <- args[[what]]
+                      assign(what, elNamed(args, what), envir = value)
                   value
               }, where = envir)
     ## from 2.11.0, the MethodsList class is deprecated
@@ -418,16 +418,16 @@
               names(signature) <- formalNames[seq_along(classes)]
             else if(length(sigArgs) && any(is.na(match(sigArgs, formalNames))))
                 if(is(fdef, "genericFunction"))
-                      stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
-                                    paste(sigArgs, collapse = ", "),
-                                    fdef@generic,
-                                    paste(formalNames, collapse = ", ")),
-                           domain = NA)
+                      stop(sprintf(gettext("the names in signature for method (%s) do not match %s's arguments (%s)", domain = "R-methods"),
+                            paste(sigArgs, collapse = ", "),
+                            fdef@generic,
+                            paste(formalNames, collapse = ", ")),
+                   domain = NA)
                 else
-                      stop(gettextf("the names in signature for method (%s) do not match function's arguments (%s)",
-                                    paste(sigArgs, collapse = ", "),
-                                    paste(formalNames, collapse = ", ")),
-                           domain = NA)
+                      stop(sprintf(gettext("the names in signature for method (%s) do not match function's arguments (%s)", domain = "R-methods"),
+                            paste(sigArgs, collapse = ", "),
+                            paste(formalNames, collapse = ", ")),
+                   domain = NA)
         }
         object@.Data <- signature
         object@package <- pkgs
