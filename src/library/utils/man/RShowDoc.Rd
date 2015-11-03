@@ -1,6 +1,6 @@
 % File src/library/utils/man/RShowDoc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RShowDoc}
@@ -36,6 +36,13 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
 
   The documentation types are tried in turn starting with the first
   specified in \code{type} (or \code{"pdf"} if none is specified).
+}
+\seealso{
+  For displaying regular help files, \code{\link{help}} (or
+  \code{\link{?}}) and \code{\link{help.start}}.
+
+  For \code{type = "txt"}, \code{\link{file.show}} is used.
+  \code{\link{vignette}}s are nicely viewed via \code{RShowDoc(*, package= . )}.
 }
 \value{
   A invisible character string given the path to the file found.

@@ -61,7 +61,9 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
   %% variants, etc.
 }
 \seealso{
-  \code{\link{browseVignettes}} for an HTML-based vignette browser.
+  \code{\link{browseVignettes}} for an HTML-based vignette browser;
+  \code{\link{RShowDoc}(<basename>, package = "<pkg>")} displays a
+  \dQuote{rendered} vignette (pdf or html).
 }
 \examples{
 ## List vignettes from all *attached* packages
