@@ -488,7 +488,7 @@
       Hastie.)
 
       \item \code{var()} and hence \code{sd()} warn about
-      \code{factor()} arguments which are deprecated now. (\PR{16564})
+      \code{factor} arguments which are deprecated now. (\PR{16564})
     }
   }
 }
