@@ -1,12 +1,14 @@
 % File src/library/base/man/file.show.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.show}
 \alias{file.show}
-\title{Display One or More Files}
-\description{Display one or more files.}
+\title{Display One or More Text Files}
+\description{Display one or more (plain) text files, in a platform
+  specific way, typically via a \sQuote{pager}.
+}
 \usage{
 file.show(\dots, header = rep("", nfiles),
           title = "R Information",
@@ -64,9 +66,11 @@ file.show(\dots, header = rep("", nfiles),
 }
 \author{Ross Ihaka, Brian Ripley.}
 \seealso{
-  \code{\link{files}},
-  \code{\link{list.files}},
-  \code{\link{help}}.
+  \code{\link{files}}, \code{\link{list.files}},
+  \code{\link{help}};
+  \code{\link{RShowDoc}} call \code{file.show()} for \code{type =
+  "text"}.  Consider \code{\link{getOption}("pdfviewer")} and
+  e.g., \code{\link{system}} for displaying pdf files.
 
   \code{\link{file.edit}}.
 }
