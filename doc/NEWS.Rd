@@ -206,6 +206,12 @@
 
       \item \code{plot(x ~ x, *)} now warns that it is the same as
       \code{plot(x ~ 1, *)}.
+
+      \item \code{recordPlot()} has new arguments \code{load} and
+      \code{attach} to allow package names to be stored as part of a
+      recorded plot.  \code{replayPlot()} has new argument
+      \code{reloadPkgs} to load/attach any package names that were
+      stored as part of a recorded plot.
     }
   }
 
