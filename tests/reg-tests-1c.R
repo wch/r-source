@@ -1041,7 +1041,7 @@ stopifnot(identical(names(myD), names(format(head(myD)))),
 
 
 ## var(x) and hence sd(x)  with factor x, PR#16564
-tools::assertError(var(f <- gl(2,3)))
 tools::assertError(cov(1:6, f <- gl(2,3)))# was ok already
-tools::assertError(sd(f))
+tools::assertWarning(var(f))
+tools::assertWarning( sd(f))
 ## var() "worked" in R <= 3.2.2  using the underlying integer codes

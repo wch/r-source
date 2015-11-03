@@ -642,7 +642,12 @@ static SEXP corcov(SEXP x, SEXP y, SEXP na_method, SEXP skendall, Rboolean cor)
     /* Arg.1: x */
     if(isNull(x)) /* never allowed */
 	error(_("'x' is NULL"));
+#ifdef _R_in_2017_
     if(isFactor(x)) error(_("'x' is a factor"));
+#else
+# define VAR_FACTOR_MSG "Calling var(x) on a factor x is deprecated and will become an error.\n  Use something like 'all(duplicated(x)[-1L])' to test for a constant vector."
+    if(isFactor(x)) warning(_(VAR_FACTOR_MSG));
+#endif
     /* length check of x -- only if(empty_err) --> below */
     x = PROTECT(coerceVector(x, REALSXP));
     if ((ansmat = isMatrix(x))) {
@@ -657,7 +662,11 @@ static SEXP corcov(SEXP x, SEXP y, SEXP na_method, SEXP skendall, Rboolean cor)
     if (isNull(y)) {/* y = x  : var() */
 	ncy = ncx;
     } else {
+#ifdef _R_in_2017_
 	if(isFactor(y)) error(_("'y' is a factor"));
+#else
+	if(isFactor(y)) warning(_(VAR_FACTOR_MSG));
+#endif
 	y = PROTECT(coerceVector(y, REALSXP));
 	nprotect++;
 	if (isMatrix(y)) {

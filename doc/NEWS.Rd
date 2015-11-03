@@ -487,8 +487,8 @@
       the data range, extrapolation was somewhat off.  (Patch by Trevor
       Hastie.)
 
-      \item \code{var()} hence \code{sd()} now signal an error for
-      \code{factor()} arguments. (\PR{16564})
+      \item \code{var()} and hence \code{sd()} warn about
+      \code{factor()} arguments which are deprecated now. (\PR{16564})
     }
   }
 }
