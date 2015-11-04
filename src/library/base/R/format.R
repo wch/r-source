@@ -248,7 +248,7 @@ format.data.frame <- function(x, ..., justify = "none")
     }
     as.data.frame.list(rval, row.names = row.names(x), col.names = names(x),
 		       optional = TRUE, # <=> check.names = FALSE
-		       cut.names = TRUE)
+		       fix.empty.names = FALSE, cut.names = TRUE)
 }
 
 format.AsIs <- function(x, width = 12, ...)

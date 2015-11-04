@@ -39,7 +39,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
               stringsAsFactors = default.stringsAsFactors())
 
 \method{as.data.frame}{list}(x, row.names = NULL, optional = FALSE, \dots,
-              cut.names = FALSE, col.names = names(x), fix.empty.names = FALSE,
+              cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
               stringsAsFactors = default.stringsAsFactors())
 
 \method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots,

@@ -170,7 +170,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
 ## prior to 1.8.0 this coerced names - PR#3280
 as.data.frame.list <-
     function(x, row.names = NULL, optional = FALSE, ...,
-	     cut.names = FALSE, col.names = names(x), fix.empty.names = FALSE,
+	     cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
              stringsAsFactors = default.stringsAsFactors())
 {
     ## need to protect names in x.
@@ -178,7 +178,7 @@ as.data.frame.list <-
     new.nms <- !missing(col.names)
     if(cut.names) {
 	maxL <- if(is.logical(cut.names)) 256L else as.integer(cut.names)
-	if((isL <- any(long <- nchar(col.names, "bytes", keepNA = FALSE) > maxL)))
+	if(any(long <- nchar(col.names, "bytes", keepNA = FALSE) > maxL))
 	    col.names[long] <- paste(substr(col.names[long], 1L, maxL - 6L), "...")
 	else cut.names <- FALSE
     }
@@ -1238,8 +1238,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
     allargs <- list(...)
     allargs <- allargs[lengths(allargs) > 0L]
     if(length(allargs)) {
-    ## drop any zero-row data frames, as they may not have proper column
-    ## types (e.g. NULL).
+        ## drop any zero-row data frames, as they may not have proper column
+        ## types (e.g. NULL).
         nr <- vapply(allargs, function(x)
                      if(is.data.frame(x)) .row_names_info(x, 2L)
                      else if(is.list(x)) length(x[[1L]]) # mismatched lists are checked later
@@ -1396,7 +1396,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
 	    rlabs <- make.unique(as.character(rlabs), sep = "")
     }
     if(is.null(cl)) {
-	as.data.frame(value, row.names = rlabs)
+	as.data.frame(value, row.names = rlabs, fix.empty.names = TRUE)
     } else {
 	structure(value, class = cl,
 		  row.names = if(is.null(rlabs)) .set_row_names(nrow) else rlabs)

@@ -1028,7 +1028,7 @@ names(myL)[1:2] <- lapply(1:2, function(i)
 nD  <- names(myD  <- as.data.frame(myL))
 nD2 <- names(myD2 <- as.data.frame(myL, cut.names = 280))
 nD3 <- names(myD3 <- as.data.frame(myL, cut.names = TRUE))
-stopifnot(nchar(nD) == c(300,300,16), is.data.frame(myD),  dim(myD) == c(20,3),
+stopifnot(nchar(nD) == c(300,300,16), is.data.frame(myD),  dim(myD)  == c(20,3),
 	  nchar(nD2)== c(278,278,16), is.data.frame(myD2), dim(myD2) == c(20,3),
 	  nchar(nD3)== c(254,254,16), is.data.frame(myD3), dim(myD3) == c(20,3),
 	  identical(nD[3], "stringsAsFactors"),
@@ -1036,7 +1036,9 @@ stopifnot(nchar(nD) == c(300,300,16), is.data.frame(myD),  dim(myD) == c(20,3),
 
 names(myD)[1:2] <- c("Variable.1", "")# 2nd col.name is "empty"
 stopifnot(identical(names(myD), names(format(head(myD)))),
-	  identical(names(myD), c("Variable.1", "", "stringsAsFactors")))
+	  identical(names(myD), c("Variable.1", "", "stringsAsFactors")),
+	  identical(rbind.data.frame(2:1, 1:2), ## was wrong for some days
+		    data.frame(c.2L..1L. = c(2L, 1L), X1.2 = 1:2)))
 ## format.data.frame() did not show "stringsAsFactors" in R <= 3.2.2
 
 
