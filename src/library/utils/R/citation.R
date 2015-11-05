@@ -1218,7 +1218,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             z$note <- paste(z$note, rfr, sep = "/r")
     }
 
-    if(!length(z$url) && !is.na(url <- meta$URL[1L])) {
+    if(!length(z$url) && !is.null(url <- meta$URL)) {
         ## Cannot have several URLs in BibTeX and bibentry object URL
         ## fields (PR #16240).
         if(grepl("[, ]", url))
