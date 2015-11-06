@@ -1,7 +1,7 @@
 #  File src/library/stats/R/splinefun.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -143,7 +143,6 @@ splinefunH0 <- function(x0, y0, m, dx = x0[-1L] - x0[-length(x0)])
 	else # deriv == 3
 	    interp <- function(x, i) {
 		h <- dx[i]
-		t <- (x - x0[i]) / h
 		## 3rd derivative of Hermite polynomials h00, h01,h10, h11
 		h01 <- -12 # h00 = - h01
 		h10 <- 6

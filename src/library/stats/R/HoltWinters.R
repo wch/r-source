@@ -1,7 +1,7 @@
 #  File src/library/stats/R/HoltWinters.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2002-2013 The R Core Team
+#  Copyright (C) 2002-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -74,12 +74,13 @@ function (x,
         st <- decompose(ts(x[1L:wind], start = start(x), frequency = f),
                         seasonal)
 
-        ## level & intercept
-        dat <- na.omit(st$trend)
-        m   <- lm(dat ~ seq_along(dat))
-
-        if (is.null(l.start)) l.start <- as.vector(coef(m)[1L])
-        if (is.null(b.start)) b.start <- as.vector(coef(m)[2L])
+	if (is.null(l.start) || is.null(b.start)) {
+	    ## level & intercept
+	    dat <- na.omit(st$trend)
+	    cf <- coef(.lm.fit(x=cbind(1,seq_along(dat)), y=dat))
+	    if (is.null(l.start)) l.start <- cf[1L]
+	    if (is.null(b.start)) b.start <- cf[2L]
+	}
         if (is.null(s.start)) s.start <- st$figure
     }
 
