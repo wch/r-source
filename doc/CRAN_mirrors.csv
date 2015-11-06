@@ -36,6 +36,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Lyon 1)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Lyon 2)",France,Lyon,http://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
+"France (Marseille)",France,Marseille,"http://cran.biotools.fr/","IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr
 "France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr
 "France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "France (Paris 2) [https]",France,Paris,https://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
