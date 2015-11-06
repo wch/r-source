@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -81,6 +81,9 @@
       with maximal opportunity to be recorded exactly to full precision.
       Complex numbers with one or both non-finite components are
       output as if this option were not set.
+
+      (This relies on that format being correctly supported: known
+      problems on Windows are worked around as from \R 3.1.2.)
     }
     \item{\code{digits17}}{
       Real and finite complex numbers are output using format
