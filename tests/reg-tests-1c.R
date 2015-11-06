@@ -1035,6 +1035,13 @@ stopifnot(nchar(nD) == c(300,300,16), is.data.frame(myD),  dim(myD)  == c(20,3),
 	  identical(nD[3], nD2[3]), identical(nD[3], nD3[3]))
 
 names(myD)[1:2] <- c("Variable.1", "")# 2nd col.name is "empty"
+## A data frame with a column that is an empty data frame:
+d20 <- structure(list(type = c("F", "G"), properties = data.frame(i=1:2)[,-1]),
+                 class = "data.frame", row.names = c(NA, -2L))
+stopifnot(is.data.frame(d20), dim(d20) == c(2,2),
+	  identical(colnames(d20), c("type", "properties")),
+	  identical(capture.output(d20), c("  type", "1    F", "2    G")))
+## format(d20) failed in intermediate R versions
 stopifnot(identical(names(myD), names(format(head(myD)))),
 	  identical(names(myD), c("Variable.1", "", "stringsAsFactors")),
 	  identical(rbind.data.frame(2:1, 1:2), ## was wrong for some days

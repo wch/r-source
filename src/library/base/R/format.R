@@ -221,8 +221,9 @@ format.factor <- function (x, ...)
 
 format.data.frame <- function(x, ..., justify = "none")
 {
-    nr <- .row_names_info(x, 2L)
     nc <- length(x)
+    if(!nc) return(x) # 0 columns: evade problems, notably for nrow() > 0
+    nr <- .row_names_info(x, 2L)
     rval <- vector("list", nc)
     for(i in seq_len(nc))
 	rval[[i]] <- format(x[[i]], ..., justify = justify)
