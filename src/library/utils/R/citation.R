@@ -664,15 +664,21 @@ function(x, style = "text", .bibstyle = NULL,
         on.exit({tools::Rd2txt_options(saveopt); close(out)})
         sapply(.bibentry_expand_crossrefs(x),
                function(y) {
-                   rd <- tools::toRd(y, style = .bibstyle)
+                   txt <- tools::toRd(y, style = .bibstyle)
                    ## <FIXME>
                    ## Ensure a closing </p> via a final empty line for
                    ## now (PR #15692).
-                   if(style == "html") rd <- paste(rd, "\n")
+                   if(style == "html") txt <- paste(txt, "\n")
                    ## </FIXME>
-                   con <- textConnection(rd)
+                   con <- textConnection(txt)
                    on.exit(close(con))
-                   f(con, fragment = TRUE, out = out, permissive = TRUE, ...)
+                   rd <- tools::parse_Rd(con,
+                                         fragment = TRUE,
+                                         permissive = TRUE)
+                   rd <- tools:::processRdSexprs(rd,
+                                                 "render",
+                                                 macros = attr(rd, "macros"))
+                   f(rd, fragment = TRUE, out = out, ...)
                    paste(readLines(out), collapse = "\n")
                })
     }
