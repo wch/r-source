@@ -6275,19 +6275,23 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
         if(is.na(enc)) enc <- "ASCII"
         else def_enc <- TRUE
     } else enc <- "ASCII"
+    macros <- file.path(R.home("share"), "Rd", "macros", "system.Rd")
+    macros <- loadPkgRdMacros(dir, macros)
     owd <- setwd(file.path(dir, "man"))
     on.exit(setwd(owd))
     pg <- c(Sys.glob("*.Rd"), Sys.glob("*.rd"),
             Sys.glob(file.path("*", "*.Rd")),
             Sys.glob(file.path("*", "*.rd")))
+    pg <- pg[basename(dirname(pg)) != "macros"]
     ## (Note that using character classes as in '*.[Rr]d' is not
     ## guaranteed to be portable.)
     bad <- character()
     for (f in pg) {
         ## Kludge for now
-        if(basename(f) %in%  c("iconv.Rd", "showNonASCII.Rd")) def_enc <- TRUE
+        if(basename(f) %in% c("iconv.Rd", "showNonASCII.Rd")) def_enc <- TRUE
 	tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
-						 def_enc = def_enc)),
+						 def_enc = def_enc,
+                                                 macros = macros)),
 			error = function(e)e)
 	if(inherits(tmp, "error")) {
 	    bad <- c(bad, f)
