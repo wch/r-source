@@ -381,7 +381,8 @@ function(mirrors, db = NULL)
                 collapse = ",\n    ")
     head <- c(paste("To:", to),
               "CC: CRAN@R-project.org",
-              "Subject: CRAN mirrors maintained by you")
+              "Subject: CRAN mirrors maintained by you",
+              "Reply-To: CRAN@R-project.org")
     len <- length(addresses)
     body <- c(if(len > 1L) {
                   "Dear maintainers,"
@@ -556,7 +557,8 @@ function(packages, db = NULL)
     to <- paste(sort(unique(addresses)), collapse = ",\n    ")
     head <- c(paste("To:", to),
               "CC: CRAN@R-project.org",
-              "Subject: CRAN packages maintained by you")
+              "Subject: CRAN packages maintained by you",
+              "Reply-To: CRAN@R-project.org")
     lst <- split(db[ind, "Package"], db[ind, "Maintainer"])
     len <- length(addresses)
     body <- c(if(len > 1L) {
