@@ -367,6 +367,10 @@
 
       \item (Windows only) Shortcuts for printing and saving have
       been added to menus in \command{Rgui.exe}.  (Request of \PR{16572}.)
+
+      \item \code{loess(..., iterTrace=TRUE)} now provides diagnostics
+      for robustness iterations, and the \code{print()} method for
+      \code{summary(<loess>)} shows slightly more.
     }
   }
 
@@ -499,6 +503,9 @@
 
       \item \code{var()} and hence \code{sd()} warn about
       \code{factor} arguments which are deprecated now. (\PR{16564})
+
+      \item \code{loess(*, weights = *)} stored wrong weights and hence
+      gave slightly wrong predictions for \code{newdata}.  (\PR{16587})
     }
   }
 }

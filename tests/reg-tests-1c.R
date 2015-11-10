@@ -1054,3 +1054,29 @@ tools::assertError(cov(1:6, f <- gl(2,3)))# was ok already
 tools::assertWarning(var(f))
 tools::assertWarning( sd(f))
 ## var() "worked" in R <= 3.2.2  using the underlying integer codes
+
+
+## loess(*, .. weights) - PR#16587
+d.loess <-
+    do.call(expand.grid,
+            c(formals(loess.control)[1:3],
+              list(iterations = c(1, 10),
+                   KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)))
+d.loess $ iterTrace <- (d.loess$ iterations > 1)
+## apply(d.loes, 1L, ...) would coerce everything to atomic, i.e, "character":
+loess.c.list <- lapply(1:nrow(d.loess), function(i)
+    do.call(loess.control, as.list(d.loess[i,])))
+set.seed(123)
+for(n in 1:6) { if(n %% 10 == 0) cat(n,"\n")
+    wt <- runif(nrow(cars))
+    for(ctrl in loess.c.list) {
+        cars.wt <- loess(dist ~ speed, data = cars, weights = wt,
+                         family = if(ctrl$iterations > 1) "symmetric" else "gaussian",
+                         control = ctrl)
+        cPr  <- predict(cars.wt)
+        cPrN <- predict(cars.wt, newdata=cars)
+        stopifnot(all.equal(cPr, cPrN, check.attributes = FALSE, tol=1e-14))
+    }
+}
+## gave (typically slightly) wrong predictions in R <= 3.2.2
+

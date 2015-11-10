@@ -1799,19 +1799,16 @@ c     partial sort to find 6*mad
       double precision y(n),yhat(n),pwgts(n),rwgts(n),ytilde(n)
 c Var
       double precision c,i1,i4,mad
-      integer identi,i2,i3,i5,m
+      integer i2,i3,i,m
 
       external ehg106
       integer ifloor
       external ifloor
-c     Identity -> identi
-c     median absolute deviation
-      do 3 i5=1,n
-         ytilde(i5)=dabs(y(i5)-yhat(i5))*dsqrt(pwgts(i5))
+c     median absolute deviation (using partial sort):
+      do 3 i=1,n
+         ytilde(i)=dabs(y(i)-yhat(i))*dsqrt(pwgts(i))
+         pi(i) = i
     3 continue
-      do 4 identi=1,n
-         pi(identi)=identi
-    4 continue
       m=ifloor(dble(n)/2.d0)+1
       call ehg106(1,n,m,1,ytilde,pi,n)
       if((n-m)+1.lt.m)then
@@ -1822,11 +1819,11 @@ c     median absolute deviation
       end if
 c     magic constant
       c=(6*mad)**2/5
-      do 5 i5=1,n
-         ytilde(i5)=1-((y(i5)-yhat(i5))**2*pwgts(i5))/c
+      do 5 i=1,n
+         ytilde(i)= 1 - ((y(i)-yhat(i))**2 * pwgts(i))/c
     5 continue
-      do 6 i5=1,n
-         ytilde(i5)=ytilde(i5)*dsqrt(rwgts(i5))
+      do 6 i=1,n
+         ytilde(i)=ytilde(i)*dsqrt(rwgts(i))
     6 continue
       if(n.le.0)then
          i4=0.d0
@@ -1840,8 +1837,8 @@ c     magic constant
       end if
       c=n/i4
 c     pseudovalues
-      do 8 i5=1,n
-         ytilde(i5)=yhat(i5)+(c*rwgts(i5))*(y(i5)-yhat(i5))
+      do 8 i=1,n
+         ytilde(i)=yhat(i) + (c*rwgts(i))*(y(i)-yhat(i))
     8 continue
       return
       end

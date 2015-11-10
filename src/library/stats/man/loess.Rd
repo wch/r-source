@@ -1,6 +1,6 @@
 % File src/library/stats/man/loess.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loess}
@@ -47,13 +47,14 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   \item{normalize}{should the predictors be normalized to a common scale
     if there is more than one?  The normalization used is to set the
     10\% trimmed standard deviation to one.  Set to false for spatial
-    coordinate predictors and others know to be a common scale.}
+    coordinate predictors and others known to be on a common scale.}
   \item{family}{if \code{"gaussian"} fitting is by least-squares, and if
     \code{"symmetric"} a re-descending M estimator is used with Tukey's
     biweight function.  Can be abbreviated.}
   \item{method}{fit the model or just extract the model frame.  Can be abbreviated.}
   \item{control}{control parameters: see \code{\link{loess.control}}.}
-  \item{\dots}{control parameters can also be supplied directly.}
+  \item{\dots}{control parameters can also be supplied directly
+    (\emph{if} \code{control} is not specified).}
 }
 \description{
   Fit a polynomial surface determined by one or more numerical
@@ -82,7 +83,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   speed.  See \code{\link{loess.control}} for details.
 }
 \value{
-  An object of class \code{"loess"}.
+  An object of class \code{"loess"}.% otherwise entirely unspecified (!)
 }
 \references{
   W. S. Cleveland, E. Grosse and W. M. Shyu (1992) Local regression
