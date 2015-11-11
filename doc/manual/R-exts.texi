@@ -1561,6 +1561,7 @@ You will very likely need to ensure that the same C compiler and
 compiler flags are used in the @file{configure} tests as when compiling
 @R{} or your package.  Under a Unix-alike, you can achieve this by
 including the following fragment early in @file{configure.ac}
+(@emph{before} calling @code{AC_PROG_CC})
 
 @example
 @group
@@ -1588,8 +1589,11 @@ LDFLAGS=`"$@{R_HOME@}/bin/R" CMD config LDFLAGS`
 
 @noindent
 and packages written with C++ need to pick up the details for the C++
-compiler and switch the current language to C++ by
+compiler and switch the current language to C++ by something like
 @example
+CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
+AC_PROG_CXX
 AC_LANG(C++)
 @end example
 
@@ -1625,9 +1629,8 @@ override the test for the FORTRAN linker flags.)
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
 @file{src/Makevars}, you do need a @command{cleanup} script to remove
-them.  Otherwise if the package has vignettes, @command{R CMD build}
-will ship the files that are created.  For example, package
-@CRANpkg{RODBC} has
+them.  Otherwise @command{R CMD build} may ship the files that are
+created.  For example, package @CRANpkg{RODBC} has
 
 @example
 #!/bin/sh
