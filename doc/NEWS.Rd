@@ -295,8 +295,8 @@
 
       \item \code{R_GE_version} has been increased to \code{11}.
 
-      \item New \code{R_orderVector1()}, as fast one-argument version of
-      \code{R_orderVector()}.
+      \item New API call \code{R_orderVector1()}, a faster
+      one-argument version of \code{R_orderVector()}.
     }
   }
 
@@ -306,9 +306,9 @@
       vector, and it returns \code{"TRUE"}/\code{"FALSE"} instead of
       \code{"T"}/\code{"F"} for logical vectors.
 
-      \item \code{.colSums()} etc (with an initial dot) first argument
-      is now named \code{x} rather than \code{X} (matching
-      \code{colSums()}): error messages are thereby corrected.
+      \item The first arguments of \code{.colSums()} etc (with an
+      initial dot) are now named \code{x} rather than \code{X} (matching
+      \code{colSums()}): thus error messages are corrected.
 
       \item A \code{coef()} method for class \code{"maov"} has been
       added to allow \code{vcov()} to work with multivariate
@@ -323,14 +323,15 @@
       rows via numerical indexing. (\PR{16570})
 
       \item \code{tail.matrix()} did not work for zero rows matrices,
-      and produced \code{"[1e+05,]"} row \dQuote{labels}.
+      and could produce row \dQuote{labels} such as \code{"[1e+05,]"}.
 
       \item Data frames with column name \code{"stringsAsFactors"} now
       format and print correctly.  (\PR{16580})
 
-      \item The X11 device froze on Red Hat Enterprise Linux 6. It now
-      waits for MapNotify events instead of Expose events, thanks to
-      Siteshwar Vashisht. (\PR{16497})
+      \item The \code{X11()} device sometimes froze on Red Hat
+      Enterprise Linux 6. It now waits for \code{MapNotify} events
+      instead of \code{Expose} events, thanks to Siteshwar
+      Vashisht. (\PR{16497})
     }
   }
 }

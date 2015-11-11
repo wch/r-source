@@ -1593,7 +1593,6 @@ compiler and switch the current language to C++ by something like
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
-AC_PROG_CXX
 AC_LANG(C++)
 @end example
 
