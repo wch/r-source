@@ -248,6 +248,18 @@
             .assignOverBinding(what, newFun, whereF, global)
         else
             assign(what, newFun, whereF)
+        if (length(pname) != 0) {
+            ## update the function also in "imports:" environments of already
+            ## loaded packages that import package pname
+
+            spname = sub("^namespace:", "", pname)
+                # catching error in case when spname is not a name of a namespace, but
+                # e.g. a reference class
+            ipkgs = tryCatch(getNamespaceUsers(spname), error=function(e){c()})
+            for(importingPkg in ipkgs) {
+              .updateInImportsEnv(what, newFun, importingPkg)
+            }
+        }
         if(length(grep("[^.]+[.][^.]+", what)) > 0) { #possible S3 method
             ## check for a registered version of the object
             S3MTableName <- ".__S3MethodsTable__."
@@ -540,6 +552,26 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
     }
     else {
         setMethod(what, signature, method, where = where)
+    }
+}
+
+.getImportsEnv <- function(pkg) {
+    iname = paste("imports:", pkg, sep="")
+    empty = emptyenv()
+    env = asNamespace(pkg)
+
+    while(!identical(env, empty)) {
+        if (identical(attr(env, "name"), iname))
+            return(env)
+        env = parent.env(env)
+    }
+    NULL
+}
+
+.updateInImportsEnv <- function(what, newFun, importingPkg) {
+    where = .getImportsEnv(importingPkg)
+    if (!is.null(where) && (what %in% names(where))) {
+        .assignOverBinding(what, newFun, where, FALSE)
     }
 }
 
