@@ -7342,10 +7342,10 @@ function(x, ...)
           "Package has a VignetteBuilder field but no prebuilt vignette index."
       },
       fmt(c(if(length(y <- x$missing_manual_rdb)) {
-                "Package has help file(s) containing build-stage \\Sexpr{} expresssons but no 'build/partial.rdb' file."
+                "Package has help file(s) containing build-stage \\Sexpr{} expressions but no 'build/partial.rdb' file."
             },
             if(length(y <- x$missing_manual_pdf)) {
-                "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
+                "Package has help file(s) containing install/render-stage \\Sexpr{} expressions but no prebuilt PDF manual."
             })),
       fmt(c(if(length(y <- x$dotjava)) {
                 "Package installs .java files."
