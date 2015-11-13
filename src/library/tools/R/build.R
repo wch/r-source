@@ -61,7 +61,7 @@ get_exclude_patterns <- function()
       "^inst/doc/00Index\\.dcf$",
       ## Autoconf
       "^config\\.(cache|log|status)$",
-      "^autom4te\\.cache$",
+      "(^|/)autom4te\\.cache$", # ncdf4 had this in subdirectory 'tools'
       ## Windows dependency files
       "^src/.*\\.d$", "^src/Makedeps$",
       ## IRIX, of some vintage
