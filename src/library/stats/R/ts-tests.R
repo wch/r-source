@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts-tests.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -56,12 +56,12 @@ PP.test <- function (x, lshort = TRUE)
     yt <- z[,1]
     yt1 <- z[,2]
     n <- length (yt)
-    tt <- (1L:n)-n/2
-    res <- lm (yt~1+tt+yt1)
+    u <- (1L:n)-n/2
+    res <- lm(yt ~ 1 + u + yt1)
     if (res$rank < 3)
         stop ("singularities in regression")
-    res.sum <- summary (res)
-    tstat <- (res.sum$coefficients[3,1]-1)/res.sum$coefficients[3,2]
+    cf <- coef(summary(res))
+    tstat <- (cf[3,1] - 1) / cf[3,2]
     u <- residuals (res)
     ssqru <- sum(u^2)/n
     l <- if (lshort) trunc(4*(n/100)^0.25) else trunc(12*(n/100)^0.25)
