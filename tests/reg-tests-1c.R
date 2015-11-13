@@ -1021,7 +1021,7 @@ for(mat in mat.l) {
 options(op)
 ## end{tail.matrix check} ------------------
 
-## format.data.frame() & as.data.frame.list() - PR#16544
+## format.data.frame() & as.data.frame.list() - PR#16580
 myL <- list(x=1:20, y=rnorm(20), stringsAsFactors = gl(4,5))
 names(myL)[1:2] <- lapply(1:2, function(i)
     paste(sample(letters, 300, replace=TRUE), collapse=""))
@@ -1047,6 +1047,20 @@ stopifnot(identical(names(myD), names(format(head(myD)))),
 	  identical(rbind.data.frame(2:1, 1:2), ## was wrong for some days
 		    data.frame(c.2L..1L. = c(2L, 1L), X1.2 = 1:2)))
 ## format.data.frame() did not show "stringsAsFactors" in R <= 3.2.2
+## Follow up: the new as.data.frame.list() must be careful with 'AsIs' columns:
+desc <- structure( c("a", NA, "z"), .Names = c("A", NA, "Z"))
+tools::assertError( data.frame(desc = desc, stringsAsFactors = FALSE) )
+## however
+dd <- data.frame(desc = structure(desc, class="AsIs"),
+                 row.names = c("A","M","Z"), stringsAsFactors = FALSE)
+## is "legal" (because "AsIs" can be 'almost anything')
+dd ## <- did not format nor print correctly in R-devel early Nov.2015
+fdesc <- structure(c("a", "NA", "z"), .Names=names(desc), class="AsIs")
+stopifnot(identical(format(dd),
+                    data.frame(desc = fdesc, row.names = c("A", "M", "Z"))),
+          identical(capture.output(dd),
+                    c("  desc", "A    a",
+                      "M <NA>", "Z    z")))
 
 
 ## var(x) and hence sd(x)  with factor x, PR#16564

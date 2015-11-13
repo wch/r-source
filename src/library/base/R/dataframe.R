@@ -188,19 +188,11 @@ as.data.frame.list <-
     if(any.m <- any(m)) col.names[m] <- paste0("..adfl.", col.names[m])
     if(new.nms || any.m || cut.names) names(x) <- col.names
     if(is.null(check.n <- list(...)$check.names)) check.n <- !optional
-    x <- do.call(data.frame, c(x, list(check.names = check.n,
-				       fix.empty.names = fix.empty.names,
-				       stringsAsFactors = stringsAsFactors)))
+    x <- do.call(data.frame,
+                 c(x, list(check.names = check.n, row.names = row.names,
+                           fix.empty.names = fix.empty.names,
+                           stringsAsFactors = stringsAsFactors)))
     if(any.m) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
-    if(!is.null(row.names)) {
-	# row.names <- as.character(row.names)
-	if(length(row.names) != dim(x)[[1L]])
-            stop(sprintf(ngettext(length(row.names),
-                                  "supplied %d row name for %d rows",
-                                  "supplied %d row names for %d rows"),
-                         length(row.names), dim(x)[[1L]]), domain = NA)
-	attr(x, "row.names") <- row.names
-    }
     x
 }
 
