@@ -12431,13 +12431,14 @@ More specifically, @code{indx <- order(x, y, na.last, decreasing)} corresponds t
 @code{R_orderVector(indx, n, Rf_lang2(x, y), nalast, decreasing)} and for
 three vectors, @code{Rf_lang3(x,y,z)} is used as @var{arglist}.
 
-When ordering only one vector, @code{R_orderVector1()} is faster and
-corresponds to @R{}'s @code{indx <- order(x, na.last, decreasing)}.
+Both @code{R_orderVector} and @code{R_orderVector1} assume the vector
+@code{indx} to be allocated to length @eqn{\ge n, >= n}.  On return,
+@code{indx[]} contains a permutation of @code{0:(n-1)}, i.e., 0-based C
+indices (and not 1-based @R{} indices, as @R{}'s @code{order()}).
 
-Note that both @code{R_orderVector*()} assume the vector @code{indx}
-to be allocated to length @eqn{\ge n, >= n}.  On return, @code{indx[]}
-contains a permutation of @code{0:(n-1)}, i.e., 0-based C indices (and not
-1-based @R{} indices, as @R{}'s @code{order()}).
+When ordering only one vector, @code{R_orderVector1} is faster and
+corresponds (but is 0-based) to @R{}'s @code{indx <- order(x, na.last,
+decreasing)}.  It was added in @R{} 3.3.0.
 @end deftypefun
 
 All other sort routines are declared in header file
