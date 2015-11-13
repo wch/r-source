@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-08-09
+@set FAQ_DATE @value{FAQ_YEAR}-11-07
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -686,7 +686,7 @@ obtained by @code{citation()}.
 @section What mailing lists exist for R?
 
 Thanks to @email{Martin.Maechler@@R-project.org, Martin Maechler}, there
-are four mailing lists devoted to R.
+are several mailing lists devoted to R, including the following:
 
 @table @code
 @item R-announce
@@ -707,6 +707,9 @@ This list is for questions and discussion about code development in R.
 @c discussions about the future of R, proposals of new functionality, and
 @c pre-testing of new versions.  It is meant for those who maintain an
 @c active position in the development of R.
+@item R-package-devel
+A list which which provides a forum for learning about the R package
+development process.
 @end table
 
 @noindent
