@@ -327,10 +327,7 @@ selectMethod("!", "foo")
 xx <- new("foo", FALSE)
 !xx
 
-## This failed for about one day -- as.vector(x, mode) :
-setMethod("as.vector", signature(x = "foo", mode = "missing"),
-          function(x) unclass(x))
-## whereas this fails in R versions earlier than 2.6.0:
+## This fails in R versions earlier than 2.6.0:
 setMethod("as.vector", "foo", function(x) unclass(x))
 stopifnot(removeClass("foo"))
 
@@ -607,6 +604,7 @@ a <- new("A", aa=aa)
 setMethod(length, "A", function(x) length(x@aa))
 setMethod(`[[`,   "A", function(x, i, j, ...) x@aa[[i]])
 setMethod(`[`,    "A", function(x, i, j, ...) new("A", aa = x@aa[i]))
+setMethod("is.na","A", function(x) is.na(x@aa))
 stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
           identical(a, rev(rev(a))), # using '['
 	  identical(mapply(`*`, aa, rep(1:3, 2)),
@@ -614,11 +612,6 @@ stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
 ## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
 ## because internal dispatch did not work for length().
 
-## is.unsorted() for formal classes - and R > 3.0.0 :
-## Fails, unfortunately (from C, base::.gtn() is called w/o dispatch)
-## setMethod("anyNA", "A", function(x) anyNA(x@aa))
-## setMethod(".gtn", "A", function(x,strictly) .gtn(x@aa, strictly))
-## but this now works (thanks to DispatchOrEval() ):
 setMethod("is.unsorted", "A", function(x, na.rm=FALSE, strictly=FALSE)
     is.unsorted(x@aa, na.rm=na.rm, strictly=strictly))
 

@@ -67,8 +67,7 @@ if(length(notS4))
 stopifnot(S4generic)
 
 # functions which are listed but not primitive
-extraS4 <- c('all', 'any', 'max', 'min', 'prod', 'range',
-             'round', 'signif', 'sum')
+extraS4 <- c('unlist', 'is.unsorted', 'as.vector')
 ff4[!ff4 %in% c(ff, extraS4)]
 stopifnot(ff4 %in% c(ff, extraS4))
 

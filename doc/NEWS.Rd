@@ -212,6 +212,10 @@
       recorded plot.  \code{replayPlot()} has new argument
       \code{reloadPkgs} to load/attach any package names that were
       stored as part of a recorded plot.
+
+      \item S4 dispatch works within calls to \code{.Internal()}. This means
+      explicit S4 generics are no longer needed for \code{unlist},
+      \code{is.unsorted} and \code{as.vector}.
     }
   }
 

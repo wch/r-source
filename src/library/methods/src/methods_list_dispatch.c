@@ -506,9 +506,13 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
     switch(TYPEOF(f)) {
     case CLOSXP:
 	{
-	    SEXP R_execMethod(SEXP, SEXP);
-	    PROTECT(f); nprotect++; /* is this needed?? */
-	    val = R_execMethod(f, ev);
+	    if (inherits(f, "internalDispatchMethod")) {
+                val = R_deferred_default_method();
+            } else {
+                SEXP R_execMethod(SEXP, SEXP);
+                PROTECT(f); nprotect++; /* is this needed?? */
+                val = R_execMethod(f, ev);
+            }
 	}
 	break;
     case SPECIALSXP: case BUILTINSXP:
@@ -1035,9 +1039,13 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     switch(TYPEOF(f)) {
     case CLOSXP:
     {
-	SEXP R_execMethod(SEXP, SEXP);
-	PROTECT(f); nprotect++; /* is this needed?? */
-	val = R_execMethod(f, ev);
+        if (inherits(f, "internalDispatchMethod")) {
+            val = R_deferred_default_method();
+        } else {
+            SEXP R_execMethod(SEXP, SEXP);
+            PROTECT(f); nprotect++; /* is this needed?? */
+            val = R_execMethod(f, ev);
+        }
     }
     break;
     case SPECIALSXP: case BUILTINSXP:

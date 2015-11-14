@@ -55,6 +55,9 @@
              where = envir); clList <- c(clList, "MethodDefinition")
     ## class for default methods made from ordinary functions
     setClass("derivedDefaultMethod", "MethodDefinition")
+    ## class for methods that call and dispatch inside .Internal()
+    setClass("internalDispatchMethod", contains = "derivedDefaultMethod",
+             representation(internal = "character"))
     ## class for methods with precomputed information for callNextMethod
     setClass("MethodWithNext",
              representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), where = envir); clList <- c(clList, "MethodWithNext")

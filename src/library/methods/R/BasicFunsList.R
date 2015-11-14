@@ -76,15 +76,15 @@ list(
 ## functions.
 
 .addBasicGeneric <-
-    function(funslist, f, fdef, group = list())
+    function(funslist, f, fdef, group = list(), internal = FALSE)
 {
-    signature <- attr(fdef, "signature") #typically NULL, but see the case for "$"
     deflt <- get(f, "package:base")
     ## use the arguments of the base package function
     ##FIXME:  should also deal with the functions having ... as the first
     ## argument, but needs to create a generic with different args from the deflt
     ## => constructing a call to the base function from the default
     if(is.primitive(deflt)) {
+        signature <- attr(fdef, "signature") #typically NULL, but see the case for "$"
         body(fdef, envir = globalenv()) <-
             substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
     }
@@ -93,7 +93,10 @@ list(
         body(fdef, envir = globalenv()) <-
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
-    deflt <- .derivedDefaultMethod(deflt)
+    deflt <- .derivedDefaultMethod(deflt, internal = if (internal) f)
+    if (internal) {
+        signature <- names(formals(deflt))[1L]
+    }
     elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base",
                                         signature = signature)
     funslist
@@ -121,8 +124,20 @@ list(
 
 ## temporary versions while primitives are still handled by a global table
 
-genericForPrimitive <- function(f, where = topenv(parent.frame()),
-                                mustFind = TRUE)
+isBaseFun <- function(fun) {
+    is.primitive(fun) || identical(environment(fun), baseenv())
+}
+
+inBasicFuns <- function(f) {
+    !is.null(.BasicFunsList[[f]])
+}
+
+dispatchIsInternal <- function(fdef) {
+    is.primitive(fdef@default) || is(fdef@default, "internalDispatchMethod")
+}
+
+genericForBasic <- function(f, where = topenv(parent.frame()),
+                            mustFind = TRUE)
 {
     ans <- .BasicFunsList[[f]]
     ## this element may not exist (yet, during loading), don't test null

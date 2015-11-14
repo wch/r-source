@@ -179,7 +179,6 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ScalarLogical(isUnsorted(x, strictly));
     }
     if(isObject(x)) {
-	// try dispatch -- fails entirely for S4: need "DispatchOrEval()" ?
 	SEXP call;
 	PROTECT(call = 	// R>  .gtn(x, strictly) :
 		lang3(install(".gtn"), x, CADR(args)));

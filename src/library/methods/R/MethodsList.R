@@ -349,7 +349,7 @@ MethodsListSelect <-
                 if(is.null(value)) resetMlist <- mlist else resetMlist <- value
             }
             .setMethodsForDispatch(f, fdef, resetMlist)
-            if(is.primitive(finalDefault))
+            if(dispatchIsInternal(fdef))
                 setPrimitiveMethods(f, finalDefault, "set", fdef, resetMlist)
         }
 
@@ -860,7 +860,7 @@ listFromMlist <-
 ## The real version requires several class definitions as well as
 ## methods for as<-
 asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FALSE, fdef = def) {
-  if(is.primitive(def))
+  if(is.primitive(def) || is(def, "MethodDefinition"))
     def
   else {
     value = new("MethodDefinition")

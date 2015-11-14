@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2015-11-11 r69620) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-11-13 r69635) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -556,12 +556,7 @@ defined "foo"
 An object of class "foo"
 [1] NA
 > 
-> ## This failed for about one day -- as.vector(x, mode) :
-> setMethod("as.vector", signature(x = "foo", mode = "missing"),
-+           function(x) unclass(x))
-Creating a generic function for 'as.vector' from package 'base' in the global environment
-[1] "as.vector"
-> ## whereas this fails in R versions earlier than 2.6.0:
+> ## This fails in R versions earlier than 2.6.0:
 > setMethod("as.vector", "foo", function(x) unclass(x))
 [1] "as.vector"
 > stopifnot(removeClass("foo"))
@@ -891,6 +886,8 @@ Creating a new generic function for 'qqplot' in the global environment
 [1] "[["
 > setMethod(`[`,    "A", function(x, i, j, ...) new("A", aa = x@aa[i]))
 [1] "["
+> setMethod("is.na","A", function(x) is.na(x@aa))
+[1] "is.na"
 > stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
 +           identical(a, rev(rev(a))), # using '['
 + 	  identical(mapply(`*`, aa, rep(1:3, 2)),
@@ -898,14 +895,8 @@ Creating a new generic function for 'qqplot' in the global environment
 > ## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
 > ## because internal dispatch did not work for length().
 > 
-> ## is.unsorted() for formal classes - and R > 3.0.0 :
-> ## Fails, unfortunately (from C, base::.gtn() is called w/o dispatch)
-> ## setMethod("anyNA", "A", function(x) anyNA(x@aa))
-> ## setMethod(".gtn", "A", function(x,strictly) .gtn(x@aa, strictly))
-> ## but this now works (thanks to DispatchOrEval() ):
 > setMethod("is.unsorted", "A", function(x, na.rm=FALSE, strictly=FALSE)
 +     is.unsorted(x@aa, na.rm=na.rm, strictly=strictly))
-Creating a generic function for 'is.unsorted' from package 'base' in the global environment
 [1] "is.unsorted"
 > 
 > stopifnot(!is.unsorted(a), # 11:16 *is* sorted

@@ -47,8 +47,11 @@
             stop(gettextf("must supply either a generic function or a function as default for %s",
                           sQuote(f)),
                  domain = NA)
-        else if(is.primitive(fdefault)) {
-            return(genericForPrimitive(f))
+        else if(isBaseFun(fdefault)) {
+            fun <- genericForBasic(f)
+            if (is.function(fun)) {
+                return(fun)
+            }
         }
         fdef <- fdefault
         body(fdef) <- substitute(standardGeneric(NAME), list(NAME = f))
@@ -206,7 +209,7 @@ makeStandardGeneric <-
     if(typeof(fdef) != "closure") {
         ## Look in a list of pre-defined functions (and also of
         ## functions for which methods are prohibited)
-        fgen <- genericForPrimitive(f)
+        fgen <- genericForBasic(f)
         message(gettextf("making a generic for special function %s",
                          sQuote(f)),
                 domain = NA)
@@ -436,7 +439,7 @@ getGeneric <-
         if(is(f, "genericFunction"))
             return(f)
         else if(is.primitive(f))
-            return(genericForPrimitive(.primname(f), mustFind=mustFind))
+            return(genericForBasic(.primname(f), mustFind=mustFind))
         else
             stop("argument 'f' must be a string, generic function, or primitive: got an ordinary function")
     }
@@ -444,12 +447,8 @@ getGeneric <-
 		  .getGeneric(f,      , package)
 	     else .getGeneric(f, where, package)
     if(is.null(value) && !is.null(baseDef <- baseenv()[[f]])) {
-        ## check for primitives
-        if(is.primitive(baseDef)) {
-            value <- genericForPrimitive(f)
-            if(!is.function(value) && mustFind)
-                stop(gettextf("methods cannot be defined for the primitive function %s",
-                              sQuote(f)), domain = NA)
+        if(is.function(baseDef)) {
+            value <- genericForBasic(f, mustFind=FALSE)
             if(is(value, "genericFunction"))
                 value <- .cacheGeneric(f, value)
         }
@@ -632,7 +631,7 @@ getGeneric <-
         fdef <- getFunction(name, TRUE, FALSE, penv)
         if(!is(fdef, "genericFunction")) {
             if(is.primitive(fdef))
-                fdef <- genericForPrimitive(name, penv)
+                fdef <- genericForBasic(name, penv)
             else
                 fdef <- implicitGeneric(name, penv)
         }
@@ -717,7 +716,7 @@ assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
   ## as of R 2.7.0 the mlist metadata is deprecated.
   ## If value is not a MethodsList,  only turns on primitives & groups
-  function(f, value, fdef, where, deflt)
+  function(f, value, fdef, where)
 {
     where <- as.environment(where)
     if(is(value, "MethodsList")) {
@@ -729,8 +728,8 @@ assignMethodsMetaData <-
         else
           assign(mname, value, where)
     }
-    if(is.primitive(deflt))
-        setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
+    if(dispatchIsInternal(fdef))
+        setPrimitiveMethods(f, fdef@default, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
         cacheGenericsMetaData(f, fdef, where = where, package = fdef@package)
 }
@@ -890,7 +889,7 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE,
 ### Assertion: methods argument unused except for primitives
 ### and then only for the old non-table case.
     deflt <- finalDefaultMethod(fdef@default) #only to detect primitives
-    if(is.primitive(deflt)) {
+    if(dispatchIsInternal(fdef)) {
 	if(missing(methods)) ## "reset"
 	    setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
 	else ## "set"
@@ -1368,10 +1367,14 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
 }
 
 ## Mark the method as derived from a non-generic.
-.derivedDefaultMethod <- function(fdef)
+.derivedDefaultMethod <- function(fdef, internal = NULL)
 {
     if(is.function(fdef) && !is.primitive(fdef)) {
-        value <- new("derivedDefaultMethod")
+        if (!is.null(internal)) {
+            value <- new("internalDispatchMethod", internal = internal)
+        } else {
+            value <- new("derivedDefaultMethod")
+        }
         value@.Data <- fdef
         value@target <- value@defined <- .newSignature(.anyClassName, formalArgs(fdef))
         value

@@ -158,6 +158,10 @@ utils::globalVariables(".addBasicGeneric")
     setGroupGeneric(where=where,"Complex", function(z)NULL,
 		    knownMembers = members, package = "base")
 
+    funs <- .addBasicGeneric(funs, "unlist", internal=TRUE)
+    funs <- .addBasicGeneric(funs, "is.unsorted", internal=TRUE)
+    funs <- .addBasicGeneric(funs, "as.vector", internal=TRUE)
+    
     assign(".BasicFunsList", funs, envir=where)
     rm(.addBasicGeneric, envir=where)
 }

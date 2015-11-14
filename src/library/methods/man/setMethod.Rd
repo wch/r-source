@@ -18,7 +18,9 @@ setMethod(f, signature=character(), definition,
 removeMethod(f, signature, where)
 }
 \arguments{
-  \item{f}{ A generic function or the character-string name of the function. }
+  \item{f}{ A generic function or the character-string name of the
+  function. Non-primitive base functions that dispatch internally need
+  to be specified by character-string.}
   \item{signature}{ A match of formal argument names for \code{f} with
     the character-string names of corresponding classes.  See the
     details below; however, if the signature is not trivial, you should use \code{\link{method.skeleton}} to generate a valid call to \code{setMethod}.}

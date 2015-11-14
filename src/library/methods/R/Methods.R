@@ -41,8 +41,7 @@ setGeneric <-
     if(is.character(.isSingleName(name)))
         stop(gettextf("invalid argument 'name': %s",
                       .isSingleName(name)), domain = NA)
-    if(exists(name, "package:base") &&
-       is.primitive(get(name, "package:base"))) { # primitives
+    if(exists(name, "package:base") && inBasicFuns(name)) {
 
         name <- switch(name, "as.double" = "as.numeric", name)
         fdef <- getGeneric(name) # will fail if this can't have methods
@@ -220,7 +219,7 @@ setGeneric <-
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
     methods <- fdef@default # empty or containing the default
-    assignMethodsMetaData(name, methods, fdef, where, finalDefaultMethod(fdef@default))
+    assignMethodsMetaData(name, methods, fdef, where)
     .assignMethodsTableMetaData(name, fdef, where)
     name
 }
@@ -272,11 +271,11 @@ isGeneric <-
     if(is.null(fdef))
       return(FALSE)
     ## check primitives. These are never found as explicit generic functions.
-    if(is.primitive(fdef)) {
+    if(isBaseFun(fdef)) {
         if(is.character(f) && f %in% "as.double") f <- "as.numeric"
-        ## the definition of isGeneric() for a primitive is that methods are defined
+        ## the definition of isGeneric() for a base function is that methods are defined
         ## (other than the default primitive)
-        gen <- genericForPrimitive(f, mustFind = FALSE)
+        gen <- genericForBasic(f, mustFind = FALSE)
         return(is.function(gen) && length(names(.getMethodsTable(gen))) > 1L)
     }
     if(!is(fdef, "genericFunction"))
@@ -442,7 +441,7 @@ setMethod <-
     else if(is.function(f)) {
         if(is.primitive(f)) {
             f <- .primname(f)
-            fdef <- genericForPrimitive(f)
+            fdef <- genericForBasic(f)
             gwhere <- .genEnv(f)
         }
         else
@@ -607,7 +606,7 @@ setMethod <-
     }
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members
-    assignMethodsMetaData(f, whereMethods, fdef, where, deflt)
+    assignMethodsMetaData(f, whereMethods, fdef, where)
     f
 }
 
@@ -616,7 +615,7 @@ removeMethod <- function(f, signature = character(), where = topenv(parent.frame
       if(is(f, "genericFunction"))
          { fdef <- f; f <- f@generic}
       else if(is.primitive(f))
-        { f <- .primname(f); fdef <- genericForPrimitive(f, mustFind=FALSE)}
+        { f <- .primname(f); fdef <- genericForBasic(f, mustFind=FALSE)}
       else
         stop("function supplied as argument 'f' must be a generic")
     }
@@ -1261,7 +1260,7 @@ getGenericFromCall <- function(call, methodEnv) {
         fdef <- if (is.name(call[[1L]]))
             get(as.character(call[[1L]]), envir = methodEnv)
         else call[[1L]]
-        if (is.primitive(fdef)) {
+        if (isBaseFun(fdef)) {
             fdef <- getGeneric(fdef, mustFind=TRUE)
         }
         generic <- environment(fdef)$.Generic
@@ -1389,13 +1388,15 @@ implicitGeneric <- function(...) NULL
             return(NULL)  # no implicit generic
           env <- environment(fdefault) # the environment for an implicit generic table
           fdefault <- .derivedDefaultMethod(fdefault)
-          if(is.primitive(fdefault)) {
-              value <- genericForPrimitive(name)
-              if(!missing(generic) && !identical(value, generic))
-                  stop(gettextf("%s is a primitive function; its generic form cannot be redefined",
-                                sQuote(name)),
-                       domain = NA)
-              generic <- value
+          if(isBaseFun(fdefault)) {
+              value <- genericForBasic(name)
+              if (is.function(value)) {
+                  if(!missing(generic) && !identical(value, generic))
+                      stop(gettextf("%s is a primitive function; its generic form cannot be redefined",
+                                    sQuote(name)),
+                           domain = NA)
+                  generic <- value
+              }
               package <- "base"
           }
           else

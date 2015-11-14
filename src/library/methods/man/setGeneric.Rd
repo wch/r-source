@@ -157,6 +157,10 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   others cannot be made generic.  See the section on Primitive Functions
   below.
 
+  It is also unnecessary to create explicit generic versions of
+  non-primitive functions that dispatch internally. These include
+  \code{unlist}, \code{is.unsorted} and \code{as.vector}.
+
   The description above is the effect when the package that owns the
   non-generic function has not created an implicit generic version.
   Otherwise, it is this implicit generic function that is used. See the
