@@ -9,7 +9,7 @@
   Extract or List Tar Archives
 }
 \description{
-  Extract files from or list a tar archive.
+  Extract files from or list the contents of a tar archive.
 }
 \usage{
 untar(tarfile, files = NULL, list = FALSE, exdir = ".",
@@ -36,8 +36,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     may be abbreviated to the first letter).  \code{TRUE} indicates gzip
     compression, \code{FALSE} no known compression (but an external
     \command{tar} command may detect compression automagically), and
-    \code{NA} (the default) that the type is inferred from the file
-    header.}
+    \code{NA} (the default) indicates that the type is inferred from the
+    file header.}
 
   \item{extras}{\code{NULL} or a character string: further command-line
     flags such as \option{-p} to be passed to an external \command{tar}
@@ -47,9 +47,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   \item{restore_times}{logical.  If true (default) restore file
     modification times.  If false, the equivalent of the \option{-m}
-    flag.  Times in tarballs are supposed to be in UTC, but tarballs are
-    submitted to CRAN with times in the future or far past: this
-    argument allows such times to be discarded.}
+    flag.  Times in tarballs are supposed to be in UTC, but tarballs
+    have been submitted to CRAN with times in the future or far past:
+    this argument allows such times to be discarded.}
 
   \item{tar}{character string: the path to the command to be used.  If
     the command itself contains spaces it needs to be quoted -- but
@@ -102,21 +102,21 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   handles it, and look carefully at the resulting files.  There may also
   be the warning \preformatted{    using pax extended headers}
   This is indicates that additional information may have been discarded,
-  such as ACLs, encodings \dots, and long path and link names are only
-  used as from \R 2.15.3.
+  such as ACLs, encodings \dots.
 
   The standards only support ASCII filenames (indeed, only alphanumeric
-  plus period, underscore and hyphen).  \code{untar} makes no attempt to map
-  filenames to those acceptable on the current system, and treats the
-  filenames in the archive as applicable without any re-encoding in the
-  current locale.
+  plus period, underscore and hyphen).  \code{untar} makes no attempt to
+  map filenames to those acceptable on the current system, and treats
+  the filenames in the archive as applicable without any re-encoding in
+  the current locale.
 }
 
 \value{
   If \code{list = TRUE}, a character vector of (relative or absolute)
   paths of files contained in the tar archive.
 
-  Otherwise the return code from \code{\link{system}}, invisibly.
+  Otherwise the return code from \code{\link{system}} with an external
+  \command{tar} or \code{0L}, invisibly.
 }
 
 \seealso{

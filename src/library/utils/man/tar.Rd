@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -55,12 +55,15 @@ tar(tarfile, files = NULL,
   similar) and on Windows \option{--force-local} (so drives can be
   included in filepaths: however, this is the default for the
   \command{Rtools} \command{tar}).  For GNU \command{tar},
-  \option{--format=ustar} forces a more portable format (the current
-  default in version 1.26 is \option{--format=gnu}, but the manual says
-  the intention is to change to \option{--format=pax} which GNU
-  incorrectly calls \sQuote{POSIX} -- it was never part of the POSIX
-  standard for \command{tar}).  For libarchive \command{tar},
-  \option{--format=ustar} is more portable than the default.
+  \option{--format=ustar} forces a more portable format. (The default is
+  set at compilation and will be shown at the end of the output from
+  \command{tar --help}: for version 1.28 \sQuote{out-of-the-box} it is 
+  \option{--format=gnu}, but the manual says the intention is to change
+  to \option{--format=pax} which GNU incorrectly calls \sQuote{POSIX} --
+  it was never part of the POSIX standard for \command{tar} and should
+  not be used.)
+  For libarchive's \command{bsdtar}, \option{--format=ustar} is more
+  portable than the default.
 }
 
 \value{
@@ -72,11 +75,12 @@ tar(tarfile, files = NULL,
   The \sQuote{tar} format no longer has an agreed standard!
   \sQuote{Unix Standard Tar} was part of POSIX 1003.1:1998 but has been
   removed in favour of \command{pax}, and in any case many common
-  implementations diverged from the former standard.  Most \R platforms
+  implementations diverged from the former standard.  Many \R platforms
   use a version of GNU \command{tar} (including \command{Rtools} on
-  Windows, but the behaviour seems to be changed with each version), Mac
-  OS >= 10.6 and FreeBSD use \command{bsdttar} from the \sQuote{libarchive}
-  project, and commercial Unixes will have their own versions.
+  Windows), but the behaviour seems to be changed with each version.  OS
+  X >= 10.6 and FreeBSD use \command{bsdttar} from the
+  \sQuote{libarchive} project, and commercial Unixes will have their own
+  versions.
 
   Known problems arise from
   \itemize{
@@ -84,12 +88,13 @@ tar(tarfile, files = NULL,
     unsupported in early versions of \command{tar}, and supported in one
     way by POSIX \command{tar} and in another by GNU \command{tar} and
     yet another by the POSIX \command{pax} command which
-    recent\command{tar} programs often support.  The internal
+    recent \command{tar} programs often support.  The internal
     implementation warns on paths of more than 100 bytes,
     uses the \sQuote{ustar} way from the 1998 POSIX
     standard which supports up to 256 bytes (depending on the path: in
     particular the final component is limited to 100 bytes) if possible,
-    or the GNU way (which is widely supported).
+    otherwise the GNU way (which is widely supported, including by
+    \code{\link{untar}}).
 
     Most formats do not record the encoding of file paths.
 
@@ -100,12 +105,11 @@ tar(tarfile, files = NULL,
     symbolic links was added.  The internal implementation supports
     symbolic links (on OSes that support them), only.  Of course, the
     question arises as to how links should be unpacked on OSes that do
-    not support them: for regular files, at least, file copies can be
-    used.
+    not support them: for regular files file copies can be used.
 
     Names of links in the \sQuote{ustar} format are restricted to 100
     bytes.  There is an GNU extension for arbitrarily long link names,
-    but \command{bsdtar} does not read.  The internal method uses the
+    but \command{bsdtar} ignores it.  The internal method uses the
     GNU extension, with a warning.
 
     \item Header fields, in particular the padding to be used when
