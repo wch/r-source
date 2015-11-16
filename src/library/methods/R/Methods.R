@@ -53,7 +53,7 @@ setGeneric <-
         ## you can only conflict with a primitive if you supply
         ## useAsDefault to signal you really mean a different function
         if(!is.function(useAsDefault) && !identical(useAsDefault, FALSE)) {
-            msg <- gettextf("%s is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", sQuote(name))
+            msg <- gettextf("%s dispatches internally;  methods can be defined, but the generic function is implicit, and cannot be changed.", sQuote(name))
             stop(msg, domain = NA)
         }
     }
