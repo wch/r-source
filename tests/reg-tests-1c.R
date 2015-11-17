@@ -1094,3 +1094,15 @@ for(n in 1:6) { if(n %% 10 == 0) cat(n,"\n")
 }
 ## gave (typically slightly) wrong predictions in R <= 3.2.2
 
+
+## aperm() for named dim()s:
+na <- list(A=LETTERS[1:2], B=letters[1:3], C=LETTERS[21:25], D=letters[11:17])
+da <- lengths(na)
+A <- array(1:210, dim=da, dimnames=na)
+aA <- aperm(A)
+a2 <- aperm(A, (pp <- c(3:1,4)))
+stopifnot(identical(     dim(aA), rev(da)),# including names(.)
+	  identical(dimnames(aA), rev(na)),
+	  identical(     dim(a2), da[pp]), # including names(.)
+	  identical(dimnames(a2), na[pp]))
+## dim(aperm(..)) did lose names() in R <= 3.2.2
