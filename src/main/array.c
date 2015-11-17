@@ -1319,10 +1319,21 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* handle the resize */
     int resize = asLogical(CADDR(args));
     if (resize == NA_LOGICAL) error(_("'resize' must be TRUE or FALSE"));
-    setAttrib(r, R_DimSymbol, resize ? dimsr : dimsa);
 
-    /* and handle the dimnames, if any */
+    /* and handle names(dim(.)) and the dimnames if any */
     if (resize) {
+	SEXP nmdm = getAttrib(dimsa, R_NamesSymbol);
+	if(nmdm != R_NilValue) { // dimsr needs correctly permuted names()
+	    PROTECT(nmdm);
+	    SEXP nm_dr = PROTECT(allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		SET_STRING_ELT(nm_dr, i, STRING_ELT(nmdm, pp[i]));
+	    }
+	    setAttrib(dimsr, R_NamesSymbol, nm_dr);
+	    UNPROTECT(2);
+	}
+	setAttrib(r, R_DimSymbol, dimsr);
+
 	PROTECT(dna = getAttrib(a, R_DimNamesSymbol));
 	if (dna != R_NilValue) {
 	    SEXP dnna, dnr, dnnr;
@@ -1346,6 +1357,8 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	UNPROTECT(1);
     }
+    else // !resize
+	setAttrib(r, R_DimSymbol, dimsa);
 
     UNPROTECT(3); /* dimsa, r, dimsr */
     return r;
