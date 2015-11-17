@@ -45,7 +45,9 @@ setGeneric <-
 
         name <- switch(name, "as.double" = "as.numeric", name)
         fdef <- getGeneric(name) # will fail if this can't have methods
-        if(nargs() <= 1) {
+        compatibleSignature <- nargs() == 2L && !missing(signature) &&
+            identical(signature, fdef@signature)
+        if(nargs() <= 1 || compatibleSignature) {
             ## generics for primitives are global, so can & must always be cached
             .cacheGeneric(name, fdef)
             return(name)
