@@ -78,12 +78,12 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
     }
     if(degree < 1)
         stop("'degree' must be at least 1")
-    if(anyNA(x)) stop("missing values are not allowed in 'poly'")
     if(raw) {
         Z <- outer(x, 1L:degree, "^")
         colnames(Z) <- 1L:degree
     } else {
 	if(is.null(coefs)) { # fitting
+	    if(anyNA(x)) stop("missing values are not allowed in 'poly'")
 	    if(degree >= length(unique(x)))
 		stop("'degree' must be less than number of unique points")
 	    xbar <- mean(x)
@@ -113,11 +113,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
         if(!simple) ## we may want to use the prediction to clone another prediction
             attr(Z, "coefs") <- list(alpha = alpha, norm2 = norm2)
     }
-    if(!simple) {
-        attr(Z, "degree") <- 1L:degree
-        class(Z) <- c("poly", "matrix")
-    }
-    Z
+    if(simple) Z else structure(Z, degree = 1L:degree, class = c("poly", "matrix"))
 }
 
 predict.poly <- function(object, newdata, ...)
