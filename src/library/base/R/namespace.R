@@ -300,7 +300,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                       if(exists(varName, envir = env))
                                           warning(gettextf("failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
                                                            sym$name, varName, varName, sQuote(package)),
-                                                  domain = NA)
+                                                  domain = NA, call. = FALSE)
                                       else
                                           assign(varName, sym, envir = env)
                                   })
@@ -324,11 +324,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                            if(origVarName != varName)
                                warning(gettextf("failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, varName, sQuote(package)),
-                                       domain = NA)
+                                       domain = NA, call. = FALSE)
                            else
                                warning(gettextf("failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, sQuote(package)),
-                                       domain = NA)
+                                       domain = NA, call. = FALSE)
                        else
                            assign(varName, symbols[[origVarName]], envir = env)
 
@@ -958,7 +958,7 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                 else
                     warning(gettextf("No generic function found corresponding to requested imported methods for \"%s\" from package \"%s\" (malformed exports?)",
                                  g, pkg),
-                        domain = NA)
+                        domain = NA, call. = FALSE)
             }
         }
     }
@@ -1233,7 +1233,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            warning(gettextf("duplicate symbol names %s in useDynLib(\"%s\")",
                                             paste(sQuote(names(symNames)[dup]),
                                                   collapse = ", "), dyl),
-                                   domain = NA)
+                                   domain = NA, call. = FALSE)
 
                        symNames <- symNames[!dup]
 
