@@ -956,8 +956,8 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                 fun <- methods::getFunction(g, mustFind = FALSE, where = self)
                 if(is.primitive(fun) || methods::is(fun, "genericFunction")) {}
                 else
-                    warning(gettextf("No generic function found corresponding to requested imported methods for \"%s\" from package \"%s\" (malformed exports?)",
-                                 g, pkg),
+                    warning(gettextf("No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)",
+                                 sQuote(g), sQuote(pkg), sQuote(from)),
                         domain = NA, call. = FALSE)
             }
         }
