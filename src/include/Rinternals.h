@@ -721,6 +721,7 @@ LibExtern SEXP  R_dot_defined;      /* ".defined" */
 LibExtern SEXP  R_dot_Method;       /* ".Method" */
 LibExtern SEXP	R_dot_packageName;// ".packageName"
 LibExtern SEXP  R_dot_target;       /* ".target" */
+LibExtern SEXP  R_dot_Generic;      /* ".Generic" */
 
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString

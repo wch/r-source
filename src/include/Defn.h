@@ -91,7 +91,6 @@ extern0 SEXP	R_ColonSymbol;         /* ":" */
 extern0 SEXP    R_ConnIdSymbol;  /* "conn_id" */
 extern0 SEXP    R_DevicesSymbol;  /* ".Devices" */
 
-extern0 SEXP    R_dot_Generic;  /* ".Generic" */
 extern0 SEXP    R_dot_Methods;  /* ".Methods" */
 extern0 SEXP    R_dot_Group;  /* ".Group" */
 extern0 SEXP    R_dot_Class;  /* ".Class" */

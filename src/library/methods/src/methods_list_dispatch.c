@@ -676,6 +676,15 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
     PROTECT(e = duplicate(matched_call));
     prim_case = isPrimitive(op);
+    if (!prim_case) {
+        if (inherits(op, "internalDispatchMethod")) {
+	    SEXP generic = findVarInFrame3(ev, R_dot_Generic, TRUE);
+	    if(generic == R_UnboundValue)
+	        error("internal error in 'callNextMethod': '.Generic' was not assigned in the frame of the method call");
+	    op = INTERNAL(install(CHAR(asChar(generic))));
+	    prim_case = TRUE;
+	}
+    }
     if(prim_case) {
 	/* retain call to primitive function, suppress method
 	   dispatch for it */
