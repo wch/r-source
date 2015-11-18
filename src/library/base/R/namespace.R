@@ -951,8 +951,9 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                 allVars <- c(allVars, g)
                 generics <- c(generics, g)
                 packages <- c(packages, p)
-            }
-            else { # should be primitive
+            } else if (g %in% c("as.vector", "is.unsorted", "unlist")) {
+                ## implicit generics
+            } else { # should be primitive
                 fun <- methods::getFunction(g, mustFind = FALSE, where = self)
                 if(is.primitive(fun) || methods::is(fun, "genericFunction")) {}
                 else
