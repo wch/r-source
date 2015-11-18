@@ -8,15 +8,11 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
-      \item \code{nchar(x)} gains a new argument \code{keepNA} which
-      governs how the result for \code{NA}s in \code{x} is determined.
-      The new default \code{keepNA = NA} returns \code{NA} where
+      \item \code{nchar(x, *)}'s argument \code{keepNA} governing how
+      the result for \code{NA}s in \code{x} is determined, gets a new
+      default \code{keepNA = NA} which returns \code{NA} where
       \code{x} is \code{NA}, except for \code{type = "width"} which still
       returns \code{2}, the formatting / printing width of \code{NA}.
-
-      \code{nzchar(x)} gets the same new argument, but with default
-      \code{keepNA = FALSE}.  Hence \code{nzchar(x)} still returns a
-      non-\code{NA} logical vector.
 
       \item All builds have support for \samp{https:} URLs in the
       default methods for \code{download.file()}, \code{url()} and code
@@ -699,10 +695,12 @@
 
       \item \code{nchar(x, *)} and \code{nzchar(x)} gain a new argument
       \code{keepNA} which governs how the result for \code{NA}s in
-      \code{x} is determined.  For the \R 3.2.x series, the default
+      \code{x} is determined.  For \code{nzchar()} in general and
+      \code{nchar()} in the \R 3.2.x series, the default
       remains \code{FALSE} which is fully back compatible.
-      From \R 3.3.0, the default will change to \code{keepNA = NA} and
-      you are advised to consider this for code portability.
+      From \R 3.3.0, \code{nchar()}'s default will change to
+      \code{keepNA = NA} and you are advised to consider this for code
+      portability.
 
       \item \code{news()} more flexibly extracts dates from package
       \file{NEWS.Rd} files.
