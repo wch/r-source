@@ -542,40 +542,40 @@ matchSignature <-
 	       length(which), length(anames), sQuote(fun@generic)), domain = NA)
     }
     else {
-    ## construct a function call with the same naming pattern  &
-      ## values as signature
-    sigList <- signature
-    for(i in seq_along(sigList))
-        sigList[[i]] <- c(sigClasses[[i]], pkgs[[i]])
-    fcall <- do.call("call", c("fun", sigList))
-    ## match the call to the formal signature (usually the formal args)
-    if(identical(anames, formalArgs(fun)))
-        smatch <- match.call(fun, fcall)
-    else {
-        fmatch <- fun
-        ff <- as.list(anames); names(ff) <- anames
-        formals(fmatch, envir = environment(fun)) <- ff
-        smatch <- match.call(fmatch, fcall)
+        ## construct a function call with the same naming pattern  &
+        ## values as signature
+        sigList <- signature
+        for(i in seq_along(sigList))
+            sigList[[i]] <- c(sigClasses[[i]], pkgs[[i]])
+        fcall <- do.call("call", c("fun", sigList))
+        ## match the call to the formal signature (usually the formal args)
+        if(identical(anames, formalArgs(fun)))
+            smatch <- match.call(fun, fcall)
+        else {
+            fmatch <- fun
+            ff <- as.list(anames); names(ff) <- anames
+            formals(fmatch, envir = environment(fun)) <- ff
+            smatch <- match.call(fmatch, fcall)
+        }
+        snames <- names(smatch)[-1L]
+        which <- match(snames, anames)
+        ## Assertion:  match.call has permuted the args into the order of formal args,
+        ## and carried along the values.  Get the supplied classes in that
+        ## order, from the matched args in the call object.
+        if(anyNA(which))
+            stop(sprintf(ngettext(sum(is.na(which)),
+                                  "in the method signature for function %s invalid argument name in the signature: %s",
+                                  "in the method signature for function %s invalid argument names in the signature: %s"),
+                         sQuote(fun@generic),
+                         paste(snames[is.na(which)], collapse = ", ")),
+                 domain = NA)
+        smatch <- smatch[-1]
+        for(i in seq_along(smatch)) {
+            eli <- smatch[[i]]
+            sigClasses[[i]] <- eli[[1]]
+            pkgs[[i]] <- eli[[2]]
+        }
     }
-    snames <- names(smatch)[-1L]
-    which <- match(snames, anames)
-    ## Assertion:  match.call has permuted the args into the order of formal args,
-    ## and carried along the values.  Get the supplied classes in that
-    ## order, from the matched args in the call object.
-    if(anyNA(which))
-        stop(sprintf(ngettext(sum(is.na(which)),
-                              "in the method signature for function %s invalid argument name in the signature: %s",
-                              "in the method signature for function %s invalid argument names in the signature: %s"),
-                     sQuote(fun@generic),
-                     paste(snames[is.na(which)], collapse = ", ")),
-             domain = NA)
-    smatch <- smatch[-1]
-    for(i in seq_along(smatch)) {
-        eli <- smatch[[i]]
-        sigClasses[[i]] <- eli[[1]]
-        pkgs[[i]] <- eli[[2]]
-    }
-}
     n <- length(anames)
     value <- rep("ANY", n)
     valueP <- rep("methods", n)
