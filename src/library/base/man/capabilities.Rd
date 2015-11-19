@@ -90,12 +90,12 @@ capabilities(what = NULL)
   \item{ICU}{is ICU available for collation?  See the help on
     \link{Comparison} and \code{\link{icuSetCollate}}: it is never
     used for a C locale.}
-    
+
   \item{long.double}{does this build use a \code{C} \code{long double}
     type which is longer than \code{double}?  Some platforms do not
     have such a type, and on others its use can be suppressed by the
     configure option \option{--disable-long-double}.
-    
+
     Although not guaranteed, it is a reasonable assumption that if
     present long doubles will have at least as much range and accuracy
     as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
@@ -106,8 +106,10 @@ capabilities(what = NULL)
     \code{\link{download.file}} and \code{\link{url}}.   As from \R
     3.3.0 always true for Unix-alikes, and true for CRAN Windows builds.}
 }
-\seealso{\code{\link{.Platform}}}
-
+\seealso{\code{\link{.Platform}} and \code{\link{extSoftVersion}} (and
+    links there) for availability capabilities \emph{external} to \R but
+    used from \R functions.
+  }
 \examples{
 capabilities()
 
