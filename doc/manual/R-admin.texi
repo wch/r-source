@@ -3251,7 +3251,7 @@ needed).  Recent versions allow several other libraries to be linked
 into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.
 
-@c PCRE 8.10 is from June 2010, 8.32 from May 2013
+@c PCRE 8.10 is from June 2010, 8.32 from Nov 2012
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib} (version 1.2.5 or
 later),, @code{libbz2} (version 1.0.6 or later: called
