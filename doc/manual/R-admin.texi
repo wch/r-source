@@ -3113,7 +3113,7 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 @code{setenv}.} are essential, and others@footnote{such as
 @code{realpath}, @code{symlink}.} will be used if available.
 
-@c PCRE 8.10 is from June 2010, 8.32 from May 2013
+@c PCRE 8.32 from Nov 2012
 @c zlib 1.2.5 is from July 2010, bzip2 1.0.6 from Sept 2010
 @c xz 5.0.3 is from mid 2011 (it was in R 2.13.1).
 @c libcurl 7.28.0 was released in Oct 2012.
@@ -3123,14 +3123,13 @@ Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 @code{liblzma}@footnote{most often distributed as part of @code{xz}:
 possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
-later, PCRE (version 8.10 or later, preferably 8.32 or
-later@footnote{and not PCRE2, which started at version 10.0.  PCRE must
-be built with UTF-8 support (not the default) and support for Unicode
-properties is assumed by some @R{} packages.  Only the first is tested
-by @command{configure}, but both can be checked at run-time by calling
-@code{pcre_config()}. JIT support is desirable for the best
-performance.}) and @code{libcurl} (version 7.28.0 or later) are
-required.  Information on @code{libcurl} is found from the
+later, PCRE (version 8.32 or later@footnote{and not PCRE2, which started
+at version 10.0.  PCRE must be built with UTF-8 support (not the
+default) and support for Unicode properties is assumed by some @R{}
+packages.  Only the first is tested by @command{configure}, but both can
+be checked at run-time by calling @code{pcre_config()}. JIT support is
+desirable for the best performance.}) and @code{libcurl} (version 7.28.0
+or later) are required.  Information on @code{libcurl} is found from the
 @command{curl-config} script: if that is missing or needs to be
 overridden@footnote{for example to specify static linking with a build
 which has both shared and static libraries.} there are macros to do so

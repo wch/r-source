@@ -278,6 +278,8 @@
       \item The \command{configure} default on OS X is
       \option{--disable-R-framework}: enable this if you intend to
       install under \file{/Library/Frameworks} and use with \code{R.app}.
+      
+      \item The minimum supported version of PCRE is 8.32 (from Nov 2012).
     }
   }
 
