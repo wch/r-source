@@ -203,9 +203,14 @@
   matching using the same syntax and semantics as Perl 5.x,
   with just a few differences.
 
-  For complete details please consult the man pages for PCRE, especially
-  \command{man pcrepattern} and \command{man pcreapi}), on your system or from
-  the sources at \url{http://www.pcre.org}.
+  For complete details please consult the man pages for PCRE (and not
+  PCRE2), especially \command{man pcrepattern} and \command{man
+  pcreapi}), on your system or from the sources at
+  \url{http://www.pcre.org}.  (The version in use can be found by
+  calling \code{\link{extSoftVersion}}.  It need not be the version
+  described in the system's man page.  As PCRE has been feature-frozen
+  for some time, the man pages at
+  \url{http://www.pcre.org/original/doc/html/} should be a good match.)
 
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
