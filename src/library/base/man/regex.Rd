@@ -203,11 +203,12 @@
   matching using the same syntax and semantics as Perl 5.x,
   with just a few differences.
 
-  For complete details please consult the man pages for PCRE, especially
-  \command{man pcrepattern} and \command{man pcreapi}), on your system
-  or from the sources at \url{http://www.pcre.org}. If PCRE support was
-  compiled from the sources within \R (the default), the PCRE version is
-  8.37 as described here.  (The version in use can be found by calling
+  For complete details please consult the man pages for PCRE (and not
+  PCRE2), especially \command{man pcrepattern} and \command{man
+  pcreapi}), on your system or from the sources at
+  \url{http://www.pcre.org}. If PCRE support was compiled from the
+  sources within \R (the default), the PCRE version is 8.37 as described
+  here.  (The version in use can be found by calling
   \code{\link{extSoftVersion}}.)
 
   Perl regular expressions can be computed byte-by-byte or
