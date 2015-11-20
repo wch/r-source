@@ -188,10 +188,11 @@ as.data.frame.list <-
     if(any.m <- any(m)) col.names[m] <- paste0("..adfl.", col.names[m])
     if(new.nms || any.m || cut.names) names(x) <- col.names
     if(is.null(check.n <- list(...)$check.names)) check.n <- !optional
-    x <- do.call(data.frame,
-                 c(x, list(check.names = check.n, row.names = row.names,
-                           fix.empty.names = fix.empty.names,
-                           stringsAsFactors = stringsAsFactors)))
+    ## data.frame() is picky with its 'row.names':
+    alis <- c(list(check.names = check.n, fix.empty.names = fix.empty.names,
+		   stringsAsFactors = stringsAsFactors),
+	      if(!is.null(row.names)) list(row.names = row.names))
+    x <- do.call(data.frame, c(x, alis))
     if(any.m) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     x
 }
@@ -427,9 +428,9 @@ data.frame <-
     for(i in seq_len(n)) {
         ## do it this way until all as.data.frame methods have been updated
 	xi <- if(is.character(x[[i]]) || is.list(x[[i]]))
-                 as.data.frame(x[[i]], optional = TRUE,
-                               stringsAsFactors = stringsAsFactors)
-        else as.data.frame(x[[i]], optional = TRUE)
+		  as.data.frame(x[[i]], optional = TRUE,
+				stringsAsFactors = stringsAsFactors)
+	      else as.data.frame(x[[i]], optional = TRUE)
 
         nrows[i] <- .row_names_info(xi) # signed for now
 	ncols[i] <- length(xi)
@@ -1426,8 +1427,9 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 {
     dm <- dim(x)
     rn <- if(rownames.force %in% FALSE) NULL
-    else if(rownames.force %in% TRUE) row.names(x)
-    else {if(.row_names_info(x) <= 0L) NULL else row.names(x)}
+	  else if(rownames.force %in% TRUE) row.names(x)
+	  else if(.row_names_info(x) <= 0L) NULL
+	  else row.names(x)
     dn <- list(rn, names(x))
     if(any(dm == 0L))
 	return(array(NA, dim = dm, dimnames = dn))

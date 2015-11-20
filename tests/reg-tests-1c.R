@@ -1060,7 +1060,8 @@ stopifnot(identical(format(dd),
                     data.frame(desc = fdesc, row.names = c("A", "M", "Z"))),
           identical(capture.output(dd),
                     c("  desc", "A    a",
-                      "M <NA>", "Z    z")))
+		      "M <NA>", "Z    z")),
+	  identical(dd, data.frame(list(dd))))# lost row.names for a while
 
 
 ## var(x) and hence sd(x)  with factor x, PR#16564
