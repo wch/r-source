@@ -4208,6 +4208,16 @@ and libraries are searched once in the order they are specified.  Not
 all linkers allow a space after @option{-L} .
 
 @item
+The @command{ar} utility is often used in makefiles to make static
+libraries.  Its modifier @code{u} is defined by POSIX but is disabled in
+GNU @command{ar} on some recent Linux distributions which use
+`deterministic mode'.  The safe way to make a static library is to first
+remove any existing file of that name then use @command{ar -cr} and then
+@command{ranlib} if needed (which is system-dependent: on most
+systems@footnote{some versions of OS X did not.} @command{ar} always
+maintains a symbol table).
+
+@item
 Some people have a need to set a locale.  Locale names are not portable,
 and e.g.@: @samp{fr_FR.utf8} is common used on Linux but not accepted on
 either Solaris or OS X.  @samp{fr_FR.UTF-8} is more portable, being

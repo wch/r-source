@@ -3113,10 +3113,10 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 @code{setenv}.} are essential, and others@footnote{such as
 @code{realpath}, @code{symlink}.} will be used if available.
 
-@c PCRE 8.32 from Nov 2012
+@c PCRE 8.32 is from Nov 2012
 @c zlib 1.2.5 is from July 2010, bzip2 1.0.6 from Sept 2010
-@c xz 5.0.3 is from mid 2011 (it was in R 2.13.1).
-@c libcurl 7.28.0 was released in Oct 2012.
+@c xz 5.0.3 is from May 2011
+@c libcurl 7.28.0 was released in Oct 2012
 Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 (version 1.0.6 or later: called @pkg{bzip2-libs}/@pkg{bzip2-devel} or
 @pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions),
