@@ -35925,13 +35925,13 @@ fi
 if test "x${have_pcre}" = xyes; then
 r_save_LIBS="${LIBS}"
 LIBS="-lpcre ${LIBS}"
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.10, < 10.0 and has UTF-8 support" >&5
-$as_echo_n "checking if PCRE version >= 8.10, < 10.0 and has UTF-8 support... " >&6; }
-if ${r_cv_have_pcre810+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.32, < 10.0 and has UTF-8 support" >&5
+$as_echo_n "checking if PCRE version >= 8.32, < 10.0 and has UTF-8 support... " >&6; }
+if ${r_cv_have_pcre832+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "$cross_compiling" = yes; then :
-  r_cv_have_pcre810=no
+  r_cv_have_pcre832=no
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -35947,7 +35947,7 @@ int main() {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
-#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 32
 {
     int ans;
     int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
@@ -35963,25 +35963,25 @@ int main() {
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_pcre810=yes
+  r_cv_have_pcre832=yes
 else
-  r_cv_have_pcre810=no
+  r_cv_have_pcre832=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre810" >&5
-$as_echo "$r_cv_have_pcre810" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre832" >&5
+$as_echo "$r_cv_have_pcre832" >&6; }
 fi
-if test "x${r_cv_have_pcre810}" != xyes; then
+if test "x${r_cv_have_pcre832}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support suffices" >&5
 $as_echo_n "checking whether PCRE support suffices... " >&6; }
-if test "x${r_cv_have_pcre810}" != xyes; then
+if test "x${r_cv_have_pcre832}" != xyes; then
   as_fn_error $? "pcre library and headers are required" "$LINENO" 5
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
