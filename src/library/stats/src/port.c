@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2007   The R Core Team.
+ *  Copyright (C) 2005-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -393,7 +393,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
 	    double *rl=REAL(lowerb), *ru=REAL(upperb);
-	    b = Calloc(2*n, double);
+	    b = (double *)R_alloc(2*n, sizeof(double));
 	    for (i = 0; i < n; i++) {
 		b[2*i] = rl[i];
 		b[2*i + 1] = ru[i];
@@ -401,8 +401,10 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	} else error(_("'lower' and 'upper' must be numeric vectors"));
     }
     if (gr != R_NilValue) {
+	g = (double *)R_alloc(n, sizeof(double));
 	g = Calloc(n, double);
-	if (hs != R_NilValue) h = Calloc((n * (n + 1))/2, double);
+	if (hs != R_NilValue)
+	    h = (double *)R_alloc((n * (n + 1))/2, sizeof(double));
     }
 
     do {
@@ -425,7 +427,6 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	PROTECT(xpt);
     } while(INTEGER(iv)[0] < 3);
 
-    if (b) Free(b); if (g) Free(g); if (h) Free(h);
     UNPROTECT(1); /* xpt */
     return R_NilValue;
 }
@@ -539,8 +540,10 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
     SEXP getPars, setPars, resid, gradient,
 	rr = PROTECT(allocVector(REALSXP, nd)),
 	x = PROTECT(allocVector(REALSXP, n));
+    // This used to use Calloc, but that will leak if 
+    // there is a premature return (and did in package drfit)
     double *b = (double *) NULL,
-	*rd = Calloc(nd, double);
+	*rd = (double *)R_alloc(nd, sizeof(double));
 
     if (!isReal(d) || n < 1)
 	error(_("'d' must be a nonempty numeric vector"));
@@ -558,8 +561,8 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
-	    double *rl=REAL(lowerb), *ru=REAL(upperb);
-	    b = Calloc(2*n, double);
+	    double *rl = REAL(lowerb), *ru = REAL(upperb);
+	    b = (double *)R_alloc(2*n, sizeof(double));
 	    for (i = 0; i < n; i++) {
 		b[2*i] = rl[i];
 		b[2*i + 1] = ru[i];
@@ -600,7 +603,6 @@ SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 	}
     } while(INTEGER(iv)[0] < 3);
 
-    Free(rd); if (b) Free(b);
     UNPROTECT(6);
     return R_NilValue;
 }
