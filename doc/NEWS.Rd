@@ -4,6 +4,7 @@
 \name{NEWS}
 \title{R News}
 \encoding{UTF-8}
+
 \section{\Rlogo CHANGES IN R 3.2.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -176,6 +177,8 @@
 
       \item \code{poly(x, ..)} now works when either \code{raw=TRUE} or
       \code{coef} is specified.  (\PR{16597})
+
+      \item \code{data(package=*)} is more careful in determining the path.
     }
   }
 }
