@@ -148,6 +148,10 @@
       \item \code{within(df, ..)} no longer drops columns whose name
       start with a \code{"."}.
 
+      \item The built-in \code{HTTP} server converted entire
+      \code{Content-Type} to lowercase including parameters which
+      can cause issues for multi-part form boundaries (\PR{16541}).
+
       \item Modifying slots of S4 objects could fail when the
       \pkg{methods} package was not attached. (\PR{16545})
 
@@ -362,10 +366,12 @@
 
       \item \code{nchar(x, *)} and \code{nzchar(x)} gain a new argument
       \code{keepNA} which governs how the result for \code{NA}s in
-      \code{x} is determined.  For the \R 3.2.x series, the default
+      \code{x} is determined.  For \code{nzchar()} in general and
+      \code{nchar()} in the \R 3.2.x series, the default
       remains \code{FALSE} which is fully back compatible.
-      From \R 3.3.0, the default will change to \code{keepNA = NA} and
-      you are advised to consider this for code portability.
+      From \R 3.3.0, \code{nchar()}'s default will change to
+      \code{keepNA = NA} and you are advised to consider this for code
+      portability.
 
       \item \code{news()} more flexibly extracts dates from package
       \file{NEWS.Rd} files.
