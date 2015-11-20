@@ -68,7 +68,7 @@ double bessel_k(double x, double alpha, double expo)
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4(_("bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
+	MATHLIB_WARNING4(_("bessel_k(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_k(%g,nu=%g): precision lost in result\n"),
@@ -105,7 +105,7 @@ double bessel_k_ex(double x, double alpha, double expo, double *bk)
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4(_("bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
+	MATHLIB_WARNING4(_("bessel_k(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_k(%g,nu=%g): precision lost in result\n"),

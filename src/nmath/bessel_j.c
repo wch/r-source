@@ -77,7 +77,7 @@ double bessel_j(double x, double alpha)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
+	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
@@ -124,7 +124,7 @@ double bessel_j_ex(double x, double alpha, double *bj)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
+	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
