@@ -278,7 +278,7 @@
       \item The \command{configure} default on OS X is
       \option{--disable-R-framework}: enable this if you intend to
       install under \file{/Library/Frameworks} and use with \code{R.app}.
-      
+
       \item The minimum supported version of PCRE is 8.32 (from Nov 2012).
     }
   }
@@ -514,6 +514,8 @@
 
       \item \code{poly(x, ..)} now works when either \code{raw=TRUE} or
       \code{coef} is specified.  (\PR{16597})
+
+      \item \code{data(package=*)} is more careful in determining the path.
     }
   }
 }

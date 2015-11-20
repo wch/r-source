@@ -1116,3 +1116,10 @@ stopifnot(all.equal(c(predict(fm, newdata=list(x = 1:3)), `4`=NA),
 	  all.equal(unclass(poly(x, degree=2, raw=TRUE)),
 		    cbind(x, x^2), check.attributes=FALSE))
 ## both gave error about NA in R <= 3.2.2
+
+
+## data(package = *) on some platforms
+dd <- data(package="datasets")[["results"]]
+if(anyDuplicated(dd[,"Item"])) stop("data(package=*) has duplications")
+## sometimes returned the data sets *twice* in R <= 3.2.2
+
