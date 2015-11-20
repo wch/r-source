@@ -24,7 +24,7 @@ R all: Makefile
 
 libtz.a: $(OBJECTS)
 	@rm -f $@
-	$(AR) cr $@ $(OBJECTS)
+	$(AR) -cr $@ $(OBJECTS)
 	@$(RANLIB) $@
 
 

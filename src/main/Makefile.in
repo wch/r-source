@@ -150,9 +150,9 @@ $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 
 libR.a: $(OBJECTS) $(STATIC_LIBS)
 	-@mkdir libs
-	@(cd libs; for l in $(STATIC_LIBS); do $(AR) x ../$$l; done)
+	@(cd libs; for l in $(STATIC_LIBS); do $(AR) -x ../$$l; done)
 	@rm -rf $@
-	$(AR) cr $@ $(OBJECTS) libs/*o
+	$(AR) -cr $@ $(OBJECTS) libs/*o
 	$(RANLIB) $@
 	@rm -rf libs
 

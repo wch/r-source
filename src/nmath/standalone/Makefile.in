@@ -121,7 +121,8 @@ Makedeps: Makefile Copy ../../include/Rconfig.h
 	@touch $@
 
 libRmath.a: $(libRmath_a_OBJECTS)
-	$(AR) cr $@ $(libRmath_a_OBJECTS)
+	@rm -rf $@
+	$(AR) -cr $@ $(libRmath_a_OBJECTS)
 	$(RANLIB) $@
 
 ## under peculiar circumstances, $(LIBM) here helps.

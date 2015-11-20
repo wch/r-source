@@ -49,8 +49,8 @@ R: Makefile @BUILD_TRE_TRUE@
 	@BUILD_TRE_TRUE@ @$(MAKE) $(noinst_LIBRARIES)
 
 libtre.a: $(libtre_a_OBJECTS)
-	rm -f $@
-	$(AR) cr $@ $(libtre_a_OBJECTS)
+	@rm -f $@
+	$(AR) -cr $@ $(libtre_a_OBJECTS)
 	$(RANLIB) $@
 
 mostlyclean: clean

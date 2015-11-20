@@ -53,8 +53,8 @@ R: Makedeps
 	(cd ../include; $(MAKE) $(@F))
 
 libunix.a: $(OBJECTS)
-	rm -rf $@
-	$(AR) cr $@ $(OBJECTS)
+	@rm -rf $@
+	$(AR) -cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
 mostlyclean: clean
