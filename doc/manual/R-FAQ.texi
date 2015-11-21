@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-11-07
+@set FAQ_DATE @value{FAQ_YEAR}-11-21
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -1846,8 +1846,9 @@ available from the Omega project.
 open development software project for the analysis and comprehension of
 genomic data.  Most Bioconductor components are distributed as R add-on
 packages.  Initially most of the
-@url{https://www.bioconductor.org/packages/bioc/, Bioconductor software
-packages} focused primarily on DNA microarray data analysis.  As the
+@url{https://bioconductor.org/packages/release/BiocViews.html#___Software,
+Bioconductor software packages}
+focused primarily on DNA microarray data analysis.  As the 
 project has matured, the functional scope of the software packages
 broadened to include the analysis of all types of genomic data, such as
 SAGE, sequence, or SNP data.  In addition, there are metadata
