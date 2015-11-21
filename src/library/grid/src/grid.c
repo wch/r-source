@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2013 The R Core Team
+ *                2003-2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3061,6 +3061,8 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     double rotationAngle;
     LViewportContext vpc;
     R_GE_gcontext gc;
+    memset(gc.fontfamily, 0, 201); // initialize for VFontFamilyCode,
+                                   // which looks at the 4th byte
     LTransform transform;
     SEXP txt, result = R_NilValue;
     double edgex, edgey;
