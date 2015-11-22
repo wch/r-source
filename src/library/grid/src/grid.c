@@ -2594,6 +2594,7 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
     int i, ny, nw, nh, maxn, nrect;
     LViewportContext vpc;
     R_GE_gcontext gc;
+    memset(gc.fontfamily, 0, 201); // initialize for VFontFamilyCode
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
@@ -3312,6 +3313,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     const void *vmax;
     LViewportContext vpc;
     R_GE_gcontext gc;
+    memset(gc.fontfamily, 0, 201); // initialize for VFontFamilyCode
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 

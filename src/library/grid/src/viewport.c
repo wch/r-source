@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2014 The R Core Team
+ *                2003-2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -207,7 +207,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
     LViewportLocation vpl;
     LViewportContext vpc, parentContext;
     R_GE_gcontext gc, parentgc;
-    memset(gc.fontfamily, 0, 201); // initialize for VFontFamilyCode,
+    memset(gc.fontfamily, 0, 201); // initialize for VFontFamilyCode
     LTransform thisLocation, thisRotation, thisJustification, thisTransform;
     LTransform tempTransform, parentTransform, transform;
     SEXP currentWidthCM, currentHeightCM, currentRotation;
