@@ -207,6 +207,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
     LViewportLocation vpl;
     LViewportContext vpc, parentContext;
     R_GE_gcontext gc, parentgc;
+    memset(gc.fontfamily, 0, 201); // initialize for VFontFamilyCode,
     LTransform thisLocation, thisRotation, thisJustification, thisTransform;
     LTransform tempTransform, parentTransform, transform;
     SEXP currentWidthCM, currentHeightCM, currentRotation;
