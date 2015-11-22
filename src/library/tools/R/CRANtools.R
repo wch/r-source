@@ -471,7 +471,7 @@ function()
                   unlist(targets, use.names = FALSE))
 }
 
-CRAN_Rd_xref_reverse_depends <-
+CRAN_Rd_xref_reverse_dependencies <-
 function(packages, db = NULL, details = FALSE)
 {
     if(is.null(db))
@@ -588,7 +588,7 @@ function(packages, db = NULL)
     list(head = head, body = body)
 }
 
-CRAN_package_reverse_depends_and_views <-
+CRAN_package_reverse_dependencies_and_views <-
 function(packages)
 {
     a <- utils::available.packages(filters = list())
@@ -608,7 +608,7 @@ function(packages)
     rrs <- package_dependencies(packages, a, "Suggests",
                                 reverse = TRUE, recursive = TRUE)
 
-    rxrefs <- CRAN_Rd_xref_reverse_depends(packages)
+    rxrefs <- CRAN_Rd_xref_reverse_dependencies(packages)
 
     y <- lapply(packages,
                 function(p) {
@@ -633,11 +633,11 @@ function(packages)
                           c("Views" = paste(sort(z), collapse = " "))
                       })
                 })
-    class(y) <- "CRAN_package_reverse_depends_and_views"
+    class(y) <- "CRAN_package_reverse_dependencies_and_views"
     y
 }
 
-format.CRAN_package_reverse_depends_and_views <-
+format.CRAN_package_reverse_dependencies_and_views <-
 function(x, ...)
 {
     vapply(x,
@@ -648,11 +648,26 @@ function(x, ...)
            "")
 }
 
-print.CRAN_package_reverse_depends_and_views <-
+print.CRAN_package_reverse_dependencies_and_views <-
 function(x, ...)
 {
     writeLines(paste(format(x, ...), collapse = "\n\n"))
     invisible(x)
+}
+
+CRAN_package_reverse_dependencies_with_maintainers <-
+function(packages, which = c("Depends", "Imports", "LinkingTo"),
+         recursive = FALSE)
+{
+    db <- CRAN_package_db()
+        
+    rdepends <- package_dependencies(packages, db, which,
+                                     recursive = recursive,
+                                     reverse = TRUE)
+    rdepends <- sort(unique(unlist(rdepends)))
+    pos <- match(rdepends, db[, "Package"], nomatch = 0L)
+
+    db[pos, c("Package", "Version", "Maintainer")]
 }
 
 CRAN_package_dependencies_with_dates <-
