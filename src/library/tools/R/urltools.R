@@ -423,7 +423,13 @@ function(db, verbose = FALSE)
 
     ## Invalid URI schemes.
     schemes <- parts[, 1L]
-    ind <- is.na(match(schemes, c("", IANA_URI_scheme_db$URI_Scheme)))
+    ind <- is.na(match(schemes,
+                       c("",
+                         IANA_URI_scheme_db$URI_Scheme,
+                         ## Also allow 'javascript' scheme, see
+                         ## <https://tools.ietf.org/html/draft-hoehrmann-javascript-scheme-03>
+                         ## (but apparently never registered with IANA).
+                         "javascript")))
     if(any(ind)) {
         len <- sum(ind)
         msg <- rep.int("Invalid URI scheme", len)
