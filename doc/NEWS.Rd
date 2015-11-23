@@ -516,6 +516,9 @@
       \code{coef} is specified.  (\PR{16597})
 
       \item \code{data(package=*)} is more careful in determining the path.
+
+      \item \code{prettyNum(*, decimal.mark, big.mark)}: fixed bug
+      introduced when fixing \PR{16411}.
     }
   }
 }

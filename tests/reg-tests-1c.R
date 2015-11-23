@@ -1124,3 +1124,22 @@ dd <- data(package="datasets")[["results"]]
 if(anyDuplicated(dd[,"Item"])) stop("data(package=*) has duplications")
 ## sometimes returned the data sets *twice* in R <= 3.2.2
 
+
+## prettyNum(*, big.mark, decimal.mark)
+b.m <- c(".", ",", "'", "")
+d.m <- c(".", ",", ".,", "..")
+pa <- expand.grid(big.mark = b.m, decimal.mark = d.m,
+                  x = c(1005.24, 100.22, 1000000.33), scientific=FALSE, digits=9,
+                  stringsAsFactors=FALSE, KEEP.OUT.ATTRS=FALSE)
+r <- vapply(1:nrow(pa), function(i) do.call(prettyNum, pa[i,]), "")# with 6x2 warnings
+r
+b.m[b.m == ""] <- "0"
+## big.mark: only >= 1000; *and* because particular chosen numbers:
+r.2 <- substr(r[pa[,"x"] > 1000], 2, 2)
+## compute location of decimal point (which maybe more than one char)
+nd <- nchar(dm.s <- rep(d.m, each=length(b.m)))
+nr <- nchar(r) - 3 + (nd == 1)
+nr2 <- nr + (nd > 1)
+stopifnot(identical(r.2,               rep_len(b.m, length(r.2))),
+          identical(substr(r, nr,nr2), rep_len(dm.s, length(r))))
+## several cases (1, 5, 9, 10,..) were wrong in R 3.2.2

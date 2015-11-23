@@ -292,7 +292,7 @@ prettyNum <-
     function(x,
 	     big.mark = "", big.interval = 3L,
 	     small.mark = "", small.interval = 5L,
-             decimal.mark = getOption("OutDec"), input.d.mark = ".",
+             decimal.mark = getOption("OutDec"), input.d.mark = decimal.mark,
 	     preserve.width = c("common", "individual", "none"),
 	     zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA, ...)
 {
@@ -357,6 +357,14 @@ prettyNum <-
     if(nchar(input.d.mark) == 0)
         stop("'input.d.mark' has no characters")
     x.sp <- strsplit(x, input.d.mark, fixed=TRUE)
+    ## can have "1.005.987" here, if all *.mark == "."
+    if(any((lx.sp <- lengths(x.sp)) > 2)) { # partly more than two parts
+	x.sp <- lapply(x.sp, function(xs) {
+	    lx <- length(xs)
+	    if(lx <= 2) xs else c(paste(xs[1:(lx-1)], collapse=input.d.mark),
+				  xs[lx])
+	})
+    }
     B. <- vapply(x.sp, `[`, "", 1L)	# Before input.d.mark (".")
     A. <- vapply(x.sp, `[`, "", 2L)	# After  "." ; empty == NA
     if(any(iN <- is.na(A.))) A.[iN] <- ""
