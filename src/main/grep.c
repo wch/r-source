@@ -2786,6 +2786,10 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* pcre_config was added in PCRE 4.0, with PCRE_CONFIG_UTF8 .
+   PCRE_CONFIG_UNICODE_PROPERTIES had been added by 8.10, 
+   the earliest version we allow.
+ */
 SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int res;
@@ -2801,12 +2805,10 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
     pcre_config(PCRE_CONFIG_UNICODE_PROPERTIES, &res); lans[1] = res;
     SET_STRING_ELT(nm, 2, mkChar("JIT"));
 #ifdef PCRE_CONFIG_JIT
-    // Paul Murrell reports 8.12 does not have this
-    // man pcrejit says it was added in 8.20.
-    // 8.10 is the earliest acceptable version and does have the others.
+    // added (and JIT support) in 8.20.
     pcre_config(PCRE_CONFIG_JIT, &res);
 #else
-    res = NA_LOGICAL;
+    res = FALSE;
 #endif
     lans[2] = res;
     UNPROTECT(1);
