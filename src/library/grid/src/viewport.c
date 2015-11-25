@@ -238,7 +238,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	parentgc.lineheight = 1.2;
 	parentgc.cex = 1;
 	parentgc.fontface = 1;
-	parentgc.fontfamily[0] = '\0';
+	parentgc.fontfamily[0] = '\0';  // This picks up the device default
 	/* The device is not rotated
 	 */
 	parentAngle = 0;
