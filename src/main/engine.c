@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2014  The R Core Team.
+ *  Copyright (C) 2001-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1595,16 +1595,21 @@ VFontTable[] = {
     { NULL,		          0, 0 },
 };
 
+/* A Hershey family (all of which have names starting with Her) may
+   have had the fourth byte changed to the family code (1...8), so
+   saving further table lookups.
+   (Done by GEText and GEStrWidth/Height.)
+*/
 static int VFontFamilyCode(char *fontfamily)
 {
-    int i, j = fontfamily[3];
-
-    /* Inline vfont is passed down as familycode in fourth byte */
-    if (!strncmp(fontfamily, "Her", 3) && j < 9) return 100 + j;
-    for (i = 0; VFontTable[i].minface; i++)
-	if (!strcmp(fontfamily, VFontTable[i].name)) {
-	    return i+1;
-	}
+    // done this way as compiler was free to access 4th byte in previous version
+    if (strlen(fontfamily) > 3)  {
+	/* Inline vfont is passed down as familycode in fourth byte */
+	unsigned int j = fontfamily[3]; // protect against signed chars
+	if (!strncmp(fontfamily, "Her", 3) && j < 9) return 100 + j;
+	for (int i = 0; VFontTable[i].minface; i++)
+	    if (!strcmp(fontfamily, VFontTable[i].name)) return i + 1;
+    }
     return -1;
 }
 

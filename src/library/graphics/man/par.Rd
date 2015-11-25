@@ -300,7 +300,7 @@ par(\dots, no.readonly = FALSE)
       \code{"serif"}, \code{"sans"} and \code{"mono"}, and the
       \link{Hershey} font families are also available.  (Devices may
       define others, and some devices will ignore this setting
-      completely.  Names starting with \code{"Hers"} are treated
+      completely.  Names starting with \code{"Her"} are treated
       specially and should only be used for the built-in Hershey font
       families.)  This can be specified inline for \code{\link{text}}.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
