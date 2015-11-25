@@ -298,10 +298,11 @@ par(\dots, no.readonly = FALSE)
       the default device fonts will be used (and what those are should
       be listed on the help page for the device).  Standard values are
       \code{"serif"}, \code{"sans"} and \code{"mono"}, and the
-      \link{Hershey} font families are also available.  (Different
-      devices may define others, and some devices will ignore this
-      setting completely.)  This can be specified inline for
-      \code{\link{text}}.}
+      \link{Hershey} font families are also available.  (Devices may
+      define others, and some devices will ignore this setting
+      completely.  Names starting with \code{"Hers"} are treated
+      specially and should only be used for the built-in Hershey font
+      families.)  This can be specified inline for \code{\link{text}}.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes
       around plots.  When called from \code{par()} this also sets
