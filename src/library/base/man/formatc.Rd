@@ -29,7 +29,7 @@ formatC(x, digits = NULL, width = NULL,
 
 prettyNum(x, big.mark = "",   big.interval = 3L,
           small.mark  = "", small.interval = 5L,
-          decimal.mark = getOption("OutDec"), input.d.mark = ".",
+          decimal.mark = getOption("OutDec"), input.d.mark = decimal.mark,
           preserve.width = c("common", "individual", "none"),
           zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA,
           \dots)
