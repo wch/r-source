@@ -41,6 +41,9 @@
       \item \code{loess(..., iterTrace=TRUE)} now provides diagnostics
       for robustness iterations, and the \code{print()} method for
       \code{summary(<loess>)} shows slightly more.
+      
+      \item The included version of PCRE has been updated to 8.38, a
+      bug-fix release.
     }
   }
 
