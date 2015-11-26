@@ -170,7 +170,7 @@ double R_GE_VStrWidth (const char *s, cetype_t enc,
 
   /* convert string to a codestring, including annotations */
   codestring = _controlify (dd, (const unsigned char *) s,
-			    gc->fontfamily[3] - 1, gc->fontface);
+			    gc->fontfamily[7] - 1, gc->fontface);
 
   label_width = _label_width_hershey (gc, dd, codestring);
 
@@ -202,7 +202,7 @@ double R_GE_VStrHeight (const char *s, cetype_t enc,
 
   /* convert string to a codestring, including annotations */
   codestring = _controlify (dd, (const unsigned char *) s,
-			    gc->fontfamily[3] - 1, gc->fontface);
+			    gc->fontfamily[7] - 1, gc->fontface);
 
   label_height = _label_height_hershey (gc, dd, codestring);
 
@@ -258,7 +258,7 @@ void R_GE_VText (double x, double y, const char *s, cetype_t enc,
 
   /* convert string to a codestring, including annotations */
   codestring = _controlify (dd, (const unsigned char *)s,
-			    gc->fontfamily[3] - 1, gc->fontface);
+			    gc->fontfamily[7] - 1, gc->fontface);
 
 
   /* PAUL MURRELL

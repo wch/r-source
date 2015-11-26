@@ -1905,8 +1905,8 @@ SEXP C_contour(SEXP args)
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont)) {
 	strncpy(familysave, gpptr(dd)->family, 201);
-	strncpy(gpptr(dd)->family, "Her ", 201);
-	gpptr(dd)->family[3] = (char) INTEGER(vfont)[0];
+	strncpy(gpptr(dd)->family, "Hershey ", 201);
+	gpptr(dd)->family[7] = (char) INTEGER(vfont)[0];
 	fontsave = gpptr(dd)->font;
 	gpptr(dd)->font = INTEGER(vfont)[1];
     }

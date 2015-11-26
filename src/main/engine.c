@@ -1595,18 +1595,19 @@ VFontTable[] = {
     { NULL,		          0, 0 },
 };
 
-/* A Hershey family (all of which have names starting with Her) may
-   have had the fourth byte changed to the family code (1...8), so
+/* A Hershey family (all of which have names starting with Hershey) may
+   have had the eighth byte changed to the family code (1...8), so
    saving further table lookups.
-   (Done by GEText and GEStrWidth/Height.)
+
+   (Done by GEText and GEStrWidth/Height, and also set that way in the
+   graphics package's plot.c for C_text, C_strWidth and C_strheight,
+   and in plot3d.c for C_contour.)
 */
 static int VFontFamilyCode(char *fontfamily)
 {
-    // done this way as compiler was free to access 4th byte in previous version
-    if (strlen(fontfamily) > 3)  {
-	/* Inline vfont is passed down as familycode in fourth byte */
-	unsigned int j = fontfamily[3]; // protect against signed chars
-	if (!strncmp(fontfamily, "Her", 3) && j < 9) return 100 + j;
+    if (strlen(fontfamily) > 7)  {
+	unsigned int j = fontfamily[7]; // protect against signed chars
+	if (!strncmp(fontfamily, "Hershey", 7) && j < 9) return 100 + j;
 	for (int i = 0; VFontTable[i].minface; i++)
 	    if (!strcmp(fontfamily, VFontTable[i].name)) return i + 1;
     }
@@ -1682,7 +1683,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
     if (vfontcode >= 100) {
 	R_GE_VText(x, y, str, enc, xc, yc, rot, gc, dd);
     } else if (vfontcode >= 0) {
-	gc->fontfamily[3] = (char) vfontcode;
+	gc->fontfamily[7] = (char) vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	R_GE_VText(x, y, str, enc, xc, yc, rot, gc, dd);
     } else {
@@ -2461,7 +2462,7 @@ double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc
     if (vfontcode >= 100)
 	return R_GE_VStrWidth(str, enc, gc, dd);
     else if (vfontcode >= 0) {
-	gc->fontfamily[3] = (char) vfontcode;
+	gc->fontfamily[7] = (char) vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrWidth(str, enc, gc, dd);
     } else {
@@ -2521,7 +2522,7 @@ double GEStrHeight(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDes
     if (vfontcode >= 100)
 	return R_GE_VStrHeight(str, enc, gc, dd);
     else if (vfontcode >= 0) {
-	gc->fontfamily[3] = (char) vfontcode;
+	gc->fontfamily[7] = (char) vfontcode;
 	gc->fontface = VFontFaceCode(vfontcode, gc->fontface);
 	return R_GE_VStrHeight(str, enc, gc, dd);
     } else {
