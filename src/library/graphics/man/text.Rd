@@ -1,6 +1,6 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{text}
@@ -98,19 +98,20 @@ text(x, \dots)
   is delta, and \code{"\300"} is aleph.
 }
 \section{Euro symbol}{
-  The Euro symbol was introduced relatively recently and may not be
-  available in older fonts.  In recent versions of Adobe symbol fonts it
-  is character 160, so \code{text(x, y, "\xA0", font = 5)} may work.
-  People using Western European locales on Unix-alikes can probably
-  select ISO-8895-15 (Latin-9) which has the Euro as character 165: this
-  can also be used for \code{\link{postscript}} and \code{\link{pdf}}.
-  It is \samp{\u20ac} in Unicode, which can be used in UTF-8 locales.
+  The Euro symbol may not be available in older fonts.  In current
+  versions of Adobe symbol fonts it is character 160, so \code{text(x,
+  y, "\xA0", font = 5)} may work. People using Western European locales
+  on Unix-alikes can probably select ISO-8895-15 (Latin-9) which has the
+  Euro as character 165: this can also be used for
+  \code{\link{postscript}} and \code{\link{pdf}}. It is \samp{\u20ac} in
+  Unicode, which can be used in UTF-8 locales.
 #ifdef unix
 
   The Euro should be rendered correctly by \code{\link{X11}} in UTF-8
   locales, but the corresponding single-byte encoding in
   \code{\link{postscript}} and \code{\link{pdf}} will need to be selected
-  as \code{ISOLatin9.enc}.
+  as \code{ISOLatin9.enc} (and the font will need to contain the Euro
+  glyph, which for example older printers may not).
 #endif
 #ifdef windows
 
