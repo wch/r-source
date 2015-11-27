@@ -264,13 +264,15 @@ function(ap)
 }
 
 package_dependencies <-
-function(packages = NULL, db,
+function(packages = NULL, db = NULL,
          which = c("Depends", "Imports", "LinkingTo"),
          recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
 {
     ## <FIXME>
     ## What about duplicated entries?
     ## </FIXME>
+
+    if(is.null(db)) db <- utils::available.packages()
 
     ## For given packages which are not found in the db, return "list
     ## NAs" (i.e., NULL entries), as opposed to character() entries

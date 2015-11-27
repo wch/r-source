@@ -10,13 +10,14 @@
    Find (recursively) dependencies or reverse dependencies of packages.
 }
 \usage{
-package_dependencies(packages = NULL, db,
+package_dependencies(packages = NULL, db = NULL,
         which = c("Depends", "Imports", "LinkingTo"),
 	recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
 }
 \arguments{
   \item{packages}{a character vector of package names.}
-  \item{db}{character matrix as from \code{\link{available.packages}()},
+  \item{db}{character matrix as from \code{\link{available.packages}()}
+    (with the default \code{NULL} the results of this call)
     or data frame variants thereof.  Alternatively, a package database
     like the one available from
     \url{https://cran.r-project.org/web/packages/packages.rds}.
