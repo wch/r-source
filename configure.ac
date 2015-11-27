@@ -2969,6 +2969,9 @@ fi
 if test -n "${warn_tcltk_version}"; then
   AC_MSG_WARN([${warn_tcltk_version}])
 fi
+if test -n "${warn_pcre_version}"; then
+  AC_MSG_WARN([${warn_pcre_version}])
+fi
 if test -n "${warn_info}"; then
   AC_MSG_WARN([${warn_info}])
 fi

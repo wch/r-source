@@ -3166,7 +3166,7 @@ fi
 if test "x${have_pcre}" = xyes; then
 r_save_LIBS="${LIBS}"
 LIBS="-lpcre ${LIBS}"
-AC_CACHE_CHECK([if PCRE version >= 8.32, < 10.0 and has UTF-8 support], [r_cv_have_pcre832],
+AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3179,7 +3179,7 @@ int main() {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
-#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 32
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
 {
     int ans;
     int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
@@ -3192,17 +3192,40 @@ int main() {
   exit(1);
 #endif
 }
-]])], [r_cv_have_pcre832=yes], [r_cv_have_pcre832=no], [r_cv_have_pcre832=no])])
+]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
 fi
-if test "x${r_cv_have_pcre832}" != xyes; then
+if test "x${r_cv_have_pcre810}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
+else
+AC_CACHE_CHECK([if PCRE version >= 8.32], [r_cv_have_pcre832],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef HAVE_PCRE_PCRE_H
+#include <pcre/pcre.h>
+#else
+#ifdef HAVE_PCRE_H
+#include <pcre.h>
+#endif
+#endif
+int main() {
+#if PCRE_MAJOR == 8 && PCRE_MINOR >= 32
+  exit(0);
+#else
+  exit(1);
+#endif
+}
+]])], [r_cv_have_pcre832=yes], [r_cv_have_pcre832=no], [r_cv_have_pcre832=no])])
 fi
+
 AC_MSG_CHECKING([whether PCRE support suffices])
-if test "x${r_cv_have_pcre832}" != xyes; then
-  AC_MSG_ERROR([pcre library and headers are required])
+if test "x${r_cv_have_pcre810}" != xyes; then
+  AC_MSG_ERROR([pcre >= 8.10 library and headers are required])
 else
   AC_MSG_RESULT([yes])
+fi
+if test "x${r_cv_have_pcre832}" != xyes; then
+  warn_pcre_version="pcre < 8.32 is deprecated"
+  AC_MSG_WARN([${warn_pcre_version}])
 fi
 ])# R_PCRE
 

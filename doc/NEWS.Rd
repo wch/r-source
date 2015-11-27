@@ -212,6 +212,10 @@
       \item S4 dispatch works within calls to \code{.Internal()}. This means
       explicit S4 generics are no longer needed for \code{unlist},
       \code{is.unsorted} and \code{as.vector}.
+      
+      \item Only font family names starting with \samp{"Hershey"} (and
+      not \samp{"Her"} as before) are given special treatment by the
+      graphics engine.
     }
   }
 
@@ -279,7 +283,10 @@
       \option{--disable-R-framework}: enable this if you intend to
       install under \file{/Library/Frameworks} and use with \code{R.app}.
 
-      \item The minimum supported version of PCRE is 8.32 (from Nov 2012).
+      \item The minimum preferred version of PCRE has since \R 3.0.0
+      been 8.32 (released in Nov 2012).  Versions 8.10 to 8.31 are now
+      deprecated (with warnings fron \command{configure}), but for now
+      still accepted.
     }
   }
 
@@ -374,6 +381,9 @@
       \item \code{loess(..., iterTrace=TRUE)} now provides diagnostics
       for robustness iterations, and the \code{print()} method for
       \code{summary(<loess>)} shows slightly more.
+      
+      \item The included version of PCRE has been updated to 8.38, a
+      bug-fix release.
     }
   }
 
