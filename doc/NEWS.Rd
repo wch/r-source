@@ -384,6 +384,9 @@
       
       \item The included version of PCRE has been updated to 8.38, a
       bug-fix release.
+      
+      \item \code{View()} now displays nested data frames in a more
+      friendly way.  (Request with patch in \PR{15915}.)
     }
   }
 
@@ -1542,7 +1545,7 @@
       was complex.  (\PR{16047})
 
       \item \code{"noquote"} objects may now be used as columns in
-      dataframes.  (\PR{15997})
+      data frames.  (\PR{15997})
 
       \item Some values with extremely long names were printed
       incorrectly.  (\PR{15999})
@@ -2968,7 +2971,7 @@
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
 
-      \item \code{rowsum()} has more support for matrices and dataframes
+      \item \code{rowsum()} has more support for matrices and data frames
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
 
       \item \code{predict(<lm object>, interval = "confidence", scale =
@@ -3775,7 +3778,7 @@
       which is representable as an integer (as often happens for package
       \CRANpkg{Matrix}), this is converted to an integer.
 
-      \item Matrix indexing of dataframes by two-column numeric indices
+      \item Matrix indexing of data frames by two-column numeric indices
       is now supported for replacement as well as extraction.
 
       \item \code{setNames()} now has a default for its \code{object}

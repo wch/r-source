@@ -1,6 +1,6 @@
 % File src/library/utils/man/View.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{View}
@@ -19,10 +19,11 @@ View(x, title)
     prefixed by \code{Data:}.}
 }
 \details{
-  Object \code{x} is coerced (if possible) to a data frame, and all
-  non-numeric columns are then coerced to character.   The object is
-  then viewed in a spreadsheet-like data viewer, a read-only version of
-  \code{\link{data.entry}}.
+
+  Object \code{x} is coerced (if possible) to a data frame, then
+  columns are converted to character using \code{\link{format.data.frame}}.  
+  The object is then viewed in a spreadsheet-like data viewer, a
+  read-only version of \code{\link{data.entry}}.
 
   If there are row names on the data frame that are not \code{1:nrow},
   they are displayed in a separate first column called \code{row.names}.
