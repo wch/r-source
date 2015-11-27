@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-11-21
+@set FAQ_DATE @value{FAQ_YEAR}-11-26
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -780,39 +780,7 @@ can be found at the @acronym{URL}
 @end quotation
 
 @noindent
-@c (which is the same as @url{http://cran.at.R-project.org/})
-Daily mirrors are available at @acronym{URL}s including
-
-@quotation
-@multitable @columnfractions .45 .40
-@item @url{http://cran.at.R-project.org/}
-@tab (Wirtschaftsuniversit@"at Wien, Austria)
-@item @url{http://cran.au.R-project.org/}
-@tab (University of Melbourne, Australia)
-@item @url{http://cran.br.R-project.org/}
-@tab (Universidade Federal do Paran@'a, Brazil)
-@item @url{http://cran.ch.R-project.org/}
-@tab (ETH Z@"urich, Switzerland)
-@item @url{http://cran.dk.R-project.org/}
-@tab (dotsrc.org, Aalborg, Denmark)
-@item @url{http://cran.es.R-project.org/}
-@tab (Spanish National Research Network, Madrid, Spain)
-@c @item @url{http://cran.fr.R-project.org/}
-@c @tab (INRA, Toulouse, France)
-@c @item @url{http://cran.hu.R-project.org/}
-@c @tab (Semmelweis U, Hungary)
-@item @url{http://cran.pt.R-project.org/}
-@tab (Universidade do Porto, Portugal)
-@item @url{http://cran.uk.R-project.org/}
-@tab (U of Bristol, United Kingdom)
-@c @item @url{http://cran.us.R-project.org/}
-@c @tab (pair Networks, USA)
-@c @item @url{http://cran.za.R-project.org/}
-@c @tab (Rhodes U, South Africa)
-@end multitable
-@end quotation
-
-@noindent
+and is mirrored daily to many sites around the world.
 See @url{https://CRAN.R-project.org/mirrors.html} for a complete list of
 mirrors.  Please use the @CRAN{} site closest to you to reduce network
 load.
