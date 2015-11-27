@@ -66,7 +66,7 @@ View <- function (x, title)
         else as.character(x)
     }
     x0 <- as.data.frame(x)
-    x <- lapply(x0, as.num.or.char)
+    x <- as.list(format.data.frame(x0))
     rn <- row.names(x0)
     if(any(rn != seq_along(rn))) x <- c(list(row.names = rn), x)
     if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||

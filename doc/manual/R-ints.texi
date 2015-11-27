@@ -2568,7 +2568,7 @@ File @file{data.rds} records a two-column character matrix with columns
 of dataset names and titles from the corresponding help file.  File
 @file{demo.rds} has the same structure for package demos.
 
-File @file{vignette.rds} records a dataframe with one row for each
+File @file{vignette.rds} records a data frame with one row for each
 `vignette' (@file{.[RS]nw} file in @file{inst/doc}) and with columns
 @samp{File} (the full file path in the sources), @samp{Title},
 @samp{PDF} (the pathless file name of the installed PDF version, if
