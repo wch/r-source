@@ -533,7 +533,7 @@ install r-base-dev} to obtain the additional tools required for this.
 So-called ``backports'' of the current R packages for at least the
 @dfn{stable} distribution of Debian are provided by Johannes Ranke, and
 available from @CRAN{}.  See
-@url{https://CRAN.R-project.org/bin/linux/debian/README.html} for details on R
+@url{https://CRAN.R-project.org/bin/linux/debian/index.html} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
 provided by Michael Rutter.
@@ -621,7 +621,7 @@ Books on R by R Core Team members include
 @quotation
 John M. Chambers (2008), ``Software for Data Analysis: Programming with
 R''.  Springer, New York, ISBN 978-0-387-75935-7,
-@url{https://statweb.stanford.edu/~jmc4/Rbook/}.
+@url{http://statweb.stanford.edu/~jmc4/Rbook/}.
 
 Peter Dalgaard (2008), ``Introductory Statistics with R'', 2nd edition.
 Springer, ISBN 978-0-387-79053-4,
@@ -934,14 +934,14 @@ This is also called the ``@emph{White Book}'', and introduced S version
 @item
 John M. Chambers (1998), ``Programming with Data,'' New York: Springer,
 ISBN 0-387-98503-4
-(@url{https://statweb.stanford.edu/~jmc4/Sbook/}).
+(@url{http://statweb.stanford.edu/~jmc4/Sbook/}).
 
 This ``@emph{Green Book}'' describes version 4 of S, a major revision of
 S designed by John Chambers to improve its usefulness at every stage of
 the programming process.
 @end itemize
 
-See @url{https://statweb.stanford.edu/~jmc4/papers/96.7.ps}
+See @url{http://statweb.stanford.edu/~jmc4/papers/96.7.ps}
 for further information on the ``Evolution of the S Language''.
 
 There is a huge amount of user-contributed code for S, available at the
