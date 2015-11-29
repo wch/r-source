@@ -2101,10 +2101,10 @@ system: see for example
 Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution of Gtk2 from
-@uref{http://www.gtk.org/@/download/@/win32.php} or
-@uref{http://www.gtk.org/@/download/@/win64.php} in the path: it should
-work to have both 32- and 64-bit Gtk+ @file{bin} directories in the path
-on a 64-bit version of @R{}.
+@uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win32/@/gtk+} or
+@uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win64/@/gtk+} in
+the path: it should work to have both 32- and 64-bit Gtk+ @file{bin}
+directories in the path on a 64-bit version of @R{}.
 
 @command{R CMD INSTALL} works in Windows to install source packages.  No
 additional tools are needed if the package does not contain compiled
