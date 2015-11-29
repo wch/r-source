@@ -2105,10 +2105,10 @@ system: see for example
 Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of a bundled distribution of Gtk2 from
-@uref{http://www.gtk.org/@/download/@/win32.php} or
-@uref{http://www.gtk.org/@/download/@/win64.php} in the path: it should
-work to have both 32- and 64-bit Gtk+ @file{bin} directories in the path
-on a 64-bit version of @R{}.
+@uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win32/@/gtk+} or
+@uref{http://ftp.gnome.org/@/pub/@/gnome/@/binaries/@/win64/@/gtk+} in
+the path: it should work to have both 32- and 64-bit Gtk+ @file{bin}
+directories in the path on a 64-bit version of @R{}.
 
 @command{R CMD INSTALL} works in Windows to install source packages.  No
 additional tools are needed if the package does not contain compiled
@@ -3251,21 +3251,22 @@ needed).  Recent versions allow several other libraries to be linked
 into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.
 
-@c PCRE 8.10 is from June 2010, 8.32 from Nov 2012
+@c PCRE[1] 8.10 is from June 2010, 8.32 from Nov 2012
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib} (version 1.2.5 or
 later),, @code{libbz2} (version 1.0.6 or later: called
 @pkg{bzip2-libs}/@pkg{bzip2-devel} or @pkg{libbz2-1.0}/@pkg{libbz2-dev}
 by some Linux distributions) and PCRE (version 8.10 or later, preferably
-8.32 or later@footnote{and not PCRE2, which started at version
-10.0. PCRE must be built with UTF-8 support (not the default) and
-support for Unicode properties is assumed by some @R{} packages.  Only
-the first is tested by @command{configure}, but both can be checked at
-run-time by calling @code{pcre_config()}. JIT support is desirable for
-the best performance.}): will be used, otherwise versions in the @R{}
-sources will be compiled in.  The external versions can be avoided by
-configure options @option{--without-system-zlib},
-@option{--without-system-bzlib} and @option{--without-system-pcre}.
+8.32 or later@footnote{sometimes known as PCRE1, and not PCRE2, which
+started at version 10.0. PCRE must be built with UTF-8 support (not the
+default, and checked by @command{configure}) and support for Unicode
+properties is assumed by some @R{} packages. JIT support is desirable
+for the best performance: support for this and Unicode properties can be
+checked at run-time by calling @code{pcre_config()}.}): will be used,
+otherwise versions in the @R{} sources will be compiled in.  The
+external versions can be avoided by configure options
+@option{--without-system-zlib}, @option{--without-system-bzlib} and
+@option{--without-system-pcre}.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository
