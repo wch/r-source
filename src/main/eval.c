@@ -1498,6 +1498,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT cntxt;
     PROTECT_INDEX vpi;
 
+    checkArity(op, args);
     sym = CAR(args);
     val = CADR(args);
     body = CADDR(args);
@@ -1691,6 +1692,7 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden NORET do_break(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     findcontext(PRIMVAL(op), rho, R_NilValue);
 }
 

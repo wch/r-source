@@ -874,6 +874,7 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
 {
     SEXP value;
     if(TYPEOF(class) == STRSXP) {
+	if (LENGTH(class) == 0) return R_NilValue;
 	SEXP package = PACKAGE_SLOT(class);
 	value = findVarInFrame(table, installChar(STRING_ELT(class, 0)));
 	if(value == R_UnboundValue)

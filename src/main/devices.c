@@ -213,8 +213,9 @@ int prevDevice(int from)
     else {
 	int i = from;
 	int prevDev = 0;
-	while ((i > 1) && (prevDev == 0))
-	    if (active[--i]) prevDev = i;
+	if (i < R_MaxDevices)
+	    while ((i > 1) && (prevDev == 0))
+		if (active[--i]) prevDev = i;
 	if (prevDev == 0) {
 	    /* start again from R_MaxDevices */
 	    i = R_MaxDevices;

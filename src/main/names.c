@@ -90,11 +90,11 @@ FUNTAB R_FunTab[] =
 
 /* Primitives */
 {"if",		do_if,		0,	200,	-1,	{PP_IF,	     PREC_FN,	  1}},
-{"while",	do_while,	0,	100,	-1,	{PP_WHILE,   PREC_FN,	  0}},
-{"for",		do_for,		0,	100,	-1,	{PP_FOR,     PREC_FN,	  0}},
-{"repeat",	do_repeat,	0,	100,	-1,	{PP_REPEAT,  PREC_FN,	  0}},
-{"break",	do_break, CTXT_BREAK,	0,	-1,	{PP_BREAK,   PREC_FN,	  0}},
-{"next",	do_break, CTXT_NEXT,	0,	-1,	{PP_NEXT,    PREC_FN,	  0}},
+{"while",	do_while,	0,	100,	2,	{PP_WHILE,   PREC_FN,	  0}},
+{"for",		do_for,		0,	100,	3,	{PP_FOR,     PREC_FN,	  0}},
+{"repeat",	do_repeat,	0,	100,	1,	{PP_REPEAT,  PREC_FN,	  0}},
+{"break",	do_break, CTXT_BREAK,	0,	0,	{PP_BREAK,   PREC_FN,	  0}},
+{"next",	do_break, CTXT_NEXT,	0,	0,	{PP_NEXT,    PREC_FN,	  0}},
 {"return",	do_return,	0,	0,	-1,	{PP_RETURN,  PREC_FN,	  0}},
 {"function",	do_function,	0,	0,	-1,	{PP_FUNCTION,PREC_FN,	  0}},
 {"<-",		do_set,		1,	100,	-1,	{PP_ASSIGN,  PREC_LEFT,	  1}},

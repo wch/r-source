@@ -62,8 +62,13 @@ stop.list[["base"]] <-
     } else {
 	c(inet.list, socket.fun, edit.int, misc.int, misc.2)
     }
+
+## S4 group generics should not be called directly
+## and doing so sometimes leads to infinite recursion
+s4.group.generics <- c("Arith", "Compare", "Ops", "Logic", "Math", "Math2", "Summary", "Complex")
+
 ## warning: browseAll will tend to read all the script and/or loop forever
-stop.list[["methods"]] <- c("browseAll", "recover")
+stop.list[["methods"]] <- c("browseAll", "recover", s4.group.generics)
 stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "testInstalledBasic",
                           "testInstalledPackages", # runs whole suite
@@ -84,11 +89,7 @@ if(.Platform$OS.type == "windows") cat('options(pager = "console")\n')
 cat('options(error=expression(NULL))',
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
-cat(".proctime00 <- proc.time()\n",
-    "c0 <- character(0)\n",
-    "l0 <- logical(0)\n",
-    "m0 <- matrix(1,0,0)\n",
-    "df0 <- as.data.frame(c0)\n", sep="")
+cat(".proctime00 <- proc.time()\n")
 
 for (pkg in core.pkgs) {
   cat("### Package ", pkg, "\n",
@@ -106,6 +107,12 @@ for (pkg in core.pkgs) {
       if(!(nm %in% stop.list[[pkg]]) &&
 	 is.function(f <- get(nm, pos = pkgname))) {
 	  cat("\n## ", nm, " :\n")
+
+	  cat("c0 <- character(0)\n",
+	      "l0 <- logical(0)\n",
+	      "m0 <- matrix(1,0,0)\n",
+	      "df0 <- as.data.frame(c0)\n", sep="")
+
 	  cat("f <- get(\"",nm,"\", pos = '", pkgname, "')\n", sep="")
 	  cat("f()\nf(NULL)\nf(,NULL)\nf(NULL,NULL)\n",
 	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(FALSE)\n",
