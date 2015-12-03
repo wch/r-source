@@ -160,7 +160,6 @@ info}, @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
 @c @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript}
 as well as the @url{https://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
 Texinfo source} used for creating all these formats using the
-@c @url{http://texinfo.org/, @acronym{GNU} Texinfo system}. Defunct
 @acronym{GNU} Texinfo system.
 
 You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
@@ -242,7 +241,7 @@ script files.
 
 The design of R has been heavily influenced by two existing languages:
 Becker, Chambers & Wilks' S (@pxref{What is S?}) and Sussman's
-@url{http://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
+@url{https://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
 @xref{What are the differences between R and S?}, for further details.
@@ -485,7 +484,7 @@ is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 OS X @acronym{FAQ}} has more details.
 
 Snapshots of the r-patched and r-devel versions of R are available as
-Apple installer packages at @uref{http://r.research.att.com}.
+Apple installer packages at @uref{https://r.research.att.com}.
 
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
@@ -582,6 +581,7 @@ version is always available for web browsing at
 
 Printed copies of the R reference manual for some version(s) are
 available from Network Theory Ltd, at
+@c https: is untrusted
 @url{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
 sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
 the R Foundation?}).
@@ -812,7 +812,7 @@ all Open Source licenses, permits all and any use of the package.  It
 only restricts distribution of R or of other programs containing code
 from R.  This is made clear in clause 6 (``No Discrimination Against
 Fields of Endeavor'') of the
-@url{http://www.opensource.org/docs/definition.html, Open Source
+@url{https://opensource.org/docs/definition.html, Open Source
 Definition}:
 
 @quotation
@@ -873,7 +873,7 @@ mailing lists, bug tracking, message boards/forums, site hosting,
 permanent file archival, full backups, and total web-based
 administration.  For more information, see the R-Forge web page and
 Stefan Theu@ss{}l and Achim Zeileis (2009), ``Collaborative software
-development using R-Forge'', @url{http://journal.R-project.org/, ,
+development using R-Forge'', @url{https://journal.R-project.org/, ,
 @emph{The R Journal}}, @strong{1}(1):9--14.
 
 
@@ -2081,7 +2081,7 @@ files).
 
 The latest stable version of @acronym{ESS} is available via @CRAN{} or
 the @url{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
-of the documentation can be found at @url{http://stat.ethz.ch/ESS/}.
+of the documentation can be found at @url{https://stat.ethz.ch/ESS/}.
 
 @acronym{ESS} comes with detailed installation instructions.
 
@@ -3608,7 +3608,7 @@ the subject line.
 
 A bug report can be generated using the function @code{bug.report()}.
 For reports on R this will open the Web page at
-@url{http://bugs.R-project.org/}: for a contributed package it will open
+@url{https://bugs.R-project.org/}: for a contributed package it will open
 the package's bug tracker Web page or help you compose an email to the
 maintainer.
 
