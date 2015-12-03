@@ -399,7 +399,7 @@ list("Artistic-2.0" =
        ),
 
      "LGPL" =
-     c("LGPL (see <https://www.opensource.org/licenses/lgpl-license.php>).",
+     c("LGPL (see <https://opensource.org/licenses/lgpl-license.php>).",
        "GNU LGPL (same as wxWidgets)."
        ),
 
