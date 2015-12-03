@@ -21,7 +21,7 @@
 
    You should have received a copy of the GNU Library General Public
    License along with the GNU C Library; see the file COPYING.LIB.  If not,
-   a copy is available at http://www.R-project.org/Licenses/
+   a copy is available at https://www.R-project.org/Licenses/
 */
 /* XXX This version of the implementation is not really complete.
    Some of the fields cannot add information alone.  But if seeing
@@ -540,7 +540,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    case L'e':
 		/* Match day of month using alternate numeric symbols.  */
 		get_alt_number (1, 31, 2);
-	        tm->tm_mday = val;
+		tm->tm_mday = val;
 		have_mday = 1;
 		want_xday = 1;
 		break;
@@ -548,27 +548,27 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		/* Match hour in 24-hour clock using alternate numeric
 		   symbols.  */
 		get_alt_number (0, 23, 2);
-	        tm->tm_hour = val;
+		tm->tm_hour = val;
 		have_I = 0;
 		break;
 	    case L'I':
 		/* Match hour in 12-hour clock using alternate numeric
 		   symbols.  */
 		get_alt_number (1, 12, 2);
-	        tm->tm_hour = val % 12;
+		tm->tm_hour = val % 12;
 		have_I = 1;
 		break;
 	    case L'm':
 		/* Match month using alternate numeric symbols.  */
 		get_alt_number (1, 12, 2);
-	        tm->tm_mon = val - 1;
+		tm->tm_mon = val - 1;
 		have_mon = 1;
 		want_xday = 1;
 		break;
 	    case L'M':
 		/* Match minutes using alternate numeric symbols.  */
 		get_alt_number (0, 59, 2);
-	        tm->tm_min = val;
+		tm->tm_min = val;
 		break;
 	    case L'S':
 		/* Match seconds using alternate numeric symbols.
@@ -608,8 +608,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    case L'y':
 		/* Match year within century using alternate numeric symbols.  */
 		get_alt_number (0, 99, 2);
-	        int ival = val;
-	        tm->tm_year = ival >= 69 ? ival : ival + 100;
+		int ival = val;
+		tm->tm_year = ival >= 69 ? ival : ival + 100;
 		want_xday = 1;
 		break;
 	    default:

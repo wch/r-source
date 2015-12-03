@@ -4329,7 +4329,7 @@ and suitable options might be
 @end example
 
 @noindent
-; see @uref{https://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
+; see @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which Ghostscript 9.06
 and later produced much better reductions than 9.05 or earlier.
@@ -7911,7 +7911,7 @@ Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
 the user manual for your version of @command{clang}, e.g.@:
-@uref{http://llvm.org/@/releases/@/3.6.2@//tools/@/clang/@/docs/@/UsersManual.html}.}
+@uref{http://llvm.org/@/releases/@/3.6.2@//tools/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
