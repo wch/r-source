@@ -293,7 +293,7 @@ function()
     db[db$Description != "Unassigned", ]
 }
 
-## See <http://en.wikipedia.org/wiki/List_of_FTP_server_return_codes>
+## See <https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes>
 ## and <http://tools.ietf.org/html/rfc959>,
 ## Section 4.2.2 "Numeric Order List of Reply Codes",
 ## and <https://tools.ietf.org/html/rfc2228>,

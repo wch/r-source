@@ -8229,7 +8229,7 @@ function()
     ## ASCII letters, digits and hyphen.
     ## We could also check that the local and domain parts are no longer
     ## than 64 and 255 characters, respectively.
-    ## See http://en.wikipedia.org/wiki/Email_address.
+    ## See https://en.wikipedia.org/wiki/Email_address.
     ASCII_letters_and_digits <-
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     l <- sprintf("[%s%s]", ASCII_letters_and_digits, "!#$%*/?|^{}`~&'+=_-")

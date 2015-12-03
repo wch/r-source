@@ -125,7 +125,7 @@ http://www.murdoch-sutherland.com/Rtools/Rtools.txt lists the current
 contents.
 
 The build of Tcl/Tk contained in the binary installer is taken via
-Rtools from http://www.stats.ox.ac.uk/pub/Rtools/, which hosts the
+Rtools from https://www.stats.ox.ac.uk/pub/Rtools/, which hosts the
 sources used and links to the scripts used for the build.
 
 Rbitmap.dll is built against static libraries for libpng, jpeg and
@@ -136,7 +136,7 @@ will need to specify which binary installer version).
 
 A binay build may contain compiled sources from cairographics,
 distributed under LGPL 2.1 (our choice) or MPL 1.1.  The binary
-distribution used is that at http://www.rforge.net/Cairo/files/ .
+distribution used is that at https://www.rforge.net/Cairo/files/ .
 
 A binary build may contain compiled components from ICU, whose license
 can be viewed at

@@ -140,7 +140,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
     ## A tar file is a set of 512 byte records,
     ## a header record followed by file contents (zero-padded).
-    ## See http://en.wikipedia.org/wiki/Tar_%28file_format%29
+    ## See https://en.wikipedia.org/wiki/Tar_%28file_format%29
     if(is.character(tarfile) && length(tarfile) == 1L) {
         con <- gzfile(path.expand(tarfile), "rb") # reads compressed formats
         on.exit(close(con))

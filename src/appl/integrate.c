@@ -18,7 +18,7 @@
  *
  *  Most of this file is C translations of Fortran routines in
  *  QUADPACK: the latter is part of SLATEC 'and therefore in the public
- *  domain' (http://en.wikipedia.org/wiki/QUADPACK).
+ *  domain' (https://en.wikipedia.org/wiki/QUADPACK).
  *
  *
  */

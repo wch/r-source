@@ -1511,7 +1511,7 @@ environments.
 @c support, and consulting services, as well as related R-based products.
 
 See also
-@url{http://en.wikipedia.org/wiki/R_programming_language#Commercialized_versions_of_R}
+@url{https://en.wikipedia.org/wiki/R_programming_language#Commercialized_versions_of_R}
 for pointers to commercialized versions of R.
 
 @node R Web Interfaces, R Add-On Packages, R and S, Top

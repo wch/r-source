@@ -19,7 +19,7 @@
 ## <NOTE>
 ## We want *standardized* license specs so that we can compute on them.
 ## In particular, we want to know whether licenses are recognizable as
-## FOSS (http://en.wikipedia.org/wiki/Free_and_open-source_software)
+## FOSS (https://en.wikipedia.org/wiki/Free_and_open-source_software)
 ## licenses.
 ##
 ## A license spec is standardized ("canonical") if it is an alternative
@@ -47,12 +47,12 @@
 ## by the FSF (and not rejected by the OSI).
 ##
 ## See
-##   http://www.gnu.org/licenses/license-list.html
-##   http://opensource.org/licenses/alphabetical
+##   https://www.gnu.org/licenses/license-list.html
+##   https://opensource.org/licenses/alphabetical
 ## fot the FSF and OSI license lists, and also
-##   http://www.fsf.org/licensing/licenses
-##   http://en.wikipedia.org/wiki/List_of_FSF_approved_software_licences
-##   http://en.wikipedia.org/wiki/List_of_OSI_approved_software_licences
+##   https://www.fsf.org/licensing/licenses
+##   https://en.wikipedia.org/wiki/List_of_FSF_approved_software_licences
+##   https://en.wikipedia.org/wiki/List_of_OSI_approved_software_licences
 ## for more information.
 ## </NOTE>
 
@@ -82,7 +82,7 @@ function(paths = NULL)
                                  .Platform$path.sep, fixed = TRUE))
     paths <- c(paths,
                file.path(R.home("share"), "licenses", "license.db"))
-    ldb <- Reduce(function(u, v) merge(u, v, all = TRUE), 
+    ldb <- Reduce(function(u, v) merge(u, v, all = TRUE),
                   lapply(unique(normalizePath(paths)), read.dcf))
     ## Merging matrices gives a data frame.
     ldb <- as.matrix(ldb)
@@ -269,11 +269,11 @@ function(paths = NULL)
 ## Nasty issues.
 ## * There really is no GPL version 2.0.
 ##   Unfortunately, the FSF uses 2.0 in URLs or links
-##   (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+##   (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 ##   The text clearly says "Version 2, June 1991".
 ## * There really is no LGPL version 2.0.
 ##   Unfortunately, the FSF uses 2.0 in URLs or links
-##   (http://www.gnu.org/licenses/old-licenses/).
+##   (https://www.gnu.org/licenses/old-licenses/).
 ##   The text clearly says "Version 2, June 1991".
 ## * CeCILL is a bit of a mess: the current version is referred to as
 ##   "version 2" (http://www.cecill.info/licences.en.html) but
@@ -284,7 +284,7 @@ function(paths = NULL)
 list("Artistic-2.0" =
      c("The Artistic License, Version 2.0",
        "Artistic 2.0",
-       "Artistic-2.0, see http://www.opensource.org/licenses/artistic-license-2.0.php"
+       "Artistic-2.0, see https://www.opensource.org/licenses/artistic-license-2.0.php"
        ),
 
      "BSL" =
@@ -301,7 +301,7 @@ list("Artistic-2.0" =
      c("GNU Public License",
        "Gnu GPL",
        "GNU GPL",
-       "GPL (http://www.gnu.org/copyleft/gpl.html)"
+       "GPL (https://www.gnu.org/copyleft/gpl.html)"
        ),
 
      "GPL-2" =
@@ -368,10 +368,10 @@ list("Artistic-2.0" =
        "GPL version 2 (or newer)",
        "GPL version 2 or later.",
        "GPL version 2 or newer",
-       "GPL version 2 or newer (http://www.gnu.org/copyleft/gpl.html)",
+       "GPL version 2 or newer (https://www.gnu.org/copyleft/gpl.html)",
        "GPL version 2 or newer (see README).",
        "GPL version 2 or newer.",
-       "GPL version 2 or newer. http://www.gnu.org/copyleft/gpl.html",
+       "GPL version 2 or newer. https://www.gnu.org/copyleft/gpl.html",
        "GPL version 2, or, at your option, any newer version.",
        "GPL Version 2 (or later)",
        "GPL version 2 (or later)",
@@ -399,7 +399,7 @@ list("Artistic-2.0" =
        ),
 
      "LGPL" =
-     c("LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).",
+     c("LGPL (see <https://www.opensource.org/licenses/lgpl-license.php>).",
        "GNU LGPL (same as wxWidgets)."
        ),
 
@@ -541,7 +541,7 @@ function(x)
             !is.null(x) && all(!is.na(x) & (x == v))
         ## (More generally we could test for positive length of x: but
         ## a length test is needed because all(NULL) |=> TRUE.)
-        
+
         expansions <- lapply(components,
                              expand_license_spec_component_from_db)
 
@@ -626,7 +626,7 @@ function(x)
                   standardization = standardization,
                   is_verified = is_verified,
                   components = components,
-                  expansions = expansions,    
+                  expansions = expansions,
                   extensions = extensions,
                   pointers = pointers,
                   is_FOSS = is_FOSS,
@@ -767,7 +767,7 @@ function(x)
         }
         TRUE
     }
-    
+
     if(x == "Unlimited" ||
        grepl(x, ldb_vars$re_license_file))
         return(NULL)

@@ -18,7 +18,7 @@
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, a copy is available at
-### http://www.r-project.org/Licenses/
+### https://www.r-project.org/Licenses/
 
 AC_PREREQ(2.62)
 
@@ -77,7 +77,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 case "${host_os}" in
    ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
    ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard)
-   ## http://en.wikipedia.org/wiki/Darwin_OS
+   ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
      AC_MSG_ERROR([The earliest supported OS X is 10.6.]
      ;; 
@@ -735,7 +735,7 @@ case "${host_os}" in
     ## OS X >= 10.3 include dlcompat in libSystem
     ## This is ancient history
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
-    ## http://developer.apple.com/documentation/MacOSX/ has nothing
+    ## https://developer.apple.com/documentation/MacOSX/ has nothing
     ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
     ## that it is only needed for GCC 3.x (and earlier) ...
     if test "${GCC}" = yes; then
