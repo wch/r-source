@@ -204,7 +204,7 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
 }
 
 \references{
-  \url{http://www.gnu.org/software/plotutils/plotutils.html}.
+  \url{https://www.gnu.org/software/plotutils/plotutils.html}.
 }
 \seealso{ \code{\link{demo}(Hershey)}, \code{\link{par}},
   \code{\link{text}}, \code{\link{contour}}.

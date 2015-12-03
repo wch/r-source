@@ -27,7 +27,7 @@
   \code{\link{demo}(Japanese)}, \code{\link{Hershey}}, \code{\link{text}}
 }
 \references{
-  \url{http://www.gnu.org/software/plotutils/plotutils.html}
+  \url{https://www.gnu.org/software/plotutils/plotutils.html}
 }
 \examples{
 require(graphics)
