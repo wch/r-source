@@ -284,7 +284,7 @@ function(paths = NULL)
 list("Artistic-2.0" =
      c("The Artistic License, Version 2.0",
        "Artistic 2.0",
-       "Artistic-2.0, see https://www.opensource.org/licenses/artistic-license-2.0.php"
+       "Artistic-2.0, see https://opensource.org/licenses/artistic-license-2.0.php"
        ),
 
      "BSL" =
