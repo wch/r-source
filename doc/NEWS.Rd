@@ -285,7 +285,7 @@
 
       \item The minimum preferred version of PCRE has since \R 3.0.0
       been 8.32 (released in Nov 2012).  Versions 8.10 to 8.31 are now
-      deprecated (with warnings fron \command{configure}), but for now
+      deprecated (with warnings from \command{configure}), but for now
       still accepted.
     }
   }
