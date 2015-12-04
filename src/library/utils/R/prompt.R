@@ -1,7 +1,7 @@
 #  File src/library/utils/R/prompt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ function(object, filename = NULL, name = NULL,
              keywords = c(paste("% Add one or more standard keywords,",
              "see file 'KEYWORDS' in the"),
              "% R documentation directory.",
-             "\\keyword{ ~kwd1 }",
+             "\\keyword{ ~kwd1 }% use one of  RShowDoc(\"KEYWORDS\")",
              "\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line"))
 
     Rdtxt$arguments <- if(n)
@@ -234,7 +234,7 @@ function(object, filename = NULL, name = NULL)
                 paste0("\\samp{", gsub("([%{}])", "\\\\\\1", s), "}")
             }
         }
-        
+
         fmt <- c("\\format{",
                  paste("  A data frame with",
                        nrow(x),
@@ -323,7 +323,7 @@ promptPackage <-
 function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 {
     ## Most of this should not be translated -- PR#11191
-    
+
     ## lib.loc is not used any more
     ## if (is.null(lib.loc)) lib.loc <- .libPaths()
 
@@ -342,7 +342,8 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     Rdtxt <-
     	    list(name = paste0("\\name{", name, "}"),
 #                version = "\\Rdversion{1.1}",
-    	         aliases = c(paste0("\\alias{", name, "}"), c(paste0("\\alias{", package, "}"))),
+    	         aliases = c(paste0("\\alias{", name, "}"),
+                             c(paste0("\\alias{", package, "}"))),
     	         docType = "\\docType{package}",
     	         title = c("\\title{", "}"),
     	         description = c("\\description{","}"),
@@ -362,8 +363,8 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     insert1("details", paste0("\\packageIndices{", package, "}"))
 
     if (!final) {
-        insert2("details",
-                strwrap("An overview of how to use the package, including the most important functions"))
+        insert2("details", strwrap(
+	 "An overview of how to use the package, including the most important functions"))
         Rdtxt$references <-
             c("\\references{",
               paste("~~",
@@ -393,7 +394,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     invisible(filename)
 }
 
-promptImport <- function(object, filename = NULL, name = NULL, importedFrom = NULL, 
+promptImport <- function(object, filename = NULL, name = NULL, importedFrom = NULL,
                          importPage = name, ...)
 {
     if(missing(name))
@@ -404,38 +405,41 @@ promptImport <- function(object, filename = NULL, name = NULL, importedFrom = NU
                 name <- substitute(object)
                 if(is.name(name))
                     as.character(name)
-                else if (is.language(name) && length(name) == 3 && identical(name[[1]], as.name("::")))
+                else if (is.language(name) && length(name) == 3 &&
+                         identical(name[[1]], as.name("::")))
                     as.character(name[[3]])
                 else
                     stop("cannot determine a usable name")
             }
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
-       
+
     x <- if(!missing(object))
         object
     else {
         ## Better than get(); works when called in fun :
         x <- get(name, envir = parent.frame())
     }
-    
+
     if(is.null(importedFrom)) {
 	if (is.function(x))
 	    importedFrom <- getNamespaceName(environment(x))
 	else
 	    stop("cannot determine import name")
     }
-    
+
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),
              aliases = paste0("\\alias{", name, "}"),
              docType = "\\docType{import}",
              title = paste0("\\title{Import from package \\pkg{", importedFrom, "}}"),
-             description = c("\\description{",
-               paste0("The \\code{", name, "} object is imported from package \\pkg{", importedFrom, "}."),
-               paste0("Help is available here:  \\code{\\link[", importedFrom, ":", importPage, "]{", 
-                      importedFrom, "::", importPage, "}}."),
-               "}"))
+             description =
+                 c("\\description{",
+                   paste0("The \\code{", name, "} object is imported from package \\pkg{",
+                          importedFrom, "}."),
+                   paste0("Help is available here:  \\code{\\link[", importedFrom, ":",
+                          importPage, "]{", importedFrom, "::", importPage, "}}."),
+                   "}"))
 
     if(is.na(filename)) return(Rdtxt)
 
@@ -444,6 +448,6 @@ promptImport <- function(object, filename = NULL, name = NULL, importedFrom = NU
     message(gettextf("Created file named %s.", sQuote(filename)),
             "\n",
             gettext("Edit the file and move it to the appropriate directory."),
-            domain = NA)    
+            domain = NA)
 }
 
