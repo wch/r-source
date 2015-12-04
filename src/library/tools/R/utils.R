@@ -1407,6 +1407,7 @@ function(package)
              HyperbolicDist = "log.hist",
              MASS = c("frequency.polygon", "gamma.dispersion", "gamma.shape",
                       "hist.FD", "hist.scott"),
+             LinearizedSVR = "sigma.est",
              ## FIXME: since these are already listed with 'base',
              ##        they should not need to be repeated here:
              Matrix = c("qr.Q", "qr.R", "qr.coef", "qr.fitted",
@@ -1414,7 +1415,10 @@ function(package)
              RCurl = "merge.list",
              RNetCDF = c("close.nc", "dim.def.nc", "dim.inq.nc",
                          "dim.rename.nc", "open.nc", "print.nc"),
+             Rmpfr = c("mpfr.is.0", "mpfr.is.integer"),
              SMPracticals = "exp.gibbs",
+             TANOVA = "sigma.hat",
+             TeachingDemos = "sigma.test",
              XML = "text.SAX",
              ape = "sort.index",
              arm = "sigma.hat", # lme4 has sigma()
@@ -1427,6 +1431,8 @@ function(package)
              crossdes = "all.combn",
              ctv = "update.views",
              deSolve = "plot.1D",
+             effects = "all.effects", # already deprecated
+             elliptic = "sigma.laurent",
              equivalence = "sign.boot",
              fields = c("qr.q2ty", "qr.yq2"),
              gbm = c("pretty.gbm.tree", "quantile.rug"),
@@ -1453,9 +1459,10 @@ function(package)
              sm = "print.graph",
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
-             stats = c("anova.lmlist", "fitted.values", "lag.plot",
-                       "influence.measures", "t.test",
+	     stats = c("anova.lmlist", "expand.model.frame", "fitted.values",
+		       "influence.measures", "lag.plot", "t.test",
                        "plot.spec.phase", "plot.spec.coherency"),
+             stremo = "sigma.hat",
              supclust = c("sign.change", "sign.flip"),
              tensorA = "chol.tensor",
              utils = c("close.socket", "flush.console", "update.packages")
