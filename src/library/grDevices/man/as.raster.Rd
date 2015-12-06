@@ -1,6 +1,6 @@
 % File src/library/grid/man/as.raster.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.raster}
@@ -86,7 +86,7 @@ as.raster(matrix(hcl(0, 80, seq(50, 80, 10)),
 as.raster(hcl(0, 80, seq(50, 80, 10)))
 #   numeric vectors are greyscale ...
 as.raster(1:5, max = 5)
-#   locigal vectors are black and white ...
+#   logical vectors are black and white ...
 as.raster(1:10 \%\% 2 == 0)
 
 # ... unless nrow/ncol are supplied ...
