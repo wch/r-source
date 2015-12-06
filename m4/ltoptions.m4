@@ -166,7 +166,7 @@ m4_define([_LT_ENABLE_SHARED],
 [m4_define([_LT_ENABLE_SHARED_DEFAULT], [m4_if($1, no, no, yes)])dnl
 AC_ARG_ENABLE([shared],
     [AS_HELP_STRING([--enable-shared@<:@=PKGS@:>@],
-	[build shared libraries @<:@default=]_LT_ENABLE_SHARED_DEFAULT[@:>@])],
+	[(libtool) build shared libraries @<:@default=]_LT_ENABLE_SHARED_DEFAULT[@:>@])],
     [p=${PACKAGE-default}
     case $enableval in
     yes) enable_shared=yes ;;
@@ -220,7 +220,7 @@ m4_define([_LT_ENABLE_STATIC],
 [m4_define([_LT_ENABLE_STATIC_DEFAULT], [m4_if($1, no, no, yes)])dnl
 AC_ARG_ENABLE([static],
     [AS_HELP_STRING([--enable-static@<:@=PKGS@:>@],
-	[build static libraries @<:@default=]_LT_ENABLE_STATIC_DEFAULT[@:>@])],
+	[(libtool) build static libraries @<:@default=]_LT_ENABLE_STATIC_DEFAULT[@:>@])],
     [p=${PACKAGE-default}
     case $enableval in
     yes) enable_static=yes ;;
@@ -274,7 +274,7 @@ m4_define([_LT_ENABLE_FAST_INSTALL],
 [m4_define([_LT_ENABLE_FAST_INSTALL_DEFAULT], [m4_if($1, no, no, yes)])dnl
 AC_ARG_ENABLE([fast-install],
     [AS_HELP_STRING([--enable-fast-install@<:@=PKGS@:>@],
-    [optimize for fast installation @<:@default=]_LT_ENABLE_FAST_INSTALL_DEFAULT[@:>@])],
+    [(libtool) optimize for fast installation @<:@default=]_LT_ENABLE_FAST_INSTALL_DEFAULT[@:>@])],
     [p=${PACKAGE-default}
     case $enableval in
     yes) enable_fast_install=yes ;;
@@ -334,7 +334,7 @@ power*-*-aix[[5-9]]*,yes)
   AC_MSG_CHECKING([which variant of shared library versioning to provide])
   AC_ARG_WITH([aix-soname],
     [AS_HELP_STRING([--with-aix-soname=aix|svr4|both],
-      [shared library versioning (aka "SONAME") variant to provide on AIX, @<:@default=]_LT_WITH_AIX_SONAME_DEFAULT[@:>@.])],
+      [(libtool( shared library versioning (aka "SONAME") variant to provide on AIX, @<:@default=]_LT_WITH_AIX_SONAME_DEFAULT[@:>@.])],
     [case $withval in
     aix|svr4|both)
       ;;
@@ -382,7 +382,7 @@ LT_OPTION_DEFINE([LT_INIT], [aix-soname=svr4], [_LT_WITH_AIX_SONAME([svr4])])
 m4_define([_LT_WITH_PIC],
 [AC_ARG_WITH([pic],
     [AS_HELP_STRING([--with-pic@<:@=PKGS@:>@],
-	[try to use only PIC/non-PIC objects @<:@default=use both@:>@])],
+	[(libtool) try to use only PIC/non-PIC objects @<:@default=use both@:>@])],
     [lt_p=${PACKAGE-default}
     case $withval in
     yes|no) pic_mode=$withval ;;
