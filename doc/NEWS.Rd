@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.2.2 patched}{
+\section{\Rlogo CHANGES IN R 3.2.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item Some recently-added Windows time zone names have been added
