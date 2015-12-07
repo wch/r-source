@@ -107,8 +107,8 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (KS) [https]",USA,Lawrence,https://rweb.crmda.ku.edu/cran/,"University of Kansas, Lawrence, KS","Paul Johnson <pauljohn # ku.edu>",1,us,"secure_mirror_from_master"
 "USA (KS)",USA,Lawrence,http://rweb.crmda.ku.edu/cran/,"University of Kansas, Lawrence, KS","Paul Johnson <pauljohn # ku.edu>",1,us,"secure_mirror_from_master"
-"USA (MD) [https]",USA,Bethesda,https://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",1,us
-"USA (MD)",USA,Bethesda,http://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",1,us
+"USA (MD) [https]",USA,Bethesda,https://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",0,us
+"USA (MD)",USA,Bethesda,http://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",0,us
 "USA (MI 1) [https]",USA,Houghton,https://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 1)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 2)",USA,Lansing,http://www.go-parts.com/mirrors-usa/cran/,Go-Parts,"Ray Sison <mirrors # go-parts.com>",1,us
@@ -117,7 +117,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (OH 1)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us
 "USA (OH 2)",USA,Dayton,http://iis.stat.wright.edu/CRAN/,"Wright State University, Dayton, OH","Long Qu <long.qu # wright.edu>",1,us
 "USA (OR)",USA,Corvallis,http://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us
-"USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,1,us
+"USA (PA 1)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",,0,us
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com/,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",1,us
 "USA (TN) [https]",USA,"Oak Ridge",https://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us
 "USA (TN)",USA,"Oak Ridge",http://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us
