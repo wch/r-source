@@ -1769,10 +1769,11 @@ Optional Features:
   --enable-java           enable Java [yes]
   --enable-byte-compiled-packages
                           byte-compile base and recommended packages [yes]
-  --enable-static[=PKGS]  build static libraries [default=no]
-  --enable-shared[=PKGS]  build shared libraries [default=yes]
+  --enable-static[=PKGS]  (libtool) build static libraries [default=no]
+  --enable-shared[=PKGS]  (libtool) build shared libraries [default=yes]
   --enable-fast-install[=PKGS]
-                          optimize for fast installation [default=yes]
+                          (libtool) optimize for fast installation
+                          [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-long-double    use long double type [yes]
   --disable-openmp        do not use OpenMP
@@ -1810,11 +1811,11 @@ Optional Packages:
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-ICU              use ICU library (if available) [yes]
-  --with-pic[=PKGS]       try to use only PIC/non-PIC objects [default=use
-                          both]
+  --with-pic[=PKGS]       (libtool) try to use only PIC/non-PIC objects
+                          [default=use both]
   --with-aix-soname=aix|svr4|both
-                          shared library versioning (aka "SONAME") variant to
-                          provide on AIX, [default=aix].
+                          (libtool( shared library versioning (aka "SONAME")
+                          variant to provide on AIX, [default=aix].
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
                           compiler's sysroot if not specified).
@@ -25055,7 +25056,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25058: \"$ac_link\") >&5
+(eval echo $as_me:25059: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25130,7 +25131,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25133: \"$ac_link\") >&5
+(eval echo $as_me:25134: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
