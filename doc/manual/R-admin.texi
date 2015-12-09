@@ -1797,12 +1797,13 @@ pkgutil --files org.r-project.x86_64.texinfo
 @noindent
 These are paths relative to @file{/}, the root of the file system.
 @c Maybe too dangerous for naive users.
+@c file.remove removes empty directories on Unix.
 @c The second could be uninstalled by an @R{} script like
 
 @c @example
 @c lis <- system2("pkgutil", "--files org.r-project.x86_64.texinfo", stdout = TRUE)
 @c setwd("/")
-@c unlink(rev(lis))
+@c file.remove(rev(lis))
 @c @end example
 
 @c @noindent
