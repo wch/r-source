@@ -76,7 +76,8 @@ list(
 ## functions.
 
 .addBasicGeneric <-
-    function(funslist, f, fdef, group = list(), internal = FALSE)
+    function(funslist, f, fdef, group = list(), internal = FALSE,
+             internalArgs = names(formals(deflt)))
 {
     deflt <- get(f, "package:base")
     ## use the arguments of the base package function
@@ -89,6 +90,13 @@ list(
             substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
     }
     else {
+        if (internal) {
+            formals(deflt) <- setNames(rep(alist(x=), length(internalArgs)),
+                                       internalArgs)
+            call <- as.call(c(as.name(f), lapply(internalArgs, as.name)))
+            body(deflt, envir = globalenv()) <-
+                substitute(.Internal(CALL), list(CALL=call))
+        }
         fdef <- deflt
         body(fdef, envir = globalenv()) <-
             substitute(standardGeneric(FNAME), list(FNAME=f))
@@ -125,7 +133,7 @@ list(
 ## temporary versions while primitives are still handled by a global table
 
 isBaseFun <- function(fun) {
-    is.primitive(fun) || identical(environment(fun), baseenv())
+    is.primitive(fun) || identical(environment(fun), .BaseNamespaceEnv)
 }
 
 inBasicFuns <- function(f) {

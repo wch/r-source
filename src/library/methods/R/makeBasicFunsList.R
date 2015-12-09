@@ -159,7 +159,8 @@ utils::globalVariables(".addBasicGeneric")
 		    knownMembers = members, package = "base")
 
     funs <- .addBasicGeneric(funs, "unlist", internal=TRUE)
-    funs <- .addBasicGeneric(funs, "is.unsorted", internal=TRUE)
+    funs <- .addBasicGeneric(funs, "is.unsorted", internal=TRUE,
+                             internalArgs=c("x", "strictly"))
     funs <- .addBasicGeneric(funs, "as.vector", internal=TRUE)
     
     assign(".BasicFunsList", funs, envir=where)

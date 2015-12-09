@@ -1260,11 +1260,8 @@ getGenericFromCall <- function(call, methodEnv) {
     generic <- methodEnv$.Generic
     if(is.null(generic)) {
         fdef <- if (is.name(call[[1L]]))
-            get(as.character(call[[1L]]), envir = methodEnv)
+            getGeneric(as.character(call[[1L]]), mustFind=TRUE, where=methodEnv)
         else call[[1L]]
-        if (isBaseFun(fdef)) {
-            fdef <- getGeneric(fdef, mustFind=TRUE)
-        }
         generic <- environment(fdef)$.Generic
     }
     generic

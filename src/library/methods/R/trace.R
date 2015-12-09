@@ -133,6 +133,7 @@
         temp <- .findFunEnvAndName(what, where, signature)
         whereF <- temp$whereF
         pname <- temp$pname
+        fname <- what
     }
     if(what %in% .InvalidTracedFunctions)
         stop(gettextf("tracing the internal function %s is not allowed",
@@ -159,7 +160,9 @@
     if(is(def, "traceable") && identical(edit, FALSE) && !untrace)
         def <- .untracedFunction(def)
     if(!is.null(signature)) {
-        fdef <- if(is.primitive(def))  getGeneric(what, TRUE, where) else def
+        fdef <- if (!is(def, "genericFunction"))
+                    getGeneric(as.character(fname), TRUE, where)
+                else def
         def <- selectMethod(what, signature, fdef = fdef, optional = TRUE)
         if(is.null(def)) {
             warning(gettextf("cannot untrace method for %s; no method defined for this signature: %s",

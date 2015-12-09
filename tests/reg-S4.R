@@ -612,8 +612,8 @@ stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
 ## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
 ## because internal dispatch did not work for length().
 
-setMethod("is.unsorted", "A", function(x, na.rm=FALSE, strictly=FALSE)
-    is.unsorted(x@aa, na.rm=na.rm, strictly=strictly))
+setMethod("is.unsorted", "A", function(x, strictly)
+    is.unsorted(x@aa, strictly=strictly))
 
 stopifnot(!is.unsorted(a), # 11:16 *is* sorted
 	  is.unsorted(rev(a)))
