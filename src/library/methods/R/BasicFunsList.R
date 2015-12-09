@@ -86,7 +86,7 @@ list(
     ## => constructing a call to the base function from the default
     if(is.primitive(deflt)) {
         signature <- attr(fdef, "signature") #typically NULL, but see the case for "$"
-        body(fdef, envir = globalenv()) <-
+        body(fdef, envir = baseenv()) <-
             substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
     }
     else {
@@ -94,11 +94,11 @@ list(
             formals(deflt) <- setNames(rep(alist(x=), length(internalArgs)),
                                        internalArgs)
             call <- as.call(c(as.name(f), lapply(internalArgs, as.name)))
-            body(deflt, envir = globalenv()) <-
+            body(deflt, envir = baseenv()) <-
                 substitute(.Internal(CALL), list(CALL=call))
         }
         fdef <- deflt
-        body(fdef, envir = globalenv()) <-
+        body(fdef, envir = topenv()) <-
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
     deflt <- .derivedDefaultMethod(deflt, internal = if (internal) f)

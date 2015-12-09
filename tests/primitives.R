@@ -89,7 +89,7 @@ xx <- new("foo",  x=1, y=2)
 S4gen <- ff4[vapply(meth.FList, is.function, NA, USE.NAMES=FALSE)]
 for(f in S4gen) {
     g <- get(f)
-    if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.
+    if(!is(g, "genericFunction")) g <- getGeneric(f) # error on non-Generics.
     ff <- args(g)
     body(ff) <- "testit"
     nm <- names(formals(ff))
