@@ -216,6 +216,9 @@
       \item Only font family names starting with \samp{"Hershey"} (and
       not \samp{"Her"} as before) are given special treatment by the
       graphics engine.
+
+      \item S4 values are automatically coerced to vector (via
+      \code{as.vector}) when subassigned into atomic vectors.
     }
   }
 
@@ -254,6 +257,12 @@
       and their defaults can be set \emph{via} options.  The
       out-of-the-box default remains \code{"wininet"} (as it has been
       since \R 3.2.2).
+
+      \item \code{[<-} with an S4 value into a list currently embeds the
+      S4 object into its own list such that the end result is roughly
+      equivalent to using \code{[[<-}. That behavior is deprecated. In
+      the future, the S4 value will be coerced to a list with
+      \code{as.list}.
     }
   }
 

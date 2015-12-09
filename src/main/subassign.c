@@ -190,13 +190,26 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 /* used instead of coerceVector to embed a non-vector in a list for
    purposes of SubassignTypeFix, for cases in wich coerceVector should
    fail; namely, S4SXP */
-static SEXP embedInVector(SEXP v)
+static SEXP embedInVector(SEXP v, SEXP call)
 {
     SEXP ans;
+    warningcall(call, "implicit list embedding of S4 objects is deprecated");
     PROTECT(ans = allocVector(VECSXP, 1));
     SET_VECTOR_ELT(ans, 0, v);
     UNPROTECT(1);
     return (ans);
+}
+
+static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
+    static SEXP op = NULL;
+    SEXP args;
+    Rboolean ans;
+    if (op == NULL)
+        op = R_Primitive("as.vector");
+    PROTECT(args = list2(*x, mkString("any")));
+    ans = DispatchOrEval(call, op, "as.vector", args, rho, x, 0, 1);
+    UNPROTECT(1);
+    return ans;
 }
 
 /* Level 1 is used in VectorAssign, MatrixAssign, ArrayAssign.
@@ -207,7 +220,7 @@ static SEXP embedInVector(SEXP v)
 */
 
 static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
-			    SEXP call)
+			    SEXP call, SEXP rho)
 {
     /* A rather pointless optimization, but level 2 used to be handled
        differently */
@@ -308,7 +321,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 
 	if (level == 1) {
 	    /* Embed the RHS into a list */
-	    *y = embedInVector(*y);
+	    *y = embedInVector(*y, call);
 	} else {
 	    /* Nothing to do here: duplicate when used (if needed) */
 	    redo_which = FALSE;
@@ -357,13 +370,23 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 
 	if (level == 1) {
 	    /* Embed the RHS into a list */
-	    *y = embedInVector(*y);
+	    *y = embedInVector(*y, call);
 	} else {
 	    /* Nothing to do here: duplicate when used (if needed) */
 	    redo_which = FALSE;
 	}
 	break;
 
+    case 1025: /* logical   <- S4 */
+    case 1325: /* integer   <- S4 */
+    case 1425: /* real      <- S4 */
+    case 1525: /* complex   <- S4 */
+    case 1625: /* character <- S4 */
+    case 2425: /* raw       <- S4 */
+        if (dispatch_asvector(y, call, rho)) {
+            return SubassignTypeFix(x, y, stretch, level, call, rho);
+        }
+        
     default:
 	error(_("incompatible types (from %s to %s) in subassignment type fix"),
 	      type2char(which%100), type2char(which/100));
@@ -462,7 +485,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
     return val;
 }
 
-static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
+static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
     SEXP indx, newnames;
     R_xlen_t i, ii, n, nx, ny, iny;
@@ -529,7 +552,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* Here we make sure that the LHS has */
     /* been coerced into a form which can */
     /* accept elements from the RHS. */
-    which = SubassignTypeFix(&x, &y, stretch, 1, call);
+    which = SubassignTypeFix(&x, &y, stretch, 1, call, rho);
     /* = 100 * TYPEOF(x) + TYPEOF(y);*/
     if (n == 0) {
 	UNPROTECT(2);
@@ -780,7 +803,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 
-static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
+static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
     int i, j, ii, jj, iy, which;
     double ry;
@@ -822,7 +845,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     if (n > 0 && n % ny)
 	error(_("number of items to replace is not a multiple of replacement length"));
 
-    which = SubassignTypeFix(&x, &y, 0, 1, call);
+    which = SubassignTypeFix(&x, &y, 0, 1, call, rho);
     if (n == 0) return x;
 
     PROTECT(x);
@@ -1061,7 +1084,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 }
 
 
-static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
+static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
     int k = 0;
     SEXP dims, tmp;
@@ -1118,7 +1141,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* Here we make sure that the LHS has been coerced into */
     /* a form which can accept elements from the RHS. */
 
-    int which = SubassignTypeFix(&x, &y, 0, 1, call);/* = 100 * TYPEOF(x) + TYPEOF(y);*/
+    int which = SubassignTypeFix(&x, &y, 0, 1, call, rho);/* = 100 * TYPEOF(x) + TYPEOF(y);*/
 
     if (n == 0) {
 	UNPROTECT(1);
@@ -1517,16 +1540,16 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     case RAWSXP:
 	switch (nsubs) {
 	case 0:
-	    x = VectorAssign(call, x, R_MissingArg, y);
+	    x = VectorAssign(call, rho, x, R_MissingArg, y);
 	    break;
 	case 1:
-	    x = VectorAssign(call, x, CAR(subs), y);
+	    x = VectorAssign(call, rho, x, CAR(subs), y);
 	    break;
 	case 2:
-	    x = MatrixAssign(call, x, subs, y);
+	    x = MatrixAssign(call, rho, x, subs, y);
 	    break;
 	default:
-	    x = ArrayAssign(call, x, subs, y);
+	    x = ArrayAssign(call, rho, x, subs, y);
 	    break;
 	}
 	break;
@@ -1728,7 +1751,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1); /* indx */
 	}
 
-	which = SubassignTypeFix(&x, &y, stretch, 2, call);
+	which = SubassignTypeFix(&x, &y, stretch, 2, call, rho);
 
 	PROTECT(x);
 	PROTECT(y);
