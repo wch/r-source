@@ -86,7 +86,7 @@ list(
     ## => constructing a call to the base function from the default
     if(is.primitive(deflt)) {
         signature <- attr(fdef, "signature") #typically NULL, but see the case for "$"
-        body(fdef, envir = baseenv()) <-
+        body(fdef, envir = topenv()) <-
             substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
     }
     else {
