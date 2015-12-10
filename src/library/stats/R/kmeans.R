@@ -93,7 +93,6 @@ function(x, centers, iter.max = 10L, nstart = 1L,
                     "MacQueen" = 3L)
     storage.mode(x) <- "double"
     if(length(centers) == 1L) {
-	if (centers == 1) nmeth <- 3L
 	k <- centers
         ## we need to avoid duplicates here
         if(nstart == 1L)
@@ -116,6 +115,7 @@ function(x, centers, iter.max = 10L, nstart = 1L,
     }
     k <- as.integer(k)
     if(is.na(k)) stop("'invalid value of 'k'")
+    if (k == 1L) nmeth <- 3L # Hartigan-Wong, (Fortran) needs k > 1
     iter.max <- as.integer(iter.max)
     if(is.na(iter.max) || iter.max < 1L) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))
