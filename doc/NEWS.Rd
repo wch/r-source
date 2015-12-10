@@ -212,7 +212,7 @@
       \item S4 dispatch works within calls to \code{.Internal()}. This means
       explicit S4 generics are no longer needed for \code{unlist},
       \code{is.unsorted} and \code{as.vector}.
-      
+
       \item Only font family names starting with \samp{"Hershey"} (and
       not \samp{"Her"} as before) are given special treatment by the
       graphics engine.
@@ -354,6 +354,18 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.2.3 patched}{
+  %% \subsection{NEW FEATURES}{
+  %%   \itemize{
+  %%   }
+  %% }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{kmeans(x, centers = <1-row>)} now works. (\PR{16623})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.2.3}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -390,10 +402,10 @@
       \item \code{loess(..., iterTrace=TRUE)} now provides diagnostics
       for robustness iterations, and the \code{print()} method for
       \code{summary(<loess>)} shows slightly more.
-      
+
       \item The included version of PCRE has been updated to 8.38, a
       bug-fix release.
-      
+
       \item \code{View()} now displays nested data frames in a more
       friendly way.  (Request with patch in \PR{15915}.)
     }

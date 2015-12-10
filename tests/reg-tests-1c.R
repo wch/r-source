@@ -1143,3 +1143,13 @@ nr2 <- nr + (nd > 1)
 stopifnot(identical(r.2,               rep_len(b.m, length(r.2))),
           identical(substr(r, nr,nr2), rep_len(dm.s, length(r))))
 ## several cases (1, 5, 9, 10,..) were wrong in R 3.2.2
+
+
+## kmeans with just one center -- PR#16623
+set.seed(23)
+x <- rbind(matrix(rnorm(100,           sd = 0.3), ncol = 2),
+           matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2))
+k1 <- kmeans(x, 1)
+k2 <- kmeans(x, centers = k1$centers)
+stopifnot(all.equal(k1, k2), k1$cluster == 1)
+## the kmeans(*, centers=.) called failed in R <= 3.2.3
