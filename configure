@@ -3778,7 +3778,7 @@ _ACEOF
 case "${host_os}" in
    ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
    ## with 13 being 10.9.  We no longer support < 10.4 (Tiger)
-   ## http://en.wikipedia.org/wiki/Darwin_OS
+   ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
      as_fn_error $? "The earliest supported OS X is 10.4.
      ;;
@@ -20811,7 +20811,7 @@ else
 fi
 
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
-    ## http://developer.apple.com/documentation/MacOSX/ has nothing
+    ## https://developer.apple.com/documentation/MacOSX/ has nothing
     ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
     ## that it is only needed for GCC 3.x (and earlier) ...
     if test "${GCC}" = yes; then
@@ -33562,6 +33562,7 @@ if ${r_cv_bsd_networking+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "${ac_cv_header_netdb_h}" = yes \
+     && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
      && test "${ac_cv_header_sys_socket_h}" = yes \
      && test "${ac_cv_search_connect}" != no \
@@ -36659,11 +36660,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36662: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36663: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36666: \$? = $ac_status" >&5
+   echo "$as_me:36667: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36758,11 +36759,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36761: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36762: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36765: \$? = $ac_status" >&5
+   echo "$as_me:36766: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36810,11 +36811,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36813: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36814: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36817: \$? = $ac_status" >&5
+   echo "$as_me:36818: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
