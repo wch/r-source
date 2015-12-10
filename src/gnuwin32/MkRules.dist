@@ -9,7 +9,7 @@
 
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
-# on CRAN can be found at http://www.stats.ox.ac.uk/pub/Rtools/libs.html
+# on CRAN can be found at https://www.stats.ox.ac.uk/pub/Rtools/libs.html
 # It can be interrogated by 'R CMD config LOCAL_SOFT'
 # Use 'make rsync-extsoft' to populate the default directory.
 # LOCAL_SOFT = $(R_HOME)/extsoft
@@ -19,7 +19,7 @@
 # Path of library directory containing zlib, bzlib, liblzma, pcre,
 # libpng, libjpeg, libtiff.
 # A suitable version can be found at
-# http://www.stats.ox.ac.uk/pub/Rtools/libs.html
+# https://www.stats.ox.ac.uk/pub/Rtools/libs.html
 # or use 'make rsync-extsoft' to populate the default directory.
 # EXT_LIBS = $(LOCAL_SOFT)
 
@@ -100,7 +100,7 @@
 
 # For the cairographics devices
 # Optionally use a static build of cairographics from
-#   http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
+#   https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz
 # and set CAIRO_HOME to the parent of the win32/win64 directories
 #
 # If CAIRO_HOME is not set the devices are not built.

@@ -16,7 +16,7 @@
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, a copy is available at
-### http://www.r-project.org/Licenses/
+### https://www.r-project.org/Licenses/
 
 ### * General support macros
 
@@ -1968,6 +1968,8 @@ AC_DEFUN([R_BSD_NETWORKING],
 [AC_CACHE_CHECK([for BSD networking],
                 [r_cv_bsd_networking],
 [if test "${ac_cv_header_netdb_h}" = yes \
+dnl needed for Rhttpd.c but missed before R 3.2.3
+     && test "${ac_cv_header_arpa_inet_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
      && test "${ac_cv_header_sys_socket_h}" = yes \
      && test "${ac_cv_search_connect}" != no \
@@ -2498,7 +2500,7 @@ AC_SUBST(use_tcltk)
 ##
 ## This is based on ACX_BLAS by Steven G. Johnson <stevenj@alum.mit.edu>
 ## from the Official Autoconf Macro Archive
-## (http://www.gnu.org/software/ac-archive/htmldoc/acx_blas.m4),
+## (https://www.gnu.org/software/ac-archive/htmldoc/acx_blas.m4),
 ## with the following changes:
 ## * We also handle HPUX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
@@ -2864,7 +2866,7 @@ AC_SUBST(BLAS_LIBS)
 ##
 ## This is roughly based on ACX_LAPACK by Steven G. Johnson
 ## <stevenj@alum.mit.edu> from the Official Autoconf Macro Archive
-## (http://www.gnu.org/software/ac-archive/htmldoc/acx_lapack.m4),
+## (https://www.gnu.org/software/ac-archive/htmldoc/acx_lapack.m4),
 ## with the following changes:
 ## * We also handle HPUX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.

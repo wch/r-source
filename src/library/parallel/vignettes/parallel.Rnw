@@ -105,7 +105,7 @@ processes.  They can be created in one of three ways:
   `cluster' of nodes.
 
 \item \emph{Via} forking.  \emph{Fork} is a
-  concept\footnote{\url{http://en.wikipedia.org/wiki/Fork_(operating_system)}}
+  concept\footnote{\url{https://en.wikipedia.org/wiki/Fork_(operating_system)}}
   from POSIX operating systems, and should be available on all \R{}
   platforms except Windows.  This creates a new \R{} process by taking
   a complete copy of the master process, including the workspace and

@@ -53,8 +53,8 @@ R: Makefile
 	@BUILD_PCRE_TRUE@ @$(MAKE) $(noinst_LIBRARIES)
 
 libpcre.a: $(libpcre_a_OBJECTS)
-	rm -f $@
-	$(AR) cr $@ $(libpcre_a_OBJECTS)
+	@rm -f $@
+	$(AR) -cr $@ $(libpcre_a_OBJECTS)
 	$(RANLIB) $@
 
 mostlyclean: clean

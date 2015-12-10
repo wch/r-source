@@ -47,8 +47,8 @@ R: Makedeps
 	@$(MAKE) libappl.a
 
 libappl.a: $(OBJECTS)
-	rm -f $@
-	$(AR) cr $@ $(OBJECTS)
+	@rm -f $@
+	$(AR) -cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
 blas.o: $(top_srcdir)/src/extra/blas/blas.f

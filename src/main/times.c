@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014  The R Core Team.
+ *  Copyright (C) 2000-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ double currentTime(void)
     /* No known current OSes */
     /* Disallowed by POSIX (1988-):
        http://www.mail-archive.com/leapsecs@rom.usno.navy.mil/msg00109.html
-       http://en.wikipedia.org/wiki/Unix_time
+       https://en.wikipedia.org/wiki/Unix_time
     */
     if (!ISNAN(ans)) {
 	ans -= n_leapseconds;

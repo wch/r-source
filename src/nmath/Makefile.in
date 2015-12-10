@@ -72,8 +72,8 @@ R: Makedeps
 	@$(MAKE) libnmath.a
 
 libnmath.a: $(OBJECTS)
-	rm -rf $@
-	$(AR) cr $@ $(OBJECTS)
+	@rm -rf $@
+	$(AR) -cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
 mostlyclean: clean
