@@ -355,10 +355,13 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.2.3 patched}{
-  %% \subsection{NEW FEATURES}{
-  %%   \itemize{
-  %%   }
-  %% }
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{install.packages()} and related functions now give a
+      more informative warning when an attempt is made to install a base
+      package.
+    }
+  }
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{kmeans(x, centers = <1-row>)} now works. (\PR{16623})
