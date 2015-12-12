@@ -19,6 +19,11 @@
 if (.Platform$OS.type == "windows")
     .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
 
+isBasePkg <- function(pkg) {
+  priority <- tryCatch(packageDescription(pkg, fields = "Priority"), error = function(e) e, warning = function(e) e)
+  !inherits(priority, "condition") && priority == "base"
+}
+
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
              binary = FALSE)
@@ -53,6 +58,13 @@ getDependencies <-
 				 "packages %s are not available (%s)"),
 			paste(sQuote(p0[miss]), collapse = ", "), msg),
                 domain = NA, call. = FALSE)
+        base <- vapply(p0[miss], isBasePkg, FALSE)
+        if (sum(base))
+          warning(sprintf(ngettext(sum(base),
+                                   "package %s is a base package, and should not be updated",
+                                   "packages %s are base packages, and should not be updated"),
+                          paste(sQuote(p0[miss][base]), collapse = ", ")),
+                  domain = NA, call. = FALSE)
         if (sum(miss) == 1L &&
             !is.na(w <- match(tolower(p0[miss]),
                               tolower(row.names(available))))) {
