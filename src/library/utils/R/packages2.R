@@ -20,8 +20,9 @@ if (.Platform$OS.type == "windows")
     .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
 
 isBasePkg <- function(pkg) {
-  priority <- tryCatch(packageDescription(pkg, fields = "Priority"), error = function(e) e, warning = function(e) e)
-  !inherits(priority, "condition") && priority == "base"
+  priority <- tryCatch(packageDescription(pkg, fields = "Priority"),
+                       error = function(e) e, warning = function(e) e)
+  !inherits(priority, "condition") && identical(priority, "base")
 }
 
 getDependencies <-
