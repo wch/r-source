@@ -22,7 +22,7 @@ if (.Platform$OS.type == "windows")
 isBasePkg <- function(pkg) {
   priority <- tryCatch(packageDescription(pkg, fields = "Priority"),
                        error = function(e) e, warning = function(e) e)
-  !inherits(priority, "condition") && identical(priority, "base")
+  identical(priority, "base")
 }
 
 getDependencies <-
