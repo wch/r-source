@@ -360,6 +360,9 @@
       \item \code{install.packages()} and related functions now give a
       more informative warning when an attempt is made to install a base
       package.
+      
+      \item \code{summary(x)} now prints with less rounding when
+      \code{x} contains infinite values. (Request of \PR{16620}.)
     }
   }
   \subsection{BUG FIXES}{
