@@ -374,6 +374,9 @@
       
       \item \code{file.copy(overwrite = FALSE)} would signal a successful
       copy when none had taken place.  (\PR{16576})
+      
+      \item \code{ngettext()} now uses the same default domain as
+      \code{gettext()}.  (\PR{14605})
     }
   }
 }
