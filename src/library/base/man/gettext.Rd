@@ -29,10 +29,10 @@ bindtextdomain(domain, dirname = NULL)
     catalogs for the domain.}
 }
 \details{
-  If \code{domain} is \code{NULL} or \code{""}, and \code{gettext} is
-  called from a function in the namespace of package \pkg{pkg} the
-  domain is set to \code{"R-pkg"}.  Otherwise there is no default
-  domain.
+  If \code{domain} is \code{NULL} or \code{""}, and \code{gettext}
+  or \code{ngettext}  is called from a function in the namespace of 
+  package \pkg{pkg} the domain is set to \code{"R-pkg"}.  Otherwise 
+  there is no default domain.
 
   If a suitable domain is found, each character string is offered for
   translation, and replaced by its translation into the current language
