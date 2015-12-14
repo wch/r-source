@@ -368,6 +368,9 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{kmeans(x, centers = <1-row>)} now works. (\PR{16623})
+      
+      \item \code{Vectorize()} now checks for clashes in argument names.
+      (\PR{16577})
     }
   }
 }
