@@ -2301,6 +2301,9 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 		nfail++;
 		goto copy_error;
 	    }
+	} else if (!over) {
+	  nfail++;
+	  goto copy_error;
 	}
 	if(fp1) fclose(fp1); fp1 = NULL;
 	if(fp2) fclose(fp2); fp2 = NULL;
@@ -2334,7 +2337,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid '%s' argument"), "to");
 	over = asLogical(CAR(args)); args = CDR(args);
 	if (over == NA_LOGICAL)
-	    error(_("invalid '%s' argument"), "over");
+	    error(_("invalid '%s' argument"), "overwrite");
 	recursive = asLogical(CAR(args)); args = CDR(args);
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
@@ -2526,7 +2529,8 @@ static int do_copy(const char* from, const char* name, const char* to,
 	    if(fp2) fclose(fp2); fp2 = NULL;
 	    if(perms) chmod(dest, sb.st_mode & mask);
 	    if(dates) copyFileTime(this, dest);
-	}
+	} else if (!over)
+	    nfail++;
 copy_error:
 	if(fp2) fclose(fp2);
 	if(fp1) fclose(fp1);
@@ -2554,7 +2558,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid '%s' argument"), "to");
 	over = asLogical(CAR(args)); args = CDR(args);
 	if (over == NA_LOGICAL)
-	    error(_("invalid '%s' argument"), "over");
+	    error(_("invalid '%s' argument"), "overwrite");
 	recursive = asLogical(CAR(args)); args = CDR(args);
 	if (recursive == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "recursive");
