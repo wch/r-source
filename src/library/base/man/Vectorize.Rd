@@ -1,6 +1,6 @@
 % File src/library/base/man/Vectorize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2015 R Core Team
 % Copyright 2002-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -34,6 +34,11 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
 
   \code{Vectorize} cannot be used with primitive functions as they do
   not have a value for \code{\link{formals}}.
+  
+  It also cannot be used with functions that have arguments named
+  \code{FUN}, \code{vectorize.args}, \code{SIMPLIFY} or
+  \code{USE.NAMES}, as they will interfere with the \code{Vectorize}
+  arguments.  See the \code{combn} example below for a workaround.  
 }
 \value{
   A function with the same arguments as \code{FUN}, wrapping a call to
@@ -68,6 +73,12 @@ Vm <- seq(140, 310, length.out = 50)
 K <- seq(0, 0.15, length.out = 40)
 SSvals <- outer(Vm, K, vSS, Treated$rate, Treated$conc)
 contour(Vm, K, SSvals, levels = (1:10)^2, xlab = "Vm", ylab = "K")
+
+# combn() has an argument named FUN
+combnV <- Vectorize(function(x, m, FUNV = NULL) combn(x, m, FUN = FUNV),
+                    vectorize.args = c("x", "m"))
+combnV(4, 1:4)
+combnV(4, 1:4, sum)
 }
 \keyword{manip}
 \keyword{utilities}
