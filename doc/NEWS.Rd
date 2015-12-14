@@ -22,6 +22,9 @@
       
       \item \code{Vectorize()} now checks for clashes in argument names.
       (\PR{16577})
+      
+      \item \code{file.copy(overwrite = FALSE)} would signal a successful
+      copy when none had taken place.  (\PR{16576})
     }
   }
 }
