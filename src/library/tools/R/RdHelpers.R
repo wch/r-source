@@ -104,6 +104,7 @@ Rd_expr_doi <- function(x)
     ## Be nice ...
     x <- sub("^((doi|DOI):)?[[:space:]]*http://(dx[.])?doi[.]org/", "",
              x)
+    x <- sub("^(doi|DOI):", "", x)
     sprintf("\\ifelse{text}{%s}{%s}",
             sprintf("doi: %s (URL: http://doi.org/%s)", x, x),
             sprintf("\\href{http://doi.org/%s}{doi:\\sspace{}%s}", x, x))
