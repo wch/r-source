@@ -3376,7 +3376,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-4.b16.fc21.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.65-3.b17.fc22.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -4805,13 +4805,6 @@ some upgrades but not others).
 @node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
 @subsection El Capitan
 
-@c Claimed that XQuartz does not install out-of-the-box:
-@c http://forums.macrumors.com/threads/os-x-el-capitan-working-not-working-apps.1890772/
-
-El Capitan was released at the end of September 2015, and experience to
-date is with systems which have been updated from Yosemite or earlier.
-Upgraded systems need the Command Line Tools reinstalled.
-
 There are problems resulting from the new-to-El-Capitan restriction that
 only Apple is allowed to install software under @file{/usr}: this
 affects @emph{inter alia} @code{MacTeX} and @code{XQuartz}.  For
@@ -4830,15 +4823,6 @@ includes @file{/usr/X11R6}, @file{/usr/texbin}, @file{/usr/bin/R},
 @noindent
 although the linked versions under @file{/usr/X11} will be found (if the
 link is present).
-
-@c It may be necessary for a clean installation for @code{XQuartz} to
-@c replace @file{/usr/X11} by @file{/opt/X11} in file
-@c @file{/usr/local/lib/tkConfig.sh}, and to use
-@c @command{install_name_tool} to adjust
-@c @file{/usr/local/lib/libtk8.6.dylib} to link to libraries under
-@c @file{/opt/X11} rather than @file{/usr/X11}.  Updated installations seem
-@c to preserve @file{/usr/X11}, but there are packages assuming
-@c @file{/usr/X11R6}, a link that no longer exists.
 
 @node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
 @subsection Tcl/Tk headers and libraries
