@@ -235,6 +235,10 @@
       globals.
 
       It now also checks DOIs in package \file{CITATION} and Rd files.
+      
+      \item \command{R CMD Rdconv} and \command{R CMD Rd2pdf} each have
+      a new option \option{--RdMacros=pkglist} which allows Rd macros
+      to be specified before processing.
     }
   }
 

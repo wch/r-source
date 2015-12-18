@@ -159,8 +159,7 @@ function(dir, installed = FALSE)
     path <- if(installed) "NEWS.Rd" else file.path("inst", "NEWS.Rd")
     nfile <- file.path(dir, path)
     if(file.exists(nfile)) {
-        macros <- loadRdMacros(file.path(R.home("share"),
-                                         "Rd", "macros", "system.Rd"))
+        macros <- initialRdMacros()
         urls <- .get_urls_from_Rd(prepare_Rd(tools::parse_Rd(nfile,
                                                              macros = macros),
                                              stages = "install"))

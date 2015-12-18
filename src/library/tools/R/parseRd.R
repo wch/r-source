@@ -35,7 +35,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     } else file0 <- "<connection>"
     lines <- readLines(file, warn = FALSE)
     if(is.character(macros)) 
-    	macros <- loadRdMacros(macros)
+    	macros <- initialRdMacros(macros = macros)
     ## remove old-style marking for data, keep line nos
     lines[lines == "\\non_function{}"] <- ""
     ## Extract the encoding if marked in the file:

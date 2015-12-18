@@ -657,6 +657,9 @@ individual @file{.Rd} files in the @file{man} directory are loaded
 last, and are local to later parts of that file.  In case of any
 duplicates, the last loaded definition will be used@footnote{Duplicate
 definitions may trigger a warning:  see @ref{User-defined macros}.}
+Both @command{R CMD Rd2pdf} and @command{R CMD Rdconv} have option
+@command{--RdMacros=pkglist}.  The option is also a comma-separated list
+of package names, and has priority over the value given in @file{DESCRIPTION}.
 
 @c DESCRIPTION field Built
 @c DESCRIPTION field Packaged

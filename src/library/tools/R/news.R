@@ -540,7 +540,7 @@ function(file = NULL)
     else {
         ## Expand \Sexpr et al now because this does not happen when using
         ## fragments.
-        macros <- loadRdMacros(file.path(R.home("share"), "Rd", "macros", "system.Rd"))
+        macros <- initialRdMacros()
         prepare_Rd(parse_Rd(file, macros = macros), stages = "install")
     }
 
@@ -559,7 +559,7 @@ function(file = NULL)
 .build_news_db_from_package_NEWS_Rd <-
 function(file)
 {
-    macros <- loadRdMacros(file.path(R.home("share"), "Rd", "macros", "system.Rd"))
+    macros <- initialRdMacros()
     x <- prepare_Rd(parse_Rd(file, macros = macros), stages = "install")
 
     db <- .extract_news_from_Rd(x)

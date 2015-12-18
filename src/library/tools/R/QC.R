@@ -6275,8 +6275,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
         if(is.na(enc)) enc <- "ASCII"
         else def_enc <- TRUE
     } else enc <- "ASCII"
-    macros <- file.path(R.home("share"), "Rd", "macros", "system.Rd")
-    macros <- loadPkgRdMacros(dir, macros)
+    macros <- loadPkgRdMacros(dir)
     owd <- setwd(file.path(dir, "man"))
     on.exit(setwd(owd))
     pg <- c(Sys.glob("*.Rd"), Sys.glob("*.rd"),
