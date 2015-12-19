@@ -895,11 +895,33 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-
                     methods::isGeneric(n, impenv)) {}
                 else next
 	    }
-            ## this is always called from another function, so reporting call
-            ## is unhelpful
-            warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
-                            sQuote(from)),
-                    call. = FALSE, domain = NA)
+            if (identical(genImp, get(n, ns))) next
+            if (isNamespace(self) && !isBaseNamespace(self)) {
+                ## Now try to figure out where we imported from
+                ## The 'imports' list is named by where-from
+                ## and is in order of adding.
+                current <- getNamespaceInfo(self, "imports")
+                poss <- lapply(rev(current), "[", n)
+                poss <- poss[!sapply(poss, is.na)]
+                if(length(poss) >= 1L) {
+                    msg <- gettext("replacing previous import %s by %s when loading %s")
+                    prev <- names(poss)[1L]
+                    warning(sprintf(msg,
+                                    sQuote(paste(prev, n, sep = "::")),
+                                    sQuote(paste(nsname, n, sep = "::")),
+                                    sQuote(from)),
+                            call. = FALSE, domain = NA)
+                } else
+                    warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
+                                    sQuote(from)),
+                            call. = FALSE, domain = NA)
+            } else {
+                ## this is always called from another function,
+                ## so reporting call is unhelpful
+                warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
+                                sQuote(from)),
+                        call. = FALSE, domain = NA)
+            }
 	}
     importIntoEnv(impenv, impnames, ns, impvars)
     if (register)

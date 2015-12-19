@@ -3380,12 +3380,13 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.65-3.b17.fc22.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
-Note that this unfortunately depends on the exact version of the JRE/JDK
+Unfortunately this depends on the exact version of the JRE/JDK
 installed, and so may need updating if the Java installation is updated.
 This can be done by running @code{R CMD javareconf} which updates
-settings in both @file{etc/Makeconf} and
+settings in both @file{@var{R_HOME}/etc/Makeconf} and
 @file{@var{R_HOME}/etc/ldpaths}. See @code{R CMD javareconf --help} for
-details.
+details: note that this needs to be done by the account owning the @R{}
+installation.
 
 Another way of overriding those settings is to set the environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
@@ -3398,7 +3399,7 @@ R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0/jre/lib/amd64/server
 @end example
 
 It may be possible to avoid this by specifying an invariant link as the
-path. For example, on that system any of
+path when configuring. For example, on that system any of
 
 @example
 JAVA_HOME=/usr/lib/jvm/java
