@@ -540,7 +540,7 @@ stopifnot(identical(f3(mLt), f3.POSIXt(mLt)))
 
 
 setClass("classA", contains = "numeric",
-   representation(realData = "numeric"))
+         representation(realData = "numeric"))
 
 Math.classA <- function(x) {(getFunction(.Generic))(x@realData)}
 setMethod("Math", "classA", Math.classA)
@@ -554,7 +554,7 @@ setClass("classB", contains = "classA")
 
 y <- new("classB", x)
 
-stopifnot(identical(abs(y), 1:10)) # (version 2.9.0 or earlier fails here)
+stopifnot(identical(abs(y), abs(x))) # (version 2.9.0 or earlier fails here)
 
 ## an S3 generic: just for demonstration purposes
 f3 <- function(x, ...) UseMethod("f3")
