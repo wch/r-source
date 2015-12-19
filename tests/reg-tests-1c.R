@@ -1153,3 +1153,8 @@ k1 <- kmeans(x, 1)
 k2 <- kmeans(x, centers = k1$centers)
 stopifnot(all.equal(k1, k2), k1$cluster == 1)
 ## the kmeans(*, centers=.) called failed in R <= 3.2.3
+
+
+## invalid dimnames for array()
+tools::assertError(array(1, 2:3, dimnames="foo"))
+## were silently disregarded in R <= 3.2.3
