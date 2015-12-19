@@ -892,6 +892,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-
                     methods:::isGeneric(n, impenv)) {}
                 else next
 	    }
+            if (identical(genImp, get(n, ns))) next
             ## this is always called from another function, so reporting call
             ## is unhelpful
             warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
