@@ -71,7 +71,7 @@ function(x, ...)
 			   ' <td style="text-align: left; vertical-align: top; width: 10%;">\n',
 			   htmlify(out[[pkg]][, "Item"]),
 			   '\n </td>\n',
-                           ' <td style="text-align: left" vertical-align: top; width: 90%;">\n',
+                           ' <td style="text-align: left; vertical-align: top; width: 90%;">\n',
 			   htmlify(out[[pkg]][, "Title"]),
 			   '\n </td>\n</tr>\n'),
 		    '</table>')
