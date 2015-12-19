@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{S3Part}
+\title{ S3-style Objects and S4-class Objects}
 \alias{S3Part}
 \alias{S3Part<-}
 \alias{S3Class}
@@ -16,7 +17,6 @@
 \alias{coerce,oldClass,S3-method}
 \alias{coerce,ANY,S4-method}
 \alias{S3-class}
-\title{ S3-style Objects and S4-class Objects}
 \description{
   Old-style (S3) classes may be registered as S4 classes (by calling
   \code{\link{setOldClass}}), and many have been.  These classes can
@@ -261,7 +261,7 @@ setClass("NumX", contains="numeric", representation(id="character"))
 nn <- new("NumX", 1:10, id="test")
 stopifnot(identical(1:10, S3Part(nn, strict = TRUE)))
 
-m1 = cbind(group, weight)
+m1 <- cbind(group, weight)
 setClass("MatX", contains = "matrix", representation(date = "Date"))
 mx1 <- new("MatX", m1, date = Sys.Date())
 stopifnot(identical(m1, S3Part(mx1, strict = TRUE)))
