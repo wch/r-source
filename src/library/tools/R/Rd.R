@@ -889,9 +889,10 @@ loadPkgRdMacros <- function(pkgdir, macros = NULL) {
     pkglist <- try(.read_description(file.path(pkgdir, "DESCRIPTION"))["RdMacros"], silent=TRUE)
     if (inherits(pkglist, "try-error"))
     	pkglist <- .read_description(file.path(pkgdir, "DESCRIPTION.in"))["RdMacros"]
-    else
+  
+    if (is.na(pkglist))
         pkglist <- NULL
-
+    
     if (is.null(macros))
         macros <- initialRdMacros(pkglist)
     else
