@@ -11,7 +11,7 @@
       \item \code{install.packages()} and related functions now give a
       more informative warning when an attempt is made to install a base
       package.
-      
+
       \item \code{summary(x)} now prints with less rounding when
       \code{x} contains infinite values. (Request of \PR{16620}.)
     }
@@ -19,15 +19,18 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{kmeans(x, centers = <1-row>)} now works. (\PR{16623})
-      
+
       \item \code{Vectorize()} now checks for clashes in argument names.
       (\PR{16577})
-      
+
       \item \code{file.copy(overwrite = FALSE)} would signal a successful
       copy when none had taken place.  (\PR{16576})
-      
+
       \item \code{ngettext()} now uses the same default domain as
       \code{gettext()}.  (\PR{14605})
+
+      \item \code{array(.., dimnames = *)} now signals the same error for
+      invalid dimnames as \code{matrix()} has always done.
     }
   }
 }
