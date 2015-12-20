@@ -299,7 +299,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                       if(exists(varName, envir = env))
                                           warning(gettextf("failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
                                                            sym$name, varName, varName, sQuote(package)),
-                                                  domain = NA)
+                                                  domain = NA, call. = FALSE)
                                       else
                                           assign(varName, sym, envir = env)
                                   })
@@ -323,11 +323,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                            if(origVarName != varName)
                                warning(gettextf("failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, varName, sQuote(package)),
-                                       domain = NA)
+                                       domain = NA, call. = FALSE)
                            else
                                warning(gettextf("failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, sQuote(package)),
-                                       domain = NA)
+                                       domain = NA, call. = FALSE)
                        else
                            assign(varName, symbols[[origVarName]], envir = env)
 
@@ -828,17 +828,19 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-
                       paste(sQuote(impnames[duplicated(impnames)]),
                             collapse = ", ")), domain = NA)
     }
-    if (isNamespace(self) && isBaseNamespace(self)) {
-        impenv <- self
-        msg <- gettext("replacing local value with import %s when loading %s")
-        register <- FALSE
-    }
-    else if (isNamespace(self)) {
-        if (namespaceIsSealed(self))
-            stop("cannot import into a sealed namespace")
-        impenv <- parent.env(self)
-        msg <- gettext("replacing previous import by %s when loading %s")
-        register <- TRUE
+    if (isNamespace(self)) {
+        if(isBaseNamespace(self)) {
+            impenv <- self
+            msg <- gettext("replacing local value with import %s when loading %s")
+            register <- FALSE
+        }
+        else {
+            if (namespaceIsSealed(self))
+                stop("cannot import into a sealed namespace")
+            impenv <- parent.env(self)
+            msg <- gettext("replacing previous import by %s when loading %s")
+            register <- TRUE
+        }
     }
     else if (is.environment(self)) {
         impenv <- self
@@ -893,11 +895,32 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-
                 else next
 	    }
             if (identical(genImp, get(n, ns))) next
-            ## this is always called from another function, so reporting call
-            ## is unhelpful
-            warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
-                            sQuote(from)),
-                    call. = FALSE, domain = NA)
+            if (isNamespace(self) && !isBaseNamespace(self)) {
+                ## Now try to figure out where we imported from
+                ## The 'imports' list is named by where-from
+                ## and is in order of adding.
+                current <- getNamespaceInfo(self, "imports")
+                poss <- lapply(rev(current), "[", n)
+                poss <- poss[!sapply(poss, is.na)]
+                if(length(poss) >= 1L) {
+                    msg <- gettext("replacing previous import %s by %s when loading %s")
+                    prev <- names(poss)[1L]
+                    warning(sprintf(msg,
+                                    sQuote(paste(prev, n, sep = "::")),
+                                    sQuote(paste(nsname, n, sep = "::")),
+                                    sQuote(from)),
+                            call. = FALSE, domain = NA)
+                } else
+                    warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
+                                    sQuote(from)),
+                            call. = FALSE, domain = NA)
+            } else {
+                ## this is always called from another function,
+                ## so reporting call is unhelpful
+                warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
+                                sQuote(from)),
+                        call. = FALSE, domain = NA)
+            }
 	}
     importIntoEnv(impenv, impnames, ns, impvars)
     if (register)
@@ -954,9 +977,9 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                 fun <- methods::getFunction(g, mustFind = FALSE, where = self)
                 if(is.primitive(fun) || methods::is(fun, "genericFunction")) {}
                 else
-                    warning(gettextf("No generic function found corresponding to requested imported methods for \"%s\" from package \"%s\" (malformed exports?)",
-                                 g, pkg),
-                        domain = NA)
+                    warning(gettextf("No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)",
+                                 sQuote(g), sQuote(pkg), sQuote(from)),
+                        domain = NA, call. = FALSE)
             }
         }
     }
@@ -1234,7 +1257,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            warning(gettextf("duplicate symbol names %s in useDynLib(\"%s\")",
                                             paste(sQuote(names(symNames)[dup]),
                                                   collapse = ", "), dyl),
-                                   domain = NA)
+                                   domain = NA, call. = FALSE)
 
                        symNames <- symNames[!dup]
 
