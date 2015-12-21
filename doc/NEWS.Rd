@@ -354,6 +354,9 @@
       Enterprise Linux 6. It now waits for \code{MapNotify} events
       instead of \code{Expose} events, thanks to Siteshwar
       Vashisht. (\PR{16497})
+
+      \item \code{as(1L, "numeric")} and  \code{as(1L, "double")} now
+      give the same as \code{as.double(1L)}.
     }
   }
 }
@@ -367,6 +370,8 @@
 
       \item \code{summary(x)} now prints with less rounding when
       \code{x} contains infinite values. (Request of \PR{16620}.)
+
+      \item \code{provideDimnames()} gets an optional \code{unique} argument.
     }
   }
   \subsection{BUG FIXES}{

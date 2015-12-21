@@ -1,6 +1,6 @@
 % File src/library/base/man/dimnames.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dimnames}
@@ -17,7 +17,7 @@
 dimnames(x)
 dimnames(x) <- value
 
-provideDimnames(x, sep = "", base = list(LETTERS))
+provideDimnames(x, sep = "", base = list(LETTERS), unique = TRUE)
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
@@ -29,6 +29,8 @@ provideDimnames(x, sep = "", base = list(LETTERS))
     list components are used in turn (and recycled when needed) to
     construct replacements for empty dimnames components.  See also the
     examples.}
+  \item{unique}{logical indicating that the dimnames constructed are
+    unique within each dimension in the sense of \code{\link{make.unique}}.}
 }
 \details{
   The functions \code{dimnames} and \code{dimnames<-} are generic.
@@ -58,7 +60,9 @@ provideDimnames(x, sep = "", base = list(LETTERS))
 
   \code{provideDimnames(x)} provides \code{dimnames} where
   \dQuote{missing}, such that its result has \code{\link{character}}
-  dimnames for each component.
+  dimnames for each component.  If \code{unique} is true as by default,
+  they are unique within each component via \code{\link{make.unique}(*,
+    sep=sep)}.
 }
 \value{
   The dimnames of a matrix or array can be \code{NULL} (which is not
@@ -105,6 +109,8 @@ strd <- function(x) utils::str(dimnames(x))
 strd(provideDimnames(A, base= list(letters[-(1:9)], tail(LETTERS))))
 strd(provideDimnames(N, base= list(letters[-(1:9)], tail(LETTERS)))) # recycling
 strd(provideDimnames(A, base= list(c("AA","BB")))) # recycling on both levels
+## set "empty dimnames":
+provideDimnames(rbind(1, 2:3), base = list(""), unique=FALSE)
 }
 \keyword{array}
 \keyword{manip}
