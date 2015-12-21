@@ -387,8 +387,9 @@
       \item \code{ngettext()} now uses the same default domain as
       \code{gettext()}.  (\PR{14605})
 
-      \item \code{array(.., dimnames = *)} now signals the same error for
-      invalid dimnames as \code{matrix()} has always done.
+      \item \code{array(.., dimnames = *)} now warns about
+      non-\code{list} dimnames and, from \R 3.3.0, will signal the same
+      error for invalid dimnames as \code{matrix()} has always done.
 
       \item \code{addmargins()} now adds dimnames for the extended
       margins in all cases, as always documented.
