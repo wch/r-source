@@ -35,7 +35,7 @@ function(data = NA, dim = length(data), dimnames = NULL)
             data <- rep_len(data, vl)
         }
         if(length(dim)) dim(data) <- dim
-	if(length(dimnames) {
+	if(length(dimnames)) {
 	    if(is.list(dimnames))
 		dimnames(data) <- dimnames
 	    else
