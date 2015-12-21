@@ -35,7 +35,12 @@ function(data = NA, dim = length(data), dimnames = NULL)
             data <- rep_len(data, vl)
         }
         if(length(dim)) dim(data) <- dim
-        if(is.list(dimnames) && length(dimnames)) dimnames(data) <- dimnames
+	if(length(dimnames) {
+	    if(is.list(dimnames))
+		dimnames(data) <- dimnames
+	    else
+		warning("non-list dimnames are disregarded; will be an error in R 3.3.0")
+	}
         data
     } else .Internal(array(data, dim, dimnames))
 }
