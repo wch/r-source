@@ -14,6 +14,8 @@
 
       \item \code{summary(x)} now prints with less rounding when
       \code{x} contains infinite values. (Request of \PR{16620}.)
+
+      \item \code{provideDimnames()} gets an optional \code{unique} argument.
     }
   }
   \subsection{BUG FIXES}{
@@ -32,6 +34,9 @@
       \item \code{array(.., dimnames = *)} now warns about
       non-\code{list} dimnames and, from \R 3.3.0, will signal the same
       error for invalid dimnames as \code{matrix()} has always done.
+
+      \item \code{addmargins()} now adds dimnames for the extended
+      margins in all cases, as always documented.
     }
   }
 }
