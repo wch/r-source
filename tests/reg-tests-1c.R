@@ -1158,3 +1158,14 @@ stopifnot(all.equal(k1, k2), k1$cluster == 1)
 ## invalid dimnames for array()
 tools::assertError(array(1, 2:3, dimnames="foo"))
 ## were silently disregarded in R <= 3.2.3
+
+
+## addmargins() - dimnames with (by default) "Sum"
+m <- rbind(1, 2:3)
+m2 <- addmargins(m, 2)
+am <- addmargins(m)
+stopifnot(
+    identical(dimnames(m2), list(NULL, c("", "", "Sum"))),
+    identical(am[,"Sum"], setNames(c(2, 5, 7), c("", "", "Sum"))))
+## the dimnames array() bug above hid the addmargins() not adding "Sum"
+

@@ -389,6 +389,9 @@
 
       \item \code{array(.., dimnames = *)} now signals the same error for
       invalid dimnames as \code{matrix()} has always done.
+
+      \item \code{addmargins()} now adds dimnames for the extended
+      margins in all cases, as always documented.
     }
   }
 }
