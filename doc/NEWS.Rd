@@ -354,6 +354,9 @@
       Enterprise Linux 6. It now waits for \code{MapNotify} events
       instead of \code{Expose} events, thanks to Siteshwar
       Vashisht. (\PR{16497})
+      
+      \item \code{cor()} is now guaranteed to return a value with 
+      absolute value less than or equal to 1. (\PR{16638})
     }
   }
 }
