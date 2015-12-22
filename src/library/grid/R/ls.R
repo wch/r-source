@@ -68,12 +68,16 @@ grid.ls <- function(x=NULL, grobs=TRUE, viewports=FALSE, fullNames=FALSE,
 
 gridListDL <- function(x, grobs=TRUE, viewports=FALSE,
                        fullNames=FALSE, recursive=TRUE) {
-    display.list <- grid.Call(L_getDisplayList)
-    dl.index <- grid.Call(L_getDLindex)
-    result <- lapply(display.list[1L:dl.index], gridList,
-                     grobs=grobs, viewports=viewports,
-                     fullNames=fullNames, recursive=recursive)
-    names(result) <- NULL
+    if (is.null(dev.list())) {
+        result <- list(gridList(NULL))
+    } else {
+        display.list <- grid.Call(L_getDisplayList)
+        dl.index <- grid.Call(L_getDLindex)
+        result <- lapply(display.list[1L:dl.index], gridList,
+                         grobs=grobs, viewports=viewports,
+                         fullNames=fullNames, recursive=recursive)
+        names(result) <- NULL
+    }
     class(result) <- c("gridListListing", "gridListing")
     result
 }
@@ -783,7 +787,7 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
         dl <- grid.ls(x, grobs=grobs, viewports=viewports, print = FALSE)
     }
     if (!length(dl$name))
-        stop("Nothing on the display list")
+        return(no.match)
     # Only keep vpListing and grobListing
     names <- names(dl)
     dl <- lapply(dl,

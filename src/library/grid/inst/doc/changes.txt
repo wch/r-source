@@ -13,6 +13,12 @@ Changes from grid_3.2.* to grid_3.3.0:
 3.  Refactored grid.draw() so that grid.draw(NULL) now works 
     (by doing nothing).  Reported by Hadley Wickham.
 
+4.  Modified grid.ls() so that it returns nothing if there are no
+    active devices (rather than opening a new device).
+  
+5.  Modified grid.grep() so that it returns an empty list (rather than
+    throwing an error) when the 'grid' display list is empty.
+
 
 Changes from grid_3.1.* to grid_3.2.0:
 -------------------------------------
