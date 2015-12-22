@@ -354,9 +354,6 @@
       Enterprise Linux 6. It now waits for \code{MapNotify} events
       instead of \code{Expose} events, thanks to Siteshwar
       Vashisht. (\PR{16497})
-
-      \item \code{as(1L, "numeric")} and  \code{as(1L, "double")} now
-      give the same as \code{as.double(1L)}.
     }
   }
 }
