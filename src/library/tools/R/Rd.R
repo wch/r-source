@@ -869,7 +869,7 @@ loadRdMacros <- function(file, macros = TRUE) {
 }
 
 initialRdMacros <- function(pkglist = NULL,
-                            macros = file.path(R.home("share"), "Rd", "macros", "system.Rd") 
+                            macros = file.path(R.home("share"), "Rd", "macros", "system.Rd")
                             ) {
     if (length(pkglist)) {
     	others <- trimws(unlist(strsplit(pkglist, ",")))
@@ -886,13 +886,21 @@ initialRdMacros <- function(pkglist = NULL,
 }
 
 loadPkgRdMacros <- function(pkgdir, macros = NULL) {
-    pkglist <- try(.read_description(file.path(pkgdir, "DESCRIPTION"))["RdMacros"], silent=TRUE)
+    ## this does get called on any directory,
+    ## e.g. a man directory in package 'diveMove'.
+    pkglist <- try(.read_description(file.path(pkgdir, "DESCRIPTION")),
+                   silent = TRUE)
     if (inherits(pkglist, "try-error"))
-    	pkglist <- .read_description(file.path(pkgdir, "DESCRIPTION.in"))["RdMacros"]
-  
+    	pkglist <-  try(.read_description(file.path(pkgdir, "DESCRIPTION.in")),
+                        silent = TRUE)
+    ## may check for 'macros' subdirectory?
+    if (inherits(pkglist, "try-error")) return(macros)
+
+    pkglist <- pkglist["RdMacros"]
+
     if (is.na(pkglist))
         pkglist <- NULL
-    
+
     if (is.null(macros))
         macros <- initialRdMacros(pkglist)
     else
