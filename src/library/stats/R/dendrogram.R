@@ -885,7 +885,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     if(!is.null(ylab)) mtext(ylab, side = 4, line = margins[2L] - 1.25)
 
     if (!missing(add.expr))
-	eval(substitute(add.expr))
+	eval.parent(substitute(add.expr))
 
     ## the two dendrograms :
     par(mar = c(margins[1L], 0, 0, 0))
