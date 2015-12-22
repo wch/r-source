@@ -393,6 +393,9 @@
 
       \item \code{addmargins()} now adds dimnames for the extended
       margins in all cases, as always documented.
+      
+      \item \code{heatmap()} evaluated its \code{add.expr} argument
+      in the wrong environment.  (\PR{16583})
     }
   }
 }
