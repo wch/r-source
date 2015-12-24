@@ -372,6 +372,9 @@
       \code{x} contains infinite values. (Request of \PR{16620}.)
 
       \item \code{provideDimnames()} gets an optional \code{unique} argument.
+      
+      \item \code{shQuote()} gains \code{type = "cmd2"} for quoting
+      in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)      
     }
   }
   \subsection{BUG FIXES}{

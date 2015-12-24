@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-shQuote <- function(string, type = c("sh", "csh", "cmd"))
+shQuote <- function(string, type = c("sh", "csh", "cmd", "cmd2"))
 {
     cshquote <- function(x) {
         xx <- strsplit(x, "'", fixed = TRUE)[[1L]]
@@ -26,6 +26,8 @@ shQuote <- function(string, type = c("sh", "csh", "cmd"))
     type <- match.arg(type)
     if(type == "cmd")
 	paste0('"', gsub('"', '\\\\"', string), '"')
+    else if (type == "cmd2")
+        gsub('([()%!^"<>&|])', "^\\1", string)
     else if(!length(string))
 	""
     else if(!any(grepl("'", string))) # has single quote
