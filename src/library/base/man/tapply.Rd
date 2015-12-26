@@ -1,6 +1,6 @@
 % File src/library/base/man/tapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tapply}
@@ -102,6 +102,17 @@ ind <- list(c(1, 2, 2), c("A", "A", "B"))
 table(ind)
 tapply(1:3, ind) #-> the split vector
 tapply(1:3, ind, sum)
+
+## Some assertions (not held by all patch propsals):
+nq <- names(quantile(1:5))
+stopifnot(
+  identical(tapply(1:3, ind), c(1L, 2L, 4L)),
+  identical(tapply(1:3, ind, sum),
+            matrix(c(1L, 2L, NA, 3L), 2, dimnames = list(c("1", "2"), c("A", "B")))),
+  identical(tapply(1:n, fac, quantile)[-1],
+            array(list(`2` = structure(c(2, 5.75, 9.5, 13.25, 17), .Names = nq),
+                 `3` = structure(c(3, 6, 9, 12, 15), .Names = nq),
+                 `4` = NULL, `5` = NULL), dim=4, dimnames=list(as.character(2:5)))))
 }
 \keyword{iteration}
 \keyword{category}
