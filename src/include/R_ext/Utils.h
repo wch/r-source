@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2012    The R Core Team
+ *  Copyright (C) 1998-2015    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -91,6 +91,9 @@ void R_CheckStack2(size_t);
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
+int findInterval2(double *xt, int n, double x,
+		  Rboolean rightmost_closed,  Rboolean all_inside, Rboolean left_open,
+		  int ilo, int *mflag);
 #ifdef R_RS_H
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,

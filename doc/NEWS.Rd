@@ -219,6 +219,8 @@
 
       \item S4 values are automatically coerced to vector (via
       \code{as.vector}) when subassigned into atomic vectors.
+
+      \item \code{findInterval()} gets \code{left.open} option.
     }
   }
 
@@ -354,8 +356,8 @@
       Enterprise Linux 6. It now waits for \code{MapNotify} events
       instead of \code{Expose} events, thanks to Siteshwar
       Vashisht. (\PR{16497})
-      
-      \item \code{cor()} is now guaranteed to return a value with 
+
+      \item \code{cor()} is now guaranteed to return a value with
       absolute value less than or equal to 1. (\PR{16638})
     }
   }
@@ -372,9 +374,9 @@
       \code{x} contains infinite values. (Request of \PR{16620}.)
 
       \item \code{provideDimnames()} gets an optional \code{unique} argument.
-      
+
       \item \code{shQuote()} gains \code{type = "cmd2"} for quoting
-      in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)      
+      in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)
     }
   }
   \subsection{BUG FIXES}{
@@ -396,7 +398,7 @@
 
       \item \code{addmargins()} now adds dimnames for the extended
       margins in all cases, as always documented.
-      
+
       \item \code{heatmap()} evaluated its \code{add.expr} argument
       in the wrong environment.  (\PR{16583})
     }

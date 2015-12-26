@@ -12526,6 +12526,7 @@ See @R{}'s help page @code{?max.col}.
 @end deftypefun
 
 @deftypefun int findInterval (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
+@deftypefunx int findInterval2(double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, Rboolean @var{left_open}, int @var{ilo}, int* @var{mflag})
 Given the ordered vector @var{xt} of length @var{n}, return the interval
 or index of @var{x} in @code{@var{xt}[]}, typically max(@math{i}; @eqn{1
 \le i \le @var{n}, 1 <= i <= @var{n}} & @math{@var{xt}[i]} @eqn{\le, <=}
@@ -12541,9 +12542,17 @@ The algorithm is particularly fast when @var{ilo} is set to the last
 result of @code{findInterval()} and @var{x} is a value of a sequence which
 is increasing or decreasing for subsequent calls.
 
+ @code{findInterval2()} is a generalization of @code{findInterval()}, with
+ an extra @code{Rboolean} argument @var{left_open}.  Setting
+ @code{left_open = TRUE} basically replaces all left-closed right-open
+ intervals @eqn{[s, t)} by left-open ones @eqn{(s, t]}, see the help page
+ of @R{} function @code{findInterval} for details.
+
 There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
+
+
 
 A system-independent interface to produce the name of a temporary
 file is provided as

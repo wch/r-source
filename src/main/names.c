@@ -911,7 +911,7 @@ FUNTAB R_FunTab[] =
 {"lazyLoadDBinsertValue",do_lazyLoadDBinsertValue, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"bincode",	do_bincode,	 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"tabulate",	do_tabulate,	 0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"findInterval",do_findinterval, 0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"findInterval",do_findinterval, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"pretty",	do_pretty,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"formatC",	do_formatC,	0,	11,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"crc64",	do_crc64,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

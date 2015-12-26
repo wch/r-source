@@ -17,7 +17,8 @@
 #  https://www.R-project.org/Licenses/
 
 ### This is a `variant' of  approx( method = "constant" ) :
-findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
+findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
+                         left.open = FALSE)
 {
     ## Purpose: returns the indices of  x in vec;  vec[] sorted
     ## ---------------------------------------------------------
@@ -25,5 +26,5 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     if(!identical(FALSE, is.unsorted(vec)))
 	stop("'vec' must be sorted non-decreasingly and not contain NAs")
     .Internal(findInterval(as.double(vec), as.double(x),
-                           rightmost.closed, all.inside))
+                           rightmost.closed, all.inside, left.open))
 }

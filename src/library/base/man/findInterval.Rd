@@ -1,13 +1,14 @@
 % File src/library/base/man/findInterval.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{findInterval}
 \alias{findInterval}
 \title{Find Interval Numbers or Indices}
 \usage{
-findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
+findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
+             left.open = FALSE)
 }
 \arguments{
   \item{x}{numeric.}
@@ -18,6 +19,11 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
   \item{all.inside}{logical; if true, the returned indices are coerced
     into \code{1,\dots,N-1}, i.e., \code{0} is mapped to \code{1}
     and \code{N} to \code{N-1}.}
+  \item{left.open}{logical; if true all the intervals are open at left
+    and closed at right; in the formulas below, \eqn{\le} should be
+    swapped with \eqn{<} (and \eqn{>} with \eqn{\ge}), and
+    \code{rightmost.closed} means \sQuote{leftmost is closed}.  This may
+    be useful, e.g., in survival analysis computations.}
 }
 \description{
   Given a vector of non-decreasing breakpoints in \code{vec}, find the
@@ -47,6 +53,15 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
   When \code{rightmost.closed = TRUE}, the result for \code{x[j] = vec[N]}
   (\eqn{ = \max vec}{ = max(vec)}), is \code{N - 1} as for all other
   values in the last interval.
+
+  \code{left.open = TRUE} is occasionally useful, e.g., for survival data.
+  For (anti-)symmetry reasons, it is equivalent to using
+  \dQuote{mirrored} data, i.e., the following is always true: \preformatted{
+    identical(
+          findInterval( x,  v,      left.open= TRUE, ...) ,
+      N - findInterval(-x, -v[N:1], left.open=FALSE, ...) )
+    }
+    where \code{N <- length(vec)} as above.
 }
 \value{
   vector of length \code{length(x)} with values in \code{0:N} (and
@@ -72,6 +87,12 @@ X <- sort(round(stats::rt(N, df = 2), 2))
 tt <- c(-100, seq(-2, 2, len = 201), +100)
 it <- findInterval(tt, X)
 tt[it < 1 | it >= N] # only first and last are outside range(X)
+
+##  'left.open = TRUE' means  "mirroring" :
+N <- length(v)
+stopifnot(identical(
+                  findInterval( x,  v,  left.open=TRUE) ,
+              N - findInterval(-x, -v[N:1])))
 }
 \keyword{arith}
 \keyword{utilities}

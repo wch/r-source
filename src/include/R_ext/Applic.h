@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2013   The R Core Team
+ *  Copyright (C) 1998-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -84,6 +84,7 @@ void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
+// findInterval2() is only in Utils.h (and hence Rinternals.h)
 
 
 /* ------------------ Entry points NOT in the R API --------------- */
