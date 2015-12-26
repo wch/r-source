@@ -359,6 +359,8 @@
 
       \item \code{cor()} is now guaranteed to return a value with
       absolute value less than or equal to 1. (\PR{16638})
+
+      \item Array subsetting now keeps \code{names(dim(.))}.
     }
   }
 }

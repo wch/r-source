@@ -158,9 +158,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
    matrix indexing of arrays */
 static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 {
-    R_xlen_t n;
-    int mode;
-    R_xlen_t stretch = 1;
+    R_xlen_t n, stretch = 1;
     SEXP indx, result, attrib, nattrib;
 
     if (s == R_MissingArg) return duplicate(x);
@@ -192,7 +190,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     /* Allocate the result. */
 
-    mode = TYPEOF(x);
+    int mode = TYPEOF(x);
     /* No protection needed as ExtractSubset does not allocate */
     result = allocVector(mode, n);
     if (mode == VECSXP || mode == EXPRSXP)
@@ -343,6 +341,8 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 	PROTECT(attr = allocVector(INTSXP, 2));
 	INTEGER(attr)[0] = nrs;
 	INTEGER(attr)[1] = ncs;
+	if(!isNull(getAttrib(dim, R_NamesSymbol)))
+	    setAttrib(attr, R_NamesSymbol, getAttrib(dim, R_NamesSymbol));
 	setAttrib(result, R_DimSymbol, attr);
 	UNPROTECT(1);
     }
@@ -502,11 +502,13 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	}
     }
 
-    PROTECT(xdims = allocVector(INTSXP, k));
+    SEXP new_dim = PROTECT(allocVector(INTSXP, k));
     for(int i = 0 ; i < k ; i++)
-	INTEGER(xdims)[i] = bound[i];
-    setAttrib(result, R_DimSymbol, xdims);
-    UNPROTECT(1); /* xdims */
+	INTEGER(new_dim)[i] = bound[i];
+    if(!isNull(getAttrib(xdims, R_NamesSymbol)))
+	setAttrib(new_dim, R_NamesSymbol, getAttrib(xdims, R_NamesSymbol));
+    setAttrib(result, R_DimSymbol, new_dim);
+    UNPROTECT(1); // new_dim
 
     /* The array elements have been transferred. */
     /* Now we need to transfer the attributes. */
@@ -828,18 +830,19 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   length one and drop == TRUE
 	*/
 	if(ndim == 1) {
-	    SEXP attr, attrib, nattrib;
 	    int len = length(ans);
-
 	    if(!drop || len > 1) {
 		// must grab these before the dim is set.
 		SEXP nm = PROTECT(getAttrib(ans, R_NamesSymbol));
-		PROTECT(attr = allocVector(INTSXP, 1));
+		SEXP attr = PROTECT(allocVector(INTSXP, 1));
 		INTEGER(attr)[0] = length(ans);
+		if(!isNull(getAttrib(dim, R_NamesSymbol)))
+		    setAttrib(attr, R_NamesSymbol, getAttrib(dim, R_NamesSymbol));
 		setAttrib(ans, R_DimSymbol, attr);
+		SEXP attrib;
 		if((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue) {
 		    /* reinstate dimnames, include names of dimnames */
-		    PROTECT(nattrib = duplicate(attrib));
+		    SEXP nattrib = PROTECT(duplicate(attrib));
 		    SET_VECTOR_ELT(nattrib, 0, nm);
 		    setAttrib(ans, R_DimNamesSymbol, nattrib);
 		    setAttrib(ans, R_NamesSymbol, R_NilValue);

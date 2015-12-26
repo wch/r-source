@@ -1169,3 +1169,27 @@ stopifnot(
     identical(am[,"Sum"], setNames(c(2, 5, 7), c("", "", "Sum"))))
 ## the dimnames array() bug above hid the addmargins() not adding "Sum"
 
+
+## dim( x[,] ) -- should keep names(dim(.)) --
+## ---  ----
+##_ 1 D _
+A1 <- array(1:6, (d <- c(nam=6L)))
+stopifnot(identical(dim(A1), d),
+          identical(dim(A1), dim(A1[])))
+##_ 2 D _
+A2 <- A[1,2,,]
+stopifnot(identical(names(dim(A2)), c("C", "D")),
+          identical(dim(A2), dim(A)[-(1:2)]),
+          identical(dim(A2[ ]), dim(A2)),
+          identical(dim(A2[,]), dim(A2)),
+          identical(dim(A2[1, , drop=FALSE]), c(C = 1L, D = 7L)),
+          identical(dim(A2[, 1, drop=FALSE]), c(C = 5L, D = 1L)))
+##_ higher D_
+A3 <- A[1, ,,]
+stopifnot(
+    identical(dim(A ), dim(A [,,,])),# was already wrong: [,,,] losing names(dim(.))
+    identical(dim(A[,-1,-1,-1]), dim(A) - c(0:1,1L,1L)),
+    identical(dim(A3), dim(A)[-1]),
+    identical(dim(A3), dim(A3[,, ])),
+    identical(dim(A3[,1,]), c(B = 3L, D = 7L)))
+## all subsetting of arrays lost names(dim(.)) in R < 3.3.0

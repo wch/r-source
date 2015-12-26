@@ -298,11 +298,12 @@ SEXP DropDims(SEXP x)
 	return x;
     }
     ndims = LENGTH(dims);
+    int *dim = INTEGER(dims); // used several times
 
     /* (2) Check whether there are redundant extents */
     n = 0;
     for (i = 0; i < ndims; i++)
-	if (INTEGER(dims)[i] != 1) n++;
+	if (dim[i] != 1) n++;
     if (n == ndims) {
 	UNPROTECT(1); /* x */
 	return x;
@@ -317,7 +318,7 @@ SEXP DropDims(SEXP x)
 	if (dimnames != R_NilValue) {
 	    if(XLENGTH(x) != 1) {
 		for (i = 0; i < LENGTH(dims); i++) {
-		    if (INTEGER(dims)[i] != 1) {
+		    if (dim[i] != 1) {
 			newnames = VECTOR_ELT(dimnames, i);
 			break;
 		    }
@@ -348,24 +349,33 @@ SEXP DropDims(SEXP x)
 /*	} */
 	UNPROTECT(1); /* newnames */
     } else {
-	/* We have a lower dimensional array. */
+	// We have a lower dimensional array, and  n == length(newdims)
 	SEXP newdims, dnn, newnamesnames = R_NilValue;
 	PROTECT(dnn = getAttrib(dimnames, R_NamesSymbol));
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
-	    if (INTEGER(dims)[i] != 1)
-		INTEGER(newdims)[n++] = INTEGER(dims)[i];
+	    if (dim[i] != 1)
+		INTEGER(newdims)[n++] = dim[i];
+	if(!isNull(getAttrib(dims, R_NamesSymbol))) {
+	    SEXP nms_d = getAttrib(dims, R_NamesSymbol),
+		new_nms = PROTECT(allocVector(STRSXP, n));
+	    for (i = 0, n = 0; i < ndims; i++)
+		if (dim[i] != 1)
+		    SET_STRING_ELT(new_nms, n++, STRING_ELT(nms_d, i));
+	    setAttrib(newdims, R_NamesSymbol, new_nms);
+	    UNPROTECT(1);
+	}
+	Rboolean havenames = FALSE;
 	if (!isNull(dimnames)) {
-	    int havenames = 0;
 	    for (i = 0; i < ndims; i++)
-		if (INTEGER(dims)[i] != 1 &&
+		if (dim[i] != 1 &&
 		    VECTOR_ELT(dimnames, i) != R_NilValue)
-		    havenames = 1;
+		    havenames = TRUE;
 	    if (havenames) {
 		PROTECT(newnames = allocVector(VECSXP, n));
 		PROTECT(newnamesnames = allocVector(STRSXP, n));
 		for (i = 0, n = 0; i < ndims; i++) {
-		    if (INTEGER(dims)[i] != 1) {
+		    if (dim[i] != 1) {
 			if(!isNull(dnn))
 			    SET_STRING_ELT(newnamesnames, n,
 					   STRING_ELT(dnn, i));
@@ -377,7 +387,7 @@ SEXP DropDims(SEXP x)
 	}
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
-	if (dimnames != R_NilValue)
+	if (havenames)
 	{
 	    if(!isNull(dnn))
 		setAttrib(newnames, R_NamesSymbol, newnamesnames);
