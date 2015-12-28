@@ -4550,7 +4550,7 @@ The most common issue involves the names of the Intel CPU registers such
 as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
 (and more with longer abbreviations) defined on i586/x64 Solaris in
 @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
-and other core headers.
+and other core headers.  Another example is @code{ERR}.
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package: an
