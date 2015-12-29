@@ -215,9 +215,10 @@ setRlibs <-
                      env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
             {
                 out <- R_runR(cmd, R_opts2, env)
+                ## htmltools produced non-UTF-8 output in Dec 2015
                 if (R_check_suppress_RandR_message)
                     grep('^Xlib: *extension "RANDR" missing on display', out,
-                         invert = TRUE, value = TRUE)
+                         invert = TRUE, value = TRUE, useBytes = TRUE)
                 else out
             }
 
