@@ -2797,7 +2797,8 @@ setRlibs <-
                     lines <- lines[max(1, ll-12):ll]
                     if (R_check_suppress_RandR_message)
                         lines <- grep('^Xlib: *extension "RANDR" missing on display',
-                                      lines, invert = TRUE, value = TRUE)
+                                      lines, invert = TRUE, value = TRUE,
+                                      useBytes = TRUE)
                     printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
                     printLog(Log, "Last 13 lines of output:\n")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
