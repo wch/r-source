@@ -1,6 +1,6 @@
 % File src/library/stats/man/family.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{family}
@@ -137,9 +137,9 @@ quasipoisson(link = "log")
   \item{initialize}{expression.  This needs to set up whatever data
     objects are needed for the family as well as \code{n} (needed for
     AIC in the binomial family) and \code{mustart} (see \code{\link{glm}}.}
-  \item{valid.mu}{logical function.  Returns \code{TRUE} if a mean
+  \item{validmu}{logical function.  Returns \code{TRUE} if a mean
     vector \code{mu} is within the domain of \code{variance}.}
-  \item{valid.eta}{logical function.   Returns \code{TRUE} if a linear
+  \item{valideta}{logical function.   Returns \code{TRUE} if a linear
     predictor \code{eta} is within the domain of \code{linkinv}.}
   \item{simulate}{(optional) function \code{simulate(object, nsim)} to be
     called by the \code{"lm"} method of \code{\link{simulate}}.  It will
