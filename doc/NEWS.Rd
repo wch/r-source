@@ -223,12 +223,10 @@
       \item \code{findInterval()} gets a  \code{left.open} option.
       
       \item The version of LAPACK included in the sources has been
-      updated to 3.6.0.  (It does not include the deprecated routines
-      removed in that version, such as \code{dgegs}, \code{dgelsx},
-      \code{dgeqpf}, \code{dggsvd}, \code{dggsvp}, \code{dlahrd},
-      \code{dlatzm} and \code{dtzrqf}.  For the time being, the
-      deprecated routines \code{dgegv} and \code{dggsvd} are included as
-      they are used by current packages.)
+      updated to 3.6.0.  (It does not include msot of the deprecated
+      routines removed in that version.  For the time being, the
+      deprecated routines \code{dgegv} and \code{dggsvd} \emph{are}
+      included as they are used by current packages.)
     }
   }
 

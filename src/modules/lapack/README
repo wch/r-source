@@ -103,7 +103,8 @@ dtrcon.f	dtrevc.f	dtrexc.f	dtrrfs.f	dtrsen.f
 dtrsna.f	dtrsyl.f	dtrti2.f	dtrtri.f	dtrtrs.f
 dtrttf.f	dtrttp.f	dtzrzf.f	ieeeck.f	iladlc.f
 iladlr.f	ilaenv.f	ilaprec.f	ilatrans.f	ilaver.f
-iparmq.f	DEPRECATED/dgegv.f	DEPRECATED/dggsvd.f
+iparmq.f
+DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 
 cmplx.f is the concatenation of
 
