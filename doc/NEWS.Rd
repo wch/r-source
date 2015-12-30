@@ -209,9 +209,9 @@
       \code{reloadPkgs} to load/attach any package names that were
       stored as part of a recorded plot.
 
-      \item S4 dispatch works within calls to \code{.Internal()}. This means
-      explicit S4 generics are no longer needed for \code{unlist},
-      \code{is.unsorted} and \code{as.vector}.
+      \item S4 dispatch works within calls to \code{.Internal()}. This
+      means explicit S4 generics are no longer needed for \code{unlist}
+      and \code{as.vector}.
 
       \item Only font family names starting with \samp{"Hershey"} (and
       not \samp{"Her"} as before) are given special treatment by the
@@ -220,7 +220,13 @@
       \item S4 values are automatically coerced to vector (via
       \code{as.vector}) when subassigned into atomic vectors.
 
-      \item \code{findInterval()} gets \code{left.open} option.
+      \item \code{findInterval()} gets a  \code{left.open} option.
+      
+      \item The version of LAPACK included in the sources has been
+      updated to 3.6.0.  (It does not include the deprecated routines
+      removed in that version, such as \code{dgegs}, \code{dgegv},
+      \code{dgelsx}, \code{dgeqpf}, \code{dggsvd}, \code{dggsvp},
+      \code{dlahrd}, \code{dlatzm} and \code{dtzrqf}.)
     }
   }
 
