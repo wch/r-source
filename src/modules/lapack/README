@@ -106,6 +106,17 @@ iladlr.f	ilaenv.f	ilaprec.f	ilatrans.f	ilaver.f
 iparmq.f
 DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 
+[The DEPRECATED routines
+
+dgegs dgegv dgelsx dgeqpf dggsvd dggsvp dlahrd dlatzm dtzrqf
+
+were included prior to LAPACK 3.6.0 and R 3.3.0.
+
+dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
+
+are new in LAPACK 3.6.0.]
+
+
 cmplx.f is the concatenation of
 
 dzsum1.f	ilazlc.f	ilazlr.f	izmax1.f	zbdsqr.f
@@ -127,5 +138,9 @@ ztrevc.f	ztrexc.f	ztrtrs.f	zung2l.f	zung2r.f
 zungbr.f	zunghr.f	zungl2.f	zunglq.f	zungql.f
 zungqr.f	zungr2.f	zungrq.f	zungtr.f	zunm2r.f
 zunmbr.f	zunmhr.f	zunml2.f	zunmlq.f	zunmqr.f
+
+[Deprecated routine zlahrd was included prior to LAPACK 3.6.0 and R 3.3.0:
+it was replaced by zlahr2.]
+
 
 R.patch suppresses compilation warnings, and with Fortran array-bounds checking.
