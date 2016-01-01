@@ -1,5 +1,5 @@
 
-R version 3.2.3 Patched (2015-12-20 r69792) -- "Wooden Christmas-Tree"
+R version 3.2.3 Patched (2015-12-30 r69830) -- "Wooden Christmas-Tree"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.120   0.012   0.125 
+  0.112   0.010   0.113 
