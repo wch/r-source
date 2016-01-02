@@ -1,6 +1,6 @@
 % File src/library/stats/man/complete.cases.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{complete.cases}
@@ -19,6 +19,14 @@ complete.cases(\dots)
 \value{
   A logical vector specifying which observations/rows have no missing
   values across the entire sequence.
+}
+\note{
+  A current limitation of this function is that it uses low level
+  functions to determine lengths and missingness, ignoring the 
+  class.  This will lead to spurious errors when some columns
+  have classes with \code{\link{length}} or \code{\link{is.na}}
+  methods, for example \code{"\link{POSIXlt}"}, as described
+  in \PR{16648}.
 }
 \seealso{
   \code{\link{is.na}},
