@@ -221,7 +221,7 @@
       \code{as.vector}) when subassigned into atomic vectors.
 
       \item \code{findInterval()} gets a  \code{left.open} option.
-      
+
       \item The version of LAPACK included in the sources has been
       updated to 3.6.0.  (It does not include most of the deprecated
       routines removed in that version.  For the time being, the
@@ -409,6 +409,10 @@
 
       \item \code{heatmap()} evaluated its \code{add.expr} argument
       in the wrong environment.  (\PR{16583})
+
+      \item \code{require()} etc now give the correct entry of
+      \code{lib.loc} in the warning about an old version of a package
+      masking a newer required one.
     }
   }
 }
