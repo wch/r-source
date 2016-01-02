@@ -1,7 +1,7 @@
 #  File src/library/base/R/unix/system.unix.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,9 +65,9 @@ system2 <- function(command, args = character(),
     command <- paste(c(env, shQuote(command), args), collapse = " ")
 
     if(is.null(stdout)) stdout <- FALSE
-    if(is.null(stderr)) stderr <- FALSE
-
-    if (isTRUE(stderr)) {
+    if(is.null(stderr))
+	stderr <- FALSE
+    else if (isTRUE(stderr)) {
         if (!isTRUE(stdout)) warning("setting stdout = TRUE")
         stdout <- TRUE
     }
@@ -79,8 +79,8 @@ system2 <- function(command, args = character(),
         if(length(stdout) != 1L) stop("'stdout' must be of length 1")
         if(nzchar(stdout)) {
             command <- if (identical(stdout, stderr))
-                paste(command, ">", shQuote(stdout), "2>&1")
-            else command <- paste(command, ">", shQuote(stdout))
+		paste (command, ">", shQuote(stdout), "2>&1")
+	    else paste(command, ">", shQuote(stdout))
         }
     }
     if (identical(stderr, FALSE))
