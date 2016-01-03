@@ -3930,7 +3930,7 @@ Should warnings about replacing imports be reported?  These sometimes come
 from auto-generated @file{NAMESPACE} files in other packages, but most
 often from importing the whole of a namespace rather than using
 @code{importFrom}.
-Default: false (but true for CRAN submission checks).
+Default: true.
 @item _R_CHECK_UNSAFE_CALLS_
 Check for calls that appear to tamper with (or allow tampering with)
 already loaded code not from the current package: such calls may well
