@@ -324,9 +324,6 @@
       Code using it will need to be reinstalled. (\PR{16470})
       % no current CRAN packages ....
 
-      \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
-      deprecated in favour of the standard OpenMP define \samp{_OPENMP}.
-
       \item \code{R_GE_version} has been increased to \code{11}.
 
       \item New API call \code{R_orderVector1()}, a faster
@@ -391,6 +388,16 @@
       in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)
     }
   }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
+      deprecated in favour of the standard OpenMP define \samp{_OPENMP}.
+
+      (This has been the recommendation in the manual for a while now.)
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{kmeans(x, centers = <1-row>)} now works. (\PR{16623})
