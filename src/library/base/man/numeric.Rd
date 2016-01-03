@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{numeric}
@@ -57,6 +57,13 @@ is.numeric(x)
   \code{is.integer(x) || is.double(x)}, or
   \code{(mode(x) == "numeric") && !is.factor(x)}.
 }
+\section{Warning}{
+  If \code{x} is a \code{\link{factor}}, \code{as.numeric} will return
+  the underlying numeric (integer) representation, which is often
+  meaningless as it may not correspond to the \code{factor}
+  \code{\link{levels}}, see the \sQuote{Warning} section in
+  \code{\link{factor}} (and the 2nd example below).
+}
 \section{S4 methods}{
   \code{as.numeric} and \code{is.numeric} are internally S4 generic and
   so methods can be set for them \emph{via} \code{setMethod}.
@@ -90,7 +97,13 @@ is.numeric(x)
 }
 \examples{
 as.numeric(c("-.1"," 2.7 ","B")) # (-0.1, 2.7, NA)  +  warning
-as.numeric(factor(5:10))
+
+as.numeric(factor(5:10)) # not what you'd expect
+f <- factor(1:5)
+## what you typically meant and want:
+as.numeric(as.character(f))
+## the same, considerably (for long factors) more efficient:
+as.numeric(levels(f))[f]
 }
 \keyword{classes}
 \keyword{attribute}
