@@ -16,11 +16,21 @@
       \code{x} contains infinite values. (Request of \PR{16620}.)
 
       \item \code{provideDimnames()} gets an optional \code{unique} argument.
-      
+
       \item \code{shQuote()} gains \code{type = "cmd2"} for quoting
-      in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)      
+      in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)
     }
   }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
+      deprecated in favour of the standard OpenMP define \samp{_OPENMP}.
+
+      (This has been the recommendation in the manual for a while now.)
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{kmeans(x, centers = <1-row>)} now works. (\PR{16623})
@@ -40,9 +50,13 @@
 
       \item \code{addmargins()} now adds dimnames for the extended
       margins in all cases, as always documented.
-      
+
       \item \code{heatmap()} evaluated its \code{add.expr} argument
       in the wrong environment.  (\PR{16583})
+
+      \item \code{require()} etc now give the correct entry of
+      \code{lib.loc} in the warning about an old version of a package
+      masking a newer required one.
     }
   }
 }
