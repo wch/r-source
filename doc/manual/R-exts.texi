@@ -12667,12 +12667,8 @@ platform-specific macros that are mainly for use in other header files.
 The macro @code{WORDS_BIGENDIAN} is defined on
 big-endian@footnote{@uref{https://en.wikipedia.org/@/wiki/@/Endianness}.}
 systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
-little-endian systems (such as @code{i686} and @code{x86_64} on all
-OSes, and Linux on Alpha and Itanium).  It can be useful when
-manipulating binary files.  The macro @code{SUPPORT_OPENMP} is defined
-on suitable systems and can be used in conjunction with the
-@code{SUPPORT_OPENMP_*} macros in packages that want to make use of
-OpenMP.
+little-endian systems (nowadays all the commoner @R{} platforms).  It
+can be useful when manipulating binary files.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
@@ -12695,8 +12691,8 @@ header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @samp{2.2}).
 
 Packages which use @code{alloca} need to ensure it is defined: as it is
-neither C99 nor POSIX there is no standard way to do so.  As from @R{}
-3.2.2 one can use
+part of neither C nor POSIX there is no standard way to do so.  As
+from @R{} 3.2.2 one can use
 
 @example
 #include <Rconfig.h> // for HAVE_ALLOCA_H
@@ -12720,11 +12716,11 @@ platforms.
 @section Inlining C functions
 @findex R_INLINE
 
-The C99 keyword @code{inline} should be recognized by all compilers now
-used to build @R{}.  Portable code which might be used with earlier
-versions of @R{} can be written using the macro @code{R_INLINE} (defined
-in file @file{Rconfig.h} included by @file{R.h}), as for example from
-package @CRANpkg{cluster}
+The C99 keyword @code{inline} should be recognized by all compilers
+nowadays used to build @R{}.  Portable code which might be used with
+earlier versions of @R{} can be written using the macro @code{R_INLINE}
+(defined in file @file{Rconfig.h} included by @file{R.h}), as for
+example from package @CRANpkg{cluster}
 
 @example
 #include <R.h>
