@@ -230,7 +230,7 @@
 
       \item \code{tapply()} has been made considerably more efficient
       without changing functionality, thanks to proposals from Peter
-      Haverty and Suharto Anggono.  (\PR{16488})
+      Haverty and Suharto Anggono.  (\PR{16640})
     }
   }
 
