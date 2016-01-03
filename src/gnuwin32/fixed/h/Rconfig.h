@@ -15,6 +15,7 @@
 #define SUPPORT_MBCS 1
 #define ENABLE_NLS 1
 /* #undef HAVE_AQUA */
+/* Deprecated: use _OPENMP instead */
 /* #undef SUPPORT_OPENMP */
 #ifdef _WIN64
 #define SIZEOF_SIZE_T 8
