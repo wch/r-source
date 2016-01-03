@@ -24,6 +24,7 @@ line=`grep "ENABLE_NLS" config.h`
 echo "${line}"
 line=`grep "HAVE_AQUA" config.h`
 echo "${line}"
+echo "/* Deprecated: use _OPENMP instead */"
 line=`grep "SUPPORT_OPENMP" config.h`
 echo "${line}"
 line=`grep "SIZEOF_SIZE_T" config.h`
