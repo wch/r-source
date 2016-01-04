@@ -1299,6 +1299,7 @@ static const struct interval_wcwidth table_wcwidth[] = {
     {0x100000,0x10fffd,{1,1,1,1,2,1,1}}, // EA ambiguous
 };
 
+#if defined(__APPLE__) || defined(Win32) || defined(_AIX)
 /* ------------------- iswalpha -------------------- */
 static const struct interval table_walpha[] = {
     { 0x41, 0x5a },
@@ -3522,7 +3523,7 @@ static const struct interval table_wxdigit[] = {
 };
 static const int table_wxdigit_count =
   (sizeof(table_wxdigit)/sizeof(struct interval));
-
+#endif
 
 /* -------------------helper for wcwidth -------------------- */
 
