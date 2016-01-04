@@ -1694,6 +1694,9 @@ setRlibs <-
             ## Current example is TeachingDemos
             out <- grep("^Loading required package:", out,
                         invert = TRUE, value = TRUE)
+            ## and methods can give Notes, e.g. from metaheur
+            out <- grep("^Note: the specification for", out,
+                        invert = TRUE, value = TRUE)
             err <- grep("^Error", out)
             if (length(err)) {
                 errorLog(Log)
