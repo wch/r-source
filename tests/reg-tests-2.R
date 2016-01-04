@@ -2952,3 +2952,8 @@ t2 <- TukeyHSD(a2)
 attr(t1, "orig.call") <- attr(t2, "orig.call")
 stopifnot(all.equal(t1, t2))
 ## functions both failed on a2 in R <= 3.2.2.
+
+
+## deparse() did not add parens before [
+substitute(a[1], list(a = quote(x * y)))
+## should be (x * y)[1], was x * y[1]

@@ -7704,3 +7704,9 @@ A B C
 > stopifnot(all.equal(t1, t2))
 > ## functions both failed on a2 in R <= 3.2.2.
 > 
+> 
+> ## deparse() did not add parens before [
+> substitute(a[1], list(a = quote(x * y)))
+(x * y)[1]
+> ## should be (x * y)[1], was x * y[1]
+> 
