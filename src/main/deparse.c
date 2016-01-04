@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -971,7 +971,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(")", d);
 		    break;
 		case PP_SUBSET:
+		    if ((parens = needsparens(fop, CAR(s), 1)))
+			print2buff("(", d);		
 		    deparse2buff(CAR(s), d);
+		    if (parens)
+			print2buff(")", d);		    
 		    if (PRIMVAL(SYMVALUE(op)) == 1)
 			print2buff("[", d);
 		    else
