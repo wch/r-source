@@ -39,7 +39,7 @@ tapply <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE)
     if (is.null(FUN)) return(group)
     levels(group) <- as.character(seq_len(ngroup))
     class(group) <- "factor"
-    ans <- split.default(X, group)
+    ans <- split(X, group) # use generic, e.g. for 'Date'
     names(ans) <- NULL
     index <- as.logical(lengths(ans))  # equivalently, lengths(ans) > 0L
     ans <- lapply(X = ans[index], FUN = FUN, ...)
