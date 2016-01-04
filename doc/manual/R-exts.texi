@@ -7916,7 +7916,7 @@ package's DLL, so it is less often needed to be included in
 
 Some versions have greatly increased compilation times on a few
 files@footnote{e.g.@: @file{src/main/dotcode.c} and parts of the
-@pkg{Matrix} sources with @command{clang} 3.7.0).}.
+@pkg{Matrix} sources with @command{clang} 3.7.0 amd later.}.
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
@@ -7964,15 +7964,20 @@ that would need to be linked by @code{clang++}, not @code{clang}: you
 could try building @R{} with something like
 @example
 MAIN_LD="clang++ -fsanitize=undefined"
+@end example
+@noindent
+and perhaps for @command{clang} 3.7.x
+@example
 R_OPENMP_CFLAGS="-fopenmp=libomp"
 @end example
+@noindent
 or add @code{-lclang_rt.asan_cxx-x86_64}@footnote{This includes the C++
 UBSAN handlers, despite its name.} or similar to @code{LD_FLAGS}).
 
 See @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Debugging-Options.html} (or
 the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}) for the options supported by
-GCC: 5.2.0 supports
+GCC: 5.3.0 supports
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
 integer-divide-by-zero,non-null-attribute,null,object-size,
@@ -7989,6 +7994,13 @@ as a separate option not enabled by @code{-fsanitize=undefined} (and not
 desirable for @R{} uses).  At the time of writing the @code{object-size}
 and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 so should be disabled.
+
+GCC 6 will add
+@example
+-fsanitize=bounds-strict
+@end example
+@noindent
+an extension of @code{bounds} to `flexible array member-like arrays'.
 
 
 Other useful flags include
