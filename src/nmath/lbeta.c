@@ -69,9 +69,10 @@ double lbeta(double a, double b)
 	return lgammafn(p) + corr + p - p * log(p + q)
 		+ (q - 0.5) * log1p(-p / (p + q));
     }
-    else
+    else {
 	/* p and q are small: p <= q < 10. */
 	/* R change for very small args */
 	if (p < 1e-306) return lgamma(p) + (lgamma(q) - lgamma(p+q));
-	return log(gammafn(p) * (gammafn(q) / gammafn(p + q)));
+	else return log(gammafn(p) * (gammafn(q) / gammafn(p + q)));
+    }
 }

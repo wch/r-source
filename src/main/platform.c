@@ -2526,7 +2526,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		nfail++;
 		goto copy_error;
 	    }
-	    if(fp2) fclose(fp2); fp2 = NULL;
+	    if(fp2) {fclose(fp2); fp2 = NULL;}
 	    if(perms) chmod(dest, sb.st_mode & mask);
 	    if(dates) copyFileTime(this, dest);
 	} else if (!over)
