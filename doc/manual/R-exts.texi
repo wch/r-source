@@ -624,7 +624,7 @@ The @samp{Type} field specifies the type of the package:
 One can add subject classifications for the content of the package using
 the fields @samp{Classification/ACM} or @samp{Classification/ACM-2012}
 (using the Computing Classification System of the Association for
-Computing Machinery, @uref{http://www.acm.org/class/}; the former refers
+Computing Machinery, @uref{http://www.acm.org/about/class/}; the former refers
 to the 1998 version), @samp{Classification/JEL} (the Journal of Economic
 Literature Classification System,
 @uref{https://www.aeaweb.org/@/econlit/@/jelCodes.php}, or

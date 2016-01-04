@@ -1196,7 +1196,7 @@ of the packages connecting to databases).
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl/Tk
-installed.  This part of the R installation, so it should be there.
+installed.  This is part of the R installation, so it should be there.
 
 However, if you have the environment variable @env{MY_TCLTK} set to a
 non-empty value, it is assumed that you want to use a different Tcl/Tk
