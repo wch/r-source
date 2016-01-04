@@ -366,7 +366,10 @@ RxmlNanoHTTPScanURL(RxmlNanoHTTPCtxtPtr ctxt, const char *URL)
 	    break;
 	}
 	if(indx >= 40959)
-	    RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));	buf[indx++] = *cur++;
+	    RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));
+	else {
+	    buf[indx++] = *cur++;
+	}
     }
     if (*cur == 0) return;
 
@@ -394,7 +397,10 @@ RxmlNanoHTTPScanURL(RxmlNanoHTTPCtxtPtr ctxt, const char *URL)
 	    break;
 	}
 	if(indx >= 40959)
-	    RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));	buf[indx++] = *cur++;
+	    RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));
+	else { 
+	    buf[indx++] = *cur++;
+	}
     }
     if (*cur == 0)
         ctxt->path = xmlMemStrdup("/");
@@ -451,7 +457,9 @@ RxmlNanoHTTPScanProxy(const char *URL)
 	}
 	if(indx >= 4095)
 	    RxmlMessage(2, _("RxmlNanoHTTPScanProxy: overlong (invalid?) URL"));
-	buf[indx++] = *cur++;
+	else {
+	    buf[indx++] = *cur++;
+	}
     }
     if (*cur == 0) return;
 
@@ -486,7 +494,10 @@ RxmlNanoHTTPScanProxy(const char *URL)
 	    break;
 	}
 	if(indx >= 4095)
-	    RxmlMessage(2, _("RxmlNanoHTTPScanProxy: overlong (invalid?) URL"));	buf[indx++] = *cur++;
+	    RxmlMessage(2, _("RxmlNanoHTTPScanProxy: overlong (invalid?) URL"));
+	else {
+	    buf[indx++] = *cur++;
+	}
     }
 }
 

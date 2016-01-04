@@ -863,7 +863,7 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 
     if (n < 2) return;
     for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < NI; h = incs[++t])
+    for (h = incs[t]; t < NI; h = incs[++t]) {
 	R_CheckUserInterrupt();
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
@@ -876,6 +876,7 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 	    }
 	    indx[j] = itmp;
 	}
+    }
 }
 #endif
 
@@ -1361,11 +1362,14 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 		switch(ties_kind) {
 		case AVERAGE:
 		    for (k = i; k <= j; k++)
-			rk[in[k]] = (i + j + 2) / 2.; break;
+			rk[in[k]] = (i + j + 2) / 2.; 
+		    break;
 		case MAX:
-		    for (k = i; k <= j; k++) rk[in[k]] = j+1; break;
+		    for (k = i; k <= j; k++) rk[in[k]] = j+1;
+		    break;
 		case MIN:
-		    for (k = i; k <= j; k++) rk[in[k]] = i+1; break;
+		    for (k = i; k <= j; k++) rk[in[k]] = i+1;
+		    break;
 		}
 	    }
 	} else
@@ -1381,11 +1385,14 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 		switch(ties_kind) {
 		case AVERAGE:
 		    for (k = i; k <= j; k++)
-			rk[in[k]] = (i + j + 2) / 2.; break;
+			rk[in[k]] = (i + j + 2) / 2.;
+		    break;
 		case MAX:
-		    for (k = i; k <= j; k++) ik[in[k]] = j+1; break;
+		    for (k = i; k <= j; k++) ik[in[k]] = j+1;
+		    break;
 		case MIN:
-		    for (k = i; k <= j; k++) ik[in[k]] = i+1; break;
+		    for (k = i; k <= j; k++) ik[in[k]] = i+1; 
+		    break;
 		}
 	    }
 	}

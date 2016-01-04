@@ -222,7 +222,7 @@ static double AsciiInReal(FILE *fp, SaveLoadData *d)
 	x = R_NegInf;
     else
 	res  = sscanf(d->smbuf, "%lg", &x);
-	if(res != 1) error(_("read error"));
+    if(res != 1) error(_("read error"));
     return x;
 }
 

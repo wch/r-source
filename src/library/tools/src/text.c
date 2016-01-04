@@ -120,7 +120,8 @@ delim_match(SEXP x, SEXP delims)
 		if(used == 0) break;
 		s += used;
 	    } else
-		s++; pos++;
+		s++; 
+	    pos++;
 	}
 	if(end > -1) {
 	    INTEGER(ans)[i] = start + 1; /* index from one */

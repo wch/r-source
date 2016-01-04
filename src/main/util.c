@@ -651,8 +651,12 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     isort_with_index(INTEGER(yi), iy, ny);
 
     /* 1. determine result sizes */
-    for (i = 0; i < nx; i++) if (INTEGER(xi)[i] > 0) break; nx_lone = i;
-    for (i = 0; i < ny; i++) if (INTEGER(yi)[i] > 0) break; ny_lone = i;
+    for (i = 0; i < nx; i++) 
+	if (INTEGER(xi)[i] > 0) break; 
+    nx_lone = i;
+    for (i = 0; i < ny; i++) 
+	if (INTEGER(yi)[i] > 0) break;
+    ny_lone = i;
     double dnans = 0;
     for (i = nx_lone, j = ny_lone; i < nx; i = nnx, j = nny) {
 	int tmp = INTEGER(xi)[i];
