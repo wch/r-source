@@ -4470,7 +4470,8 @@ and possibly more.  This means that calling @code{sqrt} on an integer
 type may have `overloading ambiguity' as it could be promoted to any of
 the supported floating-point types: this is commonly seen on Solaris,
 but for @code{pow} also seen on OS X.  (C++11 requires additional
-overloads for integer types.)
+overloads for integer types, and ambiguous overloads are more common in
+C++11/C++14 compiler modes.)
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
@@ -7762,13 +7763,11 @@ threaded programs.
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{currently only on @cputype{ix86}/@cputype{x86_64} Linux
-and OS X (including the builds in Xcode 7 beta but not earlier Apple
-releases).  On some platforms, e.g.@: Fedora, the runtime library,
-@pkg{libasan}, needs to be installed separately. OS X users can install
-a suitable @command{clang} from the sources,
-@url{http://llvm.org/releases/} or possibly distributions such as
-MacPorts or Homebrew.} of @command{gcc} and @command{clang} on common
-Linux and OS X platforms.  See
+and OS X (including the builds in Xcode 7 but not earlier Apple
+releases).  On some platforms the runtime library, @pkg{libasan}, needs
+to be installed separately, and for checking C++ you may also need
+@pkg{libubsan}.} of @command{gcc} and @command{clang} on common Linux
+and OS X platforms.  See
 @uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
 @uref{http://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
 @uref{https://code.google.com/@/p/@/address-sanitizer/}.
@@ -7823,10 +7822,10 @@ which will ensure that the @code{libasan} run-time library is compiled
 into the @R{} executable.  However this check can be enabled on a
 per-package basis by using a @file{~/.R/Makevars} file like
 @example
-CC = gcc-4.9 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
-CXX = g++-4.9 -fsanitize=address -fno-omit-frame-pointer
-F77 = gfortran-4.9 -fsanitize=address
-FC = gfortran-4.9 -fsanitize=address
+CC = gcc -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
+CXX = g++ -fsanitize=address -fno-omit-frame-pointer
+F77 = gfortran -fsanitize=address
+FC = gfortran -fsanitize=address
 @end example
 (Note that @code{-fsanitize=address} has to be part of the compiler
 specification to ensure it is used for linking.  These settings will not
@@ -7909,10 +7908,11 @@ packages are attempts to coerce a @code{NaN} or infinity to type
 might be @code{NA_INTEGER}.
 
 `UBSanitizer' is a tool for C/C++ source code selected by
-@option{-fsanitize=undefined} in suitable builds of @command{clang}, and
-GCC as from 4.9.0.  Its (main) runtime library is linked into each
-package's DLL, so it is less often needed to be included in
-@env{MAIN_LDFLAGS}.
+@option{-fsanitize=undefined} in suitable builds@footnote{On some
+platforms the runtime library, @pkg{libubsan}, needs to be installed
+separately.} of @command{clang} and GCC.  Its (main) runtime library is
+linked into each package's DLL, so it is less often needed to be
+included in @env{MAIN_LDFLAGS}.
 
 Some versions have greatly increased compilation times on a few
 files@footnote{e.g.@: @file{src/main/dotcode.c} and parts of the
@@ -7977,7 +7977,7 @@ UBSAN handlers, despite its name.} or similar to @code{LD_FLAGS}).
 See @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Debugging-Options.html} (or
 the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}) for the options supported by
-GCC: 5.3.0 supports
+GCC: 5.3 supports
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
 integer-divide-by-zero,non-null-attribute,null,object-size,
