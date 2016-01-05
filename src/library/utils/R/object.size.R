@@ -1,7 +1,7 @@
 #  File src/library/utils/R/object.size.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,22 +19,33 @@
 object.size <- function(x)
     structure(.Call(C_objectSize, x), class = "object_size")
 
-format.object_size <-
-    function(x, units = "b", ...)
+format.object_size <- function(x, units = "b", ...)
 {
-    units <- match.arg(units, c("b", "auto", "Kb", "Mb", "Gb",
-				"B", "KB", "MB", "GB"))
-    if (units == "auto") {
-	if (x >= 1024^3) units <- "Gb"
-	else if (x >= 1024^2) units <- "Mb"
-	else if (x >= 1024) units <- "Kb"
-	else units <- "b"
-    }
+    units <- match.arg(units, c("b", "auto", "Kb", "Mb", "Gb", "Tb", "Pb",
+				"B", "KB", "MB", "GB", "TB", "PB",
+				"KiB", "MiB", "GiB", "TiB",
+				"PiB", "EiB", "ZiB", "YiB"))
+    if (units == "auto")
+	units <-
+	    if      (x >= 1024^6) "Tb"
+            else if (x >= 1024^3) "Gb"
+	    else if (x >= 1024^2) "Mb"
+	    else if (x >= 1024  ) "Kb" else "b"
     switch(units,
 	   "b" =, "B" = paste(x, "bytes"),
-	   "Kb" =, "KB" = paste(round(x/1024, 1L), "Kb"),
+	   "Kb" =, "KB" = paste(round(x/1024  , 1L), "Kb"),
 	   "Mb" =, "MB" = paste(round(x/1024^2, 1L), "Mb"),
-	   "Gb" =, "GB" = paste(round(x/1024^3, 1L), "Gb")
+	   "Gb" =, "GB" = paste(round(x/1024^3, 1L), "Gb"),
+	   "Tb" =, "TB" = paste(round(x/1024^3, 1L), "Tb"),
+	   "Pb" =, "PB" = paste(round(x/1024^3, 1L), "Pb"),
+	   "KiB" = paste(round(x/1024  , 1L), "KiB"),
+	   "MiB" = paste(round(x/1024^2, 1L), "MiB"),
+	   "GiB" = paste(round(x/1024^3, 1L), "GiB"),
+	   "TiB" = paste(round(x/1024^4, 1L), "TiB"),
+	   "PiB" = paste(round(x/1024^5, 1L), "PiB"),
+	   "EiB" = paste(round(x/1024^6, 1L), "EiB"),
+	   "ZiB" = paste(round(x/1024^7, 1L), "ZiB"),
+	   "YiB" = paste(round(x/1024^8, 1L), "YiB")
 	   )
 }
 

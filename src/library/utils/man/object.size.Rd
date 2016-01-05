@@ -1,6 +1,6 @@
 % File src/library/utils/man/object.size.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{object.size}
@@ -18,14 +18,17 @@ object.size(x)
 \method{print}{object_size}(x, quote = FALSE, units = "b", \dots)
 }
 \arguments{
-  \item{x}{An \R object.}
+  \item{x}{an \R object.}
   \item{quote}{logical, indicating whether or not the result should be
     printed with surrounding quotes.}
-  \item{units}{The units to be used in printing the size.  Allowed
-    values are \code{"b"}, \code{"Kb"}, \code{"Mb"}, \code{"Gb"},
-    \code{"B"}, \code{"KB"}, \code{"MB"}, \code{"GB"}, and \code{"auto"}
-    (see \sQuote{Details}).  Can be abbreviated.} 
-  \item{\dots}{Arguments to be passed to or from other methods.}
+  \item{units}{the units to be used in printing the size.  Allowed
+    values are
+    \code{"b"}, \code{"Kb"}, \code{"Mb"}, \code{"Gb"}, \code{"Tb"}, \code{"Pb"},
+    \code{"B"}, \code{"KB"}, \code{"MB"}, \code{"GB"}, \code{"TB"}, \code{"PB"},
+    \code{"KiB"}, \code{"MiB"}, \code{"GiB"}, \code{"TiB"},
+    \code{"PiB"}, \code{"EiB"}, \code{"ZiB"}, \code{"YiB"},
+    and \code{"auto"} (see \sQuote{Details}).  Can be abbreviated.}
+  \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
   Exactly which parts of the memory allocation should be attributed to
@@ -50,6 +53,12 @@ object.size(x)
   chooses the largest units in which the result is one or more (before
   rounding).  Values in kilobytes, megabytes or gigabytes are rounded to
   the nearest \code{0.1}.
+
+  The IEC standard for \emph{binary} byte size units uses notation \code{KiB},
+  etc.  Note that our uses of \code{Kb}, \code{Mb}, etc, also mean
+  multiples of \code{1024} (and not of \code{1000}) and hence the numbers
+  for \code{Kb}, \code{KB}, and \code{KiB} are all the same - contrary
+  to SI standard but according to widespread tradition.
 }
 \value{
   An object of class \code{"object_size"} with a length-one double value,
@@ -63,6 +72,14 @@ object.size(x)
 object.size(letters)
 object.size(ls)
 format(object.size(library), units = "auto")
+
+sl <- object.size(rep(letters, 1000))
+(fsl <- sapply(c("Kb", "KB", "KiB"),
+               function(u) format(sl, units = u)))
+stopifnot(identical( ## assert that all three are the same :
+             unique(substr(as.vector(fsl), 1,5)),
+             format(round(as.vector(sl)/1024, 1))))
+
 ## find the 10 largest objects in the base package
 z <- sapply(ls("package:base"), function(x)
             object.size(get(x, envir = baseenv())))
