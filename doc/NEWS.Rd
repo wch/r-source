@@ -318,6 +318,14 @@
     }
   }
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The \command{make} macro \code{AWK} which used to be made
+      available to files such as \file{src/Makefile} is no longer set.
+      [Announced and will be implemented once packages are updated.]
+    }
+  }
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The API call \code{logspace_sum} introduced in \R 3.2.0 is
@@ -399,9 +407,9 @@
 
       (This has been the recommendation in the manual for a while now.)
 
-      \item The make macro @code{AWK} which is long unused by \R itself
-      but recorded in file \file{etc/Makeconf} is deprecated and will be
-      removed in \R 3.3.0.
+      \item The \command{make} macro @code{AWK} which is long unused by
+      \R itself but recorded in file \file{etc/Makeconf} is deprecated
+      and will be removed in \R 3.3.0.
     }
   }
 
