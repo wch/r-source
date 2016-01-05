@@ -237,6 +237,10 @@
 
       \item The \code{format} method for \code{object_size} objects now
       also accepts \dQuote{binary} units (and e.g. Tb).  (\PR{16649})
+
+      \item Profiling now records calls of the form \code{foo::bar} and
+      some similar cases directly rather than as calls to
+      \code{<Anonymous>}.  Contributed by Winston Chang.
     }
   }
 

@@ -234,8 +234,66 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 	    SEXP fun = CAR(cptr->call);
 	    if(strlen(buf) < PROFLINEMAX) {
 		strcat(buf, "\"");
-		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
-		       "<Anonymous>");
+
+		char itembuf[PROFITEMMAX];
+
+		if (TYPEOF(fun) == SYMSXP) {
+		    snprintf(itembuf, PROFITEMMAX-1, "%s", CHAR(PRINTNAME(fun)));
+
+		} else if ((CAR(fun) == R_DoubleColonSymbol ||
+			    CAR(fun) == R_TripleColonSymbol ||
+			    CAR(fun) == R_DollarSymbol) &&
+			   TYPEOF(CADR(fun)) == SYMSXP &&
+			   TYPEOF(CADDR(fun)) == SYMSXP) {
+		    /* Function accessed via ::, :::, or $. Both args must be
+		       symbols. It is possible to use strings with these
+		       functions, as in "base"::"list", but that's a very rare
+		       case so we won't bother handling it. */
+		    snprintf(itembuf, PROFITEMMAX-1, "%s%s%s",
+			     CHAR(PRINTNAME(CADR(fun))),
+			     CHAR(PRINTNAME(CAR(fun))),
+			     CHAR(PRINTNAME(CADDR(fun))));
+
+		} else if (CAR(fun) == R_Bracket2Symbol &&
+			   TYPEOF(CADR(fun)) == SYMSXP &&
+			   ((TYPEOF(CADDR(fun)) == SYMSXP ||
+			     TYPEOF(CADDR(fun)) == STRSXP ||
+			     TYPEOF(CADDR(fun)) == INTSXP ||
+			     TYPEOF(CADDR(fun)) == REALSXP) &&
+			    length(CADDR(fun)) > 0)) {
+		    /* Function accessed via [[. The first arg must be a symbol
+		       and the second can be a symbol, string, integer, or
+		       real. */
+		    SEXP arg1 = CADR(fun);
+		    SEXP arg2 = CADDR(fun);
+		    char arg2buf[PROFITEMMAX];
+
+		    if (TYPEOF(arg2) == SYMSXP) {
+			snprintf(arg2buf, PROFITEMMAX-1, "%s", CHAR(PRINTNAME(arg2)));
+
+		    } else if (TYPEOF(arg2) == STRSXP) {
+			snprintf(arg2buf, PROFITEMMAX-1, "\"%s\"", CHAR(STRING_ELT(arg2, 0)));
+
+		    } else if (TYPEOF(arg2) == INTSXP) {
+			snprintf(arg2buf, PROFITEMMAX-1, "%d", INTEGER(arg2)[0]);
+
+		    } else if (TYPEOF(arg2) == REALSXP) {
+			snprintf(arg2buf, PROFITEMMAX-1, "%.0f", REAL(arg2)[0]);
+
+		    } else {
+			/* Shouldn't get here, but just in case. */
+			arg2buf[0] = '\0';
+		    }
+
+		    snprintf(itembuf, PROFITEMMAX-1, "%s[[%s]]",
+			     CHAR(PRINTNAME(arg1)),
+			     arg2buf);
+
+		} else {
+		    sprintf(itembuf, "<Anonymous>");
+		}
+
+		strcat(buf, itembuf);
 		strcat(buf, "\" ");
 		if (R_Line_Profiling)
 		    lineprof(buf, cptr->srcref);
