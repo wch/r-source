@@ -231,6 +231,9 @@
       \item \code{tapply()} has been made considerably more efficient
       without changing functionality, thanks to proposals from Peter
       Haverty and Suharto Anggono.  (\PR{16640})
+
+      \item \code{match.arg(arg)} (the one-argument case) is faster.
+      (\PR{16640})
     }
   }
 
@@ -424,7 +427,7 @@
       \item \code{require()} etc now give the correct entry of
       \code{lib.loc} in the warning about an old version of a package
       masking a newer required one.
-      
+
       \item The internal deparser did not add parentheses when
       necessary before \code{[]} or \code{[[]]}.  (Reported by
       Lukas Stadler).
