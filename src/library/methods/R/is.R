@@ -22,31 +22,13 @@ is <-
   # With one argument, returns all the super-classes of this object's class.
 function(object, class2)
 {
-    cl <- class(object)
-    S3Case <- length(cl) > 1L
-    if(S3Case)
-        cl <- cl[[1L]]
     if(missing(class2))
-        return(extends(cl))
-    class1Def <- getClassDef(cl)
-    if(is.null(class1Def)) # an unregistered S3 class
-        return(inherits(object, class2))
-    if(is.character(class2))
-        class2Def <- getClassDef(class2, .classDefEnv(class1Def))
-    else {
-        class2Def <- class2
-        class2 <- class2Def@ className
-    }
-    ## S3 inheritance is applied if the object is not S4 and class2 is either a basic
-    ## class or an S3 class (registered or not)
-    S3Case <- S3Case || (is.object(object) && !isS4(object)) # first requirement
-    S3Case <- S3Case && (is.null(class2Def) || class2 %in% .BasicClasses ||
-			 extends(class2Def, "oldClass"))
-    if(S3Case)
-        inherits(object, class2)
-    else if(.identC(cl, class2) || .identC(class2, "ANY"))
+        return(extends(class(object)))
+    if(!is.character(class2))
+        class2 <- class2@className
+    if (inherits(object, class2))
         TRUE
-    else if(is.logical(ext <- possibleExtends(cl, class2, class1Def, class2Def)))
+    else if(is.logical(ext <- possibleExtends(class(object), class2)))
         ext
     else if(ext@simple)
         TRUE
