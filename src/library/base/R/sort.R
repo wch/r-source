@@ -1,7 +1,7 @@
 #  File src/library/base/R/sort.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,7 +63,9 @@ sort.int <-
         y <- x[o]
     } else {
         nms <- names(x)
-        method <- if(is.numeric(x)) match.arg(method) else "shell"
+	method <- if(is.numeric(x)) match.arg(method, # for speed only:
+					      c("shell", "quick"))
+		  else "shell"
         switch(method,
                "quick" = {
                    if(!is.null(nms)) {
