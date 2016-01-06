@@ -414,7 +414,7 @@
 
       (This has been the recommendation in the manual for a while now.)
 
-      \item The \command{make} macro @code{AWK} which is long unused by
+      \item The \command{make} macro \code{AWK} which is long unused by
       \R itself but recorded in file \file{etc/Makeconf} is deprecated
       and will be removed in \R 3.3.0.
     }
