@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-01-01 r69830) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-01-04 r69860) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -771,7 +771,7 @@ attr(,"id")
 [1] "xtfrm"
 > xtfrm(x)
 [1] 1 2 3
-> stopifnot(identical(xtfrm(x), 1:3))
+> stopifnot(identical(xtfrm(x), 1:3))# "integer" is "numeric"
 > ## new in 2.11.0
 > 
 > ## [-dispatch using callNextMethod()
@@ -1152,4 +1152,22 @@ Formal class 'signature' [package "methods"] with 3 slots
 > stopifnot(require("methods"))
 Loading required package: methods
 > ## Slot assignment failed in R <= 3.2.2, C code calling checkAtAssignment()
+> 
+> ## Error in argument evaluation of S4 generic - PR#16111
+> f <- function() {
++     signal <- FALSE
++     withCallingHandlers({ g(sqrt(-1)) }, warning = function(w) {
++         signal <<- TRUE
++         invokeRestart("muffleWarning")
++     })
++     signal
++ }
+> g <- function(x) x
+> op <- options(warn = 2)# warnings give errors
+> stopifnot(isTRUE( f() ))
+> setGeneric("g")
+[1] "g"
+> stopifnot(isTRUE( f() ))
+> options(op)
+> ## the second  f()  gave a warning and FALSE in  R versions  2.12.0 <= . <= 3.2.3
 > 

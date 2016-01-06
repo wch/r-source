@@ -511,7 +511,7 @@ x <- new("numWithId", 1:3, id = "An Example")
 xtfrm(x) # works as the base representation is numeric
 setMethod('xtfrm', 'numWithId', function(x) x@.Data)
 xtfrm(x)
-stopifnot(identical(xtfrm(x), 1:3))
+stopifnot(identical(xtfrm(x), 1:3))# "integer" is "numeric"
 ## new in 2.11.0
 
 ## [-dispatch using callNextMethod()
@@ -802,3 +802,20 @@ C1@slot1 <- pi
 stopifnot(identical(C1@slot1, pi))
 stopifnot(require("methods"))
 ## Slot assignment failed in R <= 3.2.2, C code calling checkAtAssignment()
+
+## Error in argument evaluation of S4 generic - PR#16111
+f <- function() {
+    signal <- FALSE
+    withCallingHandlers({ g(sqrt(-1)) }, warning = function(w) {
+        signal <<- TRUE
+        invokeRestart("muffleWarning")
+    })
+    signal
+}
+g <- function(x) x
+op <- options(warn = 2)# warnings give errors
+stopifnot(isTRUE( f() ))
+setGeneric("g")
+stopifnot(isTRUE( f() ))
+options(op)
+## the second  f()  gave a warning and FALSE in  R versions  2.12.0 <= . <= 3.2.3

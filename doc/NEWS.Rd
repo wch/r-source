@@ -236,7 +236,8 @@
       is \code{sort.int()}.  (\PR{16640})
 
       \item The \code{format} method for \code{object_size} objects now
-      also accepts \dQuote{binary} units (and e.g. Tb).  (\PR{16649})
+      also accepts \dQuote{binary} units such as \code{"KiB"} and e.g.,
+      \code{"Tb"}.  (partly from \PR{16649})
 
       \item Profiling now records calls of the form \code{foo::bar} and
       some similar cases directly rather than as calls to
@@ -386,6 +387,9 @@
       absolute value less than or equal to 1. (\PR{16638})
 
       \item Array subsetting now keeps \code{names(dim(.))}.
+
+      \item \code{withCallingHandler()} now (again) handles warnings
+      even during S4 generic's argument evaluation.  (\PR{16111})% TODO: port to r-patched
     }
   }
 }
