@@ -275,8 +275,9 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 FILE *R_popen(const char *command, const char *type)
 {
     FILE *fp;
-#ifdef __APPLE__
+#ifdef OLD__APPLE__
     /* Luke recommends this to fix PR#1140 */
+    /* As of 2016-01-06 on El Capitan this may no longer be needed -- LT */
     sigset_t ss;
     sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
@@ -297,16 +298,21 @@ int R_system(const char *command)
 {
     int res;
 #ifdef __APPLE__
+# ifdef OLD__APPLE__
     /* Luke recommends this to fix PR#1140 */
+    /* As of 2016-01-06 on El Capitan this may no longer be needed -- LT */
     sigset_t ss;
     sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
+# endif    
 #ifdef HAVE_AQUA
     if(ptr_CocoaSystem) res = ptr_CocoaSystem(command); else
 #endif
     res = system(command);
+# ifdef OLD__APPLE__
     sigprocmask(SIG_UNBLOCK, &ss, NULL);
+# endif
 #else // not APPLE
     res = system(command);
 #endif
