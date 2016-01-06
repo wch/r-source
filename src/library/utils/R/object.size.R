@@ -27,7 +27,7 @@ format.object_size <- function(x, units = "b", ...)
 				"PiB", "EiB", "ZiB", "YiB"))
     if (units == "auto")
 	units <-
-	    if      (x >= 1024^6) "Tb"
+	    if      (x >= 1024^4) "Tb"
             else if (x >= 1024^3) "Gb"
 	    else if (x >= 1024^2) "Mb"
 	    else if (x >= 1024  ) "Kb" else "b"
