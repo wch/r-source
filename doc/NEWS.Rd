@@ -23,8 +23,8 @@
       have to successfully negotiate a cryptographic protocol (TLS/SSL,
       \dots) and the server's identity has to be verifiable \emph{via}
       the available certificates.  Different access methods may allow
-      different protocols or use private certificate bundles: we have
-      experienced a \samp{https:} CRAN mirror which can be accessed by
+      different protocols or use private certificate bundles: we
+      encountered a \samp{https:} CRAN mirror which can be accessed by
       one browser but not another nor by \code{download.file()} on the
       same Linux machine.
     }
