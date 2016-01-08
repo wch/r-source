@@ -682,6 +682,8 @@ case "${host_os}" in
     ## changes DYLD_LIBRARY_PATH), because they override the system
     ## look-up sequence. Such automatic override has proven to break things
     ## like system frameworks (e.g. ImageIO or OpenGL framework).
+    ## Not so bad in later versions of Darwin, 
+    ## where DYLD_FALLBACK_LIBRARY_PATH is used (see below).
     ;;
   *)
     for arg in ${LDFLAGS}; do
@@ -697,8 +699,9 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
-## Used in etc/ldpaths: override what libtool thinks on OS X
+## Used in etc/ldpaths: As from R 3.0.0 override what libtool thinks on OS X
 ## http://hublog.hubmed.org/archives/001192.html suggests this was in 10.4
+## However, as from 10.11 this variable is not passed down to shells.
 case "${host_os}" in
   darwin*)
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH

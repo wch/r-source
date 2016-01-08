@@ -2930,7 +2930,7 @@ test the process (via @command{make test}).  Note that you will probably
 not be able to run it unless you add the directory containing
 @enindex LD_LIBRARY_PATH
 @file{libRmath.so} to the @env{LD_LIBRARY_PATH} environment variable
-(@file{libRmath.dylib}, @env{DYLD_LIBRARY_PATH} on OS X).
+(@file{libRmath.dylib}, @env{DYLD_FALLBACK_LIBRARY_PATH} on OS X).
 
 The targets
 
