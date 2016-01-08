@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-8  The R Core Team.
+ *  Copyright (C) 2006-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,12 +53,7 @@ extern void R_CleanTempDir(void);
 LibExtern char *R_TempDir;    
 extern void R_SaveGlobalEnv(void);
 
-
-#ifdef unix
-void fpu_setup(Rboolean start);
-#endif
-
-#ifdef Win32
+#ifdef _WIN32
 extern char *getDLLVersion(void), *getRUser(void), *get_R_HOME(void);
 extern void setup_term_ui(void);
 LibExtern int UserBreak;
@@ -67,6 +62,8 @@ extern void editorcleanall(void);
 extern int GA_initapp(int, char **);
 extern void GA_appcleanup(void);
 extern void readconsolecfg(void);
+#else
+void fpu_setup(Rboolean start);
 #endif
 
 #ifdef __cplusplus
