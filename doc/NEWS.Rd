@@ -1948,7 +1948,7 @@
 
       \item \code{sub()} and \code{gsub()} did not handle regular
       expressions like \code{"\\s{2,}"} properly if the text
-      contained \code{NA} or non-ascii elements in a UTF-8
+      contained \code{NA} or non-ASCII elements in a UTF-8
       locale.  Part of this was due to a bug in the TRE library.
       (\PR{16009})
 
