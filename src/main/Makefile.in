@@ -30,7 +30,7 @@ SOURCES_C = \
 	objects.c options.c \
 	paste.c platform.c plot.c plot3d.c plotmath.c \
 	print.c printarray.c printvector.c printutils.c qsort.c \
-	random.c raw.c registration.c relop.c rlocale.c \
+	radixsort.c random.c raw.c registration.c relop.c rlocale.c \
 	saveload.c scan.c seq.c serialize.c sort.c source.c split.c \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	times.c \

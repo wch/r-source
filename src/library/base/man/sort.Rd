@@ -147,10 +147,10 @@ x <- swiss$Education[1:25]
 x; sort(x); sort(x, partial = c(10, 15))
 
 ## illustrate 'stable' sorting (of ties):
-sort(c(10:3, 2:12), method = "sh", index.return = TRUE) # is stable
+sort(c(10:3, 2:12), method = "shell", index.return = TRUE) # is stable
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
 ## $ix: 9  8 10  7 11  6 12  5 13  4 14  3 15  2 16  1 17 18 19
-sort(c(10:3, 2:12), method = "qu", index.return = TRUE) # is not
+sort(c(10:3, 2:12), method = "quick", index.return = TRUE) # is not
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
 ## $ix: 9 10  8  7 11  6 12  5 13  4 14  3 15 16  2 17  1 18 19
 
@@ -163,14 +163,15 @@ is.unsorted(x, strictly = TRUE) # TRUE : is not (and cannot be)
 N <- 2000
 Sim <- 20
 rep <- 1000 # << adjust to your CPU
-c1 <- c2 <- numeric(Sim)
+c1 <- c2 <- c3 <- numeric(Sim)
 for(is in seq_len(Sim)){
   x <- rnorm(N)
   c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"))[1]
   c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"))[1]
-  stopifnot(sort(x, method = "s") == sort(x, method = "q"))
+  c2[is] <- system.time(for(i in 1:rep) sort(x, method = "radix"))[1]
+  stopifnot(sort(x, method = "shell") == sort(x, method = "quick"))
 }
-rbind(ShellSort = c1, QuickSort = c2)
+rbind(ShellSort = c1, QuickSort = c2, RadixSort = c3)
 cat("Speedup factor of quick sort():\n")
 summary({qq <- c1 / c2; qq[is.finite(qq)]})
 
@@ -178,7 +179,9 @@ summary({qq <- c1 / c2; qq[is.finite(qq)]})
 x <- rnorm(1e7)
 system.time(x1 <- sort(x, method = "shell"))
 system.time(x2 <- sort(x, method = "quick"))
+system.time(x3 <- sort(x, method = "radix"))
 stopifnot(identical(x1, x2))
+stopifnot(all.equal(x1, x3)) # imprecision in radix sort
 }}
 \keyword{univar}
 \keyword{manip}

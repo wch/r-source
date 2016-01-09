@@ -153,18 +153,32 @@ z <- cbind(a, b)
 
 \donttest{
 ##  speed examples for long vectors:
-x <- factor(sample(letters, 1e6, replace = TRUE))
-system.time(o <- sort.list(x)) ## 0.4 secs
+x <- factor(sample(letters, 1e7, replace = TRUE))
+system.time(o <- sort.list(x, method="shell")) # 4.7 sec
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method = "quick", na.last = NA)) # 0.1 sec
+system.time(o <- sort.list(x, method = "quick", na.last = NA)) # 0.6 sec
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method = "radix")) # 0.01 sec
+system.time(o <- sort.list(x, method = "radix")) # 0.05 sec
 stopifnot(!is.unsorted(x[o]))
 xx <- sample(1:26, 1e7, replace = TRUE)
-system.time(o <- sort.list(xx, method = "radix")) # 0.1 sec
+system.time(o <- sort.list(xx, method = "radix")) # 0.05 sec
 xx <- sample(1:100000, 1e7, replace = TRUE)
-system.time(o <- sort.list(xx, method = "radix")) # 0.5 sec
-system.time(o <- sort.list(xx, method = "quick", na.last = NA)) # 1.3 sec
+system.time(o <- sort.list(xx, method = "radix")) # 0.25 sec
+system.time(o <- sort.list(xx, method = "radix2")) # 0.18 sec
+system.time(o <- sort.list(xx, method = "quick", na.last = NA)) # 1 sec
+xx <- sample(1:200000, 1e7, replace = TRUE)
+## system.time(o <- sort.list(xx, method = "radix")) # 0.25 sec
+## Error in sort.list(xx, method = "radix") : 
+##  too large a range of values in 'x'
+system.time(o <- sort.list(xx, method = "radix2")) # 0.2 sec
+xx <- sample(state.name, 1e6, replace = TRUE)
+system.time(o <- sort.list(xx, method = "radix2")) # 0.007 sec
+system.time(o <- sort.list(factor(xx), method = "radix")) # 0.04 sec
+system.time(o <- sort.list(xx, method = "shell")) # 2 sec
+xx <- rnorm(1e6)
+system.time(o <- sort.list(xx, method = "radix2")) # 0.05 sec
+system.time(o <- sort.list(xx, method = "quick", na.last=NA)) # 0.1 sec
+system.time(o <- sort.list(xx, method = "shell")) # 0.4 sec
 }}
 \keyword{univar}
 \keyword{manip}
