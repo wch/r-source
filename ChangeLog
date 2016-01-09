@@ -1,0 +1,6 @@
+	* News about new released versions are in doc/NEWS.Rd
+
+	* Details about single subversion (svn) commits are available, e.g., by
+
+	svn log https://svn.r-project.org/R/trunk
+
