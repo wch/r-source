@@ -22375,6 +22375,8 @@ case "${host_os}" in
     ## changes DYLD_LIBRARY_PATH), because they override the system
     ## look-up sequence. Such automatic override has proven to break things
     ## like system frameworks (e.g. ImageIO or OpenGL framework).
+    ## Not so bad in later versions of Darwin,
+    ## where DYLD_FALLBACK_LIBRARY_PATH is used (see below).
     ;;
   *)
     for arg in ${LDFLAGS}; do
@@ -22396,8 +22398,9 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
-## Used in etc/ldpaths: override what libtool thinks on OS X
+## Used in etc/ldpaths: As from R 3.0.0 override what libtool thinks on OS X
 ## http://hublog.hubmed.org/archives/001192.html suggests this was in 10.4
+## However, as from 10.11 this variable is not passed down to shells.
 case "${host_os}" in
   darwin*)
     Rshlibpath_var=DYLD_FALLBACK_LIBRARY_PATH
@@ -25056,7 +25059,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25059: \"$ac_link\") >&5
+(eval echo $as_me:25062: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25131,7 +25134,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25134: \"$ac_link\") >&5
+(eval echo $as_me:25137: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
