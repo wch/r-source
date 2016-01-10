@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-01-07 r69884) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-01-09 r69893) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -261,4 +261,42 @@ Error in parse(text = "12iL") : <text>:1:4: unexpected symbol
 > identical(as.list(as.list),
 + 	  alist(x = , ... = , UseMethod("as.list")))
 [1] TRUE
+> 
+> ## startsWith() / endsWith()  assertions
+> t1 <- c("Foobar", "bla bla", "something", "another", "blu", "brown",
++         "blau blüht der Enzian")# non-ASCII
+> t2 <- c("some text", "any text")
+> t3 <- c("Martin", "Zürich", "Mächler")
+> 
+> all(endsWith(t1, "")); all(startsWith(t1, ""))
+[1] TRUE
+[1] TRUE
+> all(endsWith(t2, "")); all(startsWith(t2, ""))
+[1] TRUE
+[1] TRUE
+> all(endsWith(t3, "")); all(startsWith(t3, ""))
+[1] TRUE
+[1] TRUE
+> all(endsWith(t2, "text"))
+[1] TRUE
+> all(endsWith(t2, " text"))
+[1] TRUE
+> identical(startsWith(t1, "b" ), c(FALSE, TRUE, FALSE, FALSE, TRUE,  TRUE, TRUE))
+[1] TRUE
+> identical(startsWith(t1, "bl"), c(FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE))
+[1] TRUE
+> identical(startsWith(t1, "bla"),c(FALSE, TRUE, FALSE, FALSE,FALSE, FALSE, TRUE))
+[1] TRUE
+> identical(  endsWith(t1, "n"),  c(FALSE,FALSE, FALSE, FALSE,FALSE,  TRUE, TRUE))
+[1] TRUE
+> identical(  endsWith(t1, "an"), c(FALSE,FALSE, FALSE, FALSE,FALSE, FALSE, TRUE))
+[1] TRUE
+> ##
+> identical(startsWith(t3, "M" ), c( TRUE, FALSE, TRUE))
+[1] TRUE
+> identical(startsWith(t3, "Ma"), c( TRUE, FALSE, FALSE))
+[1] TRUE
+> identical(startsWith(t3, "Mä"), c(FALSE, FALSE, TRUE))
+[1] TRUE
+> 
 > 

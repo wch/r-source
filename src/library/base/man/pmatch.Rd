@@ -1,6 +1,6 @@
 % File src/library/base/man/pmatch.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pmatch}
@@ -68,6 +68,7 @@ pmatch(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
   \code{\link{match}}, \code{\link{charmatch}} and
   \code{\link{match.arg}}, \code{\link{match.fun}},
   \code{\link{match.call}}, for function argument matching etc.,
+  \code{\link{startsWith}} for particular checking of initial matches;
   \code{\link{grep}} etc for more general (regexp) matching of strings.
 }
 \examples{

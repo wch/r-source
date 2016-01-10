@@ -1,7 +1,7 @@
 #  File src/library/base/R/character.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@ substring <- function(text, first, last=1000000L)
     if(lt && lt < n) text <- rep_len(text, length.out = n)
     .Internal(substr(text, as.integer(first), as.integer(last)))
 }
+
+startsWith <- function(x, prefix) .Internal(startsWith(x, prefix))
+endsWith   <- function(x, suffix) .Internal(endsWith  (x, suffix))
 
 `substr<-` <- function(x, start, stop, value)
     .Internal(`substr<-`(x, as.integer(start), as.integer(stop), value))

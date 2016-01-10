@@ -1,6 +1,6 @@
 % File src/library/base/man/charmatch.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{charmatch}
@@ -43,6 +43,7 @@ charmatch(x, table, nomatch = NA_integer_)
 \seealso{
   \code{\link{pmatch}}, \code{\link{match}}.
 
+  \code{\link{startsWith}} for another matching of initial parts of strings;
   \code{\link{grep}} or \code{\link{regexpr}} for more general (regexp)
   matching of strings.
 }

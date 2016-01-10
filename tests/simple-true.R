@@ -166,3 +166,25 @@ all(rank(x, na.last = NA) == na.omit(rxK))
 ## as.list.function() instead of *.default():
 identical(as.list(as.list),
 	  alist(x = , ... = , UseMethod("as.list")))
+
+## startsWith() / endsWith()  assertions
+t1 <- c("Foobar", "bla bla", "something", "another", "blu", "brown",
+        "blau blüht der Enzian")# non-ASCII
+t2 <- c("some text", "any text")
+t3 <- c("Martin", "Zürich", "Mächler")
+
+all(endsWith(t1, "")); all(startsWith(t1, ""))
+all(endsWith(t2, "")); all(startsWith(t2, ""))
+all(endsWith(t3, "")); all(startsWith(t3, ""))
+all(endsWith(t2, "text"))
+all(endsWith(t2, " text"))
+identical(startsWith(t1, "b" ), c(FALSE, TRUE, FALSE, FALSE, TRUE,  TRUE, TRUE))
+identical(startsWith(t1, "bl"), c(FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE))
+identical(startsWith(t1, "bla"),c(FALSE, TRUE, FALSE, FALSE,FALSE, FALSE, TRUE))
+identical(  endsWith(t1, "n"),  c(FALSE,FALSE, FALSE, FALSE,FALSE,  TRUE, TRUE))
+identical(  endsWith(t1, "an"), c(FALSE,FALSE, FALSE, FALSE,FALSE, FALSE, TRUE))
+##
+identical(startsWith(t3, "M" ), c( TRUE, FALSE, TRUE))
+identical(startsWith(t3, "Ma"), c( TRUE, FALSE, FALSE))
+identical(startsWith(t3, "Mä"), c(FALSE, FALSE, TRUE))
+

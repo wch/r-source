@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -75,6 +75,8 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <Rinternals.h> // R_nchar()
+
+#include <R_ext/Itermacros.h>
 
 #include <rlocale.h>
 
@@ -300,43 +302,37 @@ static void substr(char *buf, const char *str, int ienc, int sa, int so)
     *buf = '\0';
 }
 
-SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden
+do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, x, sa, so, el;
-    R_xlen_t i, len;
-    int start, stop, k, l;
-    size_t slen;
-    cetype_t ienc;
-    const char *ss;
-    char *buf;
-
+    SEXP s, x;
     checkArity(op, args);
     x = CAR(args);
-    sa = CADR(args);
-    so = CADDR(args);
-    k = LENGTH(sa);
-    l = LENGTH(so);
-
     if (!isString(x))
 	error(_("extracting substrings from a non-character object"));
-    len = XLENGTH(x);
+    R_xlen_t len = XLENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
     if (len > 0) {
+	SEXP sa = CADR(args),
+	    so = CADDR(args);
+	int
+	    k = LENGTH(sa),
+	    l = LENGTH(so);
 	if (!isInteger(sa) || !isInteger(so) || k == 0 || l == 0)
 	    error(_("invalid substring arguments"));
 
-	for (i = 0; i < len; i++) {
-	    start = INTEGER(sa)[i % k];
-	    stop = INTEGER(so)[i % l];
-	    el = STRING_ELT(x,i);
+	for (R_xlen_t i = 0; i < len; i++) {
+	    int start = INTEGER(sa)[i % k],
+		stop  = INTEGER(so)[i % l];
+	    SEXP el = STRING_ELT(x,i);
 	    if (el == NA_STRING || start == NA_INTEGER || stop == NA_INTEGER) {
 		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
 	    }
-	    ienc = getCharCE(el);
-	    ss = CHAR(el);
-	    slen = strlen(ss); /* FIXME -- should handle embedded nuls */
-	    buf = R_AllocStringBuffer(slen+1, &cbuff);
+	    cetype_t ienc = getCharCE(el);
+	    const char *ss = CHAR(el);
+	    size_t slen = strlen(ss); /* FIXME -- should handle embedded nuls */
+	    char *buf = R_AllocStringBuffer(slen+1, &cbuff);
 	    if (start < 1) start = 1;
 	    if (start > stop || start > slen) {
 		buf[0] = '\0';
@@ -353,6 +349,78 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return s;
 }
+
+// return TRUE iff CHARSXP x starts with CHARSXP pre
+int str_startsWith(SEXP x, SEXP pre) {
+    cetype_t ienc = getCharCE(x);
+    const char *cx = CHAR(x);
+    size_t p_len = R_nchar(pre, Chars, FALSE, FALSE, "startWith(, prefix)");
+    /* Cheap (but short) implementation, using substr() and Seql() : */
+    char *buf = R_AllocStringBuffer(p_len+1, &cbuff);
+    if(p_len == 0)
+	buf[0] = '\0';
+    else
+	substr(buf, cx, ienc, 1, p_len);
+    return Seql(mkCharCE(buf, ienc), pre);
+}
+
+// return TRUE iff CHARSXP x ends with CHARSXP suffix
+int str_endsWith(SEXP x, SEXP suffix) {
+    cetype_t ienc = getCharCE(x);
+    const char *cx = CHAR(x);
+    size_t p_len = R_nchar(suffix, Chars, FALSE, FALSE, "endsWith(, suffix)");
+    /* Cheap (but short) implementation, using substr() and Seql() : */
+    char *buf = R_AllocStringBuffer(p_len+1, &cbuff);
+    if(p_len == 0)
+	buf[0] = '\0';
+    else {
+	size_t x_len = R_nchar(x, Chars, FALSE, FALSE, "endsWith(x, )");
+	substr(buf, cx, ienc, x_len-p_len+1, x_len);
+    }
+    return Seql(mkCharCE(buf, ienc), suffix);
+}
+
+// .Internal( startsWith(x, prefix) )  and
+// .Internal( endsWith  (x, suffix) )
+SEXP attribute_hidden
+do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args), Xfix = CADR(args); // 'prefix' or 'suffix'
+    if (!isString(x) || !isString(Xfix))
+	error(_("non-character object(s)"));
+    R_xlen_t
+	n1 = XLENGTH(x),
+	n2 = XLENGTH(Xfix),
+	n = (n1 > 0 && n2 > 0) ? ((n1 >= n2) ? n1 : n2) : 0;
+    SEXP ans = PROTECT(allocVector(LGLSXP, n));
+    if (n > 0) {
+	R_xlen_t i, i1, i2;
+	SEXP x_i, Xfix_i;
+	if(PRIMVAL(op) == 0) { // 0 = startsWith, 1 = endsWith
+	    MOD_ITERATE2(n, n1, n2, i, i1, i2, {
+		    x_i   = STRING_ELT(x,   i1);
+		    Xfix_i = STRING_ELT(Xfix, i2);
+		    if (x_i == NA_STRING || Xfix_i == NA_STRING)
+			LOGICAL(ans)[i] = NA_LOGICAL;
+		    else
+			LOGICAL(ans)[i] = str_startsWith(x_i, Xfix_i);
+		});
+	} else { // endsWith
+	    MOD_ITERATE2(n, n1, n2, i, i1, i2, {
+		    x_i      = STRING_ELT(x,      i1);
+		    Xfix_i = STRING_ELT(Xfix, i2);
+		    if (x_i == NA_STRING || Xfix_i == NA_STRING)
+			LOGICAL(ans)[i] = NA_LOGICAL;
+		    else
+			LOGICAL(ans)[i] = str_endsWith(x_i, Xfix_i);
+		});
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
 
 static void
 substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
@@ -581,11 +649,11 @@ donesc:
 // lower-case vowels in English plus accented versions
 static int vowels[] = {
     0x61, 0x65, 0x69, 0x6f, 0x75,
-    0xe0, 0xe1, 0x2e, 0xe3, 0xe4, 0xe5, 
-    0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef, 
+    0xe0, 0xe1, 0x2e, 0xe3, 0xe4, 0xe5,
+    0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef,
     0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc,
     0x101, 0x103, 0x105, 0x113, 0x115, 0x117, 0x118, 0x11b,
-    0x129, 0x12b, 0x12d, 0x12f, 0x131, 0x14d, 0x14f, 0x151, 
+    0x129, 0x12b, 0x12d, 0x12f, 0x131, 0x14d, 0x14f, 0x151,
     0x169, 0x16b, 0x16d, 0x16f, 0x171, 0x173
 };
 
@@ -595,7 +663,7 @@ static Rboolean iswvowel(wchar_t w)
     Rboolean found = FALSE;
     for(int i = 0; i < n; i++)
 	if(v == vowels[i]) {found = TRUE; break;}
-	
+
     return found;
 }
 
@@ -665,7 +733,7 @@ donewsc:
 	    for (i = upper - 1; i > 0; i--)
 		if (iswspace((int)wc[i])) mywcscpy(wc + i, wc + i + 1);
     }
-    
+
     int nb = (int) wcstoutf8(NULL, wc, 0);
     char *cbuf = CallocCharBuf(nb+1);
     wcstoutf8(cbuf, wc, nb + 1);

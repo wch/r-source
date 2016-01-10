@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -118,10 +118,10 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{useBytes = TRUE}.
 
   \code{regexpr} and \code{gregexpr} with \code{perl = TRUE} allow
-  Python-style named captures, but not for \emph{long vector} inputs.  
-    
+  Python-style named captures, but not for \emph{long vector} inputs.
+
   Invalid inputs in the current locale are warned about up to 5 times.
-  
+
   Caseless matching with \code{PERL = TRUE} for non-ASCII characters
   depends on the PCRE library being compiled with \sQuote{Unicode
   property support}: an external library might not be.
@@ -228,7 +228,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{agrep}} for approximate matching.
 
   \code{\link{charmatch}}, \code{\link{pmatch}} for partial matching,
-  \code{\link{match}} for matching to whole strings.
+  \code{\link{match}} for matching to whole strings,
+  \code{\link{startsWith}} for matching of initial parts of strings.
 
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
@@ -341,7 +342,7 @@ URL_parts(x)
 ## regexec() on the regmatches obtained via gregexpr().  E.g.:
 pattern <- "([[:alpha:]]+)([[:digit:]]+)"
 s <- "Test: A1 BC23 DEF456"
-lapply(regmatches(s, gregexpr(pattern, s)), 
+lapply(regmatches(s, gregexpr(pattern, s)),
        function(e) regmatches(e, regexec(pattern, e)))
 }
 \keyword{character}

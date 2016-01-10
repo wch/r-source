@@ -242,6 +242,10 @@
       \item Profiling now records calls of the form \code{foo::bar} and
       some similar cases directly rather than as calls to
       \code{<Anonymous>}.  Contributed by Winston Chang.
+
+      \item New string utilities \code{startsWith(x, prefix)} and
+      \code{endsWith(x, suffix)}.  Also provide speedups for some
+      \code{grepl("^...",*)} uses, related to proposals in (\PR{16490}).
     }
   }
 
