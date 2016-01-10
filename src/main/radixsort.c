@@ -389,7 +389,8 @@ static void alloc_otmp(int n) {
 }
 
 // TO DO: save xtmp if possible, see allocs in forder
-static void *xtmp=NULL; int xtmp_alloc=0;
+static void *xtmp=NULL; 
+static int xtmp_alloc=0;
 // TO DO: currently always the largest type (double) but 
 //        could be int if that's all that's needed
 static void alloc_xtmp(int n) { 
@@ -596,12 +597,12 @@ static int dround = 2;
 static unsigned long long dmask1;
 static unsigned long long dmask2;
 
-void setNumericRounding(int dround) {
+static void setNumericRounding(int dround) {
     dmask1 = dround ? 1 << (8*dround-1) : 0;
     dmask2 = 0xffffffffffffffff << dround*8;
 }
 
-SEXP do_setNumericRounding(SEXP droundArg)
+SEXP attribute_hidden do_setNumericRounding(SEXP droundArg)
 // init.c has initial call with default of 2
 {
     if (!isInteger(droundArg) || LENGTH(droundArg)!=1)
@@ -613,14 +614,17 @@ SEXP do_setNumericRounding(SEXP droundArg)
     return R_NilValue;
 }
 
-SEXP do_getNumericRounding()
+SEXP attribute_hidden do_getNumericRounding()
 {
     return ScalarInteger(dround);
 }
 
-static union {double d;
-    unsigned long long ull;} u;
+static union {
+    double d;
+    unsigned long long ull;} 
+u;
 
+static
 unsigned long long dtwiddle(void *p, int i, int order)
 {
     u.d = order*((double *)p)[i]; // take care of 'order' right at the beginning
@@ -654,16 +658,16 @@ unsigned long long dtwiddle(void *p, int i, int order)
     return( (u.ull ^ mask) & dmask2 );
 }
 
-Rboolean dnan(void *p, int i) {
+static Rboolean dnan(void *p, int i) {
     u.d = ((double *)p)[i];
     return (ISNAN(u.d));
 }
 
-unsigned long long (*twiddle)(void *, int, int);
-Rboolean (*is_nan)(void *, int);
+static unsigned long long (*twiddle)(void *, int, int);
+static Rboolean (*is_nan)(void *, int);
 // the size of the column type (4 or 8). Just 8 currently until iradix is
 // merged in.
-size_t colSize=8;
+static size_t colSize=8;
 
 static void dradix_r(unsigned char *xsub, int *osub, int n, int radix);
 
@@ -910,7 +914,8 @@ static SEXP *cradix_xtmp = NULL;
 static int cradix_xtmp_alloc = 0;
 
 // same as StrCmp but also takes into account 'na.last' argument.
-int StrCmp2(SEXP x, SEXP y) {
+static int StrCmp2(SEXP x, SEXP y) 
+{
     // same cached pointer (including NA_STRING==NA_STRING)
     if (x == y) return 0;
     // if x=NA, nalast=1 ? then x > y else x < y (Note: nalast == 0 is
@@ -920,7 +925,7 @@ int StrCmp2(SEXP x, SEXP y) {
     return order*strcmp(CHAR(x), CHAR(y));  // same as explanation in StrCmp
 }
 
-int StrCmp(SEXP x, SEXP y)            // also used by bmerge and chmatch
+static int StrCmp(SEXP x, SEXP y)            // also used by bmerge and chmatch
 {
     // same cached pointer (including NA_STRING==NA_STRING)
     if (x == y) return 0;
