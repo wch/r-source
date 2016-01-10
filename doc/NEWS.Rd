@@ -452,8 +452,8 @@
       masking a newer required one.
 
       \item The internal deparser did not add parentheses when
-      necessary before \code{[]} or \code{[[]]}.  (Reported by
-      Lukas Stadler).
+      necessary,  e.g. before \code{[]} or \code{[[]]}.  (Reported by
+      Lukas Stadler; additional fixes included as well).
     }
   }
 }

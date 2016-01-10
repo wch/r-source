@@ -7709,4 +7709,77 @@ A B C
 > substitute(a[1], list(a = quote(x * y)))
 (x * y)[1]
 > ## should be (x * y)[1], was x * y[1]
+> # Check all levels of precedence
+> # (Comment out illegal ones)
+> quote(`$`(a :: b, c)) 
+a::b$c
+> # quote(`::`(a $ b, c $ d))
+> quote(`[`(a $ b, c $ d))
+a$b[c$d]
+> quote(`$`(a[b], c))
+(a[b])$c
+> quote(`^`(a[b], c[d]))
+a[b]^c[d]
+> quote(`[`(a ^ b, c ^ d))
+(a^b)[c^d]
+> quote(`-`(a ^ b))
+-a^b
+> quote(`^`(-b, -d))
+(-b)^-d
+> quote(`:`(-b, -d))
+-b:-d
+> quote(`-`(a : b))
+-(a:b)
+> quote(`%in%`(a : b, c : d))
+a:b %in% c:d
+> quote(`:`(a %in% b, c %in% d))
+(a %in% b):(c %in% d)
+> quote(`*`(a %in% b, c %in% d))
+a %in% b * c %in% d
+> quote(`%in%`(a * b, c * d))
+(a * b) %in% (c * d)
+> quote(`+`(a * b, c * d))
+a * b + c * d
+> quote(`*`(a + b, c + d))
+(a + b) * (c + d)
+> quote(`<`(a + b, c + d))
+a + b < c + d
+> quote(`+`(a < b, c < d))
+(a < b) + (c < d)
+> quote(`!`(a < b))
+!a < b
+> quote(`<`(!b, !d))
+(!b) < (!d)
+> quote(`&`(!b, !d))
+!b & !d
+> quote(`!`(a & b))
+!(a & b)
+> quote(`|`(a & b, c & d))
+a & b | c & d
+> quote(`&`(a | b, c | d))
+(a | b) & (c | d)
+> quote(`~`(a | b, c | d))
+a | b ~ c | d
+> quote(`|`(a ~ b, c ~ d))
+(a ~ b) | (c ~ d)
+> quote(`->`(a ~ b, d))
+`->`(a ~ b, d)
+> quote(`~`(a -> b, c -> d))
+(b <- a) ~ (d <- c)
+> quote(`<-`(a, c -> d))
+a <- d <- c
+> quote(`->`(a <- b, c))
+`->`(a <- b, c)
+> quote(`=`(a, c <- d))
+a = c <- d
+> quote(`<-`(a, `=`(c, d)))
+a <- (c = d)
+> quote(`?`(`=`(a, b), `=`(c, d)))
+`?`((a = b), (c = d))
+> quote(`=`(a, c ? d))
+a = `?`(c, d)
+> quote(`?`(a = b))
+`?`(a = b)
+> quote(`=`(b, ?d))
+b = `?`(d)
 > 
