@@ -687,10 +687,10 @@ static void dradix(unsigned char *x, int *o, int n)
     for (i=0;i<n;i++) {
         thisx = twiddle(x,i,order);
         for (radix=0; radix<colSize; radix++)
+            // if dround==2 then radix 0 and 1 will be all 0 here and skipped.
+            /* on little endian, 0 is the least significant bits (the right) 
+               and 7 is the most including sign (the left); i.e. reversed. */
             radixcounts[radix][((unsigned char *)&thisx)[RADIX_BYTE]]++;
-        // if dround==2 then radix 0 and 1 will be all 0 here and skipped.
-        /* on little endian, 0 is the least significant bits (the right) 
-           / and 7 is the most including sign (the left); i.e. reversed. */
     }
     for (radix=0; radix<colSize; radix++) {
         // thisx is the last x after loop above
@@ -700,7 +700,7 @@ static void dradix(unsigned char *x, int *o, int n)
         if (skip[radix])
             radixcounts[radix][i] = 0; 
     }
-    radix = colSize-1;  // MSD
+    radix = (int) colSize-1;  // MSD
     while (radix>=0 && skip[radix]) radix--;
     if (radix==-1) {
         // All radix are skipped; i.e. one number repeated n times.
@@ -1529,8 +1529,8 @@ static void dsort(double *x, int *o, int n)
 SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ap, ans = R_NilValue /* -Wall */, x, decreasing;
-    int narg = 0, i, j, k, grp, ngrp, tmp, *osub, thisgrpn, col;
-    R_xlen_t n = -1;
+    int n = -1, narg = 0, i, j, k, grp, ngrp, tmp, *osub, thisgrpn, col;
+    R_xlen_t nl = n;
     Rboolean isSorted = TRUE;
     void *xd;
     int *o = NULL;
@@ -1568,11 +1568,11 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
 
     if (isVector(CAR(args)))
-	n = XLENGTH(CAR(args));
+	nl = XLENGTH(CAR(args));
     for (ap = args; ap != R_NilValue; ap = CDR(ap), narg++) {
 	if (!isVector(CAR(ap)))
 	    error(_("argument %d is not a vector"), narg + 1);
-	if (XLENGTH(CAR(ap)) != n)
+	if (XLENGTH(CAR(ap)) != nl)
 	    error(_("argument lengths differ"));
     }
 
@@ -1587,6 +1587,12 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     args = CDR(args);
 
+    // (ML) FIXME: need to support long vectors
+    if (nl > INT_MAX) {
+        error(_("long vectors not supported"));
+    }
+    n = (int) nl;
+    
     // upper limit for stack size (all size 1 groups). We'll detect
     // and avoid that limit, but if just one non-1 group (say 2), that
     // can't be avoided.
@@ -1599,7 +1605,6 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
     // memory needed to reorder existing order had to repace this from
     // '0' to '-1' because 'nalast = 0' replace 'o[.]' with 0 values.
 
-    // (ML) FIXME: need to support long vectors
     ans = PROTECT(allocVector(INTSXP, n)); 
     o = INTEGER(ans);
     o[0] = -1;
