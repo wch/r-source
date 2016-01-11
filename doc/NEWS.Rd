@@ -246,9 +246,6 @@
       \item New string utilities \code{startsWith(x, prefix)} and
       \code{endsWith(x, suffix)}.  Also provide speedups for some
       \code{grepl("^...",*)} uses, related to proposals in (\PR{16490}).
-
-      \item Blocking socket connection selection recovers more
-      gracefully on signal interrupts.
     }
   }
 
@@ -397,6 +394,9 @@
 
       \item \code{withCallingHandler()} now (again) handles warnings
       even during S4 generic's argument evaluation.  (\PR{16111})% TODO: port to r-patched
+
+      \item Blocking socket connection selection recovers more
+      gracefully on signal interrupts.
     }
   }
 }
