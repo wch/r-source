@@ -24,7 +24,7 @@ function(built, run)
     built <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", built)
     run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
     ## Mac OS X supports multiple CPUs by using 'universal' binaries
-    if (grepl("^universal-darwin", built) && nzchar(.Platform$r_arch))
+    if (startsWith(built, "universal-darwin") && nzchar(.Platform$r_arch))
         built <- sub("^universal", R.version$arch, built)
     ## allow for small mismatches, e.g. OS version number and i686 vs i586.
     length(agrep(built, run)) > 0

@@ -1,7 +1,7 @@
 ##  File src/library/tools/R/doitools.R
 ##  Part of the R package, https://www.R-project.org
 ##
-##  Copyright (C) 2015 The R Core Team
+##  Copyright (C) 2015-2016 The R Core Team
 ##
 ##  This program is free software; you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ function(db, verbose = FALSE)
     ##   followed by a registrant code. These two components shall be
     ##   separated by a full stop (period).
     ##   The directory indicator shall be "10".
-    ind <- !grepl("^10", dois)
+    ind <- !startsWith(dois, "10")
     if(any(ind)) {
         len <- sum(ind)
         bad <- rbind(bad,

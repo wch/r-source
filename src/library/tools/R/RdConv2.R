@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -977,7 +977,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
 
 print.checkRd <- function(x, minlevel = -Inf, ...)
 {
-    fromParse <- grepl("^prepare_Rd", x)
+    fromParse <- startsWith(x, "prepare_Rd")
     x1 <- x[fromParse]
     x2 <- x[!fromParse]
     levs <- as.numeric(sub("^checkRd: \\(([-0123456789]+)(.*)", "\\1", x2))

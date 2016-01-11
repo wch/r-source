@@ -1,7 +1,7 @@
 #  File src/library/tools/R/checktools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2013-2015 The R Core Team
+#  Copyright (C) 2013-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -470,7 +470,7 @@ function(dir, all = FALSE, invert = FALSE)
 {
     dir <- normalizePath(dir)
     outdirs <- dir(dir, pattern = "\\.Rcheck")
-    ind <- grepl("^rdepends_", basename(outdirs))
+    ind <- startsWith(basename(outdirs), "rdepends_")
     ## Re-arrange to have reverse dependencies last if at all.
     outdirs <- if(invert)
         c(if(all) outdirs[!ind], outdirs[ind])
@@ -640,7 +640,7 @@ function(results)
 {
     if(!length(results)) return()
     status <- vapply(results, `[[`, "", "status")
-    ind <- grepl("^rdepends_", names(results))
+    ind <- startsWith(names(results), "rdepends_")
     tab <- table(ifelse(ind, "Reverse depends", "Source packages"),
                  status, deparse.level = 0L)
     tab <- tab[match(c("Source packages", "Reverse depends"),
@@ -735,6 +735,7 @@ function(log, drop_ok = TRUE)
         len <- len - 1L
     }
     ## Summary footers.
+    ## Better (but 'perl=TRUE' ??) if(startsWith(lines[len], "Status: "))
     if(grepl("^Status: ", lines[len],
              perl = TRUE, useBytes = TRUE)) {
         ## New-style status summary.
@@ -851,7 +852,7 @@ function(dir, logs = NULL, drop_ok = TRUE)
     ## Group when used ...
 
     mysub <- function(p, r, x) sub(p, r, x, perl = TRUE, useBytes = TRUE)
-    
+
     checks <- db[, "Check"]
     checks <- mysub(sprintf("checking whether package (%s).*(%s) can be installed",
                             lqa, rqa),
@@ -868,9 +869,9 @@ function(dir, logs = NULL, drop_ok = TRUE)
     db[, "Check"] <- checks
     ## In fact, for tabulation purposes it would even be more convenient
     ## to shorten the check names ...
-    
+
     db[, "Output"] <- mysub("[[:space:]]+$", "", db[, "Output"])
-    
+
     db <- as.data.frame(db, stringsAsFactors = FALSE)
     db$Check <- as.factor(db$Check)
     db$Status <- as.factor(db$Status)
@@ -901,7 +902,7 @@ function(x, ...)
 }
 
 print.check_details <-
-function(x, ...)    
+function(x, ...)
 {
     writeLines(paste(format(x, ...), collapse = "\n\n"))
     invisible(x)
@@ -965,12 +966,12 @@ function(dir, old, outputs = FALSE, sources = FALSE)
                    e
                })
     db <- do.call(rbind, chunks)
-    
+
     ## Drop checks that are OK in both versions
     x.issue <- !is.na(match(db$Status.x, c("NOTE","ERROR","WARNING")))
     y.issue <- !is.na(match(db$Status.y, c("NOTE","ERROR","WARNING")))
     db <- db[x.issue | y.issue,]
-    
+
     ## Even with the above simplification, missing entries do not
     ## necessarily indicate "OK" (checks could have been skipped).
     ## Hence leave as missing and show as empty in the diff.

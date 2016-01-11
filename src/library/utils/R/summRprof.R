@@ -1,7 +1,7 @@
 #  File src/library/utils/R/summRprof.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ summaryRprof <-
        chunk <- strsplit(chunk, " ")
        if (line.profiling)
            chunk <- lapply(chunk, function(x) {
-           	locations <- !grepl("^\"", x)
+           	locations <- !startsWith(x, '"')
            	if (lines != "hide") {
            	    fnum <- sub("#.*", "", x[locations])
            	    lnum <- sub(".*#", "", x[locations])

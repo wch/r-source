@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -158,7 +158,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         if(length(ll)) txt <- txt[seq_len(max(ll) - 1L)]
         ## remove BATCH footer
         nl <- length(txt)
-        if(nl > 3L && grepl("^> proc.time\\(\\)", txt[nl-2L])) txt <- txt[1:(nl-3L)]
+        if(nl > 3L && startsWith(txt[nl-2L], "> proc.time()")) txt <- txt[1:(nl-3L)]
         if (nullPointers)
         ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
@@ -229,6 +229,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         } else system(paste("diff -bw", shQuote(a), shQuote(b)))
     }
 } ## {Rdiff}
+
 
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
@@ -675,7 +676,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
 
     ## The items need not all be packages
     ## and non-packages can be on the list multiple times.
-    isPkg <- grepl("^package:", pkgs)
+    isPkg <- startsWith(pkgs,"package:")
     for(item in pkgs[!isPkg]) {
         pos <- match(item, search())
         if(!is.na(pos)) .detach(pos)

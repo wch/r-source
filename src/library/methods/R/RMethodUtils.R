@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -264,14 +264,14 @@ mergeMethods <-
     if(is.null(m1) || is(m1, "EmptyMethodsList"))
         return(m2)
     tmp <- listFromMlist(m2)
-    sigs <- el(tmp, 1)
-    methods <- el(tmp, 2)
+    sigs <- tmp[[1]]
+    methods <- tmp[[2]]
     for(i in seq_along(sigs)) {
-        sigi <- el(sigs, i)
+        sigi <- sigs[[i]]
         if(.noMlists() && !identical(unique(sigi), "ANY"))
           next
         args <- names(sigi)
-        m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
+        m1 <- insertMethod(m1, as.character(sigi), args, methods[[i]], FALSE)
     }
     m1
 }
@@ -490,7 +490,7 @@ getGeneric <-
         value <- .Call(C_R_getGeneric, f, FALSE, as.environment(where), package)
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
-        if(!is.null(value) && !is.null(vv <- get0(f, .GlobalEnv)) &&
+        if(!is.null(value) && !is.null(vv <- .GlobalEnv[[f]]) &&
            identical(vv, value))
             .cacheGeneric(f, value)
     }
@@ -760,7 +760,7 @@ getGenerics <- function(where, searchForm = FALSE)
     }
     else {
         if(is.environment(where)) where <- list(where)
-        these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
+        these <- unlist(lapply(where, names), use.names=FALSE)
         metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
     }
 }
@@ -1536,7 +1536,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 
 
 .hasS4MetaData <- function(env)
-    any(grepl("^[.]__[CTA]_", names(env)))
+    any(startsWith(nms <- names(env), ".__C_")) &&
+    any(startsWith(nms, ".__T_")) ## once also had __A_
 
 ## turn ordinary generic into one that dispatches on "..."
 ## currently only called in one place from setGeneric()

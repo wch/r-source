@@ -1,7 +1,7 @@
 #  File src/library/base/R/attach.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -125,13 +125,13 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
 
     ## we need to treat packages differently from other objects, so get those
     ## out of the way now
-    if (! grepl("^package:", packageName) )
+    if (!startsWith(packageName, "package:"))
         return(invisible(.Internal(detach(pos))))
 
     ## From here down we are detaching a package.
     pkgname <- .rmpkg(packageName)
     for(pkg in search()[-1L]) {
-        if(grepl("^package:", pkg) &&
+	if(startsWith(pkg, "package:") &&
            exists(".Depends", pkg, inherits = FALSE) &&
            pkgname %in% get(".Depends", pkg, inherits = FALSE))
             if(force)

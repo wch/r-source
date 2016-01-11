@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -981,7 +981,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
         miss <- expnames[!eie]
         ## if called (indirectly) for namespaceImportClasses
         ## these are all classes
-        if(all(grepl("^\\.__C__", miss))) {
+        if(all(startsWith(miss, ".__C__"))) {
             miss <- sub("^\\.__C__", "", miss)
             stop(sprintf(ngettext(length(miss),
                                   "class %s is not exported by 'namespace:%s'",

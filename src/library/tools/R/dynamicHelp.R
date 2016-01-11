@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -518,7 +518,7 @@ httpd <- function(path, query, ...)
     	pkg <- sub(cssRegexp, "\\1", path)
         return( list(file = system.file("html", "R.css", package = pkg),
                      "content-type" = "text/css") )
-    } else if (grepl("^/library/", path)) {
+    } else if (startsWith(path, "/library/")) {
         descRegexp <- "^/library/+([^/]+)/+DESCRIPTION$"
         if(grepl(descRegexp, path)) {
             pkg <- sub(descRegexp, "\\1", path)
@@ -575,7 +575,7 @@ httpd <- function(path, query, ...)
 	    		"status code" = 302L)) # temporary redirect
         }
     } else {
-        if(grepl("^/doc/", path)) {
+        if(startsWith(path, "/doc/")) {
             ## /doc/AUTHORS and so on.
             file <- file.path(R.home("doc"), sub("^/doc", "", path))
         } else return(error_page(gettextf("unsupported URL %s", mono(path))))

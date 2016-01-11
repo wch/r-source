@@ -1,7 +1,7 @@
 #  File src/library/tools/R/xgettext.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -212,17 +212,17 @@ checkPoFile <- function(f, strictPlural = FALSE)
     while (i < length(lines)) {
 	i <- i + 1L
 
-	if (grepl("^#,", lines[i], useBytes = TRUE)) {
+	if (startsWith(lines[i], "#,")) { # useBytes=TRUE (speedup ?)
 	    noCformat <- noCformat || grepl("no-c-format", lines[i], useBytes = TRUE)
 	    fuzzy <- fuzzy || grepl("fuzzy", lines[i], useBytes = TRUE)
-	} else if (grepl("^#:", lines[i], useBytes = TRUE)) {
+	} else if (startsWith(lines[i], "#:")) {
 	    if (!is.na(ref))
 		ref <- paste(ref, "etc.")
 	    else
 		ref <- sub("^#:[[:blank:]]*", "", lines[i])
-	} else if (grepl("^msgid ", lines[i], useBytes = TRUE)) {
+	} else if (startsWith(lines[i], "msgid ")) {
 	    s1 <- sub('^msgid[[:blank:]]+["](.*)["][[:blank:]]*$', "\\1", lines[i])
-	    while (grepl('^["]', lines[i+1L], useBytes = TRUE)) {
+	    while (startsWith(lines[i+1L], '"')) {
 		i <- i + 1L
 		s1 <- paste0(s1, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[i]))
 	    }
@@ -246,7 +246,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 
 		s2 <- sub( paste0("^", statement, "[[:blank:]]+[\"](.*)[\"][[:blank:]]*$"),
 		                 "\\1", lines[j])
-		while (grepl('^["]', lines[j+1L], useBytes = TRUE)) {
+		while (startsWith(lines[j+1L], '"')) { # useBytes=TRUE (speedup ?)
 		    j <- j+1L
 		    s2 <- paste0(s2, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[j]))
 		}
@@ -320,7 +320,7 @@ checkPoFiles <- function(language, dir=".")
                         full.names = TRUE, recursive = TRUE)
     result <- matrix(character(), ncol = 5L, nrow = 0L)
     for (f in files) {
-	errs <- checkPoFile(f, strictPlural = grepl("^R-", basename(f)))
+	errs <- checkPoFile(f, strictPlural = startsWith(basename(f), "R-"))
 	if (nrow(errs)) result <- rbind(result, errs)
     }
     structure(result, class = "check_po_files")

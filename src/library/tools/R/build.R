@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -918,15 +918,16 @@ get_exclude_patterns <- function()
         ## FIXME: GNU make uses GNUmakefile (note capitalization)
         exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
         ## Mac resource forks
-        exclude <- exclude | grepl("^\\._", bases)
+        exclude <- exclude | startsWith(bases, "._")
         exclude <- exclude | (isdir & grepl("^src.*/[.]deps$", allfiles))
 	## Windows DLL resource file
         exclude <- exclude | (allfiles == paste0("src/", pkgname, "_res.rc"))
         ## inst/doc/.Rinstignore is a mistake
-        exclude <- exclude | grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", allfiles)
-        exclude <- exclude | grepl("vignettes/[.]Rinstignore$", allfiles)
+        exclude <- exclude | endsWith(allfiles, "inst/doc/.Rinstignore") |
+            endsWith(allfiles, "inst/doc/.build.timestamp") |
+            endsWith(allfiles, "vignettes/.Rinstignore")
         ## leftovers
-        exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
+        exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
         exclude <- exclude | (bases %in% .hidden_file_exclusions)
         unlink(allfiles[exclude], recursive = TRUE, force = TRUE)
         setwd(owd)

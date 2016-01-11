@@ -1,7 +1,7 @@
 #  File src/library/utils/R/aspell.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -207,8 +207,7 @@ function(files, filter, control = list(), encoding = "unknown",
 
 	## Look at words not in dictionary with suggestions.
 
-	ind <- grepl("^&", lines)
-	if(any(ind)) {
+	if(any(ind <- startsWith(lines, "&"))) {
 	    info <- strsplit(lines[ind], ": ", fixed = TRUE)
 	    one <- strsplit(sapply(info, `[`, 1L), " ",  fixed = TRUE)
 	    two <- strsplit(sapply(info, `[`, 2L), ", ", fixed = TRUE)
@@ -223,8 +222,7 @@ function(files, filter, control = list(), encoding = "unknown",
 	    db <- rbind(db, db1)
 	}
 	## Looks at words not in dictionary with no suggestions.
-	ind <- grepl("^#", lines)
-	if(any(ind)) {
+	if(any(ind <- startsWith(lines, "#"))) {
 	    one <- strsplit(lines[ind], " ", fixed = TRUE)
 	    db1 <- data.frame(Original =
 			      as.character(sapply(one, `[`, 2L)),
@@ -334,8 +332,7 @@ function(dictionaries, dirnames = character())
     dirnames <- c(file.path(R.home("share"), "dictionaries"), dirnames)
 
     ## For now, all dictionary files should be .rds files.
-    ind <- !grepl("\\.rds$", dictionaries)
-    if(any(ind))
+    if(any(ind <- !endsWith(dictionaries, ".rds")))
         dictionaries[ind] <- sprintf("%s.rds", dictionaries[ind])
 
     out <- character(n)
@@ -352,7 +349,6 @@ function(dictionaries, dirnames = character())
         out[pos] <- find_files_in_directories(dictionaries[pos],
                                               dirnames)
     }
-
     out
 }
 
@@ -913,11 +909,11 @@ function (ifile, encoding = "unknown", ignore = character())
         out <- character(length(s))
         i <- 1L
         out[i] <- blank_out_regexp_matches(s[i], "^msgid[ \t]+\"")
-        while(grepl("^\"", s[i <- i + 1L]))
+        while(startsWith(s[i <- i + 1L], '"'))
             out[i] <- sub("^\"", " ", s[i])
         if(grepl("^msgid_plural[ \t]", s[i])) {
             out[i] <- blank_out_regexp_matches(s[i], "^msgid_plural[ \t]+\"")
-            while(grepl("^\"", s[i <- i + 1L]))
+            while(startsWith(s[i <- i + 1L], '"'))
                 out[i] <- sub("^\"", " ", s[i])
         }
         out

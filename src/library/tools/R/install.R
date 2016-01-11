@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -475,7 +475,7 @@
 		## important since we will blow away .o files so there
 		## is no way to create it later.
 
-		if (dsym && grepl("^darwin", R.version$os) ) {
+		if (dsym && startsWith(R.version$os, "darwin")) {
 		    message(gettextf("generating debug symbols (%s)", "dSYM"),
                             domain = NA)
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))

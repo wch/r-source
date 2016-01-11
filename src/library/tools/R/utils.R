@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -621,7 +621,7 @@ function(db)
     db <- db[, c("Target", "Anchor"), drop = FALSE]
     ## See .check_Rd_xrefs().
     anchor <- db[, 2L]
-    have_equals <- grepl("^=", anchor)
+    have_equals <- startsWith(anchor, "=")
     if(any(have_equals))
         db[have_equals, ] <-
             cbind(sub("^=", "", anchor[have_equals]), "")
@@ -1469,7 +1469,7 @@ nonS3methods <- function(package)
              TeachingDemos = "sigma.test",
              XML = "text.SAX",
              ape = "sort.index",
-             arm = "sigma.hat",
+             arm = "sigma.hat", # lme4 has sigma()
              assist = "chol.new",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
@@ -1843,7 +1843,7 @@ function(x)
     if(x2 != x1) {
         pat <- "[[:space:]]*([[<>=!]+)[[:space:]]+(.*)"
         version <- sub(pat, "\\2", x2)
-        if (!grepl("^r", version)) version <- package_version(version)
+        if (!startsWith(version, "r")) version <- package_version(version)
         list(name = x1, op = sub(pat, "\\1", x2), version = version)
     } else list(name = x1)
 }
