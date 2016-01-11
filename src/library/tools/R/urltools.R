@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015 The R Core Team
+#  Copyright (C) 2015-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ function(f)
                            ## </FIXME>
                        })
                    )
-    unique(unname(hrefs[!grepl("^#", hrefs)]))
+    unique(unname(hrefs[!startsWith(hrefs, "#")]))
 }
 
 url_db <-

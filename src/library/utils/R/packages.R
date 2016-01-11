@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -826,7 +826,7 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     if (length(ind))
         res <- as.integer(ind)[1L]
     else {
-    	isHTTPS <- grepl("^https", m[, "URL"])
+    	isHTTPS <- startsWith(m[, "URL"], "https")
     	mHTTPS <- m[isHTTPS,]
     	mHTTP <- m[!isHTTPS,]
     	if (useHTTPS) {

@@ -927,7 +927,8 @@ get_exclude_patterns <- function()
             endsWith(allfiles, "inst/doc/.build.timestamp") |
             endsWith(allfiles, "vignettes/.Rinstignore")
         ## leftovers
-        exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
+        exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
+        ## or simply?  exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
         exclude <- exclude | (bases %in% .hidden_file_exclusions)
         unlink(allfiles[exclude], recursive = TRUE, force = TRUE)
         setwd(owd)
