@@ -412,6 +412,9 @@
 
       \item \code{shQuote()} gains \code{type = "cmd2"} for quoting
       in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)
+
+      \item \code{rbind.data.frame()} gets optional argument \code{stringsAsFactors}
+      (instead of only depending on \code{getOption("stringsAsFactors")}).
     }
   }
 
