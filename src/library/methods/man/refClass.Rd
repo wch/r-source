@@ -99,9 +99,11 @@ discussion of method \code{$new(...)} %$
 in the section \dQuote{Reference Object Generators}.
 
 If a \code{finalize} method is defined, a function will be
-\link[=reg.finalizer]{registered} to invoke it before the environment
-in the object is discarded by the garbage collector. See the matrix
-viewer example for both initialize and finalize methods.}
+\link[=reg.finalizer]{registered} to invoke it before the environment in
+the object is discarded by the garbage collector; finalizers are
+registered with \code{atexit=TRUE}, and so are also run at the end of
+\R{} sessions. See the matrix viewer example for both initialize and
+finalize methods.}
 
   \item{where}{
 the environment in which to store the class definition (or to begin the

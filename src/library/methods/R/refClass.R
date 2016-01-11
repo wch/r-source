@@ -202,7 +202,7 @@ envRefSetField <- function(object, field,
         }
     }
     if(is.function(classDef@refMethods$finalize))
-        reg.finalizer(selfEnv, function(x) x$.self$finalize())
+        reg.finalizer(selfEnv, function(x) x$.self$finalize(), TRUE)
     lockBinding(".self", selfEnv)
     lockBinding(".refClassDef", selfEnv)
     .Object

@@ -246,6 +246,9 @@
       \item New string utilities \code{startsWith(x, prefix)} and
       \code{endsWith(x, suffix)}.  Also provide speedups for some
       \code{grepl("^...",*)} uses, related to proposals in (\PR{16490}).
+
+      \item Reference class finalizers run at exit, as well as on
+      garbage collection.
     }
   }
 
