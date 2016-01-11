@@ -246,6 +246,9 @@
       \item New string utilities \code{startsWith(x, prefix)} and
       \code{endsWith(x, suffix)}.  Also provide speedups for some
       \code{grepl("^...",*)} uses, related to proposals in (\PR{16490}).
+
+      \item Blocking socket connection selection recovers more
+      gracefully on signal interrupts.
     }
   }
 
