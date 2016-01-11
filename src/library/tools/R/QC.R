@@ -957,7 +957,7 @@ function(package, lib.loc = NULL)
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
 
     aliases <- lapply(db, .Rd_get_metadata, "alias")
-    named_class <- lapply(aliases, grepl, pattern="-class$")
+    named_class <- lapply(aliases, endsWith, suffix="-class")
     nClass <- sApply(named_class, sum)
     oneAlias <- lengths(aliases, use.names=FALSE) == 1L
     idx <- oneAlias | nClass == 1L
