@@ -535,7 +535,11 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
     /* inserting a wait here will eliminate most blocking, but there
        are scenarios under which the Sock_listen call might block
        after the wait has completed. LT */
-    if(R_SocketWait(sockp, 0, timeout) != 0)
+    int res = 0;
+    do {
+        res = R_SocketWait(sockp, 0, timeout);
+    } while (res < 0 && -res == EINTR);
+    if(res != 0)
         return -1;              /* socket error or timeout */
     return Sock_listen(sockp, buf, len, NULL);
 }
