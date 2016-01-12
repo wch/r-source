@@ -3013,6 +3013,7 @@ setRlibs <-
             savefiles <-
                 file.path(dirname(vigns$docs),
                           paste0(vigns$names, ".Rout.save"))
+            ran <- FALSE
 
             if(!skip_run_maybe || any(file.exists(savefiles))) {
                 checkingLog(Log, "running R code from vignettes")
@@ -3046,6 +3047,9 @@ setRlibs <-
                                      stdout = outfile, stderr = outfile)
                     t2b <- proc.time()
                     out <- readLines(outfile, warn = FALSE)
+                    pos <- which(out == " *** Run successfully completed ***")
+                    if(!length(pos) || any(nzchar(out[seq_len(pos[1L] - 1L)])))
+                        ran <- TRUE
                     savefile <- savefiles[i]
                     if(length(grep("^  When (running|tangling|sourcing)", out,
                                    useBytes = TRUE))) {
@@ -3085,21 +3089,25 @@ setRlibs <-
                     }
                 }
                 t2 <- proc.time()
-                print_time(t1, t2, Log)
-                if(R_check_suppress_RandR_message)
-                    res <- grep('^Xlib: *extension "RANDR" missing on display', res,
-                                invert = TRUE, value = TRUE, useBytes = TRUE)
-                if(length(res)) {
-                    if(length(grep("there is no package called", res,
-                                   useBytes = TRUE))) {
-                        warningLog(Log, "Errors in running code in vignettes:")
-                        printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
-                    } else {
-                        errorLog(Log, "Errors in running code in vignettes:")
-                        printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
-                        maybe_exit(1L)
-                    }
-                } else resultLog(Log, "OK")
+                if(!ran) {
+                    resultLog(Log, "NONE")
+                } else {
+                    print_time(t1, t2, Log)
+                    if(R_check_suppress_RandR_message)
+                        res <- grep('^Xlib: *extension "RANDR" missing on display', res,
+                                    invert = TRUE, value = TRUE, useBytes = TRUE)
+                    if(length(res)) {
+                        if(length(grep("there is no package called", res,
+                                       useBytes = TRUE))) {
+                            warningLog(Log, "Errors in running code in vignettes:")
+                            printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
+                        } else {
+                            errorLog(Log, "Errors in running code in vignettes:")
+                            printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
+                            maybe_exit(1L)
+                        }
+                    } else resultLog(Log, "OK")
+                }
             }
 
             if (do_build_vignettes) {
@@ -3141,13 +3149,13 @@ setRlibs <-
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
-                    if(skip_run_maybe) warningLog(Log) else noteLog(Log)
+                    if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "25")))
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
-                    if(skip_run_maybe) warningLog(Log) else noteLog(Log)
+                    if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     msg <- ngettext(nw,
                                     "Warning in re-building vignettes:\n",
                                     "Warnings in re-building vignettes:\n",
