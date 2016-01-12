@@ -354,7 +354,7 @@ do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 int str_startsWith(SEXP x, SEXP pre) {
     cetype_t ienc = getCharCE(x);
     const char *cx = CHAR(x);
-    size_t p_len = R_nchar(pre, Chars, FALSE, FALSE, "startWith(, prefix)");
+    int p_len = R_nchar(pre, Chars, FALSE, FALSE, "startWith(, prefix)");
     /* Cheap (but short) implementation, using substr() and Seql() : */
     char *buf = R_AllocStringBuffer(p_len+1, &cbuff);
     if(p_len == 0)
@@ -368,7 +368,7 @@ int str_startsWith(SEXP x, SEXP pre) {
 int str_endsWith(SEXP x, SEXP suffix) {
     cetype_t ienc = getCharCE(x);
     const char *cx = CHAR(x);
-    size_t p_len = R_nchar(suffix, Chars, FALSE, FALSE, "endsWith(, suffix)");
+    int p_len = R_nchar(suffix, Chars, FALSE, FALSE, "endsWith(, suffix)");
     /* Cheap (but short) implementation, using substr() and Seql() : */
     char *buf = R_AllocStringBuffer(p_len+1, &cbuff);
     if(p_len == 0)
