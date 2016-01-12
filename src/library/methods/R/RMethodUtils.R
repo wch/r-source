@@ -1540,7 +1540,8 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
 .hasS4MetaData <- function(env) {
     nms <- names(env)
     any(startsWith(nms, ".__C_")) ||
-    any(startsWith(nms, ".__T_")) ## once also had __A_
+    any(startsWith(nms, ".__T_")) ||
+    any(startsWith(nms, ".__A_"))
 }
 
 ## turn ordinary generic into one that dispatches on "..."
