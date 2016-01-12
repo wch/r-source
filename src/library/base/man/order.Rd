@@ -83,7 +83,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   arguments such as \code{decreasing}.  A sometimes-encountered unsafe
   practice is to call \code{do.call('order', df_obj)} where
   \code{df_obj} might be a data frame: copy \code{df_obj} and
-  remove any names.
+  remove any names, for example using \code{\link{unname}}.
 }
 
 \note{
