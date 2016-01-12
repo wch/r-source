@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-01-07 r69884) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-01-12 r69919) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -115,8 +115,8 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of base objects:		1313
-Number of functions in base:	1271
+Number of base objects:		1315
+Number of functions in base:	1273
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  0.977 0.012 0.991 0 0 
+Time elapsed:  1.065 0.031 1.101 0 0 
 > 
