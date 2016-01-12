@@ -269,6 +269,8 @@
       \item \command{R CMD Rdconv} and \command{R CMD Rd2pdf} each have
       a new option \option{--RdMacros=pkglist} which allows Rd macros
       to be specified before processing.
+
+      \item \code{switch()} now warns when no alternatives are provided,
     }
   }
 

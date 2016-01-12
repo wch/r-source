@@ -1219,6 +1219,11 @@ notifyMultipleSwitchDefaults <- function(ndflt, cntxt)
                    cntxt)
 @ %def notifyMultipleSwitchDefaults
 
+<<[[notifyNoSwitchcases]] function>>=
+notifyNoSwitchcases <- function(cntxt)
+    if (! suppressAll(cntxt))
+        cntxt$warn(gettext("'switch' with no alternatives"), cntxt)
+@ %def notifyNoSwitchcases
 
 \section{Compilation environments}
 \label{sec:environments}
@@ -3548,12 +3553,16 @@ setInlineHandler("switch", function(e, cb, cntxt) {
 The first step in processing the [[switch]] expression is to extract
 the selector expression [[expr]] and the case expressions, to identify
 which, if any, of the cases are empty, and to extract the names of the
-cases as [[nm]].  If there is only one case and that case is not named
-then setting [[nm = ""]] allows this situation to be processed by code
-used when names are present.
+cases as [[nm]].  A warning is issued if there are no cases.  If there
+is only one case and that case is not named then setting [[nm = ""]]
+allows this situation to be processed by code used when names are
+present.
 <<extract the [[switch]] expression components>>=
 expr <- e[[2]]
 cases <-e[-c(1, 2)]
+
+if (is.null(cases))
+    notifyNoSwitchcases(cntxt)
 
 miss <- missingArgs(cases)
 nm <- names(cases)
@@ -6194,6 +6203,8 @@ Opcodes.names <- names(Opcodes.argc)
 <<[[notifyBadAssignFun]] function>>
 
 <<[[notifyMultipleSwitchDefaults]] function>>
+
+<<[[notifyNoSwitchcases]] function>>
 
 
 ##
