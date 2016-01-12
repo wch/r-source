@@ -722,5 +722,15 @@ stopifnot(identical( MI, as.integer( MI + 0.99)),
 	  is.na(as.integer(as.character(-100*MI))))
 ## The two cases with positive numbers  failed in R <= 3.2.0
 
+`$.foo` <- function(x, fun) paste("foo: ", NextMethod())
+x <- list(a = 1, b = 2)
+class(x) <- "foo"
+x$b  # failed prior to R 3.3.0
+
+`$<-.foo` <- function(x, value, fun) {
+    attr(x, "modified") <- "yes"
+    NextMethod()
+}
+x$y <- 10  # failed prior to R 3.3.0
 
 proc.time()
