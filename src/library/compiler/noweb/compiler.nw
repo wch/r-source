@@ -3663,7 +3663,7 @@ cmp(expr, cb, ncntxt)
 @ %def
 
 The switch instruction takes the selector off the stack and four
-operands form the instruction stream: the call index, an index for the
+operands from the instruction stream: the call index, an index for the
 names, or [[NULL]] if there are none, and indices for the labels for a
 character selector and for a numeric selector.  At this point lists of
 labels are placed in the instruction buffer.  At code extraction time

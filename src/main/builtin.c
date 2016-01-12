@@ -1083,7 +1083,8 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* fall through to error */
 	}
 	UNPROTECT(1); /* w */
-    }
+    } else
+	warningcall(call, _("'switch' with no alternatives"));
     /* an error */
     UNPROTECT(1); /* x */
     R_Visible = FALSE;
