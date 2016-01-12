@@ -1747,7 +1747,7 @@ setRlibs <-
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 wrapLog("All user-level objects",
                         "in a package",
-                        if (startsWith(out, "Undocumented S4"))
+                        if (any(startsWith(out, "Undocumented S4")))
                         "(including S4 classes and methods)",
                         "should have documentation entries.\n")
                 wrapLog(msg_writing_Rd)
@@ -2330,7 +2330,7 @@ setRlibs <-
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-        if(length(out) == 1L && startsWith(out,"Note:")) {
+        if(length(out) == 1L && startsWith(out, "Note:")) {
             ## This will be a note about symbols.rds not being available
             if(!is_base_pkg) {
                 noteLog(Log)
