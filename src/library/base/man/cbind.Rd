@@ -38,6 +38,9 @@ rbind(\dots, deparse.level = 1)
   \item{make.row.names}{(only for data frame method:) logical
     indicating if unique and valid \code{\link{row.names}} should be
     constructed from the arguments.}
+  \item{stringsAsFactors}{logical, passed to \code{\link{as.data.frame}};
+    only has an effect when the \code{\dots} arguments contain a
+    (non-\code{data.frame}) \code{\link{character}}.}
 }
 \details{
   The functions \code{cbind} and \code{rbind} are S3 generic, with
