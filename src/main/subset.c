@@ -1151,6 +1151,8 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     input = PROTECT(allocVector(STRSXP, 1));
 
     nlist = CADR(args);
+    if (TYPEOF(nlist) == PROMSXP)
+	nlist = eval(nlist, env);
     if(isSymbol(nlist) )
 	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
     else if(isString(nlist) )
@@ -1174,13 +1176,13 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* evaluation retains any missing argument indicators. */
 
     if(R_DispatchOrEvalSP(call, op, "$", args, env, &ans)) {
-	UNPROTECT(2);
+	UNPROTECT(2); /* input, args */
 	if (NAMED(ans))
 	    SET_NAMED(ans, 2);
 	return(ans);
     }
 
-    UNPROTECT(2);
+    UNPROTECT(2); /* input, args */
     return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0), call);
 }
 

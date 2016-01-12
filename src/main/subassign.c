@@ -1972,6 +1972,11 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     input = allocVector(STRSXP, 1);
 
     nlist = CADR(args);
+    if (TYPEOF(nlist) == PROMSXP) {
+	PROTECT(input);
+	nlist = eval(nlist, env);
+	UNPROTECT(1);
+    }
     iS = isSymbol(nlist);
     if (iS)
 	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
@@ -1985,6 +1990,9 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* replace the second argument with a string */
     SETCADR(args, input);
 
+    /* if nlist is a string, it may be destroyed below, but it is ok
+       because we later only use its first element which is protected
+       implicitly through args/input */
     if(R_DispatchOrEvalSP(call, op, "$<-", args, env, &ans))
       return(ans);
 

@@ -5878,7 +5878,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  /* duplicate arguments and protect */
 	  PROTECT(args = duplicate(CDR(call)));
 	  /* insert evaluated promise for LHS as first argument */
-	  /* promise won't be captured so don't track refrences */
+	  /* promise won't be captured so don't track references */
 	  prom = R_mkEVPROMISE_NR(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* insert evaluated promise for RHS as last argument */

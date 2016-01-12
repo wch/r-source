@@ -1193,3 +1193,14 @@ stopifnot(
     identical(dim(A3), dim(A3[,, ])),
     identical(dim(A3[,1,]), c(B = 3L, D = 7L)))
 ## all subsetting of arrays lost names(dim(.)) in R < 3.3.0
+
+`$.foo` <- function(x, fun) paste("foo: ", NextMethod())
+x <- list(a = 1, b = 2)
+class(x) <- "foo"
+x$b  # failed prior to R 3.3.0
+
+`$<-.foo` <- function(x, value, fun) {
+    attr(x, "modified") <- "yes"
+    NextMethod()
+}
+x$y <- 10  # failed prior to R 3.3.0
