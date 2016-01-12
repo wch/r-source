@@ -760,10 +760,8 @@ getGenerics <- function(where, searchForm = FALSE)
     }
     else {
         if(is.environment(where)) where <- list(where)
-        ## The order matters ...
-        ## these <- unlist(lapply(where, names), use.names=FALSE)
-        these <- unlist(lapply(where, function(x) sort(names(x))),
-                        use.names = FALSE)
+        ## The order matters ... and there might be no objects.
+        these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
         metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
     }
 }
