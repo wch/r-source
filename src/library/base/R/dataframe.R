@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2015 The R Core Team
+# Changes Copyright (C) 1998-2016 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -1190,7 +1190,8 @@ xpdrows.data.frame <- function(x, old.rows, new.rows)
 cbind.data.frame <- function(..., deparse.level = 1)
     data.frame(..., check.names = FALSE)
 
-rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
+rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
+                             stringsAsFactors = default.stringsAsFactors())
 {
     match.names <- function(clabs, nmi)
     {
@@ -1246,7 +1247,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
 	xi <- allargs[[i]]
 	nmi <- nms[i]
         ## coerce matrix to data frame
-        if(is.matrix(xi)) allargs[[i]] <- xi <- as.data.frame(xi)
+        if(is.matrix(xi)) allargs[[i]] <- xi <-
+            as.data.frame(xi, stringsAsFactors = stringsAsFactors)
 	if(inherits(xi, "data.frame")) {
 	    if(is.null(cl))
 		cl <- oldClass(xi)
@@ -1375,7 +1377,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
 	    rlabs <- make.unique(as.character(rlabs), sep = "")
     }
     if(is.null(cl)) {
-	as.data.frame(value, row.names = rlabs)
+	as.data.frame(value, row.names = rlabs,
+		      stringsAsFactors = stringsAsFactors)
     } else {
 	structure(value, class = cl,
 		  row.names = if(is.null(rlabs)) .set_row_names(nrow) else rlabs)
