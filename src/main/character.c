@@ -72,12 +72,8 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 #include <Defn.h>
 #include <Internal.h>
 #include <errno.h>
-
 #include <R_ext/RS.h>  /* for Calloc/Free */
-#include <Rinternals.h> // R_nchar()
-
 #include <R_ext/Itermacros.h>
-
 #include <rlocale.h>
 
 /* We use a shared buffer here to avoid reallocing small buffers, and
@@ -135,6 +131,7 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* R strings are limited to 2^31 - 1 bytes on all platforms */
 int R_nchar(SEXP string, nchar_type type_,
 	    Rboolean allowNA, Rboolean keepNA, const char* msg_name)
 {
