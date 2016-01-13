@@ -69,23 +69,9 @@ function(x)
 .get_urls_from_HTML_file <-
 function(f)
 {
-    hrefs <- character()
-    XML::htmlParse(f,
-                   handlers =
-                       list(a = function(node) {
-                           href <- XML::xmlAttrs(node)["href"]
-                           ## <FIXME>
-                           ## ? XML::xmlAttrs says the value is always a
-                           ## named character vector, but
-                           ##   XML::xmlAttrs(XML::xmlNode("a", "foobar"))
-                           ## gives NULL ...
-                           ## Hence, use an extra is.null() test.
-                           if(!is.null(href) && !is.na(href))
-                               hrefs <<- c(hrefs, href)
-                           ## </FIXME>
-                       })
-                   )
-    unique(unname(hrefs[!startsWith(hrefs, "#")]))
+    nodes <- xml2::xml_find_all(xml2::read_html(f), "//a")
+    hrefs <- xml2::xml_attr(nodes, "href")
+    unique(hrefs[!is.na(hrefs) & !startsWith(hrefs, "#")])
 }
 
 url_db <-
@@ -234,7 +220,7 @@ function(dir, add = FALSE) {
                 url_db_from_package_Rd_db(Rd_db(dir = dir)),
                 url_db_from_package_citation(dir, meta),
                 url_db_from_package_news(dir))
-    if(requireNamespace("XML", quietly = TRUE)) {
+    if(requireNamespace("xml2", quietly = TRUE)) {
         db <- rbind(db,
                     url_db_from_package_HTML_files(dir),
                     url_db_from_package_README_md(dir),
@@ -262,7 +248,7 @@ function(packages, lib.loc = NULL, verbose = FALSE)
                     url_db_from_package_citation(dir, meta,
                                                  installed = TRUE),
                     url_db_from_package_news(dir, installed = TRUE))
-        if(requireNamespace("XML", quietly = TRUE)) {
+        if(requireNamespace("xml2", quietly = TRUE)) {
             db <- rbind(db,
                         url_db_from_package_HTML_files(dir,
                                                        installed = TRUE),
