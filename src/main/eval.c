@@ -6005,8 +6005,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   if (names == R_NilValue) {
 	       if (TYPEOF(ioffsets) != INTSXP)
 		   errorcall(call, _("bad numeric 'switch' offsets"));
-	       pc = codebase + INTEGER(ioffsets)[0]; /* returns NULL */
-	       warningcall(call, _("'switch' with no alternatives"));
+	       if (LENGTH(ioffsets) == 1) {
+		   pc = codebase + INTEGER(ioffsets)[0]; /* returns NULL */
+		   warningcall(call, _("'switch' with no alternatives"));
+	       }
+	       else
+		   errorcall(call, _("numeric EXPR required for 'switch' "
+				     "without named alternatives"));
 	   } else {
 	       if (TYPEOF(coffsets) != INTSXP)
 		   errorcall(call, _("bad character 'switch' offsets"));

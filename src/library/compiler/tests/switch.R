@@ -84,3 +84,15 @@ stopifnot(identical(ev(quote(lc(1))), ev(quote(l(1)))))
 stopifnot(identical(ev(quote(lc(2))), ev(quote(l(2)))))
 stopifnot(identical(ev(quote(lc(3))), ev(quote(l(3)))))
 stopifnot(identical(ev(quote(lc(4))), ev(quote(l(4)))))
+
+l <- function(x) switch(x)
+lc <- cmpfun(l)
+
+cw <- function(expr) tryCatch(expr, warning = function(w) w)
+
+stopifnot(identical(cw(l(1)), cw(lc(1))))
+stopifnot(identical(cw(l("A")), cw(lc("A"))))
+suppressWarnings(stopifnot(identical(withVisible(l(1)),
+                                     withVisible(lc(1)))))
+suppressWarnings(stopifnot(identical(withVisible(l("A")),
+                                     withVisible(lc("A")))))
