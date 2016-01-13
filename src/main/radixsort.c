@@ -57,7 +57,8 @@ static int order = 1;
 static SEXP *saveds=NULL;
 static R_len_t *savedtl=NULL, nalloc=0, nsaved=0;
 
-static void savetl_init() {
+static void savetl_init()
+{
     if (nsaved || nalloc || saveds || savedtl)
         error("Internal error: savetl_init checks failed (%d %d %p %p).",
               nsaved, nalloc, saveds, savedtl);
@@ -73,13 +74,14 @@ static void savetl_init() {
     }
 }
 
-static void savetl_end() {
+static void savetl_end()
+{
     // Can get called if nothing has been saved yet (nsaved==0), or
     // even if _init() hasn't been called yet (pointers NULL). Such as
     // to clear up before error. Also, it might be that nothing needed
     // to be saved anyway.
-    for (int i=0; i<nsaved; i++)
-        SET_TRUELENGTH(saveds[i],savedtl[i]);
+    for (int i = 0; i < nsaved; i++)
+        SET_TRUELENGTH(saveds[i], savedtl[i]);
     free(saveds);  // does nothing on NULL input
     free(savedtl);
     nsaved = nalloc = 0;
@@ -90,7 +92,7 @@ static void savetl_end() {
 
 static void savetl(SEXP s)
 {
-    if (nsaved>=nalloc) {
+    if (nsaved >= nalloc) {
         nalloc *= 2;
         char *tmp;
         tmp = (char *)realloc(saveds, nalloc * sizeof(SEXP));
@@ -119,10 +121,11 @@ static void savetl(SEXP s)
 /* use malloc/realloc (not Calloc/Realloc) so we can trap errors 
    and call savetl_end() before the error(). */
 
-static void growstack(int newlen) {
+static void growstack(int newlen)
+{
     // no link to icount range restriction,
     // just 100,000 seems a good minimum at 0.4MB
-    if (newlen==0) newlen=100000;
+    if (newlen == 0) newlen = 100000;
     if (newlen>gsmaxalloc) newlen=gsmaxalloc;
     gs[flip] = realloc(gs[flip], newlen*sizeof(int));
     if (gs[flip] == NULL)
@@ -1531,7 +1534,9 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ap, ans = R_NilValue /* -Wall */, x, decreasing;
     int n = -1, narg = 0, i, j, k, grp, ngrp, tmp, *osub, thisgrpn, col;
     R_xlen_t nl = n;
+#ifdef UNUSED
     Rboolean isSorted = TRUE;
+#endif
     void *xd;
     int *o = NULL;
 
@@ -1634,7 +1639,9 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
         // -1 or 1. NEW: or -2 in case of nalast == 0 and all NAs
         if (tmp == 1) {
             // same as expected in 'order' (1 = increasing, -1 = decreasing)
+#ifdef UNUSED
             isSorted = TRUE;
+#endif
             for (i=0; i<n; i++)
                 o[i] = i+1;
             // TO DO: we don't need this if returning NULL? Save it?
@@ -1642,18 +1649,24 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
         } else if (tmp == -1) {
             // -1 (or -n for result of strcmp), strictly opposite to
             // -expected 'order'
+#ifdef UNUSED
             isSorted = FALSE;
+#endif
             for (i=0; i<n; i++)
                 o[i] = n-i;
         } else if (nalast == 0 && tmp == -2) {
             // happens only when nalast=NA/0. Means all NAs, replace
             // with 0's therefore!
+#ifdef UNUSED
             isSorted = FALSE;
+#endif
             for (i=0; i<n; i++)
                 o[i] = 0;
         }
     } else {
+#ifdef UNUSED
         isSorted = FALSE;
+#endif
         switch(TYPEOF(x)) {
         case INTSXP :
         case LGLSXP :
@@ -1719,7 +1732,7 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
                 alloc_csort_otmp(gsmax[1-flip]);
                 g = &csort;
             }
-            // no increasing/decreasing order required if sortStr=FALSE,
+            // no increasing/decreasing order required if sortStr = FALSE,
             // just a dummy argument
             else g = &cgroup; 
             break;
@@ -1738,19 +1751,31 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
                     switch(TYPEOF(x)) {
                     case INTSXP :
                         if (INTEGER(x)[o[i]-1] == NA_INTEGER) {
-                            isSorted=FALSE; o[i] = 0;
+#ifdef UNUSED
+                            isSorted = FALSE;
+#endif
+			    o[i] = 0;
                         } break;
                     case LGLSXP :
                         if (LOGICAL(x)[o[i]-1] == NA_LOGICAL) {
-                            isSorted=FALSE; o[i] = 0;
+#ifdef UNUSED
+                            isSorted = FALSE;
+#endif
+			    o[i] = 0;
                         } break;
                     case REALSXP :
                         if (ISNAN(REAL(x)[o[i]-1])) {
-                            isSorted=FALSE; o[i] = 0;
+#ifdef UNUSED
+                            isSorted = FALSE;
+#endif
+			    o[i] = 0;
                         } break;
                     case STRSXP :
                         if (STRING_ELT(x, o[i]-1) == NA_STRING) {
-                            isSorted=FALSE; o[i] = 0;
+#ifdef UNUSED
+                            isSorted = FALSE; 
+#endif
+			    o[i] = 0;
                         } break;
                     default :
                         Error("Internal error: previous default should have caught unsupported type");
@@ -1780,7 +1805,9 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
             if (tmp) {
                 // *sorted will have already push()'d the groups
                 if (tmp==-1) {
+#ifdef UNUSED
                     isSorted = FALSE;
+#endif
                     for (k=0;k<thisgrpn/2;k++) {
                         // reverse the order in-place using no
                         // function call or working memory
@@ -1793,12 +1820,16 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
                     }
                 } else if (nalast == 0 && tmp==-2) {
                     // all NAs, replace osub[.] with 0s.
+#ifdef UNUSED
                     isSorted = FALSE;
+#endif
                     for (k=0; k<thisgrpn; k++) osub[k] = 0;
                 }
                 continue;
             }
-            isSorted = FALSE;
+#ifdef UNUSED
+	    isSorted = FALSE;
+#endif
             // nalast=NA will result in newo[0] = 0. So had to change to -1.
             newo[0] = -1;
             // may update osub directly, or if not will put the
@@ -1819,10 +1850,10 @@ SEXP attribute_hidden do_radixsort2(SEXP call, SEXP op, SEXP args, SEXP rho)
         }
     }
     
-    if (!sortStr && ustr_n!=0)
-        Error("Internal error: at the end of forder sortStr==FALSE but ustr_n!=0 [%d]",
+    if (!sortStr && ustr_n != 0)
+        Error("Internal error: at the end of forder sortStr = =FALSE but ustr_n!=0 [%d]",
               ustr_n);
-    for(int i=0; i<ustr_n; i++)
+    for(int i = 0; i < ustr_n; i++)
         SET_TRUELENGTH(ustr[i],0);
     maxlen = 1;  // reset global. Minimum needed to count "" and NA
     ustr_n = 0;

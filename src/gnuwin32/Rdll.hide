@@ -729,6 +729,7 @@
  do_getIdentification
  do_getNSRegistry
  do_getNumRtoCConverters
+ do_getNumericRounding
  do_getOption
  do_getRegNS
  do_getRegisteredRoutines
@@ -947,6 +948,7 @@
  do_set
  do_setFileTime
  do_setInternet2
+ do_setNumericRounding
  do_setS4Object
  do_setSessionTimeLimit
  do_setStatusBar
