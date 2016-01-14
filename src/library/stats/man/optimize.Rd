@@ -1,16 +1,16 @@
 % File src/library/stats/man/optimize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{optimize}
 \title{One Dimensional Optimization}
 \usage{
-optimize(f = , interval = ,  \dots, lower = min(interval),
-         upper = max(interval), maximum = FALSE,
+optimize(f, interval, \dots, lower = min(interval), upper = max(interval),
+         maximum = FALSE,
          tol = .Machine$double.eps^0.25)
-optimise(f = , interval = ,  \dots, lower = min(interval),
-         upper = max(interval), maximum = FALSE,
+optimise(f, interval, \dots, lower = min(interval), upper = max(interval),
+         maximum = FALSE,
          tol = .Machine$double.eps^0.25)
 }
 \alias{optimize}
