@@ -2812,6 +2812,7 @@ setCompilerOptions <- function(...) {
             stop(gettextf("'%s' is not a valid compiler option", n),
                  domain = NA)
     old <- list()
+    newOptions <- compilerOptions
     for (n in nm) {
         op <- options[[n]]
         switch(n,
@@ -2820,14 +2821,14 @@ setCompilerOptions <- function(...) {
                    if (length(op) == 1 && 0 <= op && op <= 3) {
                        old <- c(old, list(optimize =
                                           compilerOptions$optimize))
-                       compilerOptions$optimize <- op
+                       newOptions$optimize <- op
                    }
                },
                suppressAll = {
                    if (identical(op, TRUE) || identical(op, FALSE)) {
                        old <- c(old, list(suppressAll =
                                           compilerOptions$suppressAll))
-                       compilerOptions$suppressAll <- op
+                       newOptions$suppressAll <- op
                    }
                },
                suppressUndefined = {
@@ -2835,10 +2836,12 @@ setCompilerOptions <- function(...) {
                        is.character(op)) {
                        old <- c(old, list(suppressUndefined =
                                           compilerOptions$suppressUndefined))
-                       compilerOptions$suppressUndefined <- op
+                       newOptions$suppressUndefined <- op
                    }
                })
     }
+    jitEnabled <- enableJIT(-1)
+    checkCompilerOptions(jitEnabled, newOptions)
     invisible(old)
 }
 
@@ -2853,6 +2856,18 @@ setCompilerOptions <- function(...) {
             if (0 <= lev && lev <= 3)
                 setCompilerOptions(optimize = lev)
         }, error = function(e) e, warning = function(w) w)
+}
+
+checkCompilerOptions <- function(jitEnabled, options = NULL) {
+    optimize <- getCompilerOption("optimize", options)
+    if (jitEnabled <= 2 || optimize >= 2)
+        TRUE
+    else {
+        stop(gettextf(
+            "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2",
+            optimize, jitEnabled))
+        FALSE
+    }
 }
 
 

@@ -4809,6 +4809,7 @@ setCompilerOptions <- function(...) {
             stop(gettextf("'%s' is not a valid compiler option", n),
                  domain = NA)
     old <- list()
+    newOptions <- compilerOptions
     for (n in nm) {
         op <- options[[n]]
         switch(n,
@@ -4817,14 +4818,14 @@ setCompilerOptions <- function(...) {
                    if (length(op) == 1 && 0 <= op && op <= 3) {
                        old <- c(old, list(optimize =
                                           compilerOptions$optimize))
-                       compilerOptions$optimize <- op
+                       newOptions$optimize <- op
                    }
                },
                suppressAll = {
                    if (identical(op, TRUE) || identical(op, FALSE)) {
                        old <- c(old, list(suppressAll =
                                           compilerOptions$suppressAll))
-                       compilerOptions$suppressAll <- op
+                       newOptions$suppressAll <- op
                    }
                },
                suppressUndefined = {
@@ -4832,10 +4833,12 @@ setCompilerOptions <- function(...) {
                        is.character(op)) {
                        old <- c(old, list(suppressUndefined =
                                           compilerOptions$suppressUndefined))
-                       compilerOptions$suppressUndefined <- op
+                       newOptions$suppressUndefined <- op
                    }
                })
     }
+    jitEnabled <- enableJIT(-1)
+    checkCompilerOptions(jitEnabled, newOptions)
     invisible(old)
 }
 @ %def
@@ -4860,6 +4863,27 @@ optimization level to be specified using environment variables.
         }, error = function(e) e, warning = function(w) w)
 }
 @ %def .onLoad
+
+When [[enableJIT]] is set to 3, loops should be compiled before executing. 
+However, if the [[optimize]] option is set to 0 or 1, a compiled loop will
+call to the same primitive function as is used by the AST interpretter (e.g. 
+[[do_for]]), and the compilation would run into infinite recursion. 
+[[checkCompilerOptions]] will detect invalid combinations of [[enableJIT]]
+and [[optimize]] and report a warning.
+%% **** could also change the interface and atomically set enableJIT and optimize
+<<[[checkCompilerOptions]] function>>=
+checkCompilerOptions <- function(jitEnabled, options = NULL) {
+    optimize <- getCompilerOption("optimize", options)
+    if (jitEnabled <= 2 || optimize >= 2)
+        TRUE
+    else {
+        stop(gettextf(
+            "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2",
+            optimize, jitEnabled))
+        FALSE
+    }
+}
+@ %def checkCompilerOptions
 
 
 \subsection{Disassembler}
@@ -6234,6 +6258,8 @@ Opcodes.names <- names(Opcodes.argc)
 <<[[setCompilerOptions]] function>>
 
 <<[[.onLoad]] function>>
+
+<<[[checkCompilerOptions]] function>>
 
 
 ##
