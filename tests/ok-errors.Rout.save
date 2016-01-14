@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-01-12 r69919) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-12-07 r69744) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -33,8 +33,27 @@ Error: test of `options(error=expression(NULL))'
 + }
 > 
 > ## bad infinite recursion / on.exit / ... interactions
-> bar <- function() 1+1
-> foo <- function() { on.exit(bar()); foo() }
-> foo() # now simple "infinite recursion"
-Error: evaluation nested too deeply: infinite recursion / options(expressions=)?
+> ##   catch the error to permit different error texts and different
+> ##   number of the error messages emitted (handling of infinite
+> ##   recursion is different in AST interpretter and byte-code
+> ##   interpretter/compiler
+> 
+> { g <- function() 1+1 ; f <- function() { on.exit(g()) ; f() } ; tryCatch(f(), error=function(x) TRUE) }
+[1] TRUE
+> 
+> { f <- function() { f() } ; tryCatch(f(), error=function(x) TRUE) }
+[1] TRUE
+> { f <- function() { on.exit(f()) } ; tryCatch(f(), error=function(x) TRUE) }
+[1] TRUE
+> { f <- function() { on.exit(f()) ; f() } ; tryCatch(f(), error=function(x) TRUE) }
+[1] TRUE
+> 
+> { f <- function() f() ; tryCatch(tryCatch(f(), finally=f()), error=function(x) TRUE) }
+[1] TRUE
+> { f <- function() f() ; tryCatch(tryCatch(f(), error=f()), error=function(x) TRUE) }
+[1] TRUE
+> { f <- function() f() ; tryCatch(tryCatch(f(), error=f(), finally=f()), error=function(x) TRUE) }
+[1] TRUE
+> { f <- function() tryCatch(f(), error=f(), finally=f()) ; tryCatch(f(), error=function(x) TRUE) }
+[1] TRUE
 > 
