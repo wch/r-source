@@ -469,6 +469,10 @@
       \item The internal deparser did not add parentheses when
       necessary,  e.g. before \code{[]} or \code{[[]]}.  (Reported by
       Lukas Stadler; additional fixes included as well).
+
+      \item \code{as.data.frame.vector(*, row.names=*)} no longer
+      produces \dQuote{corrupted} data frames from row names of wrong
+      length, but rather warns about them.  This will become an error.
     }
   }
 }

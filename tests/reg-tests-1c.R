@@ -1194,13 +1194,25 @@ stopifnot(
     identical(dim(A3[,1,]), c(B = 3L, D = 7L)))
 ## all subsetting of arrays lost names(dim(.)) in R < 3.3.0
 
-`$.foo` <- function(x, fun) paste("foo: ", NextMethod())
+
+## NextMethod() dispatch for  `$`  and  `$<-`
+`$.foo` <- function(x, fun) paste("foo:", NextMethod())
 x <- list(a = 1, b = 2)
 class(x) <- "foo"
-x$b  # failed prior to R 3.3.0
+stopifnot(identical(x$b, "foo: 2"))  # 'x$b' failed prior to R 3.3.0
 
 `$<-.foo` <- function(x, value, fun) {
     attr(x, "modified") <- "yes"
     NextMethod()
 }
-x$y <- 10  # failed prior to R 3.3.0
+x$y <- 10 ## failed prior to R 3.3.0
+stopifnot(identical(attr(x, "modified"), "yes"))
+
+
+## illegal 'row.names' for as.data.frame():  -- for now just a warning --
+tools::assertWarning(
+    d3 <- as.data.frame(1:3, row.names = letters[1:2])
+)
+stopifnot(dim(d3) == c(3,1)) ## was (2, 1) in R <= 3.2.3
+## 'row.names' were not checked and produced a "corrupted" data frame in R <= 3.2.3
+
