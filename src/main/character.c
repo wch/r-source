@@ -353,12 +353,13 @@ static int str_startsWith(SEXP x, SEXP pre)
     cetype_t ienc = getCharCE(x);
     const char *cx = CHAR(x);
     int p_len = R_nchar(pre, Chars, FALSE, FALSE, "startWith(, prefix)");
+    if (p_len == 0) return 1;
     /* Cheap (but short) implementation, using substr() and Seql() : */
-    char *buf = R_AllocStringBuffer(p_len+1, &cbuff);
-    if(p_len == 0)
-	buf[0] = '\0';
-    else
-	substr(buf, cx, ienc, 1, p_len);
+    /* This was p_len+1, but that is in characters not bytes */
+    char *buf = R_AllocStringBuffer(MB_CUR_MAX * p_len + 1, &cbuff);
+    int slen = (int) strlen(cx),
+	stop = (p_len > slen) ? slen : p_len;
+    substr(buf, cx, ienc, 1, stop);
     return Seql(mkCharCE(buf, ienc), pre);
 }
 
@@ -368,14 +369,13 @@ static int str_endsWith(SEXP x, SEXP suffix)
     cetype_t ienc = getCharCE(x);
     const char *cx = CHAR(x);
     int p_len = R_nchar(suffix, Chars, FALSE, FALSE, "endsWith(, suffix)");
+    if (p_len == 0) return 1;
+    int x_len = R_nchar(x, Chars, FALSE, FALSE, "endsWith(x, )");
+    if (p_len > x_len) return 0;
     /* Cheap (but short) implementation, using substr() and Seql() : */
-    char *buf = R_AllocStringBuffer(p_len+1, &cbuff);
-    if(p_len == 0)
-	buf[0] = '\0';
-    else {
-	int x_len = R_nchar(x, Chars, FALSE, FALSE, "endsWith(x, )");
-	substr(buf, cx, ienc, x_len-p_len+1, x_len);
-    }
+    /* This was p_len+1, but that is in characters not bytes */
+    char *buf = R_AllocStringBuffer(MB_CUR_MAX * p_len + 1, &cbuff);
+    substr(buf, cx, ienc, x_len - p_len + 1, x_len);
     return Seql(mkCharCE(buf, ienc), suffix);
 }
 
