@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -129,6 +129,7 @@ typedef struct {
     int maxlines;
     Rboolean active;
     int isS4;
+    Rboolean fnarg; /* fn argument, so parenthesize = as assignment */
 } LocalParseData;
 
 static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
@@ -641,6 +642,7 @@ static void attr2(SEXP s, LocalParseData *d)
 		    d->opts = localOpts;
 		}
 		print2buff(" = ", d);
+		d->fnarg = TRUE;
 		deparse2buff(CAR(a), d);
 	    }
 	    a = CDR(a);
@@ -709,7 +711,7 @@ static Rboolean parenthesizeCaller(SEXP s)
 	    sym = SYMVALUE(op);
 	    if (TYPEOF(sym) == BUILTINSXP
 	        || TYPEOF(sym) == SPECIALSXP) {
-	        if (PPINFO(sym).precedence >= PREC_DOLLAR
+		if (PPINFO(sym).precedence >= PREC_SUBSET
 	            || PPINFO(sym).kind == PP_FUNCALL
 	            || PPINFO(sym).kind == PP_PAREN
 	            || PPINFO(sym).kind == PP_CURLY) return FALSE; /* x$f(z) or x[n](z) or f(z) or (f) or {f} */
@@ -731,9 +733,12 @@ static Rboolean parenthesizeCaller(SEXP s)
 static void deparse2buff(SEXP s, LocalParseData *d)
 {
     PPinfo fop;
-    Rboolean lookahead = FALSE, lbreak = FALSE, parens;
+    Rboolean lookahead = FALSE, lbreak = FALSE, parens, fnarg = d->fnarg, 
+             outerparens;
     SEXP op, t;
     int localOpts = d->opts, i, n;
+    
+    d->fnarg = FALSE;
 
     if (!d->active) return;
 
@@ -971,7 +976,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(")", d);
 		    break;
 		case PP_SUBSET:
+		    if ((parens = needsparens(fop, CAR(s), 1)))
+			print2buff("(", d);		
 		    deparse2buff(CAR(s), d);
+		    if (parens)
+			print2buff(")", d);		    
 		    if (PRIMVAL(SYMVALUE(op)) == 1)
 			print2buff("[", d);
 		    else
@@ -1023,6 +1032,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_ASSIGN:
 		case PP_ASSIGN2:
+		    if ((outerparens = (fnarg && !strcmp(CHAR(PRINTNAME(op)), "="))))
+		    	print2buff("(", d);
 		    if ((parens = needsparens(fop, CAR(s), 1)))
 			print2buff("(", d);
 		    deparse2buff(CAR(s), d);
@@ -1035,6 +1046,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			print2buff("(", d);
 		    deparse2buff(CADR(s), d);
 		    if (parens)
+			print2buff(")", d);
+		    if (outerparens)
 			print2buff(")", d);
 		    break;
 		case PP_DOLLAR:
@@ -1584,17 +1597,22 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 	    if(formals) {
 		if (CAR(arglist) != R_MissingArg) {
 		    print2buff(" = ", d);
+		    d->fnarg = TRUE;
 		    deparse2buff(CAR(arglist), d);
 		}
 	    }
 	    else {
 		print2buff(" = ", d);
 		if (CAR(arglist) != R_MissingArg) {
+		    d->fnarg = TRUE;
 		    deparse2buff(CAR(arglist), d);
 		}
 	    }
 	}
-	else deparse2buff(CAR(arglist), d);
+	else {
+	  d->fnarg = TRUE;
+	  deparse2buff(CAR(arglist), d);
+	}
 	arglist = CDR(arglist);
 	if (arglist != R_NilValue) {
 	    print2buff(", ", d);

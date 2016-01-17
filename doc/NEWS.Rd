@@ -64,6 +64,10 @@
       \item \code{require()} etc now give the correct entry of
       \code{lib.loc} in the warning about an old version of a package
       masking a newer required one.
+      
+      \item The internal deparser did not add parentheses when
+      necessary,  e.g. before \code{[]} or \code{[[]]}.  (Reported by
+      Lukas Stadler; additional fixes included as well).
     }
   }
 }
