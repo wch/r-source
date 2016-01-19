@@ -225,8 +225,7 @@ function(dir,
     depends <-
         package_dependencies(pnames, available, which = "most")
     depends <- setdiff(unique(unlist(depends, use.names = FALSE)),
-                       unlist(.get_standard_package_names(),
-                              use.names = FALSE))
+                       .get_standard_package_names()$base)
 
     ## Need to install depends which are not installed or installed but
     ## old.
@@ -239,7 +238,7 @@ function(dir,
                                         available = available)[, "Package"]))
     if(length(depends)) {
         message(paste(strwrap(sprintf("installing dependencies %s",
-                                      paste(sQuote(depends),
+                                      paste(sQuote(sort(depends)),
                                             collapse = ", ")),
                               exdent = 2L),
                       collapse = "\n"), domain = NA)
