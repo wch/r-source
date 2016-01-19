@@ -1,14 +1,16 @@
 % File src/library/base/man/expand.grid.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{expand.grid}
-\title{Create a Data Frame from All Combinations of Factors}
+\title{Create a Data Frame from All Combinations of Factor Variables}
+\alias{expand.grid}
+\concept{variable combinations}
+\concept{variable permutations}
 \usage{
 expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
-\alias{expand.grid}
 \arguments{
   \item{\dots}{vectors, factors or a list containing these.}
   \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}

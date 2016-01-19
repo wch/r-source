@@ -300,7 +300,7 @@ Class.  No effect on the object itself.
                  value
              }
              else if(is(classDef, "classRepresentation")) # use standard S4 as()
-                 methods::as(.self, Class)
+                  methods::as(.self, Class)
              else if(is.character(Class) && length(Class) == 1)
                  stop(gettextf("%s is not a defined class in this environment",
                                dQuote(Class)),
@@ -707,7 +707,7 @@ accessors = function(...) {
     methods(accessors)
     invisible(accessors)
 }
-)
+)## end{ .GeneratorMethods }
 
 .localRefMethods <-
     list(
@@ -805,12 +805,15 @@ class method modifies a field.
     if(is(value, fieldClass))
         value <- as(value, fieldClass, strict = FALSE) # could be more efficient?
     else
-        stop(gettextf("invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)",
-                       sQuote(fieldName), dQuote(fieldClass), dQuote(class(value))), call. = FALSE)
+        stop(gettextf(
+	"invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)",
+		      sQuote(fieldName), dQuote(fieldClass), dQuote(class(value))),
+             call. = FALSE)
     selfEnv <- as.environment(self)
     if(onceOnly) {
         if(bindingIsLocked(metaName, selfEnv))
-            stop(gettextf("invalid replacement: reference class field %s is read-only", sQuote(fieldName)),
+            stop(gettextf("invalid replacement: reference class field %s is read-only",
+                          sQuote(fieldName)),
                  call. = FALSE)
         else {
             assign(metaName, value, envir = selfEnv)
@@ -930,19 +933,14 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
     theseMethods <- names(value)
     prevMethods <- names(methods) # catch refs to inherited methods as well
     allMethods <- unique(c(theseMethods, prevMethods))
-    if(returnAll)
-        returnMethods <- methods
-    else
-        returnMethods <- value
+    returnMethods <- if(returnAll) methods else value
     check <- TRUE
     for(method in theseMethods) {
         prevMethod <- methods[[method]] # NULL or superClass method
         if(is.null(prevMethod)) {
             ## kludge because default version of $initialize() breaks bootstrapping of methods package
-            if(identical(method, "initialize"))
-                superClassMethod <- "initFields"
-            else
-                superClassMethod <- ""
+            superClassMethod <- if(identical(method, "initialize"))
+                "initFields" else ""
         }
         else if(identical(prevMethod@refClassName, Class))
             superClassMethod <- prevMethod@superClassMethod
@@ -1118,10 +1116,9 @@ showRefClassDef <- function(object, title = "Reference Class") {
 
 .mergeAssigns <- function(previous, new) {
     for(what in names(new)) {
-        if(is.null(previous[[what]]))
-            previous[[what]] <- new[[what]]
-        else
-            previous[[what]] <- paste(previous[[what]], new[[what]], sep="; ")
+	previous[[what]] <-
+	    if(is.null(previous[[what]])) new[[what]]
+	    else paste(previous[[what]],  new[[what]], sep="; ")
     }
     previous
 }

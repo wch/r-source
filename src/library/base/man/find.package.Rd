@@ -1,6 +1,6 @@
 % File src/library/base/man/find.package.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{find.package}
@@ -53,6 +53,10 @@ path.package(package, quiet = FALSE)
   were loaded, or if none were named, for all currently attached packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
   are not attached, and given an error if none are.
+}
+\seealso{
+  \code{\link{path.expand}} and \code{\link{normalizePath}} for path
+  standardization.
 }
 \value{
   A character vector of paths of package directories.

@@ -1,9 +1,10 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
+\title{Coerce to a Data Frame}
 \alias{as.data.frame}
 \alias{is.data.frame}
 \alias{as.data.frame.AsIs}
@@ -26,9 +27,6 @@
 \alias{as.data.frame.array}
 \alias{as.data.frame.difftime}
 
-\title{
-  Coerce to a Data Frame
-}
 \description{
   Functions to check if an object is a data frame, or coerce it if possible.
 }

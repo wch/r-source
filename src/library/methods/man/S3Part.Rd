@@ -1,6 +1,6 @@
 % File src/library/methods/man/S3Part.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2015 R Core Team
+% Copyright 2008-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{S3Part}
@@ -250,6 +250,8 @@ ym2 <- new("ymm", myLm, header = "Example2", eps = .001)
 
 # but for class "ymm", an S3 part of class "lm" is an error:
 try(new("ymm", lm.D9, header = "Example2", eps = .001))
+\dontshow{tools::assertError(
+    new("ymm", lm.D9, header = "Example2", eps = .001))}
 
 setClass("dataFrameD", representation(date = "Date"),
          contains = "data.frame")

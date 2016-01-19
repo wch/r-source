@@ -1,6 +1,6 @@
 % File src/library/base/man/encodeString.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2008, 2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{encodeString}
@@ -72,10 +72,11 @@ cat(encodeString(x), "\n", sep = "") # similar to print()
 factor(x) # makes use of this to print the levels
 
 x <- c("a", "ab", "abcde")
+encodeString(x) # width = 0: use as little as possible
+encodeString(x, 2) # use two or more (left justified)
 encodeString(x, width = NA) # left justification
 encodeString(x, width = NA, justify = "c")
 encodeString(x, width = NA, justify = "r")
 encodeString(x, width = NA, quote = "'", justify = "r")
 }
 \keyword{ utilities }
-

@@ -36,7 +36,7 @@
   garbage collection.  These values can be set by the command line
   options \option{--min-nsize} and \option{--min-vsize} (or if they are
   not used, the environment variables \env{R_NSIZE} and \env{R_VSIZE})
-  when \R is started. Thereafter \R will grow or shrink the areas
+  when \R is started.  Thereafter \R will grow or shrink the areas
   depending on usage, never decreasing below the initial values.
 
   How much time \R spends in the garbage collector will depend on these
