@@ -180,7 +180,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## from another package.  A better test would be to move this
             ## down into the loop and test against specific other package name
             ## but subtle conflicts like that are likely to be found elsewhere
-	    these <- ob[substr(ob, 1L, 6L) == ".__T__"]
+	    these <- ob[startsWith(ob,".__T__")]
             gen  <- gsub(".__T__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__T__(.*):([^:]+)", "\\2", these)
             gen <- gen[from != package]
@@ -194,7 +194,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
-                Classobjs <- grep("^\\.__", same)
+                Classobjs <- which(startsWith(same,".__"))
                 if(length(Classobjs)) same <- same[-Classobjs]
                 ## report only objects which are both functions or
                 ## both non-functions.

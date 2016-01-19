@@ -233,8 +233,10 @@ generic.skeleton <- function(name, fdef, fdefault)
     }
     if(is.null(fdefault)) {
         fdefault <- fdef
-        body(fdefault) <- substitute(stop(MESSAGE, domain = NA), list(MESSAGE=
-                                                   gettextf("invalid call in method dispatch to '%s' (no default method)", name)))
+	msg <- gettextf("invalid call in method dispatch to '%s' (no default method)",
+			name)
+	body(fdefault) <- substitute(stop(MESSAGE, domain = NA),
+				     list(MESSAGE = msg))
         environment(fdefault) <- baseenv()
     }
     skeleton[[1L]] <- fdefault
@@ -575,10 +577,10 @@ getGeneric <-
 }
 
 .getGenericFromCache <- function(name, where,  pkg = "")
-   .getGenericFromCacheTable(name,where, pkg, .genericTable)
+   .getGenericFromCacheTable(name, where, pkg, .genericTable)
 
 .getImplicitGenericFromCache <- function(name, where,  pkg = "")
-   .getGenericFromCacheTable(name,where, pkg, .implicitTable)
+   .getGenericFromCacheTable(name, where, pkg, .implicitTable)
 
 .getGenericFromCacheTable <- function(name, where, pkg = "", table)
 {
@@ -777,26 +779,24 @@ getGenerics <- function(where, searchForm = FALSE)
     else if(is.environment(where)) where <- list(where)
     these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
     these <- unique(these)
-    these <- these[substr(these, 1L, 6L) == ".__T__"]
+    these <- these[startsWith(these, ".__T__")]
     if(length(these) == 0L)
         return(character())
-    funNames <- gsub(".__T__(.*):([^:]+)", "\\1", these)
-    if(length(funNames) == 0L &&
-       length(these[substr(these, 1L, 6L) == ".__M__"]))
-        warning(sprintf("package %s seems to have out-of-date methods; need to reinstall from source",
-                         sQuote(getPackageName(where[[1L]]))))
+    funNames <- gsub("^.__T__(.*):([^:]+)", "\\1", these)
+    ## FIXME: length(funNames) == length(these) != 0   ==> this never triggers:
+    ## if(length(funNames) == 0L && any(startsWith(these, ".__M__")))
+    ##     warning(sprintf("package %s seems to have out-of-date methods; need to reinstall from source",
+    ##                      sQuote(getPackageName(where[[1L]]))))
     packageNames <- gsub(".__T__(.*):([^:]+(.*))", "\\2", these)
     attr(funNames, "package") <- packageNames
     ## Would prefer following, but may be trouble bootstrapping methods
     ## funNames <- new("ObjectsWithPackage", funNames, package = packageNames)
     if(identical(trim, TRUE))
         funNames
-    else {
-        if(identical(trim, FALSE))
-            these
-        else
-            gsub(".__T__", as.character(trim), these)
-    }
+    else if(identical(trim, FALSE))
+        these
+    else
+        gsub(".__T__", as.character(trim), these)
 }
 
 cacheMetaData <-

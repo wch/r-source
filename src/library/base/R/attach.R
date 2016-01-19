@@ -1,7 +1,7 @@
 #  File src/library/base/R/attach.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
         }
         ob <- names(as.environment(db.pos))
         if(.isMethodsDispatchOn()) { ## {see note in library() about this}
-            these <- ob[substr(ob, 1L, 6L) == ".__T__"]
+            these <- ob[startsWith(ob,".__T__")]
             gen  <- gsub(".__T__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__T__(.*):([^:]+)", "\\2", these)
             gen <- gen[from != ".GlobalEnv"]
@@ -66,7 +66,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
             if (any(obj.same > 0L)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
-                Classobjs <- grep("^\\.__", same)
+                Classobjs <- which(startsWith(same,".__"))
                 if(length(Classobjs)) same <- same[-Classobjs]
                 ## report only objects which are both functions or
                 ## both non-functions.
@@ -125,13 +125,13 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
 
     ## we need to treat packages differently from other objects, so get those
     ## out of the way now
-    if (!startsWith(packageName, "package:"))
+    if (! grepl("^package:", packageName) )
         return(invisible(.Internal(detach(pos))))
 
     ## From here down we are detaching a package.
     pkgname <- .rmpkg(packageName)
     for(pkg in search()[-1L]) {
-	if(startsWith(pkg, "package:") &&
+        if(grepl("^package:", pkg) &&
            exists(".Depends", pkg, inherits = FALSE) &&
            pkgname %in% get(".Depends", pkg, inherits = FALSE))
             if(force)
