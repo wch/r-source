@@ -1109,11 +1109,15 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     y = REAL(sy);
     naflag = 0;
     for (i = 0; i < n; i++) {
-	if (ISNAN(a[i]))
-	    y[i] = a[i];
-	else {
-	    y[i] = f(a[i]);
-	    if (ISNAN(y[i])) naflag = 1;
+	double x = a[i]; /* in case y == a */
+	/* This code assumes that ISNAN(x) implies ISNAN(f(x)), so we
+	   only need to check ISNAN(x) if ISNAN(f(x)) is true. */
+	y[i] = f(x);
+	if (ISNAN(y[i])) {
+	    if (ISNAN(x))
+		y[i] = x; /* make sure the incoming NaN is preserved */
+	    else
+		naflag = 1;
 	}
     }
     /* These are primitives, so need to use the call */
