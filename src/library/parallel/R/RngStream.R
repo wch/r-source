@@ -62,7 +62,7 @@ RNGenv <- new.env()
 mc.reset.stream <- function() {
     if (RNGkind()[1L] == "L'Ecuyer-CMRG") {
         if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
-            stats::runif(1)
+            sample.int(1L)
         assign("LEcuyer.seed",
                get(".Random.seed", envir = .GlobalEnv, inherits = FALSE),
                envir = RNGenv)
@@ -76,7 +76,7 @@ mc.advance.stream <- function(reset = FALSE)
         if (reset ||
             !exists("LEcuyer.seed", envir = RNGenv, inherits = FALSE)) {
             if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
-                stats::runif(1)
+                sample.int(1L)
             assign("LEcuyer.seed",
                    get(".Random.seed", envir = .GlobalEnv, inherits = FALSE),
                    envir = RNGenv)

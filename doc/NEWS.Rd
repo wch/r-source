@@ -249,6 +249,9 @@
 
       \item Reference class finalizers run at exit, as well as on
       garbage collection.
+
+      \item Avoid \pkg{parallel} dependency on \pkg{stats} for port
+      choice and random number seeds. (\PR{16668})
     }
   }
 
