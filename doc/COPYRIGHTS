@@ -285,23 +285,23 @@ THE SOFTWARE.
 src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
 
   Extracted from
-  *  -- LAPACK computational routine (version 3.5.0) --
+  *  -- LAPACK computational routine (version 3.6.0) --
   *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
   *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-  *     September 2012
+  *     Novemeber 2015
 
   where the version number, providers and date vary by subroutine.
 
-  LAPACK 3.5.0 contains a LICENSE file, copied to src/modules/lapack
+  LAPACK 3.6.0 contains a LICENSE file, copied to src/modules/lapack
   (but many of these routines were originally copied from earlier
   versions of LAPACK).  For binary distributions it is reproduced here:
 
-  Copyright (c) 1992-2011 The University of Tennessee and The University
+  Copyright (c) 1992-2015 The University of Tennessee and The University
                           of Tennessee Research Foundation.  All rights
                           reserved.
-  Copyright (c) 2000-2011 The University of California Berkeley. All
+  Copyright (c) 2000-2015 The University of California Berkeley. All
                           rights reserved.
-  Copyright (c) 2006-2012 The University of Colorado Denver.  All rights
+  Copyright (c) 2006-2015 The University of Colorado Denver.  All rights
                           reserved.
 
   $COPYRIGHT$
@@ -351,12 +351,6 @@ src/extra/xdr/*
 
 	See the file src/extra/xdr/copyrght.txt
 
-
-src/extra/zlib/README, *.c, *.h
-
-  Taken from zlib-1.2.8 (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  See src/extra/zlib/README for the licence.
-
 src/main/connections.c, src/main/gzio.h
 
   Contain code derived from the zlib 1.2.3 distribution
@@ -368,16 +362,11 @@ src/main/dounzip.c, unzip.h
   in the zlib 1.2.3 distribution with updates taken from 1.2.5.
 
 
-src/extra/pcre/LICENCE
-src/extra/pcre/*.[ch]
 src/main/valid_utf8.h
 
-   Copyright (c) 1997-2013 University of Cambridge
-   All rights reserved.
-   Copyright(c) 2009-2013 Zoltan Herczeg
+   Copyright (c) 1997-2012 University of Cambridge
 
-See file src/extra/pcre/LICENCE.  For binary builds of R that requires
-us to include
+For binary builds of R that requires us to include
 
   Redistribution and use in source and binary forms, with or without
   modification, are permitted provided that the following conditions are met:
@@ -405,20 +394,6 @@ us to include
   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
-
-
-src/extra/bzip2/LICENSE
-src/extra/bzip2/blocksort.c
-src/extra/bzip2/bzlib.c
-src/extra/bzip2/bzlib.h
-src/extra/bzip2/bzlib_private.h
-src/extra/bzip2/compress.c
-src/extra/bzip2/crctable.c
-src/extra/bzip2/decompress.c
-src/extra/bzip2/huffman.c
-src/extra/bzip2/randtable.c
-
-   copyright (C) 1996-2010 Julian R Seward.
 
 
 src/extra/tre/LICENSE
