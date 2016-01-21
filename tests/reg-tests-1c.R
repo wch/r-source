@@ -1216,3 +1216,12 @@ tools::assertWarning(
 stopifnot(dim(d3) == c(3,1)) ## was (2, 1) in R <= 3.2.3
 ## 'row.names' were not checked and produced a "corrupted" data frame in R <= 3.2.3
 
+
+## rbind.data.frame()'s  smart row names construction
+mk1 <- function(x) data.frame(x=x)
+d4 <- rbind(mk1(1:4)[3:4,,drop=FALSE], mk1(1:2))
+stopifnot(identical(dimnames(d4),
+                    list(c("3", "4", "1", "2"), "x")),
+## the rownames were       "3"  "4"  "31" "41"  in R <= 3.3.0
+          identical(attr(rbind(mk1(5:8), 7, mk1(6:3)), "row.names"), 1:9)
+          )

@@ -199,8 +199,8 @@ stopifnot(identical(df1, rbind(df,  new, make.row.names=FALSE)),
 ## Testing a semi-official use:
 d2 <- rbind.data.frame(as.list(df), as.list(new))
 d3 <- rbind.data.frame(as.list(df), as.list(new), make.row.names=FALSE)
-stopifnot(identical(.row_names_info(d3), -13L),
-          attr(d2, "row.names")[c(1,13)] == c("13", "131"))
+stopifnot(identical(.row_names_info(d3), -13L))
+## no longer: attr(d2, "row.names")[c(1,13)] == c("13", "131"))
 row.names(d2) <- attr(d3, "row.names")# = 1:13
 stopifnot(identical(d2, d3))
 }

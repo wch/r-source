@@ -405,6 +405,9 @@
 
       \item Blocking socket connection selection recovers more
       gracefully on signal interrupts.
+
+      \item \code{rbind.data.frame()}'s \code{row.names} construction
+      now works better in borderline integer cases.  (\PR{16666})
     }
   }
 }

@@ -1232,7 +1232,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	    else if(ni > 1L) paste(nmi, ri, sep = ".")
 	    else nmi
 	}
-	else if(nrow > 0L && identical(ri, seq_len(ni)))
+	else if(nrow > 0L && identical(ri, seq_len(ni)) &&
+		identical(unlist(rlabs, FALSE, FALSE), seq_len(nrow)))
 	    as.integer(seq.int(from = nrow + 1L, length.out = ni))
 	else ri
     }
@@ -1243,7 +1244,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
         ## types (e.g. NULL).
         nr <- vapply(allargs, function(x)
                      if(is.data.frame(x)) .row_names_info(x, 2L)
-                     else if(is.list(x)) length(x[[1L]]) # mismatched lists are checked later
+                     else if(is.list(x)) length(x[[1L]])
+					# mismatched lists are checked later
                      else length(x), 1L)
         if(any(nr > 0L)) allargs <- allargs[nr > 0L]
         else return(allargs[[1L]]) # pretty arbitrary
@@ -1292,10 +1294,12 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 		has.dim <- facCol <- ordCol <- logical(nvar)
 		for(j in seq_len(nvar)) {
 		    xj <- value[[j]]
-		    if( !is.null(levels(xj)) ) {
-			all.levs[[j]] <- levels(xj)
-                        facCol[j] <- TRUE # turn categories into factors
-                    } else facCol[j] <- is.factor(xj)
+                    facCol[j] <-
+                        if(!is.null(levels(xj))) {
+                            all.levs[[j]] <- levels(xj)
+                            TRUE # turn categories into factors
+                        } else
+                            is.factor(xj)
                     ordCol[j] <- is.ordered(xj)
 		    has.dim[j] <- length(dim(xj)) == 2L
 		}
@@ -1332,7 +1336,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 		}
 	    }
 	}
-	else if(length(xi)) {
+	else if(length(xi)) { # 1 new row
 	    rows[[i]] <- nrow <- nrow + 1L
             if(make.row.names)
 		rlabs[[i]] <- if(nzchar(nmi)) nmi else as.integer(nrow)
