@@ -4500,7 +4500,7 @@ It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
 
 @item
-The GNU compilers have a large number of non-portable extensions.  For
+The GNU compilers support a large number of non-portable extensions.  For
 example, @code{INFINITY} (which is in C99 but not C++98), for which @R{}
 provides the portable @code{R_PosInf} (and @code{R_NegInf} for
 @code{-INFINITY}).  And @code{NAN} is just one NaN value: in @R{} code
@@ -4512,13 +4512,15 @@ Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C_002b_002b-Extensions.html}.
 
 @item
-Including C headers in C++ code is not portable.  Including the C
-header @file{math.h} in C++ code often causes conflicts with
-@file{cmath} which may be included by other headers.  This is
-particularly problematic with C++11 compilers, as functions like
-@code{sqrt} and @code{isnan} are defined for @code{double} arguments in
-@file{math.h} and for a range of types including @code{double} in
-@file{cmath}.
+Including C headers in C++ code is not portable.  Including the C header
+@file{math.h} in C++ code often causes conflicts with @file{cmath} which
+may be included by other headers.  This is particularly problematic with
+C++11 compilers, as functions like @code{sqrt} and @code{isnan} are
+defined for @code{double} arguments in @file{math.h} and for a range of
+types including @code{double} in @file{cmath}.  Similar issues have
+been seen for @file{stdlib.h} and @file{cstdlib}.  Historically,
+including the C++ version first was a sufficient workaround but for some
+2016 compilers only one can be included.
 
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2015    The R Core Team
+ *  Copyright (C) 1998-2016    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,9 @@
 
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
-#include <stddef.h>
+#ifndef NO_C_HEADERS
+# include <stddef.h>
+#endif
 
 #define revsort       Rf_revsort
 #define iPsort        Rf_iPsort

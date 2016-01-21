@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015  The R Core Team.
+ *  Copyright (C) 1998--2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,9 +24,9 @@
 #define R_ARITH_H_
 
 /* 
-   This used to define _BSD_SOURCE to make declarations of finite and
-   isnan visible in glibc.  But that was deprecated in glibc 2.20, and
-   --std=c99 suffices nowadays.
+   This used to define _BSD_SOURCE to make declarations of finite (no
+   longer used) and isnan visible in glibc.  But that was deprecated in
+   glibc 2.20, and --std=c99 suffices nowadays.
 */
 #if defined HAVE_FEATURES_H
 # include <features.h>

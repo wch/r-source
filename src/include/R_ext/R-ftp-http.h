@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2014 The R Core Team.
+ *  Copyright (C) 2001-2016 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,9 @@
   allow for 'large' files (>= 2GB) on 32-bit systems, where supported.
 */
 /* required by C99/C11 */
-#include <stdint.h>
+#ifndef NO_C_HEADERS
+# include <stdint.h>
+#endif
 typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 
 #ifdef __cplusplus
