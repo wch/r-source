@@ -9272,9 +9272,11 @@ Most @R{} header files can be included within C++ programs, and they
 should @strong{not} be included within an @code{extern "C"} block (as
 they include C++ system headers).  It may not be possible to include
 some @R{} headers as they in turn include C header files that may cause
-conflicts---if this happens, define @samp{NO_C_HEADERS} before including
-the @R{} headers, and include C++ versions (such as @samp{cmath}) of the
-appropriate headers yourself before the @R{} headers.
+conflicts---if this happens, try defining @samp{NO_C_HEADERS} before
+including the @R{} headers, and include C++ versions (such as
+@samp{cmath} and @samp{cstdlib}) of the appropriate headers yourself
+before the @R{} headers. (Headers @file{R.h} and @file{Rmath.h} support
+@samp{NO_C_HEADERS}: @file{S.h} does not.)
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
