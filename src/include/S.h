@@ -41,7 +41,7 @@ extern "C" {
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
-# include <math.h>
+#include <math.h>
 
 #include <Rconfig.h>
 #include <R_ext/Constants.h>

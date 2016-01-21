@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-12   The R Core Team
+ *  Copyright (C) 2005-2016   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #ifndef R_LOCALE_H
 #define R_LOCALE_H
 
+/* This is not an installed header, but was used by package 'parser' */
 #ifndef NO_C_HEADERS
 #include <wchar.h>
 #include <ctype.h>
