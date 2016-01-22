@@ -1535,11 +1535,13 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     value
 }
 
+## is this really right?
+## cf .methodsPackageMetaNamePattern <- "^[.]__[A-Z]+__"
 .hasS4MetaData <- function(env) {
     nms <- names(env)
-    any(startsWith(nms, ".__C_")) ||
-    any(startsWith(nms, ".__T_")) ||
-    any(startsWith(nms, ".__A_"))
+    any(startsWith(nms, ".__C__")) ||
+    any(startsWith(nms, ".__T__")) ||
+    any(startsWith(nms, ".__A__"))
 }
 
 ## turn ordinary generic into one that dispatches on "..."
