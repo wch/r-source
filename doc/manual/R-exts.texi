@@ -9280,6 +9280,18 @@ including the @R{} headers, and include C++ versions (such as
 before the @R{} headers. (Headers @file{R.h} and @file{Rmath.h} support
 @samp{NO_C_HEADERS}: @file{S.h} does not.)
 
+By default header @file{Rmath.h} includes @file{math.h}.  Header
+@file{R.h} includes
+
+@example
+limits.h math.h stddef.h stdio.h stdlib.h string.h
+@end example
+
+@noindent
+directly or indirectly, and either @file{stddef.h} or @file{cstddef}
+needs to be included before @file{R.h} if @samp{NO_C_HEADERS} is
+defined.
+
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
 
