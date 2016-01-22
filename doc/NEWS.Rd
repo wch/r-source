@@ -237,7 +237,7 @@
 
       \item The \code{format} method for \code{object_size} objects now
       also accepts \dQuote{binary} units such as \code{"KiB"} and e.g.,
-      \code{"Tb"}.  (partly from \PR{16649})
+      \code{"Tb"}.  (Partly from \PR{16649})
 
       \item Profiling now records calls of the form \code{foo::bar} and
       some similar cases directly rather than as calls to
@@ -251,7 +251,7 @@
       garbage collection.
 
       \item Avoid \pkg{parallel} dependency on \pkg{stats} for port
-      choice and random number seeds. (\PR{16668})
+      choice and random number seeds.  (\PR{16668})
     }
   }
 
@@ -406,8 +406,9 @@
       \item Blocking socket connection selection recovers more
       gracefully on signal interrupts.
 
-      \item \code{rbind.data.frame()}'s \code{row.names} construction
-      now works better in borderline integer cases.  (\PR{16666})
+      \item The \code{data.frame} method of \code{rbind()} construction
+      \code{row.names} works better in borderline integer cases, but
+      may change the names assigned.  (\PR{16666})
     }
   }
 }
@@ -427,8 +428,9 @@
       \item \code{shQuote()} gains \code{type = "cmd2"} for quoting
       in \command{cmd.exe} in Windows.  (Response to \PR{16636}.)
 
-      \item \code{rbind.data.frame()} gets optional argument \code{stringsAsFactors}
-      (instead of only depending on \code{getOption("stringsAsFactors")}).
+      \item The \code{data.frame} method of \code{rbind()} gains an
+      optional argument \code{stringsAsFactors} (instead of only
+      depending on \code{getOption("stringsAsFactors")}).
     }
   }
 
@@ -477,7 +479,7 @@
       Lukas Stadler; additional fixes included as well).
 
       \item \code{as.data.frame.vector(*, row.names=*)} no longer
-      produces \dQuote{corrupted} data frames from row names of wrong
+      produces \sQuote{corrupted} data frames from row names of incorrect
       length, but rather warns about them.  This will become an error.
     }
   }
