@@ -990,7 +990,14 @@ void setup_Rmainloop(void)
 		 R_Interactive);
 
     /* trying to do this earlier seems to run into bootstrapping issues. */
-    R_init_jit_enabled();
+    doneit = 0;
+    SETJMP(R_Toplevel.cjmpbuf);
+    R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
+    if (!doneit) {
+	doneit = 1;
+	R_init_jit_enabled();
+    } else
+	R_Suicide(_("unable to initialize the JIT\n"));
     R_Is_Running = 2;
 }
 
