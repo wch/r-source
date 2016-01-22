@@ -1821,10 +1821,10 @@ point to an external LAPACK library, or may be empty if an external BLAS
 library also contains LAPACK.
 
 [@code{libRlapack} includes all the double-precision LAPACK routines
-which were current in 2003 and have not been deprecated
-since:@footnote{some were removed in LAPACK 3.6.0 in late 2015.} a list
-of which routines are included is in file
-@file{src/modules/lapack/README}.]
+which were current in 2003; a list of which routines are included is in
+file @file{src/modules/lapack/README}. Note that an external LAPACK/BLAS
+library need not do so, as some were `deprecated' (and not compiled by
+default) in LAPACK 3.6.0 in late 2015.]
 
 For portability, the macros @code{BLAS_LIBS} and @code{FLIBS} should
 always be included @emph{after} @code{LAPACK_LIBS} (and in that order).

@@ -105,15 +105,10 @@ dtrttf.f	dtrttp.f	dtzrzf.f	ieeeck.f	iladlc.f
 iladlr.f	ilaenv.f	ilaprec.f	ilatrans.f	ilaver.f
 iparmq.f
 DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
+DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
+DEPRECATED/dtzrqf.f
 
-[The DEPRECATED routines
-
-dgegs dgegv dgelsx dgeqpf dggsvd dggsvp dlahrd dlatzm dtzrqf
-
-were included prior to LAPACK 3.6.0 and R 3.3.0.
-
-dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
-
+[dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
 are new in LAPACK 3.6.0.]
 
 
@@ -138,9 +133,7 @@ ztrevc.f	ztrexc.f	ztrtrs.f	zung2l.f	zung2r.f
 zungbr.f	zunghr.f	zungl2.f	zunglq.f	zungql.f
 zungqr.f	zungr2.f	zungrq.f	zungtr.f	zunm2r.f
 zunmbr.f	zunmhr.f	zunml2.f	zunmlq.f	zunmqr.f
-
-[Deprecated routine zlahrd was included prior to LAPACK 3.6.0 and R 3.3.0:
-it was replaced by zlahr2.]
+DEPRECATED/zlahrd.f
 
 
 R.patch suppresses compilation warnings, and with Fortran array-bounds checking.
