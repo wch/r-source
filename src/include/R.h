@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2013 The R Core Team.
+ *  Copyright (C) 2000-2016 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -25,11 +25,18 @@
 #endif
 
 #ifndef NO_C_HEADERS
-#include <stdlib.h>
-#include <stdio.h>  /* Used by several packages, remove in due course */
+#include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
+#include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
 #include <limits.h> /* for INT_MAX */
 #include <math.h>
+/* 
+   math.h   is also included by R_ext/Arith.h, except in C++ code
+   stddef.h is included by R_ext/Memory.h
+   string.h is included by R_ext/RS.h
+   All guarded by NO_C_HEADERS.
+*/
 # if defined(__sun)
+/* Solaris' stdlib.h includes a header which defines these (and more) */
 # undef DO
 # undef DS
 # undef SO
