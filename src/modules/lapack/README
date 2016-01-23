@@ -93,6 +93,11 @@ dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f	iparmq.f
 dgtrfs.f	dlar1v.f	dorgtr.f	dstegr.f
 dgtsv.f		dlar2v.f	dorm2l.f	dstein.f
 
+dgeqpf dgegv dggsvd dggsvp dgegs dgelsx dlahrd dlatzm dtzrqf
+are 'deprecated' in LAPACK 3.6.0 and may not be included in
+external libraries.
+
+
 cmplx.f is the concatenation of
 
 dzsum1.f ilazlc.f ilazlr.f izmax1.f zbdsqr.f
@@ -127,6 +132,9 @@ were added in 2.15.2.
 
 zgelsd zgesdd zlacp2 zlacrm zlals0 zlalsa zlalsd zlarcm
 were added in R 3.1.0.
+
+zlahrd is 'deprecated' in LAPACK 3.6.0 and may not be included in
+external libraries.
 
 -------------------------------------------------
 
