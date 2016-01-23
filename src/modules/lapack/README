@@ -7,19 +7,6 @@ routines, that are only used if COMPLEX*16 is supported by the Fortran
 compiler and compatible with the Rcomplex type.
 Neither will be compiled if an external LAPACK is used.
 
-For 'base' R addition of a new .Call()able Lapack routine,
-all these files must be updated {path relative to R's topdir}:
-
-  src/gnuwin32/Rdll.hide
-  src/include/R_ext/Lapack.h
-  src/include/Rmodules/Rlapack.h
-  src/main/basedecl.h
-  src/main/lapack.c
-  src/main/registration.c
-  src/modules/lapack/Lapack.c
-  src/modules/lapack/Lapack.h
-  src/modules/lapack/cmplx.f or dlapack.f
-
 We have tried to avoid including any single-precision routines.
 
 dlapack.f is the concatenation of
@@ -128,4 +115,35 @@ zunghr.f zungl2.f zunglq.f zungql.f zungqr.f
 zungr2.f zungrq.f zungtr.f zunm2r.f zunmbr.f
 zunmhr.f zunml2.f zunmlq.f zunmqr.f
 
-R.patch suppresses warnings with Fortran array-bounds checking.
+zlahr2 zlaqr0 zlaqr1 zlaqr2 zlaqr3 zlaqr4 zlaqr5 zlartg zpotf2 zpotrf
+zrot ztrexc
+were added in 2.5.0.
+
+izmax1 zdrscl zgecon zlacn2 zlantr ztrcon
+were added in 2.7.0.
+
+dzsum1 ilazlc ilazlr zunmhr
+were added in 2.15.2.
+
+zgelsd zgesdd zlacp2 zlacrm zlals0 zlalsa zlalsd zlarcm
+were added in R 3.1.0.
+
+-------------------------------------------------
+
+R.patch suppresses compilation warnings, and helps with Fortran
+array-bounds checking.
+
+-------------------------------------------------
+
+For 'base' R addition of a new .Call()able Lapack routine,
+all these files must be updated {path relative to R's topdir}:
+
+  src/gnuwin32/Rdll.hide
+  src/include/R_ext/Lapack.h
+  src/include/Rmodules/Rlapack.h
+  src/main/basedecl.h
+  src/main/lapack.c
+  src/main/registration.c
+  src/modules/lapack/Lapack.c
+  src/modules/lapack/Lapack.h
+  src/modules/lapack/cmplx.f or dlapack.f
