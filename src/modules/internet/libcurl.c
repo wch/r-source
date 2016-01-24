@@ -692,9 +692,22 @@ static void Curl_close(Rconnection con)
     curl_multi_remove_handle(ctxt->mh, ctxt->hnd);
     curl_easy_cleanup(ctxt->hnd);
     curl_multi_cleanup(ctxt->mh);
-    free(ctxt->buf);
-
     con->isopen = FALSE;
+}
+
+static void Curl_destroy(Rconnection con)
+{
+    RCurlconn ctxt;
+
+    if (NULL == con)
+        return;
+    ctxt = (RCurlconn)(con->private);
+
+    if (NULL == ctxt)
+        return;
+
+    free(ctxt->buf);
+    free(ctxt);
 }
 
 static size_t Curl_read(void *ptr, size_t size, size_t nitems,
@@ -791,6 +804,7 @@ in_newCurlUrl(const char *description, const char * const mode, int type)
     new->canwrite = FALSE;
     new->open = &Curl_open;
     new->close = &Curl_close;
+    new->destroy = &Curl_destroy;
     new->fgetc_internal = &Curl_fgetc_internal;
     new->fgetc = &dummy_fgetc;
     new->read = &Curl_read;

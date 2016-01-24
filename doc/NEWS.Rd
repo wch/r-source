@@ -412,6 +412,10 @@
       \item The \code{data.frame} method of \code{rbind()} construction
       \code{row.names} works better in borderline integer cases, but
       may change the names assigned.  (\PR{16666})
+
+      \item \code{url} connections with \code{method = "libcurl"} are
+      destroyed properly. (\PR{16681})
+
     }
   }
 }
