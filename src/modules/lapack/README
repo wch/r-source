@@ -1,4 +1,4 @@
-The Fortran routines here are extracted from LAPACK 3.1.0, then 3.1.1,
+The Fortran routines here were extracted from LAPACK 3.1.0, then 3.1.1,
 3.4.1, 3.4.2, 3.5.0, 3.6.0.  (http://www.netlib.org/lapack and mirrors).
 
 dlapack?.f are support routines for `real' LAPACK calls
@@ -6,19 +6,6 @@ cmplx.f are support routines for LAPACK calls from complex arithmetic
 routines, that are only used if COMPLEX*16 is supported by the Fortran
 compiler and compatible with the Rcomplex type.
 Neither will be compiled if an external LAPACK is used.
-
-For 'base' R addition of a new .Call()able Lapack routine,
-all these files must be updated {path relative to R's topdir}:
-
-  src/gnuwin32/Rdll.hide
-  src/include/R_ext/Lapack.h
-  src/include/Rmodules/Rlapack.h
-  src/main/basedecl.h
-  src/main/lapack.c
-  src/main/registration.c
-  src/modules/lapack/Lapack.c
-  src/modules/lapack/Lapack.h
-  src/modules/lapack/cmplx.f or dlapack.f
 
 We have tried to avoid including any single-precision routines.
 
@@ -108,32 +95,80 @@ DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
 DEPRECATED/dtzrqf.f
 
-[dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
-are new in LAPACK 3.6.0.]
+dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
+are new in LAPACK 3.6.0 and were added in R 3.3.0.
 
 
 cmplx.f is the concatenation of
 
 dzsum1.f	ilazlc.f	ilazlr.f	izmax1.f	zbdsqr.f
 zdrscl.f	zgebak.f	zgebal.f	zgebd2.f	zgebrd.f
-zgecon.f	zgeev.f		zgehd2.f	zgehrd.f	zgelq2.f
-zgelqf.f	zgelsd.f	zgeqp3.f	zgeqr2.f	zgeqrf.f
-zgesdd.f	zgesv.f		zgesvd.f	zgetf2.f	zgetrf.f
-zgetrf2.f	zgetrs.f	zheev.f		zhetd2.f	zhetrd.f
+zgecon.f	zgeequ.f	zgees.f		zgeev.f		zgehd2.f
+zgehrd.f	zgelq2.f	zgelqf.f	zgels.f		zgelsd.f
+zgeqp3.f	zgeqr2.f	zgeqrf.f	zgerfs.f	zgesc2.f
+zgesdd.f	zgesv.f		zgesvd.f	zgesvx.f	zgetc2.f
+zgetf2.f	zgetrf.f	zgetrf2.f	zgetri.f	zgetrs.f
+zggbak.f	zggbal.f	zgges.f		zggev.f		zgghrd.f
+zheev.f		zheevd.f	zhetd2.f	zhetrd.f	zhgeqz.f
 zhseqr.f	zlabrd.f	zlacgv.f	zlacn2.f	zlacp2.f
-zlacpy.f	zlacrm.f	zladiv.f	zlahqr.f	zlahr2.f
-zlals0.f	zlalsa.f	zlalsd.f	zlange.f	zlanhe.f
-zlanhs.f	zlantr.f	zlaqp2.f	zlaqps.f	zlaqr0.f
-zlaqr1.f	zlaqr2.f	zlaqr3.f	zlaqr4.f	zlaqr5.f
-zlarcm.f	zlarf.f		zlarfb.f	zlarfg.f	zlarft.f
-zlarfx.f	zlartg.f	zlascl.f	zlaset.f	zlasr.f
-zlassq.f	zlaswp.f	zlatrd.f	zlatrs.f	zpotf2.f
-zpotrf.f	zpotrf2.f	zrot.f		zsteqr.f	ztrcon.f
-ztrevc.f	ztrexc.f	ztrtrs.f	zung2l.f	zung2r.f
+zlacpy.f	zlacrm.f	zladiv.f	zlaed0.f	zlaed7.f
+zlaed8.f	zlahqr.f	zlahr2.f	zlals0.f	zlalsa.f
+zlalsd.f	zlange.f	zlanhe.f	zlanhs.f	zlantr.f
+zlaqge.f	zlaqp2.f	zlaqps.f	zlaqr0.f	zlaqr1.f
+zlaqr2.f	zlaqr3.f	zlaqr4.f	zlaqr5.f	zlarcm.f
+zlarf.f		zlarfb.f	zlarfg.f	zlarft.f	zlarfx.f
+zlartg.f	zlascl.f	zlaset.f	zlasr.f		zlassq.f
+zlaswp.f	zlasyf.f	zlatdf.f	zlatrd.f	zlatrs.f
+zlauu2.f	zlauum.f	zpotf2.f	zpotrf.f	zpotrf2.f
+zpotri.f	zrot.f		zstedc.f	zsteqr.f	zsymv.f
+zsyr.f		zsytf2.f	zsytrf.f	zsytri.f	ztgevc.f
+ztgex2.f	ztgexc.f	ztgsen.f	ztgsy2.f	ztgsyl.f
+ztrcon.f	ztrevc.f	ztrexc.f	ztrsen.f	ztrsyl.f
+ztrti2.f	ztrtri.f	ztrtrs.f	zung2l.f	zung2r.f
 zungbr.f	zunghr.f	zungl2.f	zunglq.f	zungql.f
-zungqr.f	zungr2.f	zungrq.f	zungtr.f	zunm2r.f
-zunmbr.f	zunmhr.f	zunml2.f	zunmlq.f	zunmqr.f
-DEPRECATED/zlahrd.f
+zungqr.f	zungr2.f	zungrq.f	zungtr.f	zunm2l.f
+zunm2r.f	zunmbr.f	zunmhr.f	zunml2.f	zunmlq.f
+zunmql.f	zunmqr.f	zunmtr.f        DEPRECATED/zlahrd.f
 
+zlahr2 zlaqr0 zlaqr1 zlaqr2 zlaqr3 zlaqr4 zlaqr5 zlartg zpotf2 zpotrf
+zrot ztrexc
+were added in 2.5.0.
 
-R.patch suppresses compilation warnings, and with Fortran array-bounds checking.
+izmax1 zdrscl zgecon zlacn2 zlantr ztrcon
+were added in 2.7.0.
+
+dzsum1 ilazlc ilazlr zunmhr
+were added in 2.15.2.
+
+zgelsd zgesdd zlacp2 zlacrm zlals0 zlalsa zlalsd zlarcm
+were added in R 3.1.0.
+
+zgetrf2 zpotrf2
+are new in LAPACK 3.6.0 and were added in R 3.3.0.
+
+zgeequ zgees zgels zgerfs zgesc2 zgesvx zgetc2 zgetri zggbak zggbal
+zgges zggev zgghrd zheevd zhgeqz zlaed0 zlaed7 zlaed8 zlaqge zlasyf
+zlatdf zlauu2 zlauum zpotri zstedc zsymv zsyr zsytf2 zsytrf zsytri
+ztgevc ztgex2 ztgexc ztgsen ztgsy2 ztgsyl ztrsen ztrsyl ztrti2 ztrtri
+zunm2l zunmql zunmtr
+were added in R 3.3.0 for use by a CRAN package.
+
+-------------------------------------------------
+
+R.patch suppresses compilation warnings, and helps with Fortran
+array-bounds checking.
+
+-------------------------------------------------
+
+For 'base' R addition of a new .Call()able Lapack routine,
+all these files must be updated {path relative to R's topdir}:
+
+  src/gnuwin32/Rdll.hide
+  src/include/R_ext/Lapack.h
+  src/include/Rmodules/Rlapack.h
+  src/main/basedecl.h
+  src/main/lapack.c
+  src/main/registration.c
+  src/modules/lapack/Lapack.c
+  src/modules/lapack/Lapack.h
+  src/modules/lapack/cmplx.f or dlapack.f
