@@ -72,17 +72,12 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
-ZLIB_CPPFLAGS = -I$(top_srcdir)/src/extra/zlib
-BZLIB_CPPFLAGS = -I$(top_srcdir)/src/extra/bzip2
-PCRE_CPPFLAGS = -I$(top_srcdir)/src/extra/pcre
 TRE_CPPFLAGS = @BUILD_TRE_TRUE@ -I$(top_srcdir)/src/extra
 XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 @BUILD_XDR_FALSE@XDR_CPPFLAGS = @TIRPC_CPPFLAGS@
-XZ_CPPFLAGS = -I$(top_srcdir)/src/extra/xz/api
 
 ## platform.c needs $(CURL_CPPFLAGS).
-ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
-  $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(XZ_CPPFLAGS) $(R_XTRA_CPPFLAGS) \
+ALL_CPPFLAGS = $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) \
   $(CURL_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
