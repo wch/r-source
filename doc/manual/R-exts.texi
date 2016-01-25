@@ -4544,11 +4544,11 @@ systems and not on others.  (A prominent example is the C++11 header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another frequent issue is the C header @code{<time.h>}
 which is included by other headers on Linux and Windows but not OS X nor
-Solaris.)  Another common issue is that @code{malloc}/@code{calloc},
-@code{realloc}/@code{free} are defined by C99 in the header
-@file{stdlib.h} and in C++ header @file{cstdlib}.  Some earlier
-implementations used a header @file{malloc.h}, but that is not portable
-and does not exist on OS X.
+Solaris.)  Another common issue is that @code{malloc}, @code{calloc},
+@code{realloc} and @code{free} are defined by C99 in the header
+@file{stdlib.h} and (in the @code{std::} namespace) by C++ header
+@file{cstdlib}.  Some earlier implementations used a header
+@file{malloc.h}, but that is not portable and does not exist on OS X.
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
