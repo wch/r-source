@@ -2408,11 +2408,21 @@ support for the C++98 standard (the widely used @command{g++} deviates
 considerably from the standard).  Some compilers have a concept of
 `C++03' (`essentially a bug fix') or `C++ Technical Report 1' (TR1), an
 optional addition to the `C++03' revision which was published in 2007.
-A revised standard was published in 2011 and compilers with fairly
+A revised standard was published in 2011 and compilers with pretty much
 complete implementations are becoming available.  C++11 added all of the
 C99 features which are not otherwise implemented in C++, and C++
-compilers commonly accept C99 extensions to C++98. A minor update to
-C++11 (sometimes known as C++14) was approved in August 2014.
+compilers commonly accept C99 extensions to C++98.  A minor update to
+C++11 (often known as C++14) was approved in August 2014.
+
+What standard a C++ compiler aims to support can be hard to determine.
+As from version 6 (to be released in 2016), @command{g++} will default
+to C++14: earlier versions aim to support C++03 with many extensions
+(including support for TR1).  @command{clang} with its
+native@footnote{Some distributions, notably Debian, have supplied a
+buiild of @command{clang} with @command{g++}'s headers and library.
+Conversely, Apple's command named @command{g++} is based on
+@command{clang} using @code{libcxx}.}  @code{libcxx} headers and library
+includes many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -4534,7 +4544,11 @@ systems and not on others.  (A prominent example is the C++11 header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another frequent issue is the C header @code{<time.h>}
 which is included by other headers on Linux and Windows but not OS X nor
-Solaris.)
+Solaris.)  Another common issue is that @code{malloc}/@code{calloc},
+@code{realloc}/@code{free} are defined by C99 in the header
+@file{stdlib.h} and in C++ header @file{cstdlib}.  Some earlier
+implementations used a header @file{malloc.h}, but that is not portable
+and does not exist on OS X.
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
