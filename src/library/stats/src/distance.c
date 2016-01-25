@@ -22,12 +22,14 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#include <float.h>
+
 /* do this first to get the right options for math.h */
 #include <R_ext/Arith.h>
-
+#include <math.h>
 #include <R.h>
 #include <Rmath.h>
-#include <float.h>
 #include "stats.h"
 #ifdef _OPENMP
 # include <R_ext/MathThreads.h>

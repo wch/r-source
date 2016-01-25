@@ -23,6 +23,8 @@
 /* swilk.f -- translated by f2c (version 19980913).
  * ------- and produced by f2c-clean,v 1.8 --- and hand polished: M.Maechler
  */
+
+#include <math.h>
 #include <Rmath.h>
 
 #ifndef min

@@ -19,7 +19,6 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include <R.h>
 #include "modreg.h"
 
 #include "Trunmed.c"

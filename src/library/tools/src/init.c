@@ -17,7 +17,6 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include <R.h>
 #include "tools.h"
 #include <R_ext/Rdynload.h>
 

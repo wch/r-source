@@ -19,6 +19,7 @@
  */
 
 #include "grid.h" 
+#include <math.h>
 
 /* Code for matrices, matrix multiplication, etc for performing
  *  2D affine transformations:  translations, scaling, and rotations.

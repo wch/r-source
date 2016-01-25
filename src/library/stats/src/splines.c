@@ -47,6 +47,7 @@
 #include <R_ext/Applic.h>
 #include <stdio.h>
 #include <errno.h>
+#include <math.h>
 
 /*
  *	Natural Splines

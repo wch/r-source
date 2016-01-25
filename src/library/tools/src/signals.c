@@ -21,7 +21,6 @@
 #include <config.h>
 #endif
 
-#include <R.h>
 #include "tools.h"
 #include <signal.h> // C99
 

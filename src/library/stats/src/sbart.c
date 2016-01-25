@@ -4,10 +4,10 @@
  * According to the GAMFIT sources, this was derived from code by
  * Finbarr O'Sullivan.
  */
-#include <R.h>
-#include <Rmath.h>
 
 #include "modreg.h"
+#include <math.h>
+#include <Rmath.h>
 
 /* sbart() : The cubic spline smoother
    -------

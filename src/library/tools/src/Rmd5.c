@@ -19,7 +19,6 @@
 
 /* <UTF8> OK since this is intended to treat chars as byte streams */
 
-#include <R.h>
 #include "tools.h"
 #define ROL_UNUSED
 #include "md5.h"

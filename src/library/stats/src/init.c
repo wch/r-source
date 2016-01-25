@@ -17,9 +17,6 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include <R.h>
-#include <Rinternals.h>
-
 #include "modreg.h"
 #include "nls.h"
 #include "port.h"

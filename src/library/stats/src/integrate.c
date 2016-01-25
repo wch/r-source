@@ -21,6 +21,7 @@
 #include <config.h>
 #endif
 
+#include <math.h> // for isfinite
 #include <Rinternals.h>
 #include <R_ext/Applic.h>
 

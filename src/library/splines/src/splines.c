@@ -23,6 +23,7 @@
 
 #include <R.h>
 #include <Rinternals.h>
+#include <string.h> // for memcpy
 
 #ifdef ENABLE_NLS
 #include <libintl.h>

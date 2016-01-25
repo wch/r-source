@@ -23,6 +23,7 @@
    in the two-sided one-sample and two-sample cases.
 */
 
+#include <math.h>
 #include <R.h>
 #include <Rinternals.h>
 #include <Rmath.h>		/* constants */

@@ -44,6 +44,8 @@
  * ...		 j	2nd permuter  X[i +j[m]] == H[m]
  */
 
+#include <math.h>
+
 static void
 swap(int l, int r, double *window, int *outlist, int *nrlist, int print_level)
 {

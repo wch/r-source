@@ -19,9 +19,11 @@
 
 /* Originally contributed by David Meyer */
 
+#include <stdlib.h>
+#include <string.h>  // memcpy
+
 #include <R.h>
 #include "ts.h"
-#include <stdlib.h>
 
 void HoltWinters (double *x,
 		  int    *xl,

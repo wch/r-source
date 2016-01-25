@@ -19,7 +19,7 @@
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
  */
-#include <R.h>
+
 #include "modreg.h"
 
 SEXP isoreg(SEXP y)
