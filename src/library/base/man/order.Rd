@@ -16,7 +16,8 @@
   etc.
 }
 \usage{
-order(\dots, na.last = TRUE, decreasing = FALSE)
+order(\dots, na.last = TRUE, decreasing = FALSE,
+      method = c("shell", "radix"))
 
 sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
           method = c("shell", "quick", "radix"))
@@ -28,15 +29,18 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   \item{partial}{vector of indices for partial sorting.
     (Non-\code{NULL} values are not implemented.)}
   \item{decreasing}{logical.  Should the sort order be increasing or
-    decreasing?}
+    decreasing? For the \code{"radix"} method, this can be a vector of
+    length equal to the number of arguments in \code{\dots}. For the
+    other methods, it must be length one.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed
     (see \sQuote{Note}.)}
   \item{method}{the method to be used: partial matches are allowed.  The
     default is \code{"shell"} except for some special cases: see
-    \sQuote{Details}.  For details of methods \code{"shell"} and
-    \code{"quick"}, see the help for \code{\link{sort}}.}
+    \sQuote{Details}.  For details of methods \code{"shell"}, 
+    \code{"quick"}, and \code{"radix"},
+    see the help for \code{\link{sort}}.}
 }
 \details{
   In the case of ties in the first vector, values in the second are used
@@ -48,19 +52,20 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   Complex values are sorted first by the real part, then the imaginary
   part.
 
-  The sort order for character vectors will depend on the collating
-  sequence of the locale in use: see \code{\link{Comparison}}.
+  Except for method \code{"radix"}, the sort order for character vectors
+  will depend on the collating sequence of the locale in use: see
+  \code{\link{Comparison}}.
 
-  The default method for \code{sort.list} is a good compromise.  Method
-  \code{"quick"} is only supported for numeric \code{x} with
-  \code{na.last = NA}, and is not stable, but will be substantially
-  faster for long vectors.  Method \code{"radix"} is only implemented
-  for integer \code{x} with a range of less than 100,000.  For such
-  \code{x} it is very fast (and stable), and hence is ideal for sorting
-  factors---as from \R 3.0.0 it is the default method for factors with
-  less than 100,000 levels.  (This is also known as \emph{counting
-  sorting}.)
-
+  The \code{"shell"} method is generally the safest bet and is the
+  default method, except for factors and integer vectors, where
+  \code{"radix"} is assumed. Method \code{"radix"} stably sorts logical,
+  numeric and character vectors in linear time. It outperforms the other
+  methods, although there are caveats (see \code{\link{sort}}).  Method
+  \code{"quick"} for \code{sort.list} is only supported for numeric
+  \code{x} with \code{na.last = NA}, is not stable, and is slower than
+  \code{"radix"}. The \code{"radix"} method has less precision when
+  sorting real-valued numbers.
+  
   \code{partial = NULL} is supported for compatibility with other
   implementations of S, but no other values are accepted and ordering is
   always complete.
@@ -101,7 +106,8 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
   both sort the non-\code{NA} values of \code{x}.
 
   Prior to \R 3.1.0 \code{method = "radix"} was only supported for
-  non-negative integers.
+  non-negative integers. Prior to \R 3.3.0 it was only supported for
+  integers of range less than 100,000.
 }
 
 \references{
@@ -129,6 +135,9 @@ rbind(x, y, z)[, order(x, -y, z)]
 ## More generally we can make use of xtfrm
 cy <- as.character(y)
 rbind(x, y, z)[, order(x, -xtfrm(cy), z)]
+## The radix sort supports multiple 'decreasing' values:
+rbind(x, y, z)[, order(x, cy, z, decreasing = c(FALSE, TRUE, FALSE),
+                       method="radix")]
 
 ## Sorting data frames:
 dd <- transform(data.frame(x, y, z),
@@ -161,33 +170,26 @@ z <- cbind(a, b)
 (o <- order(a, b, na.last = NA)); z[o, ]
 
 \donttest{
-##  speed examples for long vectors:
+##  speed examples on an average laptop for long vectors:
+##  factor/small-valued integers:
 x <- factor(sample(letters, 1e7, replace = TRUE))
-system.time(o <- sort.list(x, method="shell")) # 4.7 sec
+system.time(o <- sort.list(x, method = "quick", na.last = NA)) # 0.1 sec
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method = "quick", na.last = NA)) # 0.6 sec
+system.time(o <- sort.list(x, method = "radix")) # 0.05 sec, 2X faster
 stopifnot(!is.unsorted(x[o]))
-system.time(o <- sort.list(x, method = "radix")) # 0.05 sec
-stopifnot(!is.unsorted(x[o]))
-xx <- sample(1:26, 1e7, replace = TRUE)
-system.time(o <- sort.list(xx, method = "radix")) # 0.05 sec
-xx <- sample(1:100000, 1e7, replace = TRUE)
-system.time(o <- sort.list(xx, method = "radix")) # 0.25 sec
-system.time(o <- sort.list(xx, method = "radix2")) # 0.18 sec
-system.time(o <- sort.list(xx, method = "quick", na.last = NA)) # 1 sec
+##  large-valued integers:
 xx <- sample(1:200000, 1e7, replace = TRUE)
-## system.time(o <- sort.list(xx, method = "radix")) # 0.25 sec
-## Error in sort.list(xx, method = "radix") : 
-##  too large a range of values in 'x'
-system.time(o <- sort.list(xx, method = "radix2")) # 0.2 sec
+system.time(o <- sort.list(xx, method = "quick", na.last = NA)) # 0.3 sec
+system.time(o <- sort.list(xx, method = "radix")) # 0.2 sec
+##  character vectors:
 xx <- sample(state.name, 1e6, replace = TRUE)
-system.time(o <- sort.list(xx, method = "radix2")) # 0.007 sec
-system.time(o <- sort.list(factor(xx), method = "radix")) # 0.04 sec
 system.time(o <- sort.list(xx, method = "shell")) # 2 sec
+system.time(o <- sort.list(xx, method = "radix")) # 0.007 sec, 300X faster
+##  double vectors:
 xx <- rnorm(1e6)
-system.time(o <- sort.list(xx, method = "radix2")) # 0.05 sec
-system.time(o <- sort.list(xx, method = "quick", na.last=NA)) # 0.1 sec
 system.time(o <- sort.list(xx, method = "shell")) # 0.4 sec
+system.time(o <- sort.list(xx, method = "quick", na.last = NA)) # 0.1 sec
+system.time(o <- sort.list(xx, method = "radix")) # 0.05 sec, 2X faster
 }}
 \keyword{univar}
 \keyword{manip}

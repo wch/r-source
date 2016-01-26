@@ -255,6 +255,17 @@
 
       \item Avoid \pkg{parallel} dependency on \pkg{stats} for port
       choice and random number seeds.  (\PR{16668})
+
+      \item The radix sort algorithm and implementation from data.table
+      (forder) replaces the existing but limited radix (counting) sort
+      and adds a new method for \code{order()}. Contributed by Matthew
+      Dowle and Arun Srinivasan, the new algorithm supports logical,
+      integer (even with large values), real, and character vectors. It
+      outperforms all other methods, but there are some caveats (see
+      \code{?sort}).
+
+      \item The \code{order()} function gains a \code{method} argument
+      for choosing between \code{"shell"} and \code{"radix"}.
     }
   }
 

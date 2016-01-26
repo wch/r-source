@@ -301,7 +301,6 @@ SEXP do_qsort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_quit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_quote(SEXP, SEXP, SEXP, SEXP);
 SEXP do_radixsort(SEXP, SEXP, SEXP, SEXP);
-SEXP do_radixsort2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_random1(SEXP, SEXP, SEXP, SEXP);
 SEXP do_random2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_random3(SEXP, SEXP, SEXP, SEXP);

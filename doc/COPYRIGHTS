@@ -561,3 +561,7 @@ src/appl/dqrdc2.f is based on dqrdc.f by G.W. Stewart.
 
 src/appl/lbfgsb.c is based on the work of Zhu, Byrd, Lu-Chen and
 Nocedal, which does not state any copyright.
+
+src/main/radixsort.c is largely based on code from the data.table package,
+
+   Copyright (C) 2006--2015  Matthew Dowle and Arun Srinivasan
