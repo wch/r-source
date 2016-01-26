@@ -28,9 +28,9 @@
 #define R_EXT_EVENTLOOP_H
 
 #ifndef NO_C_HEADERS
-#ifdef HAVE_SYS_SELECT_H
-# include <sys/select.h>	/* for fd_set according to recent POSIX */
-#endif
+# ifdef HAVE_SYS_SELECT_H
+#  include <sys/select.h>	/* for fd_set according to recent POSIX */
+# endif
 /* NOTE: Needed at least on FreeBSD so that fd_set is defined. */
 # include <sys/types.h>
 #endif
