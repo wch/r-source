@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000		R Core Team
+ *  Copyright (C) 2000-2016     The R Core Team
  *  Copyright (C) 2003		The R Foundation
  *  based on AS 89 (C) 1975 Royal Statistical Society
  *
