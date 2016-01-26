@@ -950,9 +950,11 @@ static int StrCmp(SEXP x, SEXP y)            // also used by bmerge and chmatch
     return strcmp(CHAR(x), CHAR(y));
 }
 
+#ifdef UNUSED
 #define CHAR_ENCODING(x) (IS_ASCII(x) ? CE_UTF8 : getCharCE(x))
 
-static void checkEncodings(SEXP x) {
+static void checkEncodings(SEXP x)
+{
     cetype_t ce;
 
     if (length(x) == 0)
@@ -972,8 +974,8 @@ static void checkEncodings(SEXP x) {
     */
 }
 
-static SEXP normalizeEncodings(SEXP x) {
-    cetype_t ce, cei;
+static SEXP normalizeEncodings(SEXP x)
+{
     SEXP ans = x;
 
     if (length(ans) == 0)
@@ -1007,6 +1009,7 @@ static SEXP normalizeEncodings(SEXP x) {
         UNPROTECT(1);
     return(ans);
 }
+#endif
 
 static void cradix_r(SEXP * xsub, int n, int radix)
 // xsub is a unique set of CHARSXP, to be ordered by reference
