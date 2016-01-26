@@ -24,6 +24,7 @@ as.single.default <- function(x,...)
 # preserve the semantics that for a call with an object argument
 # dispatching is done first on as.character and then on as.vector.
 as.character.default <- function(x,...) .Internal(as.vector(x, "character"))
+### FIXME: why are we not doing this for all atomic vector types?
 
 as.expression <- function(x,...) UseMethod("as.expression")
 as.expression.default <- function(x,...) .Internal(as.vector(x, "expression"))

@@ -1355,6 +1355,16 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     return u;/* -Wall */
 }
 
+SEXP attribute_hidden do_asCharacterFactor(SEXP call, SEXP op, SEXP args,
+                                           SEXP rho)
+{
+    SEXP x;
+    checkArity(op, args);
+    check1arg(args, call, "x");
+    x = CAR(args);
+    return asCharacterFactor(x);
+}
+
 /* used in attrib.c, eval.c and unique.c */
 SEXP asCharacterFactor(SEXP x)
 {

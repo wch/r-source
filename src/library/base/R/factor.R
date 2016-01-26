@@ -108,7 +108,7 @@ as.vector.factor <- function(x, mode="any")
 	as.vector(unclass(x), mode)
 }
 
-as.character.factor <- function(x,...) levels(x)[x]
+as.character.factor <- function(x,...) .Internal(asCharacterFactor(x))
 
 as.logical.factor <- function(x,...) as.logical(levels(x))[x]
 
