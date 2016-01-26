@@ -2419,7 +2419,7 @@ As from version 6 (to be released in 2016), @command{g++} will default
 to C++14: earlier versions aim to support C++03 with many extensions
 (including support for TR1).  @command{clang} with its
 native@footnote{Some distributions, notably Debian, have supplied a
-buiild of @command{clang} with @command{g++}'s headers and library.
+build of @command{clang} with @command{g++}'s headers and library.
 Conversely, Apple's command named @command{g++} is based on
 @command{clang} using @code{libcxx}.}  @code{libcxx} headers and library
 includes many C++11 features, and does not support TR1.

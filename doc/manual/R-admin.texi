@@ -2357,7 +2357,7 @@ be covered by the cache, and well-designed software will add its
 locations (as for example @pkg{openmpi} does on Fedora).  The secondary
 mechanism is to consult the environment variable @env{LD_LIBRARY_PATH}.
 Now the @R{} script controls that variable, and sets it to the
-concatentation of @env{R_LD_LIBRARY_PATH}, @env{R_JAVA_LD_LIBRARY_PATH}
+concatenation of @env{R_LD_LIBRARY_PATH}, @env{R_JAVA_LD_LIBRARY_PATH}
 and the environment value of @env{LD_LIBRARY_PATH}.  The first two have
 defaults which are normally set when @R{} is installed (but can be
 overridden in the environment) so @env{LD_LIBRARY_PATH} is the best
