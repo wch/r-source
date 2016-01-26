@@ -25,9 +25,8 @@
 
 #include <float.h>
 
-/* do this first to get the right options for math.h */
+/* do this first to get the right options for math.h, which it includes */
 #include <R_ext/Arith.h>
-#include <math.h>
 #include <R.h>
 #include <Rmath.h>
 #include "stats.h"

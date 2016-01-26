@@ -28,9 +28,8 @@
 #include <config.h>
 #endif
 
-#include <R_ext/Arith.h>
+#include <R_ext/Arith.h> // includes math.h
 #include <Rinternals.h>
-#include <math.h>
 
 /* NB: this only works in the lower half of y, but pads with zeros. */
 SEXP BinDist(SEXP sx, SEXP sw, SEXP slo, SEXP shi, SEXP sn)

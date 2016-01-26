@@ -43,7 +43,6 @@
 #endif
 
 #include <R.h>
-#include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 #include <stdio.h>
 #include <errno.h>
