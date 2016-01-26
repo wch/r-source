@@ -266,6 +266,12 @@
 
       \item The \code{order()} function gains a \code{method} argument
       for choosing between \code{"shell"} and \code{"radix"}.
+
+      \item New function \code{grouping} returns a permutation that
+      stably rearranges data so that identical values are
+      adjacent.  The return value includes extra partitioning
+      information on the groups. The implementation came included with
+      the new radix sort.
     }
   }
 

@@ -203,3 +203,16 @@ xtfrm.AsIs <- function(x)
     n <- length(x)
     if(strictly) !all(x[-1L] > x[-n]) else !all(x[-1L] >= x[-n])
 }
+
+grouping <- function(...) {
+    z <- list(...)
+    if(any(vapply(z, is.object, logical(1L)))) {
+        z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
+        return(do.call("grouping", z))
+    }
+    nalast <- FALSE
+    decreasing <- rep_len(FALSE, length(z))
+    group <- TRUE
+    sortStr <- FALSE
+    return(.Internal(radixsort(nalast, decreasing, group, sortStr, ...)))
+}
