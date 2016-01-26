@@ -26,21 +26,16 @@
  *    character.c, errors.c, printutils.c, devPS.c, RGui console.
  * (b) Defines a replacment for iswctype to be used on Windows, OS X and AIX.
  * in gram.c 
+ *
+ * It is not an installed header.
  */
 
 #ifndef R_LOCALE_H
 #define R_LOCALE_H
 
-/* This is not an installed header, but was used by package 'parser' */
-#ifndef NO_C_HEADERS
 #include <wchar.h>
 #include <ctype.h>
 #include <wctype.h>
-#endif
-
-#ifdef  __cplusplus
-extern "C" {
-#endif
 
 /*
  * Windows CJK
@@ -118,7 +113,4 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswctype(__x,__y) Ri18n_iswctype(__x,__y)
 #endif
 
-#ifdef  __cplusplus
-}
-#endif
 #endif /* R_LOCALE_H */
