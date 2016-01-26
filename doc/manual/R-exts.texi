@@ -9292,7 +9292,8 @@ conflicts---if this happens, try defining @samp{NO_C_HEADERS} before
 including the @R{} headers, and include C++ versions (such as
 @samp{cmath} and @samp{cstdlib}) of the appropriate headers yourself
 before the @R{} headers. (Headers @file{R.h} and @file{Rmath.h} support
-@samp{NO_C_HEADERS}: @file{S.h} does not.)
+@samp{NO_C_HEADERS}: @file{S.h} does not.  Nor does @file{Rinternals.h}
+but that switches to the equivalent C++ headers when included from C++.)
 
 By default header @file{Rmath.h} includes @file{math.h}.  Header
 @file{R.h} includes
