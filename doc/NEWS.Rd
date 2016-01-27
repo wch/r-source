@@ -378,9 +378,9 @@
 
       \item New API call \code{R_orderVector1()}, a faster
       one-argument version of \code{R_orderVector()}.
-      
+
       \item There is a new macro, \code{USE_CXX_HEADERS}, which if set
-      causes \R{} headers Such as \file{R.h} and \file{Rmath.h} when
+      causes \R{} headers such as \file{R.h} and \file{Rmath.h} when
       called from C++ code in packages to include the C++ versions of
       system headers such as \file{<cmath>} rather than the C versions.
       (Header \file{Rinternals.h} always did.)
@@ -443,6 +443,8 @@
       \item \code{url} connections with \code{method = "libcurl"} are
       destroyed properly. (\PR{16681})
 
+      \item \code{dummy.coef.lm()} now works in more cases, thanks to a
+      proposal by Werner Stahel.  (\PR{16665})% port to r-patched
     }
   }
 }

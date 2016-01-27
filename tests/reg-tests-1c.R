@@ -1225,3 +1225,34 @@ stopifnot(identical(dimnames(d4),
 ## the rownames were       "3"  "4"  "31" "41"  in R <= 3.3.0
           identical(attr(rbind(mk1(5:8), 7, mk1(6:3)), "row.names"), 1:9)
           )
+
+
+## dummy.coef(.) in the case of "non-trivial terms" -- PR#16665
+fm1 <- lm(Fertility ~ cut(Agriculture, breaks=4) + Infant.Mortality, data=swiss)
+(dc1 <- dummy.coef(fm1)) ## failed in R <= 3.3.0
+## (R-help, Alexandra Kuznetsova, 24 Oct 2013):
+set.seed(56)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(rnorm(10, 4), rnorm(10, 5))
+x <- rnorm(20)
+lm9 <- lm(weight ~ group + x + I(x^2))
+dc9 <- dummy.coef(lm9)
+## failed in R <= 3.3.0
+stopifnot( # depends on contrasts:
+    all.equal(unname(coef(fm1)), unlist(dc1, use.names=FALSE)[-2], tol= 1e-14),
+    all.equal(unname(coef(lm9)), unlist(dc9, use.names=FALSE)[-2], tol= 1e-14))
+## a 'use.na=TRUE' example
+dd <- data.frame(x1 = rep(letters[1:2], each=3),
+                 x2 = rep(LETTERS[1:3], 2),
+                 y = rnorm(6))
+dd[6,2] <- "B" # => no (b,C) combination => that coef should be NA
+fm3 <- lm(y ~ x1*x2, dd)
+(d3F <- dummy.coef(fm3, use.na=FALSE))
+(d3T <- dummy.coef(fm3, use.na=TRUE))
+stopifnot(all.equal(d3F[-4], d3T[-4]),
+	  all.equal(d3F[[4]][-6], d3T[[4]][-6]),
+	  all.equal(drop(d3T$`x1:x2`),
+		    c("a:A"= 0, "b:A"= 0, "a:B"= 0,
+		      "b:B"= 0.4204843786, "a:C"=0, "b:C"=NA)))
+## in R <= 3.2.3, d3T$`x1:x2` was *all* NA
+
