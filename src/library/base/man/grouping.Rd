@@ -30,7 +30,7 @@ grouping(\dots)
   Under the covers, the \code{"radix"} method of \code{\link{order}} is
   used, and the same caveats apply, including reduced precision when
   comparing real values, restrictions on character encodings and lack of
-  support for long vectors (those with eqn{2^{31}}{2^31} or more elements).
+  support for long vectors (those with \eqn{2^{31}}{2^31} or more elements).
   
   Like \code{order}, for a classed \R object the grouping is based on
   the result of \code{\link{xtfrm}}.
