@@ -950,19 +950,20 @@ static int StrCmp(SEXP x, SEXP y)            // also used by bmerge and chmatch
     return strcmp(CHAR(x), CHAR(y));
 }
 
-#ifdef UNUSED
 #define CHAR_ENCODING(x) (IS_ASCII(x) ? CE_UTF8 : getCharCE(x))
 
 static void checkEncodings(SEXP x)
 {
     cetype_t ce;
 
-    if (length(x) == 0)
-        return;
+    int i;
+    for (i = 0; i < length(x) && STRING_ELT(x, i) == NA_STRING; i++);
 
-    ce = CHAR_ENCODING(STRING_ELT(x, 0));
-    if (ce == CE_NATIVE) {
-        error(_("Character encoding must be UTF-8, Latin-1 or bytes"));
+    if (i < length(x)) {
+        ce = CHAR_ENCODING(STRING_ELT(x, i));
+        if (ce == CE_NATIVE) {
+            error(_("Character encoding must be UTF-8, Latin-1 or bytes"));
+        }
     }
 
     /* Disabled for now -- doubles the time (for already sorted vectors): why?
@@ -973,43 +974,6 @@ static void checkEncodings(SEXP x)
     }
     */
 }
-
-static SEXP normalizeEncodings(SEXP x)
-{
-    SEXP ans = x;
-
-    if (length(ans) == 0)
-        return(ans);
-
-    ce = CHAR_ENCODING(STRING_ELT(ans, 0));
-    if (ce == CE_NATIVE) {
-        PROTECT(ans = duplicate(ans));
-        SET_STRING_ELT(ans, 0,
-                       mkCharCE(translateCharUTF8(STRING_ELT(ans, 0)),
-                                CE_UTF8));
-        ce = CE_UTF8;
-    }
-    
-    for (int i = 1; i < length(ans); i++) {
-        cetype_t cei = CHAR_ENCODING(STRING_ELT(ans, i));
-        if (ce != cei) {
-            if (ce == CE_UTF8 && cei != CE_BYTES) {
-                if (ans == x)
-                    PROTECT(ans = duplicate(ans));
-                SET_STRING_ELT(ans, i,
-                               mkCharCE(translateCharUTF8(STRING_ELT(ans, i)),
-                                        CE_UTF8));
-            } else {
-                error(_("Unable to normalize character encodings"));
-            }
-        }
-    }
-
-    if (ans != x)
-        UNPROTECT(1);
-    return(ans);
-}
-#endif
 
 static void cradix_r(SEXP * xsub, int n, int radix)
 // xsub is a unique set of CHARSXP, to be ordered by reference
@@ -1527,6 +1491,7 @@ static void isort(int *x, int *o, int n)
 	    for (int i = 0; i < n; i++)
 		if (x[i] == NA_INTEGER)
 		    o[i] = 0;
+                else o[i] = i + 1;
 	    push(1); push(1);
 	    return;
 	} else Error("Internal error: isort received n=%d. isorted should have dealt with this (e.g. as a reverse sorted vector) already",n);
@@ -1576,6 +1541,7 @@ static void dsort(double *x, int *o, int n)
 	    for (int i = 0; i < n; i++)
 		if (is_nan(x, i))
 		    o[i] = 0;
+                else o[i] = i + 1;
 	    push(1); push(1);
 	    return;
 	}
@@ -1678,9 +1644,9 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stackgrps = narg > 1 || retGrp;
 
-    /* if (TYPEOF(x) == STRSXP) { */
-    /*     checkEncodings(x); */
-    /* } */
+    if (TYPEOF(x) == STRSXP) {
+        checkEncodings(x);
+    }
     
     savetl_init();   // from now on use Error not error.
 
@@ -1708,8 +1674,6 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    isSorted = TRUE;
 	    for (int i = 0; i < n; i++)
 		o[i] = i + 1;
-	    // TO DO: we don't need this if returning NULL? Save it?
-	    // Unlikely huge gain, though.
 	} else if (tmp == -1) {
 	    // -1 (or -n for result of strcmp), strictly opposite to
 	    // -expected 'order'

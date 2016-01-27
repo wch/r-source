@@ -1226,6 +1226,13 @@ stopifnot(identical(dimnames(d4),
           identical(attr(rbind(mk1(5:8), 7, mk1(6:3)), "row.names"), 1:9)
           )
 
+## sort on integer() should drop NAs by default
+stopifnot(identical(1L, sort(c(NA, 1L))))
+## and other data types for method="radix"
+stopifnot(identical("a", sort(c(NA, "a"), method="radix")))
+stopifnot(identical(character(0L), sort(c(NA, NA_character_), method="radix")))
+stopifnot(identical(1, sort(c(NA, 1), method="radix")))
+
 
 ## dummy.coef(.) in the case of "non-trivial terms" -- PR#16665
 fm1 <- lm(Fertility ~ cut(Agriculture, breaks=4) + Infant.Mortality, data=swiss)

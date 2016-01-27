@@ -41,8 +41,8 @@ sort.int <-
         if (!is.null(partial)) {
             stop("'partial' sorting not supported by radix method")
         }
-        o <- sort.list(x, na.last = na.last, decreasing = decreasing,
-                       method = "radix")
+        o <- order(x, na.last = na.last, decreasing = decreasing,
+                   method = "radix")
         y <- x[o]
         if (index.return)
             return(list(x = y, ix = o))
