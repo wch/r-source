@@ -27,8 +27,13 @@
 
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
+
 #ifndef NO_C_HEADERS
-# include <stddef.h>
+# if defined(__cplusplus) && defined(USE_CXX_HEADERS)
+#  include <cstddef>
+# else
+#  include <stddef.h>
+# endif
 #endif
 
 #define revsort       Rf_revsort

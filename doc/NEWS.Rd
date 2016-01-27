@@ -24,9 +24,9 @@
       \dots) and the server's identity has to be verifiable \emph{via}
       the available certificates.  Different access methods may allow
       different protocols or use private certificate bundles: we
-      encountered a \samp{https:} CRAN mirror which can be accessed by
-      one browser but not another nor by \code{download.file()} on the
-      same Linux machine.
+      encountered a \samp{https:} CRAN mirror which could be accessed by
+      one browser but not by another nor by \code{download.file()} on
+      the same Linux machine.
     }
   }
   \subsection{NEW FEATURES}{
@@ -373,12 +373,22 @@
       first argument has gained a \code{const} qualifier.
 
       Code using it will need to be reinstalled. (\PR{16470})
-      % no current CRAN packages ....
 
       \item \code{R_GE_version} has been increased to \code{11}.
 
       \item New API call \code{R_orderVector1()}, a faster
       one-argument version of \code{R_orderVector()}.
+      
+      \item There is a new macro, \code{USE_CXX_HEADERS}, which if set
+      causes \R{} headers Such as \file{R.h} and \file{Rmath.h} when
+      called from C++ code in packages to include the C++ versions of
+      system headers such as \file{<cmath>} rather than the C versions.
+      (Header \file{Rinternals.h} always did.)
+
+      This is currently optional but is intended to become the default
+      before release.  The manual has long said that \R{} headers should
+      \bold{not} be included within an \code{extern "C"} block, and this
+      change increases the chance of compilation errors if that is done.
     }
   }
 

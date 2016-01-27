@@ -25,10 +25,21 @@
 #endif
 
 #ifndef NO_C_HEADERS
-#include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
-#include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
-#include <limits.h> /* for INT_MAX */
-#include <math.h>
+// same as Rmath.h: needed for cospi etc
+# ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
+#  define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+# endif
+# if defined(__cplusplus) && defined(USE_CXX_HEADERS)
+#  include <cstdlib>
+#  include <cstdio>
+#  include <climits>
+#  include <cmath>
+# else
+#  include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
+#  include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
+#  include <limits.h> /* for INT_MAX */
+#  include <math.h>
+# endif 
 /* 
    math.h   is also included by R_ext/Arith.h, except in C++ code
    stddef.h is included by R_ext/Memory.h
@@ -37,10 +48,10 @@
 */
 # if defined(__sun)
 /* Solaris' stdlib.h includes a header which defines these (and more) */
-# undef DO
-# undef DS
-# undef SO
-# undef SS
+#  undef DO
+#  undef DS
+#  undef SO
+#  undef SS
 # endif
 #endif
 
