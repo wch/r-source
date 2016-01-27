@@ -84,7 +84,7 @@ clean:
 	  reg-examples-*.pdf testCID.* \
 	  reg-plot-latin1.ps reg-plot.ps \
 	  reg-plot-latin1.pdf reg-plot.pdf reg-tests-*.pdf \
-	  R-exts.* R-intro.R R-intro.Rout
+	  R-exts.* R-intro.R no-segfault.R R-intro.Rout
 	-@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
@@ -92,6 +92,7 @@ clean:
 	-@rm -f *.tar.gz
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 	-@rm -f *.log *.tsin *.trin
+	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd'
 
 distclean: clean
 	-@for d in $(SUBDIRS); do \

@@ -82,6 +82,7 @@ clean:
 	@$(MK) -C Examples $@
 	@$(MK) -C Embedding $@
 	-@rm -f *.log *.tsin *.trin
+	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd'
 
 distclean: clean
 	@$(MK) -C Examples $@
