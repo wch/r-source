@@ -4471,6 +4471,15 @@ functions at @uref{http://www.cplusplus.com/reference/} or
 @uref{http://en.cppreference.com/w/} and compare what is defined in the
 various standards.
 
+Both the compiler and OS (@emph{via} system header files, which differ
+by architecture even for nominally the same OS) affect the compilability
+of C/C++ code.  Compilers from the GCC, @command{clang}, Intel and
+Solaris Studio suites are routinely used with @R{}, and both
+@command{clang} and Solaris have more than one implementation of C++
+headers and library.  The range of possibilities makes comprehensive
+empirical checking impossible, and regretably compilers are patchy at
+best on warning about non-standard code.
+
 @itemize
 @item
 Mathematical functions such as @code{sqrt} are defined in C++ for
@@ -4522,15 +4531,17 @@ Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C_002b_002b-Extensions.html}.
 
 @item
-Including C headers in C++ code is not portable.  Including the C header
-@file{math.h} in C++ code often causes conflicts with @file{cmath} which
+Including C-style headers in C++ code is not portable.  Including the
+legacy header@footnote{which often is the same as the header included by
+the C compiler, but some compilers have wrappers for some of the C
+headers.} @file{math.h} in C++ code may conflict with @file{cmath} which
 may be included by other headers.  This is particularly problematic with
 C++11 compilers, as functions like @code{sqrt} and @code{isnan} are
 defined for @code{double} arguments in @file{math.h} and for a range of
-types including @code{double} in @file{cmath}.  Similar issues have
-been seen for @file{stdlib.h} and @file{cstdlib}.  Historically,
-including the C++ version first was a sufficient workaround but for some
-2016 compilers only one can be included.
+types including @code{double} in @file{cmath}.  Similar issues have been
+seen for @file{stdlib.h} and @file{cstdlib}.  Historically, including
+the C++ version first was a sufficient workaround but for some 2016
+compilers only one can be included.
 
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++
