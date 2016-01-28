@@ -38,6 +38,7 @@
 #endif
 
 #ifdef __cplusplus
+#warning S.h should not be used from C++ code: use R.h instead
 extern "C" {
 #endif
 
