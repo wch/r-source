@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2001 The R Core Team
+ *  Copyright (C) 1997-2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -167,17 +167,13 @@ static int computeDLOpenFlag(int asLocal, int now)
 
     if(asLocal != 0) {
 #ifndef RTLD_LOCAL
-# ifndef __CYGWIN__
 	DL_WARN(0);
-# endif
 #else
 	openFlag = RTLD_LOCAL;
 #endif
     } else {
 #ifndef RTLD_GLOBAL
-# ifndef __CYGWIN__
 	DL_WARN(1);
-# endif
 #else
 	openFlag = RTLD_GLOBAL;
 #endif
@@ -185,17 +181,13 @@ static int computeDLOpenFlag(int asLocal, int now)
 
     if(now != 0) {
 #ifndef RTLD_NOW
-# ifndef __CYGWIN__
 	DL_WARN(2);
-# endif
 #else
 	openFlag |= RTLD_NOW;
 #endif
     } else {
 #ifndef RTLD_LAZY
-# ifndef __CYGWIN__
 	DL_WARN(3);
-# endif
 #else
 	openFlag |= RTLD_LAZY;
 #endif

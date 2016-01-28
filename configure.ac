@@ -1004,9 +1004,6 @@ case "${host_os}" in
       fi
     fi
     ;;
-  cygwin*|mingw*|windows*|winnt)
-    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    ;;
   darwin*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
@@ -1122,6 +1119,9 @@ case "${host_os}" in
         fi
         ;;
     esac
+    ;;
+  mingw*|windows*|winnt)
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
   openbsd*)
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
@@ -1287,7 +1287,6 @@ fi
 
 ## Step 3.  Individual platform overrides.
 dylib_undefined_allowed=yes
-is_cygwin=no
 case "${host_os}" in
   aix*)
     use_exportfiles=yes
@@ -1317,17 +1316,6 @@ case "${host_os}" in
     if test "${GXX}" = yes; then
       shlib_cxxldflags="-shared ${shlib_cxxldflags}"
     fi 
-    ;;
-  cygwin*)
-    ## All Windows code is PIC
-    cpicflags=
-    cxxpicflags=
-    fpicflags=
-    fcpicflags=
-    SHLIB_EXT=".dll"
-    dylib_undefined_allowed=no
-    is_cygwin=yes
-    main_ldflags="${wl}--large-address-aware ${wl}--stack=0xA00000"
     ;;
   darwin*)
     darwin_pic="-fPIC"
@@ -1589,7 +1577,7 @@ R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
@@ -1601,7 +1589,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -1613,7 +1601,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -1716,7 +1704,6 @@ fi
 AC_SUBST(INTERNET_LIBS)
 
 AM_CONDITIONAL(DYLIB_UNDEFINED_ALLOWED, [test "x${dylib_undefined_allowed}" = xyes])
-AM_CONDITIONAL(BUILD_CYGWIN, [test "x${is_cygwin}" = xyes])
 
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
@@ -1847,7 +1834,7 @@ AC_CHECK_DECLS([alloca], , ,
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
 ## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
-## Cygwin has rintl but not nearbyintl
+## Cygwin had rintl but not nearbyintl
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])
@@ -2548,7 +2535,7 @@ esac
 : ${FCPICFLAGS="${fcpicflags}"}
 if test -z "${FCPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FCPICFLAGS.])

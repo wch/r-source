@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-2015	    The R Core Team
+ *  Copyright (C) 2000-2016	    The R Core Team
  *  Copyright (C) 2005		    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -45,11 +45,6 @@
 #undef HAVE_CSINH
 #undef HAVE_CCOSH
 #undef HAVE_CTANH
-#endif
-
-#ifdef __CYGWIN__
-/* as of 1.7.8 it had cacos, but it does not work */
-#undef HAVE_CACOS
 #endif
 
 #ifdef __SUNPRO_C

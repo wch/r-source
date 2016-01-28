@@ -5504,57 +5504,11 @@ Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @node Cygwin, New platforms, FreeBSD, Platform notes
 @section Cygwin
 
-The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
-This is unsupported, but experiments have been conducted and a few
-workarounds added.  Cygwin has not been tested for @R{} 3.0.0 or later.
+The 32-bit version has never worked well enough to pass @R{}'s
+@command{make check}, and residual support from earlier experiments was
+removed in @R{} 3.3.0.
 
-The 64-bit version is completely unsupported.  The 32-bit version has
-never worked well enough to pass @R{}'s @command{make check}.
-
-@R{} requires C99 complex type support, which is available as from
-Cygwin 1.7.8 (March 2011).  However, the (then) implementation of
-@code{cacos} gave incorrect results, so we undefine @code{HAVE_CACOS}
-in @file{src/main/complex.c} on that platform.  It has been reported
-that some C99 long double mathematical functions are missing, so
-configuring with @option{--disable-long-double} was required.
-
-Only building as a shared library can possibly work,@footnote{Windows
-DLLs need to have all links resolved at build time and so cannot resolve
-against @file{R.bin}.} so use e.g.@:
-
-@example
-./configure --disable-nls --enable-R-shlib FLIBS=-lgfortran
-make
-@end example
-
-@noindent
-Enabling NLS does work if required, although adding
-@option{--with-included-gettext} is preferable.  You will see many
-warnings about the use of auto-import.  Setting @samp{FLIBS} explicitly
-seems needed currently as the auto-detection gives an incorrect value.
-
-You will need the @pkg{tetex-extra} Cygwin package to build
-@file{NEWS.pdf} and the vignettes.
-
-Note that this gives you a command-line application using @code{readline}
-for command editing.  The @samp{X11} graphics device will work if a
-suitable X server is running, and the standard Unix-alike ways of
-installing source packages work.  There was a bug in the
-@file{/usr/lib/tkConfig.sh} script in the version we looked at, which
-needs to have
-
-@example
-TK_LIB_SPEC='-ltk84'
-@end example
-
-The overhead of using shell scripts makes this noticeably slower than a
-native build of @R{} on Windows.
-
-Even when @R{} could be built, not all the tests passed: there were
-incorrect results from wide-character regular expressions code and from
-sourcing CR-delimited files.
-
-Do not use Cygwin's BLAS library: it is known to give incorrect results.
+The 64-bit version is completely unsupported.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms

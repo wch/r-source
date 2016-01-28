@@ -99,11 +99,7 @@ known OS with 64-bit time_t and complete tables is Linux.
 
 typedef struct tm stm;
 #define R_tzname tzname
-# if defined(__CYGWIN__)
-extern __declspec(dllimport) char *tzname[2];
-# else
 extern char *tzname[2];
-# endif
 
 #endif
 

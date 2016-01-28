@@ -33,8 +33,8 @@ R:
 	@$(MAKE) rhome="$(abs_top_builddir)" Rblas_install
 
 blas_OBJS=blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
-@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS) @BUILD_CYGWIN_TRUE@ xerbla.o
-@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD) @BUILD_CYGWIN_TRUE@ xerbla.o
+@USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
+@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)
@@ -65,7 +65,7 @@ uninstall TAGS info dvi check:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win Rblas.def \
-  $(SOURCES) $(HEADERS) xerbla.c
+  $(SOURCES) $(HEADERS)
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
