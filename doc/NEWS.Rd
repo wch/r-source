@@ -36,6 +36,9 @@
       \item The \command{make} macro \code{AWK} which is long unused by
       \R itself but recorded in file \file{etc/Makeconf} is deprecated
       and will be removed in \R 3.3.0.
+      
+      The C header file \file{S.h} is no longer documented: its use
+      should be replaced by \file{R.h}.
     }
   }
 

@@ -20,6 +20,11 @@
  *  Much of this is from Doug Bates.
  */
 
+/* 
+   This is a legacy header and no longer documented.
+   Code using it should be converted to use R.h
+*/
+
 /* This header includes C headers and so is not safe for inclusion
    from C++: use R.h instead. */
 
