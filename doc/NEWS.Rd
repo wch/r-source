@@ -440,9 +440,6 @@
       \code{row.names} works better in borderline integer cases, but
       may change the names assigned.  (\PR{16666})
 
-      \item \code{url} connections with \code{method = "libcurl"} are
-      destroyed properly. (\PR{16681})
-
       \item \code{dummy.coef.lm()} now works in more cases, thanks to a
       proposal by Werner Stahel.  (\PR{16665})% port to r-patched
     }
@@ -517,6 +514,9 @@
       \item \code{as.data.frame.vector(*, row.names=*)} no longer
       produces \sQuote{corrupted} data frames from row names of incorrect
       length, but rather warns about them.  This will become an error.
+
+      \item \code{url} connections with \code{method = "libcurl"} are
+      destroyed properly. (\PR{16681})
     }
   }
 }
