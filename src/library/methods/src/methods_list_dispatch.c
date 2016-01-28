@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2015   The R Core Team.
+ *  Copyright (C) 2001-2016   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -981,15 +981,16 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	    thisClass = s_missing;
 	else {
 	    /*  get its class */
-	    SEXP arg; int check_err;
+	    SEXP arg; int check_err = 0;
 	    if(arg_sym == R_dots) {
 		thisClass = dots_class(ev, &check_err);
 	    }
 	    else {
-		PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err));
-		if(!check_err)
-		    thisClass = R_data_class(arg, TRUE);
-		UNPROTECT(1); /* for arg */
+		arg = eval(arg_sym, ev);
+		/* PROTECT(arg = R_tryEvalSilent(arg_sym, ev, &check_err)); // <- related to bug PR#16111 */
+		/* if(!check_err) */
+		thisClass = R_data_class(arg, TRUE);
+		/* UNPROTECT(1); /\* for arg *\/ */
 	    }
 	    if(check_err)
 		error(_("error in evaluating the argument '%s' in selecting a method for function '%s': %s"),

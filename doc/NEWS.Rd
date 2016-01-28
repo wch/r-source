@@ -36,7 +36,7 @@
       \item The \command{make} macro \code{AWK} which is long unused by
       \R itself but recorded in file \file{etc/Makeconf} is deprecated
       and will be removed in \R 3.3.0.
-      
+
       The C header file \file{S.h} is no longer documented: its use
       should be replaced by \file{R.h}.
     }
@@ -79,6 +79,9 @@
 
       \item \code{url} connections with \code{method = "libcurl"} are
       destroyed properly. (\PR{16681})
+
+      \item \code{withCallingHandler()} now (again) handles warnings
+      even during S4 generic's argument evaluation.  (\PR{16111})
     }
   }
 }
