@@ -386,11 +386,11 @@
       already did, and inclusion of system headers can still be
       circumvented by defining \code{NO_C_HEADERS}, including as from
       this version for \file{Rinternals.h}.)
-      
+
       The manual has long said that \R{} headers should \bold{not} be
       included within an \code{extern "C"} block, and almost all the
       packages affected by this change are doing so.
-      
+
       \item Including header \file{S.h} from C++ code will fail on some
       platforms, and so gives a compilation warning on all.
     }
@@ -434,9 +434,6 @@
 
       \item Array subsetting now keeps \code{names(dim(.))}.
 
-      \item \code{withCallingHandler()} now (again) handles warnings
-      even during S4 generic's argument evaluation.  (\PR{16111})% TODO: port to r-patched
-
       \item Blocking socket connection selection recovers more
       gracefully on signal interrupts.
 
@@ -445,7 +442,10 @@
       may change the names assigned.  (\PR{16666})
 
       \item \code{dummy.coef.lm()} now works in more cases, thanks to a
-      proposal by Werner Stahel.  (\PR{16665})% port to r-patched
+      proposal by Werner Stahel (\PR{16665}).  In addition, it now works
+      for multivariate linear models (\code{"mlm"}, \code{\link{manova}})
+      thanks to a propsal by Daniel Wollschlaeger.
+      % port to r-patched
     }
   }
 }
@@ -481,7 +481,7 @@
       \item The \command{make} macro \code{AWK} which is long unused by
       \R itself but recorded in file \file{etc/Makeconf} is deprecated
       and will be removed in \R 3.3.0.
-      
+
       The C header file \file{S.h} is no longer documented: its use
       should be replaced by \file{R.h}.
     }
@@ -524,6 +524,9 @@
 
       \item \code{url} connections with \code{method = "libcurl"} are
       destroyed properly. (\PR{16681})
+
+      \item \code{withCallingHandler()} now (again) handles warnings
+      even during S4 generic's argument evaluation.  (\PR{16111})
     }
   }
 }

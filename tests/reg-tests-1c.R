@@ -1235,6 +1235,7 @@ stopifnot(identical(1, sort(c(NA, 1), method="radix")))
 
 
 ## dummy.coef(.) in the case of "non-trivial terms" -- PR#16665
+op <- options(contrasts = c("contr.treatment", "contr.poly"))
 fm1 <- lm(Fertility ~ cut(Agriculture, breaks=4) + Infant.Mortality, data=swiss)
 (dc1 <- dummy.coef(fm1)) ## failed in R <= 3.3.0
 ## (R-help, Alexandra Kuznetsova, 24 Oct 2013):
@@ -1262,4 +1263,34 @@ stopifnot(all.equal(d3F[-4], d3T[-4]),
 		    c("a:A"= 0, "b:A"= 0, "a:B"= 0,
 		      "b:B"= 0.4204843786, "a:C"=0, "b:C"=NA)))
 ## in R <= 3.2.3, d3T$`x1:x2` was *all* NA
+##
+## dummy.coef() for "manova"
+## artificial data inspired by the  summary.manova  example
+rate <- gl(2,10, labels=c("Lo", "Hi"))
+additive <- gl(4, 1, length = 20, labels = paste("d", 1:4, sep="."))
+additive <- C(additive, "contr.sum")# => less trivial dummy.coef
+X <- model.matrix(~ rate*additive)
+E <- matrix(round(rnorm(20*3), 2), 20,3) %*% cbind(1, c(.5,-1,.5), -1:1)
+bet <- outer(1:8, c(tear = 2, gloss = 5, opacity = 20))
+Y <- X %*% bet + E
 
+fit <- manova(Y ~ rate * additive)
+## For consistency checking, one of the univariate models:
+flm <- lm(Y[,"tear"] ~ rate * additive)
+dclm <- lapply(dummy.coef(flm), drop); names(dclm[[1]]) <- "tear"
+
+op <- options(digits = 3, width = 88)
+(cf <- coef(fit))
+(dcf <- dummy.coef(fit))
+options(op)
+stopifnot(all.equal(coef(flm), cf[,"tear"]),
+          all.equal(dclm,
+                    lapply(dcf, function(cc)
+                        if(is.matrix(cc)) cc["tear",] else cc["tear"])),
+          identical(lengths(dcf),
+                    c("(Intercept)" = 3L, "rate" = 6L,
+                      "additive" = 12L, "rate:additive" = 24L)),
+          identical(sapply(dcf[-1], dim),
+                    cbind(rate = 3:2, additive = 3:4,
+                          `rate:additive` = c(3L, 8L))))
+## dummy.coef() were missing coefficients in R <= 3.2.3
