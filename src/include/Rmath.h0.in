@@ -38,7 +38,7 @@
 # ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
 #  define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
 # endif
-# if defined(__cplusplus) && defined(USE_CXX_HEADERS)
+# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cmath>
 # else
 #  include <math.h>

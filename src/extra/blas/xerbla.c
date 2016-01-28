@@ -1,6 +1,6 @@
 /* It seems Cygwin does not allow mutually dependent dlls, so fake xerbla */
 
-#include <S.h>
+#include <R_ext/RS.h>
 
 /* Fortran-callable error routine for lapack */
 

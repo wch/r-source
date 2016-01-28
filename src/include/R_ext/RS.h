@@ -23,7 +23,7 @@
 #define R_RS_H
 
 #ifndef NO_C_HEADERS
-# if defined(__cplusplus) && defined(USE_CXX_HEADERS)
+# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstring>
 # else
 #  include <string.h>		/* for memcpy, memset */

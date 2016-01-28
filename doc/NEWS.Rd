@@ -379,16 +379,17 @@
       \item New API call \code{R_orderVector1()}, a faster
       one-argument version of \code{R_orderVector()}.
 
-      \item There is a new macro, \code{USE_CXX_HEADERS}, which if set
-      causes \R{} headers such as \file{R.h} and \file{Rmath.h} when
-      called from C++ code in packages to include the C++ versions of
-      system headers such as \file{<cmath>} rather than the C versions.
-      (Header \file{Rinternals.h} always did.)
-
-      This is currently optional but is intended to become the default
-      before release.  The manual has long said that \R{} headers should
-      \bold{not} be included within an \code{extern "C"} block, and this
-      change increases the chance of compilation errors if that is done.
+      \item When \R{} headers such as \file{R.h} and \file{Rmath.h} are
+      called from C++ code in packages they include the C++ versions of
+      system headers such as \file{<cmath>} rather than the legacy
+      headers such as \file{<math.h>).  (Header \file{Rinternals.h}
+      already did, and inclusion of system headers can still be
+      circumvented by defining \code{NO_C_HEADERS}, including as from
+      this version for \file{Rinternals.h}.)
+      
+      The manual has long said that \R{} headers should \bold{not} be
+      included within an \code{extern "C"} block, and almost all the
+      packages affected by this change are doing so.
     }
   }
 
@@ -477,6 +478,9 @@
       \item The \command{make} macro \code{AWK} which is long unused by
       \R itself but recorded in file \file{etc/Makeconf} is deprecated
       and will be removed in \R 3.3.0.
+      
+      The C header file \file{S.h} is no longer documented: its use
+      should be replaced by \file{R.h}.
     }
   }
 

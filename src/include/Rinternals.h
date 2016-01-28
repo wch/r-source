@@ -26,18 +26,23 @@
 #ifndef R_INTERNALS_H_
 #define R_INTERNALS_H_
 
+// Support for NO_C_HEADERS added in R 3.3.0
 #ifdef __cplusplus
-# include <cstdio>
-# ifdef __SUNPRO_CC
+# ifndef NO_C_HEADERS
+#  include <cstdio>
+#  ifdef __SUNPRO_CC
 using std::FILE;
+#  endif
+#  include <climits>
+#  include <cstddef>
 # endif
-# include <climits>
-# include <cstddef>
 extern "C" {
 #else
-# include <stdio.h>
-# include <limits.h> /* for INT_MAX */
-# include <stddef.h> /* for ptrdiff_t */
+# ifndef NO_C_HEADERS
+#  include <stdio.h>
+#  include <limits.h> /* for INT_MAX */
+#  include <stddef.h> /* for ptrdiff_t */
+# endif
 #endif
 
 #include <R_ext/Arith.h>

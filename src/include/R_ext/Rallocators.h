@@ -25,7 +25,7 @@
 #define R_EXT_RALLOCATORS_H_
 
 #ifndef NO_C_HEADERS
-# if defined(__cplusplus) && defined(USE_CXX_HEADERS)
+# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstddef>
 # else
 #  include <stddef.h> /* for size_t */
