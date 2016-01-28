@@ -3,7 +3,7 @@
  *  Copyright (C) 2016   The R Core Team
  *
  *  Based on code donated from the data.table package
- *  (C) 2006-2015 Matthew Dowle and Arun Srinivasan.
+ *  (C) 2006-2015 Matt Dowle and Arun Srinivasan.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

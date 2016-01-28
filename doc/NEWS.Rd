@@ -258,7 +258,7 @@
 
       \item The radix sort algorithm and implementation from data.table
       (forder) replaces the existing but limited radix (counting) sort
-      and adds a new method for \code{order()}. Contributed by Matthew
+      and adds a new method for \code{order()}. Contributed by Matt
       Dowle and Arun Srinivasan, the new algorithm supports logical,
       integer (even with large values), real, and character vectors. It
       outperforms all other methods, but there are some caveats (see

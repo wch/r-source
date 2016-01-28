@@ -93,7 +93,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   Method \code{"radix"} relies on simple hashing to scale time linearly
   with the input size, i.e., its asymptotic time complexity is O(n). The
   specific variant and its implementation originated from the data.table
-  package and are due to Matthew Dowle and Arun Srinivasan.  For small
+  package and are due to Matt Dowle and Arun Srinivasan.  For small
   inputs (< 200), the implementation uses an insertion sort (O(n^2))
   that operates in-place to avoid the allocation overhead of the radix
   sort. For integer vectors of range less than 100,000, it switches to a

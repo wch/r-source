@@ -564,4 +564,4 @@ Nocedal, which does not state any copyright.
 
 src/main/radixsort.c is largely based on code from the data.table package,
 
-   Copyright (C) 2006--2015  Matthew Dowle and Arun Srinivasan
+   Copyright (C) 2006--2015  Matt Dowle and Arun Srinivasan
