@@ -35,7 +35,7 @@ package.skeleton <-
 
     if(missing(list)) {
         if(use_code_files) {
-            environment <- new.env(hash = TRUE)
+            environment <- new.env(hash = TRUE, parent = globalenv())
             methods::setPackageName(name, environment)
             for(cf in code_files)
                 sys.source(cf, envir = environment)

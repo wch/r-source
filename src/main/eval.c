@@ -862,10 +862,10 @@ static SEXP R_compileExpr(SEXP expr, SEXP rho)
     SEXP qexpr, call, fcall, val;
 
     packsym = install("compiler");
-    funsym = install("compile");
+    funsym = install("tryCompile");
     quotesym = install("quote");
 
-    PROTECT(fcall = lang3(R_DoubleColonSymbol, packsym, funsym));
+    PROTECT(fcall = lang3(R_TripleColonSymbol, packsym, funsym));
     PROTECT(qexpr = lang2(quotesym, expr));
     PROTECT(call = lang3(fcall, qexpr, rho));
     val = eval(call, R_GlobalEnv);
@@ -874,22 +874,25 @@ static SEXP R_compileExpr(SEXP expr, SEXP rho)
     return val;
 }
 
-static SEXP R_compileAndExecute(SEXP call, SEXP rho)
+static Rboolean R_compileAndExecute(SEXP call, SEXP rho)
 {
     int old_enabled = R_jit_enabled;
-    int old_visible = R_Visible;
-    SEXP code, val;
+    SEXP code;
+    Rboolean ans = FALSE;
 
     R_jit_enabled = 0;
     PROTECT(call);
     PROTECT(rho);
     PROTECT(code = R_compileExpr(call, rho));
-    R_Visible = old_visible;
     R_jit_enabled = old_enabled;
 
-    val = bcEval(code, rho, TRUE);
+    if (TYPEOF(code) == BCODESXP) {
+	bcEval(code, rho, TRUE);
+	ans = TRUE;
+    }
+
     UNPROTECT(3);
-    return val;
+    return ans;
 }
 
 SEXP attribute_hidden do_enablejit(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1592,10 +1595,9 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if ( !isSymbol(sym) ) errorcall(call, _("non-symbol loop variable"));
 
-    if (R_jit_enabled > 2) {
-	R_compileAndExecute(call, rho);
+    if (R_jit_enabled > 2 && isUnmodifiedSpecSym(CAR(call), rho)
+	    && R_compileAndExecute(call, rho))
 	return R_NilValue;
-    }
 
     PROTECT(args);
     PROTECT(rho);
@@ -1715,10 +1717,9 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if (R_jit_enabled > 2) {
-	R_compileAndExecute(call, rho);
+    if (R_jit_enabled > 2 && isUnmodifiedSpecSym(CAR(call), rho)
+	    && R_compileAndExecute(call, rho))
 	return R_NilValue;
-    }
 
     dbg = RDEBUG(rho);
     body = CADR(args);
@@ -1756,10 +1757,9 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if (R_jit_enabled > 2) {
-	R_compileAndExecute(call, rho);
+    if (R_jit_enabled > 2 && isUnmodifiedSpecSym(CAR(call), rho)
+	    && R_compileAndExecute(call, rho))
 	return R_NilValue;
-    }
 
     dbg = RDEBUG(rho);
     body = CAR(args);

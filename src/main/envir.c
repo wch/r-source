@@ -4012,3 +4012,14 @@ SEXP attribute_hidden do_topenv(SEXP call, SEXP op, SEXP args, SEXP rho) {
     if (target != R_NilValue && TYPEOF(target) != ENVSXP)  target = R_NilValue;
     return topenv(target, envir);
 }
+
+Rboolean attribute_hidden isUnmodifiedSpecSym(SEXP sym, SEXP env) {
+    if (!IS_SPECIAL_SYMBOL(sym))
+	return FALSE;
+    for(;env != R_EmptyEnv; env = ENCLOS(env))
+	if (!NO_SPECIAL_SYMBOLS(env) && env != R_BaseEnv
+		&& env != R_BaseNamespace && existsVarInFrame(env, sym))
+	    return FALSE;
+    return TRUE;
+}
+

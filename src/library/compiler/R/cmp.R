@@ -89,8 +89,11 @@ missingArgs <- function(args) {
 frameTypes <- function(env) {
     top <- topenv(env)
     empty <- emptyenv()
+    base <- baseenv()
     nl <- 0
     while (! identical(env, top)) {
+        if (isNamespace(env))
+            stop("namespace found within local environments")
         env <- parent.env(env)
         nl <- nl + 1
         if (identical(env, empty))
@@ -99,6 +102,11 @@ frameTypes <- function(env) {
     nn <- 0
     if (isNamespace(env)) {
         while (! identical(env, .GlobalEnv)) {
+            if (!isNamespace(env)) {
+                name <- attr(env, "name")
+                if (!is.character(name) || !startsWith(name, "imports:"))
+                    stop("non-namespace found within namespace environments")
+            }
             env <- parent.env(env)
             nn <- nn + 1
             if (identical(env, empty))
@@ -107,6 +115,8 @@ frameTypes <- function(env) {
     }
     ng <- 0
     while (! identical(env, empty)) {
+        if (isNamespace(env))
+            stop("namespace found within global environments")
         env <- parent.env(env)
         ng <- ng + 1
     }
@@ -2698,6 +2708,9 @@ cmpfun <- function(f, options = NULL) {
 
 tryCmpfun <- function(f)
     tryCatch(cmpfun(f), error = function(e) f)
+
+tryCompile <- function(e, ...)
+    tryCatch(compile(e, ...), error = function(err) e)
 
 cmpframe <- function(inpos, file) {
     expr.needed <- 1000
