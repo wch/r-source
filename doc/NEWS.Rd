@@ -73,6 +73,9 @@
       \item \code{as.data.frame.vector(*, row.names=*)} no longer
       produces \sQuote{corrupted} data frames from row names of incorrect
       length, but rather warns about them.  This will become an error.
+
+      \item \code{url} connections with \code{method = "libcurl"} are
+      destroyed properly. (\PR{16681})
     }
   }
 }
