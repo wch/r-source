@@ -390,6 +390,9 @@
       The manual has long said that \R{} headers should \bold{not} be
       included within an \code{extern "C"} block, and almost all the
       packages affected by this change are doing so.
+      
+      \item Including header \file{S.h} from C++ code will fail on some
+      platforms, and so gives a compilation warning on all.
     }
   }
 
