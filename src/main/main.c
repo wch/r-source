@@ -718,7 +718,7 @@ void setup_Rmainloop(void)
 	char *p, Rlocale[1000]; /* Windows' locales can be very long */
 	p = getenv("LC_ALL");
 	strncpy(Rlocale, p ? p : "", 1000);
-        Rlocale[1000 - 1] = '\0';
+	Rlocale[1000 - 1] = '\0';
 	if(!(p = getenv("LC_CTYPE"))) p = Rlocale;
 	/* We'd like to use warning, but need to defer.
 	   Also cannot translate. */
@@ -1107,7 +1107,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 static void PrintCall(SEXP call, SEXP rho)
 {
     int old_bl = R_BrowseLines,
-        blines = asInteger(GetOption1(install("deparse.max.lines")));
+	blines = asInteger(GetOption1(install("deparse.max.lines")));
     if(blines != NA_INTEGER && blines > 0)
 	R_BrowseLines = blines;
     PrintValueRec(call, rho);
@@ -1145,8 +1145,8 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* return if 'expr' is not TRUE */
     if( !asLogical(CADDR(argList)) ) {
-        UNPROTECT(1);
-        return R_NilValue;
+	UNPROTECT(1);
+	return R_NilValue;
     }
 
     /* Save the evaluator state information */
@@ -1159,17 +1159,17 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     saveGlobalContext = R_GlobalContext;
 
     if (!RDEBUG(rho)) {
-        int skipCalls = asInteger(CADDDR(argList));
+	int skipCalls = asInteger(CADDDR(argList));
 	cptr = R_GlobalContext;
 	while ( ( !(cptr->callflag & CTXT_FUNCTION) || skipCalls--)
 		&& cptr->callflag )
 	    cptr = cptr->nextcontext;
 	Rprintf("Called from: ");
-        if( cptr != R_ToplevelContext ) {
+	if( cptr != R_ToplevelContext ) {
 	    PrintCall(cptr->call, rho);
 	    SET_RDEBUG(cptr->cloenv, 1);
-        } else
-            Rprintf("top level \n");
+	} else
+	    Rprintf("top level \n");
 
 	R_BrowseLines = 0;
     }

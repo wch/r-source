@@ -1,0 +1,8 @@
+	* News are in
+	  - the source    doc/NEWS.Rd
+	  - installed R's doc/NEWS and doc/NEWS.pdf
+
+	* Details about single subversion (svn) commits are available, e.g., by
+
+	svn log https://svn.r-project.org/R/trunk
+

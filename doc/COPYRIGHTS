@@ -326,8 +326,8 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
     contributors may be used to endorse or promote products derived from
     this software without specific prior written permission.
 
-   The copyright holders provide no reassurances that the source code
-   provided does not infringe any patent, copyright, or any other
+  The copyright holders provide no reassurances that the source code
+  provided does not infringe any patent, copyright, or any other
   intellectual property rights of third parties.  The copyright holders
   disclaim any liability to any recipient for claims brought against
   recipient by any third party for infringement of that parties

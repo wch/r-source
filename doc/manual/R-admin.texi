@@ -1730,8 +1730,7 @@ It has been reported that running @Rapp{} under Yosemite may fail if no
 preferences are stored, so if it fails when launched for the very first
 time, try it again (the first attempt will store some preferences).
 
-Users of @Rapp{} under Mavericks and later need to be aware of the `App
-Nap' feature
+Users of @Rapp{} need to be aware of the `App Nap' feature
 (@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
 producing output in the console.  Here are three ways to avoid it:
@@ -2171,10 +2170,6 @@ to do so for those with, if @command{make} is available.
 
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.2.x or 3.1.x) of @R{}.
-
-You should not attempt to mix-and-match binary packages built for `Snow
-Leopard' and `Mavericks' @acronym{CRAN} distributions: doing so is
-likely to lead to crashes or failures to load.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -3421,12 +3416,13 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.65-3.b17.fc22.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
-Note that this unfortunately depends on the exact version of the JRE/JDK
+Unfortunately this depends on the exact version of the JRE/JDK
 installed, and so may need updating if the Java installation is updated.
 This can be done by running @code{R CMD javareconf} which updates
-settings in both @file{etc/Makeconf} and
+settings in both @file{@var{R_HOME}/etc/Makeconf} and
 @file{@var{R_HOME}/etc/ldpaths}. See @code{R CMD javareconf --help} for
-details.
+details: note that this needs to be done by the account owning the @R{}
+installation.
 
 Another way of overriding those settings is to set the environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
@@ -3439,7 +3435,7 @@ R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0/jre/lib/amd64/server
 @end example
 
 It may be possible to avoid this by specifying an invariant link as the
-path. For example, on that system any of
+path when configuring. For example, on that system any of
 
 @example
 JAVA_HOME=/usr/lib/jvm/java
@@ -4838,10 +4834,6 @@ some upgrades but not others).
 @node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
 @subsection El Capitan
 
-El Capitan was released at the end of September 2015, and experience to
-date is with systems which have been updated from Yosemite or earlier.
-Upgraded systems need the Command Line Tools reinstalled.
-
 There are problems resulting from the new-to-El-Capitan restriction that
 only Apple is allowed to install software under @file{/usr}: this
 affects @emph{inter alia} @code{MacTeX} and @code{XQuartz}.  For
@@ -4947,7 +4939,7 @@ JAVA_LIBS="-framework JavaVM"
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_72.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 

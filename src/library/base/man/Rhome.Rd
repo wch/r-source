@@ -1,6 +1,6 @@
 % File src/library/base/man/Rhome.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rhome}
@@ -44,9 +44,10 @@ R.home(component = "home")
   set on startup and should not be altered).
 
   On Windows the values of \code{R.home()} and \env{R_HOME} are
-  guaranteed not to contain spaces, switching to the 8.3 short form of
-  path elements if required.  The value of \env{R_HOME} is set to use
-  forward slashes (since many package maintainers pass it unquoted to
-  shells, for example in \file{Makefile}s).
+  switched to the 8.3 short form of path elements if required and if
+  the Windows service to do that is enabled.  The value of
+  \env{R_HOME} is set to use forward slashes (since many package
+  maintainers pass it unquoted to shells, for example in
+  \file{Makefile}s).  
 }
 \keyword{utilities}

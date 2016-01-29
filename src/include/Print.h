@@ -18,6 +18,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef PRINT_H_
 #define PRINT_H_
 

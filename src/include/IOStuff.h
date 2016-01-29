@@ -18,6 +18,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef R_IOSTUFF_H
 #define R_IOSTUFF_H
 

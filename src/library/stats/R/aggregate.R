@@ -65,10 +65,10 @@ function(x, by, FUN, ..., simplify = TRUE)
 
     # Generate a group identifier vector with integers and dots.
     ident <- function(x){
-           y <- as.integer(as.factor(x))
-           z <- gsub(" ", "0", format(y, scientific = FALSE)) # for right sort order
-           return(z)
-       }
+        y <- as.integer(as.factor(x))
+        z <- gsub(" ", "0", format(y, scientific = FALSE)) # for right sort order
+        return(z)
+    }
     grp <- if(ncol(y)) {
         grp <- lapply(rev(y), ident)
         names(grp) <- NULL

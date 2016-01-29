@@ -18,6 +18,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef ERRORMSG_H
 #define ERRORMSG_H
 

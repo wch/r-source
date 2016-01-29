@@ -255,7 +255,7 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if (n2 < 1)
 	error(_("no 'tempdir'"));
     if (n3 < 1)
-        error(_("no 'fileext'"));
+	error(_("no 'fileext'"));
     slen = (n1 > n2) ? n1 : n2;
     slen = (n3 > slen) ? n3 : slen;
     PROTECT(ans = allocVector(STRSXP, slen));
@@ -305,7 +305,7 @@ int R_system(const char *command)
     sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
-# endif    
+# endif
 #ifdef HAVE_AQUA
     if(ptr_CocoaSystem) res = ptr_CocoaSystem(command); else
 #endif
@@ -794,15 +794,15 @@ static R_INLINE nttype_t needsTranslation(SEXP x) {
 
     if (IS_ASCII(x)) return NT_NONE;
     if (IS_UTF8(x)) {
-        if (utf8locale || x == NA_STRING) return NT_NONE;
-        return NT_FROM_UTF8;
+	if (utf8locale || x == NA_STRING) return NT_NONE;
+	return NT_FROM_UTF8;
     }
     if (IS_LATIN1(x)) {
-        if (x == NA_STRING || latin1locale) return NT_NONE;
-        return NT_FROM_LATIN1;
+	if (x == NA_STRING || latin1locale) return NT_NONE;
+	return NT_FROM_LATIN1;
     }
     if (IS_BYTES(x))
-        error(_("translating strings with \"bytes\" encoding is not allowed"));
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
     return NT_NONE;
 }
 
@@ -812,10 +812,10 @@ static void *latin1_obj = NULL, *utf8_obj=NULL, *ucsmb_obj=NULL,
 /* Translates string in "ans" to native encoding returning it as string
    buffer "cbuff" */
 static void translateToNative(const char *ans, R_StringBuffer *cbuff,
-                              nttype_t ttype) {
+			      nttype_t ttype) {
 
     if (ttype == NT_NONE)
-        error(_("internal error: no translation needed"));
+	error(_("internal error: no translation needed"));
 
     void * obj;
     const char *inbuf;
@@ -831,7 +831,7 @@ static void translateToNative(const char *ans, R_StringBuffer *cbuff,
 		error(_("unsupported conversion from '%s' in codepage %d"),
 		      "latin1", localeCP);
 #else
-	        error(_("unsupported conversion from '%s' to '%s'"),
+		error(_("unsupported conversion from '%s' to '%s'"),
 		      "latin1", "");
 #endif
 	    latin1_obj = obj;
@@ -846,7 +846,7 @@ static void translateToNative(const char *ans, R_StringBuffer *cbuff,
 		error(_("unsupported conversion from '%s' in codepage %d"),
 		      "latin1", localeCP);
 #else
-	        error(_("unsupported conversion from '%s' to '%s'"),
+		error(_("unsupported conversion from '%s' to '%s'"),
 		      "latin1", "");
 #endif
 	    utf8_obj = obj;
@@ -1384,7 +1384,7 @@ size_t ucstomb(char *s, const unsigned int wc)
 	    char tocode[128];
 	    /* locale set fuzzy case */
 	    strncpy(tocode, locale2charset(NULL), sizeof(tocode));
-            tocode[sizeof(tocode) - 1] = '\0';
+	    tocode[sizeof(tocode) - 1] = '\0';
 	    if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
 		return (size_t)(-1);
 #else

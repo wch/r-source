@@ -40,7 +40,7 @@ if(!interactive() && is.null(getOption("showErrorCalls")))
     options(showErrorCalls = TRUE)
 
 local({dp <- Sys.getenv("R_DEFAULT_PACKAGES")
-       if(identical(dp, "")) # marginally faster to do methods last
+       if(identical(dp, ""))
            dp <- c("datasets", "utils", "grDevices", "graphics",
                    "stats", "methods")
        else if(identical(dp, "NULL")) dp <- character(0)
@@ -72,7 +72,7 @@ Sys.setenv(R_LIBS_USER =
         res <- require("methods", quietly = TRUE, warn.conflicts = FALSE,
                        character.only = TRUE)
         if(!res)
-            warning('package "methods" in options("defaultPackages") was not found', call.=FALSE)
+            warning('package "methods" in options("defaultPackages") was not found', call. = FALSE)
     }
 }
 

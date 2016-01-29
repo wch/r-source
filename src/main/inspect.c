@@ -1,4 +1,4 @@
-/*
+  /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2009-2014 The R Core Team.
  *
@@ -105,7 +105,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (BINDING_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
     }
     if (TYPEOF(v) == ENVSXP) {
-        if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
+	if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
 	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
     }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
@@ -119,7 +119,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     if (TYPEOF(v) == ENVSXP) /* NOTE: this is not a trivial OP since it involves looking up things
 				in the environment, so for a low-level debugging we may want to
 				avoid it .. */
-        PrintEnvironment(v);
+	PrintEnvironment(v);
     if (TYPEOF(v) == CHARSXP) {
 	if (IS_BYTES(v)) Rprintf("[bytes] ");
 	if (IS_LATIN1(v)) Rprintf("[latin1] ");
