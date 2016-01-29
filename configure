@@ -777,8 +777,6 @@ USE_EXPORTFILES_FALSE
 USE_EXPORTFILES_TRUE
 SHLIB_EXT
 SHLIB_LIBADD
-BUILD_CYGWIN_FALSE
-BUILD_CYGWIN_TRUE
 DYLIB_UNDEFINED_ALLOWED_FALSE
 DYLIB_UNDEFINED_ALLOWED_TRUE
 INTERNET_LIBS
@@ -25059,7 +25057,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25062: \"$ac_link\") >&5
+(eval echo $as_me:25060: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25134,7 +25132,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25137: \"$ac_link\") >&5
+(eval echo $as_me:25135: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27474,10 +27472,6 @@ fi
       fi
     fi
     ;;
-  cygwin*|mingw*|windows*|winnt)
-    $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
-
-    ;;
   darwin*)
     $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
@@ -27801,6 +27795,10 @@ fi
         ;;
     esac
     ;;
+  mingw*|windows*|winnt)
+    $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
+
+    ;;
   openbsd*)
     if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
       $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
@@ -28085,7 +28083,6 @@ fi
 
 ## Step 3.  Individual platform overrides.
 dylib_undefined_allowed=yes
-is_cygwin=no
 case "${host_os}" in
   aix*)
     use_exportfiles=yes
@@ -28115,17 +28112,6 @@ case "${host_os}" in
     if test "${GXX}" = yes; then
       shlib_cxxldflags="-shared ${shlib_cxxldflags}"
     fi
-    ;;
-  cygwin*)
-    ## All Windows code is PIC
-    cpicflags=
-    cxxpicflags=
-    fpicflags=
-    fcpicflags=
-    SHLIB_EXT=".dll"
-    dylib_undefined_allowed=no
-    is_cygwin=yes
-    main_ldflags="${wl}--large-address-aware ${wl}--stack=0xA00000"
     ;;
   darwin*)
     darwin_pic="-fPIC"
@@ -28403,7 +28389,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine CPICFLAGS." >&5
@@ -28416,7 +28402,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine FPICFLAGS." >&5
@@ -28429,7 +28415,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -28558,14 +28544,6 @@ fi
 else
   DYLIB_UNDEFINED_ALLOWED_TRUE='#'
   DYLIB_UNDEFINED_ALLOWED_FALSE=
-fi
-
- if test "x${is_cygwin}" = xyes; then
-  BUILD_CYGWIN_TRUE=
-  BUILD_CYGWIN_FALSE='#'
-else
-  BUILD_CYGWIN_TRUE='#'
-  BUILD_CYGWIN_FALSE=
 fi
 
 
@@ -29125,7 +29103,7 @@ _ACEOF
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
 ## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
-## Cygwin has rintl but not nearbyintl
+## Cygwin had rintl but not nearbyintl
 for ac_func in expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
@@ -41485,7 +41463,7 @@ esac
 : ${FCPICFLAGS="${fcpicflags}"}
 if test -z "${FCPICFLAGS}"; then
   case "${host_os}" in
-    aix*|cygwin*|irix*|mingw*|osf*)
+    aix*|irix*|mingw*|osf*)
       ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine FCPICFLAGS." >&5
@@ -46041,10 +46019,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${DYLIB_UNDEFINED_ALLOWED_TRUE}" && test -z "${DYLIB_UNDEFINED_ALLOWED_FALSE}"; then
   as_fn_error $? "conditional \"DYLIB_UNDEFINED_ALLOWED\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${BUILD_CYGWIN_TRUE}" && test -z "${BUILD_CYGWIN_FALSE}"; then
-  as_fn_error $? "conditional \"BUILD_CYGWIN\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_EXPORTFILES_TRUE}" && test -z "${USE_EXPORTFILES_FALSE}"; then
