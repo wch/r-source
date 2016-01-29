@@ -527,9 +527,12 @@
 
       \item \code{withCallingHandler()} now (again) handles warnings
       even during S4 generic's argument evaluation.  (\PR{16111})
-      
-      \item \code{deparse(..., control = "quoteExpressions")} 
+
+      \item \code{deparse(..., control = "quoteExpressions")}
       incorrectly quoted empty expressions.  (\PR{16686})
+
+      \item \code{format()}ting datetime objects (\code{"POSIX[cl]?t"})
+      could segfault or recycle wrongly.  (\PR{16685})
     }
   }
 }

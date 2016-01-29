@@ -1294,3 +1294,32 @@ stopifnot(all.equal(coef(flm), cf[,"tear"]),
                     cbind(rate = 3:2, additive = 3:4,
                           `rate:additive` = c(3L, 8L))))
 ## dummy.coef() were missing coefficients in R <= 3.2.3
+
+
+## format.POSIXlt() with modified 'zone' or length-2 format
+f0 <- "2016-01-28 01:23:45"; tz0 <- "Europe/Stockholm"
+d2 <- d1 <- rep(as.POSIXlt(f0, tz = tz0), 2)
+f1 <- format(d1, usetz=TRUE)
+d2$zone <- d1$zone[1] # length 1 instead of 2
+f2 <- format(d2, usetz=TRUE)## -> segfault
+f1.2 <- format(as.POSIXlt("2016-01-28 01:23:45"), format=c("%d", "%y"))# segfault
+stopifnot(
+    identical(f1, rep(paste(f0, "CET"), 2)),
+    identical(f2, rep(paste(f0,  tz0 ), 2)),
+    identical(f1.2, c("28", "16"))
+    )
+tims <- seq.POSIXt(as.POSIXct("2016-01-01"),
+		   as.POSIXct("2017-11-11"), by = as.difftime(pi, units="weeks"))
+form <- c("%m/%d/%y %H:%M:%S", "", "%Y-%m-%d %H:%M:%S")
+op <- options(warn = 2)# no warnings allowed
+head(rf1 <- format(tims, form)) # recycling was wrong
+head(rf2 <- format(tims, form[c(2,1,3)]))
+stopifnot(identical(rf1[1:3], c("01/01/16 00:00:00", "2016-01-22 23:47:15",
+				"2016-02-13 23:34:30")),
+	  identical(rf2[1:3], c("2016-01-01 00:00:00", "01/22/16 23:47:15",
+				rf1[3])),
+	  nchar(rf1) == rep(c(17,19,19), length = length(rf1)),
+	  nchar(rf2) == rep(c(19,17,19), length = length(rf2)))
+options(op)
+## Wrong-length 'zone' or short 'x' segfaulted -- PR#16685
+## Default 'format' setting sometimes failed for length(format) > 1
