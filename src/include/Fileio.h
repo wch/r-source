@@ -18,6 +18,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef RFILEIO_H_
 
 #define RFILEIO_H_

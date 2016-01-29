@@ -18,10 +18,10 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef GRAPHICS_H_
 #define GRAPHICS_H_
-
-/* This is a private header */
 
 #include <R_ext/Boolean.h>
 
@@ -30,8 +30,6 @@
 
 #define R_GRAPHICS 1
 #include <Rgraphics.h> /* RUnit */
-
-//typedef unsigned int rcolor;
 
 /* base.c, graphics.c, par.c */
 #define MAX_LAYOUT_ROWS 200

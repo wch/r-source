@@ -34,11 +34,6 @@
 *****************************************************/
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 #ifdef Win32
 #include <windows.h>
 #define CACHE_DLL_SYM 1
@@ -207,9 +202,5 @@ SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
 DL_FUNC R_ExternalPtrAddrFn(SEXP s);
 DL_FUNC R_dotCallFn(SEXP, SEXP, int);
 SEXP R_doDotCall(DL_FUNC, int, SEXP *, SEXP);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* ifdef R_DYNPRIV_H */

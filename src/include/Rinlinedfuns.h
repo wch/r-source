@@ -18,6 +18,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 /* this header is always to be included from others.
    It is only called if COMPILING_R is defined (in util.c) or
    from GNU C systems.

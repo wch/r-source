@@ -17,6 +17,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
 
 /*  This file was contributed by Ei-ji Nakama.
  *  See also the comments in  ../main/rlocale.c.

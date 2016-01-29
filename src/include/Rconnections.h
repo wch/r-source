@@ -17,6 +17,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef R_CONNECTIONS_H_
 #define R_CONNECTIONS_H_
 

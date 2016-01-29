@@ -17,6 +17,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
+/* Internal header, not installed */
+
 #ifndef R_PARSE_H
 #define R_PARSE_H
 
