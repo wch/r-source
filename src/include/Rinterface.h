@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015  The R Core Team.
+ *  Copyright (C) 1998--2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,16 +30,19 @@
 #define RINTERFACE_H_
 
 #ifdef __cplusplus
-#include <cstdio>
+# ifdef __SUNPRO_CC
+using std::FILE;
+# endif
+# include <cstdio>
 extern "C" {
 #else
-#include <stdio.h>
+# include <stdio.h>
 #endif
 
 #if defined(__GNUC__) && __GNUC__ >= 3
-#define NORET __attribute__((noreturn))
+# define NORET __attribute__((noreturn))
 #else
-#define NORET
+# define NORET
 #endif
 
 #include <R_ext/Boolean.h>
