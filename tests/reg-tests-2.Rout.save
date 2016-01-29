@@ -7783,3 +7783,9 @@ a = `?`(c, d)
 > quote(`=`(b, ?d))
 b = `?`(d)
 > 
+> ## dput() quoted the empty symbol (PR#16686)
+> a <- alist(one = 1, two = )
+> dput(a)
+structure(list(one = 1, two = ), .Names = c("one", "two"))
+> ## deparsed two to quote()
+> 

@@ -2995,3 +2995,8 @@ quote(`?`(`=`(a, b), `=`(c, d)))
 quote(`=`(a, c ? d))
 quote(`?`(a = b))
 quote(`=`(b, ?d))
+
+## dput() quoted the empty symbol (PR#16686)
+a <- alist(one = 1, two = )
+dput(a)
+## deparsed two to quote()
