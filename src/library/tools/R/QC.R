@@ -7101,6 +7101,11 @@ function(dir)
         return(out)
     }
 
+    size <- Sys.getenv("_R_CHECK_SIZE_OF_TARBALL_",
+                       unset = NA_character_)
+    if(!is.na(size) && (as.integer(size) > 5000000))
+        out$size_of_tarball <- size
+
     ## Checks from this point down should be for a package already on CRAN
 
     ## For now, there should be no duplicates ...
@@ -7430,7 +7435,9 @@ function(x, ...)
             },
             if(length(x$old_date)) {
                 "The Date field is over a month old."
-            }))
+            })),
+      if(length(y <- x$size_of_tarball))
+          paste("Size of tarball:", y, "bytes")
       )
 }
 

@@ -4637,6 +4637,8 @@ setRlibs <-
                 summaryLog(Log)
                 do_exit(1L)
             }
+            size <- file.info(pkg)$size
+            Sys.setenv("_R_CHECK_SIZE_OF_TARBALL_" = size)
             ## this assumes foo_x.y.tar.gz unpacks to foo, but we are about
             ## to test that.
             pkg <- file.path(dir, pkgname0)
