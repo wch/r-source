@@ -382,10 +382,10 @@
       \item When \R{} headers such as \file{R.h} and \file{Rmath.h} are
       called from C++ code in packages they include the C++ versions of
       system headers such as \file{<cmath>} rather than the legacy
-      headers such as \file{<math.h>}.  (Header \file{Rinternals.h}
-      already did, and inclusion of system headers can still be
-      circumvented by defining \code{NO_C_HEADERS}, including as from
-      this version for \file{Rinternals.h}.)
+      headers such as \file{<math.h>}.  (Headers \file{Rinternals.h} and
+      \file{Rinterface.h} already did, and inclusion of system headers
+      can still be circumvented by defining \code{NO_C_HEADERS},
+      including as from this version for those two headers.)
 
       The manual has long said that \R{} headers should \bold{not} be
       included within an \code{extern "C"} block, and almost all the

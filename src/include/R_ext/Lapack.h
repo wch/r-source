@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2015 The R Core Team.
+ *  Copyright (C) 2003-2016 The R Core Team.
  *  Copyright (C) 2008   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,11 +36,6 @@
 #include <R_ext/Complex.h>	/* for Rcomplex */
 #include <R_ext/BLAS.h>
 
-/* The LAPACK version: might change after installation with
-   external LAPACK
-*/
-extern void F77_NAME(ilaver)(int *major, int *minor, int *patch);
-
 
 /*
   LAPACK function names are [dz]<name>(), where d denotes the real
@@ -51,6 +46,11 @@ extern void F77_NAME(ilaver)(int *major, int *minor, int *patch);
 #ifdef	__cplusplus
 extern "C" {
 #endif
+
+/* The LAPACK version: might change after installation with
+   external LAPACK
+*/
+extern void F77_NAME(ilaver)(int *major, int *minor, int *patch);
 
 // Never defined by R itself.
 #ifndef La_extern

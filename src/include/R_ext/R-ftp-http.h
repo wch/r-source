@@ -29,7 +29,11 @@
 */
 /* required by C99/C11 */
 #ifndef NO_C_HEADERS
-# include <stdint.h>
+# ifdef __cplusplus
+#  include <cstdint>
+# else
+#  include <stdint.h>
+# endif
 #endif
 typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 

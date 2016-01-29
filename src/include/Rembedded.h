@@ -23,11 +23,11 @@
 #ifndef REMBEDDED_H_
 #define REMBEDDED_H_
 
+#include <R_ext/Boolean.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <R_ext/Boolean.h>
 
 extern int Rf_initEmbeddedR(int argc, char *argv[]);
 extern void Rf_endEmbeddedR(int fatal);

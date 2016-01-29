@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2014    The R Core Team
+ *  Copyright (C) 1998-2016    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,11 +22,11 @@
 #ifndef R_RANDOM_H
 #define R_RANDOM_H
 
+#include <R_ext/Boolean.h>
+
 #ifdef  __cplusplus
 extern "C" {
 #endif
-
-#include <R_ext/Boolean.h>
 
 typedef enum {
     WICHMANN_HILL,

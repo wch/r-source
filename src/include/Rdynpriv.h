@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-12  The R Core Team.
+ *  Copyright (C) 2001-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 /*****************************************************
  These are internal routines and definitions subject
  to unannounced changes. Do not use for packages, etc.
+ (The header is not installed.)
  
  There is a great deal of repetition in the definitions 
  of the user-level method definitions and in the internal
