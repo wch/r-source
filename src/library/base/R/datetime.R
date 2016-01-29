@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -162,21 +162,22 @@ length.POSIXlt <- function(x) length(x[[1L]])
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXlt")) stop("wrong class")
-    if(format == "") {
+    if(any(f0 <- format == "")) {
         ## need list [ method here.
-        times <- unlist(unclass(x)[1L:3L])
-        secs <- x$sec; secs <- secs[!is.na(secs)]
+	times <- unlist(unclass(x)[1L:3L])[f0]
+	secs <- x$sec[f0]; secs <- secs[!is.na(secs)]
         np <- getOption("digits.secs")
-        if(is.null(np)) np <- 0L else np <- min(6L, np)
+        np <- if(is.null(np)) 0L else min(6L, np)
         if(np >= 1L)
             for (i in seq_len(np)- 1L)
                 if(all( abs(secs - round(secs, i)) < 1e-6 )) {
                     np <- i
                     break
                 }
-        format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
-        else if(np == 0L) "%Y-%m-%d %H:%M:%S"
-        else paste0("%Y-%m-%d %H:%M:%OS", np)
+	format[f0] <-
+	    if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
+	    else if(np == 0L) "%Y-%m-%d %H:%M:%S"
+	    else paste0("%Y-%m-%d %H:%M:%OS", np)
     }
     ## <FIXME>
     ## Move names handling to C code eventually ...
