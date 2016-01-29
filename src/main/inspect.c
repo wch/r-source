@@ -84,10 +84,10 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
        It is invalid on 64-bit Windows.
     */
 #ifdef _WIN64
-    Rprintf("@%p %02d %s g%dc%d [", v, TYPEOF(v), typename(v), 
+    Rprintf("@%p %02d %s g%dc%d [", v, TYPEOF(v), typename(v),
 	    v->sxpinfo.gcgen, v->sxpinfo.gccls);
 #else
-    Rprintf("@%lx %02d %s g%dc%d [", (long) v, TYPEOF(v), typename(v), 
+    Rprintf("@%lx %02d %s g%dc%d [", (long) v, TYPEOF(v), typename(v),
 	    v->sxpinfo.gcgen, v->sxpinfo.gccls);
 #endif
     if (OBJECT(v)) { a = 1; Rprintf("OBJ"); }
@@ -103,9 +103,9 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     if (TYPEOF(v) == SYMSXP || TYPEOF(v) == LISTSXP) {
 	if (IS_ACTIVE_BINDING(v)) { if (a) Rprintf(","); Rprintf("AB"); a = 1; }
 	if (BINDING_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
-    }    
+    }
     if (TYPEOF(v) == ENVSXP) {
-        if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
+	if (FRAME_IS_LOCKED(v)) { if (a) Rprintf(","); Rprintf("LCK"); a = 1; }
 	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
     }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
@@ -119,7 +119,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     if (TYPEOF(v) == ENVSXP) /* NOTE: this is not a trivial OP since it involves looking up things
 				in the environment, so for a low-level debugging we may want to
 				avoid it .. */
-        PrintEnvironment(v);
+	PrintEnvironment(v);
     if (TYPEOF(v) == CHARSXP) {
 	if (IS_BYTES(v)) Rprintf("[bytes] ");
 	if (IS_LATIN1(v)) Rprintf("[latin1] ");
@@ -202,7 +202,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 			pp(pre + 2);
 			Rprintf("TAG: "); /* TAG should be a one-liner since it's a symbol so we don't put it on an extra line*/
 			inspect_tree(0, TAG(lc), deep - 1, pvec);
-		    }		  
+		    }
 		    inspect_tree(pre + 2, CAR(lc), deep - 1, pvec);
 		    lc = CDR(lc);
 		}
@@ -220,7 +220,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 		inspect_tree(pre+2, HASHTAB(v), deep - 1, pvec);
 	    }
 	    break;
-	    
+
 	case CLOSXP:
 	    pp(pre); Rprintf("FORMALS:\n");
 	    inspect_tree(pre+2, FORMALS(v), deep - 1, pvec);
@@ -230,7 +230,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    inspect_tree(pre+2, CLOENV(v), 0, pvec);
 	    break;
 	}
-    
+
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue && TYPEOF(v) != CHARSXP) {
 	pp(pre); Rprintf("ATTRIB:\n"); inspect_tree(pre+2, ATTRIB(v), deep, pvec);
     }
@@ -249,7 +249,7 @@ SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
 	if (CDDR(args) != R_NilValue)
 	    pvec = asInteger(CADDR(args));
     }
-	
+
     inspect_tree(0, CAR(args), deep, pvec);
     return obj;
 }

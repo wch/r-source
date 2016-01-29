@@ -111,7 +111,7 @@ void R_CheckStack2(size_t extra)
     int dummy;
     intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy);
 
-    /* do it this way, as some compilers do usage + extra 
+    /* do it this way, as some compilers do usage + extra
        in unsigned arithmetic */
     usage += extra;
     if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))
@@ -342,7 +342,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 
     if(w >= 2) { /* make it an error */
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
-        RprintTrunc(buf);
+	RprintTrunc(buf);
 	inWarning = 0; /* PR#1570 */
 	errorcall(call, _("(converted from warning) %s"), buf);
     }
@@ -352,12 +352,12 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	} else dcall = "";
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-        RprintTrunc(buf);
+	RprintTrunc(buf);
 
 	if(dcall[0] == '\0') REprintf(_("Warning:"));
 	else {
 	    REprintf(_("Warning in %s :"), dcall);
-	    if(!(noBreakWarning || 
+	    if(!(noBreakWarning ||
 		 ( mbcslocale && 18 + wd(dcall) + wd(buf) <= LONGWARN) ||
 		 (!mbcslocale && 18 + strlen(dcall) + strlen(buf) <= LONGWARN)))
 		REprintf("\n ");
@@ -373,9 +373,9 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	if(R_CollectWarnings < R_nwarnings) {
 	    SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
 	    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-            RprintTrunc(buf);
+	    RprintTrunc(buf);
 	    if(R_ShowWarnCalls && call != R_NilValue) {
-		char *tr =  R_ConciseTraceback(call, 0); 
+		char *tr =  R_ConciseTraceback(call, 0);
 		size_t nc = strlen(tr);
 		if (nc && nc + (int)strlen(buf) + 8 < BUFSIZE) {
 		    strcat(buf, "\n");
@@ -457,7 +457,7 @@ void PrintWarnings(void)
     cntxt.cend = &cleanup_PrintWarnings;
 
     inPrintWarnings = 1;
-    header = ngettext("Warning message:", "Warning messages:", 
+    header = ngettext("Warning message:", "Warning messages:",
 		      R_CollectWarnings);
     if( R_CollectWarnings == 1 ) {
 	REprintf("%s\n", header);
@@ -467,7 +467,7 @@ void PrintWarnings(void)
 	else {
 	    const char *dcall, *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, 0)), 0));
-            REprintf(_("In %s :"), dcall);
+	    REprintf(_("In %s :"), dcall);
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(msg, '\n');
@@ -494,8 +494,8 @@ void PrintWarnings(void)
 	    } else {
 		const char *dcall, *msg = CHAR(STRING_ELT(names, i));
 		dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, i)), 0));
-		REprintf("%d: ", i + 1); 
-		REprintf(_("In %s :"), dcall); 
+		REprintf("%d: ", i + 1);
+		REprintf(_("In %s :"), dcall);
 		if (mbcslocale) {
 		    int msgline1;
 		    char *p = strchr(msg, '\n');
@@ -505,27 +505,27 @@ void PrintWarnings(void)
 			*p = '\n';
 		    } else msgline1 = wd(msg);
 		    if (10 + wd(dcall) + msgline1 > LONGWARN) {
-			REprintf("\n "); 
-                    }
+			REprintf("\n ");
+		    }
 		} else {
 		    size_t msgline1 = strlen(msg);
 		    char *p = strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
 		    if (10 + strlen(dcall) + msgline1 > LONGWARN) {
-			REprintf("\n "); 
-                    }
+			REprintf("\n ");
+		    }
 		}
 		REprintf(" %s\n", msg);
 	    }
 	}
     } else {
 	if (R_CollectWarnings < R_nwarnings)
-	    REprintf(ngettext("There was %d warning (use warnings() to see it)", 
-			      "There were %d warnings (use warnings() to see them)", 
-			      R_CollectWarnings), 
+	    REprintf(ngettext("There was %d warning (use warnings() to see it)",
+			      "There were %d warnings (use warnings() to see them)",
+			      R_CollectWarnings),
 		     R_CollectWarnings);
 	else
-	    REprintf(_("There were %d or more warnings (use warnings() to see the first %d)"), 
+	    REprintf(_("There were %d or more warnings (use warnings() to see the first %d)"),
 		     R_nwarnings, R_nwarnings);
 	REprintf("\n");
     }
@@ -630,28 +630,28 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	SEXP opt = GetOption1(install("show.error.locations"));
 	if (!isNull(opt)) {
 	    if (TYPEOF(opt) == STRSXP && length(opt) == 1) {
-	    	if (pmatch(ScalarString(mkChar("top")), opt, 0)) skip = 0;
-	    	else if (pmatch(ScalarString(mkChar("bottom")), opt, 0)) skip = -1;
+		if (pmatch(ScalarString(mkChar("top")), opt, 0)) skip = 0;
+		else if (pmatch(ScalarString(mkChar("bottom")), opt, 0)) skip = -1;
 	    } else if (TYPEOF(opt) == LGLSXP)
-	    	skip = asLogical(opt) == 1 ? 0 : NA_INTEGER;
+		skip = asLogical(opt) == 1 ? 0 : NA_INTEGER;
 	    else
-	    	skip = asInteger(opt);
+		skip = asInteger(opt);
 	}
 
 	const char *dcall = CHAR(STRING_ELT(deparse1s(call), 0));
-	snprintf(tmp2, BUFSIZE,  "%s", head); 
+	snprintf(tmp2, BUFSIZE,  "%s", head);
 	if (skip != NA_INTEGER) {
 	    PROTECT(srcloc = GetSrcLoc(R_GetCurrentSrcref(skip)));
 	    protected++;
 	    len = strlen(CHAR(STRING_ELT(srcloc, 0)));
 	    if (len)
-		snprintf(tmp2, BUFSIZE,  _("Error in %s (from %s) : "), 
+		snprintf(tmp2, BUFSIZE,  _("Error in %s (from %s) : "),
 			 dcall, CHAR(STRING_ELT(srcloc, 0)));
 	}
 
 	Rvsnprintf(tmp, min(BUFSIZE, R_WarnLength) - strlen(head), format, ap);
 	if (strlen(tmp2) + strlen(tail) + strlen(tmp) < BUFSIZE) {
-	    if(len) snprintf(errbuf, BUFSIZE,  
+	    if(len) snprintf(errbuf, BUFSIZE,
 			     _("Error in %s (from %s) : "),
 			     dcall, CHAR(STRING_ELT(srcloc, 0)));
 	    else snprintf(errbuf, BUFSIZE,  _("Error in %s : "), dcall);
@@ -689,7 +689,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     if(*p != '\n') strcat(errbuf, "\n");
 
     if(R_ShowErrorCalls && call != R_NilValue) {  /* assume we want to avoid deparse */
-	tr = R_ConciseTraceback(call, 0); 
+	tr = R_ConciseTraceback(call, 0);
 	size_t nc = strlen(tr);
 	if (nc && nc + strlen(errbuf) + 8 < BUFSIZE) {
 	    strcat(errbuf, _("Calls:"));
@@ -1368,7 +1368,7 @@ SEXP R_GetTraceback(int skip)
 		skip--;
 	    else {
 		SETCAR(t, deparse1(c->call, 0, DEFAULTDEPARSE));
-		if (c->srcref && !isNull(c->srcref)) 
+		if (c->srcref && !isNull(c->srcref))
 		    setAttrib(CAR(t), R_SrcrefSymbol, duplicate(c->srcref));
 		t = CDR(t);
 	    }
@@ -1380,13 +1380,13 @@ SEXP R_GetTraceback(int skip)
 SEXP attribute_hidden do_traceback(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int skip;
-    
+
     checkArity(op, args);
     skip = asInteger(CAR(args));
-    
+
     if (skip == NA_INTEGER || skip < 0 )
-    	error(_("invalid '%s' value"), "skip");
-    	
+	error(_("invalid '%s' value"), "skip");
+
     return R_GetTraceback(skip);
 }
 
@@ -1886,7 +1886,7 @@ do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(orig_value);
 }
 
-/* These functions are to be used in error messages, and available for others to use in the API 
+/* These functions are to be used in error messages, and available for others to use in the API
    GetCurrentSrcref returns the first non-NULL srcref after skipping skip of them.  If it
    doesn't find one it returns NULL. */
 
@@ -1896,38 +1896,37 @@ R_GetCurrentSrcref(int skip)
     RCNTXT *c = R_GlobalContext;
     SEXP srcref = R_Srcref;
     if (skip < 0) { /* to count up from the bottom, we need to count them all first */
-    	while (c) {
-    	    if (srcref && srcref != R_NilValue) 
+	while (c) {
+	    if (srcref && srcref != R_NilValue)
 		skip++;
-    	    srcref = c->srcref;
-    	    c = c->nextcontext;
-    	};
-    	if (skip < 0) return R_NilValue; /* not enough there */
-    	c = R_GlobalContext;
-    	srcref = R_Srcref;
+	    srcref = c->srcref;
+	    c = c->nextcontext;
+	};
+	if (skip < 0) return R_NilValue; /* not enough there */
+	c = R_GlobalContext;
+	srcref = R_Srcref;
     }
     while (c && (skip || !srcref || srcref == R_NilValue)) {
-    	if (srcref && srcref != R_NilValue) 
+	if (srcref && srcref != R_NilValue)
 	    skip--;
-    	srcref = c->srcref;
-    	c = c->nextcontext;
+	srcref = c->srcref;
+	c = c->nextcontext;
     }
     if (skip || !srcref)
-    	srcref = R_NilValue;
+	srcref = R_NilValue;
     return srcref;
 }
 
 /* Return the filename corresponding to a srcref, or "" if none is found */
 
-SEXP 
+SEXP
 R_GetSrcFilename(SEXP srcref)
 {
     SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
-    if (TYPEOF(srcfile) != ENVSXP) 
-    	return ScalarString(mkChar(""));
-    srcfile = findVar(install("filename"), srcfile);	
+    if (TYPEOF(srcfile) != ENVSXP)
+	return ScalarString(mkChar(""));
+    srcfile = findVar(install("filename"), srcfile);
     if (TYPEOF(srcfile) != STRSXP)
-        return ScalarString(mkChar(""));
+	return ScalarString(mkChar(""));
     return srcfile;
 }
-

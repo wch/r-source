@@ -4965,7 +4965,7 @@ JAVA_LIBS="-framework JavaVM"
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_72.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
