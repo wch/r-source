@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/tests/Makefile.common
 
-## If you add test scripts here, review src/library/tools/R/testing.R
+## If you add test scripts here, review  ../src/library/tools/R/testing.R
 
 test-src-gct = \
 	eval-etc.R \
@@ -12,7 +12,6 @@ test-src-gct = \
 	lm-tests.R \
 	ok-errors.R \
 	method-dispatch.R \
-	array-subset.R \
 	any-all.R
 test-src-strict-1 = \
 	$(test-src-gct) \
@@ -44,7 +43,8 @@ test-src-random = p-r-random-tests.R
 test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
-test-src-reg-1 = reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-2.R \
+test-src-reg-1 = array-subset.R \
+  reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-BLAS.R
 ## added to in Makefile.win
