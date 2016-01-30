@@ -1,6 +1,6 @@
 % File src/library/stats/man/Hypergeometric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Hypergeometric}
@@ -28,7 +28,7 @@ rhyper(nn, m, n, k)
   \item{n}{the number of black balls in the urn.}
   \item{k}{the number of balls drawn from the urn.}
   \item{p}{probability, it must be between 0 and 1.}
-  \item{nn}{number of observations. If \code{length(nn) > 1}, the length
+  \item{nn}{number of observations.  If \code{length(nn) > 1}, the length
     is taken to be the number required.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -44,8 +44,8 @@ rhyper(nn, m, n, k)
 
   The length of the result is determined by \code{n} for
   \code{rhyper}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -60,8 +60,23 @@ rhyper(nn, m, n, k)
   }{p(x) =      choose(m, x) choose(n, k-x) / choose(m+n, k)}
   for \eqn{x = 0, \ldots, k}.
 
+  Note that \eqn{p(x)} is non-zero only for
+  \eqn{\max(0, k-n) \le x \le \min(k, m)}{max(0, k-n) <= x <= min(k, m)}.
+
+  With \eqn{p := m/(m+n)} (hence \eqn{Np = N \times p} in the
+  reference's notation), the first two moments are mean
+  \deqn{E[X] = \mu = k p} and variance
+  \deqn{\mbox{Var}(X) = k p (1 - p) \frac{m+n-k}{m+n-1},}{%
+               Var(X) = k p (1 - p) * (m+n-k)/(m+n-1),}
+  which shows the closeness to the Binomial\eqn{(k,p)} (where the
+  hypergeometric has smaller variance unless \eqn{k = 1}).
+
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
+
+  If one of \eqn{m, n, k}, exceeds \code{\link{.Machine}$integer.max},
+  currently the equivalent of \code{qhyper(runif(nn), m,n,k)} is used,
+  when a binomial approximation may be considerably more efficient.
 }
 \source{
   \code{dhyper} computes via binomial probabilities, using code

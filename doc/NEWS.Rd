@@ -272,6 +272,9 @@
       adjacent.  The return value includes extra partitioning
       information on the groups. The implementation came included with
       the new radix sort.
+
+      \item \code{rhyper(nn, m,n,k)} no longer returns \code{NA} when
+      one of the three parameters exceeds the maximal integer.
     }
   }
 
