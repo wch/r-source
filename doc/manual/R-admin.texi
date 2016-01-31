@@ -1207,15 +1207,16 @@ make rsync-recommended
 The binary distributions of external software.  Download
 
 @example
-https://www.stats.ox.ac.uk/pub/Rtools/goodies/multilib/local320.zip
+https://www.stats.ox.ac.uk/pub/Rtools/goodies/multilib/local323.zip
 @end example
 
 @noindent
-create an empty directory, say @file{c:/R/extsoft}, and unpack it in
+(or a more recent version if appropriate), create an empty directory, 
+say @file{c:/R/extsoft}, and unpack it in
 that directory by e.g.@:
 
 @example
-unzip local320.zip -d c:/R/extsoft
+unzip local323.zip -d c:/R/extsoft
 @end example
 
 @item
