@@ -1,6 +1,6 @@
 % File src/library/base/man/setTimeLimit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setTimeLimit}
@@ -17,8 +17,8 @@ setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
 setSessionTimeLimit(cpu = Inf, elapsed = Inf)
 }
 \arguments{
-  \item{cpu}{double.  Limit on total cpu time.}
-  \item{elapsed}{double.  Limit on elapsed time.}
+  \item{cpu, elapsed}{double (of length one).  Set a limit on
+    the total or elapsed cpu time in seconds, respectively.}
   \item{transient}{logical.  If \code{TRUE}, the limits apply only to
     the rest of the current computation.}
 }
