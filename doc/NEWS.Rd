@@ -536,6 +536,8 @@
 
       \item \code{format()}ting datetime objects (\code{"POSIX[cl]?t"})
       could segfault or recycle wrongly.  (\PR{16685})
+
+      \item \code{plot.ts(<matrix>, las = 1)} now does use \code{las}.
     }
   }
 }

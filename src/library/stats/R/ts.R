@@ -495,10 +495,10 @@ plot.ts <-
 		do.xax <- i %% nr == 0 || i == nser
 		if(axes) {
 		    axis(y.side, xpd = NA, cex.axis = cex.axis,
-                         col.axis = col.axis, font.axis = font.axis)
+			 col.axis = col.axis, font.axis = font.axis, ...)
 		    if(do.xax)
 			axis(1, xpd = NA, cex.axis = cex.axis,
-                             col.axis = col.axis, font.axis = font.axis)
+			     col.axis = col.axis, font.axis = font.axis, ...)
 		}
 		if(ann) {
 		    mtext(nm[i], y.side, line=3, cex=cex.lab, col=col.lab,
