@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -62,15 +62,16 @@ OlsonNames()
   affiliation between major time zones, have opted out of (or in to) DST
   in various years or adopted DST rule changes late or not at all.
   
-  A quite common system implementation of \code{POSIXct} is as
-  signed 32-bit integers and so only goes back to the end of 1901: on
-  such systems \R assumes that dates prior to that are in the same time
-  zone as they were in 1902.  Most of the world had not adopted time
-  zones by 1902 (so used local \sQuote{mean time} based on longitude)
-  but for a few places there had been time-zone changes before then.
-  64-bit representations are becoming common; unfortunately on some
-  64-bit OSes (notably OS X) the database information is only available
-  for the range 1901--2038, and incompletely for the end years.
+  A quite common system implementation of \code{POSIXct} is as signed
+  32-bit integers and so only goes back to the end of 1901: on such
+  systems \R assumes that dates prior to that are in the same time zone
+  as they were in 1902.  Most of the world had not adopted time zones by
+  1902 (so used local \sQuote{mean time} based on longitude) but for a
+  few places there had been time-zone changes before then.  64-bit
+  representations are becoming common; unfortunately on some 64-bit OSes
+  (notably OS X) the database information is 32-bit and so only
+  available for the range 1901--2038, and incompletely for the end
+  years.
 }
 
 \value{
@@ -117,9 +118,9 @@ OlsonNames()
   The abbreviations used have changed over the years: for example France
   used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to 1911 then
   \samp{WET/WEST} up to 1940 and \samp{CET/CEST} from 1946.  (In almost
-  all time zones they have been stable since 1970.)  The POSIX standard
-  allows only one or two abbreviations per time zone, so you may see the
-  current abbreviation(s) used for older times.
+  all time zones the abbreviations have been stable since 1970.)  The
+  POSIX standard allows only one or two abbreviations per time zone, so
+  you may see the current abbreviation(s) used for older times.
   
   The function \code{OlsonNames} returns the time-zone names known to
   the Olson/IANA database on the current system. The system-specific
@@ -161,6 +162,21 @@ OlsonNames()
   before the switch to a standard time.  For example, Paris codified its
   LMT as \sQuote{Paris Mean Time} in 1891 (to be used throughout
   mainland France) and switched to \samp{GMT+0} in 1911.
+}
+
+\section{Warning}{
+%% glibc and OS X have _POSIX_TZNAME_MAX and define it as 6.
+%% Earlier versions of R's code assumed 10, and it was discovered
+%% that some implemntations did not abbreviate unusual names, thereby
+%% exceeding this.
+%% Olson's tzcode has a limit of 255 and does not check: this has been
+%% corrected in R's copy.
+%% sysconf(_SC_TZNAME_MAX) might allow it to be checked:
+%% that gives 27 on OS X.  However, seems it is dynamic on glibc.
+  There is a system-specific upper limit on the number of bytes in
+  (abbreviated) time-zone names which can be as low as 6 (as required by
+  POSIX).  Some OSes allow the setting of time zones with names which
+  exceed their limit, and that can crash the \R session.
 }
 
 \note{
