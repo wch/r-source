@@ -2361,9 +2361,11 @@ case "${host_os}" in
     [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
 #include <stdlib.h>
+/* This might get optimized out if not used */
 extern void * __libc_stack_end;
 
 int main () {
+    if(!__libc_stack_end) exit(1);
     exit(0);
 }
   ]])], [r_cv_libc_stack_end=yes], [r_cv_libc_stack_end=no], 
