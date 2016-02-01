@@ -4515,6 +4515,18 @@ way to make use of these functions which works with all C++ compilers
 currently in use on @R{} platforms: use @R{}'s versions such as
 @code{ISNAN} and @code{R_FINITE} instead.
 
+If you must use them in C++11, beware that some
+compilers@footnote{E.g. @command{gcc 5.3} in C++11 mode.} provide both
+@code{std::isnan} and @code{::isnan}, so using
+
+@example
+using namespace std;
+@end example
+
+@noindent
+may cause `overloading ambiguity' and you must use @code{std::isnan}
+@emph{etc} explicitly.
+
 It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
 
@@ -4582,9 +4594,9 @@ The most common issue involves the names of the Intel CPU registers such
 as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
 (and more with longer abbreviations) defined on i586/x64 Solaris in
 @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
-and other core headers.  Further examples are @code{ERR}, and @code{I}
-which is defined in Solaris' @file{<complex.h>} as a compiler intrinsic
-for the imaginary unit.
+and other core headers.  Further examples are @code{ERR}, @code{zero}
+and @code{I} (which is defined in Solaris' @file{<complex.h>} as a
+compiler intrinsic for the imaginary unit).
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package: an
