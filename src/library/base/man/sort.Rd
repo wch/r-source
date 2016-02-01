@@ -107,7 +107,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   (but unlike quick sort, radix is stable and supports all
   \code{na.last} options). The implementation is order of magnitudes
   faster than shell sort for character vectors, in part thanks to clever
-  use of the internal CHARSXP table.
+  use of the internal \code{CHARSXP} table.
 
   However, there are some caveats with the radix sort:
   \itemize{

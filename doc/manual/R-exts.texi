@@ -4477,7 +4477,7 @@ of C/C++ code.  Compilers from the GCC, @command{clang}, Intel and
 Solaris Studio suites are routinely used with @R{}, and both
 @command{clang} and Solaris have more than one implementation of C++
 headers and library.  The range of possibilities makes comprehensive
-empirical checking impossible, and regretably compilers are patchy at
+empirical checking impossible, and regrettably compilers are patchy at
 best on warning about non-standard code.
 
 @itemize

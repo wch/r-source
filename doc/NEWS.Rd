@@ -447,7 +447,7 @@
       \item \code{dummy.coef.lm()} now works in more cases, thanks to a
       proposal by Werner Stahel (\PR{16665}).  In addition, it now works
       for multivariate linear models (\code{"mlm"}, \code{\link{manova}})
-      thanks to a propsal by Daniel Wollschlaeger.
+      thanks to a proposal by Daniel Wollschlaeger.
       % port to r-patched
     }
   }
