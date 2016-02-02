@@ -676,7 +676,7 @@ function(x, style = "text", .bibstyle = NULL,
                                          fragment = TRUE,
                                          permissive = TRUE)
                    rd <- tools:::processRdSexprs(rd,
-                                                 "render",
+                                                 "build",
                                                  macros = attr(rd, "macros"))
                    f(rd, fragment = TRUE, out = out, ...)
                    paste(readLines(out), collapse = "\n")
