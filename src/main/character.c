@@ -347,44 +347,13 @@ do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-// return TRUE iff CHARSXP x starts with CHARSXP pre
-static int str_startsWith(SEXP x, SEXP pre)
-{
-    cetype_t ienc = getCharCE(x);
-    const char *cx = CHAR(x);
-    int p_len = R_nchar(pre, Chars, FALSE, FALSE, "startWith(, prefix)");
-    if (p_len == 0) return 1;
-    /* Cheap (but short) implementation, using substr() and Seql() : */
-    /* This was p_len+1, but that is in characters not bytes */
-    char *buf = R_AllocStringBuffer(MB_CUR_MAX * p_len + 1, &cbuff);
-    int slen = (int) strlen(cx),
-	stop = (p_len > slen) ? slen : p_len;
-    substr(buf, cx, ienc, 1, stop);
-    return Seql(mkCharCE(buf, ienc), pre);
-}
-
-// return TRUE iff CHARSXP x ends with CHARSXP suffix
-static int str_endsWith(SEXP x, SEXP suffix)
-{
-    cetype_t ienc = getCharCE(x);
-    const char *cx = CHAR(x);
-    int p_len = R_nchar(suffix, Chars, FALSE, FALSE, "endsWith(, suffix)");
-    if (p_len == 0) return 1;
-    int x_len = R_nchar(x, Chars, FALSE, FALSE, "endsWith(x, )");
-    if (p_len > x_len) return 0;
-    /* Cheap (but short) implementation, using substr() and Seql() : */
-    /* This was p_len+1, but that is in characters not bytes */
-    char *buf = R_AllocStringBuffer(MB_CUR_MAX * p_len + 1, &cbuff);
-    substr(buf, cx, ienc, x_len - p_len + 1, x_len);
-    return Seql(mkCharCE(buf, ienc), suffix);
-}
-
 // .Internal( startsWith(x, prefix) )  and
 // .Internal( endsWith  (x, suffix) )
 SEXP attribute_hidden
 do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+
     SEXP x = CAR(args), Xfix = CADR(args); // 'prefix' or 'suffix'
     if (!isString(x) || !isString(Xfix))
 	error(_("non-character object(s)"));
@@ -392,27 +361,90 @@ do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 	n1 = XLENGTH(x),
 	n2 = XLENGTH(Xfix),
 	n = (n1 > 0 && n2 > 0) ? ((n1 >= n2) ? n1 : n2) : 0;
+    if (n == 0) return allocVector(LGLSXP, 0);
     SEXP ans = PROTECT(allocVector(LGLSXP, n));
-    if (n > 0) {
+
+    typedef const char * cp;
+    if (n2 == 1) { // optimize the most common case
+	SEXP el = STRING_ELT(Xfix, 0);
+	if (el == NA_STRING) {
+	    for (R_xlen_t i = 0; i < n1; i++)
+		LOGICAL(ans)[i] = NA_LOGICAL;
+	} else {
+	    // ASCII matching will do for ASCII Xfix except in non-UTF-8 MBCS
+	    Rboolean need_translate = TRUE;
+	    if (strIsASCII(CHAR(el)) && (utf8locale || !mbcslocale)) 
+		need_translate = FALSE;
+	    cp y0 = need_translate ? translateCharUTF8(el) : CHAR(el);
+	    int ylen = (int) strlen(y0);
+	    for (R_xlen_t i = 0; i < n1; i++) {
+		SEXP el = STRING_ELT(x, i);
+		if (el == NA_STRING) {
+		    LOGICAL(ans)[i] = NA_LOGICAL;
+		} else {
+		    cp x0 = need_translate ? translateCharUTF8(el) : CHAR(el);
+		    if(PRIMVAL(op) == 0) { // startsWith
+			LOGICAL(ans)[i] = strncmp(x0, y0, ylen) == 0;
+		    } else { // endsWith
+			int off = (int)strlen(x0) - ylen;
+			if (off < 0)
+			    LOGICAL(ans)[i] = 0;
+			else {
+			    LOGICAL(ans)[i] = memcmp(x0 + off, y0, ylen) == 0;
+			}
+		    }
+		}
+	    }
+	}
+    } else { // n2 > 1
+	// convert both inputs to UTF-8
+	cp *x0 = (cp *) R_alloc(n1, sizeof(char *));
+	cp *y0 = (cp *) R_alloc(n2, sizeof(char *));
+	// and record lengths, -1 for NA
+	int *x1 = (int *) R_alloc(n1, sizeof(int *));
+	int *y1 = (int *) R_alloc(n2, sizeof(int *));
+	for (R_xlen_t i = 0; i < n1; i++) {
+	    SEXP el = STRING_ELT(x, i);
+	    if (el == NA_STRING)
+		x1[i] = -1;
+	    else {
+		x0[i] = translateCharUTF8(el);
+		x1[i] = (int) strlen(x0[i]);
+	    }
+	}
+	for (R_xlen_t i = 0; i < n2; i++) {
+	    SEXP el = STRING_ELT(Xfix, i);
+	    if (el == NA_STRING)
+		y1[i] = -1;
+	    else {
+		y0[i] = translateCharUTF8(el);
+		y1[i] = (int) strlen(y0[i]);
+	    }
+	}
 	R_xlen_t i, i1, i2;
-	SEXP x_i, Xfix_i;
 	if(PRIMVAL(op) == 0) { // 0 = startsWith, 1 = endsWith
 	    MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-		    x_i   = STRING_ELT(x,   i1);
-		    Xfix_i = STRING_ELT(Xfix, i2);
-		    if (x_i == NA_STRING || Xfix_i == NA_STRING)
+		    if (x1[i1] < 0 || y1[i2] < 0)
 			LOGICAL(ans)[i] = NA_LOGICAL;
-		    else
-			LOGICAL(ans)[i] = str_startsWith(x_i, Xfix_i);
+		    else if (x1[i1] < y1[i2])
+			LOGICAL(ans)[i] = 0;
+		    else // memcmp should be faster than strncmp
+			LOGICAL(ans)[i] = 
+			    memcmp(x0[i1], y0[i2], y1[i2]) == 0;
 		});
 	} else { // endsWith
 	    MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-		    x_i      = STRING_ELT(x,      i1);
-		    Xfix_i = STRING_ELT(Xfix, i2);
-		    if (x_i == NA_STRING || Xfix_i == NA_STRING)
+		    if (x1[i1] < 0 || y1[i2] < 0)
 			LOGICAL(ans)[i] = NA_LOGICAL;
-		    else
-			LOGICAL(ans)[i] = str_endsWith(x_i, Xfix_i);
+		    else {
+			int off = x1[i1] - y1[i2];
+			if (off < 0)
+			    LOGICAL(ans)[i] = 0;
+			else {
+			    LOGICAL(ans)[i] = 
+				memcmp(x0[i1] + off, y0[i2], y1[i2]) == 0;
+			}
+		    }
 		});
 	}
     }
