@@ -37708,9 +37708,11 @@ else
 
 #include "confdefs.h"
 #include <stdlib.h>
+/* This might get optimized out if not used */
 extern void * __libc_stack_end;
 
 int main () {
+    if(!__libc_stack_end) exit(1);
     exit(0);
 }
 
