@@ -1,7 +1,7 @@
 #  File src/library/base/R/serialize.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,11 +21,16 @@ saveRDS <-
              compress = TRUE, refhook = NULL)
 {
     if(is.character(file)) {
-        if(file == "") stop("'file' must be non-empty string")
-        mode <- if(ascii %in% FALSE) "wb" else "w"
-        con <- if (identical(compress, "bzip2")) bzfile(file, mode)
-            else if (identical(compress, "xz")) xzfile(file, mode)
-            else if(compress) gzfile(file, mode) else file(file, mode)
+	if(file == "") stop("'file' must be non-empty string")
+	mode <- if(ascii %in% FALSE) "wb" else "w"
+	con <- if (is.logical(compress))
+		   if(compress) gzfile(file, mode) else file(file, mode)
+	       else
+		   switch(compress,
+			  "bzip2" = bzfile(file, mode),
+			  "xz"    = xzfile(file, mode),
+			  "gzip"  = gzfile(file, mode),
+			  stop("invalid 'compress' argument: ", compress))
         on.exit(close(con))
     }
     else if(inherits(file, "connection")) {
@@ -61,10 +66,7 @@ serialize <-
     if (!ascii && inherits(connection, "sockconn"))
         .Internal(serializeb(object, connection, xdr, version, refhook))
     else {
-        if(is.na(ascii)) type <- 2L
-        else if(ascii) type <- 1L
-        else if(!xdr) type <- 3L
-        else type <- 0L
+	type <- if(is.na(ascii)) 2L else if(ascii) 1L else if(!xdr) 3L else 0L
         .Internal(serialize(object, connection, type, version, refhook))
     }
 }

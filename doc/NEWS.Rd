@@ -538,6 +538,9 @@
       could segfault or recycle wrongly.  (\PR{16685})
 
       \item \code{plot.ts(<matrix>, las = 1)} now does use \code{las}.
+
+      \item \code{saveRDS(*, compress = "gzip")} now works as
+      documented.  (\PR{16653})
     }
   }
 }
