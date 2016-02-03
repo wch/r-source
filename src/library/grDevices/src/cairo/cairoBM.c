@@ -442,6 +442,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
     dd->startfill = xd->fill;
     dd->startlty = LTY_SOLID;
     dd->startfont = 1;
+    dd->startgamma = 1;
     dd->displayListOn = FALSE;
     dd->deviceSpecific = (void *) xd;
 
