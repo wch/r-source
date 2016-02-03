@@ -7,11 +7,10 @@
   \code{prefix} or \code{suffix} respectively, where strings are
   recycled to common lengths.
 
-  \code{startsWith()} is equivalent to but faster than
+  \code{startsWith()} is equivalent to but much faster than
   \preformatted{substring(x, 1, nchar(prefix)) == prefix}
-  or also (much faster than) \preformatted{grepl("^<prefix>", x)}
-  where \code{prefix} is not to contain special regular expression
-  characters.
+  or also \preformatted{grepl("^<prefix>", x)} where \code{prefix} is
+  not to contain special regular expression characters.
 }
 \usage{
 startsWith(x, prefix)
@@ -22,13 +21,16 @@ startsWith(x, prefix)
     are considered.}
   \item{prefix, suffix}{\code{\link{character}} vector (often of length one).}
 }
-%% \details{
-%% }
+\details{
+  The code has an optimized branch for the most common usage in which
+  \code{prefix} or \code{suffix} is of length one, and is further
+  optimized in a UTF-8 or 8-byte locale if that is an ASCII string.
+}
 \value{
-  a \code{\link{logical}} vector, of \dQuote{common length} of \code{x}
+  A \code{\link{logical}} vector, of \dQuote{common length} of \code{x}
   and \code{prefix} (or \code{suffix}), i.e., of the longer of the two
-  \code{\link{length}}s unless one of them is zero when the result is
-  also of zero length.
+  lengths unless one of them is zero when the result is
+  also of zero length.  A shorter input is recycled to the output length.
 }
 %\author{Martin Maechler}
 \seealso{
@@ -42,12 +44,14 @@ startsWith(search(), "package:") # typically at least two FALSE, nowadays often 
 
 x1 <- c("Foobar", "bla bla", "something", "another", "blu", "brown",
         "blau blüht der Enzian")# non-ASCII
-cbind(x1,
+x2 <- cbind(
       startsWith(x1, "b"),
       startsWith(x1, "bl"),
       startsWith(x1, "bla"),
         endsWith(x1, "n"),
         endsWith(x1, "an"))
+rownames(x2) <- x1; colnames(x2) <- c("b", "b1", "bla", "n", "an")
+x2
 }
 \keyword{character}
 \keyword{utilities}
