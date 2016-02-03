@@ -1299,15 +1299,13 @@ stopifnot(all.equal(coef(flm), cf[,"tear"]),
 ## format.POSIXlt() with modified 'zone' or length-2 format
 f0 <- "2016-01-28 01:23:45"; tz0 <- "Europe/Stockholm"
 d2 <- d1 <- rep(as.POSIXlt(f0, tz = tz0), 2)
-f1 <- format(d1, usetz=TRUE)
+(f1 <- format(d1, usetz=TRUE))
+identical(f1, rep(paste(f0, "CET"), 2))# often TRUE (but too platform dependent)
 d2$zone <- d1$zone[1] # length 1 instead of 2
 f2 <- format(d2, usetz=TRUE)## -> segfault
 f1.2 <- format(as.POSIXlt("2016-01-28 01:23:45"), format=c("%d", "%y"))# segfault
-stopifnot(
-    identical(f1, rep(paste(f0, "CET"), 2)),
-    identical(f2, rep(paste(f0,  tz0 ), 2)),
-    identical(f1.2, c("28", "16"))
-    )
+stopifnot(identical(f2, rep(paste(f0,  tz0 ), 2)),
+	  identical(f1.2, c("28", "16")))
 tims <- seq.POSIXt(as.POSIXct("2016-01-01"),
 		   as.POSIXct("2017-11-11"), by = as.difftime(pi, units="weeks"))
 form <- c("%m/%d/%y %H:%M:%S", "", "%Y-%m-%d %H:%M:%S")
