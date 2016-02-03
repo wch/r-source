@@ -5403,8 +5403,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(SETLOOPVAL, 0):
       BCNPOP_IGNORE_VALUE(); SETSTACK(-1, R_NilValue); NEXT();
     OP(INVISIBLE,0): R_Visible = FALSE; NEXT();
-    /**** for now LDCONST, LDTRUE, and LDFALSE duplicate/allocate to
-	  be defensive against bad package C code */
     OP(LDCONST, 1):
       R_Visible = TRUE;
       value = VECTOR_ELT(constants, GETOP());

@@ -241,7 +241,7 @@ As an example, the [[GETVAR]] instruction takes one operand, the index
 in the constant pool of a symbol. The opcode for this instruction is
 [[GETVAR.OP]].  The instruction retrieves the symbol from the constant
 pool, looks up its value in the current environment, and pushes the
-value on the stack.  If [[sym]] is a variable with value a symbol,
+value on the stack.  If [[sym]] is a variable with value of a symbol,
 then code to enter the symbol in the constant pool and emit an
 instruction to get its value would be
 <<example of emitting a [[GETVAR]] instruction>>=
@@ -267,7 +267,7 @@ Otherwise it returns [[NULL]].  If constant folding is successful,
 then the result is compiled as a constant.  Otherwise, the standard
 code generation process is used.
 %% **** comment on alternative of doing constant folding as an
-%% **** optimization on the butecode or an intermediate representation?
+%% **** optimization on the bytecode or an intermediate representation?
 
 In the interpreter there are four types of objects that are not
 treated as constants, i.e. as evaluating to themselves: function calls
@@ -352,14 +352,12 @@ It might be useful to handle other constants in a similar way, such as
 %% **** check out if small integers is worth doing.
 %% **** mention peephole optimization as alternative
 
-Ideally the implementation should be able to mark the values in the
-constant pool of a byte code object as read-only by setting the
-[[NAMED]] field to 2, but experience in testing shows that there are
-several packages in the wild that assume that an expression [[TRUE]],
-for example, appearing in code will result in a freshly allocated
-value that can be freely modified in [[.C]] calls. It would be good to
-educate users not to do this, but for now the implementation
-duplicates all values as they are retrieved from the constant pool.
+The implementation marks values in the constant pool as read-only after they
+are loaded, by setting the [[NAMED]] field to 2. In the past, all values
+were duplicated as they were retrieved from the constant pool as a
+precaution against bad package code: several packages in the wild assumed
+that an expression [[TRUE]], for example, appearing in code would result in a
+freshly allocated value that could be freely modified in [[.C]] calls.
 
 
 \subsection{Compiling variable references}
@@ -450,8 +448,6 @@ then this may be effective.
 %% **** Neal's em by about 10% (just lookup, not assignment -- with
 %% **** assignment should be a bit better)
 
-%% **** Avoid using ftype variable in bcEval. Could just look at the
-%% **** fun on the stack, or use the intstack instead.
 %% **** Is it really necessary for bcEval to save/restore stack tops?
 %% **** Shouldn't that happen automatically?
 %% **** Is it possible to have closure calling stay in the same bc?
@@ -874,7 +870,7 @@ putlabel <- function(name) labels[[name]] <<- codeCount
 Once code generation is complete the symbolic labels in the code
 stream need to be converted to numerical offset values.  This is done
 by [[patchlabels]].  Labels can appear directly in the instruction
-stream os in lists that have been placed in the instruction stream;
+stream and in lists that have been placed in the instruction stream;
 this is used for the [[SWITCH]] instruction.
 <<label management interface>>=
 patchlabels <- function() {
