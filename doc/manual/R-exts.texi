@@ -2827,8 +2827,8 @@ environment of a function for later use.
 Complete checking of a package which contains a file @file{README.md}
 needs @command{pandoc} installed: see
 @uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.  This
-should be reasonably current: @acronym{CRAN} used version 1.12.4.1 to
-process these files at the time of writing
+should be reasonably current: at the time of writing @acronym{CRAN} used
+version 1.12.4.2 to process these files.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -9586,7 +9586,8 @@ In each case the @R{} objects are available for manipulation @emph{via}
 a set of functions and macros defined in the header file
 @file{Rinternals.h} or some @Sl{}-compatibility macros@footnote{That is,
 similar to those defined in @Sl{} version 4 from the 1990s: these are
-not kept up to date and are not recommended for new projects.} defined
+not kept up to date and are not recommended for new projects.  Prior to
+@R{} 3.3.0 it was not compatible with defining @code{R_NO_REMAP}.} defined
 in @file{Rdefines.h}.  See @ref{Interface functions .Call and .External}
 for details on @code{.Call} and @code{.External}.
 
