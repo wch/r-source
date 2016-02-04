@@ -388,6 +388,9 @@
 
       Code using it will need to be reinstalled. (\PR{16470})
 
+      Similarly, entry point \code{log1pexp} also defined in
+      \file{Rmath.h} is remapped there to \code{Rf_log1pexp}
+
       \item \code{R_GE_version} has been increased to \code{11}.
 
       \item New API call \code{R_orderVector1()}, a faster

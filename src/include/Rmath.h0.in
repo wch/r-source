@@ -266,6 +266,7 @@ double  Rlog1p(double);
 #define lgammafn	Rf_lgammafn
 #define lgammafn_sign	Rf_lgammafn_sign
 #define lgamma1p	Rf_lgamma1p
+#define log1pexp       	Rf_log1pexp
 #define log1pmx		Rf_log1pmx
 #define logspace_add	Rf_logspace_add
 #define logspace_sub	Rf_logspace_sub

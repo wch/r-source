@@ -187,6 +187,11 @@ int R_finite(double);
 #define lfastchoose	Rf_lfastchoose
 #define lgammacor	Rf_lgammacor
 #define stirlerr       	Rf_stirlerr
+#define pnchisq_raw   	Rf_pnchisq_raw
+#define pgamma_raw   	Rf_pgamma_raw
+#define pnbeta_raw   	Rf_pnbeta_raw
+#define pnbeta2       	Rf_pnbeta2
+#define bratio       	Rf_bratio
 
 	/* Chebyshev Series */
 
