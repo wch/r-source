@@ -358,6 +358,13 @@
       been 8.32 (released in Nov 2012).  Versions 8.10 to 8.31 are now
       deprecated (with warnings from \command{configure}), but for now
       still accepted.
+      
+      \item (Windows) An experimental build of R based on \command{gcc}
+      4.9.3 is now available on CRAN on the \file{bin/windows/base/rdevel.html}
+      snapshot page.  This build will require recompilation of at least those 
+      packages that include C++ code, and possibly others.  The CRAN 
+      binary packages still use the older toolchain, so package installs
+      default to \code{type = "source"}.
     }
   }
 

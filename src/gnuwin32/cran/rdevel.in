@@ -41,6 +41,13 @@
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>
   </ul>
+  <p><a href="@RWVER@-493-win.exe">Experimental R-Devel build for Windows</a> </p>
+  <ul>
+    <li>This is a build of R-Devel using a new toolchain based on gcc 4.9.3, produced
+    by Jeroen Ooms.  For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.
+    It is not compatible with those binary packages on CRAN that include C++ code, so it defaults
+    to source installs of packages.
+  </ul>
 </div>
 
 
