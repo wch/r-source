@@ -911,6 +911,8 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define matchPar		Rf_matchPar
 # define Mbrtowc		Rf_mbrtowc
 # define mbtoucs		Rf_mbtoucs
+# define mbcsToUcs2		Rf_mbcsToUcs2
+# define memtrace_report	Rf_memtrace_report
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkFalse		Rf_mkFalse
 # define mkPROMISE		Rf_mkPROMISE

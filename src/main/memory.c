@@ -2738,7 +2738,8 @@ SEXP allocS4Object(void)
    return s;
 }
 
-SEXP allocFormalsList(int nargs, ...) {
+static SEXP allocFormalsList(int nargs, ...)
+{
     SEXP res = R_NilValue;
     SEXP n;
     int i;
@@ -2762,23 +2763,29 @@ SEXP allocFormalsList(int nargs, ...) {
 }
 
 
-SEXP allocFormalsList2(SEXP sym1, SEXP sym2) {
+SEXP allocFormalsList2(SEXP sym1, SEXP sym2)
+{
     return allocFormalsList(2, sym1, sym2);
 }
 
-SEXP allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3) {
+SEXP allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3)
+{
     return allocFormalsList(3, sym1, sym2, sym3);
 }
 
-SEXP allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4) {
+SEXP allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4)
+{
     return allocFormalsList(4, sym1, sym2, sym3, sym4);
 }
 
-SEXP allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5) {
+SEXP allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5)
+{
     return allocFormalsList(5, sym1, sym2, sym3, sym4, sym5);
 }
 
-SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6) {
+SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, 
+		       SEXP sym5, SEXP sym6)
+{
     return allocFormalsList(6, sym1, sym2, sym3, sym4, sym5, sym6);
 }
 
