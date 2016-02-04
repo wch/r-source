@@ -722,6 +722,12 @@ void R_SetWin32(Rstart Rp)
 	putenv(UserRHome);
     }    
 
+    
+    /* This is here temporarily while the GCC version is chosen */
+    char gccversion[30];
+    snprintf(gccversion, 30, "R_COMPILED_BY=gcc %d.%d.%d", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+    putenv(gccversion);
+
     /* Rterm and Rgui set CharacterMode during startup, then set Rp->CharacterMode
        from it in cmdlineoptions().  Rproxy never calls cmdlineoptions, so we need the
        line below */

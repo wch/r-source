@@ -364,7 +364,11 @@
       snapshot page.  This build will require recompilation of at least those 
       packages that include C++ code, and possibly others.  The CRAN 
       binary packages still use the older toolchain, so package installs
-      default to \code{type = "source"}.
+      default to \code{type = "source"}.  
+      
+      During the transition, the environment variable \env{R_COMPILED_BY} will 
+      be defined to indicate which toolchain was used to compile R (and hence, 
+      which should be used to compile code in packages).
     }
   }
 
