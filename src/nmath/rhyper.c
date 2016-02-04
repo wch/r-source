@@ -45,10 +45,6 @@
 #include "dpq.h"
 #include <limits.h>
 
-#ifdef DEBUG_rhyper
-# include <R_ext/Print.h>
-#endif
-
 // afc(i) :=  ln( i! )	[logarithm of the factorial i]
 static double afc(int i)
 {

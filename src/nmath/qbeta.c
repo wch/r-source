@@ -33,7 +33,6 @@
 #include "dpq.h"
 
 #ifdef DEBUG_qbeta
-# include <R_ext/Print.h>
 # define R_ifDEBUG_printf(...) REprintf(__VA_ARGS__)
 #else
 # define R_ifDEBUG_printf(...)
