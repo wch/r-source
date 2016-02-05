@@ -4564,6 +4564,12 @@ Variable-length arrays are C99, not supported by C++98 nor by the C++
 compilers in use with @R{} on some platforms.
 
 @item
+The @code{restrict} qualifier is C99/C11 but not part of C++11 and not
+supported by some C++ compilers used with @R{}.
+@c but package treatSens attempted to use it.
+@c http://stackoverflow.com/questions/6434549/does-c11-add-the-c99-restrict-specifier-if-not-why-not
+
+@item
 Be careful to include the headers which define the functions you use.
 Some compilers/OSes include other system headers in their headers which
 are not required by the standards, and so code may compile on such
