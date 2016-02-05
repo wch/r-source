@@ -64,12 +64,21 @@
 #define AS_LIST(x)		Rf_coerceVector(x,VECSXP)
 #define AS_RAW(x)		Rf_coerceVector(x,RAWSXP)
 
-#define IS_LOGICAL(x)		Rf_isLogical(x)
-#define IS_INTEGER(x)		Rf_isInteger(x)
-#define IS_NUMERIC(x)		Rf_isReal(x)
-#define IS_CHARACTER(x)		Rf_isString(x)
-#define IS_COMPLEX(x)		Rf_isComplex(x)
-/* NB: is this right? It means atomic or VECSXP or EXPRSXP */
+#ifdef USE_RINTERNALS
+// This is not documented to be supported, and may not be in future
+# define IS_LOGICAL(x)		isLogical(x)
+# define IS_INTEGER(x)		isInteger(x)
+# define IS_NUMERIC(x)		isReal(x)
+# define IS_CHARACTER(x)	isString(x)
+# define IS_COMPLEX(x)		isComplex(x)
+#else
+# define IS_LOGICAL(x)		Rf_isLogical(x)
+# define IS_INTEGER(x)		Rf_isInteger(x)
+# define IS_NUMERIC(x)		Rf_isReal(x)
+# define IS_CHARACTER(x)	Rf_isString(x)
+# define IS_COMPLEX(x)		Rf_isComplex(x)
+#endif
+/* NB: is this right?  It means atomic or VECSXP or EXPRSXP */
 #define IS_VECTOR(x)		Rf_isVector(x)
 /* And this cannot be right: isVectorList(x)? */
 #define IS_LIST(x)		IS_VECTOR(x)
