@@ -2822,8 +2822,8 @@ environment of a function for later use.
 Complete checking of a package which contains a file @file{README.md}
 needs @command{pandoc} installed: see
 @uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.  This
-should be reasonably current: @acronym{CRAN} used version 1.12.4.1 to
-process these files at the time of writing
+should be reasonably current: at the time of writing @acronym{CRAN} used
+version 1.12.4.2 to process these files.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -9323,9 +9323,9 @@ limits.h math.h stddef.h stdio.h stdlib.h string.h
 @end example
 
 @noindent
-directly or indirectly, and either @file{stddef.h} or @file{cstddef}
-needs to be included before @file{R.h} if @samp{NO_C_HEADERS} is
-defined.
+or their C++ equivalents directly or indirectly, and either
+@file{stddef.h} or @file{cstddef} needs to be included before @file{R.h}
+if @samp{NO_C_HEADERS} is defined.
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
@@ -9582,8 +9582,9 @@ In each case the @R{} objects are available for manipulation @emph{via}
 a set of functions and macros defined in the header file
 @file{Rinternals.h} or some @Sl{}-compatibility macros@footnote{That is,
 similar to those defined in @Sl{} version 4 from the 1990s: these are
-not kept up to date and are not recommended for new projects.} defined
-in @file{Rdefines.h}.  See @ref{Interface functions .Call and .External}
+not kept up to date and are not recommended for new projects.  It is not
+compatible with defining @code{R_NO_REMAP}.} defined in
+@file{Rdefines.h}.  See @ref{Interface functions .Call and .External}
 for details on @code{.Call} and @code{.External}.
 
 Before you decide to use @code{.Call} or @code{.External}, you should
@@ -11323,7 +11324,7 @@ that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
 Note too that the use of @samp{USE_RINTERNALS} when the header is
 included in C++ code is not supported: doing so uses C99 features which
-are not necessarily in C++.
+are not necessarily in C++.  Nor is use with @file{Rdefines.h}.
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
@@ -12191,7 +12192,9 @@ accurately, notably for half integer @var{x}.
 
 This might be provided by your platform@footnote{It is an optional C11
 extension.}, in which case it is not included in @file{Rmath.h}, but is
-in @file{math.h} which @file{Rmath.h} includes.
+in @file{math.h} which @file{Rmath.h} includes. (Ensure that
+neither @file{math.h} nor @file{cmath} is included before
+@file{Rmath.h}, including not by @file{R.h}.)
 @end deftypefun
 
 @deftypefun double sinpi (double @var{x})
