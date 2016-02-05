@@ -258,9 +258,9 @@
 
       \item The radix sort algorithm and implementation from data.table
       (forder) replaces the existing but limited radix (counting) sort
-      and adds a new method for \code{order()}. Contributed by Matt
+      and adds a new method for \code{order()}.  Contributed by Matt
       Dowle and Arun Srinivasan, the new algorithm supports logical,
-      integer (even with large values), real, and character vectors. It
+      integer (even with large values), real, and character vectors.  It
       outperforms all other methods, but there are some caveats (see
       \code{?sort}).
 
@@ -270,13 +270,20 @@
       \item New function \code{grouping} returns a permutation that
       stably rearranges data so that identical values are
       adjacent.  The return value includes extra partitioning
-      information on the groups. The implementation came included with
+      information on the groups.  The implementation came included with
       the new radix sort.
 
-      \item \code{rhyper(nn, m,n,k)} no longer returns \code{NA} when
+      \item \code{rhyper(nn, m, n, k)} no longer returns \code{NA} when
       one of the three parameters exceeds the maximal integer.
 
-      \item \code{switch()} now warns when no alternatives are provided,
+      \item \code{switch()} now warns when no alternatives are provided.
+
+      \item \code{parallel::detectCores()} now has default \code{logical
+	= TRUE)} on all platforms -- as this was the default on Windows,
+      this change only affects Sparc Solaris.
+
+      Option \code{logical = FALSE} is now supported on Linux and recent
+      versions of OS X.
     }
   }
 
@@ -286,11 +293,12 @@
       \option{--ignore-vignettes} for use with non-Sweave vignettes
       whose \samp{VignetteBuilder} package is not available.
 
-      \item \command{R CMD check --as-cran} now checks code usage (via
-      \CRANpkg{codetools}) with only the base package attached, so that
-      functions from default packages other than base which are used in
-      the package code but not imported are reported as undefined
-      globals.
+      \item \command{R CMD check} now by default checks code usage
+      (\emph{via} \CRANpkg{codetools}) with only the base package
+      attached.  Functions from default packages other than \pkg{base}
+      which are used in the package code but not imported are reported
+      as undefined globals, with a suggested addiiton to the
+      \code{NAMESPACE} file.
 
       \item \command{R CMD check --as-cran} now also checks DOIs in
       package \file{CITATION} and Rd files.
