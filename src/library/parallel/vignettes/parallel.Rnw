@@ -1,6 +1,6 @@
 % File src/library/parallel/vignettes/parallel.Rnw
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2015  R Core Team
+% Copyright 2011-2016  R Core Team
 % Distributed under GPL 2 or later
 
 \documentclass[a4paper]{article}
@@ -197,7 +197,7 @@ But in so far as it is a useful guideline, function
 \code{detectCores()} tries to determine the number of CPU cores in the
 machine on which \R{} is running: it has ways to do so on all known
 current \R{} platforms.  What exactly it measures is OS-specific: we
-try where possible to report the number of physical cores available.
+try where possible to report the number of logical cores available.
 
 On Windows the default is to report the number of logical CPUs.  On
 modern hardware (e.g.{} Intel \emph{Core i7}) the latter may not be
@@ -765,10 +765,6 @@ had no support.
 loop for \command{R.app} and the event loop for the \code{quartz}
 graphics device.  This has been replaced by recording a flag in the
 \R{} executable for a child process.
-
-The version of \code{detectCores} here is biased towards the number of
-physical CPUs.  This was occasioned by serious problems on Sparc Solaris
-where \CRANpkg{multicore} defaulted to a silly number of processes.
 
 Functions \code{fork} and \code{kill} have \code{mc} prefixes and are
 not exported.  This avoids confusion with other packages (such as
