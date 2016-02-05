@@ -26,8 +26,8 @@
 
 #ifndef NO_C_HEADERS
 // same as Rmath.h: needed for cospi etc
-# ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
-#  define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+# ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
+#  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 # endif
 # if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstdlib>

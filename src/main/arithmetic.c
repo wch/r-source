@@ -1181,10 +1181,10 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	*/
     case 47: return MATH1(cospi);
     case 48: return MATH1(sinpi);
-#ifndef HAVE_TANPI
-    case 49: return MATH1(tanpi);
-#else
+#if defined(HAVE_TANPI) || defined(HAVE___TANPI)
     case 49: return MATH1(Rtanpi);
+#else
+    case 49: return MATH1(tanpi);
 #endif
 
     default:

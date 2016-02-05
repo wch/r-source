@@ -916,8 +916,17 @@
 /* Define if you have the X11/Xmu headers and libraries. */
 #undef HAVE_X11_Xmu
 
+/* Define to 1 if you have the `__cospi' function. */
+#undef HAVE___COSPI
+
 /* Define to 1 if you have the `__fsetlocking' function. */
 #undef HAVE___FSETLOCKING
+
+/* Define to 1 if you have the `__sinpi' function. */
+#undef HAVE___SINPI
+
+/* Define to 1 if you have the `__tanpi' function. */
+#undef HAVE___TANPI
 
 /* Define as const if the declaration of iconv() needs const. */
 #undef ICONV_CONST

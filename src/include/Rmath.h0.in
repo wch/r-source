@@ -31,12 +31,12 @@
 #ifndef RMATH_H
 #define RMATH_H
 
-/* Note that on some systems we need to include math.h before the
-   defines below. */
+/* Note that on some systems you need to include math.h before the
+   defines below. If so, define this yourself. */
 #ifndef NO_C_HEADERS
 /* needed for cospi etc */
-# ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
-#  define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+# ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
+#  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 # endif
 # if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cmath>
@@ -621,7 +621,7 @@ double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
 
    In future these declarations could clash with system headers if
    someone had already included math.h with
-   __STDC_WANT_IEC_60559_TYPES_EXT__ defined.
+   __STDC_WANT_IEC_60559_FUNCS_EXT__ defined.
    We can add a check for that via the value of
    __STDC_IEC_60559_FUNCS__ (>= 201ymmL, exact value not yet known).
 */

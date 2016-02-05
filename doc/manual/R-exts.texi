@@ -11328,7 +11328,7 @@ that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
 Note too that the use of @samp{USE_RINTERNALS} when the header is
 included in C++ code is not supported: doing so uses C99 features which
-are not necessarily in C++.
+are not necessarily in C++.  Nor is use with @file{Rdefines.h}.
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
@@ -12196,21 +12196,30 @@ accurately, notably for half integer @var{x}.
 
 This might be provided by your platform@footnote{It is an optional C11
 extension.}, in which case it is not included in @file{Rmath.h}, but is
-in @file{math.h} which @file{Rmath.h} includes.
+in @file{math.h} which @file{Rmath.h} includes.  (Ensure that
+neither @file{math.h} nor @file{cmath} is included before
+@file{Rmath.h} or define
+@example
+#define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
+@end example
+@noindent
+before the first inclusion.)
 @end deftypefun
 
 @deftypefun double sinpi (double @var{x})
 Computes @code{sin(pi * x)} accurately, notably for (half) integer @var{x}.
 
-This might be provided by your platform, in which case it is not included
-in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
+This might be provided by your platform, in which case it is not
+included in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h}
+includes (but see the comments for @code{cospi}).
 @end deftypefun
 
 @deftypefun double tanpi (double @var{x})
 Computes @code{tan(pi * x)} accurately, notably for (half) integer @var{x}.
 
 This might be provided by your platform, in which case it is not included
-in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
+in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes
+(but see the comments for @code{cospi}).
 @end deftypefun
 
 @deftypefun double logspace_add (double @var{logx}, double @var{logy})
@@ -12605,11 +12614,11 @@ The algorithm is particularly fast when @var{ilo} is set to the last
 result of @code{findInterval()} and @var{x} is a value of a sequence which
 is increasing or decreasing for subsequent calls.
 
- @code{findInterval2()} is a generalization of @code{findInterval()}, with
- an extra @code{Rboolean} argument @var{left_open}.  Setting
- @code{left_open = TRUE} basically replaces all left-closed right-open
- intervals @eqn{[s, t)} by left-open ones @eqn{(s, t]}, see the help page
- of @R{} function @code{findInterval} for details.
+@code{findInterval2()} is a generalization of @code{findInterval()},
+with an extra @code{Rboolean} argument @var{left_open}.  Setting
+@code{left_open = TRUE} basically replaces all left-closed right-open
+intervals @eqn{[s, t)} by left-open ones @eqn{(s, t]}, see the help page
+of @R{} function @code{findInterval} for details.
 
 There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.

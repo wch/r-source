@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2013-2014 The R Core Team
+ *  Copyright (C) 2013-2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,16 @@
 
 /* HAVE_COSPI etc will not be defined in standalone-use: the
    intention is to make the versions here available in that case.
+
+   The __cospi etc variants are from OS X (and perhaps other BSD-based systems).
 */
 
-#ifndef HAVE_COSPI
+#ifdef HAVE_COSPI
+#elif defined HAVE___COSPI
+double cospi(double x) {
+    return __cospi(x);
+}
+#else
 // cos(pi * x)  -- exact when x = k/2  for all integer k
 double cospi(double x) {
 #ifdef IEEE_754
@@ -37,7 +44,12 @@ double cospi(double x) {
 }
 #endif
 
-#ifndef HAVE_SINPI
+#ifdef HAVE_SINPI
+#elif defined HAVE___SINPI
+double sinpi(double x) {
+    return __sinpi(x);
+}
+#else
 // sin(pi * x)  -- exact when x = k/2  for all integer k
 double sinpi(double x) {
 #ifdef IEEE_754
@@ -57,11 +69,11 @@ double sinpi(double x) {
 #endif
 
 // tan(pi * x)  -- exact when x = k/2  for all integer k
-#ifndef HAVE_TANPI
-double tanpi(double x)
-#else
+#if defined(HAVE_TANPI) || defined(HAVE___TANPI)
 // for use in arithmetic.c, half-values documented to give NaN
 double Rtanpi(double x)
+#else
+double tanpi(double x)
 #endif
 {
 #ifdef IEEE_754
@@ -74,3 +86,9 @@ double Rtanpi(double x)
     if(x <= -0.5) x++; else if(x > 0.5) x--;
     return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
 }
+
+#ifdef HAVE___TANPI
+double tanpi(double x) {
+    return __tanpi(x);
+}
+#endif

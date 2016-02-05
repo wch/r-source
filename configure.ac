@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2015 R Core Team
+### Copyright (C) 1998-2016 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -1848,11 +1848,12 @@ AC_CHECK_FUNCS(isblank)
 AC_CHECK_HEADERS(sunmath.h)
 AC_CHECK_LIB(sunmath, cospi)
 
-## Functions from draft C11 extensions, some of which are already in glibc
+## Functions from ISO/IEC TS 18661-4:2015 C11 extensions.
 ## For now, do not define _GNU_SOURCE here.
-## All but pown have long been in libsunmath
-AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi], 
-[#define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+## All but pown have long been in Solaris' libsunmath
+## OS X has __cospi __sinpi __tanpi
+AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi __cospi __sinpi __tanpi], 
+[#define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #include <math.h>
 #ifdef HAVE_SUNMATH_H
 #include <sunmath.h>

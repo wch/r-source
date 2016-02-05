@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2015  The R Core Team
+ *  Copyright (C) 1998-2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,11 @@
 #else
 #  define LDOUBLE double
 #endif
+
+/* To ensure atanpi, cospi,  sinpi, tanpi are defined */
+# ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
+#  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
+# endif
 
 #include <math.h>
 #include <float.h> /* DBL_MIN etc */
