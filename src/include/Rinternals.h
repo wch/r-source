@@ -448,7 +448,7 @@ typedef struct SEXPREC *SEXP;
 #define CHAR(x)		R_CHAR(x)
 const char *(R_CHAR)(SEXP x);
 
-/* Various tests with macro versions in the USE_RINTERNALS section */
+/* Various tests with macro versions in the second USE_RINTERNALS section */
 Rboolean (Rf_isNull)(SEXP s);
 Rboolean (Rf_isSymbol)(SEXP s);
 Rboolean (Rf_isLogical)(SEXP s);
