@@ -1497,7 +1497,7 @@ setRlibs <-
                 paste("options(warn=1)\n",
                       sprintf("tools:::.check_code_usage_in_package(package = \"%s\")\n", pkgname))
             if(config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_",
-                                                "false"))) {
+                                                "true"))) {
                 out3 <-  R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
                 if(length(pos <-
                           grep("^Undefined global functions or variables:",
@@ -1510,8 +1510,8 @@ setRlibs <-
                     if(length(miss)) {
                         msg3 <- if(length(grep("^importFrom\\(\"methods\"",
                                                miss))) {
-                            strwrap("to your NAMESPACE (and ensure that your DESCRIPTION Imports field contains 'methods').")
-                        } else "to your NAMESPACE."
+                            strwrap("to your NAMESPACE file (and ensure that your DESCRIPTION Imports field contains 'methods').")
+                        } else "to your NAMESPACE file."
                         out3 <- c(out3,
                                   c("Consider adding",
                                     paste0("  ", miss),
