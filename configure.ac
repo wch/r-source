@@ -1876,7 +1876,7 @@ AC_CHECK_DECLS([alloca], , ,
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
 ## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
-## Cygwin has rintl but not nearbyintl
+## Cygwin had rintl but not nearbyintl
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])
@@ -1890,11 +1890,11 @@ AC_CHECK_FUNCS(isblank)
 AC_CHECK_HEADERS(sunmath.h)
 AC_CHECK_LIB(sunmath, cospi)
 
-## Functions from draft C11 extensions, some of which are already in glibc
+## Functions from ISO/IEC TS 18661-4:2015 C11 extensions.
 ## For now, do not define _GNU_SOURCE here.
 ## All but pown have long been in libsunmath
 AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi], 
-[#define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+[#define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #include <math.h>
 #ifdef HAVE_SUNMATH_H
 #include <sunmath.h>
