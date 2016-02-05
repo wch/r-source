@@ -1,6 +1,6 @@
 % File src/library/parallel/man/detectCores.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2015 R Core Team
+% Copyright 2011-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detectCores}
@@ -20,7 +20,8 @@ detectCores(all.tests = FALSE, logical = FALSE)
 \arguments{
   \item{all.tests}{Logical: if true apply all known tests.}
   \item{logical}{Logical: if possible, use the number of physical CPUs/cores
-    (if \code{FALSE}) or logical CPUs (if \code{TRUE}).}
+    (if \code{FALSE}) or logical CPUs (if \code{TRUE}).  The default is
+    \code{TRUE} on Windows and \code{FALSE} elsewhere.}
 }
 \details{
   This attempts to detect the number of CPU cores in the current
@@ -29,13 +30,22 @@ detectCores(all.tests = FALSE, logical = FALSE)
   It has methods to do so for Linux, OS X, FreeBSD, OpenBSD, Solaris,
   Irix and Windows.  \code{detectCores(TRUE)} could be tried on other
   Unix-alike systems.
+%% see also http://thedaneshproject.com/posts/how-to-find-the-number-of-physical-cpus-in-linux/
+
+  Currently \code{logical} is supported on Solaris and Windows only.
 }
 \value{
   An integer, \code{NA} if the answer is unknown.
 
   Exactly what this represents is OS-dependent: where possible by
-  default it represents physical cores and not logical
-  (e.g., hyperthreaded) CPUs.
+  default it counts physical cores and not logical (e.g., hyperthreaded)
+  CPUs.  However, on Linux, OS X, FreeBSD and OpenBSD it currently
+  returns the number of logical CPUs.
+
+%%   Not yet: seems to need > 10.9.  
+%%   On OS X there is a further distinction between \sQuote{available in
+%%   the current power management mode} and \sQuote{that could be available
+%%   this boot}, and this function returns the first.
 
   On Windows the default is the number of logical CPUs.
 #ifdef windows
