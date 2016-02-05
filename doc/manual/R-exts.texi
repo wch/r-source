@@ -270,11 +270,11 @@ section on @ref{Package namespaces}.
 @cindex configure file
 @cindex cleanup file
 
-The optional files @file{configure} and @file{cleanup} are (Bourne
-shell) script files which are, respectively, executed before and
-(provided that option @option{--clean} was given) after installation on
-Unix-alikes, see @ref{Configure and cleanup}.  The analogues on Windows
-are @file{configure.win} and @file{cleanup.win}.
+The optional files @file{configure} and @file{cleanup} are (Bourne)
+shell scripts which are, respectively, executed before and (if option
+@option{--clean} was given) after installation on Unix-alikes, see
+@ref{Configure and cleanup}.  The analogues on Windows are
+@file{configure.win} and @file{cleanup.win}.
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
@@ -1492,16 +1492,20 @@ Note that most of this section is specific to Unix-alikes: see the
 comments later on about the Windows port of @R{}.
 
 If your package needs some system-dependent configuration before
-installation you can include an executable (Bourne shell) script
-@file{configure} in your package which (if present) is executed by
-@code{R CMD INSTALL} before any other action is performed.  This can be
-a script created by the Autoconf mechanism, but may also be a script
-written by yourself.  Use this to detect if any nonstandard libraries
-are present such that corresponding code in the package can be disabled
-at install time rather than giving error messages when the package is
-compiled or used.  To summarize, the full power of Autoconf is available
-for your extension package (including variable substitution, searching
-for libraries, etc.).
+installation you can include an executable (Bourne@footnote{The script
+should only assume a POSIX-compliant @command{/bin/sh} -- see
+@uref{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html}.
+In particular @command{bash} extensions must not be used, and not all
+@R{} platforms have a @command{bash} command, let alone one at
+@file{/bin/bash}.}) shell script @file{configure} in your package which
+(if present) is executed by @code{R CMD INSTALL} before any other action
+is performed.  This can be a script created by the Autoconf mechanism,
+but may also be a script written by yourself.  Use this to detect if any
+nonstandard libraries are present such that corresponding code in the
+package can be disabled at install time rather than giving error
+messages when the package is compiled or used.  To summarize, the full
+power of Autoconf is available for your extension package (including
+variable substitution, searching for libraries, etc.).
 
 Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if

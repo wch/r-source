@@ -3137,7 +3137,8 @@ setRlibs <-
                                file.path(pkgoutdir, "vign_test", pkgname0),
                                "')")
                 t1 <- proc.time()
-                outfile <- tempfile()
+#                outfile <- tempfile()
+                outfile <- file.path(pkgoutdir, "build_vignettes.log")
                 status <- R_runR(Rcmd, R_opts2, jitstr,
                                  stdout = outfile, stderr = outfile)
                 t2 <- proc.time()
@@ -3166,6 +3167,8 @@ setRlibs <-
                     ## clean up
                     if (config_val_to_logical(Sys.getenv("_R_CHECK_CLEAN_VIGN_TEST_", "true")))
                         unlink(vd2, recursive = TRUE)
+                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
+                            unlink(outfile)
                     print_time(t1, t2, Log)
                     resultLog(Log, "OK")
                 }

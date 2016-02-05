@@ -3920,10 +3920,12 @@ to a valid program, or @command{gs} (or on Windows,
 Default: false (but true for CRAN submission checks).
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
-kept only if there is an error.
+kept only if there is an error.  As from @R{} 3.3.0 this also applies to
+the @file{build_vignettes.log} log from the re-building of vignettes.
 Default: false.
 @item _R_CHECK_CLEAN_VIGN_TEST_
-Should the @file{vign_test} directory be removed if the test is successful?
+Should the @file{vign_test} directory be removed if the test is
+successful?
 Default: true.
 @item _R_CHECK_REPLACING_IMPORTS_
 Should warnings about replacing imports be reported?  These sometimes come
