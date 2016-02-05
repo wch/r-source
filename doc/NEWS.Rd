@@ -283,7 +283,8 @@
       this change only affects Sparc Solaris.
 
       Option \code{logical = FALSE} is now supported on Linux and recent
-      versions of OS X.
+      versions of OS X (for the latter, thanks to a suggestion of Kyaw
+      Sint).
     }
   }
 

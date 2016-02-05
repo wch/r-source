@@ -25,9 +25,6 @@ detectCores(all.tests = FALSE, logical = TRUE)
   Irix and Windows.  \code{detectCores(TRUE)} could be tried on other
   Unix-alike systems.
 
-  \code{logical = FALSE} on OS X may not be supported on all OS versions
-  (it uses a command which is  not documented for Mavericks).
-
   Prior to \R 3.3.0 the default was \code{logical = FALSE} except on
   Windows, but \code{logical = TRUE} had an effect only on Sparc Solaris
   and Windows (where it was the default).
@@ -39,10 +36,9 @@ detectCores(all.tests = FALSE, logical = TRUE)
   default it counts logical (e.g., hyperthreaded) CPUs and not physical
   cores or packages.
 
-  On OS X there is a further distinction between \sQuote{available in
-    the current power management mode} and \sQuote{that could be available
-    this boot}, and this function returns the first, at least for
-  \code{logical = TRUE}.
+  Under OS X there is a further distinction between \sQuote{available in
+    the current power management mode} and \sQuote{could be available
+    this boot}, and this function returns the first.
 
 #ifdef windows
   Only versions of Windows since XP SP3 are supported.  Microsoft
@@ -75,7 +71,7 @@ detectCores(all.tests = FALSE, logical = TRUE)
   \code{makeCluster}.  First because it may return \code{NA}, second
   because it does not give the number of \emph{allowed} cores, and third
   because on Sparc Solaris and some Windows boxes it is not reasonable
-  to use all the logical CPUs at once.
+  to try to use all the logical CPUs at once.
 }
 \examples{
 detectCores()
