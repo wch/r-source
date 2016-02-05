@@ -275,6 +275,8 @@
 
       \item \code{rhyper(nn, m,n,k)} no longer returns \code{NA} when
       one of the three parameters exceeds the maximal integer.
+
+      \item \code{switch()} now warns when no alternatives are provided,
     }
   }
 
@@ -290,13 +292,18 @@
       the package code but not imported are reported as undefined
       globals.
 
-      It now also checks DOIs in package \file{CITATION} and Rd files.
+      \item \command{R CMD check --as-cran} now also checks DOIs in
+      package \file{CITATION} and Rd files.
 
       \item \command{R CMD Rdconv} and \command{R CMD Rd2pdf} each have
       a new option \option{--RdMacros=pkglist} which allows Rd macros
       to be specified before processing.
 
-      \item \code{switch()} now warns when no alternatives are provided,
+      \item \command{R CMD check} will leave a log file
+      \file{build_vignettes.log} from the re-building of vignettes in
+      the \file{.Rcheck} directory if there is a problem, and always if
+      environment variable \env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is
+      set to a true value.
     }
   }
 
