@@ -87,7 +87,7 @@ double tanpi(double x)
     return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
 }
 
-#ifdef HAVE___TANPI
+#if !defined(HAVE_TANPI) && defined(HAVE___TANPI)
 double tanpi(double x) {
     return __tanpi(x);
 }
