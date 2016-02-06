@@ -1497,15 +1497,17 @@ should only assume a POSIX-compliant @command{/bin/sh} -- see
 @uref{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html}.
 In particular @command{bash} extensions must not be used, and not all
 @R{} platforms have a @command{bash} command, let alone one at
-@file{/bin/bash}.}) shell script @file{configure} in your package which
-(if present) is executed by @code{R CMD INSTALL} before any other action
-is performed.  This can be a script created by the Autoconf mechanism,
-but may also be a script written by yourself.  Use this to detect if any
-nonstandard libraries are present such that corresponding code in the
-package can be disabled at install time rather than giving error
-messages when the package is compiled or used.  To summarize, the full
-power of Autoconf is available for your extension package (including
-variable substitution, searching for libraries, etc.).
+@file{/bin/bash}.  All known shells used with @R{} support the use of
+backticks, but not all support @samp{$(@var{cmd})}.}) shell script
+@file{configure} in your package which (if present) is executed by
+@code{R CMD INSTALL} before any other action is performed.  This can be
+a script created by the Autoconf mechanism, but may also be a script
+written by yourself.  Use this to detect if any nonstandard libraries
+are present such that corresponding code in the package can be disabled
+at install time rather than giving error messages when the package is
+compiled or used.  To summarize, the full power of Autoconf is available
+for your extension package (including variable substitution, searching
+for libraries, etc.).
 
 Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
@@ -4051,12 +4053,12 @@ expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
 in the AT&T Bourne shell used on Solaris, even though they are in the
-POSIX standard.} Bourne shells: the @R{} toolset on Windows and some
-Unix-alike OSes use @command{ash}
-(@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}), a rather
-minimal shell with few builtins.  Beware of assuming that all the POSIX
-command-line utilities are available, especially on Windows where only a
-minimal set is provided for use with @R{}.
+2008 POSIX standard.  Nor does Solaris support @samp{$(@var{cmd})}.} Bourne
+shells: the @R{} toolset on Windows and some Unix-alike OSes use
+@command{ash} (@uref{https://en.wikipedia.org/@/wiki/@/Almquist_shell}),
+a rather minimal shell with few builtins.  Beware of assuming that all
+the POSIX command-line utilities are available, especially on Windows
+where only a minimal set is provided for use with @R{}.
 @ifset UseExternalXrefs
 (@xref{The command line tools, , The command line tools,
 R-admin, R Installation and Administration}.)
@@ -11337,8 +11339,9 @@ obtained by defining @samp{USE_RINTERNALS} before including
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
 Note too that the use of @samp{USE_RINTERNALS} when the header is
-included in C++ code is not supported: doing so uses C99 features which
-are not necessarily in C++.  Nor is use with @file{Rdefines.h}.
+included in C++ code is not supported: doing so may use C99 features
+which are not necessarily supported by the C++ compiler.  Nor is use
+with @file{Rdefines.h} supported.
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
