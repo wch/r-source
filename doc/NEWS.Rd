@@ -298,7 +298,7 @@
       (\emph{via} \CRANpkg{codetools}) with only the base package
       attached.  Functions from default packages other than \pkg{base}
       which are used in the package code but not imported are reported
-      as undefined globals, with a suggested addiiton to the
+      as undefined globals, with a suggested addition to the
       \code{NAMESPACE} file.
 
       \item \command{R CMD check --as-cran} now also checks DOIs in
