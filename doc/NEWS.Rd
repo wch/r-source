@@ -482,6 +482,10 @@
       for multivariate linear models (\code{"mlm"}, \code{\link{manova}})
       thanks to a proposal by Daniel Wollschlaeger.
       % port to r-patched
+      
+      \item (X11 only)  \code{getGraphicsEvent()} miscoded buttons and 
+      missed mouse motion events.  (\PR{16700})
+      % port to r-patched if it doesn't add too many events to graphics windows
     }
   }
 }
