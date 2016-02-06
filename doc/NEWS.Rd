@@ -578,6 +578,10 @@
 
       \item \code{saveRDS(*, compress = "gzip")} now works as
       documented.  (\PR{16653})
+      
+      \item (Windows only) The \command{Rgui} front end did not 
+      always initialize the console properly, and could cause
+      \R to crash.  (\PR{16998})
     }
   }
 }
