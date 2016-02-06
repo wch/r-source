@@ -425,7 +425,7 @@
       packages affected by this change are doing so.
 
       \item Including header \file{S.h} from C++ code will fail on some
-      platforms, and so gives a compilation warning on all.
+      platforms, and so gives a compilation error on all.
       
       \item The deprecated header \file{Rdefines.h} is now compatible
       with defining \code{R_NO_REMAP}.
