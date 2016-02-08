@@ -1,6 +1,6 @@
 % File src/library/base/man/Cstack_info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Cstack_info}
@@ -18,12 +18,13 @@ Cstack_info()
   unavailable, the \code{size} will be returned as \code{NA}, and
   stack-checking is not performed.
 
+  %% Reports in Feb 2016 that this is broken by 'musl' on Linux.
   The information on the stack base address is thought to be accurate on
-  Windows, Linux, OS X and FreeBSD but a heuristic is used on other
-  platforms.  Because this might be slightly inaccurate, the current
-  usage could be estimated as negative.  (The heuristic is not used on
-  embedded uses of \R on platforms where the stack base is not thought
-  to be accurate.)
+  Windows, Linux (using \code{glibc}), OS X and FreeBSD but a heuristic
+  is used on other platforms.  Because this might be slightly
+  inaccurate, the current usage could be estimated as negative.  (The
+  heuristic is not used on embedded uses of \R on platforms where the
+  stack base information is not thought to be accurate.)
 
   The \sQuote{evaluation depth} is the number of nested \R expressions
   currently under evaluation: this has a limit controlled by
