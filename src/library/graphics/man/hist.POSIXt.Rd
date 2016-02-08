@@ -14,12 +14,12 @@
 \method{hist}{POSIXt}(x, breaks, \dots,
      xlab = deparse(substitute(x)),
      plot = TRUE, freq = FALSE,
-     start.on.monday = TRUE, format)
+     start.on.monday = TRUE, format, right = TRUE)
 
 \method{hist}{Date}(x, breaks, \dots,
      xlab = deparse(substitute(x)),
      plot = TRUE, freq = FALSE,
-     start.on.monday = TRUE, format)
+     start.on.monday = TRUE, format, right = TRUE)
 }
 \arguments{
   \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
@@ -44,6 +44,8 @@
   \item{start.on.monday}{logical. If \code{breaks = "weeks"}, should the
     week start on Mondays or Sundays?}
   \item{format}{for the x-axis labels. See \code{\link{strptime}}.}
+  \item{right}{logical; if \code{TRUE}, the histogram cells are
+    right-closed (left open) intervals.}
 }
 \details{
   Note that unlike the default method, \code{breaks} is a required argument.
@@ -51,6 +53,12 @@
   Using \code{breaks = "quarters"} will create intervals of 3 calendar
   months, with the intervals beginning on January 1, April 1,
   July 1 or October 1, based upon \code{min(x)} as appropriate.
+  
+  With the default \code{right = TRUE}, breaks will be set
+  on the last day of the previous period when \code{breaks} is
+  \code{"months"}, \code{"quarters"} or \code{"years"}.  Use 
+  \code{right = FALSE} to set them to the first day of the
+  interval shown in each bar.
 }
 \value{
   An object of class \code{"histogram"}: see \code{\link{hist}}.

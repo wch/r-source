@@ -285,6 +285,14 @@
       Option \code{logical = FALSE} is now supported on Linux and recent
       versions of OS X (for the latter, thanks to a suggestion of Kyaw
       Sint).
+      
+      \item \code{hist()} for \code{"Date"} or \code{"POSIXt"} objects
+      would sometimes give misleading labels on the breaks, as they
+      were set to the day before the start of the period being
+      displayed.  The display format has been changed, and the shift of the
+      start day has been made conditional on \code{right = TRUE} (the 
+      default).  (\PR{16679})
+      
     }
   }
 
