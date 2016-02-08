@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dendrogram.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -98,7 +98,6 @@ as.hclust.dendrogram <- function(x, ...)
     labsu <- unlist(labels(x))
     labs <- labsu[iOrd]
     x <- .add.dendrInd(x)
-
     SIMP <- function(d) {
 	if(is.leaf(d)) {
 	    - as.vector(d)# dropping attributes
@@ -114,16 +113,18 @@ as.hclust.dendrogram <- function(x, ...)
     }
 
     height <- numeric(n.h);  inds <- vector("list",n.h);  j <- 0L
-    xS <- SIMP(x)
-    ii <- sort.list(height) ## FIXME? - May only work if there are no 'inversion's !
-
+    xS <- SIMP(x) # -> a simplified version of 'x' [nested list]  *plus* 'height' and 'inds'
+    ## ties: break ties "compatibly" with .add.dendrInd() -- relies on stable sort here:
+    ii <- sort.list(height, decreasing=TRUE)[n.h:1L]
+    verbose <- getOption("as.hclust.dendr", FALSE)
     merge <- matrix(NA_integer_, 2L, n.h)
     for(k in seq_len(n.h)) {
-	if(k < n.h) { in.k <- inds[[ ii[k] ]] ; s <- xS[[in.k]] } else s <- xS
-	if(getOption("as.hclust.dendr", FALSE)) {
-	    cat(sprintf("ii[k=%2d]=%2d -> s=xS[[in.k]]=", k, ii[k]))
-	    str(s)
-	}
+        if(verbose) cat(sprintf("ii[k=%2d]=%2d ", k, ii[k]))
+	s <- if(k < n.h) {
+		 if(length(in.k <- inds[[ ii[k] ]]))
+		     xS[[in.k]]
+	     } else xS
+	if(verbose) { cat("-> s=xS[[in.k]]="); str(s) }
 	stopifnot(length(s) == 2L, all( vapply(s, is.integer, NA) ))# checking..
 	merge[,k] <- unlist(s)
 	if(k < n.h)
@@ -140,6 +141,7 @@ as.hclust.dendrogram <- function(x, ...)
 	      class = "hclust")
 }
 
+##' Auxiliary for as.hclust.dendrogram() :
 ##' add the c(i1,i2,..) list indices to each non-leaf of a dendrogram
 ##' --> allowing "random access" into the dendrogram
 .add.dendrInd <- function(x)

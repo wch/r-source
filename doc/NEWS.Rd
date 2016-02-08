@@ -520,6 +520,9 @@
       \item The \code{data.frame} method of \code{rbind()} gains an
       optional argument \code{stringsAsFactors} (instead of only
       depending on \code{getOption("stringsAsFactors")}).
+
+      \item The \code{as.hclust} method for \code{"dendrogram"}s failed often
+      when there ties in the heights.
     }
   }
 

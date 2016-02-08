@@ -339,6 +339,7 @@ badstructure(20, "children")
 d <- as.dendrogram(hclust(dist(sin(1:7))))
 (dl <- d[[c(2,1,2)]]) # single-leaf dendrogram
 stopifnot(inherits(dl, "dendrogram"), is.leaf(dl),
+	  identical(attributes(reorder(dl, 1:7)), c(attributes(dl), value = 5L)),
 	  identical(order.dendrogram(dl), as.vector(dl)),
 	  identical(d, as.dendrogram(d)))
 ## as.dendrogram() was hidden;  order.*() failed for leaf
@@ -459,11 +460,14 @@ stopifnot(identical(options(list()), options(NULL)))
 
 
 ## merge.dendrogram(), PR#15648
-mkDend <- function(n, lab, rGen = function(n) 1+round(16*abs(rnorm(n)))) {
+mkDend <- function(n, lab, method = "complete",
+                   ## gives *ties* often:
+		   rGen = function(n) 1+round(16*abs(rnorm(n)))) {
     stopifnot(is.numeric(n), length(n) == 1, n >= 1, is.character(lab))
     a <- matrix(rGen(n*n), n, n)
     colnames(a) <- rownames(a) <- paste0(lab, 1:n)
-    as.dendrogram(hclust(as.dist(a + t(a))))
+    .HC. <<- hclust(as.dist(a + t(a)), method=method)
+    as.dendrogram(.HC.)
 }
 set.seed(7)
 da <- mkDend(4, "A")
@@ -473,6 +477,13 @@ hcab <- as.hclust(d.ab)
 stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
 	  hcab$labels == c(paste0("A", 1:4), paste0("B", 1:3)))
 ## was wrong in R <= 3.1.1
+set.seed(1) ; h1 <- as.hclust(mkDend(5, "S", method="single")); hc1 <- .HC.
+set.seed(5) ; h5 <- as.hclust(mkDend(5, "S", method="single")); hc5 <- .HC.
+set.seed(42); h3 <- as.hclust(mkDend(5, "A", method="single")); hc3 <- .HC.
+## all failed (differently!) because of ties in R <= 3.2.3
+stopifnot(all.equal(h1[1:4], hc1[1:4], tol = 1e-12),
+	  all.equal(h5[1:4], hc5[1:4], tol = 1e-12),
+	  all.equal(h3[1:4], hc3[1:4], tol = 1e-12))
 
 
 ## bw.SJ() and similar with NA,Inf values, PR#16024
