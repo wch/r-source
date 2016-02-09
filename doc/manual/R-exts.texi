@@ -2508,10 +2508,10 @@ If a package using C++11 has a @command{configure} script it is
 essential that it selects the correct compiler, @emph{via} something like
 
 @example
-CXX1X=`"$@{R_HOME@}/bin/R" CMD config CXX11X`
-CXX1XSTD=`"$@{R_HOME@}/bin/R" CMD config CXX11XSTD`
+CXX1X=`"$@{R_HOME@}/bin/R" CMD config CXX1X`
+CXX1XSTD=`"$@{R_HOME@}/bin/R" CMD config CXX1XSTD`
 CXX="$(CXX1X) $(CXX1XSTD)"
-CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11XFLAGS`
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX1XFLAGS`
 AC_LANG(C++)
 @end example
 
