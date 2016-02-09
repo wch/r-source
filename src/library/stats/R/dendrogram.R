@@ -5,7 +5,7 @@
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
+#  the Free Software Foundation; either version 3 of the License, or
 #  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
@@ -186,23 +186,46 @@ midcache.dendrogram <- function (x, type = "hclust", quiet=FALSE)
 
     type <- match.arg(type) ## currently only "hclust"
     stopifnot( inherits(x, "dendrogram") )
+    verbose <- getOption("verbose") # non-public
     setmid <- function(d, type) {
-	if(is.leaf(d))# no "midpoint"
-	    return(d)
-	k <- length(d)
-	if(k < 1)
-	    stop("dendrogram node with non-positive #{branches}")
-	r <- d # incl. attributes!
-	midS <- 0
-	for(j in 1L:k) {
-	    r[[j]] <- unclass(setmid(d[[j]], type))
-	    midS <- midS + .midDend(r[[j]])
+	depth <- 0L
+	kk <- integer()
+	jj <- integer()
+	dd <- list()
+	repeat {
+	    if(!is.leaf(d)) {# no "midpoint" for leaf
+		k <- length(d)
+		if(k < 1)
+		    stop("dendrogram node with non-positive #{branches}")
+		depth <- depth + 1L
+		if(verbose) cat(sprintf(" depth(+)=%4d, k=%d\n", depth, k))
+		kk[depth] <- k
+		if(storage.mode(jj) != storage.mode(kk)) # (long vectors)
+		    storage.mode(jj) <- storage.mode(kk)
+		dd[[depth]] <- d
+		d <- d[[jj[depth] <- 1L]]
+		next
+	    }
+	    while(depth) {
+		k <- kk[depth]
+		j <- jj[depth]
+		r <- dd[[depth]] # incl. attributes!
+		r[[j]] <- unclass(d)
+		if(j < k) break
+		depth <- depth - 1L
+		if(verbose) cat(sprintf(" depth(-)=%4d, k=%d\n", depth, k))
+		midS <- sum(vapply(r, .midDend, 0))
+		if(!quiet && type == "hclust" && k != 2)
+		    warning("midcache() of non-binary dendrograms only partly implemented")
+		## compatible to as.dendrogram.hclust() {MM: doubtful if k > 2}
+		attr(r, "midpoint") <- (.memberDend(r[[1L]]) + midS) / 2
+		d <- r
+	    }
+	    if(!depth) break
+	    dd[[depth]] <- r
+	    d <- r[[jj[depth] <- j + 1L]]
 	}
-	if(!quiet && type == "hclust" && k != 2)
-	    warning("midcache() of non-binary dendrograms only partly implemented")
-	## compatible to as.dendrogram.hclust() {MM: doubtful if k > 2}
-	attr(r, "midpoint") <- (.memberDend(d[[1L]]) + midS) / 2
-	r
+	d
     }
     setmid(x, type=type)
 }
@@ -535,21 +558,21 @@ plotNodeLimit <- function(x1, x2, subtree, center)
     ## get the left borders limit[k] of all children k=1..K, and
     ## the handle point `x' for the edge connecting to the parent.
     inner <- !is.leaf(subtree) && x1 != x2
-    if(inner) {
-	K <- length(subtree)
-	mTop <- .memberDend(subtree)
-	limit <- integer(K)
-	xx1 <- x1
-	for(k in 1L:K) {
-	    m <- .memberDend(subtree[[k]])
-	    ##if(is.null(m)) m <- 1
-	    xx1 <- xx1 + (if(center) (x2-x1) * m/mTop else m)
-	    limit[k] <- xx1
-	}
-	limit <- c(x1, limit)
-    } else { ## leaf
-	limit <- c(x1, x2)
-    }
+    limit <- c(x1,
+	       if(inner) {
+		   K <- length(subtree)
+		   mTop <- .memberDend(subtree)
+		   limit <- integer(K)
+		   xx1 <- x1
+		   for(k in 1L:K) {
+		       m <- .memberDend(subtree[[k]])
+		       ##if(is.null(m)) m <- 1
+		       xx1 <- xx1 + (if(center) (x2-x1) * m/mTop else m)
+		       limit[k] <- xx1
+		   }
+		   limit
+	       } else ## leaf
+		   x2)
     mid <- attr(subtree, "midpoint")
     center <- center || (inner && !is.numeric(mid))
     x <- if(center) mean(c(x1,x2)) else x1 + (if(inner) mid else 0)
@@ -628,22 +651,40 @@ reorder.dendrogram <- function(x, wts, agglo.FUN = sum, ...)
 	stop("'reorder.dendrogram' requires a dendrogram")
     agglo.FUN <- match.fun(agglo.FUN)
     oV <- function(x, wts) {
-	if(is.leaf(x)) {
-	    attr(x, "value") <- wts[x[1L]]
-	    return(x)
+	depth <- 0L
+	kk <- jj <- integer()
+	xx <- list()
+	repeat {
+	    if(is.leaf(x))
+		attr(x, "value") <- wts[x[1L]]
+	    else {
+		k <- length(x)
+		if(k == 0L) stop("invalid (length 0) node in dendrogram")
+		depth <- depth + 1L
+		kk[depth] <- k
+		if(storage.mode(jj) != storage.mode(kk))
+		    storage.mode(jj) <- storage.mode(kk)
+		## insert/compute 'wts' recursively down the branches:
+		xx[[depth]] <- x
+		x <- x[[jj[depth] <- 1L]]
+		next
+	    }
+	    while(depth) {
+		b <- x
+		x <- xx[[depth]]
+		j <- jj[depth]
+		x[[j]] <- b
+		if(j < kk[depth]) break
+		depth <- depth - 1L
+		vals <- vapply(x, attr, numeric(1L), which="value")
+		iOrd <- sort.list(vals)
+		attr(x, "value") <- agglo.FUN(vals[iOrd])
+		x[] <- x[iOrd]
+	    }
+	    if(!depth) break
+	    xx[[depth]] <- x
+	    x <- x[[jj[depth] <- j + 1L]]
 	}
-        k <- length(x)
-        if(k == 0L) stop("invalid (length 0) node in dendrogram")
-        vals <- numeric(k)
-        for(j in 1L:k) {
-            ## insert/compute 'wts' recursively down the branches:
-            b <- oV(x[[j]], wts)
-            x[[j]] <- b
-            vals[j] <- attr(b, "value")
-        }
-        iOrd <- sort.list(vals)
-	attr(x, "value") <- agglo.FUN(vals[iOrd])
-        x[] <- x[iOrd]
         x
     }
     midcache.dendrogram( oV(x, wts) )

@@ -1356,3 +1356,12 @@ stopifnot(
     identical(f.raw[["default"]], f.raw[[opts["gzip"]]]))
 ## compress = "gzip" failed (PR#16653), but compress = c(a = "xz") did too
 
+
+## recursive dendrogram methods and deeply nested dendrograms
+op <- options(expressions = 999, verbose = TRUE)
+set.seed(11); d <- mkDend(1500, "A", method="single")
+rd <- reorder(d, nobs(d):1)
+## Error: evaluation nested too deeply: infinite recursion .. in R <= 3.2.3
+stopifnot(is.leaf(r1 <- rd[[1]]),    is.leaf(r2 <- rd[[2:1]]),
+	  attr(r1, "label") == "A1458", attr(r2, "label") == "A1317")
+options(op)# revert
