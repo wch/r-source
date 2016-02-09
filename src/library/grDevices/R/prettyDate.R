@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/prettyDate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 # Original code Copyright (C) 2010 Felix Andrews
 # Modifications Copyright (C) 2010 The R Core Team
@@ -37,9 +37,11 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     if (isDate) # the timezone *does* matter
 	attr(x, "tzone") <- "GMT"
     zz <- range(x, na.rm = TRUE)
+    D <- diff(nzz <- as.numeric(zz))
+    if(D < 1) # deal with unique values or sub-second ranges: [? or use "1 ms" steps below?]
+	zz <- structure(c(floor(nzz[1]), ceiling(nzz[2]) + min(60, max(D == 0, n-1))),
+                        class = class(x), tzone = attr(x, "tzone"))
     xspan <- as.numeric(diff(zz), units = "secs")
-    if (diff(as.numeric(zz)) == 0) # one value only
-	zz <- zz + c(0,60)
     ## specify the set of pretty timesteps
     MIN <- 60
     HOUR <- MIN * 60
@@ -107,25 +109,20 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         } else {
             at <- seq(startTime, max(zz), by = s$spec)
         }
-        at <- at[(min(zz) <= at) & (at <= max(zz))]
+        at <- at[min(zz) <= at & at <= max(zz)]
         at
     }
     init.at <- calcSteps(steps[[init.i]])
-    init.n <- length(init.at) - 1L
     ## bump it up if below acceptable threshold
-    while (init.n < min.n) {
+    while ((init.n <- length(init.at) - 1L) < min.n) {
         init.i <- init.i - 1L
         if (init.i == 0) stop("range too small for 'min.n'")
         init.at <- calcSteps(steps[[init.i]])
-        init.n <- length(init.at) - 1L
     }
     makeOutput <- function(at, s) {
-        flabels <- format(at, s$format)
-        ans <-
-            if (isDate) as.Date(round(at, units = "days"))
-            else as.POSIXct(at)
-        attr(ans, "labels") <- flabels
-        ans
+        structure(if (isDate) as.Date(round(at, units = "days"))
+                  else as.POSIXct(at),
+                  labels = format(at, s$format))
     }
     if (init.n == n) ## perfect
         return(makeOutput(init.at, steps[[init.i]]))

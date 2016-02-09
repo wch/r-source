@@ -1378,3 +1378,15 @@ for(n in 1:256) {
 }
 ## were slightly off in R <= 3.2.3. PR#16704
 
+
+## prettyDate() for subsecond ranges
+sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
+set.seed(7); for(n in 1:64) {
+    x <- sTime + .001*rlnorm(1) * 0:9
+    np <- length(px <- pretty(x))# n = 5
+    p1 <- pretty(sTime)
+    stopifnot(3 <= np, np <= 8, min(px) <= min(x), max(x) <= max(px),
+	      min(p1) <= sTime, sTime <= max(p1))
+}
+## failed in R <= 3.2.3
+
