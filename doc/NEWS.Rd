@@ -25,7 +25,11 @@
       depending on \code{getOption("stringsAsFactors")}).
 
       \item The \code{as.hclust} method for \code{"dendrogram"}s failed often
-      when there ties in the heights.
+      when there were ties in the heights.
+
+      \item \code{reorder()} and \code{midcache.dendrogram()} now are
+      non-recursive and hence applicable to somewhat deeply nested
+      dendrograms, thanks to a proposal by Suharto Anggono in \PR{16424}.
     }
   }
 
@@ -96,8 +100,8 @@
 
       \item \code{saveRDS(*, compress = "gzip")} now works as
       documented.  (\PR{16653})
-      
-      \item (Windows only) The \command{Rgui} front end did not 
+
+      \item (Windows only) The \command{Rgui} front end did not
       always initialize the console properly, and could cause
       \R to crash.  (\PR{16998})
     }
