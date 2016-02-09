@@ -1358,7 +1358,7 @@ stopifnot(
 
 
 ## recursive dendrogram methods and deeply nested dendrograms
-op <- options(expressions = 999, verbose = TRUE)
+op <- options(expressions = 999)# , verbose = 2) # -> max. depth= 961
 set.seed(11); d <- mkDend(1500, "A", method="single")
 rd <- reorder(d, nobs(d):1)
 ## Error: evaluation nested too deeply: infinite recursion .. in R <= 3.2.3
