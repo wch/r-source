@@ -1365,3 +1365,16 @@ rd <- reorder(d, nobs(d):1)
 stopifnot(is.leaf(r1 <- rd[[1]]),    is.leaf(r2 <- rd[[2:1]]),
 	  attr(r1, "label") == "A1458", attr(r2, "label") == "A1317")
 options(op)# revert
+
+
+## cor.test() with extremely small p values
+b <- 1:10; set.seed(1)
+for(n in 1:256) {
+    a <- round(jitter(b, f = 1/8), 3)
+    p1 <- cor.test(a, b)$ p.value
+    p2 <- cor.test(a,-b)$ p.value
+    stopifnot(abs(p1 - p2) < 8e-16 * (p1+p2))
+    ## on two different Linuxen, they actually are always equal
+}
+## were slightly off in R <= 3.2.3. PR#16704
+
