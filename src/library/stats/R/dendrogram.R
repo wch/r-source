@@ -186,7 +186,7 @@ midcache.dendrogram <- function (x, type = "hclust", quiet=FALSE)
 
     type <- match.arg(type) ## currently only "hclust"
     stopifnot( inherits(x, "dendrogram") )
-    verbose <- getOption("verbose") # non-public
+    verbose <- getOption("verbose", 0) >= 2 # non-public
     setmid <- function(d, type) {
 	depth <- 0L
 	kk <- integer()

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/cor.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     y <- y[OK]
     n <- length(x)
 
-    PVAL <- NULL
     NVAL <- 0
     conf.int <- FALSE
 
@@ -50,7 +49,6 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 	ESTIMATE <- c(cor = r)
 	PARAMETER <- c(df = df)
 	STATISTIC <- c(t = sqrt(df) * r / sqrt(1 - r^2))
-	p <- pt(STATISTIC, df)
         if(n > 3) { ## confidence int.
             if(!missing(conf.level) &&
                (length(conf.level) != 1 || !is.finite(conf.level) ||
@@ -68,6 +66,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             cint <- tanh(cint)
             attr(cint, "conf.level") <- conf.level
         }
+	PVAL <- switch(alternative,
+		       "less" = pt(STATISTIC, df),
+		       "greater" = pt(STATISTIC, df, lower.tail=FALSE),
+		       "two.sided" = 2 * min(pt(STATISTIC, df),
+					     pt(STATISTIC, df, lower.tail=FALSE)))
     }
     else {
 	if(n < 2)
@@ -90,6 +93,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     exact <- (n < 50)
                 if(exact && !TIES) {
                     q <- round((r + 1) * n * (n - 1) / 4)
+                    STATISTIC <- c(T = q)
                     pkendall <- function(q, n) .Call(C_pKendall, q, n)
                     PVAL <-
                         switch(alternative,
@@ -102,7 +106,6 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                                },
                                "greater" = 1 - pkendall(q - 1, n),
                                "less" = pkendall(q, n))
-                    STATISTIC <- c(T = q)
                 } else {
                     xties <- table(x[duplicated(x)]) + 1
                     yties <- table(y[duplicated(y)]) + 1
@@ -121,11 +124,15 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                         v1 / (2 * n * (n - 1)) +
                             v2 / (9 * n * (n - 1) * (n - 2))
 
-                    if (continuity) S <- sign(S) * (abs(S) - 1)
-                    STATISTIC <- c(z = S / sqrt(var_S))
-                    p <- pnorm(STATISTIC)
                     if(exact && TIES)
                         warning("Cannot compute exact p-value with ties")
+                    if (continuity) S <- sign(S) * (abs(S) - 1)
+                    STATISTIC <- c(z = S / sqrt(var_S))
+		    PVAL <- switch(alternative,
+				   "less" = pnorm(STATISTIC),
+				   "greater" = pnorm(STATISTIC, lower.tail=FALSE),
+				   "two.sided" = 2 * min(pnorm(STATISTIC),
+							 pnorm(STATISTIC, lower.tail=FALSE)))
                 }
             }
 	} else {
@@ -177,12 +184,6 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             }
         }
     }
-
-    if(is.null(PVAL)) # for "pearson" only, currently
-	PVAL <- switch(alternative,
-		       "less" = p,
-		       "greater" = 1 - p,
-		       "two.sided" = 2 * min(p, 1 - p))
 
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,
