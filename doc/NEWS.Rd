@@ -520,6 +520,8 @@
       \item The \code{data.frame} method of \code{rbind()} gains an
       optional argument \code{stringsAsFactors} (instead of only
       depending on \code{getOption("stringsAsFactors")}).
+
+      \code{smooth(x, *)} now also works for long vectors.
     }
   }
 
@@ -605,6 +607,9 @@
       \item \code{cor.test()} now calculates very small p values
       more accurately (affecting the result only in extreme not
       statistically relevant cases).  (\PR{16704})
+
+      \item \code{smooth(*, do.ends=TRUE)} did not always work correctly
+      in \R versions between 3.0.0 and 3.2.3.
     }
   }
 }
