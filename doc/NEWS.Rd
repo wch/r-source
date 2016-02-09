@@ -520,17 +520,6 @@
       \item The \code{data.frame} method of \code{rbind()} gains an
       optional argument \code{stringsAsFactors} (instead of only
       depending on \code{getOption("stringsAsFactors")}).
-
-      \item The \code{as.hclust} method for \code{"dendrogram"}s failed often
-      when there were ties in the heights.
-
-      \item \code{reorder()} and \code{midcache.dendrogram()} now are
-      non-recursive and hence applicable to somewhat deeply nested
-      dendrograms, thanks to a proposal by Suharto Anggono in \PR{16424}.
-
-      \item \code{cor.test()} now calculates very small p values
-      more accurately (affecting the result only in extreme not
-      statistically relevant cases).  (\PR{16704})
     }
   }
 
@@ -605,6 +594,17 @@
       \item (Windows only) The \command{Rgui} front end did not
       always initialize the console properly, and could cause
       \R to crash.  (\PR{16998})
+
+      \item The \code{as.hclust} method for \code{"dendrogram"}s failed often
+      when there were ties in the heights.
+
+      \item \code{reorder()} and \code{midcache.dendrogram()} now are
+      non-recursive and hence applicable to somewhat deeply nested
+      dendrograms, thanks to a proposal by Suharto Anggono in \PR{16424}.
+
+      \item \code{cor.test()} now calculates very small p values
+      more accurately (affecting the result only in extreme not
+      statistically relevant cases).  (\PR{16704})
     }
   }
 }
