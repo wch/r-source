@@ -1379,6 +1379,22 @@ for(n in 1:256) {
 ## were slightly off in R <= 3.2.3. PR#16704
 
 
+## smooth(*, do.ends=TRUE)
+y <- c(4,2,2,3,10,5:7,7:6)
+stopifnot(
+    identical(c(smooth(y, "3RSR" , do.ends=TRUE, endrule="copy")),
+              c(4, 2, 2, 3, 5, 6, 6, 7, 7, 6) -> sy.c),
+    identical(c(smooth(y, "3RSS" , do.ends=TRUE, endrule="copy")), sy.c),
+    identical(c(smooth(y, "3RS3R", do.ends=TRUE, endrule="copy")), sy.c),
+    identical(c(smooth(y, "3RSR" , do.ends=FALSE, endrule="copy")),
+              c(4, 4, 4, 4, 5, 6, 6, 6, 6, 6)),
+    identical(c(smooth(y, "3RSS" , do.ends=FALSE, endrule="copy")),
+              c(4, 4, 2, 3, 5, 6, 6, 6, 6, 6)),
+    identical(c(smooth(y, "3RS3R", do.ends=FALSE, endrule="copy")),
+              c(4, 4, 3, 3, 5, 6, 6, 6, 6, 6)))
+## do.ends=TRUE was not obeyed for the "3RS*" kinds, for 3.0.0 <= R <= 3.2.3
+
+
 ## prettyDate() for subsecond ranges
 sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
 set.seed(7); for(n in 1:64) {
