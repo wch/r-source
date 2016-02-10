@@ -1,0 +1,100 @@
+language: c
+sudo: false
+env:
+- CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - git-svn
+    - bash-completion
+    - bison
+    - debhelper
+    - default-jdk
+    - g++
+    - gcc
+    - gdb
+    - gfortran
+    - groff-base
+    - libblas-dev
+    - libbz2-dev
+    - libcurl4-openssl-dev
+    - libjpeg-dev
+    - liblapack-dev
+    - liblzma-dev
+    - libncurses5-dev
+    - libpango1.0-dev
+    - libpcre3-dev
+    - libpng-dev
+    - libreadline-dev
+    - libx11-dev
+    - libxt-dev
+    - tcl-dev
+    - tk-dev
+    - subversion
+    - texinfo
+    - texlive-base
+    - texlive-extra-utils
+    - texlive-fonts-extra
+    - texlive-fonts-recommended
+    - texlive-generic-recommended
+    - texlive-latex-base
+    - texlive-latex-extra
+    - texlive-latex-recommended
+    - x11proto-core-dev
+    - xauth
+    - xdg-utils
+    - xfonts-base
+    - xvfb
+    - zlib1g-dev
+
+cache:
+  - ccache
+
+before_install:
+  - tools/rsync-recommended
+  - mkdir -p extra
+  - pushd extra
+  - wget --no-check-certificate http://zlib.net/zlib-$ZLIB_VERSION.tar.gz
+  - tar xzf zlib-$ZLIB_VERSION.tar.gz
+  - pushd "zlib-$ZLIB_VERSION"
+  - ./configure --prefix=$PREFIX && make && make install
+  - popd
+  - wget --no-check-certificate "http://curl.haxx.se/download/curl-$CURL_VERSION.tar.gz"
+  - tar zxf "curl-$CURL_VERSION.tar.gz"
+  - pushd "curl-$CURL_VERSION"
+  - ./configure --prefix=$PREFIX && make && make install
+  - popd
+  - wget https://sourceforge.net/projects/pcre/files/pcre/$PCRE_VERSION/pcre-$PCRE_VERSION.tar.bz2
+  - tar xjf pcre-$PCRE_VERSION.tar.bz2
+  - pushd pcre-$PCRE_VERSION
+  - ./configure --prefix=$PREFIX --enable-utf --enable-unicode-properties && make && make install
+  - popd
+  - popd
+
+script:
+  - git svn init https://svn.r-project.org/R/trunk
+  - git update-ref refs/remotes/git-svn refs/heads/build-trunk
+  - git svn rebase
+  - mkdir build;pushd build
+  - ../configure --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
+  - make
+  - make check || true
+  - make install
+
+before_deploy:
+  - mkdir -p /tmp/R-bin
+  - tar cJf /tmp/R-bin/R-devel.xz -C $(dirname $PREFIX) $(basename $PREFIX)
+
+deploy:
+  skip_cleanup: true
+  provider: s3
+  access_key_id: AKIAI4NKQAY3ELAE3IPQ
+  secret_access_key:
+    secure: H6xdVAb9PHDLvpqnJd0axb2XtxV0bPYbl3o8eevGfUTvpK6gDuXpm7/glpdfTu2iKxR1nQ1i1xAc+D5trLjlGHn+xuuKc8LNebIUaqtb1BrL+ENJVU8SuCA/q0R9dSpy1Jvv4v8l1X8KVKDGYJf1gWWC9vgqk/RZ8uDT/ymhtn4=
+  bucket: rstudio-travis
+  local-dir: /tmp/R-bin
+  on:
+    repo: wch/r-source
+    branch: build-trunk
