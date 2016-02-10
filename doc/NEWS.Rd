@@ -113,6 +113,11 @@
 
       \item \code{smooth(*, do.ends=TRUE)} did not always work correctly
       in \R versions between 3.0.0 and 3.2.3.
+
+      \item \code{pretty(D)} for date-time objects \code{D} now also
+      works well if \code{range(D)} is (much) smaller than a second.  In
+      the case of only one unique value in \code{D}, the pretty range
+      now is more symmetric around that value than previously.
     }
   }
 }
