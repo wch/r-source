@@ -615,6 +615,10 @@
       works well if \code{range(D)} is (much) smaller than a second.  In
       the case of only one unique value in \code{D}, the pretty range
       now is more symmetric around that value than previously.
+      
+      \item The figures in help pages such as \code{?points} were 
+      accidentally damaged, and did not appear in \R 3.2.3.  
+      (\PR{16708})
     }
   }
 }
