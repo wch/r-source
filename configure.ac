@@ -327,7 +327,7 @@ AC_ARG_ENABLE([lto],
 if test "x${want_lto}" != xno; then
   LTO=-flto
 fi
-if test "x${want_lto}" == xyes; then
+if test "x${want_lto}" = xyes; then
   LTOALL=-flto
 fi
 AC_SUBST(LTO)
