@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{smooth}
@@ -11,7 +11,7 @@
 }
 \usage{
 smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
-       twiceit = FALSE, endrule = "Tukey", do.ends = FALSE)
+       twiceit = FALSE, endrule = c("Tukey", "copy"), do.ends = FALSE)
 }
 \arguments{
   \item{x}{a vector or time series}
