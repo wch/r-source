@@ -38,9 +38,11 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 	attr(x, "tzone") <- "GMT"
     zz <- range(x, na.rm = TRUE)
     D <- diff(nzz <- as.numeric(zz))
-    if(D < 1) # deal with unique values or sub-second ranges: [? or use "1 ms" steps below?]
-	zz <- structure(c(floor(nzz[1]), ceiling(nzz[2]) + min(60, max(D == 0, n-1))),
-                        class = class(x), tzone = attr(x, "tzone"))
+    if(D < 1) { # unique values / sub-second ranges: [? or use "1 ms" steps below?]
+	m <- min(30, max(D == 0, n/2 - 1)) # "- 1" ==> better match for 'n'
+	zz <- structure(c(floor(nzz[1] - m), ceiling(nzz[2] + m)),
+			class = class(x), tzone = attr(x, "tzone"))
+    }
     xspan <- as.numeric(diff(zz), units = "secs")
     ## specify the set of pretty timesteps
     MIN <- 60
