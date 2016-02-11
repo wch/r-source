@@ -489,12 +489,6 @@
       \code{row.names} works better in borderline integer cases, but
       may change the names assigned.  (\PR{16666})
 
-      \item \code{dummy.coef.lm()} now works in more cases, thanks to a
-      proposal by Werner Stahel (\PR{16665}).  In addition, it now works
-      for multivariate linear models (\code{"mlm"}, \code{\link{manova}})
-      thanks to a proposal by Daniel Wollschlaeger.
-      % port to r-patched
-
       \item (X11 only)  \code{getGraphicsEvent()} miscoded buttons and
       missed mouse motion events.  (\PR{16700})
       % port to r-patched if it doesn't add too many events to graphics windows
@@ -597,6 +591,11 @@
       always initialize the console properly, and could cause
       \R to crash.  (\PR{16998})
 
+      \item \code{dummy.coef.lm()} now works in more cases, thanks to a
+      proposal by Werner Stahel (\PR{16665}).  In addition, it now works
+      for multivariate linear models (\code{"mlm"}, \code{\link{manova}})
+      thanks to a proposal by Daniel Wollschlaeger.
+
       \item The \code{as.hclust} method for \code{"dendrogram"}s failed often
       when there were ties in the heights.
 
@@ -615,9 +614,9 @@
       works well if \code{range(D)} is (much) smaller than a second.  In
       the case of only one unique value in \code{D}, the pretty range
       now is more symmetric around that value than previously.
-      
-      \item The figures in help pages such as \code{?points} were 
-      accidentally damaged, and did not appear in \R 3.2.3.  
+
+      \item The figures in help pages such as \code{?points} were
+      accidentally damaged, and did not appear in \R 3.2.3.
       (\PR{16708})
     }
   }
