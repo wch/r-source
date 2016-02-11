@@ -71,7 +71,7 @@ before_install:
 
 script:
   - git svn init https://svn.r-project.org/R/trunk
-  - git update-ref refs/remotes/git-svn refs/heads/build
+  - git update-ref refs/remotes/git-svn refs/heads/build-trunk
   - git svn rebase
   - mkdir build;pushd build
   - ../configure --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
@@ -88,7 +88,7 @@ deploy:
   local_dir: /tmp/R-bin
   on:
     repo: wch/r-source
-    branch: build
+    branch: build-trunk
   skip_cleanup: true
   bucket: "rstudio-travis"
   access_key_id:

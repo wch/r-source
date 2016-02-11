@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wch/r-source.svg?branch=build)](https://travis-ci.org/wch/r-source)
+[![Build Status](https://travis-ci.org/wch/r-source.svg?branch=build-trunk)](https://travis-ci.org/wch/r-source)
 
 This branch builds R-devel continuously when there are SVN commits and deploys the results to S3.
 
