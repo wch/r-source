@@ -2,7 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2015 The R Core Team
+#  Copyright (C) 1998-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,40 +29,47 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-1, , drop=FALSE]
     Terms <- delete.response(Terms)
-    vars <- all.vars(Terms) # e.g. drops I(.), ...
-    nxl <- setNames(rep.int(1, length(vars)), vars)
-    tmp <- lengths(xl)
-    nxl[names(tmp)] <- tmp
+    mf <- object$model
+    if (is.null(mf)) mf <- model.frame(object)
+    vars <- dimnames(facs)[[1]] # names
+    xtlv <- lapply(mf[,vars, drop=FALSE], levels) ## levels
+    nxl <- pmax(lengths(xtlv), 1L)  ## (named) number of levels
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
-    args <- setNames(vector("list", length(vars)), vars)
-    for(i in vars)
-	args[[i]] <- if(nxl[[i]] == 1) rep.int(1, nl)
-	else factor(rep.int(xl[[i]][1L], nl), levels = xl[[i]])
-    dummy <- do.call("data.frame", args)
-    pos <- 0
+    ## dummy: data frame of vars
+    args <- sapply(vars, function(i)
+	if (nxl[i] == 1) rep.int(1, nl)
+	else factor(rep.int(xtlv[[i]][1L], nl), levels = xtlv[[i]]),
+	simplify=FALSE)
+    ## dummy <- as.data.frame(args) # slightly more efficiently:
+    dummy <- do.call(data.frame, args); names(dummy) <- vars
+    pos <- 0L
     rn <- rep.int(tl, lterms)
-    rnn <- rep.int("", nl)
+    rnn <- character(nl) # all "" --- will be names of rows
     for(j in tl) {
 	i <- vars[facs[, j] > 0]
 	ifac <- i[nxl[i] > 1]
+	lt.j <- lterms[[j]]
 	if(length(ifac) == 0L) {        # quantitative factor
-	    rnn[pos+1] <- j
-	} else if(length(ifac) == 1L) {	# main effect
-	    dummy[ pos+1L:lterms[j], ifac ] <- xl[[ifac]]
-	    rnn[ pos+1L:lterms[j] ] <- as.character(xl[[ifac]])
-	} else {			# interaction
-	    tmp <- expand.grid(xl[ifac])
-	    dummy[ pos+1L:lterms[j], ifac ] <- tmp
-	    rnn[ pos+1L:lterms[j] ] <-
-		apply(as.matrix(tmp), 1L, function(x) paste(x, collapse=":"))
+	    rnn[pos+1L] <- j
+	} else {
+	    p.j <- pos + seq_len(lt.j)
+	    if(length(ifac) == 1L) {	# main effect
+		dummy[p.j, ifac] <- x.i <- xtlv[[ifac]]
+		rnn[p.j] <- as.character(x.i)
+	    } else {			# interaction
+		tmp <- expand.grid(xtlv[ifac], KEEP.OUT.ATTRS=FALSE)
+		dummy[p.j, ifac] <- tmp
+		rnn[p.j] <- apply(as.matrix(tmp), 1L, paste, collapse = ":")
+	    }
 	}
-	pos <- pos + lterms[j]
+	pos <- pos + lt.j
     }
-    ## some terms like poly(x,1) will give problems here, so allow
-    ## NaNs and set to NA afterwards.
-    mf <- model.frame(Terms, dummy, na.action=function(x)x, xlev=xl)
-    mm <- model.matrix(Terms, mf, object$contrasts, xl)
+    attr(dummy,"terms") <- attr(mf,"terms")
+    lcontr <- object$contrasts
+    lci <- vapply(dummy, is.factor, NA)
+    lcontr <- lcontr[names(lci)[lci]] ## factors with 1 level have disappeared (?)
+    mm <- model.matrix(Terms, dummy, lcontr, xl)
     if(anyNA(mm)) {
         warning("some terms will have NAs due to the limits of the method")
         mm[is.na(mm)] <- NA
@@ -71,115 +78,214 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     if(!use.na) coef[is.na(coef)] <- 0
     asgn <- attr(mm,"assign")
     res <- setNames(vector("list", length(tl)), tl)
-    for(j in seq_along(tl)) {
-	keep <- asgn == j
-	ij <- rn == tl[j]
-	res[[j]] <-
-	    setNames(drop(mm[ij, keep, drop=FALSE] %*% coef[keep]), rnn[ij])
+    if(isM <- is.matrix(coef)) { # isM is true for "mlm", multivariate lm (incl manova)
+	for(j in seq_along(tl)) {
+	    keep <- which(asgn == j)
+	    cf <- coef[keep, , drop=FALSE]
+	    ij <- rn == tl[j]
+	    cf <-
+		if (any(na <- is.na(cf))) {
+		    if(ncol(cf) >= 2)
+			stop("multivariate case with missing coefficients is not yet implemented")
+		    ## else: 1 column --> treat 'cf' as vector
+		    rj <- t( mm[ij, keep[!na], drop=FALSE] %*% cf[!na])
+		    rj[apply(mm[ij, keep[ na], drop=FALSE] != 0, 1L, any)] <- NA
+		    rj
+		} else
+		    t(mm[ij, keep, drop = FALSE] %*% cf)
+	    dimnames(cf) <- list(colnames(coef), rnn[ij])
+	    res[[j]] <- cf
+	}
+    } else { ## regular univariate lm case
+	for(j in seq_along(tl)) {
+	    keep <- which(asgn == j)
+	    cf <- coef[keep]
+	    ij <- rn == tl[j]
+	    res[[j]] <-
+		if (any(na <- is.na(cf))) {
+		    rj <- setNames(drop(mm[ij, keep[!na], drop = FALSE] %*%
+					cf[!na]), rnn[ij])
+		    rj[apply(mm[ij, keep[na], drop=FALSE] != 0, 1L, any)] <- NA
+		    rj
+		} else
+		    setNames(drop(mm[ij, keep, drop = FALSE] %*% cf), rnn[ij])
+	}
     }
-    if(int > 0) {
-	res <- c(list("(Intercept)" = coef[int]), res)
-    }
-    class(res) <- "dummy_coef"
-    res
+    if(int > 0)
+	res <- c(list("(Intercept)" = if(isM) coef[int, ] else coef[int]), res)
+    structure(res, class = "dummy_coef",  matrix = isM)
 }
 
+## NB: This is very much duplication from dummy.coef.lm -- keep in sync !
 dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
 {
+    xl <- attr(object, "xlevels")
+    if(!length(xl)) # no factors in model
+	return(as.list(coef(object)))
     Terms <- terms(object, specials="Error")
     err <- attr(Terms,"specials")$Error - 1
     tl <- attr(Terms, "term.labels")[-err]
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-c(1,1+err), -err, drop=FALSE]
-    vars <- rownames(facs)
-    xl <- attr(object, "xlevels")
-    if(!length(xl)) {			# no factors in model
-	return(as.list(coef(object)))
-    }
-    nxl <- setNames(rep.int(1, length(vars)), vars)
-    tmp <- lengths(xl)
-    nxl[names(tmp)] <- tmp
+    stopifnot(length(names(object)) == (N <- length(object)))
+    mf <- object$model
+    if (is.null(mf)) mf <- model.frame(object)
+    vars <- dimnames(facs)[[1]] # names
+    xtlv <- lapply(mf[,vars, drop=FALSE], levels) ## levels
+    nxl <- pmax(lengths(xtlv), 1L)  ## (named) number of levels
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
     args <- setNames(vector("list", length(vars)), vars)
     for(i in vars)
 	args[[i]] <- if(nxl[[i]] == 1) rep.int(1, nl)
-	else factor(rep.int(xl[[i]][1L], nl), levels = xl[[i]])
-    dummy <- do.call("data.frame", args)
-    pos <- 0
+                     else factor(rep.int(xl[[i]][1L], nl), levels = xl[[i]])
+    ## dummy <- as.data.frame(args) # slightly more efficiently:
+    dummy <- do.call(data.frame, args); names(dummy) <- vars
+    pos <- 0L
     rn <- rep.int(tl, lterms)
-    rnn <- rep.int("", nl)
+    rnn <- character(nl) # all "" --- will be names of rows
     for(j in tl) {
 	i <- vars[facs[, j] > 0]
 	ifac <- i[nxl[i] > 1]
+	lt.j <- lterms[[j]]
 	if(length(ifac) == 0L) {        # quantitative factor
-	    rnn[pos + 1] <- j
-	} else if(length(ifac) == 1L) {	# main effect
-	    dummy[ pos+1L:lterms[j], ifac ] <- xl[[ifac]]
-	    rnn[ pos+1L:lterms[j] ] <- as.character(xl[[ifac]])
-	} else {			# interaction
-	    tmp <- expand.grid(xl[ifac])
-	    dummy[ pos+1L:lterms[j], ifac ] <- tmp
-	    rnn[ pos+1L:lterms[j] ] <-
-		apply(as.matrix(tmp), 1L, function(x) paste(x, collapse=":"))
-	}
-	pos <- pos + lterms[j]
+	    rnn[pos+1L] <- j
+	} else {
+	    p.j <- pos + seq_len(lt.j)
+	    if(length(ifac) == 1L) {	# main effect
+		dummy[p.j, ifac] <- x.i <- xtlv[[ifac]]
+		rnn[p.j] <- as.character(x.i)
+	    } else {			# interaction
+		tmp <- expand.grid(xtlv[ifac], KEEP.OUT.ATTRS=FALSE)
+		dummy[p.j, ifac] <- tmp
+		rnn[p.j] <- apply(as.matrix(tmp), 1L, paste, collapse = ":")
+	    }
+        }
+	pos <- pos + lt.j
     }
-    form <- paste("~", paste(tl, collapse = " + "))
-    if (!int) form <- paste(form, "- 1")
-    mm <- model.matrix(terms(formula(form)), dummy,
-		       attr(object, "contrasts"), xl)
+    form <- paste0("~", paste0(tl, collapse = " + "), if(!int) "- 1")
+    lcontr <- object$contrasts
+    lci <- vapply(dummy, is.factor, NA)
+    lcontr <- lcontr[names(lci)[lci]] ## factors with 1 level have disappeared
+    mm <- model.matrix(terms(formula(form)), dummy, lcontr, xl)
     tl <- c("(Intercept)", tl)
-    res <- setNames(vector("list", length(object)), names(object))
+    res <- setNames(vector("list", N), names(object))
     allasgn <- attr(mm, "assign")
     for(i in names(object)) {
 	coef <- object[[i]]$coefficients
 	if(!use.na) coef[is.na(coef)] <- 0
 	asgn <- object[[i]]$assign
 	uasgn <- unique(asgn)
-	tll <- tl[1 + uasgn]
+	tll <- tl[1L + uasgn]
 	mod <- setNames(vector("list", length(tll)), tll)
-	for(j in uasgn) {
-	    mod[[tl[1+j]]] <-
-		if(j == 0) {
-		    structure(coef[asgn == j], names="(Intercept)")
-		} else {
-		    ij <- rn == tl[1+j]
-		    setNames(drop(mm[ij, allasgn == j, drop=FALSE] %*%
-				  coef[asgn == j]),
-			     rnn[ij])
-		}
+### FIXME --- npk.aovE --- fails : "N"  gets  length 0 !!!!
+	if((isM <- is.matrix(coef))) { # "mlm", multivariate lm (incl manova)
+	    for(j in uasgn) {
+		keep <- which(asgn == j)
+		cf <- coef[keep, , drop=FALSE]
+		ij <- rn == tl[j]
+		cf <-
+		    if (any(na <- is.na(cf))) {
+			if(ncol(cf) >= 2)
+			    stop("multivariate case with missing coefficients is not yet implemented")
+			if(j == 0) {
+			    structure(cf[!na], names="(Intercept)")
+			} else {
+			    ## else: 1 column --> treat 'cf' as vector
+			    rj <- t( mm[ij, keep[!na], drop=FALSE] %*% cf[!na])
+			    rj[apply(mm[ij, keep[ na], drop=FALSE] != 0, 1L, any)] <- NA
+			    rj
+			}
+		    } else { # no NA's
+			if(j == 0)
+			    structure(cf, names="(Intercept)")
+			else
+			    t(mm[ij, keep, drop=FALSE] %*% cf)
+		    }
+		dimnames(cf) <- list(colnames(coef), rnn[ij])
+		mod[[tl[j+1L]]] <- cf
+	    }
+	} else { ## regular univariate lm case
+	    for(j in uasgn) {
+		keep <- which(asgn == j)
+		cf <- coef[keep]
+		mod[[tl[j+1L]]] <-
+		    if(j == 0) {
+			structure(cf, names="(Intercept)")
+		    } else {
+			ij <- rn == tl[j+1L]
+			if (any(na <- is.na(cf))) {
+			    rj <- setNames(drop(mm[ij, keep[!na], drop = FALSE] %*%
+						cf[!na]), rnn[ij])
+			    rj[apply(mm[ij, keep[na], drop=FALSE] != 0, 1L, any)] <- NA
+			    rj
+			} else
+			    setNames(drop(mm[ij, allasgn == j, drop=FALSE] %*% cf),
+				     rnn[ij])
+		    }
+	    }
 	}
-	res[[i]] <- mod
-    }
-    class(res) <- "dummy_coef_list"
-    res
+	res[[i]] <- structure(mod, matrix = isM)
+    } ## for( i )
+
+    structure(res, class = "dummy_coef_list")
 }
 
 print.dummy_coef <- function(x, ..., title)
 {
     terms <- names(x)
     n <- length(x)
-    nm <- max(lengths(x))
-    ans <- matrix("", 2L*n, nm)
-    rn <- rep.int("", 2L*n)
-    line <- 0
-    for (j in seq_len(n)) {
-	this <- x[[j]]
-	n1 <- length(this)
-	if(n1 > 1) {
-	    line <- line + 2
-	    ans[line-1, 1L:n1] <- names(this)
-	    ans[line, 1L:n1] <- format(this, ...)
-	    rn[line-1] <- paste0(terms[j], ":   ")
-	} else {
-	    line <- line + 1
-	    ans[line, 1L:n1] <- format(this, ...)
-	    rn[line] <- paste0(terms[j], ":   ")
+    isM <- attr(x, "matrix")
+    nr.x <- if(isM) vapply(x, NROW, 1L) else lengths(x)
+    line <- 0L # 'lineEnd'
+    if(isM) { # "mlm" - multivariate case
+	ansnrow <- sum(1L + nr.x)
+	addcol <- max(nr.x) - 1L
+	nm <- addcol + if(isM) max(vapply(x, NCOL, 1L)) else 1L
+	ans <- matrix("", ansnrow , nm)
+	rn <- character(ansnrow)
+	for (j in seq_len(n)) {
+	    this <- as.matrix(x[[j]])
+	    nr1 <- nrow(this)
+	    nc1 <- ncol(this)
+	    dn <- dimnames(this)
+	    dimnames(this) <-
+		list(if(is.null(dn[[1]])) character(nr1) else dn[[1]],
+		     if(is.null(dn[[2]])) character(nc1) else dn[[2]])
+	    if(nc1 > 1L) {
+		lin0 <- line + 2L
+		line <- line + nr1 + 1L
+		ans[lin0 - 1L, addcol + (1L:nc1)] <- colnames(this)
+		ans[lin0:line, addcol + (1L:nc1)] <- format(this, ...)
+		rn[lin0 - 1L] <- paste0(terms[j], ":   ")
+	    } else {
+		lin0 <- line + 1L
+		line <- line + nr1
+		ans[lin0:line, addcol + 1L] <- format(this, ...)
+		rn[lin0] <- paste0(terms[j], ":   ")
+	    }
+	    if(addcol > 0) ans[lin0:line, addcol] <- rownames(this)
+	}
+    } else { ## regular univariate lm case
+	nm <- max(nr.x)
+	ans <- matrix("", 2L*n, nm)
+	rn <- character(2L*n) # ""
+	for (j in seq_len(n)) {
+	    this <- x[[j]]
+	    n1 <- length(this)
+	    if(n1 > 1) {
+		line <- line + 2L
+		ans[line-1L, 1L:n1] <- names(this)
+		ans[line,    1L:n1] <- format(this, ...)
+		rn [line-1L] <- paste0(terms[j], ":   ")
+	    } else {
+		line <- line + 1L
+		ans[line, 1L:n1] <- format(this, ...)
+		rn[line] <- paste0(terms[j], ":   ")
+	    }
 	}
     }
-    rownames(ans) <- rn
-    colnames(ans) <- rep.int("", nm)
+    dimnames(ans) <- list(rn, character(nm))
     cat(if(missing(title)) "Full coefficients are" else title, "\n")
     print(ans[1L:line, , drop=FALSE], quote=FALSE, right=TRUE)
     invisible(x)
