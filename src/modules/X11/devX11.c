@@ -1608,7 +1608,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
                             XInternAtom(display, "_NET_WM_ICON", False),
                             XInternAtom(display, "CARDINAL", False), 32,
                             PropModeReplace,
-                            (const unsigned char*) rlogo_icon, 2 + 48*48);
+                            (const unsigned char*) rlogo_icon, 2 + 99*77);
 
 	    /* set up protocols so that window manager sends */
 	    /* me an event when user "destroys" window */
