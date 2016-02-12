@@ -1962,13 +1962,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     S3 <- "oldClass" %in% supers
     if(S3) {
         ## it is possible one  of these is inconsistent, but unlikely
-        ## and we will get here often from multiple setOldClass(...)'s
-        if(verbose)
-            message(gettextf("Note: the specification for S3 class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class.",
-                             dQuote(def@className),
-                             sQuote(def@package),
-                             sQuote(prev@package)),
-                    domain = NA)
+        ## and S3 class attributes have no package so duplicates are useless
         return(TRUE)
     }
     ## if there are already duplicate classes, we check duplicates
