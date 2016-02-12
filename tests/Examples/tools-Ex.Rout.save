@@ -44,7 +44,7 @@ Type 'q()' to quit R.
 <link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
 </head><body>
 <h1> This is a sample header
-<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]" />
+<img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
 <hr/>
 <div style="text-align: center;">
@@ -831,7 +831,7 @@ function (x, ...)
 <link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
 </head><body>
 <h1> R
-<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]" />
+<img class="toplogo" src="/doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
 <hr/>
 <div style="text-align: center;">

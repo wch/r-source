@@ -6101,7 +6101,7 @@ logo in both @HTML{} (using the simple form) and @LaTeX{} (using the
 expert form), the following could be used:
 
 @example
-\if@{html@}@{\figure@{logo.jpg@}@{Our logo@}@}
+\if@{html@}@{\figure@{Rlogo.svg@}@{options: width=100 alt="R logo"@}@}
 \if@{latex@}@{\figure@{logo.jpg@}@{options: width=0.5in@}@}
 @end example
 

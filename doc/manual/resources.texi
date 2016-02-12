@@ -24,7 +24,7 @@
 @lowersections
 @html
 <h1>Other Resources
-<img class="toplogo" src="logo.jpg" alt="[R logo]">
+<img class="toplogo" src="Rlogo.svg" alt="[R logo]">
 </h1>
 <hr width="100%">
 @end html

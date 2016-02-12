@@ -1,5 +1,5 @@
 % -*- coding: utf-8 -*-
-\newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
+\newcommand{\Rlogo}{\if{html}{\figure{../../html/Rlogo.svg}{options: class="toplogo" alt="[R logo]"}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 
 \name{NEWS}
 \title{R News}
@@ -292,6 +292,10 @@
       displayed.  The display format has been changed, and the shift of the
       start day has been made conditional on \code{right = TRUE} (the
       default).  (\PR{16679})
+      
+      \item \R now uses a new logo (donated to the R Foundation by
+      RStudio).  It is defined in \file{.svg} format, so it will resize
+      with text without degradation when displayed in HTML pages.
 
     }
   }

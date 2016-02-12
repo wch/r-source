@@ -1,7 +1,7 @@
 toHTML <- function(x, ...) UseMethod("toHTML")
 
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 
 HTMLheader <-
 function(title="R", logo=TRUE,
@@ -23,7 +23,7 @@ function(title="R", logo=TRUE,
     if (logo)
     	result <- c(result,
                     paste0('<img class="toplogo" src="',
-                           file.path(Rhome, 'doc/html/logo.jpg'),
+                           file.path(Rhome, 'doc/html/Rlogo.svg'),
                            '" alt="[R logo]" />'))
     result <- c(result, '</h1>', '<hr/>')
     if (!is.null(up) || !is.null(top)) {

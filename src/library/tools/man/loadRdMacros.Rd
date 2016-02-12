@@ -1,6 +1,6 @@
 % File src/library/tools/man/loadRdMacros.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014 R Core Team
+% Copyright 2016 R Core Team
 % Distributed under GPL 2 or later
 
 
@@ -66,7 +66,7 @@ Duncan Murdoch
 \examples{
 \donttest{
 f <- tempfile()
-writeLines(paste0("\\\\newcommand{\\\\logo}{\\\\if{html}{\\\\figure{logo.jpg}}",
+writeLines(paste0("\\\\newcommand{\\\\logo}{\\\\if{html}{\\\\figure{Rlogo.jpg}{options: width=100}",
                   "\\\\if{latex}{\\\\figure{logo.jpg}{options: width=0.5in}}}"),
 	    f)
 m <- loadRdMacros(f)

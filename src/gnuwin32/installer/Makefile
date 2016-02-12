@@ -95,7 +95,7 @@ imagedir:
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
 	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32
-	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
+	$(CP) $(R_HOME)/doc/html/logo.jpg $(R_HOME)/doc/html/Rlogo.svg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -pR $(R_HOME)/include $(RPREFIX)
 	$(CP) -pR $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
