@@ -552,5 +552,12 @@ $R
 [1] "R (>= 3.0.0)"
 
 attr(,"class")
-[1] "DependsList" "list"       
+[1] "DependsList"
+Warning messages:
+1: 'getDepList' is deprecated.
+Use 'dependsOnPkgs() or package_dependencies()' instead.
+See help("Deprecated") 
+2: 'package.dependencies' is deprecated.
+Use 'package_dependencies' instead.
+See help("Deprecated") 
 > 

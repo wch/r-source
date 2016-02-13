@@ -604,6 +604,15 @@ attr(,"match.length")
 > ### ** Examples
 > 
 > pkgDepends("tools", local = FALSE)
+Warning: 'pkgDepends' is deprecated.
+Use 'package_dependencies()' instead.
+See help("Deprecated")
+Warning: 'package.dependencies' is deprecated.
+Use 'package_dependencies' instead.
+See help("Deprecated")
+Warning: 'getDepList' is deprecated.
+Use 'dependsOnPkgs() or package_dependencies()' instead.
+See help("Deprecated")
 $Depends
 character(0)
 
@@ -620,7 +629,7 @@ $R
 character(0)
 
 attr(,"class")
-[1] "DependsList" "list"       
+[1] "DependsList"
 > 
 > 
 > 
@@ -658,7 +667,18 @@ attr(,"class")
 > dir.create(tmp)
 > 
 > pDL <- pkgDepends("tools", local = FALSE)
+Warning: 'pkgDepends' is deprecated.
+Use 'package_dependencies()' instead.
+See help("Deprecated")
+Warning: 'package.dependencies' is deprecated.
+Use 'package_dependencies' instead.
+See help("Deprecated")
+Warning: 'getDepList' is deprecated.
+Use 'dependsOnPkgs() or package_dependencies()' instead.
+See help("Deprecated")
 > installFoundDepends(pDL$Found, destdir = tmp)
+Warning: 'installFoundDepends()' is deprecated: It is misleading nowadays
+ since it has never taken 'Imports' into consideration
 NULL
 > 
 > 

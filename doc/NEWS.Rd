@@ -292,7 +292,7 @@
       displayed.  The display format has been changed, and the shift of the
       start day has been made conditional on \code{right = TRUE} (the
       default).  (\PR{16679})
-      
+
       \item \R now uses a new logo (donated to the R Foundation by
       RStudio).  It is defined in \file{.svg} format, so it will resize
       with text without degradation when displayed in HTML pages.
@@ -350,9 +350,14 @@
 
       \item \code{[<-} with an S4 value into a list currently embeds the
       S4 object into its own list such that the end result is roughly
-      equivalent to using \code{[[<-}. That behavior is deprecated. In
+      equivalent to using \code{[[<-}.  That behavior is deprecated.  In
       the future, the S4 value will be coerced to a list with
       \code{as.list()}.
+
+      \item Package \pkg{tools}' functions \code{package.dependencies},
+      \code{pkgDepends}, etc are deprecated now, mostly in favor of
+      \code{package_dependencies} which is both more flexible and
+      efficient.
     }
   }
 
