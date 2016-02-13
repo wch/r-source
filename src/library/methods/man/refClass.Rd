@@ -565,6 +565,12 @@ obvious advantage unless they are needed.
 They are more work to write, harder to read and (slightly) slower to
 execute.
 
+\emph{NOTE:} If you are the author of a package whose reference
+classes are likely to be subclassed in other packages, you can avoid
+these questions entirely by writing methods that \emph{only} use
+exported functions from your package, so that all the methods will
+work from another package that imports yours.
+
 }
 
 \section{Reference Class Generators}{
