@@ -62,8 +62,6 @@ TCL_VERSION = 85
 ZLIB_LIBS = -lz
 
 AR = $(BINPREF)ar
-## Used by packages 'maps' and 'mapdata'
-AWK = gawk
 BLAS_LIBS = -L"$(R_HOME)/$(IMPDIR)" -lRblas
 C_VISIBILITY = 
 CC = $(BINPREF)gcc $(M_ARCH)

@@ -144,7 +144,7 @@ Omegahat project, @uref{http://www.omegahat.org}.)
 
 
 @cindex Unix tools
-@cindex AWK
+@cindex awk
 @cindex perl
 It is also worth remembering that @R{} like @Sl{} comes from the Unix
 tradition of small re-usable tools, and it can be rewarding to use tools

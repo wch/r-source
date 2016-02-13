@@ -10,8 +10,6 @@
 include $(R_SHARE_DIR)/make/vars.mk
 
 AR = @AR@
-## Used by packages 'maps' and 'mapdata'
-AWK = @AWK@
 BLAS_LIBS = @BLAS_LIBS@
 C_VISIBILITY = @C_VISIBILITY@
 CC = @CC@

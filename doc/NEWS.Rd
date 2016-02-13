@@ -413,7 +413,6 @@
     \itemize{
       \item The \command{make} macro \code{AWK} which used to be made
       available to files such as \file{src/Makefile} is no longer set.
-      [Announced and will be implemented once packages are updated.]
     }
   }
 

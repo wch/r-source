@@ -83,7 +83,6 @@ IMPDIR=$(BINDIR)
 endif
 
 AR=$(BINPREF)ar
-# AWK=gawk
 CAT=cat
 CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG) $(M_ARCH)
 CP=cp
