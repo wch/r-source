@@ -3400,7 +3400,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.18 and 8.6.4 have been tested (including
+Versions of Tcl/Tk up to 8.5.19 and 8.6.4 have been tested (including
 most versions of 8.4.x, but not recently).
 
 Note that the @file{tk.h} header includes@footnote{This is true even for
@@ -3427,7 +3427,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.65-3.b17.fc22.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.71-1.b15.fc22.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 @end example
 
@@ -3537,9 +3537,9 @@ position-independent code), and that is not checked.
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
-@code{Accelerate} on OS X).  The correct incantation for
-these is usually found @emph{via} @option{--with-blas} with no value on
-the appropriate platforms.
+@code{Accelerate} on OS X).  The correct incantation for these is often
+found @emph{via} @option{--with-blas} with no value on the appropriate
+platforms.
 
 Some of the external @acronym{BLAS}es are multi-threaded.  One issue is
 that @R{} profiling (which uses the @code{SIGPROF} signal) may cause
@@ -4740,8 +4740,8 @@ apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
-Various compilers can be used.  The current @acronym{CRAN} `Mavericks'
-distribution of @R{} is built using
+Various compilers can be used.  The current @acronym{CRAN} distribution
+of @R{} is built using
 
 @example
 CC=clang
