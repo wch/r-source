@@ -82,6 +82,9 @@ function(contriburl = contrib.url(repos, type), method,
 
                 if (!inherits(z, "error"))
                     z <- res0 <- tryCatch(read.dcf(file = tmpf), error=identity)
+                    
+                unlink(tmpf)
+                on.exit()                    
 
                 if (inherits(z, "error")) {
                     warning(gettextf("unable to access index for repository %s",
@@ -94,8 +97,6 @@ function(contriburl = contrib.url(repos, type), method,
                 ## Do we want to cache an empty result?
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 saveRDS(res0, dest, compress = TRUE)
-                unlink(tmpf)
-                on.exit()
             } # end of download vs cached
         } # end of localcran vs online
         if (length(res0)) {

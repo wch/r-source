@@ -626,6 +626,9 @@
       \item The figures in help pages such as \code{?points} were
       accidentally damaged, and did not appear in \R 3.2.3.
       (\PR{16708})
+      
+      \item \code{available.packages()} sometimes deleted the wrong 
+      file when cleaning up temporary files.  (\PR{16712})
     }
   }
 }
