@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -81,6 +81,9 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
 
                 if (!inherits(z, "error"))
                     z <- res0 <- tryCatch(read.dcf(file = tmpf), error=identity)
+                    
+                unlink(tmpf)
+                on.exit()                    
 
                 if (inherits(z, "error")) {
                     warning(gettextf("unable to access index for repository %s",
@@ -93,8 +96,6 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                 ## Do we want to cache an empty result?
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
                 saveRDS(res0, dest, compress = TRUE)
-                unlink(tmpf)
-                on.exit()
             } # end of download vs cached
         } # end of localcran vs online
         if (length(res0)) {
