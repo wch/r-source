@@ -848,8 +848,8 @@ to select a sub-architecture to check.
 Sub-architectures are also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory,
 @file{@var{R_HOME}/bin/i386} or @file{@var{R_HOME}/bin/x64}.  For
-backwards compatibility with @R{} < 2.12.0, there are executables
-@file{@var{R_HOME}/bin/R.exe} or @file{@var{R_HOME}/bin/Rscript.exe}:
+backwards compatibility there are executables
+@file{@var{R_HOME}/bin/R.exe} and @file{@var{R_HOME}/bin/Rscript.exe}:
 these will run an executable from one of the subdirectories, which one
 being taken first from the
 @enindex R_ARCH
@@ -866,13 +866,13 @@ installation).
 @node Multilib,  , Sub-architectures, Sub-architectures
 @subsection Multilib
 
-On Linux@footnote{mainly on RedHat and Fedora, whose layout is described
-here.}, there is an alternative mechanism for mixing 32-bit and 64-bit
-libraries known as @emph{multilib}. If a Linux distribution supports
-multilib, then parallel builds of @R{} may be installed in the
-sub-directories @file{lib} (32-bit) and @file{lib64} (64-bit).  The
-build to be run may then be selected using the @command{setarch}
-command. For example, a 32-bit build may be run by
+For some Linux distributions@footnote{mainly on RedHat and Fedora, whose
+layout is described here.}, there is an alternative mechanism for mixing
+32-bit and 64-bit libraries known as @emph{multilib}. If the Linux
+distribution supports multilib, then parallel builds of @R{} may be
+installed in the sub-directories @file{lib} (32-bit) and @file{lib64}
+(64-bit).  The build to be run may then be selected using the
+@command{setarch} command. For example, a 32-bit build may be run by
 
 @example
 setarch i686 R
@@ -889,8 +889,8 @@ sessions in which packages are to be installed, even if that is the only
 version of @R{} installed (since this tells the package installation
 code the architecture needed).
 
-At present there is a potential problem with packages using Java, as
-the post-install for a @cputype{i686} RPM on @cputype{x86_64} Linux
+There is a potential problem with packages using Java, as the
+post-install for a @cputype{i686} RPM on @cputype{x86_64} Linux
 reconfigures Java and will find the @cputype{x86_64} Java.  If you know
 where a 32-bit Java is installed you may be able to run (as root)
 
@@ -919,10 +919,9 @@ to @R{} or intended for specialist uses by the @R{} developers.
 
 One that may be useful when working on @R{} itself is the option
 @option{--disable-byte-compiled-packages}, which ensures that the base
-and recommended packages are lazyloaded but not byte-compiled.
-(Alternatively the (make or environment) variable
-@env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
-of the build.)
+and recommended packages are not byte-compiled.  (Alternatively the
+(make or environment) variable @env{R_NO_BASE_COMPILE} can be set to a
+non-empty value for the duration of the build.)
 
 Option @option{--with-internal-tzcode} makes use of @R{}'s own code and
 copy of the Olson database for managing timezones.  This will be
@@ -970,15 +969,16 @@ SHLIB_OPENMP_FFLAGS
 @noindent
 Setting to an empty value will disable OpenMP for that compiler (and
 configuring with @option{--disable-openmp} will disable all detection of
-OpenMP).  Note that the @command{configure} detection test is to compile
-and link a standalone OpenMP program, which is not the same as compiling
-a shared object and loading it into the C program of @R{}'s executable.
-Note that overridden values are not tested.
+OpenMP).  The @command{configure} detection test is to compile and link
+a standalone OpenMP program, which is not the same as compiling a shared
+object and loading it into the C program of @R{}'s executable.  Note
+that overridden values are not tested.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
 
-Full testing is possible only if the test files have been installed with
+Full post-installation testing is possible only if the test files have
+been installed with
 
 @example
 make install-tests
@@ -1239,13 +1239,13 @@ cairo-based devices.
 @end itemize
 
 The following additional item is normally installed by
-@file{Rtools31.exe}.  If instead you choose to do a completely manual
+@file{Rtools*.exe}.  If instead you choose to do a completely manual
 build you will also need
 
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools31.exe} and
+The Tcl/Tk support files are contained in @file{Rtools*.exe} and
 available as @file{.zip} files from
 @uref{https://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
 install the right version: there is a 32-bit version and a 64-bit
@@ -1651,9 +1651,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
-El Capitan@footnote{for @R{} 3.2.1 and earlier, the installer will
-attempt unsuccessfully to install @command{R} and @command{Rscript} in
-@file{/usr/bin}.}, @dots{}).
+El Capitan, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
@@ -1714,15 +1712,16 @@ its user manual is currently part of the OS X FAQ at
 can be viewed from @Rapp{}'s `Help' menu.
 
 
-You can run command-line @R{} from a Terminal@footnote{The installer as
-from @R{} 3.2.2 puts links to @command{R} and @command{Rscript} in
-@file{/usr/bin} (Mavericks, Yosemite) or @file{/usr/local/bin} (El
-Capitan and later). If these are missing, you can run directly the
-versions in @file{/Library/Frameworks/R.framework/Resources/}.} so these
-can be typed as commands like any other Unix-alike: see the next chapter
-of this manual.  There are some small differences which may surprise
-users of @R{} on other platforms, notably the default location of the
-personal library directory (under @file{~/Library/R},
+You can run command-line @R{} and @command{Rscript} from a
+Terminal@footnote{The installer as puts links to @command{R} and
+@command{Rscript} in @file{/usr/bin} (Mavericks, Yosemite) or
+@file{/usr/local/bin} (El Capitan and later). If these are missing, you
+can run directly the versions in
+@file{/Library/Frameworks/R.framework/Resources/}.} so these can be
+typed as commands like any other Unix-alike: see the next chapter of
+this manual.  There are some small differences which may surprise users
+of @R{} on other platforms, notably the default location of the personal
+library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.3/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
@@ -1734,7 +1733,7 @@ time, try it again (the first attempt will store some preferences).
 Users of @Rapp{} need to be aware of the `App Nap' feature
 (@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
-producing output in the console.  Here are three ways to avoid it:
+producing output in the console.  Here are ways to avoid it:
 
 @itemize
 @item
@@ -1769,7 +1768,7 @@ links to @file{R} and @file{Rscript} in @file{/usr/bin} or
 @file{/usr/local/bin} should also be removed.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
-run (use @file{/usr/local/bin} on El Capitan):
+run (use @file{/usr/local/bin} as from El Capitan):
 
 @example
 sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
@@ -2207,13 +2206,14 @@ appropriate version at the time of writing was
 The default compilers specified in
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
 the version of OS X under which @R{} was installed, and are appropriate
-to the latest version of the command-line tools for that version
-of OS X.  The settings can be changed, either by editing that file or in
-a file such as @file{~/.R/Makevars} (see the next section).  Entries
-which may need to be changed include @samp{CC}, @samp{CXX}, @samp{FC},
-@samp{F77}, @samp{FLIBS} and the corresponding flags, and perhaps
-@samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD},
-@samp{SHLIB_FCLD} and @samp{SHLIB_LD}.
+for the latest version of the `Command Line Tools' for that version of
+OS X and the recommended version of Fortran (see @ref{OS X}).  The
+settings can be changed, either by editing that file or in a file such
+as @file{~/.R/Makevars} (see the next section).  Entries which may need
+to be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
+@samp{FLIBS} and the corresponding flags, and perhaps @samp{CXXCPP},
+@samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD}
+and @samp{SHLIB_LD}.
 
 So for example you could select @command{clang} for both C and C++ with
 extensive checking by having in @file{~/.R/Makevars}
@@ -2330,8 +2330,7 @@ INSTALL} with option @option{--byte-compile} or by
 @code{install.packages(type = "source", INSTALL_opts =
 "--byte-compile")}.
 
-Not all contributed packages work correctly when byte-compiled (for
-example because they interfere with the sealing of namespaces).  For
+Not all contributed packages work correctly when byte-compiled.  For
 most packages (especially those which make extensive use of compiled
 code) the speed-up is small.  Unless a package is used frequently the
 time spent in byte-compilation can outweigh the time saved in execution:
@@ -2453,8 +2452,7 @@ From a running @R{} process they can be removed by
                   lib = file.path("path", "to", "library"))
 @end example
 
-Finally, in most installations one can just remove the package directory
-from the library.
+Finally, one can just remove the package directory from the library.
 
 
 @node Setting up a package repository, Checking installed source packages, Removing packages, Add-on packages
@@ -2466,9 +2464,9 @@ Utilities such as @code{install.packages} can be pointed at any
 own.  The `base' of a repository is a URL such as
 @uref{http://www.omegahat.org/R/}: this must be an URL scheme that
 @code{download.packages} supports (which also includes @samp{ftp://} and
-@samp{file://} and on most systems @samp{https://}).  Under that base
-URL there should be directory trees for one or more of the following
-types of package distributions:
+@samp{file://} and (from @R{} 3.3.0 and perhaps earlier)
+@samp{https://}).  Under that base URL there should be directory trees
+for one or more of the following types of package distributions:
 
 @itemize
 @item 
@@ -2840,7 +2838,7 @@ around one third (around 1Gb).
 
 @item
 Only 64-bit builds support `long vectors', those with @math{2^{31}} or
-more elements (each of which needs 16GB of storage for a numeric
+more elements (which needs at least 16GB of storage for each numeric
 vector).
 
 @item
@@ -2862,9 +2860,9 @@ However, `other things' may not be equal.  In the specific case of
 @cputype{x86_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
 (such as SSE2 instructions) which are guaranteed to be present but are
 optional on the 32-bit CPU, and also has more general-purpose registers.
-This means that on chips like a desktop Intel Core 2 Duo the vanilla
-64-bit version of @R{} has been around 10% faster on both Linux and OS
-X.  (Laptop CPUs are usually relatively slower in 64-bit mode.)
+This means that on chips like a desktop Intel i7 the vanilla 64-bit
+version of @R{} has been around 10% faster on both Linux and OS X.
+(Laptop CPUs are usually relatively slower in 64-bit mode.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build (especially on a
@@ -3046,7 +3044,7 @@ This creates a static library @file{libRmath.a} and a DLL
 make -f Makefile.win shared implib
 @end example
 
-To use the routines in your own C or C++ programs using MinGW, include
+To use the routines in your own C or C++ programs using MinGW-w64, include
 
 @example
 #define MATHLIB_STANDALONE
@@ -3060,7 +3058,7 @@ order, so the result depends on which files are present.  You should be
 able to force static or dynamic linking  @emph{via}
 
 @example
--Wl,-Bstatic -lRmath -Wl,dynamic
+-Wl,-Bstatic -lRmath -Wl,Bdynamic
 -Wl,-Bdynamic -lRmath
 @end example
 
@@ -3071,7 +3069,7 @@ is dynamically linked, and @file{test-static.exe}, which is statically
 linked).
 
 It is possible to link to @file{Rmath.dll} using other compilers, either
-directly or via an import library: if you make a MinGW import library as
+directly or via an import library: if you make a MinGW-w64 import library as
 above, you will create a file @file{Rmath.def} which can be used
 (possibly after editing) to create an import library for other systems
 such as Visual C++.
@@ -3086,7 +3084,7 @@ If you make use of dynamic linking you should use
 
 @noindent
 to ensure that the constants like @code{NA_REAL} are linked correctly.
-(Auto-import will probably work with MinGW, but it is better to be
+(Auto-import will probably work with MinGW-w64, but it is better to be
 sure. This is likely to also work with VC++, Borland and similar
 compilers.)
 
@@ -3126,20 +3124,17 @@ the C compilers it knows about, but you may have to set @code{CC} or
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.  The default mode for GCC
-5 is @option{-std=gnu11}.}.  If the compiler is detected as
-@command{gcc}@tie{}@code{4.x}, @option{-std=gnu99} will be appended to
-@code{CC} unless it conflicts with a setting of @code{CFLAGS}.  (Note
-that options essential to run the compiler even for linking, such as
-those to set the architecture, should be specified as part of @code{CC}
-rather than in @code{CFLAGS}.)
+5 is @option{-std=gnu11}.}.  (Note that options essential to run the
+compiler even for linking, such as those to set the architecture, should
+be specified as part of @code{CC} rather than in @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen (or use OS X) you need
 @samp{X11} installed, including its headers and client libraries. For
-recent Fedora distributions it means (at least) RPMs @samp{libX11},
-@samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.  On Debian we
-recommend the meta-package @samp{xorg-dev}.  If you really do not want
-these you will need to explicitly configure @R{} without X11, using
-@option{--with-x=no}.
+recent Fedora/RedHat distributions it means (at least) RPMs
+@samp{libX11}, @samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.
+On Debian/Ubuntu we recommend the meta-package @samp{xorg-dev}.  If you
+really do not want these you will need to explicitly configure @R{}
+without X11, using @option{--with-x=no}.
 
 The command-line editing (and command completion) depends on the
 @acronym{GNU} @code{readline} library: version 4.2 or later is needed
@@ -3231,14 +3226,15 @@ make PDF versions of the manuals you will also need file
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
 script.  Some versions (including that from @pkg{texinfo} 5.2 and 6.0)
-need to be run under @command{bash} rather than a Bourne shell.}
-Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
-to be compatible: we have seen problems with older @TeX{} distributions.
+need to be run under @command{bash} rather than a Bourne shell,
+especially on Solaris.}  Further, the versions of @command{texi2dvi} and
+@file{texinfo.tex} need to be compatible: we have seen problems with
+older @TeX{} distributions.
 
 @cindex Subversion
 If you want to build from the @R{} Subversion repository then
 @command{texi2any} is highly recommended as it is used to create files
-in the tarball but not under Subversion.
+which are in the tarball but not stored in the Subversion repository.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -3254,7 +3250,7 @@ kept up-to-date.  A number of standard @LaTeX{} packages are required
 may need to change @R{}'s defaults: @pxref{Making the manuals}).  Note
 that package @pkg{hyperref} (currently) requires packages
 @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For distributions
-based on TeXLive the simplest approach may be to install collections
+based on TeX Live the simplest approach may be to install collections
 @pkg{collection-latex}, @pkg{collection-fontsrecommended},
 @pkg{collection-latexrecommended}, @pkg{collection-fontsextra} and
 @pkg{collection-latexextra} (assuming they are not installed by
@@ -4389,6 +4385,7 @@ Windows: _WIN32, _WIN64
 * Solaris::                     
 * AIX::                         
 * FreeBSD::                     
+* OpenBSD::                     
 * Cygwin::                      
 * New platforms::               
 @end menu
@@ -5062,9 +5059,7 @@ found in @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 A large selection of Open Source software can be installed from
 @uref{https://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
-(sufficient for the default @option{--with-system-bzlib}) but
-@code{zlib} version 1.2.3 (too old for @option{--with-system-zlib}):
-OpenCSW has 1.2.8.
+(sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
@@ -5308,7 +5303,7 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
 @end example
 
 @noindent
-(@code{-L/opt/csw/lib} is needed since TeXLive was built using
+(@code{-L/opt/csw/lib} is needed since TeX Live was built using
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
 
@@ -5473,7 +5468,7 @@ Further installation instructions to set up a proper @R{} development
 environment can be found in the ``R on AIX'' project on R-Forge
 (@uref{https://R-Forge.R-project.org/@/projects/@/aix/}).
 
-@node FreeBSD, Cygwin, AIX, Platform notes
+@node FreeBSD, OpenBSD, AIX, Platform notes
 @section FreeBSD
 @cindex FreeBSD
 
@@ -5483,17 +5478,10 @@ There is a `port' at @uref{https://www.freebsd.org/ports/math.html}, for
 @R{} 3.0.2 at the time of writing.  Davor Cubranic reported some success
 on x86_64 FreeBSD 10.2 for @R{} 3.2.2.
 
-It appears that versions of FreeBSD using @command{clang} as the compiler
-(the default as from 10.0) need
-@example
-MAIN_LDFLAGS=-Wl,--export-dynamic
-@end example
-@noindent
-for @R{} releases up to 3.2.2.
-
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
 
+@node OpenBSD, Cygwin, FreeBSD, Platform notes
 @section OpenBSD
 @cindex OpenBSD
 
@@ -5502,7 +5490,7 @@ Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 (and patches applied) are at
 @uref{http://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}.
 
-@node Cygwin, New platforms, FreeBSD, Platform notes
+@node Cygwin, New platforms, OpenBSD, Platform notes
 @section Cygwin
 
 The 32-bit version has never worked well enough to pass @R{}'s
@@ -5596,10 +5584,10 @@ here as a result of bitter experience.  Please do not report problems to
 the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
-due to license or size limitations) into an executable installer
-named@footnote{for @R{} 3.0.0 and later.}  @file{Rtools31.exe},
-available from @uref{https://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You
-should download and run it, choosing the default ``Package authoring
+due to license or size limitations) into an executable installer named
+@file{Rtools*.exe}, available from
+@uref{https://CRAN.R-project.org/@/bin/@/windows/@/Rtools/}. You should
+download and run it, choosing the default ``Package authoring
 installation'' to build add-on packages, or the ``full installation'' if
 you intend to build @R{}.
 
@@ -5688,7 +5676,7 @@ Manager.
 The @file{Rtools*.exe} installer does @emph{not} include any version of
 @LaTeX{}.
 
-It is also possible to use the TeXLive distribution from
+It is also possible to use the TeX Live distribution from
 @uref{https://www.tug.org/texlive/}.
 
 @enindex R_RD4PDF
@@ -5772,7 +5760,7 @@ Windows-style paths.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-The preferred toolchain is part of @code{Rtools31.exe}: this uses a beta
+The preferred toolchain is part of @code{Rtools*.exe}: this uses a beta
 version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
 project's runtime.
 
@@ -5815,7 +5803,7 @@ Developers of packages will find some of the `goodies' at
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.  The
-binary distribution is included in @file{Rtools31.exe}.
+binary distribution is included in @file{Rtools*.exe}.
 
 The file @file{xzutils.zip} contains the program @command{xz} which can
 be used to (de)compress files with that form of compression.
