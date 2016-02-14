@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -97,7 +97,9 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   \item{na.strings}{character vector.  Elements of this vector are to be
     interpreted as missing (\code{\link{NA}}) values.  Blank fields are
     also considered to be missing values in logical, integer, numeric
-    and complex fields.}
+    and complex fields.  Note that the test happens \emph{after} 
+    white space is stripped from the input, so \code{na.strings} values 
+    may need their own white space stripped in advance.}
 
   \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.

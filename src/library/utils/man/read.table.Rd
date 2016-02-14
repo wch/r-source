@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -120,7 +120,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   \item{na.strings}{a character vector of strings which are to be
     interpreted as \code{\link{NA}} values.  Blank fields are also
     considered to be missing values in logical, integer, numeric and
-    complex fields.}
+    complex fields.  Note that the test happens \emph{after} 
+    white space is stripped from the input, so \code{na.strings} 
+    values may need their own white space stripped in advance.}
 
   \item{colClasses}{character.  A vector of classes to be assumed for
     the columns.  If unnamed, recycled as necessary.  If named, names
