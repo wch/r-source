@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -93,10 +93,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{available.packages}}.
 
   The \code{"libcurl"} and \code{"wget"} methods follow \samp{http://}
-  and \samp{https://} redirections: the \code{"internal"} does not.
+  and \samp{https://} redirections: the \code{"internal"} method does not.
   (For method \code{"curl"} use argument \code{extra = "-L"}. To disable
   redirection in \command{wget}, use \code{extra = "--max-redirect=0"}.)
-
+  (The \code{"wininet"} method supports some redirections but not all.)
+  
   Note that \samp{https://} URLs are
 #ifdef unix
   not supported by the internal method.
