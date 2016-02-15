@@ -1385,7 +1385,15 @@ function(x)
     ## </FIXME>
     ## If this leaves nothing or more than one ...
     if(length(x) != 1L) return("")
-    format(x, include = c("given", "family", "email"))
+    display <- format(x, include = c("given", "family"))
+    address <- format(x, include = c("email"))
+    ## Need to quote display names at least when they contain commas
+    ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
+    if(any(ind <- grepl(",", display))) {
+        display[ind] <- sprintf("\"%s\"",
+                                gsub("\"", "\\\\\"", display[ind]))
+    }
+    paste(display, address)
 }
 
 ## Cite using the default style (which is usually citeNatbib)
