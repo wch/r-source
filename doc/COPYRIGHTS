@@ -567,6 +567,7 @@ src/main/radixsort.c is largely based on code from the data.table package,
    Copyright (C) 2006--2015  Matt Dowle and Arun Srinivasan
 
 doc/html/Rlogo.svg
+doc/html/Rlogo.pdf
 doc/html/logo.jpg
 doc/html/favicon.ico
 src/modules/X11/rlogo_icon.h
