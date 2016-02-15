@@ -6,9 +6,9 @@
 \name{tools-deprecated}
 \title{Deprecated Objects in Package \pkg{tools}}
 %------ NOTE:  ../R/tools-deprecated.R   must be synchronized with this!
-%% \alias{tools-deprecated}
+\alias{tools-deprecated}
 %------ PLEASE: one \alias{.} for EACH ! (+ one \usage{} & \arguments{} for all)
-\alias{package.dependencies}
+%% \alias{package.dependencies}
 \description{
   The functions or variables listed here are provided for compatibility
   with older versions of \R only, and may be defunct as soon as of the
