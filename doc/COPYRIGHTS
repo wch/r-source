@@ -565,3 +565,17 @@ Nocedal, which does not state any copyright.
 src/main/radixsort.c is largely based on code from the data.table package,
 
    Copyright (C) 2006--2015  Matt Dowle and Arun Srinivasan
+
+doc/html/Rlogo.svg
+doc/html/logo.jpg
+doc/html/favicon.ico
+src/modules/X11/rlogo_icon.h
+src/gnuwin32/front-ends/R.ico
+src/gnuwin32/installer/R.bmp
+
+   Copyright (C) 2016 The R Foundation
+   
+   You can distribute the logo under the terms of the Creative
+   Commons Attribution-ShareAlike 4.0 International license (CC-BY-SA
+   4.0) or (at your option) the GNU General Public License version 2
+   (GPL-2).

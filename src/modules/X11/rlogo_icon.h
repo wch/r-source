@@ -1,3 +1,22 @@
+/*
+ *  This file was produced from Rlogo.svg.
+ *  Copyright (C) 2016  The R Foundation
+ *
+ *  You can distribute the logo under the terms of the Creative
+ *  Commons Attribution-ShareAlike 4.0 International license (CC-BY-SA
+ *  4.0) or (at your option) the GNU General Public License version 2
+ *  (GPL-2).
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, a copy is available at
+ *  https://www.R-project.org/Licenses/
+ */
+ 
 unsigned long rlogo_icon[] = {
 99, 77,0x00000000,
 0x00000000,
