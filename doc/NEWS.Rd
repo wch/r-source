@@ -39,8 +39,10 @@
       \code{grep()} and friends.
 
       \item Experimental new functionality for S3 method checking, notably
-      \code{isS3method()}.  Also, the \R \sQuote{language element} names
-      are exported as \code{tools::langElts}.
+      \code{isS3method()}.
+
+      Also, the names of the \R \sQuote{language elements} are exported
+      as character vector \code{tools::langElts}.
 
       \item \code{str(x)} now displays \code{"Time-Series"} also for
       matrix (multivariate) time-series, i.e. when \code{is.ts(x)} is true.
@@ -183,9 +185,10 @@
       The choice can easily be overridden \emph{via} environment
       variable \env{R_INTERACTIVE_DEVICE}.
 
-      \item On unixy platforms (with the \command{getline} C library function),
-      \code{system(*,intern=TRUE)} no longer truncates (output) lines
-      longer than 8192 characters, thanks to Karl Millar's \PR{16544}.
+      \item On Unix-like platforms with the \command{getline} C library
+      function, \code{system(*,intern = TRUE)} no longer truncates
+      (output) lines longer than 8192 characters, thanks to Karl
+      Millar's \PR{16544}.
 
       \item \code{rank()} gains a \code{ties.method = "last"} option,
       for convenience (and symmetry).
@@ -293,10 +296,10 @@
       start day has been made conditional on \code{right = TRUE} (the
       default).  (\PR{16679})
 
-      \item \R now uses a new logo (donated to the R Foundation by
-      RStudio).  It is defined in \file{.svg} format, so it will resize
-      with text without degradation when displayed in HTML pages.
-
+      \item \R now uses a new version of the logo (donated to the R
+      Foundation by RStudio).  It is defined in \file{.svg} format, so
+      will resize without unnecessary degradation when displayed on
+      HTML pages.
     }
   }
 

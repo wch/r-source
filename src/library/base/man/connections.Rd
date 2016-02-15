@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -134,7 +134,7 @@ isIncomplete(con)
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
   \samp{file://}).  Method \code{"internal"} is that available since
   connections were introduced, method \code{"wininet"} is only available
-  on Windows (it uses the WinInet functions of that OS) and method
+  on Windows (it uses the WinINet functions of that OS) and method
   \code{"libcurl"} (using the library of that name:
   \url{http://curl.haxx.se/libcurl/}) is required on a Unix-alike but
   optional on Windows.  Method \code{"default"} uses method

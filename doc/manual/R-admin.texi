@@ -944,9 +944,9 @@ environment variable @env{TZ}.
 
 By default @command{configure} searches for suitable
 options@footnote{for example, @option{-fopenmp}, @option{-xopenmp} or
-@option{-qopenmp}.  This includes for 2015 versions of @command{clang}
-and the Intel C compiler.} for OpenMP support for the C, C++98, FORTRAN
-77 and Fortran compilers.
+@option{-qopenmp}.  This includes for @command{clang} 3.7.x and the
+Intel C compiler.} for OpenMP support for the C, C++98, FORTRAN 77 and
+Fortran compilers.
 
 Only the C result is currently used for @R{} itself, and only if
 @code{MAIN_LD}/@code{DYLIB_LD} were not specified.  This can be
@@ -1045,11 +1045,6 @@ by
 @example
 testInstalledBasic("internet")
 @end example
-
-@noindent
-(On Windows that runs the tests using whichever of internal or WinInet
-internet functions has been selected for that session: to test both run
-this twice selecting both options using @code{setInternet2}.)
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
 Windows users) is in the path.
@@ -3124,9 +3119,10 @@ the C compilers it knows about, but you may have to set @code{CC} or
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.  The default mode for GCC
-5 is @option{-std=gnu11}.}.  (Note that options essential to run the
-compiler even for linking, such as those to set the architecture, should
-be specified as part of @code{CC} rather than in @code{CFLAGS}.)
+5.1 and later is @option{-std=gnu11}.}.  (Note that options essential to
+run the compiler even for linking, such as those to set the
+architecture, should be specified as part of @code{CC} rather than in
+@code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen (or use OS X) you need
 @samp{X11} installed, including its headers and client libraries. For
