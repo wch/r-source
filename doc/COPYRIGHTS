@@ -29,7 +29,7 @@ files R_HOME/share/licenses/LGPL-2.1 and R_HOME/share/licenses/LGPL-3.
 This applies only to the header files
 
 src/include/R.h
-src/include/Rdefines.h
+4src/include/Rdefines.h
 src/include/Rgraphics.h
 src/include/Rinternals.h
 src/include/Rmath.h
@@ -574,9 +574,12 @@ src/modules/X11/rlogo_icon.h
 src/gnuwin32/front-ends/R.ico
 src/gnuwin32/installer/R.bmp
 
-   Copyright (C) 2016 The R Foundation
+   Copyright (C) 2015-2016 The R Foundation
    
    You can distribute the logo under the terms of the Creative
    Commons Attribution-ShareAlike 4.0 International license (CC-BY-SA
    4.0) or (at your option) the GNU General Public License version 2
    (GPL-2).
+
+   The design of the current logo is based on the previous logo that
+   was included in the R source from 1998 to 2016.
