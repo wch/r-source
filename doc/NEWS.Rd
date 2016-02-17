@@ -130,6 +130,10 @@
       
       \item \code{available.packages()} sometimes deleted the wrong 
       file when cleaning up temporary files.  (\PR{16712})
+
+      \item The X11 device froze on Red Hat Enterprise Linux 6. It now
+      waits for MapNotify events instead of Expose events, thanks to
+      Siteshwar Vashisht. (\PR{16497})
     }
   }
 }
