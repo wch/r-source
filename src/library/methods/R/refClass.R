@@ -47,14 +47,12 @@ self from reference class thisClass.'
 }
 
 installClassMethod <- function(def, self, me, selfEnv, thisClass) {
-    if(!is(def, "refMethodDef")) {  #should not happen? => need warning
-        warning(sprintf("method %s from class %s was not processed into a class method until being installed.  Possible corruption of the methods in the class.",
-                         me, thisClass@className),
-                domain = NA)
-        def <- makeClassMethod(def, me, thisClass@className, "", names(thisClass@refMethods))
-        .checkFieldsInMethod(def, names(thisClass@fieldClasses))
-        ## cache the analysed method definition
+    if(is(def, "externalMethodDef") || !is(def, "refMethodDef")) {
+        ## Don't process either an external method (not needed),
+        ## or a special object in the class refMethods
+        ## environment (will cause an error).  Assign it unchanged.
         assign(me, def, envir = thisClass@refMethods)
+        return(def)
     }
     depends <- def@mayCall
     environment(def) <- selfEnv # for access to fields and methods
