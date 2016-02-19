@@ -7175,7 +7175,10 @@ function(x, ...)
 
     c(character(),
       if(length(x$Maintainer))
-          sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
+          sprintf("Maintainer: %s",
+                  sQuote(trimws(gsub("\n", " ",
+                                     paste(x$Maintainer,
+                                           collapse = " ")))))
       else
           "No maintainer field in DESCRIPTION file",
       fmt(c(if(x$empty_Maintainer_name)
