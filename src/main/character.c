@@ -1648,20 +1648,20 @@ SEXP attribute_hidden do_strrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	ni = INTEGER(n)[in];
 	if((STRING_ELT(x, ix) == NA_STRING) || (ni == NA_INTEGER)) {
 	    SET_STRING_ELT(s, is, NA_STRING);
-	    continue;
+	} else {
+	    if(ni < 0)
+		error(_("invalid '%s' value"), "times");
+	    xi = CHAR(STRING_ELT(x, ix));
+	    nc = (int) strlen(xi);
+	    cbuf = buf = CallocCharBuf(nc * ni);
+	    for(j = 0; j < ni; j++) {
+		strcpy(buf, xi);
+		buf += nc;
+	    }
+	    SET_STRING_ELT(s, is, markKnown(cbuf, STRING_ELT(x, ix)));
+	    Free(cbuf);
+	    vmaxset(vmax);
 	}
-	if(ni < 0)
-	    error(_("invalid '%s' value"), "times");
-	xi = CHAR(STRING_ELT(x, ix));
-	nc = (int) strlen(xi);
-	cbuf = buf = CallocCharBuf(nc * ni);
-	for(j = 0; j < ni; j++) {
-	    strcpy(buf, xi);
-	    buf += nc;
-	}
-	SET_STRING_ELT(s, is, markKnown(cbuf, STRING_ELT(x, ix)));
-	Free(cbuf);
-	vmaxset(vmax);
 	ix = (++ix == nx) ? 0 : ix;
 	in = (++in == nn) ? 0 : in;
     }
