@@ -99,9 +99,7 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         steps[[i]]$spec <- names(steps)[i]
     }
     ## crudely work out number of steps in the given interval
-    nsteps <- sapply(steps, function(s) {
-        xspan / s[[1]]
-    })
+    nsteps <- xspan / vapply(steps, `[[`, numeric(1), 1L)
     init.i <- which.min(abs(nsteps - n))
     ## calculate actual number of ticks in the given interval
     calcSteps <- function(s) {
@@ -124,22 +122,16 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         init.at <- calcSteps(steps[[init.i]])
     }
     makeOutput <- function(at, s) {
-	structure(if(isDate) ## round(*, units = "days") - method does not exist
-		      as.Date(round(at * 3600)/3600)
-                  else as.POSIXct(at),
-                  labels = format(at, s$format))
+	structure(if (isDate) as.Date(round(at, units = "days"))
+		  else as.POSIXct(at),
+		  labels = format(at, s$format))
     }
     if (init.n == n) ## perfect
         return(makeOutput(init.at, steps[[init.i]]))
-    if (init.n > n) {
-        ## too many ticks
-        new.i <- init.i + 1L
-        new.i <- min(new.i, length(steps))
-    } else {
-        ## too few ticks
-        new.i <- init.i - 1L
-        new.i <- max(new.i, 1L)
-    }
+    new.i <- if (init.n > n) ## too many ticks
+		 min(init.i + 1L, length(steps))
+	     else ## too few ticks
+		 max(init.i - 1L, 1L)
     new.at <- calcSteps(steps[[new.i]])
     new.n <- length(new.at) - 1L
     ## work out whether new.at or init.at is better
