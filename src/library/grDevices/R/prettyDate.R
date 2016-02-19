@@ -38,7 +38,11 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 	attr(x, "tzone") <- "GMT"
     zz <- range(x, na.rm = TRUE)
     D <- diff(nzz <- as.numeric(zz))
-    if(D < 1) { # unique values / sub-second ranges: [? or use "1 ms" steps below?]
+    if(isDate && D <= n * 24*3600) { # D <= 'n days'
+	zz <- as.Date(zz)
+	return( seq.Date(zz[1], zz[2], by = "1 day") )
+    }
+    else if(D < 1) { # unique values / sub-second ranges: [? or use "1 ms" steps below?]
 	m <- min(30, max(D == 0, n/2 - 1)) # "- 1" ==> better match for 'n'
 	zz <- structure(c(floor(nzz[1] - m), ceiling(nzz[2] + m)),
 			class = class(x), tzone = attr(x, "tzone"))
@@ -102,17 +106,15 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     ## calculate actual number of ticks in the given interval
     calcSteps <- function(s) {
         startTime <- trunc_POSIXt(min(zz), units = s$start) ## FIXME: should be trunc() eventually
-        if (identical(s$spec, "halfmonth")) {
-            at <- seq(startTime, max(zz), by = "months")
-            at2 <- as.POSIXlt(at)
-            at2$mday <- 15L
-            at <- structure(sort(c(as.POSIXct(at), as.POSIXct(at2))),
-                            tzone = attr(at, "tzone"))
-        } else {
-            at <- seq(startTime, max(zz), by = s$spec)
-        }
-        at <- at[min(zz) <= at & at <= max(zz)]
-        at
+	at <- if (identical(s$spec, "halfmonth")) {
+		  at <- seq(startTime, max(zz), by = "months")
+		  at2 <- as.POSIXlt(at)
+		  at2$mday <- 15L
+		  structure(sort(c(as.POSIXct(at), as.POSIXct(at2))),
+			    tzone = attr(at, "tzone"))
+	      } else
+		  seq(startTime, max(zz), by = s$spec)
+	at[min(zz) <= at & at <= max(zz)]
     }
     init.at <- calcSteps(steps[[init.i]])
     ## bump it up if below acceptable threshold
@@ -122,7 +124,8 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         init.at <- calcSteps(steps[[init.i]])
     }
     makeOutput <- function(at, s) {
-        structure(if (isDate) as.Date(round(at, units = "days"))
+	structure(if(isDate) ## round(*, units = "days") - method does not exist
+		      as.Date(round(at * 3600)/3600)
                   else as.POSIXct(at),
                   labels = format(at, s$format))
     }

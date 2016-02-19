@@ -1405,4 +1405,11 @@ set.seed(7); for(n in 1:64) {
 	      min(p1) <= sTime, sTime <= max(p1))
 }
 ## failed in R <= 3.2.3
+MTbd <- as.Date("1960-02-10")
+stopifnot(
+    identical(pretty(MTbd),            MTbd),
+    identical(pretty(MTbd + rep(0,2)), MTbd),
+    identical(pretty(MTbd +  0:1), MTbd +  0:1),
+    identical(pretty(MTbd + -1:1), MTbd + -1:1))
+## all pretty() above gave length-5 answer (with duplicated values) in R <= 3.2.3
 

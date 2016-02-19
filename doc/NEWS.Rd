@@ -625,12 +625,16 @@
       works well if \code{range(D)} is (much) smaller than a second.  In
       the case of only one unique value in \code{D}, the pretty range
       now is more symmetric around that value than previously.
+      \cr
+      Similarly, \code{pretty(dt)} no longer returns a length 5 vector
+      with duplicated entries for \code{Date} objects \code{dt} which
+      span only a few days.
 
       \item The figures in help pages such as \code{?points} were
       accidentally damaged, and did not appear in \R 3.2.3.
       (\PR{16708})
-      
-      \item \code{available.packages()} sometimes deleted the wrong 
+
+      \item \code{available.packages()} sometimes deleted the wrong
       file when cleaning up temporary files.  (\PR{16712})
     }
   }
