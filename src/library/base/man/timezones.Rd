@@ -162,6 +162,10 @@ OlsonNames()
   before the switch to a standard time.  For example, Paris codified its
   LMT as \sQuote{Paris Mean Time} in 1891 (to be used throughout
   mainland France) and switched to \samp{GMT+0} in 1911.
+
+  %% it is a ksh script so could well pop up elsewhere.
+  Some systems (notably Linux) have \command{tzselect} command which
+  allows the interactive selection of a supported time zone name.
 }
 
 \section{Warning}{
