@@ -503,6 +503,8 @@
       \item (X11 only)  \code{getGraphicsEvent()} miscoded buttons and
       missed mouse motion events.  (\PR{16700})
       % port to r-patched if it doesn't add too many events to graphics windows
+
+      \item \code{methods(round)} now also lists \code{round.POSIXt}.
     }
   }
 }

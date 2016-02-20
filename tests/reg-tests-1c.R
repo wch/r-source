@@ -1410,6 +1410,11 @@ stopifnot(
     identical(pretty(MTbd),            MTbd),
     identical(pretty(MTbd + rep(0,2)), MTbd),
     identical(pretty(MTbd +  0:1), MTbd +  0:1),
-    identical(pretty(MTbd + -1:1), MTbd + -1:1))
-## all pretty() above gave length-5 answer (with duplicated values) in R <= 3.2.3
+    identical(pretty(MTbd + -1:1), MTbd + -1:1),
+    identical(pretty(MTbd +  0:3), MTbd + 0:3) )
+## all pretty() above gave length >= 5 answer (with duplicated values) in R <= 3.2.3
+
+
+stopifnot(c("round.Date", "round.POSIXt") %in% as.character(methods(round)))
+## round.POSIXt suppressed in R <= 3.2.x
 

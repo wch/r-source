@@ -1440,10 +1440,7 @@ nonS3methods <- function(package)
              "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",
-             ## round.POSIXt is a method for S3 and S4 group generics with
-             ## deliberately different arg names.
-             "rep.int", "round.POSIXt",
-             "seq.int", "sort.int", "sort.list"),
+             "rep.int", "seq.int", "sort.int", "sort.list"),
              AMORE = "sim.MLPnet",
              BSDA = "sign.test",
              ChemometricsWithR = "lda.loofun",

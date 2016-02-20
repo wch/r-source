@@ -2359,9 +2359,10 @@ function(package, dir, lib.loc = NULL)
         ## arguments the generic has, with positional arguments of g in
         ## the same positions for m.
         ## Exception: '...' in the method swallows anything.
+	if(identical(g, "round") && m == "round.POSIXt") return() # exception
         genfun <- get(g, envir = code_env)
         gArgs <- names(formals(genfun))
-        if(g == "plot") gArgs <- gArgs[-2L]
+        if(identical(g, "plot")) gArgs <- gArgs[-2L] # drop "y"
         ogArgs <- gArgs
         gm <- if(m %in% S3_reg) {
             ## See registerS3method() in ../../base/R/namespace.R.

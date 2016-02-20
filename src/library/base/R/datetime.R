@@ -912,13 +912,12 @@ trunc.POSIXt <- function(x, units = c("secs", "mins", "hours", "days"), ...)
 
 round.POSIXt <- function(x, units = c("secs", "mins", "hours", "days"))
 {
-    ## this gets the default from the generic, as that has two args.
-    if(is.numeric(units) && units == 0.0) units <-"secs"
-    units <- match.arg(units)
-    x <- as.POSIXct(x)
-    x <- x + switch(units,
-                    "secs" = 0.5, "mins" = 30, "hours" = 1800, "days" = 43200)
-    trunc.POSIXt(x, units = units)
+    ## this gets the default from the generic's 2nd arg 'digits = 0' :
+    units <- if(is.numeric(units) && units == 0.) "secs" else match.arg(units)
+    trunc.POSIXt(as.POSIXct(x) +
+		 switch(units,
+			"secs" = 0.5, "mins" = 30, "hours" = 1800, "days" = 43200),
+		 units = units)
 }
 
 ## ---- additions in 1.5.0 -----
