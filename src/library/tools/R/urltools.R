@@ -28,7 +28,7 @@ function()
     db
 }
 
-parse_URL_reference <-
+parse_URI_reference <-
 function(x)
 {
     ## See RFC_3986 <http://www.ietf.org/rfc/rfc3986.txt>.
@@ -394,7 +394,7 @@ function(db, verbose = FALSE)
 
     parents <- split(db$Parent, db$URL)
     urls <- names(parents)
-    parts <- parse_URL_reference(urls)
+    parts <- parse_URI_reference(urls)
 
     ## Empty URLs.
     ind <- apply(parts == "", 1L, all)
