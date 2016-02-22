@@ -1,6 +1,6 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
@@ -45,7 +45,11 @@
   \env{RD2PDF_INPUTENC} can be set to \code{inputenx} to make use of the
   LaTeX package of that name rather than \code{inputenc}: this might be
   needed for better support of the UTF-8 encoding.
-
+  
+  \command{R CMD Rd2pdf} calls \code{tools::\link{texi2pdf}} to produce
+  its PDF file: see its help for the options for the \command{texi2dvi}
+  command which that function uses.
+  
   Use \command{R CMD \var{foo} --help} to obtain usage information on utility
   \code{\var{foo}}.
 }
