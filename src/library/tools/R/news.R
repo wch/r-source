@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -370,7 +370,9 @@ function(f, pdf_file)
     close(out)
     od <- setwd(dirname(f3))
     on.exit(setwd(od))
-    texi2pdf("NEWS.tex", quiet = TRUE)
+    ## avoid broken texi2pdf scripts: this is simple LaTeX
+    ## and emulation suffices
+    texi2pdf("NEWS.tex", quiet = TRUE, texi2dvi = "emulation")
     setwd(od); on.exit()
     invisible(file.copy(file.path(dirname(f3), "NEWS.pdf"),
                         pdf_file, overwrite = TRUE))
@@ -386,7 +388,7 @@ function(file, out = stdout(), codify = FALSE)
     ## can use the DESCRIPTION metadata to obtain the package name and
     ## encoding.
 
-    format <- "default"    
+    format <- "default"
 
     file <- file_path_as_absolute(file)
 
