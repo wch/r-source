@@ -1,6 +1,6 @@
 % File src/library/tools/man/texi2dvi.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
@@ -29,10 +29,11 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \item{quiet}{logical.  No output unless an error occurs.}
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program used to
     compile a TeX file to dvi or PDF.
-    The default (selected by \code{""} or \code{NULL}) is to look for a
-    program or script named \file{texi2dvi} on the path and otherwise
-    emulate the script with \code{system2} calls (which can be selected
-    by the value \code{"emulation"}).} 
+    The default (selected by \code{""} or \code{"texi2dvi"} or
+    \code{NULL}) is to look for a program or script named
+    \file{texi2dvi} on the path and otherwise emulate the script with
+    \code{system2} calls (which can be selected by the value
+    \code{"emulation"}).  See also \sQuote{Details}.} 
   \item{texinputs}{\code{NULL} or a character vector of paths to add to
     the LaTeX and bibtex input search paths.}
   \item{index}{logical: should indices be prepared?}
@@ -56,8 +57,13 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   The default option for \code{texi2dvi} is set from environment variable
   \env{R_TEXI2DVICMD}, and the default for that is set from environment
   variable \env{TEXI2DVI} or if that is unset, from a value chosen when
-  \R is configured.  A shell script \command{texi2dvi} is part of GNU's
-  \pkg{texinfo}.
+  \R is configured.
+  
+  %% issues included not re-running latex in texinfo 6.1 and bashisms in
+  %% the /bin/sh script in <= 6.0.
+  A shell script \command{texi2dvi} is part of GNU's \pkg{texinfo}.
+  Several issues have been seen with released versions, so if yours does
+  not work correctly set \env{R_TEXI2DVICMD=emulation}.
 #endif
 
 #ifdef windows

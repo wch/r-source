@@ -3223,9 +3223,11 @@ in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
 script.  Some versions (including that from @pkg{texinfo} 5.2 and 6.0)
 need to be run under @command{bash} rather than a Bourne shell,
-especially on Solaris.}  Further, the versions of @command{texi2dvi} and
-@file{texinfo.tex} need to be compatible: we have seen problems with
-older @TeX{} distributions.
+especially on Solaris. Some of the issues which have been observed with
+broken versions of @command{texi2dvi} can be circumvented by setting the
+environment variable @env{R_TEXI2DVICMD} to the value @code{emulation}.}
+Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
+to be compatible: we have seen problems with older @TeX{} distributions.
 
 @cindex Subversion
 If you want to build from the @R{} Subversion repository then

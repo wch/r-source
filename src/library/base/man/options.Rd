@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -300,7 +300,11 @@ getOption(x, default = NULL)
     \item{\code{texi2dvi}:}{used by functions
       \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.
 #ifdef unix
-      Set at startup from the environment variable \env{R_TEXI2DVICMD}.
+      Set at startup from the environment variable \env{R_TEXI2DVICMD},
+      which defaults first to the value of environment variable
+      \env{TEXI2DVI}, and then to a value set when \R was installed (the
+      full path to a \command{texi2dvi} script if one was found).  If
+      necessary, that environment variable can be set to \code{"emulation"}.
 #endif
     }
 
