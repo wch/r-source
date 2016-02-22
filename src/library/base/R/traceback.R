@@ -1,7 +1,7 @@
 #  File src/library/base/R/traceback.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,14 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-traceback <-
-function(x = NULL, max.lines = getOption("deparse.max.lines"))
-{
+.traceback <- function(x = NULL) {
     if(is.null(x) && !is.null(x <- get0(".Traceback", envir = baseenv())))
 	{}
     else if (is.numeric(x))
     	x <- .Internal(traceback(x))
-    n <- length(x)
+    x
+}
+
+traceback <- function(x = NULL, max.lines = getOption("deparse.max.lines"))
+{
+    n <- length(x <- .traceback(x))
     if(n == 0L)
         cat(gettext("No traceback available"), "\n")
     else {
@@ -31,12 +34,12 @@ function(x = NULL, max.lines = getOption("deparse.max.lines"))
             xi <- x[[i]]
             label <- paste0(n-i+1L, ": ")
             m <- length(xi)
-            # Find source location (NULL if not available)
+            ## Find source location (NULL if not available)
             srcloc <- if (!is.null(srcref <- attr(xi, "srcref"))) {
                 srcfile <- attr(srcref, "srcfile")
                 paste0(" at ", basename(srcfile$filename), "#", srcref[1L])
             }
-            # Truncate deparsed code (destroys attributes of xi)
+            ## Truncate deparsed code (destroys attributes of xi)
             if(is.numeric(max.lines) && max.lines > 0L && max.lines < m) {
                 xi <- c(xi[seq_len(max.lines)], " ...")
                 m <- length(xi)

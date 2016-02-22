@@ -1,21 +1,27 @@
 % File src/library/base/man/traceback.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{traceback}
+\title{Get and Print Call Stacks}
 \alias{traceback}
+\alias{.traceback}
 \alias{.Traceback}
-\title{Print Call Stacks}
 \description{
   By default \code{traceback()} prints the call stack of the last
   uncaught error, i.e., the sequence of calls that lead to the error.
   This is useful when an error occurs with an unidentifiable error
   message.  It can also be used to print the current stack or
   arbitrary lists of deparsed calls.
+
+  \code{.traceback()} now \emph{returns} the above call stack (and
+  \code{traceback(x, *)} can be regarded as convenience function for
+  printing the result of \code{.traceback(x)}).
 }
 \usage{
 traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
+.traceback(x = NULL)
 }
 \arguments{
   \item{x}{\code{NULL} (default, meaning \code{.Traceback}), or an
@@ -68,7 +74,7 @@ foo <- function(x) { print(1); bar(2) }
 bar <- function(x) { x + a.variable.which.does.not.exist }
 \dontrun{
 foo(2) # gives a strange error
-traceback()}
+traceback()}%dont
 ## 2: bar(2)
 ## 1: foo(2)
 bar
