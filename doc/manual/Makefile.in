@@ -39,10 +39,12 @@ MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 ## some broken versions of texi2dvi need C collation.
-TEXI2DVI0 = @TEXI2DVI@
 TEXI2DVI = LC_COLLATE=C @TEXI2DVI@ --texinfo="@set UseExternalXrefs "
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
+## These are used to check if there is a non-empty path to the
+## texi2dvi script, and as it uses pdftex if that was detected.
+TEXI2DVI0 = @TEXI2DVI@
 PDFTEX = @PDFTEX@
 
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
@@ -101,12 +103,12 @@ docs: html
 	$(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 .texi.pdf:
-	@if test -z "$(PDFTEX)"; then \
-	  $(ECHO) "ERROR: 'pdftex' needed but missing on your system."; \
-	  exit 1; \
-	fi
 	@if test -z "$(TEXI2DVI0)"; then \
 	  $(ECHO) "ERROR: 'texi2dvi' needed but missing on your system."; \
+	  exit 1; \
+	fi
+	@if test -z "$(PDFTEX)"; then \
+	  $(ECHO) "ERROR: 'pdftex' needed but missing on your system."; \
 	  exit 1; \
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
@@ -391,8 +393,8 @@ clean:
 	  *-pkg.tex refman.i?? refman.tex fullrefman.i?? fullrefman.tex \
 	  version.tex version.texi
 	-@rm -f stamp-*
+	-@rm -f *.epub *.mobi rw-FAQ rw-FAQ.html
 distclean: clean
-	-@rm -f *.epub *.mobi rw-FAQ rw-FAQ.html rw-FAQ.pdf
 	-@rm -f Makefile
 maintainer-clean: distclean
 
@@ -467,7 +469,6 @@ rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
-	@$(TEXI2DVI) --pdf tmp.texi
-	@$(TEXI2DVI) --pdf tmp.texi
+	@$(TEXI2PDF) tmp.texi
 	@mv tmp.pdf $@
 	@rm tmp.*
