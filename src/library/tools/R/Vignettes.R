@@ -250,15 +250,15 @@ function(package, dir, lib.loc = NULL,
     if(weave && latex) {
         if(!("Makefile" %in% list.files(vigns$dir))) {
             ## <NOTE>
-            ## This used to run texi2dvi on *all* vignettes, including
+            ## This used to run texi2pdf on *all* vignettes, including
             ## the ones already known from the above to give trouble.
-            ## In addition, texi2dvi errors were not caught, so that in
+            ## In addition, texi2pdf errors were not caught, so that in
             ## particular the results of the previous QC analysis were
             ## *not* returned in case of such errors ...
             ## Hence, let us
-            ## * Only run texi2dvi() on previously unproblematic vignettes
-            ## * Catch texi2dvi() errors similar to the above.
-            ## * Do *not* immediately show texi2dvi() output as part of
+            ## * Only run texi2pdf() on previously unproblematic vignettes
+            ## * Catch texi2pdf() errors similar to the above.
+            ## * Do *not* immediately show texi2pdf() output as part of
             ##   running checkVignettes().
             ## (For the future, maybe keep this output and provide it as
             ## additional diagnostics ...)
