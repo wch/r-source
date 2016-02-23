@@ -24,6 +24,8 @@
 #include <config.h>
 #endif
 
+#define USE_RINTERNALS // read-only, promise.
+
 #include <Defn.h>
 #include <Internal.h>
 
