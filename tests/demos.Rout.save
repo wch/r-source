@@ -1,5 +1,5 @@
 
-R version 3.2.3 Patched (2016-02-17 r70181) -- "Wooden Christmas-Tree"
+R version 3.2.3 Patched (2016-02-23 r70210) -- "Wooden Christmas-Tree"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.037 0.02 1.057 0 0 
+Time elapsed:  0.984 0.026 1.009 0 0 
 > 
