@@ -528,7 +528,13 @@
       optional argument \code{stringsAsFactors} (instead of only
       depending on \code{getOption("stringsAsFactors")}).
 
-      \code{smooth(x, *)} now also works for long vectors.
+      \item \code{smooth(x, *)} now also works for long vectors.
+      
+      \item \code{tools::texi2dvi()} has a workaround for problems with
+      the \command{texi2dvi} script supplied by \pkg{texinfo 6.1}.
+
+      It extracts more error messages from the LaTeX logs when in
+      emulation mode.
     }
   }
 

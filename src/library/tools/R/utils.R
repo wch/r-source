@@ -315,15 +315,17 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                                     env = env0)
 
         log <- paste(file_path_sans_ext(file), "log", sep = ".")
-        
+
         ## With Texinfo 6.1 (precisely, c6637), texi2dvi may not rerun
-        ## often enough and give a non-zero status value.  Try to catch
-        ## and correct (some of) these cases ...
-        ## Note that texi2dvi may have been run quietly, in which case
-        ## diagnostics will only be in the log file.
+        ## often enough and give a non-zero status value when it should
+        ## have continued iterating.
+        ## Try to catch and correct cases seen on CRAN ...
+        ## (Note that texi2dvi may have been run quietly, in which case
+        ## diagnostics will only be in the log file.)
         if(out$status &&
            file_test("-f", log) &&
-           any(grepl("Rerun to get", readLines(log, warn = FALSE)))) {
+           any(grepl("(Rerun to get|biblatex.*\\(re\\)run)",
+                     readLines(log, warn = FALSE)))) {
             out <- .system_with_capture(texi2dvi,
                                         c(opt_pdf, opt_quiet, opt_extra,
                                           shQuote(file)),
@@ -468,13 +470,20 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                                   makeindex, idxfile),
                          domain = NA)
             }
-            if(sys2(latex, ltxargs))
-                stop(gettextf("unable to run %s on '%s'", latex, file),
+            if(sys2(latex, ltxargs)) {
+                lines <- .get_LaTeX_errors_from_log_file(paste0(base, ".log"))
+                errors <- if(length(lines))
+                    paste("LaTeX errors:",
+                          paste(lines, collapse = "\n"), sep = "\n")
+                else character()
+                stop(paste(gettextf("unable to run %s on '%s'", latex, file),
+                           errors, sep = "\n"),
                      domain = NA)
+            }
             Log <- readLines(paste0(base, ".log"))
             nmiss <- length(grep("Warning:.*Citation.*undefined", Log))
             if(nmiss == nmiss_prev &&
-               !length(grep("Rerun to get", Log)) ) break
+               !any(grepl("(Rerun to get|biblatex.*\\(re\\)run)", Log)) ) break
         }
         do_cleanup(clean)
     }
