@@ -34,6 +34,16 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} will leave a log file
+      \file{build_vignettes.log} from the re-building of vignettes in
+      the \file{.Rcheck} directory if there is a problem, and always if
+      environment variable \env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is
+      set to a true value.
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
