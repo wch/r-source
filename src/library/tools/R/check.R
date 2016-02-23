@@ -3137,7 +3137,6 @@ setRlibs <-
                                file.path(pkgoutdir, "vign_test", pkgname0),
                                "')")
                 t1 <- proc.time()
-#                outfile <- tempfile()
                 outfile <- file.path(pkgoutdir, "build_vignettes.log")
                 status <- R_runR(Rcmd, R_opts2, jitstr,
                                  stdout = outfile, stderr = outfile)
