@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-02-05 r70096) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-02-23 r70212) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -703,4 +703,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.097   0.019   1.107 
+  1.188   0.035   1.214 
