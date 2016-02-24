@@ -108,6 +108,9 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   is used to avoid infinite retries.
   
   The emulation mode supports \code{quiet = TRUE} from \R 3.2.3 only.
+  Currently \code{clean = TRUE} only cleans up in this mode if the
+  conversion was successful---this gives users a chance to examine log
+  files in the event of error.
 }
 \value{
   Invisible \code{NULL}.  Used for the side effect of creating a dvi or
