@@ -465,21 +465,6 @@ static R_xlen_t dispatch_length(SEXP x, SEXP call, SEXP rho) {
     return(xlength(x));
 }
 
-static SEXP dispatch_subset2(SEXP x, R_xlen_t i, SEXP call, SEXP rho) {
-    static SEXP bracket_op = NULL;
-    SEXP args, x_elt;
-    if (isObject(x)) {
-        if (bracket_op == NULL)
-            bracket_op = R_Primitive("[[");
-        PROTECT(args = list2(x, ScalarReal(i + 1)));
-        x_elt = do_subset2(call, bracket_op, args, rho);
-        UNPROTECT(1);
-    } else {
-        x_elt = VECTOR_ELT(x, i);
-    }
-    return(x_elt);
-}
-
 // auxiliary for do_lengths_*(), i.e., R's lengths()
 static R_xlen_t getElementLength(SEXP x, R_xlen_t i, SEXP call, SEXP rho) {
     SEXP x_elt = dispatch_subset2(x, i, call, rho);
