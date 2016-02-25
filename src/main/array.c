@@ -511,6 +511,10 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     int useNames = asLogical(CADR(args));
     if (useNames == NA_LOGICAL)
 	error(_("invalid '%s' value"), "USE.NAMES");
+
+    if (DispatchOrEval(call, op, "lengths", args, rho, &ans, 0, 1))
+      return(ans);
+
     Rboolean isList = isVectorList(x) || isS4(x);
     if(!isList) switch(TYPEOF(x)) {
 	case NILSXP:

@@ -303,6 +303,8 @@
 
       \item New function \code{.traceback()} returns the stack trace
       which \code{traceback()} prints.
+
+      \item \code{lengths()} dispatches internally.
     }
   }
 
