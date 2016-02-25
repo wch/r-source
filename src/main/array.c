@@ -448,7 +448,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(length(x));
 }
 
-static R_xlen_t dispatch_length(SEXP x, SEXP call, SEXP rho) {
+R_xlen_t attribute_hidden dispatch_length(SEXP x, SEXP call, SEXP rho) {
     static SEXP length_op = NULL;
     if (isObject(x)) {
         SEXP len, args;

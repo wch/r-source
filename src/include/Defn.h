@@ -1059,6 +1059,7 @@ SEXP deparse1s(SEXP call);
 int DispatchAnyOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(const char *, SEXP,SEXP,SEXP,SEXP,SEXP*);
+R_xlen_t dispatch_length(SEXP, SEXP, SEXP);
 SEXP dispatch_subset2(SEXP, R_xlen_t, SEXP, SEXP);
 SEXP duplicated(SEXP, Rboolean);
 R_xlen_t any_duplicated(SEXP, Rboolean);
