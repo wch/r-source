@@ -1097,6 +1097,21 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+SEXP attribute_hidden dispatch_subset2(SEXP x, R_xlen_t i, SEXP call, SEXP rho)
+{
+    static SEXP bracket_op = NULL;
+    SEXP args, x_elt;
+    if (isObject(x)) {
+        if (bracket_op == NULL)
+            bracket_op = R_Primitive("[[");
+        PROTECT(args = list2(x, ScalarReal(i + 1)));
+        x_elt = do_subset2(call, bracket_op, args, rho);
+        UNPROTECT(1);
+    } else {
+        x_elt = VECTOR_ELT(x, i);
+    }
+    return(x_elt);
+}
 
 enum pmatch {
     NO_MATCH,
