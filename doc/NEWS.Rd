@@ -299,7 +299,7 @@
       \item \R now uses a new version of the logo (donated to the R
       Foundation by RStudio).  It is defined in \file{.svg} format, so
       will resize without unnecessary degradation when displayed on
-      HTML pages.
+      HTML pages---there is also vector version for use in PDF files. 
 
       \item New function \code{.traceback()} returns the stack trace
       which \code{traceback()} prints.
@@ -356,10 +356,10 @@
       the future, the S4 value will be coerced to a list with
       \code{as.list()}.
 
-      \item Package \pkg{tools}' functions \code{package.dependencies},
-      \code{pkgDepends}, etc are deprecated now, mostly in favor of
-      \code{package_dependencies} which is both more flexible and
-      efficient.
+      \item Package \pkg{tools}' functions
+      \code{package.dependencies()}, \code{pkgDepends()}, etc are
+      deprecated now, mostly in favor of \code{package_dependencies()}
+      which is both more flexible and efficient.
     }
   }
 
@@ -399,15 +399,17 @@
       not found.  (OS X is the main instance.)
 
       \item (Windows) An experimental build of R based on \command{gcc}
-      4.9.3 is now available on CRAN on the \file{bin/windows/base/rdevel.html}
-      snapshot page.  This build will require recompilation of at least those
-      packages that include C++ code, and possibly others.  The CRAN
-      binary packages still use the older toolchain, so package installs
-      default to \code{type = "source"}.
+      4.9.3 is now available on CRAN on the
+      \file{bin/windows/base/rdevel.html} snapshot page.  This build
+      will require recompilation of at least those packages that include
+      C++ code, and possibly others.  The CRAN binary packages still use
+      the older toolchain, so package installs default to \code{type =
+      "source"}.
 
-      During the transition, the environment variable \env{R_COMPILED_BY} will
-      be defined to indicate which toolchain was used to compile R (and hence,
-      which should be used to compile code in packages).
+      During the transition, the environment variable
+      \env{R_COMPILED_BY} will be defined to indicate which toolchain
+      was used to compile R (and hence, which should be used to compile
+      code in packages).
     }
   }
 
