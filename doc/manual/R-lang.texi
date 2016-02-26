@@ -1360,10 +1360,8 @@ permitted.
 looping.@footnote{Looping is the repeated evaluation of a statement or
 block of statements.}  They are @code{for}, @code{while} and
 @code{repeat}.  The two built-in constructs, @code{next} and
-@code{break}, provide additional control over the evaluation.  Each of
-the three statements returns the value of the last statement that was
-evaluated.  It is possible, although uncommon, to assign the result of
-one of these statements to a symbol.  @R{} provides other functions for
+@code{break}, provide additional control over the evaluation. 
+@R{} provides other functions for
 implicit looping such as @code{tapply}, @code{apply}, and @code{lapply}.
 In addition many operations, especially arithmetic ones, are vectorized
 so you may not need to use a loop.
