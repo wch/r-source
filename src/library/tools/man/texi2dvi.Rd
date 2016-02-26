@@ -8,8 +8,8 @@
 \alias{texi2pdf}
 \title{Compile LaTeX Files}
 \description{
-  Run \code{latex} and \code{bibtex} until all cross-references are
-  resolved and create either a dvi or a PDF file.
+  Run \code{latex}/\code{pdflatex}, \code{makeindex} and \code{bibtex}
+  until all cross-references are resolved to create a dvi or a PDF file.
 }
 \usage{
 texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
@@ -21,19 +21,19 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
          texinputs = NULL, index = TRUE)
 }
 \arguments{
-  \item{file}{character string.  Name of LaTeX source file.}
+  \item{file}{character string.  Name of the LaTeX source file.}
   \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced instead of
     the default dvi file (\code{texi2dvi} command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
     during the conversion are removed.}
   \item{quiet}{logical.  No output unless an error occurs.}
-  \item{texi2dvi}{character string (or \code{NULL}).  Script or program used to
-    compile a TeX file to dvi or PDF.
-    The default (selected by \code{""} or \code{"texi2dvi"} or
-    \code{NULL}) is to look for a program or script named
-    \file{texi2dvi} on the path and otherwise emulate the script with
-    \code{system2} calls (which can be selected by the value
-    \code{"emulation"}).  See also \sQuote{Details}.} 
+  \item{texi2dvi}{character string (or \code{NULL}).  Script or program
+    used to compile a TeX file to dvi or PDF. The default (selected
+    by \code{""} or \code{"texi2dvi"} or \code{NULL}) is to look
+    for a program or script named \file{texi2dvi} on the path and
+    otherwise emulate the script with \code{system2} calls (which
+    can be selected by the value \code{"emulation"}).  See also
+    \sQuote{Details}.} 
   \item{texinputs}{\code{NULL} or a character vector of paths to add to
     the LaTeX and bibtex input search paths.}
   \item{index}{logical: should indices be prepared?}
@@ -43,15 +43,16 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \code{texi2dvi(pdf = TRUE)}.
 
   Despite the name, this is used in \R to compile LaTeX files,
-  specifically those generated from vignettes.  It
+  specifically those generated from vignettes and by the
+  \code{\link{Rd2pdf}} script (used for package reference manuals).  It
   ensures that the \file{\var{\link{R_HOME}}/share/texmf} directory is
   in the \env{TEXINPUTS} path, so \R style files such as \file{Sweave}
   and \file{Rd} will be found.  The TeX search path used is first the
   existing \env{TEXINPUTS} setting (or the current directory if unset),
-  then elements of \code{texinputs}, then
-  \file{\var{R_HOME}/share/texmf} and finally the default
-  path.  Analogous changes are made to \env{BIBINPUTS} and
-  \env{BSTINPUTS} settings.
+  then elements of argument \code{texinputs}, then
+  \file{\var{R_HOME}/share/texmf} and finally the default path.
+  Analogous changes are made to \env{BIBINPUTS} and \env{BSTINPUTS}
+  settings.
 
 #ifdef unix
   The default option for \code{texi2dvi} is set from environment variable
@@ -63,7 +64,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   %% the /bin/sh script in <= 6.0.
   A shell script \command{texi2dvi} is part of GNU's \pkg{texinfo}.
   Several issues have been seen with released versions, so if yours does
-  not work correctly set \env{R_TEXI2DVICMD=emulation}.
+  not work correctly try \env{R_TEXI2DVICMD=emulation}.
 #endif
 
 #ifdef windows
@@ -111,6 +112,10 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   Currently \code{clean = TRUE} only cleans up in this mode if the
   conversion was successful---this gives users a chance to examine log
   files in the event of error.
+  
+  All the approaches should respect the values of enviroment variables
+  \env{LATEX}, \env{PDFLATEX}, \env{MAKEINDEX} and \env{BIBTEX} for the
+  full paths to the corresponding commands.
 }
 \value{
   Invisible \code{NULL}.  Used for the side effect of creating a dvi or
