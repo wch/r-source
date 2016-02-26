@@ -352,12 +352,14 @@ function(x, ...)
 }
 
 .build_Rd_db <-
-function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
-         stages = c("build", "install"), os = .OStype(), step = 3L, built_file = NULL)
+function(dir = NULL, files = NULL,
+         encoding = "unknown", db_file = NULL,
+         stages = c("build", "install"), os = .OStype(), step = 3L,
+         built_file = NULL, macros = character())
 {
     if(!is.null(dir)) {
         dir <- file_path_as_absolute(dir)
-        macros <- loadPkgRdMacros(dir)
+        macros0 <- loadPkgRdMacros(dir)
         man_dir <- file.path(dir, "man")
         if(!dir.exists(man_dir))
             return(structure(list(), names = character()))
@@ -366,9 +368,17 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
         encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
         if(is.na(encoding)) encoding <- "unknown"
     } else if(!is.null(files))
-        macros <- initialRdMacros()
+        macros0 <- initialRdMacros()
     else
         stop("you must specify 'dir' or 'files'")
+
+    if(length(macros)) {
+        con <- textConnection(macros)
+        macros <- loadRdMacros(con, macros0)
+        close(con)
+    } else {
+        macros <- macros0
+    }
 
     .fetch_Rd_object <- function(f) {
         ## This calls parse_Rd if f is a filename
