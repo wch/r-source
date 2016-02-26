@@ -1,6 +1,6 @@
 % File src/library/graphics/man/title.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{title}
@@ -11,13 +11,12 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
 }
 \alias{title}
 \arguments{
-  \item{main}{The main title (on top) using font and size (character
-    expansion) \code{par("font.main")} and color
-    \code{par("col.main")}.}
-  \item{sub}{Sub-title (at bottom) using font and size
-    \code{par("font.sub")} and color \code{par("col.sub")}.}
-  \item{xlab}{X axis label using font and character expansion
-    \code{par("font.lab")} and color \code{par("col.lab")}.}
+  \item{main}{The main title (on top) using font, size (character
+    expansion) and color \code{par(c("font.main", "cex.main", "col.main"))}.}
+  \item{sub}{Sub-title (at bottom) using font, size and color 
+    \code{par(c("font.sub", "cex.sub", "col.sub"))}.}
+  \item{xlab}{X axis label using font, size and color 
+    \code{par(c("font.lab", "cex.lab", "col.lab"))}.}
   \item{ylab}{Y axis label, same font attributes as \code{xlab}.}
   \item{line}{specifying a value for \code{line} overrides the
     default placement of labels, and places them this many lines
