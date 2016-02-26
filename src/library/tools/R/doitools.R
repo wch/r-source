@@ -16,23 +16,6 @@
 ##  A copy of the GNU General Public License is available at
 ##  https://www.R-project.org/Licenses/
 
-.get_dois_from_Rd <-
-function(x)
-{
-    dois <- character()
-    recurse <- function(e) {
-        tag <- attr(e, "Rd_tag")
-        if(identical(tag, "\\doi")) {
-            dois <<-
-                c(dois,
-                  trimws(gsub("\n", "", .Rd_deparse(e, tag = FALSE),
-                              fixed = TRUE, useBytes = TRUE)))
-        }
-    }
-    lapply(x, recurse)
-    unique(trimws(dois))
-}
-
 doi_db <-
 function(dois, parents)
 {
@@ -43,15 +26,18 @@ function(dois, parents)
     db
 }
 
-doi_db_from_package_Rd_db <-
-function(db)
+doi_db_from_package_metadata <- 
+function(meta)
 {
-    dois <- Filter(length, lapply(db, .get_dois_from_Rd))
-    doi_db(unlist(dois, use.names = FALSE),
-           rep.int(file.path("man", names(dois)),
-                   lengths(dois)))
+    dois <- character()
+    pattern <- "<(DOI|doi):([^>]*)>"
+    if(!is.na(v <- meta["Description"])) {
+        m <- gregexpr(pattern, v)
+        dois <- c(dois, .gregexec_at_pos(pattern, v, m, 3L))
+    }
+    doi_db(dois, rep.int("DESCRIPTION", length(dois)))
 }
-    
+
 doi_db_from_package_citation <-
 function(dir, meta, installed = FALSE)
 {
@@ -66,19 +52,56 @@ function(dir, meta, installed = FALSE)
     doi_db(dois, rep.int(path, length(dois)))
 }
 
+## \doi a user-defined macro (from system.Rd) which gets expanded by 
+## parse_Rd().  To extract programmatically, we try to find the user
+## macros with the (current) expansion.
+## Alternative, we could call .build_Rd_db() on the package Rd sources
+## with e.g. macros = c("\\newcommand{\\doi}{<DOI:#1>}" and look for
+## TEXT nodes matching the expansion.  However, we cannot necessarily
+## safely process build-time Sexprs ...
+
+doi_db_from_package_Rd_db <-
+function(db)
+{
+    dois <- Filter(length, lapply(db, .get_dois_from_Rd))
+    doi_db(unlist(.canonicalize_doi(dois), use.names = FALSE),
+           rep.int(file.path("man", names(dois)),
+                   lengths(dois)))
+}
+
+.get_dois_from_Rd <-
+function(x)
+{
+    dois <- character()
+    recurse <- function(e) {
+        if(identical(attr(e, "Rd_tag"), "USERMACRO") &&
+           grepl("\\\\Sexpr.*tools:::Rd_expr_doi", e[1L]))
+            dois <<- c(dois, e[2L])
+        else if(is.list(e))
+            lapply(e, recurse)
+    }
+    if(getDynamicFlags(x)["\\Sexpr"])
+        lapply(x, recurse)
+    dois
+}
+
 doi_db_from_package_sources <-
-function(dir, add = FALSE)    
+function(dir, add = FALSE, Rd = FALSE)
 {
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
-    db <- rbind(doi_db_from_package_Rd_db(Rd_db(dir = dir)),
-                doi_db_from_package_citation(dir, meta))
+    db <- rbind(doi_db_from_package_metadata(meta),
+                doi_db_from_package_citation(dir, meta),
+                if(Rd) {
+                    rddb <- Rd_db(dir = dir)
+                    doi_db_from_package_Rd_db(rddb)
+                })
     if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
     db
 }
 
 doi_db_from_installed_packages <-
-function(packages, lib.loc = NULL, verbose = FALSE)
+function(packages, lib.loc = NULL, verbose = FALSE, Rd = FALSE)
 {
     if(!length(packages)) return()
     one <- function(p) {
@@ -87,10 +110,13 @@ function(packages, lib.loc = NULL, verbose = FALSE)
         dir <- system.file(package = p, lib.loc = lib.loc)
         if(dir == "") return()
         meta <- .read_description(file.path(dir, "DESCRIPTION"))
-        rddb <- Rd_db(p, lib.loc = dirname(dir))
-        db <- rbind(doi_db_from_package_Rd_db(rddb),
+        db <- rbind(doi_db_from_package_metadata(meta),
                     doi_db_from_package_citation(dir, meta,
-                                                 installed = TRUE))
+                                                 installed = TRUE),
+                    if(Rd) {
+                        rddb <- Rd_db(p, lib.loc = dirname(dir))
+                        doi_db_from_package_Rd_db(rddb)
+                    })
         db$Parent <- file.path(p, db$Parent)
         db
     }

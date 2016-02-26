@@ -584,6 +584,15 @@ function(val) {
     }
 }
 
+### ** .canonicalize_doi
+
+.canonicalize_doi <-
+function(x)    
+{
+    x <- sub("^((doi|DOI):)?[[:space:]]*http://(dx[.])?doi[.]org/", "",
+             x)
+    sub("^(doi|DOI):", "", x)
+}
 
 ### ** .canonicalize_quotes
 
@@ -1166,6 +1175,20 @@ function(texi = NULL)
     lines <- readLines(texi)
     re <- "^@c DESCRIPTION field "
     sort(unique(sub(re, "", lines[grepl(re, lines)])))
+}
+
+### ** .gregexec_at_pos
+
+.gregexec_at_pos <-
+function(pattern, x, m, pos)
+{
+    unlist(lapply(regmatches(x, m),
+                  function(e)
+                      do.call(rbind,
+                              regmatches(e,
+                                         regexec(pattern, e)))[, pos]
+                  ),
+           use.names = FALSE)
 }
 
 ### ** .gsub_with_transformed_matches

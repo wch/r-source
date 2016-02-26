@@ -97,16 +97,6 @@ function(db)
 url_db_from_package_metadata <-
 function(meta)
 {
-    gregexec_at_pos <- function(pattern, v, m, pos) {
-        unlist(lapply(regmatches(v, m),
-                      function(e)
-                          do.call(rbind,
-                                  regmatches(e,
-                                             regexec(pattern, e)))[, 3L]
-                      ),
-               use.names = FALSE)
-    }
-
     urls <- character()
     fields <- c("URL", "BugReports")
     for(v in meta[fields]) {
@@ -114,11 +104,11 @@ function(meta)
         pattern <-
             "<(URL: *)?((https?|ftp)://[^[:space:],]*)[[:space:]]>"
         m <- gregexpr(pattern, v)
-        urls <- c(urls, gregexec_at_pos(pattern, v, m, 3L))
+        urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
         regmatches(v, m) <- ""
         pattern <- "(^|[^>\"])((https?|ftp)://[^[:space:],]*)"
         m <- gregexpr(pattern, v)
-        urls <- c(urls, gregexec_at_pos(pattern, v, m, 3L))
+        urls <- c(urls, .gregexec_at_pos(pattern, v, m, 3L))
     }
 
     url_db(urls, rep.int("DESCRIPTION", length(urls)))
