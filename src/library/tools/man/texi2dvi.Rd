@@ -113,7 +113,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   conversion was successful---this gives users a chance to examine log
   files in the event of error.
   
-  All the approaches should respect the values of enviroment variables
+  All the approaches should respect the values of environment variables
   \env{LATEX}, \env{PDFLATEX}, \env{MAKEINDEX} and \env{BIBTEX} for the
   full paths to the corresponding commands.
 }
