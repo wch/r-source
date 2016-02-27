@@ -237,9 +237,15 @@ get_exclude_patterns <- function()
         }
         if (vignettes &&
             parse_description_field(desc, "BuildVignettes", TRUE)) {
+
+            vignette_index_path <- file.path("build", "vignette.rds")
+            if(file.exists(vignette_index_path))
+                unlink(vignette_index_path)
+
 ## this is not a logical field
 ##	    if (nchar(parse_description_field(desc, "VignetteBuilder", "")))
 ##		ensure_installed()
+
             ## PR#15775: check VignetteBuilder packages are installed
             ## This is a bit wasteful: we do not need them in this process
             loadVignetteBuilder(pkgdir, TRUE)
@@ -325,7 +331,7 @@ get_exclude_patterns <- function()
 		## Save the list
 		dir.create("build", showWarnings = FALSE)
 		saveRDS(vignetteIndex,
-			file = file.path("build", "vignette.rds"))
+			file = vignette_index_path)
             }
         } else {
             fv <- file.path("build", "vignette.rds")
@@ -490,7 +496,19 @@ get_exclude_patterns <- function()
     }
 
     build_Rd_db <- function(pkgdir, libdir, desc) {
-    	db <- .build_Rd_db(pkgdir, stages = NULL,
+
+        build_partial_Rd_db_path <-
+            file.path("build", "partial.rdb")
+        if(file.exists(build_partial_Rd_db_path))
+            unlink(build_partial_Rd_db_path)
+
+        ## Use a full path as this could be passed to ..Rd2pdf().
+        build_refman_path <-
+            file.path(pkgdir, "build", paste0(basename(pkgdir), ".pdf"))
+        if(file.exists(build_refman_path))
+            unlink(build_refman_path)
+
+        db <- .build_Rd_db(pkgdir, stages = NULL,
                            os = c("unix", "windows"), step = 1)
     	if (!length(db)) return(FALSE)
 
@@ -521,7 +539,7 @@ get_exclude_patterns <- function()
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
 	    dir.create("build", showWarnings = FALSE)
-	    saveRDS(partial, file.path("build", "partial.rdb"))
+	    saveRDS(partial, build_partial_Rd_db_path)
 	}
 	needRefman <- manual &&
             parse_description_field(desc, "BuildManual", TRUE) &&
@@ -529,10 +547,8 @@ get_exclude_patterns <- function()
 	if (needRefman) {
 	    messageLog(Log, "building the PDF package manual")
 	    dir.create("build", showWarnings = FALSE)
-	    refman <- file.path(pkgdir, "build",
-                                paste0(basename(pkgdir), ".pdf"))
 	    ..Rd2pdf(c("--force", "--no-preview",
-	               paste0("--output=", refman),
+	               paste0("--output=", build_refman_path),
 	               pkgdir), quit = FALSE)
         }
 	return(TRUE)
