@@ -299,7 +299,7 @@
       \item \R now uses a new version of the logo (donated to the R
       Foundation by RStudio).  It is defined in \file{.svg} format, so
       will resize without unnecessary degradation when displayed on
-      HTML pages---there is also vector version for use in PDF files. 
+      HTML pages---there is also vector version for use in PDF files.
 
       \item New function \code{.traceback()} returns the stack trace
       which \code{traceback()} prints.
@@ -530,7 +530,7 @@
       depending on \code{getOption("stringsAsFactors")}).
 
       \item \code{smooth(x, *)} now also works for long vectors.
-      
+
       \item \code{tools::texi2dvi()} has a workaround for problems with
       the \command{texi2dvi} script supplied by \pkg{texinfo 6.1}.
 
@@ -548,7 +548,7 @@
       set to a true value.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
@@ -655,6 +655,10 @@
 
       \item \code{available.packages()} sometimes deleted the wrong
       file when cleaning up temporary files.  (\PR{16712})
+
+      \item \code{[dpqr]nbinom(*, size=Inf, mu=.)} now works as limit
+      case, for \sQuote{dpq} as the Poisson.  (\PR{16727})\cr
+      \code{pnbinom()} no longer loops infinitely in border cases.
     }
   }
 }

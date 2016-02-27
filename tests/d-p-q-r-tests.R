@@ -954,5 +954,25 @@ pp <- pchisq(0, df = 0, ncp=th, log.p=TRUE)
 stopifnot(all.equal(pp, -th/2, tol=1e-15))
 ## underflowed at about th ~= 60  in R <= 3.2.2
 
+## pnbinom (-> C's bratio())
+op <- options(warn = 1)# -- NaN's giving warnings
+L <- 1e308; pnbinom(L, L, mu = 5) # NaN -- should rather be '1'
+## gave infinite loop in R <= 3.2.3
+
+## [dpqr]nbinom(*, mu, size=Inf) -- PR#16727
+L <- 1e308; mu <- 5; pp <- (0:16)/16
+x <- c(0:3, 1e10, 1e100, L, Inf)
+(d <- dnbinom(x,  mu = mu, size = Inf)) # gave NaN (for 0 and L)
+(p <- pnbinom(x,  mu = mu, size = Inf)) # gave all NaN
+(q <- qnbinom(pp, mu = mu, size = Inf)) # gave all NaN
+set.seed(1); NI <- rnbinom(32, mu = mu, size = Inf)# gave all NaN
+set.seed(1); N2 <- rnbinom(32, mu = mu, size = L  )
+stopifnot(all.equal(d, dpois(x, mu)),
+	  all.equal(p, ppois(x, mu)),
+	  q == qpois(pp, mu),
+	  identical(NI, N2))
+## size = Inf -- mostly gave NaN  in R <= 3.2.3
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

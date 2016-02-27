@@ -266,11 +266,11 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     }
     else { /* L30: -------------------- both  a, b > 1  {a0 > 1  &  b0 > 1} ---*/
 
-	if (a > b)
-	    lambda = (a + b) * y - b;
-	else
-	    lambda = a - (a + b) * x;
-
+	/* lambda := a y - b x  =  (a + b)y  =  a - (a+b)x    {using x + y == 1},
+	 * ------ using the numerically best version : */
+	lambda = R_FINITE(a+b)
+	    ? ((a > b) ? (a + b) * y - b : a - (a + b) * x)
+	    : a*y - b*x;
 	do_swap = (lambda < 0.);
 	if (do_swap) {
 	    lambda = -lambda;
@@ -651,10 +651,7 @@ static double bup(double a, double b, double x, double y, int n, double eps,
 /*     EPS IS THE TOLERANCE USED. */
 /* ----------------------------------------------------------------------- */
 
-    /* System generated locals */
     double ret_val;
-
-    /* Local variables */
     int i, k, mu;
     double d, l;
 
@@ -733,14 +730,24 @@ static double bfrac(double a, double b, double x, double y, double lambda,
    -----------------------------------------------------------------------*/
 
     double c, e, n, p, r, s, t, w, c0, c1, r0, an, bn, yp1, anp1, bnp1,
-	beta, alpha;
+	beta, alpha, brc;
 
-    double brc = brcomp(a, b, x, y, log_p);
-
+    if(!R_FINITE(lambda)) return ML_NAN;// TODO: can return 0 or 1 (?)
+    R_ifDEBUG_printf(" bfrac(a=%g, b=%g, x=%g, y=%g, lambda=%g, eps=%g, log_p=%d):",
+		     a,b,x,y, lambda, eps, log_p);
+    brc = brcomp(a, b, x, y, log_p);
+    if(ISNAN(brc)) { // e.g. from   L <- 1e308; pnbinom(L, L, mu = 5)
+	R_ifDEBUG_printf(" --> brcomp(a,b,x,y) = NaN\n");
+	ML_ERR_return_NAN; // TODO: could we know better?
+    }
     if (!log_p && brc == 0.) {
-	R_ifDEBUG_printf("  in bfrac(): brcomp() underflowed to 0.\n");
+	R_ifDEBUG_printf(" --> brcomp(a,b,x,y) underflowed to 0.\n");
 	return 0.;
     }
+#ifdef DEBUG_bratio
+    else
+	REprintf("\n");
+#endif
 
     c = lambda + 1.;
     c0 = b / a;
@@ -776,6 +783,10 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 
 	r0 = r;
 	r = anp1 / bnp1;
+#ifdef _not_normally_DEBUG_bfrac
+	R_ifDEBUG_printf(" n=%5.0f, a_{n,n+1}= (%12g,%12g),  b_{n,n+1} = (%12g,%12g) => r0,r = (%14g,%14g)\n",
+			 n, an,anp1, bn,bnp1, r0, r);
+#endif
 	if (fabs(r - r0) <= eps * r)
 	    break;
 
@@ -785,10 +796,13 @@ static double bfrac(double a, double b, double x, double y, double lambda,
 	bn /= bnp1;
 	anp1 = r;
 	bnp1 = 1.;
-    } while (1);
-
+    } while (n < 10000);// arbitrary; had '1' --> infinite loop for  lambda = Inf
     R_ifDEBUG_printf("  in bfrac(): n=%.0f terms cont.frac.; brc=%g, r=%g\n",
 		     n, brc, r);
+    if(n >= 10000)
+	MATHLIB_WARNING5(
+	    " bfrac(a=%g, b=%g, x=%g, y=%g, lambda=%g) did *not* converge (in 10000 steps)\n",
+	    a,b,x,y, lambda);
     return (log_p ? brc + log(r) : brc * r);
 } /* bfrac */
 

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/distn.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -251,10 +251,10 @@ qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
 	if (!missing(prob)) stop("'prob' and 'mu' both specified")
-### FIXME: implement qnbinom_mu(...) properly
-	prob <- size/(size + mu)
+	.Call(C_qnbinom_mu, p, size, mu, lower.tail, log.p)
     }
-    .Call(C_qnbinom, p, size, prob, lower.tail, log.p)
+    else
+	.Call(C_qnbinom, p, size, prob, lower.tail, log.p)
 }
 rnbinom <- function(n, size, prob, mu)
 {

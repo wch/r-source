@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2006  The R Core Team
+ *  Copyright (C) 2000--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,15 +46,17 @@
 
 double rnbinom(double size, double prob)
 {
-    if(!R_FINITE(size) || !R_FINITE(prob) || size <= 0 || prob <= 0 || prob > 1)
+    if(!R_FINITE(prob) || size <= 0 || prob <= 0 || prob > 1)
 	/* prob = 1 is ok, PR#1218 */
 	ML_ERR_return_NAN;
+    if(!R_FINITE(size)) size = DBL_MAX;
     return (prob == 1) ? 0 : rpois(rgamma(size, (1 - prob) / prob));
 }
 
 double rnbinom_mu(double size, double mu)
 {
-    if(!R_FINITE(size) || !R_FINITE(mu) || size <= 0 || mu < 0)
+    if(!R_FINITE(mu) || size <= 0 || mu < 0)
 	ML_ERR_return_NAN;
+    if(!R_FINITE(size)) size = DBL_MAX;
     return (mu == 0) ? 0 : rpois(rgamma(size, mu / size));
 }

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-02-23 r70212) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-02-27 r70231) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1358,7 +1358,34 @@ N
 > stopifnot(all.equal(pp, -th/2, tol=1e-15))
 > ## underflowed at about th ~= 60  in R <= 3.2.2
 > 
+> ## pnbinom (-> C's bratio())
+> op <- options(warn = 1)# -- NaN's giving warnings
+> L <- 1e308; pnbinom(L, L, mu = 5) # NaN -- should rather be '1'
+Warning in pnbinom(L, L, mu = 5) : NaNs produced
+[1] NaN
+> ## gave infinite loop in R <= 3.2.3
+> 
+> ## [dpqr]nbinom(*, mu, size=Inf) -- PR#16727
+> L <- 1e308; mu <- 5; pp <- (0:16)/16
+> x <- c(0:3, 1e10, 1e100, L, Inf)
+> (d <- dnbinom(x,  mu = mu, size = Inf)) # gave NaN (for 0 and L)
+[1] 0.006737947 0.033689735 0.084224337 0.140373896 0.000000000 0.000000000
+[7] 0.000000000 0.000000000
+> (p <- pnbinom(x,  mu = mu, size = Inf)) # gave all NaN
+[1] 0.006737947 0.040427682 0.124652019 0.265025915 1.000000000 1.000000000
+[7] 1.000000000 1.000000000
+> (q <- qnbinom(pp, mu = mu, size = Inf)) # gave all NaN
+ [1]   0   2   3   3   3   4   4   4   5   5   6   6   6   7   8   9 Inf
+> set.seed(1); NI <- rnbinom(32, mu = mu, size = Inf)# gave all NaN
+> set.seed(1); N2 <- rnbinom(32, mu = mu, size = L  )
+> stopifnot(all.equal(d, dpois(x, mu)),
++ 	  all.equal(p, ppois(x, mu)),
++ 	  q == qpois(pp, mu),
++ 	  identical(NI, N2))
+> ## size = Inf -- mostly gave NaN  in R <= 3.2.3
+> 
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.973 0.008 0.982 0 0 
+Time elapsed:  0.79 0.078 0.867 0 0 
 > 
