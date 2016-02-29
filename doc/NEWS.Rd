@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.2.3 patched}{
+\section{\Rlogo CHANGES IN R 3.2.4}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{install.packages()} and related functions now give a
@@ -25,7 +25,7 @@
       depending on \code{getOption("stringsAsFactors")}).
 
       \item \code{smooth(x, *)} now also works for long vectors.
-      
+
       \item \code{tools::texi2dvi()} has a workaround for problems with
       the \command{texi2dvi} script supplied by \pkg{texinfo 6.1}.
 
@@ -43,7 +43,7 @@
       set to a true value.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Use of \samp{SUPPORT_OPENMP} from header \file{Rconfig.h} is
@@ -121,8 +121,8 @@
       for multivariate linear models (\code{"mlm"}, \code{\link{manova}})
       thanks to a proposal by Daniel Wollschlaeger.
 
-      \item The \code{as.hclust} method for \code{"dendrogram"}s failed often
-      when there were ties in the heights.
+      \item The \code{as.hclust()} method for \code{"dendrogram"}s
+      failed often when there were ties in the heights.
 
       \item \code{reorder()} and \code{midcache.dendrogram()} now are
       non-recursive and hence applicable to somewhat deeply nested
@@ -151,9 +151,14 @@
       \item \code{available.packages()} sometimes deleted the wrong
       file when cleaning up temporary files.  (\PR{16712})
 
-      \item The X11 device froze on Red Hat Enterprise Linux 6. It now
-      waits for MapNotify events instead of Expose events, thanks to
-      Siteshwar Vashisht. (\PR{16497})
+      \item The \code{X11()} device sometimes froze on Red Hat
+      Enterprise Linux 6. It now waits for \code{MapNotify} events
+      instead of \code{Expose} events, thanks to Siteshwar
+      Vashisht. (\PR{16497})
+
+      \item \code{[dpqr]nbinom(*, size=Inf, mu=.)} now works as limit
+      case, for \sQuote{dpq} as the Poisson.  (\PR{16727})\cr
+      \code{pnbinom()} no longer loops infinitely in border cases.
     }
   }
 }
