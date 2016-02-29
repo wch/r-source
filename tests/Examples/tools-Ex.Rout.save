@@ -1,5 +1,5 @@
 
-R version 3.2.3 Patched (2016-02-23 r70210) -- "Wooden Christmas-Tree"
+R version 3.2.4 beta (2016-02-29 r70247) -- "Very Secure Dishes"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -188,7 +188,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x1517fc8>
+<environment: 0x2417480>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -981,7 +981,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.201 0.002 0.202 0 0 
+Time elapsed:  0.193 0.008 0.2 0 0 
 > grDevices::dev.off()
 null device 
           1 

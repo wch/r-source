@@ -1,5 +1,5 @@
 
-R version 3.2.3 Patched (2016-02-23 r70210) -- "Wooden Christmas-Tree"
+R version 3.2.4 beta (2016-02-29 r70247) -- "Very Secure Dishes"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -582,7 +582,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.107 0.004 0.111 0 0 
+Time elapsed:  0.098 0.007 0.104 0 0 
 > grDevices::dev.off()
 null device 
           1 
