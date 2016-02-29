@@ -1,6 +1,6 @@
 % File src/library/utils/man/aspell.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aspell}
@@ -96,9 +96,9 @@ aspell(files, filter, control = list(), encoding = "unknown",
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.
 
-  Package \pkg{Aspell} on Omegahat
-  (\url{http://www.omegahat.org/Aspell}) for a fine-grained R interface
-  to the Aspell library.
+%%   Package \pkg{Aspell} on Omegahat
+%%   (\url{http://www.omegahat.net/Aspell}) for a fine-grained R interface
+%%   to the Aspell library.
 }
 \examples{
 \dontrun{

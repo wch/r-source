@@ -73,7 +73,7 @@ R_ToplevelCallbackEl* Rf_addTaskCallback(R_ToplevelCallback cb, void *data, void
   to interface to the internal R code.
   
   See http://developer.r-project.org/RObjectTables.pdf,
-  http://www.omegahat.org/RObjectTables/
+  http://www.omegahat.net/RObjectTables/
 */
 
 typedef struct  _R_ObjectTable R_ObjectTable;

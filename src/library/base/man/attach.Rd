@@ -1,6 +1,6 @@
 % File src/library/base/man/attach.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attach}
@@ -73,7 +73,8 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
 
   There are hooks to attach user-defined table objects of class
   \code{"UserDefinedDatabase"}, supported by the Omegahat package
-  \pkg{RObjectTables}.  See \url{http://www.omegahat.org/RObjectTables/}.
+  \pkg{RObjectTables}.
+  %% See \url{http://www.omegahat.net/RObjectTables/}.
 }
 
 \value{

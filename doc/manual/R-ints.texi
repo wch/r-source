@@ -539,8 +539,9 @@ enclosure.
 @cindex user databases
 There are additional places that `variables' can be looked up, called
 `user databases' in comments in the code.  These seem undocumented in
-the @R{} sources, but apparently refer to the @pkg{RObjectTable} package
-at @uref{http://www.omegahat.org/RObjectTables/}.
+the @R{} sources.
+@c , but apparently refer to the @pkg{RObjectTable} package
+@c at @uref{http://www.omegahat.net/RObjectTables/}.
 
 @cindex base environment
 @cindex environment, base
@@ -3855,8 +3856,8 @@ Controls the minimum level for reporting warnings from @code{checkRd}.
 Default: -1.
 @item _R_CHECK_XREFS_REPOSITORIES_
 If set to a non-empty value, a space-separated list of repositories to
-use to determine known packages.  Default: empty, when the CRAN,
-Omegahat and Bioconductor repositories known to @R{} is used.
+use to determine known packages.  Default: empty, when the CRAN
+and Bioconductor repositories known to @R{} is used.
 @item _R_CHECK_SRC_MINUS_W_IMPLICIT_
 Control whether installation output is checked for compilation warnings
 about implicit function declarations (as spotted by GCC with command

@@ -536,9 +536,11 @@ neither sets up nor removes the file associations.
 @node Does R support automation?, The Internet download functions fail., Does R use the Registry?, Installation and Usage
 @section Does R support automation (OLE, COM)?
 
-Directly, no.  See packages such as @code{RDCOMClient} from
-@uref{http://www.omegahat.org/} and the non-Free project at
-@uref{http://www.statconn.com/}.
+Directly, no.  See packages such as @code{RDCOMClient} from Omegahat
+(source and binary packages available from
+@uref{https://www.stats.ox.ac.uk/pub/RWin/})
+@c @uref{http://www.omegahat.net/} 
+and the non-Free project at @uref{http://www.statconn.com/}.
 
 @node The Internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
 @section The Internet download functions fail.

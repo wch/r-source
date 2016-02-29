@@ -628,8 +628,8 @@ getOption(x, default = NULL)
       \code{local({r <- getOption("repos"); r["CRAN"] <- "http://my.local.cran";
                    options(repos = r)})}.
 
-      Note that you can add more repositories (Bioconductor and
-      Omegahat, R-Forge, Rforge.net \dots)
+      Note that you can add more repositories (Bioconductor,
+      R-Forge, Rforge.net \dots)
       using \code{\link{setRepositories}}.
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
