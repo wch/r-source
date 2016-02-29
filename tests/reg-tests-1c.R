@@ -1418,3 +1418,10 @@ stopifnot(
 stopifnot(c("round.Date", "round.POSIXt") %in% as.character(methods(round)))
 ## round.POSIXt suppressed in R <= 3.2.x
 
+
+## approxfun(*, method="constant")
+Fn <- ecdf(1:5)
+t <- c(NaN, NA, 1:5)
+stopifnot(all.equal(Fn(t), t/5))
+## In R <= 3.2.3,  NaN values resulted in something like (n-1)/n.
+
