@@ -956,8 +956,8 @@ stopifnot(all.equal(pp, -th/2, tol=1e-15))
 
 ## pnbinom (-> C's bratio())
 op <- options(warn = 1)# -- NaN's giving warnings
-L <- 1e308; pnbinom(L, L, mu = 5) # NaN -- should rather be '1'
-## gave infinite loop in R <= 3.2.3
+L <- 1e308; pnbinom(L, L, mu = 5) # NaN or 1 (for 64 / 32 bit)
+## gave infinite loop on some 64b platforms in R <= 3.2.3
 
 ## [dpqr]nbinom(*, mu, size=Inf) -- PR#16727
 L <- 1e308; mu <- 5; pp <- (0:16)/16
@@ -971,6 +971,7 @@ stopifnot(all.equal(d, dpois(x, mu)),
 	  all.equal(p, ppois(x, mu)),
 	  q == qpois(pp, mu),
 	  identical(NI, N2))
+options(op)
 ## size = Inf -- mostly gave NaN  in R <= 3.2.3
 
 
