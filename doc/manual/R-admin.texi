@@ -2059,7 +2059,7 @@ name given is a single @file{.tar.gz} file.
 
 @code{install.packages} can look in several repositories, specified as a
 character vector by the argument @code{repos}: these can include a
-@acronym{CRAN} mirror, Bioconductor, Omegahat, R-forge, rforge.net,
+@acronym{CRAN} mirror, Bioconductor, R-forge, rforge.net,
 local archives, local files, @dots{}).  Function
 @code{setRepositories()} can select amongst those repositories that the
 @R{} installation is aware of.
@@ -2457,11 +2457,12 @@ Finally, one can just remove the package directory from the library.
 Utilities such as @code{install.packages} can be pointed at any
 @acronym{CRAN}-style repository, and @R{} users may want to set up their
 own.  The `base' of a repository is a URL such as
-@uref{http://www.omegahat.org/R/}: this must be an URL scheme that
-@code{download.packages} supports (which also includes @samp{ftp://} and
-@samp{file://} and (from @R{} 3.3.0 and perhaps earlier)
-@samp{https://}).  Under that base URL there should be directory trees
-for one or more of the following types of package distributions:
+@uref{http://www.stats.ox.ac.uk/pub/RWin}: this must be an URL scheme
+that @code{download.packages} supports (which also includes
+@samp{ftp://} and @samp{file://} and (from @R{} 3.3.0 and perhaps
+earlier) @samp{https://}).  Under that base URL there should be
+directory trees for one or more of the following types of package
+distributions:
 
 @itemize
 @item 

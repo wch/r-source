@@ -6504,8 +6504,9 @@ are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
 (@uref{https://CRAN.R-project.org/} and its mirrors) and other
-repositories such as Bioconductor (@uref{https://www.bioconductor.org/})
-and Omegahat (@uref{http://www.omegahat.org/}).  The @emph{R FAQ}
+repositories such as Bioconductor (@uref{https://www.bioconductor.org/}).
+@c and Omegahat (@uref{http://www.omegahat.net/}).  
+The @emph{R FAQ}
 contains a list of CRAN packages current at the time of release, but the
 collection of available packages changes very frequently.
 

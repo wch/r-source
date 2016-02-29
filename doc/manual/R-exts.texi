@@ -1681,8 +1681,7 @@ set the value of the @env{LD_LIBRARY_PATH} (or equivalent) environment
 variable, but that the secondary object is automatically resolved.
 Another example is when a package installs support files that are
 required at run time, and their location is substituted into an @R{}
-data structure at installation time. (This happens with the Java Archive
-files in the Omegahat @pkg{SJava} package.)
+data structure at installation time.
 @vindex R_LIBRARY_DIR
 @vindex R_PACKAGE_DIR
 @vindex R_PACKAGE_NAME
@@ -3753,11 +3752,6 @@ useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
 which makes the @R{} variables corresponding to the FORTRAN symbols
 @code{F_bkde} and so on, and so avoid clashes with @R{} code in the
 namespace.
-
-
-@c More information about this symbol lookup, along with some approaches
-@c for customizing it, is available from
-@c @uref{http://www.omegahat.org/@/examples/@/RDotCall}.
 
 @node An example, Namespaces with S4 classes and methods, useDynLib, Package namespaces
 @subsection An example
@@ -8950,14 +8944,6 @@ methods can contain
 		as.integer(m), as.integer(n))$p
 @end example
 
-
-@c These tools are not currently operational.
-@c Additionally, there are (experimental) tools that can be used to
-@c automate the generation of the code to register the routines for a
-@c collection of C files. See the @code{GccTranslationUnit} module on the
-@c Omegahat Web site at @uref{http://www.omegahat.org/GccTranslationUnit/}
-@c for more information.
-
 @menu
 * Speed considerations::        
 * Linking to native routines in other packages::  
@@ -13823,10 +13809,10 @@ which works with @R{} packages to support transfer of data to and from
 Recent versions have usage restrictions.
 
 @item
-Another (D)COM server, @code{RDCOMServer}, is available from
-@uref{http://www.omegahat.org/}.  Its philosophy is discussed in
-@uref{http://www.omegahat.org/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
-very different from the purpose of this section.
+Another (D)COM server, @code{RDCOMServer}, may be available from Omegahat.
+@c @uref{http://www.omegahat.net/}.  Its philosophy is discussed in
+@c @uref{http://www.omegahat.net/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
+@c very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly, Finding R_HOME, Using (D)COM, Embedding R under Windows
 @subsection Calling R.dll directly

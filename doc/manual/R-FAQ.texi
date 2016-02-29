@@ -1573,8 +1573,8 @@ and a web server provided that the installer has the necessary security
 permissions.  David's paper ``CGIwithR: Facilities for Processing Web
 Forms Using R'' was published in the Journal of Statistical Software
 (@url{http://www.jstatsoft.org/v08/i10/}).  The package is now
-maintained by @email{duncan@@wald.ucdavis.edu, Duncan Temple Lang} and
-has a web page at @url{http://www.omegahat.org/CGIwithR/}.
+maintained by @email{duncan@@wald.ucdavis.edu, Duncan Temple Lang}.
+@c and has a web page at @url{http://www.omegahat.net/CGIwithR/}.
 
 @c See <https://code.google.com/p/rpad/>
 @c Link to web page <http://www.rpad.org/> no longer works.
@@ -1799,12 +1799,12 @@ versions of R for Windows.
 @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
 @subsection Add-on packages from Omegahat
 
-The @url{http://www.omegahat.org/, Omega Project for Statistical
+The @url{http://www.omegahat.net/, Omega Project for Statistical
 Computing} provides a variety of open-source software for statistical
 applications, with special emphasis on web-based software, Java, the
 Java virtual machine, and distributed computing.  A @acronym{CRAN} style
-R package repository is available via @url{http://www.omegahat.org/R/}.
-See @url{http://www.omegahat.org/} for information on most R packages
+R package repository is available via @url{http://www.omegahat.net/R/}.
+See @url{http://www.omegahat.net/} for information on most R packages
 available from the Omega project.
 
 @node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?

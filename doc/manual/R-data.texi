@@ -138,9 +138,9 @@ here.
 There are packages to allow functionality developed in languages such as
 @code{Java}, @code{perl} and @code{python} to be directly integrated
 with @R{} code, making the use of facilities in these languages even
-more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN} and
-the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the
-Omegahat project, @uref{http://www.omegahat.org}.)
+more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN}.)
+@c and the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the
+@c Omegahat project, @uref{http://www.omegahat.net}.)
 
 
 @cindex Unix tools
@@ -184,10 +184,11 @@ on their computers for that purpose).  However, this is not always
 possible, and @ref{Importing from other statistical systems} discusses
 what facilities are available to access such files directly from @R{}.
 For Excel spreadsheets, the available methods are summarized in
-@ref{Reading Excel spreadsheets}.  For ODS spreadsheets from Open
-Office, see the Omegahat package@footnote{Currently not available from
-that repository but as a source package for download from
-@url{http://www.omegahat.org/ROpenOffice/}.} @pkg{ROpenOffice}.
+@ref{Reading Excel spreadsheets}.  
+@c For ODS spreadsheets from Open
+@c Office, see the Omegahat package@footnote{Currently not available from
+@c that repository but as a source package for download from
+@c @url{http://www.omegahat.net/ROpenOffice/}.} @pkg{ROpenOffice}.
 
 In a few cases, data have been stored in a binary form for compactness
 and speed of access.  One application of this that we have seen several
@@ -435,12 +436,12 @@ graphical displays, mathematics and so on.
 although it does not require it.
 
 The @CRANpkg{XML} package provides general facilities for reading and
-writing @acronym{XML} documents within @R{}.  A description of the
-facilities of the @CRANpkg{XML} package is outside the scope of this
-document: see the package's Web page at
-@uref{http://www.omegahat.org/RSXML} for details and examples.  Package
-@CRANpkg{StatDataML} on @acronym{CRAN} is one example building on
-@CRANpkg{XML}.
+writing @acronym{XML} documents within @R{}. 
+@c A description of the facilities of the @CRANpkg{XML} package is outside
+@c the scope of this document: see the package's Web page at
+@c @uref{http://www.omegahat.net/RSXML} for details and examples.
+Package @CRANpkg{StatDataML} on @acronym{CRAN} is one example building
+on @CRANpkg{XML}.
 
 NB: @CRANpkg{XML} is available as a binary package for Windows, normally
 from the `CRAN extras' repository (which is selected by default on
