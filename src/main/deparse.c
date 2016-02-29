@@ -545,13 +545,18 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 			if (arginfo.precedence == PREC_SUM)   /* binary +/- precedence upgraded as unary */
 			    arginfo.precedence = PREC_SIGN;
 		    case 2:
+			if (mainop.precedence == PREC_COMPARE && arginfo.precedence == PREC_COMPARE)
+		          return TRUE;     /*   a < b < c   is not legal syntax */
 			break;
 		    default:
 			return FALSE;
 		    }
+		case PP_SUBSET:
+		    if (mainop.kind == PP_DOLLAR)
+		    	return FALSE;
+		    /* fall through, don't break... */
 		case PP_ASSIGN:
 		case PP_ASSIGN2:
-		case PP_SUBSET:
 		case PP_UNARY:
 		case PP_DOLLAR:
 		    if (mainop.precedence > arginfo.precedence
