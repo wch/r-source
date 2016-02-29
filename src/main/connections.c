@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2015   The R Core Team.
+ *  Copyright (C) 2000-2016   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -369,7 +369,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 		/* is this safe? */
 		warning(_("invalid char string in output conversion"));
 	    *ob = '\0';
-	    con->write(outbuf, 1, strlen(outbuf), con);
+	    con->write(outbuf, 1, ob - outbuf, con);
 	} while(again && inb > 0);  /* it seems some iconv signal -1 on
 				       zero-length input */
     } else

@@ -389,7 +389,11 @@ isIncomplete(con)
   \url{https://en.wikipedia.org/wiki/UTF-16}: the use of characters in
   the \sQuote{Supplementary Planes} which need surrogate pairs is very
   rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
-  widely implemented).
+  widely implemented).  
+  
+  One caveat:  \R's implementation of \code{"UCS-2LE"} and similar for 
+  output does not currently work on Windows, and on Unix it will default 
+  to Unix-style line endings.  We recommend use of \code{UTF-8} instead.
 
   As from \R 3.0.0 the encoding \code{"UTF-8-BOM"} is accepted for
   reading and will remove a Byte Order Mark if present (which it often
