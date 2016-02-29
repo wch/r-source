@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* need to transfer _all but tsp and dim_ attributes, possibly lost
 	   by subsetting in na.action. */
 	/* But if data is unchanged, don't mess with it (PR#16436) */
-	
+
 	for ( i = length(ans) ; i-- ; )
 	    if (VECTOR_ELT(data, i) != VECTOR_ELT(ans, i))
 		copyMostAttribNoTs(VECTOR_ELT(data, i),VECTOR_ELT(ans, i));
@@ -1242,14 +1242,11 @@ static SEXP OrBits(SEXP term1, SEXP term2)
 }
 
 
-/* BitCount counts the number of ``on'' */
-/* bits in a term */
-
+// BitCount counts the number of ``on'' bits in a term
 static int BitCount(SEXP term)
 {
-    int i, sum;
-    sum = 0;
-    for (i = 1; i <= nvar; i++)
+    int sum = 0;
+    for (int i = 1; i <= nvar; i++)
 	sum += GetBit(term, i);
     return sum;
 }
@@ -1259,11 +1256,10 @@ static int BitCount(SEXP term)
 
 static int TermZero(SEXP term)
 {
-    int i, val;
-    val = 1;
-    for (i = 0; i < nwords; i++)
-	val = val && (INTEGER(term)[i] == 0);
-    return val;
+    for (int i = 0; i < nwords; i++)
+        if (INTEGER(term)[i] != 0)
+	    return 0;
+    return 1;
 }
 
 
@@ -1271,11 +1267,10 @@ static int TermZero(SEXP term)
 
 static int TermEqual(SEXP term1, SEXP term2)
 {
-    int i, val;
-    val = 1;
-    for (i = 0; i < nwords; i++)
-	val = val && (INTEGER(term1)[i] == INTEGER(term2)[i]);
-    return val;
+    for (int i = 0; i < nwords; i++)
+        if (INTEGER(term1)[i] != INTEGER(term2)[i])
+            return 0;
+    return 1;
 }
 
 
@@ -1302,19 +1297,35 @@ static SEXP StripTerm(SEXP term, SEXP list)
 }
 
 
-/* TrimRepeats removes duplicates of (bit string) terms 
-   in a model formula by repeated use of ``StripTerm''.
+/* TrimRepeats removes duplicates of (bit string) terms in a model formula.
    Also drops zero terms. */
 
 static SEXP TrimRepeats(SEXP list)
 {
-    if (list == R_NilValue)
-	return R_NilValue;
-    /* Highly recursive */
-    R_CheckStack();
-    if (TermZero(CAR(list)))
-	return TrimRepeats(CDR(list));
-    SETCDR(list, TrimRepeats(StripTerm(CAR(list), CDR(list))));
+    // Drop zero terms at the start of the list.
+    while (list != R_NilValue && TermZero(CAR(list))) {
+	list = CDR(list);
+    }
+    if (list == R_NilValue || CDR(list) == R_NilValue)
+	return list;
+
+    // Find out which terms are duplicates.
+    SEXP all_terms = PROTECT(PairToVectorList(list)),
+	duplicate_sexp = PROTECT(duplicated(all_terms, FALSE));
+    int i_p1 = 1, *is_duplicate = LOGICAL(duplicate_sexp);
+
+    // Remove the zero terms and duplicates from the list.
+    for (SEXP current = list; CDR(current) != R_NilValue; i_p1++) {
+	SEXP next = CDR(current);
+	if (is_duplicate[i_p1] || TermZero(CAR(next))) {
+	    // Remove the node from the list.
+	    SETCDR(current, CDR(next));
+	} else {
+	    current = next;
+	}
+    }
+
+    UNPROTECT(2);
     return list;
 }
 
