@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-02-23 r70212) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-02-29 r70242) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7401,7 +7401,7 @@ Residuals 45 650.71  14.460
 ---
 Signif. codes:  
 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-> op <- options(width = 40)
+> options(width = 40)
 > aa ; options(op)
 Analysis of Variance Table
 
@@ -7447,50 +7447,28 @@ $foo
 +          ){a+b}"
 > p <- parse(text = raw)
 > getParseData(p)
-   line1 col1 line2 col2 id parent          token
-31     2    1     4   15 31      0           expr
-3      2    1     2    8  3     31       FUNCTION
-4      2    9     2    9  4     31            '('
-5      2   11     2   11  5     31 SYMBOL_FORMALS
-6      2   15     2   27  6     31        COMMENT
-8      3   10     3   10  8     31            ','
-10     3   12     3   12 10     31 SYMBOL_FORMALS
-11     3   13     3   13 11     31     EQ_FORMALS
-12     3   14     3   14 12     13      NUM_CONST
-13     3   14     3   14 13     31           expr
-14     3   16     3   28 14     31        COMMENT
-16     4   10     4   10 16     31            ')'
-28     4   11     4   15 28     31           expr
-18     4   11     4   11 18     28            '{'
-25     4   12     4   14 25     28           expr
-19     4   12     4   12 19     21         SYMBOL
-21     4   12     4   12 21     25           expr
-20     4   13     4   13 20     25            '+'
-22     4   14     4   14 22     24         SYMBOL
-24     4   14     4   14 24     25           expr
-23     4   15     4   15 23     28            '}'
-   terminal          text
-31    FALSE              
-3      TRUE      function
-4      TRUE             (
-5      TRUE             a
-6      TRUE # parameter 1
-8      TRUE             ,
-10     TRUE             b
-11     TRUE             =
-12     TRUE             2
-13    FALSE              
-14     TRUE # parameter 2
-16     TRUE             )
-28    FALSE              
-18     TRUE             {
-25    FALSE              
-19     TRUE             a
-21    FALSE              
-20     TRUE             +
-22     TRUE             b
-24    FALSE              
-23     TRUE             }
+   line1 col1 line2 col2 id parent          token terminal          text
+31     2    1     4   15 31      0           expr    FALSE              
+3      2    1     2    8  3     31       FUNCTION     TRUE      function
+4      2    9     2    9  4     31            '('     TRUE             (
+5      2   11     2   11  5     31 SYMBOL_FORMALS     TRUE             a
+6      2   15     2   27  6     31        COMMENT     TRUE # parameter 1
+8      3   10     3   10  8     31            ','     TRUE             ,
+10     3   12     3   12 10     31 SYMBOL_FORMALS     TRUE             b
+11     3   13     3   13 11     31     EQ_FORMALS     TRUE             =
+12     3   14     3   14 12     13      NUM_CONST     TRUE             2
+13     3   14     3   14 13     31           expr    FALSE              
+14     3   16     3   28 14     31        COMMENT     TRUE # parameter 2
+16     4   10     4   10 16     31            ')'     TRUE             )
+28     4   11     4   15 28     31           expr    FALSE              
+18     4   11     4   11 18     28            '{'     TRUE             {
+25     4   12     4   14 25     28           expr    FALSE              
+19     4   12     4   12 19     21         SYMBOL     TRUE             a
+21     4   12     4   12 21     25           expr    FALSE              
+20     4   13     4   13 20     25            '+'     TRUE             +
+22     4   14     4   14 22     24         SYMBOL     TRUE             b
+24     4   14     4   14 24     25           expr    FALSE              
+23     4   15     4   15 23     28            '}'     TRUE             }
 > ## Got some parents wrong
 > 
 > 
@@ -7711,7 +7689,7 @@ A B C
 > ## should be (x * y)[1], was x * y[1]
 > # Check all levels of precedence
 > # (Comment out illegal ones)
-> quote(`$`(a :: b, c)) 
+> quote(`$`(a :: b, c))
 a::b$c
 > # quote(`::`(a $ b, c $ d))
 > quote(`[`(a $ b, c $ d))
@@ -7788,4 +7766,46 @@ b = `?`(d)
 > dput(a)
 structure(list(one = 1, two = ), .Names = c("one", "two"))
 > ## deparsed two to quote()
+> 
+> 
+> ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
+> x <- c(18000000, 18810924, 19091227, 19027233, 19310526, 19691228, NA)
+> x.Date <- as.Date(as.character(x), format = "%Y%m%d")
+> summary(x.Date)
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"1881-09-24" "1902-12-04" "1920-09-10" "1923-04-12" "1941-01-17" "1969-12-28" 
+        NA's 
+         "3" 
+> DF.Dates <- data.frame(c1 = x.Date)
+> summary(DF.Dates) ## NA's missing from output :
+       c1            
+ Min.   :1881-09-24  
+ 1st Qu.:1902-12-04  
+ Median :1920-09-10  
+ Mean   :1923-04-12  
+ 3rd Qu.:1941-01-17  
+ Max.   :1969-12-28  
+ NA's   :3           
+> DF.Dates$x1 <- 1:7
+> summary(DF.Dates) ## NA's still missing
+       c1                   x1     
+ Min.   :1881-09-24   Min.   :1.0  
+ 1st Qu.:1902-12-04   1st Qu.:2.5  
+ Median :1920-09-10   Median :4.0  
+ Mean   :1923-04-12   Mean   :4.0  
+ 3rd Qu.:1941-01-17   3rd Qu.:5.5  
+ Max.   :1969-12-28   Max.   :7.0  
+ NA's   :3                         
+> DF.Dates$x2 <- c(1:6, NA)
+> ## now, NA's show fine:
+> summary(DF.Dates)
+       c1                   x1            x2      
+ Min.   :1881-09-24   Min.   :1.0   Min.   :1.00  
+ 1st Qu.:1902-12-04   1st Qu.:2.5   1st Qu.:2.25  
+ Median :1920-09-10   Median :4.0   Median :3.50  
+ Mean   :1923-04-12   Mean   :4.0   Mean   :3.50  
+ 3rd Qu.:1941-01-17   3rd Qu.:5.5   3rd Qu.:4.75  
+ Max.   :1969-12-28   Max.   :7.0   Max.   :6.00  
+ NA's   :3                          NA's   :1     
+> ## 2 of 4  summary(.) above did not show NA's  in R <= 3.2.3
 > 

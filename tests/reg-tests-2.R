@@ -2864,7 +2864,7 @@ attr(cophenetic(x1), "Labels")
 aa <- anova( lm(sr ~ ., data = LifeCycleSavings) )
 op <- options(width = 50)
 aa
-op <- options(width = 40)
+options(width = 40)
 aa ; options(op)
 ## did not line wrap "Signif. codes" previously
 
@@ -2959,7 +2959,7 @@ substitute(a[1], list(a = quote(x * y)))
 ## should be (x * y)[1], was x * y[1]
 # Check all levels of precedence
 # (Comment out illegal ones)
-quote(`$`(a :: b, c)) 
+quote(`$`(a :: b, c))
 # quote(`::`(a $ b, c $ d))
 quote(`[`(a $ b, c $ d))
 quote(`$`(a[b], c))
@@ -3000,3 +3000,17 @@ quote(`=`(b, ?d))
 a <- alist(one = 1, two = )
 dput(a)
 ## deparsed two to quote()
+
+
+## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
+x <- c(18000000, 18810924, 19091227, 19027233, 19310526, 19691228, NA)
+x.Date <- as.Date(as.character(x), format = "%Y%m%d")
+summary(x.Date)
+DF.Dates <- data.frame(c1 = x.Date)
+summary(DF.Dates) ## NA's missing from output :
+DF.Dates$x1 <- 1:7
+summary(DF.Dates) ## NA's still missing
+DF.Dates$x2 <- c(1:6, NA)
+## now, NA's show fine:
+summary(DF.Dates)
+## 2 of 4  summary(.) above did not show NA's  in R <= 3.2.3
