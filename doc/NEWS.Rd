@@ -424,17 +424,17 @@
     \itemize{
       \item The API call \code{logspace_sum} introduced in \R 3.2.0 is
       now remapped as an entry point to \code{Rf_logspace_sum}, and its
-      first argument has gained a \code{const} qualifier.
+      first argument has gained a \code{const} qualifier.  (\PR{16470})
 
-      Code using it will need to be reinstalled. (\PR{16470})
+      Code using it will need to be reinstalled.
 
       Similarly, entry point \code{log1pexp} also defined in
       \file{Rmath.h} is remapped there to \code{Rf_log1pexp}
 
       \item \code{R_GE_version} has been increased to \code{11}.
 
-      \item New API call \code{R_orderVector1()}, a faster
-      one-argument version of \code{R_orderVector()}.
+      \item New API call \code{R_orderVector1}, a faster
+      one-argument version of \code{R_orderVector}.
 
       \item When \R{} headers such as \file{R.h} and \file{Rmath.h} are
       called from C++ code in packages they include the C++ versions of
