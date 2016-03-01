@@ -138,9 +138,9 @@ here.
 There are packages to allow functionality developed in languages such as
 @code{Java}, @code{perl} and @code{python} to be directly integrated
 with @R{} code, making the use of facilities in these languages even
-more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN}.)
-@c and the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the
-@c Omegahat project, @uref{http://www.omegahat.net}.)
+more appropriate.  (See the @CRANpkg{rJava} package from @acronym{CRAN}
+and the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython} packages from the
+Omegahat project, @uref{http://www.omegahat.net}.)
 
 
 @cindex Unix tools

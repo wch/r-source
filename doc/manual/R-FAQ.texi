@@ -1574,7 +1574,7 @@ permissions.  David's paper ``CGIwithR: Facilities for Processing Web
 Forms Using R'' was published in the Journal of Statistical Software
 (@url{http://www.jstatsoft.org/v08/i10/}).  The package is now
 maintained by @email{duncan@@wald.ucdavis.edu, Duncan Temple Lang}.
-@c and has a web page at @url{http://www.omegahat.net/CGIwithR/}.
+and has a web page at @url{http://www.omegahat.net/CGIwithR/}.
 
 @c See <https://code.google.com/p/rpad/>
 @c Link to web page <http://www.rpad.org/> no longer works.

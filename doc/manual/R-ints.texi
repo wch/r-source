@@ -539,9 +539,8 @@ enclosure.
 @cindex user databases
 There are additional places that `variables' can be looked up, called
 `user databases' in comments in the code.  These seem undocumented in
-the @R{} sources.
-@c , but apparently refer to the @pkg{RObjectTable} package
-@c at @uref{http://www.omegahat.net/RObjectTables/}.
+the @R{} sources, but apparently refer to the @pkg{RObjectTable} package
+at @uref{http://www.omegahat.net/RObjectTables/}.
 
 @cindex base environment
 @cindex environment, base

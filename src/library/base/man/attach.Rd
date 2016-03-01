@@ -73,8 +73,7 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
 
   There are hooks to attach user-defined table objects of class
   \code{"UserDefinedDatabase"}, supported by the Omegahat package
-  \pkg{RObjectTables}.
-  %% See \url{http://www.omegahat.net/RObjectTables/}.
+  \pkg{RObjectTables}.  See \url{http://www.omegahat.net/RObjectTables/}.
 }
 
 \value{
