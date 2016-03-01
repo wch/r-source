@@ -158,7 +158,7 @@
 
       \item \code{[dpqr]nbinom(*, size=Inf, mu=.)} now works as limit
       case, for \sQuote{dpq} as the Poisson.  (\PR{16727})\cr
-      \code{pnbinom()} no longer loops infinitely in border cases.% yet to port!
+      \code{pnbinom()} no longer loops infinitely in border cases.
 
       \item \code{approxfun(*, method="constant")} and hence \code{ecdf()}
       which calls the former now correctly \dQuote{predict} \code{NaN}
