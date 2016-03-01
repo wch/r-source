@@ -102,7 +102,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 }
 \examples{
 \dontrun{
-## To check all Rd files in a directory, (additonally) skipping the
+## To check all Rd files in a directory, (additionally) skipping the
 ## \references sections.
 files <- Sys.glob("*.Rd")
 aspell(files, filter = list("Rd", drop = "\\\\references"))
