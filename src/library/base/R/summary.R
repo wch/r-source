@@ -1,7 +1,7 @@
 #  File src/library/base/R/summary.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -139,7 +139,9 @@ summary.data.frame <-
     nv <- length(object)
     nm <- names(object)
     lw <- numeric(nv)
-    nr <- if (nv) max(unlist(lapply(z, NROW))) else 0
+    nr <- if (nv)
+	      max(vapply(z, function(x) NROW(x) + !is.null(attr(x, "NAs")), integer(1)))
+	  else 0
     for(i in seq_len(nv)) {
         sms <- z[[i]]
         if(is.matrix(sms)) {

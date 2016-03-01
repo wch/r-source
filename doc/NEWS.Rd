@@ -163,6 +163,9 @@
       \item \code{approxfun(*, method="constant")} and hence \code{ecdf()}
       which calls the former now correctly \dQuote{predict} \code{NaN}
       values as \code{NaN}.
+
+      \item \code{summary.data.frame()} now displays \code{NA}s in
+      \code{Date} columns in all cases.  (\PR{16709})
     }
   }
 }
