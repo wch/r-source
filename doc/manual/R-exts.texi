@@ -13809,10 +13809,10 @@ which works with @R{} packages to support transfer of data to and from
 Recent versions have usage restrictions.
 
 @item
-Another (D)COM server, @code{RDCOMServer}, may be available from Omegahat.
-@c @uref{http://www.omegahat.net/}.  Its philosophy is discussed in
-@c @uref{http://www.omegahat.net/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
-@c very different from the purpose of this section.
+Another (D)COM server, @code{RDCOMServer}, may be available from Omegahat,
+@uref{http://www.omegahat.net/}.  Its philosophy is discussed in
+@uref{http://www.omegahat.net/@/RDCOMServer/@/Docs/@/Paradigm.html} and is
+very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly, Finding R_HOME, Using (D)COM, Embedding R under Windows
 @subsection Calling R.dll directly

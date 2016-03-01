@@ -96,9 +96,9 @@ aspell(files, filter, control = list(), encoding = "unknown",
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.
 
-%%   Package \pkg{Aspell} on Omegahat
-%%   (\url{http://www.omegahat.net/Aspell}) for a fine-grained R interface
-%%   to the Aspell library.
+  Package \pkg{Aspell} on Omegahat
+  (\url{http://www.omegahat.net/Aspell}) for a fine-grained R interface
+  to the Aspell library.
 }
 \examples{
 \dontrun{
