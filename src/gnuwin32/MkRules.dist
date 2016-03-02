@@ -70,10 +70,10 @@
 # 32- or 64-bit Windows?
 # WIN = 32
 
-# The gcc 4.9.2 64 bit toolchain is set up for the 'medium code' model and needs
-# to remove the .refptr entries from the exports list; this is the default
+# The gcc 4.9.3 64 bit toolchain is set up for the 'medium code' model and needs
+# to remove the .refptr and .weak entries from the exports list; this is the default
 # when WIN = 64, with blank for WIN = 32:
-# NM_FILTER = | $(SED) -e '/.refptr./d'
+# NM_FILTER = | $(SED) -e '/\.refptr\./d' -e '/\.weak\./d'
 
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
