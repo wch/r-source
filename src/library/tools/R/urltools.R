@@ -170,8 +170,9 @@ function(dir, installed = FALSE)
 {
     urls <- path <- character()
     rfile <- Filter(file.exists,
-                    c(if(!installed) file.path("inst", "README.md"),
-                      "README.md"))[1L]
+                    c(if(!installed)
+                          file.path(dir, "inst", "README.md"),
+                      file.path(dir, "README.md")))[1L]
     if(!is.na(rfile) && nzchar(Sys.which("pandoc"))) {
         path <- .file_path_relative_to_dir(rfile, dir)
         tfile <- tempfile("README", fileext = ".html")
@@ -189,8 +190,9 @@ function(dir, installed = FALSE)
 {
     urls <- path <- character()
     nfile <- Filter(file.exists,
-                    c(if(!installed) file.path("inst", "NEWS.md"),
-                      "NEWS.md"))[1L]
+                    c(if(!installed)
+                          file.path(dir, "inst", "NEWS.md"),
+                      file.path(dir, "NEWS.md")))[1L]
     if(!is.na(nfile) && nzchar(Sys.which("pandoc"))) {
         path <- .file_path_relative_to_dir(nfile, dir)
         tfile <- tempfile("NEWS", fileext = ".html")
