@@ -695,7 +695,7 @@ topenv <- function(envir = parent.frame(),
 
 unloadNamespace <- function(ns)
 {
-    if (any(ns == loadedNamespaces()) { # not to load & unload
+    if (any(ns == loadedNamespaces())) { # not to load & unload
 	## only used to run .onUnload
 	runHook <- function(hookname, env, ...) {
 	    if (!is.null(fun <- env[[hookname]])) {
