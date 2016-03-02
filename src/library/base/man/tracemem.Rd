@@ -1,6 +1,6 @@
 % File src/library/base/man/tracemem.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tracemem}
@@ -62,7 +62,7 @@ retracemem(x, previous = NULL)
 
   \code{\link{trace}}, \code{\link{Rprofmem}}
 
-  \url{http://developer.r-project.org/memory-profiling.html}
+  \url{https://developer.r-project.org/memory-profiling.html}
 }
 \examples{\dontrun{
 a <- 1:10

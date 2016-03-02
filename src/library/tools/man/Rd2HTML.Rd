@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2014 R Core Team
+% Copyright 2008-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -155,7 +155,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 \author{
   Duncan Murdoch, Brian Ripley
 }
-\references{ \url{http://developer.r-project.org/parseRd.pdf} }
+\references{ \url{https://developer.r-project.org/parseRd.pdf} }
 \seealso{
   \code{\link{parse_Rd}}, \code{\link{checkRd}},
   \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}}.

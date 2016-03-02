@@ -1,6 +1,6 @@
 % File src/library/tools/man/loadRdMacros.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014 R Core Team
+% Copyright 2014-2016 R Core Team
 % Distributed under GPL 2 or later
 
 
@@ -55,7 +55,7 @@ file processed will have \code{\link{emptyenv}()} as its parent.
 }
 \references{
 See the \sQuote{Writing \R Extensions} manual for the syntax of Rd files,
-or \url{http://developer.r-project.org/parseRd.pdf} for a technical discussion.
+or \url{https://developer.r-project.org/parseRd.pdf} for a technical discussion.
 }
 \author{
 Duncan Murdoch

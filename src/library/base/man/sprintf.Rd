@@ -1,6 +1,6 @@
 % File src/library/base/man/sprintf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sprintf}
@@ -186,7 +186,7 @@ gettextf(fmt, \dots, domain = NULL)
   Describes the format options in table B-1 in the Appendix.
 
   The C Standards, especially ISO/IEC 9899:1999 for \sQuote{C99}.  Links
-  can be found at \url{http://developer.r-project.org/Portability.html}.
+  can be found at \url{https://developer.r-project.org/Portability.html}.
 
   \command{man sprintf} on a Unix-alike system.
 }

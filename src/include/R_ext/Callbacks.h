@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2 The R Core Team.
+ *  Copyright (C) 2001-2016 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -72,7 +72,7 @@ R_ToplevelCallbackEl* Rf_addTaskCallback(R_ToplevelCallback cb, void *data, void
   separate package on Omegahat and these declarations allow the package
   to interface to the internal R code.
   
-  See http://developer.r-project.org/RObjectTables.pdf,
+  See https://developer.r-project.org/RObjectTables.pdf,
   http://www.omegahat.net/RObjectTables/
 */
 

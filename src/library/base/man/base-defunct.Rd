@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -189,7 +189,7 @@ is.real(x)
   references to the same object.  There is no direct replacement.  Where
   multiple references to a single object are required for semantic
   reasons consider using environments or external pointers.  There are
-  some notes on \url{http://developer.r-project.org}.
+  some notes on \url{https://developer.r-project.org}.
 
   \code{.Dyn.libs} and \code{.lib.loc} were internal variables used for
   storing and manipulating the information about packages with DLLs, and

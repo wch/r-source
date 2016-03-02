@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallbackNames.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallbackNames}
@@ -34,7 +34,7 @@ getTaskCallbackNames()
   \code{\link{addTaskCallback}},
   \code{\link{removeTaskCallback}},
   \code{\link{taskCallbackManager}}\\
-  \url{http://developer.r-project.org/TaskHandlers.pdf}
+  \url{https://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
  n <- addTaskCallback(function(expr, value, ok, visible) {
