@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-12-04
+@set FAQ_YEAR 2016
+@set FAQ_DATE @value{FAQ_YEAR}-03-02
 @set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
@@ -177,7 +177,7 @@ In publications, please refer to this @acronym{FAQ} as Hornik
 @@Misc@{,
   author        = @{Kurt Hornik@},
   title         = @{@{R@} @{FAQ@}@},
-  year          = @{@value{REL_YEAR}@},
+  year          = @{@value{FAQ_YEAR}@},
   url           = @{https://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
 @}
 @end group
@@ -792,6 +792,9 @@ prebuilt binaries for various operating systems (Linux, Mac OS Classic,
 OS X, and MS Windows).  @CRAN{} also provides access to
 documentation on R, existing mailing lists and the R Bug Tracking
 system.
+
+Since March 2016, ``old'' material is made available from a central
+@CRAN{} archive server (@url{https://CRAN-archive.R-project.org/}).
 
 Please always use the @acronym{URL} of the master site when referring to
 @CRAN{}.
@@ -2207,6 +2210,7 @@ dir /opt/R/src/unix
 * Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::
 * Why is R apparently not releasing memory?::
 * How can I enable secure https downloads in R?::
+* How can I get CRAN package binaries for outdated versions of R?::
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3352,7 +3356,7 @@ Unix-like systems) it is possible to use the @code{mallinfo} system call
 query the allocator about the layout of the allocations, including the
 actually used memory as well as unused memory that cannot be released.
 
-@node How can I enable secure https downloads in R?,  , Why is R apparently not releasing memory?, R Miscellanea
+@node How can I enable secure https downloads in R?, How can I get CRAN package binaries for outdated versions of R?, Why is R apparently not releasing memory?, R Miscellanea
 @section How can I enable secure https downloads in R?
 
 @c This should be re-phrased for 3.3.0.
@@ -3372,8 +3376,10 @@ R versions 3.2.0 and greater include two download methods
 The requisite code to add to @file{.Rprofile} or @file{Rprofile.site} is:
 
 @example
-options(download.file.method = "wininet", url.method = "wininet")     @r{(Windows)}
-options(download.file.method = "libcurl", url.method = "libcurl")     @r{(Linux and OS X)}
+options(download.file.method = "wininet", url.method = "wininet")
+@r{(Windows)}
+options(download.file.method = "libcurl", url.method = "libcurl")
+@r{(Linux and OS X)}
 @end example
 
 @noindent
@@ -3388,6 +3394,22 @@ OS X.  It is possible that system versions of @code{"libcurl"},
 @code{"libcurl"} with @acronym{HTTPS} support is required except on
 Windows.
 
+@node How can I get CRAN package binaries for outdated versions of R?,  , How can I enable secure https downloads in R?, R Miscellanea
+@section How can I get CRAN package binaries for outdated versions of R?
+
+Since March 2016, Windows and OS X binaries of @CRAN{} packages for old
+versions of R (released more than 5 years ago) are made available from a
+central @CRAN{} archive server instead of the @CRAN{} mirrors.  To get
+these, one should set the @CRAN{} ``mirror'' element of the @code{repos}
+option accordingly, by something like
+@example
+local(@{r <- getOption("repos")
+       r["CRAN"] <- "http://CRAN-archive.R-project.org"
+       options(repos = r)
+      @})
+@end example
+@noindent
+(see @code{?options} for more information).
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
