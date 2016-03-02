@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2014 R Core Team
+% Copyright 2008-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
@@ -42,7 +42,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
 }
 \details{
   This function parses \file{Rd} files according to the specification given
-  in \url{http://developer.r-project.org/parseRd.pdf}.
+  in \url{https://developer.r-project.org/parseRd.pdf}.
 
   It generates a warning for each parse error and attempts to continue
   parsing.  In order to continue, it is generally necessary to drop some
@@ -83,7 +83,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
   guaranteed to work if saved to a file and reloaded in a different 
   session.
 }
-\references{ \url{http://developer.r-project.org/parseRd.pdf} }
+\references{ \url{https://developer.r-project.org/parseRd.pdf} }
 \author{ Duncan Murdoch }
 \seealso{
   \code{\link{Rd2HTML}} for the converters that use the output of

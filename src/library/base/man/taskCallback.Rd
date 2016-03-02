@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallback.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallback}
@@ -84,7 +84,7 @@ will be called on the completion of the next top-level task.
 \seealso{
   \code{\link{getTaskCallbackNames}}
   \code{\link{taskCallbackManager}}
-  \url{http://developer.r-project.org/TaskHandlers.pdf}
+  \url{https://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
 times <- function(total = 3, str = "Task a") {

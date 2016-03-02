@@ -1,6 +1,6 @@
 % File src/library/utils/man/summaryRprof.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summaryRprof}
@@ -128,7 +128,7 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
 
   \code{\link{Rprofmem}} is a non-sampling memory-use profiler.
 
-  \url{http://developer.r-project.org/memory-profiling.html}
+  \url{https://developer.r-project.org/memory-profiling.html}
 }
 \examples{
 \dontrun{

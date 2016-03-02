@@ -11,6 +11,8 @@ subdir = doc/html
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+## logo.jpg is not used in R >= 3.3.0.
+## Rlogo.pdf is only used to make NEWS.pdf
 INSTFILES = \
 	NEWS.2.html R.css Rlogo.svg Rlogo.pdf Search.html SearchOn.html \
 	favicon.ico left.jpg logo.jpg right.jpg up.jpg \
