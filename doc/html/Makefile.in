@@ -18,7 +18,7 @@ INSTFILES = \
 	favicon.ico left.jpg logo.jpg right.jpg up.jpg \
 	about.html packages-head-utf8.html
 NON_SVN_INSTFILES = resources.html NEWS.html
-DISTFILES = Makefile.in $(INSTFILES) index-default.html
+DISTFILES = Makefile.in $(INSTFILES) index-default.html Notes
 OBJECTS = index.html
 ## <FIXME>
 ## We really should not create packages.html in *this* directory.
