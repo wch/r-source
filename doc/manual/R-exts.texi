@@ -6096,7 +6096,7 @@ expert form), the following could be used:
 
 @example
 \if@{html@}@{\figure@{Rlogo.svg@}@{options: width=100 alt="R logo"@}@}
-\if@{latex@}@{\figure@{logo.jpg@}@{options: width=0.5in@}@}
+\if@{latex@}@{\figure@{Rlogo.pdf@}@{options: width=0.5in@}@}
 @end example
 
 The files containing the figures should be stored in the directory
