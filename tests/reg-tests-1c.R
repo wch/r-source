@@ -1425,3 +1425,20 @@ t <- c(NaN, NA, 1:5)
 stopifnot(all.equal(Fn(t), t/5))
 ## In R <= 3.2.3,  NaN values resulted in something like (n-1)/n.
 
+
+## tar() default (i.e. "no files") behaviour:
+dir.create(td <- tempfile("tar-experi"))
+setwd(td)
+dfil <- "base_Desc"
+file.copy(system.file("DESCRIPTION"), dfil)
+## tar w/o specified files
+tar("ex.tar")# all files, i.e. 'dfil'
+unlink(dfil)
+stopifnot(grepl(dfil, untar("ex.tar", list = TRUE)))
+untar("ex.tar")
+myF2 <- c(dfil, "ex.tar")
+stopifnot(identical(list.files(), myF2))
+unlink(myF2)
+## produced an empty tar file in R < 3.3.0, PR#16716
+
+

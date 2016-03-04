@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -329,6 +329,14 @@ tar <- function(tarfile, files = NULL,
                 compression_level = 6, tar = Sys.getenv("tar"),
                 extra_flags = "")
 {
+    files <- ## list the files before 'tarfile' is created!
+	if(is.null(files)) ## is fine
+	    list.files(recursive = TRUE, all.files = TRUE,
+		       full.names = TRUE, include.dirs = TRUE)
+	else ## is *not* ok when 'files' are simple files !
+	    ## list.files(path, ....) : first argument are *directories*
+	    list.files(files, recursive = TRUE, all.files = TRUE,
+		       full.names = TRUE, include.dirs = TRUE)
     if(is.character(tarfile)) {
         if(nzchar(tar) && tar != "internal") {
             ## FIXME: could pipe through gzip etc: might be safer for xz
@@ -382,9 +390,6 @@ tar <- function(tarfile, files = NULL,
         if(ssize > size) writeBin(raw(ssize - size), con)
     }
     warn1 <- character()
-
-    files <- list.files(files, recursive = TRUE, all.files = TRUE,
-                        full.names = TRUE, include.dirs = TRUE)
 
     invalid_uid <- invalid_gid <- FALSE
     for (f in unique(files)) {

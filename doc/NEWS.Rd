@@ -501,6 +501,9 @@
       % port to r-patched if it doesn't add too many events to graphics windows
 
       \item \code{methods(round)} now also lists \code{round.POSIXt}.
+
+      \item \code{tar()} now works with the default \code{files = NULL}.
+      (\PR{16716})
     }
   }
 }
