@@ -1,6 +1,6 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
-"0-Cloud [https]",0-Cloud,0-Cloud,https://cran.rstudio.com/,"Rstudio, automatic redirection to servers worldwide","winston # stdout.org",1,us,"secure_mirror_from_master"
-0-Cloud,0-Cloud,0-Cloud,http://cran.rstudio.com/,"Rstudio, automatic redirection to servers worldwide","winston # stdout.org",1,us,"secure_mirror_from_master"
+"0-Cloud [https]",0-Cloud,0-Cloud,https://cloud.r-project.org/,"Automatic redirection to servers worldwide, currently sponsored by Rstudio","winston # stdout.org",1,us,"secure_mirror_from_master"
+0-Cloud,0-Cloud,0-Cloud,http://cloud.r-project.org/,"Automatic redirection to servers worldwide, currently sponsored by Rstudio","winston # stdout.org",1,us,"secure_mirror_from_master"
 Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
