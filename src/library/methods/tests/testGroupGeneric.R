@@ -14,7 +14,7 @@ stopifnot(logical() == a & a)
 removeClass("A")
 
 ### Find inherited group methods:
-if(require(Matrix)) {
+if(require(Matrix)) { ## , lib.loc = .Library
     sm <- selectMethod("-", c("dgCMatrix", "numeric"))# direct match with "Arith"
     s2 <- selectMethod("-", c("dtCMatrix", "numeric"))# ambiguity match with "Arith"
     stopifnot(sm@generic == "Arith", s2@generic == "Arith")

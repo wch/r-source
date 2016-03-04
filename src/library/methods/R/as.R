@@ -125,7 +125,7 @@ as <-
     ## be the equivalent of new("toClass", fromObject)
     ## But must check that replacement is defined, in the case
     ## of nonstandard superclass relations
-    replaceMethod <- elNamed(ClassDef@contains, fromClass)
+    replaceMethod <- ClassDef@contains[[fromClass]]
     if(is(replaceMethod, "SClassExtension") &&
        !identical(as(replaceMethod@replace, "function"), .ErrorReplace)) {
         f <- function(from, to) NULL
@@ -338,6 +338,17 @@ setAs <-
             as.name(from)
         })
   setMethod("coerce", c("ANY","name"), method, where = where)
+  ## Proposed on R-devel, Dec. 7, 2015, by JMC, this is too radical,
+  ## coercing to "double" in too many cases where "numeric" data remained "integer":
+  ## setMethod("coerce", c("integer", "numeric"),
+  ##           ## getMethod("coerce", c("ANY", "numeric"), where = envir) -- not yet available
+  ##           function (from, to, strict = TRUE) {
+  ##               value <- as.numeric(from)
+  ##               if(strict)
+  ##                   attributes(value) <- NULL
+  ##               value
+  ##           }, where = where)
+
   ## not accounted for and maybe not needed:  real, pairlist, double
 }
 

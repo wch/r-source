@@ -1909,6 +1909,7 @@ substituteFunctionArgs <-
 ## See .cacheGeneric, etc. for analogous computations for generics
 .classTable <- new.env(TRUE, baseenv())
 assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
+## FIXME We've seen duplicated classes in .classTable
 .duplicateClassesExist <- function(on) {
     value <- get("#HAS_DUPLICATE_CLASS_NAMES", envir = .classTable)
     if(nargs())
@@ -1919,34 +1920,36 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 .cacheClass <- function(name, def, doSubclasses = FALSE, env) {
     if(!identical(doSubclasses, FALSE))
       .recacheSubclasses(def@className, def, doSubclasses, env)
-    if(exists(name, envir = .classTable, inherits = FALSE)) {
-        newpkg <- def@package
-        prev <- get(name, envir = .classTable)
-        if(is(prev, "classRepresentation")) {
-            if(identical(prev, def))
-               return()
-            pkg <- prev@package # start a per-package list
-            if(identical(pkg, newpkg)) { # redefinition
-                ## cache for S3, to override possible previous cache
-                .cache_class(name, .extendsForS3(def))
-                return(assign(name, def, envir = .classTable))
-            }
-            else if(.simpleDuplicateClass(def, prev))
-                return()
-            prev <- list(prev)
-            names(prev) <- pkg
-        }
-        i <- match(newpkg, names(prev))
-        if(is.na(i))
-           prev[[newpkg]] <- def
-        else if(identical(def, prev[[i]]))
-          return()
-        else
-            prev[[i]] <- def
-        def <- prev
-        .duplicateClassesExist(TRUE)
+    if(!is.null(prev <- .classTable[[name]])) {
+	newpkg <- def@package
+	if(is(prev, "classRepresentation")) {
+	    if(identical(prev, def))
+		return()
+	    pkg <- prev@package # start a per-package list
+	    if(identical(pkg, newpkg)) { # redefinition
+		## cache for S3, to override possible previous cache
+		.cache_class(name, .extendsForS3(def))
+		return(.classTable[[name]] <- def)
+	    }
+	    else if(.simpleDuplicateClass(def, prev))
+		return()
+	    prev <- list(prev)
+	    names(prev) <- pkg
+	}
+	## now  prev  is a named list of class definitions (>= 1),
+	## where the names are names of packages (rather: namespaces)
+	i <- match(newpkg, names(prev))
+	if(is.na(i))
+	    prev[[newpkg]] <- def
+	else if(identical(def, prev[[i]]))
+	    return()
+	else # replace previous
+	    prev[[i]] <- def
+	def <- prev
+	if(length(def) > 1L)
+	    .duplicateClassesExist(TRUE)
     }
-    assign(name, def, envir = .classTable)
+    .classTable[[name]] <- def # return()s invisibly
 }
 
 ## test for identical def, prev class definitions
@@ -2006,23 +2009,22 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 }
 
 .uncacheClass <- function(name, def) {
-  if(!is.null(prev <- .classTable[[name]])) {
+    if(!is.null(prev <- .classTable[[name]])) {
         if(is(def, "classRepresentation")) # paranoia: should only be called this way
             newpkg <- def@package
         else
             newpkg <- ""
-        if(is(prev, "classRepresentation") &&
-           identical(prev@package, newpkg) )
+        if(is(prev, "classRepresentation") && identical(prev@package, newpkg) )
             return(remove(list = name, envir = .classTable))
-         i <- match(newpkg, names(prev))
+        i <- match(newpkg, names(prev))
         if(!is.na(i))
-           prev[[i]] <- NULL
+            prev[[i]] <- NULL
         else # we might warn about unchaching more than once
-          return()
+            return()
         if(length(prev) == 0L)
-          return(remove(list = name, envir = .classTable))
+            return(remove(list = name, envir = .classTable))
         else if(length(prev) == 1L)
-          prev <- prev[[1L]]
+            prev <- prev[[1L]]
         assign(name, prev, envir  = .classTable)
     }
 }

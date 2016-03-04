@@ -196,7 +196,7 @@
                   args <- list(...)
                   objs <- names(args)
                   for(what in objs)
-                      assign(what, elNamed(args, what), envir = value)
+                      value[[what]] <- args[[what]]
                   value
               }, where = envir)
     ## from 2.11.0, the MethodsList class is deprecated

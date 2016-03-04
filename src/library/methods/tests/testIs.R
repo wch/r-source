@@ -29,3 +29,24 @@ setMethod("size", "vector", function(x)length(x))
 stopifnot(identical(size(xyc), length(x1)))
 removeClass("xy")
 removeGeneric("size")
+
+
+### Related to  numeric <-> double <-> integer  proposals, end of 2015, on R-devel
+myN   <- setClass("myN",   contains="numeric")
+myNid <- setClass("myNid", contains="numeric", representation(id="character"))
+NN <-    setClass("NN", representation(x="numeric"))
+
+(m1 <- myN  (1:3))
+(m2 <- myNid(1:3, id = "i3"))
+tools::assertError(NN (1:3))# in all R versions
+nn <- myN(2*pi)
+##                     # current R  |  (not existing)
+##                     # -----------|----------
+class(getDataPart(m1)) # integer    |  numeric
+class(getDataPart(m2)) # integer    |  numeric
+## check for now [[conceivably, these *could* change !]] :
+stopifnot(identical(getDataPart(m1), 1:3),
+	  identical(getDataPart(m2), 1:3),
+	  identical(S3Part(m1, strict=TRUE), 1:3),
+	  identical(S3Part(m2, strict=TRUE), 1:3),
+	  identical(2*pi, S3Part(nn, strict = TRUE)))

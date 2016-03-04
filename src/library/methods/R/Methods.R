@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -521,7 +521,7 @@ setMethod <-
     }
     else if(identical(gwhere, NA)) {
         ## better be a primitive since getGeneric returned a generic, but none was found
-        if(is.null(elNamed(.BasicFunsList, f)))
+	if(is.null(.BasicFunsList[[f]]))
             stop(sprintf("apparent internal error: a generic function was found for \"%s\", but no corresponding object was found searching from \"%s\"",
                           f, getPackageName(where)), domain = NA)
         if(!isGeneric(f))
@@ -590,13 +590,11 @@ setMethod <-
         definition@generic <- fdef@generic
     }
     is.not.base <- !identical(where, baseenv())
-##    do.mlist <- is.not.base && (!.noMlists() || all(signature == "ANY"))
-    do.mlist <- is.not.base && !.noMlists()
-    if(do.mlist)
-        whereMethods <- insertMethod(.getOrMakeMethodsList(f, where, fdef),
-                                     signature, margs, definition)
-    else
-        whereMethods <- NULL
+    whereMethods <-
+	## do.mlist <- is.not.base && (!.noMlists() || all(signature == "ANY"))
+	if(is.not.base && !.noMlists()) # do.mlist
+	    insertMethod(.getOrMakeMethodsList(f, where, fdef),
+			 signature, margs, definition) ## else NULL
     mtable <- getMethodsForDispatch(fdef)
     if(cacheOnAssign(where)) { # will be FALSE for sourceEnvironment's
         ## cache in both direct and inherited tables
@@ -658,7 +656,7 @@ findMethod <- function(f, signature, where = topenv(parent.frame())) {
         f <- fdef@generic
     }
     else
-      fdef <- getGeneric(f, where = where)
+	fdef <- getGeneric(f, where = where)
     if(is.null(fdef)) {
         warning(gettextf("no generic function %s found",
                          sQuote(f)),
@@ -713,12 +711,12 @@ getMethod <-
 	if(!is.character(f)) f <- deparse(substitute(f))
 	stop(gettextf("no generic function found for '%s'", f), domain = NA)
     }
-    if(missing(mlist)) {
-	if(missing(where))
-	    mlist <- getMethodsForDispatch(fdef)
-	else
-	    mlist <- .getMethodsTableMetaData(fdef, where, optional)
-    }
+    if(missing(mlist))
+	mlist <-
+	    if(missing(where))
+		getMethodsForDispatch(fdef)
+	    else
+		.getMethodsTableMetaData(fdef, where, optional)
     if(is.environment(mlist)) {
 	signature <- matchSignature(signature, fdef)
 	value <- .findMethodInTable(signature, mlist, fdef)
@@ -894,7 +892,7 @@ signature <-
     value <- list(...)
     names <- names(value)
     for(i in seq_along(value)) {
-        sigi <- el(value, i)
+        sigi <- value[[i]]
         if(!is.character(sigi) || length(sigi) != 1L)
             stop(gettextf(
 		"bad class specified for element %d (should be a single character string)",
@@ -1474,11 +1472,10 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 .getImplicitGeneric <- function(name, where, pkg = "")
 {
     value <- .getImplicitGenericFromCache(name, where, pkg)
-    if(is.null(value) && !is.null(tbl <-
-		where[[.ImplicitGenericsMetaName]])) {
-       value <- .getGenericFromCacheTable(name, where, pkg, tbl)
-    }
-    value
+    if(is.null(value) && !is.null(tbl <- where[[.ImplicitGenericsMetaName]]))
+       .getGenericFromCacheTable(name, where, pkg, tbl)
+    else
+        value
 }
 
 ## only called from setGeneric, f1 = supplied, f2 = implicit

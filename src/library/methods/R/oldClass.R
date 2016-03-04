@@ -184,11 +184,11 @@ setOldClass <- function(Classes, prototype = NULL,
         n1 <- names(slots1)
         bad <- character()
         for(what in n2[match(n2, n1, 0) > 0])
-          if(!extends(elNamed(slots1, what), elNamed(slots2, what))) {
+          if(!extends(slots1[[what]], slots2[[what]])) {
               message(gettextf("slot %s: class %s should extend class %s",
                                sQuote(what),
-                               dQuote(elNamed(slots1, what)),
-                               dQuote(elNamed(slots2, what))),
+                               dQuote(slots1[[what]]),
+                               dQuote(slots2[[what]])),
                       domain = NA)
               bad <- c(bad, what)
           }

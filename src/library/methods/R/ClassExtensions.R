@@ -185,7 +185,7 @@ makeExtends <- function(Class, to,
     distance <- 1
     ##FIX ME:  when by is supplied, should use the existing extension information
     ## to compute distance
-    dataPartClass <- elNamed(slots, ".Data")
+    dataPartClass <- elNamed(slots, ".Data") # This seems to be the only elNamed that has to stay
     dataPart <- FALSE
     if(simple && !is.null(dataPartClass)) {
         if(!(is.null(getClassDef(dataPartClass)) || is.null(getClassDef(to)))) {
@@ -234,7 +234,7 @@ makeExtends <- function(Class, to,
     }
     if(is.null(replace)) {
         if(dataPart) {
-            extn <- elNamed(classDef2@contains, dataPartClass)
+            extn <- classDef2@contains[[dataPartClass]]
             if(is(extn, "SClassExtension"))
                 easy <- extn@simple
             else

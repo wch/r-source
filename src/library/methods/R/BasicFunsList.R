@@ -105,7 +105,7 @@ list(
     if (internal) {
         signature <- names(formals(deflt))[1L]
     }
-    elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base",
+    funslist[[f]] <- makeGeneric(f, fdef, deflt, group = group, package = "base",
                                         signature = signature)
     funslist
 }
