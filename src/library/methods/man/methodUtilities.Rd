@@ -20,9 +20,9 @@
 \alias{methodSignatureMatrix}
 \title{Utility Functions for Methods and S-Plus Compatibility}
 \description{
-  These are utilities, currently in the \pkg{methods} package, that
-  either provide some functionality needed by the package (e.g., element
-  matching by name), or add compatibility with S-Plus, or both.
+  These are \emph{internal} utilities, currently in the \pkg{methods}
+  package, that either provide some functionality needed by the package
+  (e.g., element matching by name), or add compatibility with S-Plus, or both.
 }
 \usage{
 functionBody(fun=sys.function(sys.parent()))
@@ -37,7 +37,7 @@ elNamed(x, name, mustFind=FALSE)
 
 formalArgs(def)
 
-Quote()
+Quote(expr)
 
 showDefault(object, oldMethods = TRUE)
 
@@ -54,9 +54,12 @@ methodSignatureMatrix(object, sigSlots = c("target", "defined"))
     \item{\code{getFunction}:}{
       find the object as a function.
     }
+    \item{\code{el}:}{\code{el(object, i)} is equivalent to
+      \code{object[i][[1]]} (and should typically be replacable by object[[i]]).
+    }
     \item{\code{elNamed}:}{
       get the element of the vector corresponding to name.  Unlike the
-      \code{[}, \code{[[}, and \code{$} operators, this function %$
+      \code{\link{[}}, \code{\link{[[}}, and \code{\link{$}} operators, this function
       requires \code{name} to match the element name exactly (no partial
       matching).
     }
@@ -89,11 +92,14 @@ methodSignatureMatrix(object, sigSlots = c("target", "defined"))
       \code{.isMethodsDispatchOn(FALSE)}---a very gutsy thing to do),
       calling this function should turn dispatch back on again.
     }
-  \item{\code{methodSignatureMatrix}:}{
+    \item{\code{methodSignatureMatrix}:}{
       Returns a matrix with the contents of the specified slots as
       rows.  The slots should be named character strings of the same
       length.  Basically used to turn the signatures of a
       \code{"MethodDefinition"} object into a matrix for printing.
+    }
+    \item{\code{Quote}:}{is a synonym of \code{\link{quote}()} and
+      considered deprecated.
     }
   }
 }

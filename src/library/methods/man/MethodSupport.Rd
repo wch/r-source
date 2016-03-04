@@ -5,13 +5,12 @@
 
 \name{MethodSupport}
 \title{Additional (Support) Functions for Methods}
-\alias{OldEvalSelectedMethod}
 \alias{getMethodsForDispatch}
 \alias{cacheMethod}
 \alias{resetGeneric}
 \alias{listFromMethods}
 \description{
-  These are support routines for computations on formal methods.
+  These are \emph{internal} support routines for computations on formal methods.
 }
 \usage{
 listFromMethods(generic, where, table)

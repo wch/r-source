@@ -1,13 +1,15 @@
 % File src/library/methods/man/MethodsList.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{MethodsList}
 \title{MethodsList Objects}
 %
-\alias{listFromMlist}
-\alias{linearizeMlist}
+\alias{listFromMlist}%  only used in listFromMlist(), deprecated below
+\alias{linearizeMlist}% only used in showMlist(), deprecated below
+%
+% but finalDefaultMethod() and loadMethod() seem somewhat important :
 \alias{finalDefaultMethod}
 \alias{loadMethod}
 \alias{loadMethod-methods}
@@ -28,7 +30,7 @@
 \alias{MethodsListSelect}
 \description{
   These functions create and manipulate \code{MethodsList} objects, the
-  objects formerly used in R to store methods for dispatch.  Use of
+  objects formerly used in \R to store methods for dispatch.  Use of
   these objects is deprecated since \R 3.2.0, as it will rarely be a
   good idea.  Where methods dispatch is
   to be studied, see \code{\link{selectMethod}}.  For computations
