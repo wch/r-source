@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-02-23 r70212) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-03-04 r70272) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1170,4 +1170,10 @@ Loading required package: methods
 > stopifnot(isTRUE( f() ))
 > options(op)
 > ## the second  f()  gave a warning and FALSE in  R versions  2.12.0 <= . <= 3.2.3
+> 
+> 
+> stopifnot(
++     identical(formals(getGeneric("as.vector")), formals(base::as.vector)),
++     identical(formals(getGeneric("unlist")),    formals(base::unlist)))
+> ## failed for a while in R-devel (3.3.0)
 > 
