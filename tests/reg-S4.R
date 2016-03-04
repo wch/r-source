@@ -819,3 +819,9 @@ setGeneric("g")
 stopifnot(isTRUE( f() ))
 options(op)
 ## the second  f()  gave a warning and FALSE in  R versions  2.12.0 <= . <= 3.2.3
+
+
+stopifnot(
+    identical(formals(getGeneric("as.vector")), formals(base::as.vector)),
+    identical(formals(getGeneric("unlist")),    formals(base::unlist)))
+## failed for a while in R-devel (3.3.0)

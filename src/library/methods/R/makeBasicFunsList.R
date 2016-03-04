@@ -1,11 +1,11 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
+#  the Free Software Foundation; either version 3 of the License, or
 #  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
@@ -41,7 +41,7 @@ utils::globalVariables(".addBasicGeneric")
     prims <- names(.GenericArgsEnv)
     new_prims <- setdiff(prims, names(funs))
     for(nm in new_prims) {
-        f <- get(nm, envir = .GenericArgsEnv)
+        f <- .GenericArgsEnv[[nm]]
         body(f) <- substitute(standardGeneric(ff), list(ff=val))
         funs <- .addBasicGeneric(funs, nm, f, "")
     }

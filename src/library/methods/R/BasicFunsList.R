@@ -22,7 +22,7 @@
 ## needs to have a special form (e.g., belonging to one of the
 ## predefined groups of functions).
 
-##' The list is expanded in .makeBasicFuns() -> ./makeBasicFunsList.R by 
+##' The list is expanded in .makeBasicFuns() -> ./makeBasicFunsList.R by
 ##' adding the S4 group generics and the remaining primitives.
 .BasicFunsList <-
 list(
@@ -79,7 +79,7 @@ list(
     function(funslist, f, fdef, group = list(), internal = FALSE,
              internalArgs = names(formals(deflt)))
 {
-    deflt <- get(f, "package:base")
+    deflt <- .BaseNamespaceEnv[[f]]
     ## use the arguments of the base package function
     ##FIXME:  should also deal with the functions having ... as the first
     ## argument, but needs to create a generic with different args from the deflt
@@ -91,8 +91,9 @@ list(
     }
     else {
         if (internal) {
-            formals(deflt) <- setNames(rep(alist(x=), length(internalArgs)),
-                                       internalArgs)
+	    ## "forgets" the *defaults* of arguments, e.g. the "any" of as.vector():
+	    ## formals(deflt) <- setNames(rep(alist(x=), length(internalArgs)),
+	    ##                            internalArgs)
             call <- as.call(c(as.name(f), lapply(internalArgs, as.name)))
             body(deflt, envir = baseenv()) <-
                 substitute(.Internal(CALL), list(CALL=call))
@@ -106,7 +107,7 @@ list(
         signature <- names(formals(deflt))[1L]
     }
     funslist[[f]] <- makeGeneric(f, fdef, deflt, group = group, package = "base",
-                                        signature = signature)
+                                 signature = signature)
     funslist
 }
 
