@@ -193,7 +193,7 @@
       \item \code{rank()} gains a \code{ties.method = "last"} option,
       for convenience (and symmetry).
 
-      %% \item \code{getSource(vignette(..))} is the \R source file name of
+      %% \item \code{getRcode(vignette(..))} is the \R source file name of
       %% a vignette.
 
       \item \code{regmatches(invert = NA)} can now be used to extract
