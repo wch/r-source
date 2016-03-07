@@ -1,7 +1,7 @@
 #  File src/library/grid/R/unit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,13 +34,10 @@ unit <- function(x, units, data=NULL) {
 }
 
 valid.unit <- function(x, units, data) {
-  valid.units <- valid.units(units)
-  data <- valid.data(rep(units, length.out=length(x)), data)
-  attr(x, "unit") <- units
-  attr(x, "valid.unit") <- valid.units
-  attr(x, "data") <- data
-  class(x) <- "unit"
-  x
+    structure(x, class = "unit",
+              "valid.unit" = valid.units(units),
+              "data" = valid.data(rep(units, length.out=length(x)), data),
+              "unit" = units)
 }
 
 grid.convert <- function(x, unitTo, axisFrom="x", typeFrom="location",
@@ -165,11 +162,10 @@ recycle.data <- function(data, data.per, max.n, units) {
             n <- length(data)
         original <- data
         length(data) <- n
-        if (length(original) < length(data)) {
-            for (i in (length(original) + 1):length(data)) {
-                data[[i]] <- original[[(i - 1) %% length(original) + 1]]
-            }
-        }
+        n.o <- length(original)
+        if (n.o < n)
+            for (i in (n.o + 1L):n)
+                data[[i]] <- original[[(i - 1L) %% n.o + 1L]]
     }
     data
 }
@@ -337,16 +333,11 @@ unit.pmin <- function(...) {
 
 # create a unit list from a unit, unit.arithmetic, or unit.list object
 unit.list <- function(unit) {
-  if (is.unit.list(unit))
-    unit
-  else {
-    l <- length(unit)
-    result <- vector("list", l)
-    for (i in seq_len(l))
-      result[[i]] <- unit[i]
-    class(result) <- c("unit.list", "unit")
-    result
-  }
+    if (is.unit.list(unit))
+	unit
+    else
+	structure(class = c("unit.list", "unit"),
+		  lapply(seq_along(unit), function(i) unit[i]))
 }
 
 is.unit.list <- function(x) {
@@ -354,11 +345,8 @@ is.unit.list <- function(x) {
 }
 
 as.character.unit.list <- function(x, ...) {
-  l <- length(x)
-  result <- character(l)
-  for (i in seq_len(l))
-    result[i] <- as.character(x[[i]])
-  result
+  ## *apply cannot work on 'x' directly because of "wrong" length()s
+  vapply(seq_along(x), function(i) as.character(x[[i]]), "")
 }
 
 #########################
@@ -369,10 +357,9 @@ is.unit <- function(unit) {
   inherits(unit, "unit")
 }
 
-print.unit <- function(x, ...) {
+print.unit <- function(x, ...)
   print(as.character(x), quote=FALSE, ...)
-  invisible(x)
-}
+
 
 #########################
 # Unit subsetting
@@ -388,28 +375,30 @@ print.unit <- function(x, ...) {
 `[.unit` <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
-    index <- (1L:this.length)[index]
-  # Allow for negative integer index
-  if (any(index < 0)) {
-      if (any(index > 0))
-          stop("cannot mix signs of indices")
-      else
-          index <- (1L:this.length)[index]
+      index <- which(index)
+  else { # Allow for negative integer index
+      if (any(index < 0)) {
+          if (any(index > 0))
+              stop("cannot mix signs of indices")
+          else
+              index <- (1L:this.length)[index]
+      }
+      if (top && any(index > this.length))
+          stop("index out of bounds ('unit' subsetting)")
   }
-  if (top && any(index > this.length))
-    stop("index out of bounds ('unit' subsetting)")
   cl <- class(x)
   units <- attr(x, "unit")
   valid.units <- attr(x, "valid.unit")
   data <- attr(x, "data")
   class(x) <- NULL
+  i_1 <- index - 1L
   # The line below may seem slightly odd, but it should only be
   # used to recycle values when this method is called to
   # subset an argument in a unit.arithmetic object
-  x <- x[(index - 1) %% this.length + 1]
-  attr(x, "unit") <- units[(index - 1) %% length(units) + 1]
-  attr(x, "valid.unit") <- valid.units[(index - 1) %% length(valid.units) + 1]
-  data.list <- data[(index - 1) %% length(data) + 1]
+  x <- x[i_1 %% this.length + 1L]
+  attr(x, "unit") <- units[i_1 %% length(units) + 1L]
+  attr(x, "valid.unit") <- valid.units[i_1 %% length(valid.units) + 1L]
+  data.list <- data[i_1 %% length(data) + 1L]
   attr(x, "data") <- data.list
   class(x) <- cl
   x
@@ -420,31 +409,32 @@ print.unit <- function(x, ...) {
 `[.unit.arithmetic` <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
-    index <- (1L:this.length)[index]
-  # Allow for negative integer index
-  if (any(index < 0)) {
+    index <- which(index)
+  else { # Allow for negative integer index
+    if (any(index < 0)) {
       if (any(index > 0))
-          stop("cannot mix signs of indices")
+        stop("cannot mix signs of indices")
       else
-          index <- (1L:this.length)[index]
+        index <- (1L:this.length)[index]
+    }
+    if (top && any(index > this.length))
+      stop("index out of bounds (unit arithmetic subsetting)")
   }
-  if (top && any(index > this.length))
-    stop("index out of bounds (unit arithmetic subsetting)")
-
   repSummaryUnit <- function(x, n) {
-      newUnits <- lapply(seq_len(n), function(z) { get(x$fname)(x$arg1) })
+      val <- get(x$fname)(x$arg1)
+      newUnits <- lapply(integer(n), function(z) val)
       class(newUnits) <- c("unit.list", "unit")
       newUnits
   }
 
   switch(x$fname,
-         "+"=`[`(x$arg1, (index - 1) %% this.length + 1, top=FALSE) +
-             `[`(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
-         "-"=`[`(x$arg1, (index - 1) %% this.length + 1, top=FALSE) -
-             `[`(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
+         "+"=`[`(x$arg1, (index - 1L) %% this.length + 1L, top=FALSE) +
+             `[`(x$arg2, (index - 1L) %% this.length + 1L, top=FALSE),
+         "-"=`[`(x$arg1, (index - 1L) %% this.length + 1L, top=FALSE) -
+             `[`(x$arg2, (index - 1L) %% this.length + 1L, top=FALSE),
          # Recycle multiplier if necessary
-         "*"=x$arg1[(index - 1) %% length(x$arg1) + 1] *
-             `[`(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
+         "*"=`[`(x$arg1, (index - 1L) %% length(x$arg1) + 1L) *
+             `[`(x$arg2, (index - 1L) %% this.length + 1L, top=FALSE),
          "min"=repSummaryUnit(x, length(index)),
          "max"=repSummaryUnit(x, length(index)),
          "sum"=repSummaryUnit(x, length(index)))
@@ -453,20 +443,19 @@ print.unit <- function(x, ...) {
 `[.unit.list` <- function(x, index, top=TRUE, ...) {
   this.length <- length(x)
   if (is.logical(index))
-    index <- (1L:this.length)[index]
-  # Allow for negative integer index
-  if (any(index < 0)) {
+    index <- which(index)
+  else { # Allow for negative integer index
+    if (any(index < 0)) {
       if (any(index > 0))
-          stop("cannot mix signs of indices")
+        stop("cannot mix signs of indices")
       else
-          index <- (1L:this.length)[index]
+        index <- (1L:this.length)[index]
+    }
+    if (top && any(index > this.length))
+      stop("index out of bounds (unit list subsetting)")
   }
-  if (top && any(index > this.length))
-    stop("index out of bounds (unit list subsetting)")
-  cl <- class(x)
-  result <- unclass(x)[(index - 1) %% this.length + 1]
-  class(result) <- cl
-  result
+  structure(class = class(x),
+            unclass(x)[(index - 1L) %% this.length + 1L])
 }
 
 # Write `[<-.unit` methods too ??
@@ -528,11 +517,10 @@ unit.c <- function(...) {
     }
 }
 
-unit.list.from.list <- function(x) {
-    result <- do.call("c", lapply(x, unit.list))
-    class(result) <- c("unit.list", "unit")
-    result
-}
+unit.list.from.list <- function(x)
+  structure(class = c("unit.list", "unit"),
+            do.call("c", lapply(x, unit.list)))
+
 
 #########################
 # rep'ing unit objects
@@ -789,8 +777,8 @@ absolute <- function(unit) {
                  "mylines", "mychar", "mystrwidth", "mystrheight",
                  # pseudonyms (from unit.c)
                  "centimetre", "centimetres", "centimeter",  "centimeters",
-                 "in", "inch",       
-                 "line",       
+                 "in", "inch",
+                 "line",
                  "millimetre", "millimetres", "millimeter", "millimeters",
                  "point", "pt")))
 }
@@ -802,24 +790,15 @@ absolute.units <- function(unit) {
 
 absolute.units.unit <- function(unit) {
   n <- length(unit)
-  if (absolute(unit[1L]))
-    abs.unit <- unit[1L]
-  else
-    abs.unit <- unit(1, "null")
-  new.unit <- abs.unit
-  count <- 1
-  while (count < n) {
-    count <- count + 1
-    new.unit <- unit.c(new.unit, absolute.units(unit[count]))
-  }
+  new.unit <- if (absolute(unit[1L])) unit[1L] else unit(1, "null")
+  if(n > 1) for(i in 2L:n)
+    new.unit <- unit.c(new.unit, absolute.units(unit[i]))
   new.unit
 }
 
 absolute.units.unit.list <- function(unit) {
-  cl <- class(unit)
-  abs.ul <- lapply(unit, absolute.units)
-  class(abs.ul) <- cl
-  abs.ul
+  structure(class = class(unit),
+            lapply(unit, absolute.units))
 }
 
 absolute.units.unit.arithmetic <- function(unit) {
@@ -833,5 +812,3 @@ absolute.units.unit.arithmetic <- function(unit) {
          "max"=unit.arithmetic("max", absolute.units(unit$arg1)),
          "sum"=unit.arithmetic("sum", absolute.units(unit$arg1)))
 }
-
-
