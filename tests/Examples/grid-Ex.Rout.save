@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-02-23 r70212) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-03-07 r70283) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1761,6 +1761,12 @@ List of 6
 +        unit(1, "strwidth", "hi there"))
 [1] 0.5npc          2inches+0.25npc 2inches+0.5npc  2inches+0.75npc
 [5] 1strwidth      
+> x <- unit(1:5, "npc")
+> x[2:4]
+[1] 2npc 3npc 4npc
+> x[2:4] <- unit(1, "mm")
+> x
+[1] 1npc 1mm  1mm  1mm  5npc
 > 
 > 
 > 
@@ -2063,7 +2069,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.004 0.017 1.019 0 0 
+Time elapsed:  1.78 0.016 1.796 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -133,3 +133,39 @@ x <- unit(1, "cm")
 stopifnot(length(unit.pmax(x)) == 1L, length(unit.pmin(x)) == 1L)
 ## was 3 in R <= 2.12.0
 
+# Unit subassignment
+a <- unit(1:3, c("cm", "in", "npc"))
+b <- a + unit(1, "npc")
+a[2] <- unit(2,"pt")
+b[2] <- unit(2,"npc")
+
+unitCheck(a, unit(1:3, c("cm", "pt", "npc")))
+unitCheck(b, unit.c(unit(1, "cm") + unit(1, "npc"),
+                    unit(2, "npc"),
+                    unit(3, "npc") + unit(1, "npc")))
+
+c <- unit(1:10, "mm")
+
+# assign to range
+c[5:9] <- unit(9:5, "pt")
+unitCheck(c, unit(c(1:4, 9:5, 10),
+                  c(rep("mm", 4), rep("pt", 5), "mm")))
+
+# recycle
+c[2:3] <- unit(1, "in") + unit(.5, "npc")
+unitCheck(c, unit.c(unit(1, "mm"),
+                    rep(unit(1, "in") + unit(.5, "npc"), 2),
+                    unit(4, "mm"),
+                    unit(9:5, "pt"),
+                    unit(10, "mm")))
+
+# recycle non-multiple
+c[6:8] <- stringWidth(c("a", "b"))
+unitCheck(c, unit.c(unit(1, "mm"),
+                    rep(unit(1, "in") + unit(.5, "npc"), 2),
+                    unit(4, "mm"),
+                    unit(9, "pt"),
+                    stringWidth(c("a", "b", "a")),
+                    unit(5, "pt"),
+                    unit(10, "mm")))
+

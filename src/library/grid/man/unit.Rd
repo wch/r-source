@@ -82,8 +82,9 @@ unit(x, units, data=NULL)
   data = list(NULL, "my string", NULL))
 }.
 
-  It is possible to subset unit objects in the normal way
-  (e.g., \code{unit(1:5, "npc")[2:4]}), but a special function
+  It is possible to subset unit objects in the normal way and to perform
+  subassignment (see the examples),
+  but a special function
   \code{unit.c} is provided for combining unit objects.
 
   Certain arithmetic and summary operations are defined for
@@ -120,5 +121,9 @@ unit(1:3/4, "npc") + unit(1, "inches")
 min(unit(0.5, "npc"), unit(1, "inches"))
 unit.c(unit(0.5, "npc"), unit(2, "inches") + unit(1:3/4, "npc"),
        unit(1, "strwidth", "hi there"))
+x <- unit(1:5, "npc")
+x[2:4]
+x[2:4] <- unit(1, "mm")
+x
 }
 \keyword{dplot}

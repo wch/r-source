@@ -19,6 +19,11 @@ Changes from grid_3.2.* to grid_3.3.0:
 5.  Modified grid.grep() so that it returns an empty list (rather than
     throwing an error) when the 'grid' display list is empty.
 
+6.  Added subassignment methods for unit objects
+    (e.g., x <- unit(1:3, "cm"); x[2] <- unit(.5, "npc"))
+
+    Thanks to Baptiste Auguie for code suggestions.
+
 
 Changes from grid_3.1.* to grid_3.2.0:
 -------------------------------------

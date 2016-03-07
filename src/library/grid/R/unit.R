@@ -458,7 +458,20 @@ print.unit <- function(x, ...)
             unclass(x)[(index - 1L) %% this.length + 1L])
 }
 
-# Write `[<-.unit` methods too ??
+# `[<-.unit` methods
+#
+# The basic approach is to convert everything to a unit.list,
+# unclass (so everything is list), rely on list subassignment, reclass
+
+`[<-.unit` <- function(x, i, value) {
+    if (!is.unit(value))
+        stop("Value being assigned must be a unit")
+    valueList <- unclass(unit.list(value))
+    xList <- unclass(unit.list(x))
+    xList[i] <- valueList
+    class(xList) <- c("unit.list", "unit")
+    xList
+}
 
 #########################
 # str() method
