@@ -1,5 +1,5 @@
 
-R version 3.2.4 beta (2016-02-29 r70247) -- "Very Secure Dishes"
+R version 3.2.4 RC (2016-03-02 r70281) -- "Very Secure Dishes"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.282   0.026   0.296 
+  0.237   0.017   0.243 
