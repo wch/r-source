@@ -1,6 +1,6 @@
 % File src/library/stats/man/manova.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{manova}
@@ -36,6 +36,10 @@ manova(\dots)
   \emph{Multivariate Analysis of Variance and Repeated Measures.}
   Chapman and Hall.
 }
+\seealso{
+  \code{\link{aov}}, \code{\link{summary.manova}}, the latter containing
+  more examples.
+}
 \examples{
 ## Set orthogonal contrasts.
 op <- options(contrasts = c("contr.helmert", "contr.poly"))
@@ -47,11 +51,5 @@ summary(npk2.aov)
 
 ( npk2.aovE <- manova(cbind(yield, foo) ~  N*P*K + Error(block), npk2) )
 summary(npk2.aovE)
-
-
-}
-\seealso{
-  \code{\link{aov}}, \code{\link{summary.manova}}, the latter containing
-  examples.
 }
 \keyword{models}
