@@ -31,6 +31,7 @@
 #ifndef NO_C_HEADERS
 # if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstddef>
+using std::size_t;
 # else
 #  include <stddef.h>
 # endif
