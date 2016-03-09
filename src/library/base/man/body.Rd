@@ -1,6 +1,6 @@
 % File src/library/base/man/body.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{body}
@@ -60,5 +60,8 @@ e <- expression(y <- x^2, return(y)) # or a list
 body(f) <- as.call(c(as.name("{"), e))
 f
 f(8)
+%% Rd parser bug? : need to backslash-escape the "{" below:
+## Using substitute() may be simpler than 'as.call(c(as.name("\{",..)))':
+stopifnot(identical(body(f), substitute({ y <- x^2; return(y) })))
 }
 \keyword{programming}
