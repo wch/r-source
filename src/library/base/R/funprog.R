@@ -104,7 +104,7 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
 Filter <-
 function(f, x)
 {
-    ind <- vapply(x, f, logical(1L))
+    ind <- as.logical(unlist(lapply(x, f)))
     x[which(ind)]
 }
 
