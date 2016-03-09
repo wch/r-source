@@ -1,7 +1,7 @@
 % File src/library/stats/man/ecdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
-% Copyright 2002-2011 The R Foundation
+% Copyright 1995-2016 R Core Team
+% Copyright 2002-2016 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{ecdf}
@@ -102,7 +102,7 @@ summary(Fn12)
 summary.stepfun(Fn12)
 
 ## Advanced: What's inside the function closure?
-print(ls.Fn12 <- ls(environment(Fn12)))
+ls(environment(Fn12))
 ##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 utils::ls.str(environment(Fn12))
 stopifnot(all.equal(quantile(Fn12), quantile(y)))

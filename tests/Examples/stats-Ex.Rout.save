@@ -6456,7 +6456,7 @@ and	9 plateau levels (y) with summary
  0.0000  0.1667  0.5000  0.4630  0.6667  1.0000 
 > 
 > ## Advanced: What's inside the function closure?
-> print(ls.Fn12 <- ls(environment(Fn12)))
+> ls(environment(Fn12))
 [1] "f"      "method" "nobs"   "x"      "y"      "yleft"  "yright"
 > ##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 > utils::ls.str(environment(Fn12))
