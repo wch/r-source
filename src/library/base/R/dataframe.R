@@ -1465,7 +1465,7 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 	   || (!is.null(cl <- attr(xj, "class")) && # numeric classed objects to format:
 	       any(cl %in% c("Date", "POSIXct", "POSIXlt"))))
 	    non.numeric <- TRUE
-	if(!is.atomic(xj))
+	if(!is.atomic(xj) && !inherits(xj, "POSIXlt"))
 	    non.atomic <- TRUE
     }
     if(non.atomic) {
