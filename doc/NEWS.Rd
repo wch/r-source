@@ -305,6 +305,10 @@
       which \code{traceback()} prints.
 
       \item \code{lengths()} dispatches internally.
+
+      \item \code{for} loops are generalized to iterate over any object
+      with \code{[[} and \code{length} methods. Thanks to Hervé Pagès
+      for the idea and the patch.
     }
   }
 
