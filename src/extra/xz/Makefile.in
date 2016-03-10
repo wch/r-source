@@ -58,7 +58,7 @@ stamp:
 	touch stamp
 
 liblzma.a: $(liblzma_a_OBJECTS)
-	$rm -f $@
+	@rm -f $@
 	$(AR) -cr $@ $(liblzma_a_OBJECTS)
 	$(RANLIB) $@
 
