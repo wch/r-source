@@ -495,7 +495,7 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
     int *ans_elt;
     int useNames = asLogical(CADR(args));
     if (useNames == NA_LOGICAL)
-	error(_("invalid '%s' value"), "USE.NAMES");
+	error(_("invalid '%s' value"), "use.names");
 
     if (DispatchOrEval(call, op, "lengths", args, rho, &ans, 0, 1))
       return(ans);
