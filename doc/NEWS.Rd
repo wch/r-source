@@ -309,6 +309,11 @@
       \item \code{for} loops are generalized to iterate over any object
       with \code{[[} and \code{length} methods. Thanks to Hervé Pagès
       for the idea and the patch.
+
+      \item \code{dotchart()} gains a \code{pt.cex} argument to control
+      the size of points separately from the size of plot labels.
+      Thanks to Michael Friendly and Milan Bouchet-Valat for ideas
+      and patches.
     }
   }
 
