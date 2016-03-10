@@ -29,6 +29,9 @@
 # ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 #  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 # endif
+# ifdef __SUNPRO_CC
+#  define DO_NOT_USE_CXX_HEADERS
+# endif
 # if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstdlib>
 #  include <cstdio>
