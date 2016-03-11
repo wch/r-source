@@ -24,7 +24,7 @@ formatDL(x, y, style = c("table", "list"),
     description information.  Can be abbreviated.
     If \code{"table"}, a two-column table with
     items and descriptions as columns is produced (similar to Texinfo's
-    \verb{@table} environment.  If \code{"list"}, a LaTeX-style tagged
+    \verb{@table} environment).  If \code{"list"}, a LaTeX-style tagged
     description list is obtained.}
   \item{width}{a positive integer giving the target column for wrapping
     lines in the output.}
