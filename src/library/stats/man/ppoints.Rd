@@ -6,7 +6,7 @@
 \name{ppoints}
 \title{Ordinates for Probability Plotting}
 \usage{
-ppoints(n, a = ifelse(n <= 10, 3/8, 1/2))
+ppoints(n, a = if(n <= 10) 3/8 else 1/2)
 }
 \alias{ppoints}
 \arguments{
