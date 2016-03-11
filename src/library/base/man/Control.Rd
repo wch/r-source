@@ -37,8 +37,7 @@ next
   }
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
-    an \link{expression}), or to a \link{pairlist}, or to an object with
-    \code{length} and subsetting methods, or \code{NULL}.  A
+    an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
     factor value will be coerced to a character vector.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
@@ -99,12 +98,6 @@ for(i in 1:5) print(1:i)
 for(n in c(2,5,10,20,50)) {
    x <- stats::rnorm(n)
    cat(n, ": ", sum(x^2), "\n", sep = "")
-}
-l <- lapply(1:10, sample, replace=TRUE)
-l <- l[sapply(l, anyDuplicated)]
-for(x in l) {
-   print(x)
-   cat("\n")
 }
 f <- factor(sample(letters[1:5], 10, replace = TRUE))
 for(i in unique(f)) print(i)
