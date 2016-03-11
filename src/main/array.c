@@ -450,11 +450,10 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 R_len_t attribute_hidden dispatch_length(SEXP x, SEXP call, SEXP rho) {
     R_xlen_t len = dispatch_xlength(x, call, rho);
-    if (len > INT_MAX) {
-        return R_BadLongVector(x, __FILE__, __LINE__);
-    } else {
-        return (R_len_t) len;
-    }
+#ifdef LONG_VECTOR_SUPPORT
+    if (len > INT_MAX) return R_BadLongVector(x, __FILE__, __LINE__);
+#endif
+    return (R_len_t) len;
 }
 
 R_xlen_t attribute_hidden dispatch_xlength(SEXP x, SEXP call, SEXP rho) {
