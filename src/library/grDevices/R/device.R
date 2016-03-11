@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/device.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -161,9 +161,9 @@ dev.print <- function(device = postscript, ...)
             ## fits portrait but not landscape
             hz <- FALSE
         } else {
-            h0 <- ifelse(hz, wp, hp)
+            h0 <- if(hz) wp else hp
             if(h > h0) { w <- w * h0/h; h <- h0 }
-            w0 <- ifelse(hz, hp, wp)
+            w0 <- if(hz) hp else wp
             if(w > w0) { h <- h * w0/w; w <- w0 }
         }
         if(is.null(oc$pointsize)) {

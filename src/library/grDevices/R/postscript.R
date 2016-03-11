@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/postscript.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ guessEncoding <- function(family)
 
 ##--> source in devPS.c :
 
-postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
+postscript <- function(file = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
                        onefile, family, title , fonts, encoding, bg, fg,
                        width, height, horizontal, pointsize,
                        paper, pagecentre, print.it, command, colormodel,
@@ -272,7 +272,7 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
     invisible()
 }
 
-xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
+xfig <- function (file = if(onefile) "Rplots.fig" else "Rplot%03d.fig",
                   onefile = FALSE, encoding = "none",
                   paper = "default", horizontal = TRUE,
                   width = 0, height = 0, family = "Helvetica",
@@ -291,7 +291,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
     invisible()
 }
 
-pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
+pdf <- function(file = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
                 useDingbats, useKerning, fillOddEven, compress)

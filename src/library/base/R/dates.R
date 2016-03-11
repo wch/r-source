@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -356,7 +356,7 @@ cut.Date <-
 	    start$mday <- 1L
             start$isdst <- -1L
 	    end <- as.POSIXlt(max(x, na.rm = TRUE))
-	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+	    step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
 	    end <- as.POSIXlt(end + (31 * step * 86400))
 	    end$mday <- 1L
             end$isdst <- -1L
@@ -366,7 +366,7 @@ cut.Date <-
 	    start$mday <- 1L
             start$isdst <- -1L
 	    end <- as.POSIXlt(max(x, na.rm = TRUE))
-	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+	    step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
 	    end <- as.POSIXlt(end + (366 * step * 86400))
 	    end$mon <- 0L
 	    end$mday <- 1L
@@ -379,7 +379,7 @@ cut.Date <-
             start$isdst <- -1L
 	    maxx <- max(x, na.rm = TRUE)
 	    end <- as.POSIXlt(maxx)
-	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+	    step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
 	    end <- as.POSIXlt(end + (93 * step * 86400))
 	    end$mon <- qtr[end$mon + 1L]
 	    end$mday <- 1L

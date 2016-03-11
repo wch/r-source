@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -14,7 +14,7 @@
   graphics.
 }
 \usage{
-pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
+pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
     useDingbats, useKerning, fillOddEven, compress)

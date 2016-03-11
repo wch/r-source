@@ -819,7 +819,7 @@ cut.POSIXt <-
         if(valid == 6L) {               # months
             start$mday <- 1L
             end <- as.POSIXlt(max(x, na.rm = TRUE))
-            step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+            step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (31 * step * 86400))
             end$mday <- 1L
             end$isdst <- -1L
@@ -828,7 +828,7 @@ cut.POSIXt <-
             start$mon <- 0L
             start$mday <- 1L
             end <- as.POSIXlt(max(x, na.rm = TRUE))
-            step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+            step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (366 * step* 86400))
             end$mon <- 0L
             end$mday <- 1L
@@ -840,7 +840,7 @@ cut.POSIXt <-
             start$mday <- 1L
             maxx <- max(x, na.rm = TRUE)
             end <- as.POSIXlt(maxx)
-            step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+            step <- if(length(by2) == 2L) as.integer(by2[1L]) else 1L
             end <- as.POSIXlt(end + (93 * step * 86400))
             end$mon <- qtr[end$mon + 1L]
             end$mday <- 1L

@@ -1,7 +1,7 @@
 #  File src/library/base/R/sink.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ sink <- function(file=NULL, append = FALSE, type = c("output", "message"),
         closeOnExit <- FALSE
         if(is.null(file)) file <- -1L
         else if(is.character(file)) {
-            file <- file(file, ifelse(append, "a", "w"))
+            file <- file(file, if(append) "a" else "w")
             closeOnExit <- TRUE
         } else if(!inherits(file, "connection"))
             stop("'file' must be NULL, a connection or a character string")

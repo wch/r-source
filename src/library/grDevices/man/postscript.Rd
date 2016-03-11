@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -15,7 +15,7 @@
 %% The definitive doc is the source :-)
 %%      ../../../main/devices.c  &   ../../../unix/devPS.c
 \usage{
-postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
+postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
            onefile, family, title, fonts, encoding, bg, fg,
            width, height, horizontal, pointsize,
            paper, pagecentre, print.it, command,
@@ -40,7 +40,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page
     number for each page and use an EPSF header and no
-    \code{DocumentMedia} comment.  Defaults to the \code{TRUE}.}
+    \code{DocumentMedia} comment.  Defaults to \code{TRUE}.}
   \item{family}{the initial font family to be used, normally as a
     character string.  See the section \sQuote{Families}.  Defaults to
     \code{"Helvetica"}.}

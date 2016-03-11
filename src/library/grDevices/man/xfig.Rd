@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xfig.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xfig}
@@ -15,7 +15,7 @@
   \code{xfig} and \code{postscript}.
 }
 \usage{
-xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
+xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
      onefile = FALSE, encoding = "none",
      paper = "default", horizontal = TRUE,
      width = 0, height = 0, family = "Helvetica",
