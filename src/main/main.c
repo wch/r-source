@@ -317,9 +317,33 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
 static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE+1], *DLLbufp;
 
+static void check_session_exit()
+{
+    if (! R_Interactive) {
+	/* This funtion will be called again after a LONGJMP if an
+	   error is signaled from one of the functions called. The
+	   'exiting' variable identifies this and results in
+	   R_Suicide. */
+	static Rboolean exiting = FALSE;
+	if (exiting)
+	    R_Suicide(_("error during cleanup\n"));
+	else {
+	    exiting = TRUE;
+	    if (GetOption1(install("error")) != R_NilValue) {
+		exiting = FALSE;
+		return;
+	    }
+	    REprintf(_("Execution halted\n"));
+	    R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
+	}
+	
+    }
+}
+
 void R_ReplDLLinit(void)
 {
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
@@ -663,7 +687,9 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 {
     FILE * volatile fp = fparg; /* is this needed? */
     if (fp != NULL) {
-	if (! SETJMP(R_Toplevel.cjmpbuf)) {
+	if (SETJMP(R_Toplevel.cjmpbuf))
+	    check_session_exit();
+	else {
 	    R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
 	    R_ReplFile(fp, env);
 	}
@@ -862,7 +888,8 @@ void setup_Rmainloop(void)
 	R_Suicide(_("unable to open the base package\n"));
 
     doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     if (R_SignalHandlers) init_signal_handlers();
     if (!doneit) {
@@ -891,7 +918,8 @@ void setup_Rmainloop(void)
 
     /* require(methods) if it is in the default packages */
     doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     if (!doneit) {
 	doneit = 1;
@@ -929,15 +957,18 @@ void setup_Rmainloop(void)
        or dropped on the application.
     */
     doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     if (!doneit) {
 	doneit = 1;
 	R_InitialData();
     }
     else {
-	if (! SETJMP(R_Toplevel.cjmpbuf)) {
-	    warning(_("unable to restore saved data in %s\n"), get_workspace_name());
+	if (SETJMP(R_Toplevel.cjmpbuf))
+	    check_session_exit();
+	else {
+    	    warning(_("unable to restore saved data in %s\n"), get_workspace_name());
 	}
     }
 
@@ -946,7 +977,8 @@ void setup_Rmainloop(void)
        If there is an error we continue. */
 
     doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     if (!doneit) {
 	doneit = 1;
@@ -964,7 +996,8 @@ void setup_Rmainloop(void)
        If there is an error we continue. */
 
     doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     if (!doneit) {
 	doneit = 1;
@@ -993,7 +1026,8 @@ void setup_Rmainloop(void)
 
     /* trying to do this earlier seems to run into bootstrapping issues. */
     doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     if (!doneit) {
 	doneit = 1;
@@ -1019,7 +1053,8 @@ void run_Rmainloop(void)
 {
     /* Here is the real R read-eval-loop. */
     /* We handle the console until end-of-file. */
-    SETJMP(R_Toplevel.cjmpbuf);
+    if (SETJMP(R_Toplevel.cjmpbuf))
+	check_session_exit();
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     R_ReplConsole(R_GlobalEnv, 0, 0);
     end_Rmainloop(); /* must go here */
