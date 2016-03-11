@@ -82,7 +82,7 @@ void NORET R_SignalCStackOverflow(intptr_t usage)
     */
     if (R_OldCStackLimit == 0) {
 	R_OldCStackLimit = R_CStackLimit;
-	R_CStackLimit = R_CStackLimit / 0.95;
+	R_CStackLimit = (uintptr_t) (R_CStackLimit / 0.95);
     }
 
     errorcall(R_NilValue, "C stack usage  %ld is too close to the limit",
