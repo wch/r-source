@@ -71,11 +71,7 @@ static char * R_ConciseTraceback(SEXP call, int skip);
   WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
-static void reset_stack_limit(void *data)
-{
-    uintptr_t *limit = (uintptr_t *) data;
-    R_CStackLimit = *limit;
-}
+static uintptr_t R_OldCStackLimit = 0;
 
 void NORET R_SignalCStackOverflow(intptr_t usage)
 {
@@ -84,15 +80,13 @@ void NORET R_SignalCStackOverflow(intptr_t usage)
        reduced R_CStackLimit to 95% of the initial value in
        setup_Rmainloop.
     */
-    RCNTXT cntxt;
-    uintptr_t stacklimit = R_CStackLimit;
-    R_CStackLimit += 0.05*R_CStackLimit;
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		 R_NilValue, R_NilValue);
-    cntxt.cend = &reset_stack_limit;
-    cntxt.cenddata = &stacklimit;
+    if (R_OldCStackLimit == 0) {
+	R_OldCStackLimit = R_CStackLimit;
+	R_CStackLimit = R_CStackLimit / 0.95;
+    }
 
-    errorcall(R_NilValue, "C stack usage  %ld is too close to the limit", usage);
+    errorcall(R_NilValue, "C stack usage  %ld is too close to the limit",
+	      usage);
     /* Do not translate this, to save stack space */
 }
 
@@ -910,6 +904,14 @@ static void jump_to_top_ex(Rboolean traceback,
 
     R_GlobalContext = R_ToplevelContext;
     R_restore_globals(R_GlobalContext);
+
+    /* if we are in the process of handling a C stack overflow we need
+       to restore the C stack limit before the jump */
+    if (R_OldCStackLimit != 0) {
+	R_CStackLimit = R_OldCStackLimit;
+	R_OldCStackLimit = 0;
+    }
+
     LONGJMP(R_ToplevelContext->cjmpbuf, 0);
     /* not reached
     endcontext(&cntxt);
@@ -1323,6 +1325,14 @@ void NORET R_JumpToToplevel(Rboolean restart)
 
     R_ToplevelContext = R_GlobalContext = c;
     R_restore_globals(R_GlobalContext);
+
+    /* if we are in the process of handling a C stack overflow we need
+       to restore the C stack limit before the jump */
+    if (R_OldCStackLimit != 0) {
+	R_CStackLimit = R_OldCStackLimit;
+	R_OldCStackLimit = 0;
+    }
+
     LONGJMP(c->cjmpbuf, CTXT_TOPLEVEL);
 }
 #endif
@@ -1584,6 +1594,10 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	    if (ENTRY_HANDLER(entry) == R_RestartToken)
 		return; /* go to default error handling; do not reset stack */
 	    else {
+		/* if we are in the process of handling a C stack
+		   overflow, treat all calling handlers ar failed */
+		if (R_OldCStackLimit)
+		    break;
 		SEXP hooksym, hcall, qcall;
 		/* protect oldstack here, not outside loop, so handler
 		   stack gets unwound in case error is protect stack
