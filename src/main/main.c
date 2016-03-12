@@ -1124,14 +1124,6 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    R_BrowserLastCommand = 'n';
 	} else if (!strcmp(expr, "Q")) {
 
-	    /* Run onexit/cend code for everything above the target.
-	       The browser context is still on the stack, so any error
-	       will drop us back to the current browser.  Not clear
-	       this is a good thing.  Also not clear this should still
-	       be here now that jump_to_toplevel is used for the
-	       jump. */
-	    R_run_onexits(R_ToplevelContext);
-
 	    /* this is really dynamic state that should be managed as such */
 	    SET_RDEBUG(rho, 0); /*PR#1721*/
 
