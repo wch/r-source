@@ -807,7 +807,8 @@ static void jump_to_top_ex(Rboolean traceback,
 
     haveHandler = FALSE;
 
-    if (tryUserHandler && inError < 3) {
+    /* don't use options("error") when handling a C stack overflow */
+    if (R_OldCStackLimit == 0 && tryUserHandler && inError < 3) {
 	if (! inError)
 	    inError = 1;
 
