@@ -29,6 +29,10 @@
 # ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 #  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 # endif
+/* The C++ headers in Solaris Studio are strict C++98, and many 
+   packages fail because of not using e.g. std::round 
+   or using C99 functions such as snprintf. 
+*/
 # ifdef __SUNPRO_CC
 #  define DO_NOT_USE_CXX_HEADERS
 # endif

@@ -38,6 +38,7 @@
 # ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 #  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 # endif
+/* See the comment in R.h */
 # ifdef __SUNPRO_CC
 #  define DO_NOT_USE_CXX_HEADERS
 # endif
