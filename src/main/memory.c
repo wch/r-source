@@ -1586,6 +1586,7 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_BaseEnv);
     FORWARD_NODE(R_EmptyEnv);
     FORWARD_NODE(R_Warnings);	           /* Warnings, if any */
+    FORWARD_NODE(R_ReturnedValue);
 
     FORWARD_NODE(R_HandlerStack);          /* Condition handler stack */
     FORWARD_NODE(R_RestartStack);          /* Available restarts stack */
@@ -1626,6 +1627,7 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(ctxt->handlerstack);  /* the condition handler stack */
 	FORWARD_NODE(ctxt->restartstack);  /* the available restarts stack */
 	FORWARD_NODE(ctxt->srcref);	   /* the current source reference */
+	FORWARD_NODE(ctxt->returnValue);   /* For on.exit calls */
     }
 
     FORWARD_NODE(R_PreciousList);
