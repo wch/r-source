@@ -673,6 +673,8 @@ extern0 Rboolean R_CBoundsCheck	INI_as(FALSE);	/* options(CBoundsCheck) */
 extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
 extern0 int	R_nwarnings	INI_as(50);
 extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
+extern uintptr_t R_OldCStackLimit INI_as((uintptr_t)0); /* Old value while 
+							   handling overflow */
 extern uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
 extern int	R_CStackDir	INI_as(1);	/* C stack direction */
 
@@ -1193,7 +1195,7 @@ SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
 
 void R_run_onexits(RCNTXT *);
-void R_restore_globals(RCNTXT *);
+void NORET R_jumpctxt(RCNTXT *, int, SEXP);
 #endif
 
 /* ../main/bind.c */

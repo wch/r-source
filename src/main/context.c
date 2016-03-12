@@ -160,12 +160,9 @@ void attribute_hidden R_run_onexits(RCNTXT *cptr)
 
 /* R_restore_globals - restore global variables from a target context
    before a LONGJMP.  The target context itself is not restored here
-   since this is done slightly differently in jumpfun below, in
-   errors.c:jump_now, and in main.c:ParseBrowser.  Eventually these
-   three should be unified so there is only one place where a LONGJMP
-   occurs. */
+   since this is done in R_jumpctxt below. */
 
-void attribute_hidden R_restore_globals(RCNTXT *cptr)
+static void R_restore_globals(RCNTXT *cptr)
 {
     R_PPStackTop = cptr->cstacktop;
     R_GCEnabled = cptr->gcenabled;
@@ -191,31 +188,28 @@ void attribute_hidden R_restore_globals(RCNTXT *cptr)
     R_Srcref = cptr->srcref;
 }
 
+/* R_jumpctxt - jump to the named context */
 
-/* jumpfun - jump to the named context */
-
-static void NORET jumpfun(RCNTXT * cptr, int mask, SEXP val)
+void attribute_hidden NORET R_jumpctxt(RCNTXT * cptr, int mask, SEXP val)
 {
     Rboolean savevis = R_Visible;
 
     /* run onexit/cend code for all contexts down to but not including
        the jump target */
-    PROTECT(val);
     cptr->returnValue = val;/* in case the on.exit code wants to see it */
     R_run_onexits(cptr);
-    UNPROTECT(1);
     R_Visible = savevis;
 
     R_ReturnedValue = val;
-    R_GlobalContext = cptr; /* this used to be set to
-			       cptr->nextcontext for non-toplevel
-			       jumps (with the context set back at the
-			       SETJMP for restarts).  Changing this to
-			       always using cptr as the new global
-			       context should simplify some code and
-			       perhaps allow loops to be handled with
-			       fewer SETJMP's.  LT */
+    R_GlobalContext = cptr;
     R_restore_globals(R_GlobalContext);
+
+    /* if we are in the process of handling a C stack overflow we need
+       to restore the C stack limit before the jump */
+    if (R_OldCStackLimit != 0) {
+	R_CStackLimit = R_OldCStackLimit;
+	R_OldCStackLimit = 0;
+    }
 
     LONGJMP(cptr->cjmpbuf, mask);
 }
@@ -292,7 +286,7 @@ void attribute_hidden NORET findcontext(int mask, SEXP env, SEXP val)
 	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
 	     cptr = cptr->nextcontext)
 	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
-		jumpfun(cptr, mask, val);
+		R_jumpctxt(cptr, mask, val);
 	error(_("no loop for break/next, jumping to top level"));
     }
     else {				/* return; or browser */
@@ -300,7 +294,7 @@ void attribute_hidden NORET findcontext(int mask, SEXP env, SEXP val)
 	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
 	     cptr = cptr->nextcontext)
 	    if ((cptr->callflag & mask) && cptr->cloenv == env)
-		jumpfun(cptr, mask, val);
+		R_jumpctxt(cptr, mask, val);
 	error(_("no function to return from, jumping to top level"));
     }
 }
@@ -312,7 +306,7 @@ void attribute_hidden NORET R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
 	 cptr = cptr->nextcontext) {
 	if (cptr == target)
-	    jumpfun(cptr, mask, val);
+	    R_jumpctxt(cptr, mask, val);
 	if (cptr == R_ExitContext)
 	    R_ExitContext = NULL;
     }

@@ -71,8 +71,6 @@ static char * R_ConciseTraceback(SEXP call, int skip);
   WarningMessage()-> warningcall (but with message from WarningDB[]).
 */
 
-static uintptr_t R_OldCStackLimit = 0;
-
 void NORET R_SignalCStackOverflow(intptr_t usage)
 {
     /* We do need some stack space to process error recovery, so
@@ -883,34 +881,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	}
     }
 
-    /* Run onexit/cend code for all contexts down to but not including
-       the jump target.  This may cause recursive calls to
-       jump_to_top_ex, but the possible number of such recursive
-       calls is limited since each exit function is removed before it
-       is executed.  In addition, all but the first should have
-       inError > 0.  This is not a great design because we could run
-       out of other resources that are on the stack (like C stack for
-       example).  The right thing to do is arrange to execute exit
-       code *after* the LONGJMP, but that requires a more extensive
-       redesign of the non-local transfer of control mechanism.
-       LT. */
-    R_run_onexits(R_ToplevelContext);
-
-    R_GlobalContext = R_ToplevelContext;
-    R_restore_globals(R_GlobalContext);
-
-    /* if we are in the process of handling a C stack overflow we need
-       to restore the C stack limit before the jump */
-    if (R_OldCStackLimit != 0) {
-	R_CStackLimit = R_OldCStackLimit;
-	R_OldCStackLimit = 0;
-    }
-
-    LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-    /* not reached
-    endcontext(&cntxt);
-    inError = oldInError;
-    */
+    R_jumpctxt(R_ToplevelContext, 0, NULL);
 }
 
 void NORET jump_to_toplevel()
@@ -1314,20 +1285,7 @@ void NORET R_JumpToToplevel(Rboolean restart)
     if (c != R_ToplevelContext)
 	warning(_("top level inconsistency?"));
 
-    /* Run onexit/cend code for everything above the target. */
-    R_run_onexits(c);
-
-    R_ToplevelContext = R_GlobalContext = c;
-    R_restore_globals(R_GlobalContext);
-
-    /* if we are in the process of handling a C stack overflow we need
-       to restore the C stack limit before the jump */
-    if (R_OldCStackLimit != 0) {
-	R_CStackLimit = R_OldCStackLimit;
-	R_OldCStackLimit = 0;
-    }
-
-    LONGJMP(c->cjmpbuf, CTXT_TOPLEVEL);
+    R_jumpctxt(R_ToplevelContext, CTXT_TOPLEVEL, NULL);
 }
 #endif
 
