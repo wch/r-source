@@ -853,10 +853,9 @@ static void jump_to_top_ex(Rboolean traceback,
 
     /* WARNING: If oldInError > 0 ABSOLUTELY NO ALLOCATION can be
        triggered after this point except whatever happens in writing
-       the traceback and R_run_onexits.  The error could be an out of
-       memory error and any allocation could result in an
-       infinite-loop condition. All you can do is reset things and
-       exit.  */
+       the traceback.  The error could be an out of memory error and
+       any allocation could result in an infinite-loop condition. All
+       you can do is reset things and exit.  */
 
     /* jump to a browser/try if one is on the stack */
     if (! ignoreRestartContexts)

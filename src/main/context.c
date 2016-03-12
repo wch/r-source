@@ -188,14 +188,34 @@ static void R_restore_globals(RCNTXT *cptr)
     R_Srcref = cptr->srcref;
 }
 
+static RCNTXT *first_jump_target(RCNTXT *cptr, int mask)
+{
+    RCNTXT *c;
+
+    for (c = R_GlobalContext; c && c != cptr; c = c->nextcontext) {
+	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
+	    c->jumptarget = cptr;
+	    c->jumpmask = mask;
+	    return c;
+	}
+    }
+    return cptr;
+}
+
 /* R_jumpctxt - jump to the named context */
 
-void attribute_hidden NORET R_jumpctxt(RCNTXT * cptr, int mask, SEXP val)
+void attribute_hidden NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 {
     Rboolean savevis = R_Visible;
+    RCNTXT *cptr;
 
-    /* run onexit/cend code for all contexts down to but not including
-       the jump target */
+    /* find the target for the first jump -- either an intermediate
+       context with an on.exit action to run or the final target if
+       there are no intermediate on.exit actions */
+    cptr = first_jump_target(targetcptr, mask);
+
+    /* run cend code for all contexts down to but not including
+       the first jump target */
     cptr->returnValue = val;/* in case the on.exit code wants to see it */
     R_run_onexits(cptr);
     R_Visible = savevis;
@@ -246,6 +266,8 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->browserfinish = R_GlobalContext->browserfinish;
     cptr->nextcontext = R_GlobalContext;
     cptr->returnValue = NULL;
+    cptr->jumptarget = NULL;
+    cptr->jumpmask = 0;
 
     R_GlobalContext = cptr;
 }
@@ -271,6 +293,10 @@ void endcontext(RCNTXT * cptr)
     }
     if (R_ExitContext == cptr)
 	R_ExitContext = NULL;
+    /* continue jumping if this was reached as an intermetiate jump */
+    if (cptr->jumptarget)
+	R_jumpctxt(cptr->jumptarget, cptr->jumpmask, cptr->returnValue);
+
     R_GlobalContext = cptr->nextcontext;
 }
 

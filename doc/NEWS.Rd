@@ -514,6 +514,18 @@
 
       \item \code{tar()} now works with the default \code{files = NULL}.
       (\PR{16716})
+
+      \item Jumps to outer contexts, for example in error recovery, now
+      make intermediate jumps to contexts where \code{on.exit} actions
+      are established instead of trying to run all \code{on.exit}
+      actions before jumping to the final target. This unwinds the stack
+      gradually, releases resources held on the stack, and significantly
+      reduces the chance of a segfault when running out of C stack
+      space. Error handlers established using
+      \code{withCallingHandlers()} and \code{options("error")}
+      specifications are ignored when handling a C stack overflow error
+      as attempting one of these would trigger a cascade of C stack
+      overflow errors.  These changes resolve \PR{16753}.
     }
   }
 }
