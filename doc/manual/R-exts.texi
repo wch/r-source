@@ -4233,11 +4233,16 @@ all linkers allow a space after @option{-L} .
 The @command{ar} utility is often used in makefiles to make static
 libraries.  Its modifier @code{u} is defined by POSIX but is disabled in
 GNU @command{ar} on some recent Linux distributions which use
-`deterministic mode'.  The safe way to make a static library is to first
+`deterministic mode'.  The safest way to make a static library is to first
 remove any existing file of that name then use @command{ar -cr} and then
 @command{ranlib} if needed (which is system-dependent: on most
 systems@footnote{some versions of OS X did not.} @command{ar} always
-maintains a symbol table).
+maintains a symbol table).  The POSIX standard says options should be
+preceded by a hyphen (as in @option{-cr}), although most OSes accept
+them without.
+@c flowWorkspace failed on OS X in Mar 2016 because a wildcard spec was empty
+Note that on some systems @command{ar -cr} must have at least one file
+specified.
 
 @item
 Some people have a need to set a locale.  Locale names are not portable,
