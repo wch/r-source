@@ -5,6 +5,16 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.2.4 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{format.POSIXlt()} behaved wrongly, e.g.,
+      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz="CET"),
+	usetz=TRUE)} ended in two \code{"CEST"} time formats.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.2.4}{
   \subsection{NEW FEATURES}{
     \itemize{
