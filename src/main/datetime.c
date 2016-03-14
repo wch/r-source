@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2015  The R Core Team.
+ *  Copyright (C) 2000-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -858,24 +858,23 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans, tz;
-    R_xlen_t n = 0, m, N, nlen[9];
-    int UseTZ, settz = 0;
+    int settz = 0;
     char buff[300];
     char oldtz[1001] = "";
     stm tm;
 
     checkArity(op, args);
-    PROTECT(x = duplicate(CAR(args))); /* coerced below */
+    SEXP x = PROTECT(duplicate(CAR(args))); /* coerced below */
     if(!isVectorList(x) || LENGTH(x) < 9)
 	error(_("invalid '%s' argument"), "x");
+    SEXP sformat;
     if(!isString((sformat = CADR(args))) || XLENGTH(sformat) == 0)
 	error(_("invalid '%s' argument"), "format");
-    m = XLENGTH(sformat);
-    UseTZ = asLogical(CADDR(args));
+    R_xlen_t m = XLENGTH(sformat);
+    int UseTZ = asLogical(CADDR(args));
     if(UseTZ == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "usetz");
-    tz = getAttrib(x, install("tzone"));
+    SEXP tz = getAttrib(x, install("tzone"));
 
     const char *tz1;
     if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
@@ -894,10 +893,12 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
      */
     memset(&tm, 0, sizeof(tm));
 
-    /* coerce fields to integer or real, find length of longest one */
+    /* coerce fields, find length of longest one */
+    R_xlen_t n = 0, nlen[9];
     for(int i = 0; i < 9; i++) {
 	nlen[i] = XLENGTH(VECTOR_ELT(x, i));
 	if(nlen[i] > n) n = nlen[i];
+	// real for 'sec', the first; integer for the rest:
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
 					  i > 0 ? INTSXP : REALSXP));
     }
@@ -906,8 +907,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(nlen[i] == 0)
 		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
     }
-    if(n > 0) N = (m > n) ? m:n; else N = 0;
-    PROTECT(ans = allocVector(STRSXP, N));
+    R_xlen_t N = (n > 0) ? ((m > n) ? m : n) : 0;
+    SEXP ans = PROTECT(allocVector(STRSXP, N));
     char tm_zone[20];
 #ifdef HAVE_TM_GMTOFF
     Rboolean have_zone = LENGTH(x) >= 11 && XLENGTH(VECTOR_ELT(x, 9)) == n &&
@@ -947,79 +948,78 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
+	} else if(validate_tm(&tm) < 0) {
+	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
-	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
-	    else {
-		const char *q = translateChar(STRING_ELT(sformat, i%m));
-		int n = (int) strlen(q) + 50;
-		char buf2[n];
-		const char *p;
+	    const char *q = translateChar(STRING_ELT(sformat, i%m));
+	    int nn = (int) strlen(q) + 50;
+	    char buf2[nn];
+	    const char *p;
 #ifdef OLD_Win32
-		/* We want to override Windows' TZ names */
-		p = strstr(q, "%Z");
-		if (p) {
-		    memset(buf2, 0, n);
-		    strncpy(buf2, q, p - q);
-		    if(have_zone)
-			strcat(buf2, tm_zone);
-		    else
-			strcat(buf2, tm.tm_isdst > 0 ? R_tzname[1] : R_tzname[0]);
-		    strcat(buf2, p+2);
-		} else
+	    /* We want to override Windows' TZ names */
+	    p = strstr(q, "%Z");
+	    if (p) {
+		memset(buf2, 0, nn);
+		strncpy(buf2, q, p - q);
+		if(have_zone)
+		    strcat(buf2, tm_zone);
+		else
+		    strcat(buf2, tm.tm_isdst > 0 ? R_tzname[1] : R_tzname[0]);
+		strcat(buf2, p+2);
+	    } else
 #endif
-		    strcpy(buf2, q);
+		strcpy(buf2, q);
 
-		p = strstr(q, "%OS");
-		if(p) {
-		    /* FIXME some of this should be outside the loop */
-		    int ns, nused = 4;
-		    char *p2 = strstr(buf2, "%OS");
-		    *p2 = '\0';
-		    ns = *(p+3) - '0';
-		    if(ns < 0 || ns > 9) { /* not a digit */
-			ns = asInteger(GetOption1(install("digits.secs")));
-			if(ns == NA_INTEGER) ns = 0;
-			nused = 3;
-		    }
-		    if(ns > 6) ns = 6;
-		    if(ns > 0) {
-			/* truncate to avoid nuisances such as PR#14579 */
-			double s = secs, t = Rexp10((double) ns);
-			s = ((int) (s*t))/t;
-			sprintf(p2, "%0*.*f", ns+3, ns, s);
-			strcat(buf2, p+nused);
-		    } else {
-			strcat(p2, "%S");
-			strcat(buf2, p+nused);
-		    }
+	    p = strstr(q, "%OS");
+	    if(p) {
+		/* FIXME some of this should be outside the loop */
+		int ns, nused = 4;
+		char *p2 = strstr(buf2, "%OS");
+		*p2 = '\0';
+		ns = *(p+3) - '0';
+		if(ns < 0 || ns > 9) { /* not a digit */
+		    ns = asInteger(GetOption1(install("digits.secs")));
+		    if(ns == NA_INTEGER) ns = 0;
+		    nused = 3;
 		}
-		// The overflow behaviour is not determined by C99.
-		// We assume truncation, and ensure termination.
-#ifdef USE_INTERNAL_MKTIME
-		R_strftime(buff, 256, buf2, &tm);
-#else
-		strftime(buff, 256, buf2, &tm);
-#endif
-		buff[256] = '\0';
-		// Now assume tzone abbreviated name is < 40 bytes,
-		// but they are currently 3 or 4 bytes.
-		if(UseTZ) {
-		    if(have_zone) {
-			const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%n));
-			if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
-		    } else if(!isNull(tz)) {
-			int ii = 0;
-			if(LENGTH(tz) == 3) {
-			    if(tm.tm_isdst > 0) ii = 2;
-			    else if(tm.tm_isdst == 0) ii = 1;
-			    else ii = 0; /* Use base timezone name */
-			}
-			const char *p = CHAR(STRING_ELT(tz, ii));
-			if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
-		    }
+		if(ns > 6) ns = 6;
+		if(ns > 0) {
+		    /* truncate to avoid nuisances such as PR#14579 */
+		    double s = secs, t = Rexp10((double) ns);
+		    s = ((int) (s*t))/t;
+		    sprintf(p2, "%0*.*f", ns+3, ns, s);
+		    strcat(buf2, p+nused);
+		} else {
+		    strcat(p2, "%S");
+		    strcat(buf2, p+nused);
 		}
-		SET_STRING_ELT(ans, i, mkChar(buff));
 	    }
+	    // The overflow behaviour is not determined by C99.
+	    // We assume truncation, and ensure termination.
+#ifdef USE_INTERNAL_MKTIME
+	    R_strftime(buff, 256, buf2, &tm);
+#else
+	    strftime(buff, 256, buf2, &tm);
+#endif
+	    buff[256] = '\0';
+	    // Now assume tzone abbreviated name is < 40 bytes,
+	    // but they are currently 3 or 4 bytes.
+	    if(UseTZ) {
+		if(have_zone) {
+		    const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%n));
+		    if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
+		} else if(!isNull(tz)) {
+		    int ii = 0;
+		    if(LENGTH(tz) == 3) {
+			if(tm.tm_isdst > 0) ii = 2;
+			else if(tm.tm_isdst == 0) ii = 1;
+			else ii = 0; /* Use base timezone name */
+		    }
+		    const char *p = CHAR(STRING_ELT(tz, ii));
+		    if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
+		}
+	    }
+	    SET_STRING_ELT(ans, i, mkChar(buff));
 	}
     }
     if(settz) reset_tz(oldtz);

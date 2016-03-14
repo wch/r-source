@@ -310,7 +310,7 @@
       \item \code{for()} loops are generalized to iterate over any
       object with \code{[[} and \code{length()} methods. Thanks to Hervé
       Pagès for the idea and the patch.
-      
+
       \item \code{dotchart()} gains a \code{pt.cex} argument to control
       the size of points separately from the size of plot labels.
       Thanks to Michael Friendly and Milan Bouchet-Valat for ideas
@@ -526,6 +526,16 @@
       specifications are ignored when handling a C stack overflow error
       as attempting one of these would trigger a cascade of C stack
       overflow errors.  These changes resolve \PR{16753}.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.2.4 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{format.POSIXlt()} behaved wrongly, e.g.,
+      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz="CET"),
+	usetz=TRUE)} ended in two \code{"CEST"} time formats.
     }
   }
 }

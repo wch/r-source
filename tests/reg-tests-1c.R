@@ -1442,3 +1442,15 @@ unlink(myF2)
 ## produced an empty tar file in R < 3.3.0, PR#16716
 
 
+## format.POSIXlt() of Jan.1 if  1941 or '42 is involved:
+tJan1 <- function(n1, n2)
+    strptime(paste0(n1:n2,"/01/01"), "%Y/%m/%d", tz="CET")
+wDSTJan1 <- function(n1, n2)
+    which("CEST" == sub(".* ", '', format(tJan1(n1,n2), usetz=TRUE)))
+(w8 <- wDSTJan1(1801, 2300))
+(w9 <- wDSTJan1(1901, 2300))
+stopifnot(identical(w8, 141:142),# exactly 1941:1942 had CEST on Jan.1
+          identical(w9,  41: 42))
+## for R-devel Jan.2016 to Mar.14 -- *AND* for R 3.2.4 -- the above gave
+## integer(0)  and  c(41:42, 99:100, ..., 389:390)  respectively
+
