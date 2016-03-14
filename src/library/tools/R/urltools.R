@@ -374,8 +374,9 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
-        cran <- grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
-                      u, ignore.case = TRUE)
+        cran <- (grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
+                       u, ignore.case = TRUE) ||
+                 any(substring(tolower(u), 1L, nchar(mirrors)) == mirrors))
         spaces <- grepl(" ", u)
         c(s, msg, newLoc, if(cran) u else "", if(spaces) u else "")
     }
@@ -383,6 +384,14 @@ function(db, verbose = FALSE)
     bad <- .gather()
 
     if(!NROW(db)) return(bad)
+
+    ## Could also use utils::getCRANmirrors(local.only = TRUE).
+    mirrors <- c(utils::read.csv(file.path(R.home("doc"),
+                                           "CRAN_mirrors.csv"),
+                                 as.is = TRUE, encoding = "UTF-8")$URL,
+                 "http://cran.rstudio.com/",
+                 "https://cran.rstudio.com/")
+    mirrors <- tolower(sub("/$", "", mirrors))
 
     parents <- split(db$Parent, db$URL)
     urls <- names(parents)
