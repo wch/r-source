@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -20,8 +20,9 @@
 aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                 contrasts = NULL, ...)
 {
-    Terms <- if(missing(data)) terms(formula, "Error")
-    else terms(formula, "Error", data = data)
+    Terms <- if(missing(data))
+		  terms(formula, "Error")
+	     else terms(formula, "Error", data = data)
     indError <- attr(Terms, "specials")$Error
     ## NB: this is only used for n > 1, so singular form makes no sense
     ## in English.  But some languages have multiple plurals.
@@ -37,15 +38,15 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     if(projections) qr <- lmcall$qr <- TRUE
     lmcall$projections <- NULL
     if(is.null(indError)) {
-        ## no Error term
-        fit <- eval(lmcall, parent.frame())
-        if(projections) fit$projections <- proj(fit)
-        class(fit) <- if(inherits(fit, "mlm"))
-            c("maov", "aov", oldClass(fit)) else c("aov", oldClass(fit))
-        fit$call <- Call
-        return(fit)
+	## no Error term
+	fit <- eval(lmcall, parent.frame())
+	fit$call <- Call # fixup 'lmcall'
+	structure(fit,
+		  class = c(if(inherits(fit, "mlm")) "maov",
+			    "aov", oldClass(fit)),
+		  projections = if(projections) proj(fit))
     } else {
-        if(pmatch("weights", names(match.call()), 0L))
+	if(pmatch("weights", names(Call), 0L))
             stop("weights are not supported in a multistratum aov() fit")
         ##  Helmert contrasts can be helpful: do we want to force them?
         ##  this version does for the Error model.
@@ -53,7 +54,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         options(contrasts = c("contr.helmert", "contr.poly"))
         on.exit(options(opcons))
         allTerms <- Terms
-        errorterm <-  attr(Terms, "variables")[[1 + indError]]
+        errorterm <- attr(Terms, "variables")[[1L + indError]]
         eTerm <- deparse(errorterm[[2L]], width.cutoff = 500L, backtick = TRUE)
         intercept <- attr(Terms, "intercept")
         ecall <- lmcall
@@ -83,13 +84,15 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         maxasgn <- length(nmstrata) - 1L
         nobs <- NROW(qty)
 	len <- if(nobs > rank.e) {
-	    asgn.e[(rank.e+1):nobs] <- maxasgn + 1L
+	    asgn.e[(rank.e+1L):nobs] <- maxasgn + 1L
 	    nmstrata <- c(nmstrata, "Within")
 	    maxasgn + 2L
 	} else maxasgn + 1L
         result <- setNames(vector("list", len), nmstrata)
         lmcall$formula <- form <-
-            update(formula, paste(". ~ .-", deparse(errorterm, width.cutoff = 500L, backtick = TRUE)))
+            update(formula,
+                   paste(". ~ .-",
+                         deparse(errorterm, width.cutoff = 500L, backtick = TRUE)))
         Terms <- terms(form)
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, parent.frame())
@@ -134,21 +137,20 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             class(fiti) <- c(if(maov) "maov", "aov", oldClass(er.fit))
             result[[i]] <- fiti
         }
-        ## drop empty strata
-        result <- result[!sapply(result, is.null)]
-        class(result) <- c("aovlist", "listof")
-        if(qr) attr(result, "error.qr") <- qr.e
-        attr(result, "call") <- Call
-        if(length(wts)) attr(result, "weights") <- wts
-        attr(result, "terms") <- allTerms
-        attr(result, "contrasts") <- cons
-        attr(result, "xlevels") <- xlev
-        result
+        structure(class = c("aovlist", "listof"),
+                  ## drop empty strata:
+                  result[!vapply(result, is.null, NA)],
+                  error.qr = if(qr) qr.e,
+                  call = Call,
+                  weights = if(length(wts)) wts,
+                  terms = allTerms,
+                  contrasts = cons,
+                  xlevels = xlev)
     }
 }
 
 print.aov <-
-function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
+function(x, intercept = FALSE, tol = sqrt(.Machine$double.eps), ...)
 {
     if(!is.null(cl <- x$call)) {
         cat("Call:\n   ")
@@ -162,7 +164,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     rdf <- x$df.residual
     resid <- as.matrix(x$residuals)
     wt <- x$weights
-    if(!is.null(wt)) resid <- resid * wt^0.5
+    if(!is.null(wt)) resid <- resid * sqrt(wt)
     RSS <- colSums(resid^2)
     uasgn <- unique(asgn)
     nmeffect <- c("(Intercept)", attr(x$terms, "term.labels"))[1+uasgn]
@@ -302,7 +304,7 @@ summary.aov <- function(object, intercept = FALSE, split,
     coef <- as.matrix(object$coefficients)
     resid <- as.matrix(object$residuals)
     wt <- object$weights
-    if(!is.null(wt)) resid <- resid * wt^0.5
+    if(!is.null(wt)) resid <- resid * sqrt(wt)
     nresp <- NCOL(resid)
     ans <- vector("list", nresp)
     if(nresp > 1) {
@@ -600,7 +602,7 @@ se.contrast.aov <-
     if(rdf == 0L) stop("no degrees of freedom for residuals")
     resid <- as.matrix(object$residuals)
     wt <- object$weights
-    if(!is.null(wt)) resid <- resid * wt^0.5
+    if(!is.null(wt)) resid <- resid * sqrt(wt)
     rse <- sum(resid^2)/rdf
     if(!is.matrix(contrast.obj)) sqrt(sum(weights) * rse)
     else sqrt(rse * colSums(weights))
@@ -654,7 +656,7 @@ se.contrast.aovlist <-
         if(rdf == 0L) return(NA)
         resid <- as.matrix(aov.object$residuals)
         wt <- aov.object$weights
-        if(!is.null(wt)) resid <- resid * wt^0.5
+        if(!is.null(wt)) resid <- resid * sqrt(wt)
         sum(resid^2)/rdf
     }
     if(is.null(attr(object, "error.qr"))) {
