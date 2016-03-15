@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lsfit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ lsfit <- function(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07,
 	if(any(wt < 0)) stop("negative weights not allowed")
 	if(nwts != nry)
             stop(gettextf("number of weights = %d should equal %d (number of responses)", nwts, nry), domain = NA)
-	wtmult <- wt^0.5
+	wtmult <- sqrt(wt)
 	if(any(wt == 0)) {
 	    xzero <- as.matrix(x)[wt == 0, ]
 	    yzero <- as.matrix(y)[wt == 0, ]
@@ -167,7 +167,7 @@ ls.diag <- function(ls.out)
     if( !is.null(ls.out$wt) ) {
 	if( any(ls.out$wt[good] == 0) )
 	    warning("observations with 0 weight not used in calculating standard deviation")
-	resids <- resids * ls.out$wt[good]^0.5
+	resids <- resids * sqrt(ls.out$wt[good])
     }
 
     ## initialize
@@ -186,12 +186,12 @@ ls.diag <- function(ls.out)
 
     ## calculate diagnostics
 
-    stddev <- (colSums(as.matrix(resids^2))/(n - p))^0.5
+    stddev <- sqrt(colSums(as.matrix(resids^2))/(n - p))
     stddevmat <- matrix(stddev, nrow=sum(good), ncol=ncol(resids), byrow=TRUE)
-    stdres[good, ] <- resids/((1-hatdiag[good])^0.5 * stddevmat)
-    studres[good, ] <- (stdres[good, ]*stddevmat)/
-        (((n-p)*stddevmat^2 - resids^2/(1-hatdiag[good]))/(n-p-1))^0.5
-    dfits[good, ] <- (hatdiag[good]/(1-hatdiag[good]))^0.5 * studres[good, ]
+    stdres[good, ] <- resids/(sqrt(1-hatdiag[good]) * stddevmat)
+    studres[good, ] <- (stdres[good, ]*stddevmat) /
+        sqrt(((n-p)*stddevmat^2 - resids^2/(1-hatdiag[good]))/(n-p-1))
+    dfits[good, ] <- sqrt(hatdiag[good]/(1-hatdiag[good])) * studres[good, ]
     Cooks[good, ] <- ((stdres[good, ]^2 * hatdiag[good])/p)/(1-hatdiag[good])
     if(ncol(resids)==1 && is.null(yname)) {
 	stdres <- as.vector(stdres)
@@ -214,8 +214,8 @@ ls.diag <- function(ls.out)
 
     ## calculate correlation matrix
 
-    cormat <- covmat.scaled/
-	(outer(diag(covmat.scaled), diag(covmat.scaled))^0.5)
+    cormat <- covmat.scaled /
+	sqrt(outer(diag(covmat.scaled), diag(covmat.scaled)))
 
     ## calculate standard error
 
@@ -236,7 +236,7 @@ ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
     if( !is.null(ls.out$wt) ) {
 	if(any(ls.out$wt == 0))
 	    warning("observations with 0 weights not used")
-	resids <- resids * ls.out$wt^0.5
+	resids <- resids * sqrt(ls.out$wt)
     }
     n <- apply(resids, 2L, length) - colSums(is.na(resids))
     lsqr <- ls.out$qr

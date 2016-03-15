@@ -1,7 +1,7 @@
 #  File src/library/stats/R/glm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -190,7 +190,7 @@ glm.fit <-
         if (!validmu(mu))
             stop("invalid fitted means in empty model", call. = FALSE)
         dev <- sum(dev.resids(y, mu, weights))
-        w <- ((weights * mu.eta(eta)^2)/variance(mu))^0.5
+        w <- sqrt((weights * mu.eta(eta)^2)/variance(mu))
         residuals <- (y - mu)/mu.eta(eta)
         good <- rep_len(TRUE, length(residuals))
         boundary <- conv <- TRUE
