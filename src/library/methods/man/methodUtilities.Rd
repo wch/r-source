@@ -55,7 +55,7 @@ methodSignatureMatrix(object, sigSlots = c("target", "defined"))
       find the object as a function.
     }
     \item{\code{el}:}{\code{el(object, i)} is equivalent to
-      \code{object[i][[1]]} (and should typically be replacable by object[[i]]).
+      \code{object[i][[1]]} (and should typically be replaceable by object[[i]]).
     }
     \item{\code{elNamed}:}{
       get the element of the vector corresponding to name.  Unlike the
