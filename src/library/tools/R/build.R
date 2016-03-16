@@ -680,7 +680,9 @@ get_exclude_patterns <- function()
     resave_data_others <- function(pkgname, resave_data)
     {
         if (resave_data == "no") return()
-        ddir <- normalizePath(file.path(pkgname, "data"))
+        if(!dir.exists(ddir <- file.path(pkgname, "data")))
+            return()
+        ddir <- normalizePath(ddir)
         dataFiles <- grep("\\.(rda|RData)$",
                           list_files_with_type(ddir, "data"),
                           invert = TRUE, value = TRUE)
