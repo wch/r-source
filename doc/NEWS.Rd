@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R 3.3.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item \code{nchar(x, *)}'s argument \code{keepNA} governing how
@@ -29,6 +29,7 @@
       the same Linux machine.
     }
   }
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{print} method for \code{methods()} gains a
