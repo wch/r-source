@@ -1906,14 +1906,21 @@ all: $(SHLIB)
 $(SHLIB): mylibs
 
 mylibs:
-	(cd subdir; make)
+	(cd subdir; $(MAKE))
 @end example
 
 @noindent
-Be careful to create all the necessary dependencies, as there is a no
+Be careful to create all the necessary dependencies, as there is no
 guarantee that the dependencies of @code{all} will be run in a
 particular order (and some of the @acronym{CRAN} build machines use
-multiple CPUs and parallel makes).
+multiple CPUs and parallel makes).  In particular,
+
+@example
+all: mylibs
+@end example
+
+@noindent
+does @strong{not} suffice.
 
 Note that on Windows it is required that @file{Makevars[.win]} does
 create a DLL: this is needed as it is the only reliable way to ensure
