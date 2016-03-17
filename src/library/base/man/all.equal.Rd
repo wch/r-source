@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -25,7 +25,7 @@
 all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
-          tolerance = .Machine$double.eps ^ 0.5, scale = NULL,
+          tolerance = sqrt(.Machine$double.eps), scale = NULL,
           \dots, check.attributes = TRUE)
 
 \method{all.equal}{list}(target, current, \dots,
