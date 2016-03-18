@@ -1224,19 +1224,6 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
             m
 	} else stop("names do not match previous names")
     }
-    if(make.row.names)
-    Make.row.names <- function(nmi, ri, ni, nrow)
-    {
-	if(nzchar(nmi)) {
-            if(ni == 0L) character()  # PR8506
-	    else if(ni > 1L) paste(nmi, ri, sep = ".")
-	    else nmi
-	}
-	else if(nrow > 0L && identical(ri, seq_len(ni)) &&
-		identical(unlist(rlabs, FALSE, FALSE), seq_len(nrow)))
-	    as.integer(seq.int(from = nrow + 1L, length.out = ni))
-	else ri
-    }
     allargs <- list(...)
     allargs <- allargs[lengths(allargs) > 0L]
     if(length(allargs)) {
@@ -1260,7 +1247,26 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	nms <- character(n)
     cl <- NULL
     perm <- rows <- vector("list", n)
-    rlabs <- if(make.row.names) rows # else NULL
+    if(make.row.names) {
+	rlabs <- rows
+	autoRnms <- TRUE # result with 1:nrow(.) row names? [efficiency!]
+	Make.row.names <- function(nmi, ri, ni, nrow)
+	{
+	    if(nzchar(nmi)) {
+		if(autoRnms) autoRnms <<- FALSE
+		if(ni == 0L) character()  # PR8506
+		else if(ni > 1L) paste(nmi, ri, sep = ".")
+		else nmi
+	    }
+	    else if(autoRnms && nrow > 0L && identical(ri, seq_len(ni)))
+		as.integer(seq.int(from = nrow + 1L, length.out = ni))
+	    else {
+		if(autoRnms && (nrow > 0L || !identical(ri, seq_len(ni))))
+		    autoRnms <<- FALSE
+		ri
+	    }
+	}
+    }
     nrow <- 0L
     value <- clabs <- NULL
     all.levs <- list()
@@ -1396,11 +1402,13 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
             }
 	}
     }
-    if(make.row.names) {
-	rlabs <- unlist(rlabs)
-	if(anyDuplicated(rlabs))
-	    rlabs <- make.unique(as.character(rlabs), sep = "")
-    }
+    rlabs <- if(make.row.names && !autoRnms) {
+		 rlabs <- unlist(rlabs)
+		 if(anyDuplicated(rlabs))
+		     make.unique(as.character(rlabs), sep = "")
+		 else
+		     rlabs
+	     } # else NULL
     if(is.null(cl)) {
 	as.data.frame(value, row.names = rlabs, fix.empty.names = TRUE,
 		      stringsAsFactors = stringsAsFactors)
