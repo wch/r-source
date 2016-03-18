@@ -535,6 +535,9 @@
       specifications are ignored when handling a C stack overflow error
       as attempting one of these would trigger a cascade of C stack
       overflow errors.  These changes resolve \PR{16753}.
+      
+      \item The spacing could be wrong when printing a complex array.
+      (Report and patch by Lukas Stadler.)
     }
   }
 }

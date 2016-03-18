@@ -7809,3 +7809,11 @@ structure(list(one = 1, two = ), .Names = c("one", "two"))
  NA's   :3                          NA's   :1     
 > ## 2 of 4  summary(.) above did not show NA's  in R <= 3.2.3
 > 
+> 
+> ## Printing complex matrix 
+> matrix(1i,2,13)
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+[1,] 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i  0+1i  0+1i  0+1i  0+1i
+[2,] 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i  0+1i  0+1i  0+1i  0+1i
+> ## Spacing was wrong in R <= 3.2.4
+> 

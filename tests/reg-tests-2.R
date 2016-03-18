@@ -3014,3 +3014,8 @@ DF.Dates$x2 <- c(1:6, NA)
 ## now, NA's show fine:
 summary(DF.Dates)
 ## 2 of 4  summary(.) above did not show NA's  in R <= 3.2.3
+
+
+## Printing complex matrix 
+matrix(1i,2,13)
+## Spacing was wrong in R <= 3.2.4

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000--2014	The R Core Team
+ *  Copyright (C) 2000--2016	The R Core Team
  *  Copyright (C) 2001--2012	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -271,9 +271,11 @@ static void printComplexMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 		   if (ISNA(x[i + j * r].r) || ISNA(x[i + j * r].i))
 		       Rprintf("%s", EncodeReal0(NA_REAL, w[j], 0, 0, OutDec));
 		   else
+		       /* Note that the label printing may modify w[j], so wr[j] is not 
+		          necessarily still valid, and we use w[j] - wi[j] - 2  */
 		       Rprintf("%s",
 			       EncodeComplex(x[i + j * r],
-					     wr[j] + R_print.gap, dr[j], er[j],
+					     w[j] - wi[j] - 2, dr[j], er[j],
 					     wi[j], di[j], ei[j], OutDec)) )
 }
 
