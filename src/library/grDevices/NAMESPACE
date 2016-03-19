@@ -48,8 +48,8 @@ S3method("Ops", "raster")
 
 S3method("print", "raster")
 
-S3method(pretty, Date)
-S3method(pretty, POSIXt)
+S3method(pretty, Date,   prettyDate)
+S3method(pretty, POSIXt, prettyDate)
 
 
 if(tools:::.OStype() == "windows") {

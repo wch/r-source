@@ -19,28 +19,28 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-pretty.Date <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
-{
-    prettyDate(x = x, n = n, min.n = min.n, sep = sep, ...)
-}
-
-pretty.POSIXt <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
-{
-    prettyDate(x = x, n = n, min.n = min.n, sep = sep, ...)
-}
-
-
+##' S3 method =:  pretty.Date() and pretty.POSIXt [in ../NAMESPACE]
 prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 {
+    stopifnot(min.n <= n)
     isDate <- inherits(x, "Date")
     x <- as.POSIXct(x)
     if (isDate) # the timezone *does* matter
 	attr(x, "tzone") <- "GMT"
     zz <- range(x, na.rm = TRUE)
     D <- diff(nzz <- as.numeric(zz))
-    if(isDate && D <= n * 24*3600) { # D <= 'n days'
+    MIN <- 60
+    HOUR <- MIN * 60
+    DAY <- HOUR * 24
+    YEAR <- DAY * 365.25
+    MONTH <- YEAR / 12
+    if(isDate && D <= n * DAY) { # D <= 'n days' & Date  ==> use days
+	r <- round(n - D/DAY)
+	m <- max(0, r %/% 2)
 	zz <- as.Date(zz)
-	return( seq.Date(zz[1], zz[2], by = "1 day") )
+	zz <- seq.Date(zz[1] - m, zz[2] + m + (r %% 2), by = "1 day")
+	return(structure(zz, ## "1 DSTday" from steps:
+			 labels = paste("%b", "%d", sep = sep)))
     }
     else if(D < 1) { # unique values / sub-second ranges: [? or use "1 ms" steps below?]
 	m <- min(30, max(D == 0, n/2 - 1)) # "- 1" ==> better match for 'n'
@@ -49,11 +49,6 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     }
     xspan <- as.numeric(diff(zz), units = "secs")
     ## specify the set of pretty timesteps
-    MIN <- 60
-    HOUR <- MIN * 60
-    DAY <- HOUR * 24
-    YEAR <- DAY * 365.25
-    MONTH <- YEAR / 12
     steps <-
         list("1 sec" = list(1, format = "%S", start = "mins"),
              "2 secs" = list(2),
@@ -117,13 +112,13 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     init.at <- calcSteps(steps[[init.i]])
     ## bump it up if below acceptable threshold
     while ((init.n <- length(init.at) - 1L) < min.n) {
-        init.i <- init.i - 1L
-        if (init.i == 0) stop("range too small for 'min.n'")
-        init.at <- calcSteps(steps[[init.i]])
+	if(init.i == 1L)
+	    break # and live with it instead of error
+	init.i <- init.i - 1L
+	init.at <- calcSteps(steps[[init.i]])
     }
     makeOutput <- function(at, s) {
-	structure(if (isDate) as.Date(round(at, units = "days"))
-		  else as.POSIXct(at),
+	structure(if(isDate) as.Date(round(at, units = "days")) else as.POSIXct(at),
 		  labels = format(at, s$format))
     }
     if (init.n == n) ## perfect

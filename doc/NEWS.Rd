@@ -11,7 +11,7 @@
       \item Placeholder.
     }
   }
-} 
+}
 
 \section{\Rlogo CHANGES IN R 3.3.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
@@ -535,9 +535,14 @@
       specifications are ignored when handling a C stack overflow error
       as attempting one of these would trigger a cascade of C stack
       overflow errors.  These changes resolve \PR{16753}.
-      
+
       \item The spacing could be wrong when printing a complex array.
       (Report and patch by Lukas Stadler.)
+
+      \item \code{pretty(d, n, min.n, *)} for date-time objects \code{d}
+      works again in border cases with large \code{min.n}, returns a
+      \code{labels} attribute also for small-range dates and in such cases
+      its returned length is closer to the desired \code{n}.  \PR{16761}
     }
   }
 }
