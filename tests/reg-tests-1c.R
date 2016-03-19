@@ -1396,23 +1396,36 @@ stopifnot(
 
 
 ## prettyDate() for subsecond ranges
-sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
-set.seed(7); for(n in 1:64) {
-    x <- sTime + .001*rlnorm(1) * 0:9
-    np <- length(px <- pretty(x))# n = 5
-    p1 <- pretty(sTime)
-    stopifnot(3 <= np, np <= 8, min(px) <= min(x), max(x) <= max(px),
-	      min(p1) <= sTime, sTime <= max(p1))
+chkPretty <- function(obj, n = 5, ..., max.D = 1) {
+    pr <- pretty(obj, n=n, ...)
+    stopifnot(abs(length(pr) - n) <= max.D,
+	      length(unique(diff(pr))) == 1, # <==> must be equidistant
+	      min(pr) <= min(obj), max(obj) <= max(pr))
+    invisible(pr)
 }
+sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
+for(n in c(1:16, 30:32, 41, 50, 60)) # (not for much larger n)
+    chkPretty(sTime, n=n)
+set.seed(7)
+for(n in c(1:7, 12)) replicate(32, chkPretty(sTime + .001*rlnorm(1) * 0:9, n = n))
 ## failed in R <= 3.2.3
+seqD  <- function(d1,d2) seq.Date(as.Date(d1), as.Date(d2), by = "1 day")
+seqDp <- function(d1,d2) structure(seqD(d1, d2), labels = "%b %d")
 MTbd <- as.Date("1960-02-10")
+(p1   <- chkPretty(MTbd))
 stopifnot(
-    identical(pretty(MTbd),            MTbd),
-    identical(pretty(MTbd + rep(0,2)), MTbd),
-    identical(pretty(MTbd +  0:1), MTbd +  0:1),
-    identical(pretty(MTbd + -1:1), MTbd + -1:1),
-    identical(pretty(MTbd +  0:3), MTbd + 0:3) )
-## all pretty() above gave length >= 5 answer (with duplicated values) in R <= 3.2.3
+    identical(p1, seqDp("1960-02-08", "1960-02-13")) ,
+    identical(chkPretty(MTbd + rep(0,2)), p1) ,
+    identical(chkPretty(MTbd +  0:1), p1) ,
+    identical(chkPretty(MTbd + -1:1), p1) ,
+    identical(chkPretty(MTbd +  0:3), seqDp("1960-02-09", "1960-02-14")) )
+## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3
+## and length 1 or 2 instead of about 5 in R 3.2.4
+(p2 <- chkPretty(as.POSIXct("2002-02-02 02:02"), n = 5, min.n = 5))
+stopifnot(identical(p2, structure(1012611718 + (0:4),
+				  class = c("POSIXct", "POSIXt"), tzone = "",
+				  labels = sprintf("%02d", 58:62 %% 60))))
+## failed in R 3.2.4
 
 
 stopifnot(c("round.Date", "round.POSIXt") %in% as.character(methods(round)))
