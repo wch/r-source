@@ -1419,11 +1419,11 @@ stopifnot(
     identical(chkPretty(MTbd +  0:1), p1) ,
     identical(chkPretty(MTbd + -1:1), p1) ,
     identical(chkPretty(MTbd +  0:3), seqDp("1960-02-09", "1960-02-14")) )
-## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3
+## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3!
 ## and length 1 or 2 instead of about 5 in R 3.2.4
-(p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "CET"), n = 5, min.n = 5))
+(p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
 stopifnot(identical(p2, structure(1012611718 + (0:4),
-				  class = c("POSIXct", "POSIXt"), tzone = "CET",
+				  class = c("POSIXct", "POSIXt"), tzone = "GMT-1",
 				  labels = sprintf("%02d", 58:62 %% 60))))
 ## failed in R 3.2.4
 
