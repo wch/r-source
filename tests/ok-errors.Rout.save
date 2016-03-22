@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-03-14 r70327) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-03-19 r70354) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -33,8 +33,12 @@ Error: test of `options(error=expression(NULL))'
 + }
 > 
 > ## bad infinite recursion / on.exit / ... interactions
+> ##   catch the error to permit different error messages emitted
+> ##   (handling of infinite recursion is different in the AST interpreter
+> ##   and the byte-code interpreter)
+> 
 > bar <- function() 1+1
 > foo <- function() { on.exit(bar()); foo() }
-> foo() # now simple "infinite recursion"
-Error: evaluation nested too deeply: infinite recursion / options(expressions=)?
+> tryCatch(foo(), error=function(x) TRUE) # now simple "infinite recursion"
+[1] TRUE
 > 
