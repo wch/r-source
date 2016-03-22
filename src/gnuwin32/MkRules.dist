@@ -36,27 +36,28 @@
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# With the recommended gcc 4.6.3 toolchain, set this to 32 or 64
+# With the previously recommended gcc 4.6.3 toolchain, set this to 32 or 64
 # MULTI =
 # If the toolchain's bin directory is not in your path, set this to the path
 # (including the trailing /, and use / not \).
 # TOOL_PATH =
 # for other toolchains leave these empty and set the more detailed options below
 
-# With the experimental gcc 4.9.2 toolchain or another toolchain, set 
+# With the recommended gcc 4.9.3 toolchain or another toolchain, set 
 # BINPREF and BINPREF64 (below) to the respective bin directories.  
 # Include the trailing /, and use / not \.
 # Do this in the more detailed options below
+# Set this to 32 or 64
+# WIN = 32
 
 
 ### BEGIN more detailed options
 # Some of the toolchains have prefixes for e.g. ar, gcc.
 # This can also be used to give the full path to the compiler, 
-# including a trailing / .  The experimental gcc 4.9.2 defaults are shown;
-# actual defaults are blank for both of these.
-# BINPREF = c:/Rtools/gcc492_32/bin/
+# including a trailing / .  
+# BINPREF = c:/Rtools/mingw_32/bin/
 # prefix for 64-bit:
-# BINPREF64 = c:/Rtools/gcc492_64/bin/
+# BINPREF64 = c:/Rtools/mingw_64/bin/
 
 # Others use a -m64 or -m32 option to select architectures
 # M_ARCH =
@@ -146,8 +147,6 @@
 # DLLs32 =
 # DLLs64 =
 
-# Define this to 1 if using the gcc 4.9.2 toolchain with dynamic linking
-# COPY_RUNTIME_DLLS =
 
 ## ====== configuration macros for building MSI installer ===========
 

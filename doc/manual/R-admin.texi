@@ -5626,7 +5626,7 @@ use filepaths containing spaces: you can always use the short forms
 For example for a 32-bit build, all on one line,
 
 @example
-PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;c:\MiKTeX\miktex\bin;
+PATH=c:\Rtools\bin;c:\MiKTeX\miktex\bin;
      c:\R\R-3.2\bin\i386;c:\windows;c:\windows\system32
 @end example
 
@@ -5759,8 +5759,8 @@ Windows-style paths.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-The preferred toolchain is part of @code{Rtools*.exe}: this uses a beta
-version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
+The preferred toolchain is part of @code{Rtools*.exe}: this uses a 
+version of @command{gcc 4.9.3} and version rt_v3 of the MinGW-w64
 project's runtime.
 
 This toolchain uses @emph{multilib}: that is there is a single front-end

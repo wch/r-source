@@ -38,15 +38,19 @@
 <div class="download">
   <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(62 megabytes, 32/64 bit)</span></p>
   <ul>
+    <li>This is a build of R-Devel, using a new gcc 4.9.3 toolchain produced
+    by Jeroen Ooms.  For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.
+    It is not compatible with binary packages that were built with the older toolchain, so it defaults
+    to source installs of packages.</li>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li><a href="NEWS.@RWVER@.html">New features in this version</a></li>
   </ul>
-  <p><a href="@RWVER@-493-win.exe">Experimental R-Devel build for Windows</a> </p>
+  <p><a href="@RWVER@-463-win.exe">R-Devel build for Windows using older toolchain.</a> </p>
   <ul>
-    <li>This is a build of R-Devel, using a new gcc 4.9.3 toolchain produced
-    by Jeroen Ooms.  For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.
-    It is not compatible with binary packages on CRAN that include C++ code, so it defaults
-    to source installs of packages.
+      <li>This is a build of R-Devel, using the previous gcc 4.6.3 toolchain.
+      It is not compatible with binary packages that were built with the newer toolchain, 
+      so it defaults
+      to source installs of packages.
   </ul>
 </div>
 

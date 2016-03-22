@@ -412,13 +412,15 @@
       and \code{__tanpi} and uses these if \code{cospi}\emph{etc} are
       not found.  (OS X is the main instance.)
 
-      \item (Windows) An experimental build of R based on \command{gcc}
-      4.9.3 is now available on CRAN on the
-      \file{bin/windows/base/rdevel.html} snapshot page.  This build
-      will require recompilation of at least those packages that include
-      C++ code, and possibly others.  The CRAN binary packages still use
-      the older toolchain, so package installs default to \code{type =
-      "source"}.
+      \item (Windows) The build of R based on \command{gcc}
+      4.9.3 is now the default for R-devel on CRAN on the
+      \file{bin/windows/base/rdevel.html} snapshot page, and is expected
+      to be used in \R 3.3.0 (though the switch has not happened yet). 
+      This build will require recompilation of at least those packages 
+      that include C++ code, and possibly others.  The CRAN binary 
+      packages still use the older toolchain, so package installs 
+      default to \code{type = "source"}.  A build using the older 
+      toolchain will also be temporarily available for comparison purposes.
 
       During the transition, the environment variable
       \env{R_COMPILED_BY} will be defined to indicate which toolchain
