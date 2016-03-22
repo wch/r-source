@@ -563,23 +563,20 @@ else {
 @ 
 and [[checkCall]] is defined as
 <<[[checkCall]] function>>=
-## **** clean up to use tryCatch
 ## **** figure out how to handler multi-line deparses
 ## ****     e.g. checkCall(`{`, quote({}))
 ## **** better design would capture error object, wrap it up, and pass it on
+## **** use approach from codetools to capture partial argument match
+## ****     warnings if enabled?
 checkCall <- function(def, call, signal = warning) {
     if (typeof(def) %in% c("builtin", "special"))
         def <- args(def)
     if (typeof(def) != "closure" || any.dots(call))
         NA
     else {
-        old <- getOption("show.error.messages")
-        if (is.null(old)) old <- TRUE
-        options(show.error.messages=FALSE)
-        msg <- try({match.call(def, call); NULL})
-        options(show.error.messages=old)
+        msg <- tryCatch({match.call(def, call); NULL},
+                        error = function(e) conditionMessage(e))
         if (! is.null(msg)) {
-            msg <- sub("\n$", "", sub("^E.*: ", "", msg))
             emsg <- gettextf("possible error in '%s': %s",
                              deparse(call, 20)[1], msg)
             if (! is.null(signal)) signal(emsg)
