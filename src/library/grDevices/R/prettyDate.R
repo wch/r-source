@@ -34,13 +34,19 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     DAY <- HOUR * 24
     YEAR <- DAY * 365.25
     MONTH <- YEAR / 12
+    makeOutput <- function(at, s, round = TRUE, do) {
+	structure(if(isDate)
+		      if(round) as.Date(round(at, units = "days")) else at
+		  else as.POSIXct(at),
+		  labels = format(at, s$format))
+    }
     if(isDate && D <= n * DAY) { # D <= 'n days' & Date  ==> use days
 	r <- round(n - D/DAY)
 	m <- max(0, r %/% 2)
 	zz <- as.Date(zz)
-	zz <- seq.Date(zz[1] - m, zz[2] + m + (r %% 2), by = "1 day")
-	return(structure(zz, ## "1 DSTday" from steps:
-			 labels = paste("%b", "%d", sep = sep)))
+ 	zz <- seq.Date(zz[1] - m, zz[2] + m + (r %% 2), by = "1 day")
+	return(makeOutput(zz, round = FALSE, ## "1 DSTday" from steps:
+			  list(format = paste("%b", "%d", sep = sep))))
     }
     else if(D < 1) { # unique values / sub-second ranges: [? or use "1 ms" steps below?]
 	m <- min(30, max(D == 0, n/2 - 1)) # "- 1" ==> better match for 'n'
@@ -116,10 +122,6 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 	    break # and live with it instead of error
 	init.i <- init.i - 1L
 	init.at <- calcSteps(steps[[init.i]])
-    }
-    makeOutput <- function(at, s) {
-	structure(if(isDate) as.Date(round(at, units = "days")) else as.POSIXct(at),
-		  labels = format(at, s$format))
     }
     if (init.n == n) ## perfect
         return(makeOutput(init.at, steps[[init.i]]))
