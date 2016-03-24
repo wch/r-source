@@ -48,6 +48,7 @@ export("hsearch_db", "hsearch_db_concepts", "hsearch_db_keywords")
 
 S3method("[", getAnywhere)
 S3method("[", roman)
+S3method(Ops, roman)
 S3method(as.character, person)
 S3method(as.character, roman)
 S3method(as.person, default)

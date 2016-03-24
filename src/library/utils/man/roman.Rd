@@ -43,7 +43,8 @@ y[3]
 (y <- as.roman(format(Sys.Date(), "\%Y")))
 ## Today, and  10, 20, 30, and 100 years ago ...
 y - 10*c(0:3,10)
-
+\dontshow{stopifnot(identical(as.character(as.roman("2016") - 10*c(0:3,10)),
+             c("MMXVI", "MMVI", "MCMXCVI", "MCMLXXXVI", "MCMXVI"))) }
 ## mixture of arabic and roman numbers :
 as.roman(c(NA, 1:3, "", strrep("I", 1:6))) # + NA with a warning for "IIIIII"
 cc <- c(NA, 1:3, strrep("I", 0:5))
