@@ -5209,6 +5209,11 @@ size_t R_ReadConnection(Rconnection con, void *buf, size_t n)
     return con->read(buf, 1, n, con);
 }
 
+Rconnection R_GetConnection(SEXP sConn) {
+    if (!inherits(sConn, "connection")) error(_("invalid connection"));
+    return getConnection(asInteger(sConn));
+}
+
 /* ------------------- (de)compression functions  --------------------- */
 
 /* Code for gzcon connections is modelled on gzio.c from zlib 1.2.3 */
