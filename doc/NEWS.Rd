@@ -469,6 +469,13 @@
 
       \item The deprecated header \file{Rdefines.h} is now compatible
       with defining \code{R_NO_REMAP}.
+
+      \item Connection API now includes \code{R_GetConnection()} which
+      allows packages implementing connections to convert R
+      \code{connection} objects to \code{Rconnection} handles used in
+      the API. Code which previously used the low-level R-internal
+      \code{getConnection()} entry point should switch to the official
+      API.
     }
   }
 
