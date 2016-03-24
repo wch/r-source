@@ -319,6 +319,10 @@
       the size of points separately from the size of plot labels.
       Thanks to Michael Friendly and Milan Bouchet-Valat for ideas
       and patches.
+
+      \item \code{as.roman(ch)} now correctly deals with more diverse
+      character vectors \code{ch}; also arithmetic with resulting roman
+      numbers works in more cases.  (\PR{16779})
     }
   }
 
@@ -415,11 +419,11 @@
       \item (Windows) The build of R based on \command{gcc}
       4.9.3 is now the default for R-devel on CRAN on the
       \file{bin/windows/base/rdevel.html} snapshot page, and is expected
-      to be used in \R 3.3.0 (though the switch has not happened yet). 
-      This build will require recompilation of at least those packages 
-      that include C++ code, and possibly others.  The CRAN binary 
-      packages still use the older toolchain, so package installs 
-      default to \code{type = "source"}.  A build using the older 
+      to be used in \R 3.3.0 (though the switch has not happened yet).
+      This build will require recompilation of at least those packages
+      that include C++ code, and possibly others.  The CRAN binary
+      packages still use the older toolchain, so package installs
+      default to \code{type = "source"}.  A build using the older
       toolchain will also be temporarily available for comparison purposes.
 
       During the transition, the environment variable
@@ -547,7 +551,7 @@
       works again in border cases with large \code{min.n}, returns a
       \code{labels} attribute also for small-range dates and in such cases
       its returned length is closer to the desired \code{n}.  \PR{16761}
-      
+
       \item \code{tsp(x) <- NULL} did not handle objects inheriting from
       both \code{"ts"} and \code{"mts"} properly.  \PR{16769}
     }

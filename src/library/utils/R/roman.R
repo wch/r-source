@@ -1,7 +1,7 @@
 #  File src/library/utils/R/roman.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,38 +16,36 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-as.roman <-
-function(x)
+.as.roman <- function(x, check.range=TRUE)
 {
     if(is.numeric(x))
         x <- as.integer(x)
     else if(is.character(x)) {
-        ## Let's be nice: either strings that are *all* arabics, or
-        ## (hopefully, for the time being) all romans.
-        x <- if(all(grepl("^[[:digit:]]+$", x)))
-            as.integer(x)
-        else
-            .roman2numeric(x)
+	x <- if(all(dig.x <- !nzchar(x) | is.na(x) | grepl("^[[:digit:]]+$", x)))
+		 as.integer(x)
+	     else if(any(dig.x)) {
+		 r <- suppressWarnings(as.integer(x))# NAs for all non-dig
+		 r[!dig.x] <- .roman2numeric(x[!dig.x])
+		 r
+	     }
+	     else ## no digits -- assume all roman characters
+		 .roman2numeric(x)
     }
     else
         stop("cannot coerce 'x' to roman")
-    x[(x <= 0L | x >= 3900L)] <- NA
+    if(check.range) x[x <= 0L | x >= 3900L] <- NA
     class(x) <- "roman"
     x
 }
+as.roman <- function(x) .as.roman(x, check.range=TRUE)
 
-as.character.roman <-
-function(x, ...)
-    .numeric2roman(x)
+as.character.roman <- function(x, ...) .numeric2roman(x)
 
-format.roman <-
-function(x, ...)
-    format(as.character(x))
+format.roman <- function(x, ...) format(as.character.roman(x), ...)
 
-print.roman <-
-function(x, ...)
+print.roman <- function(x, ...)
 {
-    print(noquote(as.character(x)), ...)
+    print(noquote(as.character.roman(x)), ...)
     invisible(x)
 }
 
@@ -60,19 +58,40 @@ function(x, i)
     y
 }
 
+Ops.roman <- function(e1, e2)
+{
+    e1 <- .as.roman(e1, check.range=FALSE)
+    e2 <- .as.roman(e2, check.range=FALSE)
+    as.roman(NextMethod(.Generic))
+}
+
+## for recycling etc
+rep.roman <- function(x, ...) structure(rep(unclass(x), ...), class = class(x))
+
+## romans: used in both utility functions, and not unuseful in general:
+.romans <-
+    c(1000L, 900L, 500L, 400L, 100L, 90L, 50L, 40L, 10L, 9L, 5L,  4L, 1L)
+names(.romans) <-
+    c("M", "CM",  "D",  "CD", "C",  "XC", "L", "XL","X","IX","V","IV","I")
+## Can *not* use stats {dependency cycle at build time} -- hence need our own:
+## .setNames <- function (object = nm, nm) {
+##     names(object) <- nm
+##     object
+## }
+## .romans <- .setNames(
+##     c(1000L, 900L, 500L, 400L, 100L, 90L, 50L, 40L, 10L, 9L, 5L,  4L, 1L),
+##     c("M", "CM",  "D",  "CD", "C",  "XC", "L", "XL","X","IX","V","IV","I"))
+
 .numeric2roman <-
 function(x) {
-    romans <- c("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
-                "V", "IV", "I")
-    numbers <- c(1000L, 900L, 500L, 400L, 100L, 90L, 50L, 40L, 10L, 9L,
-                 5L, 4L, 1L)
+    romaNs <- names(.romans)
     n2r <- function(z) {
         y <- character()
-        for(i in seq_along(romans)) {
-            d <- numbers[i]
+	for(i in seq_along(.romans)) {
+	    d <- .romans[[i]]
             while(z >= d) {
                 z <- z - d
-                y <- c(y, romans[i])
+                y <- c(y, romaNs[i])
             }
         }
         paste(y, collapse = "")
@@ -82,27 +101,16 @@ function(x) {
     x <- as.integer(x)
     ind <- is.na(x) | (x <= 0L) | (x >= 3900L)
     out[ind] <- NA
-    if(any(!ind))
-        out[!ind] <- sapply(x[!ind], n2r)
+    out[!ind] <- vapply(x[!ind], n2r, "")
     out
 }
 
-.roman2numeric <-
-function(x)
+.roman2numeric <- function(x)
 {
-    ## <FIXME>
-    ## What if this fails?
-    ## Should say something like "Not a valid roman number ..."
-    ## </FIXME>
-    romans <- c("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
-                "V", "IV", "I")
-    numbers <- c(1000L, 900L, 500L, 400L, 100L, 90L, 50L, 40L, 10L, 9L,
-                 5L, 4L, 1L)
     out <- integer(length(x))
-    ind <- is.na(x)
-    out[ind] <- NA
-    if(any(!ind)) {
-        y <- toupper(x[!ind])
+    out[ina <- is.na(x) | !nzchar(x)] <- NA
+    if(any(ind <- !ina)) {
+        y <- toupper(x[ind])
         y <- gsub("CM", "DCCCC", y)
         y <- gsub("CD", "CCCC", y)
         y <- gsub("XC", "LXXXX", y)
@@ -114,15 +122,15 @@ function(x)
             warning(sprintf(ngettext(sum(!ok),
                                      "invalid roman numeral: %s",
                                      "invalid roman numerals: %s"),
-                            paste(x[!ind][!ok], collapse = " ")),
+                            paste(x[ind][!ok], collapse = " ")),
                     domain = NA)
-            out[!ind][!ok] <- NA
+            out[ind][!ok] <- NA
         }
-        if(any(ok))
-            out[!ind][ok] <-
-                sapply(strsplit(y[ok], ""),
-                       function(z)
-                       as.integer(sum(numbers[match(z, romans)])))
+	out[ind][ok] <-
+	    vapply(strsplit(y[ok], ""),
+		   function(z)
+		       as.integer(sum(.romans[match(z, names(.romans))])),
+		   integer(1L))
     }
     out
 }
