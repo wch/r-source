@@ -311,6 +311,10 @@
       the size of points separately from the size of plot labels.
       Thanks to Michael Friendly and Milan Bouchet-Valat for ideas
       and patches.
+
+      \item \code{as.roman(ch)} now correctly deals with more diverse
+      character vectors \code{ch}; also arithmetic with resulting roman
+      numbers works in more cases.  (\PR{16779})
     }
   }
 
@@ -537,7 +541,7 @@
       works again in border cases with large \code{min.n}, returns a
       \code{labels} attribute also for small-range dates and in such cases
       its returned length is closer to the desired \code{n}.  \PR{16761}
-      
+
       \item \code{tsp(x) <- NULL} did not handle objects inheriting from
       both \code{"ts"} and \code{"mts"} properly.  \PR{16769}
     }

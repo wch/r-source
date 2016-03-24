@@ -1,7 +1,8 @@
 # Refer to all C routines by their name prefixed by C_
 useDynLib(utils, .registration = TRUE, .fixes = "C_")
 
-export("?", .DollarNames, .S3methods, CRAN.packages, Rprof, Rprofmem, RShowDoc,
+export("?", .DollarNames, .S3methods, .romans,
+       CRAN.packages, Rprof, Rprofmem, RShowDoc,
        RSiteSearch, URLdecode, URLencode, View, adist, alarm, apropos,
        aregexec, argsAnywhere, assignInMyNamespace, assignInNamespace,
        as.roman, as.person, as.personList, as.relistable, aspell,
@@ -47,6 +48,7 @@ export("hsearch_db", "hsearch_db_concepts", "hsearch_db_keywords")
 
 S3method("[", getAnywhere)
 S3method("[", roman)
+S3method(Ops, roman)
 S3method(as.character, person)
 S3method(as.character, roman)
 S3method(as.person, default)
@@ -98,6 +100,7 @@ S3method(relist, default)
 S3method(relist, factor)
 S3method(relist, list)
 S3method(relist, matrix)
+S3method(rep, roman)
 S3method(stack, data.frame)
 S3method(stack, default)
 S3method(str, POSIXt)
@@ -119,7 +122,7 @@ S3method(unstack, data.frame)
 S3method(unstack, default)
 S3method(upgrade, packageStatus)
 ## can't register update.packageStatus as update is in stats
-## and would create a cycle.
+## and would create a cycle, i.e., can NOT use anything from stats
 
 export("bibentry")
 S3method("$", "bibentry")
