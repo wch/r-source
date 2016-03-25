@@ -58,6 +58,8 @@
 # BINPREF = c:/Rtools/mingw_32/bin/
 # prefix for 64-bit:
 # BINPREF64 = c:/Rtools/mingw_64/bin/
+# Set this to indicate a non-gcc compiler and version
+# COMPILED_BY = <determined automatically>
 
 # Others use a -m64 or -m32 option to select architectures
 # M_ARCH =

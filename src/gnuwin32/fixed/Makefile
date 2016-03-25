@@ -29,6 +29,7 @@ ifeq "$(WIN)" "64"
 	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
+	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
 	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
@@ -45,6 +46,7 @@ else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
+	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  -e "s|DT_ARCH =|DT_ARCH = $(DT_ARCH)|" \

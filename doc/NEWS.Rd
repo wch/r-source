@@ -429,7 +429,13 @@
       During the transition, the environment variable
       \env{R_COMPILED_BY} will be defined to indicate which toolchain
       was used to compile R (and hence, which should be used to compile
-      code in packages).
+      code in packages).  The \code{COMPILED_BY} variable described below
+      will be a permanent replacement for this.
+      
+      \item (Windows) A \command{make} and \command{R CMD config} variable
+      named \code{COMPILED_BY} has been added.  This indicates
+      which toolchain was used to compile R (and hence, which should be
+      used to compile code in packages).
     }
   }
 
