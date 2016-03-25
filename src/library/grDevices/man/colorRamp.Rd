@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colorRamp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{colorRamp}
@@ -26,7 +26,7 @@ colorRampPalette(colors, \dots)
   \item{space}{a character string; interpolation in RGB or CIE Lab
     color spaces.}
   \item{interpolate}{use spline or linear interpolation.}
-  \item{alpha}{logical: should alpha channel (opacity) values should be
+  \item{alpha}{logical: should alpha channel (opacity) values be
     returned?   It is an error to give a true value if
     \code{space} is specified.}
   \item{\dots}{arguments to pass to \code{colorRamp}.}
