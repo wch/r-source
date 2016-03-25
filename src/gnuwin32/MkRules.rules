@@ -11,6 +11,7 @@ MULTI ?=
 TOOL_PATH ?=
 BINPREF ?=
 BINPREF64 ?= x86_64-w64-mingw32-
+COMPILED_BY ?= gcc-$(shell $(CC) --version | egrep -o "([0-9]{1,}\.){2,}[0-9]{1,}")
 M_ARCH ?=
 AS_ARCH ?=
 RC_ARCH ?=

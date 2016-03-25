@@ -109,7 +109,16 @@ Variables:
   TCLTK_CPPFLAGS
 		flags needed for finding the tcl.h and tk.h headers
   TCLTK_LIBS    flags needed for linking against the Tcl and Tk libraries
+"
 
+if test "${R_OSTYPE}" = "windows"; then
+  usage="${usage}
+Windows only:
+  COMPILED_BY   name and version of compiler used to build R"
+fi
+
+usage="${usage}
+  
 Report bugs at bugs.r-project.org ."
 
 ## <NOTE>
@@ -250,7 +259,7 @@ ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
-ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT"
+ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT COMPILED_BY"
 
 ## Can we do this elegantly using case?
 
