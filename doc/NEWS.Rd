@@ -416,18 +416,14 @@
       and \code{__tanpi} and uses these if \code{cospi}\emph{etc} are
       not found.  (OS X is the main instance.)
 
-      \item (Windows) The build of R based on \command{gcc}
-      4.9.3 is now the default for R-devel on CRAN on the
-      \file{bin/windows/base/rdevel.html} snapshot page, and is expected
-      to be used in \R 3.3.0 (though the switch has not happened yet).
-      This build will require recompilation of at least those packages
-      that include C++ code, and possibly others.  The CRAN binary
-      packages still use the older toolchain, so package installs
-      default to \code{type = "source"}.  A build using the older
-      toolchain will also be temporarily available for comparison purposes.
+      \item (Windows) R is now built using \command{gcc}
+      4.9.3.  This build will require recompilation of at least those packages
+      that include C++ code, and possibly others.  A build of R-devel using 
+      the older toolchain will be temporarily available for comparison 
+      purposes.
 
       During the transition, the environment variable
-      \env{R_COMPILED_BY} will be defined to indicate which toolchain
+      \env{R_COMPILED_BY} has been defined to indicate which toolchain
       was used to compile R (and hence, which should be used to compile
       code in packages).  The \code{COMPILED_BY} variable described below
       will be a permanent replacement for this.
