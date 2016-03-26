@@ -1,5 +1,5 @@
 
-R version 3.3.0 alpha (2016-03-16 r70342)
+R version 3.3.0 alpha (2016-03-25 r70378)
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2069,7 +2069,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.074 0.014 1.088 0 0 
+Time elapsed:  1.095 0.018 1.113 0 0 
 > grDevices::dev.off()
 null device 
           1 

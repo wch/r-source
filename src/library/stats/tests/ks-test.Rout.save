@@ -1,5 +1,5 @@
 
-R version 3.3.0 alpha (2016-03-16 r70342)
+R version 3.3.0 alpha (2016-03-25 r70378)
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.108   0.011   0.109 
+  0.140   0.018   0.147 

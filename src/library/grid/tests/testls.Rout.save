@@ -1,5 +1,5 @@
 
-R version 3.3.0 alpha (2016-03-16 r70342)
+R version 3.3.0 alpha (2016-03-25 r70378)
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.211   0.015   0.214 
+  0.228   0.021   0.237 
