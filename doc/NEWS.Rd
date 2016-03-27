@@ -422,7 +422,7 @@
       still accepted.
 
       \item \command{configure} looks for \code{__cospi}, \code{__sinpi}
-      and \code{__tanpi} and uses these if \code{cospi}\emph{etc} are
+      and \code{__tanpi} and uses these if \code{cospi} \emph{etc} are
       not found.  (OS X is the main instance.)
 
       \item (Windows) R is now built using \command{gcc}
