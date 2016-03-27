@@ -11,7 +11,16 @@
       \item Placeholder.
     }
   }
-}
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The deprecated support for PCRE versions 8.10 to 8.31 will
+      be removed prior to \R 3.4.0.
+
+      \item (Windows only) Deprecated function \code{setInternet2()}
+      will be removed prior to \R 3.4.0.
+    }
+  }      
+} 
 
 \section{\Rlogo CHANGES IN R 3.3.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
