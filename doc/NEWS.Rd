@@ -16,8 +16,7 @@
       \item The deprecated support for PCRE versions 8.10 to 8.31 will
       be removed prior to \R 3.4.0.
 
-      \item (Windows only) Deprecated function \code{setInternet2()}
-      will be removed prior to \R 3.4.0.
+      \item (Windows only) Function \code{setInternet2()} is defunct.
     }
   }      
 } 
