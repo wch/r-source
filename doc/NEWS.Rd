@@ -95,8 +95,8 @@
       the HTML help system if it is available.  If no news file is found,
       a visible \code{NULL} is returned to the console.
 
-      \item \code{as.raster(x)} now also accepts \code{\link{raw}}
-      arrays \code{x} assuming values in \code{0:255}.
+      \item \code{as.raster(x)} now also accepts \code{raw} arrays
+      \code{x} assuming values in \code{0:255}.
 
       \item Subscripting of matrix/array objects of type
       \code{"expression"} is now supported.
@@ -170,7 +170,7 @@
 
       \item \code{tools::undoc(dir = D)} and \code{codoc(dir = D)} now
       also work when \code{D} is a directory whose \code{normalizePath()}ed
-      version no longer ends in the package name, e.g.\sspace{}from a symlink.
+      version does not end in the package name, e.g.\sspace{}from a symlink.
 
       \item \code{abbreviate()} has more support for multi-byte
       character sets -- it no longer removes bytes within characters and
@@ -202,10 +202,10 @@
       The choice can easily be overridden \emph{via} environment
       variable \env{R_INTERACTIVE_DEVICE}.
 
-      \item On Unix-like platforms with the \command{getline} C library
-      function, \code{system(*,intern = TRUE)} no longer truncates
-      (output) lines longer than 8192 characters, thanks to Karl
-      Millar's \PR{16544}.
+      \item On Unix-like platforms which support the \command{getline} C
+      library function, \code{system(*,intern = TRUE)} no longer
+      truncates (output) lines longer than 8192 characters, thanks to
+      Karl Millar's \PR{16544}.
 
       \item \code{rank()} gains a \code{ties.method = "last"} option,
       for convenience (and symmetry).
@@ -230,8 +230,8 @@
       stored as part of a recorded plot.
 
       \item S4 dispatch works within calls to \code{.Internal()}. This
-      means explicit S4 generics are no longer needed for \code{unlist}
-      and \code{as.vector}.
+      means explicit S4 generics are no longer needed for
+      \code{unlist()} and \code{as.vector()}.
 
       \item Only font family names starting with \samp{"Hershey"} (and
       not \samp{"Her"} as before) are given special treatment by the
@@ -276,22 +276,21 @@
       \item Avoid \pkg{parallel} dependency on \pkg{stats} for port
       choice and random number seeds.  (\PR{16668})
 
-      \item The radix sort algorithm and implementation from data.table
-      (forder) replaces the existing but limited radix (counting) sort
-      and adds a new method for \code{order()}.  Contributed by Matt
-      Dowle and Arun Srinivasan, the new algorithm supports logical,
-      integer (even with large values), real, and character vectors.  It
-      outperforms all other methods, but there are some caveats (see
-      \code{?sort}).
+      \item The radix sort algorithm and implementation from
+      \CRANpkg{data.table} (\code{forder}) replaces the previous radix
+      (counting) sort and adds a new method for \code{order()}.
+      Contributed by Matt Dowle and Arun Srinivasan, the new algorithm
+      supports logical, integer (even with large values), real, and
+      character vectors.  It outperforms all other methods, but there
+      are some caveats (see \code{?sort}).
 
       \item The \code{order()} function gains a \code{method} argument
       for choosing between \code{"shell"} and \code{"radix"}.
 
-      \item New function \code{grouping} returns a permutation that
-      stably rearranges data so that identical values are
-      adjacent.  The return value includes extra partitioning
-      information on the groups.  The implementation came included with
-      the new radix sort.
+      \item New function \code{grouping()} returns a permutation that
+      stably rearranges data so that identical values are adjacent.  The
+      return value includes extra partitioning information on the
+      groups.  The implementation came included with the new radix sort.
 
       \item \code{rhyper(nn, m, n, k)} no longer returns \code{NA} when
       one of the three parameters exceeds the maximal integer.
@@ -299,7 +298,7 @@
       \item \code{switch()} now warns when no alternatives are provided.
 
       \item \code{parallel::detectCores()} now has default \code{logical
-	= TRUE)} on all platforms -- as this was the default on Windows,
+	= TRUE} on all platforms -- as this was the default on Windows,
       this change only affects Sparc Solaris.
 
       Option \code{logical = FALSE} is now supported on Linux and recent
@@ -316,7 +315,7 @@
       \item \R now uses a new version of the logo (donated to the R
       Foundation by RStudio).  It is defined in \file{.svg} format, so
       will resize without unnecessary degradation when displayed on
-      HTML pages---there is also vector version for use in PDF files.
+      HTML pages---there is also a vector PDF version.
 
       \item New function \code{.traceback()} returns the stack trace
       which \code{traceback()} prints.
@@ -417,12 +416,12 @@
 
       \item The minimum preferred version of PCRE has since \R 3.0.0
       been 8.32 (released in Nov 2012).  Versions 8.10 to 8.31 are now
-      deprecated (with warnings from \command{configure}), but for now
-      still accepted.
+      deprecated (with warnings from \command{configure}), but will
+      still be accepted until \R 3.4.0.
 
-      \item \command{configure} looks for \code{__cospi}, \code{__sinpi}
-      and \code{__tanpi} and uses these if \code{cospi} \emph{etc} are
-      not found.  (OS X is the main instance.)
+      \item \command{configure} looks for C functions \code{__cospi},
+      \code{__sinpi} and \code{__tanpi} and uses these if \code{cospi}
+      \emph{etc} are not found.  (OS X is the main instance.)
 
       \item (Windows) R is now built using \command{gcc}
       4.9.3.  This build will require recompilation of at least those packages
@@ -476,7 +475,7 @@
 
       The manual has long said that \R{} headers should \bold{not} be
       included within an \code{extern "C"} block, and almost all the
-      packages affected by this change are doing so.
+      packages affected by this change were doing so.
 
       \item Including header \file{S.h} from C++ code would fail on some
       platforms, and so gives a compilation error on all.
@@ -484,12 +483,12 @@
       \item The deprecated header \file{Rdefines.h} is now compatible
       with defining \code{R_NO_REMAP}.
 
-      \item Connection API now includes \code{R_GetConnection()} which
-      allows packages implementing connections to convert R
-      \code{connection} objects to \code{Rconnection} handles used in
-      the API. Code which previously used the low-level R-internal
-      \code{getConnection()} entry point should switch to the official
-      API.
+      \item The connections API now includes a function
+      \code{R_GetConnection()} which allows packages implementing
+      connections to convert R \code{connection} objects to
+      \code{Rconnection} handles used in the API. Code which previously
+      used the low-level R-internal \code{getConnection()} entry point
+      should switch to the official API.
     }
   }
 
@@ -518,8 +517,8 @@
       \item \code{tail.matrix()} did not work for zero rows matrices,
       and could produce row \dQuote{labels} such as \code{"[1e+05,]"}.
 
-      \item Data frames with column name \code{"stringsAsFactors"} now
-      format and print correctly.  (\PR{16580})
+      \item Data frames with a column named \code{"stringsAsFactors"}
+      now format and print correctly.  (\PR{16580})
 
       \item \code{cor()} is now guaranteed to return a value with
       absolute value less than or equal to 1. (\PR{16638})
@@ -543,8 +542,8 @@
       (\PR{16716})
 
       \item Jumps to outer contexts, for example in error recovery, now
-      make intermediate jumps to contexts where \code{on.exit} actions
-      are established instead of trying to run all \code{on.exit}
+      make intermediate jumps to contexts where \code{on.exit()} actions
+      are established instead of trying to run all \code{on.exit()}
       actions before jumping to the final target. This unwinds the stack
       gradually, releases resources held on the stack, and significantly
       reduces the chance of a segfault when running out of C stack
@@ -562,8 +561,8 @@
       \code{labels} attribute also for small-range dates and in such cases
       its returned length is closer to the desired \code{n}.  \PR{16761}
 
-      \item \code{tsp(x) <- NULL} did not handle objects inheriting from
-      both \code{"ts"} and \code{"mts"} properly.  \PR{16769}
+      \item \code{tsp(x) <- NULL} did not handle correctly objects
+      inheriting from both \code{"ts"} and \code{"mts"}.  \PR{16769}
     }
   }
 }
@@ -571,9 +570,10 @@
 \section{\Rlogo CHANGES IN R 3.2.4 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{format.POSIXlt()} behaved wrongly, e.g.,
-      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz="CET"),
-	usetz=TRUE)} ended in two \code{"CEST"} time formats.
+      \item \code{format.POSIXlt()} behaved incorrectly in \R 3.2.4.
+      E.g.\sspace{}the output of
+      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz = "CET"),
+	usetz = TRUE)} ended in two \code{"CEST"} time formats.
     }
   }
 }
