@@ -8,9 +8,10 @@
 \section{\Rlogo CHANGES IN R 3.2.4 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{format.POSIXlt()} behaved wrongly, e.g.,
-      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz="CET"),
-	usetz=TRUE)} ended in two \code{"CEST"} time formats.
+      \item \code{format.POSIXlt()} behaved incorrectly in \R 3.2.4.
+      E.g.\sspace{}the output of
+      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz = "CET"),
+	usetz = TRUE)} ended in two \code{"CEST"} time formats.
     }
   }
 }
