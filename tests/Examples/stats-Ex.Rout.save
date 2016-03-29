@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-03-25 r70378) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-03-28 r70390) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -12207,6 +12207,38 @@ Coefficients of ridge terms:
 > 
 > ### ** Examples
 > 
+> C <- chol(S <- toeplitz(.9 ^ (0:31))) # Cov.matrix and its root
+> all.equal(S, crossprod(C))
+[1] TRUE
+> set.seed(17)
+> X <- matrix(rnorm(32000), 1000, 32)
+> Z <- X %*% C  ## ==>  cov(Z) ~=  C'C = S
+> all.equal(cov(Z), S, tol = 0.08)
+[1] TRUE
+> pZ <- prcomp(Z, tol = 0.1)
+> summary(pZ) # only ~14 PCs (out of 32)
+Importance of first k=14 (out of 32) components:
+                          PC1    PC2    PC3     PC4     PC5     PC6     PC7
+Standard deviation     3.6415 2.7178 1.8447 1.39430 1.10207 0.90922 0.76951
+Proportion of Variance 0.4173 0.2324 0.1071 0.06118 0.03822 0.02602 0.01864
+Cumulative Proportion  0.4173 0.6498 0.7569 0.81806 0.85628 0.88230 0.90094
+                           PC8     PC9    PC10    PC11    PC12    PC13   PC14
+Standard deviation     0.67490 0.60833 0.51638 0.49048 0.44452 0.40326 0.3904
+Proportion of Variance 0.01433 0.01165 0.00839 0.00757 0.00622 0.00512 0.0048
+Cumulative Proportion  0.91527 0.92692 0.93531 0.94288 0.94910 0.95422 0.9590
+> ## or choose only 3 PCs more directly:
+> pz3 <- prcomp(Z, rank. = 3)
+> summary(pz3) # same numbers as the first 3 above
+Importance of first k=3 (out of 32) components:
+                          PC1    PC2    PC3
+Standard deviation     3.6415 2.7178 1.8447
+Proportion of Variance 0.4173 0.2324 0.1071
+Cumulative Proportion  0.4173 0.6498 0.7569
+> stopifnot(ncol(pZ$rotation) == 14, ncol(pz3$rotation) == 3,
++           all.equal(pz3$sdev, pZ$sdev, tol = 1e-15)) # exactly equal typically
+> 
+> 
+> 
 > 
 > cleanEx()
 > nameEx("predict.HoltWinters")
@@ -18049,7 +18081,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.318 0.105 4.423 0 0 
+Time elapsed:  4.18 0.276 4.456 0 0 
 > grDevices::dev.off()
 null device 
           1 
