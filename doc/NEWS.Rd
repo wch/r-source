@@ -342,6 +342,10 @@
       directly aim for less than \code{min(n,p)} PC's.  The
       \code{summary()} and its \code{print()} method have been amended,
       notably for this case.
+
+      \item \code{gzcon} gains a new option \code{text}, which marks the
+      connection as text-oriented (so e.g. \code{pushBack} works). It is
+      still always opened in binary mode.
     }
   }
 

@@ -267,8 +267,8 @@ writeChar <- function(object, con, nchars = nchar(object, type="chars"),
     .Internal(writeChar(object, con, as.integer(nchars), eos, useBytes))
 }
 
-gzcon <- function(con, level = 6, allowNonCompressed = TRUE)
-    .Internal(gzcon(con, level, allowNonCompressed))
+gzcon <- function(con, level = 6, allowNonCompressed = TRUE, text = FALSE)
+    .Internal(gzcon(con, level, allowNonCompressed, text))
 
 socketSelect <- function(socklist, write = FALSE, timeout = NULL) {
     if (is.null(timeout))
