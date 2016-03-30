@@ -179,11 +179,13 @@ dynGet <- function(x, ifnotfound = stop(gettextf("%s not found",
 		   minframe = 1L, inherits = FALSE)
 {
     n <- sys.nframe()
+    myObj <- structure(list(.b = as.raw(7)), foo = 47L)# "very improbable" object
     while (n > minframe) {
 	n <- n - 1L
 	env <- sys.frame(n)
-	if ( exists   (x, envir = env, inherits=inherits))
-	    return(get(x, envir = env, inherits=inherits))
+	r <- get0(x, envir = env, inherits=inherits, ifnotfound = myObj)
+	if(!identical(r, myObj))
+	    return(r)
     }
     ifnotfound
 }
