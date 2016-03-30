@@ -3820,9 +3820,10 @@ aggregate(as.ts(c(1,2,3,4,5,6,7,8,9,10)),1/5,mean)
 
 
 ## prcomp(tol=1e-6)
+set.seed(16)
 x <- matrix(runif(30),ncol=10)
 s <- prcomp(x, tol=1e-6)
-stopifnot(length(s$sdev) == ncol(s$rotation))
+stopifnot(length(s$sdev) == 3, ncol(s$rotation) == 2)
 summary(s)
 ## last failed in 2.2.0
 
