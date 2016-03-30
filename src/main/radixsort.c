@@ -644,7 +644,7 @@ unsigned long long dtwiddle(void *p, int i, int order)
 {
     u.d = order * ((double *)p)[i]; // take care of 'order' at the beginning
     if (R_FINITE(u.d)) {
-	u.ull = (u.d) ? u.ull + ((u.ull & dmask1) << 1) : 0;
+	u.ull = (u.d != 0.0) ? u.ull + ((u.ull & dmask1) << 1) : 0;
     } else if (ISNAN(u.d)) {
 	/* 1. NA twiddled to all bits 0, sorts first.  R's value 1954 cleared.
 
