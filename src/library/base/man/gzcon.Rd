@@ -14,13 +14,17 @@
   connection.  Standard \code{gzip} headers are assumed.
 }
 \usage{
-gzcon(con, level = 6, allowNonCompressed = TRUE)
+gzcon(con, level = 6, allowNonCompressed = TRUE, text = FALSE)
 }
 \arguments{
   \item{con}{a connection.}
   \item{level}{integer between 0 and 9, the compression level when writing.}
   \item{allowNonCompressed}{logical.  When reading, should
     non-compressed input be allowed?}
+  \item{text}{logical. Should the connection be text-oriented? This is
+    distinct from the mode of the connection (must always be binary).
+    If \code{TRUE}, \code{\link{pushBack}} works on the connection,
+    otherwise \code{\link{readBin}} and friends apply.}
 }
 \details{
   If \code{con} is open then the modified connection is opened.  Closing

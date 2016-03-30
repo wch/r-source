@@ -314,6 +314,10 @@
       \item \code{as.roman(ch)} now correctly deals with more diverse
       character vectors \code{ch}; also arithmetic with resulting roman
       numbers works in more cases.  (\PR{16779})
+
+      \item \code{gzcon()} gains a new option \code{text}, which marks the
+      connection as text-oriented (so e.g. \code{pushBack()} works). It is
+      still always opened in binary mode.
     }
   }
 
