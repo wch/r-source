@@ -1,7 +1,7 @@
 #  File src/library/stats/R/integrate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,20 +34,20 @@ integrate <- function(f, lower, upper, ..., subdivisions = 100L,
 			as.double(abs.tol), as.double(rel.tol),
 			limit = limit)
     } else { # indefinite integral
-	if(is.na(lower) || is.na(upper)) stop("a limit is missing")
+	if(anyNA(lower) || anyNA(upper)) stop("a limit is NA or NaN")
 	if (is.finite(lower)) {
-	    inf <- 1
+	    inf <- 1L
 	    bound <- lower
 	} else if (is.finite(upper)) {
-	    inf <- -1
+	    inf <- -1L
 	    bound <- upper
 	} else {
-	    inf <- 2
+	    inf <- 2L
 	    bound <- 0.0
 	}
 	wk <- .External(C_call_dqagi,
 			ff, rho = environment(),
-			as.double(bound), as.integer(inf),
+			as.double(bound), inf,
 			as.double(abs.tol), as.double(rel.tol),
 			limit = limit)
     }

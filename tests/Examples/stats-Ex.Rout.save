@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-03-28 r70390) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-03-29 r70391) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -8074,6 +8074,15 @@ Error in integrate(f, 0, 1) :
 0 with absolute error < 0
 > integrate(dnorm, 0, Inf)   ## works
 0.5 with absolute error < 4.7e-05
+> ## Don't show: 
+> tools::assertError(
++ ## End(Don't show)
++ integrate(dnorm, 0:1, 20) #-> error!
++ ## "silently" gave  integrate(dnorm, 0, 20)  in earlier versions of R
++ ## Don't show: 
++  , verbose=TRUE)
+Asserted error: 'lower' must be of length one
+> ## End(Don't show)
 > 
 > 
 > 

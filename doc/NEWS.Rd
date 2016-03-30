@@ -8,7 +8,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item User errors such as \code{integrate(f, 0:1, 2)} are now caught.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

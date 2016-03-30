@@ -1,6 +1,6 @@
 % File src/library/stats/man/integrate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{integrate}
@@ -43,6 +43,10 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
 
   \code{rel.tol} cannot be less than \code{max(50*.Machine$double.eps,
     0.5e-28)} if \code{abs.tol <= 0}.
+
+  In \R versions \eqn{\le}{<=} 3.2.x, the first entry of
+  \code{lower} and \code{upper} were used where as an error is signalled
+  now if they are not of length one.
 }
 \note{
   Like all numerical integration routines, these evaluate the function
@@ -110,6 +114,10 @@ integrate(dnorm, 0, 200)
 integrate(dnorm, 0, 2000)
 integrate(dnorm, 0, 20000) ## fails on many systems
 integrate(dnorm, 0, Inf)   ## works
+\dontshow{tools::assertError(}
+integrate(dnorm, 0:1, 20) #-> error!
+## "silently" gave  integrate(dnorm, 0, 20)  in earlier versions of R
+\dontshow{ , verbose=TRUE)}
 }
 \keyword{math}
 \keyword{utilities}

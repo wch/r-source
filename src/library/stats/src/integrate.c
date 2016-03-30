@@ -25,7 +25,14 @@
 #include <Rinternals.h>
 #include <R_ext/Applic.h>
 
-/* alled via .External(.) :*/
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
+
+/* called via .External(.) :*/
 SEXP call_dqags(SEXP args);
 SEXP call_dqagi(SEXP args);
 
@@ -74,7 +81,9 @@ SEXP call_dqags(SEXP args)
     args = CDR(args);
     is.f = CAR(args); args = CDR(args);
     is.env = CAR(args); args = CDR(args);
+    if(length(CAR(args)) > 1) error(_("'%s' must be of length one"), "lower");
     lower = asReal(CAR(args)); args = CDR(args);
+    if(length(CAR(args)) > 1) error(_("'%s' must be of length one"), "upper");
     upper = asReal(CAR(args)); args = CDR(args);
     epsabs = asReal(CAR(args)); args = CDR(args);
     epsrel = asReal(CAR(args)); args = CDR(args);
@@ -116,6 +125,7 @@ SEXP call_dqagi(SEXP args)
     args = CDR(args);
     is.f = CAR(args); args = CDR(args);
     is.env = CAR(args); args = CDR(args);
+    if(length(CAR(args)) > 1) error(_("'%s' must be of length one"), "bound");
     bound = asReal(CAR(args)); args = CDR(args);
     inf = asInteger(CAR(args)); args = CDR(args);
     epsabs = asReal(CAR(args)); args = CDR(args);
