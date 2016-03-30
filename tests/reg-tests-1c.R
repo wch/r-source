@@ -1476,3 +1476,11 @@ tsp(z) <- NULL
 stopifnot(identical(class(z), "matrix"))
 ## kept "mts" in 3.2.4, PR#16769
 
+
+## body() / formals() notably the replacement versions
+x <- NULL; tools::assertWarning(   body(x) <-    body(mean))	# to be error
+x <- NULL; tools::assertWarning(formals(x) <- formals(mean))	# to be error
+x <- NULL; tools::assertWarning(f <-    body(x)); stopifnot(is.null(f))
+x <- NULL; tools::assertWarning(f <- formals(x)); stopifnot(is.null(f))
+## these all silently coerced NULL to a function in R <= 3.2.x
+

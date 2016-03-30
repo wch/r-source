@@ -19,6 +19,13 @@
       \item (Windows only) Function \code{setInternet2()} is defunct.
     }
   }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Getting or setting \code{body()} or \code{formals()} on
+      non-functions for now signals a warning and may become an error
+      for setting.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.3.0}{

@@ -1,6 +1,6 @@
 % File src/library/base/man/funprog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 \name{funprog}
 \alias{Filter}
@@ -144,10 +144,10 @@ asqrt(2, 30)(-1) # Starting from a negative value => -sqrt(2)
 ## A list of all functions in the base environment:
 funs <- Filter(is.function, sapply(ls(baseenv()), get, baseenv()))
 ## Functions in base with more than 10 arguments:
-names(Filter(function(f) length(formals(args(f))) > 10, funs))
+names(Filter(function(f) length(formals(f)) > 10, funs))
 ## Number of functions in base with a '...' argument:
 length(Filter(function(f)
-              any(names(formals(args(f))) \%in\% "..."),
+              any(names(formals(f)) \%in\% "..."),
               funs))
 \donttest{
 ## Find all objects in the base environment which are *not* functions:
