@@ -166,6 +166,18 @@
                     getGeneric(as.character(fname), TRUE, where)
                 else def
         def <- selectMethod(what, signature, fdef = fdef, optional = TRUE)
+        if(isRematched(def)) {
+            expr <- substitute(trace(.local, tracer = tr, at = at,
+                                     exit = ex,  print = pr,
+                                     edit = ed,
+                                     where = sys.frame(sys.nframe())),
+                               list( tr = substitute(tracer),
+                                    ex = exit, at = at, pr = print,
+                                    ed = edit))
+            at <- 3L
+            tracer <- expr
+            print <- FALSE
+        }
         if(is.null(def)) {
             warning(gettextf("cannot untrace method for %s; no method defined for this signature: %s",
                              sQuote(what),
@@ -313,7 +325,8 @@
 		  else "specified method for function"
         object <- paste0(" ", object, " \"", what, "\" ")
         .message(action, object, location)
-        if(nameSpaceCase && !untrace && exists(what, envir = .GlobalEnv)) {
+        ## tracing methods (signature not null) works without setting where
+        if(nameSpaceCase && !untrace && is.null(signature) && exists(what, envir = .GlobalEnv)) {
 	    untcall <- paste0("untrace(\"", what,
 			      "\", where = getNamespace(\"", pname, "\"))")
             .message("Warning: Tracing only in the namespace; to untrace you will need:\n    ",

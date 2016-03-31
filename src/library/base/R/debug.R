@@ -16,12 +16,37 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-debug <- function(fun, text="", condition=NULL)
-    .Internal(debug(fun, text, condition))
-debugonce <- function(fun, text="", condition=NULL)
-    .Internal(debugonce(fun, text, condition))
-undebug <- function(fun) .Internal(undebug(fun))
-isdebugged <- function(fun) .Internal(isdebugged(fun))
+debug <- function(fun, text = "", condition = NULL, signature = NULL) {
+    if(is.null(signature))
+        .Internal(debug(fun, text, condition))
+    else if(requireNamespace("methods"))
+        methods::.debugMethod(fun, text, condition, signature, once = FALSE)
+    else stop("failed to load the methods package for debugging by signature")
+}
+
+debugonce <- function(fun, text = "", condition = NULL, signature = NULL) {
+    if(is.null(signature))
+        .Internal(debugonce(fun, text, condition))
+    else if(requireNamespace("methods"))
+        methods::.debugMethod(fun, text, condition, signature, once = TRUE)
+    else stop("failed to load the methods package for debugging by signature")
+}
+
+undebug <- function(fun, signature = NULL) {
+    if(is.null(signature))
+        .Internal(undebug(fun))
+    else if(requireNamespace("methods"))
+        methods::.undebugMethod(fun, signature = signature)
+    else stop("failed to load methods package for undebugging by signature")
+}
+
+isdebugged <- function(fun, signature = NULL) {
+    if(is.null(signature))
+        .Internal(isdebugged(fun))
+    else if(requireNamespace("methods"))
+        methods::.isMethodDebugged(fun, signature)
+    else stop("failed to load methods package for handling signature")
+}
 
 browserText <- function(n=1L) .Internal(browserText(n))
 browserCondition <- function(n=1L) .Internal(browserCondition(n))

@@ -136,39 +136,8 @@ function(expr, envir, doEval = TRUE)
         }
         else
             fdef <- methods::getGeneric(f, where = where)
-        args <- formals(fdef)
-        call <- match.call(fdef, expr, expand.dots=FALSE)
-        args[names(call[-1L])] <- call[-1L]
-        if ("..." %in% names(call))
-            args$... <- args$...[[1L]]
-        ## make the signature
-        sigNames <- fdef@signature
-        sigClasses <- rep.int("missing", length(sigNames))
-        names(sigClasses) <- sigNames
-        for(arg in sigNames) {
-            argExpr <- methods::elNamed(args, arg)
-            if(!missing(argExpr) && !is.null(argExpr)) {
-                simple <- (is.character(argExpr) || is.name(argExpr))
-                ## TODO:  ideally, if doEval is TRUE, we would like to
-                ## create the same context used by applyClosure in
-                ## eval.c, but then skip the actual evaluation of the
-                ## body.  If we could create this environment then
-                ## passing it to selectMethod is closer to the semantics
-                ## of the "real" function call than the code below.
-                ## But, seems to need a change to eval.c and a flag to
-                ## the evaluator.
-                if(doEval || !simple) {
-                    argVal <- try(eval(argExpr, envir))
-                    if(methods::is(argVal, "try-error"))
-                        stop(gettextf("error in trying to evaluate the expression for argument %s (%s)",
-                                      sQuote(arg), deparse(argExpr)),
-                             domain = NA)
-                    sigClasses[[arg]] <- class(argVal)[1L]
-                }
-                else
-                    sigClasses[[arg]] <- as.character(argExpr)
-            }
-        }
+        sigClasses <- .signatureFromCall(fdef, expr, envir, doEval)
+        sigNames <- names(sigClasses)
         method <- methods::selectMethod(f, sigClasses, optional=TRUE,
                                         fdef = fdef)
         if(methods::is(method, "MethodDefinition")) {

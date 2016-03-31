@@ -327,6 +327,23 @@ isS3method <- function(method, f, class, envir = parent.frame())
     exists(method, envir = S3Table, inherits = FALSE)
 }
 
+isS3stdGeneric <- function(f) {
+    bdexpr <- body(f)
+    ## protect against technically valid but bizarre
+    ## function(x) { { { UseMethod("gen")}}} by
+    ## repeatedly consuming the { until we get to the first non { expr
+    while(as.character(bdexpr[[1L]]) == "{")
+        bdexpr <- bdexpr[[2L]]
+
+    ## We only check if it is a "standard" s3 generic. i.e. the first non-{
+    ## expression is a call to UseMethod. This will return FALSE if any
+    ## work occurs before the UseMethod call ("non-standard" S3 generic)
+    ret <- is.call(bdexpr) && identical(bdexpr[[1L]], as.name("UseMethod"))
+    if(ret)
+        names(ret) <- bdexpr[[2L]] ## arg passed to UseMethod naming generic
+    ret
+}
+
 getFromNamespace <-
 function(x, ns, pos = -1, envir = as.environment(pos))
 {

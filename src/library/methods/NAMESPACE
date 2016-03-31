@@ -213,9 +213,13 @@ export(testVirtual)
 export(traceOff)
 export(traceOn)
 export(tryNew)
+export(isRematched)
 export(unRematchDefinition)
 export(validObject)
 export(validSlotNames)
+export(.isMethodDebugged)
+export(.debugMethod)
+export(.undebugMethod)
 
 ## the next 2 would not be needed if R_initMethods looked in the namespace, not globalenv
 export(.ShortPrimitiveSkeletons)

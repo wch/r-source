@@ -9,6 +9,19 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item User errors such as \code{integrate(f, 0:1, 2)} are now caught.
+      
+      \item Add \code{signature} argument to \code{debug()},
+      \code{debugonce()}, \code{undebug()} and \code{isdebugged()} for
+      more conveniently debugging S3 and S4 methods. Based on a patch by
+      Gabe Becker.
+
+      \item Add \code{utils::debugcall()} and
+      \code{utils::undebugcall()} for debugging the function that would
+      be called by evaluating the given expression. When the call is to
+      an S4 generic or standard S3 generic, \code{debugcall()} debugs the
+      method that would be dispatched. A number of internal utilities
+      were added to support this, most notably
+      \code{utils::isS3stdGeneric()}. Based on a patch by Gabe Becker.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

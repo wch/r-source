@@ -11,16 +11,19 @@
 \alias{isdebugged}
 \alias{debuggingState}
 \usage{
-debug(fun, text = "", condition = NULL)
-debugonce(fun, text = "", condition = NULL)
-undebug(fun)
-isdebugged(fun)
+debug(fun, text = "", condition = NULL, signature = NULL)
+debugonce(fun, text = "", condition = NULL, signature = NULL)
+undebug(fun, signature = NULL)
+isdebugged(fun, signature = NULL)
 debuggingState(on = NULL)
 }
 \arguments{
   \item{fun}{any interpreted \R function.}
   \item{text}{a text string that can be retrieved when the browser is entered.}
-  \item{condition}{a condition that can be retrieved when the browser is entered.}
+  \item{condition}{a condition that can be retrieved when the browser is
+    entered.}
+  \item{signature}{an optional method signature. If specified, the
+    method is debugged, rather than its generic.}
   \item{on}{logical; a call to the support function
     \code{debuggingState} returns \code{TRUE} if debugging is globally
     turned on, \code{FALSE} otherwise.  An argument of one or the other
@@ -58,12 +61,23 @@ debuggingState(on = NULL)
   function is removed and replaced the debug state is not preserved).
   Use \code{debugonce} to enter the debugger only the next time the
   function is invoked.
-
-  In order to debug S4 methods (see \code{\link{Methods}}), you
-  need to use \code{\link{trace}}, typically calling \code{\link{browser}},
-  e.g., as \cr
-  \code{trace("plot", browser, exit = browser, signature = c("track", "missing"))}
-
+  
+  To debug an S4 method by explicit signature, use
+  \code{signature}. When specified, signature indicates the method of
+  \code{fun} to be debugged. Note that debugging is implemented slightly
+  differently for this case, as it uses the trace machinery, rather than
+  the debugging bit. As such, \code{text} and \code{condition} cannot be
+  specified in combination with a non-null \code{signature}. For methods
+  which implement the \code{.local} rematching mechanism, the
+  \code{.local} closure itself is the one that will be ultimately
+  debugged (see \code{\link[methods]{isRematched}}).
+  
+  \code{isdebugged} returns \code{TRUE} if a) \code{signature} is \code{NULL}
+  and the closure \code{fun} has been debugged, or b) \code{signature} is not
+  \code{NULL}, \code{fun} is an S4 generic, and the method of \code{fun}
+  for that signature has been debugged. In all other cases, it returns
+  \code{FALSE}.
+  
   The number of lines printed for the deparsed call when a function is
   entered for debugging can be limited by setting
   \code{\link{options}(deparse.max.lines)}.
@@ -72,10 +86,30 @@ debuggingState(on = NULL)
   interpreted version of the function will be used until debugging is
   disabled.
 }
+\value{
+  \code{debug} and \code{undebug} invisibly return \code{NULL}.
+
+  \code{isdebugged} returns \code{TRUE} if the function or method is
+  marked for debugging, and \code{FALSE} otherwise.
+}
 \seealso{
+  \code{\link{debugcall}} for conveniently debugging methods,
   \code{\link{browser}}, \code{\link{trace}};
   \code{\link{traceback}} to see the stack after an \code{Error: \dots}
   message; \code{\link{recover}} for another debugging approach.
+}
+
+\examples{
+\dontrun{
+debug(library)
+library(methods)
+}
+\dontrun{
+debugonce(sample)
+## only the first call will be debugged
+sampe(10, 1)
+sample(10, 1)
+}
 }
 \keyword{programming}
 \keyword{environment}

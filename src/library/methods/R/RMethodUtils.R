@@ -414,19 +414,25 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
     generic
 }
 
-unRematchDefinition <- function(definition)
+
+isRematched <- function(definition)
 {
-    ## undo the effects of rematchDefiniition, if it was used.
+    ## detect the effects of rematchDefinition, if it was used.
     ## Has the obvious disadvantage of depending on the implementation.
     ## If we considered the rematching part of the API, a cleaner solution
     ## would be to include the "as given to setMethod" definition as a slot
+
     bdy <- body(definition)
     if(.identC(class(bdy),"{") && length(bdy) > 1L) {
         bdy <- bdy[[2L]]
-        if(.identC(class(bdy), "<-") &&
-           identical(bdy[[2L]], as.name(".local")))
-            definition <- bdy[[3L]]
-    }
+        .identC(class(bdy), "<-") && identical(bdy[[2L]], as.name(".local"))
+    } else FALSE
+}
+
+unRematchDefinition <- function(definition)
+{
+    if(isRematched(definition))
+        definition <-  body(definition)[[2]][[3]] # value in assignmt to .local
     definition
 }
 
