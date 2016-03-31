@@ -15,6 +15,15 @@
 \usage{
 standardGeneric(f, fdef)
 }
+\arguments{
+  \item{f}{
+    The name of the generic.
+  }
+  \item{fdef}{
+    The generic function definition. Never passed when
+    defining a new generic.
+  }
+}
 \details{
   \code{standardGeneric} dispatches the method defined for a generic
   function named \code{f}, using the actual arguments in the frame from which
