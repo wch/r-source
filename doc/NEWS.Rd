@@ -22,6 +22,11 @@
       method that would be dispatched. A number of internal utilities
       were added to support this, most notably
       \code{utils::isS3stdGeneric()}. Based on a patch by Gabe Becker.
+
+      \item Add \code{utils::strcapture()}. Given a character vector and
+      a regular expression containing capture expressions,
+      \code{strcapture()} will extract the captured tokens into a
+      tabular data structure, typically a data.frame.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
