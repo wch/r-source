@@ -340,7 +340,8 @@
       \item \R now uses a new version of the logo (donated to the R
       Foundation by RStudio).  It is defined in \file{.svg} format, so
       will resize without unnecessary degradation when displayed on
-      HTML pages---there is also a vector PDF version.
+      HTML pages---there is also a vector PDF version.  Thanks to
+      Dirk Eddelbuettel for producing the corresponding X11 icon.
 
       \item New function \code{.traceback()} returns the stack trace
       which \code{traceback()} prints.
