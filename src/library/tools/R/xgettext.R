@@ -246,7 +246,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 
 		s2 <- sub( paste0("^", statement, "[[:blank:]]+[\"](.*)[\"][[:blank:]]*$"),
 		                 "\\1", lines[j])
-		while (startsWith(lines[j+1L], '"')) { # useBytes=TRUE (speedup ?)
+		while (!is.na(lines[j+1L]) && startsWith(lines[j+1L], '"')) {
 		    j <- j+1L
 		    s2 <- paste0(s2, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[j]))
 		}
