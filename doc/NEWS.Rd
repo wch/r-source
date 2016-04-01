@@ -27,6 +27,12 @@
       a regular expression containing capture expressions,
       \code{strcapture()} will extract the captured tokens into a
       tabular data structure, typically a data.frame.
+
+      \item The \code{import()} namespace directive now accepts an
+      argument \code{except} which names symbols to exclude from the
+      imports. The \code{except} expression should evaluate to a
+      character vector (after substituting symbols for strings). See
+      Writing R Extensions.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

@@ -403,6 +403,13 @@ loadNamespace <- function (package, lib.loc = NULL,
                                 loadNamespace(i, c(lib.loc, .libPaths()),
                                               versionCheck = vI[[i]]),
                                 from = package)
+            else if (!is.null(i$except))
+                namespaceImport(ns,
+                                loadNamespace(j <- i[[1L]],
+                                              c(lib.loc, .libPaths()),
+                                              versionCheck = vI[[j]]),
+                                from = package,
+                                except = i$except)
             else
                 namespaceImportFrom(ns,
                                     loadNamespace(j <- i[[1L]],
@@ -762,11 +769,14 @@ asNamespace <- function(ns, base.OK = TRUE) {
     else ns
 }
 
-namespaceImport <- function(self, ..., from = NULL)
+namespaceImport <- function(self, ..., from = NULL, except = character(0L))
     for (ns in list(...))
-        namespaceImportFrom(self, asNamespace(ns), from = from)
+        namespaceImportFrom(self, asNamespace(ns), from = from,
+                            except = except)
 
-namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-package environment")
+namespaceImportFrom <- function(self, ns, vars, generics, packages,
+                                from = "non-package environment",
+                                except = character(0L))
 {
     addImports <- function(ns, from, what) {
         imp <- structure(list(what), names = getNamespaceName(from))
@@ -811,6 +821,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-
         vars <- getNamespaceExports(ns)
         vars <- vars[! vars %in% stoplist]
     } else vars
+    impvars <- impvars[! impvars %in% except]
     impvars <- makeImportExportNames(impvars)
     impnames <- names(impvars)
     if (anyDuplicated(impnames)) {
@@ -1143,6 +1154,11 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 		     domain = NA)
 	    r
 	}
+        evalToChar <- function(cc) {
+            vars <- all.vars(cc)
+            names(vars) <- vars
+            as.character(eval(eval(call("substitute", cc, as.list(vars)))))
+        }
         switch(as.character(e[[1L]]),
                "if" = if (eval(e[[2L]], .GlobalEnv))
                parseDirective(e[[3L]])
@@ -1174,7 +1190,15 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                exportMethods = {
                    exportMethods <<- c(asChar(e[-1L]), exportMethods)
                },
-               import = imports <<- c(imports, as.list(asChar(e[-1L]))),
+               import = {
+                   except <- e$except
+                   e$except <- NULL
+                   pkgs <- as.list(asChar(e[-1L]))
+                   if (!is.null(except)) {
+                       pkgs <- lapply(pkgs, list, except=evalToChar(except))
+                   }
+                   imports <<- c(imports, pkgs)
+               },
                importFrom = {
                    imp <- e[-1L]
                    ivars <- imp[-1L]

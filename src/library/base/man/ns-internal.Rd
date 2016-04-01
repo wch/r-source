@@ -38,9 +38,10 @@ importIntoEnv(impenv, impnames, expenv, expnames)
 isBaseNamespace(ns)
 isNamespace(ns)
 namespaceExport(ns, vars)
-namespaceImport(self, \dots, from = NULL)
+namespaceImport(self, \dots, from = NULL, except = character(0L))
 namespaceImportFrom(self, ns, vars, generics, packages,
-                    from = "non-package environment")
+                    from = "non-package environment",
+                    except = character(0L))
 namespaceImportClasses(self, ns, vars, from = NULL)
 namespaceImportMethods(self, ns, vars, from = NULL)
 packageHasNamespace(package, package.lib)
@@ -77,6 +78,9 @@ loadingNamespaceInfo()
   \item{\dots}{character arguments.}
   \item{metaname}{the methods table name.}
   \item{name}{symbol: name of namespace}
+  \item{except}{character vector naming symbols to exclude from the
+    import, particularly useful when \code{vars} is missing.
+  }
 }
 \description{
   Internal namespace support functions.  Not intended to be called
