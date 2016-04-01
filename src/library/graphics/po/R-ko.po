@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -348,6 +348,9 @@ msgstr "'x'의 값은 반드시 양수이어야 합니다"
 
 msgid "invalid table 'x'"
 msgstr "유효하지 않은 테이블 'x'입니다"
+
+msgid "the formula '%s' is treated as '%s'"
+msgstr ""
 
 msgid "cannot handle more than one 'x' coordinate"
 msgstr "한개 이상의 'x'좌표를 처리할 수 없습니다"

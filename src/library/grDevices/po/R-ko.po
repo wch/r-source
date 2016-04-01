@@ -2,7 +2,7 @@
 # src/library/grDevices/po/R-ko.po
 #
 # Copyright (C) 1995-2015 The R Core Team
-# 
+#
 # This file is distributed under the same license as the R grDevices package.
 # Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
 #
@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -233,9 +233,6 @@ msgstr "유효하지 않은 출력 포맷입니다"
 msgid "status %d in running command '%s'"
 msgstr "명령어 '%2$s'를 실행하던 중 상태 %1$d가 되었습니다"
 
-msgid "range too small for 'min.n'"
-msgstr "'min.n'에 대한 범위가 너무 작습니다"
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "래스터 행렬은 반드시 문자, 또는 숫자, 또는 논리값이어야 합니다"
 
@@ -267,8 +264,16 @@ msgstr "다음으로부터 기록을 할 수 있는 장치가 없습니다"
 msgid "argument is not of class %s"
 msgstr "인자는 클래스 %s가 아닙니다"
 
-msgid "loading snapshot from a different session"
+#, fuzzy
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "다른 세션으로부터 스냅샷을 로딩합니다"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "다른 세션으로부터 스냅샷을 로딩합니다"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "'nbin'은 반드시 길이가 1 또는 2인 수치형입니다"
@@ -412,6 +417,9 @@ msgstr[0] ""
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] ""
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "'min.n'에 대한 범위가 너무 작습니다"
 
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr "미안합니다, 'gs'를 찾을 수 없습니다"

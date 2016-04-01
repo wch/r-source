@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2015-03-26 19:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -79,11 +79,11 @@ msgstr "неправильный 'layout.pos.row'"
 msgid "invalid 'layout.pos.col'"
 msgstr "неправильный 'layout.pos.col'"
 
-#: matrix.c:49
+#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
-#: state.c:169
+#: state.c:170
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -253,6 +253,14 @@ msgstr ""
 msgid "did not assign() anything"
 msgstr ""
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr ""
+
 msgid "Browsing in the environment with call:"
 msgstr ""
 
@@ -409,13 +417,13 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
+msgid "incorrect type specification"
+msgstr ""
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
-msgstr ""
-
-msgid "incorrect type specification"
 msgstr ""
 
 #, fuzzy
@@ -596,10 +604,16 @@ msgstr "--- Lütfen bu oturumda kullanılacak bir CRAN yansısı seçin ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr ""
 
-msgid "cannot choose a CRAN mirror non-interactively"
+msgid "'download.file()' error code '%d'"
 msgstr ""
 
-msgid "cannot choose a BioC mirror non-interactively"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+msgid "mirror non-interactively"
 msgstr ""
 
 msgid "cannot set repositories non-interactively"
@@ -734,9 +748,6 @@ msgid ""
 msgstr ""
 
 msgid "no methods for %s and no documentation for it as a function"
-msgstr ""
-
-msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr ""
 
 msgid "no method defined for function %s and signature %s"
@@ -879,6 +890,9 @@ msgstr ""
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr ""
 
@@ -1006,9 +1020,6 @@ msgstr ""
 msgid "'ccaddress' must be of length 1"
 msgstr ""
 
-msgid "no download method found"
-msgstr ""
-
 msgid "'url' must be a length-one character vector"
 msgstr ""
 
@@ -1124,6 +1135,11 @@ msgstr[1] ""
 
 msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
 msgstr[0] ""
 msgstr[1] ""
 

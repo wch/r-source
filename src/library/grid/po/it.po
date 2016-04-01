@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -82,11 +82,11 @@ msgstr "layout.pos.row non valido"
 msgid "invalid 'layout.pos.col'"
 msgstr "layout.pos.col non valido"
 
-#: matrix.c:49
+#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr ""
 
-#: state.c:169
+#: state.c:170
 #, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Impossibile memorizzare lo stato di grid. Troppi dispositivi aperti?"

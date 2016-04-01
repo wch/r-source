@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:09\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -231,9 +231,6 @@ msgstr "niepoprawny format wyjściowy"
 msgid "status %d in running command '%s'"
 msgstr "status '%d' w działającym poleceniu '%s'"
 
-msgid "range too small for 'min.n'"
-msgstr "zakres jest zbyt mały dla 'min.m'"
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "macierz rastrowa musi być tekstem lub liczbą lub być wartością logiczną"
@@ -265,8 +262,16 @@ msgstr "brak bieżącego urządzenia z którego można nagrywać"
 msgid "argument is not of class %s"
 msgstr "argument nie jest obiektem klasy %s"
 
-msgid "loading snapshot from a different session"
+#, fuzzy
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "ładowanie zrzutu z innej sesji"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "ładowanie zrzutu z innej sesji"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "argument 'nbin' musi być liczbą o długości 1 lub 2"
@@ -415,3 +420,6 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "zakres jest zbyt mały dla 'min.m'"

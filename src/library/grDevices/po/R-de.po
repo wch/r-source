@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-20 16:07+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -224,9 +224,6 @@ msgstr "ungültiges Ausgabeformat"
 msgid "status %d in running command '%s'"
 msgstr "Status %d im laufenden Kommando '%s'"
 
-msgid "range too small for 'min.n'"
-msgstr "Spannweite zu klein für 'min.n'"
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "Eine Rastermatrix muss entweder character, numerisch oder boolesch sein"
@@ -258,8 +255,16 @@ msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
 msgid "argument is not of class %s"
 msgstr "Argument ist nicht von Klasse %s"
 
-msgid "loading snapshot from a different session"
+#, fuzzy
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "lade Snapshot einer anderen R Sitzung"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "lade Snapshot einer anderen R Sitzung"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "'nbin' muss numerisch mit Länge 1 oder 2 sein"
@@ -402,6 +407,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z Wert <= 0 ausgelassen in logarithmischem Plot"
 msgstr[1] "%d z Werte <= 0 ausgelassen in logarithmischem Plot"
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "Spannweite zu klein für 'min.n'"
 
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr "'gs' kann leider nicht gefunden werden"

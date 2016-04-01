@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -264,6 +264,14 @@ msgstr "无法正确恢复变量"
 msgid "did not assign() anything"
 msgstr "assign()没有用到"
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "为参数%s評估表示式时发生了错误(%s)"
+
 msgid "Browsing in the environment with call:"
 msgstr "在調用环境里浏览:"
 
@@ -422,14 +430,14 @@ msgstr "不知道要搜查什么"
 msgid "argument 'help.db' is deprecated"
 msgstr "参数'help.db'已经不再用了"
 
+msgid "incorrect type specification"
+msgstr "域设定得不对"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'rebuild = TRUE'？"
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
-
-msgid "incorrect type specification"
-msgstr "域设定得不对"
 
 msgid "could not find package %s"
 msgstr "找不到程序包%s"
@@ -611,11 +619,19 @@ msgstr "--- 在此連線階段时请选用CRAN的鏡子 ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "试试在不设定镜像的情况下用CRAN"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "无法在非互交的情况下选用CRAN镜像"
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "read.dcf()在'%s'文件上出了错"
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "无法在非互交的情况下选用BioC镜像"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "无法在非互交的情况下选用CRAN镜像"
 
 msgid "cannot set repositories non-interactively"
 msgstr "无法在非互交情况下设定貯藏處"
@@ -762,9 +778,6 @@ msgstr "函数調用%2$s里类别为%1$s的对象不能用作帮助文件題目"
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "%s没有方法，也没有将之用作函数的帮助文件"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "为参数%s評估表示式时发生了错误(%s)"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "函数%s和标签%s没有设定方法"
 
@@ -907,6 +920,9 @@ msgstr "'object'的levels()的值不对"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr "%s里找不到信息"
 
@@ -1038,9 +1054,6 @@ msgstr "缺少'subject'值"
 msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress'的长度必需为一"
 
-msgid "no download method found"
-msgstr "没有下载方法"
-
 #, fuzzy
 msgid "'url' must be a length-one character vector"
 msgstr "'title'值要么是NULL，要么是长度为一的字符向量"
@@ -1158,6 +1171,11 @@ msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
 msgstr[0] "没有%s这个程序包(给%s用)"
 
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "没有'%s'这种相依关系"
@@ -1228,6 +1246,12 @@ msgstr[0] "罗马数字不对：%s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "无法在非互交的情况下选用BioC镜像"
+
+#~ msgid "no download method found"
+#~ msgstr "没有下载方法"
 
 #~ msgid ","
 #~ msgstr ","
@@ -1440,9 +1464,6 @@ msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "更新HTML程序包的描述内容"
-
-#~ msgid "read.dcf() error on file '%s'"
-#~ msgstr "read.dcf()在'%s'文件上出了错"
 
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr "找不到aspell或ispell执行文件"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 11:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -486,6 +486,12 @@ msgstr "l'approximation du Chi-2 est peut-être incorrecte"
 msgid "NA values not allowed in 'd'"
 msgstr "NA non autorisées dans 'd'"
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "les distances doivent provenir de 'dist' ou d'une matrice carrée"
 
@@ -497,6 +503,9 @@ msgstr "'k' doit être dans {1, 2, ..  n - 1}"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "seulement %d des premières  %d valeurs propres sont positives"
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr ""
@@ -543,6 +552,10 @@ msgstr "vous devez fournir un ou plusieurs vecteurs"
 
 msgid "arguments must have the same length"
 msgstr "les arguments doivent avoir la même longueur"
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr "le nombre de colonnes de 'x' est incorrect"
 
 msgid "contrasts apply only to factors"
 msgstr "les contrastes s'appliquent uniquement aux facteurs"
@@ -792,6 +805,9 @@ msgstr "'prob' et 'mu' spécifiés tous les deux"
 msgid "some terms will have NAs due to the limits of the method"
 msgstr "certains termes auront des NAs du fait des limites de la méthode"
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x' doit avoir au moins une valeur non manquante"
 
@@ -921,7 +937,10 @@ msgstr ""
 "seules les valeurs positives sont autorisées pour la famille 'inverse."
 "gaussian'"
 
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+#, fuzzy
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr ""
 "le package 'SuppDists' de CRAN est nécessaire pour la famille 'inverse."
 "gaussian'"
@@ -1214,8 +1233,8 @@ msgstr "tous les éléments de 'which' doivent être compris entre 1 et %d"
 msgid "invalid parameter values"
 msgstr "valeurs des paramètres incorrectes"
 
-msgid "a limit is missing"
-msgstr "il manque une limite"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "valeurs manquantes non autorisées"
@@ -1448,6 +1467,10 @@ msgstr "NCOL(X) incorrect"
 msgid "only 1-4 predictors are allowed"
 msgstr "pas plus de 4 prédicteurs autorisés"
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr "NCOL(X) incorrect"
+
 msgid "invalid 'y'"
 msgstr "'y' incorrect"
 
@@ -1475,6 +1498,13 @@ msgstr "argument 'cell' incorrect"
 
 msgid "invalid argument 'degree'"
 msgstr "argument 'degree' incorrect"
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr "aucune observation finie"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "le premier argument doit être un objet \"loess\""
@@ -2022,8 +2052,8 @@ msgstr ""
 msgid "'varying' arguments must be the same length"
 msgstr "les arguments varying doivent avoir la même longueur"
 
-msgid "'times' is wrong length"
-msgstr "'times' n'a pas la bonne longueur"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr ""
@@ -2638,6 +2668,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' est trop court : il faut %d point"
 msgstr[1] "'start.innov' est trop court : il faut %d points"
+
+#~ msgid "a limit is missing"
+#~ msgstr "il manque une limite"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times' n'a pas la bonne longueur"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "les arguments non nommés ultérieurs sont ignorés"

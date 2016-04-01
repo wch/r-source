@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -141,7 +141,7 @@ msgstr "无法打开afm文本'%s'"
 msgid "unknown AFM entity encountered"
 msgstr "遇到未知AFM值这个错误"
 
-#: devPS.c:740 devPS.c:743 devPS.c:4425 devPS.c:7916 devPicTeX.c:484
+#: devPS.c:740 devPS.c:743 devPS.c:4427 devPS.c:7918 devPicTeX.c:484
 #: devPicTeX.c:486
 #, c-format
 msgid "invalid string in '%s'"
@@ -235,107 +235,107 @@ msgstr "字体数据库里找不到'%s'字体系列的字体编码"
 msgid "font CMap for family '%s' not found in font database"
 msgstr "字体数据库里找不到用于'%s'字体系列的CMap这个字体"
 
-#: devPS.c:1951 devPS.c:2030 devPS.c:2098
+#: devPS.c:1952 devPS.c:2032 devPS.c:2100
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr "无法载入afm文本'%s'"
 
-#: devPS.c:2386
+#: devPS.c:2388
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "载入的编码损坏了; 没有记录编码"
 
-#: devPS.c:2397
+#: devPS.c:2399
 msgid "failed to record device encoding"
 msgstr "无法记录装置编码"
 
-#: devPS.c:2568
+#: devPS.c:2570
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "对象'.ps.prolog'不是字符向量"
 
-#: devPS.c:2643 devPS.c:6420 devWindows.c:801
+#: devPS.c:2645 devPS.c:6422 devWindows.c:801
 msgid "invalid line end"
 msgstr "行尾出错"
 
-#: devPS.c:2662 devPS.c:6439 devWindows.c:814
+#: devPS.c:2664 devPS.c:6441 devWindows.c:814
 msgid "invalid line join"
 msgstr "行接連處出错"
 
-#: devPS.c:2670
+#: devPS.c:2672
 msgid "invalid line mitre"
 msgstr "行斜接出错"
 
-#: devPS.c:2879 devPS.c:3775 devPS.c:4223 devPS.c:4250 devPS.c:5260
-#: devPS.c:7766 devPS.c:7811
+#: devPS.c:2881 devPS.c:3777 devPS.c:4225 devPS.c:4252 devPS.c:5262
+#: devPS.c:7768 devPS.c:7813
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "不能用%d这个字体，代用一字体"
 
-#: devPS.c:3101 devPS.c:4725 devPS.c:5839
+#: devPS.c:3103 devPS.c:4727 devPS.c:5841
 #, c-format
 msgid "filename too long in %s()"
 msgstr "%s()里的文本名字太长"
 
-#: devPS.c:3107 devPS.c:4731 devPS.c:5845
+#: devPS.c:3109 devPS.c:4733 devPS.c:5847
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr "%s()内存分配出了问题"
 
-#: devPS.c:3124 devPS.c:5905
+#: devPS.c:3126 devPS.c:5907
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr "%s()里的编码路径太长"
 
-#: devPS.c:3138 devPS.c:4771
+#: devPS.c:3140 devPS.c:4773
 #, c-format
 msgid "failed to load encoding file in %s()"
 msgstr "%s()中载入编码文本失败了'"
 
-#: devPS.c:3183 devPS.c:3246 devPS.c:5964 devPS.c:6019 devPS.c:7646
+#: devPS.c:3185 devPS.c:3248 devPS.c:5966 devPS.c:6021 devPS.c:7648
 msgid "invalid font type"
 msgstr "字体类别出错"
 
-#: devPS.c:3207
+#: devPS.c:3209
 msgid "failed to initialise default PostScript font"
 msgstr "无法初始化PostScript字体的默认值"
 
-#: devPS.c:3273
+#: devPS.c:3275
 msgid "failed to initialise additional PostScript fonts"
 msgstr "无法初始化外加的PostScript字体"
 
-#: devPS.c:3289
+#: devPS.c:3291
 msgid "invalid foreground/background color (postscript)"
 msgstr "前景/后景颜色不对(postscript)"
 
-#: devPS.c:3294
+#: devPS.c:3296
 msgid "'command' is too long"
 msgstr "'command'太长"
 
-#: devPS.c:3299
+#: devPS.c:3301
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "'postscript(print.it=TRUE)'不能用在空'print'命令里"
 
-#: devPS.c:3348
+#: devPS.c:3350
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "页类别'%s'(postscript)不对"
 
-#: devPS.c:3462 devPS.c:4575 devWindows.c:2346
+#: devPS.c:3464 devPS.c:4577 devWindows.c:2346
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr "此装置不支持半透明：每一页将被报告一次"
 
-#: devPS.c:3568 devPS.c:3577
+#: devPS.c:3570 devPS.c:3579
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "无法打开'postscript'管道至'%s'"
 
-#: devPS.c:3588 devPS.c:4980 devPS.c:4991 devPS.c:7071 qdPDF.c:98
+#: devPS.c:3590 devPS.c:4982 devPS.c:4993 devPS.c:7073 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "无法打开'%s'文件"
 
-#: devPS.c:3716 devPS.c:3731
+#: devPS.c:3718 devPS.c:3733
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -344,168 +344,168 @@ msgstr ""
 "postscript()出了错，是在运行这个命令时发生的:\n"
 "    %s"
 
-#: devPS.c:3763
+#: devPS.c:3765
 #, c-format
 msgid "CID family '%s' not included in postscript() device"
 msgstr "postscript()装置里没有CID系列'%s'"
 
-#: devPS.c:3781 devPS.c:3792 devPS.c:4230 devPS.c:4260 devPS.c:4365
+#: devPS.c:3783 devPS.c:3794 devPS.c:4232 devPS.c:4262 devPS.c:4367
 #, c-format
 msgid "family '%s' not included in postscript() device"
 msgstr " postscript()装置里没有'%s'系列"
 
-#: devPS.c:4305
+#: devPS.c:4307
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "'mbcsToSbcs'不存在'%s'这样的编码"
 
-#: devPS.c:4315
+#: devPS.c:4317
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr "'mbcsToSbcs'里转换'%s'出错：<%02x>代替了dot"
 
-#: devPS.c:4393
+#: devPS.c:4395
 #, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "编码'%s'时文字转换器出了错"
 
-#: devPS.c:4411 devPS.c:5305 devPS.c:7901
+#: devPS.c:4413 devPS.c:5307 devPS.c:7903
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
 
-#: devPS.c:4589
+#: devPS.c:4591
 msgid "ran out of colors in xfig()"
 msgstr "xfig()里的颜色不够用"
 
-#: devPS.c:4618
+#: devPS.c:4620
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr "没有实现%08x这样的字行结构: 用Dash-double-dotted"
 
-#: devPS.c:4684
+#: devPS.c:4686
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr "不存在postscript字体系列'%s', 用Helvetica"
 
-#: devPS.c:4756
+#: devPS.c:4758
 msgid "invalid foreground/background color (xfig)"
 msgstr "前景/后景颜色不对(xfig)"
 
-#: devPS.c:4789
+#: devPS.c:4791
 msgid "only Type 1 fonts supported for XFig"
 msgstr "XFig只支持Type 1字体"
 
-#: devPS.c:4802
+#: devPS.c:4804
 msgid "failed to initialise default XFig font"
 msgstr "无法初始化XFig默认字体"
 
-#: devPS.c:4839
+#: devPS.c:4841
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr "页类别'%s'出错(xfig)"
 
-#: devPS.c:4847
+#: devPS.c:4849
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr "xfig(%s, onefile=FALSE)只会返回最后的一张图"
 
-#: devPS.c:4972
+#: devPS.c:4974
 msgid "empty file name"
 msgstr "空文本名字"
 
-#: devPS.c:5037 devPS.c:5089 devPS.c:5667 devPS.c:5711 devPS.c:7131
+#: devPS.c:5039 devPS.c:5091 devPS.c:5669 devPS.c:5713 devPS.c:7133
 msgid "write failed"
 msgstr "讀寫失败"
 
-#: devPS.c:5294
+#: devPS.c:5296
 #, c-format
 msgid "unable to use encoding '%s'"
 msgstr "无法用编码'%s'"
 
-#: devPS.c:5555 devPS.c:5558
+#: devPS.c:5557 devPS.c:5560
 msgid "failed to increase 'maxRaster'"
 msgstr "无法增加’maxRaster’"
 
-#: devPS.c:5570
+#: devPS.c:5572
 msgid "unable to allocate raster image"
 msgstr "无法分配光栅图像"
 
-#: devPS.c:5771
+#: devPS.c:5773
 msgid "corrupt loaded encodings;  font not added"
 msgstr "载入的编码坏了; 字体没有加入"
 
-#: devPS.c:5780
+#: devPS.c:5782
 msgid "failed to record device encoding; font not added"
 msgstr "无法记录装置编码; 字体没有加入"
 
-#: devPS.c:5891
+#: devPS.c:5893
 msgid "increasing the PDF version to 1.2"
 msgstr "增加PDF版本到1.2"
 
-#: devPS.c:5921
+#: devPS.c:5923
 msgid "failed to load default encoding"
 msgstr "无法载入默认编码"
 
-#: devPS.c:5987
+#: devPS.c:5989
 msgid "failed to initialise default PDF font"
 msgstr "无法初始化PDF默认字体"
 
-#: devPS.c:6042
+#: devPS.c:6044
 msgid "failed to initialise additional PDF fonts"
 msgstr "无法初始化外加的PDF字体"
 
-#: devPS.c:6055
+#: devPS.c:6057
 msgid "failed to allocate rasters"
 msgstr "无法分配栅格"
 
-#: devPS.c:6062
+#: devPS.c:6064
 msgid "failed to allocate masks"
 msgstr "无法分配面具"
 
-#: devPS.c:6125
+#: devPS.c:6127
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "纸张类别'%s'不对(pdf)"
 
-#: devPS.c:6149
+#: devPS.c:6151
 msgid "invalid foreground/background color (pdf)"
 msgstr "前景/后景颜色不对(pdf)"
 
-#: devPS.c:6268
+#: devPS.c:6270
 msgid "invalid 'alpha' value in PDF"
 msgstr "PDF里的'alpha'值不对"
 
-#: devPS.c:6293
+#: devPS.c:6295
 msgid "increasing the PDF version to 1.4"
 msgstr "增加PDF版本到1.4"
 
-#: devPS.c:6344 devPS.c:6391
+#: devPS.c:6346 devPS.c:6393
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "没有这种'colormodel'，用'srgb'"
 
-#: devPS.c:6585
+#: devPS.c:6587
 msgid "failed to load sRGB colorspace file"
 msgstr "无法载入sRGB色彩文件"
 
-#: devPS.c:6849
+#: devPS.c:6851
 msgid "corrupt encodings in PDF device"
 msgstr "PDF装置里的编码坏了"
 
-#: devPS.c:6930
+#: devPS.c:6932
 msgid "increasing the PDF version to 1.3"
 msgstr "增加PDF版本到1.3"
 
-#: devPS.c:7055
+#: devPS.c:7057
 #, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr "无法打开通到'%s'的'pdf'管道"
 
-#: devPS.c:7061
+#: devPS.c:7063
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\"意味着'onefile = TRUE'"
 
-#: devPS.c:7204
+#: devPS.c:7206
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -514,32 +514,32 @@ msgstr ""
 "无法打开'pdf'文本参数'%s'\n"
 "  请关闭PDF装置"
 
-#: devPS.c:7671 devPS.c:8033 devPS.c:8080
+#: devPS.c:7673 devPS.c:8035 devPS.c:8082
 msgid "failed to find or load PDF font"
 msgstr "没有能够找到或载入PDF字体"
 
-#: devPS.c:7855 devPS.c:7988
+#: devPS.c:7857 devPS.c:7990
 msgid "failed to find or load PDF CID font"
 msgstr "没有能够找到或载入PDF CID字体"
 
-#: devPS.c:8219 devPS.c:8223 devPS.c:8383 devPS.c:8387
+#: devPS.c:8221 devPS.c:8225 devPS.c:8386 devPS.c:8390
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s里的'system'参数不对"
 
-#: devPS.c:8241 devPS.c:8399
+#: devPS.c:8243 devPS.c:8402
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:8247 devPS.c:8409 devPS.c:8412 devWindows.c:3646 devWindows.c:3650
+#: devPS.c:8249 devPS.c:8412 devPS.c:8415 devWindows.c:3646 devWindows.c:3650
 #: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
 #: devWindows.c:3689 devWindows.c:3693
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "'%s'的值不对"
 
-#: devPS.c:8260 devPS.c:8327 devPS.c:8426 devPicTeX.c:740 devWindows.c:3734
+#: devPS.c:8262 devPS.c:8329 devPS.c:8429 devPicTeX.c:740 devWindows.c:3734
 #, c-format
 msgid "unable to start %s() device"
 msgstr "无法启动%s()装置"

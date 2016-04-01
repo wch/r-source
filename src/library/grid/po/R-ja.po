@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-26 10:01+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -265,9 +265,6 @@ msgstr " gPath (%s) が見つかりません "
 msgid "grob '%s' not found"
 msgstr " grob '%s' が見つかりません "
 
-msgid "invalid element in the display list"
-msgstr " ディスプレイリストの中に不正な要素があります "
-
 msgid "Invalid force target"
 msgstr " 不正な force target です "
 
@@ -324,9 +321,6 @@ msgstr " 不正なリスティング "
 
 msgid "invalid 'listing'"
 msgstr " 不正な 'listing' "
-
-msgid "Nothing on the display list"
-msgstr " ディスプレイリストに何もありません "
 
 msgid "invalid 'origin'"
 msgstr " 不正な 'origin' です "
@@ -465,6 +459,10 @@ msgstr " 添え字が範囲を超えています (unit arithmetic subsetting) "
 msgid "index out of bounds (unit list subsetting)"
 msgstr " 添え字が範囲を超えています (unit list subsetting) "
 
+#, fuzzy
+msgid "Value being assigned must be a unit"
+msgstr " x と y は単位 (units) でなければなりません "
+
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr ""
 " 単位 ('unit') オブジェクトとそれ以外の型のオブジェクトを結合することは出来ま"
@@ -535,6 +533,12 @@ msgstr[0] " 不正な grob 名です "
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] " 不正な viewport 名です "
+
+#~ msgid "invalid element in the display list"
+#~ msgstr " ディスプレイリストの中に不正な要素があります "
+
+#~ msgid "Nothing on the display list"
+#~ msgstr " ディスプレイリストに何もありません "
 
 #~ msgid "the 'vp' argument is deprecated"
 #~ msgstr " 引数 'vp' は廃止予定です "

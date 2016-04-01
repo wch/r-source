@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -220,6 +220,11 @@ msgstr " データフレームに無効な 'dimnames' が与えられました "
 
 msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr " クラス \"%s\" はデータフレームに強制変換できません "
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr ""
@@ -495,6 +500,15 @@ msgstr ""
 " 不正な行は次の場所で始まっています: \n"
 " %s "
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr " 'x' は正方行列でなければなりません "
 
@@ -614,11 +628,13 @@ msgstr " 無効な 'path' 引数です "
 msgid "invalid 'time' argument"
 msgstr " 無効な 'time' 引数です "
 
-msgid "'vec' contains NAs"
-msgstr " 'vec' は NA 値を含んでいます "
-
-msgid "'vec' must be sorted non-decreasingly"
+#, fuzzy
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr " ハンドラーは関数でなければなりません "
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr " タイプ \"expression\" の 'value' の最初の要素だけを使います "
@@ -649,15 +665,19 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 " 壊れたデータフレームです。列が切り詰められるか、または NA 値で埋められます "
 
-msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
-" 'big.mark' と 'decimal.mark' が両方とも '%s' ですが，これは混乱を招きます "
-
 msgid "'zero.print' has length > 1"
 msgstr " 'zero.print' は長さ > 1 を持ちます "
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr " 'zero.print' は文字、論理値、または NULL でなければなりません "
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+" 'big.mark' と 'decimal.mark' が両方とも '%s' ですが，これは混乱を招きます "
+
+#, fuzzy
+msgid "'input.d.mark' has no characters"
+msgstr " 'input' そして 'target' は文字ベクトルでなければなりません "
 
 msgid "'subset' must be logical"
 msgstr " 'subset' は論理値でなければなりません "
@@ -741,12 +761,18 @@ msgstr ""
 msgid "package %s has a license that you need to accept after viewing"
 msgstr " パッケージ %s を使うにはライセンスを確認して受諾する必要があります "
 
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is"
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr " パッケージ %s を使うにはライセンスを確認して受諾する必要があります "
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
 msgstr ""
 " パッケージ %s を使うにはライセンスを受諾する必要があります。以下をご確認くだ"
 "さい。: "
+
+msgid "%s"
+msgstr ""
 
 msgid "license for package %s not accepted"
 msgstr " パッケージ %s のライセンスは受諾されていません "
@@ -925,6 +951,15 @@ msgstr " 無効な 'category' 引数です "
 
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr " 'vectorize.args' には仮引数名しか指定出来ません "
+
+msgid "FUN"
+msgstr ""
+
+msgid "may not have argument(s) named"
+msgstr ""
+
+msgid ","
+msgstr " , "
 
 msgid "'arg' must be NULL or a character vector"
 msgstr " 'arg' は、NULL かひとつの文字ベクトルでなければなりません "
@@ -1119,6 +1154,10 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 " 関数 %s に対するインポートメソッドをみつけましたが、総称的ではありません "
 
+#, fuzzy
+msgid "replacing previous import %s by %s when loading %s"
+msgstr " %2$s のロード中に、以前のインポート %1$s を置き換えています "
+
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr " \"%s\" 中には要求に対するメソッドが見つかりません: %s "
 
@@ -1127,9 +1166,10 @@ msgstr ""
 " 要求された methods オブジェクトは環境もしくはパッケージ %s 中に見付かりませ"
 "ん: %s "
 
+#, fuzzy
 msgid ""
-"No generic function found corresponding to requested imported methods for "
-"\"%s\" from package \"%s\" (malformed exports?)"
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
 msgstr ""
 " \"%s\" に対して要求されたインポートされたメソッド (パッケージ \"%s\" から"
 "の) に対応する総称的関数がありません (不正確なエクスポート？) "
@@ -1289,6 +1329,10 @@ msgstr " 長さは非負の数値でなければなりません "
 msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
+#, fuzzy
+msgid "invalid 'compress' argument:"
+msgstr " 無効な 'name' 引数です "
+
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr " 'file' がファイル名でない限り、'compress' は無視されます "
 
@@ -1328,6 +1372,9 @@ msgstr ""
 " 'decreasing' は長さ length-1 の論理値ベクトルでなければなりません。 \n"
 " 'partial' を設定するつもりですか？ "
 
+msgid "'partial' sorting not supported by radix method"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr " 'index.return' は非因子専用です "
 
@@ -1355,9 +1402,6 @@ msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr " method = \"quick\" は実数の 'x' にしか利用できません "
-
-msgid "method = \"radix\" is only for integer 'x'"
-msgstr " method = \"radix\" は整数の 'x' にしか利用できません "
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr " 'local' は TRUE か FALSE 、または環境でなければなりません "
@@ -1412,9 +1456,6 @@ msgstr " 'indent' と 'width' に対する値が不正です "
 msgid "probably wrong encoding in names(.) of column"
 msgstr " おそらく列の names(.) 中に間違ったエンコーディングがあります "
 
-msgid ","
-msgstr " , "
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr " STATS は 'dim(x)[MARGIN]' の大きさより長いです "
 
@@ -1456,6 +1497,10 @@ msgstr " 'INDEX' の長さが 0 です "
 
 msgid "arguments must have same length"
 msgstr " 引数は同じ長さでなければなりません "
+
+#, fuzzy
+msgid "total number of levels >= 2^31"
+msgstr " 水準の数が異なります "
 
 msgid "handler must be a function"
 msgstr " ハンドラーは関数でなければなりません "
@@ -1723,6 +1768,12 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] " 余分な引数 %s は無視されます "
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr " 'vec' は NA 値を含んでいます "
+
+#~ msgid "method = \"radix\" is only for integer 'x'"
+#~ msgstr " method = \"radix\" は整数の 'x' にしか利用できません "
 
 #, fuzzy
 #~ msgid "re-exports %s not exported by %s"

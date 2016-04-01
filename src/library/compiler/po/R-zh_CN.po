@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -17,8 +17,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=0;\n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr "不是一个正确的评估环境"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
+
+msgid "namespace found within global environments"
+msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
@@ -56,7 +66,7 @@ msgstr "2分配出了错"
 msgid "invalid function in complex assignment"
 msgstr "复杂分配里的函数不对"
 
-msgid "%s is not a registered math1 function"
+msgid "is not a registered math1 function"
 msgstr ""
 
 msgid "missing arguments are not allowed"
@@ -79,6 +89,9 @@ msgstr "给'%s'的参数个数不对"
 
 msgid "more than one default provided in switch() call"
 msgstr "调用switch()时只能有一个默认值"
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "无法编译非函数"
@@ -106,6 +119,9 @@ msgstr "没有'%s'这样的文件"
 
 msgid "'%s' is not a valid compiler option"
 msgstr "没有'%s'这样的编译器选项"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
 
 msgid "function is not compiled"
 msgstr "函数没有被编制"

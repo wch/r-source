@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 19:05-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -272,6 +272,14 @@ msgstr "не могу полностью восстановить переменные"
 msgid "did not assign() anything"
 msgstr "не могу ничего assign()"
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "ошибка при попытке выполнить выражение для аргумента %s (%s)"
+
 msgid "Browsing in the environment with call:"
 msgstr "Просмотр окружения с вызовом:"
 
@@ -439,14 +447,14 @@ msgstr "непонятно, что искать"
 msgid "argument 'help.db' is deprecated"
 msgstr "аргумент 'help.db' устарел"
 
+msgid "incorrect type specification"
+msgstr "неправильное указание типа"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr "в базе данных нет информации о пакете %s: надо 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "неправильное указание 'agrep'"
-
-msgid "incorrect type specification"
-msgstr "неправильное указание типа"
 
 msgid "could not find package %s"
 msgstr "не могу найти пакет %s"
@@ -638,11 +646,19 @@ msgstr ""
 msgid "trying to use CRAN without setting a mirror"
 msgstr "пробую использовать CRAN без установки зеркала"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "не могу выбрать зеркало CRAN неинтерактивно"
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "Ошибка read.dcf() на файле '%s'"
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "не могу выбрать зеркало BioC неинтерактивно"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "не могу выбрать зеркало CRAN неинтерактивно"
 
 msgid "cannot set repositories non-interactively"
 msgstr "не могу установить хранилища неинтерактивно"
@@ -791,9 +807,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "для %s нет методов и нет документации для него как функции"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "ошибка при попытке выполнить выражение для аргумента %s (%s)"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "для функции %s и подписи %s не определено метода"
 
@@ -940,6 +953,9 @@ msgstr "'object' не имеет правильных levels()"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "определены и 'digits', и 'digits.d', последняя не используется"
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr "в '%s' нет строк"
 
@@ -1077,9 +1093,6 @@ msgstr "пропущен 'subject'"
 msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress' должен быть длиной 1"
 
-msgid "no download method found"
-msgstr "не найдено метода скачивания"
-
 msgid "'url' must be a length-one character vector"
 msgstr "'url' должен быть текстовым вектором единичной длины"
 
@@ -1215,6 +1228,13 @@ msgstr[0] "пакет '%s' недоступен (%s)"
 msgstr[1] "пакета %s недоступны (%s)"
 msgstr[2] "пакетов %s недоступно (%s)"
 
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
+msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
+msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "зависимость '%s' недоступна"
@@ -1325,6 +1345,12 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "не могу выбрать зеркало BioC неинтерактивно"
+
+#~ msgid "no download method found"
+#~ msgstr "не найдено метода скачивания"
 
 #~ msgid ","
 #~ msgstr ","
@@ -1538,9 +1564,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "обновляю HTML-описания пакетов"
-
-#~ msgid "read.dcf() error on file '%s'"
-#~ msgstr "Ошибка read.dcf() на файле '%s'"
 
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr "Не могу найти исполняемого файла aspell или ispell."

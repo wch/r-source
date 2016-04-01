@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -270,6 +270,14 @@ msgstr "nie można było poprawnie przywrócić zmiennych"
 msgid "did not assign() anything"
 msgstr "nic nie przypisano"
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "błąd podczas próby obliczenia wyrażenia dla argumentu %s (%s)"
+
 msgid "Browsing in the environment with call:"
 msgstr "Przeglądanie w środowisku z wywołaniem:"
 
@@ -437,15 +445,15 @@ msgstr "nie wiadomo czego szukać"
 msgid "argument 'help.db' is deprecated"
 msgstr "argument 'help.db' jest przestarzały"
 
+msgid "incorrect type specification"
+msgstr "niepoprawne określenie typu"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 "brak informacji w bazie danych dla pakietu %s: potrzeba 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "niepoprawne określenie 'agrep'"
-
-msgid "incorrect type specification"
-msgstr "niepoprawne określenie typu"
 
 msgid "could not find package %s"
 msgstr "nie można było znaleźć pakietu %s"
@@ -641,11 +649,18 @@ msgstr "--- Proszę wybrać serwer lustrzany CRAN do użycia w tej sesji ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "próba użycia CRAN bez ustawienia serwera lustrzanego"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "nie można wybrać serweru lustrzanego CRAN nieinteraktywnie"
+msgid "'download.file()' error code '%d'"
+msgstr ""
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "nie można wybrać serweru lustrzanego BioC nieinteraktywnie"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "nie można wybrać serweru lustrzanego CRAN nieinteraktywnie"
 
 msgid "cannot set repositories non-interactively"
 msgstr "nie można wybrać repozytoriów nieinteraktywnie"
@@ -798,9 +813,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "brak metod dla %s oraz brak dla niego dokumentacji jako funkcji"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "błąd podczas próby obliczenia wyrażenia dla argumentu %s (%s)"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "brak zdefiniowanej metody dla funkcji %s oraz sygnatury %s"
 
@@ -950,6 +962,9 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "obydwa 'digits' oraz 'digits.d' są zdefiniowane i ostatni nie jest używany"
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr "nie znaleziono linii w %s"
 
@@ -1088,9 +1103,6 @@ msgstr "brakuje 'subject'"
 msgid "'ccaddress' must be of length 1"
 msgstr "argument 'ccaddress' musi być długości 1"
 
-msgid "no download method found"
-msgstr "nie znaleziono metody pobierania"
-
 msgid "'url' must be a length-one character vector"
 msgstr "argument 'url' musi być wektorem tekstowym o długości 1"
 
@@ -1227,6 +1239,13 @@ msgstr[0] "pakiet %s nie jest dostępny (%s)"
 msgstr[1] "pakiety %s nie są dostępne (%s)"
 msgstr[2] "pakiety %s nie są dostępne (%s)"
 
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
+msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "zależność %s nie jest dostępna"
@@ -1342,6 +1361,12 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "nie można wybrać serweru lustrzanego BioC nieinteraktywnie"
+
+#~ msgid "no download method found"
+#~ msgstr "nie znaleziono metody pobierania"
 
 #~ msgid "function '%s' appears not to be an S3 generic"
 #~ msgstr "wygląda na to, że funkcja '%s' nie jest ogólną funkcją S3"

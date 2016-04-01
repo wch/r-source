@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -14,8 +14,20 @@ msgstr ""
 "X-Generator: Pootle 2.5.1.1 \n"
 "X-POOTLE-MTIME: 1427433312.000000 \n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr " 評価環境が適切ではありません "
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+" 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけれ"
+"ばなりません "
+
+msgid "namespace found within global environments"
+msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
@@ -55,7 +67,8 @@ msgstr " 付値の誤り 2 "
 msgid "invalid function in complex assignment"
 msgstr " complex の付値に不正な関数があります "
 
-msgid "%s is not a registered math1 function"
+#, fuzzy
+msgid "is not a registered math1 function"
 msgstr " %s は登録された math1 関数ではありません "
 
 msgid "missing arguments are not allowed"
@@ -78,6 +91,9 @@ msgstr " '%s' に対する引数の数が違います "
 
 msgid "more than one default provided in switch() call"
 msgstr " switch() 呼び出しの中で、デフォルト選択肢が 2 つ以上あります "
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr " 非関数はコンパイルできません "
@@ -105,6 +121,9 @@ msgstr " ファイル '%s' は存在しません "
 
 msgid "'%s' is not a valid compiler option"
 msgstr " '%s' は有効なコンパイルオプションではありません "
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
 
 msgid "function is not compiled"
 msgstr " 関数はコンパイルされません "

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Generator: Pootle 2.5.1.1 \n"
 "X-POOTLE-MTIME: 1427436568.000000 \n"
 
-#: Srunmed.c:55
+#: Srunmed.c:54
 msgid "bandwidth/span of running medians is larger than n"
 msgstr " 移動中央値のバンド幅・バンド範囲 (span) が n より大きくなっています "
 
-#: ansari.c:116
+#: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
 msgstr " qansari() 中で確率が [0, 1] の範囲外です "
 
@@ -43,7 +43,7 @@ msgstr " approx(): NA 値を補間しようとしました "
 msgid "invalid argument type"
 msgstr " 不正な引数の型です "
 
-#: arima.c:444 arima.c:530 pacf.c:327 pacf.c:366
+#: arima.c:444 arima.c:530 pacf.c:324 pacf.c:363
 msgid "can only transform 100 pars in arima0"
 msgstr " arima0 では 100 個のパラメータまでしか変換出来ません "
 
@@ -69,31 +69,41 @@ msgstr " ケースの数を決定する入力がありません "
 msgid "not all arguments have the same length"
 msgstr " 引数の中に異なった長さのものがあります "
 
-#: cov.c:566
+#: cov.c:569
 msgid "missing observations in cov/cor"
 msgstr " cov/cor 関数に欠損した観測値があります "
 
-#: cov.c:644
+#: cov.c:643
 msgid "'x' is NULL"
 msgstr " 'x' が NULL です "
 
-#: cov.c:663 cov.c:669
+#: cov.c:645
+#, fuzzy
+msgid "'x' is a factor"
+msgstr " 'x' が行列ではありません "
+
+#: cov.c:665
+#, fuzzy
+msgid "'y' is a factor"
+msgstr " 'fn' が関数ではありません "
+
+#: cov.c:673 cov.c:679
 msgid "incompatible dimensions"
 msgstr " 互換性のない次元です "
 
-#: cov.c:688 cov.c:729 cov.c:762
+#: cov.c:698 cov.c:739 cov.c:772
 msgid "no complete element pairs"
 msgstr " 完全な要素のペアがありません "
 
-#: cov.c:701
+#: cov.c:711
 msgid "invalid 'use' (computational method)"
 msgstr " 'use' (計算法) が不正です "
 
-#: cov.c:704
+#: cov.c:714
 msgid "'x' is empty"
 msgstr " 'x' が空です "
 
-#: cov.c:798
+#: cov.c:808
 msgid "the standard deviation is zero"
 msgstr " 標準偏差が 0 です "
 
@@ -131,15 +141,15 @@ msgstr " 変数名が不正です "
 msgid "invalid tag"
 msgstr " タグが不正です "
 
-#: distance.c:153
+#: distance.c:152
 msgid "treating non-finite values as NA"
 msgstr " 有限でない値を NA として取り扱います "
 
-#: distance.c:226
+#: distance.c:225
 msgid "distance(): invalid p"
 msgstr " distance(): 不正な p "
 
-#: distance.c:229
+#: distance.c:228
 msgid "distance(): invalid distance"
 msgstr " distance(): 不正な距離 "
 
@@ -151,17 +161,17 @@ msgstr " 計算結果が NaN になりました "
 msgid "Non-numeric argument to mathematical function"
 msgstr " 数学関数に非数値引数が渡されました "
 
-#: family.c:44
+#: family.c:45
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr " 値 %g は範囲 (0, 1) 外です "
 
-#: family.c:65 family.c:79 family.c:97
+#: family.c:66 family.c:80 family.c:98
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr " 引数 %s は空でない数値ベクトルでなければなりません "
 
-#: family.c:130 family.c:133
+#: family.c:131 family.c:134
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
@@ -186,7 +196,12 @@ msgstr " 因子がありません "
 msgid "invalid factors"
 msgstr " 因子 (factor) が不正です "
 
-#: ksmooth.c:67
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr " 'm' はリストでなければなりません "
+
+#: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr " sm.method=\"spline\" では 2500 行までしか扱えません "
 
@@ -204,7 +219,7 @@ msgstr " 'x' (%d,%d) と 'y' (%d)の次元が一致しません "
 msgid "NA/NaN/Inf in '%s'"
 msgstr " '%s' の中に NA/NaN/Inf があります "
 
-#: loessc.c:233
+#: loessc.c:240
 msgid "span is too small"
 msgstr " 範囲 (span) が小さすぎます "
 
@@ -232,19 +247,19 @@ msgstr " 'iter' は有限かつ 0 以上でなくてはなりません "
 msgid "'delta' must be finite and > 0"
 msgstr " 'delta' は有限かつ正数でなくてはなりません "
 
-#: mAR.c:467
+#: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr " qr_solve 中の特異行列です "
 
-#: mAR.c:510
+#: mAR.c:513
 msgid "Singular matrix in ldet"
 msgstr " ldet 中の特異行列です "
 
-#: mAR.c:697
+#: mAR.c:700
 msgid "Invalid vmethod"
 msgstr " 不正な vmethod です "
 
-#: mAR.c:833
+#: mAR.c:836
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr " Burg のアルゴリズムが偏相関を見つけ損ないました "
 
@@ -283,185 +298,185 @@ msgstr " 変数 ('%s' に基づく) の長さが異なります "
 msgid "invalid result from na.action"
 msgstr " na.action の結果が不正です "
 
-#: model.c:369 model.c:377 optim.c:197
+#: model.c:372 model.c:380 optim.c:197
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
 
-#: model.c:388
+#: model.c:391
 msgid "invalid model frame"
 msgstr " モデルフレームが不正です "
 
-#: model.c:390
+#: model.c:393
 msgid "do not know how many cases"
 msgstr " ケースの数が幾つあるか分かりません "
 
-#: model.c:414
+#: model.c:417
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr " 変数 (%d 変数に基づく) の長さが異なります "
 
-#: model.c:418 model.c:425
+#: model.c:421 model.c:428
 #, c-format
 msgid "variable %d has no levels"
 msgstr " 変数 %d は水準を持ちません "
 
-#: model.c:537
+#: model.c:540
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr " 目的変数が右辺にあるため、捨て去られました "
 
-#: model.c:557
+#: model.c:560
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr " 項 %d は %.0g 行を必要とするかもしれません "
 
-#: model.c:561
+#: model.c:564
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr " 行列は %.0g 行を必要とするかもしれません "
 
-#: model.c:572
+#: model.c:575
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 " model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
 
-#: model.c:621 model.c:626 model.c:632 model.c:643 model.c:649 model.c:655
+#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
 msgid "term names will be truncated"
 msgstr " 項の名前は切りつめらられるでしょう "
 
-#: model.c:635
+#: model.c:638
 msgid "complex variables are not currently allowed in model matrices"
 msgstr " モデル行列中では複素数は現在許されていません "
 
-#: model.c:659
+#: model.c:662
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr " タイプ '%s' の変数はモデル行列中では許されません "
 
-#: model.c:881
+#: model.c:884
 msgid "invalid formula in 'update'"
 msgstr " 'update' 中の式が不正です "
 
-#: model.c:915
+#: model.c:918
 msgid "formula expected"
 msgstr " 式が期待されています "
 
-#: model.c:1046
+#: model.c:1049
 msgid "invalid term in model formula"
 msgstr " モデル式に不正な項があります "
 
-#: model.c:1121
+#: model.c:1124
 msgid "invalid model formula"
 msgstr " モデル式が不正です "
 
-#: model.c:1147 model.c:1395
+#: model.c:1150 model.c:1410
 msgid "invalid power in formula"
 msgstr " モデル式中に不正なべき乗があります "
 
-#: model.c:1183
+#: model.c:1186
 msgid "invalid model formula in ExtractVars"
 msgstr " ExtractVars 中のモデル式が不正です "
 
-#: model.c:1518
+#: model.c:1533
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1579
+#: model.c:1594
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1665
+#: model.c:1680
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1675
+#: model.c:1690
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
-#: model.c:1687
+#: model.c:1702
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1957
+#: model.c:1972
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
-#: monoSpl.c:34
+#: monoSpl.c:36
 msgid "n must be at least two"
 msgstr " n は最低でも 2 でなければなりません "
 
-#: monoSpl.c:67
+#: monoSpl.c:69
 msgid "Argument m must be numeric"
 msgstr " 引数 m は数値でなければなりません "
 
-#: monoSpl.c:70
+#: monoSpl.c:72
 msgid "length(m) must be at least two"
 msgstr " length(m) は少なくとも 2 でなければなりません "
 
-#: monoSpl.c:72
+#: monoSpl.c:74
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr " 引数 Sx は長さが m[] より 1 だけ短い数値ベクトルでなければなりません "
 
-#: nls.c:97
+#: nls.c:99
 msgid "'control' must be a list"
 msgstr " 'control' はリストでなければなりません "
 
-#: nls.c:99
+#: nls.c:101
 msgid "'m' must be a list"
 msgstr " 'm' はリストでなければなりません "
 
-#: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
-#: nls.c:176 nls.c:181 nls.c:186 nls.c:191
+#: nls.c:107 nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:168 nls.c:173
+#: nls.c:178 nls.c:183 nls.c:188 nls.c:193
 #, c-format
 msgid "'%s' absent"
 msgstr " '%s' がありません "
 
-#: nls.c:232
+#: nls.c:234
 msgid "singular gradient"
 msgstr " 勾配が特異です "
 
-#: nls.c:253
+#: nls.c:255
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr " step 因子 %g は %g の 'minFactor' 以下に縮小しました "
 
-#: nls.c:262
+#: nls.c:264
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr " 繰り返し数が最大値 %d を超えました "
 
-#: nls.c:267
+#: nls.c:269
 msgid "converged"
 msgstr " 収束しました "
 
-#: nls.c:288
+#: nls.c:290
 msgid "'theta' should be of type character"
 msgstr " 'theta' は文字型でなければなりません "
 
-#: nls.c:290 port.c:376
+#: nls.c:292 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr " NULL 環境の使用は廃止されました "
 
-#: nls.c:294
+#: nls.c:296
 msgid "'rho' should be an environment"
 msgstr " 'rho' は環境 (environment) でなければなりません "
 
-#: nls.c:297
+#: nls.c:299
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr " 'dir' は正しい長さの数値ベクトルではありません "
 
-#: nls.c:311 nls.c:345
+#: nls.c:313 nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr " モデルを評価する際，欠損値または無限大が生成されました "
 
-#: nls.c:319
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr " 変数 '%s' は整数です、数値ではありません "
 
-#: nls.c:321
+#: nls.c:323
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr " 変数 '%s' は数値ではありません "
@@ -685,21 +700,21 @@ msgstr " 提供されたヘッセ行列は不正な長さかモードであっ�
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr " 提供された勾配は不正な長さかモードであったので無視されました "
 
-#: pacf.c:90
+#: pacf.c:87
 msgid "bad Starma struct"
 msgstr " 不適な Starma struct です "
 
-#: pacf.c:236
+#: pacf.c:233
 #, c-format
 msgid "starma error code %d"
 msgstr " starma エラーコード %d です "
 
-#: pacf.c:296
+#: pacf.c:293
 #, c-format
 msgid "forkal error code %d"
 msgstr " forkal エラーコード %d です "
 
-#: pacf.c:469
+#: pacf.c:466
 msgid "invalid value of lag.max"
 msgstr " 不正な lag.max 値です "
 
@@ -726,7 +741,7 @@ msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなけ�
 msgid "'rho' must be an environment"
 msgstr " 'rho' は環境 (environment) でなければなりません "
 
-#: port.c:382 port.c:546
+#: port.c:382 port.c:548
 msgid "'d' must be a nonempty numeric vector"
 msgstr " 'd' は空でない数値ベクトルでなければなりません "
 
@@ -767,23 +782,23 @@ msgstr ""
 msgid "invalid type for eval_check_store"
 msgstr " eval_check_store に対する不正なタイプです "
 
-#: port.c:547
+#: port.c:549
 msgid "m must be a list"
 msgstr " m はリストでなければなりません "
 
-#: port.c:567
+#: port.c:569
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr " 'lowerb' と 'upperb' は数値ベクトルでなければなりません "
 
-#: rWishart.c:51
+#: rWishart.c:53
 msgid "inconsistent degrees of freedom and dimension"
 msgstr " 自由度と次元が矛盾しています "
 
-#: rWishart.c:84
+#: rWishart.c:86
 msgid "'scal' must be a square, real matrix"
 msgstr " 'scal' は正方な実行列である必要があります "
 
-#: rWishart.c:96
+#: rWishart.c:98
 msgid "'scal' matrix is not positive-definite"
 msgstr " 行列 'scal' が正定値行列ではありません "
 
@@ -823,12 +838,12 @@ msgstr ""
 " rcont2 [%d, %d]: exp がアンダーフローして 0 になりました; アルゴリズムが失敗"
 "しました "
 
-#: smooth.c:101
+#: smooth.c:107
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr " 3 点移動中央値計算の終了ルールが不正です: %d "
 
-#: starma.c:366
+#: starma.c:364
 #, c-format
 msgid "missing value in last %d observations"
 msgstr " 直前の %d 個の観測値中に欠損値があります "

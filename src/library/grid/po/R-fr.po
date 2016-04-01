@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 10:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -281,9 +281,6 @@ msgstr "gPath (%s) introuvable"
 msgid "grob '%s' not found"
 msgstr "grob '%s' introuvable"
 
-msgid "invalid element in the display list"
-msgstr "élément incorrect dans la liste d'affichage (display list)"
-
 msgid "Invalid force target"
 msgstr "Cible incorrecte pour 'force'"
 
@@ -342,9 +339,6 @@ msgstr "listing incorrect"
 
 msgid "invalid 'listing'"
 msgstr "'listing' incorrect"
-
-msgid "Nothing on the display list"
-msgstr "Il n'y a rien dans la liste d'affichage (display list)"
 
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
@@ -482,6 +476,10 @@ msgstr "indice hors plage (indiçage arithmétique d'unités)"
 msgid "index out of bounds (unit list subsetting)"
 msgstr "indice hors plage (indiçage de liste d'unités)"
 
+#, fuzzy
+msgid "Value being assigned must be a unit"
+msgstr "'x' et 'y' doivent être des unités"
+
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr "il n'est pas permis de combiner des objets unités avec d'autres types"
 
@@ -552,6 +550,12 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "nom de vue incorrect"
 msgstr[1] "noms de vues incorrects"
+
+#~ msgid "invalid element in the display list"
+#~ msgstr "élément incorrect dans la liste d'affichage (display list)"
+
+#~ msgid "Nothing on the display list"
+#~ msgstr "Il n'y a rien dans la liste d'affichage (display list)"
 
 #~ msgid "the 'vp' argument is deprecated"
 #~ msgstr "l'argument 'vp' est obsolète"

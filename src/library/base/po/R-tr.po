@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -219,6 +219,11 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr ""
 
 msgid "cannot coerce class \"%s\" to a data.frame"
+msgstr ""
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
 msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -480,6 +485,15 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr ""
 
@@ -593,10 +607,10 @@ msgstr "geçersiz paket ismi"
 msgid "invalid 'time' argument"
 msgstr "geçersiz paket ismi"
 
-msgid "'vec' contains NAs"
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr ""
 
-msgid "'vec' must be sorted non-decreasingly"
+msgid "'fun' is not a function"
 msgstr ""
 
 msgid "using the first element of 'value' of type \"expression\""
@@ -623,13 +637,16 @@ msgstr ""
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 
-msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
-
 msgid "'zero.print' has length > 1"
 msgstr ""
 
 msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
+msgid "'input.d.mark' has no characters"
 msgstr ""
 
 msgid "'subset' must be logical"
@@ -712,9 +729,13 @@ msgstr ""
 msgid "package %s has a license that you need to accept after viewing"
 msgstr ""
 
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is"
+msgid "package %s has a license that you need to accept:"
+msgstr ""
+
+msgid "according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "%s"
 msgstr ""
 
 msgid "license for package %s not accepted"
@@ -888,6 +909,15 @@ msgid "invalid 'category' argument"
 msgstr ""
 
 msgid "must specify names of formal arguments for 'vectorize'"
+msgstr ""
+
+msgid "FUN"
+msgstr ""
+
+msgid "may not have argument(s) named"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1066,6 +1096,9 @@ msgstr ""
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
+msgid "replacing previous import %s by %s when loading %s"
+msgstr ""
+
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr ""
 
@@ -1073,8 +1106,8 @@ msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 
 msgid ""
-"No generic function found corresponding to requested imported methods for "
-"\"%s\" from package \"%s\" (malformed exports?)"
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
 msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
@@ -1230,6 +1263,10 @@ msgstr ""
 msgid "too many arguments"
 msgstr ""
 
+#, fuzzy
+msgid "invalid 'compress' argument:"
+msgstr "geçersiz paket ismi"
+
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr ""
 
@@ -1265,6 +1302,9 @@ msgid ""
 "Did you intend to set 'partial'?"
 msgstr ""
 
+msgid "'partial' sorting not supported by radix method"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr ""
 
@@ -1289,9 +1329,6 @@ msgid ""
 msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
-msgstr ""
-
-msgid "method = \"radix\" is only for integer 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1345,9 +1382,6 @@ msgstr ""
 msgid "probably wrong encoding in names(.) of column"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr ""
 
@@ -1388,6 +1422,9 @@ msgid "'INDEX' is of length zero"
 msgstr ""
 
 msgid "arguments must have same length"
+msgstr ""
+
+msgid "total number of levels >= 2^31"
 msgstr ""
 
 msgid "handler must be a function"

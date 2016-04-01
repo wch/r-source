@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -223,6 +223,11 @@ msgstr "数据框的'dimnames'给得不对"
 
 msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr "不能把\"%s\"类别强迫变成数据框"
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr "options(\"stringsAsFactors\")只能取TRUE或FALSE值"
@@ -494,6 +499,15 @@ msgstr ""
 "不对行的开头为：\n"
 "%s"
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
 
@@ -606,11 +620,13 @@ msgstr "'path'参数不对"
 msgid "invalid 'time' argument"
 msgstr "'time'参数不对"
 
-msgid "'vec' contains NAs"
-msgstr "'vec'内有NA值"
-
-msgid "'vec' must be sorted non-decreasingly"
+#, fuzzy
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "'vec'的顺序一定得从小到大"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "處置程式必需是函数"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "用种类为\"expression\"的'value'的第一个元素"
@@ -638,14 +654,18 @@ msgstr "'flag'只能含'0+- #'"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "破损的数据框：縮短列的长度或用NA来填充空白"
 
-msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
-
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print'的长度一定得大于一"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print'只能取字符，逻辑或NULL值"
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
+#, fuzzy
+msgid "'input.d.mark' has no characters"
+msgstr "'input'和'target'一定都得是字符串"
 
 msgid "'subset' must be logical"
 msgstr "'subset'必需是逻辑值"
@@ -727,12 +747,18 @@ msgstr "程辑包%s的使用许可要求你先通过交互式会话时接受它"
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "程辑包%s的使用许可证要求你在看完后接受它"
 
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is"
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr "程辑包%s的使用许可证要求你在看完后接受它"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
 msgstr ""
 "程辑包%s的使用许可证要求你接受它:\n"
 "按照DESCRIPTION文件它是"
+
+msgid "%s"
+msgstr ""
 
 msgid "license for package %s not accepted"
 msgstr "程辑包%s的使用许可证没有被接受"
@@ -904,6 +930,15 @@ msgstr "'category'参数有错"
 
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "用'vectorize'时必需设定正式参数"
+
+msgid "FUN"
+msgstr ""
+
+msgid "may not have argument(s) named"
+msgstr ""
+
+msgid ","
+msgstr "，"
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg'要么是NULL，要么是字符矢量。"
@@ -1082,15 +1117,20 @@ msgstr "进口目标有错"
 msgid "found methods to import for function %s but not the generic itself"
 msgstr "%s函数有可进口的方法，但找不到它的同属方法"
 
+#, fuzzy
+msgid "replacing previous import %s by %s when loading %s"
+msgstr "输入%2$s将代替前次引进%1$s"
+
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr "在\"%s\"找不到%s需要的索取"
 
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "环境/程辑包%s里找不到所要求的方法：%s"
 
+#, fuzzy
 msgid ""
-"No generic function found corresponding to requested imported methods for "
-"\"%s\" from package \"%s\" (malformed exports?)"
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
 msgstr ""
 "程序包\"%2$s\"里没有相应于为\"%1$s\"所要求的进口方法的泛型函数（是不是出口的"
 "格式不对？）"
@@ -1250,6 +1290,10 @@ msgstr "长度必需为非负数"
 msgid "too many arguments"
 msgstr "太多参数"
 
+#, fuzzy
+msgid "invalid 'compress' argument:"
+msgstr "'name'参数不对"
+
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr "除非'file'是文件名，'compress'将被略过不用"
 
@@ -1285,6 +1329,9 @@ msgid ""
 "Did you intend to set 'partial'?"
 msgstr "'decreasing'必需是长度为一的矢量，你是不是想设'partial'的值？"
 
+msgid "'partial' sorting not supported by radix method"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr "'index.return'只能适用于非因子"
 
@@ -1312,9 +1359,6 @@ msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr "method=\"quick\"只适用于数值的'x'"
-
-msgid "method = \"radix\" is only for integer 'x'"
-msgstr "method=\"radix\"只适用于整数的'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "'local'的值必需是'TRUE'，或是'FALSE'，或是环境"
@@ -1368,9 +1412,6 @@ msgstr "'indent'和'width'的值有错"
 msgid "probably wrong encoding in names(.) of column"
 msgstr "列名称的编码可能不对"
 
-msgid ","
-msgstr "，"
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS大于'dim(x)[MARGIN]'的范围"
 
@@ -1412,6 +1453,10 @@ msgstr "'INDEX'的长度必需为一"
 
 msgid "arguments must have same length"
 msgstr "参数的长度必需相同"
+
+#, fuzzy
+msgid "total number of levels >= 2^31"
+msgstr "层次数目不同"
 
 msgid "handler must be a function"
 msgstr "處置程式必需是函数"
@@ -1674,6 +1719,12 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec'内有NA值"
+
+#~ msgid "method = \"radix\" is only for integer 'x'"
+#~ msgstr "method=\"radix\"只适用于整数的'x'"
 
 #, fuzzy
 #~ msgid "re-exports %s not exported by %s"

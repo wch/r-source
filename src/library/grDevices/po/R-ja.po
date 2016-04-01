@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:17+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -227,9 +227,6 @@ msgstr " 無効な出力書式です "
 msgid "status %d in running command '%s'"
 msgstr " 状態 %d が命令 '%s' 実行中に起きました "
 
-msgid "range too small for 'min.n'"
-msgstr " 'min.n' に対して範囲が小さすぎます "
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr " ラスター行列は文字、数値もしくは論理値でなければなりません "
 
@@ -260,8 +257,16 @@ msgstr " 現在、以下のものから記録することが出来るデバイ�
 msgid "argument is not of class %s"
 msgstr " 引数はクラス %s ではありません "
 
-msgid "loading snapshot from a different session"
+#, fuzzy
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr " 異なるセッションからスナップショットが読み込まれています "
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr " 異なるセッションからスナップショットが読み込まれています "
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr " 'nbin' は長さ 1 または 2 の数値でなければなりません "
@@ -400,6 +405,9 @@ msgstr[0] " %d 個の正でない y の値が対数プロットから除かれ�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] " %d 個の正でない x の値が対数プロットから除かれました "
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr " 'min.n' に対して範囲が小さすぎます "
 
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr " すみません，'gs' が見つかりません "

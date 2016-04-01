@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -75,11 +75,11 @@ msgstr "niepoprawny 'layout.pos.row'"
 msgid "invalid 'layout.pos.col'"
 msgstr "niepoprawny 'layout.pos.col'"
 
-#: matrix.c:49
+#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr "osobliwa macierz transformacyjna"
 
-#: state.c:169
+#: state.c:170
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "nie można zachować stanu siatki. Zbyt duża liczba otwartych urządzeń?"
 

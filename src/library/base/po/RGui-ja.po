@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org \n"
-"POT-Creation-Date: 2015-02-09 08:52+0000 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -31,11 +31,11 @@ msgstr " メモリ不足: テキストをクリップボードにコピーする
 msgid "Unable to open the clipboard"
 msgstr " クリップボードを開くことができません "
 
-#: src/gnuwin32/console.c:1917
+#: src/gnuwin32/console.c:1919
 msgid "Insufficient memory. Please close the console"
 msgstr " メモリが不足しています。コンソールを閉じてください "
 
-#: src/gnuwin32/console.c:1972 src/gnuwin32/console.c:2026
+#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -45,23 +45,23 @@ msgstr ""
 " フォント %s-%d-%d  が見つかりません \n"
 " システムに用意されているフォントを使います "
 
-#: src/gnuwin32/console.c:2131
+#: src/gnuwin32/console.c:2133
 msgid "Save selection to"
 msgstr " 選択を以下にセーブします "
 
-#: src/gnuwin32/console.c:2133
+#: src/gnuwin32/console.c:2135
 msgid "Save console contents to"
 msgstr " コンソールの内容を以下に保存します "
 
-#: src/gnuwin32/console.c:2232
+#: src/gnuwin32/console.c:2234
 msgid "Scrolling.\n"
 msgstr " スクロール. \n"
 
-#: src/gnuwin32/console.c:2233
+#: src/gnuwin32/console.c:2235
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "   キーボード: PgUp, PgDown, Ctrl+矢印, Ctrl+Home, Ctrl+End, \n"
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2236
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -69,76 +69,76 @@ msgstr ""
 "   マウス: スクロールバーを使います. \n"
 " \n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2237
 msgid "Editing.\n"
 msgstr " 編集. \n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2238
 msgid "  Moving the cursor: \n"
 msgstr "   カーソル移動: \n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2239
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "      左矢印 または Ctrl+B: 1 文字戻る; \n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2240
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "      右矢印 または Ctrl+F: 1 文字進む; \n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2241
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "      Home または Ctrl+A: 行頭に移動; \n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2242
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "      End または Ctrl+E: 行末に移動; \n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2243
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "   履歴: 上矢印、下矢印、Ctrl+P、Ctrl+N \n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2244
 msgid "  Deleting:\n"
 msgstr "   消去: \n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2245
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "      Delete または Ctrl+D: 現在選択している文字を消去; \n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2246
 msgid "     Backspace: delete preceding character;\n"
 msgstr "      Backspace: 1 つ前の文字を消去; \n"
 
-#: src/gnuwin32/console.c:2245
+#: src/gnuwin32/console.c:2247
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "      Ctrl+Del または Ctrl+K: 現在選択している文字から行末までの文字を全て消"
 "去。 \n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2248
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "      Ctrl+U: 現在の行のテキストを全て消去。 \n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2249
 msgid "  Copy and paste.\n"
 msgstr "   コピー＆ペースト. \n"
 
-#: src/gnuwin32/console.c:2248
+#: src/gnuwin32/console.c:2250
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "      マウスの左ボタンを押しながらマウスを使って文字列をマーク (選択) しま"
 "す。 \n"
 
-#: src/gnuwin32/console.c:2249
+#: src/gnuwin32/console.c:2251
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "      Shift+Del (または Ctrl+C) を使って、マーク (選択) した文字列をクリップ"
 "ボードにコピーし、 \n"
 
-#: src/gnuwin32/console.c:2250
+#: src/gnuwin32/console.c:2252
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -146,29 +146,29 @@ msgstr ""
 "      Shift+Ins (または Ctrl+V または Ctrl+Y) でクリップボードの内容 (もしあ"
 "れば) をペーストして \n"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2253
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
 "      、コンソールへ出力します、また Ctrl+X でコピーした後にペーストしても構"
 "いません \n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2254
 msgid "  Misc:\n"
 msgstr "   その他: \n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2255
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "      Ctrl+L: コンソール画面を全消去します。 \n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2256
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "      Ctrl+O: 上書きモードを切り替えます: 最初はオフです. \n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2257
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "      Ctrl+T: 現在の文字と1文字前の文字を入れ替えます. \n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2258
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -176,7 +176,7 @@ msgstr ""
 "\n"
 " 注意: 何らかの入力が要求された場合にのみ,コンソールが更新されます. \n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2259
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -184,7 +184,7 @@ msgstr ""
 "   Ctrl+W で現在の機能の off/on を切り替えます. \n"
 " \n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2260
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -192,7 +192,7 @@ msgstr ""
 " ESC で計算を中断します. \n"
 " \n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2261
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -200,11 +200,11 @@ msgstr ""
 " 'rcompgen' パッケージがインストールされていれば, TAB で補完を開始します. \n"
 " \n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2262
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr " 標準ウインドウズ・ホットキーを使い以下へ切りかえることができます \n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2263
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 " グラフィックスデバイス (MDI 中の Ctrl+Tab または Ctrl+F6, SDI 中の Alt+Tab) "
@@ -364,6 +364,7 @@ msgid "Save as..."
 msgstr " 別名で保存... "
 
 #: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
+#: src/library/grDevices/src/devWindows.c:1666
 #: src/library/grDevices/src/devWindows.c:1708
 msgid "Print..."
 msgstr " 印刷... "
@@ -419,7 +420,7 @@ msgstr " エディタウインドウを作成することができません "
 msgid "Untitled"
 msgstr " 無題 "
 
-#: src/gnuwin32/extra.c:811
+#: src/gnuwin32/extra.c:825
 msgid "Select file"
 msgstr " ファイルを選択 "
 
@@ -619,7 +620,8 @@ msgid "Update packages..."
 msgstr " パッケージの更新... "
 
 #: src/gnuwin32/rui.c:920
-msgid "Install package(s) from local zip files..."
+#, fuzzy
+msgid "Install package(s) from local files..."
 msgstr " ローカルにある zip ファイルからのパッケージのインストール... "
 
 #: src/gnuwin32/rui.c:944
@@ -831,7 +833,7 @@ msgstr " メニューが見つかりません "
 msgid "menu or item does not exist"
 msgstr " メニューまたはアイテムが存在しません "
 
-#: src/gnuwin32/system.c:447
+#: src/gnuwin32/system.c:446
 msgid "Save workspace image?"
 msgstr " 作業スペースを保存しますか? "
 
@@ -854,27 +856,27 @@ msgstr " 作業ディレクトリの変更 "
 msgid "Unable to set '%s' as working directory"
 msgstr " 作業ディレクトリとして '%s' を設定することができません "
 
-#: src/extra/graphapp/dialogs.c:603 src/extra/graphapp/dialogs.c:621
-#: src/extra/graphapp/dialogs.c:627 src/extra/graphapp/dialogs.c:726
-#: src/extra/graphapp/dialogs.c:740 src/extra/graphapp/dialogs.c:746
+#: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
+#: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:727
+#: src/extra/graphapp/dialogs.c:741 src/extra/graphapp/dialogs.c:747
 #: src/library/utils/src/windows/widgets.c:125
 msgid "Cancel"
 msgstr " キャンセル "
 
-#: src/extra/graphapp/dialogs.c:623 src/extra/graphapp/dialogs.c:742
+#: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:743
 #: src/library/utils/src/windows/widgets.c:124
 msgid "OK"
 msgstr " OK "
 
-#: src/extra/graphapp/dialogs.c:734
+#: src/extra/graphapp/dialogs.c:735
 msgid "User"
 msgstr " ユーザー "
 
-#: src/extra/graphapp/dialogs.c:735
+#: src/extra/graphapp/dialogs.c:736
 msgid "Password"
 msgstr " パスワード "
 
-#: src/extra/graphapp/dialogs.c:901 src/extra/graphapp/dialogs.c:907
+#: src/extra/graphapp/dialogs.c:902 src/extra/graphapp/dialogs.c:908
 #, c-format
 msgid "\"%s\" not found"
 msgstr " \"%s\" が見つかりません "
@@ -1122,10 +1124,6 @@ msgstr " ビットマップとして\tCTRL+C "
 msgid "as a Metafile\tCTRL+W"
 msgstr " メタファイルとして\tCTRL+W "
 
-#: src/library/grDevices/src/devWindows.c:1666
-msgid "Print...\tCTRL+P"
-msgstr " 印刷...\tCTRL+P "
-
 #: src/library/grDevices/src/devWindows.c:1668
 msgid "close Device"
 msgstr " デバイスを閉じる "
@@ -1209,6 +1207,9 @@ msgstr " ページ変更を確認するまで待機中... "
 #: src/library/grDevices/src/devWindows.c:3781
 msgid "Click or hit ENTER for next page"
 msgstr " クリックまたは ENTER キーを押すと次のページに移ります "
+
+#~ msgid "Print...\tCTRL+P"
+#~ msgstr " 印刷...\tCTRL+P "
 
 #~ msgid "invalid device"
 #~ msgstr " 無効なデバイスです "

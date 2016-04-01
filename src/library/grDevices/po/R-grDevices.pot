@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"Project-Id-Version: grDevices 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -218,9 +217,6 @@ msgstr ""
 msgid "status %d in running command '%s'"
 msgstr ""
 
-msgid "range too small for 'min.n'"
-msgstr ""
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 
@@ -251,7 +247,13 @@ msgstr ""
 msgid "argument is not of class %s"
 msgstr ""
 
-msgid "loading snapshot from a different session"
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr ""
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr ""
+
+msgid "snapshot contains invalid graphics call"
 msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"

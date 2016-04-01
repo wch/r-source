@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2014-03-26 10:02+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -76,11 +76,11 @@ msgstr " 不正な 'layout.pos.row' です "
 msgid "invalid 'layout.pos.col'"
 msgstr " 不正な 'layout.pos.col' です "
 
-#: matrix.c:49
+#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr " 特異な変換行列です "
 
-#: state.c:169
+#: state.c:170
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 " 現在の 'grid' の状態を保持することが出来ません。デバイスを開きすぎていません"

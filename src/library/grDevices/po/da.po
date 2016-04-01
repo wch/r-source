@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,7 +144,7 @@ msgstr "afm-fil '%s' kunne ikke åbnes"
 msgid "unknown AFM entity encountered"
 msgstr "mødte ukendt AFM-entitet"
 
-#: devPS.c:740 devPS.c:743 devPS.c:4425 devPS.c:7916 devPicTeX.c:484
+#: devPS.c:740 devPS.c:743 devPS.c:4427 devPS.c:7918 devPicTeX.c:484
 #: devPicTeX.c:486
 #, c-format
 msgid "invalid string in '%s'"
@@ -242,32 +242,32 @@ msgstr "skriftkodning ikke fundet i skriftdatabasen"
 msgid "font CMap for family '%s' not found in font database"
 msgstr "skrift-CMAP ikke fundet i skriftdatabasen"
 
-#: devPS.c:1951 devPS.c:2030 devPS.c:2098
+#: devPS.c:1952 devPS.c:2032 devPS.c:2100
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr "kan ikke indlæse afm-fil '%s'"
 
-#: devPS.c:2386
+#: devPS.c:2388
 #, fuzzy
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "Ødelagte indlæste kodninger;  kodning ikke optaget"
 
-#: devPS.c:2397
+#: devPS.c:2399
 #, fuzzy
 msgid "failed to record device encoding"
 msgstr "Kunne ikke optage enhedskodning"
 
-#: devPS.c:2568
+#: devPS.c:2570
 #, fuzzy
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "Object.ps.prolog er ikke en tegnvektor"
 
-#: devPS.c:2643 devPS.c:6420 devWindows.c:801
+#: devPS.c:2645 devPS.c:6422 devWindows.c:801
 #, fuzzy
 msgid "invalid line end"
 msgstr "Ugyldig linjeafslutning"
 
-#: devPS.c:2662 devPS.c:6439 devWindows.c:814
+#: devPS.c:2664 devPS.c:6441 devWindows.c:814
 #, fuzzy
 msgid "invalid line join"
 msgstr "Ugyldig linjeforbindelse"
@@ -275,71 +275,71 @@ msgstr "Ugyldig linjeforbindelse"
 # http://en.wikipedia.org/wiki/Miter_joint
 # må være gering på dansk
 # http://www.denstoredanske.dk/It,_teknik_og_naturvidenskab/Teknik/Boring,_s%C3%A6nkning_og_rivning/gering
-#: devPS.c:2670
+#: devPS.c:2672
 #, fuzzy
 msgid "invalid line mitre"
 msgstr "Ugyldig linjegering"
 
-#: devPS.c:2879 devPS.c:3775 devPS.c:4223 devPS.c:4250 devPS.c:5260
-#: devPS.c:7766 devPS.c:7811
+#: devPS.c:2881 devPS.c:3777 devPS.c:4225 devPS.c:4252 devPS.c:5262
+#: devPS.c:7768 devPS.c:7813
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "forsøg på at bruge ugyldig skrifttype %d erstattet af skrifttype 1"
 
-#: devPS.c:3101 devPS.c:4725 devPS.c:5839
+#: devPS.c:3103 devPS.c:4727 devPS.c:5841
 #, c-format
 msgid "filename too long in %s()"
 msgstr "filnavn er for langt i %s()"
 
-#: devPS.c:3107 devPS.c:4731 devPS.c:5845
+#: devPS.c:3109 devPS.c:4733 devPS.c:5847
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr "allokeringsproblem for hukommelsen i %s()"
 
-#: devPS.c:3124 devPS.c:5905
+#: devPS.c:3126 devPS.c:5907
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr "kodningssti er for lang i %s()"
 
-#: devPS.c:3138 devPS.c:4771
+#: devPS.c:3140 devPS.c:4773
 #, c-format
 msgid "failed to load encoding file in %s()"
 msgstr "kunne ikke indlæse kodningsfil i %s()"
 
-#: devPS.c:3183 devPS.c:3246 devPS.c:5964 devPS.c:6019 devPS.c:7646
+#: devPS.c:3185 devPS.c:3248 devPS.c:5966 devPS.c:6021 devPS.c:7648
 #, fuzzy
 msgid "invalid font type"
 msgstr "Ugyldig skrifttype"
 
-#: devPS.c:3207
+#: devPS.c:3209
 #, fuzzy
 msgid "failed to initialise default PostScript font"
 msgstr "Kunne ikke initialisere standardskriften for PostScript"
 
-#: devPS.c:3273
+#: devPS.c:3275
 #, fuzzy
 msgid "failed to initialise additional PostScript fonts"
 msgstr "Kunne ikke initialisere yderligere PostScript-skrifter"
 
-#: devPS.c:3289
+#: devPS.c:3291
 msgid "invalid foreground/background color (postscript)"
 msgstr "ugyldig forgrund- eller baggrundsfarve (postscript)"
 
-#: devPS.c:3294
+#: devPS.c:3296
 msgid "'command' is too long"
 msgstr "'kommando' er for lang"
 
-#: devPS.c:3299
+#: devPS.c:3301
 #, fuzzy
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "postscript(print.it=TRUE) brugt med en tom print-kommando"
 
-#: devPS.c:3348
+#: devPS.c:3350
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "ugyldig sidetype '%s' (postscript)"
 
-#: devPS.c:3462 devPS.c:4575 devWindows.c:2346
+#: devPS.c:3464 devPS.c:4577 devWindows.c:2346
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -347,17 +347,17 @@ msgstr ""
 "semitransparens er ikke understøttet på denne enhed: kun rapporteret en gang "
 "per side"
 
-#: devPS.c:3568 devPS.c:3577
+#: devPS.c:3570 devPS.c:3579
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "kan ikke åbne postscript-datakanal til '%s'"
 
-#: devPS.c:3588 devPS.c:4980 devPS.c:4991 devPS.c:7071 qdPDF.c:98
+#: devPS.c:3590 devPS.c:4982 devPS.c:4993 devPS.c:7073 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "kan ikke åbne fil '%s'"
 
-#: devPS.c:3716 devPS.c:3731
+#: devPS.c:3718 devPS.c:3733
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -366,187 +366,187 @@ msgstr ""
 "fejl fra postscript() under kørsel af:\n"
 "    %s"
 
-#: devPS.c:3763
+#: devPS.c:3765
 #, fuzzy, c-format
 msgid "CID family '%s' not included in postscript() device"
 msgstr "CID-familie '%s' er ikke inkluderet i PostScript-enhed"
 
 # 91%
-#: devPS.c:3781 devPS.c:3792 devPS.c:4230 devPS.c:4260 devPS.c:4365
+#: devPS.c:3783 devPS.c:3794 devPS.c:4232 devPS.c:4262 devPS.c:4367
 #, fuzzy, c-format
 msgid "family '%s' not included in postscript() device"
 msgstr "familie '%s' er ikke inkluderet i PostScript-enhed"
 
-#: devPS.c:4305
+#: devPS.c:4307
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "ukendt kodning '%s' i 'mbcsToSbcs'"
 
-#: devPS.c:4315
+#: devPS.c:4317
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr "konverteringsfejl på '%s' i 'mbcsToSbcs': punktum erstattet for <%02x>"
 
-#: devPS.c:4393
+#: devPS.c:4395
 #, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "fejlede åbn af omdannelsesprogram for kodning af '%s'"
 
-#: devPS.c:4411 devPS.c:5305 devPS.c:7901
+#: devPS.c:4413 devPS.c:5307 devPS.c:7903
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "fejlede i tekstomdannelse til kodning '%s'"
 
-#: devPS.c:4589
+#: devPS.c:4591
 #, fuzzy
 msgid "ran out of colors in xfig()"
 msgstr "løb ud af farver i xfig()"
 
-#: devPS.c:4618
+#: devPS.c:4620
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr "uimplementeret linjetekstur %08x: bruger Bindestreg-dobbelt-prikket"
 
-#: devPS.c:4684
+#: devPS.c:4686
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr "ukendt postscript-skriftfamilie '%s', bruger Helvetica"
 
 # 81%
-#: devPS.c:4756
+#: devPS.c:4758
 msgid "invalid foreground/background color (xfig)"
 msgstr "ugyldig forgrund- eller baggrundsfarve (xfig)"
 
-#: devPS.c:4789
+#: devPS.c:4791
 #, fuzzy
 msgid "only Type 1 fonts supported for XFig"
 msgstr "Kun Type 1-skrifter understøttet for XFig"
 
 # 79%
-#: devPS.c:4802
+#: devPS.c:4804
 #, fuzzy
 msgid "failed to initialise default XFig font"
 msgstr "Kunne ikke initialisere standardskriften for XFig"
 
-#: devPS.c:4839
+#: devPS.c:4841
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr "ugyldig sidetype '%s' (xfig)"
 
-#: devPS.c:4847
+#: devPS.c:4849
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr "xfig(%s, onefile=FALSE) vil kun returnere det sidste plot"
 
-#: devPS.c:4972
+#: devPS.c:4974
 msgid "empty file name"
 msgstr "tomt filnavn"
 
-#: devPS.c:5037 devPS.c:5089 devPS.c:5667 devPS.c:5711 devPS.c:7131
+#: devPS.c:5039 devPS.c:5091 devPS.c:5669 devPS.c:5713 devPS.c:7133
 msgid "write failed"
 msgstr "skrivning fejlede"
 
-#: devPS.c:5294
+#: devPS.c:5296
 #, c-format
 msgid "unable to use encoding '%s'"
 msgstr "kan ikke bruge kodning '%s'"
 
-#: devPS.c:5555 devPS.c:5558
+#: devPS.c:5557 devPS.c:5560
 msgid "failed to increase 'maxRaster'"
 msgstr "kan ikke øge 'maxRaster'"
 
-#: devPS.c:5570
+#: devPS.c:5572
 #, fuzzy
 msgid "unable to allocate raster image"
 msgstr "Kan ikke allokere raster-billede"
 
 # 77%
-#: devPS.c:5771
+#: devPS.c:5773
 #, fuzzy
 msgid "corrupt loaded encodings;  font not added"
 msgstr "Ødelagte indlæste kodninger;  skrift ikke tilføjet"
 
-#: devPS.c:5780
+#: devPS.c:5782
 #, fuzzy
 msgid "failed to record device encoding; font not added"
 msgstr "Kunne ikke optage enhedskodning: skrifttype ikke tilføjet"
 
-#: devPS.c:5891
+#: devPS.c:5893
 msgid "increasing the PDF version to 1.2"
 msgstr "øger PDF-versionen til 1.2"
 
-#: devPS.c:5921
+#: devPS.c:5923
 msgid "failed to load default encoding"
 msgstr "kunne ikke indlæse standardkodning"
 
 # 79%
-#: devPS.c:5987
+#: devPS.c:5989
 #, fuzzy
 msgid "failed to initialise default PDF font"
 msgstr "Kunne ikke initialisere standardskriften for PDF"
 
 # 81%
-#: devPS.c:6042
+#: devPS.c:6044
 #, fuzzy
 msgid "failed to initialise additional PDF fonts"
 msgstr "Kunne ikke initialisere yderligere PDF-skrifter"
 
 # 75%
-#: devPS.c:6055
+#: devPS.c:6057
 msgid "failed to allocate rasters"
 msgstr "kunne ikke allokere rastere"
 
-#: devPS.c:6062
+#: devPS.c:6064
 msgid "failed to allocate masks"
 msgstr "kunne ikke allokere masker"
 
-#: devPS.c:6125
+#: devPS.c:6127
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "ugyldig papirtype '%s' (pdf)"
 
 # 81%
-#: devPS.c:6149
+#: devPS.c:6151
 msgid "invalid foreground/background color (pdf)"
 msgstr "ugyldig forgrund- eller baggrundsfarve (pdf)"
 
-#: devPS.c:6268
+#: devPS.c:6270
 #, fuzzy
 msgid "invalid 'alpha' value in PDF"
 msgstr "Ugyldig alfaværdi i PDF"
 
-#: devPS.c:6293
+#: devPS.c:6295
 msgid "increasing the PDF version to 1.4"
 msgstr "øger PDF-versionen til 1.4"
 
-#: devPS.c:6344 devPS.c:6391
+#: devPS.c:6346 devPS.c:6393
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "ukendt 'colormodel', bruger 'srgb'"
 
-#: devPS.c:6585
+#: devPS.c:6587
 #, fuzzy
 msgid "failed to load sRGB colorspace file"
 msgstr "Kunne ikke indlæse sRGB-farverumsfil"
 
-#: devPS.c:6849
+#: devPS.c:6851
 #, fuzzy
 msgid "corrupt encodings in PDF device"
 msgstr "Ødelagte kodninger i PDF-enhed"
 
-#: devPS.c:6930
+#: devPS.c:6932
 msgid "increasing the PDF version to 1.3"
 msgstr "øger PDF-versionen til 1.3"
 
-#: devPS.c:7055
+#: devPS.c:7057
 #, fuzzy, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr "kan ikke åbne postscript-datakanal til '%s'"
 
-#: devPS.c:7061
+#: devPS.c:7063
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr ""
 
-#: devPS.c:7204
+#: devPS.c:7206
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -555,27 +555,27 @@ msgstr ""
 "kan ikke åbne 'pdf-filargument' '%s'\n"
 "  luk venligst PDF-enheden ned"
 
-#: devPS.c:7671 devPS.c:8033 devPS.c:8080
+#: devPS.c:7673 devPS.c:8035 devPS.c:8082
 #, fuzzy
 msgid "failed to find or load PDF font"
 msgstr "Kunne ikke finde eller indlæse PDF-skrift"
 
-#: devPS.c:7855 devPS.c:7988
+#: devPS.c:7857 devPS.c:7990
 #, fuzzy
 msgid "failed to find or load PDF CID font"
 msgstr "Kunne ikke finde eller indlæse PDF CID-skrift"
 
-#: devPS.c:8219 devPS.c:8223 devPS.c:8383 devPS.c:8387
+#: devPS.c:8221 devPS.c:8225 devPS.c:8386 devPS.c:8390
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "ugyldigt 'family'-parameter i %s"
 
-#: devPS.c:8241 devPS.c:8399
+#: devPS.c:8243 devPS.c:8402
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "ugyldigt 'fonts'-parameter i %s"
 
-#: devPS.c:8247 devPS.c:8409 devPS.c:8412 devWindows.c:3646 devWindows.c:3650
+#: devPS.c:8249 devPS.c:8412 devPS.c:8415 devWindows.c:3646 devWindows.c:3650
 #: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
 #: devWindows.c:3689 devWindows.c:3693
 #, c-format
@@ -583,7 +583,7 @@ msgid "invalid value of '%s'"
 msgstr "ugyldig værdi for '%s'"
 
 # 85%
-#: devPS.c:8260 devPS.c:8327 devPS.c:8426 devPicTeX.c:740 devWindows.c:3734
+#: devPS.c:8262 devPS.c:8329 devPS.c:8429 devPicTeX.c:740 devWindows.c:3734
 #, c-format
 msgid "unable to start %s() device"
 msgstr "kan ikke starte %s()-enhed"

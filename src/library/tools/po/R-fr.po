@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 #, fuzzy
 msgid "Checking %s"
 msgstr "vérification de %s ..."
+
+#, fuzzy
+msgid "Processing %s ..."
+msgstr "analyse de %s"
 
 msgid "argument 'package' must be of length 1"
 msgstr "l'argument 'package' doit être de longueur 1"
@@ -961,6 +965,10 @@ msgstr "aucun fichier source n'est trouvé"
 msgid "empty 'data' directory"
 msgstr "répertoire 'data' vide"
 
+#, fuzzy
+msgid "cannot create unique directory for build"
+msgstr "impossible de créer le répertoire '%s'"
+
 msgid "cannot create temporary directory"
 msgstr "impossible de créer un répertoire temporaire"
 
@@ -1027,6 +1035,14 @@ msgstr ""
 "Impossible de traiter la section ou les lignes : \n"
 "%s"
 
+#, fuzzy
+msgid "DESCRIPTION file not found"
+msgstr "Fichier DESCRIPTION incorrect"
+
+#, fuzzy
+msgid "NEWS file not found"
+msgstr "le fichier '%s' est introuvable"
+
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
 "Pas de nouvelles trouvées dans le fichier en usant de l'ancien format de "
@@ -1077,6 +1093,14 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "Traitement des packages :"
+
+#, fuzzy
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr ""
+"la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
+"%s"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s doit être une chaîne de caractères ou une connexion fichier/raw"
@@ -1161,6 +1185,9 @@ msgstr "l'argument 'pkg' doit être de longueur 1"
 
 msgid "package '%s' was not found"
 msgstr "le package '%s' est introuvable"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
 
 msgid "bad operand"
 msgstr "un opérateur erroné"
@@ -1454,12 +1481,6 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d des tests du package ont échoué"
 msgstr[1] "%d des tests du package ont échoué"
-
-#, fuzzy
-#~ msgid "Reading %s failed with message: %s"
-#~ msgstr ""
-#~ "la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
-#~ "%s"
 
 #~ msgid "assertCondition: caught %s"
 #~ msgstr "assertCondition : capture de %s"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -234,6 +234,11 @@ msgstr "데이터프레임에 잘못된 'dimnames'이 주어졌습니다"
 
 msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr "클래스  \"%s\"를 data.frame으로 강제형변환 할 수 없습니다"
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr ""
@@ -498,6 +503,15 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x'는 반드시 정방행렬이어야 합니다"
 
@@ -612,11 +626,12 @@ msgstr "유효하지 않은 'path' 인자입니다"
 msgid "invalid 'time' argument"
 msgstr "유효하지 않은 'time' 인자입니다"
 
-msgid "'vec' contains NAs"
-msgstr "'vec'는 NA 값들을 포함합니다"
-
-msgid "'vec' must be sorted non-decreasingly"
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr ""
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "핸들러는 반드시 함수이어야 합니다"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "타입 \"expression\"을 가지는 'value'의 첫번째 요소를 사용합니다"
@@ -647,14 +662,18 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 "손상된 데이터 프레임입니다:  columns will be truncated or padded with NAs"
 
-msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
-
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print'는 길이가 1 보다 커야합니다"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print'는 반드시 문자, 논리값, 또는 NULL이어야 합니다"
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
+#, fuzzy
+msgid "'input.d.mark' has no characters"
+msgstr "'input'과 'target'은 반드시 문자형 벡터이어야 합니다"
 
 msgid "'subset' must be logical"
 msgstr "'subset'은 반드시 논리적이어야 합니다"
@@ -736,12 +755,18 @@ msgstr ""
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "패키지 %s는 당신이 보고 확인을 해야할 라이센스를 가지고 있습니다"
 
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is"
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr "패키지 %s는 당신이 보고 확인을 해야할 라이센스를 가지고 있습니다"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
 msgstr ""
 "패키지 %s는 DESCRIPTION 파일에 따르면, \n"
 "당신이 수용을 해야만 하는 라이센스를 가지고 있습니다"
+
+msgid "%s"
+msgstr ""
 
 msgid "license for package %s not accepted"
 msgstr "패키지 %s에 대해서 수락되지 않은 라이센스입니다"
@@ -912,6 +937,15 @@ msgstr "유효하지 않은 'category' 인자입니다"
 
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr ""
+
+msgid "FUN"
+msgstr ""
+
+msgid "may not have argument(s) named"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg'는 반드시 NULL 또는 문자형 벡터이어야 합니다"
@@ -1101,6 +1135,9 @@ msgstr ""
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
+msgid "replacing previous import %s by %s when loading %s"
+msgstr ""
+
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr ""
 
@@ -1108,8 +1145,8 @@ msgid "requested methods not found in environment/package %s: %s"
 msgstr "요청된 메소드를 environment/패키지 %s에서 찾을 수 없습니다: %s"
 
 msgid ""
-"No generic function found corresponding to requested imported methods for "
-"\"%s\" from package \"%s\" (malformed exports?)"
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
 msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
@@ -1265,6 +1302,10 @@ msgstr "길이는 반드시 음의 값을 가지는 숫자가 아니어야 합�
 msgid "too many arguments"
 msgstr "너무 많은 인자들이 있습니다"
 
+#, fuzzy
+msgid "invalid 'compress' argument:"
+msgstr "유효한 'name' 인자가 아닙니다"
+
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr "만약 'file'이 파일명이 아니라면 'compress'는 무시되어 집니다"
 
@@ -1300,6 +1341,9 @@ msgid ""
 "Did you intend to set 'partial'?"
 msgstr ""
 
+msgid "'partial' sorting not supported by radix method"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr ""
 
@@ -1324,9 +1368,6 @@ msgid ""
 msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
-msgstr ""
-
-msgid "method = \"radix\" is only for integer 'x'"
 msgstr ""
 
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1383,9 +1424,6 @@ msgstr "'indent'와 'width'의 값이 잘못되었습니다"
 msgid "probably wrong encoding in names(.) of column"
 msgstr ""
 
-msgid ","
-msgstr ","
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr ""
 
@@ -1427,6 +1465,10 @@ msgstr "'INDEX'의 길이가 0입니다"
 
 msgid "arguments must have same length"
 msgstr "인자들은 반드시 같은 길이를 가져야 합니다"
+
+#, fuzzy
+msgid "total number of levels >= 2^31"
+msgstr "레벨의 개수가 다릅니다."
 
 msgid "handler must be a function"
 msgstr "핸들러는 반드시 함수이어야 합니다"
@@ -1681,6 +1723,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "추가적인 인자 %s는 고려되지 않을 것입니다"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec'는 NA 값들을 포함합니다"
 
 #~ msgid "cannot be unloaded."
 #~ msgstr "%s 네임스페이스는 언로드 될 수 없습니다:"

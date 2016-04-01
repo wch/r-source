@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -472,6 +472,12 @@ msgstr " カイ自乗近似は不正確かもしれません "
 msgid "NA values not allowed in 'd'"
 msgstr " 'd' 中には NA 値は許されません "
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr " 距離は 'dist' の結果であるか、正方行列である必要があります "
 
@@ -483,6 +489,9 @@ msgstr " 'k' は {1, 2, .. n - 1} 内にある必要があります "
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr " %d 個の固有値 (最初の %d 個のうち) だけが正です "
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr " 初期値は実行可能な範囲の内部にありません "
@@ -524,6 +533,10 @@ msgstr " 1 つ以上のベクトルを与えなければなりません "
 
 msgid "arguments must have the same length"
 msgstr " 引数は同じ長さでなければなりません "
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr " 'x' の列数が間違っています "
 
 msgid "contrasts apply only to factors"
 msgstr " 対比は因子にしか適用できません "
@@ -768,6 +781,9 @@ msgstr " 'prob' と 'mu' の双方が指定されました "
 msgid "some terms will have NAs due to the limits of the method"
 msgstr " メソッドの限界のために幾つかの項は NA 値を持つでしょう "
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr " 'x' は 1 つ以上の非欠損値を持たなければなりません "
 
@@ -891,7 +907,10 @@ msgstr ""
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr " 'inverse.gaussian' ファミリでは正の値しか許されません "
 
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+#, fuzzy
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr ""
 " 'inverse.gaussian' ファミリには CRAN パッケージ 'SuppDists' が必要です "
 
@@ -1176,8 +1195,8 @@ msgstr " 'which' のすべての要素は 1 と %d の間になければなり�
 msgid "invalid parameter values"
 msgstr " 無効なパラメータ値です "
 
-msgid "a limit is missing"
-msgstr " 限界がありません "
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr " 欠測値は許されません "
@@ -1392,6 +1411,10 @@ msgstr " 無効な NCOL(X) "
 msgid "only 1-4 predictors are allowed"
 msgstr " 1-4 個の予測子しか許されません "
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr " 無効な NCOL(X) "
+
 msgid "invalid 'y'"
 msgstr " 無効な 'y' "
 
@@ -1415,6 +1438,13 @@ msgstr " 無効な引数 'cell' です "
 
 msgid "invalid argument 'degree'"
 msgstr " 無効な引数 'degree' です "
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr " 有限な観測値がありません "
 
 msgid "first argument must be a \"loess\" object"
 msgstr " 最初の引数は \"loess\" オブジェクトでなければなりません "
@@ -1940,8 +1970,8 @@ msgstr " 時間変動変数を名前から推測できませんでした "
 msgid "'varying' arguments must be the same length"
 msgstr " 'varying' 引数は同じ長さでなければなりません "
 
-msgid "'times' is wrong length"
-msgstr " 'times' の長さが誤っています "
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr " 時間が欠損した記録がありますので、取り除きます "
@@ -2495,6 +2525,12 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "a limit is missing"
+#~ msgstr " 限界がありません "
+
+#~ msgid "'times' is wrong length"
+#~ msgstr " 'times' の長さが誤っています "
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr " 余計な引数は捨てられました "

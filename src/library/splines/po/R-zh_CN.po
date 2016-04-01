@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -20,8 +20,12 @@ msgstr ""
 msgid "must have at least 'ord' knots"
 msgstr "至少需要有'ord'个结"
 
-msgid "length of 'derivs' must match length of 'x'"
+#, fuzzy
+msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "'derivs'和'x'的长度必需匹配"
+
+msgid "empty 'derivs'"
+msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord'必需为正整数，最多不能超过结的数目"

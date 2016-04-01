@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -226,6 +226,11 @@ msgstr "niepoprawne 'dimnames' dla podanej ramki danych"
 
 msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr "nie można przekształcić klasy \"%s\" w klasę \"data.frame\""
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr ""
 
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
 msgstr ""
@@ -520,6 +525,15 @@ msgstr ""
 "Przeszkadzające linie rozpoczynają się od:\n"
 "%s"
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "argument 'x' musi być macierzą kwadratową"
 
@@ -642,11 +656,13 @@ msgstr "niepoprawny argument 'path'"
 msgid "invalid 'time' argument"
 msgstr "niepoprawny argument 'time'"
 
-msgid "'vec' contains NAs"
-msgstr "argument 'vec' zawiera wartości NA"
-
-msgid "'vec' must be sorted non-decreasingly"
+#, fuzzy
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "argument 'vec' musi być posortowany w sposób niemalejący"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "przewodnik musi być funkcją"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "używanie pierwszego elementu 'value' typu \"expression\""
@@ -676,16 +692,20 @@ msgstr ""
 "uszkodzona ramka danych: kolumny będą obcięte lub uzupełnione wartościami "
 "'NA'"
 
-msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
-"oba argumenty 'big.mark' oraz 'decimal.mark' są ustawione na '%s', co może "
-"być mylące"
-
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' ma długość > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' musi być tekstem, wartością logiczną lub NULL"
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+"oba argumenty 'big.mark' oraz 'decimal.mark' są ustawione na '%s', co może "
+"być mylące"
+
+#, fuzzy
+msgid "'input.d.mark' has no characters"
+msgstr "argumenty 'input' oraz 'target' muszą być wektorami tekstowymi"
 
 msgid "'subset' must be logical"
 msgstr "'subset' musi być zmienną logiczną"
@@ -768,12 +788,19 @@ msgid "package %s has a license that you need to accept after viewing"
 msgstr ""
 "pakiet %s posiada licencję, którą musisz zaakceptować po przeglądnięciu"
 
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is"
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr ""
+"pakiet %s posiada licencję, którą musisz zaakceptować po przeglądnięciu"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
 msgstr ""
 "pakiet %s posiada licencję, którą musisz zaakceptować:\n"
 "zgodnie z opisem w pliku DESCRIPTION jest to"
+
+msgid "%s"
+msgstr ""
 
 msgid "license for package %s not accepted"
 msgstr "licencja dla pakietu %s nie została zaakceptowana"
@@ -953,6 +980,15 @@ msgstr "niepoprawny argument 'category'"
 
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "wymagane jest określenie nazwy formalnych argumentów dla 'vectorize'"
+
+msgid "FUN"
+msgstr ""
+
+msgid "may not have argument(s) named"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "argument 'arg' musi być wartością NULL lub wektorem tekstowym"
@@ -1157,15 +1193,22 @@ msgstr ""
 "znaleziono metody do importu dla funkcji %s ale nie znaleziono samej funkcji "
 "ogólnej"
 
+#, fuzzy
+msgid "replacing previous import %s by %s when loading %s"
+msgstr ""
+"zastępowanie poprzedniego importu przez %s podczas ładowanie przestrzeni "
+"nazw %s"
+
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr "Nie znaleziono metod w pakiecie '%s' dla żądań: %s"
 
 msgid "requested methods not found in environment/package %s: %s"
 msgstr "zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s"
 
+#, fuzzy
 msgid ""
-"No generic function found corresponding to requested imported methods for "
-"\"%s\" from package \"%s\" (malformed exports?)"
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
 msgstr ""
 "Nie znaleziono ogólnej funkcji odpowiadającej zażądanym zaimportowanym "
 "metodom dla funkcji '%s' z pakietu '%s' (uszkodzone eksporty?)"
@@ -1325,6 +1368,10 @@ msgstr "długość musi być liczbą nieujemną"
 msgid "too many arguments"
 msgstr "zbyć dużo argumentów"
 
+#, fuzzy
+msgid "invalid 'compress' argument:"
+msgstr "niepoprawny argument 'name'"
+
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr ""
 "argument 'compress' zostanie zignorowany o ile argument 'file' nie jest "
@@ -1365,6 +1412,9 @@ msgstr ""
 "'decreasing' musi być wektorem logicznym o długości 1.\n"
 "Czy chciałeś ustawić 'partial'?"
 
+msgid "'partial' sorting not supported by radix method"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr "argument 'index.return' jest poprawny jedynie dla nie-czynników"
 
@@ -1392,9 +1442,6 @@ msgstr ""
 
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr "'method=\"quick\"' jest tylko dla liczbowych 'x'"
-
-msgid "method = \"radix\" is only for integer 'x'"
-msgstr "'method=\"radix\"' jest tylko dla liczb całkowitych 'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "argument 'local' musi być TRUE, FALSE lub musi być środowiskiem"
@@ -1450,9 +1497,6 @@ msgstr "niepoprawne wartości 'indent' oraz 'width'"
 msgid "probably wrong encoding in names(.) of column"
 msgstr "prawdopodobnie błędne kodowanie w 'names(.)' kolumny"
 
-msgid ","
-msgstr ","
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS jest dłuższe niż rozmiar 'dim(x)[MARGIN]'"
 
@@ -1494,6 +1538,10 @@ msgstr "argument 'INDEX' ma zerową długość"
 
 msgid "arguments must have same length"
 msgstr "argumenty muszą mieć tę samą długość"
+
+#, fuzzy
+msgid "total number of levels >= 2^31"
+msgstr "liczba poziomów różni się"
 
 msgid "handler must be a function"
 msgstr "przewodnik musi być funkcją"
@@ -1837,6 +1885,12 @@ msgid_plural ""
 msgstr[0] "dodatkowy argument %s zostanie odrzucony"
 msgstr[1] "dodatkowe argumenty %s zostaną odrzucone"
 msgstr[2] "dodatkowe argumenty %s zostaną odrzucone"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "argument 'vec' zawiera wartości NA"
+
+#~ msgid "method = \"radix\" is only for integer 'x'"
+#~ msgstr "'method=\"radix\"' jest tylko dla liczb całkowitych 'x'"
 
 #~ msgid "cannot be unloaded."
 #~ msgstr "nie może być zwolniony"

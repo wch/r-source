@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -231,6 +231,11 @@ msgstr "'dimnames' inválidos para um data frame"
 #, fuzzy
 msgid "cannot coerce class \"%s\" to a data.frame"
 msgstr "não é possível fazer coerção de classe \"%s\" para um data.frame"
+
+msgid ""
+"'row.names' is not a character vector of length %d -- omitting it. Will be "
+"an error!"
+msgstr ""
 
 #, fuzzy
 msgid "options(\"stringsAsFactors\") not set to TRUE or FALSE"
@@ -533,6 +538,15 @@ msgstr ""
 "As linhas que não estão no padrão começam com:\n"
 "%s"
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x' deve ser uma matriz quadrada"
 
@@ -660,11 +674,13 @@ msgstr "argumento 'name' inválido"
 msgid "invalid 'time' argument"
 msgstr "argumento 'name' inválido"
 
-msgid "'vec' contains NAs"
-msgstr "'vec' contem NAs"
-
-msgid "'vec' must be sorted non-decreasingly"
+#, fuzzy
+msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "'vec' deve ser ordenado de forma não-decrescente"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "manipulador deve ser uma função"
 
 #, fuzzy
 msgid "using the first element of 'value' of type \"expression\""
@@ -693,14 +709,18 @@ msgstr "'flag' pode conter somente '0+- #'"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "data frame corrompido: colunas serão truncadas ou completadas com NAs"
 
-msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
-
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' tem comprimento > 1"
 
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' deve ser caractere, lógico ou NULL"
+
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
+#, fuzzy
+msgid "'input.d.mark' has no characters"
+msgstr "'input' e 'target' devem ser vetores de caracteres"
 
 msgid "'subset' must be logical"
 msgstr "'subset' deve ser lógico"
@@ -800,12 +820,18 @@ msgstr ""
 "Pacote '%s' tem uma licença que você precisa aceitar depois de visualizá-la"
 
 #, fuzzy
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is"
+msgid "package %s has a license that you need to accept:"
+msgstr ""
+"Pacote '%s' tem uma licença que você precisa aceitar depois de visualizá-la"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
 msgstr ""
 "Pacote '%s' tem uma licença que você precisa aceitar:\n"
 "de acordo com o arquivo DESCRIPTION"
+
+msgid "%s"
+msgstr ""
 
 #, fuzzy
 msgid "license for package %s not accepted"
@@ -1005,6 +1031,15 @@ msgstr "argumento 'category' inválido"
 #, fuzzy
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "nomes de argumentos formais devem ser especificados para vetorizar"
+
+msgid "FUN"
+msgstr ""
+
+msgid "may not have argument(s) named"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' deve ser NULL ou um vetor caractere"
@@ -1212,6 +1247,10 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 "métodos encontrados para importar para função %s mas não o genérico em si"
 
+#, fuzzy
+msgid "replacing previous import %s by %s when loading %s"
+msgstr "substituindo importação %s quando carregando %s"
+
 msgid "No methods found in \"%s\" for requests: %s"
 msgstr ""
 
@@ -1219,8 +1258,8 @@ msgid "requested methods not found in environment/package %s: %s"
 msgstr "métodos requeridos não encontrados no ambiente/pacote %s: %s"
 
 msgid ""
-"No generic function found corresponding to requested imported methods for "
-"\"%s\" from package \"%s\" (malformed exports?)"
+"No generic function %s found corresponding to requested imported methods "
+"from package %s when loading %s (malformed exports?)"
 msgstr ""
 
 #, fuzzy
@@ -1388,6 +1427,10 @@ msgstr "'length' deve ser um número não negativo"
 msgid "too many arguments"
 msgstr "muitos argumentos"
 
+#, fuzzy
+msgid "invalid 'compress' argument:"
+msgstr "argumento 'name' inválido"
+
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr ""
 
@@ -1425,6 +1468,9 @@ msgstr ""
 "'decreasing' deve ser um vetor lógico de comprimento 1.\n"
 "Sua intenção era definir 'partial'?"
 
+msgid "'partial' sorting not supported by radix method"
+msgstr ""
+
 msgid "'index.return' only for non-factors"
 msgstr "'index.return' somente para não fatores"
 
@@ -1453,10 +1499,6 @@ msgstr ""
 #, fuzzy
 msgid "method = \"quick\" is only for numeric 'x'"
 msgstr "method=\"quick\" somente para 'x' numérico"
-
-#, fuzzy
-msgid "method = \"radix\" is only for integer 'x'"
-msgstr "method=\"radix\" somente para 'x' inteiro"
 
 #, fuzzy
 msgid "'local' must be TRUE, FALSE or an environment"
@@ -1512,9 +1554,6 @@ msgstr "valores incorretos de 'indent' e 'width'"
 msgid "probably wrong encoding in names(.) of column"
 msgstr "provavelmente codificação errada no names(.) da coluna"
 
-msgid ","
-msgstr ","
-
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
 msgstr "STATS é maior que o comprimento de 'dim(x)[MARGIN]'"
 
@@ -1561,6 +1600,10 @@ msgstr "'to' deve ter comprimento 1"
 
 msgid "arguments must have same length"
 msgstr "argumentos devem ter o mesmo comprimento"
+
+#, fuzzy
+msgid "total number of levels >= 2^31"
+msgstr "número de níveis difere"
 
 msgid "handler must be a function"
 msgstr "manipulador deve ser uma função"
@@ -1868,6 +1911,13 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "argumento 'drop' será ignorado"
 msgstr[1] "argumento 'drop' será ignorado"
+
+#~ msgid "'vec' contains NAs"
+#~ msgstr "'vec' contem NAs"
+
+#, fuzzy
+#~ msgid "method = \"radix\" is only for integer 'x'"
+#~ msgstr "method=\"radix\" somente para 'x' inteiro"
 
 #, fuzzy
 #~ msgid "re-exports %s not exported by %s"

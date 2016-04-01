@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -13,8 +13,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 2.0.5\n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr "não é um ambiente apropriado para avaliação"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+"'ns' deve ser um espaço de nomes ou um ambiente importado de espaço de nomes"
+
+msgid "namespace found within global environments"
+msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
@@ -53,7 +64,7 @@ msgstr "atribuição inválida 2"
 msgid "invalid function in complex assignment"
 msgstr "função inválida em atribuição complexa"
 
-msgid "%s is not a registered math1 function"
+msgid "is not a registered math1 function"
 msgstr ""
 
 msgid "missing arguments are not allowed"
@@ -77,6 +88,9 @@ msgstr "número de argumentos inválidos para '%s'"
 #, fuzzy
 msgid "more than one default provided in switch() call"
 msgstr "mais de um valor default fornecido na chamada de switch"
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "não é possível compilar algo que não seja uma função"
@@ -104,6 +118,9 @@ msgstr "arquivo '%s' não existe"
 
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' não é uma opção válida de compilação"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
 
 msgid "function is not compiled"
 msgstr "função não está compilada"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 19:01-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "неправильная позиция 'at' в 'axis'"
@@ -80,11 +81,19 @@ msgstr "'row' может быть только рангом из существующих строк"
 msgid "invalid 'row' specification"
 msgstr "неправильное указание 'row'"
 
-msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr "не могу задать больше чем один 'side=[\"left\", \"right\"]', 'col', 'col.before', или 'col.after'"
+msgid ""
+"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
+"before', or 'col.after'"
+msgstr ""
+"не могу задать больше чем один 'side=[\"left\", \"right\"]', 'col', 'col."
+"before', или 'col.after'"
 
-msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr "надо задать в точности один из 'side=[\"top\", \"bottom\"]', 'row', 'row.before', или 'row.after'"
+msgid ""
+"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
+"before', or 'row.after'"
+msgstr ""
+"надо задать в точности один из 'side=[\"top\", \"bottom\"]', 'row', 'row."
+"before', или 'row.after'"
 
 msgid "invalid 'n'"
 msgstr "неправильный 'n'"
@@ -119,14 +128,20 @@ msgstr "надо задавать только правильные имена 'gpar'"
 msgid "invalid display list element"
 msgstr "неправильный элемент списка изображений"
 
-msgid "one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
-msgstr "один или больше grobs переписан (grab НЕ будет точным; попробуйте 'wrap = TRUE')"
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+msgstr ""
+"один или больше grobs переписан (grab НЕ будет точным; попробуйте 'wrap = "
+"TRUE')"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "оконница переписана (grab, ВОЗМОЖНО, не будет точным)"
 
-msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr "grob задвинул оконницы и не извлек/переместил вверх (grab, ВОЗМОЖНО, не будет точным)"
+msgid ""
+"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr ""
+"grob задвинул оконницы и не извлек/переместил вверх (grab, ВОЗМОЖНО, не "
+"будет точным)"
 
 msgid "only valid to push viewports"
 msgstr "правильно только для задвигания оконниц"
@@ -251,9 +266,6 @@ msgstr "gPath (%s) не найден"
 msgid "grob '%s' not found"
 msgstr "grob '%s' не найден"
 
-msgid "invalid element in the display list"
-msgstr "неправильный элемент в списке изображений"
-
 msgid "Invalid force target"
 msgstr "Неправильная прямая цель"
 
@@ -310,9 +322,6 @@ msgstr "неправильный 'listing'"
 
 msgid "invalid 'listing'"
 msgstr "неправильный список"
-
-msgid "Nothing on the display list"
-msgstr "Ничего нет в списке изображений"
 
 msgid "invalid 'origin'"
 msgstr "неправильный 'origin'"
@@ -446,6 +455,10 @@ msgstr "индекс за пределами (арифметическое подмножество единиц)"
 msgid "index out of bounds (unit list subsetting)"
 msgstr "индекс за пределами (списковое подмножество единиц)"
 
+#, fuzzy
+msgid "Value being assigned must be a unit"
+msgstr "x и y должны быть единицами"
+
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr "нельзя комбинировать объекты-единицы с другими типами"
 
@@ -488,11 +501,14 @@ msgstr "только оконницы разрешены в 'vpList'"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "только оконницы разрешены в 'vpStack'"
 
-msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr "'parent' должен быть оконницей и 'children' должны быть 'vpList' в 'vpTree'"
+msgid ""
+"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr ""
+"'parent' должен быть оконницей и 'children' должны быть 'vpList' в 'vpTree'"
 
 msgid "a viewport path must contain at least one viewport name"
-msgstr "путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
+msgstr ""
+"путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
 
 msgid "must specify at least one of 'x' or 'xscale'"
 msgstr "надо задать по крайней мере одно из 'x' или 'xscale'"
@@ -515,40 +531,55 @@ msgstr[0] "Неправильное имя оконницы"
 msgstr[1] "Неправильные имена оконниц"
 msgstr[2] "Неправильные имена оконниц"
 
+#~ msgid "invalid element in the display list"
+#~ msgstr "неправильный элемент в списке изображений"
+
+#~ msgid "Nothing on the display list"
+#~ msgstr "Ничего нет в списке изображений"
+
 #~ msgid "the 'vp' argument is deprecated"
 #~ msgstr "аргумент 'vp' не одобряется"
+
 #~ msgid "grid.grob() is deprecated; please use grob() instead"
 #~ msgstr "grid.grob() не одобряется; используйте, пожалуйста, grob()"
+
 #~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 #~ msgstr "аргумент 'grob' должен быть 'line.to', 'lines', или 'segments' grob"
 
 #, fuzzy
 #~ msgid "invalid 'ask' value"
 #~ msgstr "Неправильное значение 'ask'"
+
 #~ msgid "Cannot mix signs of indices"
 #~ msgstr "Не могу смешивать знаки индексов"
 
 #, fuzzy
 #~ msgid "It is only valid to remove a child from a \"gTree\""
 #~ msgstr "Правильно лишь удалять 'child' из 'gTree'"
+
 #~ msgid "This function is redundant and will disappear in future versions."
 #~ msgstr "Эта функция излишняя и исчезнет в будущих версиях."
+
 #~ msgid ""
 #~ "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
 #~ "functions."
 #~ msgstr ""
 #~ "grid.arrows() не одобряется;  используйте аргументы 'arrow' для функций, "
 #~ "рисующих линии."
+
 #~ msgid "shape must be between -1 and 1"
 #~ msgstr "форма должна быть между -1 и 1"
+
 #~ msgid "Non-unit operand must be numeric"
 #~ msgstr "Операнды-не-единицы должны быть числовыми"
+
 #~ msgid ""
 #~ "unit.rep has been deprecated in favour of a unit method for the generic "
 #~ "rep function"
 #~ msgstr ""
 #~ "'unit.rep' не одобряется, используйте единичный метод для общей функции "
 #~ "'rep'"
+
 #~ msgid ""
 #~ "unit.length has been deprecated in favour of a unit method for the "
 #~ "generic length function"
@@ -559,16 +590,21 @@ msgstr[2] "Неправильные имена оконниц"
 #, fuzzy
 #~ msgid "invalid graphics parameters"
 #~ msgstr "Неправильные графические параметры"
+
 #~ msgid "at least one of 'width' and 'height' must be specified"
 #~ msgstr "по крайней мере 'width', и 'height' должны быть определены"
+
 #~ msgid "Viewport '%s' was not found"
 #~ msgstr "Оконница '%s' не найдена"
+
 #~ msgid "Invalid"
 #~ msgstr "Неправильный"
+
 #~ msgid "print"
 #~ msgstr "печать"
+
 #~ msgid "argument"
 #~ msgstr "аргумент"
+
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x' должен быть числом"
-

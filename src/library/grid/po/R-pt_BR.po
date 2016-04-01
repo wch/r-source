@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -318,10 +318,6 @@ msgid "grob '%s' not found"
 msgstr "Grob '%s' não encontrado"
 
 #, fuzzy
-msgid "invalid element in the display list"
-msgstr "Elemento Inválido na lista de exibição"
-
-#, fuzzy
 msgid "Invalid force target"
 msgstr "'frame' inválido"
 
@@ -390,10 +386,6 @@ msgstr "listing inválido"
 #, fuzzy
 msgid "invalid 'listing'"
 msgstr "listing inválido"
-
-#, fuzzy
-msgid "Nothing on the display list"
-msgstr "Elemento Inválido na lista de exibição"
 
 #, fuzzy
 msgid "invalid 'origin'"
@@ -552,6 +544,10 @@ msgid "index out of bounds (unit list subsetting)"
 msgstr "Índice fora dos limites (tentando fazer subset de lista unitária)"
 
 #, fuzzy
+msgid "Value being assigned must be a unit"
+msgstr "x e y devem ser unidades"
+
+#, fuzzy
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr "É inválido combinar objetos unitários com outros tipos"
 
@@ -639,6 +635,14 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "Nome(s) de vista inválido(s)"
 msgstr[1] "Nome(s) de vista inválido(s)"
+
+#, fuzzy
+#~ msgid "invalid element in the display list"
+#~ msgstr "Elemento Inválido na lista de exibição"
+
+#, fuzzy
+#~ msgid "Nothing on the display list"
+#~ msgstr "Elemento Inválido na lista de exibição"
 
 #, fuzzy
 #~ msgid "the 'vp' argument is deprecated"

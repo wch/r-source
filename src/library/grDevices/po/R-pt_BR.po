@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -234,10 +234,6 @@ msgid "status %d in running command '%s'"
 msgstr "estado %d em executar comando '%s'"
 
 #, fuzzy
-msgid "range too small for 'min.n'"
-msgstr "faixa pequena demais para min.n"
-
-#, fuzzy
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "Uma matriz raster deve ser caractere, ou numérica, ou lógica"
 
@@ -274,8 +270,15 @@ msgid "argument is not of class %s"
 msgstr "argumento não é da classe \"recordedplot\""
 
 #, fuzzy
-msgid "loading snapshot from a different session"
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "carregando snapshot de versão R diferente"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "carregando snapshot de versão R diferente"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "'nbin' deve ser numérico de comprimento 1 ou 2"
@@ -420,6 +423,10 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "valores %d z <= 0 omitidos do gráfico logarítmico"
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "faixa pequena demais para min.n"
 
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr "desculpe, 'gs' não pode ser encontrado"

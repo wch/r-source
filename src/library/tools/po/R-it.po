@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -14,6 +14,10 @@ msgstr ""
 
 #, fuzzy
 msgid "Checking %s"
+msgstr "analizzo '%s'"
+
+#, fuzzy
+msgid "Processing %s ..."
 msgstr "analizzo '%s'"
 
 msgid "argument 'package' must be of length 1"
@@ -903,6 +907,10 @@ msgid "empty 'data' directory"
 msgstr ""
 
 #, fuzzy
+msgid "cannot create unique directory for build"
+msgstr "impossibile creare directory '%s'"
+
+#, fuzzy
 msgid "cannot create temporary directory"
 msgstr "impossibile creare directory '%s'"
 
@@ -967,6 +975,14 @@ msgid ""
 "%s"
 msgstr ""
 
+#, fuzzy
+msgid "DESCRIPTION file not found"
+msgstr "file DESCRIPTION non valido"
+
+#, fuzzy
+msgid "NEWS file not found"
+msgstr "file '%s' non trovato"
+
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
 
@@ -1001,6 +1017,11 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "Elaboro i pacchetti:"
+
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr ""
 
 #, fuzzy
 msgid "%s must be a character string or a file/raw connection"
@@ -1096,6 +1117,9 @@ msgstr "l'argomento 'pkg' deve avere lunghezza 1"
 
 msgid "package '%s' was not found"
 msgstr "pacchetto '%s' non trovato"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
 
 msgid "bad operand"
 msgstr "operatore sbagliato"

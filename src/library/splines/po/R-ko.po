@@ -1,8 +1,8 @@
 # Korean translation for R splines package
 # src/library/splines/po/R-ko.po
-# 
+#
 # Copyright (C) 1995-2015 The R Core Team
-# 
+#
 # This file is distributed under the same license as the R splines package.
 # Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
 #
@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-10 18:35\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -27,8 +27,12 @@ msgstr ""
 msgid "must have at least 'ord' knots"
 msgstr "반드시 적어도 'ord' 놋트를 가져야 합니다"
 
-msgid "length of 'derivs' must match length of 'x'"
+#, fuzzy
+msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "'derivs'의 길이는 반드시 'x'의 길이와 일치해야 합니다"
+
+msgid "empty 'derivs'"
+msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord'는 반드시 양의 정수이며 최대 놋트의 수만큼입니다"

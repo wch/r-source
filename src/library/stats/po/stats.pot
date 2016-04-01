@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR The R Core Team
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Project-Id-Version: stats 3.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Srunmed.c:55
+#: Srunmed.c:54
 msgid "bandwidth/span of running medians is larger than n"
 msgstr ""
 
-#: ansari.c:116
+#: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "invalid argument type"
 msgstr ""
 
-#: arima.c:444 arima.c:530 pacf.c:327 pacf.c:366
+#: arima.c:444 arima.c:530 pacf.c:324 pacf.c:363
 msgid "can only transform 100 pars in arima0"
 msgstr ""
 
@@ -67,31 +67,39 @@ msgstr ""
 msgid "not all arguments have the same length"
 msgstr ""
 
-#: cov.c:566
+#: cov.c:569
 msgid "missing observations in cov/cor"
 msgstr ""
 
-#: cov.c:644
+#: cov.c:643
 msgid "'x' is NULL"
 msgstr ""
 
-#: cov.c:663 cov.c:669
+#: cov.c:645
+msgid "'x' is a factor"
+msgstr ""
+
+#: cov.c:665
+msgid "'y' is a factor"
+msgstr ""
+
+#: cov.c:673 cov.c:679
 msgid "incompatible dimensions"
 msgstr ""
 
-#: cov.c:688 cov.c:729 cov.c:762
+#: cov.c:698 cov.c:739 cov.c:772
 msgid "no complete element pairs"
 msgstr ""
 
-#: cov.c:701
+#: cov.c:711
 msgid "invalid 'use' (computational method)"
 msgstr ""
 
-#: cov.c:704
+#: cov.c:714
 msgid "'x' is empty"
 msgstr ""
 
-#: cov.c:798
+#: cov.c:808
 msgid "the standard deviation is zero"
 msgstr ""
 
@@ -129,15 +137,15 @@ msgstr ""
 msgid "invalid tag"
 msgstr ""
 
-#: distance.c:153
+#: distance.c:152
 msgid "treating non-finite values as NA"
 msgstr ""
 
-#: distance.c:226
+#: distance.c:225
 msgid "distance(): invalid p"
 msgstr ""
 
-#: distance.c:229
+#: distance.c:228
 msgid "distance(): invalid distance"
 msgstr ""
 
@@ -149,17 +157,17 @@ msgstr ""
 msgid "Non-numeric argument to mathematical function"
 msgstr ""
 
-#: family.c:44
+#: family.c:45
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr ""
 
-#: family.c:65 family.c:79 family.c:97
+#: family.c:66 family.c:80 family.c:98
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr ""
 
-#: family.c:130 family.c:133
+#: family.c:131 family.c:134
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr ""
@@ -184,7 +192,12 @@ msgstr ""
 msgid "invalid factors"
 msgstr ""
 
-#: ksmooth.c:67
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, c-format
+msgid "'%s' must be of length one"
+msgstr ""
+
+#: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr ""
 
@@ -202,7 +215,7 @@ msgstr ""
 msgid "NA/NaN/Inf in '%s'"
 msgstr ""
 
-#: loessc.c:233
+#: loessc.c:240
 msgid "span is too small"
 msgstr ""
 
@@ -230,19 +243,19 @@ msgstr ""
 msgid "'delta' must be finite and > 0"
 msgstr ""
 
-#: mAR.c:467
+#: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr ""
 
-#: mAR.c:510
+#: mAR.c:513
 msgid "Singular matrix in ldet"
 msgstr ""
 
-#: mAR.c:697
+#: mAR.c:700
 msgid "Invalid vmethod"
 msgstr ""
 
-#: mAR.c:833
+#: mAR.c:836
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr ""
 
@@ -281,184 +294,184 @@ msgstr ""
 msgid "invalid result from na.action"
 msgstr ""
 
-#: model.c:369 model.c:377 optim.c:197
+#: model.c:372 model.c:380 optim.c:197
 #, c-format
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: model.c:388
+#: model.c:391
 msgid "invalid model frame"
 msgstr ""
 
-#: model.c:390
+#: model.c:393
 msgid "do not know how many cases"
 msgstr ""
 
-#: model.c:414
+#: model.c:417
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr ""
 
-#: model.c:418 model.c:425
+#: model.c:421 model.c:428
 #, c-format
 msgid "variable %d has no levels"
 msgstr ""
 
-#: model.c:537
+#: model.c:540
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr ""
 
-#: model.c:557
+#: model.c:560
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr ""
 
-#: model.c:561
+#: model.c:564
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr ""
 
-#: model.c:572
+#: model.c:575
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 
-#: model.c:621 model.c:626 model.c:632 model.c:643 model.c:649 model.c:655
+#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
 msgid "term names will be truncated"
 msgstr ""
 
-#: model.c:635
+#: model.c:638
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 
-#: model.c:659
+#: model.c:662
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 
-#: model.c:881
+#: model.c:884
 msgid "invalid formula in 'update'"
 msgstr ""
 
-#: model.c:915
+#: model.c:918
 msgid "formula expected"
 msgstr ""
 
-#: model.c:1046
+#: model.c:1049
 msgid "invalid term in model formula"
 msgstr ""
 
-#: model.c:1121
+#: model.c:1124
 msgid "invalid model formula"
 msgstr ""
 
-#: model.c:1147 model.c:1395
+#: model.c:1150 model.c:1410
 msgid "invalid power in formula"
 msgstr ""
 
-#: model.c:1183
+#: model.c:1186
 msgid "invalid model formula in ExtractVars"
 msgstr ""
 
-#: model.c:1518
+#: model.c:1533
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr ""
 
-#: model.c:1579
+#: model.c:1594
 msgid "invalid model formula in EncodeVars"
 msgstr ""
 
-#: model.c:1665
+#: model.c:1680
 msgid "argument is not a valid model"
 msgstr ""
 
-#: model.c:1675
+#: model.c:1690
 msgid "'specials' must be NULL or a character vector"
 msgstr ""
 
-#: model.c:1687
+#: model.c:1702
 msgid "'data' argument is of the wrong type"
 msgstr ""
 
-#: model.c:1957
+#: model.c:1972
 msgid "'.' in formula and no 'data' argument"
 msgstr ""
 
-#: monoSpl.c:34
+#: monoSpl.c:36
 msgid "n must be at least two"
 msgstr ""
 
-#: monoSpl.c:67
+#: monoSpl.c:69
 msgid "Argument m must be numeric"
 msgstr ""
 
-#: monoSpl.c:70
+#: monoSpl.c:72
 msgid "length(m) must be at least two"
 msgstr ""
 
-#: monoSpl.c:72
+#: monoSpl.c:74
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr ""
 
-#: nls.c:97
+#: nls.c:99
 msgid "'control' must be a list"
 msgstr ""
 
-#: nls.c:99
+#: nls.c:101
 msgid "'m' must be a list"
 msgstr ""
 
-#: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
-#: nls.c:176 nls.c:181 nls.c:186 nls.c:191
+#: nls.c:107 nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:168 nls.c:173
+#: nls.c:178 nls.c:183 nls.c:188 nls.c:193
 #, c-format
 msgid "'%s' absent"
 msgstr ""
 
-#: nls.c:232
+#: nls.c:234
 msgid "singular gradient"
 msgstr ""
 
-#: nls.c:253
+#: nls.c:255
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr ""
 
-#: nls.c:262
+#: nls.c:264
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr ""
 
-#: nls.c:267
+#: nls.c:269
 msgid "converged"
 msgstr ""
 
-#: nls.c:288
+#: nls.c:290
 msgid "'theta' should be of type character"
 msgstr ""
 
-#: nls.c:290 port.c:376
+#: nls.c:292 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr ""
 
-#: nls.c:294
+#: nls.c:296
 msgid "'rho' should be an environment"
 msgstr ""
 
-#: nls.c:297
+#: nls.c:299
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr ""
 
-#: nls.c:311 nls.c:345
+#: nls.c:313 nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr ""
 
-#: nls.c:319
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 
-#: nls.c:321
+#: nls.c:323
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr ""
@@ -672,21 +685,21 @@ msgstr ""
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 
-#: pacf.c:90
+#: pacf.c:87
 msgid "bad Starma struct"
 msgstr ""
 
-#: pacf.c:236
+#: pacf.c:233
 #, c-format
 msgid "starma error code %d"
 msgstr ""
 
-#: pacf.c:296
+#: pacf.c:293
 #, c-format
 msgid "forkal error code %d"
 msgstr ""
 
-#: pacf.c:469
+#: pacf.c:466
 msgid "invalid value of lag.max"
 msgstr ""
 
@@ -713,7 +726,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr ""
 
-#: port.c:382 port.c:546
+#: port.c:382 port.c:548
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
@@ -753,23 +766,23 @@ msgstr ""
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:547
+#: port.c:549
 msgid "m must be a list"
 msgstr ""
 
-#: port.c:567
+#: port.c:569
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
-#: rWishart.c:51
+#: rWishart.c:53
 msgid "inconsistent degrees of freedom and dimension"
 msgstr ""
 
-#: rWishart.c:84
+#: rWishart.c:86
 msgid "'scal' must be a square, real matrix"
 msgstr ""
 
-#: rWishart.c:96
+#: rWishart.c:98
 msgid "'scal' matrix is not positive-definite"
 msgstr ""
 
@@ -807,12 +820,12 @@ msgstr ""
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr ""
 
-#: smooth.c:101
+#: smooth.c:107
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr ""
 
-#: starma.c:366
+#: starma.c:364
 #, c-format
 msgid "missing value in last %d observations"
 msgstr ""

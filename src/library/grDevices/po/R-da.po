@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,10 +232,6 @@ msgid "status %d in running command '%s'"
 msgstr "status %d i kørende kommando »%s«"
 
 #, fuzzy
-msgid "range too small for 'min.n'"
-msgstr "interval for lille for min.n"
-
-#, fuzzy
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "En bitmapmatrix skal være tegn eller numerisk eller logisk"
 
@@ -272,8 +268,15 @@ msgid "argument is not of class %s"
 msgstr "argument er ikke af klasse »recordedplot«"
 
 #, fuzzy
-msgid "loading snapshot from a different session"
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "Indlæser øjebliksbillede fra anden R version"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "Indlæser øjebliksbillede fra anden R version"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "»nbin« skal være numerisk og af længde 1 eller 2"
@@ -418,6 +421,10 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
 msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"
+
+#, fuzzy
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "interval for lille for min.n"
 
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr "beklager, »gs« kan ikke findes"

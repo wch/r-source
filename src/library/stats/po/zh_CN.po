@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: Srunmed.c:55
+#: Srunmed.c:54
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "移动中位数的帶寬/跨距的值不能大于n"
 
-#: ansari.c:116
+#: ansari.c:118
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qansari()里的概率值在[0,1]范围外"
 
@@ -41,7 +41,7 @@ msgstr "approx(): 不能内插NA值"
 msgid "invalid argument type"
 msgstr "参数种类不对"
 
-#: arima.c:444 arima.c:530 pacf.c:327 pacf.c:366
+#: arima.c:444 arima.c:530 pacf.c:324 pacf.c:363
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0里只能转换100个参数"
 
@@ -67,31 +67,41 @@ msgstr "无法用输入来确定个案数目"
 msgid "not all arguments have the same length"
 msgstr "不是所有的参数都一样长"
 
-#: cov.c:566
+#: cov.c:569
 msgid "missing observations in cov/cor"
 msgstr "cov/cor中有遗漏值"
 
-#: cov.c:644
+#: cov.c:643
 msgid "'x' is NULL"
 msgstr "'x'为NULL"
 
-#: cov.c:663 cov.c:669
+#: cov.c:645
+#, fuzzy
+msgid "'x' is a factor"
+msgstr "'tmax'不是整数"
+
+#: cov.c:665
+#, fuzzy
+msgid "'y' is a factor"
+msgstr "'fn'不是函数"
+
+#: cov.c:673 cov.c:679
 msgid "incompatible dimensions"
 msgstr "不兼容的量度"
 
-#: cov.c:688 cov.c:729 cov.c:762
+#: cov.c:698 cov.c:739 cov.c:772
 msgid "no complete element pairs"
 msgstr "不存在完的一对"
 
-#: cov.c:701
+#: cov.c:711
 msgid "invalid 'use' (computational method)"
 msgstr "'use'不对(计算方法)"
 
-#: cov.c:704
+#: cov.c:714
 msgid "'x' is empty"
 msgstr "'x'是空的"
 
-#: cov.c:798
+#: cov.c:808
 msgid "the standard deviation is zero"
 msgstr "标准差为零"
 
@@ -129,15 +139,15 @@ msgstr "变数名字不对"
 msgid "invalid tag"
 msgstr "标签不对"
 
-#: distance.c:153
+#: distance.c:152
 msgid "treating non-finite values as NA"
 msgstr "所有无限值都作为NA来处理"
 
-#: distance.c:226
+#: distance.c:225
 msgid "distance(): invalid p"
 msgstr "distance(): p值不对"
 
-#: distance.c:229
+#: distance.c:228
 msgid "distance(): invalid distance"
 msgstr "distance()：距离值不对"
 
@@ -149,17 +159,17 @@ msgstr "产生了NaNs"
 msgid "Non-numeric argument to mathematical function"
 msgstr "数学函数中用了非数值参数"
 
-#: family.c:44
+#: family.c:45
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "%g值出界在(0, 1)外"
 
-#: family.c:65 family.c:79 family.c:97
+#: family.c:66 family.c:80 family.c:98
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "参数%s必需为非空数字向量"
 
-#: family.c:130 family.c:133
+#: family.c:131 family.c:134
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "参数%s必需为长度为一或长度为%d的数字向量"
@@ -184,7 +194,12 @@ msgstr "非因子"
 msgid "invalid factors"
 msgstr "因子不对"
 
-#: ksmooth.c:67
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr "'m'的值必需是串列"
+
+#: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "sm.method=\"spline\"最多只能算2500行"
 
@@ -203,7 +218,7 @@ msgstr ""
 msgid "NA/NaN/Inf in '%s'"
 msgstr ""
 
-#: loessc.c:233
+#: loessc.c:240
 msgid "span is too small"
 msgstr "跨距太小"
 
@@ -231,19 +246,19 @@ msgstr "'iter'必需是正数"
 msgid "'delta' must be finite and > 0"
 msgstr "'delta'必需是正数"
 
-#: mAR.c:467
+#: mAR.c:470
 msgid "Singular matrix in qr_solve"
 msgstr "gr_solve里出现了奇异矩阵"
 
-#: mAR.c:510
+#: mAR.c:513
 msgid "Singular matrix in ldet"
 msgstr "ldet里出现了奇异矩阵"
 
-#: mAR.c:697
+#: mAR.c:700
 msgid "Invalid vmethod"
 msgstr "vmethod不对"
 
-#: mAR.c:833
+#: mAR.c:836
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg的算法没有能够找到偏相关数"
 
@@ -282,184 +297,184 @@ msgstr "变数的长度不一样('%s')"
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: model.c:369 model.c:377 optim.c:197
+#: model.c:372 model.c:380 optim.c:197
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
 
-#: model.c:388
+#: model.c:391
 msgid "invalid model frame"
 msgstr "模型框不对"
 
-#: model.c:390
+#: model.c:393
 msgid "do not know how many cases"
 msgstr "案例数目不清"
 
-#: model.c:414
+#: model.c:417
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "变数的长度不一样(变数%d)"
 
-#: model.c:418 model.c:425
+#: model.c:421 model.c:428
 #, c-format
 msgid "variable %d has no levels"
 msgstr "变数%d没有因子层"
 
-#: model.c:537
+#: model.c:540
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "在公式右手的反应略过不用"
 
-#: model.c:557
+#: model.c:560
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "%d项需要%.0g个列"
 
-#: model.c:561
+#: model.c:564
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "矩阵需要%.0g个列"
 
-#: model.c:572
+#: model.c:575
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
-#: model.c:621 model.c:626 model.c:632 model.c:643 model.c:649 model.c:655
+#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: model.c:635
+#: model.c:638
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "模型矩阵里目前不能有复数"
 
-#: model.c:659
+#: model.c:662
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "模型矩阵里不能有种类为'%s'的参数"
 
-#: model.c:881
+#: model.c:884
 msgid "invalid formula in 'update'"
 msgstr "'update'里的公式不对"
 
-#: model.c:915
+#: model.c:918
 msgid "formula expected"
 msgstr "需要公式"
 
-#: model.c:1046
+#: model.c:1049
 msgid "invalid term in model formula"
 msgstr "模型公式里有错误的项"
 
-#: model.c:1121
+#: model.c:1124
 msgid "invalid model formula"
 msgstr "模型公式不对"
 
-#: model.c:1147 model.c:1395
+#: model.c:1150 model.c:1410
 msgid "invalid power in formula"
 msgstr "公式里的幂不对"
 
-#: model.c:1183
+#: model.c:1186
 msgid "invalid model formula in ExtractVars"
 msgstr "ExtractVars里的模型公式不对"
 
-#: model.c:1518
+#: model.c:1533
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 
-#: model.c:1579
+#: model.c:1594
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: model.c:1665
+#: model.c:1680
 msgid "argument is not a valid model"
 msgstr "参数不是正确的模型"
 
-#: model.c:1675
+#: model.c:1690
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials'的值要么是NULL要么是字符矢量"
 
-#: model.c:1687
+#: model.c:1702
 msgid "'data' argument is of the wrong type"
 msgstr "'data'参数种类有错"
 
-#: model.c:1957
+#: model.c:1972
 msgid "'.' in formula and no 'data' argument"
 msgstr "公式里有'.'，而没有'data'这一参数"
 
-#: monoSpl.c:34
+#: monoSpl.c:36
 msgid "n must be at least two"
 msgstr "n至少需要是二"
 
-#: monoSpl.c:67
+#: monoSpl.c:69
 msgid "Argument m must be numeric"
 msgstr "参数m必需为数值"
 
-#: monoSpl.c:70
+#: monoSpl.c:72
 msgid "length(m) must be at least two"
 msgstr "length(m)的值必需为二"
 
-#: monoSpl.c:72
+#: monoSpl.c:74
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "参数Sx必需是长度比m[]小一的数值向量"
 
-#: nls.c:97
+#: nls.c:99
 msgid "'control' must be a list"
 msgstr "'control'的值必需为串列"
 
-#: nls.c:99
+#: nls.c:101
 msgid "'m' must be a list"
 msgstr "'m'的值必需是串列"
 
-#: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
-#: nls.c:176 nls.c:181 nls.c:186 nls.c:191
+#: nls.c:107 nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:168 nls.c:173
+#: nls.c:178 nls.c:183 nls.c:188 nls.c:193
 #, c-format
 msgid "'%s' absent"
 msgstr "需要设定'%s'"
 
-#: nls.c:232
+#: nls.c:234
 msgid "singular gradient"
 msgstr "奇异梯度"
 
-#: nls.c:253
+#: nls.c:255
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "算法的步因素%g的大小被减少到小于%g的'minFactor'值"
 
-#: nls.c:262
+#: nls.c:264
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "循环次数超过了%d这个最大值"
 
-#: nls.c:267
+#: nls.c:269
 msgid "converged"
 msgstr "收敛了"
 
-#: nls.c:288
+#: nls.c:290
 msgid "'theta' should be of type character"
 msgstr "'theta'的种类必需是字符"
 
-#: nls.c:290 port.c:376
+#: nls.c:292 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用了"
 
-#: nls.c:294
+#: nls.c:296
 msgid "'rho' should be an environment"
 msgstr "'rho'必需为环境"
 
-#: nls.c:297
+#: nls.c:299
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'这个数字向量的长度不对"
 
-#: nls.c:311 nls.c:345
+#: nls.c:313 nls.c:347
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "在计算模型的时候产生了缺省值或无限值"
 
-#: nls.c:319
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "变量'%s'应该为整数，不能是数值"
 
-#: nls.c:321
+#: nls.c:323
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "变量'%s'不是数值"
@@ -679,21 +694,21 @@ msgstr "海森的长度不对或其状态不对，因此略过不用"
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "梯度的长度或其状态不对，因此略过不用"
 
-#: pacf.c:90
+#: pacf.c:87
 msgid "bad Starma struct"
 msgstr "Starma结构不对"
 
-#: pacf.c:236
+#: pacf.c:233
 #, c-format
 msgid "starma error code %d"
 msgstr "starma出错编号%d"
 
-#: pacf.c:296
+#: pacf.c:293
 #, c-format
 msgid "forkal error code %d"
 msgstr "forkal出错编号%d"
 
-#: pacf.c:469
+#: pacf.c:466
 msgid "invalid value of lag.max"
 msgstr "lag.max的值不对"
 
@@ -720,7 +735,7 @@ msgstr "Hessian函数必需回覆一个度数为%d的正方形数值矩阵"
 msgid "'rho' must be an environment"
 msgstr "'rho'必需是环境"
 
-#: port.c:382 port.c:546
+#: port.c:382 port.c:548
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'必需是非空数字向量"
 
@@ -760,23 +775,23 @@ msgstr "fcn运行结果的模式为%d , 长度为%d - 但正确的模式应该�
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store的种类不对"
 
-#: port.c:547
+#: port.c:549
 msgid "m must be a list"
 msgstr "m必需为串列"
 
-#: port.c:567
+#: port.c:569
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'和'upperb'必需为数字向量"
 
-#: rWishart.c:51
+#: rWishart.c:53
 msgid "inconsistent degrees of freedom and dimension"
 msgstr "自由度和维度不相符"
 
-#: rWishart.c:84
+#: rWishart.c:86
 msgid "'scal' must be a square, real matrix"
 msgstr "'scal'必需是正文形的实数矩阵"
 
-#: rWishart.c:96
+#: rWishart.c:98
 msgid "'scal' matrix is not positive-definite"
 msgstr "'scal'不是正定矩阵"
 
@@ -814,12 +829,12 @@ msgstr "第二参数'size'不对"
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr " rcont2 [%d,%d]: exp下益到0； 算法失败"
 
-#: smooth.c:101
+#: smooth.c:107
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "三移动中位数的结尾规则出了错: %d"
 
-#: starma.c:366
+#: starma.c:364
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "最后%d个观测值里出现了缺省值"

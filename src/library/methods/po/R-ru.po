@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 19:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -137,9 +137,10 @@ msgstr "не могу создать класс union:  не могу установить членов %s"
 msgid "invalid argument 'name': %s"
 msgstr "неправильное 'name' аргумента: %s"
 
+#, fuzzy
 msgid ""
-"%s is a primitive function;  methods can be defined, but the generic "
-"function is implicit, and cannot be changed."
+"%s dispatches internally;  methods can be defined, but the generic function "
+"is implicit, and cannot be changed."
 msgstr ""
 "\"%s\" является элементарной функцией; методы могут быть определены, но "
 "общая функция подразумевается и не может быть изменена."
@@ -736,14 +737,6 @@ msgid "unable to find an environment containing class %s"
 msgstr "не могу найти окружение, содержащее класс %s"
 
 msgid ""
-"Note: the specification for S3 class %s in package %s seems equivalent to "
-"one from package %s: not turning on duplicate class definitions for this "
-"class."
-msgstr ""
-"Замечание: спецификация класса S3 %s в пакете %s похожа на спецификацию из "
-"пакета %s: не превращается в дублированное определение для этого класса."
-
-msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
@@ -758,6 +751,11 @@ msgid ""
 msgstr ""
 "Замечание: спецификация класса %s пакета %s похоже на спецификацию из пакета "
 "%s: не будет дубликатом определений этого класса."
+
+msgid ""
+"Found more than one class \"%s\" in cache; using the first, from namespace "
+"'%s'"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "неопределенный подкласс %s класса \"%s\"; определение не обновлено"
@@ -855,20 +853,11 @@ msgstr ""
 "аргумент 'f' должен быть строкой, общей функцией, или примитивом: получена "
 "обычная функция"
 
-msgid "methods cannot be defined for the primitive function %s"
-msgstr "методы не могут быть определены для элементарной функции %s"
-
 msgid "no generic function found for %s"
 msgstr "не найдено общей функции для %s"
 
 msgid "Empty function name in .getGeneric"
 msgstr "Пустое имя функции в .getGeneric"
-
-msgid ""
-"package %s seems to have out-of-date methods; need to reinstall from source"
-msgstr ""
-"пакет %s возможно, содержит устаревшие методы; необходимо переустановить его "
-"из источника"
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -964,9 +953,6 @@ msgstr ""
 
 msgid "no definition found for class %s"
 msgstr "нет определения класса %s"
-
-msgid "trying to execute load actions without 'methods' package"
-msgstr "попытка выполнить команды загрузки без пакета 'methods'"
 
 msgid "missing function for load action: %s"
 msgstr "нет функции для действия загрузки: %s"
@@ -1201,6 +1187,13 @@ msgstr "метод \"coerce' не определен"
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "методы для приведения %s к %s уже существуют; они будут заменены."
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr "Пустое имя функции в .getGeneric"
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr "объект %s не найден"
@@ -1496,6 +1489,10 @@ msgstr ""
 msgid "%s is not a field in this class"
 msgstr "%s не является полем в этом классе"
 
+#, fuzzy
+msgid "Methods not found: %s"
+msgstr "объект %s не найден"
+
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
 "redefined"
@@ -1621,6 +1618,11 @@ msgstr ""
 "заблокировано"
 
 msgid ""
+"Reference superclasses must come from the same package for the environment "
+"to be defined:  got %s and %s"
+msgstr ""
+
+msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
 "class"
 msgstr ""
@@ -1670,8 +1672,8 @@ msgstr ""
 msgid "the method for %s for this signature was not being traced"
 msgstr "данный метод для %s для данной подписи не может быть отслежен"
 
-msgid ""
-"making a traced version of a primitive; arguments will be treated as '...'"
+#, fuzzy
+msgid "making a traced version of a special; arguments may be altered"
 msgstr ""
 "создаю отслеживаемую версию примитива; аргументы будут обработаны как  '...'"
 
@@ -1941,6 +1943,28 @@ msgid_plural ""
 msgstr[0] "нет определения класса %s в указанной позиции, %s, определение: %s"
 msgstr[1] "нет определения класса %s в указанной позиции, %s, определения: %s"
 msgstr[2] "нет определения класса %s в указанной позиции, %s, определения: %s"
+
+#~ msgid ""
+#~ "Note: the specification for S3 class %s in package %s seems equivalent to "
+#~ "one from package %s: not turning on duplicate class definitions for this "
+#~ "class."
+#~ msgstr ""
+#~ "Замечание: спецификация класса S3 %s в пакете %s похожа на спецификацию "
+#~ "из пакета %s: не превращается в дублированное определение для этого "
+#~ "класса."
+
+#~ msgid "methods cannot be defined for the primitive function %s"
+#~ msgstr "методы не могут быть определены для элементарной функции %s"
+
+#~ msgid ""
+#~ "package %s seems to have out-of-date methods; need to reinstall from "
+#~ "source"
+#~ msgstr ""
+#~ "пакет %s возможно, содержит устаревшие методы; необходимо переустановить "
+#~ "его из источника"
+
+#~ msgid "trying to execute load actions without 'methods' package"
+#~ msgstr "попытка выполнить команды загрузки без пакета 'methods'"
 
 #~ msgid "special function %s is not permitted to have methods"
 #~ msgstr "специальной функции %s не разрешено иметь методов"

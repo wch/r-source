@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -465,6 +465,12 @@ msgstr "Chi-squared近似算法有可能不准"
 msgid "NA values not allowed in 'd'"
 msgstr "'d'里不允许有NA值"
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "距离必需是'dist'计算出结果或是正方形矩阵"
 
@@ -476,6 +482,9 @@ msgstr "'k'必需是{1, 2, ..  n - 1}中的一个"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "前%2$d个特征值里只有%1$d个大于零"
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "初始值不是在可行区域内"
@@ -517,6 +526,10 @@ msgstr "至少要提供一或多个矢量"
 
 msgid "arguments must have the same length"
 msgstr "参数的长度必需一样"
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr "'x'里的列数不对"
 
 msgid "contrasts apply only to factors"
 msgstr "对比只适用于因子"
@@ -755,6 +768,9 @@ msgstr "'prob'和'mu'不能同时设定"
 msgid "some terms will have NAs due to the limits of the method"
 msgstr "因为这个方法的限制，有些项的值为NA"
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x'必需含一个或多个非遺漏值"
 
@@ -862,7 +878,10 @@ msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用�
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "'inverse.gaussian'分布族只允许正值"
 
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+#, fuzzy
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr "'inverse.gaussian'分布族需要CRAN程序包'SuppDists'"
 
 msgid "using weights as inverse variances"
@@ -1138,8 +1157,8 @@ msgstr "'which'的所有单元值都必需在一和%d之间"
 msgid "invalid parameter values"
 msgstr "参数值不对"
 
-msgid "a limit is missing"
-msgstr "極限有遺漏"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "不能有遺漏值"
@@ -1350,6 +1369,10 @@ msgstr "NCOL(X)不对"
 msgid "only 1-4 predictors are allowed"
 msgstr "只允许有一到四个従属変数"
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr "NCOL(X)不对"
+
 msgid "invalid 'y'"
 msgstr "'y'不对"
 
@@ -1373,6 +1396,13 @@ msgstr "参数'cell'不对"
 
 msgid "invalid argument 'degree'"
 msgstr "参数'degree'不对"
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr "没有有限观察量"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "第一个参数必需为\"loess\"对象"
@@ -1888,8 +1918,8 @@ msgstr "没有能够从它们的名字中来猜测时变参数"
 msgid "'varying' arguments must be the same length"
 msgstr "'varying'参数的长度必需相同"
 
-msgid "'times' is wrong length"
-msgstr "'times'的长度不对"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "含遺漏时间的记录略过不用。"
@@ -2435,6 +2465,12 @@ msgstr[0] "删除了含NA, NaN或Inf的%d个观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
+
+#~ msgid "a limit is missing"
+#~ msgstr "極限有遺漏"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times'的长度不对"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "不匹配的额外参数略过不用"

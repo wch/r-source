@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"Project-Id-Version: methods 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +79,7 @@ msgstr ""
 msgid "invalid argument 'name': %s"
 msgstr ""
 
-msgid "%s is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed."
+msgid "%s dispatches internally;  methods can be defined, but the generic function is implicit, and cannot be changed."
 msgstr ""
 
 msgid "if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default"
@@ -473,13 +472,13 @@ msgstr ""
 msgid "unable to find an environment containing class %s"
 msgstr ""
 
-msgid "Note: the specification for S3 class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class."
-msgstr ""
-
 msgid "Note: some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s"
 msgstr ""
 
 msgid "Note: the specification for class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class."
+msgstr ""
+
+msgid "Found more than one class \"%s\" in cache; using the first, from namespace '%s'"
 msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -539,16 +538,10 @@ msgstr ""
 msgid "argument 'f' must be a string, generic function, or primitive: got an ordinary function"
 msgstr ""
 
-msgid "methods cannot be defined for the primitive function %s"
-msgstr ""
-
 msgid "no generic function found for %s"
 msgstr ""
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
-
-msgid "package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
@@ -609,9 +602,6 @@ msgid "multiple definitions exist for class %s; should specify one of them (%s),
 msgstr ""
 
 msgid "no definition found for class %s"
-msgstr ""
-
-msgid "trying to execute load actions without 'methods' package"
 msgstr ""
 
 msgid "missing function for load action: %s"
@@ -771,6 +761,12 @@ msgid "undefined 'coerce' method"
 msgstr ""
 
 msgid "methods currently exist for coercing from %s to %s; they will be replaced."
+msgstr ""
+
+msgid "Function must be an S4 generic"
+msgstr ""
+
+msgid "method is not being debugged"
 msgstr ""
 
 msgid "object %s not found"
@@ -962,6 +958,9 @@ msgstr ""
 msgid "%s is not a field in this class"
 msgstr ""
 
+msgid "Methods not found: %s"
+msgstr ""
+
 msgid "the definition of class %s in package %s is locked, methods may not be redefined"
 msgstr ""
 
@@ -1028,6 +1027,9 @@ msgstr ""
 msgid "field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 
+msgid "Reference superclasses must come from the same package for the environment to be defined:  got %s and %s"
+msgstr ""
+
 msgid "Class %s is not a subclass of %s; functional semantics not defined for this class"
 msgstr ""
 
@@ -1064,7 +1066,7 @@ msgstr ""
 msgid "the method for %s for this signature was not being traced"
 msgstr ""
 
-msgid "making a traced version of a primitive; arguments will be treated as '...'"
+msgid "making a traced version of a special; arguments may be altered"
 msgstr ""
 
 msgid "the editing in trace() can only change the body of the function; got an object of class %s"

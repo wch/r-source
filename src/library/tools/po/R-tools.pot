@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"Project-Id-Version: tools 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,6 +11,9 @@ msgstr ""
 
 
 msgid "Checking %s"
+msgstr ""
+
+msgid "Processing %s ..."
 msgstr ""
 
 msgid "argument 'package' must be of length 1"
@@ -800,6 +802,9 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
+msgid "cannot create unique directory for build"
+msgstr ""
+
 msgid "cannot create temporary directory"
 msgstr ""
 
@@ -857,6 +862,12 @@ msgstr ""
 msgid "Cannot process chunk/lines:\n%s"
 msgstr ""
 
+msgid "DESCRIPTION file not found"
+msgstr ""
+
+msgid "NEWS file not found"
+msgstr ""
+
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
 
@@ -879,6 +890,9 @@ msgid "Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains more than one \\i
 msgstr ""
 
 msgid "Processing packages:"
+msgstr ""
+
+msgid "reading DESCRIPTION for package %s failed with message:\n  %s"
 msgstr ""
 
 msgid "%s must be a character string or a file/raw connection"
@@ -963,6 +977,9 @@ msgid "argument 'pkg' must be of length 1"
 msgstr ""
 
 msgid "package '%s' was not found"
+msgstr ""
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr ""
 
 msgid "bad operand"

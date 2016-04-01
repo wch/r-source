@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -16,9 +16,20 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 1.7.5\n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr ""
 "dostarczony argument 'env' nie jest odpowiednim środowiskiem obliczeniowym"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+"'ns' musi być przestrzenią nazw lub przestrzenią nazw importującą środowisko"
+
+msgid "namespace found within global environments"
+msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
@@ -57,8 +68,8 @@ msgstr "złe przypisanie 2"
 msgid "invalid function in complex assignment"
 msgstr "niepoprawna funkcja w zespolonym przypisaniu"
 
-msgid "%s is not a registered math1 function"
-msgstr "%s nie jest zarejestrowaną funkcją 'math1'"
+msgid "is not a registered math1 function"
+msgstr ": to nie jest zarejestrowana funkcja math1"
 
 msgid "missing arguments are not allowed"
 msgstr "brakujące argumenty nie są dozwolone"
@@ -80,6 +91,9 @@ msgstr "błędna liczba argumentów w '%s'"
 
 msgid "more than one default provided in switch() call"
 msgstr "więcej niż jedna wartość domyślna dostarczona w wywołaniu 'switch()'"
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "nie można skompilować nie-funkcji"
@@ -108,6 +122,9 @@ msgstr "plik '%s' nie istnieje"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' nie jest prawidłową opcją kompilatora"
 
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
+
 msgid "function is not compiled"
 msgstr "funkcja nie jest skompilowana"
 
@@ -120,5 +137,5 @@ msgstr[0] "lokalne przypisanie do funkcji syntaktycznej:"
 msgstr[1] "lokalne przypisania do funkcji syntaktycznych:"
 msgstr[2] "lokalne przypisania do funkcji syntaktycznych:"
 
-#~ msgid "is not a registered math1 function"
-#~ msgstr ": to nie jest zarejestrowana funkcja math1"
+#~ msgid "%s is not a registered math1 function"
+#~ msgstr "%s nie jest zarejestrowaną funkcją 'math1'"

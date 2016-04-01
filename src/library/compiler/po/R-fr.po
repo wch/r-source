@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2013-03-18 22:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,8 +18,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.5\n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr "ceci n'est pas un environnement adéquat pour l'évaluation"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+"'ns' doit être être un espace de noms (namespace) ou un environnement "
+"d'importation d'espace de noms"
+
+msgid "namespace found within global environments"
+msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
@@ -63,7 +75,7 @@ msgstr "mauvaise affectation 1"
 msgid "invalid function in complex assignment"
 msgstr "function incorrecte dans une affectation complexe"
 
-msgid "%s is not a registered math1 function"
+msgid "is not a registered math1 function"
 msgstr ""
 
 msgid "missing arguments are not allowed"
@@ -86,6 +98,9 @@ msgstr "nombre incorrect d'arguments pour '%s'"
 
 msgid "more than one default provided in switch() call"
 msgstr "plus d'une valeur par défaut fournie dans une construction switch()"
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "impossible de compiler autre chose qu'une fonction"
@@ -113,6 +128,9 @@ msgstr "le fichier '%s' n'existe pas"
 
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' n'est pas une option de compilation reconnue"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
 
 msgid "function is not compiled"
 msgstr "la fonction n'est pas compilée"

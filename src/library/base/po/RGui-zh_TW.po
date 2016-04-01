@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:52+0000\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2011-10-13 17:33+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -31,11 +31,11 @@ msgstr "記憶體不足: 文字並未複製到剪貼簿"
 msgid "Unable to open the clipboard"
 msgstr "無法開啟剪貼簿"
 
-#: src/gnuwin32/console.c:1917
+#: src/gnuwin32/console.c:1919
 msgid "Insufficient memory. Please close the console"
 msgstr "記憶體不足。請關閉主控臺"
 
-#: src/gnuwin32/console.c:1972 src/gnuwin32/console.c:2026
+#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -45,23 +45,23 @@ msgstr ""
 "找不到 %s-%d-%d 字型。\n"
 "使用系統定寬字型"
 
-#: src/gnuwin32/console.c:2131
+#: src/gnuwin32/console.c:2133
 msgid "Save selection to"
 msgstr "儲存所選部份到"
 
-#: src/gnuwin32/console.c:2133
+#: src/gnuwin32/console.c:2135
 msgid "Save console contents to"
 msgstr "儲存主控臺內容到"
 
-#: src/gnuwin32/console.c:2232
+#: src/gnuwin32/console.c:2234
 msgid "Scrolling.\n"
 msgstr "捲動。\n"
 
-#: src/gnuwin32/console.c:2233
+#: src/gnuwin32/console.c:2235
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  鍵盤: PgUp、PgDown、Ctrl+方向鍵、Ctrl+Home、Ctrl+End、\n"
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2236
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -69,97 +69,97 @@ msgstr ""
 "  滑鼠: 使用捲動軸。\n"
 "\n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2237
 msgid "Editing.\n"
 msgstr "編輯中。\n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2238
 msgid "  Moving the cursor: \n"
 msgstr "  移動游標: \n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2239
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     左箭頭或 Ctrl+B: 左移一字元；\n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2240
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     右箭頭或Ctrl+F: 右移一字元；\n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2241
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home 或 Ctrl+A: 移到列首；\n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2242
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End 或 Ctrl+E: 移到列尾；\n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2243
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  命令歷程: 上、下箭頭、Ctrl+P、Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2244
 msgid "  Deleting:\n"
 msgstr "  刪除中:\n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2245
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del 或 Ctrl+D:刪除目前所在字元或選取；\n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2246
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 刪除目前位置之前的字元；\n"
 
-#: src/gnuwin32/console.c:2245
+#: src/gnuwin32/console.c:2247
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr "     Ctrl+Del 或 Ctrl+K: 刪除目前位置到列尾的所有文字。\n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2248
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: 從目前所在列開始刪除所有的文字。\n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2249
 msgid "  Copy and paste.\n"
 msgstr "  複製和貼上。\n"
 
-#: src/gnuwin32/console.c:2248
+#: src/gnuwin32/console.c:2250
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr "     用滑鼠 (持續按著左鍵) 來選擇文字。\n"
 
-#: src/gnuwin32/console.c:2249
+#: src/gnuwin32/console.c:2251
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr "     用 Shift+Del (或 Ctrl+C) 把選擇好的文字複製到剪貼簿以及\n"
 
-#: src/gnuwin32/console.c:2250
+#: src/gnuwin32/console.c:2252
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
 "     用 Shift+Ins (或 Ctrl+V 或 Ctrl+Y) 來貼上剪貼簿的內容 (如果有的話)  \n"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2253
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     到主控臺，Ctrl+X 先複製再貼上\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2254
 msgid "  Misc:\n"
 msgstr "  其它:\n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2255
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: 清除主控臺。\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2256
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O 或 INS：切換覆寫模式：初始時關閉。\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2257
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: 將目前所在位置的字元與其左方的字元交換。\n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2258
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -167,7 +167,7 @@ msgstr ""
 "\n"
 "注意: 只有在要求輸入時主控臺才會被更新。\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2259
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -175,7 +175,7 @@ msgstr ""
 "  使用 Ctrl+W 來開關此一功能。\n"
 "\n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2260
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -183,7 +183,7 @@ msgstr ""
 "使用 ESC 來停止解譯器。\n"
 "\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2261
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -191,11 +191,11 @@ msgstr ""
 "TAB 啟動補完目前的字詞。\n"
 "\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2262
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "可以用 Windows 的標準快捷鍵來轉換\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2263
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "繪圖裝置 (MDI 用 Ctrl+Tab 或 Ctrl+F6，SDI 用 Alt+Tab)"
 
@@ -348,6 +348,7 @@ msgid "Save as..."
 msgstr "另存為…"
 
 #: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
+#: src/library/grDevices/src/devWindows.c:1666
 #: src/library/grDevices/src/devWindows.c:1708
 msgid "Print..."
 msgstr "列印…"
@@ -403,7 +404,7 @@ msgstr "無法建立編輯器視窗"
 msgid "Untitled"
 msgstr "未命名"
 
-#: src/gnuwin32/extra.c:811
+#: src/gnuwin32/extra.c:825
 msgid "Select file"
 msgstr "選擇檔案"
 
@@ -602,7 +603,8 @@ msgid "Update packages..."
 msgstr "更新程式套件…"
 
 #: src/gnuwin32/rui.c:920
-msgid "Install package(s) from local zip files..."
+#, fuzzy
+msgid "Install package(s) from local files..."
 msgstr "用本機的 zip 檔案來安裝程式套件…"
 
 #: src/gnuwin32/rui.c:944
@@ -815,7 +817,7 @@ msgstr "找不到選單"
 msgid "menu or item does not exist"
 msgstr "選單或是項目不存在"
 
-#: src/gnuwin32/system.c:447
+#: src/gnuwin32/system.c:446
 msgid "Save workspace image?"
 msgstr "儲存工作空間圖案?"
 
@@ -837,27 +839,27 @@ msgstr " 現行目錄改成："
 msgid "Unable to set '%s' as working directory"
 msgstr "無法將 '%s' 設成現行目錄"
 
-#: src/extra/graphapp/dialogs.c:603 src/extra/graphapp/dialogs.c:621
-#: src/extra/graphapp/dialogs.c:627 src/extra/graphapp/dialogs.c:726
-#: src/extra/graphapp/dialogs.c:740 src/extra/graphapp/dialogs.c:746
+#: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
+#: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:727
+#: src/extra/graphapp/dialogs.c:741 src/extra/graphapp/dialogs.c:747
 #: src/library/utils/src/windows/widgets.c:125
 msgid "Cancel"
 msgstr "取消"
 
-#: src/extra/graphapp/dialogs.c:623 src/extra/graphapp/dialogs.c:742
+#: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:743
 #: src/library/utils/src/windows/widgets.c:124
 msgid "OK"
 msgstr "確定"
 
-#: src/extra/graphapp/dialogs.c:734
+#: src/extra/graphapp/dialogs.c:735
 msgid "User"
 msgstr "使用者"
 
-#: src/extra/graphapp/dialogs.c:735
+#: src/extra/graphapp/dialogs.c:736
 msgid "Password"
 msgstr "密碼"
 
-#: src/extra/graphapp/dialogs.c:901 src/extra/graphapp/dialogs.c:907
+#: src/extra/graphapp/dialogs.c:902 src/extra/graphapp/dialogs.c:908
 #, c-format
 msgid "\"%s\" not found"
 msgstr "找不到 \"%s\""
@@ -1104,10 +1106,6 @@ msgstr "做為 Bitmap\tCTRL+C"
 msgid "as a Metafile\tCTRL+W"
 msgstr "做為 Metafile\tCTRL+W"
 
-#: src/library/grDevices/src/devWindows.c:1666
-msgid "Print...\tCTRL+P"
-msgstr "列印…\tCTRL+P"
-
 #: src/library/grDevices/src/devWindows.c:1668
 msgid "close Device"
 msgstr "關閉裝置"
@@ -1191,6 +1189,9 @@ msgstr "等待頁面變更的確認…"
 #: src/library/grDevices/src/devWindows.c:3781
 msgid "Click or hit ENTER for next page"
 msgstr "按 ENTER 來看下一頁"
+
+#~ msgid "Print...\tCTRL+P"
+#~ msgstr "列印…\tCTRL+P"
 
 #~ msgid "invalid device"
 #~ msgstr "裝置發生錯誤"

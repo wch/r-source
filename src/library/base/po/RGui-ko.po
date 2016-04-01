@@ -2,7 +2,7 @@
 # src/library/base/po/RGui-ko.po
 #
 # Copyright (C) 1995-2015 The R Core Team
-# 
+#
 # This file is distributed under the same license as the R base package.
 # Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
 #
@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:52+0000\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -38,11 +38,11 @@ msgstr "메모리 부족: 텍스트를 클립보드에 복사할 수 없습니�
 msgid "Unable to open the clipboard"
 msgstr "클립보드를 열 수 없습니다"
 
-#: src/gnuwin32/console.c:1917
+#: src/gnuwin32/console.c:1919
 msgid "Insufficient memory. Please close the console"
 msgstr "메모리가 부족합니다.  콘솔을 닫아주세요"
 
-#: src/gnuwin32/console.c:1972 src/gnuwin32/console.c:2026
+#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -52,23 +52,23 @@ msgstr ""
 "폰트 %s-%d-%d를 찾을 수 없습니다.\n"
 "시스템고정폰트를 사용합니다"
 
-#: src/gnuwin32/console.c:2131
+#: src/gnuwin32/console.c:2133
 msgid "Save selection to"
 msgstr "선택한 부분을 다음 위치에 저장합니다"
 
-#: src/gnuwin32/console.c:2133
+#: src/gnuwin32/console.c:2135
 msgid "Save console contents to"
 msgstr "콘솔의 내용을 다음의 위치에 저장합니다"
 
-#: src/gnuwin32/console.c:2232
+#: src/gnuwin32/console.c:2234
 msgid "Scrolling.\n"
 msgstr "스크롤링.\n"
 
-#: src/gnuwin32/console.c:2233
+#: src/gnuwin32/console.c:2235
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  키보드: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2236
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -76,91 +76,103 @@ msgstr ""
 "  마우스: 스크롤바를 사용하세요.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2237
 msgid "Editing.\n"
 msgstr "편집.\n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2238
 msgid "  Moving the cursor: \n"
 msgstr "  커서를 이동중: \n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2239
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     좌로 이동화살표 또는 Ctrl+B: 한 문자 뒤로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2240
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     우로 이동화살표 또는 Ctrl+F: 한 문자 앞으로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2241
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home 또는 Ctrl+A: 라인의 맨 처음으로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2242
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End 또는 Ctrl+E: 라인의 맨 끝으로 이동합니다;\n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2243
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  작업기록: 위로 이동과 아래로 이동 화살표들, Ctrl+P, Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2244
 msgid "  Deleting:\n"
 msgstr "  삭제:\n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2245
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del 또는 Ctrl+D: 현재 문자 또는 선택 영역을 삭제합니다;\n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2246
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 바로 이전문자를 삭제합니다;\n"
 
-#: src/gnuwin32/console.c:2245
-msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+#: src/gnuwin32/console.c:2247
+msgid ""
+"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr "     Ctrl+Del 또는 Ctrl+K: 현재 문자부터 라인의 끝까지 삭제합니다.\n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2248
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: 현재 라인의 모든 텍스트를 삭제합니다.\n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2249
 msgid "  Copy and paste.\n"
 msgstr "  복사하여 붙여넣기.\n"
 
-#: src/gnuwin32/console.c:2248
-msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하세요. \n"
-
-#: src/gnuwin32/console.c:2249
-msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 사용합니다. \n"
-
 #: src/gnuwin32/console.c:2250
-msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V 혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
+msgid ""
+"     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr ""
+"     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하"
+"세요. \n"
 
 #: src/gnuwin32/console.c:2251
+msgid ""
+"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr ""
+"     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 "
+"사용합니다. \n"
+
+#: src/gnuwin32/console.c:2252
+msgid ""
+"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
+"(if any)  \n"
+msgstr ""
+"     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V "
+"혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
+
+#: src/gnuwin32/console.c:2253
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     Ctrl+X를 이용하여 복사한 뒤 붙여넣을수도 있습니다.\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2254
 msgid "  Misc:\n"
 msgstr "  기타:\n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2255
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: 콘솔화면을 깨끗하게 정리해 줍니다.\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2256
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O 또는 INS: 덮어쓰기 모드로 전환합니다: 처음에는 꺼져있습니다.\n"
+msgstr ""
+"     Ctrl+O 또는 INS: 덮어쓰기 모드로 전환합니다: 처음에는 꺼져있습니다.\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2257
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: 현재의 문자와 좌측에 있는 문자를 서로 교환합니다.\n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2258
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -168,7 +180,7 @@ msgstr ""
 "\n"
 "참고: 콘솔은 오로지 어떤 입력이 요구되어 질 때만 갱신됩니다.\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2259
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -176,7 +188,7 @@ msgstr ""
 "  이 기능을 켜거나 혹은 끄고 싶을 때 Ctrl+W 를 이용하세요.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2260
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -184,21 +196,23 @@ msgstr ""
 "인터프리터를 중단하기 위해서는 ESC 키를 이용하세요.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2261
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-"TAB키를 이용하여 현재 입력중인 단어에 대한 자동완성기능을 살펴볼 수 있습니다.\n"
+"TAB키를 이용하여 현재 입력중인 단어에 대한 자동완성기능을 살펴볼 수 있습니"
+"다.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2262
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "표준 윈도우즈 핫키들이 그래픽 장치 전환에 사용될 수 있습니다 \n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2263
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr "(MDI의 경우 Ctrl+Tab 또는 Ctrl+F6를, SDI의 경우 Alt+Tab을 사용할 수 있습니다)"
+msgstr ""
+"(MDI의 경우 Ctrl+Tab 또는 Ctrl+F6를, SDI의 경우 Alt+Tab을 사용할 수 있습니다)"
 
 #: src/gnuwin32/editor.c:91 src/gnuwin32/editor.c:93
 msgid "R Editor"
@@ -223,8 +237,8 @@ msgstr "파일 '%s'를 저장할 수 없었습니다"
 msgid "Save script as"
 msgstr "다른 이름으로 스크립트를 저장"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
-#: src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
+#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "스크립트 열기"
 
@@ -246,7 +260,8 @@ msgstr "명령들을 실행중입니다\n"
 
 #: src/gnuwin32/editor.c:609
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr "R 코드 한 줄 또는 선택한 영역을 실행하고자 한다면, 코드를 먼저 선택한 뒤 \n"
+msgstr ""
+"R 코드 한 줄 또는 선택한 영역을 실행하고자 한다면, 코드를 먼저 선택한 뒤 \n"
 
 #: src/gnuwin32/editor.c:610
 msgid "     Press Ctrl-R\n"
@@ -261,12 +276,15 @@ msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     툴바에 있는 \"줄 또는 선택영역 실행\" 아이콘을 눌러 주세요\n"
 
 #: src/gnuwin32/editor.c:613
-msgid "This will copy the selected commands to the console and evaluate them.\n"
+msgid ""
+"This will copy the selected commands to the console and evaluate them.\n"
 msgstr "이것은 선택된 명령어들을 콘솔로 복사하고 평가할 것입니다.\n"
 
 #: src/gnuwin32/editor.c:614
-msgid "If there is no selection, this will just run the current line and advance\n"
-msgstr "만약 선택된 명령어들이 없다면, 이것은 단순히 커서가 놓인 라인을 실행하고\n"
+msgid ""
+"If there is no selection, this will just run the current line and advance\n"
+msgstr ""
+"만약 선택된 명령어들이 없다면, 이것은 단순히 커서가 놓인 라인을 실행하고\n"
 
 #: src/gnuwin32/editor.c:615
 msgid "the cursor by one line.\n"
@@ -285,9 +303,9 @@ msgstr "실행취소"
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
-#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
-#: src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
+#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
+#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "복사하기"
 
@@ -300,8 +318,9 @@ msgstr "붙여넣기"
 msgid "Delete"
 msgstr "삭제하기"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
-#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
+#: src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "모두 선택하기"
 
@@ -346,6 +365,7 @@ msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
 #: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
+#: src/library/grDevices/src/devWindows.c:1666
 #: src/library/grDevices/src/devWindows.c:1708
 msgid "Print..."
 msgstr "인쇄하기..."
@@ -403,7 +423,7 @@ msgstr "편집기 윈도우를 생성할 수 없습니다"
 msgid "Untitled"
 msgstr "제목없음"
 
-#: src/gnuwin32/extra.c:811
+#: src/gnuwin32/extra.c:825
 msgid "Select file"
 msgstr "파일선택"
 
@@ -603,7 +623,8 @@ msgid "Update packages..."
 msgstr "패키지 업데이트..."
 
 #: src/gnuwin32/rui.c:920
-msgid "Install package(s) from local zip files..."
+#, fuzzy
+msgid "Install package(s) from local files..."
 msgstr "로컬에 있는 zip 파일들로부터 패키지(들) 설치..."
 
 #: src/gnuwin32/rui.c:944
@@ -815,7 +836,7 @@ msgstr "메뉴를 찾을 수 없습니다"
 msgid "menu or item does not exist"
 msgstr "메뉴 또는 항목이 존재하지 않습니다"
 
-#: src/gnuwin32/system.c:447
+#: src/gnuwin32/system.c:446
 msgid "Save workspace image?"
 msgstr "작업공간 이미지를 저장하시겠습니까?"
 
@@ -837,27 +858,27 @@ msgstr "작업디렉토리를 다음의 위치로 변경:"
 msgid "Unable to set '%s' as working directory"
 msgstr "'%s'를 작업디렉토리로 지정할 수 없습니다"
 
-#: src/extra/graphapp/dialogs.c:603 src/extra/graphapp/dialogs.c:621
-#: src/extra/graphapp/dialogs.c:627 src/extra/graphapp/dialogs.c:726
-#: src/extra/graphapp/dialogs.c:740 src/extra/graphapp/dialogs.c:746
+#: src/extra/graphapp/dialogs.c:604 src/extra/graphapp/dialogs.c:622
+#: src/extra/graphapp/dialogs.c:628 src/extra/graphapp/dialogs.c:727
+#: src/extra/graphapp/dialogs.c:741 src/extra/graphapp/dialogs.c:747
 #: src/library/utils/src/windows/widgets.c:125
 msgid "Cancel"
 msgstr "취소"
 
-#: src/extra/graphapp/dialogs.c:623 src/extra/graphapp/dialogs.c:742
+#: src/extra/graphapp/dialogs.c:624 src/extra/graphapp/dialogs.c:743
 #: src/library/utils/src/windows/widgets.c:124
 msgid "OK"
 msgstr "OK"
 
-#: src/extra/graphapp/dialogs.c:734
+#: src/extra/graphapp/dialogs.c:735
 msgid "User"
 msgstr "사용자"
 
-#: src/extra/graphapp/dialogs.c:735
+#: src/extra/graphapp/dialogs.c:736
 msgid "Password"
 msgstr "비밀번호"
 
-#: src/extra/graphapp/dialogs.c:901 src/extra/graphapp/dialogs.c:907
+#: src/extra/graphapp/dialogs.c:902 src/extra/graphapp/dialogs.c:908
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\"를 찾을 수 없습니다"
@@ -970,7 +991,8 @@ msgstr ""
 "  Ctrl-L 키는 열의 크기를 자동으로 재조정하여 화면을 다시 그려 보여줍니다\n"
 "  Ctrl-C 키는 선택된 셀을 복사합니다\n"
 "  Ctrl-V 키는 선택된 셀을 붙여넣습니다\n"
-"  우측 버튼을 누르면 복사, 붙여넣기, 선태된 열에 대한 자동크기 조절을 할 수 있는 메뉴를 보여줍니다\n"
+"  우측 버튼을 누르면 복사, 붙여넣기, 선태된 열에 대한 자동크기 조절을 할 수 "
+"있는 메뉴를 보여줍니다\n"
 "\n"
 
 #: src/library/utils/src/windows/dataentry.c:1700
@@ -1103,10 +1125,6 @@ msgstr "비트맵으로\tCTRL+C"
 msgid "as a Metafile\tCTRL+W"
 msgstr "메타파일로\tCTRL+W"
 
-#: src/library/grDevices/src/devWindows.c:1666
-msgid "Print...\tCTRL+P"
-msgstr "인쇄...\tCTRL+P"
-
 #: src/library/grDevices/src/devWindows.c:1668
 msgid "close Device"
 msgstr "장치를 닫습니다"
@@ -1190,6 +1208,9 @@ msgstr "페이지 변경을 확인하기 위해 기다리는 중..."
 #: src/library/grDevices/src/devWindows.c:3781
 msgid "Click or hit ENTER for next page"
 msgstr "다음 페이지로 이동하기 위해서는 클릭 또는 엔터키를 누르세요"
+
+#~ msgid "Print...\tCTRL+P"
+#~ msgstr "인쇄...\tCTRL+P"
 
 #~ msgid "invalid device"
 #~ msgstr "잘못된 장치입니다"

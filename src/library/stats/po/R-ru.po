@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 19:18-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -482,6 +482,12 @@ msgstr "аппроксимация на основе хи-квадрат может быть неправильной"
 msgid "NA values not allowed in 'd'"
 msgstr "NA в 'd' не разрешены"
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "расстояния должны быть результатом 'dist' или квадратной матрицей"
 
@@ -493,6 +499,9 @@ msgstr "'k' должен быть из {1, 2, ..  n - 1}"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "только %d из первых %d собственных значений > 0"
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "начальное значение не является внутренним в допустимом регионе"
@@ -536,6 +545,10 @@ msgstr "надо предоставить один или более векторов"
 
 msgid "arguments must have the same length"
 msgstr "аргументы должны иметь одну длину"
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr "неправильное количество колонок в 'x'"
 
 msgid "contrasts apply only to factors"
 msgstr "контрасты применяются лишь к факторам"
@@ -779,6 +792,9 @@ msgstr "'prob' и 'mu' -- указаны оба"
 msgid "some terms will have NAs due to the limits of the method"
 msgstr "в некоторых выражениях будут NA вследствие ограничений метода"
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x' должен иметь 1 или более непропущенных значений"
 
@@ -902,7 +918,10 @@ msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr ""
 "только положительные значения разрешены для обратно-гауссового семейства"
 
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+#, fuzzy
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr "для семейства 'inverse.gaussian' необходим пакет 'SuppDists' из CRAN"
 
 msgid "using weights as inverse variances"
@@ -1182,8 +1201,8 @@ msgstr "все элементы 'which' должны быть между 1 и %d"
 msgid "invalid parameter values"
 msgstr "неправильные значения параметра"
 
-msgid "a limit is missing"
-msgstr "предел пропущен"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "пропущенные значения не разрешены"
@@ -1402,6 +1421,10 @@ msgstr "неправильный NCOL(X)"
 msgid "only 1-4 predictors are allowed"
 msgstr "разрешены только 1-4 предиктора"
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr "неправильный NCOL(X)"
+
 msgid "invalid 'y'"
 msgstr "недопустимый y"
 
@@ -1427,6 +1450,13 @@ msgstr "неправильный аргумент 'cell'"
 
 msgid "invalid argument 'degree'"
 msgstr "неправильный аргумент 'degree'"
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr "нет конечных наблюдений"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "первый аргумент должен быть объектом \"loess\""
@@ -1954,8 +1984,8 @@ msgstr "не получилось создать временнЫе переменные из их имен"
 msgid "'varying' arguments must be the same length"
 msgstr "аргументы 'varying' должны быть одной длины"
 
-msgid "'times' is wrong length"
-msgstr "'times' неправильной длины"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "здесь есть записи с пропущенными временами, они будут сброшены."
@@ -2575,6 +2605,12 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "a limit is missing"
+#~ msgstr "предел пропущен"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times' неправильной длины"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "дальнейшие несоответствующие аргументы проигнорированы"

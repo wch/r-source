@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:52+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -140,9 +140,10 @@ msgstr " union クラスを生成できません: メンバー %s を設定で�
 msgid "invalid argument 'name': %s"
 msgstr " 不正な引数 'name' です: %s "
 
+#, fuzzy
 msgid ""
-"%s is a primitive function;  methods can be defined, but the generic "
-"function is implicit, and cannot be changed."
+"%s dispatches internally;  methods can be defined, but the generic function "
+"is implicit, and cannot be changed."
 msgstr ""
 " %s はプリミティブな関数です; メソッドを定義できますが、総称的関数は隠匿され"
 "ており、変更できません "
@@ -742,14 +743,6 @@ msgid "unable to find an environment containing class %s"
 msgstr " クラス %s を含む環境を見付けることが出来ません "
 
 msgid ""
-"Note: the specification for S3 class %s in package %s seems equivalent to "
-"one from package %s: not turning on duplicate class definitions for this "
-"class."
-msgstr ""
-" 注意: パッケージ %2$s 中の S3 クラス %1$s  はパッケージ %3$s からのものと同"
-"値に見えますので、このクラスに対する重複クラス定義は行いません "
-
-msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
@@ -763,6 +756,11 @@ msgid ""
 msgstr ""
 " 注意: パッケージ %2$s 中の S3 クラス %1$s はパッケージ %3$s からのものと同値"
 "に見えますので、このクラスに対する重複クラス定義は行いません "
+
+msgid ""
+"Found more than one class \"%s\" in cache; using the first, from namespace "
+"'%s'"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr " 未定義のサブクラス %s (クラスは %s) です; 定義は更新されません "
@@ -858,20 +856,11 @@ msgstr ""
 " 引数 'f' は文字列、総称的関数またはプリミティブである必要がありますが、普通"
 "の関数が得られました "
 
-msgid "methods cannot be defined for the primitive function %s"
-msgstr " プリミティブ関数 %s に対してはメソッドを定義できません "
-
 msgid "no generic function found for %s"
 msgstr " %s に対する総称的関数は見付かりません "
 
 msgid "Empty function name in .getGeneric"
 msgstr " .getGeneric の中に空の関数名 "
-
-msgid ""
-"package %s seems to have out-of-date methods; need to reinstall from source"
-msgstr ""
-" パッケージ %s は時代遅れのメソッドを持つようです; ソースから再インストールす"
-"る必要があります "
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -966,9 +955,6 @@ msgstr ""
 
 msgid "no definition found for class %s"
 msgstr " クラス %s に対する定義はありません "
-
-msgid "trying to execute load actions without 'methods' package"
-msgstr " 'methods' パッケージ無しにロード動作の実行を試みています "
 
 msgid "missing function for load action: %s"
 msgstr " ロード動作に対する関数がありません; %s "
@@ -1207,6 +1193,13 @@ msgid ""
 msgstr ""
 " %s から %s への強制変換のためのメソッドが現在存在します; これらを交換しま"
 "す。 "
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr " .getGeneric の中に空の関数名 "
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr " オブジェクト %s は存在しません "
@@ -1512,6 +1505,10 @@ msgstr ""
 msgid "%s is not a field in this class"
 msgstr " %s はこのクラス中の欄ではありません "
 
+#, fuzzy
+msgid "Methods not found: %s"
+msgstr " オブジェクト %s は存在しません "
+
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
 "redefined"
@@ -1638,6 +1635,11 @@ msgstr ""
 " フィールド %s （クラス %s）は既定の結合を持たないためロックできません "
 
 msgid ""
+"Reference superclasses must come from the same package for the environment "
+"to be defined:  got %s and %s"
+msgstr ""
+
+msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
 "class"
 msgstr ""
@@ -1687,8 +1689,8 @@ msgstr ""
 msgid "the method for %s for this signature was not being traced"
 msgstr " このシグナチャの %s に対するメソッドはトレースされていませんでした "
 
-msgid ""
-"making a traced version of a primitive; arguments will be treated as '...'"
+#, fuzzy
+msgid "making a traced version of a special; arguments may be altered"
 msgstr ""
 " プリミティブの traced バージョンを作っています; 引数は '...' として扱われま"
 "す "
@@ -1910,6 +1912,27 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、以下に関する定義です: %s "
+
+#~ msgid ""
+#~ "Note: the specification for S3 class %s in package %s seems equivalent to "
+#~ "one from package %s: not turning on duplicate class definitions for this "
+#~ "class."
+#~ msgstr ""
+#~ " 注意: パッケージ %2$s 中の S3 クラス %1$s  はパッケージ %3$s からのものと"
+#~ "同値に見えますので、このクラスに対する重複クラス定義は行いません "
+
+#~ msgid "methods cannot be defined for the primitive function %s"
+#~ msgstr " プリミティブ関数 %s に対してはメソッドを定義できません "
+
+#~ msgid ""
+#~ "package %s seems to have out-of-date methods; need to reinstall from "
+#~ "source"
+#~ msgstr ""
+#~ " パッケージ %s は時代遅れのメソッドを持つようです; ソースから再インストー"
+#~ "ルする必要があります "
+
+#~ msgid "trying to execute load actions without 'methods' package"
+#~ msgstr " 'methods' パッケージ無しにロード動作の実行を試みています "
 
 #~ msgid "special function %s is not permitted to have methods"
 #~ msgstr " 特殊関数 %s はメソッドを持つことが出来ません "

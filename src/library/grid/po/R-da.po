@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,9 +281,6 @@ msgstr ""
 msgid "grob '%s' not found"
 msgstr ""
 
-msgid "invalid element in the display list"
-msgstr ""
-
 #, fuzzy
 msgid "Invalid force target"
 msgstr "Ugyldig »frame«"
@@ -350,9 +347,6 @@ msgstr "Ugyldig »grob«"
 #, fuzzy
 msgid "invalid 'listing'"
 msgstr "Ugyldig »grob«"
-
-msgid "Nothing on the display list"
-msgstr ""
 
 #, fuzzy
 msgid "invalid 'origin'"
@@ -491,6 +485,9 @@ msgid "index out of bounds (unit arithmetic subsetting)"
 msgstr ""
 
 msgid "index out of bounds (unit list subsetting)"
+msgstr ""
+
+msgid "Value being assigned must be a unit"
 msgstr ""
 
 msgid "it is invalid to combine 'unit' objects with other types"

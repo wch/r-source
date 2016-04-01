@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 15:07+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -268,6 +268,14 @@ msgstr "konnte Variablen nicht angemessen wieder herstellen"
 msgid "did not assign() anything"
 msgstr "habe nichts assign()-ed"
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
+
 msgid "Browsing in the environment with call:"
 msgstr "Untersuche die Umgebung mit Aufruf:"
 
@@ -435,15 +443,15 @@ msgstr "weiß nicht, wonach suchen"
 msgid "argument 'help.db' is deprecated"
 msgstr "Argument 'help.db' ist veraltet"
 
+msgid "incorrect type specification"
+msgstr "falsche Typspezifikation"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 "keine Information in der Datenbank für Paket %s: benötige 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "falsche 'agrep' Spezifikation"
-
-msgid "incorrect type specification"
-msgstr "falsche Typspezifikation"
 
 msgid "could not find package %s"
 msgstr "konnte Paket %s nicht finden"
@@ -636,11 +644,19 @@ msgstr "--- Bitte einen CRAN Spiegel für diese Sitzung auswählen ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "versuche CRAN ohne einen Spiegelserver zu nutzen"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "kann keinen CRAN-Spiegel nicht-interaktiv nutzen"
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "Fehler in read.dcf() bei Datei '%s'"
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "kann keinen BioC-Spiegel nicht-interaktiv wählen"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "kann keinen CRAN-Spiegel nicht-interaktiv nutzen"
 
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
@@ -793,9 +809,6 @@ msgstr ""
 "keine Methoden für %s und keine Dokumentation darüber, es als Funktion zu "
 "nutzen"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "keine Methode für Funktion %s und Signatur %s definiert"
 
@@ -943,6 +956,9 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr "kein Zeilen in '%s'"
 
@@ -1077,9 +1093,6 @@ msgstr "'subject' fehlt"
 msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress' muss die Länge 1 haben"
 
-msgid "no download method found"
-msgstr "keine Downloadmethode gefunden"
-
 msgid "'url' must be a length-one character vector"
 msgstr "'url' muss ein Zeichenkettenvektor mit Länge 1 sein"
 
@@ -1204,6 +1217,12 @@ msgid_plural "packages %s are not available (%s)"
 msgstr[0] "Paket %s ist nicht verfügbar (%s)"
 msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
 
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
+msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "Abhängigkeit %s nicht verfügbar"
@@ -1300,6 +1319,12 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "kann keinen BioC-Spiegel nicht-interaktiv wählen"
+
+#~ msgid "no download method found"
+#~ msgstr "keine Downloadmethode gefunden"
 
 #~ msgid ","
 #~ msgstr ","
@@ -1515,9 +1540,6 @@ msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "aktualisiere HTML Paketbeschreibungen"
-
-#~ msgid "read.dcf() error on file '%s'"
-#~ msgstr "Fehler in read.dcf() bei Datei '%s'"
 
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr "Konnte weder aspell noch ispell finden"

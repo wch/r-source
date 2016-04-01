@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -20,6 +20,10 @@ msgstr ""
 #, fuzzy
 msgid "Checking %s"
 msgstr "%s…"
+
+#, fuzzy
+msgid "Processing %s ..."
+msgstr "处理%s "
 
 msgid "argument 'package' must be of length 1"
 msgstr "参数'package'的长度必需为一"
@@ -904,6 +908,10 @@ msgstr "找不到源程序文件"
 msgid "empty 'data' directory"
 msgstr "空的'data'目录"
 
+#, fuzzy
+msgid "cannot create unique directory for build"
+msgstr "无法建立目录'%s'"
+
 msgid "cannot create temporary directory"
 msgstr "无法建立临时性目录"
 
@@ -968,6 +976,14 @@ msgstr ""
 "无法处理段/列：\n"
 "%s"
 
+#, fuzzy
+msgid "DESCRIPTION file not found"
+msgstr "DESCRIPTION文件不对"
+
+#, fuzzy
+msgid "NEWS file not found"
+msgstr "找不到'%s'这个文件"
+
 msgid "No news found in given file using old-style R-like format."
 msgstr "在所提供的文件中用老式R类的格式找不到任何新信息。"
 
@@ -1012,6 +1028,14 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
+
+#, fuzzy
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr ""
+"编译TeX文件%s失败，消息为:\n"
+"%s"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s必需是字符串或原联结"
@@ -1096,6 +1120,9 @@ msgstr "参数'pkg'的长度必需是一"
 
 msgid "package '%s' was not found"
 msgstr "找不到程辑包'%s'"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
 
 msgid "bad operand"
 msgstr "操作数不对"
@@ -1340,12 +1367,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
-
-#, fuzzy
-#~ msgid "Reading %s failed with message: %s"
-#~ msgstr ""
-#~ "编译TeX文件%s失败，消息为:\n"
-#~ "%s"
 
 #~ msgid ","
 #~ msgstr ","

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -156,9 +156,10 @@ msgstr "impossível criar classe união: não foi possível definir os membros %
 msgid "invalid argument 'name': %s"
 msgstr "Argumento inválido  \"name\": %s"
 
+#, fuzzy
 msgid ""
-"%s is a primitive function;  methods can be defined, but the generic "
-"function is implicit, and cannot be changed."
+"%s dispatches internally;  methods can be defined, but the generic function "
+"is implicit, and cannot be changed."
 msgstr ""
 "'%s' é uma função primitiva; métodos podem ser definidos, mas a função "
 "genérica está implícita e não pode ser modificada"
@@ -861,12 +862,6 @@ msgid "unable to find an environment containing class %s"
 msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
 
 msgid ""
-"Note: the specification for S3 class %s in package %s seems equivalent to "
-"one from package %s: not turning on duplicate class definitions for this "
-"class."
-msgstr ""
-
-msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
@@ -875,6 +870,11 @@ msgstr ""
 msgid ""
 "Note: the specification for class %s in package %s seems equivalent to one "
 "from package %s: not turning on duplicate class definitions for this class."
+msgstr ""
+
+msgid ""
+"Found more than one class \"%s\" in cache; using the first, from namespace "
+"'%s'"
 msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
@@ -960,19 +960,10 @@ msgid ""
 msgstr "argumento \"f\" deve ser uma função genérica ou %s"
 
 #, fuzzy
-msgid "methods cannot be defined for the primitive function %s"
-msgstr ""
-"métodos não podem ser definidos para função primitiva '%s' nessa versão do R"
-
-#, fuzzy
 msgid "no generic function found for %s"
 msgstr "nenhuma função genérica '%s' encontrada"
 
 msgid "Empty function name in .getGeneric"
-msgstr ""
-
-msgid ""
-"package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr ""
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
@@ -1062,9 +1053,6 @@ msgstr ""
 #, fuzzy
 msgid "no definition found for class %s"
 msgstr "nenhuma definição existente para função '%s'"
-
-msgid "trying to execute load actions without 'methods' package"
-msgstr ""
 
 #, fuzzy
 msgid "missing function for load action: %s"
@@ -1281,6 +1269,13 @@ msgstr ""
 
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
+msgstr ""
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr "Função fornecida como argumento \"f\" deve ser genérica"
+
+msgid "method is not being debugged"
 msgstr ""
 
 #, fuzzy
@@ -1591,6 +1586,10 @@ msgid "%s is not a field in this class"
 msgstr "\"%s\" não é um campo definido nessa classe"
 
 #, fuzzy
+msgid "Methods not found: %s"
+msgstr "nenhuma função genérica '%s' encontrada"
+
+#, fuzzy
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
 "redefined"
@@ -1707,6 +1706,11 @@ msgid "field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 
 msgid ""
+"Reference superclasses must come from the same package for the environment "
+"to be defined:  got %s and %s"
+msgstr ""
+
+msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
 "class"
 msgstr ""
@@ -1762,8 +1766,7 @@ msgstr ""
 msgid "the method for %s for this signature was not being traced"
 msgstr "no método %s com assinatura %s:"
 
-msgid ""
-"making a traced version of a primitive; arguments will be treated as '...'"
+msgid "making a traced version of a special; arguments may be altered"
 msgstr ""
 
 #, fuzzy
@@ -2004,6 +2007,12 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
+
+#, fuzzy
+#~ msgid "methods cannot be defined for the primitive function %s"
+#~ msgstr ""
+#~ "métodos não podem ser definidos para função primitiva '%s' nessa versão "
+#~ "do R"
 
 #~ msgid ""
 #~ "'callGeneric' with a primitive needs explicit arguments (no formal args "

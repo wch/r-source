@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -266,6 +266,14 @@ msgstr " 変数を正しく再構成できませんでした "
 msgid "did not assign() anything"
 msgstr " 何も assign() しませんでした "
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr " 引数 %s (%s) に対する表現式を評価中にエラー "
+
 msgid "Browsing in the environment with call:"
 msgstr " 以下の呼び出しに伴う環境でブラウジング: "
 
@@ -431,6 +439,9 @@ msgstr " 何を検索すべきか分かりません "
 msgid "argument 'help.db' is deprecated"
 msgstr " 引数 'help.db' は廃止されました "
 
+msgid "incorrect type specification"
+msgstr " 不正確なタイプ指定です "
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 " パッケージ %s の情報がデータベース中にありません: 'rebuild = TRUE' が必要か"
@@ -438,9 +449,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr " 不正確な 'agrep' 指定 "
-
-msgid "incorrect type specification"
-msgstr " 不正確なタイプ指定です "
 
 msgid "could not find package %s"
 msgstr " パッケージ %s を見付けることが出来ませんでした "
@@ -637,11 +645,19 @@ msgstr ""
 msgid "trying to use CRAN without setting a mirror"
 msgstr " ミラーを設定することなく CRAN を使おうとしています "
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr " CRAN ミラーの選択は対話的にしかできません "
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr " ファイル '%s' に対する read.dcf() エラー "
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr " BioC ミラーの選択は対話的にしかできません "
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr " CRAN ミラーの選択は対話的にしかできません "
 
 msgid "cannot set repositories non-interactively"
 msgstr " リポジトリーの設定は対話的にしかできません "
@@ -801,9 +817,6 @@ msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 " %s に対するメソッドはありませんし、その関数としてのドキュメントもありません "
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr " 引数 %s (%s) に対する表現式を評価中にエラー "
-
 msgid "no method defined for function %s and signature %s"
 msgstr ""
 " 関数 %s でシグネチャが %s であるものに対して定義されたメソッドはありません "
@@ -954,6 +967,9 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 " 'digits' と 'digits.d' の両方が指定されています。'digits.d' は使われません "
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr " %s には一行も存在しません "
 
@@ -1088,9 +1104,6 @@ msgstr " 'subject' が欠けています "
 msgid "'ccaddress' must be of length 1"
 msgstr " 'ccaddress' は長さ 1 の整数でなければなりません "
 
-msgid "no download method found"
-msgstr " ダウンロードの方法が見付かりません "
-
 msgid "'url' must be a length-one character vector"
 msgstr " 'url' は長さ1の文字ベクトルでなければなりません "
 
@@ -1205,6 +1218,11 @@ msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
 msgstr[0] " パッケージ %s が利用できません (%s) "
 
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] " 依存対象 (dependency) %s が利用できません "
@@ -1277,6 +1295,12 @@ msgstr[0] " 不正なローマ数字です: %s "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr " BioC ミラーの選択は対話的にしかできません "
+
+#~ msgid "no download method found"
+#~ msgstr " ダウンロードの方法が見付かりません "
 
 #~ msgid ","
 #~ msgstr " , "
@@ -1502,9 +1526,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr " HTML パッケージ記述を更新 "
-
-#~ msgid "read.dcf() error on file '%s'"
-#~ msgstr " ファイル '%s' に対する read.dcf() エラー "
 
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr " 実行可能なaspellまたはispellが見つかりません "

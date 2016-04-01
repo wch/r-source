@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -115,9 +115,10 @@ msgstr "无法建立併集类别: 无法设定%s成员"
 msgid "invalid argument 'name': %s"
 msgstr "参数'name'无效: %s"
 
+#, fuzzy
 msgid ""
-"%s is a primitive function;  methods can be defined, but the generic "
-"function is implicit, and cannot be changed."
+"%s dispatches internally;  methods can be defined, but the generic function "
+"is implicit, and cannot be changed."
 msgstr ""
 "%s是基元函数; 能够为其设定方法，但泛型函数是隱含定义的，无法对之进行改动。"
 
@@ -637,15 +638,6 @@ msgstr "找不到包含类别%s的环境"
 
 #, fuzzy
 msgid ""
-"Note: the specification for S3 class %s in package %s seems equivalent to "
-"one from package %s: not turning on duplicate class definitions for this "
-"class."
-msgstr ""
-"程序包%2$s里的%1$s S3类别定义似乎与程序包%3$s里的类别定义相当，因此不打开重复"
-"的类别定义"
-
-#, fuzzy
-msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
@@ -660,6 +652,11 @@ msgid ""
 msgstr ""
 "程序包%2$s里的%1$s类别定义似乎与程序包%3$s里的类别定义相当，因此不打开重复的"
 "类别定义"
+
+msgid ""
+"Found more than one class \"%s\" in cache; using the first, from namespace "
+"'%s'"
+msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "%2$s类别的子类别%1$s没有定义；因此没有更新"
@@ -744,18 +741,11 @@ msgid ""
 msgstr ""
 "'f'参数要么是字符，要么是泛型函数，要么是原始函数：现在得到的却是普通函数"
 
-msgid "methods cannot be defined for the primitive function %s"
-msgstr "无法为基元函数%s定义方法"
-
 msgid "no generic function found for %s"
 msgstr "为'%s'找不到泛型函数"
 
 msgid "Empty function name in .getGeneric"
 msgstr ".getGeneric里不能有空的函数名字"
-
-msgid ""
-"package %s seems to have out-of-date methods; need to reinstall from source"
-msgstr "程序包%s里的方法好象过时了；请重新安装"
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr "%s找不到方法；'cacheGenericsMetaData()'没有作用"
@@ -839,9 +829,6 @@ msgstr "%s类别存在多个定义；应该指定用一个(%s)，比如通过cla
 
 msgid "no definition found for class %s"
 msgstr "类别%s的定义不存在"
-
-msgid "trying to execute load actions without 'methods' package"
-msgstr "没有'methods'程序包时进行加载操作"
 
 msgid "missing function for load action: %s"
 msgstr "荷载操作时找不到函数：%s"
@@ -1050,6 +1037,13 @@ msgstr "没有'coerce'方法"
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "目前存在着強制转换%s成%s的方法；这些方法将会被替换掉。"
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr ".getGeneric里不能有空的函数名字"
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr "找不到%s这个对象"
@@ -1310,6 +1304,10 @@ msgstr "不能直接调用callSuper()：只能用其它的方法来调用它"
 msgid "%s is not a field in this class"
 msgstr "%s不是这个类别里的场"
 
+#, fuzzy
+msgid "Methods not found: %s"
+msgstr "找不到%s这个对象"
+
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
 "redefined"
@@ -1418,6 +1416,11 @@ msgid "field %s of class %s has a non-default binding and cannot be locked"
 msgstr "%1$s类别的%2$s场有非默认的约束力，因此不能被锁定"
 
 msgid ""
+"Reference superclasses must come from the same package for the environment "
+"to be defined:  got %s and %s"
+msgstr ""
+
+msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
 "class"
 msgstr "%s类别不是%s的子类别；这没有功能语义定义"
@@ -1463,8 +1466,8 @@ msgstr "无法将%s删除追踪；这一标记没有与之相对应的方法：%
 msgid "the method for %s for this signature was not being traced"
 msgstr "此标记的%s方法没有被追踪"
 
-msgid ""
-"making a traced version of a primitive; arguments will be treated as '...'"
+#, fuzzy
+msgid "making a traced version of a special; arguments may be altered"
 msgstr "创造一个被追踪的基元函数版本；其参数将被当作'...'来用"
 
 msgid ""
@@ -1652,6 +1655,26 @@ msgid ""
 msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] "在指定的%2$s这个位置不存在类别%1$s的定义, 定义在: %3$s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Note: the specification for S3 class %s in package %s seems equivalent to "
+#~ "one from package %s: not turning on duplicate class definitions for this "
+#~ "class."
+#~ msgstr ""
+#~ "程序包%2$s里的%1$s S3类别定义似乎与程序包%3$s里的类别定义相当，因此不打开"
+#~ "重复的类别定义"
+
+#~ msgid "methods cannot be defined for the primitive function %s"
+#~ msgstr "无法为基元函数%s定义方法"
+
+#~ msgid ""
+#~ "package %s seems to have out-of-date methods; need to reinstall from "
+#~ "source"
+#~ msgstr "程序包%s里的方法好象过时了；请重新安装"
+
+#~ msgid "trying to execute load actions without 'methods' package"
+#~ msgstr "没有'methods'程序包时进行加载操作"
 
 #~ msgid "special function %s is not permitted to have methods"
 #~ msgstr "特殊函数%s不可以有方法"

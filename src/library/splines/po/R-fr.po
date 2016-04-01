@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2013-03-18 22:10+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -21,8 +21,12 @@ msgstr ""
 msgid "must have at least 'ord' knots"
 msgstr "il faut au moins 'ord' noeuds"
 
-msgid "length of 'derivs' must match length of 'x'"
+#, fuzzy
+msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "la longueur de 'derivs' doit correspondre à la longueur de 'x'"
+
+msgid "empty 'derivs'"
+msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' doit être un entier positif, au nombre de noeuds au mieux"

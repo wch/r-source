@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -261,9 +261,6 @@ msgstr "gPath(%s)不存在"
 msgid "grob '%s' not found"
 msgstr "不存在grob'%s'这个值"
 
-msgid "invalid element in the display list"
-msgstr "显示单里的成分不对"
-
 #, fuzzy
 msgid "Invalid force target"
 msgstr "'order'的值不对"
@@ -324,10 +321,6 @@ msgstr "表不对"
 
 msgid "invalid 'listing'"
 msgstr "'listing'不对"
-
-#, fuzzy
-msgid "Nothing on the display list"
-msgstr "显示单修改得不对"
 
 msgid "invalid 'origin'"
 msgstr "'origin'的值不对"
@@ -461,6 +454,10 @@ msgstr "索引值出界(取单元数字子集时)"
 msgid "index out of bounds (unit list subsetting)"
 msgstr "索引值出界(取单元串子集时)"
 
+#, fuzzy
+msgid "Value being assigned must be a unit"
+msgstr "x和y必需为单元值"
+
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr "不能将'unit'对象同其它类别的对象相结合"
 
@@ -526,6 +523,13 @@ msgstr[0] "'grob'名字不对"
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "视口名字不对"
+
+#~ msgid "invalid element in the display list"
+#~ msgstr "显示单里的成分不对"
+
+#, fuzzy
+#~ msgid "Nothing on the display list"
+#~ msgstr "显示单修改得不对"
 
 #~ msgid "the 'vp' argument is deprecated"
 #~ msgstr "'vp'参数已经不再有用"

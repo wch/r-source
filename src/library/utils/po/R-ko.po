@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -281,6 +281,14 @@ msgstr "변수들을 올바르게 복구할 수 없었습니다"
 msgid "did not assign() anything"
 msgstr "어떠한 것도 assign()하지 않습니다"
 
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "인자 %s (%s)에 대한 표현식을 평가하려는데 에러가 발생했습니다"
+
 msgid "Browsing in the environment with call:"
 msgstr ""
 
@@ -446,6 +454,9 @@ msgstr "무엇을 검색해야할지 모릅니다"
 msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db'가 누락되었습니다"
 
+msgid "incorrect type specification"
+msgstr "유형지정이 잘못되었습니다"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 "패키지 %s에 대한 정보가 데이터베이스에 없습니다: 'rebuild = TRUE'가 필요한가"
@@ -453,9 +464,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 지정이 잘못되었습니다"
-
-msgid "incorrect type specification"
-msgstr "유형지정이 잘못되었습니다"
 
 msgid "could not find package %s"
 msgstr "패키지 %s를 찾을 수 없었습니다"
@@ -645,11 +653,18 @@ msgstr "--- 현재 세션에서 사용할 CRAN 미러를 선택해 주세요 ---
 msgid "trying to use CRAN without setting a mirror"
 msgstr "미러 설정을 하지 않고서는 CRAN을 사용할 수 없습니다"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "비대화식으로 CRAN 미러를 선택할 수 없습니다"
+msgid "'download.file()' error code '%d'"
+msgstr ""
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "비대화식으로 BioC 미러를 선택할 수 없습니다"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "비대화식으로 CRAN 미러를 선택할 수 없습니다"
 
 msgid "cannot set repositories non-interactively"
 msgstr "비대화식으로 저장소드을 설정할 수 없습니다"
@@ -798,9 +813,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "%s에 대한 메소드들이 없으며 함수로서 이와 관련된 문서들도 없습니다"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "인자 %s (%s)에 대한 표현식을 평가하려는데 에러가 발생했습니다"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "함수 %s와 signature %s에 정의된 메소드가 없습니다"
 
@@ -948,6 +960,9 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits'와 'digits.d' 모두 지정되지 않았기 때문에 후자는 사용되지 않습니다"
 
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr "%s에서 발견된 라인들은 없습니다"
 
@@ -1082,9 +1097,6 @@ msgstr "'subject'를 찾을 수 없습니다."
 msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress'의 길이는 반드시 1이어야 합니다."
 
-msgid "no download method found"
-msgstr "다운로드 메소드(download method)를 찾을 수 없습니다"
-
 msgid "'url' must be a length-one character vector"
 msgstr "'url'은 반드시 길이가 1인 문자형 벡터이어야 합니다."
 
@@ -1196,6 +1208,11 @@ msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
 msgstr[0] "패키지 %s(들)이 사용가능하지 않습니다 (그 이유는 %s 입니다)"
 
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "%s(들)이 사용가능하지 않습니다."
@@ -1272,6 +1289,12 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "비대화식으로 BioC 미러를 선택할 수 없습니다"
+
+#~ msgid "no download method found"
+#~ msgstr "다운로드 메소드(download method)를 찾을 수 없습니다"
 
 #~ msgid "function '%s' appears not to be generic"
 #~ msgstr "함수 '%s'는 제네릭처럼 나타나지 않을 것입니다"

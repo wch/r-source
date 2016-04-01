@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R /3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-11-29 17:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,8 +13,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr "ikke et korrekt evuleringsmiljø"
+
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
+
+msgid "namespace found within global environments"
+msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
@@ -52,7 +62,7 @@ msgstr "ugyldig tildeling 2"
 msgid "invalid function in complex assignment"
 msgstr "ugyldig funktion i kompleks tildeling"
 
-msgid "%s is not a registered math1 function"
+msgid "is not a registered math1 function"
 msgstr ""
 
 msgid "missing arguments are not allowed"
@@ -76,6 +86,9 @@ msgstr "forkert antal argumenter for '%s'"
 #, fuzzy
 msgid "more than one default provided in switch() call"
 msgstr "mere end en standard tilbudt i kontaktkald"
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "kan ikke kompilere en ikkefunktion"
@@ -103,6 +116,9 @@ msgstr "fil '%s' findes ikke"
 
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' er ikke et gyldigt kompilertilvalg"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
 
 msgid "function is not compiled"
 msgstr "funktion er ikke kompileret"

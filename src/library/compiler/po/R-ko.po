@@ -1,6 +1,6 @@
 # Korean translation for R compiler package
 # src/library/compiler/po/R-ko.po
-# 
+#
 # Copyright (C) 1995-2015 The R Core Team
 #
 # This file is distributed under the same license as the R compiler package.
@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -24,11 +24,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
 msgstr "올바른 이밸류에이션 인바이런먼트가 아닙니다"
 
+#, fuzzy
+msgid "non-namespace found within namespace environments"
+msgstr ""
+"'ns'는 반드시 네임스페이스 또는 환경을  불러오는 네임스페이스이어야 합니다"
+
+msgid "namespace found within global environments"
+msgstr ""
+
 msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr "'ns'는 반드시 네임스페이스 또는 환경을  불러오는 네임스페이스이어야 합니다"
+msgstr ""
+"'ns'는 반드시 네임스페이스 또는 환경을  불러오는 네임스페이스이어야 합니다"
 
 msgid "bad assignment: %s"
 msgstr ""
@@ -63,7 +75,7 @@ msgstr ""
 msgid "invalid function in complex assignment"
 msgstr ""
 
-msgid "%s is not a registered math1 function"
+msgid "is not a registered math1 function"
 msgstr ""
 
 msgid "missing arguments are not allowed"
@@ -86,6 +98,9 @@ msgstr "'%s'에 올바르지 않은 개수의 인자들이 있습니다"
 
 msgid "more than one default provided in switch() call"
 msgstr "switch() 함수호출시 주어진 기본값이 하나이상입니다"
+
+msgid "'switch' with no alternatives"
+msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "함수가 아닌 것을 컴파일 할 수 없습니다"
@@ -113,6 +128,9 @@ msgstr "파일 '%s'은 존재하지 않습니다"
 
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s'은 선택가능한 컴파일러가 아닙니다"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr ""
 
 msgid "function is not compiled"
 msgstr "함수가 컴파일 되지 않았습니다"

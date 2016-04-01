@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2012-02-29 14:00+0000\n"
 "Last-Translator: Fei Chen <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -16,73 +16,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: fork.c:253 fork.c:256
+#: fork.c:251 fork.c:254
 msgid "unable to create a pipe"
 msgstr "无法建立管道"
 
-#: fork.c:274
+#: fork.c:272
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "无法分叉，可能的原因是：%s"
 
-#: fork.c:320
+#: fork.c:318
 msgid "memory allocation error"
 msgstr "内存分配错误"
 
-#: fork.c:373
+#: fork.c:371
 msgid "only children can send data to the master process"
 msgstr "只有子进程才能给主进程发送数据"
 
-#: fork.c:375
+#: fork.c:373
 msgid "there is no pipe to the master process"
 msgstr "有没可以接到主进程的管道"
 
-#: fork.c:377
+#: fork.c:375
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "发送的内容必须是原始的，如果需要的话请用serialize（）"
 
-#: fork.c:386 fork.c:393 fork.c:717
+#: fork.c:384 fork.c:391 fork.c:715
 msgid "write error, closing pipe to the master"
 msgstr "书写错误，请关闭通往主进程的管道"
 
-#: fork.c:406
+#: fork.c:404
 msgid "only the master process can send data to a child process"
 msgstr "只有主进程才能给子进程发送数据"
 
-#: fork.c:413
+#: fork.c:411
 #, c-format
 msgid "child %d does not exist"
 msgstr "不存在%d这个子进程"
 
-#: fork.c:419
+#: fork.c:417
 msgid "write error"
 msgstr "书写错误"
 
-#: fork.c:487 fork.c:611
+#: fork.c:485 fork.c:609
 #, c-format
 msgid "error '%s' in select"
 msgstr "选择时出了'%s'这样一个错"
 
-#: fork.c:699
+#: fork.c:697
 msgid "'mckill' failed"
 msgstr "'mckill'失败"
 
-#: fork.c:709
+#: fork.c:707
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit'只能用于子进程"
 
-#: fork.c:730
+#: fork.c:728
 msgid "'mcexit' failed"
 msgstr "'mcexit'失败"
 
-#: fork.c:759 fork.c:768
+#: fork.c:757 fork.c:766
 msgid "invalid CPU affinity specification"
 msgstr "CPU亲和力规范不对"
 
-#: fork.c:779
+#: fork.c:777
 msgid "requested CPU set is too large for this system"
 msgstr "所需要的CPU设置对于这个系统来说太大了"
 
-#: fork.c:802
+#: fork.c:800
 msgid "retrieving CPU affinity set failed"
 msgstr "无法收取CPU亲和力"

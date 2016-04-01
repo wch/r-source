@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2013-03-11 11:27+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: Rmd5.c:37
+#: Rmd5.c:36
 msgid "argument 'files' must be character"
 msgstr "Argument 'files' muss Zeichenkette sein"
 
-#: Rmd5.c:51
+#: Rmd5.c:50
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 für Datei '%s' fehlgeschlagen"
@@ -136,27 +136,27 @@ msgstr "schlechter Textmode %d in 'deparseRd'"
 msgid "invalid bind address specification"
 msgstr "unzulässige Bindungsadressenspezifikation"
 
-#: install.c:112 install.c:133 install.c:135
+#: install.c:112 install.c:131 install.c:133
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "unzulässiges '%s' Argument"
 
-#: install.c:163
+#: install.c:162
 msgid "write error during file append"
 msgstr "Schreibfehler während Anhängen an Datei"
 
-#: signals.c:43
+#: signals.c:42
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() auf dieser Plattform nicht unterstützt"
 
-#: signals.c:140
+#: signals.c:139
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() auf dieser Plattform nicht unterstützt"
 
-#: text.c:66
+#: text.c:67
 msgid "invalid argument type"
 msgstr "unzulässiger Argumenttyp"
 
-#: text.c:223 text.c:245
+#: text.c:225 text.c:247
 msgid "out of memory"
 msgstr "zu wenig Hauptspeicher"

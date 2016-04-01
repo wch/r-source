@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-20 23:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -19,6 +19,10 @@ msgstr ""
 
 msgid "Checking %s"
 msgstr "Überprüfe %s"
+
+#, fuzzy
+msgid "Processing %s ..."
+msgstr "bearbeite %s'"
 
 msgid "argument 'package' must be of length 1"
 msgstr "Argument 'package' muss Länge 1 haben"
@@ -925,6 +929,10 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
+#, fuzzy
+msgid "cannot create unique directory for build"
+msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+
 msgid "cannot create temporary directory"
 msgstr "kann temporäres Verzeichnis nicht erzeugen"
 
@@ -989,6 +997,14 @@ msgstr ""
 "Kann die Zeilen/den Happen:\n"
 "\"%s\" nicht verarbeiten"
 
+#, fuzzy
+msgid "DESCRIPTION file not found"
+msgstr "Unzulässige DESCRIPTION Datei"
+
+#, fuzzy
+msgid "NEWS file not found"
+msgstr "Datei '%s' nicht gefunden"
+
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
 "Keine Neuigkeiten in angegebener Datei mit dem alten R-ähnlichen Format "
@@ -1039,6 +1055,12 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
+
+#, fuzzy
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr "Einlesen von %s fehlgeschlagen mit Nachricht: %s"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s muss eine Zeichenkette oder eine Datei/raw -Verbindung sein"
@@ -1123,6 +1145,9 @@ msgstr "Argument 'pkg' muss Länge 1 haben"
 
 msgid "package '%s' was not found"
 msgstr "Paket '%s' nicht gefunden"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
 
 msgid "bad operand"
 msgstr "ungeeigneter Operand"
@@ -1401,9 +1426,6 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
-
-#~ msgid "Reading %s failed with message: %s"
-#~ msgstr "Einlesen von %s fehlgeschlagen mit Nachricht: %s"
 
 #~ msgid "assertCondition: caught %s"
 #~ msgstr "assertCondition: %s abgefangen"

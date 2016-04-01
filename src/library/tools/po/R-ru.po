@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 21:50-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -22,6 +22,10 @@ msgstr ""
 
 msgid "Checking %s"
 msgstr "Проверяю %s"
+
+#, fuzzy
+msgid "Processing %s ..."
+msgstr "обрабатываю %s"
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"
@@ -916,6 +920,10 @@ msgstr "не найдено файлов исходников"
 msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
 
+#, fuzzy
+msgid "cannot create unique directory for build"
+msgstr "Не могу создать папку '%s'"
+
 msgid "cannot create temporary directory"
 msgstr "Не могу создать врЕменную"
 
@@ -981,6 +989,14 @@ msgstr ""
 "Не могу обработать группу/строки:\n"
 "%s"
 
+#, fuzzy
+msgid "DESCRIPTION file not found"
+msgstr "Неправильный файл 'DESCRIPTION'"
+
+#, fuzzy
+msgid "NEWS file not found"
+msgstr "файл '%s' не найден"
+
 msgid "No news found in given file using old-style R-like format."
 msgstr "В используемом формате, похожем на старый R, нет новостей."
 
@@ -1027,6 +1043,12 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
+
+#, fuzzy
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr "Чтение %s не удалось с сообщением: %s"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s должен быть текстовой строкой или файлом/простым соединением"
@@ -1111,6 +1133,9 @@ msgstr "аргумент 'pkg' должен быть единичной длины"
 
 msgid "package '%s' was not found"
 msgstr "пакет '%s' не найден"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
 
 msgid "bad operand"
 msgstr "плохой операнд"
@@ -1421,9 +1446,6 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d из теста пакета не удалось"
 msgstr[1] "%d из теста пакета не удались"
 msgstr[2] "%d из теста пакета не удались"
-
-#~ msgid "Reading %s failed with message: %s"
-#~ msgstr "Чтение %s не удалось с сообщением: %s"
 
 #~ msgid "assertCondition: caught %s"
 #~ msgstr "assertCondition: захвачено %s"

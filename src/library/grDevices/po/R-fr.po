@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 10:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -230,9 +230,6 @@ msgstr "Format de sortie incorrect"
 msgid "status %d in running command '%s'"
 msgstr "statut %d dans la commande en cours d'exécution '%s'"
 
-msgid "range too small for 'min.n'"
-msgstr "étendue des valeurs trop petite pour 'min.n'"
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 "une matrice de pixels doit contenir des chaînes de caractères, des nombres "
@@ -265,8 +262,16 @@ msgstr "aucun périphérique à partir duquel enregistrer"
 msgid "argument is not of class %s"
 msgstr "l'argument n'est pas de classe %s"
 
-msgid "loading snapshot from a different session"
+#, fuzzy
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "chargement d'un instantané graphique à partir d'une version différente"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "chargement d'un instantané graphique à partir d'une version différente"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "'nbin' doit être numérique et de longueur 1 ou 2"
@@ -415,6 +420,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+
+#~ msgid "range too small for 'min.n'"
+#~ msgstr "étendue des valeurs trop petite pour 'min.n'"
 
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr "désolé, 'gs' est introuvable"

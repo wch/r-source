@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:09\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -268,9 +268,6 @@ msgstr "'gPath' (%s) nie został znaleziony"
 msgid "grob '%s' not found"
 msgstr "'grob' (%s) nie został znaleziony"
 
-msgid "invalid element in the display list"
-msgstr "niepoprawny element w liście wyświetleń"
-
 msgid "Invalid force target"
 msgstr "niepoprawny cel 'force'"
 
@@ -329,9 +326,6 @@ msgstr "niepoprawna wartość 'listing'"
 
 msgid "invalid 'listing'"
 msgstr "niepoprawna wartość 'listing'"
-
-msgid "Nothing on the display list"
-msgstr "Nic na liście wyświetlania"
 
 msgid "invalid 'origin'"
 msgstr "niepoprawna wartość \"origin\""
@@ -475,6 +469,10 @@ msgstr "indeks poza zakresem (arytmetyczny podzbiór jednostki)"
 msgid "index out of bounds (unit list subsetting)"
 msgstr "indeks poza zakresem (podzbiór listy jednostek)"
 
+#, fuzzy
+msgid "Value being assigned must be a unit"
+msgstr "'x' oraz 'y' muszą być jednostkami"
+
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr "niepoprawne jest łączenie obiektów 'unit' z innymi typami"
 
@@ -548,6 +546,12 @@ msgid_plural "invalid viewport names"
 msgstr[0] "niepoprawna nazwa okna ekranu"
 msgstr[1] "niepoprawne nazwy okien ekranu"
 msgstr[2] "niepoprawne nazwy okien ekranu"
+
+#~ msgid "invalid element in the display list"
+#~ msgstr "niepoprawny element w liście wyświetleń"
+
+#~ msgid "Nothing on the display list"
+#~ msgstr "Nic na liście wyświetlania"
 
 #~ msgid "the 'vp' argument is deprecated"
 #~ msgstr "argument 'vp' jest przestarzały"

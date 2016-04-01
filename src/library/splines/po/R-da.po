@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2012-01-28 15:52+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,12 @@ msgstr ""
 msgid "must have at least 'ord' knots"
 msgstr "skal have mindst »ord« knob"
 
-msgid "length of 'derivs' must match length of 'x'"
+#, fuzzy
+msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "længden for »drivs« skal matche længden for »x«"
+
+msgid "empty 'derivs'"
+msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "»ord« skal være et positivt heltal, højst antallet af knob"

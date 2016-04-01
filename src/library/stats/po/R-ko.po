@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -487,6 +487,12 @@ msgstr "카이제곱 approximation은 정확하지 않을수도 있습니다"
 msgid "NA values not allowed in 'd'"
 msgstr "NA값들은 'd'에서 사용할 수 없습니다"
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "distances는 반드시 'dist'의 결과이거나 정방행렬이어야 합니다"
 
@@ -498,6 +504,9 @@ msgstr "'k'는 반드시 {1, 2, .. n - 1} 내에 있어야 합니다"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "처음 %2$d개의 고유치들 중 %1$d개만이 양수입니다"
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "초기값이 feasible region의 내부에 있지 않습니다"
@@ -540,6 +549,10 @@ msgstr "하나 이상의 벡터들이 제공되어야 합니다"
 
 msgid "arguments must have the same length"
 msgstr "인자들은 반드시 같은 길이를 가지고 있어야 합니다"
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr "'x'에 있는 열의 개수가 잘못되었습니다"
 
 msgid "contrasts apply only to factors"
 msgstr "contrasts는 요인들에만 적용합니다"
@@ -784,6 +797,9 @@ msgstr "'prob'와 'mu' 모두 지정되어 있습니다"
 msgid "some terms will have NAs due to the limits of the method"
 msgstr "메소드의 한계로 인하여 일부 항들이 NA를 가질 것입니다"
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x'는 반드시 한 개 또는 그 이상의 결측되지 않은 값들이 있어야 합니다"
 
@@ -906,7 +922,10 @@ msgstr ""
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "'inverse.gaussian' 페밀링에서는 양수값들만 사용할 수 있습니다"
 
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+#, fuzzy
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr "'inverse.gaussian' 페밀리는 CRAN 패키지 'SuppDists'를 필요로 합니다"
 
 msgid "using weights as inverse variances"
@@ -1190,7 +1209,7 @@ msgstr "'which'의 모든 구성요소들은 반드시 1과 %d사이에 있어�
 msgid "invalid parameter values"
 msgstr "유효하지 않은 파라미터 값입니다"
 
-msgid "a limit is missing"
+msgid "a limit is NA or NaN"
 msgstr ""
 
 msgid "missing values not allowed"
@@ -1406,6 +1425,10 @@ msgstr "유효하지 않은 NCOL(X)입니다"
 msgid "only 1-4 predictors are allowed"
 msgstr ""
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr "유효하지 않은 NCOL(X)입니다"
+
 msgid "invalid 'y'"
 msgstr "유효하지 않은 'y'입니다"
 
@@ -1429,6 +1452,13 @@ msgstr "유효하지 않은 인자 'cell'입니다"
 
 msgid "invalid argument 'degree'"
 msgstr "유효하지 않은 인자 'degree'입니다"
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr "iteration %d에서 얻어진 계수의 값은 유한하지 않습니다"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "첫번째 인자는 반드시 \"loess\" 객체이어야 합니다"
@@ -1950,8 +1980,8 @@ msgstr ""
 msgid "'varying' arguments must be the same length"
 msgstr "'varying' 인자들은 반드시 같은 길이이어야 합니다"
 
-msgid "'times' is wrong length"
-msgstr "'times'의 길이가 잘 못되었습니다"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "누락된 times와 함께 있는 레코드는 이용되지 않을 것입니다"
@@ -2526,6 +2556,9 @@ msgstr[0] ""
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times'의 길이가 잘 못되었습니다"
 
 #~ msgid "extra argument %s will be disregarded"
 #~ msgid_plural "extra arguments %s will be disregarded"

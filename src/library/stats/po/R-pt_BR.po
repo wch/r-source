@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -484,6 +484,12 @@ msgstr "Aproximação do qui-quadrado pode estar incorreta"
 msgid "NA values not allowed in 'd'"
 msgstr "valores NA não permitidos em 'd'"
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "distâncias deve ser resultado de \"dist\", ou de uma matriz quadrada"
 
@@ -496,6 +502,9 @@ msgstr "'k' deve estar em {1, 2, ..  n - 1}"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "somente %d do primeiro %d autovalor são > 0"
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "valor inicial não está na região viável"
@@ -540,6 +549,10 @@ msgstr "deve fornecer um ou mais vetores"
 
 msgid "arguments must have the same length"
 msgstr "argumentos devem ter o mesmo comprimento"
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr "número errado de linhas na matriz de contraste"
 
 msgid "contrasts apply only to factors"
 msgstr "contrastes aplicam-se apenas a fatores"
@@ -798,6 +811,9 @@ msgstr "especifique 'prob' e 'mu'"
 msgid "some terms will have NAs due to the limits of the method"
 msgstr "alguns termos terão NAs devido aos limites do método"
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x' deve ter um ou mais valores  ausentes"
 
@@ -929,7 +945,9 @@ msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "somente valores positivos permitidos para a família inverse.gaussian"
 
 #, fuzzy
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr "É preciso o pacote CRAN 'SuppDists' para a família 'inverse.gaussian'"
 
 msgid "using weights as inverse variances"
@@ -1216,8 +1234,8 @@ msgstr "todos os elementos de 'which' devem estar entre 1 e %d"
 msgid "invalid parameter values"
 msgstr "valores de parâmetros são inválidos"
 
-msgid "a limit is missing"
-msgstr "está faltando um limite"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "valores que faltam não são permitidos"
@@ -1442,6 +1460,10 @@ msgstr "'x' inválido"
 msgid "only 1-4 predictors are allowed"
 msgstr "somente 1-4 prognosticadores são permitidos"
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr "'x' inválido"
+
 msgid "invalid 'y'"
 msgstr "'y' inválido"
 
@@ -1472,6 +1494,13 @@ msgstr "argumento 'omit' inválido"
 #, fuzzy
 msgid "invalid argument 'degree'"
 msgstr "argumento 'omit' inválido"
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr "não convergiu em %d iterações"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "primeiro argumento deve ser um objeto \"loess\""
@@ -2011,7 +2040,7 @@ msgstr ""
 msgid "'varying' arguments must be the same length"
 msgstr ""
 
-msgid "'times' is wrong length"
+msgid "'lengths(varying)' must all match 'length(times)'"
 msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
@@ -2623,6 +2652,9 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "a limit is missing"
+#~ msgstr "está faltando um limite"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "outros argumentos não-pareados são ignorados"

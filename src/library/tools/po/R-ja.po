@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -16,6 +16,10 @@ msgstr ""
 
 msgid "Checking %s"
 msgstr " %s をチェックしています "
+
+#, fuzzy
+msgid "Processing %s ..."
+msgstr " %s を処理中 "
 
 msgid "argument 'package' must be of length 1"
 msgstr " 引数 'package' は 長さ 1 でなければなりません "
@@ -958,6 +962,10 @@ msgstr " ソースファイルが見つかりません "
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
 
+#, fuzzy
+msgid "cannot create unique directory for build"
+msgstr " ディレクトリ '%s' を生成することが出来ません "
+
 msgid "cannot create temporary directory"
 msgstr " 一時ディレクトリを生成することが出来ません "
 
@@ -1025,6 +1033,14 @@ msgstr ""
 " チャンク/行を処理できません: \n"
 " %s "
 
+#, fuzzy
+msgid "DESCRIPTION file not found"
+msgstr " 不正な DESCRIPTION ファイルです "
+
+#, fuzzy
+msgid "NEWS file not found"
+msgstr " ファイル '%s' が見つかりません "
+
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
 " 旧来の R 風の書式を使ったニュースは与えられたファイル中にはありません。 "
@@ -1073,6 +1089,12 @@ msgstr ""
 
 msgid "Processing packages:"
 msgstr " パッケージを処理中: "
+
+#, fuzzy
+msgid ""
+"reading DESCRIPTION for package %s failed with message:\n"
+"  %s"
+msgstr " %s の読み込みに失敗しました．メッセージは以下の通りです: %s "
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr " %s は文字列かファイル,Rawコネクションでなければなりません "
@@ -1157,6 +1179,9 @@ msgstr " 引数 'pkg' は長さ 1 でなければなりません "
 
 msgid "package '%s' was not found"
 msgstr " パッケージ '%s' は見つかりませんでした "
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
 
 msgid "bad operand"
 msgstr " 誤ったオペランド "
@@ -1406,9 +1431,6 @@ msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しによ�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
-
-#~ msgid "Reading %s failed with message: %s"
-#~ msgstr " %s の読み込みに失敗しました．メッセージは以下の通りです: %s "
 
 #~ msgid "assertCondition: caught %s"
 #~ msgstr " assertCondition:  %s をキャッチしました "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-24 08:30\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2013-03-19 21:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -18,13 +18,18 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "must have at least 'ord' knots"
 msgstr "должно быть по крайней мере 'ord' узлов"
 
-msgid "length of 'derivs' must match length of 'x'"
+#, fuzzy
+msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "длина 'derivs' должна соответствовать длине 'x'"
+
+msgid "empty 'derivs'"
+msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' должен быть положительным целым, максимум количеством узлов"
@@ -33,7 +38,8 @@ msgid "need at least %s (=%d) knots"
 msgstr "необходимо как минимум %s (=%d) узлов"
 
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "данные 'x' должны быть в промежутке от %g до %g пока Вы не установите %s"
+msgstr ""
+"данные 'x' должны быть в промежутке от %g до %g пока Вы не установите %s"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "%s хочет, чтобы пакет 'Matrix' был установлен правильно"
@@ -78,5 +84,6 @@ msgid "'df' was too small; have used %d"
 msgstr "'df' был слишком мал; использован %d"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
-msgstr "некоторые значения 'x' за граничными узлами могут привести к неправильно обусловленным основаниям"
-
+msgstr ""
+"некоторые значения 'x' за граничными узлами могут привести к неправильно "
+"обусловленным основаниям"

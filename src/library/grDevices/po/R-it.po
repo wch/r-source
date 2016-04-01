@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -247,9 +247,6 @@ msgstr ""
 msgid "status %d in running command '%s'"
 msgstr ""
 
-msgid "range too small for 'min.n'"
-msgstr ""
-
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
 
@@ -286,8 +283,15 @@ msgid "argument is not of class %s"
 msgstr "l'argomento non è di classe \"recordedplot\""
 
 #, fuzzy
-msgid "loading snapshot from a different session"
+msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "carico uno snapshot da una versione differente di R"
+
+#, fuzzy
+msgid "snapshot recorded in different R version (%s)"
+msgstr "carico uno snapshot da una versione differente di R"
+
+msgid "snapshot contains invalid graphics call"
+msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr ""

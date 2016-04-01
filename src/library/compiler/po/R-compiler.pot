@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"Project-Id-Version: compiler 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,7 +10,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
+msgid "namespace found within local environments"
+msgstr ""
+
 msgid "not a proper evaluation environment"
+msgstr ""
+
+msgid "non-namespace found within namespace environments"
+msgstr ""
+
+msgid "namespace found within global environments"
 msgstr ""
 
 msgid "'ns' must be a namespace or a namespace imports environment"
@@ -50,7 +58,7 @@ msgstr ""
 msgid "invalid function in complex assignment"
 msgstr ""
 
-msgid "%s is not a registered math1 function"
+msgid "is not a registered math1 function"
 msgstr ""
 
 msgid "missing arguments are not allowed"
@@ -72,6 +80,9 @@ msgid "wrong number of arguments to '%s'"
 msgstr ""
 
 msgid "more than one default provided in switch() call"
+msgstr ""
+
+msgid "'switch' with no alternatives"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -99,6 +110,9 @@ msgid "file '%s' does not exist"
 msgstr ""
 
 msgid "'%s' is not a valid compiler option"
+msgstr ""
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
 msgid "function is not compiled"

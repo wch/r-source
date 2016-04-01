@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -66,16 +66,16 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "调用时找不到用于'%s'函数的直接或继承的方法"
 
-#: methods_list_dispatch.c:522 methods_list_dispatch.c:1045
+#: methods_list_dispatch.c:526 methods_list_dispatch.c:1071
 msgid "invalid object (non-function) used as method"
 msgstr "当方法用的对象(非函数)出了错"
 
-#: methods_list_dispatch.c:543
+#: methods_list_dispatch.c:547
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "调用框里找不到'%s'这个符号"
 
-#: methods_list_dispatch.c:551
+#: methods_list_dispatch.c:555
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
@@ -84,18 +84,18 @@ msgstr ""
 "方法调度在检查短少参数时符号出了错：需要的是个名字，得到的却是类别为\"%s\"的"
 "对象"
 
-#: methods_list_dispatch.c:554
+#: methods_list_dispatch.c:558
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用"
 
-#: methods_list_dispatch.c:558
+#: methods_list_dispatch.c:562
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
 msgstr "方法调度在检查短少参数'%s'时环境出了错：不需要类别为\"%s\"的对象"
 
-#: methods_list_dispatch.c:584
+#: methods_list_dispatch.c:588
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
@@ -103,14 +103,14 @@ msgid ""
 msgstr ""
 "函数'%s'里不能把类别为\"%s\"的对象当作方法串列来用(没有'argument'这样一个槽)"
 
-#: methods_list_dispatch.c:595
+#: methods_list_dispatch.c:599
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
 "be used for methods dispatch"
 msgstr "(在为'%s'函数选择方法时)'...'和其他有关的变量不能在方法调度时使用"
 
-#: methods_list_dispatch.c:598
+#: methods_list_dispatch.c:602
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
@@ -119,55 +119,55 @@ msgstr ""
 "(在为'%s'函数选择方法时) 调度时的'environment'参数必需是R环境；不需要类别为"
 "\"%s\"的对象"
 
-#: methods_list_dispatch.c:612 methods_list_dispatch.c:624
-#: methods_list_dispatch.c:995
+#: methods_list_dispatch.c:616 methods_list_dispatch.c:628
+#: methods_list_dispatch.c:1017
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr "在为'%2$s'函数选择方法时评估'%1$s'参数出了错: %3$s "
 
-#: methods_list_dispatch.c:632
+#: methods_list_dispatch.c:636
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr "找不到与'%s'函数相配的方法(参数是'%s'，类别为\"%s\")"
 
-#: methods_list_dispatch.c:639
+#: methods_list_dispatch.c:643
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr "在方法选择时函数'%s'不能有无默认方法的递归使用"
 
-#: methods_list_dispatch.c:698
+#: methods_list_dispatch.c:712
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "評估'primitive'其次方法时出了错: %s "
 
-#: methods_list_dispatch.c:796
+#: methods_list_dispatch.c:810
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr "'%s'必需是单一字符串(现在它是长度为%d的字符向量)"
 
-#: methods_list_dispatch.c:800
+#: methods_list_dispatch.c:814
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s'必需是非空字符串；现在它是空的字符串"
 
-#: methods_list_dispatch.c:804
+#: methods_list_dispatch.c:818
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的对象)"
 
-#: methods_list_dispatch.c:875
+#: methods_list_dispatch.c:895
 msgid "class should be either a character-string name or a class definition"
 msgstr "类别必需是字符串名字或类别定义"
 
-#: methods_list_dispatch.c:955
+#: methods_list_dispatch.c:975
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "没有能够为原始\"%s\"找到同属函数"
 
-#: methods_list_dispatch.c:961
+#: methods_list_dispatch.c:982
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "
