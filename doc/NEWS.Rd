@@ -313,12 +313,17 @@
       and patches.
 
       \item \code{as.roman(ch)} now correctly deals with more diverse
-      character vectors \code{ch}; also arithmetic with resulting roman
-      numbers works in more cases.  (\PR{16779})
+      character vectors \code{ch}; also arithmetic with the resulting
+      roman numbers works in more cases.  (\PR{16779})
 
-      \item \code{gzcon()} gains a new option \code{text}, which marks the
-      connection as text-oriented (so e.g. \code{pushBack()} works). It is
-      still always opened in binary mode.
+      \item \code{prcomp()} gains a new option \code{rank.} allowing to
+      directly aim for less than \code{min(n,p)} PC's.  The
+      \code{summary()} and its \code{print()} method have been amended,
+      notably for this case.
+
+      \item \code{gzcon()} gains a new option \code{text}, which marks
+      the connection as text-oriented (so e.g.\sspace{}\code{pushBack()}
+      works).  It is still always opened in binary mode.
     }
   }
 
@@ -414,8 +419,8 @@
 
       \item (Windows) R is now built using \command{gcc}
       4.9.3.  This build will require recompilation of at least those packages
-      that include C++ code, and possibly others.  A build of R-devel using 
-      the older toolchain will be temporarily available for comparison 
+      that include C++ code, and possibly others.  A build of R-devel using
+      the older toolchain will be temporarily available for comparison
       purposes.
 
       During the transition, the environment variable
@@ -423,7 +428,7 @@
       was used to compile R (and hence, which should be used to compile
       code in packages).  The \code{COMPILED_BY} variable described below
       will be a permanent replacement for this.
-      
+
       \item (Windows) A \command{make} and \command{R CMD config} variable
       named \code{COMPILED_BY} has been added.  This indicates
       which toolchain was used to compile R (and hence, which should be
