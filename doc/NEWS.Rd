@@ -360,17 +360,17 @@
       and patches.
 
       \item \code{as.roman(ch)} now correctly deals with more diverse
-      character vectors \code{ch}; also arithmetic with resulting roman
-      numbers works in more cases.  (\PR{16779})
+      character vectors \code{ch}; also arithmetic with the resulting
+      roman numbers works in more cases.  (\PR{16779})
 
       \item \code{prcomp()} gains a new option \code{rank.} allowing to
       directly aim for less than \code{min(n,p)} PC's.  The
       \code{summary()} and its \code{print()} method have been amended,
       notably for this case.
 
-      \item \code{gzcon} gains a new option \code{text}, which marks the
-      connection as text-oriented (so e.g. \code{pushBack} works). It is
-      still always opened in binary mode.
+      \item \code{gzcon()} gains a new option \code{text}, which marks
+      the connection as text-oriented (so e.g.\sspace{}\code{pushBack()}
+      works).  It is still always opened in binary mode.
     }
   }
 
