@@ -2103,14 +2103,16 @@ directory of a bundled distribution of Gtk2 from
 the path: it should work to have both 32- and 64-bit Gtk+ @file{bin}
 directories in the path on a 64-bit version of @R{}.
 
-@command{R CMD INSTALL} works in Windows to install source packages.  No
-additional tools are needed if the package does not contain compiled
-code, and @code{install.packages(type="source")} will work for such
-packages (and for those with compiled code if the tools (see @ref{The
-Windows toolset}) are in the path).  We have seen occasional permission
-problems after unpacking source packages on some systems: these have
-been circumvented by setting the environment variable
-@env{R_INSTALL_TAR} to @samp{tar.exe}.
+@command{R CMD INSTALL} works in Windows to install source packages.
+No additional tools are needed if the package does not contain
+compiled code, and @code{install.packages(type="source")} will work
+for such packages (and for those with compiled code if the tools (see
+@ref{The Windows toolset}) are on the path, and the variables
+@code{BINPREF} and @code{BINPREF64} are set properly; see the
+discussion below).  We have seen occasional permission problems after
+unpacking source packages on some systems: these have been
+circumvented by setting the environment variable @env{R_INSTALL_TAR}
+to @samp{tar.exe}.
 @enindex R_INSTALL_TAR
 
 If you have only a source package that is known to work with current
@@ -2142,16 +2144,24 @@ sources on Windows without any additional tools.
 
 
 @enindex LOCAL_SOFT
-There is provision to make use of a system-wide library of installed
-external software by setting the @command{make} variable
-@code{LOCAL_SOFT}, to give an equivalent of @file{/usr/local} on a
-Unix-alike.  This can be set in @file{src/gnuwin/MkRules.local} when
-@R{} is built from sources (see the comments in
-@file{src/gnuwin/MkRules.dist}), or in file@footnote{or by adding it in
-a file such as @file{etc/i386/Makevars.site}, which does not exist by
-default.}  @file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an
-installed version of @R{}.  The version used by @acronym{CRAN} can be
-installed as described in @ref{Building from source}.
+@enindex BINPREF
+@enindex BINPREF64
+Packages with compiled code may need to have paths to the compilers
+set explicitly, and there is provision to make use of a system-wide
+library of installed external software. The compiler paths are set
+using the @command{make} variables @code{BINPREF} (and in some cases
+@code{BINPREF64}).  The library location is set using @command{make}
+variable @code{LOCAL_SOFT}, to give an equivalent of @file{/usr/local}
+on a Unix-alike.  All of these can be set in
+@file{src/gnuwin/MkRules.local} when @R{} is built from sources (see
+the comments in @file{src/gnuwin/MkRules.dist}), or in
+file@footnote{or by adding it in a file such as
+@file{etc/i386/Makevars.site}, which does not exist by default.}
+@file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an installed
+version of @R{}.  In the latter case only @code{BINPREF} is used, with
+the 64 bit path used in @file{etc/x64/Makeconf}. The version used by
+@acronym{CRAN} can be installed as described in @ref{Building from
+source}.
 
 
 @node OS X packages, Customizing package compilation, Windows packages, Installing packages
