@@ -4513,9 +4513,11 @@ with versions for types @code{float}, @code{double}, @code{long double}
 and possibly more.  This means that calling @code{sqrt} on an integer
 type may have `overloading ambiguity' as it could be promoted to any of
 the supported floating-point types: this is commonly seen on Solaris,
-but for @code{pow} also seen on OS X.  (C++11 requires additional
-overloads for integer types, and ambiguous overloads are more common in
-C++11/C++14 compiler modes.)
+but for @code{pow} also seen on OS X.  (C++98 has an overload for
+@code{std::pow(<double>, <int>)}, but this may not be visible from the
+main namespace.  C++11 requires additional overloads for integer types,
+and ambiguous overloads are more common in C++11 (and later) compiler
+modes.)
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
