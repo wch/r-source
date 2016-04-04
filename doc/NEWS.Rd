@@ -9,7 +9,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item User errors such as \code{integrate(f, 0:1, 2)} are now caught.
-      
+
       \item Add \code{signature} argument to \code{debug()},
       \code{debugonce()}, \code{undebug()} and \code{isdebugged()} for
       more conveniently debugging S3 and S4 methods. Based on a patch by
@@ -33,6 +33,10 @@
       imports. The \code{except} expression should evaluate to a
       character vector (after substituting symbols for strings). See
       Writing R Extensions.
+
+      \item \code{str()} and \code{strOptions()} get a new option
+      \code{drop.deparse.attr} with improved but \emph{changed} default
+      behaviour for expressions.% plan: backport to 3.3.1
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

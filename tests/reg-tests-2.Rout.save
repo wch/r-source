@@ -7817,3 +7817,9 @@ structure(list(one = 1, two = ), .Names = c("one", "two"))
 [2,] 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i  0+1i  0+1i  0+1i  0+1i
 > ## Spacing was wrong in R <= 3.2.4
 > 
+> 
+> E <- expression(poly = x^3 - 3 * x^2)
+> str(E)
+  expression(poly = x^3 - 3 * x^2)
+> ## no longer shows "structure(...., .Names = ..)"
+> 

@@ -3019,3 +3019,8 @@ summary(DF.Dates)
 ## Printing complex matrix 
 matrix(1i,2,13)
 ## Spacing was wrong in R <= 3.2.4
+
+
+E <- expression(poly = x^3 - 3 * x^2)
+str(E)
+## no longer shows "structure(...., .Names = ..)"

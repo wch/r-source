@@ -1,6 +1,6 @@
 % File src/library/utils/man/str.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{str}
@@ -17,6 +17,7 @@ str(object, \dots)
 \method{str}{default}(object, max.level = NA,
     vec.len  = strO$vec.len, digits.d = strO$digits.d,
     nchar.max = 128, give.attr = TRUE,
+    drop.deparse.attr = strO$drop.deparse.attr,
     give.head = TRUE, give.length = give.head,
     width = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)),
@@ -26,6 +27,7 @@ str(object, \dots)
     formatNum = strO$formatNum, list.len = 99, \dots)
 
 strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
+           drop.deparse.attr = TRUE,
            formatNum = function(x, ...)
                        format(x, trim = TRUE, drop0trailing = TRUE, ...))
 }
@@ -60,6 +62,11 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
     \code{longch} example below.}
   \item{give.attr}{logical; if \code{TRUE} (default), show attributes
     as sub structures.}
+  \item{drop.deparse.attr}{logical; if \code{TRUE} (default),
+    \code{\link{deparse}(control = <S>)} will not have
+    \code{"showAttributes"} in \code{<S>}.  Used to be hard coded to
+    \code{FALSE} and hence can be set via \code{strOptions()} for back
+    compatibility.}
   \item{give.length}{logical; if \code{TRUE} (default), indicate
     length (as \code{[1:\dots]}).}
   \item{give.head}{logical; if \code{TRUE} (default), give (possibly

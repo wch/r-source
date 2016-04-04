@@ -78,15 +78,18 @@ str.Date <- str.POSIXt <- function(object, ...) {
 }
 
 strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4,
+                       drop.deparse.attr = TRUE,
 		       formatNum = function(x, ...)
 		       format(x, trim=TRUE, drop0trailing=TRUE, ...))
     list(strict.width = strict.width, digits.d = digits.d, vec.len = vec.len,
+	 drop.deparse.attr = drop.deparse.attr,
 	 formatNum = match.fun(formatNum))
 
 str.default <-
     function(object, max.level = NA, vec.len = strO$vec.len,
 	     digits.d = strO$digits.d,
 	     nchar.max = 128, give.attr = TRUE,
+	     drop.deparse.attr = strO$drop.deparse.attr,
 	     give.head = TRUE, give.length = give.head,
 	     width = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
@@ -136,7 +139,7 @@ str.default <-
 	}
 	if(length(iLong <- which(nchar(ss) > width))) { ## cut hard
 	    sL <- ss[iLong]
-	    k <- as.integer(width-2)
+	    k <- as.integer(width-2L)
 	    if(any(i <- grepl("\"", substr(sL, k +1L, nchar(sL))))) {
 		## care *not* to cut off the closing   "  at end of
 		## string that's already truncated {-> maybe_truncate()} :
@@ -203,7 +206,10 @@ str.default <-
     has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
-    deParse <- function(.) deparse(., width.cutoff = min(500, max(20, width-10)))
+    dCtrl <- eval(formals(deparse)$control)
+    if(drop.deparse.attr) dCtrl <- dCtrl[dCtrl != "showAttributes"]
+    deParse <- function(.) deparse(., width.cutoff = min(500L, max(20L, width-10L)),
+				   control = dCtrl)
     n.of. <- function(n, singl, plural) paste(n, ngettext(n, singl, plural))
     n.of <- function(n, noun) n.of.(n, noun, paste0(noun,"s"))
     if(is.ts <- stats::is.ts(object))
@@ -537,7 +543,7 @@ str.default <-
 
 	if(char.like) {
 	    ## if object is very long, drop the rest which won't be used anyway:
-	    max.len <- max(100, width %/% 3 + 1, if(!missing(vec.len)) vec.len)
+	    max.len <- max(100L, width %/% 3L + 1L, if(!missing(vec.len)) vec.len)
 	    if(le > max.len) object <- object[seq_len(max.len)]
 	    encObj <- encodeString(object, quote= '"', na.encode= FALSE)
 					#O: encodeString(object)
