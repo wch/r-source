@@ -19,7 +19,7 @@ isS3stdGeneric(f)
 \details{
   A closure is considered a standard S3 generic if the first expression
   in its body calls \code{\link{UseMethod}}. Functions which perform
-  operations before calling UseMethod will not be considered
+  operations before calling \code{UseMethod} will not be considered
   \dQuote{standard} S3 generics.
 }
 \value{

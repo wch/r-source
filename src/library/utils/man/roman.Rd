@@ -26,7 +26,7 @@ as.roman(x)
   Only numbers between 1 and 3899 have a unique representation as roman
   numbers.
 
-  \code{.romans} is the basic dictionnary, a named \code{\link{character}} vector.
+  \code{.romans} is the basic dictionary, a named \code{\link{character}} vector.
 }
 \references{
   Wikipedia contributors (2006). Roman numerals.
