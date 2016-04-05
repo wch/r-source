@@ -28,12 +28,6 @@
       \code{strcapture()} will extract the captured tokens into a
       tabular data structure, typically a data.frame.
 
-      \item The \code{import()} namespace directive now accepts an
-      argument \code{except} which names symbols to exclude from the
-      imports. The \code{except} expression should evaluate to a
-      character vector (after substituting symbols for strings). See
-      Writing R Extensions.
-
       \item \code{str()} and \code{strOptions()} get a new option
       \code{drop.deparse.attr} with improved but \emph{changed} default
       behaviour for expressions.% plan: backport to 3.3.1
@@ -375,6 +369,12 @@
       \item \code{gzcon()} gains a new option \code{text}, which marks
       the connection as text-oriented (so e.g.\sspace{}\code{pushBack()}
       works).  It is still always opened in binary mode.
+
+      \item The \code{import()} namespace directive now accepts an
+      argument \code{except} which names symbols to exclude from the
+      imports. The \code{except} expression should evaluate to a
+      character vector (after substituting symbols for strings). See
+      Writing R Extensions.
     }
   }
 
