@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:09\n"
+"POT-Creation-Date: 2016-04-04 08:15\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -13,102 +13,162 @@ msgstr ""
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.7\n"
 
-msgid "invalid value of 'seed'"
-msgstr "niepoprawna wartość 'seed'"
-
-msgid "need at least one argument"
-msgstr "co najmniej jeden argument jest wymagany"
-
-msgid "zero-length inputs cannot be mixed with those of non-zero length"
-msgstr ""
-"wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
-"długości"
-
-msgid "dim(X) must have a positive length"
-msgstr "'dim(X)' musi mieć dodatnią długość"
-
-msgid "'X' must have named dimnames"
-msgstr "'X' musi mieć nazwane wymiary"
-
-msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
-
-msgid "no cluster 'cl' supplied and none is registered"
-msgstr ""
-"nie dostarczono argumentu klastr 'cl' oraz żaden nie jest zarejestrowany"
-
-msgid "not a valid cluster"
-msgstr "to nie jest poprawny klaster"
-
-msgid "unknown cluster type"
-msgstr "nieznany typ klastra"
-
-msgid "numeric 'names' must be >= 1"
-msgstr "argument 'names' musi być >= 1"
-
-msgid "node of a socket cluster on host %s with pid %d"
-msgstr "węzeł gniazda klastra na hoście %s z pid %d"
-
-msgid "PORT must be specified"
-msgstr "argument 'port' musi być określony"
-
-msgid "'nnodes' must be >= 1"
-msgstr "argument 'nnodes' musi być >= 1"
-
-msgid "invalid 'child' argument"
-msgstr "niepoprawny argument 'child'"
-
-msgid "'children' must be a list of processes or a single process"
-msgstr "argument 'children' musi być listą procesów lub pojedynczym procesem"
-
-msgid "'process' must be of class %s"
-msgstr "argument 'process' musi być klasy %s"
-
-msgid "'child' must be a valid child process"
-msgstr "argument 'child' musi być poprawnym procesem potomnym"
-
-msgid "'what' must be a character or raw vector"
-msgstr "argument 'what' musi być tekstem albo pustym wektorem"
-
-msgid "'mc.cores' must be >= 1"
-msgstr "argument 'mc.cores' musi być >= 1"
-
+#. R/unix/mclapply.R: gettextf("%d function calls resulted in an error", has.errors)
+#: R/unix/mclapply.R:0
 msgid "%d function calls resulted in an error"
 msgstr "wywołania funkcji %d spowodowało błąd"
 
-msgid "all scheduled cores encountered errors in user code"
-msgstr "wszystkie zaplanowane jądra napotkały błędy w kodzie użytkownika"
+#. R/clusterApply.R: stop("'X' must have named dimnames")
+#: R/clusterApply.R:0
+msgid "'X' must have named dimnames"
+msgstr "'X' musi mieć nazwane wymiary"
 
+#. R/unix/mcfork.R: stop("'child' must be a valid child process")
+#: R/unix/mcfork.R:0
+msgid "'child' must be a valid child process"
+msgstr "argument 'child' musi być poprawnym procesem potomnym"
+
+#. R/unix/mcfork.R: stop("'children' must be a list of processes or a single process")
+#. R/unix/mcfork.R: stop("'children' must be a list of processes or a single process")
+#: R/unix/mcfork.R:0
+msgid "'children' must be a list of processes or a single process"
+msgstr "argument 'children' musi być listą procesów lub pojedynczym procesem"
+
+#. R/windows/mcdummies.R: stop("'mc.cores' > 1 is not supported on Windows")
+#. R/windows/mcdummies.R: stop("'mc.cores' > 1 is not supported on Windows")
+#. R/windows/mcdummies.R: stop("'mc.cores' > 1 is not supported on Windows")
+#: R/windows/mcdummies.R:0
+msgid "'mc.cores' > 1 is not supported on Windows"
+msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
+
+#. R/unix/mclapply.R: stop("'mc.cores' must be >= 1")
+#. R/unix/pvec.R: stop("'mc.cores' must be >= 1")
+#. R/windows/mcdummies.R: stop("'mc.cores' must be >= 1")
+#. R/windows/mcdummies.R: stop("'mc.cores' must be >= 1")
+#. R/windows/mcdummies.R: stop("'mc.cores' must be >= 1")
+#: R/unix/mclapply.R:0 R/unix/pvec.R:0 R/windows/mcdummies.R:0
+msgid "'mc.cores' must be >= 1"
+msgstr "argument 'mc.cores' musi być >= 1"
+
+#. R/unix/forkCluster.R: stop("'nnodes' must be >= 1")
+#: R/unix/forkCluster.R:0
+msgid "'nnodes' must be >= 1"
+msgstr "argument 'nnodes' musi być >= 1"
+
+#. R/unix/mcfork.R: gettextf("'process' must be of class %s", dQuote("process"))
+#: R/unix/mcfork.R:0
+msgid "'process' must be of class %s"
+msgstr "argument 'process' musi być klasy %s"
+
+#. R/unix/pvec.R: stop("'v' must be a vector")
+#. R/windows/mcdummies.R: stop("'v' must be a vector")
+#: R/unix/pvec.R:0 R/windows/mcdummies.R:0
+msgid "'v' must be a vector"
+msgstr "argument 'v' musi być wektorem"
+
+#. R/unix/mcfork.R: stop("'what' must be a character or raw vector")
+#: R/unix/mcfork.R:0
+msgid "'what' must be a character or raw vector"
+msgstr "argument 'what' musi być tekstem albo pustym wektorem"
+
+#. R/snowSOCK.R: stop("PORT must be specified")
+#: R/snowSOCK.R:0
+msgid "PORT must be specified"
+msgstr "argument 'port' musi być określony"
+
+#. R/unix/mcmapply.R: stop("Zero-length inputs cannot be mixed with those of non-zero length")
+#: R/unix/mcmapply.R:0
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 "Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
 "długości"
 
+#. R/unix/mclapply.R: warning("all scheduled cores encountered errors in user code")
+#: R/unix/mclapply.R:0
+msgid "all scheduled cores encountered errors in user code"
+msgstr "wszystkie zaplanowane jądra napotkały błędy w kodzie użytkownika"
+
+#. R/clusterApply.R: stop("dim(X) must have a positive length")
+#: R/clusterApply.R:0
+msgid "dim(X) must have a positive length"
+msgstr "'dim(X)' musi mieć dodatnią długość"
+
+#. R/windows/forkCluster.R: stop("fork clusters are not supported on Windows")
+#: R/windows/forkCluster.R:0
+msgid "fork clusters are not supported on Windows"
+msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
+
+#. R/unix/mcfork.R: stop("invalid 'child' argument")
+#. R/unix/mcfork.R: stop("invalid 'child' argument")
+#: R/unix/mcfork.R:0
+msgid "invalid 'child' argument"
+msgstr "niepoprawny argument 'child'"
+
+#. R/unix/mcparallel.R: stop("invalid 'jobs' argument")
+#: R/unix/mcparallel.R:0
 msgid "invalid 'jobs' argument"
 msgstr "niepoprawny argument 'jobs'"
 
-msgid "'v' must be a vector"
-msgstr "argument 'v' musi być wektorem"
+#. R/RngStream.R: stop("invalid value of 'seed'")
+#. R/RngStream.R: stop("invalid value of 'seed'")
+#: R/RngStream.R:0
+msgid "invalid value of 'seed'"
+msgstr "niepoprawna wartość 'seed'"
 
+#. R/clusterApply.R: stop("need at least one argument")
+#: R/clusterApply.R:0
+msgid "need at least one argument"
+msgstr "co najmniej jeden argument jest wymagany"
+
+#. R/snow.R: stop("no cluster 'cl' supplied and none is registered")
+#: R/snow.R:0
+msgid "no cluster 'cl' supplied and none is registered"
+msgstr ""
+"nie dostarczono argumentu klastr 'cl' oraz żaden nie jest zarejestrowany"
+
+#. R/snowSOCK.R: gettextf("node of a socket cluster on host %s with pid %d", sQuote(x[["host"]]),     pid)
+#: R/snowSOCK.R:0
+msgid "node of a socket cluster on host %s with pid %d"
+msgstr "węzeł gniazda klastra na hoście %s z pid %d"
+
+#. R/snow.R: stop("not a valid cluster")
+#: R/snow.R:0
+msgid "not a valid cluster"
+msgstr "to nie jest poprawny klaster"
+
+#. R/clusterApply.R: stop("not all elements of 'MARGIN' are names of dimensions")
+#: R/clusterApply.R:0
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
+
+#. R/snowSOCK.R: stop("numeric 'names' must be >= 1")
+#: R/snowSOCK.R:0
+msgid "numeric 'names' must be >= 1"
+msgstr "argument 'names' musi być >= 1"
+
+#. R/unix/pvec.R: warning("some results may be missing, folded or caused an error")
+#: R/unix/pvec.R:0
 msgid "some results may be missing, folded or caused an error"
 msgstr ""
 "niektórych wyników może brakować, mogą być zwinięte lub spowodowały błąd"
 
-msgid "fork clusters are not supported on Windows"
-msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
+#. R/snow.R: stop("unknown cluster type")
+#: R/snow.R:0
+msgid "unknown cluster type"
+msgstr "nieznany typ klastra"
 
-msgid "'mc.cores' > 1 is not supported on Windows"
-msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
+#. R/clusterApply.R: stop("zero-length inputs cannot be mixed with those of non-zero length")
+#: R/clusterApply.R:0
+msgid "zero-length inputs cannot be mixed with those of non-zero length"
+msgstr ""
+"wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
+"długości"
 
-msgid "socket cluster with %d nodes on host %s"
-msgid_plural "socket cluster with %d nodes on hosts %s"
-msgstr[0] "gniazdo klastra z %d węzłem na hoście %s"
-msgstr[1] "gniazdo klastra z %d węzłami na hoście %s"
-msgstr[2] "gniazdo klastra z %d węzłami na hoście %s"
-
+#. R/unix/mclapply.R: ngettext(has.errors, "scheduled core %s encountered error in user code, all values of the job will be affected",     "scheduled cores %s encountered errors in user code, all values of the jobs will be affected")
+#: R/unix/mclapply.R:0
 msgid ""
 "scheduled core %s encountered error in user code, all values of the job will "
 "be affected"
@@ -124,3 +184,11 @@ msgstr[1] ""
 msgstr[2] ""
 "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
 "wszystkie wartości zadań"
+
+#. R/snowSOCK.R: ngettext(length(hosts), "socket cluster with %d nodes on host %s",     "socket cluster with %d nodes on hosts %s")
+#: R/snowSOCK.R:0
+msgid "socket cluster with %d nodes on host %s"
+msgid_plural "socket cluster with %d nodes on hosts %s"
+msgstr[0] "gniazdo klastra z %d węzłem na hoście %s"
+msgstr[1] "gniazdo klastra z %d węzłami na hoście %s"
+msgstr[2] "gniazdo klastra z %d węzłami na hoście %s"

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:09\n"
+"POT-Creation-Date: 2016-04-04 08:15\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -13,92 +13,151 @@ msgstr ""
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.7\n"
 
-msgid "cannot handle object of mode '%s'"
-msgstr "nie można obsłużyć obiektu o trybie '%s'"
-
-msgid "cannot change names on Tcl array"
-msgstr "nie można zmienić nazw w tablicy Tcl"
-
-msgid "cannot set length of Tcl array"
-msgstr "nie można ustawić długości tablicy Tcl"
-
-msgid "Tcl package '%s' not found"
-msgstr "Pakiet Tcl '%s' nie został znaleziony"
-
-msgid "The tkGUI is not available under Windows"
-msgstr "tkGUI nie jest dostępne w systemie Windows"
-
-msgid "File"
-msgstr "Plik"
-
-msgid "Demos"
-msgstr "Dema"
-
-msgid "Packages"
-msgstr "Pakiety"
-
-msgid "Help"
-msgstr "Pomoc"
-
-msgid "Source R code"
-msgstr "Źródłowy kod R"
-
-msgid "Quit"
-msgstr "Wyjście"
-
-msgid "Save workspace"
-msgstr "Zapisz obszar roboczy"
-
-msgid "Don't save workspace"
-msgstr "Nie zapisuj obszaru roboczego"
-
-msgid "t test"
-msgstr "test t-Studenta"
-
-msgid "Density"
-msgstr "Gęstość"
-
-msgid "Interactive linear fitting"
-msgstr "Interaktywne dopasowanie liniowe"
-
-msgid "R FAQ"
-msgstr "FAQ dla R"
-
-msgid "Load"
-msgstr "Załaduj"
-
-msgid "Go get them!"
-msgstr "Bierz je!"
-
-msgid "Load packages"
-msgstr "Załaduj pakiety"
-
-msgid "Install packages from CRAN"
-msgstr "Zainstaluj pakiety z repozytorium CRAN"
-
-msgid "Help topic:"
-msgstr "Temat pomocy:"
-
-msgid "Manuals in PDF format"
-msgstr "Podręczniki w formacie PDF"
-
-msgid "OK"
-msgstr "OK"
-
-msgid "Cancel"
-msgstr "Anuluj"
-
-msgid "'pb' is not from class %s"
-msgstr "'pb' nie pochodzi z klasy %s"
-
+#. R/utils.R: stop("'filters' must be a 2-column character matrix")
+#: R/utils.R:0
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' muszą być 2-kolumnowymi macierzami znaków"
 
+#. R/utils.R: gettextf("'pb' is not from class %s", dQuote("tkProgressBar"))
+#. R/utils.R: gettextf("'pb' is not from class %s", dQuote("tkProgressBar"))
+#: R/utils.R:0
+msgid "'pb' is not from class %s"
+msgstr "'pb' nie pochodzi z klasy %s"
+
+#. R/utils.R: gettext("Cancel")
+#: R/utils.R:0
+msgid "Cancel"
+msgstr "Anuluj"
+
+#. R/tkGUI.R: gettext("Demos")
+#: R/tkGUI.R:0
+msgid "Demos"
+msgstr "Dema"
+
+#. R/tkGUI.R: gettext("Density")
+#: R/tkGUI.R:0
+msgid "Density"
+msgstr "Gęstość"
+
+#. R/tkGUI.R: gettext("Don't save workspace")
+#: R/tkGUI.R:0
+msgid "Don't save workspace"
+msgstr "Nie zapisuj obszaru roboczego"
+
+#. R/tkGUI.R: gettext("File")
+#: R/tkGUI.R:0
+msgid "File"
+msgstr "Plik"
+
+#. R/tkGUI.R: gettext("Go get them!")
+#: R/tkGUI.R:0
+msgid "Go get them!"
+msgstr "Bierz je!"
+
+#. R/tkGUI.R: gettext("Help")
+#: R/tkGUI.R:0
+msgid "Help"
+msgstr "Pomoc"
+
+#. R/tkGUI.R: gettext("Help topic:")
+#: R/tkGUI.R:0
+msgid "Help topic:"
+msgstr "Temat pomocy:"
+
+#. R/tkGUI.R: gettext("Install packages from CRAN")
+#: R/tkGUI.R:0
+msgid "Install packages from CRAN"
+msgstr "Zainstaluj pakiety z repozytorium CRAN"
+
+#. R/tkGUI.R: gettext("Interactive linear fitting")
+#: R/tkGUI.R:0
+msgid "Interactive linear fitting"
+msgstr "Interaktywne dopasowanie liniowe"
+
+#. R/tkGUI.R: gettext("Load")
+#: R/tkGUI.R:0
+msgid "Load"
+msgstr "Załaduj"
+
+#. R/tkGUI.R: gettext("Load packages")
+#: R/tkGUI.R:0
+msgid "Load packages"
+msgstr "Załaduj pakiety"
+
+#. R/tkGUI.R: gettext("Manuals in PDF format")
+#: R/tkGUI.R:0
+msgid "Manuals in PDF format"
+msgstr "Podręczniki w formacie PDF"
+
+#. R/utils.R: gettext("OK")
+#: R/utils.R:0
+msgid "OK"
+msgstr "OK"
+
+#. R/tkGUI.R: gettext("Packages")
+#: R/tkGUI.R:0
+msgid "Packages"
+msgstr "Pakiety"
+
+#. R/tkGUI.R: gettext("Quit")
+#: R/tkGUI.R:0
+msgid "Quit"
+msgstr "Wyjście"
+
+#. R/tkGUI.R: gettext("R FAQ")
+#: R/tkGUI.R:0
+msgid "R FAQ"
+msgstr "FAQ dla R"
+
+#. R/tkGUI.R: gettext("Save workspace")
+#: R/tkGUI.R:0
+msgid "Save workspace"
+msgstr "Zapisz obszar roboczy"
+
+#. R/tkGUI.R: gettext("Source R code")
+#: R/tkGUI.R:0
+msgid "Source R code"
+msgstr "Źródłowy kod R"
+
+#. R/tclsearch.R: gettextf("Tcl package '%s' not found", package)
+#: R/tclsearch.R:0
+msgid "Tcl package '%s' not found"
+msgstr "Pakiet Tcl '%s' nie został znaleziony"
+
+#. R/windows/zzz.R: stop("Tcl/Tk support files were not installed", call. = FALSE)
+#: R/windows/zzz.R:0
+msgid "Tcl/Tk support files were not installed"
+msgstr "Pliki obsługujące Tcl/Tk nie zostały zainstalowane"
+
+#. R/unix/zzzstub.R: stop("Tcl/Tk support is not available on this system", domain = "R-tcltk")
+#: R/unix/zzzstub.R:0
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Obsługa Tcl/Tk nie jest dostępna dla tego systemu"
 
-msgid "Tcl/Tk support files were not installed"
-msgstr "Pliki obsługujące Tcl/Tk nie zostały zainstalowane"
+#. R/tkGUI.R: stop("The tkGUI is not available under Windows")
+#: R/tkGUI.R:0
+msgid "The tkGUI is not available under Windows"
+msgstr "tkGUI nie jest dostępne w systemie Windows"
+
+#. R/tclarray.R: stop("cannot change names on Tcl array")
+#: R/tclarray.R:0
+msgid "cannot change names on Tcl array"
+msgstr "nie można zmienić nazw w tablicy Tcl"
+
+#. R/Tk.R: gettextf("cannot handle object of mode '%s'", storage.mode(x))
+#: R/Tk.R:0
+msgid "cannot handle object of mode '%s'"
+msgstr "nie można obsłużyć obiektu o trybie '%s'"
+
+#. R/tclarray.R: stop("cannot set length of Tcl array")
+#: R/tclarray.R:0
+msgid "cannot set length of Tcl array"
+msgstr "nie można ustawić długości tablicy Tcl"
+
+#. R/tkGUI.R: gettext("t test")
+#: R/tkGUI.R:0
+msgid "t test"
+msgstr "test t-Studenta"
