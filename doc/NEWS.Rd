@@ -324,6 +324,12 @@
       \item \code{gzcon()} gains a new option \code{text}, which marks
       the connection as text-oriented (so e.g.\sspace{}\code{pushBack()}
       works).  It is still always opened in binary mode.
+      
+      \item The \code{import()} namespace directive now accepts an
+      argument \code{except} which names symbols to exclude from the
+      imports. The \code{except} expression should evaluate to a
+      character vector (after substituting symbols for strings). See
+      Writing R Extensions.
     }
   }
 

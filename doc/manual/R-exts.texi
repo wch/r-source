@@ -3478,6 +3478,19 @@ package @pkg{foo} are to be imported.  Using @code{importFrom}
 selectively rather than @code{import} is good practice and recommended
 notably when importing from packages with more than a dozen exports.
 
+To import every symbol from a package but for a few exceptions,
+pass the @code{except} argument to @code{import}. The directive
+
+@example
+import(foo, except=c(bar, baz))
+@end example
+
+@noindent
+imports every symbol from @pkg{foo} except @code{bar} and
+@code{baz}. The value of @code{except} should evaluate to something
+coercible to a character vector, after substituting each symbol for
+its corresponding string.
+
 It is possible to export variables from a namespace which it has
 imported from other namespaces: this has to be done explicitly and not
 @emph{via} @code{exportPattern}.
