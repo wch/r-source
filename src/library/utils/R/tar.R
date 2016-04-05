@@ -245,7 +245,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                             warn1 <- c(warn1, "restoring symbolic link as a file copy")
                    } else {
                        mydir.create(dirname(name))
-                       od <- setwd(dirname(name))
+                       od0 <- setwd(dirname(name))
                        nm <- basename(name)
                        unlink(nm)
                        if(!file.symlink(name2, nm)) { # will give a warning
@@ -255,7 +255,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                            else
                                warning(gettextf("failed to copy %s to %s", sQuote(from), sQuote(name)), domain = NA)
                        }
-                       setwd(od)
+                       setwd(od0)
                    }
                 }
             }
