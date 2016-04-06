@@ -608,6 +608,10 @@
 
       \item \code{tsp(x) <- NULL} did not handle correctly objects
       inheriting from both \code{"ts"} and \code{"mts"}.  \PR{16769}
+      
+      \item \code{install.packages()} could give false errors when
+      \code{options("pkgType")} was \code{"binary"}.  (Reported by
+      Jose Claudio Faria.)
     }
   }
 }
