@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ install.packages <-
         if (type2 == "source")
             stop("type 'binary' is not supported on this platform")
         else type <- type2
-        if(!missing(contriburl) || !is.null(available))
+        if(type == "both" && (!missing(contriburl) || !is.null(available)))
            stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
     }
     if (is.logical(clean) && clean)
