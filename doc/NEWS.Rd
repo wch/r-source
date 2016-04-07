@@ -210,9 +210,9 @@
       \code{abbreviate(use.classes = FALSE)} is now implemented, and
       that is more suitable for non-European languages.
 
-      \item \code{match(x, table)} is faster, sometimes by an order of
-      magnitude, when \code{x} is of length one and \code{incomparables}
-      is unchanged, thanks to Haverty's \PR{16491}.
+      \item \code{match(x, table)} is faster (sometimes by an order of
+      magnitude) when \code{x} is of length one and \code{incomparables}
+      is unchanged, thanks to Peter Haverty (\PR{16491}).
 
       \item More consistent, partly not back-compatible behavior of
       \code{NA} and \code{NaN} coercion to complex numbers, operations
@@ -234,7 +234,7 @@
       \item On Unix-like platforms which support the \command{getline} C
       library function, \code{system(*,intern = TRUE)} no longer
       truncates (output) lines longer than 8192 characters, thanks to
-      Karl Millar's \PR{16544}.
+      Karl Millar. (\PR{16544})
 
       \item \code{rank()} gains a \code{ties.method = "last"} option,
       for convenience (and symmetry).
@@ -289,7 +289,7 @@
 
       \item The \code{format} method for \code{object_size} objects now
       also accepts \dQuote{binary} units such as \code{"KiB"} and e.g.,
-      \code{"Tb"}.  (Partly from \PR{16649})
+      \code{"Tb"}.  (Partly from \PR{16649}.)
 
       \item Profiling now records calls of the form \code{foo::bar} and
       some similar cases directly rather than as calls to
@@ -297,7 +297,7 @@
 
       \item New string utilities \code{startsWith(x, prefix)} and
       \code{endsWith(x, suffix)}.  Also provide speedups for some
-      \code{grepl("^...",*)} uses, related to proposals in (\PR{16490}).
+      \code{grepl("^...",*)} uses (related to proposals in \PR{16490}).
 
       \item Reference class finalizers run at exit, as well as on
       garbage collection.
@@ -595,7 +595,7 @@
       \code{withCallingHandlers()} and \code{options("error")}
       specifications are ignored when handling a C stack overflow error
       as attempting one of these would trigger a cascade of C stack
-      overflow errors.  These changes resolve \PR{16753}.
+      overflow errors.  (These changes resolve \PR{16753}.)
 
       \item The spacing could be wrong when printing a complex array.
       (Report and patch by Lukas Stadler.)
@@ -603,10 +603,10 @@
       \item \code{pretty(d, n, min.n, *)} for date-time objects \code{d}
       works again in border cases with large \code{min.n}, returns a
       \code{labels} attribute also for small-range dates and in such cases
-      its returned length is closer to the desired \code{n}.  \PR{16761}
+      its returned length is closer to the desired \code{n}.  (\PR{16761})
 
       \item \code{tsp(x) <- NULL} did not handle correctly objects
-      inheriting from both \code{"ts"} and \code{"mts"}.  \PR{16769}
+      inheriting from both \code{"ts"} and \code{"mts"}.  (\PR{16769})
       
       \item \code{install.packages()} could give false errors when
       \code{options("pkgType")} was \code{"binary"}.  (Reported by
