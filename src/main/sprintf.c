@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2015     The R Core Team
+ *  Copyright (C) 2002--2016     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -263,10 +263,12 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			} else fmtp = fmt;
 
 #define CHECK_this_length						\
-			PROTECT(_this);					\
-			thislen = length(_this);			\
-			if(thislen == 0)				\
-			    error(_("coercion has changed vector length to 0"))
+			do {						\
+			    PROTECT(_this);				\
+			    thislen = length(_this);			\
+			    if(thislen == 0)				\
+				error(_("coercion has changed vector length to 0")); \
+			} while (0)
 
 			/* Now let us see if some minimal coercion
 			   would be sensible, but only do so once, for ns = 0: */
