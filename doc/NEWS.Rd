@@ -737,7 +737,7 @@
 
       \item (Windows only) The \command{Rgui} front end did not
       always initialize the console properly, and could cause
-      \R to crash.  (\PR{16998})
+      \R to crash.  (\PR{16698})
 
       \item \code{dummy.coef.lm()} now works in more cases, thanks to a
       proposal by Werner Stahel (\PR{16665}).  In addition, it now works
