@@ -7398,7 +7398,7 @@ function(x, ...)
             if(length(y) && any(nzchar(z <- y$CRAN))) {
                 ind <-
                     grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
-                          z)
+                          z, ignore.case = TRUE)
                 paste(c(if(any(ind)) {
                             c("  The canonical URL of the CRAN page for a package is ",
                               "  https://cran.r-project.org/package=pkgname")
