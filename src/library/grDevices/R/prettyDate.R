@@ -27,7 +27,7 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     x <- as.POSIXct(x)
     if (isDate) # the timezone *does* matter
 	attr(x, "tzone") <- "GMT"
-    zz <- range(x, na.rm = TRUE)
+    zz <- rx <- range(x, na.rm = TRUE)
     D <- diff(nzz <- as.numeric(zz))
     MIN <- 60
     HOUR <- MIN * 60
@@ -41,15 +41,17 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 		  labels = format(at, s$format))
     }
     if(isDate && D <= n * DAY) { # D <= 'n days' & Date  ==> use days
+	zz <- as.Date(zz)
 	r <- round(n - D/DAY)
 	m <- max(0, r %/% 2)
-	zz <- as.Date(zz)
- 	zz <- seq.Date(zz[1] - m, zz[2] + m + (r %% 2), by = "1 day")
-	return(makeOutput(zz, round = FALSE, ## "1 DSTday" from steps:
+        m2 <- m + (r %% 2)
+	while(length(dd <- seq.Date(zz[1] - m, zz[2] + m2, by = "1 day")) < min.n + 1)
+	    if(m < m2) m <- m+1 else m2 <- m2+1
+	return(makeOutput(dd, round = FALSE, ## "1 DSTday" from steps:
 			  list(format = paste("%b", "%d", sep = sep))))
     }
     else if(D < 1) { # unique values / sub-second ranges: [? or use "1 ms" steps below?]
-	m <- min(30, max(D == 0, n/2 - 1)) # "- 1" ==> better match for 'n'
+	m <- min(30, max(D == 0, n/2))
 	zz <- structure(c(floor(nzz[1] - m), ceiling(nzz[2] + m)),
 			class = class(x), tzone = attr(x, "tzone"))
     }
@@ -69,7 +71,8 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
              "15 mins" = list(15*MIN),
              "30 mins" = list(30*MIN),
              ## "1 hour" = list(1*HOUR),
-             "1 hour" = list(1*HOUR, format = if (xspan <= DAY) "%H:%M" else paste("%b %d", "%H:%M", sep = sep)),
+	     "1 hour" = list(1*HOUR, format = if (xspan <= DAY) "%H:%M"
+					      else paste("%b %d", "%H:%M", sep = sep)),
              "3 hours" = list(3*HOUR, start = "days"),
              "6 hours" = list(6*HOUR, format = paste("%b %d", "%H:%M", sep = sep)),
              "12 hours" = list(12*HOUR),
@@ -78,7 +81,8 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
              "1 week" = list(7*DAY, start = "weeks"),
              "halfmonth" = list(MONTH/2, start = "months"),
              ## "1 month" = list(1*MONTH, format = "%b"),
-             "1 month" = list(1*MONTH, format = if (xspan < YEAR) "%b" else paste("%b", "%Y", sep = sep)),
+	     "1 month" = list(1*MONTH, format = if (xspan < YEAR) "%b"
+						else paste("%b", "%Y", sep = sep)),
              "3 months" = list(3*MONTH, start = "years"),
              "6 months" = list(6*MONTH, format = "%Y-%m"),
              "1 year" = list(1*YEAR, format = "%Y"),
@@ -100,32 +104,80 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         steps[[i]]$spec <- names(steps)[i]
     }
     ## crudely work out number of steps in the given interval
-    nsteps <- xspan / vapply(steps, `[[`, numeric(1), 1L)
-    init.i <- which.min(abs(nsteps - n))
+    nsteps <- xspan / vapply(steps, `[[`, numeric(1), 1L, USE.NAMES=FALSE)
+    init.i <- init.i0 <- which.min(abs(nsteps - n))
     ## calculate actual number of ticks in the given interval
-    calcSteps <- function(s) {
-        startTime <- trunc_POSIXt(min(zz), units = s$start) ## FIXME: should be trunc() eventually
+    calcSteps <- function(s, lim = range(zz)) {
+        startTime <- trunc_POSIXt(lim[1], units = s$start) ## FIXME: should be trunc() eventually
 	at <- if (identical(s$spec, "halfmonth")) {
-		  at <- seq(startTime, max(zz), by = "months")
+		  at <- seq(startTime, lim[2], by = "months")
 		  at2 <- as.POSIXlt(at)
 		  at2$mday <- 15L
 		  structure(sort(c(as.POSIXct(at), as.POSIXct(at2))),
 			    tzone = attr(at, "tzone"))
 	      } else
-		  seq(startTime, max(zz), by = s$spec)
-	at[min(zz) <= at & at <= max(zz)]
+		  seq(startTime, lim[2], by = s$spec)
+        r <- range(i <- which(lim[1] <= at & at <= lim[2]))
+        while(lim[1] < at[r[1]]) { # not covering at left
+            if(r[1] > 1) ## take one more point at left
+                i <- c(r[1] <- r[1] - 1L, i)
+            else { # (undesirable): "manually add point at left
+                at <- c(at[1] - diff(at[1:2]), at)
+                r <- range(i <- which(lim[1] <= at & at <= lim[2]))
+            }
+        }
+        while(lim[2] > at[r[2]]) { # not covering at right
+            if(r[2] < length(at)) ## take one more point at right
+                i <- c(i, r[2] <- r[2] + 1L)
+            else { # (undesirable): "manually add point at right
+                at <- c(at, at[length(at)] + diff(at[1:2]))
+                r <- range(i <- which(lim[1] <= at & at <= lim[2]))
+            }
+        }
+        ## Now we could see if we are *smaller* than 'n+1' and add even more at[] on both sides
+        at[i]
     }
-    init.at <- calcSteps(steps[[init.i]])
+    init.at <- calcSteps(st.i <- steps[[init.i]])
     ## bump it up if below acceptable threshold
+    R <- TRUE # R := TRUE iff "right"
     while ((init.n <- length(init.at) - 1L) < min.n) {
-	if(init.i == 1L)
-	    break # and live with it instead of error
-	init.i <- init.i - 1L
-	init.at <- calcSteps(steps[[init.i]])
+	if(init.i == 1L) { ## keep steps[[1]]
+	    ## add new interval right or left
+	    del <- diff(init.at[1:2])
+	    init.at <- if(R) c(init.at, init.at[length(init.at)] + del)
+		       else c(init.at[1] - del, init.at)
+	    R <- !R # alternating right <-> left
+	} else { # smaller step sizes
+	    init.i <- init.i - 1L
+	    init.at <- calcSteps(st.i <- steps[[init.i]])
+	}
     }
     if (init.n == n) ## perfect
-        return(makeOutput(init.at, steps[[init.i]]))
-    new.i <- if (init.n > n) ## too many ticks
+        return(makeOutput(init.at, st.i))
+    ## else : have a difference dn :
+    dn <- init.n - n
+    if(dn > 0) {  ## too many ticks
+	## ticks "outside", on left and right, keep at least one on each side
+	nl <- sum(init.at <= rx[1]) - 1L
+	nr <- sum(init.at >= rx[2]) - 1L
+	if(nl > 0L || nr > 0L) {
+	    n.c <- nl+nr # number of removable ticks
+	    if(dn < n.c) { # remove dn, not all
+		nl <- round(dn * nl/n.c)
+		nr <- dn - nl
+	    }
+	    ## remove nl on left,  nr on right:
+	    init.at <- init.at[-c(seq_len(nl), length(init.at)+1L-seq_len(nr))]
+	}
+    } else { ## too few ticks
+        ## warning("trying to add more points -- not yet implemented")
+	## init.at <- calcSteps(st.i, "more ticks")
+    }
+    if ((dn <- length(init.at) - 1L - n) == 0L || ## perfect
+	dn > 0L && init.i < init.i0)# too many, but we tried init.i + 1 already
+	return(makeOutput(init.at, st.i))
+
+    new.i <- if (dn > 0L) ## too many ticks
 		 min(init.i + 1L, length(steps))
 	     else ## too few ticks
 		 max(init.i - 1L, 1L)
@@ -134,10 +186,10 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     ## work out whether new.at or init.at is better
     if (new.n < min.n)
         new.n <- -Inf
-    if (abs(new.n - n) < abs(init.n - n))
+    if (abs(new.n - n) < abs(dn))
 	makeOutput(new.at, steps[[new.i]])
     else
-	makeOutput(init.at, steps[[init.i]])
+	makeOutput(init.at, st.i)
 }
 
 ## utility function, extending the base function trunc.POSIXt.
@@ -150,10 +202,9 @@ trunc_POSIXt <-
              start.on.monday = TRUE)
 {
     x <- as.POSIXlt(x)
-    ## Why is base:: here?  The namespace implicitly imports base
     if (units %in% c("secs", "mins", "hours", "days"))
-        return(base::trunc.POSIXt(x, units))
-    x <- base::trunc.POSIXt(x, "days")
+	return(trunc.POSIXt(x, units))
+    x <- trunc.POSIXt(x, "days")
     if (length(x$sec))
         switch(units,
                weeks = {

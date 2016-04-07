@@ -3221,7 +3221,6 @@ attr(,"class")
 > 
 > ### Name: pretty.Date
 > ### Title: Pretty Breakpoints for Date-Time Classes
-> ### Aliases: pretty.Date pretty.POSIXt
 > ### Keywords: dplot
 > 
 > ### ** Examples

@@ -604,10 +604,12 @@
       works again in border cases with large \code{min.n}, returns a
       \code{labels} attribute also for small-range dates and in such cases
       its returned length is closer to the desired \code{n}.  (\PR{16761})
+      Additionally, it finally does cover the range of \code{d}, as it
+      always claimed.
 
       \item \code{tsp(x) <- NULL} did not handle correctly objects
       inheriting from both \code{"ts"} and \code{"mts"}.  (\PR{16769})
-      
+
       \item \code{install.packages()} could give false errors when
       \code{options("pkgType")} was \code{"binary"}.  (Reported by
       Jose Claudio Faria.)

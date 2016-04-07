@@ -1396,12 +1396,24 @@ stopifnot(
 
 
 ## prettyDate() for subsecond ranges
-chkPretty <- function(obj, n = 5, ..., max.D = 1) {
-    pr <- pretty(obj, n=n, ...)
-    ## if debugging: pr <- grDevices:::prettyDate(obj, n=n, ...)
-    stopifnot(abs(length(pr) - n) <= max.D,
-	      length(unique(diff(pr))) == 1, # <==> must be equidistant
-	      min(pr) <= min(obj), max(obj) <= max(pr))
+##' checking pretty():
+chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
+    if(is.null(min.n)) {
+	## work with both pretty.default() and greDevices::prettyDate()
+	## *AND* these have a different default for 'min.n' we must be "extra smart":
+	min.n <-
+	    if(inherits(x, "Date") || inherits(x, "POSIXt"))
+		n %/% 2 # grDevices:::prettyDate
+	    else
+		n %/% 3 # pretty.default
+    }
+    pr <- pretty(x, n=n, min.n=min.n, ...)
+    ## if debugging:
+    pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
+    stopifnot(length(pr) >= (min.n+1),
+	      abs(length(pr) - (n+1)) <= max.D,
+	      length(pr) == 1 || length(unique(diff(pr))) == 1, # <==> must be equidistant
+	      TRUE) # min(pr) <= min(x), max(x) <= max(pr))
     invisible(pr)
 }
 sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
@@ -1423,10 +1435,11 @@ stopifnot(
     identical(chkPretty(MTbd + -1:1), p1) ,
     identical(chkPretty(MTbd +  0:3), seqDp("1960-02-09", "1960-02-14")) )
 ## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3!
-## and length 1 or 2 instead of about 5 in R 3.2.4
+## and length 1 or 2 instead of about 6 in R 3.2.4
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
-stopifnot(identical(p2, structure(1012611718 + (0:4), class = c("POSIXct", "POSIXt"),
-                                  tzone = "GMT-1", labels = time2d(58:62))))
+stopifnot(length(p2) >= 5+1,
+	  identical(p2, structure(1012611717 + (0:5), class = c("POSIXct", "POSIXt"),
+                                  tzone = "GMT-1", labels = time2d(57 + (0:5)))))
 ## failed in R 3.2.4
 
 
