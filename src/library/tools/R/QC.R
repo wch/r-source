@@ -347,8 +347,17 @@ function(package, dir, lib.loc = NULL,
             objects_in_ns <-
                 setdiff(sort(names(ns_env)),
                         c(".__NAMESPACE__.", ".__S3MethodsTable__."))
+            ns_S3_methods_db <- ns_env$".__NAMESPACE__."$S3methods
+            ## Alternatively, use
+            ##   ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
+            ns_S3_methods <- if(is.null(ns_S3_methods_db))
+                                 character()
+                             else
+                                 paste(ns_S3_methods_db[, 1L],
+                                       ns_S3_methods_db[, 2L],
+                                       sep = ".")
             objects_in_code_or_namespace <-
-                unique(c(objects_in_code, objects_in_ns))
+                unique(c(objects_in_code, objects_in_ns, ns_S3_methods))
             objects_in_ns <- setdiff(objects_in_ns, objects_in_code)
         }
         else
