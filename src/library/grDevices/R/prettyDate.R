@@ -117,7 +117,10 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 			    tzone = attr(at, "tzone"))
 	      } else
 		  seq(startTime, lim[2], by = s$spec)
-        r <- range(i <- which(lim[1] <= at & at <= lim[2]))
+	i <- which(lim[1] <= at & at <= lim[2])
+	if(!length(i)) # at[] is fully outside (to the *left*: rarely)
+	    return(at[FALSE])
+	r <- range(i)
         while(lim[1] < at[r[1]]) { # not covering at left
             if(r[1] > 1) ## take one more point at left
                 i <- c(r[1] <- r[1] - 1L, i)
@@ -156,7 +159,7 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         return(makeOutput(init.at, st.i))
     ## else : have a difference dn :
     dn <- init.n - n
-    if(dn > 0) {  ## too many ticks
+    if(dn > 0L) {  ## too many ticks
 	## ticks "outside", on left and right, keep at least one on each side
 	nl <- sum(init.at <= rx[1]) - 1L
 	nr <- sum(init.at >= rx[2]) - 1L
@@ -171,16 +174,18 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
 	}
     } else { ## too few ticks
         ## warning("trying to add more points -- not yet implemented")
+        ## but after all, 'n' is approximate
 	## init.at <- calcSteps(st.i, "more ticks")
     }
-    if ((dn <- length(init.at) - 1L - n) == 0L || ## perfect
-	dn > 0L && init.i < init.i0)# too many, but we tried init.i + 1 already
+    if ((dn <- length(init.at) - 1L - n) == 0L  ## perfect
+	|| (dn > 0L && init.i < init.i0) # too many, but we tried init.i + 1 already
+        || (dn < 0L && init.i == 1)) # too few, but init.i = 1
 	return(makeOutput(init.at, st.i))
 
     new.i <- if (dn > 0L) ## too many ticks
 		 min(init.i + 1L, length(steps))
-	     else ## too few ticks
-		 max(init.i - 1L, 1L)
+	     else ## too few ticks (and init.i > 1):
+		 init.i - 1L
     new.at <- calcSteps(steps[[new.i]])
     new.n <- length(new.at) - 1L
     ## work out whether new.at or init.at is better

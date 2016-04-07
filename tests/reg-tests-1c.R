@@ -1408,16 +1408,17 @@ chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
 		n %/% 3 # pretty.default
     }
     pr <- pretty(x, n=n, min.n=min.n, ...)
-    ## if debugging:
-    pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
+    ## if debugging: pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
     stopifnot(length(pr) >= (min.n+1),
 	      abs(length(pr) - (n+1)) <= max.D,
-	      length(pr) == 1 || length(unique(diff(pr))) == 1, # <==> must be equidistant
-	      TRUE) # min(pr) <= min(x), max(x) <= max(pr))
+              ## must be equidistant [may need fuzz, i.e., signif(.) ?]:
+	      length(pr) == 1 || length(unique(diff(pr))) == 1,
+	      ## pretty(x, *) must cover range of x:
+	      min(pr) <= min(x), max(x) <= max(pr))
     invisible(pr)
 }
 sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
-for(n in c(1:16, 30:32, 41, 50, 60)) # (not for much larger n)
+for(n in c(1:16, 30:32, 41, 50, 60)) # (not for much larger n, (TODO ?))
     chkPretty(sTime, n=n)
 set.seed(7)
 for(n in c(1:7, 12)) replicate(32, chkPretty(sTime + .001*rlnorm(1) * 0:9, n = n))
@@ -1439,9 +1440,10 @@ stopifnot(
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
 stopifnot(length(p2) >= 5+1,
 	  identical(p2, structure(1012611717 + (0:5), class = c("POSIXct", "POSIXt"),
-                                  tzone = "GMT-1", labels = time2d(57 + (0:5)))))
+				  tzone = "GMT-1", labels = time2d(57 + (0:5)))))
 ## failed in R 3.2.4
-
+(T3 <- structure(1460019857.25, class = c("POSIXct", "POSIXt")))# typical Sys.date()
+chkPretty(T3, 1) # error in svn 70438
 
 stopifnot(c("round.Date", "round.POSIXt") %in% as.character(methods(round)))
 ## round.POSIXt suppressed in R <= 3.2.x
