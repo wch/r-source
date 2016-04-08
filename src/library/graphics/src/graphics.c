@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *  Copyright (C) 2002--2011  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2547,12 +2547,21 @@ void GLine(double x1, double y1, double x2, double y2, int coords, pGEDevDesc dd
 */
 static void (*old_close)(pDevDesc) = NULL;
 
-static void NORET locator_close(pDevDesc dd)
+static void 
+#ifndef WIN32
+NORET 
+#endif
+locator_close(pDevDesc dd)
 {
     if(old_close) old_close(dd);
     dd->close = old_close;
     old_close = NULL;
+    /* It's not safe to call error() in a Windows event handler, so 
+       the GA_Close method records the close event separately.
+    */
+#ifndef WIN32
     error(_("graphics device closed during call to locator or identify"));
+#endif
 }
 
 
