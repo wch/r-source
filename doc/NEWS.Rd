@@ -613,6 +613,10 @@
       \item \code{install.packages()} could give false errors when
       \code{options("pkgType")} was \code{"binary"}.  (Reported by
       Jose Claudio Faria.)
+      
+      \item A bug fix in \R 3.0.2 fixed problems with \code{locator()}
+      in X11, but introduced problems in Windows.  Now both should be
+      fixed.  (\PR{15700})      
     }
   }
 }

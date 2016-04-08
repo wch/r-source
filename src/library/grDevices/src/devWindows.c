@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-2015   The R Core Team
+ *  Copyright (C) 2004-2016   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2251,9 +2251,11 @@ static void GA_Close(pDevDesc dd)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     SEXP vDL;
 
+    if (xd->cntxt)
+    	((RCNTXT *)xd->cntxt)->cend = NULL;  /* Don't try to run cleanup; it will have already happened */
+
     if (dd->onExit) {
 	dd->onExit(dd);
-	UserBreak = TRUE;
     }
 
     if (xd->kind == SCREEN) {
@@ -2287,6 +2289,7 @@ static void GA_Close(pDevDesc dd)
        device (but also on the console and others) */
     doevent();
     free(xd);
+    dd->deviceSpecific = NULL;
 }
 
 	/********************************************************/
@@ -3156,6 +3159,11 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 	SH;
 	R_WaitEvent();
 	R_ProcessEvents();
+	if (!dd->deviceSpecific) { /* closing the window on other systems calls error().  
+	                             But that is not safe on Windows, so we NULL the device
+	                             specific field and call error() here instead. */
+	    error(_("graphics device closed during call to locator or identify"));
+	}
     }
 
     dd->onExit = NULL;
