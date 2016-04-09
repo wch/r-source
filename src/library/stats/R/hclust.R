@@ -1,7 +1,7 @@
 #  File src/library/stats/R/hclust.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -263,7 +263,7 @@ function(x)
     lens <- sapply(children, attr, "Size")
     m <- matrix(attr(x, "height"), sum(lens), sum(lens))
     ## This seems a bit slower:
-    ##    inds <- split(seq(length = sum(lens)),
+    ##    inds <- split(seq(length.out = sum(lens)),
     ##                  rep.int(seq_along(lens), lens))
     ##    for(i in seq_along(inds))
     ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
