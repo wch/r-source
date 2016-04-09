@@ -616,7 +616,11 @@
       
       \item A bug fix in \R 3.0.2 fixed problems with \code{locator()}
       in X11, but introduced problems in Windows.  Now both should be
-      fixed.  (\PR{15700})      
+      fixed.  (\PR{15700})
+
+      \item \code{download.file()} with \code{method = "wininet"}
+      incorrectly warned of download file length difference when
+      reported length was unknown. (\PR{16805})
     }
   }
 }
