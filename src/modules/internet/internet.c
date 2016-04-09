@@ -883,7 +883,7 @@ static void *in_R_HTTPOpen2(const char *url, const char *headers,
 			    const int cacheOK)
 {
     WIctxt  wictxt;
-    DWORD status, d1 = 4, d2 = 0, d3 = 100;
+    DWORD status = 0, len = 0, d1 = 4, d2 = 0, d3 = 100;
     char buf[101], *p;
 
     wictxt = (WIctxt) malloc(sizeof(wIctxt));
@@ -950,20 +950,22 @@ static void *in_R_HTTPOpen2(const char *url, const char *headers,
 		  HTTP_QUERY_CONTENT_TYPE, &buf, &d3, &d2);
     d2 = 0;
     // NB: this can only retrieve in a DWORD, so up to 2GB or 4GB?
-    HttpQueryInfo(wictxt->session,
-		  HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
-		  &status, &d1, &d2);
-    wictxt->length = status;
+    if (HttpQueryInfo(wictxt->session,
+		      HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
+		      &len, &d1, &d2))
+	wictxt->length = len;
     wictxt->type = strdup(buf);
     if(!IDquiet) {
-	if(status > 1024*1024)
-	    REprintf("Content type '%s' length %0.0f bytes (%0.1f MB)\n",
-		     buf, (double) status, status/1024.0/1024.0);
-	else if(status > 10240)
-	    REprintf("Content type '%s' length %d bytes (%d KB)\n",
-		     buf, (int) status, (int) (status/1024));
-	else
-	    REprintf("Content type '%s' length %d bytes\n", buf, (int) status);
+	REprintf("Content type '%s'", buf);
+	if(len > 1024*1024)
+	    REprintf(" length %0.0f bytes (%0.1f MB)\n", (double)len,
+		     len/1024.0/1024.0);
+	else if(len > 10240)
+	    REprintf(" length %d bytes (%d KB)\n", 
+		     (int)len, (int)(len/1024));
+	else if(wictxt->length >= 0) /* signed; len is not */
+	    REprintf(" length %d bytes\n", (int)len);
+	else REprintf(" length unknown\n", len);
 	R_FlushConsole();
     }
 
