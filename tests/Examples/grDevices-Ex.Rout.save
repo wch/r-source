@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-03-25 r70378) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-04-08 r70447) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3221,6 +3221,7 @@ attr(,"class")
 > 
 > ### Name: pretty.Date
 > ### Title: Pretty Breakpoints for Date-Time Classes
+> ### Aliases: pretty.Date pretty.POSIXt
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -3249,39 +3250,38 @@ $`span = 5 mins`
 [1] "02:02" "02:03" "02:04" "02:05" "02:06" "02:07"
 
 $`span = 30 mins`
-[1] "02:05" "02:10" "02:15" "02:20" "02:25" "02:30"
+[1] "02:05" "02:10" "02:15" "02:20" "02:25" "02:30" "02:35"
 
 $`span = 6 hours`
-[1] "03:00" "04:00" "05:00" "06:00" "07:00" "08:00"
+[1] "03:00" "04:00" "05:00" "06:00" "07:00" "08:00" "09:00"
 
 $`span = 12 hours`
-[1] "03:00" "06:00" "09:00" "12:00"
+[1] "03:00" "06:00" "09:00" "12:00" "15:00"
 
 $`span = 1 DSTday`
-[1] "Feb 02 06:00" "Feb 02 12:00" "Feb 02 18:00" "Feb 03 00:00"
+[1] "Feb 02 06:00" "Feb 02 12:00" "Feb 02 18:00" "Feb 03 00:00" "Feb 03 06:00"
 
 $`span = 2 weeks`
-[1] "Feb 04" "Feb 06" "Feb 08" "Feb 10" "Feb 12" "Feb 14" "Feb 16"
+[1] "Feb 04" "Feb 06" "Feb 08" "Feb 10" "Feb 12" "Feb 14" "Feb 16" "Feb 18"
 
 $`span = 1 month`
-[1] "Feb 04" "Feb 11" "Feb 18" "Feb 25"
+[1] "Feb 04" "Feb 11" "Feb 18" "Feb 25" "Mar 04"
 
 $`span = 6 months`
-[1] "Mar" "Apr" "May" "Jun" "Jul" "Aug"
+[1] "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Aug"
 
 $`span = 1 year`
-[1] "Apr" "Jul" "Oct" "Jan"
+[1] "Apr" "Jul" "Oct" "Jan" "Apr"
 
 $`span = 10 years`
-[1] "2004" "2006" "2008" "2010" "2012"
+[1] "2004" "2006" "2008" "2010" "2012" "2014"
 
 $`span = 50 years`
-[1] "2010" "2020" "2030" "2040" "2050"
+[1] "2010" "2020" "2030" "2040" "2050" "2060"
 
 $`span = 1000 years`
-[1] "2200" "2400" "2600" "2800" "3000"
+[1] "2200" "2400" "2600" "2800" "3000" "3200"
 
-> 
 > 
 > 
 > 
@@ -3763,7 +3763,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.762 0.125 7.887 0 0 
+Time elapsed:  7.983 0.262 8.246 0 0 
 > grDevices::dev.off()
 null device 
           1 
