@@ -375,6 +375,9 @@
       imports. The \code{except} expression should evaluate to a
       character vector (after substituting symbols for strings). See
       Writing R Extensions.
+
+      \item \code{isSymmetrix(m)} is much faster for large asymmetric
+      matrices \code{m}.
     }
   }
 
