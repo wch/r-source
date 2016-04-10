@@ -1,7 +1,7 @@
 #  File src/library/base/R/sample.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,10 +27,9 @@ sample <- function(x, size, replace = FALSE, prob = NULL)
     }
 }
 
-sample.int  <- function(n, size = n, replace = FALSE, prob = NULL,
-                        method2 = (!replace && is.null(prob) && size <= n/2 && n > 1e7))
+sample.int  <- function(n, size = n, replace = FALSE, prob = NULL)
 {
-    if (method2)
+    if (!replace && is.null(prob) && n > 1e7 && size <= n/2)
         .Internal(sample2(n, size))
     else .Internal(sample(n, size, replace, prob))
 }

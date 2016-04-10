@@ -211,8 +211,18 @@ format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
               names = names(x))
 }
 
-## could handle arrays for max.print; cf print.Date() in ./dates.R
-print.POSIXct <-
+## could handle arrays for max.print
+print.POSIXct <- function(x, ...)
+{
+    max.print <- getOption("max.print", 9999L)
+    if(max.print < length(x)) {
+        print(format(x[seq_len(max.print)], usetz = TRUE), ...)
+        cat(' [ reached getOption("max.print") -- omitted',
+            length(x) - max.print, 'entries ]\n')
+    } else print(format(x, usetz = TRUE), ...)
+    invisible(x)
+}
+
 print.POSIXlt <- function(x, ...)
 {
     max.print <- getOption("max.print", 9999L)
@@ -220,11 +230,9 @@ print.POSIXlt <- function(x, ...)
         print(format(x[seq_len(max.print)], usetz = TRUE), ...)
         cat(' [ reached getOption("max.print") -- omitted',
             length(x) - max.print, 'entries ]\n')
-    } else print(if(length(x)) format(x, usetz = TRUE)
-		 else paste0(class(x),"(0)"), ...)
+   } else print(format(x, usetz = TRUE), ...)
     invisible(x)
 }
-
 
 summary.POSIXct <- function(object, digits = 15L, ...)
 {
@@ -867,8 +875,6 @@ julian.POSIXt <- function(x, origin = as.POSIXct("1970-01-01", tz = "GMT"), ...)
     res <- difftime(as.POSIXct(x), origin, units = "days")
     structure(res, "origin" = origin)
 }
-
-## 'abbreviate' works *vectorized* !
 
 weekdays <- function(x, abbreviate) UseMethod("weekdays")
 weekdays.POSIXt <- function(x, abbreviate = FALSE)

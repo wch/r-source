@@ -107,7 +107,7 @@ format.Date <- function(x, ...)
     xx
 }
 
-## could handle arrays for max.print; cf print.POSIX?t() in ./datetime.R
+## could handle arrays for max.print
 print.Date <- function(x, max = NULL, ...)
 {
     if(is.null(max)) max <- getOption("max.print", 9999L)
@@ -115,8 +115,7 @@ print.Date <- function(x, max = NULL, ...)
 	print(format(x[seq_len(max)]), max=max, ...)
 	cat(' [ reached getOption("max.print") -- omitted',
 	    length(x) - max, 'entries ]\n')
-    } else print(if(length(x)) format(x) else paste0(class(x),"(0)"),
-		 max = max, ...)
+    } else print(format(x), max=max, ...)
     invisible(x)
 }
 
