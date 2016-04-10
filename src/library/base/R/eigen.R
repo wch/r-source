@@ -28,13 +28,14 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...)
     if(n <= 1L) return(TRUE)
     ## else: square (n x n) matrix, n >= 2 :
     ## initial tests, fast for large non-symmetric:
-    if(is.character(all.equal(object[1L, 2L],
-			      object[2L, 1L], tolerance = tol))) return(FALSE)
+    Cj <- if((iCplx <- is.complex(object))) Conj else identity
+    if(is.character(all.equal(   object[1L, 2L],
+			      Cj(object[2L, 1L]), tolerance = tol))) return(FALSE)
     for(i in unique(c(1L, 2L, n-1L, n)))
-	if(is.character(all.equal(object[i, ],
-				  object[, i], tolerance = tol))) return(FALSE)
+	if(is.character(all.equal(object[i, ], Cj(object[, i]), tolerance = tol)))
+            return(FALSE)
     test <-
-        if(is.complex(object))
+        if(iCplx)
             all.equal.numeric(object, Conj(t(object)), tolerance = tol, ...)
         else # numeric, character, ..
             all.equal(object, t(object), tolerance = tol, ...)

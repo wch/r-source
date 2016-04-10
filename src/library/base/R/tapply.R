@@ -37,10 +37,34 @@ tapply <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE)
         for (i in 2L:nI)
            group <- group + cumextent[i - 1L] * (as.integer(INDEX[[i]]) - 1L)
     if (is.null(FUN)) return(group)
-    levels(group) <- as.character(seq_len(ngroup))
-    class(group) <- "factor"
-    ans <- split(X, group) # use generic, e.g. for 'Date'
-    names(ans) <- NULL
+    spliti <- function(x, group, attr) {
+        attributes(group) <- attr
+        split(x, group) # use generic, e.g. for 'Date'
+    }
+    ## Careful speed optimization [PR#16640] leading to two cases
+    if (nI == 1L || ngroup <= (nmax <- 65536L)) { # nmax = 2^16
+        ans <- spliti(X, group, list(levels = if (nI == 1L) namelist[[1L]]
+                                              else as.character(seq_len(ngroup)),
+                                     class = "factor"))
+        names(ans) <- NULL
+    } else { ## rare(!) large group case:
+        ans <- as.character(seq_len(nmax))
+        group <- group - 1L
+        ngroup <- ngroup - 1L
+        npart <- 1L + ngroup %/% nmax
+        ans <- unlist(lapply(seq_len(npart),
+                             function(curpart, i, group, at, nrest) {
+                                 if (curpart == npart) length(at$levels) <- nrest
+                                 i <- i[[curpart]]
+                                 spliti(X[i], group[i], at)
+                             },
+                             spliti(seq_along(X), 1L + group %/% nmax,
+                                    list(levels = ans[seq_len(npart)], class = "factor")),
+                             1L + group %% nmax,
+                             list(levels = ans, class = "factor"),
+                             1L + ngroup %% nmax),
+                      recursive = FALSE, use.names = FALSE)
+    }
     index <- as.logical(lengths(ans))  # equivalently, lengths(ans) > 0L
     ans <- lapply(X = ans[index], FUN = FUN, ...)
     if (simplify && all(lengths(ans) == 1L)) {

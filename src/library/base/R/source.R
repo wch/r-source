@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## MM_FIXME:  new option  store.file = FALSE
+##            which assigns the full path of the current file to a variable, say
+##            ..source.file.. in environment 'envir' -- using 'owd' and 'ofile'
+##            all quite parallel to the 'chdir' option
 source <-
 function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 verbose = getOption("verbose"),
@@ -76,16 +80,17 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             filename <- file
 	    file <- file(filename, "r", encoding = encoding)
 	    on.exit(close(file))
-            if (isTRUE(keep.source)) {
-	    	lines <- readLines(file, warn = FALSE)
-	    	on.exit()
-	    	close(file)
-            	srcfile <- srcfilecopy(filename, lines, file.mtime(filename)[1],
-            			       isFile = TRUE)
-	    } else {
-            	from_file <- TRUE
-		srcfile <- filename
-	    }
+            srcfile <-
+                if (isTRUE(keep.source)) {
+                    lines <- readLines(file, warn = FALSE)
+                    on.exit()
+                    close(file)
+                    srcfilecopy(filename, lines, file.mtime(filename)[1],
+                                isFile = TRUE)
+                } else {
+                    from_file <- TRUE
+                    filename
+                }
 
             ## We translated the file (possibly via a guess),
             ## so don't want to mark the strings.as from that encoding
@@ -100,10 +105,11 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	}
     } else {
     	lines <- readLines(file, warn = FALSE)
-    	if (isTRUE(keep.source))
-    	    srcfile <- srcfilecopy(deparse(substitute(file)), lines)
-    	else
-    	    srcfile <- deparse(substitute(file))
+        srcfile <-
+            if (isTRUE(keep.source))
+                srcfilecopy(deparse(substitute(file)), lines)
+            else
+                deparse(substitute(file))
     }
 
     exprs <- if (!from_file) {
