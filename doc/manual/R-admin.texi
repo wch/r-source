@@ -4824,12 +4824,13 @@ toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
 will show the compilers and configuration options used for the
-@acronym{CRAN} binary package for @R{}: at the time of writing
+@acronym{CRAN} binary package for @R{}: at the time of writing the
+non-default options
 @example
---enable-memory-profiling
+--enable-memory-profiling --enable-R-framework
 @end example
 @noindent
-was used.
+were used.
 
 Configure option @option{--with-internal-tzcode} is the default on OS X,
 as the system implementation of time zones does not work correctly for
