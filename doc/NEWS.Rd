@@ -31,6 +31,11 @@
       \item \code{str()} and \code{strOptions()} get a new option
       \code{drop.deparse.attr} with improved but \emph{changed} default
       behaviour for expressions.% plan: backport to 3.3.1
+
+      \item \code{isSymmetrix(m)} is much faster for large asymmetric
+      matrices \code{m} via pre-tests and a new option \code{tol1}
+      (with which strict back compatibility is possible but not the
+      default).% plan: backport
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -375,9 +380,6 @@
       imports. The \code{except} expression should evaluate to a
       character vector (after substituting symbols for strings). See
       Writing R Extensions.
-
-      \item \code{isSymmetrix(m)} is much faster for large asymmetric
-      matrices \code{m}.
     }
   }
 
@@ -616,7 +618,7 @@
       \item \code{install.packages()} could give false errors when
       \code{options("pkgType")} was \code{"binary"}.  (Reported by
       Jose Claudio Faria.)
-      
+
       \item A bug fix in \R 3.0.2 fixed problems with \code{locator()}
       in X11, but introduced problems in Windows.  Now both should be
       fixed.  (\PR{15700})

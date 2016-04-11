@@ -1,6 +1,6 @@
 % File src/library/base/man/isSymmetric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isSymmetric}
@@ -13,12 +13,17 @@
 }
 \usage{
 isSymmetric(object, \dots)
-\method{isSymmetric}{matrix}(object, tol = 100 * .Machine$double.eps, \dots)
+\method{isSymmetric}{matrix}(object, tol = 100 * .Machine$double.eps,
+            tol1 = 8 * tol, \dots)
 }
 \arguments{
   \item{object}{any \R object; a \code{\link{matrix}} for the matrix method.}
   \item{tol}{numeric scalar >= 0.  Smaller differences are not
     considered, see \code{\link{all.equal.numeric}}.}
+  \item{tol1}{numeric scalar >= 0.  \code{isSymmetric.matrix()}
+    \dQuote{pre-tests} the first and last few rows for fast detection of
+    \dQuote{obviously} asymmetric cases with this tolerance.  Setting it
+    to length zero will skip the pre-tests.}
   \item{\dots}{further arguments passed to methods; the matrix method
     passes these to \code{\link{all.equal}}.}
 }
