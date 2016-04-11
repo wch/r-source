@@ -1,6 +1,6 @@
 % File src/library/base/man/eigen.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eigen}
@@ -20,17 +20,18 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     be computed.  Logical matrices are coerced to numeric.}
   \item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
     (or Hermitian if complex) and only its lower triangle (diagonal
-    included) is used.  If \code{symmetric} is not specified, the matrix
-    is inspected for symmetry.}
+    included) is used.  If \code{symmetric} is not specified,
+    \code{\link{isSymmetric(x)}} is used.}
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
   \item{EISPACK}{logical. Defunct and ignored.}
 }
 \details{
-  If \code{symmetric} is unspecified, the code attempts to
-  determine if the matrix is symmetric up to plausible numerical
-  inaccuracies.  It is faster and surer to set the value yourself.
+  If \code{symmetric} is unspecified, \code{\link{isSymmetric}(x)}
+  determines if the matrix is symmetric up to plausible numerical
+  inaccuracies.  It is surer and typically much faster to set the value
+  yourself.
 
   Computing the eigenvectors is the slow part for large matrices.
 
@@ -41,14 +42,13 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   algebraic solution with repeated real eigenvalues, the computed
   solution may be of a similar matrix with complex conjugate pairs of
   eigenvalues.
-  
+
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code (most often \code{1}): these can
   only be interpreted by detailed study of the FORTRAN code.
 }
 \value{
-  The spectral decomposition of \code{x} is returned as components of a
-  list with components
+  The spectral decomposition of \code{x} is returned as a list with components
 
   \item{values}{a vector containing the \eqn{p} eigenvalues of \code{x},
     sorted in \emph{decreasing} order, according to \code{Mod(values)}

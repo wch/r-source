@@ -19,7 +19,7 @@
 
 isSymmetric <- function(object, ...) UseMethod("isSymmetric")
 
-isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...)
+isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, tol1 = 8*tol, ...)
 {
     if(!is.matrix(object)) return(FALSE) ## we test for  symmetric *matrix*
     ## cheap pretest: is it square?
@@ -29,10 +29,8 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...)
     ## else: square (n x n) matrix, n >= 2 :
     ## initial tests, fast for large non-symmetric:
     Cj <- if((iCplx <- is.complex(object))) Conj else identity
-    if(is.character(all.equal(   object[1L, 2L],
-			      Cj(object[2L, 1L]), tolerance = tol))) return(FALSE)
     for(i in unique(c(1L, 2L, n-1L, n)))
-	if(is.character(all.equal(object[i, ], Cj(object[, i]), tolerance = tol)))
+	if(is.character(all.equal(object[i, ], Cj(object[, i]), tolerance = tol1, ...)))
             return(FALSE)
     test <-
         if(iCplx)
