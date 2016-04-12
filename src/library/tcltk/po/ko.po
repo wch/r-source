@@ -1,23 +1,26 @@
 # Korean translation for R tcltk package
-# src/library/tcltk/po/ko.po
+# ./tcltk/po/ko.po
 #
-# Copyright (C) 1995-2015 The R Core Team
+# Copyright (C) 1995-2016 The R Core Team
 #
 # This file is distributed under the same license as the R tcltk package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
+# Contact: Chel Hee Lee <gnustats@gmail.com>
 #
 # Notes:
+# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
+# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
 # Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: R-3.3.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2016-04-01 10:28-0700\n"
-"PO-Revision-Date: 2015-03-30 14:01-0600\n"
+"PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +29,7 @@ msgstr ""
 
 #: tcltk.c:67
 msgid "parse error in R expression"
-msgstr "R 표현식(expression)을 구문분석(parse) 도중에 에러가 발생했습니다."
+msgstr "R 표현식(expression)을 구문분석(parse) 하던 도중에 에러가 발생했습니다."
 
 #: tcltk.c:176 tcltk.c:253
 msgid "tcl error.\n"
@@ -38,8 +41,7 @@ msgstr "올바르지 않은 인자입니다."
 
 #: tcltk.c:309 tcltk.c:327 tcltk.c:400 tcltk.c:463 tcltk.c:515
 msgid "invalid tclObj -- perhaps saved from another session?"
-msgstr ""
-"올바르지 않은 tclObj입니다 -- 혹시 다른 세션으로부터 저장된것이 아닐까요?"
+msgstr "올바르지 않은 tclObj입니다 -- 혹시 다른 세션으로부터 저장된것이 아닐까요?"
 
 #: tcltk.c:625
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
@@ -47,7 +49,7 @@ msgstr "tcltk 내부 함수 'callback_closure'에 있는 인자목록이 너무 
 
 #: tcltk.c:658
 msgid "argument is not of correct type"
-msgstr "올바른 유형의 인자가 아닙니다."
+msgstr "올바른 유형(correct type)의 인자가 아닙니다."
 
 #: tcltk.c:709
 msgid "no DISPLAY variable so Tk is not available"
