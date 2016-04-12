@@ -21,7 +21,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   \item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
     (or Hermitian if complex) and only its lower triangle (diagonal
     included) is used.  If \code{symmetric} is not specified,
-    \code{\link{isSymmetric(x)}} is used.}
+    \code{\link{isSymmetric}(x)} is used.}
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
@@ -65,6 +65,9 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     when the length is specified they are still only defined up to a
     scalar of modulus one (the sign for real matrices).
   }
+
+  When \code{only.values} is not true, as by default, the result is of
+  S3 class \code{"eigen"}.
 
   If \code{r <- eigen(A)}, and \code{V <- r$vectors; lam <- r$values},
   then \deqn{A = V \Lambda V^{-1}}{A = V Lmbd V^(-1)} (up to numerical
