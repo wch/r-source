@@ -850,6 +850,7 @@ options(op)# back to sanity
 ## format(*, decimal.mark=".")  when   OutDec != "."  (PR#16411)
 op <- options(OutDec = ",")
 stopifnot(identical(fpi, format(pi, decimal.mark=".")))
+options(op)
 ## failed in R <= 3.2.1
 
 
@@ -1408,13 +1409,23 @@ chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
 		n %/% 3 # pretty.default
     }
     pr <- pretty(x, n=n, min.n=min.n, ...)
-    ## if debugging: pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
+    ## if debugging:
+    pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
     stopifnot(length(pr) >= (min.n+1),
-	      abs(length(pr) - (n+1)) <= max.D,
-              ## must be equidistant [may need fuzz, i.e., signif(.) ?]:
-	      length(pr) == 1 || length(unique(diff(pr))) == 1,
 	      ## pretty(x, *) must cover range of x:
 	      min(pr) <= min(x), max(x) <= max(pr))
+    if((D <- abs(length(pr) - (n+1))) > max.D)
+	stop("| |pretty(.)| - (n+1) | = ", D, " > max.D = ", max.D)
+    ## is it equidistant [may need fuzz, i.e., signif(.) ?]:
+    eqD <- length(pr) == 1 || length(udp <- unique(dp <- diff(pr))) == 1
+    ## may well FALSE (differing number days in months; leap years, leap seconds)
+    if(!eqD) {
+        if(inherits(dp, "difftime") && units(dp) %in% c("days")# <- more ??
+           )
+            attr(pr, "chkPr") <- "not equidistant"
+        else
+            stop("non equidistant: has ", length(udp)," unique differences")
+    }
     invisible(pr)
 }
 sTime <- structure(1455056860.75, class = c("POSIXct", "POSIXt"))
@@ -1444,6 +1455,52 @@ stopifnot(length(p2) >= 5+1,
 ## failed in R 3.2.4
 (T3 <- structure(1460019857.25, class = c("POSIXct", "POSIXt")))# typical Sys.date()
 chkPretty(T3, 1) # error in svn 70438
+## "Data" from  example(pretty.Date) :
+steps <- setNames(,
+    c("10 secs", "1 min", "5 mins", "30 mins", "6 hours", "12 hours",
+      "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
+      "10 years", "50 years", "1000 years"))
+t02 <- as.POSIXct("2002-02-02 02:02")
+nns <- c(1:9, 15:17); names(nns) <- paste0("n=",nns)
+prSeq <- function(x, n, st, ...) pretty(seq(x, by = st, length = 2), n = n, ...)
+pps <- lapply(nns, function(n)
+	      lapply(steps, function(st) prSeq(x=t02, n=n, st=st)))
+Ls.ok <- list(
+    `10 secs`  = c("00", "02", "04", "06", "08", "10"),
+    `1 min`    = sprintf("%02d", 10*((0:6) %% 6)),
+    `5 mins`   = sprintf("02:%02d", 2:7),
+    `30 mins`  = sprintf("02:%02d", (0:4)*10),
+    `6 hours`  = sprintf("%02d:00", 2:9),
+    `12 hours` = sprintf("%02d:00", (0:5)*3),
+    `1 DSTday` = c("Feb 02 00:00", "Feb 02 06:00", "Feb 02 12:00",
+		   "Feb 02 18:00", "Feb 03 00:00", "Feb 03 06:00"),
+    `2 weeks`  = c("Jan 28", "Feb 04", "Feb 11", "Feb 18"),
+    `1 month`  = c("Jan 28", "Feb 04", "Feb 11", "Feb 18", "Feb 25", "Mar 04"),
+    `6 months` = c("Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"),
+    `1 year`   = c("Jan", "Apr", "Jul", "Oct", "Jan", "Apr"),
+    `10 years` = as.character(2000 +   2*(1:7)),
+    `50 years` = as.character(2000 +  10*(0:6)),
+    `1000 years`= as.character(2000 + 200*(0:6)))
+stopifnot(identical(Ls.ok,
+		    lapply(pps[["n=5"]], attr, "label")))
+##
+chkSeq <- function(st, x, n, max.D = if(n <= 4) 1 else if(n <= 10) 2 else 3, ...)
+    tryCatch(chkPretty(seq(x, by = st, length = 2), n = n, max.D=max.D, ...),
+             error = conditionMessage)
+c.ps <- lapply(nns, function(n) lapply(steps, chkSeq, x = t02, n = n))
+## ensure that all are ok *but* some which did not match 'n' well enough:
+cc.ps <- unlist(c.ps, recursive=FALSE)
+table(ok <- vapply(cc.ps, inherits, NA, what = "POSIXt"))
+errs <- unlist(cc.ps[!ok])
+stopifnot(startsWith(errs, prefix = "| |pretty(.)| - (n+1) |"))
+Ds <- as.numeric(sub(".*\\| = ([0-9]+) > max.*", "\\1", errs))
+table(Ds)
+## Currently   [may improve]
+##  3  4  5  6  7  8
+##  4 14  6  3  2  1
+## ... and ensure we only improve:
+stopifnot(length(Ds) <= 30, max(Ds) <= 8, sum(Ds) <= 138)
+
 
 stopifnot(c("round.Date", "round.POSIXt") %in% as.character(methods(round)))
 ## round.POSIXt suppressed in R <= 3.2.x

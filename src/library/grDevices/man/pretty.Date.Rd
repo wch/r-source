@@ -36,14 +36,18 @@
   \code{\link{pretty}} for the default method.
 }
 \examples{
+\donttest{% time-dependent
+pretty(Sys.Date())
+pretty(Sys.time(), n = 10)
+}
+pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
 
-steps <-
-    list("10 secs", "1 min", "5 mins", "30 mins", "6 hours", "12 hours",
-         "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
-         "10 years", "50 years", "1000 years")
-
-names(steps) <- paste("span =", unlist(steps))
-
+## time ranges in diverse scales:% also in ../../../../tests/reg-tests-1c.R
+require(stats)
+steps <- setNames(,
+    c("10 secs", "1 min", "5 mins", "30 mins", "6 hours", "12 hours",
+      "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
+      "10 years", "50 years", "1000 years"))
 x <- as.POSIXct("2002-02-02 02:02")
 lapply(steps,
        function(s) {

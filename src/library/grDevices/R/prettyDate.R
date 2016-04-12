@@ -109,14 +109,8 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     ## calculate actual number of ticks in the given interval
     calcSteps <- function(s, lim = range(zz)) {
         startTime <- trunc_POSIXt(lim[1], units = s$start) ## FIXME: should be trunc() eventually
-	at <- if (identical(s$spec, "halfmonth")) {
-		  at <- seq(startTime, lim[2], by = "months")
-		  at2 <- as.POSIXlt(at)
-		  at2$mday <- 15L
-		  structure(sort(c(as.POSIXct(at), as.POSIXct(at2))),
-			    tzone = attr(at, "tzone"))
-	      } else
-		  seq(startTime, lim[2], by = s$spec)
+        at <- seqDtime(startTime, end = lim[2], by = s$spec)
+
 	i <- which(lim[1] <= at & at <= lim[2])
 	if(!length(i)) # at[] is fully outside (to the *left*: rarely)
 	    return(at[FALSE])
@@ -124,17 +118,24 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
         while(lim[1] < at[r[1]]) { # not covering at left
             if(r[1] > 1) ## take one more point at left
                 i <- c(r[1] <- r[1] - 1L, i)
-            else { # (undesirable): "manually add point at left
-                at <- c(at[1] - diff(at[1:2]), at)
-                r <- range(i <- which(lim[1] <= at & at <= lim[2]))
+            else { # add point at left
+                nat <- seqDtime(at[1], by=paste("-1",s$spec), length = 2)[2]
+                if(is.na(nat) || !(nat < at[1])) # failed
+                    break
+                at <- c(nat, at)
+                i <- i + 1L
+                if(lim[1] <= at[1]) r <- range(i <- c(1L, i))
             }
         }
         while(lim[2] > at[r[2]]) { # not covering at right
             if(r[2] < length(at)) ## take one more point at right
                 i <- c(i, r[2] <- r[2] + 1L)
-            else { # (undesirable): "manually add point at right
-                at <- c(at, at[length(at)] + diff(at[1:2]))
-                r <- range(i <- which(lim[1] <= at & at <= lim[2]))
+            else { # add point at right
+                nat <- seqDtime(at[length(at)], by = s$spec, length=2)[2]
+                if(is.na(nat) || !(nat > at[length(at)])) # failed
+                    break
+                at <- c(at, nat)
+                if(lim[2] >= nat) r <- range(i <- c(i, length(at)))
             }
         }
         ## Now we could see if we are *smaller* than 'n+1' and add even more at[] on both sides
@@ -143,12 +144,23 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     init.at <- calcSteps(st.i <- steps[[init.i]])
     ## bump it up if below acceptable threshold
     R <- TRUE # R := TRUE iff "right"
+    L.fail <- R.fail <- FALSE
     while ((init.n <- length(init.at) - 1L) < min.n) {
 	if(init.i == 1L) { ## keep steps[[1]]
 	    ## add new interval right or left
-	    del <- diff(init.at[1:2])
-	    init.at <- if(R) c(init.at, init.at[length(init.at)] + del)
-		       else c(init.at[1] - del, init.at)
+            if(R) {
+                nat <- seqDtime(init.at[length(init.at)], by = st.i$spec, length=2)[2]
+                R.fail <- is.na(nat) || !(nat > init.at[length(init.at)])
+                if(!R.fail)
+                    init.at <- c(init.at, nat)
+            } else { # left
+                nat <- seqDtime(init.at[1], by = paste("-1",st.i$spec), length=2)[2]
+                L.fail <- is.na(nat) || !(nat < init.at[1])
+                if(!L.fail)
+                    init.at <- c(nat, init.at)
+            }
+            if(R.fail && L.fail)
+                stop("failed to add more ticks; 'min.n' too large?")
 	    R <- !R # alternating right <-> left
 	} else { # smaller step sizes
 	    init.i <- init.i - 1L
@@ -196,6 +208,39 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     else
 	makeOutput(init.at, st.i)
 }
+
+
+## Utility, a generalization/special case of seq.POSIXct() / seq.Date()
+seqDtime <- function(beg, end, by, length=NULL) {
+    if(missing(by) || !identical(by, "halfmonth"))
+        return( seq(beg, end, by = by, length.out=length) )
+    ## else  by == "halfmonth" => can only go forward (!)
+    if(is.null(length)) {
+        l2 <- NULL; i <- TRUE
+    } else {
+        l2 <- ceiling(length/2); i <- seq_len(length)
+    }
+    at <- seq(beg, end, by = "months", length.out = l2)
+    at2 <- as.POSIXlt(at)
+    stopifnot(length(md <- unique(at2$mday)) == 1)
+    at <- as.POSIXct(at)
+    ## intersperse at and at2 := 15-day-shifted( at ), via rbind():
+    if(md == 1) {
+        at2$mday <- 15L
+        at2 <- rbind(at, as.POSIXct(at2))
+    } else if(md == 15) {
+        at2$mday <- 1L
+        at2$mon <- at2$mon + 1L
+        fix <- at2$mon == 13L
+        at2$mon [fix] <- 1L
+        at2$year[fix] <- at2$year[fix] + 1L
+        ## at2 now has wrong 'yday','wday',.. and we rely on as.POSIXct():
+        at2 <- rbind(at, as.POSIXct(at2))
+    }
+    else stop("'mday' must be 1 or 15 for \"halfmonth\"")
+    structure(at2[i], class = class(at), tzone = attr(at, "tzone"))
+}
+
 
 ## utility function, extending the base function trunc.POSIXt.
 ## Ideally this should replace the original, but that should be done
