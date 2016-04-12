@@ -1,6 +1,7 @@
 ## Regression tests for R >= 3.0.0
 
 pdf("reg-tests-1c.pdf", encoding = "ISOLatin1.enc")
+.pt <- proc.time()
 
 ## mapply with classed objects with length method
 ## was not documented to work in 2.x.y
@@ -582,6 +583,7 @@ stopifnot(identical(crossprod(2, v), t(2) %*% v),
 	  identical(5 %*% v, 5 %*% t(v)),
           identical(tcrossprod(m, 1:2), m %*% 1:2) )
 ## gave error "non-conformable arguments" in R <= 3.2.0
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## list <--> environment
@@ -778,6 +780,7 @@ if(.Platform$OS.type == "unix" &&
 				    "[1] 1 2 3")))
 }
 ## (failed for < 1 hr, in R-devel only)
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## Parsing large exponents of floating point numbers, PR#16358
@@ -963,6 +966,7 @@ df <- data.frame(.id = 1:3 %% 3 == 2, a = 1:3)
 d2 <- within(df, {d = a + 2})
 stopifnot(identical(names(d2), c(".id", "a", "d")))
 ## lost the '.id' column in R <= 3.2.2
+proc.time() - .pt; .pt <- proc.time()
 
 ## system() truncating and splitting long lines of output, PR#16544
 ## only works when platform has getline() in stdio.h, and Solaris does not.
@@ -1081,6 +1085,7 @@ tools::assertError(cov(1:6, f <- gl(2,3)))# was ok already
 tools::assertWarning(var(f))
 tools::assertWarning( sd(f))
 ## var() "worked" in R <= 3.2.2  using the underlying integer codes
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## loess(*, .. weights) - PR#16587
@@ -1306,6 +1311,7 @@ stopifnot(all.equal(coef(flm), cf[,"tear"]),
                     cbind(rate = 3:2, additive = 3:4,
                           `rate:additive` = c(3L, 8L))))
 ## dummy.coef() were missing coefficients in R <= 3.2.3
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## format.POSIXlt() with modified 'zone' or length-2 format
@@ -1556,3 +1562,9 @@ x <- NULL; tools::assertWarning(f <-    body(x)); stopifnot(is.null(f))
 x <- NULL; tools::assertWarning(f <- formals(x)); stopifnot(is.null(f))
 ## these all silently coerced NULL to a function in R <= 3.2.x
 
+
+
+
+## keep at end
+rbind(last =  proc.time() - .pt,
+      total = proc.time())
