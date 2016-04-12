@@ -970,13 +970,16 @@ proc.time() - .pt; .pt <- proc.time()
 
 ## system() truncating and splitting long lines of output, PR#16544
 ## only works when platform has getline() in stdio.h, and Solaris does not.
-## op <- options(warn = 2)# no warnings allowed
-## if(.Platform$OS.type == "unix") { # only works when platform has getline() in stdio.h
-##     cn <- paste(1:2222, collapse=" ")
-##     rs <- system(paste("echo", cn), intern=TRUE)
-##     stopifnot(identical(rs, cn))
-## }
-## options(op)
+known.POSIX_2008 <- .Platform$OS.type == "unix" &&
+     (Sys.info()[["sysname"]] != "SunOS")
+## ^^^ explicitly exclude *non*-working platforms above
+if(known.POSIX_2008) {
+    cat("testing system(\"echo\", <large>) : "); op <- options(warn = 2)# no warnings allowed
+    cn <- paste(1:2222, collapse=" ")
+    rs <- system(paste("echo", cn), intern=TRUE)
+    stopifnot(identical(rs, cn))
+    cat("[Ok]\n"); options(op)
+}
 
 
 ## tail.matrix()
