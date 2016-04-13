@@ -80,7 +80,7 @@ Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Pawe�
 "Russia (Moscow) [https]",Russia,Moscow,https://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
 "Russia (Moscow)",Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
 Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
-Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
+Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",0,sk
 "South Africa (Cape Town)","South Africa","Cape Town",http://r.adu.org.za/,"University of Cape Town","michael.brooks # uct.ac.za",1,za
 "South Africa (Johannesburg)","South Africa",Johannesburg,http://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za
 "Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
