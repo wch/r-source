@@ -6,10 +6,12 @@
 \name{isSymmetric}
 \alias{isSymmetric}
 \alias{isSymmetric.matrix}
-\title{Test if a Matrix or other Object is Symmetric}
+\title{Test if a Matrix or other Object is Symmetric (Hermitian)}
 \description{
   Generic function to test if \code{object} is symmetric or not.
-  Currently only a matrix method is implemented.
+  Currently only a matrix method is implemented, where a
+  \code{\link{complex}} matrix \code{Z} must be \dQuote{Hermitian} for
+  \code{isSymmetric(Z)} to be true.
 }
 \usage{
 isSymmetric(object, \dots)
@@ -49,6 +51,13 @@ D3[2, 1] <- 1e-100
 D3
 isSymmetric(D3) # TRUE
 isSymmetric(D3, tol = 0) # FALSE for zero-tolerance
+
+## Complex Matrizes - Hermitian or not
+Z <- sqrt(matrix(-1:2 + 0i, 2)); Z <- t(Conj(Z)) \%*\% Z
+Z
+isSymmetric(Z)      # TRUE
+isSymmetric(Z + 1)  # TRUE
+isSymmetric(Z + 1i) # FALSE -- a Hermitian matrix has a *real* diagonal
 }
 \keyword{array}
 \keyword{utilities}
