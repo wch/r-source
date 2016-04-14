@@ -23,8 +23,8 @@ isSymmetric(object, \dots)
   \item{tol}{numeric scalar >= 0.  Smaller differences are not
     considered, see \code{\link{all.equal.numeric}}.}
   \item{tol1}{numeric scalar >= 0.  \code{isSymmetric.matrix()}
-    \dQuote{pre-tests} the first and last few rows for fast detection of
-    \dQuote{obviously} asymmetric cases with this tolerance.  Setting it
+    \sQuote{pre-tests} the first and last few rows for fast detection of
+    \sQuote{obviously} asymmetric cases with this tolerance.  Setting it
     to length zero will skip the pre-tests.}
   \item{\dots}{further arguments passed to methods; the matrix method
     passes these to \code{\link{all.equal}}.}
@@ -52,7 +52,7 @@ D3
 isSymmetric(D3) # TRUE
 isSymmetric(D3, tol = 0) # FALSE for zero-tolerance
 
-## Complex Matrizes - Hermitian or not
+## Complex Matrices - Hermitian or not
 Z <- sqrt(matrix(-1:2 + 0i, 2)); Z <- t(Conj(Z)) \%*\% Z
 Z
 isSymmetric(Z)      # TRUE
