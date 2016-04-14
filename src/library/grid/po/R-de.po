@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-20 16:09+0100\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
+"PO-Revision-Date: 2016-04-08 11:20+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -146,7 +146,8 @@ msgstr "es muss zumindest ein Viewport angegeben werden"
 
 msgid "Down viewport failed to record on display list"
 msgstr ""
-"Abgeschalteter Viewport konnte nicht in die Display-Liste aufgenommen werde"
+"Abgeschalteter Viewport konnte nicht in die Display-Liste "
+"aufgenommen werde"
 
 msgid "Down viewport incorrectly recorded on display list"
 msgstr ""
@@ -165,7 +166,7 @@ msgid "invalid object inserted on the display list"
 msgstr "unzulässiges Objekt in die Displayliste eingefügt"
 
 msgid "invalid modification of the display list"
-msgstr "unzulässige Modifikation der Display-Liste"
+msgstr "unzulässige Modifikation der Displayliste"
 
 msgid "'expr' must return a grob or gList"
 msgstr "'expr' muss ein grob oder eine gList zurückgeben"
@@ -265,6 +266,9 @@ msgstr "gPath (%s) nicht gefunden"
 msgid "grob '%s' not found"
 msgstr "Grob '%s' nicht gefunden"
 
+msgid "invalid element in the display list"
+msgstr "unzulässiges Element in der Display-Liste"
+
 msgid "Invalid force target"
 msgstr "ungültiges Zwangsziel"
 
@@ -321,6 +325,9 @@ msgstr "ungültiges Listing"
 
 msgid "invalid 'listing'"
 msgstr "ungültiges 'listing'"
+
+msgid "Nothing on the display list"
+msgstr "Nichts in der Display-Liste"
 
 msgid "invalid 'origin'"
 msgstr "unzulässiger 'origin'"
@@ -428,7 +435,7 @@ msgid "only one operand may be a unit"
 msgstr "nur ein Operand darf eine Einheit sein"
 
 msgid "non-unit operand must be numeric"
-msgstr "nicht-Einheiten Operand muss numerisch sein"
+msgstr "non-unit Operand muss numerisch sein"
 
 msgid "both operands must be units"
 msgstr "beide Operanden müssen Einheiten sein"
@@ -454,12 +461,9 @@ msgstr "Index außerhalb des Bereichs (arithmetische Teilsauswahl)"
 msgid "index out of bounds (unit list subsetting)"
 msgstr "Index außerhalb des Bereichs (Einheitenlistenteilauswahl)"
 
-#, fuzzy
-msgid "Value being assigned must be a unit"
-msgstr "x und y müssen Einheiten sein"
-
 msgid "it is invalid to combine 'unit' objects with other types"
-msgstr "unzulässig 'unit' Objekte mit anderen Typen zu kombinieren"
+msgstr ""
+"unzulässig 'unit' Objekte mit anderen Typen zu kombinieren"
 
 msgid "invalid 'unit' object"
 msgstr "Unzulässiges 'unit' Objekt"
@@ -526,12 +530,6 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "Unzulässiger Viewport-Name"
 msgstr[1] "Unzulässige Viewport-Namen"
-
-#~ msgid "invalid element in the display list"
-#~ msgstr "unzulässiges Element in der Display-Liste"
-
-#~ msgid "Nothing on the display list"
-#~ msgstr "Nichts in der Display-Liste"
 
 #~ msgid "the 'vp' argument is deprecated"
 #~ msgstr "'vp' Argument ist veraltet"
