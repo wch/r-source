@@ -55,6 +55,13 @@ Sys.setenv(R_LIBS_SITE =
 Sys.setenv(R_LIBS_USER =
            .expand_R_libs_env_var(Sys.getenv("R_LIBS_USER")))
 
+local({
+    if(nzchar(tl <- Sys.getenv("R_SESSION_TIME_LIMIT_CPU")))
+        setSessionTimeLimit(cpu = tl)
+    if(nzchar(tl <- Sys.getenv("R_SESSION_TIME_LIMIT_ELAPSED")))
+        setSessionTimeLimit(elapsed = tl)
+})
+
 .First.sys <- function()
 {
     for(pkg in getOption("defaultPackages")) {
