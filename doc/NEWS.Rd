@@ -5,13 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.2.4 patched}{
+\section{\Rlogo CHANGES IN R 3.2.5}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{format.POSIXlt()} behaved incorrectly in \R 3.2.4.
       E.g.\sspace{}the output of
       \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz = "CET"),
 	usetz = TRUE)} ended in two \code{"CEST"} time formats.
+
+      \item A typo in the Makefile for \file{src/extra/xz} prevented 
+      builds of \file{liblzma.a}. (Notice that this will become
+      unbundled in 3.3.0.)
     }
   }
 }
