@@ -21,7 +21,7 @@ Rcmd(args, ...)
 }
 \details{
   Provides a portable convenience interface to the \command{R CMD}
-  mechnism by invoking the corresponding system commands (using the
+  mechanism by invoking the corresponding system commands (using the
   version of \R currently used) via \code{\link{system2}}.
 }
 \keyword{utilities}
