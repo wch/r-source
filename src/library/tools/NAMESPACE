@@ -17,6 +17,7 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "find_gs_cmd", "getBibstyle", "getVignetteInfo",
        langElts, "latexToUtf8", "list_files_with_exts",
        "list_files_with_type", "loadRdMacros", "loadPkgRdMacros",
+       "makevars_site", "makevars_user",
        nonS3methods,
        "make_translations_pkg", "md5sum",
        package.dependencies,# R/package.dependencies.R man/package.dependencies.Rd
