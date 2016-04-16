@@ -625,9 +625,14 @@ setRlibs <-
                 summaryLog(Log)
                 do_exit(1L)
             } else {
+                ## <FIXME>
+                ## This is not quite right: if we issue a NOTE here, we
+                ## can no longer issue a WARNING in the description
+                ## encoding check below ....
                 noteLog(Log)
                 any <- TRUE
                 printLog0(Log, paste(out, collapse = "\n"), "\n")
+                ## </FIXME>
             }
         }
         ## Check the encoding.
@@ -720,6 +725,14 @@ setRlibs <-
                     }
                 }
             }
+        }
+
+        if(!is_base_pkg && is.na(db["Packaged"])) {
+            if(!any) (noteLog(Log))
+            any <- TRUE
+            printLog(Log,
+                     "Checking should be performed on sources prepared by 'R CMD build'.",
+                     "\n")
         }
 
         if(!is.na(ncomp <- db["NeedsCompilation"])) {
