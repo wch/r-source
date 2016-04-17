@@ -1013,6 +1013,12 @@ visible (and if it is, it need not be the one from that namespace:
 give an error if the suggested package is not available, simply use
 e.g.@: @code{rgl::plot3d}.
 
+Note that the recommendation to use suggested packages conditionally in
+tests does also apply to packages used to manage test suites: a
+notorious example was @pkg{testthat} which in version 1.0.0 contained
+illegal C++ code and hence could not be installed on standards-compliant
+platforms.
+
 As noted above, packages in @samp{Enhances} @emph{must} be used
 conditionally and hence objects within them should always be accessed
 @emph{via} @code{::}.
@@ -2034,9 +2040,12 @@ are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
 and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
-_OPENMP}: note that some toolchains used for @R{} (including most of
-those using @command{clang}@footnote{Some builds of @command{clang} 3.7
-have support for OpenMP 3.1}) have no OpenMP support at all, not even
+_OPENMP}: note that some toolchains used for @R{} (including many of
+those using @command{clang}@footnote{Some builds of @command{clang}
+3.7.0 have support for OpenMP 3.1 (this is built by default as from
+3.8.0), but even if the compiler has, the @code{libomp} library may not
+be installed.  At the time of writing Apple builds of @command{clang}
+for OS X had no support.})  have no OpenMP support at all, not even
 @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
@@ -2147,17 +2156,17 @@ For a tutorial see
 POSIX threads are not normally used on Windows, which has its own native
 concepts of threads.  However, there are two projects implementing
 @code{pthreads} on top of Windows, @code{pthreads-w32} and
-@code{winpthreads} (a recent part of the MinGW-w64 project).
+@code{winpthreads} (part of the MinGW-w64 project).
 
 Whether Windows toolchains implement @code{pthreads} is up to the
-toolchain provider: the currently recommended toolchain does by default
-provide it.  A @command{make} variable @code{SHLIB_PTHREAD_FLAGS} is
-available: this should be included in both @code{PKG_CPPFLAGS} (or the
-Fortran or F9x equivalents) and @code{PKG_LIBS}.
+toolchain provider.  A @command{make} variable
+@code{SHLIB_PTHREAD_FLAGS} is available: this should be included in both
+@code{PKG_CPPFLAGS} (or the Fortran or F9x equivalents) and
+@code{PKG_LIBS}.
 
 The presence of a working @code{pthreads} implementation cannot be
 unambiguously determined without testing for yourself: however, that
-@samp{_REENTRANT} is defined@footnote{some Windows toolchains have the
+@samp{_REENTRANT} is defined@footnote{some Windows toolchains had the
 typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
 See also the comments on thread-safety and performance under OpenMP: on
