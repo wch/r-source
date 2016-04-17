@@ -58,6 +58,7 @@ Matrix.ts: lattice.ts
 mgcv.ts: nlme.ts MASS.ts Matrix.ts
 nlme.ts: lattice.ts
 class.ts: MASS.ts
+survival.ts: Matrix.ts
 ## and for static html links
 boot.ts: MASS.ts survival.ts
 cluster.ts: MASS.ts
