@@ -594,7 +594,7 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 	SET_STRING_ELT(ans, i+1, STRING_ELT(CADR(CADR(nextarg)), 0));
     }	
     UNPROTECT_PTR(args);
-    UNPROTECT_PTR(macro);    
+
     /* Now push the expanded macro onto the input stream, in reverse order */
     xxungetc(END_MACRO);
     start = CHAR(STRING_ELT(ans, 0));
@@ -613,6 +613,8 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
     SEXP s_Rd_tag = install("Rd_tag");
     setAttrib(ans, s_Rd_tag, mkString("USERMACRO"));
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, install("macro"), macro);
+    UNPROTECT_PTR(macro);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);
 #endif
