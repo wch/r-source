@@ -2050,10 +2050,13 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 		switch(resolve.confl,
 		       "none" = NULL,
 		       "first" = {
-			   if(resolve.msg)
+			   if(resolve.msg) {
 			       message(gettextf(
 				"Found more than one class \"%s\" in cache; using the first, from namespace '%s'",
 				name, pkgs[1]), domain=NA)
+                               message("Also defined by ",
+                                       paste(sQuote(pkgs[-1]), collapse = " "))
+                           }
 			   value[[1]]
 		       },
 		       "all" = value) # return all, a list
