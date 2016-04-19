@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-04-12 r70470) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-04-19 r70509) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -28,7 +28,7 @@ Loading required package: MASS
 > if(require("survival")) {
 +   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
 +   print(summary(model3))
-+   detach("package:survival")  # survival (conflicts)
++   detach("package:survival", unload = TRUE)  # survival (conflicts)
 + }
 Loading required package: survival
 Call:
@@ -318,7 +318,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 4.67 on 57 degrees of freedom
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 9.32e-07
+Achieved convergence tolerance: 9.33e-07
 
 > 
 > ## Then we use nls' indexing feature for parameters in non-linear
@@ -531,7 +531,7 @@ pckgDs>
 > ## lattice may not be installed
 > ## Avoid possibly large list from R_HOME/site-library, which --vanilla includes.
 > dependsOnPkgs("lattice", lib.loc = .Library)
-[1] "Matrix" "nlme"   "mgcv"  
+[1] "Matrix"   "nlme"     "mgcv"     "survival"
 > 
 > ## This may not be installed
 > gridEx <- system.file("doc", "grid.Rnw", package = "grid")

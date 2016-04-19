@@ -10,7 +10,7 @@ pdf("reg-examples-3.pdf", encoding = "ISOLatin1.enc")
 if(require("survival")) {
   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
   print(summary(model3))
-  detach("package:survival")  # survival (conflicts)
+  detach("package:survival", unload = TRUE)  # survival (conflicts)
 }
 
 
