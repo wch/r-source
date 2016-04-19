@@ -1,7 +1,7 @@
 #  File src/library/stats/R/smspline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -138,11 +138,9 @@ smooth.spline <-
     dofoff <- df.offset
     if(!missing(df)) { # not when cv was NA
 	if(df > 1 && df <= nx) {
-	    if(!missing(cv))
-		warning("specified both 'df' and 'cv'; will disregard the latter")
 	    icrit <- 3L
 	    dofoff <- df
-	} else warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
+	} else warning("not using invalid df; must have 1 < df <= n := #{unique x} = ", nx)
     }
     iparms <- c(icrit=icrit, ispar=ispar, iter=as.integer(contr.sp$maxit))
 
@@ -171,8 +169,11 @@ smooth.spline <-
 		    ldnk = 1L,
 		    ier = integer(1L)
 		    )[ans.names]
+
+### FIXME only was needed, when we had  DUP=FALSE
+    stopifnot(identical(wbar, tmp[,1]))
     ## now we have clobbered wbar, recompute it.
-    wbar <- tmp[, 1]
+    ## wbar <- tmp[, 1]
 
     if(is.na(cv)) lev <- df <- NA
     else {
