@@ -36,6 +36,9 @@
       matrices \code{m} via pre-tests and a new option \code{tol1}
       (with which strict back compatibility is possible but not the
       default).% plan: backport
+
+      \item The result of \code{eigen()} now is of class \code{"eigen"}
+      in the default case when eigenvectors are computed.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
