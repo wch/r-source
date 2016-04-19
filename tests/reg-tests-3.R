@@ -11,7 +11,7 @@ str(ordered(ff, exclude=NULL))
 if(require(survival)) {
     (sa <- Surv(aml$time, aml$status))
     str(sa)
-    detach("package:survival")
+    detach("package:survival", unload = TRUE)
 }
 ## were different, the last one failed in 1.6.2 (at least)
 
@@ -92,7 +92,7 @@ if(require("survival")) {
     print(as.matrix(df.soa)) # numeric result
     df.soac <- data.frame(soa, letters[1:5])
     print(as.matrix(df.soac)) # character result
-    detach("package:survival")
+    detach("package:survival", unload = TRUE)
 }
 ## failed in 2.8.1
 
