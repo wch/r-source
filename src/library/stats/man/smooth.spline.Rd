@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -26,15 +26,18 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
  \item{w}{optional vector of weights of the same length as \code{x};
    defaults to all 1.}
  \item{df}{the desired equivalent number of degrees of freedom (trace of
-   the smoother matrix).}
+   the smoother matrix).  Must be in \eqn{(1,n_x]}{(1,nx]},
+   \eqn{n_x}{nx} the number of unique x values, see below.}
  \item{spar}{smoothing parameter, typically (but not necessarily) in
    \eqn{(0,1]}.  The coefficient \eqn{\lambda} of the integral of the
    squared second derivative in the fit (penalized log likelihood)
    criterion is a monotone function of \code{spar}, see the details
    below.}
  \item{cv}{ordinary (\code{TRUE}) or \sQuote{generalized} cross-validation
-   (GCV) when \code{FALSE}; setting it to \code{NA} skips the evaluation
-   of leverages and any score.}
+   (GCV) when \code{FALSE}; is used for smoothing parameter computation
+   only when \code{df} is not specified; it is used however
+   to determine \code{cv.crit} in the result.  Setting it to \code{NA}
+   for speedup skips the evaluation of leverages and any score.}
  \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used as
    knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
@@ -174,7 +177,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
     on \code{cv}.}
   \item{pen.crit}{penalized criterion}
   \item{crit}{the criterion value minimized in the underlying
-    \code{.Fortran} routine \file{sslvrg}.}
+    \code{.Fortran} routine \file{sslvrg}.  When \code{df} has been specified,
+    the criterion is \eqn{3 + (tr(S_\lambda) - df)^2}{3 + (tr(S[lambda]) - df)^2},
+    where the \eqn{3 +} is there for numerical (and historical) reasons.}
   \item{df}{equivalent degrees of freedom used.  Note that (currently)
     this value may become quite imprecise when the true \code{df} is
     between and 1 and 2.
@@ -277,7 +282,7 @@ lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
 \dontshow{
-stopifnot(all.equal(predict(s02, xx),
+stopifnot(all.equal(predict(s02 , xx),
 		    predict(s02., xx), tolerance = 1e-15))
 }
 \donttest{
