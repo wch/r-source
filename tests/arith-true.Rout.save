@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-10 r70470) -- "Supposedly Educational"
+R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.192 0.004 0.195 0 0 
+Time elapsed:  0.136 0 0.136 0 0 
 > 

@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-10 r70470) -- "Supposedly Educational"
+R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 8239
+[1] 8269
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
