@@ -1,6 +1,6 @@
 % File src/library/utils/man/normalizePath.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{normalizePath}
@@ -44,6 +44,12 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
   messages.
 }
 
+\note{
+  The canonical form of paths may not be what you expect.  For example,
+  on OS X absolute paths such as \file{/tmp} and \file{/var} are
+  symbolic links.
+}
+
 \value{
   A character vector.
 
@@ -73,7 +79,7 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 }
 #endif
 
-\examples{\donttest{ # random tempdir
+\examples{\donttest{# random tempdir
 cat(normalizePath(c(R.home(), tempdir())), sep = "\n")
 }}
 \keyword{ utilities }

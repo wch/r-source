@@ -1,6 +1,6 @@
 % File src/library/base/man/tempfile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tempfile}
@@ -29,6 +29,12 @@ tempdir()
 #ifdef windows
 
   Both will use backslash as the path separator.
+#endif
+#ifdef unix
+  
+  The value will be an absolute path (unless \code{tmpdir} is set to a
+  relative path), but it need not be canonical (see
+  \code{\link{normalizePath}}) and on OS X usually is not.
 #endif
 }
 \details{
