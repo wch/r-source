@@ -33,8 +33,9 @@ makevars_site()
   Section \dQuote{Customizing package compilation} in the 
   \dQuote{R Installation and Administration} manual.
 }
-\examples{
+%% \donttest as output is user/site-dependent
+\examples{\donttest{
 makevars_user()
 makevars_site()
-}
+}}
 \keyword{utilities}
