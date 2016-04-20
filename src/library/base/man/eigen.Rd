@@ -5,6 +5,7 @@
 
 \name{eigen}
 \alias{eigen}
+\alias{print.eigen}
 \concept{eigen vector}
 \concept{eigen value}
 \title{Spectral Decomposition of a Matrix}
