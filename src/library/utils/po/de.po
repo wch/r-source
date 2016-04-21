@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2015-06-06 13:52+0100\n"
-"PO-Revision-Date: 2016-04-20 09:58+0200\n"
+"PO-Revision-Date: 2016-04-21 09:14+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -70,7 +70,7 @@ msgstr "\\\\ gefolgt von EOF"
 #: io.c:937 io.c:940
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
-msgstr "unvollstäindige letzte Zeile von readTableHeader in '%s' gefunden"
+msgstr "unvollständige letzte Zeile von readTableHeader in '%s' gefunden"
 
 #: io.c:997
 msgid "index out of range"
