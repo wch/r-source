@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/text.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,19 @@
 text <- function(x, ...) UseMethod("text")
 
 text.default <-
-function(x, y = NULL, labels = seq_along(x),
+function(x, y = NULL, labels = seq_along(x$x),
          adj = NULL, pos = NULL, offset = 0.5,
          vfont = NULL, cex = 1, col = NULL, font = NULL, ...)
 {
     if (!missing(y) && (is.character(y) || is.expression(y))) {
 	labels <- y; y <- NULL
     }
+    x <- xy.coords(x,y, recycle = TRUE, setLab = FALSE)
     labels <- as.graphicsAnnot(labels)
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
                    fontindex = pmatch(vfont[2L], Hershey$fontindex))
-    .External.graphics(C_text, xy.coords(x,y, recycle = TRUE), labels,
+    .External.graphics(C_text, x, labels,
                        adj, pos, offset, vfont, cex, col, font, ...)
     invisible()
 }

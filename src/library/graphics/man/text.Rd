@@ -1,6 +1,6 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{text}
@@ -9,7 +9,7 @@
 \usage{
 text(x, \dots)
 
-\method{text}{default} (x, y = NULL, labels = seq_along(x), adj = NULL,
+\method{text}{default} (x, y = NULL, labels = seq_along(x$x), adj = NULL,
      pos = NULL, offset = 0.5, vfont = NULL,
      cex = 1, col = NULL, font = NULL, \dots)
 }

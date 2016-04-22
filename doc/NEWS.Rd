@@ -60,6 +60,10 @@
       \item Getting or setting \code{body()} or \code{formals()} on
       non-functions for now signals a warning and may become an error
       for setting.
+
+      \item In \code{text.default(x, y, labels)}, the rarely(?) used
+      default for \code{labels} is now correct also for the case of a
+      2-column matrix \code{x} and missing \code{y}.
     }
   }
 }
