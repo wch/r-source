@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/calc.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ function (x = seq(0, 1, length.out = nrow(z)),
 
 chull <- function(x, y = NULL)
 {
-    X <- xy.coords(x, y, recycle = TRUE)
+    X <- xy.coords(x, y, recycle = TRUE, setLab = FALSE)
     x <- cbind(X$x, X$y)
     if(any(!is.finite(x))) stop("finite coordinates are needed")
     if(nrow(x) == 0) return(integer())
@@ -113,7 +113,7 @@ xyTable <- function(x, y = NULL, digits)
 {
     ## Compute number := multiplicities of (x[i], y[i])
 
-    x <- xy.coords(x, y)
+    x <- xy.coords(x, y, setLab = FALSE)
 
     ## get rid of rounding fuzz:
     y <- signif(x$y, digits=digits)

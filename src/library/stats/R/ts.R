@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -529,7 +529,7 @@ plot.ts <-
 		xy <- ts.intersect(x, y)
 		xy <- xy.coords(xy[,1], xy[,2], xlabel, ylabel, log)
 	    } else
-	    xy <- xy.coords(x, y, xlabel, ylabel, log)
+		xy <- xy.coords(x, y, xlabel, ylabel, log)
 	    xlab <- if (missing(xlab)) xy$xlab else xlab
 	    ylab <- if (missing(ylab)) xy$ylab else ylab
 	    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
@@ -575,10 +575,10 @@ plot.ts <-
 	    k <- ncol(x)
 	    tx <- time(x)
 	    xy <- xy.coords(x = matrix(rep.int(tx, k), ncol = k),
-			    y = x, log = log)
+			    y = x, log = log, setLab = FALSE)
 	    xy$x <- tx
 	}
-	else xy <- xy.coords(x, NULL, log = log)
+	else xy <- xy.coords(x, NULL, log = log, setLab = FALSE)
 	if(is.null(xlim)) xlim <- range(xy$x)
 	if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
 	plot.new()

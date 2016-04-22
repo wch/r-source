@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/identify.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ identify.default <-
         opar <- par(extras)
         on.exit(par(opar))
     }
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab = FALSE)
     x <- xy$x
     y <- xy$y
     if (length(x)==0) {

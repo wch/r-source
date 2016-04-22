@@ -1,7 +1,7 @@
 #  File src/library/stats/R/tukeyline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 line <- function(x, y = NULL)
 {
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab = FALSE)
     ok <- complete.cases(xy$x,xy$y)
     Call <- sys.call()
     structure(.Call(C_tukeyline, as.double(xy$x[ok]), as.double(xy$y[ok]),

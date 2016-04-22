@@ -51,7 +51,7 @@ smooth.spline <-
        contr.sp$tol < 0 || contr.sp$eps <= 0 || contr.sp$maxit <= 0)
         stop("invalid 'control.spar'")
 
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab=FALSE)
     y <- xy$y
     x <- xy$x
     if(!all(is.finite(c(x, y))))

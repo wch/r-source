@@ -42,6 +42,9 @@
 
       \item Zero-length date and datetime objects (\code{"POSIX[cl]?t"})
       now \code{print()} \dQuote{recognizably}.
+
+      \item \code{xy.coords()} and \code{xyz.coords()} get new
+      \code{setLab} option.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

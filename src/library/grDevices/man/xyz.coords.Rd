@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xyz.coords.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xyz.coords}
@@ -13,7 +13,7 @@
 \usage{
 xyz.coords(x, y = NULL, z = NULL,
            xlab = NULL, ylab = NULL, zlab = NULL,
-           log = NULL, recycle = FALSE)
+           log = NULL, recycle = FALSE, setLab = TRUE)
 }
 \arguments{
   \item{x, y, z}{the x, y and z coordinates of a set of points.
@@ -41,6 +41,9 @@ xyz.coords(x, y = NULL, z = NULL,
     Sets negative values to \code{\link{NA}} and gives a warning.}
   \item{recycle}{logical; if \code{TRUE}, recycle (\code{\link{rep}}) the
     shorter ones of \code{x}, \code{y} or \code{z} if their lengths differ.}
+  \item{setLab}{logical indicating if the resulting \code{xlab} and
+    \code{ylab} should be constructed from the \dQuote{kind} of \code{(x,y)};
+    otherwise, the arguments \code{xlab} and \code{ylab} are used.}
 }
 \value{
   A list with the components

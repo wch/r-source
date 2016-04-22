@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xy.coords.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xy.coords}
@@ -12,7 +12,7 @@
 }
 \usage{
 xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
-          recycle = FALSE)
+          recycle = FALSE, setLab = TRUE)
 }
 \alias{xy.coords}
 \arguments{
@@ -24,6 +24,9 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
     gives a warning.}
   \item{recycle}{logical; if \code{TRUE}, recycle (\code{\link{rep}})
     the shorter of \code{x} or \code{y} if their lengths differ.}
+  \item{setLab}{logical indicating if the resulting \code{xlab} and
+    \code{ylab} should be constructed from the \dQuote{kind} of \code{(x,y)};
+    otherwise, the arguments \code{xlab} and \code{ylab} are used.}
 }
 \details{
   An attempt is made to interpret the arguments \code{x} and \code{y} in
@@ -49,7 +52,7 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
   In any other case, the \code{x} argument is coerced to a vector and
   returned as \bold{y} component where the resulting \code{x} is just
   the index vector \code{1:n}.  In this case, the resulting \code{xlab}
-  component is set to \code{"Index"}.
+  component is set to \code{"Index"} (if \code{setLab} is true as by default).
 
   If \code{x} (after transformation as above) inherits from class
   \code{"POSIXt"} it is coerced to class \code{"POSIXct"}.
@@ -68,12 +71,24 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
   and \code{\link{lowess}} are examples of functions which use this mechanism.
 }
 \examples{
-xy.coords(stats::fft(c(1:9)), NULL)
-
+ff <- stats::fft(1:9)
+xy.coords(ff)
+xy.coords(ff, xlab = "fft") # labels "Re(fft)",  "Im(fft)"
+\dontshow{
+stopifnot(identical(xy.coords(ff, xlab = "fft"),
+                    xy.coords(ff, ylab = "fft")))
+xy.labs <- function(...) xy.coords(...)[c("xlab","ylab")]
+stopifnot(identical(xy.labs(ff, xlab = "fft", setLab = FALSE),
+                    list(xlab = "fft", ylab = "fft")),
+          identical(xy.labs(ff, ylab = "fft", setLab = FALSE),
+                    list(xlab = NULL, ylab = "fft")),
+          identical(xy.labs(ff, xlab = "Re(fft)", ylab = "Im(fft)", setLab = FALSE),
+                    list(xlab = "Re(fft)", ylab = "Im(fft)")))
+}% dont
 with(cars, xy.coords(dist ~ speed, NULL)$xlab ) # = "speed"
 
-xy.coords(1:3, 1:2, recycle = TRUE)
-xy.coords(-2:10, NULL, log = "y")
-##> warning: 3 y values <= 0 omitted ..
+xy.coords(1:3, 1:2, recycle = TRUE) # otherwise error "lengths differ"
+xy.coords(-2:10, log = "y")
+##> xlab: "Index"  \\\  warning: 3 y values <= 0 omitted ..
 }
 \keyword{dplot}

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/polygon.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright 1995-2012 The R Core Team
+#  Copyright 1995-2016 The R Core Team
 #  In part (C) 2001 Kevin Buhr
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@ polygon <-
     ## FIXME: remove this eventually
     ..debug.hatch <- FALSE
     ##-- FIXME: what if `log' is active, for x or y?
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab = FALSE)
 
     if (is.numeric(density) && all(is.na(density) | density < 0))
         density <- NULL
@@ -283,7 +283,7 @@ xspline <-
   function(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE,
            draw = TRUE, border = par("fg"), col = NA, ...)
 {
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab = FALSE)
     s <- rep.int(shape, length(xy$x))
     if(open) s[1L] <- s[length(x)] <- 0
     invisible(.External.graphics(C_xspline, xy$x, xy$y, s, open, repEnds,
@@ -295,7 +295,7 @@ polypath <-
            border = NULL, col = NA, lty = par("lty"),
            rule = "winding", ...)
 {
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab = FALSE)
     if (is.logical(border)) {
         if (!is.na(border) && border) border <- par("fg")
         else border <- NA

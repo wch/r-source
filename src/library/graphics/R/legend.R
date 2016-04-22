@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/legend.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	else NA
 
     if (is.na(auto)) {
-	xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
+	xy <- xy.coords(x, y, setLab = FALSE); x <- xy$x; y <- xy$y
 	nx <- length(x)
 	if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
     } else nx <- 0

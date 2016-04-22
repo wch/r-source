@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/smooth2d.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ densCols <- function(x, y = NULL, nbin = 128, bandwidth,
 		     colramp = colorRampPalette(blues9[-(1:3)]))
 {
     ## similar as in plot.default
-    xy <- xy.coords(x, y)
+    xy <- xy.coords(x, y, setLab = FALSE)
 
     ## deal with NA, etc
     select <- is.finite(xy$x) & is.finite(xy$y)
