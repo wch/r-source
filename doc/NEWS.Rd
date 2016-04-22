@@ -39,6 +39,9 @@
 
       \item The result of \code{eigen()} now is of class \code{"eigen"}
       in the default case when eigenvectors are computed.
+
+      \item Zero-length date and datetime objects (\code{"POSIX[cl]?t"})
+      now \code{print()} \dQuote{recognizably}.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
