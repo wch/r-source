@@ -1470,6 +1470,18 @@ steps <- setNames(,
       "1 DSTday", "2 weeks", "1 month", "6 months", "1 year",
       "10 years", "50 years", "1000 years"))
 t02 <- as.POSIXct("2002-02-02 02:02")
+(at <- chkPretty(t02 + 0:1, n = 5, min.n = 3, max.D=2))
+xU <- as.POSIXct("2002-02-02 02:02", tz = "UTC")
+x5 <- as.POSIXct("2002-02-02 02:02", tz = "EST5EDT")
+atU <- chkPretty(seq(xU, by = "30 mins", length = 2), n = 5)
+at5 <- chkPretty(seq(x5, by = "30 mins", length = 2), n = 5)
+stopifnot(length(at) >= 4,
+	  identical(sort(names(aat <- attributes(at))), c("class", "labels", "tzone")),
+	  identical(aat$labels, time2d(59+ 0:3)),
+          identical(x5 - xU, structure(5, units = "hours", class = "difftime")),
+          identical(attr(at5, "labels"), attr(atU, "labels") -> lat),
+          identical(lat, paste("02", time2d(10* 0:4), sep=":"))
+)
 nns <- c(1:9, 15:17); names(nns) <- paste0("n=",nns)
 prSeq <- function(x, n, st, ...) pretty(seq(x, by = st, length = 2), n = n, ...)
 pps <- lapply(nns, function(n)

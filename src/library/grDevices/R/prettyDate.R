@@ -110,36 +110,17 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     calcSteps <- function(s, lim = range(zz)) {
         startTime <- trunc_POSIXt(lim[1], units = s$start) ## FIXME: should be trunc() eventually
         at <- seqDtime(startTime, end = lim[2], by = s$spec)
-
-	i <- which(lim[1] <= at & at <= lim[2])
-	if(!length(i)) # at[] is fully outside (to the *left*: rarely)
-	    return(at[FALSE])
-	r <- range(i)
-        while(lim[1] < at[r[1]]) { # not covering at left
-            if(r[1] > 1) ## take one more point at left
-                i <- c(r[1] <- r[1] - 1L, i)
-            else { # add point at left
-                nat <- seqDtime(at[1], by=paste("-1",s$spec), length = 2)[2]
-                if(is.na(nat) || !(nat < at[1])) # failed
-                    break
-                at <- c(nat, at)
-                i <- i + 1L
-                if(lim[1] <= at[1]) r <- range(i <- c(1L, i))
-            }
-        }
-        while(lim[2] > at[r[2]]) { # not covering at right
-            if(r[2] < length(at)) ## take one more point at right
-                i <- c(i, r[2] <- r[2] + 1L)
-            else { # add point at right
-                nat <- seqDtime(at[length(at)], by = s$spec, length=2)[2]
-                if(is.na(nat) || !(nat > at[length(at)])) # failed
-                    break
-                at <- c(at, nat)
-                if(lim[2] >= nat) r <- range(i <- c(i, length(at)))
-            }
-        }
-        ## Now we could see if we are *smaller* than 'n+1' and add even more at[] on both sides
-        at[i]
+	r1 <- sum(at <= lim[1])
+	r2 <- length(at) + 1 - sum(at >= lim[2])
+	if(r2 == length(at) + 1) { # not covering at right -- add point at right
+	    nat <- seqDtime(at[length(at)], by = s$spec, length=2)[2]
+	    if(is.na(nat) || !(nat > at[length(at)])) # failed
+		r2 <- length(at)
+	    else
+		at[r2] <- nat
+	}
+	## Now we could see if we are *smaller* than 'n+1' and add even more at[] on both sides
+	at[r1:r2]
     }
     init.at <- calcSteps(st.i <- steps[[init.i]])
     ## bump it up if below acceptable threshold
@@ -152,12 +133,14 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
                 nat <- seqDtime(init.at[length(init.at)], by = st.i$spec, length=2)[2]
                 R.fail <- is.na(nat) || !(nat > init.at[length(init.at)])
                 if(!R.fail)
-                    init.at <- c(init.at, nat)
+                    init.at[length(init.at) + 1] <- nat
             } else { # left
-                nat <- seqDtime(init.at[1], by = paste("-1",st.i$spec), length=2)[2]
+                nat <- seqDtime(init.at[1], by = paste0("-",st.i$spec), length=2)[2]
                 L.fail <- is.na(nat) || !(nat < init.at[1])
-                if(!L.fail)
-                    init.at <- c(nat, init.at)
+                if(!L.fail) {
+                    init.at[seq_along(init.at) + 1] <- init.at
+                    init.at[1] <- nat
+                }
             }
             if(R.fail && L.fail)
                 stop("failed to add more ticks; 'min.n' too large?")
