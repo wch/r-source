@@ -647,6 +647,9 @@
       \item \code{download.file()} with \code{method = "wininet"}
       incorrectly warned of download file length difference when
       reported length was unknown. (\PR{16805})
+      
+      \item \code{diag(NULL, 1)} crashed because of missed type
+      checking.  (\PR{16853})
     }
   }
 }
