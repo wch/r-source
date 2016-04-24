@@ -5,13 +5,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2016
-@set FAQ_DATE @value{FAQ_YEAR}-04-14
-@set REL_YEAR 2016
-@set REL_MAJOR 3
-@set REL_MINOR 2
-@set REL_PATCHLEVEL 5
-@set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
-@set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
+@set FAQ_DATE @value{FAQ_YEAR}-04-24
+@set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -315,12 +310,15 @@ If you know about other platforms, please drop us a note.
 @node What is the current version of R?, How can R be obtained?, What machines does R run on?, R Basics
 @section What is the current version of R?
  
-The current released version is @value{REL_VERSION}.  Based on this
-`major.minor.patchlevel' numbering scheme, there are two development
-versions of R, a patched version of the current release (`r-patched')
-and one working towards the next minor or eventually major (`r-devel')
-releases of R, respectively.  Version r-patched is for bug fixes mostly.
-New features are typically introduced in r-devel.
+R uses a `major.minor.patchlevel' numbering scheme.  Based on this,
+there are the current release version of R (`r-release') as well as two
+development versions of R, a patched version of the current release
+(`r-patched') and one working towards the next minor or eventually major
+(`r-devel') releases of R, respectively.  New features are typically
+introduced in r-devel, while r-patched is for bug fixes mostly.
+
+See @url{https://CRAN.R-project.org/sources.html} for the current
+versions of r-release, r-patched and r-devel.
 
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
@@ -673,11 +671,14 @@ To cite R in publications, use
   author       = @{@{R Core Team@}@},
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
-  year         = @value{REL_YEAR},
+  year         = @var{YEAR},
   url          = @{https://www.R-project.org@}
 @}
 @end group
 @end example
+@noindent
+where @var{YEAR} is the release year of the version of R used and can
+determined as @code{R.version$year}.
 
 Citation strings (or Bib@TeX{} entries) for R and R packages can also be
 obtained by @code{citation()}.
