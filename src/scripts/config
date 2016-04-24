@@ -228,7 +228,7 @@ if test "${site}" = "yes"; then
 fi
 if test "${personal}" = "yes"; then
   if test "${R_OSTYPE}" = "windows"; then
-    if test -n "${R_MAKEVARS_USER}"; then
+    if test -f "${R_MAKEVARS_USER}"; then
       makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
     elif test ${R_ARCH} = "/x64" -a -f "${HOME}/.R/Makevars.win64"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars.win64"
@@ -239,7 +239,7 @@ if test "${personal}" = "yes"; then
     fi
   else
     . ${R_HOME}/etc${R_ARCH}/Renviron
-    if test -n "${R_MAKEVARS_USER}"; then
+    if test -f "${R_MAKEVARS_USER}"; then
       makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
     elif test -f "${HOME}/.R/Makevars-${R_PLATFORM}"; then
       makefiles="${makefiles} -f ${HOME}/.R/Makevars-${R_PLATFORM}"
