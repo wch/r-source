@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
+R version 3.3.0 beta (2016-04-24 r70538) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -531,7 +531,7 @@ pckgDs>
 > ## lattice may not be installed
 > ## Avoid possibly large list from R_HOME/site-library, which --vanilla includes.
 > dependsOnPkgs("lattice", lib.loc = .Library)
-[1] "Matrix"   "nlme"     "mgcv"     "survival"
+[1] "Matrix" "nlme"   "mgcv"  
 > 
 > ## This may not be installed
 > gridEx <- system.file("doc", "grid.Rnw", package = "grid")
