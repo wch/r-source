@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -71,7 +71,7 @@ strptime(x, format, tz = "")
   \code{\link{LC_TIME}} locale category.  The \sQuote{current locale} of
   the descriptions might mean the locale in use at the start of the \R
   session or when these functions are first used.
-  
+
   % strftime is C99: strptime is POSIX.
   The details of the formats are platform-specific, but the following are
   likely to be widely available: most are defined by the POSIX standard.
@@ -210,7 +210,7 @@ strptime(x, format, tz = "")
   truncated to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
   not followed by a digit, it uses the setting of
   \code{\link{getOption}("digits.secs")}, or if that is unset, \code{n =
-  3}).  Further, for \code{strptime} \code{\%OS} will input seconds
+  0}).  Further, for \code{strptime} \code{\%OS} will input seconds
   including fractional seconds.  Note that \code{\%S} does not read
   fractional parts on output. 
 
@@ -231,7 +231,7 @@ strptime(x, format, tz = "")
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The time zone is used to set the
   \code{isdst} component and to set the \code{"tzone"} attribute if
-  \code{tz != ""}. If the specified time is invalid (for example
+  \code{tz != ""}.  If the specified time is invalid (for example
   \samp{"2010-02-30 08:00"}) all the components of the result are
   \code{NA}.  (NB: this does means exactly what it says -- if it is an
   invalid time, not just a time that does not exist in some time zone.)
