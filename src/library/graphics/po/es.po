@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 16:25-0700\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -22,7 +22,12 @@ msgstr ""
 msgid "no base graphics system is registered"
 msgstr ""
 
-#: base.c:333 base.c:340 base.c:348
+#: base.c:310
+#, fuzzy
+msgid "Incompatible graphics state"
+msgstr "estado gráfico inválido"
+
+#: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
 msgstr ""
 
@@ -80,28 +85,28 @@ msgstr "plot.new no ha sido llamado aún"
 msgid "invalid graphics state"
 msgstr "estado gráfico inválido"
 
-#: graphics.c:2555
+#: graphics.c:2563
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2604
+#: graphics.c:2613
 msgid "No graphics device is active"
 msgstr "Ningún dispositivo gráfico está activo"
 
-#: graphics.c:3063
+#: graphics.c:3072
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "vector de argumento cero tiene un ángulo indeterminado y se saltea"
 
-#: graphics.c:3144
+#: graphics.c:3153
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "parámetro inválido par(\"bty\") = '%c'; no box() desechado"
 
-#: graphics.c:3161
+#: graphics.c:3170
 msgid "invalid argument to GBox"
 msgstr "argumento inválido para GBox"
 
-#: graphics.c:3406
+#: graphics.c:3415
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "\t\"Información métrica no disponible para este dispositivo"

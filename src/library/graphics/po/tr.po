@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 16:25-0700\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -24,7 +24,12 @@ msgstr ""
 msgid "no base graphics system is registered"
 msgstr ""
 
-#: base.c:333 base.c:340 base.c:348
+#: base.c:310
+#, fuzzy
+msgid "Incompatible graphics state"
+msgstr "geçersiz grafik durumu"
+
+#: base.c:385 base.c:392 base.c:400
 #, fuzzy
 msgid "the base graphics system is not registered"
 msgstr "çok fazla grafik sistemi kayıtlı"
@@ -83,28 +88,28 @@ msgstr "plot.new henüz çağırılmadı"
 msgid "invalid graphics state"
 msgstr "geçersiz grafik durumu"
 
-#: graphics.c:2555
+#: graphics.c:2563
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2604
+#: graphics.c:2613
 msgid "No graphics device is active"
 msgstr "Hiç bir grafik aygıtı aktif değil"
 
-#: graphics.c:3063
+#: graphics.c:3072
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "belirsiz açıda sıfır uzunlukta ok, atlandı"
 
-#: graphics.c:3144
+#: graphics.c:3153
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "geçersiz par(\"bty\") = '%c'; box() çizilmedi"
 
-#: graphics.c:3161
+#: graphics.c:3170
 msgid "invalid argument to GBox"
 msgstr "GBox a geçersiz argüman"
 
-#: graphics.c:3406
+#: graphics.c:3415
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "Bu aygıtta metrik bilgisi bulunmuyor"

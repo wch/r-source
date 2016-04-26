@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 16:25-0700\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -28,7 +28,12 @@ msgstr ""
 msgid "no base graphics system is registered"
 msgstr "등록된 base 그래픽 시스템이 없습니다"
 
-#: base.c:333 base.c:340 base.c:348
+#: base.c:310
+#, fuzzy
+msgid "Incompatible graphics state"
+msgstr "유효한 그래픽 상태가 아닙니다"
+
+#: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
 msgstr "base 그래픽 시스템이 등록되지 않았습니다"
 
@@ -84,28 +89,28 @@ msgstr "plot.new는 아직까지 호출되지 않았습니다"
 msgid "invalid graphics state"
 msgstr "유효한 그래픽 상태가 아닙니다"
 
-#: graphics.c:2555
+#: graphics.c:2563
 msgid "graphics device closed during call to locator or identify"
 msgstr "locator 또는 identify 로의 호출이 있는 동안 그래픽 장치는 잠깁니다"
 
-#: graphics.c:2604
+#: graphics.c:2613
 msgid "No graphics device is active"
 msgstr "활성화된 그래픽 장치가 없습니다"
 
-#: graphics.c:3063
+#: graphics.c:3072
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "길이가 0인 arrow는 angle을 정할 수 없기 때문에 넘어갑니다"
 
-#: graphics.c:3144
+#: graphics.c:3153
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "유효한 par(\"bty\") = '%c'가 아니므로 그려질 box()가 없습니다"
 
-#: graphics.c:3161
+#: graphics.c:3170
 msgid "invalid argument to GBox"
 msgstr "유효하지 않은 인자가 GBox에 전달되었습니다"
 
-#: graphics.c:3406
+#: graphics.c:3415
 msgid "metric information not available for this device"
 msgstr "이 장치에 대한 metric information이 사용가능하지 않습니다"
 

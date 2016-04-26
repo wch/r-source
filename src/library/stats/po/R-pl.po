@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-26 15:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -488,6 +488,12 @@ msgstr "Aproksymacja chi-kwadrat może być niepoprawna"
 msgid "NA values not allowed in 'd'"
 msgstr "wartości NA w argumencie 'd' nie są dozwolone"
 
+msgid "eig=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
+msgid "x.ret=TRUE is disregarded when list.=FALSE"
+msgstr ""
+
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "odległości muszą być wynikiem 'dist' lub być kwadratową macierzą"
 
@@ -499,6 +505,9 @@ msgstr "'k' musi być w zakresie {1, 2, ..  n - 1}"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "tylko %d pierwszych %d wartości własnych jest > 0"
+
+msgid "package 'MASS' must be installed"
+msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "wartość początkowa nie jest wewnątrz możliwego regionu"
@@ -542,6 +551,10 @@ msgstr "potrzeba dostarczyć jeden lub więecj wektorów"
 
 msgid "arguments must have the same length"
 msgstr "argumenty muszą mieć tę samą długość"
+
+#, fuzzy
+msgid "wrong number of columns in new data:"
+msgstr "niepoprawna liczba kolumn w 'x'"
 
 msgid "contrasts apply only to factors"
 msgstr "kontrasty mają zastosowanie jedynie do czynników"
@@ -797,6 +810,9 @@ msgid "some terms will have NAs due to the limits of the method"
 msgstr ""
 "niektóre wyrażenia będą miały wartości NA z uwagi na ograniczenia metody"
 
+msgid "multivariate case with missing coefficients is not yet implemented"
+msgstr ""
+
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x' musi mieć 1 lub więcej niebrakujących wartości"
 
@@ -915,7 +931,10 @@ msgstr ""
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "dodanie wartości są dozwolone jedynie dla rodziny 'inverse.gaussian'"
 
-msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
+#, fuzzy
+msgid ""
+"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
+"family"
 msgstr "potrzeba pakietu 'SuppDists' z CRAN dla rodziny 'inverse.gaussian'"
 
 msgid "using weights as inverse variances"
@@ -1431,6 +1450,10 @@ msgstr "niepoprawna wartość 'NCOL(X)'"
 msgid "only 1-4 predictors are allowed"
 msgstr "tylko od 1 do 4 predyktorów jest dozwolone"
 
+#, fuzzy
+msgid "invalid NROW(X)"
+msgstr "niepoprawna wartość 'NCOL(X)'"
+
 msgid "invalid 'y'"
 msgstr "niepoprawna wartość 'y'"
 
@@ -1458,6 +1481,13 @@ msgstr "niepoprawny argument 'cell'"
 
 msgid "invalid argument 'degree'"
 msgstr "niepoprawny argument 'degree'"
+
+msgid "iterTrace ="
+msgstr ""
+
+#, fuzzy
+msgid "not obeyed as iterations ="
+msgstr "brak skończonych obserwacji"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "pierwszy argument musi być obiektem klasu \"loess\""
@@ -2110,10 +2140,8 @@ msgstr "nie można użyć więcej wewnętrznych węzłów niż unikalnych warto�
 msgid "'spar' must be of length 1"
 msgstr "argument 'spar' musi mieć długość 1"
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr "określono jednocześnie 'df' oraz 'cv'; drugi zostanie odrzucony"
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+#, fuzzy
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "musisz dostarczyć 1 < df <= n,  n = #{unikalne x} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2623,6 +2651,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktu"
 msgstr[1] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
 msgstr[2] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
+
+#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
+#~ msgstr "określono jednocześnie 'df' oraz 'cv'; drugi zostanie odrzucony"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "dalsze niedopasowane argumenty zostały odrzucone"

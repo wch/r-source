@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 16:25-0700\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -21,7 +21,12 @@ msgstr ""
 msgid "no base graphics system is registered"
 msgstr " ベースとなるグラフィックシステムが登録されていません "
 
-#: base.c:333 base.c:340 base.c:348
+#: base.c:310
+#, fuzzy
+msgid "Incompatible graphics state"
+msgstr " グラフィックスの状態が不正です "
+
+#: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
 msgstr " 基本グラフィックシステムが登録されていません "
 
@@ -77,29 +82,29 @@ msgstr " まだ plot.new が呼ばれていません "
 msgid "invalid graphics state"
 msgstr " グラフィックスの状態が不正です "
 
-#: graphics.c:2555
+#: graphics.c:2563
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 " locatorまたはidentifyの呼び出し中にグラフィックデバイスが閉じられました "
 
-#: graphics.c:2604
+#: graphics.c:2613
 msgid "No graphics device is active"
 msgstr " 現在有効なグラフィックデバイスがありません "
 
-#: graphics.c:3063
+#: graphics.c:3072
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr " 長さゼロの arrow は角度が不定ですので，スキップされました "
 
-#: graphics.c:3144
+#: graphics.c:3153
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr " par(\"bty\") = '%c' が不正です; box() は描画されません "
 
-#: graphics.c:3161
+#: graphics.c:3170
 msgid "invalid argument to GBox"
 msgstr " GBox の引数が不正です "
 
-#: graphics.c:3406
+#: graphics.c:3415
 msgid "metric information not available for this device"
 msgstr " このデバイスに対してメトリック情報は利用できません "
 

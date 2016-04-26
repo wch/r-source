@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
+"POT-Creation-Date: 2016-04-26 15:26\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -449,6 +449,9 @@ msgstr "je ne sais pas quoi rechercher"
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
 
+msgid "incorrect type specification"
+msgstr "spécification de type incorrecte"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 "pas d'information dans la base de données pour le package %s : faut-il "
@@ -456,9 +459,6 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "spécification 'agrep' incorrecte"
-
-msgid "incorrect type specification"
-msgstr "spécification de type incorrecte"
 
 msgid "could not find package %s"
 msgstr "impossible de trouver le packages %s"
@@ -651,11 +651,19 @@ msgstr "--- SVP sélectionner un miroir CRAN pour cette session ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "essai d'utilisation de CRAN sans fixer un miroir"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "impossible de choisir un miroir CRAN en mode non interactif"
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "erreur de read.dcf() dans le fichier %s"
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "impossible de choisir un miroir BioC en mode non interactif"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr ""
+
+msgid "cannot choose a"
+msgstr ""
+
+#, fuzzy
+msgid "mirror non-interactively"
+msgstr "impossible de choisir un miroir CRAN en mode non interactif"
 
 msgid "cannot set repositories non-interactively"
 msgstr "impossible de fixer les entrepôts en mode non interactif"
@@ -1101,9 +1109,6 @@ msgstr "'subject' est manquant"
 msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress' doit être de longueur 1"
 
-msgid "no download method found"
-msgstr "impossible de trouver une méthode de téléchargement"
-
 #, fuzzy
 msgid "'url' must be a length-one character vector"
 msgstr "'title' doit être NULL ou un vecteur de type caractère de longueur 1"
@@ -1173,6 +1178,9 @@ msgstr "aucun répertoire 'libs' n'est trouvé dans le package %s"
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
 
+msgid "use != NA is defunct"
+msgstr ""
+
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() ne peut être utilisé en mode non interactif"
 
@@ -1233,6 +1241,13 @@ msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
 msgstr[0] "le package %s n'est pas disponible (pour %s)"
 msgstr[1] "les packages '%s' ne sont pas disponibles (pour %s)"
+
+#, fuzzy
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
+msgstr[1] ""
+"les packages %s sont en cours d'utilisation et ne seront pas installés"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1337,6 +1352,12 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "impossible de choisir un miroir BioC en mode non interactif"
+
+#~ msgid "no download method found"
+#~ msgstr "impossible de trouver une méthode de téléchargement"
 
 #~ msgid ","
 #~ msgstr ","
@@ -1563,9 +1584,6 @@ msgstr[1] ""
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "mise à jour des descriptions HTML des packages"
-
-#~ msgid "read.dcf() error on file '%s'"
-#~ msgstr "erreur de read.dcf() dans le fichier %s"
 
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr "Executable aspell ou ispell introuvable."

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 16:25-0700\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -22,7 +22,12 @@ msgstr ""
 msgid "no base graphics system is registered"
 msgstr ""
 
-#: base.c:333 base.c:340 base.c:348
+#: base.c:310
+#, fuzzy
+msgid "Incompatible graphics state"
+msgstr "ugyldig grafikktilstand"
+
+#: base.c:385 base.c:392 base.c:400
 #, fuzzy
 msgid "the base graphics system is not registered"
 msgstr "for mange grafikksystem registrerte"
@@ -81,28 +86,28 @@ msgstr "plot.new er ikkje kalla enno"
 msgid "invalid graphics state"
 msgstr "ugyldig grafikktilstand"
 
-#: graphics.c:2555
+#: graphics.c:2563
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2604
+#: graphics.c:2613
 msgid "No graphics device is active"
 msgstr "Inga verksam grafikkeining"
 
-#: graphics.c:3063
+#: graphics.c:3072
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "pil av lengd null har ikkje-unik vinkel, og vert derfor ikkje teikna"
 
-#: graphics.c:3144
+#: graphics.c:3153
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ugyldig par(\"bty\") = '%c' (ingen box() teikna)"
 
-#: graphics.c:3161
+#: graphics.c:3170
 msgid "invalid argument to GBox"
 msgstr "ugyldig argument til GBox"
 
-#: graphics.c:3406
+#: graphics.c:3415
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "Metrikkinformasjon ikkje tilgjengeleg for eininga"

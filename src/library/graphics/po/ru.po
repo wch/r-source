@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-26 16:25-0700\n"
 "PO-Revision-Date: 2015-03-26 18:57-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -26,7 +26,12 @@ msgstr ""
 msgid "no base graphics system is registered"
 msgstr "не зарегистрирована базовая графическая система"
 
-#: base.c:333 base.c:340 base.c:348
+#: base.c:310
+#, fuzzy
+msgid "Incompatible graphics state"
+msgstr "неправильное графическое состояние"
+
+#: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
 msgstr "базовая графическая система не зарегистрирована"
 
@@ -82,28 +87,28 @@ msgstr "'plot.new' пока не вызван"
 msgid "invalid graphics state"
 msgstr "неправильное графическое состояние"
 
-#: graphics.c:2555
+#: graphics.c:2563
 msgid "graphics device closed during call to locator or identify"
 msgstr "графическое устройство закрыто в процессе вызова locator или identify"
 
-#: graphics.c:2604
+#: graphics.c:2613
 msgid "No graphics device is active"
 msgstr "Нет активного графического устройства"
 
-#: graphics.c:3063
+#: graphics.c:3072
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "стрелка нулевой длины имеет неопределенный угол и поэтому пропущена"
 
-#: graphics.c:3144
+#: graphics.c:3153
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "неправильный par(\"bty\") = '%c'; не нарисован box()"
 
-#: graphics.c:3161
+#: graphics.c:3170
 msgid "invalid argument to GBox"
 msgstr "неправильный аргумент для GBox"
 
-#: graphics.c:3406
+#: graphics.c:3415
 msgid "metric information not available for this device"
 msgstr "метрическая информация для этого устройства недоступна"
 
