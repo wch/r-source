@@ -1,7 +1,7 @@
 #  File src/library/stats/R/anova.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,7 +64,8 @@ printCoefmat <-
 	     dig.tst = max(1L, min(5L, digits - 1L)),
 	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(),
 	     P.values = NULL,
-	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc], 1, 3) == "Pr(",
+	     has.Pvalue = nc >= 4L &&
+                 substr(colnames(x)[nc], 1L, 3L) %in% c("Pr(", "p-v"),
              eps.Pvalue = .Machine$double.eps,
 	     na.print = "NA", ...)
 {

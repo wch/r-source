@@ -1,6 +1,6 @@
 % File src/library/stats/man/printCoefmat.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{printCoefmat}
@@ -21,7 +21,7 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
              cs.ind = 1L:k, tst.ind = k + 1L,
              zap.ind = integer(), P.values = NULL,
              has.Pvalue = nc >= 4L &&
-                          substr(colnames(x)[nc], 1L, 3L) == "Pr(",
+                          substr(colnames(x)[nc], 1L, 3L) \%in\% c("Pr(", "p-v"),
              eps.Pvalue = .Machine$double.eps,
              na.print = "NA", \dots)
 }
