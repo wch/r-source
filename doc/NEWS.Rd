@@ -45,6 +45,11 @@
 
       \item \code{xy.coords()} and \code{xyz.coords()} get new
       \code{setLab} option.
+
+      \item \code{sort.list()}, \code{order()} and \code{sort.int()}
+      \code{method} argument gains an \code{"auto"} option (the default)
+      which should behave the same as before when \code{method} was left
+      missing.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
