@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -988,6 +988,12 @@ msgstr ""
 
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
+msgstr ""
+
+msgid "Function must be an S4 generic"
+msgstr ""
+
+msgid "method is not being debugged"
 msgstr ""
 
 msgid "object %s not found"

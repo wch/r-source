@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1259,8 +1259,8 @@ msgstr "tutti gli elementi di 'which' devono essere tra 1 e %d"
 msgid "invalid parameter values"
 msgstr "valori dei parametri non validi"
 
-msgid "a limit is missing"
-msgstr "manca un limite"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 #, fuzzy
 msgid "missing values not allowed"
@@ -2083,8 +2083,8 @@ msgstr ""
 msgid "'varying' arguments must be the same length"
 msgstr "gli argomenti 'varying' devono avere la stessa lunghezza"
 
-msgid "'times' is wrong length"
-msgstr "'times' ha lunghezza sbagliata"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "ci sono record con 'times' mancanti, saranno ignorati"
@@ -2206,8 +2206,10 @@ msgstr "non posso usare più nodi interni che valori unici di 'x'"
 msgid "'spar' must be of length 1"
 msgstr "'acf' deve avere lunghezza due o più"
 
-#, fuzzy
-msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
+
+msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "si deve fornire 1 < df <= n, n = #{x distrinti} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2725,6 +2727,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "a limit is missing"
+#~ msgstr "manca un limite"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times' ha lunghezza sbagliata"
 
 #, fuzzy
 #~ msgid "non-matched further arguments are disregarded"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -86,28 +86,28 @@ msgstr "plot.new 還沒有被呼叫"
 msgid "invalid graphics state"
 msgstr "繪圖狀態不正確"
 
-#: graphics.c:2563
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2613
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr "沒有活動中的繪圖裝置"
 
-#: graphics.c:3072
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "零長度箭頭的角度不定，因此忽略不用"
 
-#: graphics.c:3153
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\")='%c' 不正確; 取消繪製 box()"
 
-#: graphics.c:3170
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr "GBox 引數不正確"
 
-#: graphics.c:3415
+#: graphics.c:3406
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "無法取得這個裝置的度量資訊"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2015-02-17 08:52+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -334,7 +334,7 @@ msgstr " 'postscript(print.it=TRUE)' が空の描画命令とともに使われ�
 msgid "invalid page type '%s' (postscript)"
 msgstr " 不正なページ '%s' (ポストスクリプト) "
 
-#: devPS.c:3464 devPS.c:4577 devWindows.c:2349
+#: devPS.c:3464 devPS.c:4577 devWindows.c:2346
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -552,14 +552,14 @@ msgstr " %s 中に不正な 'family' パラメータ "
 msgid "invalid 'fonts' parameter in %s"
 msgstr " %s 中に不正な 'fonts' パラメータ "
 
-#: devPS.c:8249 devPS.c:8412 devPS.c:8415 devWindows.c:3654 devWindows.c:3658
-#: devWindows.c:3666 devWindows.c:3677 devWindows.c:3683 devWindows.c:3690
-#: devWindows.c:3697 devWindows.c:3701
+#: devPS.c:8249 devPS.c:8412 devPS.c:8415 devWindows.c:3646 devWindows.c:3650
+#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
+#: devWindows.c:3689 devWindows.c:3693
 #, c-format
 msgid "invalid value of '%s'"
 msgstr " '%s' の値が不正です "
 
-#: devPS.c:8262 devPS.c:8329 devPS.c:8429 devPicTeX.c:740 devWindows.c:3742
+#: devPS.c:8262 devPS.c:8329 devPS.c:8429 devPicTeX.c:740 devWindows.c:3734
 #, c-format
 msgid "unable to start %s() device"
 msgstr " デバイス %s() を開始できませんでした "
@@ -687,52 +687,48 @@ msgstr " クリップボードメタファイルは一つの図だけを保管�
 msgid "metafile '%s' could not be created"
 msgstr " メタファイル '%s' を作成できませんでした "
 
-#: devWindows.c:3120 devWindows.c:3766
+#: devWindows.c:3117 devWindows.c:3758
 msgid "R Graphics"
 msgstr " R グラフィックス "
 
-#: devWindows.c:3134
+#: devWindows.c:3131
 msgid "attempt to use the locator after dev.hold()"
 msgstr " dev.hold() のあとにロケーターを使おうとしています "
 
-#: devWindows.c:3165
-msgid "graphics device closed during call to locator or identify"
-msgstr ""
-
-#: devWindows.c:3405
+#: devWindows.c:3397
 msgid "option 'windowsTimeouts' should be integer"
 msgstr " オプション 'windowsTimeouts' は整数でなければなりません "
 
-#: devWindows.c:3426
+#: devWindows.c:3418
 msgid "invalid device number in 'savePlot'"
 msgstr " 'savePlot' 中に不正なデバイス番号 "
 
-#: devWindows.c:3428
+#: devWindows.c:3420
 msgid "invalid device in 'savePlot'"
 msgstr " 'savePlot' 中に不正なデバイス "
 
-#: devWindows.c:3431
+#: devWindows.c:3423
 msgid "invalid filename argument in 'savePlot'"
 msgstr " 'savePlot' 中に不正なファイル名引数 "
 
-#: devWindows.c:3436
+#: devWindows.c:3428
 msgid "invalid type argument in 'savePlot'"
 msgstr " 'savePlot' に不正な型の引数 "
 
-#: devWindows.c:3463
+#: devWindows.c:3455
 msgid "unknown type in savePlot"
 msgstr " savePlot 中に未知の型 "
 
-#: devWindows.c:3508 devWindows.c:3540 devWindows.c:3568 devWindows.c:3599
-#: devWindows.c:3620
+#: devWindows.c:3500 devWindows.c:3532 devWindows.c:3560 devWindows.c:3591
+#: devWindows.c:3612
 msgid "processing of the plot ran out of memory"
 msgstr " プロット中にメモリ不足になりました "
 
-#: devWindows.c:3584
+#: devWindows.c:3576
 msgid "Impossible to open "
 msgstr " オープンできません "
 
-#: devWindows.c:3649
+#: devWindows.c:3641
 msgid "invalid 'width' or 'height'"
 msgstr " 不正な幅か高さ "
 

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -232,12 +232,6 @@ msgstr "유효하지 않은 출력 포맷입니다"
 
 msgid "status %d in running command '%s'"
 msgstr "명령어 '%2$s'를 실행하던 중 상태 %1$d가 되었습니다"
-
-msgid "failed to add more ticks; 'min.n' too large?"
-msgstr ""
-
-msgid "'mday' must be 1 or 15 for \"halfmonth\""
-msgstr ""
 
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "래스터 행렬은 반드시 문자, 또는 숫자, 또는 논리값이어야 합니다"

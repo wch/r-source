@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1195,8 +1195,8 @@ msgstr " 'which' のすべての要素は 1 と %d の間になければなり�
 msgid "invalid parameter values"
 msgstr " 無効なパラメータ値です "
 
-msgid "a limit is missing"
-msgstr " 限界がありません "
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr " 欠測値は許されません "
@@ -1970,8 +1970,8 @@ msgstr " 時間変動変数を名前から推測できませんでした "
 msgid "'varying' arguments must be the same length"
 msgstr " 'varying' 引数は同じ長さでなければなりません "
 
-msgid "'times' is wrong length"
-msgstr " 'times' の長さが誤っています "
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr " 時間が欠損した記録がありますので、取り除きます "
@@ -2082,8 +2082,10 @@ msgstr " 相異なる 'x' 値の数より多くの内部結節点を使用する
 msgid "'spar' must be of length 1"
 msgstr " 'spar' の長さは 1 でなければなりません "
 
-#, fuzzy
-msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr " 'df' と 'cv' の両方が特定されているので、後者は無視されます "
+
+msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr ""
 " 自由度 1 < df < n を与えなければなりません。ここで n = #{unique x} =　 "
 
@@ -2524,8 +2526,11 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
 
-#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
-#~ msgstr " 'df' と 'cv' の両方が特定されているので、後者は無視されます "
+#~ msgid "a limit is missing"
+#~ msgstr " 限界がありません "
+
+#~ msgid "'times' is wrong length"
+#~ msgstr " 'times' の長さが誤っています "
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr " 余計な引数は捨てられました "

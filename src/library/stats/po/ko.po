@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 15:26-0700\n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -200,6 +200,11 @@ msgstr "요인이 없습니다"
 #: fourier.c:226
 msgid "invalid factors"
 msgstr "유효하지 않은 요인입니다"
+
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr "'m'은 반드시 리스트이어야 합니다"
 
 #: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

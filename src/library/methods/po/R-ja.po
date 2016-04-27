@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:52+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1193,6 +1193,13 @@ msgid ""
 msgstr ""
 " %s から %s への強制変換のためのメソッドが現在存在します; これらを交換しま"
 "す。 "
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr " .getGeneric の中に空の関数名 "
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr " オブジェクト %s は存在しません "

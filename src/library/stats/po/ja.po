@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 15:26-0700\n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -195,6 +195,11 @@ msgstr " 因子がありません "
 #: fourier.c:226
 msgid "invalid factors"
 msgstr " 因子 (factor) が不正です "
+
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr " 'm' はリストでなければなりません "
 
 #: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

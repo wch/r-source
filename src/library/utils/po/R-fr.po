@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -278,6 +278,15 @@ msgstr "impossible de restaurer les variables correctement"
 
 msgid "did not assign() anything"
 msgstr "rien n'a été assign()é"
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr ""
+"erreur lors de la tentative d'évaluation d'expression pour l'argument %s (%s)"
 
 msgid "Browsing in the environment with call:"
 msgstr "Navigation dans l'environnement avec l'appel :"
@@ -821,10 +830,6 @@ msgstr ""
 "aucune méthode pour %s et aucune documentation à son sujet en tant que "
 "fonction"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr ""
-"erreur lors de la tentative d'évaluation d'expression pour l'argument %s (%s)"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "aucune méthode définie pour la fonction %s et pour la signature %s"
 
@@ -972,6 +977,9 @@ msgstr "'object' n'a pas d'attribut levels() correct"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' et 'digits.d' sont tous deux spécifiés et le second est ignoré"
+
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
 
 msgid "no lines found in %s"
 msgstr "aucune ligne trouvée dans %s"
@@ -1176,9 +1184,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr "aucun répertoire 'libs' n'est trouvé dans le package %s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

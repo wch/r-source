@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1157,8 +1157,8 @@ msgstr "'which'的所有单元值都必需在一和%d之间"
 msgid "invalid parameter values"
 msgstr "参数值不对"
 
-msgid "a limit is missing"
-msgstr "極限有遺漏"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "不能有遺漏值"
@@ -1918,8 +1918,8 @@ msgstr "没有能够从它们的名字中来猜测时变参数"
 msgid "'varying' arguments must be the same length"
 msgstr "'varying'参数的长度必需相同"
 
-msgid "'times' is wrong length"
-msgstr "'times'的长度不对"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "含遺漏时间的记录略过不用。"
@@ -2025,8 +2025,10 @@ msgstr "内部结点数止比相互不同的'x'数目要多"
 msgid "'spar' must be of length 1"
 msgstr "'spar'的长度必需是一"
 
-#, fuzzy
-msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr "'df'和'cv'都有设定；后者略过不用"
+
+msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "你必需提供1 < df <= n,  n = #{unique x} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2464,8 +2466,11 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
 
-#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
-#~ msgstr "'df'和'cv'都有设定；后者略过不用"
+#~ msgid "a limit is missing"
+#~ msgstr "極限有遺漏"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times'的长度不对"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "不匹配的额外参数略过不用"

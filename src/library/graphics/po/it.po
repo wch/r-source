@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -92,30 +92,30 @@ msgstr "plot.new non è ancora stato chiamato"
 msgid "invalid graphics state"
 msgstr "stato grafico non valido"
 
-#: graphics.c:2563
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2613
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr "Nessun dispositivo grafico attivo"
 
-#: graphics.c:3072
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr ""
 "frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno "
 "ignorate"
 
-#: graphics.c:3153
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\") = '%c' non valido; no disegno il box()"
 
-#: graphics.c:3170
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr "argomento non valido in GBox"
 
-#: graphics.c:3415
+#: graphics.c:3406
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "'truncation' non disponibile per questa connessione"

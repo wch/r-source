@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 15:26-0700\n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -193,6 +193,11 @@ msgstr "非因子"
 #: fourier.c:226
 msgid "invalid factors"
 msgstr "因子不对"
+
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr "'m'的值必需是串列"
 
 #: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

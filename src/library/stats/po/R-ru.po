@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 19:18-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1201,8 +1201,8 @@ msgstr "все элементы 'which' должны быть между 1 и %d"
 msgid "invalid parameter values"
 msgstr "неправильные значения параметра"
 
-msgid "a limit is missing"
-msgstr "предел пропущен"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "пропущенные значения не разрешены"
@@ -1984,8 +1984,8 @@ msgstr "не получилось создать временнЫе переменные из их имен"
 msgid "'varying' arguments must be the same length"
 msgstr "аргументы 'varying' должны быть одной длины"
 
-msgid "'times' is wrong length"
-msgstr "'times' неправильной длины"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "здесь есть записи с пропущенными временами, они будут сброшены."
@@ -2093,8 +2093,10 @@ msgstr ""
 msgid "'spar' must be of length 1"
 msgstr "'ref' должен быть единичной длины"
 
-#, fuzzy
-msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr "указано и 'df' и 'cv'; значение последнего проигнорировано"
+
+msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr "Вы должны указать 1 < df <= n,  n = #{unique x} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2604,8 +2606,11 @@ msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
 
-#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
-#~ msgstr "указано и 'df' и 'cv'; значение последнего проигнорировано"
+#~ msgid "a limit is missing"
+#~ msgstr "предел пропущен"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times' неправильной длины"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "дальнейшие несоответствующие аргументы проигнорированы"

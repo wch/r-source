@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2015-03-26 18:57-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -87,28 +87,28 @@ msgstr "'plot.new' пока не вызван"
 msgid "invalid graphics state"
 msgstr "неправильное графическое состояние"
 
-#: graphics.c:2563
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr "графическое устройство закрыто в процессе вызова locator или identify"
 
-#: graphics.c:2613
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr "Нет активного графического устройства"
 
-#: graphics.c:3072
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "стрелка нулевой длины имеет неопределенный угол и поэтому пропущена"
 
-#: graphics.c:3153
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "неправильный par(\"bty\") = '%c'; не нарисован box()"
 
-#: graphics.c:3170
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr "неправильный аргумент для GBox"
 
-#: graphics.c:3415
+#: graphics.c:3406
 msgid "metric information not available for this device"
 msgstr "метрическая информация для этого устройства недоступна"
 

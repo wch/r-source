@@ -1,27 +1,28 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
-"PO-Revision-Date: 2016-04-04 11:19+0200\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"PO-Revision-Date: 2015-03-26 21:38+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.7.5\n"
 
 #: base.c:43
 msgid "no base graphics system is registered"
 msgstr "nie zarejestrowano żadnego bazowego systemu graficznego"
 
 #: base.c:310
+#, fuzzy
 msgid "Incompatible graphics state"
-msgstr "Niepoprawny stan grafiki"
+msgstr "niepoprawny stan grafiki"
 
 #: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
@@ -79,31 +80,31 @@ msgstr "'plot.new' nie został jeszcze wywołany"
 msgid "invalid graphics state"
 msgstr "niepoprawny stan grafiki"
 
-#: graphics.c:2563
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 "urządzenie graficzne zostało zamknięte podczas wywołania funkcji 'locator()' "
 "lub 'idenfify()'"
 
-#: graphics.c:2613
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr "Brak aktywnego urządzenia graficznego"
 
-#: graphics.c:3072
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr ""
 "strzałka o zerowej długości ma nieokreślony kąt tak więc zostaje pominięta"
 
-#: graphics.c:3153
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "niepoprawne par(\"bty\") = '%c'; nie wykonano funkcji 'box()'"
 
-#: graphics.c:3170
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr "niepoprawny argument przekazany do 'GBox'"
 
-#: graphics.c:3415
+#: graphics.c:3406
 msgid "metric information not available for this device"
 msgstr "informacja o metryce nie jest dostępna dla tego urządzenia"
 

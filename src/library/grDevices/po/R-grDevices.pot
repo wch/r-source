@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: grDevices 3.3.0\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"Project-Id-Version: grDevices 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,12 +215,6 @@ msgid "invalid output format"
 msgstr ""
 
 msgid "status %d in running command '%s'"
-msgstr ""
-
-msgid "failed to add more ticks; 'min.n' too large?"
-msgstr ""
-
-msgid "'mday' must be 1 or 15 for \"halfmonth\""
 msgstr ""
 
 msgid "a raster matrix must be character, or numeric, or logical"

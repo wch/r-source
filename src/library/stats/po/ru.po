@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 15:26-0700\n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2015-03-26 19:21-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -198,6 +198,11 @@ msgstr "нет факторов"
 #: fourier.c:226
 msgid "invalid factors"
 msgstr "неправильные факторы"
+
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr "'m' должен быть списком"
 
 #: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1188,8 +1188,8 @@ msgstr "'x' in bütün elemanları 1 ile %d arasında olmalı"
 msgid "invalid parameter values"
 msgstr "geçersiz parametre değerleri"
 
-msgid "a limit is missing"
-msgstr "a sınırı eksik"
+msgid "a limit is NA or NaN"
+msgstr ""
 
 msgid "missing values not allowed"
 msgstr "eksik değerlere izin verilmiyor"
@@ -1955,8 +1955,8 @@ msgstr ""
 msgid "'varying' arguments must be the same length"
 msgstr ""
 
-msgid "'times' is wrong length"
-msgstr "'times' yanlış uzunluk"
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr ""
 
 msgid "there are records with missing times, which will be dropped."
 msgstr ""
@@ -2071,7 +2071,10 @@ msgstr ""
 msgid "'spar' must be of length 1"
 msgstr "'model$order' 3 uzunluğunda olmalı"
 
-msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
+msgid "specified both 'df' and 'cv'; will disregard the latter"
+msgstr ""
+
+msgid "you must supply 1 < df <= n,  n = #{unique x} ="
 msgstr ""
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2561,6 +2564,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#~ msgid "a limit is missing"
+#~ msgstr "a sınırı eksik"
+
+#~ msgid "'times' is wrong length"
+#~ msgstr "'times' yanlış uzunluk"
 
 #, fuzzy
 #~ msgid "extra argument %s will be disregarded"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 15:26-0700\n"
+"POT-Creation-Date: 2016-04-01 10:01-0700\n"
 "PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -194,6 +194,11 @@ msgstr "pas de variables facteur"
 #: fourier.c:226
 msgid "invalid factors"
 msgstr "variables facteur incorrectes"
+
+#: integrate.c:84 integrate.c:86 integrate.c:128
+#, fuzzy, c-format
+msgid "'%s' must be of length one"
+msgstr "'m' doit être une liste"
 
 #: ksmooth.c:68
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

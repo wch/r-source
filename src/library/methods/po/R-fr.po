@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 10:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1275,6 +1275,13 @@ msgid ""
 msgstr ""
 "des méthodes existent actuellement pour convertir automatiquement de %s vers "
 "%s ; Elles seront remplacées."
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr "nom de fonction vide dans .getGeneric"
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr "objet %s introuvable"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -263,6 +263,14 @@ msgstr "无法正确恢复变量"
 
 msgid "did not assign() anything"
 msgstr "assign()没有用到"
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "为参数%s評估表示式时发生了错误(%s)"
 
 msgid "Browsing in the environment with call:"
 msgstr "在調用环境里浏览:"
@@ -770,9 +778,6 @@ msgstr "函数調用%2$s里类别为%1$s的对象不能用作帮助文件題目"
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "%s没有方法，也没有将之用作函数的帮助文件"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "为参数%s評估表示式时发生了错误(%s)"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "函数%s和标签%s没有设定方法"
 
@@ -914,6 +919,9 @@ msgstr "'object'的levels()的值不对"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
+
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
 
 msgid "no lines found in %s"
 msgstr "%s里找不到信息"
@@ -1111,9 +1119,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr "在程序包%s里找不到'libs'这个目录"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

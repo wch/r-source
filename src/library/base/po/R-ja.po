@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -500,6 +500,15 @@ msgstr ""
 " 不正な行は次の場所で始まっています: \n"
 " %s "
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr " 'x' は正方行列でなければなりません "
 
@@ -622,6 +631,10 @@ msgstr " 無効な 'time' 引数です "
 #, fuzzy
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr " 'vec' は非減少順にソートされていなければいけません "
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr " ハンドラーは関数でなければなりません "
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr " タイプ \"expression\" の 'value' の最初の要素だけを使います "

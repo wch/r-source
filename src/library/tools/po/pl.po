@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -13,8 +13,8 @@ msgstr ""
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Generator: Poedit 1.7.5\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -53,12 +53,12 @@ msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 "co najwyżej jedna gwiazdka '*' jest wspierana w każdym określeniu zamiany"
 
-#: gramLatex.c:2499 gramRd.c:3935
+#: gramLatex.c:2499 gramRd.c:3933
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
 
-#: gramLatex.c:2736 gramRd.c:4424 gramRd.c:4430
+#: gramLatex.c:2736 gramRd.c:4422 gramRd.c:4428
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawny wartość '%s'"
@@ -85,55 +85,55 @@ msgstr ""
 msgid "No macro definition for '%s'."
 msgstr "Brak makra zdefiniowanego dla '%s'"
 
-#: gramRd.c:3350 gramRd.c:3354
+#: gramRd.c:3348 gramRd.c:3352
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "nowa linia wewnątrz cytowanego łańcucha w %s:%d"
 
-#: gramRd.c:3373
+#: gramRd.c:3371
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "nie można przydzielić bufora dla długiego makra w linii %d"
 
-#: gramRd.c:3403
+#: gramRd.c:3401
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "makra są zagnieżdżone zbyt głęboko: nieskończona rekurencja?"
 
-#: gramRd.c:3797
+#: gramRd.c:3795
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Nie można znaleźć makra %s"
 
-#: gramRd.c:3995
+#: gramRd.c:3993
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
 "Nieoczekiwane zakończenie wejścia (w %c cytowanym łańcuchu otwartym w %s:%d:"
 "%d)"
 
-#: gramRd.c:4437
+#: gramRd.c:4435
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
-#: gramRd.c:4444
+#: gramRd.c:4442
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
-#: gramRd.c:4452
+#: gramRd.c:4450
 msgid "invalid Rd file"
 msgstr "niepoprawny plik Rd"
 
-#: gramRd.c:4471
+#: gramRd.c:4469
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 "'deparseRd' wspiera tylko konwertowanie wyrażenia na łańcuch tekstowy dla "
 "elementów znakowych"
 
-#: gramRd.c:4474
+#: gramRd.c:4472
 msgid "bad state"
 msgstr "błędny stan"
 
-#: gramRd.c:4487
+#: gramRd.c:4485
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "błędny tryb %d tekstu w 'deparseRd'"

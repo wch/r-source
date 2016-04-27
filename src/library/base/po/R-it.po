@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -549,6 +549,15 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x' deve essere una matrice quadrata"
 
@@ -688,6 +697,10 @@ msgstr "argomento 'category' non valido"
 #, fuzzy
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "'vec' deve essere ordinato in ordine non decrescente"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "handler deve essere una funzione"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 18:54-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -228,12 +228,6 @@ msgstr "неправильный формат вывода"
 
 msgid "status %d in running command '%s'"
 msgstr "статус %d выполняющейся команды '%s'"
-
-msgid "failed to add more ticks; 'min.n' too large?"
-msgstr ""
-
-msgid "'mday' must be 1 or 15 for \"halfmonth\""
-msgstr ""
 
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""

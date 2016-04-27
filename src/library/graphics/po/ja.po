@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -82,29 +82,29 @@ msgstr " まだ plot.new が呼ばれていません "
 msgid "invalid graphics state"
 msgstr " グラフィックスの状態が不正です "
 
-#: graphics.c:2563
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 " locatorまたはidentifyの呼び出し中にグラフィックデバイスが閉じられました "
 
-#: graphics.c:2613
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr " 現在有効なグラフィックデバイスがありません "
 
-#: graphics.c:3072
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr " 長さゼロの arrow は角度が不定ですので，スキップされました "
 
-#: graphics.c:3153
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr " par(\"bty\") = '%c' が不正です; box() は描画されません "
 
-#: graphics.c:3170
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr " GBox の引数が不正です "
 
-#: graphics.c:3415
+#: graphics.c:3406
 msgid "metric information not available for this device"
 msgstr " このデバイスに対してメトリック情報は利用できません "
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -265,6 +265,14 @@ msgstr " 変数を正しく再構成できませんでした "
 
 msgid "did not assign() anything"
 msgstr " 何も assign() しませんでした "
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr " 引数 %s (%s) に対する表現式を評価中にエラー "
 
 msgid "Browsing in the environment with call:"
 msgstr " 以下の呼び出しに伴う環境でブラウジング: "
@@ -809,9 +817,6 @@ msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 " %s に対するメソッドはありませんし、その関数としてのドキュメントもありません "
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr " 引数 %s (%s) に対する表現式を評価中にエラー "
-
 msgid "no method defined for function %s and signature %s"
 msgstr ""
 " 関数 %s でシグネチャが %s であるものに対して定義されたメソッドはありません "
@@ -961,6 +966,9 @@ msgstr " 'object' は有効な levels() を持ちません "
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 " 'digits' と 'digits.d' の両方が指定されています。'digits.d' は使われません "
+
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
 
 msgid "no lines found in %s"
 msgstr " %s には一行も存在しません "
@@ -1159,9 +1167,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr " パッケージ %s には 'libs' ディレクトリはありません "
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

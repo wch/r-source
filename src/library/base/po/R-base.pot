@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: base 3.3.0\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"Project-Id-Version: base 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -460,6 +460,15 @@ msgstr ""
 msgid "Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s"
 msgstr ""
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr ""
 
@@ -569,6 +578,9 @@ msgid "invalid 'time' argument"
 msgstr ""
 
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
+msgstr ""
+
+msgid "'fun' is not a function"
 msgstr ""
 
 msgid "using the first element of 'value' of type \"expression\""

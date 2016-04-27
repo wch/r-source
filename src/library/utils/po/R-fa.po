@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -250,6 +250,14 @@ msgid "could not restore variables properly"
 msgstr ""
 
 msgid "did not assign() anything"
+msgstr ""
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr ""
 
 msgid "Browsing in the environment with call:"
@@ -739,9 +747,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr ""
-
 msgid "no method defined for function %s and signature %s"
 msgstr ""
 
@@ -880,6 +885,9 @@ msgid "'object' does not have valid levels()"
 msgstr ""
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr ""
+
+msgid "number of matches does not always match ncol(proto)"
 msgstr ""
 
 msgid "no lines found in %s"
@@ -1068,9 +1076,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr ""
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

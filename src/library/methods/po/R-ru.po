@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 19:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1187,6 +1187,13 @@ msgstr "метод \"coerce' не определен"
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "методы для приведения %s к %s уже существуют; они будут заменены."
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr "Пустое имя функции в .getGeneric"
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr "объект %s не найден"

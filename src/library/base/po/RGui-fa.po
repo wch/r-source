@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2012-10-26 22:30+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -1041,7 +1041,7 @@ msgid "Enhanced metafiles"
 msgstr "Metafile ذخیره تصویر در قالب"
 
 #: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3453
+#: src/library/grDevices/src/devWindows.c:3445
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "مسیر پرونده انتخاب شده بسیار طولانی است؛ فقط 512 بایت مجاز می‌باشد"
 
@@ -1183,15 +1183,15 @@ msgstr "metafile ذخیره به عنوان ..."
 msgid "Save as postscript..."
 msgstr "postscript ذخیره به عنوان ..."
 
-#: src/library/grDevices/src/devWindows.c:3146
+#: src/library/grDevices/src/devWindows.c:3143
 msgid "Locator is active"
 msgstr "مختصات‌یاب فعال می‌باشد"
 
-#: src/library/grDevices/src/devWindows.c:3777
+#: src/library/grDevices/src/devWindows.c:3769
 msgid "Waiting to confirm page change..."
 msgstr "منتظر اجازه شما برای تغییر تصویر  ..."
 
-#: src/library/grDevices/src/devWindows.c:3789
+#: src/library/grDevices/src/devWindows.c:3781
 msgid "Click or hit ENTER for next page"
 msgstr "برای دیدن تصویر بعد در این پنجره تلیک کنید یا کلید اینتر را بزنید"
 

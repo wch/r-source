@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -524,6 +524,15 @@ msgstr ""
 "Les lignes litigieuses commencent par:\n"
 "%s"
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x' doit être une matrice carrée"
 
@@ -647,6 +656,10 @@ msgstr "argument 'time' incorrect"
 #, fuzzy
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "'vec' doit être trié par ordre croissant"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "le manipulateur de données (handler) doit être une fonction"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "utilisation du premier élément de 'value' de type \"expression\""

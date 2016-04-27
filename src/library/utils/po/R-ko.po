@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -280,6 +280,14 @@ msgstr "변수들을 올바르게 복구할 수 없었습니다"
 
 msgid "did not assign() anything"
 msgstr "어떠한 것도 assign()하지 않습니다"
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "인자 %s (%s)에 대한 표현식을 평가하려는데 에러가 발생했습니다"
 
 msgid "Browsing in the environment with call:"
 msgstr ""
@@ -805,9 +813,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "%s에 대한 메소드들이 없으며 함수로서 이와 관련된 문서들도 없습니다"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "인자 %s (%s)에 대한 표현식을 평가하려는데 에러가 발생했습니다"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "함수 %s와 signature %s에 정의된 메소드가 없습니다"
 
@@ -954,6 +959,9 @@ msgstr "'object'는 올바른 levels()들을 가지고 있지 않습니다"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits'와 'digits.d' 모두 지정되지 않았기 때문에 후자는 사용되지 않습니다"
+
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
 
 msgid "no lines found in %s"
 msgstr "%s에서 발견된 라인들은 없습니다"
@@ -1150,9 +1158,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr "패키지 %s내에 'libs'이라는 디렉토리가 없습니다"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

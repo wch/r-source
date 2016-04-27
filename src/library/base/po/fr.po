@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2014-03-17 10:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -133,13 +133,13 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/main/array.c:1413 src/main/array.c:1414 src/main/array.c:1758
 #: src/main/array.c:1760 src/main/array.c:1762 src/main/attrib.c:190
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
-#: src/main/builtin.c:118 src/main/builtin.c:149 src/main/builtin.c:560
-#: src/main/builtin.c:576 src/main/builtin.c:765 src/main/builtin.c:767
-#: src/main/builtin.c:769 src/main/character.c:237 src/main/character.c:240
-#: src/main/character.c:245 src/main/character.c:786 src/main/character.c:789
-#: src/main/character.c:1287 src/main/character.c:1291
-#: src/main/character.c:1526 src/main/character.c:1530
-#: src/main/character.c:1591 src/main/character.c:1594
+#: src/main/builtin.c:118 src/main/builtin.c:149 src/main/builtin.c:569
+#: src/main/builtin.c:585 src/main/builtin.c:773 src/main/builtin.c:775
+#: src/main/builtin.c:777 src/main/character.c:239 src/main/character.c:242
+#: src/main/character.c:247 src/main/character.c:788 src/main/character.c:791
+#: src/main/character.c:1289 src/main/character.c:1293
+#: src/main/character.c:1528 src/main/character.c:1532
+#: src/main/character.c:1593 src/main/character.c:1596
 #: src/main/connections.c:1208 src/main/connections.c:1214
 #: src/main/connections.c:1217 src/main/connections.c:1221
 #: src/main/connections.c:1367 src/main/connections.c:1383
@@ -221,9 +221,9 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/main/saveload.c:2366 src/main/scan.c:684 src/main/scan.c:853
 #: src/main/scan.c:867 src/main/scan.c:871 src/main/scan.c:873
 #: src/main/scan.c:884 src/main/scan.c:911 src/main/scan.c:914
-#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:615
-#: src/main/seq.c:620 src/main/seq.c:628 src/main/seq.c:659 src/main/seq.c:663
-#: src/main/seq.c:669 src/main/seq.c:677 src/main/sort.c:175
+#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:622
+#: src/main/seq.c:627 src/main/seq.c:635 src/main/seq.c:666 src/main/seq.c:670
+#: src/main/seq.c:676 src/main/seq.c:684 src/main/sort.c:175
 #: src/main/sysutils.c:597 src/main/sysutils.c:601 src/main/sysutils.c:605
 #: src/main/sysutils.c:611 src/main/sysutils.c:615 src/main/sysutils.c:1787
 #: src/main/sysutils.c:1791 src/main/unique.c:1029 src/main/unique.c:1337
@@ -719,8 +719,8 @@ msgstr "chaîne de caractères de formattage trop longue"
 msgid "invalid multibyte format string"
 msgstr "chaîne de caractères multioctets incorrecte"
 
-#: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1289
-#: src/main/character.c:1293 src/main/grep.c:782 src/main/grep.c:1530
+#: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1291
+#: src/main/character.c:1295 src/main/grep.c:782 src/main/grep.c:1530
 #: src/main/grep.c:1534 src/main/grep.c:2347 src/main/grep.c:2654
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
@@ -782,16 +782,16 @@ msgstr "erreur regcomp : '%s'"
 msgid "'FUN.VALUE' must be a vector"
 msgstr "'FUN.VALUE' doit être un vecteur"
 
-#: src/main/apply.c:100 src/main/array.c:506 src/main/character.c:845
-#: src/main/character.c:1653 src/main/connections.c:3551
+#: src/main/apply.c:100 src/main/array.c:506 src/main/character.c:847
+#: src/main/character.c:1655 src/main/connections.c:3551
 #: src/main/context.c:653 src/main/context.c:672 src/main/datetime.c:681
 #: src/main/datetime.c:783 src/main/datetime.c:1047 src/main/dotcode.c:222
 #: src/main/errors.c:910 src/main/errors.c:943 src/main/errors.c:1049
 #: src/main/errors.c:1074 src/main/errors.c:1079 src/main/errors.c:1349
 #: src/main/identical.c:66 src/main/identical.c:67 src/main/identical.c:68
 #: src/main/identical.c:69 src/main/identical.c:70 src/main/platform.c:2982
-#: src/main/seq.c:192 src/main/seq.c:340 src/main/seq.c:345 src/main/seq.c:349
-#: src/main/seq.c:390 src/main/seq.c:394 src/main/seq.c:398
+#: src/main/seq.c:192 src/main/seq.c:343 src/main/seq.c:348 src/main/seq.c:352
+#: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1244 src/main/sort.c:1327 src/main/sort.c:1331
 #: src/main/sort.c:1338 src/main/source.c:225 src/main/summary.c:954
 #: src/main/sysutils.c:250 src/main/util.c:1051 src/main/util.c:1056
@@ -865,7 +865,7 @@ msgstr "l'opérateur a besoin d'un ou de deux arguments"
 msgid "non-numeric argument to binary operator"
 msgstr "argument non numérique pour un opérateur binaire"
 
-#: src/main/arithmetic.c:576 src/main/relop.c:230
+#: src/main/arithmetic.c:576 src/main/relop.c:221
 msgid "non-conformable arrays"
 msgstr "tableaux de tailles inadéquates"
 
@@ -873,8 +873,8 @@ msgstr "tableaux de tailles inadéquates"
 msgid "non-conformable time-series"
 msgstr "séries temporelles de tailles inadéquates"
 
-#: src/main/arithmetic.c:641 src/main/logic.c:135 src/main/relop.c:169
-#: src/main/relop.c:268
+#: src/main/arithmetic.c:641 src/main/logic.c:135 src/main/relop.c:160
+#: src/main/relop.c:259
 msgid "longer object length is not a multiple of shorter object length"
 msgstr ""
 "la taille d'un objet plus long n'est pas multiple de la taille d'un objet "
@@ -1358,13 +1358,13 @@ msgstr "la taille de vecteur ne peut être NA/NaN"
 msgid "vector size cannot be infinite"
 msgstr "la longueur d'un vecteur ne peut être infinie"
 
-#: src/main/builtin.c:51 src/main/builtin.c:59 src/main/builtin.c:942
+#: src/main/builtin.c:51 src/main/builtin.c:59 src/main/builtin.c:950
 #: src/main/sort.c:1325
 msgid "vector size specified is too large"
 msgstr "la longueur choisie pour le vecteur est trop grande"
 
-#: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:295
-#: src/main/builtin.c:328 src/main/builtin.c:385 src/main/builtin.c:399
+#: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:304
+#: src/main/builtin.c:337 src/main/builtin.c:394 src/main/builtin.c:408
 #: src/main/coerce.c:1536 src/main/connections.c:3062 src/main/engine.c:2987
 #: src/main/envir.c:1001 src/main/envir.c:1054 src/main/envir.c:1210
 #: src/main/envir.c:1749 src/main/envir.c:1873 src/main/envir.c:1939
@@ -1377,41 +1377,46 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 msgid "use of NULL environment is defunct"
 msgstr "l'utilisation de l'environnement NULL n'est plus autorisée"
 
-#: src/main/builtin.c:308
+#: src/main/builtin.c:250 src/main/builtin.c:263
+#, fuzzy
+msgid "argument is not a function"
+msgstr "l'argument ne peut pas être une fonction"
+
+#: src/main/builtin.c:317
 msgid "replacement object is not an environment"
 msgstr "l'objet de remplacement n'est pas un environnement"
 
-#: src/main/builtin.c:333
+#: src/main/builtin.c:342
 msgid "'enclos' must be an environment"
 msgstr "'enclos' doit être un environnement"
 
-#: src/main/builtin.c:354 src/main/builtin.c:390
+#: src/main/builtin.c:363 src/main/builtin.c:399
 msgid "argument is not an environment"
 msgstr "l'argument n'est pas un environnment"
 
-#: src/main/builtin.c:356
+#: src/main/builtin.c:365
 msgid "the empty environment has no parent"
 msgstr "l'environnement vide n'a pas de parent"
 
-#: src/main/builtin.c:392
+#: src/main/builtin.c:401
 msgid "can not set parent of the empty environment"
 msgstr "impossible de fixer le parent de l'environnement vide"
 
-#: src/main/builtin.c:394
+#: src/main/builtin.c:403
 #, fuzzy
 msgid "can not set the parent environment of a namespace"
 msgstr "impossible de fixer le parent de l'environnement vide"
 
-#: src/main/builtin.c:396
+#: src/main/builtin.c:405
 #, fuzzy
 msgid "can not set the parent environment of package imports"
 msgstr "impossible de fixer le parent de l'environnement vide"
 
-#: src/main/builtin.c:404
+#: src/main/builtin.c:413
 msgid "'parent' is not an environment"
 msgstr "'parent' n'est pas un environnement"
 
-#: src/main/builtin.c:547 src/main/connections.c:3687
+#: src/main/builtin.c:556 src/main/connections.c:3687
 #: src/main/connections.c:4079 src/main/connections.c:4113
 #: src/main/connections.c:4491 src/main/connections.c:4561
 #: src/main/connections.c:4772 src/main/connections.c:4776
@@ -1420,59 +1425,59 @@ msgstr "'parent' n'est pas un environnement"
 msgid "cannot write to this connection"
 msgstr "impossible d'écrire vers cette connexion"
 
-#: src/main/builtin.c:552 src/main/builtin.c:582
+#: src/main/builtin.c:561 src/main/builtin.c:591
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "spécification de '%s' incorrecte"
 
-#: src/main/builtin.c:569
+#: src/main/builtin.c:578
 msgid "non-positive 'fill' argument will be ignored"
 msgstr "l'argument 'fill' négatif ou nul sera ignoré"
 
-#: src/main/builtin.c:644
+#: src/main/builtin.c:653
 #, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
 msgstr "argument %d (type '%s') pas encore traité par cat"
 
-#: src/main/builtin.c:789
+#: src/main/builtin.c:797
 #, c-format
 msgid "vector: cannot make a vector of mode '%s'."
 msgstr "vector : impossible de créer un vecteur de mode '%s'"
 
-#: src/main/builtin.c:815
+#: src/main/builtin.c:823
 msgid "cannot set length of non-vector"
 msgstr "impossible de modifier la longueur d'un objet qui n'est pas un vecteur"
 
-#: src/main/builtin.c:923 src/main/builtin.c:933 src/main/options.c:659
+#: src/main/builtin.c:931 src/main/builtin.c:941 src/main/options.c:659
 msgid "invalid argument"
 msgstr "argument incorrect"
 
-#: src/main/builtin.c:925 src/main/builtin.c:935 src/main/builtin.c:937
-#: src/main/character.c:523 src/main/coerce.c:2832
+#: src/main/builtin.c:933 src/main/builtin.c:943 src/main/builtin.c:945
+#: src/main/character.c:525 src/main/coerce.c:2832
 msgid "invalid value"
 msgstr "valeur incorrecte"
 
-#: src/main/builtin.c:968 src/main/coerce.c:2541 src/main/coerce.c:2584
+#: src/main/builtin.c:976 src/main/coerce.c:2541 src/main/coerce.c:2584
 #: src/main/eval.c:620 src/main/eval.c:740 src/main/eval.c:2266
 #: src/main/eval.c:2346 src/main/eval.c:2407 src/main/eval.c:2745
 #: src/main/eval.c:5584 src/main/eval.c:5701
 msgid "'...' used in an incorrect context"
 msgstr "'...' utilisé dans un contexte incorrect"
 
-#: src/main/builtin.c:990
+#: src/main/builtin.c:998
 #, c-format
 msgid "duplicate 'switch' defaults: '%s' and '%s'"
 msgstr "multiples valeurs par défaut dans 'switch' : '%s' et ''%s'"
 
-#: src/main/builtin.c:1023
+#: src/main/builtin.c:1031
 msgid "'EXPR' is missing"
 msgstr "'EXPR' est manquant"
 
-#: src/main/builtin.c:1027 src/main/eval.c:6056
+#: src/main/builtin.c:1035 src/main/eval.c:6056
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR doit être un vecteur de longueur 1"
 
-#: src/main/builtin.c:1030 src/main/eval.c:6059
+#: src/main/builtin.c:1038 src/main/eval.c:6059
 #, c-format
 msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
@@ -1481,7 +1486,7 @@ msgstr ""
 "EXPR est une variable \"factor\", elle sera traitée comme des entiers.\n"
 " Pensez à utiliser plutôt '%s'."
 
-#: src/main/builtin.c:1087 src/main/eval.c:6069 src/main/eval.c:6098
+#: src/main/builtin.c:1095 src/main/eval.c:6069 src/main/eval.c:6098
 #, fuzzy
 msgid "'switch' with no alternatives"
 msgstr "EXPR numérique requise dans 'switch' sans alternatives nommées"
@@ -1493,8 +1498,8 @@ msgid_plural "%d arguments passed to '%s' which requires %d to %d"
 msgstr[0] "%d argument passés à '%s' qui en exige %d"
 msgstr[1] "%d arguments passés à '%s' qui en exige %d"
 
-#: src/main/character.c:110 src/main/character.c:113 src/main/character.c:230
-#: src/main/character.c:233
+#: src/main/character.c:110 src/main/character.c:113 src/main/character.c:232
+#: src/main/character.c:235
 #, c-format
 msgid "'%s' requires a character vector"
 msgstr "'%s' exige un vecteur de caractères comme argument"
@@ -1518,80 +1523,80 @@ msgid "width is not computable for %s in \"bytes\" encoding"
 msgstr ""
 "largeur impossible à calculer pour l'élément %d dans l'encodage \"bytes\""
 
-#: src/main/character.c:309
+#: src/main/character.c:311
 msgid "extracting substrings from a non-character object"
 msgstr "extraction d'une chaîne d'un objet ne contenant pas des caractères"
 
-#: src/main/character.c:319 src/main/character.c:520
+#: src/main/character.c:321 src/main/character.c:522
 msgid "invalid substring arguments"
 msgstr "arguments de type chaîne incorrects"
 
-#: src/main/character.c:359
+#: src/main/character.c:361
 #, fuzzy
 msgid "non-character object(s)"
 msgstr "les noms ne sont pas des chaînes de caractères"
 
-#: src/main/character.c:515
+#: src/main/character.c:517
 msgid "replacing substrings in a non-character object"
 msgstr "la chaîne de remplacement n'est pas un objet constitué de caractères"
 
-#: src/main/character.c:783
+#: src/main/character.c:785
 msgid "the first argument must be a character vector"
 msgstr "le premier argument doit être un vecteur de caractères"
 
-#: src/main/character.c:820
+#: src/main/character.c:822
 msgid "abbreviate used with non-ASCII chars"
 msgstr "abbreviate utilisé avec des caractères non ASCII"
 
-#: src/main/character.c:841
+#: src/main/character.c:843
 msgid "non-character names"
 msgstr "les noms ne sont pas des chaînes de caractères"
 
-#: src/main/character.c:903 src/main/character.c:1000
+#: src/main/character.c:905 src/main/character.c:1002
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "chaîne de charactères multioctets incorrecte %d"
 
-#: src/main/character.c:946 src/main/grep.c:163
+#: src/main/character.c:948 src/main/grep.c:163
 msgid "non-character argument"
 msgstr "l'argument n'est pas une chaîne de caractères"
 
-#: src/main/character.c:1055
+#: src/main/character.c:1057
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "spécification de plage décroissante ('%lc-%lc')"
 
-#: src/main/character.c:1141
+#: src/main/character.c:1143
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "spécification de plage décroissante ('%c-%c')"
 
-#: src/main/character.c:1329
+#: src/main/character.c:1331
 msgid "invalid UTF-8 string 'old'"
 msgstr "chaîne de charactères UTF-8 'old' incorrecte"
 
-#: src/main/character.c:1335
+#: src/main/character.c:1337
 msgid "invalid multibyte string 'old'"
 msgstr "chaîne de charactères multioctets 'old' incorrecte"
 
-#: src/main/character.c:1348
+#: src/main/character.c:1350
 msgid "invalid UTF-8 string 'new'"
 msgstr "chaîne de charactères uTF-8 'new' incorrecte"
 
-#: src/main/character.c:1354
+#: src/main/character.c:1356
 msgid "invalid multibyte string 'new'"
 msgstr "chaîne de charactères multioctets 'new' incorrecte"
 
-#: src/main/character.c:1382 src/main/character.c:1471
+#: src/main/character.c:1384 src/main/character.c:1473
 msgid "'old' is longer than 'new'"
 msgstr "'old' est plus long que 'new'"
 
-#: src/main/character.c:1414
+#: src/main/character.c:1416
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "chaîne de caractères multioctets %d incorrecte en entrée"
 
-#: src/main/character.c:1521
+#: src/main/character.c:1523
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() exige un vecteur de caractères comme argument"
 
@@ -2731,7 +2736,7 @@ msgstr "argument PACKAGE trop long"
 msgid "no arguments supplied"
 msgstr "aucun argument fourni"
 
-#: src/main/dotcode.c:493 src/main/seq.c:904
+#: src/main/dotcode.c:493 src/main/seq.c:911
 msgid "too many arguments"
 msgstr "trop d'arguments"
 
@@ -4177,7 +4182,7 @@ msgstr ""
 msgid "binary operation on non-conformable arrays"
 msgstr "opération binaire sur des tableaux de tailles non conformes"
 
-#: src/main/logic.c:116 src/main/relop.c:250
+#: src/main/logic.c:116 src/main/relop.c:241
 msgid "non-conformable time series"
 msgstr "séries temporelles de tailles non conformes"
 
@@ -5108,15 +5113,15 @@ msgstr "erreur d'affectation mémoire dans 'realpr'"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "la procédure BLAS/LAPACK '%6s' a produit le code d'erreur %d"
 
-#: src/main/printarray.c:330
+#: src/main/printarray.c:332
 msgid "too few row labels"
 msgstr "trop peu d'étiquettes de lignes"
 
-#: src/main/printarray.c:332
+#: src/main/printarray.c:334
 msgid "too few column labels"
 msgstr "trop peu d'étiquettes de colonnes"
 
-#: src/main/printarray.c:366
+#: src/main/printarray.c:368
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
@@ -5213,24 +5218,24 @@ msgstr "l'argument 'x' ne peut contenir de NAs"
 msgid "invalid UTF-8 string"
 msgstr "chaîne de charactères UTF-8 incorrecte"
 
-#: src/main/relop.c:205
+#: src/main/relop.c:196
 #, c-format
 msgid "comparison (%d) is possible only for atomic and list types"
 msgstr "comparaison (%d) possible seulement pour les types liste et atomique"
 
-#: src/main/relop.c:210
+#: src/main/relop.c:201
 msgid "comparison is not allowed for expressions"
 msgstr "comparaison interdite pour les expressions"
 
-#: src/main/relop.c:299
+#: src/main/relop.c:293
 msgid "comparison of these types is not implemented"
 msgstr "comparaison de ces types non implémentée"
 
-#: src/main/relop.c:503
+#: src/main/relop.c:425
 msgid "invalid comparison with complex values"
 msgstr "comparaison incorrecte pour des valeurs complexes"
 
-#: src/main/relop.c:761
+#: src/main/relop.c:683
 msgid "'a' and 'b' must have the same type"
 msgstr "'a' et 'b' doivent être de même type"
 
@@ -5572,57 +5577,57 @@ msgstr[1] "l'expression numérique a %d éléments : seul le premier est utilisé"
 msgid "NA/NaN argument"
 msgstr "argument NA / NaN"
 
-#: src/main/seq.c:330
+#: src/main/seq.c:333
 msgid "incorrect type for second argument"
 msgstr "type incorrect pour le second argument"
 
-#: src/main/seq.c:333
+#: src/main/seq.c:336
 #, c-format
 msgid "attempt to replicate an object of type '%s'"
 msgstr "tentative de dupliquer un objet de type '%s'"
 
-#: src/main/seq.c:386
+#: src/main/seq.c:393
 msgid "attempt to replicate non-vector"
 msgstr "tentative de dupliquer autre chose qu'un vecteur"
 
-#: src/main/seq.c:402
+#: src/main/seq.c:409
 msgid "cannot replicate NULL to a non-zero length"
 msgstr "impossible de répliquer NULL vers une longueur non nulle"
 
-#: src/main/seq.c:623 src/main/seq.c:630 src/main/seq.c:759 src/main/seq.c:970
+#: src/main/seq.c:630 src/main/seq.c:637 src/main/seq.c:766 src/main/seq.c:977
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr "seul le premier élément de l'argument '%s' est utilisé"
 
-#: src/main/seq.c:757
+#: src/main/seq.c:764
 msgid "'length.out' must be a non-negative number"
 msgstr "'length.out' doit être un entier positif ou nul"
 
-#: src/main/seq.c:781 src/main/seq.c:847 src/main/seq.c:864
+#: src/main/seq.c:788 src/main/seq.c:854 src/main/seq.c:871
 msgid "'from' must be finite"
 msgstr "'from' doit être fini"
 
-#: src/main/seq.c:783 src/main/seq.c:849 src/main/seq.c:886
+#: src/main/seq.c:790 src/main/seq.c:856 src/main/seq.c:893
 msgid "'to' must be finite"
 msgstr "'to' doit être fini"
 
-#: src/main/seq.c:795
+#: src/main/seq.c:802
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr "'(to - from)/by' incorrect dans 'seq'"
 
-#: src/main/seq.c:807
+#: src/main/seq.c:814
 msgid "'by' argument is much too small"
 msgstr "argument 'by' bien trop petit"
 
-#: src/main/seq.c:809
+#: src/main/seq.c:816
 msgid "wrong sign in 'by' argument"
 msgstr "signe incorrect pour l'argument 'by'"
 
-#: src/main/seq.c:866 src/main/seq.c:888
+#: src/main/seq.c:873 src/main/seq.c:895
 msgid "'by' must be finite"
 msgstr "'by' doit être fini"
 
-#: src/main/seq.c:976 src/main/seq.c:981
+#: src/main/seq.c:983 src/main/seq.c:988
 msgid "argument must be coercible to non-negative integer"
 msgstr ""
 "l'argument doit être convertible automatiquement en un entier non négatif"
@@ -6932,7 +6937,7 @@ msgid "cannot open URL '%s': HTTP status was '%d %s'"
 msgstr "ouverture impossible : le statut HTTP était '%d %s'"
 
 #: src/modules/internet/internet.c:915 src/modules/internet/internet.c:929
-#: src/modules/internet/internet.c:1021 src/modules/internet/internet.c:1030
+#: src/modules/internet/internet.c:1019 src/modules/internet/internet.c:1028
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "échec de InternetOpenUrl : '%s'"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -503,6 +503,15 @@ msgstr ""
 "Overtrædende linjer starter med:\n"
 "%s"
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x' skal være en kvadratisk matrix"
 
@@ -621,6 +630,10 @@ msgstr "ugyldigt 'time'-argument"
 #, fuzzy
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "'vec' skal sorteres ikkefaldende"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "håndtag skal være en funktion"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "bruger det første element for 'value' for type »expression«"

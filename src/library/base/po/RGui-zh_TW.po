@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2011-10-13 17:33+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1036,7 +1036,7 @@ msgid "Enhanced metafiles"
 msgstr "進階 metafiles"
 
 #: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3453
+#: src/library/grDevices/src/devWindows.c:3445
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "選擇的檔案路徑太長：最多只能有 512 位元組"
 
@@ -1178,15 +1178,15 @@ msgstr "儲存成 metafile…"
 msgid "Save as postscript..."
 msgstr "儲存成 postscript…"
 
-#: src/library/grDevices/src/devWindows.c:3146
+#: src/library/grDevices/src/devWindows.c:3143
 msgid "Locator is active"
 msgstr "定位器在啟用狀態"
 
-#: src/library/grDevices/src/devWindows.c:3777
+#: src/library/grDevices/src/devWindows.c:3769
 msgid "Waiting to confirm page change..."
 msgstr "等待頁面變更的確認…"
 
-#: src/library/grDevices/src/devWindows.c:3789
+#: src/library/grDevices/src/devWindows.c:3781
 msgid "Click or hit ENTER for next page"
 msgstr "按 ENTER 來看下一頁"
 

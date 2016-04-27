@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-26 16:25-0700\n"
+"POT-Creation-Date: 2016-04-01 10:28-0700\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -135,13 +135,13 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/array.c:1413 src/main/array.c:1414 src/main/array.c:1758
 #: src/main/array.c:1760 src/main/array.c:1762 src/main/attrib.c:190
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
-#: src/main/builtin.c:118 src/main/builtin.c:149 src/main/builtin.c:560
-#: src/main/builtin.c:576 src/main/builtin.c:765 src/main/builtin.c:767
-#: src/main/builtin.c:769 src/main/character.c:237 src/main/character.c:240
-#: src/main/character.c:245 src/main/character.c:786 src/main/character.c:789
-#: src/main/character.c:1287 src/main/character.c:1291
-#: src/main/character.c:1526 src/main/character.c:1530
-#: src/main/character.c:1591 src/main/character.c:1594
+#: src/main/builtin.c:118 src/main/builtin.c:149 src/main/builtin.c:569
+#: src/main/builtin.c:585 src/main/builtin.c:773 src/main/builtin.c:775
+#: src/main/builtin.c:777 src/main/character.c:239 src/main/character.c:242
+#: src/main/character.c:247 src/main/character.c:788 src/main/character.c:791
+#: src/main/character.c:1289 src/main/character.c:1293
+#: src/main/character.c:1528 src/main/character.c:1532
+#: src/main/character.c:1593 src/main/character.c:1596
 #: src/main/connections.c:1208 src/main/connections.c:1214
 #: src/main/connections.c:1217 src/main/connections.c:1221
 #: src/main/connections.c:1367 src/main/connections.c:1383
@@ -223,9 +223,9 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/saveload.c:2366 src/main/scan.c:684 src/main/scan.c:853
 #: src/main/scan.c:867 src/main/scan.c:871 src/main/scan.c:873
 #: src/main/scan.c:884 src/main/scan.c:911 src/main/scan.c:914
-#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:615
-#: src/main/seq.c:620 src/main/seq.c:628 src/main/seq.c:659 src/main/seq.c:663
-#: src/main/seq.c:669 src/main/seq.c:677 src/main/sort.c:175
+#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:622
+#: src/main/seq.c:627 src/main/seq.c:635 src/main/seq.c:666 src/main/seq.c:670
+#: src/main/seq.c:676 src/main/seq.c:684 src/main/sort.c:175
 #: src/main/sysutils.c:597 src/main/sysutils.c:601 src/main/sysutils.c:605
 #: src/main/sysutils.c:611 src/main/sysutils.c:615 src/main/sysutils.c:1787
 #: src/main/sysutils.c:1791 src/main/unique.c:1029 src/main/unique.c:1337
@@ -723,8 +723,8 @@ msgstr "string de formato demasiado larga"
 msgid "invalid multibyte format string"
 msgstr "string de formato multibyte no válida"
 
-#: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1289
-#: src/main/character.c:1293 src/main/grep.c:782 src/main/grep.c:1530
+#: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1291
+#: src/main/character.c:1295 src/main/grep.c:782 src/main/grep.c:1530
 #: src/main/grep.c:1534 src/main/grep.c:2347 src/main/grep.c:2654
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
@@ -783,16 +783,16 @@ msgstr "error regcomp:  '%s'"
 msgid "'FUN.VALUE' must be a vector"
 msgstr "code debe ser un vector genérico"
 
-#: src/main/apply.c:100 src/main/array.c:506 src/main/character.c:845
-#: src/main/character.c:1653 src/main/connections.c:3551
+#: src/main/apply.c:100 src/main/array.c:506 src/main/character.c:847
+#: src/main/character.c:1655 src/main/connections.c:3551
 #: src/main/context.c:653 src/main/context.c:672 src/main/datetime.c:681
 #: src/main/datetime.c:783 src/main/datetime.c:1047 src/main/dotcode.c:222
 #: src/main/errors.c:910 src/main/errors.c:943 src/main/errors.c:1049
 #: src/main/errors.c:1074 src/main/errors.c:1079 src/main/errors.c:1349
 #: src/main/identical.c:66 src/main/identical.c:67 src/main/identical.c:68
 #: src/main/identical.c:69 src/main/identical.c:70 src/main/platform.c:2982
-#: src/main/seq.c:192 src/main/seq.c:340 src/main/seq.c:345 src/main/seq.c:349
-#: src/main/seq.c:390 src/main/seq.c:394 src/main/seq.c:398
+#: src/main/seq.c:192 src/main/seq.c:343 src/main/seq.c:348 src/main/seq.c:352
+#: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1244 src/main/sort.c:1327 src/main/sort.c:1331
 #: src/main/sort.c:1338 src/main/source.c:225 src/main/summary.c:954
 #: src/main/sysutils.c:250 src/main/util.c:1051 src/main/util.c:1056
@@ -866,7 +866,7 @@ msgstr "el operador necesita uno o dos argumentos"
 msgid "non-numeric argument to binary operator"
 msgstr "argumento no-numérico para operador binario"
 
-#: src/main/arithmetic.c:576 src/main/relop.c:230
+#: src/main/arithmetic.c:576 src/main/relop.c:221
 msgid "non-conformable arrays"
 msgstr "arreglos de dimensón no compatibles"
 
@@ -874,8 +874,8 @@ msgstr "arreglos de dimensón no compatibles"
 msgid "non-conformable time-series"
 msgstr "series de tiempo no compatibles"
 
-#: src/main/arithmetic.c:641 src/main/logic.c:135 src/main/relop.c:169
-#: src/main/relop.c:268
+#: src/main/arithmetic.c:641 src/main/logic.c:135 src/main/relop.c:160
+#: src/main/relop.c:259
 msgid "longer object length is not a multiple of shorter object length"
 msgstr "longitud de objeto mayor no es múltiplo de la longitud de uno menor"
 
@@ -1359,13 +1359,13 @@ msgstr "tamaño del vector no puede ser NA/NaN"
 msgid "vector size cannot be infinite"
 msgstr "tamaño del vector no puede ser infinito"
 
-#: src/main/builtin.c:51 src/main/builtin.c:59 src/main/builtin.c:942
+#: src/main/builtin.c:51 src/main/builtin.c:59 src/main/builtin.c:950
 #: src/main/sort.c:1325
 msgid "vector size specified is too large"
 msgstr "tamaño del vector especificado es muy grande"
 
-#: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:295
-#: src/main/builtin.c:328 src/main/builtin.c:385 src/main/builtin.c:399
+#: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:304
+#: src/main/builtin.c:337 src/main/builtin.c:394 src/main/builtin.c:408
 #: src/main/coerce.c:1536 src/main/connections.c:3062 src/main/engine.c:2987
 #: src/main/envir.c:1001 src/main/envir.c:1054 src/main/envir.c:1210
 #: src/main/envir.c:1749 src/main/envir.c:1873 src/main/envir.c:1939
@@ -1378,41 +1378,46 @@ msgstr "tamaño del vector especificado es muy grande"
 msgid "use of NULL environment is defunct"
 msgstr "no es posible usar un ambiente NULL"
 
-#: src/main/builtin.c:308
+#: src/main/builtin.c:250 src/main/builtin.c:263
+#, fuzzy
+msgid "argument is not a function"
+msgstr "el argumento no debe ser una función"
+
+#: src/main/builtin.c:317
 msgid "replacement object is not an environment"
 msgstr "el objeto de reemplazo no es un entorno"
 
-#: src/main/builtin.c:333
+#: src/main/builtin.c:342
 msgid "'enclos' must be an environment"
 msgstr "'enclos' debe ser un entorno"
 
-#: src/main/builtin.c:354 src/main/builtin.c:390
+#: src/main/builtin.c:363 src/main/builtin.c:399
 msgid "argument is not an environment"
 msgstr "el argumento no es un entorno"
 
-#: src/main/builtin.c:356
+#: src/main/builtin.c:365
 msgid "the empty environment has no parent"
 msgstr "el entorno vacio no esta asociado"
 
-#: src/main/builtin.c:392
+#: src/main/builtin.c:401
 msgid "can not set parent of the empty environment"
 msgstr "no se puede fijar un entorno en el ambiente vacío"
 
-#: src/main/builtin.c:394
+#: src/main/builtin.c:403
 #, fuzzy
 msgid "can not set the parent environment of a namespace"
 msgstr "no se puede fijar un entorno en el ambiente vacío"
 
-#: src/main/builtin.c:396
+#: src/main/builtin.c:405
 #, fuzzy
 msgid "can not set the parent environment of package imports"
 msgstr "no se puede fijar un entorno en el ambiente vacío"
 
-#: src/main/builtin.c:404
+#: src/main/builtin.c:413
 msgid "'parent' is not an environment"
 msgstr "'parent' no es un entorno"
 
-#: src/main/builtin.c:547 src/main/connections.c:3687
+#: src/main/builtin.c:556 src/main/connections.c:3687
 #: src/main/connections.c:4079 src/main/connections.c:4113
 #: src/main/connections.c:4491 src/main/connections.c:4561
 #: src/main/connections.c:4772 src/main/connections.c:4776
@@ -1421,67 +1426,67 @@ msgstr "'parent' no es un entorno"
 msgid "cannot write to this connection"
 msgstr "no es posible escribir en esa conexión"
 
-#: src/main/builtin.c:552 src/main/builtin.c:582
+#: src/main/builtin.c:561 src/main/builtin.c:591
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "especificación '%s' inválida"
 
-#: src/main/builtin.c:569
+#: src/main/builtin.c:578
 msgid "non-positive 'fill' argument will be ignored"
 msgstr "un argumento no positivo en 'fill' será ignorado"
 
-#: src/main/builtin.c:644
+#: src/main/builtin.c:653
 #, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
 msgstr "el argumento %d (type '%s') no es soportado por 'cat'"
 
-#: src/main/builtin.c:789
+#: src/main/builtin.c:797
 #, c-format
 msgid "vector: cannot make a vector of mode '%s'."
 msgstr "vector: no es posible hacer un vector de modo '%s'."
 
-#: src/main/builtin.c:815
+#: src/main/builtin.c:823
 msgid "cannot set length of non-vector"
 msgstr "no es posible especificar la longitud de un objeto que no es un vector"
 
-#: src/main/builtin.c:923 src/main/builtin.c:933 src/main/options.c:659
+#: src/main/builtin.c:931 src/main/builtin.c:941 src/main/options.c:659
 msgid "invalid argument"
 msgstr "argumento no válido"
 
-#: src/main/builtin.c:925 src/main/builtin.c:935 src/main/builtin.c:937
-#: src/main/character.c:523 src/main/coerce.c:2832
+#: src/main/builtin.c:933 src/main/builtin.c:943 src/main/builtin.c:945
+#: src/main/character.c:525 src/main/coerce.c:2832
 msgid "invalid value"
 msgstr "valor no válido"
 
-#: src/main/builtin.c:968 src/main/coerce.c:2541 src/main/coerce.c:2584
+#: src/main/builtin.c:976 src/main/coerce.c:2541 src/main/coerce.c:2584
 #: src/main/eval.c:620 src/main/eval.c:740 src/main/eval.c:2266
 #: src/main/eval.c:2346 src/main/eval.c:2407 src/main/eval.c:2745
 #: src/main/eval.c:5584 src/main/eval.c:5701
 msgid "'...' used in an incorrect context"
 msgstr "'...' usado en un contexto incorrecto"
 
-#: src/main/builtin.c:990
+#: src/main/builtin.c:998
 #, fuzzy, c-format
 msgid "duplicate 'switch' defaults: '%s' and '%s'"
 msgstr "duplicado de interuptores por defecto: '%s' y '%s'"
 
-#: src/main/builtin.c:1023
+#: src/main/builtin.c:1031
 msgid "'EXPR' is missing"
 msgstr "'EXPR' esta perdida"
 
-#: src/main/builtin.c:1027 src/main/eval.c:6056
+#: src/main/builtin.c:1035 src/main/eval.c:6056
 #, fuzzy
 msgid "EXPR must be a length 1 vector"
 msgstr "switch: EXPR debe devolver un vector de longitud 1"
 
-#: src/main/builtin.c:1030 src/main/eval.c:6059
+#: src/main/builtin.c:1038 src/main/eval.c:6059
 #, c-format
 msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
 " Consider using '%s' instead."
 msgstr ""
 
-#: src/main/builtin.c:1087 src/main/eval.c:6069 src/main/eval.c:6098
+#: src/main/builtin.c:1095 src/main/eval.c:6069 src/main/eval.c:6098
 #, fuzzy
 msgid "'switch' with no alternatives"
 msgstr ""
@@ -1494,8 +1499,8 @@ msgid_plural "%d arguments passed to '%s' which requires %d to %d"
 msgstr[0] "%d argumentos dados a '%s', que requeiren 1 o 2"
 msgstr[1] "%d argumentos dados a '%s', que requeiren 1 o 2"
 
-#: src/main/character.c:110 src/main/character.c:113 src/main/character.c:230
-#: src/main/character.c:233
+#: src/main/character.c:110 src/main/character.c:113 src/main/character.c:232
+#: src/main/character.c:235
 #, c-format
 msgid "'%s' requires a character vector"
 msgstr "%s' requiere un vector de caracteres"
@@ -1519,82 +1524,82 @@ msgid "width is not computable for %s in \"bytes\" encoding"
 msgstr ""
 "el ancho no es computable para el elemento %d en el \"bytes\" codificación"
 
-#: src/main/character.c:309
+#: src/main/character.c:311
 msgid "extracting substrings from a non-character object"
 msgstr ""
 "tentativa de extraer substrings de un objeto que no es de tipo carácter"
 
-#: src/main/character.c:319 src/main/character.c:520
+#: src/main/character.c:321 src/main/character.c:522
 #, fuzzy
 msgid "invalid substring arguments"
 msgstr "argumento(s) string no válido"
 
-#: src/main/character.c:359
+#: src/main/character.c:361
 #, fuzzy
 msgid "non-character object(s)"
 msgstr "nombres de tipo no carácter"
 
-#: src/main/character.c:515
+#: src/main/character.c:517
 msgid "replacing substrings in a non-character object"
 msgstr "sustitución de substrings en un objeto que no es carácter"
 
-#: src/main/character.c:783
+#: src/main/character.c:785
 msgid "the first argument must be a character vector"
 msgstr "el primer argumento debe ser un vector de caracteres"
 
-#: src/main/character.c:820
+#: src/main/character.c:822
 msgid "abbreviate used with non-ASCII chars"
 msgstr "abreviatura utilizada con caracteres no ASCII"
 
-#: src/main/character.c:841
+#: src/main/character.c:843
 msgid "non-character names"
 msgstr "nombres de tipo no carácter"
 
-#: src/main/character.c:903 src/main/character.c:1000
+#: src/main/character.c:905 src/main/character.c:1002
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "string multibyte %d inválida"
 
-#: src/main/character.c:946 src/main/grep.c:163
+#: src/main/character.c:948 src/main/grep.c:163
 msgid "non-character argument"
 msgstr "argumento de tipo no-carácter"
 
-#: src/main/character.c:1055
+#: src/main/character.c:1057
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "especificación de rango decreciente ('%lc-%lc')"
 
-#: src/main/character.c:1141
+#: src/main/character.c:1143
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "especificación de rango decreciente ('%c-%c')"
 
-#: src/main/character.c:1329
+#: src/main/character.c:1331
 msgid "invalid UTF-8 string 'old'"
 msgstr "string UTF-8  no válido  'old'"
 
-#: src/main/character.c:1335
+#: src/main/character.c:1337
 msgid "invalid multibyte string 'old'"
 msgstr "string multibyte 'old' inválida"
 
-#: src/main/character.c:1348
+#: src/main/character.c:1350
 msgid "invalid UTF-8 string 'new'"
 msgstr "string UTF-8  no válido  'new' "
 
-#: src/main/character.c:1354
+#: src/main/character.c:1356
 msgid "invalid multibyte string 'new'"
 msgstr "string multibyte 'new' inválida"
 
-#: src/main/character.c:1382 src/main/character.c:1471
+#: src/main/character.c:1384 src/main/character.c:1473
 msgid "'old' is longer than 'new'"
 msgstr "'old' es más largo que 'new'"
 
-#: src/main/character.c:1414
+#: src/main/character.c:1416
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "string multibyte %d de entrada inválida"
 
-#: src/main/character.c:1521
+#: src/main/character.c:1523
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requiere un vector de caracteres"
 
@@ -2725,7 +2730,7 @@ msgstr "el argumento PACKAGE es demasiado largo"
 msgid "no arguments supplied"
 msgstr "ningún argumento suministrado"
 
-#: src/main/dotcode.c:493 src/main/seq.c:904
+#: src/main/dotcode.c:493 src/main/seq.c:911
 msgid "too many arguments"
 msgstr "demasiados argumentos"
 
@@ -4177,7 +4182,7 @@ msgstr ""
 msgid "binary operation on non-conformable arrays"
 msgstr "operación binaria en arreglos no conformables"
 
-#: src/main/logic.c:116 src/main/relop.c:250
+#: src/main/logic.c:116 src/main/relop.c:241
 msgid "non-conformable time series"
 msgstr "series temporales no conformables"
 
@@ -5128,15 +5133,15 @@ msgstr "error de asignación de memoria en realpr"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "rutina BLAS/LAPACK  '%6s' tuvo un error de código %d"
 
-#: src/main/printarray.c:330
+#: src/main/printarray.c:332
 msgid "too few row labels"
 msgstr "muy pocos rótulos de filas"
 
-#: src/main/printarray.c:332
+#: src/main/printarray.c:334
 msgid "too few column labels"
 msgstr " muy pocos rótulos de columnas"
 
-#: src/main/printarray.c:366
+#: src/main/printarray.c:368
 #, fuzzy, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"
@@ -5244,24 +5249,24 @@ msgstr "el argumento no debe ser una función"
 msgid "invalid UTF-8 string"
 msgstr "string UTF-8  no válido  'old'"
 
-#: src/main/relop.c:205
+#: src/main/relop.c:196
 #, c-format
 msgid "comparison (%d) is possible only for atomic and list types"
 msgstr "comparación  (%d) es posible solo para tipos lista y atómico"
 
-#: src/main/relop.c:210
+#: src/main/relop.c:201
 msgid "comparison is not allowed for expressions"
 msgstr "comparación no permitida para expresiones"
 
-#: src/main/relop.c:299
+#: src/main/relop.c:293
 msgid "comparison of these types is not implemented"
 msgstr "comparaciones de estos tipoo no están implementadas"
 
-#: src/main/relop.c:503
+#: src/main/relop.c:425
 msgid "invalid comparison with complex values"
 msgstr "comparación con valores complejos es inválida"
 
-#: src/main/relop.c:761
+#: src/main/relop.c:683
 #, fuzzy
 msgid "'a' and 'b' must have the same type"
 msgstr "'path' debe ser un vector de caracteres"
@@ -5603,65 +5608,65 @@ msgstr[1] "expresión numérica tiene %d elementos: solo el primero es utilizado"
 msgid "NA/NaN argument"
 msgstr "Argumento NA/NaN"
 
-#: src/main/seq.c:330
+#: src/main/seq.c:333
 #, fuzzy
 msgid "incorrect type for second argument"
 msgstr "rep() del segundo argumento de tipo incorrecto"
 
-#: src/main/seq.c:333
+#: src/main/seq.c:336
 #, fuzzy, c-format
 msgid "attempt to replicate an object of type '%s'"
 msgstr "intento de réplica de objeto que no es vector"
 
-#: src/main/seq.c:386
+#: src/main/seq.c:393
 msgid "attempt to replicate non-vector"
 msgstr "intento de réplica de objeto que no es vector"
 
-#: src/main/seq.c:402
+#: src/main/seq.c:409
 #, fuzzy
 msgid "cannot replicate NULL to a non-zero length"
 msgstr "no se puede asignar un vector de longitud %d"
 
-#: src/main/seq.c:623 src/main/seq.c:630 src/main/seq.c:759 src/main/seq.c:970
+#: src/main/seq.c:630 src/main/seq.c:637 src/main/seq.c:766 src/main/seq.c:977
 #, fuzzy, c-format
 msgid "first element used of '%s' argument"
 msgstr "solo se utilizó el primer elemento del argumento 'url'"
 
-#: src/main/seq.c:757
+#: src/main/seq.c:764
 #, fuzzy
 msgid "'length.out' must be a non-negative number"
 msgstr "'gap' debe ser un entero no negativo"
 
-#: src/main/seq.c:781 src/main/seq.c:847 src/main/seq.c:864
+#: src/main/seq.c:788 src/main/seq.c:854 src/main/seq.c:871
 #, fuzzy
 msgid "'from' must be finite"
 msgstr "'a' e 'b' deben ser finitos"
 
-#: src/main/seq.c:783 src/main/seq.c:849 src/main/seq.c:886
+#: src/main/seq.c:790 src/main/seq.c:856 src/main/seq.c:893
 #, fuzzy
 msgid "'to' must be finite"
 msgstr "'a' e 'b' deben ser finitos"
 
-#: src/main/seq.c:795
+#: src/main/seq.c:802
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr "'(to - from)/by' inválido en 'seq'"
 
-#: src/main/seq.c:807
+#: src/main/seq.c:814
 #, fuzzy
 msgid "'by' argument is much too small"
 msgstr "argumento 'file' es muy largo"
 
-#: src/main/seq.c:809
+#: src/main/seq.c:816
 #, fuzzy
 msgid "wrong sign in 'by' argument"
 msgstr "longitud incorrecta para el argumento 'mode'"
 
-#: src/main/seq.c:866 src/main/seq.c:888
+#: src/main/seq.c:873 src/main/seq.c:895
 #, fuzzy
 msgid "'by' must be finite"
 msgstr "'a' e 'b' deben ser finitos"
 
-#: src/main/seq.c:976 src/main/seq.c:981
+#: src/main/seq.c:983 src/main/seq.c:988
 #, fuzzy
 msgid "argument must be coercible to non-negative integer"
 msgstr "argumento debe ser un entorno"
@@ -7013,7 +7018,7 @@ msgid "cannot open URL '%s': HTTP status was '%d %s'"
 msgstr "no fue posible abrir: el status HTTP fue '%d %s'"
 
 #: src/modules/internet/internet.c:915 src/modules/internet/internet.c:929
-#: src/modules/internet/internet.c:1021 src/modules/internet/internet.c:1030
+#: src/modules/internet/internet.c:1019 src/modules/internet/internet.c:1028
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "fallo en InternetOpenUrl: '%s'"

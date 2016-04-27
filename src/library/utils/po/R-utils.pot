@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: utils 3.3.0\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"Project-Id-Version: utils 3.4.0\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,6 +227,12 @@ msgid "could not restore variables properly"
 msgstr ""
 
 msgid "did not assign() anything"
+msgstr ""
+
+msgid "Cannot debug primitive functions unless they are implicit generics (requires loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr ""
 
 msgid "Browsing in the environment with call:"
@@ -685,9 +691,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr ""
-
 msgid "no method defined for function %s and signature %s"
 msgstr ""
 
@@ -824,6 +827,9 @@ msgid "'object' does not have valid levels()"
 msgstr ""
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
+msgstr ""
+
+msgid "number of matches does not always match ncol(proto)"
 msgstr ""
 
 msgid "no lines found in %s"
@@ -1004,9 +1010,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr ""
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

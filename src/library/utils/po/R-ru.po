@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-27 19:05-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -271,6 +271,14 @@ msgstr "не могу полностью восстановить переменные"
 
 msgid "did not assign() anything"
 msgstr "не могу ничего assign()"
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "ошибка при попытке выполнить выражение для аргумента %s (%s)"
 
 msgid "Browsing in the environment with call:"
 msgstr "Просмотр окружения с вызовом:"
@@ -799,9 +807,6 @@ msgstr ""
 msgid "no methods for %s and no documentation for it as a function"
 msgstr "для %s нет методов и нет документации для него как функции"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "ошибка при попытке выполнить выражение для аргумента %s (%s)"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "для функции %s и подписи %s не определено метода"
 
@@ -947,6 +952,9 @@ msgstr "'object' не имеет правильных levels()"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "определены и 'digits', и 'digits.d', последняя не используется"
+
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
 
 msgid "no lines found in %s"
 msgstr "в '%s' нет строк"
@@ -1148,9 +1156,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr "нет директории 'libs' в пакете %s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

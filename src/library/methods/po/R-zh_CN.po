@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1037,6 +1037,13 @@ msgstr "没有'coerce'方法"
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr "目前存在着強制转换%s成%s的方法；这些方法将会被替换掉。"
+
+#, fuzzy
+msgid "Function must be an S4 generic"
+msgstr ".getGeneric里不能有空的函数名字"
+
+msgid "method is not being debugged"
+msgstr ""
 
 msgid "object %s not found"
 msgstr "找不到%s这个对象"

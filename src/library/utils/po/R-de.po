@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2015-03-26 15:07+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -267,6 +267,14 @@ msgstr "konnte Variablen nicht angemessen wieder herstellen"
 
 msgid "did not assign() anything"
 msgstr "habe nichts assign()-ed"
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
 
 msgid "Browsing in the environment with call:"
 msgstr "Untersuche die Umgebung mit Aufruf:"
@@ -801,9 +809,6 @@ msgstr ""
 "keine Methoden für %s und keine Dokumentation darüber, es als Funktion zu "
 "nutzen"
 
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
-
 msgid "no method defined for function %s and signature %s"
 msgstr "keine Methode für Funktion %s und Signatur %s definiert"
 
@@ -950,6 +955,9 @@ msgstr "'object' hat keine gültigen levels()"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
+
+msgid "number of matches does not always match ncol(proto)"
+msgstr ""
 
 msgid "no lines found in %s"
 msgstr "kein Zeilen in '%s'"
@@ -1148,9 +1156,6 @@ msgid "there is no 'libs' directory in package %s"
 msgstr "kein 'libs' Verzeichnis im Paket %s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
-
-msgid "use != NA is defunct"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

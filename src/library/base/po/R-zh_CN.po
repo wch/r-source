@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-26 15:26\n"
+"POT-Creation-Date: 2016-04-01 09:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -499,6 +499,15 @@ msgstr ""
 "不对行的开头为：\n"
 "%s"
 
+msgid "failed to load the methods package for debugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for undebugging by signature"
+msgstr ""
+
+msgid "failed to load methods package for handling signature"
+msgstr ""
+
 msgid "'x' must be a square matrix"
 msgstr "'x'必需是正方形矩阵"
 
@@ -614,6 +623,10 @@ msgstr "'time'参数不对"
 #, fuzzy
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
 msgstr "'vec'的顺序一定得从小到大"
+
+#, fuzzy
+msgid "'fun' is not a function"
+msgstr "處置程式必需是函数"
 
 msgid "using the first element of 'value' of type \"expression\""
 msgstr "用种类为\"expression\"的'value'的第一个元素"
