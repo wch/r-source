@@ -69,6 +69,13 @@
       \item In \code{text.default(x, y, labels)}, the rarely(?) used
       default for \code{labels} is now correct also for the case of a
       2-column matrix \code{x} and missing \code{y}.
+
+      \item When a class name matches multiple classes in the cache,
+      perform a dynamic search in order to obey namespace imports. This
+      should eliminate annoying messages about multiple hits in the
+      class cache. Also, pass along the package from the
+      \code{ClassExtends} object when looking up superclasses in the
+      cache.
     }
   }
 }

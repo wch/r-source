@@ -2206,8 +2206,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 
 ## remove superclass from  definition of class in the cache & in environments
 ## on search list
-.removeSuperClass <- function(class, superclass, resolve.msg = TRUE) {
-    cdef <- .getClassFromCache(class, where, resolve.msg=resolve.msg)
+.removeSuperClass <- function(class, superclass) {
+    cdef <- getClassDef(class)
     if(is.null(cdef)) {}
     else {
         newdef <- .deleteSuperClass(cdef, superclass)
@@ -2223,7 +2223,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     mname <- classMetaName(class)
     for(where in evv) {
         if(!is.null(cdef <- where[[mname]])) {
-            newdef <- .deleteSuperClass(cdef, superclass, resolve.msg=resolve.msg)
+            newdef <- .deleteSuperClass(cdef, superclass)
             if(!is.null(newdef)) {
               assignClassDef(class, newdef,  where, TRUE)
               ## message("deleted ",superclass, " from ",class, "in environment")
@@ -2233,13 +2233,13 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     NULL
 }
 
-.deleteSuperClass <- function(cdef, superclass, resolve.msg = TRUE) {
+.deleteSuperClass <- function(cdef, superclass) {
     superclasses <- cdef@contains
     ii <- match(superclass, names(superclasses), 0L)
     if(ii) {
 	cdef@contains <- superclasses[-ii]
 	for(subclass in names(cdef@subclasses))
-	    .removeSuperClass(subclass, superclass, resolve.msg=resolve.msg)
+	    .removeSuperClass(subclass, superclass)
 	cdef
     }
     else

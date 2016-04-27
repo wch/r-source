@@ -11,10 +11,8 @@
   Get the definition of a class.
 }
 \usage{
-getClass   (Class, .Force = FALSE, where,
-            resolve.msg = getOption("getClass.msg", default=TRUE))
-getClassDef(Class, where, package, inherits = TRUE,
-            resolve.msg = getOption("getClass.msg", default=TRUE))
+getClass   (Class, .Force = FALSE, where)
+getClassDef(Class, where, package, inherits = TRUE)
 }
 \arguments{
   \item{Class}{ the character-string name of the class, often with a
@@ -35,9 +33,6 @@ getClassDef(Class, where, package, inherits = TRUE,
   \item{inherits}{logical; should the class definition be retrieved from
     any enclosing environment and also from the cache?  If \code{FALSE}
     only a definition in the environment \code{where} will be returned.}
-  \item{resolve.msg}{\code{\link{logical}} indicating if \R should
-    \code{\link{message}()} its decision if \code{Class} is found in
-    multiple namespaces and one is chosen.}
 }
 \details{
   Class definitions are stored in metadata objects in a package
