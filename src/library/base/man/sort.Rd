@@ -20,7 +20,7 @@ sort(x, decreasing = FALSE, \dots)
 \method{sort}{default}(x, decreasing = FALSE, na.last = NA, \dots)
 
 sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
-         method = c("shell", "quick", "radix"), index.return = FALSE)
+         method = c("auto", "shell", "quick", "radix"), index.return = FALSE)
 }
 \arguments{
   \item{x}{for \code{sort} an \R object with a class or a numeric,
@@ -56,6 +56,9 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   Complex values are sorted first by the real part, then the imaginary
   part.
 
+  The \code{"auto"} method selects \code{"radix"} for integer vectors,
+  logical vectors and factors; otherwise, \code{"shell"}.
+  
   Except for method \code{"radix"},
   the sort order for character vectors will depend on the collating
   sequence of the locale in use: see \code{\link{Comparison}}.

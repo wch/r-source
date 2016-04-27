@@ -17,10 +17,10 @@
 }
 \usage{
 order(\dots, na.last = TRUE, decreasing = FALSE,
-      method = c("shell", "radix"))
+      method = c("auto", "shell", "radix"))
 
 sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
-          method = c("shell", "quick", "radix"))
+          method = c("auto", "shell", "quick", "radix"))
 }
 \arguments{
   \item{\dots}{a sequence of numeric, complex, character or logical
@@ -37,8 +37,9 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     \code{FALSE}, they are put first; if \code{NA}, they are removed
     (see \sQuote{Note}.)}
   \item{method}{the method to be used: partial matches are allowed.  The
-    default is \code{"shell"} except for some special cases: see
-    \sQuote{Details}.  For details of methods \code{"shell"}, 
+    default (\code{"auto"}) implies \code{"radix"} for integer vectors,
+    logical vectors and factors. Otherwise, it implies \code{"shell"}.
+    For details of methods \code{"shell"}, 
     \code{"quick"}, and \code{"radix"},
     see the help for \code{\link{sort}}.}
 }

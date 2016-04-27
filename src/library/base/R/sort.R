@@ -32,10 +32,12 @@ sort.default <- function(x, decreasing = FALSE, na.last = NA, ...)
 
 sort.int <-
     function(x, partial = NULL, na.last = NA, decreasing = FALSE,
-             method = c("shell", "quick", "radix"), index.return = FALSE)
+             method = c("auto", "shell", "quick", "radix"),
+             index.return = FALSE)
 {
-    useRadix <- (!missing(method) && method == "radix") ||
-        (missing(method) && is.null(partial) &&
+    method <- match.arg(method)
+    useRadix <- method == "radix" ||
+        (method == "auto" && is.null(partial) &&
              (is.integer(x) || is.factor(x) || is.logical(x)))
     if (useRadix) {
         if (!is.null(partial)) {
@@ -47,7 +49,8 @@ sort.int <-
         if (index.return)
             return(list(x = y, ix = o))
         else return(y)
-    }
+    } else if (method == "auto" || !is.numeric(x))
+          method <- "shell" # explicitly prevent 'quick' for non-numeric data
     
     if(isfact <- is.factor(x)) {
         if(index.return) stop("'index.return' only for non-factors")
@@ -65,7 +68,7 @@ sort.int <-
     if(index.return && !is.na(na.last))
         stop("'index.return' only for 'na.last = NA'")
     if(!is.null(partial)) {
-        if(index.return || decreasing || isfact || !missing(method))
+        if(index.return || decreasing || isfact || method != "shell")
 	    stop("unsupported options for partial sorting")
         if(!all(is.finite(partial))) stop("non-finite 'partial'")
         y <- if(length(partial) <= 10L) {
@@ -75,9 +78,7 @@ sort.int <-
         else .Internal(sort(x, FALSE))
     } else {
         nms <- names(x)
-	method <- if(is.numeric(x) && !missing(method)) match.arg(method)
-		  else "shell"
-        switch(method,
+	switch(method,
                "quick" = {
                    if(!is.null(nms)) {
                        if(decreasing) x <- -x
@@ -110,16 +111,19 @@ sort.int <-
 }
 
 order <- function(..., na.last = TRUE, decreasing = FALSE,
-                  method = c("shell", "radix"))
+                  method = c("auto", "shell", "radix"))
 {
     z <- list(...)
 
-    if (missing(method)) {
-        ints <- all(vapply(z, function(x) is.integer(x) || is.factor(x),
+    method <- match.arg(method)
+    if (method == "auto") {
+        ints <- all(vapply(z, function(x) { 
+                               is.integer(x) || is.factor(x) || is.logical(x)
+                           },
                            logical(1L)))
         method <- if (ints) "radix" else "shell"
     } else {
-        method <- match.arg(method)
+        method <- "shell"
     }
     
     if(any(unlist(lapply(z, is.object)))) {
@@ -149,10 +153,11 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 }
 
 sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
-                      method = c("shell", "quick", "radix"))
+                      method = c("auto", "shell", "quick", "radix"))
 {
-    if (is.integer(x) || is.factor(x)) method <- "radix"
     method <- match.arg(method)
+    if (method == "auto" && (is.integer(x) || is.factor(x) || is.logical(x)))
+        method <- "radix"
     if(!is.atomic(x))
         stop("'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?")
     if(!is.null(partial))
