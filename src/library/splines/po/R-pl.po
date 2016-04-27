@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2016-04-04 08:15\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -13,72 +13,118 @@ msgstr ""
 "na-Revision-Date: 2012-05-29 07:55+0100\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.7\n"
 
-msgid "must have at least 'ord' knots"
-msgstr "potrzeba mieć przynajmniej węzły 'ord'"
+#. R/splineClasses.R: gettextf("%s needs package 'Matrix' correctly installed", "splineDesign(*, sparse=TRUE)")
+#: R/splineClasses.R:0
+msgid "%s needs package 'Matrix' correctly installed"
+msgstr "'%s' potrzebuje poprawnie zainstalowanego pakietu 'Matrix'"
 
-#, fuzzy
-msgid "length of 'derivs' is larger than length of 'x'"
-msgstr "długość 'derivs' musi zgadzać się z długością 'x'"
+#. R/splines.R: stop("'degree' must be integer >= 1")
+#: R/splines.R:0
+msgid "'degree' must be integer >= 1"
+msgstr "'degree' musi być liczbą całkowitą >= 1"
 
-msgid "empty 'derivs'"
-msgstr ""
+#. R/splineClasses.R: gettextf("'deriv' must be between 0 and %d", ord - 1)
+#. R/splineClasses.R: gettextf("'deriv' must be between 0 and %d", ord - 1)
+#: R/splineClasses.R:0
+msgid "'deriv' must be between 0 and %d"
+msgstr "'deriv' musi być pomiędzy 0 a %d"
 
+#. R/splines.R: gettextf("'df' was too small; have used %d", ord - (1L - intercept))
+#. R/splines.R: gettextf("'df' was too small; have used %d", 1L + intercept)
+#: R/splines.R:0
+msgid "'df' was too small; have used %d"
+msgstr "'df' było zbyt małe; użyto %d"
+
+#. R/splineClasses.R: stop("'formula' must be of the form \"y ~ x\"")
+#. R/splineClasses.R: stop("'formula' must be of the form \"y ~ x\"")
+#: R/splineClasses.R:0
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr "'formula' musi posiadać formę \"y ~ x\""
+
+#. R/splineClasses.R: stop("'ord' must be >= 2")
+#: R/splineClasses.R:0
+msgid "'ord' must be >= 2"
+msgstr "'ord' musi być >= 2"
+
+#. R/splineClasses.R: stop("'ord' must be positive integer, at most the number of knots")
+#: R/splineClasses.R:0
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr ""
 "'ord' musi być dodatnią liczbą całkowitą, równą co najwyżej liczbie węzłów"
 
-msgid "need at least %s (=%d) knots"
-msgstr "potrzeba przynamniej %s (=%d) wezłów"
+#. R/splineClasses.R: stop("empty 'derivs'")
+#: R/splineClasses.R:0
+msgid "empty 'derivs'"
+msgstr "puste 'derivs'"
 
-msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "dane 'x' muszą być w przedziale od %g do %g chyba, że ustawiono '%s'"
-
-msgid "%s needs package 'Matrix' correctly installed"
-msgstr "'%s' potrzebuje poprawnie zainstalowanego pakietu 'Matrix'"
-
-msgid "values of 'x' must be distinct"
-msgstr "wartości 'x' muszą być różne"
-
-msgid "'formula' must be of the form \"y ~ x\""
-msgstr "'formula' musi posiadać formę \"y ~ x\""
-
-msgid "lengths of 'x' and 'y' must match"
-msgstr "długości 'x' oraz 'y' muszą być zgodne"
-
-msgid "values of 'x' must be strictly increasing"
-msgstr "wartości 'x' muszą być ściśle rosnące"
-
-msgid "'ord' must be >= 2"
-msgstr "'ord' musi być >= 2"
-
-msgid "the range of 'x' values exceeds one period"
-msgstr "zakres wartości 'x' przekracza jeden okres"
-
+#. R/splineClasses.R: stop("knot positions must be non-decreasing")
+#. R/splineClasses.R: stop("knot positions must be non-decreasing")
+#: R/splineClasses.R:0
 msgid "knot positions must be non-decreasing"
 msgstr "pozycje węzłów muszą być niemalejące"
 
-msgid "lengths of 'x' and 'y' must be the same"
-msgstr "długości 'x' oraz 'y' muszą być takie same"
-
-msgid "'deriv' must be between 0 and %d"
-msgstr "'deriv' musi być pomiędzy 0 a %d"
-
+#. R/splineClasses.R: stop("knot positions must be strictly increasing")
+#: R/splineClasses.R:0
 msgid "knot positions must be strictly increasing"
 msgstr "pozycje węzłów muszą być ściśle rosnące"
 
-msgid "spline must be monotone"
-msgstr "funkcja sklejana musi być funkcją monotoniczną"
+#. R/splineClasses.R: stop("length of 'derivs' is larger than length of 'x'")
+#: R/splineClasses.R:0
+msgid "length of 'derivs' is larger than length of 'x'"
+msgstr "długość 'derivs' jest większa niż długość 'x'"
 
-msgid "'degree' must be integer >= 1"
-msgstr "'degree' musi być liczbą całkowitą >= 1"
+#. R/splineClasses.R: stop("lengths of 'x' and 'y' must be the same")
+#: R/splineClasses.R:0
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr "długości 'x' oraz 'y' muszą być takie same"
 
-msgid "'df' was too small; have used %d"
-msgstr "'df' było zbyt małe; użyto %d"
+#. R/splineClasses.R: stop("lengths of 'x' and 'y' must match")
+#: R/splineClasses.R:0
+msgid "lengths of 'x' and 'y' must match"
+msgstr "długości 'x' oraz 'y' muszą być zgodne"
 
+#. R/splineClasses.R: stop("must have at least 'ord' knots")
+#: R/splineClasses.R:0
+msgid "must have at least 'ord' knots"
+msgstr "potrzeba mieć przynajmniej węzły 'ord'"
+
+#. R/splineClasses.R: gettextf("need at least %s (=%d) knots", "2*ord -1", 2 * ord -     1)
+#: R/splineClasses.R:0
+msgid "need at least %s (=%d) knots"
+msgstr "potrzeba przynamniej %s (=%d) wezłów"
+
+#. R/splines.R: warning("some 'x' values beyond boundary knots may cause ill-conditioned bases")
+#: R/splines.R:0
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""
 "niektóre wartości 'x' poza zakresem węzłów mogą powodować źle uwarunkowane "
 "bazy"
+
+#. R/splineClasses.R: stop("spline must be monotone")
+#: R/splineClasses.R:0
+msgid "spline must be monotone"
+msgstr "funkcja sklejana musi być funkcją monotoniczną"
+
+#. R/splineClasses.R: gettextf("the 'x' data must be in the range %g to %g unless you set '%s'",     knots[ord], knots[nk - o1], "outer.ok = TRUE")
+#: R/splineClasses.R:0
+msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
+msgstr "dane 'x' muszą być w przedziale od %g do %g chyba, że ustawiono '%s'"
+
+#. R/splineClasses.R: stop("the range of 'x' values exceeds one period")
+#: R/splineClasses.R:0
+msgid "the range of 'x' values exceeds one period"
+msgstr "zakres wartości 'x' przekracza jeden okres"
+
+#. R/splineClasses.R: stop("values of 'x' must be distinct")
+#. R/splineClasses.R: stop("values of 'x' must be distinct")
+#: R/splineClasses.R:0
+msgid "values of 'x' must be distinct"
+msgstr "wartości 'x' muszą być różne"
+
+#. R/splineClasses.R: stop("values of 'x' must be strictly increasing")
+#: R/splineClasses.R:0
+msgid "values of 'x' must be strictly increasing"
+msgstr "wartości 'x' muszą być ściśle rosnące"

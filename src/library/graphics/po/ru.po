@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
-"PO-Revision-Date: 2015-03-26 18:57-0600\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"PO-Revision-Date: 2016-04-05 18:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -19,19 +19,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: base.c:43
 msgid "no base graphics system is registered"
 msgstr "не зарегистрирована базовая графическая система"
 
-#: base.c:310
-#, fuzzy
-msgid "Incompatible graphics state"
-msgstr "неправильное графическое состояние"
-
-#: base.c:385 base.c:392 base.c:400
+#: base.c:333
+#: base.c:340
+#: base.c:348
 msgid "the base graphics system is not registered"
 msgstr "базовая графическая система не зарегистрирована"
 
@@ -40,7 +36,8 @@ msgstr "базовая графическая система не зарегис
 msgid "bad units specified in '%s'"
 msgstr "в %s указаны неправильные единицы"
 
-#: graphics.c:1791 graphics.c:1813
+#: graphics.c:1791
+#: graphics.c:1813
 msgid "attempt to plot on null device"
 msgstr "попытка рисовать на null-устройстве"
 
@@ -126,7 +123,8 @@ msgstr "указано неправильное значение графиче�
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "графический параметр \"%s\" неправильной длины"
 
-#: par.c:262 par.c:673
+#: par.c:262
+#: par.c:673
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "графический параметр \"%s\" не может быть установлен"
@@ -155,12 +153,14 @@ msgstr "значение 'nc' в \"mfg\" неправильное и будет 
 msgid "calling par(new=TRUE) with no plot"
 msgstr "вызов par(new=TRUE) без графика"
 
-#: par.c:665 par.c:1063
+#: par.c:665
+#: par.c:1063
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "графический параметр \"%s\" устарел"
 
-#: par.c:669 par.c:1067
+#: par.c:669
+#: par.c:1067
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" -- не графический параметр"
@@ -200,9 +200,20 @@ msgstr "неправильный графический символ"
 msgid "invalid font specification"
 msgstr "неправильное указание шрифта"
 
-#: plot.c:276 plot.c:290 plot.c:481 plot.c:486 plot.c:2112 plot.c:2119
-#: plot.c:3141 plot.c:3143 plot.c:3145 plot.c:3300 plot3d.c:1163 plot3d.c:1167
-#: plot3d.c:1169 plot3d.c:1903
+#: plot.c:276
+#: plot.c:290
+#: plot.c:481
+#: plot.c:486
+#: plot.c:2112
+#: plot.c:2119
+#: plot.c:3141
+#: plot.c:3143
+#: plot.c:3145
+#: plot.c:3300
+#: plot3d.c:1163
+#: plot3d.c:1167
+#: plot3d.c:1169
+#: plot3d.c:1903
 #, c-format
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
@@ -258,9 +269,24 @@ msgstr "Логарифмическая ось должна иметь полож
 msgid "invalid type for axis labels"
 msgstr "неправильный тип меток осей"
 
-#: plot.c:765 plot.c:1298 plot.c:1621 plot.c:1686 plot.c:1761 plot.c:1827
-#: plot.c:1901 plot.c:1996 plot.c:2072 plot.c:2350 plot.c:2524 plot.c:2740
-#: plot.c:3282 plot.c:3409 plot.c:3485 plot.c:3651 plot.c:3931 plot3d.c:1872
+#: plot.c:765
+#: plot.c:1298
+#: plot.c:1621
+#: plot.c:1686
+#: plot.c:1761
+#: plot.c:1827
+#: plot.c:1901
+#: plot.c:1996
+#: plot.c:2072
+#: plot.c:2350
+#: plot.c:2524
+#: plot.c:2740
+#: plot.c:3282
+#: plot.c:3409
+#: plot.c:3485
+#: plot.c:3651
+#: plot.c:3931
+#: plot3d.c:1872
 msgid "too few arguments"
 msgstr "слишком мало аргументов"
 
@@ -273,8 +299,18 @@ msgstr "неправильное количество осей %d"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' должен быть единичной длины"
 
-#: plot.c:873 plot.c:2084 plot.c:2361 plot.c:2367 plot.c:2374 plot.c:2382
-#: plot.c:2389 plot.c:2396 plot.c:2403 plot.c:2410 plot.c:2418 plot.c:2425
+#: plot.c:873
+#: plot.c:2084
+#: plot.c:2361
+#: plot.c:2367
+#: plot.c:2374
+#: plot.c:2382
+#: plot.c:2389
+#: plot.c:2396
+#: plot.c:2403
+#: plot.c:2410
+#: plot.c:2418
+#: plot.c:2425
 #: plot.c:3148
 #, c-format
 msgid "zero-length '%s' specified"
@@ -307,7 +343,8 @@ msgstr "длины 'x' и 'y' в %s() различаются"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "тип графика '%s' будет обрезан до первого знака"
 
-#: plot.c:1331 plot.c:3002
+#: plot.c:1331
+#: plot.c:3002
 msgid "invalid plot type"
 msgstr "неправильный тип графика"
 
@@ -364,15 +401,31 @@ msgstr "неправильное указание a=, b="
 msgid "'a' and 'b' must be finite"
 msgstr "'a' и 'b' должны быть конечными"
 
-#: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
-#: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
-#: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
-#: stem.c:208 stem.c:209
+#: plot.c:2925
+#: plot.c:4051
+#: plot.c:4055
+#: plot.c:4058
+#: plot.c:4078
+#: plot.c:4082
+#: plot.c:4085
+#: plot3d.c:1085
+#: plot3d.c:1089
+#: plot3d.c:1094
+#: plot3d.c:1098
+#: plot3d.c:1102
+#: plot3d.c:1106
+#: stem.c:158
+#: stem.c:159
+#: stem.c:161
+#: stem.c:162
+#: stem.c:208
+#: stem.c:209
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: plot.c:2997 plot.c:3137
+#: plot.c:2997
+#: plot.c:3137
 #, c-format
 msgid "invalid number of points in %s"
 msgstr "неправильное количество точек в %s"
@@ -402,7 +455,8 @@ msgstr "предупреждение: ближайшая точка уже оп�
 msgid "invalid units"
 msgstr "неправильные единицы"
 
-#: plot.c:3469 plot.c:3576
+#: plot.c:3469
+#: plot.c:3576
 msgid "invalid dendrogram input"
 msgstr "неправильный ввод дендрограммы"
 
@@ -422,7 +476,10 @@ msgstr "несоответствие длин x/y/параметров"
 msgid "invalid circles data"
 msgstr "неправильные данные о кругах"
 
-#: plot.c:3685 plot.c:3706 plot.c:3731 plot.c:3761
+#: plot.c:3685
+#: plot.c:3706
+#: plot.c:3731
+#: plot.c:3761
 msgid "invalid symbol parameter"
 msgstr "неправильный символьный параметр"
 
@@ -472,20 +529,26 @@ msgstr "неправильные 'boxplots[, 1:4]'"
 msgid "invalid symbol type"
 msgstr "неправильный тип символа"
 
-#: plot.c:3944 plot.c:3946 plot.c:3951 plot.c:3953
+#: plot.c:3944
+#: plot.c:3946
+#: plot.c:3951
+#: plot.c:3953
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"
 
-#: plot3d.c:181 plot3d.c:1929
+#: plot3d.c:181
+#: plot3d.c:1929
 msgid "insufficient 'x' or 'y' values"
 msgstr "недостаточные значения 'x' или 'y'"
 
-#: plot3d.c:185 plot3d.c:1932
+#: plot3d.c:185
+#: plot3d.c:1932
 msgid "dimension mismatch"
 msgstr "несоответствие размерности"
 
-#: plot3d.c:193 plot3d.c:1935
+#: plot3d.c:193
+#: plot3d.c:1935
 msgid "no contour values"
 msgstr "нет значений контура"
 
@@ -497,7 +560,8 @@ msgstr "неправильные x/y-значения или границы"
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "неправильные уровни контура: должны четко увеличиваться"
 
-#: plot3d.c:1049 plot3d.c:1062
+#: plot3d.c:1049
+#: plot3d.c:1062
 msgid "Axis orientation not calculated"
 msgstr "Положение осей не вычислено"
 
@@ -533,7 +597,8 @@ msgstr "'zlab' должен быть текстовым вектором еди�
 msgid "invalid viewing parameters"
 msgstr "неправильные параметры просмотра"
 
-#: plot3d.c:1179 plot3d.c:1183
+#: plot3d.c:1179
+#: plot3d.c:1183
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "неправильное определение '%s'"
@@ -578,48 +643,34 @@ msgstr "длинный вектор '%s' не поддерживается"
 
 #~ msgid "unable to allocate memory (in GPolygon)"
 #~ msgstr "не могу разместить память (в GPolygon)"
-
 #~ msgid "invalid number of points in identify()"
 #~ msgstr "неправильное количество точек в identify()"
-
 #~ msgid "Event GE_ScalePS requires a single numeric value"
 #~ msgstr "Событие GE_ScalePS требует единичного числового значения"
-
 #~ msgid "zero length 'padj' specified"
 #~ msgstr "указан 'padj' нулевой длины"
-
 #~ msgid "unable to allocate memory (in GPath)"
 #~ msgstr "не могу разместить память (в GPath)"
-
 #~ msgid "invalid x or y (in GPath)"
 #~ msgstr "неправильный x или y (в GPath)"
-
 #~ msgid "zero length 'labels'"
 #~ msgstr "нулевые 'labels'"
-
 #~ msgid "zero length 'text' specified"
 #~ msgstr "указана нулевая длина 'text'"
-
 #~ msgid "zero length 'line' specified"
 #~ msgstr "указан нулевая длина 'line'"
-
 #~ msgid "zero length 'outer' specified"
 #~ msgstr "указана нулевая длина 'outer'"
-
 #~ msgid "zero length 'at' specified"
 #~ msgstr "указана нулевая длина 'at'"
-
 #~ msgid "zero length 'adj' specified"
 #~ msgstr "указана нулевая длина 'adj'"
-
 #~ msgid "zero length 'cex' specified"
 #~ msgstr "указана нулевая длина 'cex'"
-
 #~ msgid "zero length 'col' specified"
 #~ msgstr "указана нулевая длина 'col'"
-
 #~ msgid "zero length 'font' specified"
 #~ msgstr "указана нулевая длина 'font'"
-
 #~ msgid "unable to allocate memory (in xspline)"
 #~ msgstr "не могу разместить память (в xspline)"
+

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-26 18:54-0600\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
+"PO-Revision-Date: 2016-04-05 18:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "invalid 'filename'"
 msgstr "неправильное 'filename'"
@@ -163,8 +162,7 @@ msgid "NOT changing %s"
 msgstr "НЕ изменяется %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 
 msgid "unknown family '%s'"
 msgstr "неизвестное семейство '%s'"
@@ -229,9 +227,11 @@ msgstr "неправильный формат вывода"
 msgid "status %d in running command '%s'"
 msgstr "статус %d выполняющейся команды '%s'"
 
+msgid "range too small for 'min.n'"
+msgstr "размах слишком мал для 'min.n'"
+
 msgid "a raster matrix must be character, or numeric, or logical"
-msgstr ""
-"растровая матрица должна быть символом, числом или логическим выражением"
+msgstr "растровая матрица должна быть символом, числом или логическим выражением"
 
 msgid "a raster array must be numeric"
 msgstr "растровая многомерная матрица должна быть числовой"
@@ -240,8 +240,7 @@ msgid "a raster array must have exactly 3 dimensions"
 msgstr "растровая многомерная матрица должна быть в точности трехмерной"
 
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr ""
-"растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
+msgstr "растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' всегда неявно выставлен в FALSE в '[.raster'"
@@ -261,16 +260,8 @@ msgstr "нет устройства, которое надо записывать"
 msgid "argument is not of class %s"
 msgstr "аргумент не принадлежит к классу %s"
 
-#, fuzzy
-msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgid "loading snapshot from a different session"
 msgstr "загрузка снимка из другой версии"
-
-#, fuzzy
-msgid "snapshot recorded in different R version (%s)"
-msgstr "загрузка снимка из другой версии"
-
-msgid "snapshot contains invalid graphics call"
-msgstr ""
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr "'nbin' должен быть числовым вектором длиной 1 или 2"
@@ -340,9 +331,7 @@ msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr "неправильные аргументы в эquartzFontsэ (нужны именованные аргументы)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-"типы, основанные на cairo, в этой сборке не поддерживаются -- использую "
-"\"Xlib\""
+msgstr "типы, основанные на cairo, в этой сборке не поддерживаются -- использую \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "неизвестное семейство X11(type = \"XLib\")"
@@ -419,28 +408,20 @@ msgstr[0] "%d значение z <= 0 пропущено на логарифмическом графике"
 msgstr[1] "%d значения z <= 0 пропущены на логарифмическом графике"
 msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
 
-#~ msgid "range too small for 'min.n'"
-#~ msgstr "размах слишком мал для 'min.n'"
-
 #~ msgid "sorry, 'gs' cannot be found"
 #~ msgstr "извините, не могу найти 'gs'"
-
 #~ msgid "loading snapshot from pre-3.0.0 R version"
 #~ msgstr "загрузка снимка из версии R до 3.0.0"
-
 #~ msgid "can only print from screen device"
 #~ msgstr "могу печатать только с экранного устройства"
-
 #~ msgid "'maxRasters' is no longer needed, and will be ignored"
 #~ msgstr "'maxRasters' больше не нужны и будут пропущены"
-
 #~ msgid "The 'gamma' argument is deprecated and has no effect"
 #~ msgstr "Аргумент 'gamma' устарел и не возымеем никакого эффекта"
-
 #~ msgid "invalid value for 'antialias'"
 #~ msgstr "неправильное значение 'antialias'"
-
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""
 #~ "устройство quartz() интерактивно сокращено без использования обработчика "
 #~ "циклов"
+

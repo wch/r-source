@@ -1,28 +1,27 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-01 10:28-0700\n"
-"PO-Revision-Date: 2015-03-26 21:38+0100\n"
+"PO-Revision-Date: 2016-04-04 11:19+0200\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #: base.c:43
 msgid "no base graphics system is registered"
 msgstr "nie zarejestrowano żadnego bazowego systemu graficznego"
 
 #: base.c:310
-#, fuzzy
 msgid "Incompatible graphics state"
-msgstr "niepoprawny stan grafiki"
+msgstr "Niepoprawny stan grafiki"
 
 #: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"

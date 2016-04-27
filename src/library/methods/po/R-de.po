@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.2.0\n"
+"Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-26 14:56+0100\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2016-04-08 11:31+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -16,9 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#, fuzzy
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
-msgstr "OOPS: irgendetwas falsch mit der Zeile %d in '.OldClassesPrototype'"
+msgstr "OOPS: irgendetwas ist falsch mit '.OldClassesPrototypes[[%d]]'"
 
 msgid ""
 "unnamed argument to initialize() for S3 class must have a class definition; "
@@ -81,9 +80,7 @@ msgstr ""
 
 msgid ""
 "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
-msgstr ""
-"das S3Class Argument muss eine Superklasse von %s sein: gilt nicht für "
-"Klasse %s"
+msgstr "das 'S3Class' Argument muss eine Superklasse von %s sein: gilt nicht für Klasse %s"
 
 msgid "replacement value must extend class %s, got %s"
 msgstr "Ersetzung muss die Klasse %s erweitern, bekam %s"
@@ -137,10 +134,9 @@ msgstr ""
 msgid "invalid argument 'name': %s"
 msgstr "unzulässiges Argument 'name': %s"
 
-#, fuzzy
 msgid ""
-"%s dispatches internally;  methods can be defined, but the generic function "
-"is implicit, and cannot be changed."
+"%s is a primitive function;  methods can be defined, but the generic "
+"function is implicit, and cannot be changed."
 msgstr ""
 "\"%s\" ist eine primitive Funktion; es können Methoden definiert werden, die "
 "generische Funktion ist jedoch implizit und kann nicht geändert werden"
@@ -509,16 +505,14 @@ msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist veraltet"
 msgid "use %s instead."
 msgstr "nutze stattdessen %s."
 
-#, fuzzy
 msgid ""
 "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
 msgstr ""
-"%s ist, zusammen mit der Nutzung der \"MethodsList\" Metadatenobjekte, "
-"veraltet."
+"%s ist, zusammen mit der Nutzung der \"MethodsList\" Metadatenobjekte,\n"
+" nicht mehr vorhanden."
 
-#, fuzzy
 msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
-msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist veraltet"
+msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist nicht mehr möglich"
 
 msgid "invalid object for formal method definition: type %s"
 msgstr "unzulässiges Objekt für die formale Methodendefinition: Typ %s"
@@ -754,6 +748,15 @@ msgid "unable to find an environment containing class %s"
 msgstr "kann keine Umgebung mit einer Klasse %s finden"
 
 msgid ""
+"Note: the specification for S3 class %s in package %s seems equivalent to "
+"one from package %s: not turning on duplicate class definitions for this "
+"class."
+msgstr ""
+"die Spezifikation für die S3 Klasse %s in Paket %s scheint äquivalent zu "
+"einer aus Paket %s; für diese Klasse werden  die Klassendefinitionen nicht "
+"dupliziert"
+
+msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
@@ -769,11 +772,6 @@ msgstr ""
 "Die Spezifikation für die Klasse %s in Paket %s scheint äquivalent zu einer "
 "aus Paket %s; für diese Klasse werden  die Klassendefinitionen nicht "
 "dupliziert"
-
-msgid ""
-"Found more than one class \"%s\" in cache; using the first, from namespace "
-"'%s'"
-msgstr ""
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
@@ -875,11 +873,20 @@ msgstr ""
 "Argument 'f' muss eine Zeichenkette, eine generische Funktion oder eine "
 "Primitive sein: bekam eine gewöhnliche Funktion"
 
+msgid "methods cannot be defined for the primitive function %s"
+msgstr "für die primitive Funktion %s können keine Methoden definiert werden"
+
 msgid "no generic function found for %s"
 msgstr "keine generische Funktion für %s gefunden"
 
 msgid "Empty function name in .getGeneric"
 msgstr "Leerer Funktionsname in .getGeneric"
+
+msgid ""
+"package %s seems to have out-of-date methods; need to reinstall from source"
+msgstr ""
+"Paket %s scheint veraltete Methoden zu beinhalten; Neuinstallation aus den "
+"Quellen erforderlich"
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
@@ -891,7 +898,7 @@ msgstr ""
 "unzulässiger Wert aus der generischen Funktion %s, Klasse %s, erwartet war %s"
 
 msgid "\"MethodsList\" is defunct; allMethods now are empty"
-msgstr ""
+msgstr "\"MethodsList\" exisitiert nicht mehr; allMethods sind jetzt leer"
 
 msgid ""
 "the body of the generic function for %s calls 'standardGeneric' to dispatch "
@@ -981,6 +988,9 @@ msgstr ""
 
 msgid "no definition found for class %s"
 msgstr "keine Definition der Klasse %s gefunden"
+
+msgid "trying to execute load actions without 'methods' package"
+msgstr "versuche die Ladeaktionen ohne das 'methods' Paket auszuführen"
 
 msgid "missing function for load action: %s"
 msgstr "fehlende Funktion für Ladeaktion: %s"
@@ -1226,13 +1236,6 @@ msgstr ""
 "momentan existieren Methoden zur Umwandlung von %s nach %s; diese werden "
 "ersetzt"
 
-#, fuzzy
-msgid "Function must be an S4 generic"
-msgstr "Leerer Funktionsname in .getGeneric"
-
-msgid "method is not being debugged"
-msgstr ""
-
 msgid "object %s not found"
 msgstr "Objekt %s nicht gefunden"
 
@@ -1306,13 +1309,10 @@ msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 "ungültiges Objekt im Metatable der Methoden für %s, Label %s, hatte Klasse %s"
 
-#, fuzzy
 msgid ""
 "invalid mlist element for signature %s at level %d (should be "
 "MethodDefinition or .Primitive, had class %s)"
-msgstr ""
-"ungültiges mlist Element für die Signatur %s auf Stufe %d (sollte "
-"Methodenliste oder Methode sein, hat Klasse %s)"
+msgstr "ungültiges mlist Element für die Signatur %s auf Stufe %d (sollte MethodDefinition oder .Primitive sein, hat Klasse %s)"
 
 msgid "bad method object stored in method table, class %s"
 msgstr "ungültiges Methodenobjekt in der Methodentabelle, Klasse %s"
@@ -1536,10 +1536,6 @@ msgstr ""
 msgid "%s is not a field in this class"
 msgstr "%s ist kein Feld dieser Klasse"
 
-#, fuzzy
-msgid "Methods not found: %s"
-msgstr "Objekt %s nicht gefunden"
-
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
 "redefined"
@@ -1668,11 +1664,6 @@ msgstr ""
 "gesichert werden."
 
 msgid ""
-"Reference superclasses must come from the same package for the environment "
-"to be defined:  got %s and %s"
-msgstr ""
-
-msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
 "class"
 msgstr ""
@@ -1723,8 +1714,8 @@ msgstr ""
 msgid "the method for %s for this signature was not being traced"
 msgstr "die Methode für %s für diese Signatur wurde nicht verfolgt"
 
-#, fuzzy
-msgid "making a traced version of a special; arguments may be altered"
+msgid ""
+"making a traced version of a primitive; arguments will be treated as '...'"
 msgstr ""
 "erzeuge verfolgte Version einer Primitiven; Argumente werden wie '...' "
 "behandelt"
@@ -1983,29 +1974,6 @@ msgstr[0] ""
 msgstr[1] ""
 "keine Definiton der Klasse %s an der angegebenen Position, %s, Definitionen "
 "bei: %s"
-
-#~ msgid ""
-#~ "Note: the specification for S3 class %s in package %s seems equivalent to "
-#~ "one from package %s: not turning on duplicate class definitions for this "
-#~ "class."
-#~ msgstr ""
-#~ "die Spezifikation für die S3 Klasse %s in Paket %s scheint äquivalent zu "
-#~ "einer aus Paket %s; für diese Klasse werden  die Klassendefinitionen "
-#~ "nicht dupliziert"
-
-#~ msgid "methods cannot be defined for the primitive function %s"
-#~ msgstr ""
-#~ "für die primitive Funktion %s können keine Methoden definiert werden"
-
-#~ msgid ""
-#~ "package %s seems to have out-of-date methods; need to reinstall from "
-#~ "source"
-#~ msgstr ""
-#~ "Paket %s scheint veraltete Methoden zu beinhalten; Neuinstallation aus "
-#~ "den Quellen erforderlich"
-
-#~ msgid "trying to execute load actions without 'methods' package"
-#~ msgstr "versuche die Ladeaktionen ohne das 'methods' Paket auszuführen"
 
 #~ msgid "special function %s is not permitted to have methods"
 #~ msgstr "spezielle Funktion %s darf keine Methoden besitzen"

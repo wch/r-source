@@ -1,33 +1,36 @@
 # Korean translation for R methods package
-# src/library/methods/po/R-ko.po
+# ./methods/po/R-ko.po
 #
-# Copyright (C) 1995-2015 The R Core Team
+# Copyright (C) 1995-2016 The R Core Team
 #
 # This file is distributed under the same license as the R methods package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
+# Contact: Chel Hee Lee <gnustats@gmail.com>
 #
 # Notes:
+# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
+# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
 # Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-30 14:01-0600\n"
+"PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#, fuzzy
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr ""
-"아이쿠: '.OldClassesPrototypes'내의 %d번째 줄에 무엇인가 잘못되었습니다"
+"OOPS: 무엇인가가 '.OldClassesPrototypes[[%d]]'를 사용함에 있어서 잘못되었습니"
+"다."
 
 msgid ""
 "unnamed argument to initialize() for S3 class must have a class definition; "
@@ -147,13 +150,10 @@ msgstr ""
 msgid "invalid argument 'name': %s"
 msgstr "인자 'name'이 올바르지 않습니다: %s"
 
-#, fuzzy
 msgid ""
 "%s dispatches internally;  methods can be defined, but the generic function "
 "is implicit, and cannot be changed."
 msgstr ""
-"%s는 프리미티브 함수입니다; 따라서 메소드들이 정의되어 질 수 있지만, 제네릭 "
-"함수는 절대적이고, 변경되어 질 수 없습니다."
 
 msgid ""
 "if the 'def' argument is supplied, it must be a function that calls "
@@ -294,7 +294,7 @@ msgid ""
 msgstr ""
 
 msgid "must supply 'generic.function' or 'class'"
-msgstr ""
+msgstr "반드시 'generic.function' 또는 'class'를 제공해야 합니다."
 
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr ""
@@ -511,17 +511,12 @@ msgstr ""
 msgid "use %s instead."
 msgstr "대신 %s을 사용하세요."
 
-#, fuzzy
 msgid ""
 "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
 msgstr ""
-"\"MethodsList\" 메타데이터 객체의 다른 용도에 함께 이용되는 %s는 더 이상 제공"
-"되지 않습니다."
 
-#, fuzzy
 msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr ""
-"%s내에서:  \"MethodsList\" 메타데이터 객체들의 사용은 지원되지 않습니다."
 
 msgid "invalid object for formal method definition: type %s"
 msgstr "형식 메소드 정의에 대한 객체가 올바르지 않습니다: 유형 %s"
@@ -1184,9 +1179,8 @@ msgstr ""
 "%1$s에서 %2$s로의 강제로 변환하는 메소드는 현재 존재하지 않습니다; 이것들은 "
 "대체되어질 것입니다."
 
-#, fuzzy
 msgid "Function must be an S4 generic"
-msgstr ".getGeneric내에 이름이 없는 함수가 있습니다"
+msgstr ""
 
 msgid "method is not being debugged"
 msgstr ""
@@ -1262,13 +1256,10 @@ msgstr "%s에 쓰여진 메소드의 구조"
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "invalid mlist element for signature %s at level %d (should be "
 "MethodDefinition or .Primitive, had class %s)"
 msgstr ""
-"\"signature\" 인자에 대한 리스트내에 잘못된 구성요소가 있습니다; 구성요소 %d"
-"는 클래스 정의도 아니고 클래스명도 아닙니다"
 
 msgid "bad method object stored in method table, class %s"
 msgstr ""
@@ -1466,9 +1457,8 @@ msgstr ""
 msgid "%s is not a field in this class"
 msgstr "%s는 이 클래스 내에 있는 항목이 아닙니다"
 
-#, fuzzy
 msgid "Methods not found: %s"
-msgstr "객체 %s를 찾을 수 없습니다"
+msgstr ""
 
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
@@ -1863,6 +1853,13 @@ msgstr[0] ""
 msgstr[1] ""
 
 #~ msgid ""
+#~ "%s is a primitive function;  methods can be defined, but the generic "
+#~ "function is implicit, and cannot be changed."
+#~ msgstr ""
+#~ "%s는 프리미티브 함수입니다; 따라서 메소드들이 정의되어 질 수 있지만, 제네"
+#~ "릭 함수는 절대적이고, 변경되어 질 수 없습니다."
+
+#~ msgid ""
 #~ "Note: the specification for S3 class %s in package %s seems equivalent to "
 #~ "one from package %s: not turning on duplicate class definitions for this "
 #~ "class."
@@ -1883,6 +1880,10 @@ msgstr[1] ""
 
 #~ msgid "trying to execute load actions without 'methods' package"
 #~ msgstr "'methods' 패키지 없이 로드 액션들의 실행을 시도합니다"
+
+#~ msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+#~ msgstr ""
+#~ "아이쿠: '.OldClassesPrototypes'내의 %d번째 줄에 무엇인가 잘못되었습니다"
 
 #~ msgid "special function %s is not permitted to have methods"
 #~ msgstr "특이 함수 %s는 메소드를 가질 수 없습니다"

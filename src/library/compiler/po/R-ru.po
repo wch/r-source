@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-26 18:50-0600\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2016-04-05 18:15-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -11,29 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
-
-msgid "namespace found within local environments"
-msgstr ""
 
 msgid "not a proper evaluation environment"
 msgstr "не является подходящим окружением для вычисления"
 
-#, fuzzy
-msgid "non-namespace found within namespace environments"
-msgstr ""
-"'ns' должно быть пространством имен или пространство имен импортируется из "
-"окружения"
-
-msgid "namespace found within global environments"
-msgstr ""
-
 msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr ""
-"'ns' должно быть пространством имен или пространство имен импортируется из "
-"окружения"
+msgstr "'ns' должно быть пространством имен или пространство имен импортируется из окружения"
 
 msgid "bad assignment: %s"
 msgstr "неверное назначение: %s"
@@ -68,9 +53,8 @@ msgstr "неправильное назначение 2"
 msgid "invalid function in complex assignment"
 msgstr "неверная функция в сложном назначении"
 
-#, fuzzy
-msgid "is not a registered math1 function"
-msgstr "незарегистрированная math1-функция"
+msgid "%s is not a registered math1 function"
+msgstr "%s -- незарегистрированная math1-функция"
 
 msgid "missing arguments are not allowed"
 msgstr "пропущенные аргументы не допустимы"
@@ -92,9 +76,6 @@ msgstr "неправильное число аргументов для '%s'"
 
 msgid "more than one default provided in switch() call"
 msgstr "более чем одно значение по умолчанию в вызове switch()"
-
-msgid "'switch' with no alternatives"
-msgstr ""
 
 msgid "cannot compile a non-function"
 msgstr "невозможно скомпилировать не функцию"
@@ -123,9 +104,6 @@ msgstr "файл '%s' не существует"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' не является опцией компилятора"
 
-msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
-msgstr ""
-
 msgid "function is not compiled"
 msgstr "функция не скомпилирована"
 
@@ -140,3 +118,4 @@ msgstr[2] "локальные назначения синтаксическим 
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "ожидается одиночное логическое значение для флага состояния S4"
+

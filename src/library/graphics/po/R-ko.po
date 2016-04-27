@@ -1,23 +1,26 @@
 # Korean translation for R graphics package
-# src/library/graphics/po/R-ko.po
+# ./graphics/po/R-ko.po
 #
-# Copyright (C) 1995-2015 The R Core Team
+# Copyright (C) 1995-2016 The R Core Team
 #
 # This file is distributed under the same license as the R graphics package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
+# Contact: Chel Hee Lee <gnustats@gmail.com>
 #
 # Notes:
+# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
+# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
 # Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-30 14:01-0600\n"
+"PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -246,7 +249,7 @@ msgid "'z' must be a matrix"
 msgstr "'z'는 반드시 행렬이어야 합니다"
 
 msgid "'z' must be numeric or logical"
-msgstr ""
+msgstr "'z'는 반드시 수치형 또는 논리형이어야 합니다."
 
 msgid "invalid z limits"
 msgstr "유효하지 않은 z limits입니다"

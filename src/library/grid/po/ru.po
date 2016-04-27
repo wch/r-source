@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
-"PO-Revision-Date: 2015-03-26 19:02-0600\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
+"PO-Revision-Date: 2016-04-05 18:07-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -18,18 +18,18 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: grid.c:212
 msgid "cannot clip to rotated viewport"
 msgstr "не могу обрезать до повернутой оконницы"
 
-#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
+#: grid.c:697
+#: grid.c:702
+#: grid.c:792
+#: grid.c:797
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-"не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' "
-"смешались?)"
+msgstr "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' смешались?)"
 
 #: grid.c:977
 msgid "attempt to plot on null device"
@@ -79,27 +79,37 @@ msgstr "неправильный 'layout.pos.row'"
 msgid "invalid 'layout.pos.col'"
 msgstr "неправильный 'layout.pos.col'"
 
-#: matrix.c:50
+#: matrix.c:49
 msgid "singular transformation matrix"
 msgstr "сингулярная трансформационная матрица"
 
-#: state.c:170
+#: state.c:169
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 
-#: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
+#: unit.c:260
+#: unit.c:410
+#: unit.c:1210
+#: unit.c:1290
+#: unit.c:1370
+#: unit.c:1450
 msgid "unimplemented unit function"
 msgstr "не разработанная единичная функция"
 
-#: unit.c:893 unit.c:1645
+#: unit.c:893
+#: unit.c:1645
 msgid "invalid unit or unit not yet implemented"
 msgstr "неправильная или не разработанная единица"
 
-#: unit.c:1702 unit.c:1733
+#: unit.c:1702
+#: unit.c:1733
 msgid "Viewport has zero dimension(s)"
 msgstr "Оконница имеет ноль измерений"
 
-#: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
+#: unit.c:1765
+#: unit.c:1780
+#: unit.c:1795
+#: unit.c:1810
 msgid "Unsupported unit conversion"
 msgstr "Неподдерживаемая конверсия единиц измерения"
 
@@ -121,3 +131,4 @@ msgstr "не-конечное положение и/или размер оконницы"
 
 #~ msgid "Invalid circle radius (must be non-negative)"
 #~ msgstr "Неправильный радиус круга (должен быть неотрицательным)"
+

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2015-03-26 14:46+0100\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
+"PO-Revision-Date: 2016-04-08 12:31+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -178,7 +178,7 @@ msgid "'x' must be coefficient matrix/data frame"
 msgstr "'x' muss eine Koeffizientenmatrix oder Dataframe sein"
 
 msgid "option \"show.coef.Pvalues\" is invalid: assuming TRUE"
-msgstr "option \"show.coef.Pvalues\" is unzulässig: nehme TRUE an"
+msgstr "option \"show.coef.Pvalues\" ist unzulässig: nehme TRUE an"
 
 msgid "'P.values' is TRUE, but 'has.Pvalue' is not"
 msgstr "'P.values' ist TRUE, aber 'has.Pvalue' nicht"
@@ -187,7 +187,7 @@ msgid "wrong k / cs.ind"
 msgstr "falsches k / cs.ind"
 
 msgid "option \"show.signif.stars\" is invalid: assuming TRUE"
-msgstr "Option \"show.signif.stars\" is unzulässig: nehme TRUE an"
+msgstr "Option \"show.signif.stars\" ist unzulässig: nehme TRUE an"
 
 msgid "'anova' object must have colnames"
 msgstr "'anova' Objekt muss Spaltennamen haben"
@@ -418,7 +418,7 @@ msgid "'p' must be a single number between 0 and 1"
 msgstr "'p' muss eine einzelne Zahl zwischen 0 und 1 sein"
 
 msgid "length of choices must be 2"
-msgstr "Länge der Auswahlen muss 2 sein"
+msgstr "Länge der Auswahl muss 2 sein"
 
 msgid "object '%s' has no scores"
 msgstr "Objekt '%s' hat keine Scores"
@@ -474,12 +474,6 @@ msgstr "Chi-Quadrat-Approximation kann inkorrekt sein"
 msgid "NA values not allowed in 'd'"
 msgstr "NAs sind in 'd' nicht erlaubt"
 
-msgid "eig=TRUE is disregarded when list.=FALSE"
-msgstr ""
-
-msgid "x.ret=TRUE is disregarded when list.=FALSE"
-msgstr ""
-
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr ""
 "Distanzen müssen Ergebnisse von 'dist' oder eine quadratische Matrix sein"
@@ -492,9 +486,6 @@ msgstr "'k' muss in {1, 2, .. n-1} liegen"
 
 msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "nur %d der ersten %d Eigenwerte sind > 0"
-
-msgid "package 'MASS' must be installed"
-msgstr ""
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "Startwert nicht im Inneren der zulässigen Region"
@@ -538,10 +529,6 @@ msgstr "einer oder mehrere Vektoren müssen angegeben werden"
 
 msgid "arguments must have the same length"
 msgstr "Argumente müssen dieselbe Länge haben"
-
-#, fuzzy
-msgid "wrong number of columns in new data:"
-msgstr "falsche Spaltenanzahl in 'x'"
 
 msgid "contrasts apply only to factors"
 msgstr "Kontraste arbeiten nur auf Faktoren"
@@ -784,9 +771,6 @@ msgid "some terms will have NAs due to the limits of the method"
 msgstr ""
 "einige Ausdrücke werden aufgrund der eingeschränkten Methode NAs enthalten"
 
-msgid "multivariate case with missing coefficients is not yet implemented"
-msgstr ""
-
 msgid "'x' must have 1 or more non-missing values"
 msgstr "'x' muss mindestens einen nicht-fehlenden Wert enthalten"
 
@@ -905,10 +889,7 @@ msgstr ""
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "nur positive Werte sind für die 'inverse.gaussian'-Familie zulässig"
 
-#, fuzzy
-msgid ""
-"need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' "
-"family"
+msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
 msgstr ""
 "benötige CRAN Paket 'SuppDists' für die Verteilungsfamilie 'inverse.gaussian'"
 
@@ -1200,8 +1181,8 @@ msgstr "alle Elemente von 'which' müssen zwischen 1 und %d liegen"
 msgid "invalid parameter values"
 msgstr "unzulässige Parameterwerte"
 
-msgid "a limit is NA or NaN"
-msgstr ""
+msgid "a limit is missing"
+msgstr "es fehlt eine Grenze"
 
 msgid "missing values not allowed"
 msgstr "fehlende Werte nicht zugelassen"
@@ -1421,10 +1402,6 @@ msgstr "unzulässiges NCOL(X)"
 msgid "only 1-4 predictors are allowed"
 msgstr "nur 1-4 Prediktoren erlaubt"
 
-#, fuzzy
-msgid "invalid NROW(X)"
-msgstr "unzulässiges NCOL(X)"
-
 msgid "invalid 'y'"
 msgstr "unzulässiges 'y'"
 
@@ -1452,13 +1429,6 @@ msgstr "unzulässiges Argument 'cell'"
 
 msgid "invalid argument 'degree'"
 msgstr "unzulässiges Argument 'degree'"
-
-msgid "iterTrace ="
-msgstr ""
-
-#, fuzzy
-msgid "not obeyed as iterations ="
-msgstr "keine endlichen Beobachtungen"
 
 msgid "first argument must be a \"loess\" object"
 msgstr "erstes Argument muss ein \"loess\" Objekt sein"
@@ -1990,8 +1960,8 @@ msgstr "konnte die zeit-veränderlichen Variablen nicht aus den Namen erraten"
 msgid "'varying' arguments must be the same length"
 msgstr "'varying' Argumente müssen gleich lang sein"
 
-msgid "'lengths(varying)' must all match 'length(times)'"
-msgstr ""
+msgid "'times' is wrong length"
+msgstr "'times' hat falsche Länge"
 
 msgid "there are records with missing times, which will be dropped."
 msgstr "es gibt Datensätze mit fehlenden Zeiten; diese werden ignoriert"
@@ -2584,12 +2554,6 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' ist zu kurz: benötige %d Punkt"
 msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
-
-#~ msgid "a limit is missing"
-#~ msgstr "es fehlt eine Grenze"
-
-#~ msgid "'times' is wrong length"
-#~ msgstr "'times' hat falsche Länge"
 
 #~ msgid "non-matched further arguments are disregarded"
 #~ msgstr "übrige Argumente ohne Entsprechung werden verworfen"
