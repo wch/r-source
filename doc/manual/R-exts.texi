@@ -10276,7 +10276,7 @@ and language objects (whose internal structures just differ by
 block: it constructs a pairlist from @code{u} followed by @code{v}
 (which is a pairlist or @code{R_NilValue}).  @code{LCONS} is a variant
 that constructs a language object.  Functions @code{list1} to
-@code{list5} construct a pairlist from one to five items, and
+@code{list6} construct a pairlist from one to six items, and
 @code{lang1} to @code{lang6} do the same for a language object (a
 function to call plus zero to five arguments).  Functions @code{elt} and
 @code{lastElt} find the @var{i}th element and the last element of a
