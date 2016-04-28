@@ -7,7 +7,7 @@
   Extract the estimated standard deviation of the errors, the
   \dQuote{residual standard deviation} (misnomed also
   \dQuote{residual standard error}, e.g., in
-  \code{\link{summary.lm}()}'s output, from a fitted model.
+  \code{\link{summary.lm}()}'s output, from a fitted model).
 
   Many classical statistical models have a \emph{scale parameter},
   typically the standard deviation of a zero-mean normal (or Gaussian)
