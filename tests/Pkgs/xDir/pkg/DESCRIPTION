@@ -1,10 +1,10 @@
 Package: pkgA
 Title: Simple Package with NameSpace and S4 Methods and Classes
 Version: 1.2
-Date: 2015-02-05
+Date: 2015-10-10
 Type: Package
-Depends: methods
-Imports: Matrix
+Depends: R (>= 2.14.0), R (>= r56550), methods
+Imports: Matrix (>= 1.2-0), Matrix (<= 99.9-9)
 LazyData: true
 Author: Yohan Chalabi and R-core
 Maintainer: R Core <R-core@almost.r-project.org>
