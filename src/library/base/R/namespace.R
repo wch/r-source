@@ -1157,7 +1157,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
         evalToChar <- function(cc) {
             vars <- all.vars(cc)
             names(vars) <- vars
-            as.character(eval(eval(call("substitute", cc, as.list(vars)))))
+            as.character(eval(eval(call("substitute", cc, as.list(vars))),
+                              .GlobalEnv))
         }
         switch(as.character(e[[1L]]),
                "if" = if (eval(e[[2L]], .GlobalEnv))
@@ -1283,7 +1284,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                                           keep.source = FALSE,
                                           srcfile = NULL)[[1L]]
                                if(is.call(e))
-                                   val <- eval(e)
+                                   val <- eval(e, .GlobalEnv)
                                else
                                    val <- as.character(e)
                                if(length(val))
