@@ -1726,7 +1726,7 @@ if(FALSE) {
         ## else, an error
         classi <- classes[[i]]
         pkgi <- pkgs[[i]]
-        classDefi <- getClass(classi, where = where)
+        classDefi <- getClassDef(classi, where=if (pkgi == "") where else pkgi)
         if(checkDups && classi %in% multipleClasses()) { # hardly ever, we hope
             clDefsi <- get(classi, envir = .classTable)
             if(nzchar(pkgi) && pkgi %in% names(clDefsi))

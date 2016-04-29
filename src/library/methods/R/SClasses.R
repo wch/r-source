@@ -69,6 +69,8 @@ setClass <-
         classDef@sealed <- FALSE # to allow setIs to work anyway; will be reset later
         assignClassDef(Class, classDef, where)
         badContains <- character()
+### FIXME: need to iterate over contains, not superclass to get
+### package for getClassDef()
         for(class2 in superClasses) {
             if(is(try(setIs(Class, class2, classDef = classDef, where = where)), "try-error"))
                 badContains <- c(badContains, class2)
@@ -247,7 +249,10 @@ getClassDef <-
 			  Class[[1L]] else Class)
 	## a string with a package slot strongly implies the class definition
 	## should be in that package.
-	if(identical(nzchar(package), TRUE)) {
+        if(is.character(where)) {
+            package <- where
+        }
+	if(isTRUE(nzchar(package))) {
 	    whereP <- .requirePackage(package)
 	    value <- get0(cname, whereP, inherits = inherits) # NULL if not existing
 	}

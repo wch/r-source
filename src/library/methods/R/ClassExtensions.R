@@ -383,7 +383,7 @@ makeExtends <- function(Class, to,
         if(exti@distance == 1)
             next # asserted that this was done by makeExtends
         what <- superClasses[[i]]
-        whatDef <- getClassDef(what, where)
+        whatDef <- getClassDef(what, package=packageSlot(exti))
         if(is.null(whatDef) # but shouldn't happen,
            || !isXS3Class(whatDef))
             next
