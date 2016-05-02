@@ -83,6 +83,16 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.3.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \command{R CMD INSTALL} and hence \code{install.packages()}
+      gave an internal error installing a package called
+      \pkg{description} from a tarball on a case-insensitive file system.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.3.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
