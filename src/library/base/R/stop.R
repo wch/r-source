@@ -40,6 +40,9 @@ stopifnot <- function(...)
 	ch <- deparse(call, width.cutoff = cutoff)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch
     }
+    ## basically utils:::head.default() :
+    head <- function(x, n = 6L, ...)
+	x[if(n < 0L) max(length(x) + n, 0L) else min(n, length(x))]
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     mc <- match.call()
