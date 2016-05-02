@@ -1,6 +1,6 @@
 % File src/library/base/man/stopifnot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
@@ -25,9 +25,13 @@ stopifnot(\dots)
   checking of functions, in particular to make them easier to read.
 
   \code{stopifnot(A, B)} is conceptually equivalent to
-\preformatted{\{   if(any(is.na(A)) || !all(A)) stop(...) ;
-      if(any(is.na(B)) || !all(B)) stop(...) \}
-}
+\preformatted{ \{ if(any(is.na(A)) || !all(A)) stop(...);
+   if(any(is.na(B)) || !all(B)) stop(...) \}}
+
+  Since \R version 3.4.0, when an expression (from \code{\dots}) is not
+  true \emph{and} is a call to \code{\link{all.equal}}, the error
+  message will report the (first part of the) differences reported by
+  \code{\link{all.equal}(*)}.
 }
 \value{
   (\code{\link{NULL}} if all statements in \code{\dots} are \code{TRUE}.)
@@ -43,7 +47,7 @@ m <- matrix(c(1,3,3,1), 2, 2)
 stopifnot(m == t(m), diag(m) == rep(1, 2)) # all(.) |=>  TRUE
 
 op <- options(error = expression(NULL))
-# "disable stop(.)"  << Use with CARE! >>
+# "disabling stop(.)"  << Use with CARE! >>
 
 stopifnot(all.equal(pi, 3.141593),  2 < 2, all(1:10 < 12), "a" < "b")
 stopifnot(all.equal(pi, 3.1415927), 2 < 2, all(1:10 < 12), "a" < "b")

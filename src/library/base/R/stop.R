@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,15 +36,31 @@ stopifnot <- function(...)
     n <- length(ll <- list(...))
     if(n == 0L)
 	return(invisible())
+    Dparse <- function(call, cutoff = 60L) {
+	ch <- deparse(call, width.cutoff = cutoff)
+	if(length(ch) > 1L) paste(ch[1L], "....") else ch
+    }
+    abbrev <- function(ae, n = 3L)
+	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     mc <- match.call()
     for(i in 1L:n)
 	if(!(is.logical(r <- ll[[i]]) && !anyNA(r) && all(r))) {
-	    ch <- deparse(mc[[i+1]], width.cutoff = 60L)
-	    if(length(ch) > 1L) ch <- paste(ch[1L], "....")
-            stop(sprintf(ngettext(length(r),
-                                  "%s is not TRUE",
-                                  "%s are not all TRUE"),
-                         ch), call. = FALSE, domain = NA)
+	    cl.i <- mc[[i+1L]]
+	    msg <- ## special case for decently written 'all.equal(*)':
+		if(is.call(cl.i) && identical(cl.i[[1]], quote(all.equal)) &&
+		   (is.null(ni <- names(cl.i)) || length(cl.i) == 3L ||
+		    length(cl.i <- cl.i[!nzchar(ni)]) == 3L))
+
+		    sprintf(gettext("%s and %s are not equal:\n  %s"),
+			    Dparse(cl.i[[2]]),
+			    Dparse(cl.i[[3]]), abbrev(r))
+		else
+		    sprintf(ngettext(length(r),
+				     "%s is not TRUE",
+				     "%s are not all TRUE"),
+			    Dparse(cl.i))
+
+	    stop(msg, call. = FALSE, domain = NA)
 	}
     invisible()
 }
