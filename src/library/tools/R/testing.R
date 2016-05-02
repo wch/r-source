@@ -168,9 +168,12 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
             ## not entirely safe ...
             txt <- gsub("(\x91|\x92)", "'", txt, perl = TRUE, useBytes = TRUE)
             txt <- gsub("(\x93|\x94)", '"', txt, perl = TRUE, useBytes = TRUE)
-            txt <- txt[!grepl('options(pager = "console")', txt,
-                              fixed = TRUE, useBytes = TRUE)]
         }
+        ## massageExamples() adds options(pager = "console") only for
+        ## Windows, but we should ignore a corresponding diff on all
+        ## platforms.
+        txt <- txt[!grepl('options(pager = "console")', txt,
+                          fixed = TRUE, useBytes = TRUE)]
         pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^/CreationDate |^/ModDate |^/Producer |^End.Don\'t show)'
         txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
