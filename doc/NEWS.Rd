@@ -32,7 +32,7 @@
       \code{drop.deparse.attr} with improved but \emph{changed} default
       behaviour for expressions.% plan: backport to 3.3.1
 
-      \item \code{isSymmetrix(m)} is much faster for large asymmetric
+      \item \code{isSymmetric(m)} is much faster for large asymmetric
       matrices \code{m} via pre-tests and a new option \code{tol1}
       (with which strict back compatibility is possible but not the
       default).% plan: backport
@@ -50,6 +50,9 @@
       \code{method} argument gains an \code{"auto"} option (the default)
       which should behave the same as before when \code{method} was left
       missing.
+
+      \item \code{stopifnot(E, ..)} now reports differences when
+      \code{E} is a call to \code{all.equal()} and that is not true.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -659,7 +662,7 @@
       \item \code{download.file()} with \code{method = "wininet"}
       incorrectly warned of download file length difference when
       reported length was unknown. (\PR{16805})
-      
+
       \item \code{diag(NULL, 1)} crashed because of missed type
       checking.  (\PR{16853})
     }
