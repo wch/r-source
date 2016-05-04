@@ -75,7 +75,7 @@ function(x)
     dois <- character()
     recurse <- function(e) {
         if(identical(attr(e, "Rd_tag"), "USERMACRO") &&
-           grepl("\\\\Sexpr.*tools:::Rd_expr_doi", e[1L]))
+           identical(attr(e, "macro"), "\\doi"))
             dois <<- c(dois, e[2L])
         else if(is.list(e))
             lapply(e, recurse)
