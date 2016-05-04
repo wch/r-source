@@ -200,7 +200,7 @@ function(x, file = "", append = FALSE,
     if(length(eor)) {
         ## Newline for end of record.
         ## Note that we do not write a trailing blank line.
-        eor[ diff(c(col(out))[is_not_empty]) >= 1L ] <- "\n"
+        eor[ which(diff(c(col(out))[is_not_empty]) >= 1L) ] <- "\n"
     }
     writeLines(paste0(c(out[is_not_empty]), eor), file)
 }
