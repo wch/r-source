@@ -63,12 +63,15 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
 
     nrx <- NROW(x)
 
-    # Generate a group identifier vector with integers and dots.
-    ident <- function(x){
-        y <- as.integer(as.factor(x))
-        z <- gsub(" ", "0", format(y, scientific = FALSE)) # for right sort order
-        return(z)
-       }
+    ## Generate a group identifier vector with integers and dots.
+    ident <- function(x) {
+        y <- as.factor(x)
+        l <- length(levels(y))
+        s <- as.character(seq_len(l))
+        n <- nchar(s)
+        levels(y) <- paste0(strrep("0", n[l] - n), s)
+        as.character(y)
+    }
     grp <- if(ncol(y)) {
         grp <- lapply(rev(y), ident)
         names(grp) <- NULL
