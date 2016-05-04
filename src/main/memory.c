@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015  The R Core Team.
+ *  Copyright (C) 1998--2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2785,7 +2785,7 @@ SEXP allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5)
     return allocFormalsList(5, sym1, sym2, sym3, sym4, sym5);
 }
 
-SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, 
+SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4,
 		       SEXP sym5, SEXP sym6)
 {
     return allocFormalsList(6, sym1, sym2, sym3, sym4, sym5, sym6);
@@ -2974,32 +2974,6 @@ static void R_gc_internal(R_size_t size_needed)
     }
 }
 
-SEXP attribute_hidden do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP ans;
-    double nsize, vsize;
-    R_size_t tmp;
-
-    checkArity(op, args);
-    nsize = asReal(CAR(args));
-    vsize = asReal(CADR(args));
-
-    if (ISNAN(nsize) || nsize <= 0) ;
-    else if (nsize >= R_SIZE_T_MAX) R_MaxNSize = R_SIZE_T_MAX;
-    else if (R_FINITE(nsize)) R_SetMaxNSize((R_size_t) nsize);
-
-    if (ISNAN(vsize) || vsize <= 0) ;
-    else if (vsize >= R_SIZE_T_MAX) R_MaxVSize = R_SIZE_T_MAX;
-    else if (R_FINITE(vsize)) R_SetMaxVSize((R_size_t) vsize);
-
-    PROTECT(ans = allocVector(REALSXP, 2));
-    tmp = R_GetMaxNSize();
-    REAL(ans)[0] = (tmp < R_SIZE_T_MAX) ? tmp : NA_REAL;
-    tmp = R_GetMaxVSize();
-    REAL(ans)[1] = (tmp < R_SIZE_T_MAX) ? tmp : NA_REAL;
-    UNPROTECT(1);
-    return ans;
-}
 
 SEXP attribute_hidden do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
