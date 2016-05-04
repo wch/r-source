@@ -1,7 +1,7 @@
 #  File src/library/tools/R/CRANtools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2014-2015 The R Core Team
+#  Copyright (C) 2014-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -610,42 +610,35 @@ function(packages)
 
     rxrefs <- CRAN_Rd_xref_reverse_dependencies(packages)
 
+    fmt <- function(x) {
+        if(length(x)) paste(sort(x), collapse = " ") else NA_character_
+    }
+    
     y <- lapply(packages,
                 function(p) {
                     c(Package = p,
-                      if(length(z <- r[[p]])) {
-                          c("Reverse depends" =
-                            paste(sort(z), collapse = " "),
-                            if(length(zz <- setdiff(rr[[p]], z))) {
-                                c("Additional recursive reverse depends" =
-                                  paste(sort(zz), collapse = " "))
-                            })
-                      },
-                      if(length(z <- rrs[[p]])) {
-                          c("Reverse recursive suggests" =
-                            paste(sort(z), collapse = " "))
-                      },
-                      if(length(z <- rxrefs[[p]])) {
-                          c("Reverse Rd xref depends" =
-                            paste(sort(z), collapse = " "))
-                      },
-                      if(length(z <- v[[p]])) {
-                          c("Views" = paste(sort(z), collapse = " "))
-                      })
+                      "Reverse depends" = fmt(r[[p]]),
+                      "Additional recursive reverse depends" =
+                          fmt(setdiff(rr[[p]], r[[p]])),
+                      "Reverse recursive suggests" = fmt(rrs[[p]]),
+                      "Reverse Rd xref depends" = fmt(rxrefs[[p]]),
+                      "Views" = fmt(v[[p]]))
                 })
-    class(y) <- "CRAN_package_reverse_dependencies_and_views"
+    y <- as.data.frame(do.call(rbind, y), stringsAsFactors = FALSE)
+    class(y) <- c("CRAN_package_reverse_dependencies_and_views",
+                  class(y))
     y
 }
 
 format.CRAN_package_reverse_dependencies_and_views <-
 function(x, ...)
 {
-    vapply(x,
-           function(e) {
-               paste(formatDL(e, style = "list", indent = 2L),
-                     collapse = "\n")
-           },
-           "")
+    apply(x, 1L,
+          function(e) {
+              paste(formatDL(e[!is.na(e)],
+                             style = "list", indent = 2L),
+                    collapse = "\n")
+          })
 }
 
 print.CRAN_package_reverse_dependencies_and_views <-
