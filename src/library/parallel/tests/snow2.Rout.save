@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-04-20 r70521) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-05-04 r70581) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.149   0.028   0.588 
+  0.145   0.027   0.579 
