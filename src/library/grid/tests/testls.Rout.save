@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
+R version 3.3.0 Patched (2016-05-05 r70581) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.217   0.021   0.226 
+  0.218   0.027   0.234 

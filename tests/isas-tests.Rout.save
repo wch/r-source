@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
+R version 3.3.0 Patched (2016-05-05 r70581) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2568,6 +2568,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.132 0.011 0.142 0 0 
+Time elapsed:  0.136 0.006 0.141 0 0 
 > 
 > 

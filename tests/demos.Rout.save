@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
+R version 3.3.0 Patched (2016-05-05 r70581) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.039 0.021 1.06 0 0 
+Time elapsed:  0.994 0.02 1.014 0 0 
 > 

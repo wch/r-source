@@ -1,5 +1,5 @@
 
-R version 3.3.0 beta (2016-04-19 r70517) -- "Supposedly Educational"
+R version 3.3.0 Patched (2016-05-05 r70581) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -278,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.233 0.004 1.237 0 0 
+Time elapsed:  1.186 0.005 1.191 0 0 
 > 
 > 
