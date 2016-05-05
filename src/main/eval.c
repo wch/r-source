@@ -6166,6 +6166,13 @@ SEXP R_bcEncode(SEXP bytes)
 	/* install the current version number */
 	pc[0].i = R_bcVersion;
 
+	/* Revert to version 2 to allow for some one compiling in a
+	   new R, loading/saving in an old one, and then trying to run
+	   in a new one. This has happened! Setting the version number
+	   back tells bcEval to drop back to eval. */
+	if (n == 2 && ipc[1] == BCMISMATCH_OP)
+	    pc[0].i = 2;
+
 	for (i = 1; i < n;) {
 	    int op = pc[i].i;
 	    if (op < 0 || op >= OPCOUNT)
