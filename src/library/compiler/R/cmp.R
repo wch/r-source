@@ -1197,9 +1197,10 @@ tryInline <- function(e, cb, cntxt) {
 setInlineHandler("function", function(e, cb, cntxt) {
     forms <- e[[2]]
     body <- e[[3]]
+    sref <- e[[4]]
     ncntxt <- make.functionContext(cntxt, forms, body)
     cbody <- genCode(body, ncntxt)
-    ci <- cb$putconst(list(forms, cbody))
+    ci <- cb$putconst(list(forms, cbody, sref))
     cb$putcode(MAKECLOSURE.OP, ci)
     if (cntxt$tailcall) cb$putcode(RETURN.OP)
     TRUE
