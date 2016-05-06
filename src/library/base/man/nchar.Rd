@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -66,7 +66,7 @@ nzchar(x, keepNA = FALSE)
   \code{type = "width"} gives (an approximation to) the number of
   columns used in printing each element in a terminal font, taking into
   account double-width, zero-width and \sQuote{composing} characters.
-  
+
   If \code{allowNA = TRUE} and an element is detected as invalid in a
   multi-byte character set such as UTF-8, its number of characters and
   the width will be \code{NA}.  Otherwise the number of characters will
@@ -102,7 +102,7 @@ nzchar(x, keepNA = FALSE)
   characters and widths will be computed in UTF-8, even though printing
   may use escapes such as \samp{<U+2642>} in a non-UTF-8 locale.
 #endif
-  
+
   The concept of \sQuote{width} is a slippery one even in a monospaced
   font. Some human languages have the concept of \emph{combining}
   characters, in which two or more characters are rendered together: an
@@ -132,7 +132,7 @@ nzchar(x, keepNA = FALSE)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-  
+
   Unicode Standard Annex #11: \emph{East Asian Width.}
   \url{http://www.unicode.org/reports/tr11/}
 }
@@ -154,5 +154,21 @@ nchar(x, keepNA=FALSE) #  5  6  2  1 15
 stopifnot(identical(nchar(x     ), nchar(x, keepNA= TRUE)),
           identical(nchar(x, "w"), nchar(x, keepNA=FALSE)),
           identical(is.na(x), is.na(nchar(x))))
+
+##' nchar() for all three types :
+nchars <- function(x, ...)
+   vapply(c("chars", "bytes", "width"),
+          function(tp) nchar(x, tp, ...), integer(length(x)))
+
+nchars("\\u200b") # in R versions (>= 2015-09-xx):
+## chars bytes width
+##     1     3     0
+
+data.frame(x, nchars(x)) ## all three types : same unless for NA
+## force the same by forcing 'keepNA':
+(ncT <- nchars(x, keepNA = TRUE)) ## .... NA NA NA ....
+(ncF <- nchars(x, keepNA = FALSE))## ....  2  2  2 ....
+stopifnot(apply(ncT, 1, function(.) length(unique(.))) == 1,
+          apply(ncF, 1, function(.) length(unique(.))) == 1)
 }
 \keyword{character}
