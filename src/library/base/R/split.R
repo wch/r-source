@@ -1,7 +1,7 @@
 #  File src/library/base/R/split.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,11 +18,12 @@
 
 split <- function(x, f, drop = FALSE, ...) UseMethod("split")
 
-split.default <- function(x, f, drop = FALSE, sep = ".", ...)
+split.default <- function(x, f, drop = FALSE, sep = ".", lex.order = FALSE, ...)
 {
     if(!missing(...)) .NotYetUsed(deparse(...), error = FALSE)
 
-    if (is.list(f)) f <- interaction(f, drop = drop, sep = sep)
+    if (is.list(f))
+	f <- interaction(f, drop = drop, sep = sep, lex.order = lex.order)
     else if (!is.factor(f)) f <- as.factor(f) # docs say as.factor
     else if (drop) f <- factor(f) # drop extraneous levels
     storage.mode(f) <- "integer"  # some factors have had double in the past

@@ -468,11 +468,10 @@ is.numeric.Date <- function(x) FALSE
 
 ## ---- additions in 2.8.0 -----
 
-split.Date <-
-function(x, f, drop = FALSE, ...)
+split.Date <- function(x, f, drop = FALSE, ...)
 {
     oclass <- class(x)
-    y <- split.default(unclass(x), f, drop = drop)
+    y <- split.default(unclass(x), f, drop = drop, ...)
     for(i in seq_along(y)) class(y[[i]]) <- oclass
     y
 }

@@ -53,6 +53,11 @@
 
       \item \code{stopifnot(E, ..)} now reports differences when
       \code{E} is a call to \code{all.equal()} and that is not true.
+
+      \item \code{boxplot(<formula>, *)} gets optional arguments
+      \code{drop}, \code{sep}, and \code{lex.order} to pass to
+      \code{split.default()} which itself newly gets \code{lex.order} to
+      pass to \code{interaction()} for more flexibility.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -90,20 +90,23 @@ boxplot.matrix <- function(x, use.cols = TRUE, ...)
 }
 
 boxplot.formula <-
-    function(formula, data = NULL, ..., subset, na.action = NULL)
+    function(formula, data = NULL, ..., subset, na.action = NULL,
+	     drop = FALSE, sep = ".", lex.order = FALSE)
 {
     if(missing(formula) || (length(formula) != 3L))
 	stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
-    m$... <- NULL
+    m$... <- m$drop <- m$sep <- m$lex.order <- NULL
     m$na.action <- na.action # force use of default for this method
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
-    boxplot(split(mf[[response]], mf[-response]), ...)
+    boxplot(split(mf[[response]], mf[-response],
+		  drop = drop, sep = sep, lex.order = lex.order),
+	    ...)
 }
 
 bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,

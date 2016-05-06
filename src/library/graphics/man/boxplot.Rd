@@ -1,6 +1,6 @@
 % File src/library/graphics/man/boxplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot}
@@ -14,7 +14,8 @@
 \usage{
 boxplot(x, \dots)
 
-\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = NULL)
+\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = NULL,
+        drop = FALSE, sep = ".", lex.order = FALSE)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, plot = TRUE,
@@ -33,6 +34,7 @@ boxplot(x, \dots)
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is to ignore missing
     values in either the response or the group.}
+  \item{drop, sep, lex.order}{passed to \code{\link{split.default}}, see there.}
   \item{x}{for specifying data from which the boxplots are to be
     produced. Either a numeric vector, or a single list containing such
     vectors. Additional unnamed arguments specify further data
@@ -184,6 +186,13 @@ boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         subset = supp == "OJ", col = "orange")
 legend(2, 9, c("Ascorbic acid", "Orange juice"),
        fill = c("yellow", "orange"))
+
+## With less effort (slightly different) using factor *interaction*:
+boxplot(len ~ dose:supp, data = ToothGrowth,
+        boxwex = 0.5, col = c("orange", "yellow"),
+        main = "Guinea Pigs' Tooth Growth",
+        xlab = "Vitamin C dose mg", ylab = "tooth length",
+        sep = ":", lex.order = TRUE, ylim = c(0, 35), yaxs = "i")
 
 ## more examples in  help(bxp)
 }

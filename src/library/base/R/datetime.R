@@ -998,7 +998,7 @@ is.numeric.POSIXt <- function(x) FALSE
 
 split.POSIXct <-
 function(x, f, drop = FALSE, ...)
-    lapply(split.default(as.double(x), f, drop = drop), .POSIXct,
+    lapply(split.default(as.double(x), f, drop = drop, ...), .POSIXct,
            tz = attr(x, "tzone"))
 
 xtfrm.POSIXct <- function(x) as.numeric(x)

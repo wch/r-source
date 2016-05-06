@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-05-04 r70581) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-05-06 r70586) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -412,6 +412,13 @@ Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
 +         subset = supp == "OJ", col = "orange")
 > legend(2, 9, c("Ascorbic acid", "Orange juice"),
 +        fill = c("yellow", "orange"))
+> 
+> ## With less effort (slightly different) using factor *interaction*:
+> boxplot(len ~ dose:supp, data = ToothGrowth,
++         boxwex = 0.5, col = c("orange", "yellow"),
++         main = "Guinea Pigs' Tooth Growth",
++         xlab = "Vitamin C dose mg", ylab = "tooth length",
++         sep = ":", lex.order = TRUE, ylim = c(0, 35), yaxs = "i")
 > 
 > ## more examples in  help(bxp)
 > 
