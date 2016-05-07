@@ -1578,6 +1578,50 @@ x <- NULL; tools::assertWarning(f <- formals(x)); stopifnot(is.null(f))
 ## these all silently coerced NULL to a function in R <= 3.2.x
 
 
+## match(x, t): fast algorithm for length-1 'x'
+## a) string 'x'  when only encoding differs
+tmp <- "年付"
+tmp2 <- "\u5e74\u4ed8" ; Encoding(tmp2) <- "UTF-8"
+for(ex in list(c(tmp, tmp2), c("foo","foo"))) {
+    cat(sprintf("\n|%s|%s| :\n----------\n", ex[1], ex[2]))
+    for(enc in c("latin1", "UTF-8", "unknown")) { # , "MAC", "WINDOWS-1251"
+	cat(sprintf("%9s: ", enc))
+	tt <- ex[1]; Encoding(tt) <- enc; t2 <- ex[2]
+	if(identical(i1 <- (  tt       %in% t2),
+		     i2 <- (c(tt, "a") %in% t2)[1]))
+	    cat(i1,"\n")
+	else
+	    stop("differing: ", i1, ", ", i2)
+    }
+}
+outerID <- function(x,y, ...) { ## ugly; can we get outer() to work ?
+    r <- matrix( , length(x), length(y))
+    for(i in seq_along(x)) for(j in seq_along(y)) r[i,j] <- identical(z[i], z[j], ...)
+    r
+}
+## b) complex 'x' with different kinds of NaN
+x0 <- c(0,1, NA_real_, NaN)
+z <- outer(x0,x0, complex, length.out=1L)
+z <- c(z[is.na(z)], # <- of length 4 * 4 - 2*2 = 12
+       as.complex(NaN), as.complex(0/0), # <- typically these two differ in bits
+       complex(real = NaN), complex(imaginary = NaN),
+       NA_complex_, complex(real = NA), complex(imaginary = NA))
+## 1..12 all differ, then only [14] ("0/0") differs in first (low level):
+symnum(outerID(z,z, FALSE,FALSE,FALSE,FALSE))
+symnum(outerID(z,z))
+(mz <- match(z, z)) # currently different {NA,NaN} patterns differ - not in print()/format() _FIXME_
+stopifnot(identical(mz, c(1:4, 1L, 3L, 7:8, 2L, 4L, 8L, 12L, # <- would change after FIXME
+                          rep(2L, 4), 7L, 1L, 1L)))
+zRI <- rbind(Re=Re(z), Im=Im(z)) # and see the pattern :
+print(cbind(format = format(z), t(zRI), mz), quote=FALSE)
+stopifnot(iN  <- apply(zRI, 2, anyNA)) # NA *or* NaN: all TRUE
+is.NA <- function(.) is.na(.) & !is.nan(.)
+(iNaN <- apply(zRI, 2, function(.) any(is.nan(.))))
+(iNA <-  apply(zRI, 2, function(.) any(is.NA (.)))) # has non-NaN NA's
+## use iNA for consistency check once FIXME happened
+stopifnot(identical(mz, sapply(z, match, table = z)))
+## the latter has length(x) == 1 in match(x,*)  and failed in R 3.3.0
+
 
 
 ## keep at end
