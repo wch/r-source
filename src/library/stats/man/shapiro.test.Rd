@@ -1,6 +1,6 @@
 % File src/library/stats/man/shapiro.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shapiro.test}
@@ -40,7 +40,7 @@ shapiro.test(x)
 }
 \source{
   The algorithm used is a C translation of the Fortran code described in
-  Royston (1995) and found at \url{http://lib.stat.cmu.edu/apstat/R94}.
+  Royston (1995). % and was found at \url{http://lib.stat.cmu.edu/apstat/R94}.
   The calculation of the p value is exact for \eqn{n = 3}, otherwise
   approximations are used, separately for \eqn{4 \le n \le 11} and
   \eqn{n \ge 12}.
