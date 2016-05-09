@@ -17,7 +17,7 @@ src/stxwx.f
   From the public domain source of the package GAMFIT by T. Hastie and
   R. Tibshirani, converted to double precision and with consistency
   changes to the calls to bvalue. 
-  Original at http://lib.stat.cmu.edu/general/gamfit.
+  Originally derived from http://lib.stat.cmu.edu/general/gamfit (now defunct).
 
 src/loessc.c
 src/loessf.f

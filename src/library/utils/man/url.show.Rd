@@ -30,7 +30,7 @@ url.show(url, title = url, file = tempfile(),
   \code{\link{url}}, \code{\link{file.show}}, \code{\link{download.file}}
 }
 \examples{
-\dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch3a.txt")}
+\dontrun{url.show("http://www.stats.ox.ac.uk/pub/datasets/csb/ch3a.txt")}
 }
 \keyword{file}
 \keyword{misc}
