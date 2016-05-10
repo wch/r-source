@@ -20,7 +20,7 @@
 }
 \usage{
 split(x, f, drop = FALSE, \dots)
-\method{split}{default}(x, f, drop = FALSE, lex.order = FALSE, \dots)
+\method{split}{default}(x, f, drop = FALSE, sep = ".", lex.order = FALSE, \dots)
 
 split(x, f, drop = FALSE, \dots) <- value
 unsplit(value, f, drop = FALSE)
@@ -34,8 +34,10 @@ unsplit(value, f, drop = FALSE)
     (if \code{f} is a \code{factor} or a list).}
   \item{value}{a list of vectors or data frames compatible with a
     splitting of \code{x}. Recycling applies if the lengths do not match.}
-  \item{lex.order}{logical, passed to \code{\link{interaction}} in the
+  \item{sep}{character string, passed to \code{\link{interaction}} in the
     case where \code{f} is a \code{\link{list}}.}
+  \item{lex.order}{logical, passed to \code{\link{interaction}} when
+    \code{f} is a list.}
   \item{\dots}{further potential arguments passed to methods.}
 }
 \details{
@@ -45,8 +47,8 @@ unsplit(value, f, drop = FALSE)
   likewise, provided they are invoked explicitly.
 
   \code{unsplit} works with lists of vectors or data frames (assumed to
-  have compatible structure, as if created by \code{split}). It puts
-  elements or rows back in the positions given by \code{f}. In the data
+  have compatible structure, as if created by \code{split}).  It puts
+  elements or rows back in the positions given by \code{f}.  In the data
   frame case, row names are obtained by unsplitting the row name
   vectors from the elements of \code{value}.
 
@@ -56,9 +58,10 @@ unsplit(value, f, drop = FALSE)
   Any missing values in \code{f} are dropped together with the
   corresponding values of \code{x}.
 
-  The default method calls \code{\link{interaction}}.  If the levels of
-  the factors contain \samp{.} they may not be split as expected, so
-  the method has argument \code{sep} which is use to join the levels.
+  The default method calls \code{\link{interaction}} when \code{f} is a
+  \code{\link{list}}.  If the levels of the factors contain \samp{.}
+  the factors may not be split as expected, unless \code{sep} is set to
+  string not present in the factor \code{\link{levels}}.
 }
 \value{
   The value returned from \code{split} is a list of vectors containing
