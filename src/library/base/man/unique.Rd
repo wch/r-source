@@ -1,6 +1,6 @@
 % File src/library/base/man/unique.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unique}
@@ -58,9 +58,10 @@ unique(x, incomparables = FALSE, \dots)
   not just if it is equal the immediately previous one.  (For the
   latter, see \code{\link{rle}}).
 
-  Missing values are regarded as equal, but \code{NaN} is not equal to
-  \code{NA_real_}.  Character strings are regarded as equal if they are
-  in different encodings but would agree when translated to UTF-8.
+  Missing values (\code{"\link{NA}"}) are regarded as equal, numeric and
+  complex ones differing from \code{NaN}; character strings will be compared in a
+  \dQuote{common encoding}; for details, see \code{\link{match}} (and
+  \code{\link{duplicated}}) which use the same concept.
 
   Values in \code{incomparables} will never be marked as duplicated.
   This is intended to be used for a fairly small set of values and will
@@ -71,9 +72,6 @@ unique(x, incomparables = FALSE, \dots)
   tests for identity of character representations.  This will
   catch people who unwisely rely on exact equality of floating-point
   numbers!
-
-  Character strings will be compared as byte sequences if any input is
-  marked as \code{"bytes"} (see \code{\link{Encoding}}).
 }
 \value{
   For a vector, an object of the same type of \code{x}, but with only

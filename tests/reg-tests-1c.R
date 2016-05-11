@@ -1418,8 +1418,7 @@ chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
 		n %/% 3 # pretty.default
     }
     pr <- pretty(x, n=n, min.n=min.n, ...)
-    ## if debugging:
-    pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
+    ## if debugging: pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
     stopifnot(length(pr) >= (min.n+1),
 	      ## pretty(x, *) must cover range of x:
 	      min(pr) <= min(x), max(x) <= max(pr))
@@ -1578,7 +1577,7 @@ x <- NULL; tools::assertWarning(f <- formals(x)); stopifnot(is.null(f))
 ## these all silently coerced NULL to a function in R <= 3.2.x
 
 
-## match(x, t): fast algorithm for length-1 'x'
+## match(x, t): fast algorithm for length-1 'x' -- PR#16885
 ## a) string 'x'  when only encoding differs
 tmp <- "年付"
 tmp2 <- "\u5e74\u4ed8" ; Encoding(tmp2) <- "UTF-8"
@@ -1606,21 +1605,22 @@ z <- c(z[is.na(z)], # <- of length 4 * 4 - 2*2 = 12
        as.complex(NaN), as.complex(0/0), # <- typically these two differ in bits
        complex(real = NaN), complex(imaginary = NaN),
        NA_complex_, complex(real = NA), complex(imaginary = NA))
-## 1..12 all differ, then only [14] ("0/0") differs in first (low level):
-symnum(outerID(z,z, FALSE,FALSE,FALSE,FALSE))
-symnum(outerID(z,z))
-(mz <- match(z, z)) # currently different {NA,NaN} patterns differ - not in print()/format() _FIXME_
-stopifnot(identical(mz, c(1:4, 1L, 3L, 7:8, 2L, 4L, 8L, 12L, # <- would change after FIXME
-                          rep(2L, 4), 7L, 1L, 1L)))
+## 1..12 all differ, then
+symnum(outerID(z,z, FALSE,FALSE,FALSE,FALSE))# [14] differing from all on low level
+symnum(outerID(z,z))                         # [14] matches 2, 13,15
+(mz <- match(z, z)) # (checked with m1z below)
 zRI <- rbind(Re=Re(z), Im=Im(z)) # and see the pattern :
 print(cbind(format = format(z), t(zRI), mz), quote=FALSE)
-stopifnot(iN  <- apply(zRI, 2, anyNA)) # NA *or* NaN: all TRUE
+stopifnot(apply(zRI, 2, anyNA)) # NA *or* NaN: all TRUE
 is.NA <- function(.) is.na(.) & !is.nan(.)
 (iNaN <- apply(zRI, 2, function(.) any(is.nan(.))))
 (iNA <-  apply(zRI, 2, function(.) any(is.NA (.)))) # has non-NaN NA's
 ## use iNA for consistency check once FIXME happened
-stopifnot(identical(mz, sapply(z, match, table = z)))
-## the latter has length(x) == 1 in match(x,*)  and failed in R 3.3.0
+m1z <- sapply(z, match, table = z)
+stopifnot(identical(m1z, mz),
+	  identical(m1z == 1L, iNA),
+	  identical(m1z == 2L, !iNA))
+## m1z uses match(x, *) with length(x) == 1 and failed in R 3.3.0
 
 
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/match.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{match}
@@ -65,11 +65,13 @@ x \%in\% table
   For real and complex values, \code{NaN} values are regarded
   as matching any other \code{NaN} value, but not matching \code{NA}.
 
+  Character strings will be compared as byte sequences if any input is
+  marked as \code{"bytes"}, and otherwise are regarded as equal if they are
+  in different encodings but would agree when translated to UTF-8 (see
+  \code{\link{Encoding}}.
+
   That \code{\%in\%} never returns \code{NA} makes it particularly
   useful in \code{if} conditions.
-
-  Character strings will be compared as byte sequences if any input is
-  marked as \code{"bytes"} (see \code{\link{Encoding}}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -84,6 +86,12 @@ x \%in\% table
   finds numbers within intervals, rather than exact matches.
 
   \code{\link{is.element}} for an S-compatible equivalent of \code{\%in\%}.
+
+  \code{\link{unique}} (and \code{\link{duplicated}}) are using the same
+  definitions of \dQuote{match} or \dQuote{equality} as \code{match()},
+  and these are less strict than \code{\link{==}}, e.g., for
+  \code{\link{NA}} and \code{\link{NaN}} in numeric or complex vectors,
+  or for strings with different encodings, see also above.
 }
 \examples{
 ## The intersection of two sets can be defined via match():
@@ -98,9 +106,30 @@ sstr[sstr \%in\% c(letters, LETTERS)]
 
 "\%w/o\%" <- function(x, y) x[!x \%in\% y] #--  x without y
 (1:10) \%w/o\% c(3,7,12)
-## Note that setdiff() is very similar and typically makes more sense: 
+## Note that setdiff() is very similar and typically makes more sense:
         c(1:6,7:2) \%w/o\% c(3,7,12)  # -> keeps duplicates
-setdiff(c(1:6,7:2),        c(3,7,12)) # -> unique values
+setdiff(c(1:6,7:2),      c(3,7,12)) # -> unique values
+
+## Illuminating example about NA matching
+r <- c(1, NA, NaN)
+zN <- c(complex(real = NA , imaginary =  r ), complex(real =  r , imaginary = NA ),
+        complex(real =  r , imaginary = NaN), complex(real = NaN, imaginary =  r ))
+zM <- cbind(Re=Re(zN), Im=Im(zN), match = match(zN, zN))
+rownames(zM) <- format(zN)
+zM ##--> only two different matches: NA or non-NA NaN
+
+length(zN) # 12
+unique(zN) # only two: the "NA" and the first non-NA NaN:
+stopifnot(identical(unique(zN), zN[c(1,7)]))
+
+## very strict equality would have 4 duplicates (of 12):
+symnum(outer(zN, zN, Vectorize(identical,c("x","y")),
+                     FALSE,FALSE,FALSE,FALSE))
+## removing "(very strictly) duplicates",
+i <- c(5,8,11,12)  # we get 8 pairwise non-identicals :
+Ixy <- outer(zN[-i], zN[-i], Vectorize(identical,c("x","y")),
+                     FALSE,FALSE,FALSE,FALSE)
+stopifnot(identical(Ixy, diag(8) == 1))
 }
 \keyword{manip}
 \keyword{logic}
