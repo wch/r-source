@@ -95,11 +95,14 @@
       gave an internal error installing a package called
       \pkg{description} from a tarball on a case-insensitive file system.
 
-      \item \command{match(x, t)} (and hence \code{x \%in\% t}) failed
+      \item \code{match(x, t)} (and hence \code{x \%in\% t}) failed
       when \code{x} was of length one, and either \code{character} and \code{x}
       and \code{t} only differed in their \code{Encoding} or when
       \code{x} and \code{t} where \code{complex} with \code{NA}s or \code{NaN}s.
       (\PR{16885}.)
+
+      \item \code{unloadNamespace(ns)} also works again when \code{ns} is a
+      \sQuote{namespace}, as from \code{getNamespace()}.
     }
   }
 }
