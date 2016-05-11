@@ -2800,20 +2800,24 @@ setRlibs <-
                 ## (Maybe there was an error without a failing test.)
                 bad_files <- dir(".", pattern="\\.Rout\\.fail")
                 if (length(bad_files)) {
-                    ## Read in output from the (first) failed test
-                    ## and retain at most the last 13 lines
-                    ## (13? why not?).
+                    ## Read in output from the (first) failed test.
                     file <- bad_files[1L]
                     lines <- readLines(file, warn = FALSE)
                     file <- file.path(test_dir, sub("out\\.fail", "", file))
                     ll <- length(lines)
-                    lines <- lines[max(1, ll-12):ll]
+                    keep <- as.integer(Sys.getenv("_R_CHECK_TESTS_NLINES_",
+                                                  "13"))
+                    if (keep > 0L)
+                        lines <- lines[max(1L, ll-keep-1L):ll]
                     if (R_check_suppress_RandR_message)
                         lines <- grep('^Xlib: *extension "RANDR" missing on display',
                                       lines, invert = TRUE, value = TRUE,
                                       useBytes = TRUE)
                     printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
-                    printLog(Log, "Last 13 lines of output:\n")
+                    if (keep > 0L)
+                        printLog(Log, sprintf("Last %i lines of output:\n", keep))
+                    else
+                        printLog(Log, "Complete output:\n")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
                 }
                 return(FALSE)
