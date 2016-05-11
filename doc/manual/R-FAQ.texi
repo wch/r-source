@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2016
-@set FAQ_DATE @value{FAQ_YEAR}-04-24
+@set FAQ_DATE @value{FAQ_YEAR}-05-10
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -948,8 +948,8 @@ the programming process.
 See @url{http://statweb.stanford.edu/~jmc4/papers/96.7.ps}
 for further information on the ``Evolution of the S Language''.
 
-There is a huge amount of user-contributed code for S, available at the
-@url{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
+@c There is a huge amount of user-contributed code for S, available at the
+@c @url{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
 
 @c The @url{http://lib.stat.cmu.edu/S/faq, ``Frequently Asked Questions
 @c about S''} contains further information about S, but is not
