@@ -97,6 +97,9 @@
       %% \code{print(x)} remains back compatible, treating all
       %% \code{NA}s identically, but showing real and imaginary parts
       %% for the \code{NaN} \dQuote{class}.
+
+      \item \code{deparse(<complex>, options = "digits17")} prints more
+      nicely now, mostly thanks to a suggestion by Richie Cotton.
     }
   }
 }

@@ -1623,6 +1623,19 @@ stopifnot(identical(m1z, mz),
 ## m1z uses match(x, *) with length(x) == 1 and failed in R 3.3.0
 
 
+## deparse(<complex>,  "digits17")
+fz <- format(z <- c(outer(-1:2, 1i*(-1:1), `+`)))
+(fz0 <- sub("^ +","",z))
+r <- c(-1:1,100, 1e20); z2 <- c(outer(pi*r, 1i*r, `+`)); z2
+dz2 <- deparse(z2, control="digits17")
+stopifnot(identical(deparse(z, 200, control = "digits17"),
+                    paste0("c(", paste(fz0, collapse=", "), ")")),
+          print((sum(nchar(dz2)) - 2) / length(z2)) < 22, # much larger in <= 3.3.0
+          ## deparse <-> parse equivalence, 17 digits should be perfect:
+          all.equal(z2, eval(parse(text = dz2)), tolerance = 0))
+## deparse() for these was "ugly" in R <= 3.3.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

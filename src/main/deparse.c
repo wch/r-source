@@ -738,11 +738,11 @@ static Rboolean parenthesizeCaller(SEXP s)
 static void deparse2buff(SEXP s, LocalParseData *d)
 {
     PPinfo fop;
-    Rboolean lookahead = FALSE, lbreak = FALSE, parens, fnarg = d->fnarg, 
+    Rboolean lookahead = FALSE, lbreak = FALSE, parens, fnarg = d->fnarg,
              outerparens, doquote;
     SEXP op, t;
     int localOpts = d->opts, i, n;
-    
+
     d->fnarg = FALSE;
 
     if (!d->active) return;
@@ -983,10 +983,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_SUBSET:
 		    if ((parens = needsparens(fop, CAR(s), 1)))
-			print2buff("(", d);		
+			print2buff("(", d);
 		    deparse2buff(CAR(s), d);
 		    if (parens)
-			print2buff(")", d);		    
+			print2buff(")", d);
 		    if (PRIMVAL(SYMVALUE(op)) == 1)
 			print2buff("[", d);
 		    else
@@ -1486,7 +1486,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & DIGITS16)) {
 		Rcomplex z =  COMPLEX(vector)[i];
 		if (R_FINITE(z.r) && R_FINITE(z.i)) {
-		    snprintf(hex, 64, "%.17g + %17gi", z.r, z.i);
+		    snprintf(hex, 64, "%.17g%+.17gi", z.r, z.i);
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');
