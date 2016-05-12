@@ -347,7 +347,7 @@ function(x)
 	von <- c("De", "Den", "Der", "La", "Le", "Ten", "Van", "Von")
 	family <- x[length(x)]
 	given <- x[-length(x)]
-	if(!is.null(family) &&
+	if(length(family) &&
            !is.na(match(family, c(jr, tolower(jr))))) {
             family <- paste(given[length(given)], family)
             given <- given[-length(given)]
