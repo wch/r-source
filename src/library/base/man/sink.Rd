@@ -1,6 +1,6 @@
 % File src/library/base/man/sink.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sink}
@@ -26,7 +26,7 @@ sink.number(type = c("output", "message"))
     sink and to the current output stream, like the Unix program \code{tee}.}
 }
 \description{
-  \code{sink} diverts \R output to a connection.
+  \code{sink} diverts \R output to a connection (and stops such diversions).
 
   \code{sink.number()} reports how many diversions are in use.
 
@@ -34,7 +34,8 @@ sink.number(type = c("output", "message"))
   connection currently being used for error messages.
 }
 \details{
-  \code{sink} diverts \R output to a connection.  If \code{file} is a
+  \code{sink} diverts \R output to a connection (and must be used again
+  to finish such a diversion, see below!).  If \code{file} is a
   character string, a file connection with that name will be established
   for the duration of the diversion.
 
@@ -99,14 +100,14 @@ sink("sink-examp.txt")
 i <- 1:10
 outer(i, i, "*")
 sink()
-unlink("sink-examp.txt")
+\dontshow{unlink("sink-examp.txt")}% don't show what confuses newbies
 \donttest{
 ## capture all the output to a file.
 zz <- file("all.Rout", open = "wt")
 sink(zz)
 sink(zz, type = "message")
 try(log("a"))
-## back to the console
+## revert output back to the console -- only then access the file!
 sink(type = "message")
 sink()
 file.show("all.Rout")
