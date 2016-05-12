@@ -1,7 +1,7 @@
 #  File src/library/methods/R/cbind.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -131,6 +131,8 @@ cbind <- function(..., deparse.level = 1)
 ## This may be called on loading methods, see ./zzz.R
 bind_activation <- function(on = TRUE)
 {
+    if(on)
+        warning("methods:::bind_activation(TRUE) is deprecated;\n you should rather provide methods for cbind2() / rbind2()")
     inBase <- function(x, value, ns)
     {
         unlockBinding(x, ns)
