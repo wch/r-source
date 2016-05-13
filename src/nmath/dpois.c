@@ -4,11 +4,11 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000-2015 The R Core Team
+ *	Copyright (C) 2000-2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
+ *  the Free Software Foundation; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -35,16 +35,22 @@
 #include "nmath.h"
 #include "dpq.h"
 
+// called also from dgamma.c, pgamma.c, dnbeta.c, dnbinom.c, dnchisq.c :
 double dpois_raw(double x, double lambda, int give_log)
 {
     /*       x >= 0 ; integer for dpois(), but not e.g. for pgamma()!
         lambda >= 0
     */
     if (lambda == 0) return( (x == 0) ? R_D__1 : R_D__0 );
-    if (!R_FINITE(lambda)) return R_D__0;
+    if (!R_FINITE(lambda)) return R_D__0; // including for the case where  x = lambda = +Inf
     if (x < 0) return( R_D__0 );
     if (x <= lambda * DBL_MIN) return(R_D_exp(-lambda) );
-    if (lambda < x * DBL_MIN) return(R_D_exp(-lambda + x*log(lambda) -lgammafn(x+1)));
+    if (lambda < x * DBL_MIN) {
+	if (!R_FINITE(x)) // lambda < x = +Inf
+	    return R_D__0;
+	// else
+	return(R_D_exp(-lambda + x*log(lambda) -lgammafn(x+1)));
+    }
     return(R_D_fexp( M_2PI*x, -stirlerr(x)-bd0(x,lambda) ));
 }
 
