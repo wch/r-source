@@ -174,6 +174,7 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	return getAttrib0(vec, name);
 }
 
+// R's .row_names_info(x, type = 1L) := .Internal(shortRowNames(x, type)) :
 attribute_hidden
 SEXP do_shortRowNames(SEXP call, SEXP op, SEXP args, SEXP env)
 {

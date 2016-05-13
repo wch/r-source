@@ -848,7 +848,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
     SEXP klass, rval = R_NilValue /* -Wall */;
 
     if(IS_S4_OBJECT(x))
-	PROTECT(klass = R_data_class2(x));
+	PROTECT(klass = R_data_class2(x)); // -> := S4_extends( "class(x)" )
     else
 	PROTECT(klass = R_data_class(x, FALSE));
 

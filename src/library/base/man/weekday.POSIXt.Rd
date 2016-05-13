@@ -1,6 +1,6 @@
 % File src/library/base/man/weekday.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{weekdays}
@@ -41,7 +41,8 @@ julian(x, \dots)
 }
 \arguments{
   \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
-  \item{abbreviate}{logical.  Should the names be abbreviated?}
+  \item{abbreviate}{logical vector (possibly recycled).  Should the names be
+    abbreviated?}
   \item{origin}{an length-one object inheriting from class
     \code{"POSIXt"} or \code{"Date"}.}
   \item{\dots}{arguments for other methods.}

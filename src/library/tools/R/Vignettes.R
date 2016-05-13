@@ -704,7 +704,7 @@ getVignetteEncoding <-  function(file, ...)
     if(is.na(res)) {
         poss <- grep("^[[:space:]]*%+[[:space:]]*\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
         if (length(poss))
-            res <- "UTF-8"
+	    "UTF-8"
         else {
             ## Look for input enc lines using inputenc or inputenx
             ## Note, multiple encodings are excluded.
@@ -720,39 +720,35 @@ getVignetteEncoding <-  function(file, ...)
         	poss <- lines[poss[1L]]
         	res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
                             poss)               # This line should be ASCII.
-	    ## see Rd2latex.R.
-	    ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
-	    res <- switch(res,
-		   "utf8" =, "utf8x" = "UTF-8",
-		   "latin1" =, "iso-8859-1" = "latin1",
-		   "latin2" =, "iso-8859-2" = "latin2",
-		   "latin9" =, "iso-8859-15" = "latin-9", # only form known to GNU libiconv
-		   "latin10" =, "iso-8859-16" = "latin10",
-		   "cyrillic" =, "iso-8859-5" =  "ISO-8859-5", # inputenx
-		   "koi8-r" =  "KOI8-R", # inputenx
-		   "arabic" = "ISO-8859-6", # Not clear next 3 are known to latex
-		   "greek" =, "iso-8859-7" = "ISO-8859-7",
-		   "hebrew" =, "iso-8859-8" = "ISO-8859-8",
-		   "ansinew" = "CP1252",
-		   "applemac" = "macroman",
-		   ## assume these only get used on Windows
-		   "cp1250" = "CP1250",
-		   "cp1252" = "CP1252",
-		   "cp1257" = "CP1257",
-		   "unknown")
+		## see Rd2latex.R.
+		## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
+		switch(res,
+		       "utf8" =, "utf8x" = "UTF-8",
+		       "latin1" =, "iso-8859-1" = "latin1",
+		       "latin2" =, "iso-8859-2" = "latin2",
+		       "latin9" =, "iso-8859-15" = "latin-9", # only form known to GNU libiconv
+		       "latin10" =, "iso-8859-16" = "latin10",
+		       "cyrillic" =, "iso-8859-5" =  "ISO-8859-5", # inputenx
+		       "koi8-r" =  "KOI8-R", # inputenx
+		       "arabic" = "ISO-8859-6", # Not clear next 3 are known to latex
+		       "greek" =, "iso-8859-7" = "ISO-8859-7",
+		       "hebrew" =, "iso-8859-8" = "ISO-8859-8",
+		       "ansinew" = "CP1252",
+		       "applemac" = "macroman",
+		       ## assume these only get used on Windows
+		       "cp1250" = "CP1250",
+		       "cp1252" = "CP1252",
+		       "cp1257" = "CP1257",
+		       "unknown")
 	    } else if (!is.na(default)) {
-		res <- default
+		default
             } else { # Nothing else has indicated an encoding, maybe it's just ASCII
                 asc <- iconv(lines, "latin1", "ASCII")
-                ind <- is.na(asc) | asc != lines
-                if(any(ind))
-                    res <- "non-ASCII"
-                else
-                    res <- "" # or "ASCII"
+		if(anyNA(asc) || any(asc != lines)) "non-ASCII" else "" # or "ASCII"
             }
         }
-    }
-    res
+    } else
+	res
 }
 
 ### * .build_vignette_index
@@ -907,17 +903,14 @@ function(pkg, con, vignetteIndex = NULL)
 {
     ## FIXME: in principle we could need to set an encoding here
     html <- c(HTMLheader("Vignettes and other documentation"),
-              paste0("<h2>Vignettes from package '", pkg,"'</h2>"))
-
-    if(NROW(vignetteIndex) == 0L) { ## NROW(NULL) = 0
-        html <-
-            c(html,
-              "The package contains no vignette meta-information.")
-    } else {
-    	vignetteIndex <- cbind(Package = pkg, as.matrix(vignetteIndex[,
-                               c("File", "Title", "PDF", "R")]))
-        html <- c(html, makeVignetteTable(vignetteIndex, depth = 3L))
-    }
+              paste0("<h2>Vignettes from package '", pkg,"'</h2>"),
+              if(NROW(vignetteIndex) == 0L) ## NROW(NULL) = 0
+                  "The package contains no vignette meta-information."
+              else {
+                  vignetteIndex <- cbind(Package = pkg,
+                                         as.matrix(vignetteIndex[, c("File", "Title", "PDF", "R")]))
+                  makeVignetteTable(vignetteIndex, depth = 3L)
+              })
     otherfiles <- list.files(system.file("doc", package = pkg))
     if(NROW(vignetteIndex))
         otherfiles <- setdiff(otherfiles,
@@ -1010,8 +1003,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
     stopifnot(length(i) == 1L)
 
     loadVignetteBuilder(pkgdir)
-    file <- vigns$docs[i]
-    file <- basename(file)
+    file <- basename(vigns$docs[i])
     name <- vigns$names[i]
     engine <- vignetteEngine(vigns$engine[i])
 
@@ -1224,8 +1216,7 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
             entries <- readRDS(INDEX)
         if (NROW(entries) > 0) {
             # FIXME:  this test is unnecessary?
-            if (is.null(entries$R)) R <- rep("", NROW(entries))
-            else R <- entries$R
+            R <- if (is.null(entries$R)) rep("", NROW(entries)) else entries$R
             file <- basename(entries$File)
             pdf <- entries$PDF
             topic <- file_path_sans_ext(ifelse(R == "", ifelse(pdf == "", file, pdf), R))

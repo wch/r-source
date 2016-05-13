@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team.
- *  Copyright (C) 2003--2011  The R Foundation
+ *  Copyright (C) 1997--2016  The R Core Team.
+ *  Copyright (C) 2003--2016  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -190,13 +190,13 @@ static const double tbl[] =
 #endif
 
 static void
-scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
+scientific(double *x, int *neg, int *kpower, int *nsig, Rboolean *roundingwidens)
 {
     /* for a number x , determine
-     *	sgn    = 1_{x < 0}  {0/1}
+     *	neg    = 1_{x < 0}  {0/1}
      *	kpower = Exponent of 10;
      *	nsig   = min(R_print.digits, #{significant digits of alpha})
-     *  roundingwidens = 1 if rounding causes x to increase in width, 0 otherwise
+     *  roundingwidens = TRUE iff rounding causes x to increase in width
      *
      * where  |x| = alpha * 10^kpower	and	 1 <= alpha < 10
      */
@@ -208,17 +208,17 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
     if (*x == 0.0) {
 	*kpower = 0;
 	*nsig = 1;
-	*sgn = 0;
-	*roundingwidens = 0;
+	*neg = 0;
+	*roundingwidens = FALSE;
     } else {
 	if(*x < 0.0) {
-	    *sgn = 1; r = -*x;
+	    *neg = 1; r = -*x;
 	} else {
-	    *sgn = 0; r = *x;
+	    *neg = 0; r = *x;
 	}
         if (R_print.digits >= DBL_DIG + 1) {
             format_via_sprintf(r, R_print.digits, kpower, nsig);
-	    *roundingwidens = 0;
+	    *roundingwidens = FALSE;
             return;
         }
         kp = (int) floor(log10(r)) - R_print.digits + 1;/* r = |x|; 10^(kp + digits - 1) <= r */
@@ -313,7 +313,8 @@ void formatReal(double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 {
     int left, right, sleft;
     int mnl, mxl, rgt, mxsl, mxns, wF;
-    int neg, sgn, kpower, nsig, roundingwidens;
+    Rboolean roundingwidens;
+    int neg_i, neg, kpower, nsig;
     int naflag, nanflag, posinf, neginf;
 
     nanflag = 0;
@@ -331,14 +332,14 @@ void formatReal(double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 	    else if(x[i] > 0) posinf = 1;
 	    else neginf = 1;
 	} else {
-	    scientific(&x[i], &sgn, &kpower, &nsig, &roundingwidens);
+	    scientific(&x[i], &neg_i, &kpower, &nsig, &roundingwidens);
 
 	    left = kpower + 1;
 	    if (roundingwidens) left--;
 
-	    sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
+	    sleft = neg_i + ((left <= 0) ? 1 : left); /* >= 1 */
 	    right = nsig - left; /* #{digits} right of '.' ( > 0 often)*/
-	    if (sgn) neg = 1;	 /* if any < 0, need extra space for sign */
+	    if (neg_i) neg = 1;	 /* if any < 0, need extra space for sign */
 
 	    /* Infinite precision "F" Format : */
 	    if (right > rgt) rgt = right;	/* max digits to right of . */
@@ -400,14 +401,13 @@ void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
 void formatComplex(Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
 		   int *wi, int *di, int *ei, int nsmall)
 {
-/* format.info() or  x[1..l] for both Re & Im */
+/* format.info() for  x[1..n] for both Re & Im */
     int left, right, sleft;
     int rt, mnl, mxl, mxsl, mxns, wF, i_wF;
     int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
-    int neg, sgn;
-    int kpower, nsig, roundingwidens;
-    int naflag;
-    int rnanflag, rposinf, rneginf, inanflag, iposinf;
+    Rboolean roundingwidens;
+    int neg_i, neg, kpower, nsig;
+    int naflag, rnanflag, rposinf, rneginf, inanflag, iposinf;
     Rcomplex tmp;
     Rboolean all_re_zero = TRUE, all_im_zero = TRUE;
 
@@ -437,13 +437,13 @@ void formatComplex(Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
 		else rneginf = 1;
 	    } else {
 		if(x[i].r != 0) all_re_zero = FALSE;
-		scientific(&(tmp.r), &sgn, &kpower, &nsig, &roundingwidens);
+		scientific(&(tmp.r), &neg_i, &kpower, &nsig, &roundingwidens);
 
 		left = kpower + 1;
 		if (roundingwidens) left--;
-		sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
+		sleft = neg_i + ((left <= 0) ? 1 : left); /* >= 1 */
 		right = nsig - left; /* #{digits} right of '.' ( > 0 often)*/
-		if (sgn) neg = 1; /* if any < 0, need extra space for sign */
+		if (neg_i) neg = 1; /* if any < 0, need extra space for sign */
 
 		if (right > rt) rt = right;	/* max digits to right of . */
 		if (left > mxl) mxl = left;	/* max digits to left of . */
@@ -462,7 +462,7 @@ void formatComplex(Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
 		else iposinf = 1;
 	    } else {
 		if(x[i].i != 0) all_im_zero = FALSE;
-		scientific(&(tmp.i), &sgn, &kpower, &nsig, &roundingwidens);
+		scientific(&(tmp.i), &neg_i, &kpower, &nsig, &roundingwidens);
 
 		left = kpower + 1;
 		if (roundingwidens) left--;

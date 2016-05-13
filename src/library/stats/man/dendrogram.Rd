@@ -1,6 +1,6 @@
 % File src/library/stats/man/dendrogram.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Copyright 2002-2015 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -212,9 +212,10 @@ is.leaf(object)
 }
 \section{Warning}{
   Some operations on dendrograms such as \code{merge()} make use of
-  recursion.  For very deep trees it may be necessary to increase
-  \code{\link{options}("expressions")}: if you do you are likely to need
-  to set the C stack size larger than the default where possible.
+  recursion.  For deep trees it may be necessary to increase
+  \code{\link{options}("expressions")}: if you do, you are likely to need
+  to set the C stack size (\code{\link{Cstack_info}()[["size"]]}) larger
+  than the default where possible.
 }
 \seealso{
   \code{\link{dendrapply}} for applying a function to \emph{each} node.

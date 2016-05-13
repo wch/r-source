@@ -86,7 +86,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{destfile} can be character vectors of the same length greater
   than one.  For a single URL and \code{quiet = FALSE} a progress
   bar is shown in interactive use.
-  
+
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
   installed on your system and be in the search path for executables.
@@ -120,7 +120,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The remaining details apply to the \code{"internal"}, \code{"wininet"}
   and \code{"libcurl"} methods only.
-  
+
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.
 
@@ -137,10 +137,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   A progress bar tracks the transfer.  If the file length is known, the
   full width of the bar is the known length.  Otherwise the initial
   width represents 100 Kbytes and is doubled whenever the current width
-  is exceeded.  (In non-interactive use this uses a text version. If the
+  is exceeded.  (In non-interactive use this uses a text version.  If the
   file length is known, an equals sign represents 2\% of the transfer
   completed: otherwise a dot represents 10Kb.)
-  
+
 
   If \code{mode} is not supplied and \code{url} ends in one of
   \code{.gz}, \code{.bz2}, \code{.xz}, \code{.tgz}, \code{.zip},
@@ -161,7 +161,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 \note{
    Files of more than 2GB are supported on 64-bit builds of \R; they
   may be truncated on some 32-bit builds.
-  
+
   Methods \code{"wget"} and \code{"curl"} are mainly for historical
   compatibility but provide may provide capabilities not supported by
   the \code{"libcurl"} or \code{"wininet"} methods.
@@ -183,7 +183,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Options} of the system are used to choose proxies and so on; these are
   set in the Control Panel and are those used for Internet Explorer.
 #endif
-  
+
   The next two paragraphs apply to the internal code only.
 
   Proxies can be specified via environment variables.
@@ -195,7 +195,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   and \env{ftp_proxy_password}.  The form of \env{http_proxy}
   should be \code{http://proxy.dom.com/} or
   \code{http://proxy.dom.com:8080/} where the port defaults to
-  \code{80} and the trailing slash may be omitted. For
+  \code{80} and the trailing slash may be omitted.  For
   \env{ftp_proxy} use the form \code{ftp://proxy.dom.com:3128/}
   where the default port is \code{21}.  These environment variables
   must be set before the download code is first used: they cannot be

@@ -1,6 +1,6 @@
 % File src/library/utils/man/SweaveUtils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SweaveUtils}
@@ -16,8 +16,9 @@
 \alias{makeRweaveLatexCodeRunner}
 \title{Sweave Driver Utilities}
 \description{
-  These functions are handy for writing Sweave drivers and currently not
-  documented. Look at the source code of the Sweave Latex driver (in this
+  These functions are handy for writing Sweave drivers and are
+  considered internal and hence not documented.  Look at the source code
+  of the Sweave Latex driver (in this
   package) or the HTML driver (in the R2HTML package from CRAN) to see
   how they can be used.
 }

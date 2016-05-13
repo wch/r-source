@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2013  The R Core Team.
+ *  Copyright (C) 2001--2016  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@
 
 /* NB: the handling of dims is odd here.  Most are coerced to be
  * integers (which dimgets currently guarantees), but a couple were
- * used unchecked. 
+ * used unchecked.
  */
 
 /* FIXME: MM would want to make these available to packages;
@@ -78,29 +78,26 @@ static char La_rcond_type(const char *typstr)
 /* La.svd, called from svd */
 static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
 {
-    int n, p, info = 0;
-
     if (!isString(jobu))
 	error("'jobu' must be a character string");
-    int *xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
-    n = xdims[0]; p = xdims[1];
+    int *xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP)),
+	n = xdims[0], p = xdims[1], nprot = 2;
 
     /* work on a copy of x  */
     double *xvals;
     if (!isReal(x)) {
-       x = coerceVector(x, REALSXP);
-       xvals = REAL(x);
+	x = PROTECT(coerceVector(x, REALSXP)); nprot++;
+	xvals = REAL(x);
     } else {
 	xvals = (double *) R_alloc(n * (size_t) p, sizeof(double));
 	Memcpy(xvals, REAL(x), n * (size_t) p);
     }
-    PROTECT(x);
 
     SEXP dims = getAttrib(u, R_DimSymbol);
-    if (TYPEOF(dims) != INTSXP) error("non-integer dims");
+    if (TYPEOF(dims) != INTSXP) error("non-integer dim(u)");
     int ldu = INTEGER(dims)[0];
     dims = getAttrib(vt, R_DimSymbol);
-    if (TYPEOF(dims) != INTSXP) error("non-integer dims");
+    if (TYPEOF(dims) != INTSXP) error("non-integer dim(vt)");
     int ldvt = INTEGER(dims)[0];
     double tmp;
     /* min(n,p) large is implausible, but cast to be sure */
@@ -108,7 +105,7 @@ static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
 
     /* ask for optimal size of work array */
     const char *ju = CHAR(STRING_ELT(jobu, 0));
-    int lwork = -1;
+    int info = 0, lwork = -1;
     F77_CALL(dgesdd)(ju, &n, &p, xvals, &n, REAL(s),
 		     REAL(u), &ldu, REAL(vt), &ldvt,
 		     &tmp, &lwork, iwork, &info);
@@ -131,7 +128,7 @@ static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
     SET_VECTOR_ELT(val, 0, s);
     SET_VECTOR_ELT(val, 1, u);
     SET_VECTOR_ELT(val, 2, vt);
-    UNPROTECT(3);
+    UNPROTECT(nprot);
     return val;
 }
 
@@ -558,7 +555,7 @@ static SEXP La_solve_cmplx(SEXP A, SEXP Bin)
 	p = 1;
 	if(length(Bin) != n)
 	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
-		  length(Bin), p, n, n);	
+		  length(Bin), p, n, n);
 	PROTECT(B = allocVector(CPLXSXP, n));
 	if (!isNull(Adn)) setAttrib(B, R_NamesSymbol, VECTOR_ELT(Adn, 1));
     }
@@ -824,7 +821,7 @@ static SEXP La_rs_cmplx(SEXP xin, SEXP only_values)
     SEXP values = PROTECT(allocVector(REALSXP, n));
     rvalues = REAL(values);
 
-    rwork = (double *) R_alloc((3*(size_t)n-2) > 1 ? 3*(size_t)n-2 : 1, 
+    rwork = (double *) R_alloc((3*(size_t)n-2) > 1 ? 3*(size_t)n-2 : 1,
 			       sizeof(double));
     /* ask for optimal size of work array */
     lwork = -1;
@@ -970,7 +967,7 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 	    // need to pivot the colnames
 	    SEXP dn2 = PROTECT(duplicate(dn));
 	    SEXP cn2 = VECTOR_ELT(dn2, 1);
-	    for(int i = 0; i < m; i++) 
+	    for(int i = 0; i < m; i++)
 		SET_STRING_ELT(cn2, i, STRING_ELT(cn, ip[i] - 1)); // base 1
 	    setAttrib(ans, R_DimNamesSymbol, dn2);
 	    UNPROTECT(1);
@@ -1035,7 +1032,7 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
     double *avals, anorm, rcond, tol = asReal(tolin), *work;
     SEXP B, Adn, Bdn;
 
-    if (!(isMatrix(A) && 
+    if (!(isMatrix(A) &&
 	  (TYPEOF(A) == REALSXP || TYPEOF(A) == INTSXP || TYPEOF(A) == LGLSXP)))
 	error(_("'a' must be a numeric matrix"));
     int *Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
@@ -1068,13 +1065,13 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 	p = 1;
 	if(length(Bin) != n)
 	    error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
-		  length(Bin), p, n, n);	
+		  length(Bin), p, n, n);
 	PROTECT(B = allocVector(REALSXP, n));
 	if (!isNull(Adn)) setAttrib(B, R_NamesSymbol, VECTOR_ELT(Adn, 1));
     }
     PROTECT(Bin = coerceVector(Bin, REALSXP));
     Memcpy(REAL(B), REAL(Bin), (size_t)n * p);
-    
+
     int *ipiv = (int *) R_alloc(n, sizeof(int));
 
     /* work on a copy of A */
@@ -1173,7 +1170,7 @@ static SEXP qr_coef_real(SEXP Q, SEXP Bin)
 
     k = LENGTH(tau);
     if (!isMatrix(Bin)) error(_("'b' must be a numeric matrix"));
-    
+
     B = PROTECT(isReal(Bin) ? duplicate(Bin) : coerceVector(Bin, REALSXP));
 
     n = INTEGER(coerceVector(getAttrib(qr, R_DimSymbol), INTSXP))[0];
