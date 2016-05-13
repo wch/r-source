@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.ppr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 % file modreg/man/plot.ppr.Rd
@@ -8,29 +8,33 @@
 %
 \name{plot.ppr}
 \alias{plot.ppr}
-\title{
-Plot Ridge Functions for Projection Pursuit Regression Fit
-}
+\title{Plot Ridge Functions for Projection Pursuit Regression Fit}
 \description{
-Plot ridge functions for projection pursuit regression fit.
+  Plot the ridge functions for a projection pursuit regression
+  (\code{\link{ppr}}) fit.
 }
 \usage{
-\method{plot}{ppr}(x, ask, type = "o", \dots)
+\method{plot}{ppr}(x, ask, type = "o", cex = 1/2,
+     main = quote(bquote(
+         "term"[.(i)]*":" ~~ hat(beta[.(i)]) == .(bet.i))),
+     xlab = quote(bquote(bold(alpha)[.(i)]^T * bold(x))),
+     ylab = "", \dots)
 }
 \arguments{
-  \item{x}{
-    A fit of class \code{"ppr"} as produced by a call to \code{ppr}.
-  }
+  \item{x}{an \R object of class \code{"ppr"} as produced by a call to
+    \code{ppr}.}
   \item{ask}{
-    the graphics parameter \code{ask}: see \code{par} for details.
+    the graphics parameter \code{ask}: see \code{\link{par}} for details.
     If set to \code{TRUE} will ask between the plot of each cross-section.
   }
-  \item{type}{
-    the type of line to draw
-  }
-  \item{\dots}{
-    further graphical parameters
-  }
+  \item{type}{the type of line (see \code{\link{plot.default}}) to draw.}
+  \item{cex}{plot symbol expansion factor (\emph{relative} to
+    \code{\link{par}("cex")}).}
+  \item{main, xlab, ylab}{axis annotations, see also
+    \code{\link{title}}.  Can be an expression (depending on \code{i} and
+    \code{bet.i}), as by default which will be \code{eval()}uated.}
+  \item{\dots}{further graphical parameters, passed to
+    \code{\link{plot}()}.}
 }
 \value{
   None

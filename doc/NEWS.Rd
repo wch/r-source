@@ -62,6 +62,9 @@
       \code{drop}, \code{sep}, and \code{lex.order} to pass to
       \code{split.default()} which itself newly gets \code{lex.order} to
       pass to \code{interaction()} for more flexibility.
+
+      \item The \code{plot} method for \code{ppr} got enhanced default
+      labels (xmin and main).
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
