@@ -30,12 +30,20 @@ makevars_site()
   \option{-f} to custom Make invocations.
 }
 \seealso{
-  Section \dQuote{Customizing package compilation} in the 
+  Section \dQuote{Customizing package compilation} in the
   \dQuote{R Installation and Administration} manual.
 }
 %% \donttest as output is user/site-dependent
 \examples{\donttest{
 makevars_user()
 makevars_site()
-}}
+}
+\dontshow{
+checkMV <- function(r)
+  stopifnot(is.character(r),
+            length(r) == 0 || (length(r) == 1 && file.exists(r)))
+checkMV(makevars_user())
+checkMV(makevars_site())
+}
+}
 \keyword{utilities}
