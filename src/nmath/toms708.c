@@ -799,7 +799,7 @@ static double bfrac(double a, double b, double x, double y, double lambda,
     } while (n < 10000);// arbitrary; had '1' --> infinite loop for  lambda = Inf
     R_ifDEBUG_printf("  in bfrac(): n=%.0f terms cont.frac.; brc=%g, r=%g\n",
 		     n, brc, r);
-    if(n >= 10000)
+    if(n >= 10000 && fabs(r - r0) > eps * r)
 	MATHLIB_WARNING5(
 	    " bfrac(a=%g, b=%g, x=%g, y=%g, lambda=%g) did *not* converge (in 10000 steps)\n",
 	    a,b,x,y, lambda);
