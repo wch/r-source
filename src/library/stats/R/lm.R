@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -469,16 +469,24 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
         RNGstate <- structure(seed, kind = as.list(RNGkind()))
         on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
+    fam <- if(inherits(object, "glm")) object$family$family else "gaussian"
     ftd <- fitted(object)             # == napredict(*, object$fitted)
-    nm <- names(ftd)
+    isMlm <- identical(fam, "gaussian") && is.matrix(ftd)
+    nm <- if(isMlm) dimnames(ftd) else names(ftd)
+    if(isMlm) ## Not hard. Biggest question: how exactly the data frame should look
+	stop("simulate() is not yet implemented for multivariate lm()")
     n <- length(ftd)
     ntot <- n * nsim
-    fam <- if(inherits(object, "glm")) object$family$family else "gaussian"
     val <- switch(fam,
                   "gaussian" = {
                       vars <- deviance(object)/ df.residual(object)
-                      if (!is.null(object$weights)) vars <- vars/object$weights
-                      ftd + rnorm(ntot, sd = sqrt(vars))
+                      if(isMlm) {
+                          ...
+                          ## weights ==> "vars / weights" as matrix with  dim(ftd)
+                      } else {
+                          if (!is.null(object$weights)) vars <- vars/object$weights
+                          ftd + rnorm(ntot, sd = sqrt(vars))
+                      }
                   },
                   if(!is.null(object$family$simulate))
                       object$family$simulate(object, nsim)
@@ -486,11 +494,14 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                             domain = NA)
                   )
 
-    if(!is.list(val)) {
+    if(isMlm) {
+        ...
+    } else if(!is.list(val)) {
         dim(val) <- c(n, nsim)
         val <- as.data.frame(val)
     } else
         class(val) <- "data.frame"
+    ## isMlm: conceptually, each "sim_i" could be a *matrix* [unusually]
     names(val) <- paste("sim", seq_len(nsim), sep="_")
     if (!is.null(nm)) row.names(val) <- nm
     attr(val, "seed") <- RNGstate
