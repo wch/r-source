@@ -50,3 +50,8 @@ set.seed(11)
 rH <- rhyper(20, m=m, n=n, k=k) # now via qhyper() - may change!
 stopifnot( is.finite(rH), 3 <= rH, rH <= 24) # allow slack for change
 ## gave all NA_integer_ in R < 3.3.0
+
+
+stopifnot(identical(rgamma(1, Inf), Inf),
+	  identical(rgamma(1, 0, 0), 0))
+## gave NaN in R <= 3.3.0

@@ -119,6 +119,9 @@
 
       \item \code{unloadNamespace(ns)} also works again when \code{ns} is a
       \sQuote{namespace}, as from \code{getNamespace()}.
+
+      \item \code{rgamma(1,Inf)} or \code{rgamma(1, 0,0)} no longer give
+      \code{NaN} but the correct limit.
     }
   }
 }
