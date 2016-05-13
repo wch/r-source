@@ -1,6 +1,6 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sample}
@@ -14,17 +14,23 @@
 \usage{
 sample(x, size, replace = FALSE, prob = NULL)
 
-sample.int(n, size = n, replace = FALSE, prob = NULL)
+sample.int(n, size = n, replace = FALSE, prob = NULL,
+           useHash = (!replace && is.null(prob) && size <= n/2 && n > 1e7))
 }
 \arguments{
-  \item{x}{Either a vector of one or more elements from which to choose,
+  \item{x}{either a vector of one or more elements from which to choose,
     or a positive integer.  See \sQuote{Details.}}
   \item{n}{a positive number, the number of items to choose from.  See
     \sQuote{Details.}}
   \item{size}{a non-negative integer giving the number of items to choose.}
-  \item{replace}{Should sampling be with replacement?}
-  \item{prob}{A vector of probability weights for obtaining the elements
+  \item{replace}{should sampling be with replacement?}
+  \item{prob}{a vector of probability weights for obtaining the elements
     of the vector being sampled.}
+  \item{useHash}{\code{\link{logical}} indicating if the hash-version of
+    the algorithm should be used.  Can only be used for \code{replace =
+      FALSE}, \code{prob = NULL}, and \code{size <= n/2}, and really
+    should be used for large \code{n}, as \code{useHash=FALSE} will use
+    memory proportional to \code{n}.}
 }
 \details{
   If \code{x} has length 1, is numeric (in the sense of
@@ -111,6 +117,7 @@ x <- 1:10
     sample(x[x >  9]) # oops -- length 10!
     sample(x[x > 10]) # length 0
 
+## safer version:
 resample <- function(x, ...) x[sample.int(length(x), ...)]
 resample(x[x >  8]) # length 2
 resample(x[x >  9]) # length 1

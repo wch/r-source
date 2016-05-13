@@ -65,6 +65,9 @@
 
       \item The \code{plot} method for \code{ppr} got enhanced default
       labels (xmin and main).
+
+      \item \code{sample.int()} got an explicit \code{useHash} option
+      (with a back compatible default).
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
