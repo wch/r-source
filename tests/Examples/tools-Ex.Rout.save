@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-05-04 r70581) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-05-13 r70616) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -711,6 +711,14 @@ NULL
 > ### Keywords: utilities
 > 
 > ### ** Examples
+> ## Don't show: 
+> checkMV <- function(r)
++   stopifnot(is.character(r),
++             length(r) == 0 || (length(r) == 1 && file.exists(r)))
+> checkMV(makevars_user())
+> checkMV(makevars_site())
+> ## End(Don't show)
+> 
 > 
 > 
 > cleanEx()
@@ -744,13 +752,6 @@ NULL
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D pdb <- available.packages()
-> ##D deps <- package_dependencies(packages = "MASS", pdb,
-> ##D                     which = c("Depends", "Imports", "LinkingTo", "Suggests"),
-> ##D                     recursive = TRUE, reverse = TRUE)
-> ##D length(deps$MASS)
-> ## End(Not run)
 > 
 > 
 > 
