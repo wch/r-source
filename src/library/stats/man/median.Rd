@@ -1,6 +1,6 @@
 % File src/library/stats/man/median.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{median}
@@ -29,8 +29,8 @@ median(x, na.rm = FALSE)
 }
 \value{
   The default method returns a length-one object of the same type as
-  \code{x}, except when \code{x} is integer of even length, when the
-  result will be double.
+  \code{x}, except when \code{x} is logical or integer of even length,
+  when the result will be double.
 
   If there are no values or if \code{na.rm = FALSE} and there are \code{NA}
   values the result is \code{NA} of the same type as \code{x} (or more
