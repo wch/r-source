@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -92,6 +92,10 @@
 
   \code{\link{.Machine}} for details of the arithmetic used, and
   \code{\link{system}} for invoking platform-specific system commands.
+
+  \code{\link{capabilities}} and \code{\link{extSoftVersion}} (and links
+  there) for availability of capabilities partly \emph{external} to \R
+  but used from \R functions.
 }
 
 \examples{
