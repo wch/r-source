@@ -72,8 +72,9 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     text.  Useful for y-adjustment when \code{labels} are
     \link{plotmath} expressions.}
   \item{text.width}{the width of the legend text in x (\code{"user"})
-    coordinates.  (Should be positive even for a reversed x axis.)
-    Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
+    coordinates.  (Should be a single positive number even for a reversed 
+    x axis.)  Defaults to the proper value computed by 
+    \code{\link{strwidth}(legend)}.}
   \item{text.col}{the color used for the legend text.}
   \item{text.font}{the font used for the legend text, see \code{\link{text}}.}
   \item{merge}{logical; if \code{TRUE}, merge points and lines but
