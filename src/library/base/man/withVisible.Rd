@@ -1,6 +1,6 @@
 % File src/library/utils/man/withVisible.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{withVisible}
@@ -28,9 +28,9 @@ withVisible(x)
 \seealso{\code{\link{invisible}}, \code{\link{eval}}}
 \examples{
 x <- 1
-withVisible(x <- 1)
+withVisible(x <- 1) # *$visible is FALSE
 x
-withVisible(x)
+withVisible(x)      # *$visible is TRUE
 
 # Wrap the call in evalq() for special handling
 

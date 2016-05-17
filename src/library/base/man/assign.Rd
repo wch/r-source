@@ -1,6 +1,6 @@
 % File src/library/base/man/assign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{assign}
@@ -72,7 +72,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 
 \seealso{
   \code{\link{<-}},
-  \code{\link{get}},
+  \code{\link{get}}, the inverse of \code{assign()},
   \code{\link{exists}},
   \code{\link{environment}}.
 }

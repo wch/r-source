@@ -49,9 +49,10 @@
  */
 
 /* R 1.8.0: namespaces are no longer experimental, so the following
- *  are no longer 'experimental options':
+ *  are no longer 'experimental options', but rather three sections
+ *  describing the API:
  *
- * EXPERIMENTAL_NAMESPACES: When this is defined the variable
+ * NAMESPACES:
  *     R_BaseNamespace holds an environment that has R_GlobalEnv as
  *     its parent.  This environment does not actually contain any
  *     bindings of its own.  Instead, it redirects all fetches and
@@ -62,7 +63,7 @@
  * ENVIRONMENT_LOCKING: Locking an environment prevents new bindings
  *     from being created and existing bindings from being removed.
  *
- * FANCY_BINDINGS: This enables binding locking and "active bindings".
+ * FANCY_BINDINGS: We have binding locking and "active bindings".
  *     When a binding is locked, its value cannot be changed.  It may
  *     still be removed from the environment if the environment is not
  *     locked.

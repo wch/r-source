@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.matrix.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.matrix}
@@ -29,7 +29,9 @@ model.matrix(object, \dots)
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
-  \code{model.matrix} creates a design (or model) matrix.
+  \code{model.matrix} creates a design (or model) matrix, e.g., by
+  expanding factors to a set of dummary variables (depending on the
+  contrasts) and expanding interactions similarly.
 }
 \details{
   \code{model.matrix} creates a design matrix from the description
@@ -81,6 +83,10 @@ model.matrix(object, \dots)
 \seealso{
   \code{\link{model.frame}}, \code{\link{model.extract}},
   \code{\link{terms}}
+
+  \code{\link[Matrix]{sparse.model.matrix}} from package
+  \CRANpkg{Matrix} for creating \emph{sparse} model matrices, which may
+  be more efficient in large dimensions.
 }
 \examples{
 ff <- log(Volume) ~ log(Height) + log(Girth)

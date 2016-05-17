@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -358,11 +358,10 @@ prettyNum <-
         stop("'input.d.mark' has no characters")
     x.sp <- strsplit(x, input.d.mark, fixed=TRUE)
     ## can have "1.005.987" here, if all *.mark == "."
-    if(any((lx.sp <- lengths(x.sp)) > 2)) { # partly more than two parts
+    if(any(lengths(x.sp) > 2)) { # partly more than two parts
 	x.sp <- lapply(x.sp, function(xs) {
 	    lx <- length(xs)
-	    if(lx <= 2) xs else c(paste(xs[1:(lx-1)], collapse=input.d.mark),
-				  xs[lx])
+	    if(lx <= 2) xs else c(paste(xs[-lx], collapse=input.d.mark), xs[lx])
 	})
     }
     B. <- vapply(x.sp, `[`, "", 1L)	# Before input.d.mark (".")

@@ -1,6 +1,6 @@
 % File src/library/base/man/bindenv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bindenv}
@@ -30,7 +30,7 @@ bindingIsActive(sym, env)
   \item{fun}{a function taking zero or one arguments.}
 }
 \description{
-  These functions represent an experimental interface for adjustments
+  These functions represent an interface for adjustments
   to environments and bindings within environments.  They allow for
   locking environments as well as individual bindings, and for linking
   a variable to a function.

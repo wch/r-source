@@ -109,7 +109,7 @@ smoothEnds <- function(y, k = 3)
         if (k >= 3L) {
             for (i in 3:k) {
                 j <- 2L*i - 1L
-                sm  [i]   <- med.odd( y [1L:j] ,     j) #- left border
+                sm  [i]    <- med.odd( y[1L:j]      , j) #- left border
                 sm[n-i+1L] <- med.odd( y[(n+1L-j):n], j) #- right border
             }
         }
@@ -118,6 +118,6 @@ smoothEnds <- function(y, k = 3)
     ##--- For the very first and last pt.:  Use Tukey's end-point rule: ---
     ## Ysm[1L]:= Median(Ysm[2L],X1,Z_0), where Z_0 is extrapol. from Ysm[2L],Ysm[3L]
     sm[1L] <- med3(y[1L], sm [2L] , 3*sm [2L]  - 2*sm [3L])
-    sm[n] <- med3(y[n], sm[n-1L], 3*sm[n-1L] - 2*sm[n-2L])
+    sm[n]  <- med3(y[n],  sm[n-1L], 3*sm[n-1L] - 2*sm[n-2L])
     sm
 }

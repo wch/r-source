@@ -37,8 +37,7 @@ setClass(Class, representation, prototype, contains=character(),
     It is allowed to provide an unnamed character vector as a limiting
     case, with the elements taken as slot names and all slots having
     the unrestricted class \code{"ANY"}.
-
-    }
+  }
   \item{contains}{ the names (and optionally package slots) for the
     \emph{superclasses} of this class.  The special superclass
     \code{"VIRTUAL"} causes the new class to be created as a
@@ -58,21 +57,22 @@ setClass(Class, representation, prototype, contains=character(),
     its argument is a valid object of this class and one or more strings
     describing the failures otherwise).  See \code{\link{validObject}}
     for details.}
-  \item{S3methods, representation, access, version }{ All these
-      arguments are deprecated from version 3.0.0 of \R and should be
-      avoided.
-      
-      \code{S3methods} is a flag indicating that old-style methods
-      will be written involving this class.  Modern versions of \R
-      attempt to match formal and old-style methods consistently, so
-      this argument is largely irrelevant.
+  \item{S3methods, representation, access, version }{All these
+    arguments are deprecated from version 3.0.0 of \R and should be
+    \emph{avoided}.
 
-      \code{representation} is an argument inherited from S that
-      included both \code{slots} and \code{contains}, but the use of
-      the latter two arguments is clearer and recommended.
+    \code{S3methods} is a flag indicating that old-style methods
+    will be written involving this class.  Modern versions of \R
+    attempt to match formal and old-style methods consistently, so
+    this argument is largely irrelevant.
 
-      \code{access} and \code{version} are included for
-      historical compatibility with S-Plus, but ignored.}
+    \code{representation} is an argument inherited from S that
+    included both \code{slots} and \code{contains}, but the use of
+    the latter two arguments is clearer and recommended.
+
+    \code{access} and \code{version} are included for
+    historical compatibility with S-Plus, but ignored.
+  }
   \item{sealed}{ if \code{TRUE}, the class definition will be sealed,
     so that another call to \code{setClass} will fail on this class name.
   }
@@ -247,7 +247,7 @@ This should be a rare occurrence.
  Springer (For the original S4 version.)
 }
 \seealso{
-\code{\link{Classes}} for a general discussion of classes,
+  \code{\link{Classes}} for a general discussion of classes,
   \code{\link{Methods}} for an analogous discussion of methods,
   \code{\link{makeClassRepresentation}}
 }
@@ -258,15 +258,14 @@ This should be a rare occurrence.
  if(isClass("track"))           removeClass("track")
 }
 ## A simple class with two slots
-track <- setClass("track",
-         slots = c(x="numeric", y="numeric"))
+track <- setClass("track", slots = c(x="numeric", y="numeric"))
 ## an object from the class
 t1 <- track(x = 1:10, y = 1:10 + rnorm(10))
 
 ## A class extending the previous, adding one more slot
 trackCurve <- setClass("trackCurve",
-    slots = c(smooth = "numeric"),
-    contains = "track")
+		slots = c(smooth = "numeric"),
+		contains = "track")
 
 ## an object containing a superclass object
 t1s <- trackCurve(t1, smooth = 1:10)
@@ -287,8 +286,8 @@ numWithId <- setClass("numWithId", slots = c(id = "character"),
 numWithId(1:3, id = "An Example")
 
 ## inherit from reference object of type "environment"
-stampedEnv <-setClass("stampedEnv", contains = "environment",
-      slots = c(update = "POSIXct"))
+stampedEnv <- setClass("stampedEnv", contains = "environment",
+                       slots = c(update = "POSIXct"))
 setMethod("[[<-", c("stampedEnv", "character", "missing"),
    function(x, i, j, ..., value) {
        ev <- as(x, "environment")

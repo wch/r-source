@@ -50,3 +50,12 @@ stopifnot(identical(getDataPart(m1), 1:3),
 	  identical(S3Part(m1, strict=TRUE), 1:3),
 	  identical(S3Part(m2, strict=TRUE), 1:3),
 	  identical(2*pi, S3Part(nn, strict = TRUE)))
+
+if(FALSE) ## --- all these fail still:
+stopifnot(
+    identical(as(1L, "numeric"), as.numeric(1L))
+    ,
+    identical(as(1L, "numeric"), 1.0)
+    ,
+    is.double(as(1L, "double"))
+    )

@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{deriv}
+\title{Symbolic and Algorithmic Derivatives of Simple Expressions}
 \alias{D}
 \alias{deriv}
 \alias{deriv.default}
@@ -11,9 +12,8 @@
 \alias{deriv3}
 \alias{deriv3.default}
 \alias{deriv3.formula}
-\title{Symbolic and Algorithmic Derivatives of Simple Expressions}
 \description{
-  Compute derivatives of simple expressions, symbolically.
+  Compute derivatives of simple expressions, symbolically and algorithmically.
 }
 \usage{
     D (expr, name)
@@ -31,12 +31,12 @@ deriv3(expr, \dots)
        hessian = TRUE, \dots)
 }
 \arguments{
-  \item{expr}{A \code{\link{expression}} or \code{\link{call}} or
+  \item{expr}{a \code{\link{expression}} or \code{\link{call}} or
     (except \code{D}) a formula with no lhs.}
   \item{name,namevec}{character vector, giving the variable names (only
     one for \code{D()}) with respect to which derivatives will be
     computed.}
-  \item{function.arg}{If specified and non-\code{NULL}, a character
+  \item{function.arg}{if specified and non-\code{NULL}, a character
     vector of arguments for a function return, or a function (with empty
     body) or \code{TRUE}, the latter indicating that a function with
     argument names \code{namevec} should be used.}
@@ -158,5 +158,3 @@ DD(expression(sin(x^2)), "x", 3)
 }
 \keyword{math}
 \keyword{nonlinear}
-
-
