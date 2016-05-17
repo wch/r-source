@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -379,7 +379,7 @@ void R_runHandlers(InputHandler *handlers, fd_set *readMask)
 	R_PolledEvents();
     } else
 	while(tmp) {
-	    /* Do this way as the handler function might call 
+	    /* Do this way as the handler function might call
 	       removeInputHandlers */
 	    next = tmp->next;
 	    if(FD_ISSET(tmp->fileDescriptor, readMask)
@@ -427,11 +427,37 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 typedef void rl_vcpfunc_t (char *);
 #  endif /* _RL_FUNCTION_TYPEDEF */
 # else
+/*
+  I would recommend removing this block. Recent versions of R (at
+  least since 3.1.3) would not compile without readline.h anyway,
+  because "rl_readline_name" was missing from the following list of
+  declarations. If nobody reported that as a bug, it hints that
+  everyone had readline.h.
+
+  Trying to work around the presence of readline.h prevents us from
+  conditioning on RL_READLINE_VERSION.
+
+  Frederick Eaton 02 May 2016, PR#16603
+ */
 typedef void rl_vcpfunc_t (char *);
 extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
 extern void rl_callback_handler_remove(void);
 extern void rl_callback_read_char(void);
 extern char *tilde_expand (const char *);
+extern const char *rl_readline_name;
+extern void rl_free_line_state (void);
+extern void rl_cleanup_after_signal (void);
+#define RL_UNSETSTATE(x)	(rl_readline_state &= ~(x))
+extern char *rl_line_buffer;
+extern unsigned long rl_readline_state;
+#define RL_STATE_ISEARCH	0x0000080	/* doing incremental search */
+#define RL_STATE_NSEARCH	0x0000100	/* doing non-inc search */
+#define RL_STATE_VIMOTION	0x0100000	/* reading vi motion arg */
+#define RL_STATE_NUMERICARG	0x0000400	/* reading numeric argument */
+#define RL_STATE_MULTIKEY	0x0200000	/* reading multiple-key command */
+extern int rl_point;
+extern int rl_end;
+extern int rl_mark;
 # endif
 
 attribute_hidden
@@ -509,6 +535,17 @@ static struct {
   rl_vcpfunc_t *fun[MAX_READLINE_NESTING];
 } ReadlineStack = {-1, MAX_READLINE_NESTING - 1};
 
+/*
+  Readline >= 6.3 no longer handles SIGWINCH outside of Readline code,
+  so we need our own signal handler.
+ */
+static volatile Rboolean caught_sigwinch = FALSE;
+
+static RETSIGTYPE
+R_readline_sigwinch_handler(int sig)
+{
+    caught_sigwinch = TRUE;
+}
 
 /*
   Registers the specified routine and prompt with readline
@@ -523,9 +560,41 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
      ReadlineStack.fun[++ReadlineStack.current] = f;
 
    rl_callback_handler_install(prompt, f);
+
+   signal(SIGWINCH, R_readline_sigwinch_handler);
+
    /* flush stdout in case readline wrote the prompt, but didn't flush
       stdout to make it visible. (needed for Apple's rl in OS X 10.4-pre) */
    fflush(stdout);
+}
+
+/*
+  This function was created to fix the incremental-search-SIGINT bug,
+  https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16603
+
+  The Readline interface is somewhat messy. Readline contains the
+  function rl_free_line_state(), which its internal SIGINT handler
+  calls. However, rl_free_line_state only cancels keyboard macros and
+  certain other things. It does not clear the line. Also, Readline's
+  SIGINT handler is no longer triggered during our select() loop since
+  rl_callback_handler_install() no longer installs signal handlers as
+  of Readline 6.3. So we have to catch the signal and do all the work
+  ourselves to get Bash-like behavior on ^C. If Readline ever moves to
+  a cleaner interface, we should clean this up too.
+ */
+static void resetReadline(void)
+{
+    rl_free_line_state ();
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0700
+    rl_callback_sigcleanup();
+#endif
+    rl_cleanup_after_signal ();
+    RL_UNSETSTATE(RL_STATE_ISEARCH | RL_STATE_NSEARCH | RL_STATE_VIMOTION |
+		  RL_STATE_NUMERICARG | RL_STATE_MULTIKEY);
+    /* The following two lines should be equivalent, but doing both
+       won't hurt: */
+    rl_line_buffer[rl_point = rl_end = rl_mark = 0] = 0;
+    rl_done = 1;
 }
 
 /*
@@ -535,6 +604,7 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
 static void popReadline(void)
 {
   if(ReadlineStack.current > -1) {
+     resetReadline();
      rl_callback_handler_remove();
      ReadlineStack.fun[ReadlineStack.current--] = NULL;
      if(ReadlineStack.current > -1 && ReadlineStack.fun[ReadlineStack.current])
@@ -921,6 +991,18 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))
 		wt = Rg_wait_usec;
 	    what = R_checkActivityEx(wt, 0, handleInterrupt);
+#ifdef HAVE_LIBREADLINE
+            if (UsingReadline) {
+		if(caught_sigwinch) {
+		    caught_sigwinch = FALSE;
+		    rl_resize_terminal();
+		    /* TODO: users may want to be able to register a
+		     * function which modifies options("width") when
+		     * we get here */
+		}
+            }
+#endif
+
 	    /* This is slightly clumsy. We have advertised the
 	     * convention that R_wait_usec == 0 means "wait forever",
 	     * but we also need to enable R_checkActivity to return
@@ -1082,7 +1164,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
 	    R_setupHistory(); /* re-read the history size and filename */
 	    stifle_history(R_HistorySize);
 	    err = write_history(R_HistoryFile);
-	    if(err) warning(_("problem in saving the history file '%s'"), 
+	    if(err) warning(_("problem in saving the history file '%s'"),
 			    R_HistoryFile);
 	}
 # endif /* HAVE_READLINE_HISTORY_H */
@@ -1101,7 +1183,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
     R_CleanTempDir();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and (if run) .Last */
-    if(ifp) { 
+    if(ifp) {
 	fclose(ifp);    /* input file from -f or --file= */
 	ifp = NULL; 	/* To avoid trying to close it again */
     }
@@ -1291,7 +1373,7 @@ void Rsleep(double timeint)
     for (;;) {
 	fd_set *what;
 	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
-	
+
 	int wt = -1;
 	if (R_wait_usec > 0) wt = R_wait_usec;
 	if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))

@@ -128,6 +128,11 @@
 
       \item \code{rgamma(1,Inf)} or \code{rgamma(1, 0,0)} no longer give
       \code{NaN} but the correct limit.
+
+      \item The API for readline libraries >= 6.3 had changed such that
+      incremental search and line editing after terminal resizing
+      behaved confusingly in \R (unix) consoles.  This has been fixed
+      thanks to patches by Frederick Eaton in \PR{16603} and \PR{16604}.
     }
   }
 }
