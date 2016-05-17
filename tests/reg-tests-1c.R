@@ -1593,11 +1593,7 @@ for(ex in list(c(tmp, tmp2), c("foo","foo"))) {
 	    stop("differing: ", i1, ", ", i2)
     }
 }
-outerID <- function(x,y, ...) { ## ugly; can we get outer() to work ?
-    r <- matrix( , length(x), length(y))
-    for(i in seq_along(x)) for(j in seq_along(y)) r[i,j] <- identical(z[i], z[j], ...)
-    r
-}
+outerID <- function(x,y, ...) outer(x,y, Vectorize(identical,c("x","y")), ...)
 ## b) complex 'x' with different kinds of NaN
 x0 <- c(0,1, NA_real_, NaN)
 z <- outer(x0,x0, complex, length.out=1L)
@@ -1621,6 +1617,10 @@ stopifnot(identical(m1z, mz),
 	  identical(m1z == 1L, iNA),
 	  identical(m1z == 2L, !iNA))
 ## m1z uses match(x, *) with length(x) == 1 and failed in R 3.3.0
+## PR#16909 - a consequence of the match() bug; check here too:
+dv <- data.frame(varé1 = 1:3, varé2 = 3); dv[,"varé2"] <- 2
+stopifnot(ncol(dv) == 2, dv[,2] == 2, identical(names(dv), paste0("varé",1:2)))
+## in R 3.3.0, got a 3rd column
 
 
 ## deparse(<complex>,  "digits17")
