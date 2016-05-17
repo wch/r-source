@@ -1,6 +1,6 @@
 % File src/library/base/man/assignOps.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{assignOps}
@@ -37,7 +37,7 @@
   or as one of the subexpressions in a braced list of expressions.
 
   The operators \code{<<-} and \code{->>} are normally only used in
-  functions, and cause a search to made through parent environments
+  functions, and cause a search to be made through parent environments
   for an existing definition of the variable being assigned.  If such
   a variable is found (and its binding is not locked) then its value
   is redefined, otherwise assignment takes place in the global
@@ -68,8 +68,9 @@
 }
 
 \seealso{
-  \code{\link{assign}}, for \dQuote{subassignment} such
-  as \code{x[i] <- v}, \code{\link{[<-}}; % ./Extract.Rd
-  \code{\link{environment}}.
+  \code{\link{assign}} (and its inverse \code{\link{get}}),
+  for \dQuote{subassignment} such as \code{x[i] <- v},
+  see \code{\link{[<-}}; % ./Extract.Rd
+  further, \code{\link{environment}}.
 }
 \keyword{data}
