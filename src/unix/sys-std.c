@@ -568,6 +568,7 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
    fflush(stdout);
 }
 
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
 /*
   This function was created to fix the incremental-search-SIGINT bug,
   https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16603
@@ -596,6 +597,7 @@ static void resetReadline(void)
     rl_line_buffer[rl_point = rl_end = rl_mark = 0] = 0;
     rl_done = 1;
 }
+#endif
 
 /*
   Unregister the current readline handler and pop it from R's readline
@@ -604,7 +606,9 @@ static void resetReadline(void)
 static void popReadline(void)
 {
   if(ReadlineStack.current > -1) {
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
      resetReadline();
+#endif
      rl_callback_handler_remove();
      ReadlineStack.fun[ReadlineStack.current--] = NULL;
      if(ReadlineStack.current > -1 && ReadlineStack.fun[ReadlineStack.current])
