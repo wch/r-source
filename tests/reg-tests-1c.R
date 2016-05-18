@@ -1618,8 +1618,9 @@ stopifnot(identical(m1z, mz),
 	  identical(m1z == 2L, !iNA))
 ## m1z uses match(x, *) with length(x) == 1 and failed in R 3.3.0
 ## PR#16909 - a consequence of the match() bug; check here too:
-dv <- data.frame(varé1 = 1:3, varé2 = 3); dv[,"varé2"] <- 2
-stopifnot(ncol(dv) == 2, dv[,2] == 2, identical(names(dv), paste0("varé",1:2)))
+dvn <- paste0("var\xe9", 1:2); Encoding(dvn) <- "latin1"
+dv <- data.frame(1:3, 3); names(dv) <- dvn; dv[,"var\u00e92"] <- 2
+stopifnot(ncol(dv) == 2, dv[,2] == 2, identical(names(dv), dvn))
 ## in R 3.3.0, got a 3rd column
 
 
