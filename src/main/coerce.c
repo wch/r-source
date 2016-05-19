@@ -2800,10 +2800,14 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 
 SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    SEXP ans;
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    return R_set_class(CAR(args), CADR(args), call);
+    if (MAYBE_SHARED(CAR(args))) SETCAR(args, shallow_duplicate(CAR(args)));
+    ans = R_set_class(CAR(args), CADR(args), call);
+    SET_NAMED(CAR(args), 0);
+    return ans;
 }
 
 /* primitive */
