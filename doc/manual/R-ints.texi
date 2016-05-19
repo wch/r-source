@@ -611,7 +611,7 @@ which is traversed once the search reaches the global environment.
 @cindex namespace
 Namespaces are environments associated with packages (and once again
 the base package is special and will be considered separately).  A
-package @code{@var{pkg}} with a namespace defines two environments
+package @code{@var{pkg}} defines two environments
 @code{namespace:@var{pkg}} and @code{package:@var{pkg}}: it is
 @code{package:@var{pkg}} that can be @code{attach}ed and form part of
 the search path.
@@ -1428,20 +1428,20 @@ objects without needing to know their internal `metaname' (although
 @node S4 methods, Mechanics of S4 dispatch, S4 classes, S4 objects
 @subsection S4 methods
 
-Details of methods are stored in S4 objects of class
-@code{"MethodsList"}.  They have a non-syntactic name of the form
-@code{.__M__@var{generic}:@var{package}} for all methods defined in the
-current environment for the named generic derived from a specific
-package (which might be @code{.GlobalEnv}).
+Details of the methods are stored in environments (typically hidden in the
+respective namespace) with a non-syntactic name of the form
+@code{.__T__@var{generic}:@var{package}} containing objects of class
+@code{MethodDefinition} for all methods defined in the current environment
+for the named generic derived from a specific package (which might be @code{.GlobalEnv}).
+This is sometimes referred to as a `methods table'.
 
-There is also environment @code{.__T__@var{generic}:@var{package}} which
-has names the signatures of the methods defined, and values the
-corresponding method functions.  This is often referred to as a `methods
-table'.
-
-When a package without a namespace is attached these objects become
-visible on the search path.  @code{library} calls
-@code{methods:::cacheMetaData} to update the internal tables.
+For example,
+@example
+ length(nM <- asNamespace("Matrix") )                    # 941 for Matrix 1.2-6
+ length(meth <- grep("^[.]__T__", names(nM), value=TRUE))# 107 generics with methods
+ length(meth.Ops <- nM$`.__T__Ops:base`) # 71 methods for the 'Ops' (group)generic
+ head(sort(names(meth.Ops))) ## "abIndex#abIndex" ... "ANY#ddiMatrix" "ANY#ldiMatrix" "ANY#Matrix"
+@end example
 
 During an @R{} session there is an environment associated with each
 non-primitive generic containing objects @code{.AllMTable},
@@ -1456,8 +1456,8 @@ directive @code{exportMethods} will export all the methods defined in
 the namespace for a specified generic: the code also adds to the list
 of generics any that are exported directly.  For generics which are
 listed via @code{exportMethods} or exported themselves, the
-corresponding @code{"MethodsList"} and environment are exported and so
-will appear (as hidden objects) in the package environment.
+corresponding environment is exported and so
+will appear (as hidden object) in the package environment.
 
 Methods for primitives which are internally S4 generic (see below) are
 always exported, whether mentioned in the @file{NAMESPACE} file or not.
@@ -1471,7 +1471,7 @@ methods defined on generics in other packages.  Since methods for a
 generic could be imported from several different packages, the methods
 tables are merged.
 
-When a package with a namespace is attached
+When a package is attached
 @code{methods:::cacheMetaData} is called to update the internal tables:
 only the visible methods will be cached.
 
@@ -1495,7 +1495,7 @@ space there will be two functions called @code{myfn} on the search
 paths, and which will be called depends on which search path is in use.
 This is starkest for functions in the base namespace, where the
 original will be found ahead of the newly created function from any
-other package with a namespace.
+other package.
 
 Primitive functions are treated quite differently, for efficiency
 reasons: this results in different semantics.  @code{setGeneric} is
