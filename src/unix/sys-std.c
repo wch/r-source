@@ -999,7 +999,9 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
             if (UsingReadline) {
 		if(caught_sigwinch) {
 		    caught_sigwinch = FALSE;
+#ifdef HAVE_RL_RESIZE_TERMINAL
 		    rl_resize_terminal();
+#endif
 		    /* TODO: users may want to be able to register a
 		     * function which modifies options("width") when
 		     * we get here */

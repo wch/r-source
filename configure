@@ -22918,7 +22918,7 @@ done
   if test "${use_readline}" = no; then
     as_fn_error $? "--with-readline=yes (default) and headers/libs are not available" "$LINENO" 5
   else
-    for ac_func in rl_completion_matches
+    for ac_func in rl_completion_matches rl_resize_terminal
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
