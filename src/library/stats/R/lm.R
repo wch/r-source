@@ -481,7 +481,7 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                   "gaussian" = {
                       vars <- deviance(object)/ df.residual(object)
                       if(isMlm) {
-                          ...
+                          ## _TODO_
                           ## weights ==> "vars / weights" as matrix with  dim(ftd)
                       } else {
                           if (!is.null(object$weights)) vars <- vars/object$weights
@@ -495,7 +495,7 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                   )
 
     if(isMlm) {
-        ...
+        ## _TODO_
     } else if(!is.list(val)) {
         dim(val) <- c(n, nsim)
         val <- as.data.frame(val)
