@@ -160,7 +160,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         else {
             ## A package will have created a generic
             ## only if it has created a formal method.
-            length(grep(pattern="^\\.__T", names(env))) == 0L
+	    !any(startsWith(names(env), ".__T"))
         }
     }
 

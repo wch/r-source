@@ -801,8 +801,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages,
     whichMethodMetaNames <- function(impvars) {
         if(!.isMethodsDispatchOn())
             return(numeric())
-        mm <- ".__T__"
-        seq_along(impvars)[substr(impvars, 1L, nchar(mm, type = "c")) == mm]
+	seq_along(impvars)[startsWith(impvars, ".__T__")]
     }
     genericPackage <- function(f) {
         if(methods::is(f, "genericFunction")) f@package
@@ -1067,10 +1066,9 @@ namespaceExport <- function(ns, vars) {
 
 .mergeExportMethods <- function(new, ns)
 {
-    ## avoid bootstrapping issues
-    ##    mm <- methods:::methodsPackageMetaName("M","")
-    mm <- ".__M__"
-    newMethods <- new[substr(new, 1L, nchar(mm, type = "c")) == mm]
+    ## avoid bootstrapping issues when using methods:::methodsPackageMetaName("M","")
+    ## instead of  ".__M__" :
+    newMethods <- new[startsWith(new, ".__M__")]
     nsimports <- parent.env(ns)
     for(what in newMethods) {
 	if(!is.null(m1 <- nsimports[[what]])) {
