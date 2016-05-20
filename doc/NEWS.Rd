@@ -20,6 +20,8 @@
 
       \item \code{unloadNamespace(ns)} also works again when \code{ns} is a
       \sQuote{namespace}, as from \code{getNamespace()}.
+
+      \item \code{length(baseenv())} is correct now.
     }
   }
 }

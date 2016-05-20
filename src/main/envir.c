@@ -2803,6 +2803,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     int sort_nms = asLogical(CADDR(args)); /* sorted = TRUE/FALSE */
     if (sort_nms == NA_LOGICAL) sort_nms = 0;
 
+    // k := length(env) = envxlength(env) :
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	k = BuiltinSize(all, 0);
     else if (HASHTAB(env) != R_NilValue)
@@ -2948,29 +2949,23 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /* Leaks out via inlining in ../library/tools/src/ */
-int Rf_envlength(SEXP rho)
-{
-    if(IS_USER_DATABASE(rho)) {
-	R_ObjectTable *tb = (R_ObjectTable*)
-	    R_ExternalPtrAddr(HASHTAB(rho));
-	return length(tb->objects(tb));
-    } else if( HASHTAB(rho) != R_NilValue)
-	return HashTableSize(HASHTAB(rho), 1);
-    else
-	return FrameSize(FRAME(rho), 1);
+#define R_ENVLENGTH(NAME_, LENGTH_FN_, TYPE_)				\
+TYPE_ NAME_(SEXP rho)							\
+{									\
+    if(IS_USER_DATABASE(rho)) {						\
+	R_ObjectTable *tb = (R_ObjectTable*) R_ExternalPtrAddr(HASHTAB(rho)); \
+	return LENGTH_FN_(tb->objects(tb));				\
+    } else if( HASHTAB(rho) != R_NilValue)				\
+	return HashTableSize(HASHTAB(rho), 1);				\
+    else if (rho == R_BaseEnv || rho == R_BaseNamespace) 		\
+	return BuiltinSize(1, 0);					\
+    else								\
+	return FrameSize(FRAME(rho), 1);				\
 }
 
-R_xlen_t Rf_envxlength(SEXP rho)
-{
-    if(IS_USER_DATABASE(rho)) {
-	R_ObjectTable *tb = (R_ObjectTable*)
-	    R_ExternalPtrAddr(HASHTAB(rho));
-	return xlength(tb->objects(tb));
-    } else if( HASHTAB(rho) != R_NilValue)
-	return HashTableSize(HASHTAB(rho), 1);
-    else
-	return FrameSize(FRAME(rho), 1);
-}
+R_ENVLENGTH(Rf_envlength,   length, int)
+
+R_ENVLENGTH(Rf_envxlength, xlength, R_xlen_t)
 
 /*----------------------------------------------------------------------
 
