@@ -110,6 +110,7 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, sep = " ", ...)
     calcSteps <- function(s, lim = range(zz)) {
         startTime <- trunc_POSIXt(lim[1], units = s$start) ## FIXME: should be trunc() eventually
         at <- seqDtime(startTime, end = lim[2], by = s$spec)
+	if(anyNA(at)) { at <- at[!is.na(at)]; if(!length(at)) return(at) }
 	r1 <- sum(at <= lim[1])
 	r2 <- length(at) + 1 - sum(at >= lim[2])
 	if(r2 == length(at) + 1) { # not covering at right -- add point at right

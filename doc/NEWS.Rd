@@ -22,6 +22,11 @@
       \sQuote{namespace}, as from \code{getNamespace()}.
 
       \item \code{length(baseenv())} is correct now.
+
+      \item \code{pretty(d, ..)} for date-time \code{d} rarely
+      failed on \sQuote{inaccurate} platforms such as 32-bit windows or
+      a configuration with \command{--disable-long-double}; see comment
+      #15 of \PR{16761}.
     }
   }
 }
