@@ -3480,13 +3480,40 @@ function(aar, strict = FALSE)
             else {
                 attr(out, "Author") <- s
                 if(strict) {
-                    ## Specifically check for persons with missing or
-                    ## non-standard roles.
-                    s <- format(aar[sapply(aar,
-                                           utils:::.format_person_for_plain_author_spec)
-                                    == ""])
-                    if(length(s))
-                        out$bad_authors_at_R_field_has_author_without_role <- s
+                    has_no_name <- 
+                        vapply(aar,
+                               function(e)
+                               is.null(e$given) && is.null(e$family),
+                               NA)
+                    if(any(has_no_name)) {
+                        out$bad_authors_at_R_field_has_persons_with_no_name <-
+                            format(aar[has_no_name])
+                    }
+                    has_no_role <-
+                        vapply(aar,
+                               function(e) is.null(e$role),
+                               NA)
+                    if(any(has_no_role)) {
+                        out$bad_authors_at_R_field_has_persons_with_no_role <-
+                            format(aar[has_no_role])
+                    }
+                    if(all(has_no_name |
+                           vapply(aar,
+                                  function(e)
+                                  is.na(match("aut", e$role)),
+                                  NA)))
+                        out$bad_authors_at_R_field_has_no_author_roles <- TRUE
+                    non_standard_roles <-
+                        lapply(aar$role, setdiff,
+                               utils:::MARC_relator_db_codes_used_with_R)
+                    ind <- sapply(non_standard_roles, length) > 0L
+                    if(any(ind)) {
+                        out$bad_authors_at_R_field_has_persons_with_nonstandard_roles <-
+                            sprintf("%s: %s",
+                                    format(aar[ind]),
+                                    sapply(non_standard_roles[ind], paste,
+                                           collapse = ", "))
+                    }
                 }
             }
         }
@@ -3535,28 +3562,41 @@ function(x)
     c(character(),
       if(length(bad <- x[["bad_authors_at_R_field"]])) {
           c(gettext("Malformed Authors@R field:"),
-            paste(" ", bad))
+            paste0("  ", bad))
       },
       if(length(bad <- x[["bad_authors_at_R_field_for_author"]])) {
           c(gettext("Cannot extract Author field from Authors@R field:"),
-            paste(" ", bad))
+            paste0("  ", bad))
       },
       if(length(x[["bad_authors_at_R_field_has_no_author"]])) {
-          gettext("Authors@R field gives no person with author role.")
+          gettext("Authors@R field gives no person with name and roles.")
       },
       if(length(bad <-
-                x[["bad_authors_at_R_field_has_author_without_role"]])) {
-          c(gettext("Authors@R field gives persons with no valid roles:"),
-            paste(" ", bad))
+                x[["bad_authors_at_R_field_has_persons_with_no_name"]])) {
+          c(gettext("Authors@R field gives persons with no name:"),
+            paste0("  ", bad))
+      },
+      if(length(bad <-
+                x[["bad_authors_at_R_field_has_persons_with_no_role"]])) {
+          c(gettext("Authors@R field gives persons with no role:"),
+            paste0("  ", bad))
+      },
+      if(length(x[["bad_authors_at_R_field_has_no_author_roles"]])) {
+          gettext("Authors@R field gives no person with name and author role")
+      },
+      if(length(bad <-
+                x[["bad_authors_at_R_field_has_persons_with_nonstandard_roles"]])) {
+          c(gettext("Authors@R field gives persons with non-standard roles:"),
+            paste0("  ", bad))
       },
       if(length(bad <- x[["bad_authors_at_R_field_for_maintainer"]])) {
           c(gettext("Cannot extract Maintainer field from Authors@R field:"),
-            paste(" ", bad))
+            paste0("  ", bad))
       },
       if(length(bad <-
                 x[["bad_authors_at_R_field_too_many_maintainers"]])) {
           c(gettext("Authors@R field gives more than one person with maintainer role:"),
-            paste(" ", bad))
+            paste0("  ", bad))
       },
       if(length(x[["bad_authors_at_R_field_has_no_valid_maintainer"]])) {
           strwrap(gettext("Authors@R field gives no person with maintainer role, valid email address and non-empty name."))

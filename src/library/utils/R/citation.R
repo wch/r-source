@@ -464,7 +464,7 @@ function(object, ...)
          format(p, include = c("family", "given"),
                 braces = list(given = br, family = c("", ",")))
     })
-    paste(object, collapse = " and ")
+    paste(object[nzchar(object)], collapse = " and ")
 }
 
 ######################################################################
@@ -1188,14 +1188,29 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     }
 
     author <- meta$`Authors@R`
-    ## <FIXME>
+    ## <NOTE>
     ## Older versions took persons with no roles as "implied" authors.
-    ## So for now check whether Authors@R gives any authors; if not fall
-    ## back to the plain text Author field.
+    ## Now we only use persons with a name and a 'aut' role.  If there
+    ## are none, we use persons with a name and a 'cre' role.
+    ## If this still gives nothing (which really should not happen), we
+    ## fall back to the plain text Author field.
+    ## Checking will at least note the cases where there are no persons
+    ## with names and 'aut' or 'cre' roles.
     if(length(author)) {
-        author <- .read_authors_at_R_field(author)
-        ## We only want those with author roles.
-        author <- Filter(.person_has_author_role, author)
+        aar <- .read_authors_at_R_field(author)
+        author <- Filter(function(e) {
+                             !(is.null(e$given) &&
+                               is.null(e$family)) &&
+                                 !is.na(match("aut", e$role))
+                         },
+                         aar)
+        if(!length(author))
+            author <- Filter(function(e) {
+                                 !(is.null(e$given) &&
+                                   is.null(e$family)) &&
+                                     !is.na(match("cre", e$role))
+                             },
+                             aar)
     }
     if(length(author)) {
         has_authors_at_R_field <- TRUE
@@ -1203,7 +1218,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         has_authors_at_R_field <- FALSE
         author <- as.personList(meta$Author)
     }
-    ## </FIXME>
+    ## </NOTE>
 
     z <- list(title = paste0(package, ": ", meta$Title),
               author = author,
@@ -1319,19 +1334,13 @@ function(x)
     if(inherits(x, "list")) x else list(x)
 
 .format_person_for_plain_author_spec <-
-function(x) {
-    ## Names first.
-    out <- format(x, include = c("given", "family"))
-    ## Only show roles recommended for usage with R.
-    role <- x$role
-    if(!length(role)) return("")
-    role <- role[role %in% MARC_relator_db_codes_used_with_R]
-    if(!length(role)) return("")
-    out <- sprintf("%s [%s]", out, paste(role, collapse = ", "))
-    if(!is.null(comment <- x$comment))
-        out <- sprintf("%s (%s)", out,
-                       paste(comment, collapse = "\n"))
-    out
+function(x)
+{
+    ## Single person only.
+    ## Give empty if person has no name or no role.
+    if((is.null(x$given) && is.null(x$family)) || is.null(x$role))
+        return("")
+    format(x, include = c("given", "family", "role", "comment"))
 }
 
 ## NB: because of the use of strwrap(), this always outputs
