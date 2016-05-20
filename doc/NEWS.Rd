@@ -36,12 +36,12 @@
       \code{drop.deparse.attr} with improved but \emph{changed} default
       behaviour for expressions.  For \code{expression} objects
       \code{x}, \code{str(x)} now may remove extraneous white space and
-      truncate long lines.% plan: backport to 3.3.1
+      truncate long lines.
 
       \item \code{isSymmetric(m)} is much faster for large asymmetric
       matrices \code{m} via pre-tests and a new option \code{tol1}
       (with which strict back compatibility is possible but not the
-      default).% plan: backport
+      default).
 
       \item The result of \code{eigen()} now is of class \code{"eigen"}
       in the default case when eigenvectors are computed.
