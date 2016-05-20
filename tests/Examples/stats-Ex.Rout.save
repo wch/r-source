@@ -6843,7 +6843,7 @@ List of 11
  $ dev.resids:function (y, mu, wt)  
  $ aic       :function (y, n, mu, wt, dev)  
  $ mu.eta    :function (eta)  
- $ initialize:  expression({     n <- rep.int(1, nobs)     if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$link ==          "inverse" && any(y == 0)) || (family$link == "log" && any(y <=          0))))          stop("cannot find valid starting values: please specify some")     mustart <- y })
+ $ initialize:  expression({  n <- rep.int(1, nobs)  if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$link ==  "inverse" "| __truncated__
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
  - attr(*, "class")= chr "family"
@@ -6864,7 +6864,7 @@ List of 12
  $ dev.resids:function (y, mu, wt)  
  $ aic       :function (y, n, mu, wt, dev)  
  $ mu.eta    :function (eta)  
- $ initialize:  expression({     if (any(y <= 0))          stop("non-positive values not allowed for the 'gamma' family")     n <- rep.int(1, nobs)     mustart <- y })
+ $ initialize:  expression({  if (any(y <= 0))  stop("non-positive values not allowed for the 'gamma' family")  n <- rep.int(1, nobs)  mustart <"| __truncated__
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
  $ simulate  :function (object, nsim)  
