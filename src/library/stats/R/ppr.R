@@ -188,6 +188,7 @@ plot.ppr <- function(x, ask, type = "o", cex = 1/2,
 	     xlab = if(is.call(xlab)) eval(xlab) else xlab,
              ylab = ylab, ...)
     }
+    force(bet.i)# codetools
     invisible()
 }
 
