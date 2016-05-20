@@ -135,6 +135,8 @@
       incremental search and line editing after terminal resizing
       behaved confusingly in \R (unix) consoles.  This has been fixed
       thanks to patches by Frederick Eaton in \PR{16603} and \PR{16604}.
+
+      \item \code{length(baseenv())} is correct now.
     }
   }
 }

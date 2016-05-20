@@ -1637,6 +1637,12 @@ stopifnot(identical(deparse(z, 200, control = "digits17"),
 ## deparse() for these was "ugly" in R <= 3.3.0
 
 
+## length(environment(.)) == #{objects}
+stopifnot(identical(length(      baseenv()),
+                    length(names(baseenv()))))
+## was 0 in R <= 3.3.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
