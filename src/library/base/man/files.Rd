@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -187,12 +187,17 @@ Sys.junction(from, to)
   (an undocumented restriction of the Windows system call).
 
   Care is needed with removing a junction (and most likely also a
-  symbolic link): many tools will remove the target and its contents
-  (including Windows Explorer in XP, and \code{unlink} in \R prior to
-  2.15.0).
+  symbolic link): many tools will remove the target and its contents.
 }
 #endif
 
+\section{Warning}{
+  Always check the return value of these functions when used in package
+  code.  This is especially important for \code{file.rename}, which has
+  OS-specific restrictions (and note that the session temporary
+  directory is commonly on a different file system from the working
+  directory).
+}
 \author{
   Ross Ihaka, Brian Ripley
 }
