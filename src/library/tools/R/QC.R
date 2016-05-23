@@ -3479,7 +3479,7 @@ function(aar, strict = FALSE)
                 out$bad_authors_at_R_field_has_no_author <- TRUE
             else {
                 attr(out, "Author") <- s
-                if(strict) {
+                if(strict >= 1L) {
                     has_no_name <- 
                         vapply(aar,
                                function(e)
@@ -3497,6 +3497,8 @@ function(aar, strict = FALSE)
                         out$bad_authors_at_R_field_has_persons_with_no_role <-
                             format(aar[has_no_role])
                     }
+                }
+                if(strict >= 2L) {
                     if(all(has_no_name |
                            vapply(aar,
                                   function(e)

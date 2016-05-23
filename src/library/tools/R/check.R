@@ -680,8 +680,9 @@ setRlibs <-
         ## and does not check for persons with no valid roles.
         db <- .read_description(dfile)
         if(!is.na(aar <- db["Authors@R"])) {
+            lev <- if(check_incoming) 2L else 1L
             out <- .check_package_description_authors_at_R_field(aar,
-                                                                 strict = TRUE)
+                                                                 strict = lev)
             if(length(out)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
@@ -690,7 +691,7 @@ setRlibs <-
             }
             ## and there might be stale Authors and Maintainer fields
             yorig <- db[c("Author", "Maintainer")]
-            if(check_incoming &&any(!is.na(yorig))) {
+            if(check_incoming && any(!is.na(yorig))) {
                 enc <- db["Encoding"]
                 aar <- utils:::.read_authors_at_R_field(aar)
                 tmp <- utils:::.format_authors_at_R_field_for_author(aar)
