@@ -2631,22 +2631,33 @@ setRlibs <-
                         "cores simultaneously during their checks.")
             }
             any <- any || bad
-            if (!any) resultLog(Log, "OK")
 
             if (do_timings) {
+                theta <-
+                    as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_THRESHOLD_",
+                                          "5"))
                 tfile <- paste0(pkgname, "-Ex.timings")
 		times <-
                     utils::read.table(tfile, header = TRUE, row.names = 1L,
                                       colClasses = c("character", rep("numeric", 3)))
-                o <- order(times[[1]]+times[[2]], decreasing = TRUE)
+                o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
                 times <- times[o, ]
-                keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
+                keep <- ((times[[1L]] + times[[2L]] > theta) |
+                         (times[[3L]] > theta))
                 if(any(keep)) {
-                    printLog(Log, "Examples with CPU or elapsed time > 5s\n")
+                    if(!any) {
+                        resultLog(Log, "NOTE")
+                        any <- TRUE
+                    }
+                    printLog(Log,
+                             sprintf("Examples with CPU or elapsed time > %gs\n",
+                                     theta))
                     times <- utils::capture.output(format(times[keep, ]))
                     printLog0(Log, paste(times, collapse = "\n"), "\n")
                 }
             }
+
+            if (!any) resultLog(Log, "OK")
 
             ## Try to compare results from running the examples to
             ## a saved previous version.
