@@ -21,12 +21,19 @@
       \item \code{unloadNamespace(ns)} also works again when \code{ns} is a
       \sQuote{namespace}, as from \code{getNamespace()}.
 
+      \item \code{rgamma(1,Inf)} or \code{rgamma(1, 0,0)} no longer give
+      \code{NaN} but the correct limit.
+
       \item \code{length(baseenv())} is correct now.
 
       \item \code{pretty(d, ..)} for date-time \code{d} rarely
       failed on \sQuote{inaccurate} platforms such as 32-bit windows or
       a configuration with \command{--disable-long-double}; see comment
       #15 of \PR{16761}.
+
+      \item In \code{text.default(x, y, labels)}, the rarely(?) used
+      default for \code{labels} is now correct also for the case of a
+      2-column matrix \code{x} and missing \code{y}.
     }
   }
 }
@@ -350,7 +357,7 @@
       \item \code{gzcon()} gains a new option \code{text}, which marks
       the connection as text-oriented (so e.g.\sspace{}\code{pushBack()}
       works).  It is still always opened in binary mode.
-      
+
       \item The \code{import()} namespace directive now accepts an
       argument \code{except} which names symbols to exclude from the
       imports. The \code{except} expression should evaluate to a
@@ -602,7 +609,7 @@
       \item \code{install.packages()} could give false errors when
       \code{options("pkgType")} was \code{"binary"}.  (Reported by
       Jose Claudio Faria.)
-      
+
       \item A bug fix in \R 3.0.2 fixed problems with \code{locator()}
       in X11, but introduced problems in Windows.  Now both should be
       fixed.  (\PR{15700})
@@ -610,7 +617,7 @@
       \item \code{download.file()} with \code{method = "wininet"}
       incorrectly warned of download file length difference when
       reported length was unknown. (\PR{16805})
-      
+
       \item \code{diag(NULL, 1)} crashed because of missed type
       checking.  (\PR{16853})
     }

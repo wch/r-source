@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2008 The R Core Team
+ *  Copyright (C) 2000--2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,8 +43,9 @@
  *	  poisson and binomial distributions.
  *	  Computing, 12, 223-246.
  *
- *    Input: a = parameter (mean) of the standard gamma distribution.
- *    Output: a variate from the gamma(a)-distribution
+ *  Input : a     = 'shape' = alpha,
+ *          scale = 'scale' = 1/rate of the gamma distribution w/ mean E[.] = a * scale
+ *  Output: a variate from the gamma(a, scale)-distribution
  */
 
 #include "nmath.h"
@@ -85,14 +86,13 @@ double rgamma(double a, double scale)
 
     double e, p, q, r, t, u, v, w, x, ret_val;
 
-    if (!R_FINITE(a) || !R_FINITE(scale) || a < 0.0 || scale <= 0.0) {
-	if(scale == 0.) return 0.;
+    if (a <= 0.0 || scale <= 0.0) {
+	if(scale == 0. || a == 0.) return 0.;
 	ML_ERR_return_NAN;
     }
+    if(!R_FINITE(a) || !R_FINITE(scale)) return ML_POSINF;
 
     if (a < 1.) { /* GS algorithm for parameters a < 1 */
-	if(a == 0)
-	    return 0.;
 	e = 1.0 + exp_m1 * a;
 	repeat {
 	    p = e * unif_rand();
