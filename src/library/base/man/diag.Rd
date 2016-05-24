@@ -1,6 +1,6 @@
 % File src/library/base/man/diag.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{diag}
@@ -16,8 +16,8 @@ diag(x) <- value
   or construct a diagonal matrix.
 }
 \arguments{
-  \item{x}{a matrix, vector or 1D array, or missing.}
-  \item{nrow, ncol}{Optional dimensions for the result when \code{x} is
+  \item{x}{a matrix, vector or 1D \code{\link{array}}, or missing.}
+  \item{nrow, ncol}{optional dimensions for the result when \code{x} is
     not a matrix.}
   \item{value}{either a single value or a vector of length equal to that
     of the current diagonal.  Should be of a mode which can be coerced
@@ -31,7 +31,9 @@ diag(x) <- value
     an identity matrix.
     \item \code{x} is a scalar (length-one vector) and the only
     argument, it returns a square identity matrix of size given by the scalar.
-    \item \code{x} is a numeric vector, either of length at least 2 or there
+    \item \code{x} is a \sQuote{numeric} (\code{\link{complex}},
+    \code{numeric}, \code{integer}, \code{\link{logical}}, or
+    \code{\link{raw}}) vector, either of length at least 2 or there
     were further arguments.  This returns a matrix with the given
     diagonal and zero off-diagonal entries.
   }
@@ -72,14 +74,20 @@ diag(x) <- value
 \code{\link{upper.tri}}, \code{\link{lower.tri}}, \code{\link{matrix}}.
 }
 \examples{
-require(stats)
 dim(diag(3))
 diag(10, 3, 4) # guess what?
 all(diag(1:3) == {m <- matrix(0,3,3); diag(m) <- 1:3; m})
 
-diag(var(M <- cbind(X = 1:5, Y = stats::rnorm(5))))
-#-> vector with names "X" and "Y"
+## other "numeric"-like diagonal matrices :
+diag(c(1i,2i))    # complex
+diag(TRUE, 3)     # logical
+diag(as.raw(1:3)) # raw
+(D2 <- diag(2:1, 4)); typeof(D2) # "integer"
 
+require(stats)
+## diag(<var-cov-matrix>) = variances
+diag(var(M <- cbind(X = 1:5, Y = rnorm(5))))
+#-> vector with names "X" and "Y"
 rownames(M) <- c(colnames(M), rep("", 3));
 M; diag(M) #  named as well
 }

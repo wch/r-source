@@ -1709,32 +1709,67 @@ SEXP attribute_hidden do_diag(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("too many elements specified"));
 #endif
 
-   if (TYPEOF(x) == CPLXSXP) {
+   int nx = LENGTH(x);
+   R_xlen_t NR = nr;
+
+#define mk_DIAG(_zero_)					\
+   for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = _zero_;	\
+   R_xlen_t i, i1;					\
+   MOD_ITERATE1(mn, nx, i, i1, {			\
+	   ra[i * (NR+1)] = rx[i1];			\
+   });
+
+   switch(TYPEOF(x)) {
+
+   case REALSXP:
+   {
+#define mk_REAL_DIAG					\
+       PROTECT(ans = allocMatrix(REALSXP, nr, nc));	\
+       double *rx = REAL(x), *ra = REAL(ans);		\
+       mk_DIAG(0.0)
+
+       mk_REAL_DIAG;
+       break;
+   }
+   case CPLXSXP:
+   {
        PROTECT(ans = allocMatrix(CPLXSXP, nr, nc));
        int nx = LENGTH(x);
        R_xlen_t NR = nr;
        Rcomplex *rx = COMPLEX(x), *ra = COMPLEX(ans), zero;
        zero.r = zero.i = 0.0;
-       for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = zero;
-       R_xlen_t i, i1;
-       MOD_ITERATE1(mn, nx, i, i1, {
-	   ra[i * (NR+1)] = rx[i1];
-       });
-  } else {
-       if(TYPEOF(x) != REALSXP) {
-	   PROTECT(x = coerceVector(x, REALSXP));
-	   nprotect++;
-       }
-       PROTECT(ans = allocMatrix(REALSXP, nr, nc));
-       int nx = LENGTH(x);
-       R_xlen_t NR = nr;
-       double *rx = REAL(x), *ra = REAL(ans);
-       for (R_xlen_t i = 0; i < NR*nc; i++) ra[i] = 0.0;
-       R_xlen_t i, i1;
-       MOD_ITERATE1(mn, nx, i, i1, {
-	   ra[i * (NR+1)] = rx[i1];
-       });
+       mk_DIAG(zero);
+       break;
    }
+   case INTSXP:
+   {
+       PROTECT(ans = allocMatrix(INTSXP, nr, nc));
+       int *rx = INTEGER(x), *ra = INTEGER(ans);
+       mk_DIAG(0);
+       break;
+   }
+   case LGLSXP:
+   {
+       PROTECT(ans = allocMatrix(LGLSXP, nr, nc));
+       int *rx = LOGICAL(x), *ra = LOGICAL(ans);
+       mk_DIAG(0);
+       break;
+   }
+   case RAWSXP:
+   {
+       PROTECT(ans = allocMatrix(RAWSXP, nr, nc));
+       Rbyte *rx = RAW(x), *ra = RAW(ans);
+       mk_DIAG((Rbyte) 0);
+       break;
+   }
+   default: {
+       PROTECT(x = coerceVector(x, REALSXP));
+       nprotect++;
+       mk_REAL_DIAG;
+     }
+   }
+#undef mk_REAL_DIAG
+#undef mk_DIAG
    UNPROTECT(nprotect);
    return ans;
 }

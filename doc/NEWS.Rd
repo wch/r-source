@@ -74,6 +74,10 @@
       \item \code{identical()} gets an \code{ignore.srcref} option
       which drops \code{"srcref"} and similar attributes when true (as
       by default).
+
+      \item \code{diag(x, n=.)} now preserves \code{typeof(x)}, also
+      for logical, integer and raw \code{x} (and as previously for
+      complex and numeric).
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
