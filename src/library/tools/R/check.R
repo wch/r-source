@@ -2633,6 +2633,8 @@ setRlibs <-
             }
             any <- any || bad
 
+            if (!any && !check_incoming) resultLog(Log, "OK")
+
             if (do_timings) {
                 theta <-
                     as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_THRESHOLD_",
@@ -2646,19 +2648,18 @@ setRlibs <-
                 keep <- ((times[[1L]] + times[[2L]] > theta) |
                          (times[[3L]] > theta))
                 if(any(keep)) {
-                    if(!any) {
+                    if(!any && check_incoming)
                         resultLog(Log, "NOTE")
-                        any <- TRUE
-                    }
                     printLog(Log,
                              sprintf("Examples with CPU or elapsed time > %gs\n",
                                      theta))
                     times <- utils::capture.output(format(times[keep, ]))
                     printLog0(Log, paste(times, collapse = "\n"), "\n")
+                } else {
+                    if(!any && check_incoming)
+                        resultLog(Log, "OK")
                 }
             }
-
-            if (!any) resultLog(Log, "OK")
 
             ## Try to compare results from running the examples to
             ## a saved previous version.
