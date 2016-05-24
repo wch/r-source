@@ -1,13 +1,15 @@
 % File src/library/stats/man/medpolish.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{medpolish}
+\title{Median Polish (Robust Twoway Decomposition) of a Matrix}
 \alias{medpolish}
-\title{Median Polish of a Matrix}
+\concept{twoway}% S-plus name
 \description{
-  Fits an additive model using Tukey's \emph{median polish} procedure.
+  Fits an additive model (twoway decomposition) using Tukey's
+  \emph{median polish} procedure.
 }
 \usage{
 medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE,
