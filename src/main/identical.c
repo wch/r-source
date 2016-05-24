@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2015  The R Core Team
+ *  Copyright (C) 2001-2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,12 +28,11 @@
 
 /* How are  R "double"s compared : */
 typedef enum {
-    bit_NA__num_bit = 0,/* S's default - look at bit pattern, also for NA/NaN's */
-    bit_NA__num_eq  = 1,/* bitwise comparison for NA / NaN; '==' for other numbers */
-    single_NA__num_bit = 2,/*         one   "  "  NA          "  " 'bit'comparison */
-    single_NA__num_eq  = 3,/* R's default: one kind of NA or NaN; for num, use '==' */
+    bit_NA__num_bit = 0,// S's default - look at bit pattern, also for NA/NaN's
+    bit_NA__num_eq  = 1,// bitwise comparison for NA / NaN; '==' for other numbers
+ single_NA__num_bit = 2,// one kind of NA or NaN; for num, use 'bit'comparison
+ single_NA__num_eq  = 3,// one kind of NA or NaN; for num, use '==' : R's DEFAULT
 } ne_strictness_type;
-
 /* NOTE:  ne_strict = NUM_EQ + (SINGLE_NA * 2)  = NUM_EQ | (SINGLE_NA << 1)   */
 
 static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
@@ -43,7 +42,7 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1,
-	ignore_env = 0, nargs = length(args), flags;
+	ignore_env = 0, ignore_srcref = 1, nargs = length(args), flags;
     /* avoid problems with earlier (and future) versions captured in S4
        methods: but this should be fixed where it is caused, in
        'methods'!
@@ -62,15 +61,18 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 	ignore_bytecode = asLogical(CAR(args));
     if (nargs >= 7)
 	ignore_env = asLogical(CADR(args));
+    if (nargs >= 8)
+	ignore_srcref = asLogical(CADDR(args));
 
-    if(num_eq == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
-    if(single_NA == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
-    if(attr_as_set == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
+    if(num_eq          == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
+    if(single_NA       == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
+    if(attr_as_set     == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
     if(ignore_bytecode == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.bytecode");
-    if(ignore_env == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
+    if(ignore_env      == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
+    if(ignore_srcref   == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.srcref");
 
     flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) +
-	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16);
+	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16) + (ignore_srcref ? 0 : 32);
     return ScalarLogical(R_compute_identical(x, y, flags));
 }
 
@@ -79,6 +81,7 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 #define ATTR_AS_SET     (!(flags & 4))
 #define IGNORE_BYTECODE (!(flags & 8))
 #define IGNORE_ENV      (!(flags & 16))
+#define IGNORE_SRCREF   (!(flags & 32))
 
 /* do the two objects compute as identical?
    Also used in unique.c */
@@ -95,13 +98,21 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 
     /* Skip attribute checks for CHARSXP
        -- such attributes are used for the cache.  */
-    if(TYPEOF(x) == CHARSXP)
-    {
+    if(TYPEOF(x) == CHARSXP) {
 	/* This matches NAs */
 	return Seql(x, y);
     }
-
-    ax = ATTRIB(x); ay = ATTRIB(y);
+    if (IGNORE_SRCREF && TYPEOF(x) == CLOSXP) {
+	/* Remove "srcref" attribute - and below, treat body(x), body(y) */
+	SEXP x_ = PROTECT(duplicate(x)), y_ = PROTECT(duplicate(y));
+	setAttrib(x_, R_SrcrefSymbol, R_NilValue);
+	setAttrib(y_, R_SrcrefSymbol, R_NilValue);
+	ax = ATTRIB(x_); ay = ATTRIB(y_);
+	UNPROTECT(2);
+    }
+    else {
+	ax = ATTRIB(x); ay = ATTRIB(y);
+    }
     if (!ATTR_AS_SET) {
 	if(!R_compute_identical(ax, ay, flags)) return FALSE;
     }
@@ -231,7 +242,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     }
     case CLOSXP:
 	return(R_compute_identical(FORMALS(x), FORMALS(y), flags) &&
-	       R_compute_identical(BODY_EXPR(x), BODY_EXPR(y), flags) &&
+	       (( IGNORE_SRCREF && R_compute_identical(R_body_no_src(x), R_body_no_src(y), flags)) ||
+		(!IGNORE_SRCREF && R_compute_identical(    BODY_EXPR(x),     BODY_EXPR(y), flags))) &&
 	       (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE) &&
 	       (IGNORE_BYTECODE || R_compute_identical(BODY(x), BODY(y), flags))
 	       );

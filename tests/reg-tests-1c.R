@@ -1643,6 +1643,14 @@ stopifnot(identical(length(      baseenv()),
 ## was 0 in R <= 3.3.0
 
 
+## "srcref"s of closures
+op <- options(keep.source = TRUE)# as in interactive use
+getOption("keep.source")
+stopifnot(identical(function(){}, function(){}),
+          identical(function(x){x+1},
+                    function(x){x+1})); options(op)
+## where all FALSE in 2.14.0 <= R <= 3.3.x because of "srcref"s etc
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

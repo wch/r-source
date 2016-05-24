@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2001-2014 R Core Team
+% Copyright 2001-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -13,7 +13,8 @@
 }
 \usage{
 identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
-          ignore.bytecode = TRUE, ignore.environment = FALSE)
+          ignore.bytecode = TRUE, ignore.environment = FALSE,
+          ignore.srcref = TRUE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -34,6 +35,8 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
     ignored when comparing \link{closure}s.}
   \item{ignore.environment}{logical indicating if their environments
     should be ignored when comparing \link{closure}s.}
+  \item{ignore.srcref}{logical indicating if their \code{"srcref"}
+    attributes should be ignored when comparing \link{closure}s.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in
@@ -130,13 +133,29 @@ identical(0., -0., num.eq = FALSE)
 ## similar:
 identical(NaN, -NaN) # TRUE
 identical(NaN, -NaN, single.NA = FALSE) # differ on bit-level
-## for functions:
+
+### For functions ("closure"s): ----------------------------------------------
+###     ~~~~~~~~~
 f <- function(x) x
 f
 g <- compiler::cmpfun(f)
 g
-identical(f, g)
-identical(f, g, ignore.bytecode = FALSE)
+identical(f, g)                        # TRUE, as bytecode is ignored by default
+identical(f, g, ignore.bytecode=FALSE) # FALSE: bytecode differs
+
+## GLM families contain several functions, some of which share an environment:
+p1 <- poisson() ; p2 <- poisson()
+identical(p1, p2)                          # FALSE
+identical(p1, p2, ignore.environment=TRUE) # TRUE
+
+## in interactive use, the 'keep.source' option is typically true:
+op <- options(keep.source = TRUE) # and so, these have differing "srcref" :
+f1 <- function() {}
+f2 <- function() {}
+identical(f1,f2)# ignore.srcref= TRUE : TRUE
+identical(f1,f2,  ignore.srcref=FALSE)# FALSE
+options(op) # revert to previous state
+
 \dontshow{
 m0 <- m <- structure(cbind(I = 1, a = 1:3), foo = "bar", class = "matrix")
 attributes(m0) <- rev(attributes(m))

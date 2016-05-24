@@ -70,6 +70,10 @@
 
       \item \code{sample.int()} got an explicit \code{useHash} option
       (with a back compatible default).
+
+      \item \code{identical()} gets an \code{ignore.srcref} option
+      which drops \code{"srcref"} and similar attributes when true (as
+      by default).
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
