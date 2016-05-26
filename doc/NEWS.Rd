@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.3.0 patched}{
+\section{\Rlogo CHANGES IN R 3.3.0 patched}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{R CMD INSTALL} and hence \code{install.packages()}
@@ -26,8 +27,9 @@
 
       \item \code{length(baseenv())} is correct now.
 
-      \item \code{pretty(d, ..)} for date-time \code{d} rarely
-      failed on \sQuote{inaccurate} platforms such as 32-bit windows or
+      \item \code{pretty(d, ..)} for date-time \code{d} rarely failed
+      when \code{"halfmonth"} time steps were tried (\PR{16923}) and
+      on \sQuote{inaccurate} platforms such as 32-bit windows or
       a configuration with \command{--disable-long-double}; see comment
       #15 of \PR{16761}.
 
