@@ -211,17 +211,17 @@ seqDtime <- function(beg, end, by, length=NULL) {
     ## intersperse at and at2 := 15-day-shifted( at ), via rbind():
     if(md == 1) {
         at2$mday <- 15L
-        at2 <- rbind(at, as.POSIXct(at2))
-    } else if(md == 15) {
+    } else if(md >= 15) { # (md == 16 may happen; not seen yet)
         at2$mday <- 1L
         at2$mon <- at2$mon + 1L
-        fix <- at2$mon == 13L
+        fix <- at2$mon == 13L # -> january, next year
         at2$mon [fix] <- 1L
         at2$year[fix] <- at2$year[fix] + 1L
         ## at2 now has wrong 'yday','wday',.. and we rely on as.POSIXct():
-        at2 <- rbind(at, as.POSIXct(at2))
+    } else if(md < 15) { ## e.g., southern hemisphere, seen 14
+        at2$mday <- md + 14L # consistent w (1 -> 15) in 1st case; ok even in Feb.
     }
-    else stop("'mday' must be 1 or 15 for \"halfmonth\"")
+    at2 <- rbind(at, as.POSIXct(at2), deparse.level = 0L)
     structure(at2[i], class = class(at), tzone = attr(at, "tzone"))
 }
 

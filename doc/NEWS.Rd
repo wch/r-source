@@ -75,7 +75,7 @@
       which drops \code{"srcref"} and similar attributes when true (as
       by default).
 
-      \item \code{diag(x, n=.)} now preserves \code{typeof(x)}, also
+      \item \code{diag(x, nrow = n)} now preserves \code{typeof(x)}, also
       for logical, integer and raw \code{x} (and as previously for
       complex and numeric).
     }
@@ -144,8 +144,9 @@
 
       \item \code{length(baseenv())} is correct now.
 
-      \item \code{pretty(d, ..)} for date-time \code{d} rarely
-      failed on \sQuote{inaccurate} platforms such as 32-bit windows or
+      \item \code{pretty(d, ..)} for date-time \code{d} rarely failed
+      when \code{"halfmonth"} time steps were tried (\PR{16923}) and
+      on \sQuote{inaccurate} platforms such as 32-bit windows or
       a configuration with \command{--disable-long-double}; see comment
       #15 of \PR{16761}.
 

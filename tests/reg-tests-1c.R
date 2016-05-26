@@ -1403,6 +1403,7 @@ stopifnot(
     identical(c(smooth(y, "3RS3R", do.ends=FALSE, endrule="copy")),
               c(4, 4, 3, 3, 5, 6, 6, 6, 6, 6)))
 ## do.ends=TRUE was not obeyed for the "3RS*" kinds, for 3.0.0 <= R <= 3.2.3
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## prettyDate() for subsecond ranges
@@ -1507,19 +1508,43 @@ stopifnot(identical(Ls.ok,
 chkSeq <- function(st, x, n, max.D = if(n <= 4) 1 else if(n <= 10) 2 else 3, ...)
     tryCatch(chkPretty(seq(x, by = st, length = 2), n = n, max.D=max.D, ...),
              error = conditionMessage)
-c.ps <- lapply(nns, function(n) lapply(steps, chkSeq, x = t02, n = n))
-## ensure that all are ok *but* some which did not match 'n' well enough:
-cc.ps <- unlist(c.ps, recursive=FALSE)
-table(ok <- vapply(cc.ps, inherits, NA, what = "POSIXt"))
-errs <- unlist(cc.ps[!ok])
-stopifnot(startsWith(errs, prefix = "| |pretty(.)| - (n+1) |"))
-Ds <- as.numeric(sub(".*\\| = ([0-9]+) > max.*", "\\1", errs))
-table(Ds)
+prSeq.errs <- function(tt, nset, tSteps) {
+    stopifnot(length(tt) == 1)
+    c.ps <- lapply(nset, function(n) lapply(tSteps, chkSeq, x = tt, n = n))
+    ## ensure that all are ok *but* some which did not match 'n' well enough:
+    cc.ps <- unlist(c.ps, recursive=FALSE)
+    ok <- vapply(cc.ps, inherits, NA, what = "POSIXt")
+    errs <- unlist(cc.ps[!ok])
+    stopifnot(startsWith(errs, prefix = "| |pretty(.)| - (n+1) |"))
+    list(ok = ok,
+	 Ds = as.numeric(sub(".*\\| = ([0-9]+) > max.*", "\\1", errs)))
+}
+r.t02 <- prSeq.errs(t02, nset = nns, tSteps = steps)
+table(r.t02 $ ok)
+table(r.t02 $ Ds -> Ds)
 ## Currently   [may improve]
 ##  3  4  5  6  7  8
 ##  4 14  6  3  2  1
 ## ... and ensure we only improve:
 stopifnot(length(Ds) <= 30, max(Ds) <= 8, sum(Ds) <= 138)
+## A Daylight saving time -- halfmonth combo:
+(tOz <- structure(c(1456837200, 1460728800), class = c("POSIXct", "POSIXt"),
+		tzone = "Australia/Sydney"))
+(pz <- pretty(tOz)) # failed in R 3.3.0, PR#16923
+stopifnot(length(pz) <= 6, # is 5
+          attr(dpz <- diff(pz), "units") == "days", sd(dpz) < 1.6)
+if(FALSE) { # save 0.4 sec
+    print(system.time(
+        r.tOz <- prSeq.errs(tOz[1], nset = nns, tSteps = steps)
+    ))
+    stopifnot(sum(r.tOz $ ok) >= 132,
+              max(r.tOz $ Ds -> DOz) <= 8, mean(DOz) < 4.5)
+}
+nn <- c(1:33,10*(4:9),100*(1+unique(sort(rpois(20,4)))))
+pzn <- lengths(lapply(nn, pretty, x=tOz))
+stopifnot(0.5 <= min(pzn/(nn+1)), max(pzn/(nn+1)) <= 1.5)
+proc.time() - .pt; .pt <- proc.time()
+
 
 
 stopifnot(c("round.Date", "round.POSIXt") %in% as.character(methods(round)))
