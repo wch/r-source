@@ -399,7 +399,7 @@ stopifnot(identical(ans2, myFormula))
 
 
 ## PR#15753
-0x110p-5L
+0x110p-5L # (+ warning)
 stopifnot(.Last.value == 8.5)
 ## was 272 with a garbled message in R 3.0.0 - 3.1.0.
 
@@ -1394,7 +1394,6 @@ stopifnot(
     identical(c(smooth(y, "3RS3R", do.ends=FALSE, endrule="copy")),
               c(4, 4, 3, 3, 5, 6, 6, 6, 6, 6)))
 ## do.ends=TRUE was not obeyed for the "3RS*" kinds, for 3.0.0 <= R <= 3.2.3
-proc.time() - .pt; .pt <- proc.time()
 
 
 ## prettyDate() for subsecond ranges
@@ -1410,8 +1409,7 @@ chkPretty <- function(x, n = 5, min.n = NULL, ..., max.D = 1) {
 		n %/% 3 # pretty.default
     }
     pr <- pretty(x, n=n, min.n=min.n, ...)
-    ## if debugging:
-    pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
+    ## if debugging: pr <- grDevices:::prettyDate(x, n=n, min.n=min.n, ...)
     stopifnot(length(pr) >= (min.n+1),
 	      ## pretty(x, *) must cover range of x:
 	      min(pr) <= min(x), max(x) <= max(pr))
@@ -1535,7 +1533,6 @@ if(FALSE) { # save 0.4 sec
 nn <- c(1:33,10*(4:9),100*(1+unique(sort(rpois(20,4)))))
 pzn <- lengths(lapply(nn, pretty, x=tOz))
 stopifnot(0.5 <= min(pzn/(nn+1)), max(pzn/(nn+1)) <= 1.5)
-proc.time() - .pt; .pt <- proc.time()
 
 
 
@@ -1602,11 +1599,7 @@ for(ex in list(c(tmp, tmp2), c("foo","foo"))) {
 	    stop("differing: ", i1, ", ", i2)
     }
 }
-outerID <- function(x,y, ...) { ## ugly; can we get outer() to work ?
-    r <- matrix( , length(x), length(y))
-    for(i in seq_along(x)) for(j in seq_along(y)) r[i,j] <- identical(z[i], z[j], ...)
-    r
-}
+outerID <- function(x,y, ...) outer(x,y, Vectorize(identical,c("x","y")), ...)
 ## b) complex 'x' with different kinds of NaN
 x0 <- c(0,1, NA_real_, NaN)
 z <- outer(x0,x0, complex, length.out=1L)
