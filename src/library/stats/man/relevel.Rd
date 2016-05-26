@@ -1,6 +1,6 @@
 % File src/library/stats/man/relevel.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2007, 2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{relevel}
@@ -13,9 +13,9 @@
 relevel(x, ref, \dots)
 }
 \arguments{
-    \item{x}{An unordered factor.}
-    \item{ref}{The reference level.}
-    \item{\dots}{Additional arguments for future methods.}
+  \item{x}{an unordered factor.}
+  \item{ref}{the reference level, typically a string.}
+  \item{\dots}{additional arguments for future methods.}
 }
 \description{
     The levels of a factor are re-ordered so that the level specified by
@@ -26,7 +26,10 @@ relevel(x, ref, \dots)
 \value{
   A factor of the same length as \code{x}.
 }
-
+\details{
+  This, as \code{\link{reorder}()}, is a special case of simply calling
+  \code{\link{factor}(x, levels = levels(x)[....])}.
+}
 \seealso{
   \code{\link{factor}}, \code{\link{contr.treatment}},
   \code{\link{levels}}, \code{\link{reorder}}.

@@ -1,6 +1,6 @@
 % File src/library/stats/man/reorder.factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{reorder.default}
@@ -21,20 +21,18 @@ reorder(x, \dots)
 
 }
 \arguments{
-  \item{x}{
-    An atomic vector, usually a factor (possibly ordered).  The vector
-    is treated as a categorical variable whose levels will be reordered.
-    If \code{x} is not a factor, its unique values will be used as
-    the implicit levels.
+  \item{x}{an atomic vector, usually a \code{\link{factor}} (possibly
+    ordered).  The vector is treated as a categorical variable whose
+    levels will be reordered.  If \code{x} is not a factor, its unique
+    values will be used as the implicit levels.
   }
   \item{X}{ a vector of the same length as \code{x}, whose subset
     of values for each unique level of \code{x} determines the
     eventual order of that level.
   }
-  \item{FUN}{ a function whose first argument is a vector and
-    returns a scalar, to be applied to each subset of \code{X}
-    determined by the levels of \code{x}.
-  }
+  \item{FUN}{a \code{\link{function}} whose first argument is a vector
+    and returns a scalar, to be applied to each subset of \code{X}
+    determined by the levels of \code{x}.}
   \item{\dots}{ optional: extra arguments supplied to \code{FUN}}
   \item{order}{ logical, whether return value will be an ordered factor
     rather than a factor.
@@ -52,7 +50,10 @@ reorder(x, \dots)
   \code{X} (in the original order of the levels of \code{x}) is returned
   as the \code{"scores"} attribute.
 }
-
+\details{
+  This, as \code{\link{relevel}()}, is a special case of simply calling
+  \code{\link{factor}(x, levels = levels(x)[....])}.
+}
 \author{Deepayan Sarkar \email{deepayan.sarkar@r-project.org}}
 
 \seealso{
