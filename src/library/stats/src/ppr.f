@@ -935,6 +935,11 @@ c Called from R's supsmu()
       double precision  df, gcvpen
       integer                       ismethod
       common /spsmooth/ df, gcvpen, ismethod
+
+      ismethod = 0
+      return
+      end
+
       subroutine supsmu (n,x,y,w,iper,span,alpha,smo,sc,edf)
 c
 c------------------------------------------------------------------
