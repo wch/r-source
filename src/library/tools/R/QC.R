@@ -1516,7 +1516,7 @@ function(x, ...)
                              function(nm) {
                                  c(gettextf("Bad \\usage lines found in documentation object '%s':",
                                             nm),
-                                   paste(" ", bad_lines[[nm]]))
+                                   paste0("  ", bad_lines[[nm]]))
                              })),
                "")
 
@@ -3330,20 +3330,20 @@ function(x, ...)
         writeLines(gettext("Malformed Depends or Suggests or Imports or Enhances field."))
         if(length(bad$bad_dep_entry)) {
             tmp <- c(gettext("Offending entries:"),
-                     paste(" ", bad$bad_dep_entry),
+                     paste0("  ", bad$bad_dep_entry),
                      strwrap(gettextf("Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses.")))
             writeLines(tmp)
         }
         if(length(bad$bad_dep_op)) {
             tmp <- c(gettext("Entries with infeasible comparison operator:"),
-                     paste(" ", bad$bad_dep_entry),
+                     paste0("  ", bad$bad_dep_entry),
                      strwrap(gettextf("Only operators '<=' and '>=' are possible.")))
 
             writeLines(tmp)
         }
         if(length(bad$bad_dep_version)) {
             tmp <- c(gettext("Entries with infeasible version number:"),
-                     paste(" ", bad$bad_dep_version),
+                     paste0("  ", bad$bad_dep_version),
                      strwrap(gettextf("Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'.")))
             writeLines(tmp)
         }
@@ -3763,11 +3763,11 @@ function(x, ...)
       },
       if(length(y <- x$bad_extensions)) {
           c(gettext("License components with restrictions not permitted:"),
-            paste(" ", y))
+            paste0("  ", y))
       },
       if(length(y <- x$miss_extension)) {
           c(gettext("License components which are templates and need '+ file LICENSE':"),
-            paste(" ", y))
+            paste0("  ", y))
       }
       )
 }
@@ -4788,15 +4788,15 @@ function(x, ...)
             msg <- gsub("\n", "\n  ", sub("[^:]*: *", "", xi$Error),
 			perl = TRUE, useBytes = TRUE)
             writeLines(c(sprintf("Error in file '%s':", xi$File),
-                         paste(" ", msg)))
+                         paste0("  ", msg)))
         }
         if(len <- length(xi$Warnings))
             writeLines(c(sprintf(ngettext(len,
                                           "Warning in file %s:",
                                           "Warnings in file %s:"),
                                  sQuote(xi$File)),
-                         paste(" ", gsub("\n\n", "\n  ", xi$Warnings,
-					 perl = TRUE, useBytes = TRUE))))
+                         paste0("  ", gsub("\n\n", "\n  ", xi$Warnings,
+                                           perl = TRUE, useBytes = TRUE))))
     }
     invisible(x)
 }
@@ -6112,7 +6112,7 @@ function(x, ...)
                           "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
                           )
           c(strwrap(msg),
-            paste(" ", x$bad_examples))
+            paste0("  ", x$bad_examples))
       })
 }
 
@@ -7297,11 +7297,11 @@ function(x, ...)
                       collapse = "\n"),
             if(length(y <- x$extensions)) {
                 paste(c("License components with restrictions and base license permitting such:",
-                        paste(" ", y),
+                        paste0("  ", y),
                         unlist(lapply(x$pointers,
                                       function(e) {
                                           c(sprintf("File '%s':", e[1L]),
-                                            paste(" ", e[-1L]))
+                                            paste0("  ", e[-1L]))
                                       }))),
                       collapse = "\n")
             })),
@@ -7372,7 +7372,7 @@ function(x, ...)
               },
               if(length(y <- x$additional_repositories_analysis_failed_with)) {
                   paste(c("Using Additional_repositories specification failed with:",
-                          paste(" ", y)),
+                          paste0("  ", y)),
                         collapse = "\n")
               },
               if(length(y <- x$additional_repositories_analysis_results)) {
@@ -7385,7 +7385,7 @@ function(x, ...)
               },
               if(length(y <- x$additional_repositories_with_no_packages)) {
                   paste(c("Additional repositories with no packages:",
-                          paste(" ", y)),
+                          paste0("  ", y)),
                         collapse = "\n")
               })),
       if(length(y <- x$uses)) {
@@ -7439,7 +7439,7 @@ function(x, ...)
             },
             if(length(y <- x$citation_error)) {
                 paste(c("Reading CITATION file fails with",
-                        paste(" ", y),
+                        paste0("  ", y),
                         "when package is not installed."),
                       collapse = "\n")
             })),
@@ -7453,7 +7453,7 @@ function(x, ...)
                                 "Found the following (possibly) invalid URLs:"
                             else
                                 "Found the following (possibly) invalid URL:",
-                            paste(" ", gsub("\n", "\n    ", format(y)))),
+                            paste0("  ", gsub("\n", "\n    ", format(y)))),
                           collapse = "\n")
             },
             if(length(y) && any(nzchar(z <- y$CRAN))) {
@@ -7485,7 +7485,7 @@ function(x, ...)
                               "Found the following (possibly) invalid DOIs:"
                           else
                               "Found the following (possibly) invalid DOI:",
-                          paste(" ", gsub("\n", "\n    ", format(y)))),
+                          paste0("  ", gsub("\n", "\n    ", format(y)))),
                         collapse = "\n")
           }),
       if(length(y <- x$R_files_non_ASCII)) {

@@ -246,7 +246,7 @@ function(dir, outDir)
             out <- gettextf("\nduplicated files in '%s' field:",
                             collationField)
             out <- paste(out,
-                         paste(" ", badFiles, collapse = "\n"),
+                         paste0("  ", badFiles, collapse = "\n"),
                          sep = "\n")
             stop(out, domain = NA)
         }
@@ -258,7 +258,7 @@ function(dir, outDir)
                             collationField,
                             codeDir)
             out <- paste(out,
-                         paste(" ", badFiles, collapse = "\n"),
+                         paste0("  ", badFiles, collapse = "\n"),
                          sep = "\n")
             stop(out, domain = NA)
         }
@@ -271,7 +271,7 @@ function(dir, outDir)
                             codeDir,
                             collationField)
             out <- paste(out,
-                         paste(" ", badFiles, collapse = "\n"),
+                         paste0("  ", badFiles, collapse = "\n"),
                          sep = "\n")
             stop(out, domain = NA)
         }

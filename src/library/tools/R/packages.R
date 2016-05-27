@@ -119,7 +119,7 @@ function(dir, fields = NULL,
     if(type == "win.binary") {
         files <- file.path(dir, files)
         for(i in seq_along(files)) {
-            if(verbose) message(paste(" ", files[i]))
+            if(verbose) message(paste0("  ", files[i]))
             con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
             temp <- tryCatch(read.dcf(con, fields = fields)[1L, ],
                              error = identity)
@@ -141,7 +141,7 @@ function(dir, fields = NULL,
         on.exit(unlink(td, recursive = TRUE), add = TRUE)
         setwd(td)
         for(i in seq_along(files)) {
-            if(verbose) message(paste(" ", files[i]))
+            if(verbose) message(paste0("  ", files[i]))
             p <- file.path(packages[i], "DESCRIPTION")
             ## temp <- try(system(paste("tar zxf", files[i], p)))
             temp <- try(utils::untar(files[i], files = p))
@@ -184,7 +184,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     db <- vector(length(paths), mode = "list")
     if(verbose) message("Processing packages:")
     for(i in seq_along(paths)) {
-        if(verbose) message(paste(" ", basename(paths[i])))
+        if(verbose) message(paste0("  ", basename(paths[i])))
         temp <- tryCatch(read.dcf(file.path(paths[i], "DESCRIPTION"),
                                   fields = fields)[1L, ],
                          error = identity)

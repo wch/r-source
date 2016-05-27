@@ -39,7 +39,7 @@ function(filename, desc = file.path(dirname(filename), "DESCRIPTION"))
 		     c("",
 		       "# Import all packages listed as Imports or Depends",
 		       "import(",
-		       paste(" ", pkgs, collapse = ",\n"),
+		       paste0("  ", pkgs, collapse = ",\n"),
 		       ")")),
     	       filename)
 }
@@ -371,7 +371,7 @@ get_exclude_patterns <- function()
                               gs_cmd = gs_cmd, gs_quality = gs_quality)
             res <- format(res, diff = 1e5)
             if(length(res))
-                printLog0(Log, paste(" ", format(res), collapse = "\n"), "\n")
+                printLog0(Log, paste0("  ", format(res), collapse = "\n"), "\n")
         }
         if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
@@ -398,7 +398,6 @@ get_exclude_patterns <- function()
                 } else {
                     if (file.exists("Makevars.win")) {
                         if (have_make) {
-                            makefiles <- paste()
                             makefiles <- paste("-f",
                                                shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars.win")

@@ -889,7 +889,7 @@ function(x, ...)
 {
     if(length(x)) {
         writeLines(c("Vignettes with missing or empty \\VignetteIndexEntry:",
-                     paste(" ", basename(unclass(x)))))
+                     paste0("  ", basename(unclass(x)))))
     }
     invisible(x)
 }
