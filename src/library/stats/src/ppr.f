@@ -39,8 +39,8 @@ C                        ^^^ really (ndb) of  smart(.)
       integer i,j,l, lm
       double precision sw,s
 c Common Vars
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
       double precision conv,            cutmin,fdel,cjeps
@@ -141,7 +141,7 @@ C END REPEAT
       subroutine subfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,
      &     bt,g,dp,edf)
 c Args
-      integer              m,p,q,n,            lm
+      integer           m,p,q,n,            lm
       double precision w(n),sw, x(p,n),r(q,n),ww(q),a(p,m),b(q,m),
      &     f(n,m), t(n,m), asr(15), sc(n,15), bt(q), g(p,3), edf(m)
       double precision dp(*)
@@ -149,8 +149,8 @@ c Var
       integer i,j,l, iflsv
       double precision asrold
 c Common Vars
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
       double precision conv,            cutmin,fdel,cjeps
@@ -187,7 +187,7 @@ c does 'edf' mean 'edf(1)' or 'edf(l)'?
       subroutine fulfit(lm,lbf,p,q,n,w,sw,x,r,ww,a,b,f,t,
      &     asr,sc,bt,g,dp,edf)
 c Args
-      integer              lm,lbf,p,q,n
+      integer           lm,lbf,p,q,n
       double precision w(n),sw,x(p,n),r(q,n),ww(q),a(p,lm),b(q,lm),
      &     f(n,lm),t(n,lm),asr(1+lm), sc(n,15),bt(q),g(p,3), edf(lm)
       double precision dp(*)
@@ -195,8 +195,8 @@ c Var
       double precision asri, fsv, asrold
       integer i,j,iter,lp,isv
 c Common Vars
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
       double precision conv,            cutmin,fdel,cjeps
@@ -257,7 +257,7 @@ C Outer loop:
       subroutine onetrm(jfl,p,q,n,w,sw,x,y,ww,a,b,f,t,asr,
      &     sc,g,dp,edf)
 c Args
-      integer              jfl,p,q,n
+      integer           jfl,p,q,n
       double precision w(n),sw, x(p,n),y(q,n),ww(q),a(p),b(q),f(n),t(n),
      &     asr, sc(n,13),g(p,2), edf
       double precision dp(*)
@@ -265,8 +265,8 @@ c Var
       double precision asrold,s
       integer i,j,iter
 c Common Vars
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
       double precision conv,            cutmin,fdel,cjeps
@@ -307,15 +307,15 @@ C REPEAT
 
       subroutine oneone(ist,p,n, w,sw,y,x,a,f,t,asr,sc,g,dp,edf)
 c Args
-      integer              ist,p,n
+      integer           ist,p,n
       double precision w(n),sw,y(n),x(p,n),a(p),f(n),t(n),asr,
      &     sc(n,12), g(p,2), edf, dp(*)
 c Var
       integer i,j,k,iter
       double precision sml, s,v,cut,asrold
 c Common Vars
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
       double precision conv,            cutmin,fdel,cjeps
@@ -728,8 +728,8 @@ C avoid bounds error: this was .and. but order is not guaranteed
       integer i,lm1,l,l1
       double precision s,t,sml
 c Common
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
 
@@ -786,16 +786,16 @@ c Common
       block data bkppr
 
 c Common Vars
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
       double precision conv,            cutmin,fdel,cjeps
       integer              maxit,mitone,                  mitcj
       common /pprz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
-      double precision     df, gcvpen
-      integer                          ismethod
+      double precision  df, gcvpen
+      integer                       ismethod
       common /spsmooth/ df, gcvpen, ismethod
 
       data ifl,maxit, conv, mitone, cutmin, fdel,
@@ -806,16 +806,16 @@ c Common Vars
       end
 
       subroutine setppr(span1, alpha1, optlevel, ism, df1, gcvpen1)
-c Put `parameters' into Common blocks
+c Put 'parameters' into Common blocks
       integer optlevel,ism
       double precision span1,alpha1, df1, gcvpen1
 
-      double precision         span,alpha,big
-      integer           ifl,lf
+      double precision       span,alpha,big
+      integer         ifl,lf
       common /pprpar/ ifl,lf,span,alpha,big
 
-      double precision     df, gcvpen
-      integer                          ismethod
+      double precision  df, gcvpen
+      integer                       ismethod
       common /spsmooth/ df, gcvpen, ismethod
 
       span = span1
@@ -930,7 +930,11 @@ C        END
       return
       end
 
-
+c Called from R's supsmu()
+      subroutine setsmu
+      double precision  df, gcvpen
+      integer                       ismethod
+      common /spsmooth/ df, gcvpen, ismethod
       subroutine supsmu (n,x,y,w,iper,span,alpha,smo,sc,edf)
 c
 c------------------------------------------------------------------
@@ -985,12 +989,13 @@ c Var
       double precision sy,sw, a,h(n),f, scale,vsmlsq,resmin
       integer i,j, jper
 
-      double precision  spans(3),          big,sml,eps
+      double precision  spans(3),    big,sml,eps
       common /spans/ spans  /consts/ big,sml,eps
 
-      double precision     df, gcvpen
-      integer                          ismethod
+      double precision  df, gcvpen
+      integer                       ismethod
       common /spsmooth/ df, gcvpen, ismethod
+c     Called from R's supsmu(),  ismethod = 0, always (but not when called from ppr)
 
       if (x(n).gt.x(1)) go to 30
       sy=0d0
@@ -1170,7 +1175,7 @@ c--
       end
 
       block data bksupsmu
-      double precision spans(3), big,sml,eps
+      double precision spans(3),    big,sml,eps
       common /spans/ spans /consts/ big,sml,eps
 
       data spans, big,sml,eps /0.05,0.2,0.5, 1.0e20,1.0e-7,1.0e-3/
@@ -1220,8 +1225,8 @@ c Var
       double precision param(4), df1, lambda, crit, p, s
       integer iparms(3), i, nk, ip, ier
 
-      double precision     df, gcvpen
-      integer                          ismethod
+      double precision  df, gcvpen
+      integer                       ismethod
       common /spsmooth/ df, gcvpen, ismethod
 
       if (n .gt. 2500) call bdrsplerr()
