@@ -2168,8 +2168,26 @@ essentially the same as
 (function() expr)()
 \end{verbatim}
 There may be some minor differences related to what the [[sys.xyz]]
-functions return but these do not seem to be important. So the
-compiler handles one argument [[local]] calls by making this
+functions return. An instance of this was found in the [[RefManageR]]
+package which used [[parent.frame(2)]] to access the environment from which
+[[local]] was invoked. In this case, the use of [[parent.frame]] was
+unnecessary (and [[local]] was not needed either); the maintainer
+accepted a patch fixing this. The code pattern in the package was
+\begin{verbatim}
+MakeBibLaTeX <- function(docstyle = "text") local({
+  docstyle <- get("docstyle", parent.frame(2))
+  sortKeys <- function() 42
+  environment()
+})
+\end{verbatim}
+and the suggested fix was
+\begin{verbatim}
+MakeBibLaTeX <- function(docstyle = "text") {
+  sortKeys <- function() 42
+  environment()
+}
+\end{verbatim}
+So the compiler handles one argument [[local]] calls by making this
 conversion and compiling the result.
 %% **** add to language manual?
 <<inlining handler for [[local]] function>>=
@@ -2182,7 +2200,8 @@ setInlineHandler("local", function(e, cb, cntxt) {
     else FALSE
 })
 @ %def
-
+The interpreter couls, and probably should, be modified to handle this
+case of a [[local]] call expression in the same way as the compiler.
 
 \subsection{The [[return]] function}
 \label{subsec:return}
