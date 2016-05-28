@@ -598,6 +598,13 @@ function(dir, all = FALSE, full = FALSE)
 
 ### ** check_packages_in_dir_results
 
+## <FIXME>
+## For new-style logs from successful check runs (a '* DONE' line
+## followed by a 'Status: ' line), we could simply get the status from
+## the 'Status: ' line.
+## Change to fully rely on the new format eventually.
+## </FIXME>
+
 check_packages_in_dir_results <-
 function(dir, logs = NULL)
 {
@@ -693,7 +700,7 @@ function(log, drop = TRUE)
 
 ## <FIXME>
 ## New-style check logs should have a '* DONE' line followed by a
-## 'Status:' line.  If not, a check failure occured.
+## 'Status:' line.  If not, a check failure occurred.
 ## Change to fully rely on the new format eventually.
 ## </FIXME>
 
@@ -759,34 +766,42 @@ function(log, drop_ok = TRUE)
 
     ## Get footer.
     len <- length(lines)
-    ## Some check systems explicitly record the elapsed time in the
-    ## last line:
-    if(grepl("^\\* elapsed time ", lines[len],
-             perl = TRUE, useBytes = TRUE)) {
-        lines <- lines[-len]
-        len <- len - 1L
-    }
-    
-    ## Summary footers.
-    ## Better (but 'perl=TRUE' ??) if(startsWith(lines[len], "Status: "))
-    if(grepl("^Status: ", lines[len],
-             perl = TRUE, useBytes = TRUE)) {
-        ## New-style status summary.
-        lines <- lines[-len]
-        len <- len - 1L
-    } else {
-        ## Old-style status summary.
-        num <- length(grep("^(NOTE|WARNING): There",
-                           lines[c(len - 1L, len)]))
-        if(num > 0L) {
-            pos <- seq.int(len - num + 1L, len)
-            lines <- lines[-pos]
-            len <- len - num
+    pos <- which(lines == "* DONE")
+    if(length(pos) &&
+       ((pos <- pos[length(pos)]) < len) &&
+       startsWith(lines[pos + 1L], "Status: "))
+        lines <- lines[seq_len(pos - 1L)]
+    else {
+        ## Not really new style, or failure ... argh.
+        ## Some check systems explicitly record the elapsed time in the
+        ## last line:
+        if(grepl("^\\* elapsed time ", lines[len],
+                 perl = TRUE, useBytes = TRUE)) {
+            lines <- lines[-len]
+            len <- len - 1L
+            while(grepl("^[[:space:]]*$", lines[len])) {
+                lines <- lines[-len]
+                len <- len - 1L
+            }
         }
+        ## Summary footers.
+        if(startsWith(lines[len], "Status: ")) {
+            ## New-style status summary.
+            lines <- lines[-len]
+            len <- len - 1L
+        } else {
+            ## Old-style status summary.
+            num <- length(grep("^(NOTE|WARNING): There",
+                               lines[c(len - 1L, len)]))
+            if(num > 0L) {
+                pos <- seq.int(len - num + 1L, len)
+                lines <- lines[-pos]
+                len <- len - num
+            }
+        }
+        if(lines[len] == "* DONE")
+            lines <- lines[-len]
     }
-    ## New-style end-of-check tag.
-    if(lines[len] == "* DONE")
-        lines <- lines[-len]
 
     analyze_lines <- function(lines) {
         ## Windows has
