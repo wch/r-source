@@ -30,7 +30,7 @@ model.matrix(object, \dots)
 }
 \description{
   \code{model.matrix} creates a design (or model) matrix, e.g., by
-  expanding factors to a set of dummary variables (depending on the
+  expanding factors to a set of dummy variables (depending on the
   contrasts) and expanding interactions similarly.
 }
 \details{
