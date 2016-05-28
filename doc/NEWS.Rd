@@ -78,6 +78,10 @@
       \item \code{diag(x, nrow = n)} now preserves \code{typeof(x)}, also
       for logical, integer and raw \code{x} (and as previously for
       complex and numeric).
+
+      \item \code{smooth.spline()} now allows to specify lambda
+      directly, gets a \code{hatvalues()} method and keeps \code{tol} in
+      result.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

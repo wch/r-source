@@ -7,6 +7,7 @@
 \alias{smooth.spline}
 \alias{.nknots.smspl}
 %\alias{print.smooth.spline}% is not exported
+%\alias{hatvalues.smooth.spline}% is not exported
 \title{Fit a Smoothing Spline}
 \description{
   Fits a cubic smoothing spline to the supplied data.
@@ -32,8 +33,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
    \eqn{(0,1]}.  The coefficient \eqn{\lambda} of the integral of the
    squared second derivative in the fit (penalized log likelihood)
    criterion is a monotone function of \code{spar}, see the details
-   below.}
- \item{cv}{ordinary (\code{TRUE}) or \sQuote{generalized} cross-validation
+   below.  If desired, the internal design-dependent \eqn{\lambda} can
+   be specified instead of the scale free \code{spar}=\eqn{s}, using
+   \code{spar = c(lambda = *)}.}
+ \item{cv}{ordinary leave-one-out (\code{TRUE}) or \sQuote{generalized} cross-validation
    (GCV) when \code{FALSE}; is used for smoothing parameter computation
    only when \code{df} is not specified; it is used however
    to determine \code{cv.crit} in the result.  Setting it to \code{NA}
@@ -92,7 +95,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   regarded as the same are replaced by the first of their values and the
   corresponding \code{y} and \code{w} are pooled accordingly.
 
-  The computational \eqn{\lambda} used (as a function of
+  Unless \code{spar = c(lambda = <value>)} has been specified,
+  the computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is
   \eqn{\lambda = r * 256^{3 s - 1}}{\lambda = r * 256^(3*spar - 1)}
   where
@@ -165,6 +169,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   \item{y}{the fitted values corresponding to \code{x}.}
   \item{w}{the weights used at the unique values of \code{x}.}
   \item{yin}{the y values used at the unique \code{y} values.}
+  \item{tol}{the \code{tol} argument (whose default depends on \code{x}).}
   \item{data}{only if \code{keep.data = TRUE}: itself a
     \code{\link{list}} with components \code{x}, \code{y} and \code{w}
     of the same length.  These are the original \eqn{(x_i,y_i,w_i),
@@ -172,9 +177,11 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
     hence be longer than the above \code{x} component; see details.
     }
   \item{lev}{(when \code{cv} was not \code{NA}) leverages, the diagonal
-  values of the smoother matrix.}
+    values of the smoother matrix.}
   \item{cv.crit}{cross-validation score, \sQuote{generalized} or true, depending
-    on \code{cv}.}
+    on \code{cv}.  The CV score is often called \dQuote{PRESS} (and
+    labeled on \code{\link{print}()}), for \sQuote{\bold{PRE}diction
+      \bold{S}um of \bold{S}quares}.}
   \item{pen.crit}{penalized criterion}
   \item{crit}{the criterion value minimized in the underlying
     \code{.Fortran} routine \file{sslvrg}.  When \code{df} has been specified,
@@ -184,7 +191,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
     this value may become quite imprecise when the true \code{df} is
     between and 1 and 2.
   }
-  \item{spar}{the value of \code{spar} computed or given.}
+  \item{spar}{the value of \code{spar} computed or given, unless it has been
+    given as \code{c(lambda = *)}, when it set to \code{NA} here.}
   \item{lambda}{the value of \eqn{\lambda} corresponding to \code{spar},
     see the details above.}
   \item{iparms}{named integer(3) vector where \code{..$ipars["iter"]}
@@ -248,7 +256,7 @@ lines(smooth.spline(speed, dist, df = 10), lty = 2, col = "red")
 legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
                "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
        bg = 'bisque')
-detach()
+detach() # cars
 
 
 ## Residual (Tukey Anscombe) plot:
@@ -276,16 +284,21 @@ axis(4, at=.nknots.smspl(10000), line=-.5, col=c..,col.axis=c.., las=1)
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
 xx  <- seq(1, length(y18), len = 201)
-(s2  <- smooth.spline(y18)) # GCV
+(s2   <- smooth.spline(y18)) # GCV
 (s02  <- smooth.spline(y18, spar = 0.2))
 (s02. <- smooth.spline(y18, spar = 0.2, cv = NA))
 plot(y18, main = deparse(s2$call), col.main = 2)
 lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
+## Specifying 'lambda' instead of usual spar :
+(s2. <- smooth.spline(y18, spar = c(lambda = s2$lambda), tol = s2$tol))
+
 \dontshow{
-stopifnot(all.equal(predict(s02 , xx),
-		    predict(s02., xx), tolerance = 1e-15))
+nD <- c("spar", "iparms", "call"); nn <- setdiff(names(s2), nD)
+stopifnot(all.equal(s2[nn], s2.[nn], tol = 7e-7), # seen 6.86e-8
+          all.equal(predict(s02 , xx),
+		    predict(s02., xx), tol = 1e-15))
 }
 \donttest{
 ## The following shows the problematic behavior of 'spar' searching:

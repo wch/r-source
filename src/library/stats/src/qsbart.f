@@ -1,7 +1,7 @@
 c-----------------------------------------------------------------------
 c
 c  R : A Computer Language for Statistical Data Analysis
-c  Copyright (C) 1998-2012 The R Core Team
+c  Copyright (C) 1998-2016 The R Core Team
 c
 c  This program is free software; you can redistribute it and/or modify
 c  it under the terms of the GNU General Public License as published by
@@ -29,14 +29,18 @@ C
      &     crit,iparms,spar,parms,
      &     scrtch, ld4,ldnk,ier)
 c
-      integer n,nk,isetup, iparms(3), ld4,ldnk,ier
+      integer n,nk,isetup, iparms(4), ld4,ldnk,ier
       double precision penalt,dofoff, xs(n),ys(n),ws(n),ssw,
      &     knot(nk+4), coef(nk),sz(n),lev(n),
      &     crit, spar, parms(4),
      &     scrtch(*)
 C          ^^^^^^^^ dimension (9+2*ld4+nk)*nk = (17 + nk)*nk
 
-      isetup = 0
+      if(iparms(4) .eq. 1) then ! spar is lambda
+         isetup = 2
+      else
+         isetup = 0
+      endif
       call sbart(penalt,dofoff,xs,ys,ws,ssw,n,knot,nk,
      &     coef,sz,lev, crit,
      &     iparms(1),spar,iparms(2),iparms(3),
