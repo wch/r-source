@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -102,10 +102,7 @@ influence.glm <- function(model, do.coef = TRUE, ...) {
 }
 
 hatvalues <- function(model, ...) UseMethod("hatvalues")
-hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...)
-{
-    setNames(infl$hat, names(infl$wt.res))
-}
+hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...) infl$hat
 
 rstandard <- function(model, ...) UseMethod("rstandard")
 rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
