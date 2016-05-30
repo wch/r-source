@@ -82,6 +82,9 @@
       \item \code{smooth.spline()} now allows to specify lambda
       directly, gets a \code{hatvalues()} method and keeps \code{tol} in
       result.
+
+      \item \code{addNA()} is faster now, e.g., when applied twice;
+      (part of \PR{16895}).
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
