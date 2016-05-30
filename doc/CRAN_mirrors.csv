@@ -22,7 +22,7 @@ Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexan
 "Chile [https]",Chile,Santiago,https://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 2)",China,Bejing,http://mirror.bjtu.edu.cn/cran/,"Beijing Jiaotong University, Beijing","idealities # gmail.com",1,cn
-"China (Beijing 3)",China,Beijing,http://mirrors.opencas.cn/cran/,"Chinese Academy of Sciences, Beijing","admin # opencas.cn",1,cn
+"China (Beijing 3)",China,Beijing,http://mirrors.opencas.cn/cran/,"Chinese Academy of Sciences, Beijing","admin # opencas.cn",0,cn
 "China (Beijing 4) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Beijing 4)",China,Beijing,http://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",0,cn
@@ -42,7 +42,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "France (Paris 2) [https]",France,Paris,https://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
-"Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
+"Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",0,de
 "Germany (Göttingen)",Germany,Göttingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Göttingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
 "Germany (Münster) [https]",Germany,Münster,https://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
 "Germany (Münster)",Germany,Münster,http://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
@@ -116,7 +116,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (MD)",USA,Bethesda,http://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",0,us
 "USA (MI 1) [https]",USA,Houghton,https://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us,"secure_mirror_from_master"
 "USA (MI 1)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us,"secure_mirror_from_master"
-"USA (MI 2)",USA,Lansing,http://www.go-parts.com/mirrors-usa/cran/,Go-Parts,"Ray Sison <mirrors # go-parts.com>",1,us
+"USA (MI 2)",USA,Lansing,http://www.go-parts.com/mirrors-usa/cran/,Go-Parts,"Ray Sison <mirrors # go-parts.com>",0,us
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","admartin # wustl.edu",1,us,"maintainer_address_bounces"
 "USA (NC)",USA,Durham,http://archive.linux.duke.edu/cran/,"Duke University, Durham, NC","csi-linux-admins # duke.edu",1,us
 "USA (OH 1)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us
