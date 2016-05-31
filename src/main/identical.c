@@ -246,15 +246,19 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 		(!IGNORE_SRCREF && R_compute_identical(    BODY_EXPR(x),     BODY_EXPR(y), flags))) &&
 	       (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE) &&
 	       (IGNORE_BYTECODE || R_compute_identical(BODY(x), BODY(y), flags))
-	       );
+	       ); /* FIXME: without IGNORE_BYTECODE, the comparison of functions
+		            will compare the function bodies more than once */
     case SPECIALSXP:
     case BUILTINSXP:
 	return(PRIMOFFSET(x) == PRIMOFFSET(y) ? TRUE : FALSE);
     case ENVSXP:
     case SYMSXP:
-    case WEAKREFSXP:
-    case BCODESXP: /**** is this the best approach? */
+    case WEAKREFSXP: /**** is this the best approach? */
 	return(x == y ? TRUE : FALSE);
+    case BCODESXP:
+	return R_compute_identical(BCODE_CODE(x), BCODE_CODE(y), flags) &&
+	       R_compute_identical(BCODE_EXPR(x), BCODE_EXPR(y), flags) &&
+	       R_compute_identical(BCODE_CONSTS(x), BCODE_CONSTS(y), flags);
     case EXTPTRSXP:
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:
