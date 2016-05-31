@@ -1,6 +1,6 @@
 % File src/library/stats/man/influence.measures.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{influence.measures}
@@ -12,10 +12,11 @@
 \concept{Covariance ratios}
 \concept{DFBETAs}
 \concept{DFFITs}
+\concept{PRESS}
 
 \alias{influence.measures}
 %\alias{print.infl}
-%\alias{summary.infl}
+%\alias{summary.infl} <- To document: has 'digits' & return()s
 \alias{hat}
 \alias{hatvalues}
 \alias{hatvalues.lm}
@@ -39,7 +40,8 @@ influence.measures(model)
 
 rstandard(model, \dots)
 \method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
-          sd = sqrt(deviance(model)/df.residual(model)), \dots)
+          sd = sqrt(deviance(model)/df.residual(model)),
+          type = c("sd.1", "predictive"), \dots)
 \method{rstandard}{glm}(model, infl = influence(model, do.coef = FALSE),
           type = c("deviance", "pearson"), \dots)
 
@@ -86,8 +88,9 @@ hat(x, intercept = TRUE)
   \item{dispersion}{dispersion (for \code{\link{glm}} objects) to use,
     see default.}
   \item{hat}{hat values \eqn{H_{ii}}{H[i,i]}, see default.}
-  \item{type}{type of residuals for \code{glm} method for \code{rstandard}.
-    Can be abbreviated.}
+  \item{type}{type of residuals for \code{rstandard}, with different
+    options and meanings for \code{lm} and \code{glm}.  Can be
+    abbreviated.}
 
   \item{x}{the \eqn{X} or design matrix.}
   \item{intercept}{should an intercept column be prepended to \code{x}?}
@@ -130,6 +133,11 @@ hat(x, intercept = TRUE)
   \code{na.action = na.exclude}, suitable values are filled in for the
   cases excluded during fitting.
 
+  For linear models, \code{rstandard(*, type = "predictive")} provides
+  leave-one-out cross validation residuals, and the \dQuote{PRESS}
+  statistic (\bold{PRE}dictive \bold{S}um of \bold{S}quares, the same as
+  the CV score) of model \code{model} is \preformatted{   PRESS <- sum(rstandard(model, type="pred")^2)}
+
   The function \code{hat()} exists mainly for S (version 2)
   compatibility; we recommend using \code{hatvalues()} instead.
 }
@@ -171,7 +179,7 @@ hat(x, intercept = TRUE)
 
   \sQuote{\link{plotmath}} for the use of \code{hat} in plot annotation.
 }
-\examples{\donttest{
+\examples{
 require(graphics)
 
 ## Analysis of the life-cycle savings data
@@ -184,6 +192,7 @@ which(apply(inflm.SR$is.inf, 1, any))
 summary(inflm.SR) # only these
 inflm.SR          # all
 plot(rstudent(lm.SR) ~ hatvalues(lm.SR)) # recommended by some
+plot(lm.SR, which = 5) # an enhaced version of that via plot(<lm>)
 
 ## The 'infl' argument is not needed, but avoids recomputation:
 rs <- rstandard(lm.SR)
@@ -191,12 +200,27 @@ iflSR <- influence(lm.SR)
 identical(rs, rstandard(lm.SR, infl = iflSR))
 ## to "see" the larger values:
 1000 * round(dfbetas(lm.SR, infl = iflSR), 3)
+cat("PRESS :"); (PRESS <- sum( rstandard(lm.SR, type = "predictive")^2 ))
+stopifnot(all.equal(PRESS, sum( (residuals(lm.SR) / (1 - iflSR$hat))^2)))
+
+## Show that "PRE-residuals"  ==  L.O.O. Crossvalidation (CV) errors:
+X <- model.matrix(lm.SR)
+y <- model.response(model.frame(lm.SR))
+## Leave-one-out CV least-squares prediction errors (relatively fast)
+rCV <- vapply(seq_len(nrow(X)), function(i)
+              y[i] - X[i,] \%*\% .lm.fit(X[-i,], y[-i])$coef,
+              numeric(1))
+## are the same as the *faster* rstandard(*, "pred") :
+stopifnot(all.equal(rCV, unname(rstandard(lm.SR, type = "predictive"))))
+
 
 ## Huber's data [Atkinson 1985]
 xh <- c(-4:0, 10)
 yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
-summary(lmH <- lm(yh ~ xh))
-(im <- influence.measures(lmH))
+lmH <- lm(yh ~ xh)
+\donttest{summary(lmH)}
+im <- influence.measures(lmH)
+\donttest{ im }
 plot(xh,yh, main = "Huber's data: L.S. line and influential obs.")
 abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
 
@@ -204,10 +228,12 @@ abline(lmH); points(xh[im$is.inf], yh[im$is.inf], pch = 20, col = 2)
 xi <- 1:5
 yi <- c(0,2,14,19,30)    # number of mice responding to dose xi
 mi <- rep(40, 5)         # number of mice exposed
-summary(lmI <- glm(cbind(yi, mi -yi) ~ xi, family = binomial))
-signif(cooks.distance(lmI), 3)   # ~= Ci in Table 3, p.184
-(imI <- influence.measures(lmI))
+glmI <- glm(cbind(yi, mi -yi) ~ xi, family = binomial)
+\donttest{summary(glmI)}
+signif(cooks.distance(glmI), 3)   # ~= Ci in Table 3, p.184
+imI <- influence.measures(glmI)
+\donttest{ imI }
 stopifnot(all.equal(imI$infmat[,"cook.d"],
-          cooks.distance(lmI)))
-}}
+          cooks.distance(glmI)))
+}
 \keyword{regression}

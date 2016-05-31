@@ -5,7 +5,7 @@
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
+#  the Free Software Foundation; either version 3 of the License, or
 #  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
@@ -106,9 +106,12 @@ hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...) 
 
 rstandard <- function(model, ...) UseMethod("rstandard")
 rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
-                         sd = sqrt(deviance(model)/df.residual(model)), ...)
+                         sd = sqrt(deviance(model)/df.residual(model)),
+                         type = c("sd.1", "predictive"), ...)
 {
-    res <- infl$wt.res / (sd * sqrt(1 - infl$hat))
+    type <- match.arg(type)
+    res <- infl$wt.res / switch(type, "sd.1" = sd * sqrt(1 - infl$hat),
+				"predictive" = 1 - infl$hat)
     res[is.infinite(res)] <- NaN
     res
 }

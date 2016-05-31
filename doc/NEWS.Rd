@@ -85,6 +85,10 @@
 
       \item \code{addNA()} is faster now, e.g., when applied twice;
       (part of \PR{16895}).
+
+      \item New option \code{rstandard(<lm>, type = "predicted")}
+      provides the \dQuote{PRESS}-related leave-one-out
+      cross-validation errors for linear models.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
