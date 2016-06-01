@@ -167,6 +167,8 @@
 
       \item \code{as.factor(c(a = 1L))} preserves \code{names()} again
       as in \R < 3.1.0.
+
+      \item \code{strtrim(""[0], 0[0])} now works.
     }
   }
 }
