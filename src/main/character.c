@@ -1656,6 +1656,13 @@ SEXP attribute_hidden do_strrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		error(_("invalid '%s' value"), "times");
 	    xi = CHAR(STRING_ELT(x, ix));
 	    nc = (int) strlen(xi);
+
+	    /* check for feasible result length; use double to protect
+	       against integer overflow */
+	    double len = ((double) nc) * ni;
+	    if (len > INT_MAX)
+		error("R character strings are limited to 2^31-1 bytes");
+
 	    cbuf = buf = CallocCharBuf(nc * ni);
 	    for(j = 0; j < ni; j++) {
 		strcpy(buf, xi);
