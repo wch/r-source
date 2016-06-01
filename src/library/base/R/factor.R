@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ as.factor <- function(x) {
         levels <- sort(unique.default(x)) # avoid array methods
         f <- match(x, levels)
         levels(f) <- as.character(levels)
+	if(!is.null(nx <- names(x))) names(f) <- nx
         class(f) <- "factor"
         f
     } else factor(x)
