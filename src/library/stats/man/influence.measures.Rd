@@ -190,7 +190,7 @@ inflm.SR <- influence.measures(lm.SR)
 which(apply(inflm.SR$is.inf, 1, any))
 # which observations 'are' influential
 summary(inflm.SR) # only these
-inflm.SR          # all
+\donttest{inflm.SR          # all}
 plot(rstudent(lm.SR) ~ hatvalues(lm.SR)) # recommended by some
 plot(lm.SR, which = 5) # an enhaced version of that via plot(<lm>)
 
