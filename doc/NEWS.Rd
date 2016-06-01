@@ -164,6 +164,9 @@
       \item In \code{text.default(x, y, labels)}, the rarely(?) used
       default for \code{labels} is now correct also for the case of a
       2-column matrix \code{x} and missing \code{y}.
+
+      \item \code{as.factor(c(a = 1L))} preserves \code{names()} again
+      as in \R < 3.1.0.
     }
   }
 }

@@ -1659,7 +1659,7 @@ stopifnot(identical(deparse(z, 200, control = "digits17"),
           print((sum(nchar(dz2)) - 2) / length(z2)) < 22, # much larger in <= 3.3.0
           ## deparse <-> parse equivalence, 17 digits should be perfect:
 	  all.equal(z2, eval(parse(text = dz2)), tolerance = 3e-16)) # seen 2.2e-35 on 32b
-## deparse() for these was "ugly" in R <= 3.3.0
+## deparse() for these was "ugly" in R <= 3.3.x
 
 
 ## length(environment(.)) == #{objects}
@@ -1675,6 +1675,17 @@ stopifnot(identical(function(){}, function(){}),
           identical(function(x){x+1},
                     function(x){x+1})); options(op)
 ## where all FALSE in 2.14.0 <= R <= 3.3.x because of "srcref"s etc
+
+
+## as.factor(<named integer>)
+ni <- 1:2; Nni <- names(ni) <- c("A","B")
+stopifnot(identical(Nni, names(as.factor(ni))),
+	  identical(Nni, names(   factor(ni))),
+	  identical(Nni, names(   factor(ni+0))), # +0 : "double"
+	  identical(Nni, names(as.factor(ni+0))))
+## The first one lost names in  3.1.0 <= R <= 3.3.0
+
+
 
 
 ## keep at end
