@@ -89,6 +89,10 @@
       \item New option \code{rstandard(<lm>, type = "predicted")}
       provides the \dQuote{PRESS}-related leave-one-out
       cross-validation errors for linear models.
+
+      \item After seven years of deprecation, duplicated factor levels
+      now produce an error in \code{levels<-} instead of a warning, and
+      a warning when printed.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
