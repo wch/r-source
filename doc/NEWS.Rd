@@ -93,6 +93,9 @@
       \item After seven years of deprecation, duplicated factor levels
       now produce an error in \code{levels<-} instead of a warning, and
       a warning when printed.
+
+      \item \code{str(<looooooooong_string>)} is now much faster;
+      inspired by Mikko Korpela's proposal in \PR{16527}.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

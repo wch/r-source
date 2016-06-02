@@ -161,12 +161,20 @@ str.default <-
         vec.len <- 0
     }
 
-    maybe_truncate <- function(x, e.x = x, Sep = "\"", ch = "| __truncated__")
+    maybe_truncate <- function(x, nx = nchar(x), S = "\"", ch = "| __truncated__")
     {
-	trimmed <- strtrim(e.x, nchar.max)
-	ii <- trimmed != e.x
-	ii[is.na(ii)] <- FALSE
-	if(any(ii)) x[ii] <- paste0(trimmed[ii], Sep, ch)
+	nc <- nchar(ch <- paste0(S, ch))
+	if(nchar.max <= nc)
+	    stop(gettextf("'nchar.max = %d' is too small", nchar.max), domain=NA)
+	## else:  nchar.max - nc > 0
+	ok <- if(anyNA(nx)) !is.na(nx) else TRUE
+	if(any(lrg <- ok & nx > nchar.max)) {
+	    x.lrg <- x[lrg]
+	    tr.x <- strtrim(x.lrg, nchar.max - nc)
+	    if(any(ii <- tr.x != x.lrg & paste0(tr.x, S) != x.lrg)) {
+		x[lrg][ii] <- paste0(tr.x[ii], ch)
+	    }
+	}
 	x
     }
     pClass <- function(cls)
@@ -524,9 +532,16 @@ str.default <-
 	if(char.like) {
 	    ## if object is very long, drop the rest which won't be used anyway:
 	    max.len <- max(100L, width %/% 3L + 1L, if(!missing(vec.len)) vec.len)
-	    if(le > max.len) object <- object[seq_len(max.len)]
-	    encObj <- encodeString(object, quote= '"', na.encode= FALSE)
-					#O: encodeString(object)
+	    if(le > max.len) le <- length(object <- object[seq_len(max.len)])
+	    ## For very long strings, truncated later anyway,
+	    ## both nchar(*, type="w") and encodeString() are too expensive
+	    rhs <- as.integer(width - (4 + 5*nest.lev + nchar(str1, type="w")))
+	    subLen <- pmax.int(as.integer(nchar.max) - 1L,
+			       as.integer(rhs) - 5L * seq_len(le))
+	    slackLen <- 2L * subLen + 3L # <<- "fudge" for cases where
+	    ## encodeString() does not catch a non-printable character (when ?)
+	    encObj <- encodeString(strtrim(object, slackLen),
+				   quote= '"', na.encode= FALSE)
 	    v.len <-
 		if(missing(vec.len)) {
 		    max(1,sum(cumsum(3 + if(le>0) nchar(encObj, type="w") else 0) <
@@ -536,7 +551,6 @@ str.default <-
 	    ile <- min(le, v.len)
 	    if(ile >= 1) ## truncate if LONG char:
 		object <- maybe_truncate(encObj[seq_len(ile)])
-					#O: encodeString(object, quote= '"', na.encode= FALSE)
 	    formObj <- function(x) paste(as.character(x), collapse = " ")
 	}
 	else { # not char.like

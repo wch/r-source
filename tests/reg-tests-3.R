@@ -184,6 +184,7 @@ if(require("Matrix")) {
  detach("package:Matrix", unload=TRUE)
 }##{Matrix}
 
+
 ## Invalid UTF-8 strings
 x <- c("Jetz", "no", "chli", "z\xc3\xbcrit\xc3\xbc\xc3\xbctsch:",
        "(noch", "ein", "bi\xc3\x9fchen", "Z\xc3\xbc", "deutsch)",
@@ -196,3 +197,9 @@ try(nchar(x, "w"))
 nchar(x, "c", allowNA = TRUE)
 nchar(x, "w", allowNA = TRUE)
 ## Results differed by platform, but some gave incorrect results on string 10.
+
+
+## str() on large strings
+nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")# 5.1 M
+stopifnot(system.time( str(L) )[[1]] < 0.05)
+## needed 1.6 sec in R <= 3.3.0
