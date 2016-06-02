@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -64,14 +64,14 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   be a warning, depending on the OS.
 
   Attempts to change the character set (by
-  \code{Sys.setlocale("LC_TYPE", )}, if that implies a different
+  \code{Sys.setlocale("LC_CTYPE", )}, if that implies a different
   character set) during a session may not work and are likely to lead to
   some confusion.
 
   Note that the \env{LANGUAGE} environment variable has precedence over
   \code{"LC_MESSAGES"} in selecting the language for message translation
   on most \R platforms.
-  
+
   On platforms where ICU is used for collation the locale used for
   collation can be reset by \code{\link{icuSetCollate}}).  Except on
   Windows, the initial setting is taken from the \code{"LC_COLLATE"}
