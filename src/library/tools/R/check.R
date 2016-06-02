@@ -2649,7 +2649,7 @@ setRlibs <-
                          (times[[3L]] > theta))
                 if(any(keep)) {
                     if(!any && check_incoming)
-                        resultLog(Log, "NOTE")
+                        noteLog(Log)
                     printLog(Log,
                              sprintf("Examples with CPU or elapsed time > %gs\n",
                                      theta))
