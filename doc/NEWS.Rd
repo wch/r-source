@@ -94,8 +94,12 @@
       now produce an error in \code{levels<-} instead of a warning, and
       a warning when printed.
 
-      \item \code{str(<looooooooong_string>)} is now much faster;
+      \item \code{str(<looooooooong_string>)} is no longer very slow;
       inspired by Mikko Korpela's proposal in \PR{16527}.
+
+      \item Illegal factors, e.g., with duplicated levels (illegal but
+      constructable) now give a warning when printed, via new
+      \code{.valid.factor}.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

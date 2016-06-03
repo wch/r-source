@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicClasses.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -201,16 +201,7 @@
               },
               where = envir)
     setClass("factor", contains = "integer", representation(levels = "character"),
-	     validity = function(object) {
-		 levs <- levels(object)
-		 if (!is.character(levs))
-		     return("factor levels must be \"character\"")
-		 if (d <- anyDuplicated(levs))
-		     return(sprintf("duplicated level [%d] in factor", d))
-		 ## 'else'	ok :
-		 TRUE
-	     },
-	     where = envir)
+	     validity = base::.valid.factor, where = envir)
     setOldClass("factor", S4Class = "factor", where = envir)
     if(!isGeneric("show", envir))
         setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
