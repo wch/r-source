@@ -40,7 +40,7 @@ DJM 2003-02-25
 
 3) Making Tcl/Tk.
 
-See the directory R-Tcl-win in the R-packages SVN repository.
+See https://github.com/waddella/Tclbuild.
 
 
 4) Linking to DLLs.
