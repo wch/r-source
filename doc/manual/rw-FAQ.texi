@@ -1202,10 +1202,10 @@ installed.  This is part of the R installation, so it should be there.
 
 However, if you have the environment variable @env{MY_TCLTK} set to a
 non-empty value, it is assumed that you want to use a different Tcl/Tk
-8.5.x installation with the path to its @file{bin} directory given by
+8.6.x installation with the path to its @file{bin} directory given by
 value of @env{MY_TCLTK}, and that this is set up correctly (with
-@env{TCL_LIBRARY} set if needed).  Note that you do need 8.5.x and not
-8.4.x nor 8.6.0, and you do need the architecture to match, that is a
+@env{TCL_LIBRARY} set if needed).  Note that you do need 8.6.x and not
+8.5.x nor 8.4.x, and you do need the architecture to match, that is a
 32-bit or 64-bit build of Tcl/Tk to match the R build in use.  (There is
 no guarantee that a 64-bit build will work: it depends on the layout it
 uses.)

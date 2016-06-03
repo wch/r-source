@@ -143,6 +143,14 @@
       nicely now, mostly thanks to a suggestion by Richie Cotton.
     }
   }
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      % FIXME:  Backport to 3.3.x after testing on CRAN.
+      \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
+      binary builds. The \file{tcltk*.chm} help file is no longer 
+      included; please use \url{http://www.tcl.tk/man/} instead.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.3.0 patched}{
