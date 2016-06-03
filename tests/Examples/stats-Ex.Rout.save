@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-05-30 r70684) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-06-02 r70700) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6843,7 +6843,7 @@ List of 11
  $ dev.resids:function (y, mu, wt)  
  $ aic       :function (y, n, mu, wt, dev)  
  $ mu.eta    :function (eta)  
- $ initialize:  expression({  n <- rep.int(1, nobs)  if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$link ==  "inverse" "| __truncated__
+ $ initialize:  expression({  n <- rep.int(1, nobs)  if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$lin"| __truncated__
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
  - attr(*, "class")= chr "family"
@@ -6864,7 +6864,7 @@ List of 12
  $ dev.resids:function (y, mu, wt)  
  $ aic       :function (y, n, mu, wt, dev)  
  $ mu.eta    :function (eta)  
- $ initialize:  expression({  if (any(y <= 0))  stop("non-positive values not allowed for the 'gamma' family")  n <- rep.int(1, nobs)  mustart <"| __truncated__
+ $ initialize:  expression({  if (any(y <= 0))  stop("non-positive values not allowed for the 'gamma' family")  n <- rep.int(1, "| __truncated__
  $ validmu   :function (mu)  
  $ valideta  :function (eta)  
  $ simulate  :function (object, nsim)  

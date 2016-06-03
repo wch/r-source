@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-05-20 r70654) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-06-02 r70700) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -834,6 +834,7 @@ Loading required package: Matrix
 [2,] 2 5 8 11 2 5 8 11
 [3,] 3 6 9 12 3 6 9 12
 > 
+> 
 > ## Invalid UTF-8 strings
 > x <- c("Jetz", "no", "chli", "z\xc3\xbcrit\xc3\xbc\xc3\xbctsch:",
 +        "(noch", "ein", "bi\xc3\x9fchen", "Z\xc3\xbc", "deutsch)",
@@ -881,4 +882,12 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 > nchar(x, "w", allowNA = TRUE)
  [1]  4  2  4 12  5  3  7  2  8 NA
 > ## Results differed by platform, but some gave incorrect results on string 10.
+> 
+> 
+> ## str() on large strings
+> nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")# 5.1 M
+[1] 5100000
+> stopifnot(system.time( str(L) )[[1]] < 0.05)
+ chr "A.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E"| __truncated__
+> ## needed 1.6 sec in R <= 3.3.0
 > 
