@@ -463,7 +463,8 @@ constantFoldCall <- function(e, cntxt) {
             modes <- unlist(lapply(args, mode))
             if (all(modes %in% constModes)) {
                 tryCatch(checkConst(do.call(ffun, args)),
-                         error = function(e) NULL) ## **** issue warning??
+                         error = function(e) NULL, warning = function(w) NULL)
+                ## **** issue warning??
             }
             else NULL
         }

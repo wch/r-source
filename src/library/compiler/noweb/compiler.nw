@@ -4562,7 +4562,7 @@ constNames <- c("pi", "T", "F")
 Call expressions are handled by determining whether the function
 called is eligible for constant folding, attempting to constant fold
 the arguments, and calling the folding function.  The result is the
-passed to [[checkConst]].  If an error occurs in the call to the
+passed to [[checkConst]].  If an error or a warning occurs in the call to the
 folding function then [[constantFoldCall]] returns [[NULL]].
 <<[[constantFoldCall]] function>>=
 constantFoldCall <- function(e, cntxt) {
@@ -4583,7 +4583,8 @@ constantFoldCall <- function(e, cntxt) {
             modes <- unlist(lapply(args, mode))
             if (all(modes %in% constModes)) {
                 tryCatch(checkConst(do.call(ffun, args)),
-                         error = function(e) NULL) ## **** issue warning??
+                         error = function(e) NULL, warning = function(w) NULL)
+                ## **** issue warning??
             }
             else NULL
         }
