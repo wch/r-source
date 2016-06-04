@@ -478,7 +478,8 @@ getOption(x, default = NULL)
       \code{c("unordered", "ordered")}, but the names are unused.}
 
     \item{\code{na.action}:}{the name of a function for treating missing
-      values (\code{\link{NA}}'s) for certain situations.}
+      values (\code{\link{NA}}'s) for certain situations, see
+      \code{\link{na.action}} and \code{\link{na.pass}}.}
 
     \item{\code{show.coef.Pvalues}:}{logical, affecting whether P
       values are printed in summary tables of coefficients.  See
@@ -555,7 +556,7 @@ getOption(x, default = NULL)
       requests.  If \code{NULL}, requests will be made without a
       user agent header.
       The default is \code{R (<version> <platform> <arch> <os>)} .}
-    
+
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful
       for binary installs on OS X and Windows, but can be used in a
@@ -648,7 +649,7 @@ getOption(x, default = NULL)
       used.
 #endif
     }
-      
+
     \item{\code{useHTTPS}:}{logical.  Used by \code{\link{chooseCRANmirror}}:
       are secure mirrors preferred?  If not set, \code{TRUE} is assumed.}
   }
