@@ -1136,8 +1136,17 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    rval = 2;
 	    printwhere();
 	    /* SET_RDEBUG(rho, 1); */
+	} else if (!strcmp(expr, "r")) {
+	    SEXP hooksym = install(".tryResumeInterrupt");
+	    if (SYMVALUE(hooksym) != R_UnboundValue) {
+		SEXP hcall;
+		PROTECT(hcall = LCONS(hooksym, R_NilValue));
+		eval(hcall, R_GlobalEnv);
+		UNPROTECT(1);
+	    }
 	}
     }
+
     return rval;
 }
 

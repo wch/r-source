@@ -133,6 +133,7 @@ void R_CheckUserInterrupt(void)
 #endif
 }
 
+static SEXP getInterruptCondition();
 void onintr()
 {
     if (R_interrupts_suspended) {
@@ -140,7 +141,18 @@ void onintr()
 	return;
     }
     else R_interrupts_pending = 0;
-    signalInterrupt();
+
+    SEXP hooksym = install(".signalInterrupt");
+    if (SYMVALUE(hooksym) != R_UnboundValue) {
+	int resume = FALSE;
+	SEXP cond, hcall;
+	PROTECT(cond = getInterruptCondition());
+	PROTECT(hcall = LCONS(hooksym, LCONS(cond, R_NilValue)));
+	resume = asLogical(eval(hcall, R_GlobalEnv));
+	UNPROTECT(2);
+	if (resume) return;
+    }
+    else signalInterrupt();
 
     REprintf("\n");
     /* Attempt to run user error option, save a traceback, show
