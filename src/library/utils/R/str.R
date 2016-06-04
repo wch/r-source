@@ -161,14 +161,13 @@ str.default <-
         vec.len <- 0
     }
 
-    maybe_truncate <- function(x, nx = nchar(x), S = "\"", ch = "| __truncated__")
+    maybe_truncate <- function(x, nx = nchar(x, type="w"), S = "\"", ch = "| __truncated__")
     {
-	nc <- nchar(ch <- paste0(S, ch))
-	if(nchar.max <= nc)
-	    stop(gettextf("'nchar.max = %d' is too small", nchar.max), domain=NA)
-	## else:  nchar.max - nc > 0
 	ok <- if(anyNA(nx)) !is.na(nx) else TRUE
 	if(any(lrg <- ok & nx > nchar.max)) {
+	    nc <- nchar(ch <- paste0(S, ch))
+	    if(nchar.max <= nc)
+		stop(gettextf("'nchar.max = %d' is too small", nchar.max), domain=NA)
 	    x.lrg <- x[lrg]
 	    tr.x <- strtrim(x.lrg, nchar.max - nc)
 	    if(any(ii <- tr.x != x.lrg & paste0(tr.x, S) != x.lrg)) {
@@ -535,17 +534,22 @@ str.default <-
 	    if(le > max.len) le <- length(object <- object[seq_len(max.len)])
 	    ## For very long strings, truncated later anyway,
 	    ## both nchar(*, type="w") and encodeString() are too expensive
-	    rhs <- as.integer(width - (4 + 5*nest.lev + nchar(str1, type="w")))
-	    subLen <- pmax.int(as.integer(nchar.max) - 1L,
-			       as.integer(rhs) - 5L * seq_len(le))
-	    slackLen <- 2L * subLen + 3L # <<- "fudge" for cases where
-	    ## encodeString() does not catch a non-printable character (when ?)
-	    encObj <- encodeString(strtrim(object, slackLen),
-				   quote= '"', na.encode= FALSE)
+	    nc1 <- nchar(str1, type="w")
+	    rhs <- width - (4 + 5*nest.lev + nc1)
+	    trimWidth <- pmax.int(as.integer(nchar.max) - 1L,
+				  as.integer(rhs) - 5L * seq_len(le))
+	    ## FIXME: need combined  encode.and.trim.string(object, m)  with O(m) !
+	    encObj <- tryCatch(strtrim(object, trimWidth), error=function(e) NULL)
+	    encObj <-
+		if(is.null(encObj)) # must first encodeString() before we can trim
+		    strtrim(encodeString(object, quote= '"', na.encode= FALSE),
+			    trimWidth)
+		else
+		    encodeString(encObj, quote= '"', na.encode= FALSE)
 	    v.len <-
 		if(missing(vec.len)) {
 		    max(1,sum(cumsum(3 + if(le>0) nchar(encObj, type="w") else 0) <
-			      width - (4 + 5*nest.lev + nchar(str1, type="w"))))
+			      width - (4 + 5*nest.lev + nc1)))
 		}		      # '5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
