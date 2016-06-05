@@ -1,5 +1,5 @@
 
-R version 3.3.0 Patched (2016-05-05 r70581) -- "Supposedly Educational"
+R version 3.3.0 Patched (2016-06-02 r70710) -- "Supposedly Educational"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -703,4 +703,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.153   0.022   1.164 
+  1.269   0.014   1.276 
