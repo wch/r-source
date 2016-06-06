@@ -241,13 +241,23 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	return(y == R_NilValue);
     }
     case CLOSXP:
-	return(R_compute_identical(FORMALS(x), FORMALS(y), flags) &&
-	       (( IGNORE_SRCREF && R_compute_identical(R_body_no_src(x), R_body_no_src(y), flags)) ||
-		(!IGNORE_SRCREF && R_compute_identical(    BODY_EXPR(x),     BODY_EXPR(y), flags))) &&
-	       (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE) &&
-	       (IGNORE_BYTECODE || R_compute_identical(BODY(x), BODY(y), flags))
-	       ); /* FIXME: without IGNORE_BYTECODE, the comparison of functions
-		            will compare the function bodies more than once */
+    {
+	if(!R_compute_identical(FORMALS(x), FORMALS(y), flags)) return FALSE;
+	if(IGNORE_BYTECODE) {
+	    if(IGNORE_SRCREF) {
+		SEXP x_ = PROTECT(R_body_no_src(x)),
+		     y_ = PROTECT(R_body_no_src(y));
+		Rboolean id_body = R_compute_identical(x_, y_, flags);
+		UNPROTECT(2);
+		if(!id_body) return FALSE;
+	    } else if(!R_compute_identical(BODY_EXPR(x), BODY_EXPR(y), flags))
+		return FALSE;
+	} else { // !IGNORE_BYTECODE: use byte code for comparison of function bodies :
+	    if(!R_compute_identical(BODY(x), BODY(y), flags)) return FALSE;
+	}
+	// now, formals and body are equal, check the enviroment(.)s:
+	return (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
+    }
     case SPECIALSXP:
     case BUILTINSXP:
 	return(PRIMOFFSET(x) == PRIMOFFSET(y) ? TRUE : FALSE);
