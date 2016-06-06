@@ -2153,8 +2153,8 @@ using the @command{make} variables @code{BINPREF} (and in some cases
 @code{BINPREF64}).  The library location is set using @command{make}
 variable @code{LOCAL_SOFT}, to give an equivalent of @file{/usr/local}
 on a Unix-alike.  All of these can be set in
-@file{src/gnuwin/MkRules.local} when @R{} is built from sources (see
-the comments in @file{src/gnuwin/MkRules.dist}), or in
+@file{src/gnuwin32/MkRules.local} when @R{} is built from sources (see
+the comments in @file{src/gnuwin32/MkRules.dist}), or in
 file@footnote{or by adding it in a file such as
 @file{etc/i386/Makevars.site}, which does not exist by default.}
 @file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an installed
