@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2016
-@set FAQ_DATE @value{FAQ_YEAR}-05-10
+@set FAQ_DATE @value{FAQ_YEAR}-06-06
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -3000,12 +3000,12 @@ package and library?} for more information.
 @node Why doesn't R think these numbers are equal?, How can I capture or ignore errors in a long simulation?, I installed a package but the functions are not there, R Miscellanea
 @section Why doesn't R think these numbers are equal?
 
-The only numbers that can be represented exactly in R's numeric type 
-are integers and fractions whose denominator is a power of 2.  Other 
-numbers have to be rounded to (typically) 53 binary digits accuracy.  As a 
-result, two floating point numbers will not reliably be equal unless they 
-have been computed by the same algorithm, and not always even then.  For 
-example
+The only numbers that can be represented exactly in R's numeric type are
+integers and fractions whose denominator is a power of 2.  All other
+numbers are internally rounded to (typically) 53 binary digits accuracy.
+As a result, two floating point numbers will not reliably be equal
+unless they have been computed by the same algorithm, and not always
+even then.  For example
 
 @example
 R> a <- sqrt(2)
@@ -3013,6 +3013,8 @@ R> a * a == 2
 [1] FALSE
 R> a * a - 2
 [1] 4.440892e-16
+R> print(a * a, digits = 18)
+[1] 2.00000000000000044
 @end example
 
 The function @code{all.equal()} compares two objects using a numeric
@@ -3020,17 +3022,32 @@ tolerance of @code{.Machine$double.eps ^ 0.5}.  If you want much greater
 accuracy than this you will need to consider error propagation
 carefully.
 
+A discussion with many easily followed examples is in Appendix G
+``Computational Precision and Floating Point Arithmetic'', pages
+753--771 of @emph{Statistical Analysis and Data Display: An Intermediate
+Course with Examples in R}, Richard M. Heiberger and Burt Holland
+(Springer 2015, second edition).  This appendix is a free download from
+@url{http://link.springer.com/content/pdf/bbm%3A978-1-4939-2122-5%2F1.pdf}.
+
 For more information, see e.g.@: David Goldberg (1991), ``What Every
 Computer Scientist Should Know About Floating-Point Arithmetic'',
 @emph{ACM Computing Surveys}, @strong{23/1}, 5--48, also available via
 @url{http://www.validlab.com/goldberg/paper.pdf}.
 
-To quote from ``The Elements of Programming Style'' by Kernighan and
-Plauger:
+Here is another example, this time using addition:
 
-@quotation
-@emph{10.0 times 0.1 is hardly ever 1.0}.
-@end quotation
+@example
+R> .3 + .6 == .9
+[1] FALSE
+R> .3 + .6 - .9
+[1] -1.110223e-16
+R> print(matrix(c(.3,  .6,  .9, .3 + .6)), digits = 18)
+                     [,1]
+[1,] 0.299999999999999989
+[2,] 0.599999999999999978
+[3,] 0.900000000000000022
+[4,] 0.899999999999999911
+@end example
 
 
 @node How can I capture or ignore errors in a long simulation?, Why are powers of negative numbers wrong?, Why doesn't R think these numbers are equal?, R Miscellanea
