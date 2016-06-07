@@ -192,6 +192,10 @@
 
       \item Internal S4 dispatch sets .Generic in the method frame for
       consistency with \code{standardGeneric()} (\PR{16929}).
+
+      \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
+      integer vector containing \code{MAX_INT}. Ported from a fix Matt
+      Dowle made to data.table.
     }
   }
 
