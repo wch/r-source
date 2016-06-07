@@ -2084,16 +2084,16 @@ editing saved transcripts, and re-evaluating commands from transcript
 files).
 
 The latest stable version of @acronym{ESS} is available via @CRAN{} or
-the @url{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
-of the documentation can be found at @url{https://stat.ethz.ch/ESS/}.
+the @url{http://ESS.R-project.org/, ESS web page}, an https version
+of which can be found at @url{https://stat.ethz.ch/ESS/}.
 
 @acronym{ESS} comes with detailed installation instructions.
 
 For help with @acronym{ESS}, send email to
-@email{ESS-help@@stat.math.ethz.ch}.
+@email{ESS-help@@r-project.org}.
 
 Please send bug reports and suggestions on @acronym{ESS} to
-@email{ESS-bugs@@stat.math.ethz.ch}.  The easiest way to do this from is
+@email{ESS-bugs@@r-project.org}.  The easiest way to do this from is
 within Emacs by typing @kbd{M-x ess-submit-bug-report} or using the
 [ESS] or [iESS] pulldown menus.
 
