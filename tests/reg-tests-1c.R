@@ -1676,6 +1676,11 @@ stopifnot(identical(function(){}, function(){}),
                     function(x){x+1})); options(op)
 ## where all FALSE in 2.14.0 <= R <= 3.3.x because of "srcref"s etc
 
+## PR#16925, radix sorting INT_MAX w/ decreasing=TRUE and na.last=TRUE
+## failed ASAN check and segfaulted on some systems.
+data <- c(2147483645L, 2147483646L, 2147483647L, 2147483644L)
+stopifnot(identical(sort(data, decreasing = TRUE, method = "radix"),
+                    c(2147483647L, 2147483646L, 2147483645L, 2147483644L)))
 
 ## as.factor(<named integer>)
 ni <- 1:2; Nni <- names(ni) <- c("A","B")
