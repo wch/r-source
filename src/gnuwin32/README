@@ -206,7 +206,7 @@ Using package tcltk
 The package tcltk supports building graphical interfaces with Tcl/Tk.
 "Support Files for Package tcltk" needs to be selected from the
 installer for this to work; alternatively you can use an existing
-installation of Tcl/Tk 8.5.x by following the instructions in the
+installation of Tcl/Tk 8.6.x by following the instructions in the
 rw-FAQ.
 
 

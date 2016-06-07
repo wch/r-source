@@ -58,7 +58,7 @@ SORT = sort
 
 ## For use in packages
 GRAPHAPP_LIB = -lRgraphapp
-TCL_VERSION = 85
+TCL_VERSION = 86
 # was a reference to Rzlib.dll in R < 3.2.0
 ZLIB_LIBS = -lz
 

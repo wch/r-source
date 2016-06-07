@@ -49,7 +49,7 @@ Based on files which are
 
 R_HOME/Tcl:
 
-Files compiled and installed from Tcl 8.5.8 and Tk 8.5.8.
+Files compiled and installed from Tcl 8.6.4 and Tk 8.6.4.
 see R_HOME/Tcl/license.terms for the license.
 
     This software is copyrighted by the Regents of the University of
@@ -124,9 +124,10 @@ at http://www.murdoch-sutherland.com/Rtools/;
 http://www.murdoch-sutherland.com/Rtools/Rtools.txt lists the current
 contents.
 
-The build of Tcl/Tk contained in the binary installer is taken via
-Rtools from https://www.stats.ox.ac.uk/pub/Rtools/, which hosts the
-sources used and links to the scripts used for the build.
+The build of Tcl/Tk contained in the binary installer was produced
+by Adrian Waddell; see https://github.com/waddella/Tclbuild for 
+instructions.  Sources are available via links on that page, or on
+request from R-windows@r-project.org.
 
 Rbitmap.dll is built against static libraries for libpng, jpeg and
 libtiff: the Makefiles and configuration headers used are in the
