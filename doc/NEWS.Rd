@@ -180,6 +180,9 @@
       as in \R < 3.1.0.
 
       \item \code{strtrim(""[0], 0[0])} now works.
+
+      \item \code{as<-()} avoids an infinite loop when a virtual class
+      intercedes between a subclass and an actual superclass.
     }
   }
 
