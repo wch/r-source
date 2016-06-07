@@ -677,9 +677,9 @@ static SEXP S4_extends(SEXP klass, Rboolean use_tab) {
 	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	R_PreserveObject(R_S4_extends_table);
     }
-    /* sanity check for methods package available */
-    if(findVar(s_extends, R_GlobalEnv) == R_UnboundValue)
-	return klass;
+    if(!isMethodsDispatchOn()) {
+        return klass;
+    }
     class = translateChar(STRING_ELT(klass, 0)); /* TODO: include package attr. */
     if(use_tab) {
 	val = findVarInFrame(R_S4_extends_table, install(class));

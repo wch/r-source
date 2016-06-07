@@ -186,6 +186,9 @@
 
       \item Fix level propagation in \code{unlist()} when the list
       contains zero-length lists or factors.
+
+      \item Fix S3 dispatch on S4 objects when the methods package is
+      not attached.
     }
   }
 
