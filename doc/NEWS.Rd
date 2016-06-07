@@ -189,6 +189,9 @@
 
       \item Fix S3 dispatch on S4 objects when the methods package is
       not attached.
+
+      \item Internal S4 dispatch sets .Generic in the method frame for
+      consistency with \code{standardGeneric()} (\PR{16929}).
     }
   }
 
