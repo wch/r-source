@@ -183,6 +183,9 @@
 
       \item \code{as<-()} avoids an infinite loop when a virtual class
       intercedes between a subclass and an actual superclass.
+
+      \item Fix level propagation in \code{unlist()} when the list
+      contains zero-length lists or factors.
     }
   }
 
