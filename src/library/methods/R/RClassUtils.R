@@ -1566,14 +1566,16 @@ setDataPart <- function(object, value, check = TRUE) {
         f <- byExt@replace
         byExpr <- body(f)
         if(!strictBy) {
-            toDef <- getClassDef(to)
-            byDef <- getClassDef(by)
+            toDef <- getClassDef(to, package=packageSlot(toExt))
+            byDef <- getClassDef(by, package=packageSlot(byExt))
             strictBy <- is.null(toDef) || is.null(byDef) || toDef@virtual || byDef@virtual
         }
-        if (isVirtualClass(by)) {
-            skipExt <- getClass(by)@contains[[to]]
+        if (isVirtualClass(by, .requirePackage(packageSlot(byExt)))) {
+            skipDef <- getClassDef(by, package=packageSlot(byExt))
+            skipExt <- skipDef@contains[[to]]
             if (!is.null(skipExt)) {
-                f <- skipExt@replace
+                body(f, envir = environment(f)) <-
+                    call("as", body(skipExt@replace), byExt@subClass)
             }
         } else {
             expr <- substitute({
