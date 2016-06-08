@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -379,7 +379,7 @@ void R_runHandlers(InputHandler *handlers, fd_set *readMask)
 	R_PolledEvents();
     } else
 	while(tmp) {
-	    /* Do this way as the handler function might call 
+	    /* Do this way as the handler function might call
 	       removeInputHandlers */
 	    next = tmp->next;
 	    if(FD_ISSET(tmp->fileDescriptor, readMask)
@@ -432,6 +432,9 @@ extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
 extern void rl_callback_handler_remove(void);
 extern void rl_callback_read_char(void);
 extern char *tilde_expand (const char *);
+extern const char *rl_readline_name;
+/* Other externals are used, but only if the readline >= 6.3 is detected,
+   and that requires the header. */
 # endif
 
 attribute_hidden
@@ -528,6 +531,32 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
    fflush(stdout);
 }
 
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+/*
+  Fix for PR#16603.
+
+  The readline interface is somewhat messy. readline contains the
+  function rl_free_line_state(), which its internal SIGINT handler
+  calls. However, it only cancels keyboard macros and certain other
+  things: it does not clear the line. Also, as of readline 6.3, its
+  SIGINT handler is no longer triggered during our select() loop since
+  rl_callback_handler_install() no longer installs signal handlers.
+  So we have to catch the signal and do all the work ourselves to get
+  Bash-like behavior on Ctrl-C.
+ */
+static void resetReadline(void)
+{
+    rl_free_line_state();
+    rl_cleanup_after_signal();
+    RL_UNSETSTATE(RL_STATE_ISEARCH | RL_STATE_NSEARCH | RL_STATE_VIMOTION |
+		  RL_STATE_NUMERICARG | RL_STATE_MULTIKEY);
+    /* The following two lines should be equivalent, but doing both
+       won't hurt. */
+    rl_line_buffer[rl_point = rl_end = rl_mark = 0] = 0;
+    rl_done = 1;
+}
+#endif
+
 /*
   Unregister the current readline handler and pop it from R's readline
   stack, followed by re-registering the previous one.
@@ -535,6 +564,9 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
 static void popReadline(void)
 {
   if(ReadlineStack.current > -1) {
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+     resetReadline();
+#endif
      rl_callback_handler_remove();
      ReadlineStack.fun[ReadlineStack.current--] = NULL;
      if(ReadlineStack.current > -1 && ReadlineStack.fun[ReadlineStack.current])
@@ -1082,7 +1114,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
 	    R_setupHistory(); /* re-read the history size and filename */
 	    stifle_history(R_HistorySize);
 	    err = write_history(R_HistoryFile);
-	    if(err) warning(_("problem in saving the history file '%s'"), 
+	    if(err) warning(_("problem in saving the history file '%s'"),
 			    R_HistoryFile);
 	}
 # endif /* HAVE_READLINE_HISTORY_H */
@@ -1101,7 +1133,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
     R_CleanTempDir();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and (if run) .Last */
-    if(ifp) { 
+    if(ifp) {
 	fclose(ifp);    /* input file from -f or --file= */
 	ifp = NULL; 	/* To avoid trying to close it again */
     }
@@ -1291,7 +1323,7 @@ void Rsleep(double timeint)
     for (;;) {
 	fd_set *what;
 	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
-	
+
 	int wt = -1;
 	if (R_wait_usec > 0) wt = R_wait_usec;
 	if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))

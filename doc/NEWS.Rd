@@ -40,6 +40,11 @@
       as in \R < 3.1.0.
 
       \item \code{strtrim(""[0], 0[0])} now works.
+
+      \item Use of \code{Ctrl-C} to terminate a reverse incremental
+      search started by \code{Ctrl-R} in the \code{readline}-based Unix
+      terminal interface is now supported for \code{readline} >= 6.3
+      (\code{Ctrl-G} always worked).  (\PR{16603})
     }
   }
 
