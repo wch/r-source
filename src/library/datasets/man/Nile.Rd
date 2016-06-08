@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Nile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Nile}
@@ -9,7 +9,9 @@
 \title{Flow of the River Nile}
 \usage{Nile}
 \description{
-  Measurements of the annual flow of the river Nile at Ashwan 1871--1970.
+  Measurements of the annual flow of the river Nile at Aswan (formerly
+  \code{Assuan}), 1871--1970, in \eqn{10^8 m^3},
+  \dQuote{with apparent changepoint near 1898} (Cobb(1978), Table 1, p.249).
 }
 \format{
   A time series of length 100.
