@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015 The R Core Team
+ *  Copyright (C) 1998--2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2919,12 +2919,20 @@ void u_getVersion(UVersionInfo versionArray);
 # include <gnu/libc-version.h>
 #endif
 
+#ifdef HAVE_LIBREADLINE
+# ifdef HAVE_READLINE_READLINE_H
+#  include <readline/readline.h>
+# else
+extern const char *rl_library_version;
+# endif
+#endif
+
 SEXP attribute_hidden
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(STRSXP, 7));
-    SEXP nms = PROTECT(allocVector(STRSXP, 7));
+    SEXP ans = PROTECT(allocVector(STRSXP, 8));
+    SEXP nms = PROTECT(allocVector(STRSXP, 8));
     setAttrib(ans, R_NamesSymbol, nms);
     unsigned int i = 0;
     char p[256];
@@ -2967,6 +2975,12 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("iconv"));
+#ifdef HAVE_LIBREADLINE
+    SET_STRING_ELT(ans, i, mkChar(rl_library_version));
+#else
+    SET_STRING_ELT(ans, i, mkChar(""));
+#endif
+    SET_STRING_ELT(nms, i++, mkChar("readline"));
     UNPROTECT(2);
     return ans;
 }

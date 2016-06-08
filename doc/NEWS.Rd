@@ -100,6 +100,9 @@
       \item Illegal factors, e.g., with duplicated levels (illegal but
       constructable) now give a warning when printed, via new
       \code{.valid.factor}.
+
+      \item \code{extSoftVersion()} now reports the version (if any) of
+      the \code{readline} library in use.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

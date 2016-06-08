@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2015 R Core Team
+% Copyright 2014-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -32,6 +32,8 @@ extSoftVersion()
   \item{TRE}{The version of \code{libtre} in use.}
   \item{iconv}{The implementation and version of the \code{iconv}
   library in use (if known).}
+\item{readline}{The version of \code{readline} in use (if any,
+  otherwise \code{""}).}
 
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
