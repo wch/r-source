@@ -207,3 +207,15 @@ nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")# 5.1 M
 stopifnot(system.time( str(L) )[[1]] < 0.05)
 Sys.setlocale("LC_CTYPE", oloc)
 ## needed 1.6 sec in R <= 3.3.0 in a multibyte locale
+
+if(require("Matrix")) {
+    M = Matrix(diag(1:10),sparse=T)
+    setClass("TestM",representation(M='numeric'))
+    setMethod("+", c("TestM","TestM"), function(e1,e2) {
+        e1@M + e2@M
+    })
+    M+M # works the first time
+    M+M # was an error
+    rm(M)
+    detach("package:Matrix", unload=TRUE)
+}##{Matrix}

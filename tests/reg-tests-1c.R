@@ -1704,7 +1704,8 @@ tools::assertWarning(print(f))
 tools::assertError(validObject(f))
 ## no warning in print() for R <= 3.3.x
 
-
+## R <= 3.3.0 returned integer(0L) from unlist() in this case:
+stopifnot(identical(levels(unlist(list(factor(levels="a")))), "a"))
 
 
 ## keep at end

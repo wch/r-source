@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2016-06-04 r70709) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-06-07 r70720) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1176,4 +1176,25 @@ Loading required package: methods
 +     identical(formals(getGeneric("as.vector")), formals(base::as.vector)),
 +     identical(formals(getGeneric("unlist")),    formals(base::unlist)))
 > ## failed for a while in R-devel (3.3.0)
+> 
+> setClass("myInteger", contains=c("integer", "VIRTUAL"))
+> setClass("mySubInteger", contains="myInteger")
+> new("mySubInteger", 1L)
+An object of class "mySubInteger"
+[1] 1
+attr(,"class")
+[1] "myInteger"
+> ## caused infinite recursion in R 3.3.0
+> 
+> detach("package:methods", force=TRUE)
+> methods::setClass("test1", methods::representation(date="POSIXct"))
+> methods::setClass("test2", contains="test1")
+> test <- function(x) UseMethod('test', x)
+> test.test1 <- function(x) 'Hi'
+> test(methods::new("test2", date=as.POSIXct("2003-10-09")))
+[1] "Hi"
+> stopifnot(require("methods"))
+Loading required package: methods
+> ## S3 dispatch to superclass methods failed on S4 objects when
+> ## methods package was not attached
 > 
