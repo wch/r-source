@@ -970,9 +970,6 @@ function(x, ...)
 check_packages_in_dir_changes <-
 function(dir, old, outputs = FALSE, sources = FALSE)
 {
-    check_packages_in_dir_changes_classes <-
-        c("check_packages_in_dir_changes", "data.frame")
-
     dir <- if(inherits(dir, "check_packages_in_dir"))
         dir <- attr(dir, "dir")
     else
@@ -990,6 +987,20 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     if(!inherits(old, "check_details"))
         old <- check_packages_in_dir_details(old, drop_ok = FALSE)
 
+    check_details_changes(new, old, outputs)
+}
+
+### ** check_details_changes
+
+check_details_changes <-
+function(new, old, outputs = FALSE)
+{
+    check_details_changes_classes <-
+        c("check_details_changes", "data.frame")
+
+    if(!inherits(new, "check_details")) stop("wrong class")
+    if(!inherits(old, "check_details")) stop("wrong class")
+
     ## Simplify matters by considering only "changes" in *available*
     ## results/details.
 
@@ -1001,7 +1012,7 @@ function(dir, old, outputs = FALSE, sources = FALSE)
                          Old = character(),
                          New = character(),
                          stringsAsFactors = FALSE)
-        class(db) <- check_packages_in_dir_changes_classes
+        class(db) <- check_details_changes_classes
         return(db)
     }
 
@@ -1066,12 +1077,12 @@ function(dir, old, outputs = FALSE, sources = FALSE)
 
     db <- db[c("Package", "Check", "Old", "New")]
 
-    class(db) <- check_packages_in_dir_changes_classes
+    class(db) <- check_details_changes_classes
 
     db
 }
 
-format.check_packages_in_dir_changes <-
+format.check_details_changes <-
 function(x, ...)
 {
     if(!nrow(x)) return(character())
@@ -1086,7 +1097,7 @@ function(x, ...)
                    ""))
 }
 
-print.check_packages_in_dir_changes <-
+print.check_details_changes <-
 function(x, ...)
 {
     if(length(y <- format(x)))
