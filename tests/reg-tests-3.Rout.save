@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-06-07 r70726) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-06-09 r70736) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -897,20 +897,21 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 [1] 5100000
 > stopifnot(system.time( str(L) )[[1]] < 0.05)
  chr "A.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E"| __truncated__
-> ## needed 1.6 sec in (some) R <= 3.3.0 in a multibyte locale
-> Sys.setlocale("LC_CTYPE", oloc) # revert
+> Sys.setlocale("LC_CTYPE", oloc)
 [1] "C"
+> ## needed 1.6 sec in (some) R <= 3.3.0 in a multibyte locale
 > 
 > if(require("Matrix")) {
-+     M = Matrix(diag(1:10),sparse=T)
-+     setClass("TestM",representation(M='numeric'))
++     M <- Matrix(diag(1:10), sparse=TRUE) # a "dsCMatrix"
++     setClass("TestM", slots = c(M='numeric'))
 +     setMethod("+", c("TestM","TestM"), function(e1,e2) {
 +         e1@M + e2@M
 +     })
 +     M+M # works the first time
-+     M+M # was an error
++     M+M # was error   "object '.Generic' not found"
 +     rm(M)
 +     detach("package:Matrix", unload=TRUE)
 + }##{Matrix}
 Loading required package: Matrix
+> 
 > 
