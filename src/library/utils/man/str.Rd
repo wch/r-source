@@ -136,11 +136,33 @@ ch <- letters[1:12]; is.na(ch) <- 3:5
 str(ch) # character NA's
 
 str(list(a = "A", L = as.list(1:100)), list.len = 9)
+##                                     ------------
+## " .. [list output truncated] "
+
+## Long strings,   'nchar.max'; 'strict.width' :
 nchar(longch <- paste(rep(letters,100), collapse = ""))
 str(longch)
 str(longch, nchar.max = 52)
-
 str(longch, strict.width = "wrap")
+
+## Multibyte characters in strings (in multibyte locales):
+oloc <- Sys.getlocale("LC_CTYPE")
+mbyte.lc <- if(.Platform$OS.type == "windows")
+ "English_United States.28605" else "en_GB.UTF-8"
+try(Sys.setlocale("LC_CTYPE", mbyte.lc))
+## Truncation behavior (<-> correct width measurement) for "long" non-ASCII:
+idx <- c(65313:65338, 65345:65350)
+fwch <- intToUtf8(idx) # full width character string: each has width 2
+ch <- strtrim(paste(LETTERS, collapse="._"), 64)
+(ncc <- c(c.ch = nchar(ch),   w.ch = nchar(ch,   "w"),
+          c.fw = nchar(fwch), w.fw = nchar(fwch, "w")))
+stopifnot(unname(ncc) == c(64,64, 32, 64))
+## nchar.max: 1st line needs an increase of  2  in order to see  1  (in UTF-8!):
+invisible(lapply(60:66, function(N) str(fwch, nchar.max = N)))
+invisible(lapply(60:66, function(N) str( ch , nchar.max = N))) # "1 is 1" here
+## revert locale to previous:
+Sys.setlocale("LC_CTYPE", oloc)
+
 
 ## Settings for narrow transcript :
 op <- options(width = 60,

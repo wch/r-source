@@ -536,7 +536,7 @@ str.default <-
 	    ## both nchar(*, type="w") and encodeString() are too expensive
 	    nc1 <- nchar(str1, type="w")
 	    rhs <- width - (4 + 5*nest.lev + nc1)
-	    trimWidth <- pmax.int(as.integer(nchar.max) - 1L,
+	    trimWidth <- pmax.int(as.integer(nchar.max),
 				  as.integer(rhs) - 5L * seq_len(le))
 	    ## FIXME: need combined  encode.and.trim.string(object, m)  with O(m) !
 	    encObj <- tryCatch(strtrim(object, trimWidth), error=function(e) NULL)
