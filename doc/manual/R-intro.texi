@@ -7554,6 +7554,10 @@ type @key{ESC}@key{b}.  The @kbd{ESC} character sequences are also
 allowed on terminals with real Meta keys.  Note that case is significant
 for Meta characters.
 
+Some but not all versions@footnote{In particular, not versions 6.3 or
+later: this is worked around as from @R{} 3.4.0.} of @strong{readline}
+will recognize resizing of the terminal window so this is best avoided.
+
 @appendixsection Editing actions
 
 The @R{} program keeps a history of the command lines you type,
@@ -7583,7 +7587,8 @@ Go to the previous command (backwards in the history).
 @item C-n
 Go to the next command (forwards in the history).
 @item C-r @var{text}
-Find the last command with the @var{text} string in it.
+Find the last command with the @var{text} string in it.  This can be
+cancelled by @code{C-g} (and on some versions of @R{} by @code{C-c}).
 @end table
 
 On most terminals, you can also use the up and down arrow keys instead
