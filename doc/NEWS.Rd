@@ -105,6 +105,12 @@
       the \code{readline} library in use.
     }
   }
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item \code{readline} headers (and not just the library) are
+      required unless configuring with \option{--with-readline=no}.
+    }
+  }  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The deprecated support for PCRE versions 8.10 to 8.31 will

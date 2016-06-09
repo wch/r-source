@@ -769,13 +769,19 @@ if test "${use_readline}" = yes; then
                               AC_CHECK_LIB(termlib, main)))
     AC_CHECK_LIB(readline, rl_callback_read_char)
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
+    if test "${use_readline}" = yes; then
+      use_readline="${ac_cv_header_readline_readline_h}"
+    fi
   fi
-  ## the NetBSD version as used in OS X does not have this
-  AC_CHECK_FUNCS(history_truncate_file)
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
   else
-    R_CHECK_FUNCS([rl_completion_matches rl_resize_terminal], 
+    ## the NetBSD emulation supplied by OS X does not have this
+    AC_CHECK_FUNCS(history_truncate_file)
+    ## rl_completion_matches is >= 4.2.
+    ## rl_resize_terminal is >= 4.0 ane we use it only for >= 6.3.
+    ## rl_callback_sigcleanup is in pre-releases for 7.0, not yet used.
+    R_CHECK_FUNCS([rl_callback_sigcleanup rl_completion_matches rl_resize_terminal rl_sort_completion_matches], 
 [#include <stdio.h>
 #include <readline/readline.h>]
                  )

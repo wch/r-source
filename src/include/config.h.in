@@ -623,11 +623,17 @@
 /* Define to 1 if you have the `rintl' function. */
 #undef HAVE_RINTL
 
+/* Define to 1 if you have the `rl_callback_sigcleanup' function. */
+#undef HAVE_RL_CALLBACK_SIGCLEANUP
+
 /* Define to 1 if you have the `rl_completion_matches' function. */
 #undef HAVE_RL_COMPLETION_MATCHES
 
 /* Define to 1 if you have the `rl_resize_terminal' function. */
 #undef HAVE_RL_RESIZE_TERMINAL
+
+/* Define to 1 if you have the `rl_sort_completion_matches' function. */
+#undef HAVE_RL_SORT_COMPLETION_MATCHES
 
 /* Define to 1 if you have the `sched_getaffinity' function. */
 #undef HAVE_SCHED_GETAFFINITY
