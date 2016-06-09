@@ -591,8 +591,9 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
 static void resetReadline(void)
 {
     rl_free_line_state();
-/* This might be needed in future, but we cannot tell until readline
-   7.0 is released.
+/* This might be helpful/needed in future, but we cannot tell until
+   readline 7.0 is released.  Only info so far:
+   https://lists.gnu.org/archive/html/bug-readline/2016-02/msg00000.html
 #ifdef HAVE_RL_CALLBACK_SIGCLEANUP
     rl_callback_sigcleanup();
 #endif
