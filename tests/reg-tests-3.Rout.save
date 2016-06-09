@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-06-04 r70709) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-06-07 r70726) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -885,18 +885,21 @@ Error in nchar(x, "w") : invalid multibyte string, element 10
 > 
 > 
 > ## str() on large strings (in multibyte locales; changing locale may not work everywhere
-> oloc <- Sys.getlocale("LC_CTYPE"); Sys.setlocale("LC_CTYPE", "en_GB.UTF-8")
+> oloc <- Sys.getlocale("LC_CTYPE")
+> mbyte.lc <- if(.Platform$OS.type == "windows")
++  "English_United States.28605" else "en_GB.UTF-8"
+> try(Sys.setlocale("LC_CTYPE", mbyte.lc))
 [1] "en_GB.UTF-8"
-> cc <- "J\xf6reskog" # another invalid multibyte string
+> cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
 > str(cc) # failed in some R-devel versions
  chr "J\xf6reskog"
 > nchar(L <- strrep(paste(LETTERS, collapse="."), 100000), type="b")# 5.1 M
 [1] 5100000
 > stopifnot(system.time( str(L) )[[1]] < 0.05)
  chr "A.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.ZA.B.C.D.E"| __truncated__
-> Sys.setlocale("LC_CTYPE", oloc)
+> ## needed 1.6 sec in (some) R <= 3.3.0 in a multibyte locale
+> Sys.setlocale("LC_CTYPE", oloc) # revert
 [1] "C"
-> ## needed 1.6 sec in R <= 3.3.0 in a multibyte locale
 > 
 > if(require("Matrix")) {
 +     M = Matrix(diag(1:10),sparse=T)
