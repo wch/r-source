@@ -422,7 +422,8 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 
 # ifdef HAVE_READLINE_READLINE_H
 #  include <readline/readline.h>
-/* For compatibility with pre-readline4.2 systems: */
+/* For compatibility with pre-readline-4.2 systems, 
+   also missing in Apple's emulation via the NetBSD editline library.*/
 #  if !defined (_RL_FUNCTION_TYPEDEF)
 typedef void rl_vcpfunc_t (char *);
 #  endif /* _RL_FUNCTION_TYPEDEF */
@@ -527,11 +528,11 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
 
    rl_callback_handler_install(prompt, f);
    /* flush stdout in case readline wrote the prompt, but didn't flush
-      stdout to make it visible. (needed for Apple's rl in OS X 10.4-pre) */
+      stdout to make it visible. (needed for Apple's readline emulation). */
    fflush(stdout);
 }
 
-#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0600
 /*
   Fix for PR#16603.
 
@@ -564,7 +565,7 @@ static void resetReadline(void)
 static void popReadline(void)
 {
   if(ReadlineStack.current > -1) {
-#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0600
      resetReadline();
 #endif
      rl_callback_handler_remove();
