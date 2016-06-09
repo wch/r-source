@@ -7536,9 +7536,12 @@ Windows versions of @R{} have somewhat simpler command-line editing: see
 file @file{README.Rterm} for command-line editing under
 @code{Rterm.exe}.
 
-When using @R{} with @strong{readline} capabilities, the functions
-described below are available, as well as others (probably) documented
-in @command{man readline} or @command{info readline} on your system.
+When using @R{} with GNU@footnote{It is possible to build @R{} using an
+emulation of GNU @strong{readline}, such as one based on NetBSD's
+@strong{editline}, it which case only a subset of the capabilities may
+be provided.} @strong{readline} capabilities, the functions described
+below are available, as well as others (probably) documented in
+@command{man readline} or @command{info readline} on your system.
 
 Many of these use either Control or Meta characters.  Control
 characters, such as @kbd{Control-m}, are obtained by holding the

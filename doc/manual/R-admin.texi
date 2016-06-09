@@ -3144,9 +3144,10 @@ really do not want these you will need to explicitly configure @R{}
 without X11, using @option{--with-x=no}.
 
 The command-line editing (and command completion) depends on the
-@acronym{GNU} @code{readline} library: version 4.2 or later is needed
-for all the features to be enabled.  Otherwise you will need to
-configure with @option{--with-readline=no} (or equivalent).
+@acronym{GNU} @code{readline} library (including its headers): version
+4.2 or later is needed for all the features to be enabled.  Otherwise
+you will need to configure with @option{--with-readline=no} (or
+equivalent).
 
 A suitably comprehensive @code{iconv} function is essential.  The @R{}
 usage requires @code{iconv} to be able to translate between
@@ -4725,12 +4726,13 @@ offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
 reinstalled when OS X is upgraded, as upgrading partially removes them.)
 
-You need @code{readline} (or to configure using
-@option{--without-readline}), and a Fortran compiler.  Those and other
-binary components are available from
-@uref{https://r.research.att.com/libs}: you are likely to need
-@code{pcre} and @code{xz} (recent OS X provides libs but not headers for
-these).
+You need @code{readline}@footnote{Apple provides a partial emulation of
+GNU readline 4.2 based on the NetBSD @code{editline} library.  That is
+not recommended but for the time being @R{}'s installation scripts will
+make use of it.} and a Fortran compiler.  Those and other binary
+components are available from @uref{https://r.research.att.com/libs}:
+you are likely to need @code{pcre} and @code{xz} (recent OS X provides
+libraries but not headers for these).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
