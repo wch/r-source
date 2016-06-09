@@ -144,7 +144,8 @@
       \item Versions of the \code{readline} library >= 6.3 had been
       changed so that terminal window resizes were not signalled to
       \code{readline}: code has been added using a explicit signal
-      handler to work around that.  (\PR{16604})
+      handler to work around that (if \R was compiled under 6.3 or
+      later).  (\PR{16604})
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
@@ -190,8 +191,9 @@
 
       \item Use of \code{Ctrl-C} to terminate a reverse incremental
       search started by \code{Ctrl-R} in the \code{readline}-based Unix
-      terminal interface is now supported for \code{readline} >= 6.3
-      (\code{Ctrl-G} always worked).  (\PR{16603})
+      terminal interface is now supported when \R{} was compiled against
+      \code{readline} >= 6.0 (\code{Ctrl-G} always worked).
+      (\PR{16603})
 
       \item \code{as<-()} avoids an infinite loop when a virtual class
       is interposed between a subclass and an actual superclass.
