@@ -135,12 +135,10 @@
       %% \code{NA}s identically, but showing real and imaginary parts
       %% for the \code{NaN} \dQuote{class}.
 
-      \item The API for readline libraries >= 6.3 had changed such
-      terminal window resizes where no longer properly signalled
-      (\PR{16604}).  Also, \command{Ctrl C} in incremental search
-      behaved confusingly in \R (unix) consoles (\PR{16603}) also for
-      older readline versions.  These have been fixed (for readline >=
-      6.3 only), thanks to patches by Frederick Eaton.
+      \item Versions of the \code{readline} library >= 6.3 had been
+      changed so that terminal window resizes were not signalled to
+      \code{readline}: code has been added using a explicit signal
+      handler to work around that.  (\PR{16604})
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
@@ -183,6 +181,11 @@
       as in \R < 3.1.0.
 
       \item \code{strtrim(""[0], 0[0])} now works.
+
+      \item Use of \code{Ctrl-C} to terminate a reverse incremental
+      search started by \code{Ctrl-R} in the \code{readline}-based Unix
+      terminal interface is now supported for \code{readline} >= 6.3
+      (\code{Ctrl-G} always worked).  (\PR{16603})
 
       \item \code{as<-()} avoids an infinite loop when a virtual class
       is interposed between a subclass and an actual superclass.
