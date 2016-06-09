@@ -2920,11 +2920,8 @@ void u_getVersion(UVersionInfo versionArray);
 #endif
 
 #ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_READLINE_H
-#  include <readline/readline.h>
-# else
-extern const char *rl_library_version;
-# endif
+// that ensures we have this header
+# include <readline/readline.h>
 #endif
 
 SEXP attribute_hidden

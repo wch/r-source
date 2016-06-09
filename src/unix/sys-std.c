@@ -417,47 +417,54 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 }
 
 
-
 #ifdef HAVE_LIBREADLINE
+/* As from R 3.4.0, this implies we have the headers too.
+   We use entry points
 
-# ifdef HAVE_READLINE_READLINE_H
-#  include <readline/readline.h>
-/* For compatibility with pre-readline4.2 systems: */
-#  if !defined (_RL_FUNCTION_TYPEDEF)
-typedef void rl_vcpfunc_t (char *);
-#  endif /* _RL_FUNCTION_TYPEDEF */
-# else
-/*
-  I would recommend removing this block. Recent versions of R (at
-  least since 3.1.3) would not compile without readline.h anyway,
-  because "rl_readline_name" was missing from the following list of
-  declarations. If nobody reported that as a bug, it hints that
-  everyone had readline.h.
+   rl_callback_handler_install
+   rl_callback_handler_remove
+   rl_callback_read_char
+   rl_readline_name
 
-  Trying to work around the presence of readline.h prevents us from
-  conditioning on RL_READLINE_VERSION.
+   , if HAVE_RL_COMPLETION_MATCHES (>= 4.2)
 
-  Frederick Eaton 02 May 2016, PR#16603
+   rl_attempted_completion_function
+   rl_attempted_completion_over
+   rl_basic_word_break_characters
+   rl_completer_word_break_characters
+   rl_completion_append_character
+   rl_completion_matches
+   rl_line_buffer
+
+   and others conditionally:
+
+   rl_cleanup_after_signal (>= 4.0)
+   rl_done
+   rl_end
+   rl_free_line_state (>= 4.0)
+   rl_line_buffer
+   rl_mark
+   rl_point
+   rl_readline_state (>= 4.2)
+   rl_resize_terminal (>= 4.0)
+   rl_sort_completion_matches (>= 6.0)
  */
+
+# include <readline/readline.h>
+
+/* For compatibility with pre-readline-4.2 systems, 
+   also missing in Apple's emulation via the NetBSD editline library.*/
+# if !defined (_RL_FUNCTION_TYPEDEF)
 typedef void rl_vcpfunc_t (char *);
-extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
-extern void rl_callback_handler_remove(void);
-extern void rl_callback_read_char(void);
-extern char *tilde_expand (const char *);
-extern const char *rl_readline_name;
-extern void rl_free_line_state (void);
-extern void rl_cleanup_after_signal (void);
-#define RL_UNSETSTATE(x)	(rl_readline_state &= ~(x))
-extern char *rl_line_buffer;
-extern unsigned long rl_readline_state;
-#define RL_STATE_ISEARCH	0x0000080	/* doing incremental search */
-#define RL_STATE_NSEARCH	0x0000100	/* doing non-inc search */
-#define RL_STATE_VIMOTION	0x0100000	/* reading vi motion arg */
-#define RL_STATE_NUMERICARG	0x0000400	/* reading numeric argument */
-#define RL_STATE_MULTIKEY	0x0200000	/* reading multiple-key command */
-extern int rl_point;
-extern int rl_end;
-extern int rl_mark;
+# endif /* _RL_FUNCTION_TYPEDEF */
+
+# if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+/* readline 6.3's rl_callback_handler_install() no longer installs
+   signal handlers, so as from that version we need an explicit
+   one. (PR#16604)  (This could have been controlled in earlier versions
+   by setting rl_catch_sigwinch.)
+ */
+#  define NEED_INT_HANDLER
 # endif
 
 attribute_hidden
@@ -535,10 +542,7 @@ static struct {
   rl_vcpfunc_t *fun[MAX_READLINE_NESTING];
 } ReadlineStack = {-1, MAX_READLINE_NESTING - 1};
 
-/*
-  Readline >= 6.3 no longer handles SIGWINCH outside of Readline code,
-  so we need our own signal handler.
- */
+#ifdef NEED_INT_HANDLER
 static volatile Rboolean caught_sigwinch = FALSE;
 
 static RETSIGTYPE
@@ -546,6 +550,7 @@ R_readline_sigwinch_handler(int sig)
 {
     caught_sigwinch = TRUE;
 }
+#endif
 
 /*
   Registers the specified routine and prompt with readline
@@ -561,39 +566,42 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
 
    rl_callback_handler_install(prompt, f);
 
+#ifdef NEED_INT_HANDLER
    signal(SIGWINCH, R_readline_sigwinch_handler);
+#endif
 
    /* flush stdout in case readline wrote the prompt, but didn't flush
-      stdout to make it visible. (needed for Apple's rl in OS X 10.4-pre) */
+      stdout to make it visible. (needed for Apple's readline emulation). */
    fflush(stdout);
 }
 
-#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0600
 /*
-  This function was created to fix the incremental-search-SIGINT bug,
-  https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16603
+  Fix for PR#16603, for readline >= 6.0.
 
-  The Readline interface is somewhat messy. Readline contains the
+  The readline interface is somewhat messy. readline contains the
   function rl_free_line_state(), which its internal SIGINT handler
-  calls. However, rl_free_line_state only cancels keyboard macros and
-  certain other things. It does not clear the line. Also, Readline's
+  calls. However, it only cancels keyboard macros and certain other
+  things: it does not clear the line. Also, as of readline 6.3, its
   SIGINT handler is no longer triggered during our select() loop since
-  rl_callback_handler_install() no longer installs signal handlers as
-  of Readline 6.3. So we have to catch the signal and do all the work
-  ourselves to get Bash-like behavior on ^C. If Readline ever moves to
-  a cleaner interface, we should clean this up too.
+  rl_callback_handler_install() no longer installs signal handlers.
+  So we have to catch the signal and do all the work ourselves to get
+  Bash-like behavior on Ctrl-C.
  */
 static void resetReadline(void)
 {
-    rl_free_line_state ();
-#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0700
+    rl_free_line_state();
+/* This might be needed in future, but we cannot tell until readline
+   7.0 is released.
+#ifdef HAVE_RL_CALLBACK_SIGCLEANUP
     rl_callback_sigcleanup();
 #endif
-    rl_cleanup_after_signal ();
+*/
+    rl_cleanup_after_signal();
     RL_UNSETSTATE(RL_STATE_ISEARCH | RL_STATE_NSEARCH | RL_STATE_VIMOTION |
 		  RL_STATE_NUMERICARG | RL_STATE_MULTIKEY);
     /* The following two lines should be equivalent, but doing both
-       won't hurt: */
+       won't hurt. */
     rl_line_buffer[rl_point = rl_end = rl_mark = 0] = 0;
     rl_done = 1;
 }
@@ -606,7 +614,7 @@ static void resetReadline(void)
 static void popReadline(void)
 {
   if(ReadlineStack.current > -1) {
-#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0600
      resetReadline();
 #endif
      rl_callback_handler_remove();
@@ -757,9 +765,8 @@ static void initialize_rlcompletion(void)
     /* Tell the completer that we want a crack first. */
     rl_attempted_completion_function = R_custom_completion;
 
-    /* Disable sorting of possible completions; only readline >= 6 */
-#if RL_READLINE_VERSION >= 0x0600
-    /* if (rl_readline_version >= 0x0600) */
+// This was added in readline 6.0
+#ifdef HAVE_RL_SORT_COMPLETION_MATCHES
     rl_sort_completion_matches = 0;
 #endif
 
@@ -995,17 +1002,13 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))
 		wt = Rg_wait_usec;
 	    what = R_checkActivityEx(wt, 0, handleInterrupt);
-#ifdef HAVE_LIBREADLINE
-            if (UsingReadline) {
-		if(caught_sigwinch) {
-		    caught_sigwinch = FALSE;
+#if defined(NEED_INT_HANDLER)
+            if (UsingReadline && caught_sigwinch) {
+		caught_sigwinch = FALSE;
+		// it was introduced in readline 4.0: this is only used for >= 63.3
 #ifdef HAVE_RL_RESIZE_TERMINAL
-		    rl_resize_terminal();
+		rl_resize_terminal();
 #endif
-		    /* TODO: users may want to be able to register a
-		     * function which modifies options("width") when
-		     * we get here */
-		}
             }
 #endif
 
@@ -1163,8 +1166,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
     case SA_SAVE:
 	if(runLast) R_dot_Last();
 	if(R_DirtyImage) R_SaveGlobalEnv();
-#ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_HISTORY_H
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
 	if(R_Interactive && UsingReadline) {
 	    int err;
 	    R_setupHistory(); /* re-read the history size and filename */
@@ -1173,8 +1175,7 @@ void attribute_hidden NORET Rstd_CleanUp(SA_TYPE saveact, int status, int runLas
 	    if(err) warning(_("problem in saving the history file '%s'"),
 			    R_HistoryFile);
 	}
-# endif /* HAVE_READLINE_HISTORY_H */
-#endif /* HAVE_LIBREADLINE */
+#endif
 	break;
     case SA_NOSAVE:
 	if(runLast) R_dot_Last();
@@ -1291,13 +1292,11 @@ void attribute_hidden Rstd_ShowMessage(const char *s)
 
 void attribute_hidden Rstd_read_history(const char *s)
 {
-#ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_HISTORY_H
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
     if(R_Interactive && UsingReadline) {
 	read_history(s);
     }
-# endif /* HAVE_READLINE_HISTORY_H */
-#endif /* HAVE_LIBREADLINE */
+#endif
 }
 
 void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
