@@ -47,14 +47,6 @@
       (\code{Ctrl-G} always worked).  (\PR{16603})
     }
   }
-
-  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
-    \itemize{
-      \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
-      binary builds. The \file{tcltk*.chm} help file is no longer 
-      included; please use \url{http://www.tcl.tk/man/} instead.
-    }
-  }  
 }
 
 \section{\Rlogo CHANGES IN R 3.3.0}{
