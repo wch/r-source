@@ -1,7 +1,7 @@
 % File src/library/base/man/merge.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
-% Copyright 2002-2011 The R Foundation
+% Copyright 1995-2016 R Core Team
+% Copyright 2002-2016 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{merge}
@@ -42,7 +42,7 @@ merge(x, y, \dots)
     columns?}
   \item{suffixes}{a character vector of length 2 specifying the suffixes
     to be used for making unique the names of columns in the result
-    which not used for merging (appearing in \code{by} etc).}
+    which are not used for merging (appearing in \code{by} etc).}
   \item{incomparables}{values which cannot be matched.  See
     \code{\link{match}}.  This is intended to be used for merging on one
     column, so these are incomparable values of that column.}
@@ -95,7 +95,7 @@ merge(x, y, \dots)
 \note{
   This is intended to work with data frames with vector-like columns:
   some aspects work with data frames containing matrices, but not all.
-  
+
   Currently long vectors are not accepted for inputs, which are thus
   restricted to less than 2^31 rows.  Prior to \R 3.2.0 that restriction
   also applied to the result (and still does for 32-bit platforms).
