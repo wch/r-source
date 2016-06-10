@@ -1568,7 +1568,6 @@ setRlibs <-
             out7 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
-
         ## Use of deprecated, defunct and platform-specific devices?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
             win <- !is.na(OS_type) && OS_type == "windows"
@@ -2633,7 +2632,7 @@ setRlibs <-
             }
             any <- any || bad
 
-            if (!any && !check_incoming) resultLog(Log, "OK")
+            if (!any && !do_timings) resultLog(Log, "OK")
 
             if (do_timings) {
                 theta <-
