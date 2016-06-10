@@ -109,6 +109,13 @@
     \itemize{
       \item \code{readline} headers (and not just the library) are
       required unless configuring with \option{--with-readline=no}.
+
+      \item Versions of the \code{readline} library >= 6.3 had been
+      changed so that terminal window resizes were not signalled to
+      \code{readline}: code has been added using a explicit signal
+      handler to work around that (if \R was compiled against readline
+      >= 6.3).  (\PR{16604})
+      %% The intention is to port this to 3.3.1 patched.
     }
   }  
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -140,12 +147,6 @@
       %% \code{print(x)} remains back compatible, treating all
       %% \code{NA}s identically, but showing real and imaginary parts
       %% for the \code{NaN} \dQuote{class}.
-
-      \item Versions of the \code{readline} library >= 6.3 had been
-      changed so that terminal window resizes were not signalled to
-      \code{readline}: code has been added using a explicit signal
-      handler to work around that (if \R was compiled under 6.3 or
-      later).  (\PR{16604})
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
