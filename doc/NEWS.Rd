@@ -45,6 +45,9 @@
       search started by \code{Ctrl-R} in the \code{readline}-based Unix
       terminal interface is now supported for \code{readline} >= 6.3
       (\code{Ctrl-G} always worked).  (\PR{16603})
+
+      \item \code{diff(<difftime>)} now keeps the \code{"units"}
+      attribute, as subtraction already did, \PR{16940}.
     }
   }
 }

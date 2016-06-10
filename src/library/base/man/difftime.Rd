@@ -1,9 +1,10 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
+\title{Time Intervals / Differences}
 \alias{difftime}
 \alias{as.difftime}
 \alias{as.double.difftime}
@@ -19,13 +20,14 @@
 \alias{Summary.difftime}
 \alias{[.difftime}
 \alias{mean.difftime}
+\alias{diff.difftime}
 \alias{c.difftime}
 \alias{units}
 \alias{units<-}
 \alias{time interval} % used by mean.Rd
-\title{Time Intervals}
 \description{
-  Time intervals creation, printing, and some arithmetic.
+  Time intervals creation, printing, and some arithmetic.  The
+  \code{\link{print}()} method calls these \dQuote{time differences}.
 }
 \usage{
 \special{time1 - time2}
@@ -88,7 +90,9 @@ as.difftime(tim, format = "\%X", units = "auto")
   \code{"difftime"} object with the same units as the \code{"difftime"}
   object.  There are methods for \code{\link{mean}} and
   \code{\link{sum}} (via the \code{\link[=S3groupGeneric]{Summary}}
-  group generic).
+  group generic), and \code{\link{diff}} via \code{\link{diff.default}}
+  building on the \code{"difftime"} method for arithmetic, notably
+  \code{-}.
 
   The units of a \code{"difftime"} object can be extracted by the
   \code{units} function, which also has a replacement form.  If the
