@@ -116,12 +116,12 @@
       handler to work around that (if \R was compiled against readline
       >= 6.3).  (\PR{16604})
       %% The intention is to port this to 3.3.1 patched.
-      
+
       \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
-      binary builds. The \file{tcltk*.chm} help file is no longer 
+      binary builds. The \file{tcltk*.chm} help file is no longer
       included; please use \url{http://www.tcl.tk/man/} instead.
     }
-  }  
+  }
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The deprecated support for PCRE versions 8.10 to 8.31 will
@@ -215,6 +215,9 @@
       \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
       integer vector containing \code{MAX_INT}. Ported from a fix Matt
       Dowle made to \CRANpkg{data.table}.
+
+      \item \code{diff(<difftime>)} now keeps the \code{"units"}
+      attribute, as subtraction already did, \PR{16940}.
     }
   }
 }

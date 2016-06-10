@@ -1676,11 +1676,13 @@ stopifnot(identical(function(){}, function(){}),
                     function(x){x+1})); options(op)
 ## where all FALSE in 2.14.0 <= R <= 3.3.x because of "srcref"s etc
 
+
 ## PR#16925, radix sorting INT_MAX w/ decreasing=TRUE and na.last=TRUE
 ## failed ASAN check and segfaulted on some systems.
 data <- c(2147483645L, 2147483646L, 2147483647L, 2147483644L)
 stopifnot(identical(sort(data, decreasing = TRUE, method = "radix"),
                     c(2147483647L, 2147483646L, 2147483645L, 2147483644L)))
+
 
 ## as.factor(<named integer>)
 ni <- 1:2; Nni <- names(ni) <- c("A","B")
@@ -1704,8 +1706,25 @@ tools::assertWarning(print(f))
 tools::assertError(validObject(f))
 ## no warning in print() for R <= 3.3.x
 
+
 ## R <= 3.3.0 returned integer(0L) from unlist() in this case:
 stopifnot(identical(levels(unlist(list(factor(levels="a")))), "a"))
+
+
+## diff(<difftime>)
+d <- as.POSIXct("2016-06-08 14:21", tz="UTC") + as.difftime(2^(-2:8), units="mins")
+dd  <- diff(d)
+ddd <- diff(dd)
+d3d <- diff(ddd)
+d7d <- diff(d, differences = 7)
+(ldd <- list(dd=dd, ddd=ddd, d3d=d3d, d7d=d7d))
+stopifnot(identical(ddd, diff(d, differences = 2)),
+	  identical(d3d, diff(d, differences = 3)))
+stopifnot(vapply(ldd, units, "") == "secs",
+	  vapply(ldd, class, "") == "difftime",
+	  lengths(c(list(d), ldd)) == c(11:8, 11-7))
+## was losing time units in R <= 3.3.0
+
 
 
 ## keep at end

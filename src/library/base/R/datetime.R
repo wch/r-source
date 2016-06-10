@@ -535,6 +535,11 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
     val
 }
 
+diff.difftime <- function(x, ...)
+    ## assume class is preserved (it is in diff.default):
+    structure(NextMethod("diff"), units = attr(x, "units"))
+
+
 Ops.difftime <- function(e1, e2)
 {
     coerceTimeUnit <- function(x)
