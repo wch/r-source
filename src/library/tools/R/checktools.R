@@ -1051,10 +1051,12 @@ function(new, old, outputs = FALSE)
     sx <- as.character(db$Status.x)
     sy <- as.character(db$Status.y)
     if(outputs) {
-        sx <- sprintf("%s\n  %s", sx,
-                      gsub("\n", "\n  ", db$Output.x, fixed = TRUE))
-        sy <- sprintf("%s\n  %s", sy,
-                      gsub("\n", "\n  ", db$Output.y, fixed = TRUE))
+        ind <- nzchar(ox <- db$Output.x)
+        sx[ind] <- sprintf("%s\n  %s", sx[ind],
+                           gsub("\n", "\n  ", ox[ind], fixed = TRUE))
+        ind <- nzchar(oy <- db$Output.y)
+        sy[ind] <- sprintf("%s\n  %s", sy[ind],
+                           gsub("\n", "\n  ", oy[ind], fixed = TRUE))
     }
     sx[is.na(db$Status.x)] <- ""
     sy[is.na(db$Status.y)] <- ""
