@@ -116,6 +116,10 @@
       handler to work around that (if \R was compiled against readline
       >= 6.3).  (\PR{16604})
       %% The intention is to port this to 3.3.1 patched.
+      
+      \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
+      binary builds. The \file{tcltk*.chm} help file is no longer 
+      included; please use \url{http://www.tcl.tk/man/} instead.
     }
   }  
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -213,14 +217,6 @@
       Dowle made to \CRANpkg{data.table}.
     }
   }
-
-  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
-    \itemize{
-      \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
-      binary builds. The \file{tcltk*.chm} help file is no longer 
-      included; please use \url{http://www.tcl.tk/man/} instead.
-    }
-  }  
 }
 
 \section{\Rlogo CHANGES IN R 3.3.0}{
