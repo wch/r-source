@@ -1,5 +1,5 @@
 
-R version 3.3.0 Patched (2016-06-02 r70710) -- "Supposedly Educational"
+R version 3.3.1 beta (2016-06-11 r70762) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.157   0.024   0.558 
+  0.137   0.022   0.450 
