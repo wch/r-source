@@ -1892,14 +1892,16 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (retGrp) {
         int maxgrpn = NA_INTEGER;
         ngrp = gsngrp[flip];
-        setAttrib(ans, install("ends"), x = allocVector(INTSXP, ngrp));
+        SEXP s_ends = install("ends");
+        setAttrib(ans, s_ends, x = allocVector(INTSXP, ngrp));
         if (ngrp > 0) {
             INTEGER(x)[0] = gs[flip][0];
             for (int i = 1; i < ngrp; i++)
                 INTEGER(x)[i] = INTEGER(x)[i - 1] + gs[flip][i];
             maxgrpn = gsmax[flip];
         }
-        setAttrib(ans, install("maxgrpn"), ScalarInteger(maxgrpn));
+        SEXP s_maxgrpn = install("maxgrpn");
+        setAttrib(ans, s_maxgrpn, ScalarInteger(maxgrpn));
         setAttrib(ans, R_ClassSymbol, mkString("grouping"));
     }
 
