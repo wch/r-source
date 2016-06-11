@@ -158,7 +158,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.3.0 patched}{
+\section{\Rlogo CHANGES IN R 3.3.1}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{R CMD INSTALL} and hence \code{install.packages()}
