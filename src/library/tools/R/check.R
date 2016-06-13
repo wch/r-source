@@ -2632,7 +2632,8 @@ setRlibs <-
             }
             any <- any || bad
 
-            if (!any && !do_timings) resultLog(Log, "OK")
+            if (!any && !(check_incoming && do_timings))
+                resultLog(Log, "OK")
 
             if (do_timings) {
                 theta <-
