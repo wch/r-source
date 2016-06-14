@@ -144,6 +144,9 @@
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
+
+      \item Rotated symbols in plotmath expressions are now positioned
+      correctly on x11(type="Xlib") (\PR{16948}).
     }
   }
 }

@@ -454,8 +454,8 @@ static int XRotPaintAlignedString(Display *dpy, XFontStruct *font, double angle,
     }
 
     /* where should top left corner of bitmap go ? */
-    xp=(short)(x - item->cols_out/2. + hot_xp);
-    yp=(short)(y - item->rows_out/2. - hot_yp);
+    xp=(short)(x - (item->cols_out/2. + hot_xp));
+    yp=(short)(y - (item->rows_out/2. - hot_yp));
 
     /* by default we draw the rotated bitmap, solid */
     bitmap_to_paint=item->bitmap;
