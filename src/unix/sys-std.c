@@ -1003,10 +1003,10 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))
 		wt = Rg_wait_usec;
 	    what = R_checkActivityEx(wt, 0, handleInterrupt);
-#if defined(NEED_INT_HANDLER)
+#ifdef NEED_INT_HANDLER
             if (UsingReadline && caught_sigwinch) {
 		caught_sigwinch = FALSE;
-		// it was introduced in readline 4.0: this is only used for >= 63.3
+		// introduced in readline 4.0: only used for >= 6.3
 #ifdef HAVE_RL_RESIZE_TERMINAL
 		rl_resize_terminal();
 #endif
