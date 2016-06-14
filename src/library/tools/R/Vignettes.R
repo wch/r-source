@@ -506,7 +506,7 @@ buildVignettes <-
     for(i in seq_along(vigns$docs)) {
         file <- basename(vigns$docs[i])
         name <- vigns$names[i]
-    	engine <- vignetteEngine(vigns$engine[i])
+    	engine <- vignetteEngine(vigns$engines[i])
         enc <- vigns$encodings[i]
         if (enc == "non-ASCII")
             stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding",
@@ -1005,7 +1005,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
     loadVignetteBuilder(pkgdir)
     file <- basename(vigns$docs[i])
     name <- vigns$names[i]
-    engine <- vignetteEngine(vigns$engine[i])
+    engine <- vignetteEngine(vigns$engines[i])
 
     output <- tryCatch({
         engine$tangle(file, quiet = TRUE, encoding = encoding)
