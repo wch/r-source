@@ -66,7 +66,8 @@ sessionInfo <- function(package = NULL)
                                       "9" = "Mavericks",
                                       "10" = "Yosemite",
                                       "11" = "El Capitan",
-                                      "unknown"))
+                                      "12" = "Sierra",
+                                     "unknown"))
                    },
                    "SunOS" = {
                        ver <- system('uname -r', intern = TRUE)
