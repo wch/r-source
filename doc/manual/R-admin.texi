@@ -1075,7 +1075,9 @@ from @acronym{CRAN} to run on 32- or 64-bit Windows (XP or later) on
 @cputype{ix86} and @cputype{x86_64} @acronym{CPU}s.
 
 Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).
+perhaps for some network-mounted systems).  If it doesn't also support
+conversion to short name equivalents (a.k.a. DOS 8.3 names), then R
+@emph{must} be installed in a path that does not contain spaces.
 
 Installation is @emph{via} the installer
 @file{@value{RWVERSION}-win.exe}.  Just double-click on the icon and
