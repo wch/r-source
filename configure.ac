@@ -75,14 +75,14 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 
 ## exclude some unsupported OSes
 case "${host_os}" in
-   ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
+   ## Darwin 1.3.1 was macOS 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
    ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard)
    ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
-     AC_MSG_ERROR([The earliest supported OS X is 10.6.]
+     AC_MSG_ERROR([The earliest supported macOS is 10.6.]
      ;; 
   darwin[[56789]]*)
-     AC_MSG_ERROR([The earliest supported OS X is 10.6.]
+     AC_MSG_ERROR([The earliest supported macOS is 10.6.]
      ;; 
   aix[123]*|aix4.[01]*)
     ## These need a form of linking we no longer support
@@ -221,7 +221,7 @@ fi],
 
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
-[AS_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],[OS X only: build R framework (if possible), and specify
+[AS_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],[macOS only: build R framework (if possible), and specify
                  its installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
 [want_R_framework=no])
@@ -254,7 +254,7 @@ fi
 AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
 
 ## Allow the user to specify building R as a shared library.
-## (but a 'dynamic library' in the terminology of OS X).
+## (but a 'dynamic library' in the terminology of macOS).
 ## <NOTE>
 ## Building a framework implies building R shared libraries, hence the
 ## strange default.
@@ -347,14 +347,14 @@ AC_ARG_WITH([blas],
 [AS_HELP_STRING([--with-blas],[use system BLAS library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
-# default is "no" except on OS X
+# default is "no" except on macOS
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AS_HELP_STRING([--with-lapack],[use system LAPACK library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
-# default is "no" except on OS X
+# default is "no" except on macOS
 
 ## Readline.
 AC_ARG_WITH([readline],
@@ -364,7 +364,7 @@ AC_ARG_WITH([readline],
 
 ## Aqua.
 AC_ARG_WITH([aqua],
-[AS_HELP_STRING([--with-aqua],[OS X only: use Aqua (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-aqua],[macOS only: use Aqua (if available) @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_aqua=no
 else
@@ -698,7 +698,7 @@ esac
 
 ## Record name of environment variable which tells the dynamic linker
 ## where to find shlibs (typically, 'LD_LIBRARY_PATH').
-## Used in etc/ldpaths: As from R 3.0.0 override what libtool thinks on OS X
+## Used in etc/ldpaths: As from R 3.0.0 override what libtool thinks on macOS
 ## http://hublog.hubmed.org/archives/001192.html suggests this was in 10.4
 ## However, as from 10.11 this variable is not passed down to shells.
 case "${host_os}" in
@@ -734,7 +734,7 @@ AC_SUBST(LIBM)
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
   darwin*)
-    ## OS X >= 10.3 include dlcompat in libSystem
+    ## macOS >= 10.3 include dlcompat in libSystem
     ## This is ancient history
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## https://developer.apple.com/documentation/MacOSX/ has nothing
@@ -776,7 +776,7 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
   else
-    ## the NetBSD emulation supplied by OS X does not have this
+    ## the NetBSD emulation supplied by macOS does not have this
     AC_CHECK_FUNCS(history_truncate_file)
     ## rl_completion_matches is >= 4.2.
     ## rl_resize_terminal is >= 4.0 ane we use it only for >= 6.3.
@@ -1370,7 +1370,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ## * libRblas must be 2-level, dyn lookup because of xerbla which is undefined
     cpicflags="${darwin_pic}"
     cxxpicflags="${darwin_pic}"
-    ## OS X does not have a Fortran compiler, so this is speculative
+    ## macOS does not have a Fortran compiler, so this is speculative
     fpicflags="${darwin_pic}"
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
@@ -1856,7 +1856,7 @@ AC_CHECK_LIB(sunmath, cospi)
 ## Functions from ISO/IEC TS 18661-4:2015 C11 extensions.
 ## For now, do not define _GNU_SOURCE here.
 ## All but pown have long been in Solaris' libsunmath
-## OS X has __cospi __sinpi __tanpi
+## macOS has __cospi __sinpi __tanpi
 AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi __cospi __sinpi __tanpi], 
 [#define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #include <math.h>
@@ -1897,7 +1897,7 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink 
 R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 ## utime was declared obsolescent in POSIX 2008 (use utimes instead)
 R_CHECK_FUNCS([utime], [#include <utime.h>])
-## clock_gettime is POSIX 1993, but not on OS X
+## clock_gettime is POSIX 1993, but not on macOS
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
@@ -2206,7 +2206,7 @@ AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
-## The default has already been set on OS X: otherwise it is "no"
+## The default has already been set on macOS: otherwise it is "no"
 ## and so this test fails.
 if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
@@ -2510,7 +2510,7 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
 fi
 case "${host_os}" in
   darwin*)
-     ## OS X does not have a Fortran compiler, so this is speculative
+     ## macOS does not have a Fortran compiler, so this is speculative
     fcpicflags="${darwin_pic}"
     ;;
   hpux*)
@@ -2573,8 +2573,8 @@ LIBS="${LIBS1} ${LIBS2}"
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
 
-## On OS X (Darwin) this used to have /usr/X11R6/lib
-## which shadows the OpenGL framework but we add nothing on OS X ....
+## On macOS (Darwin) this used to have /usr/X11R6/lib
+## which shadows the OpenGL framework but we add nothing on macOS ....
 case "${host_os}" in
   linux*)
     r_ld_library_defaults="/usr/lib64:/lib64:/usr/lib:/lib"

@@ -39,7 +39,7 @@
     unspecified granularity).
 
     Many systems (including AIX, FreeBSD, Linux, Solaris) have
-    clock_gettime().  Mac OS X and Cygwin have gettimeofday().
+    clock_gettime().  macOS and Cygwin have gettimeofday().
 
     Function time() is C99 and defined in <time.h>.  C99 does not
     mandate the units, but POSIX does (as the number of seconds since
@@ -58,11 +58,11 @@
     POSIX function getrusage() defined in <sys/resource.h>.  This
     returns the same time structure as gettimeofday() and on some
     systems offers millisecond resolution.
-    It is available on Cygwin, FreeBSD, Mac OS X, Linux and Solaris.
+    It is available on Cygwin, FreeBSD, macOS, Linux and Solaris.
 
     currentTime() (in this file) uses
     clock_gettime(): AIX, FreeBSD, Linux, Solaris
-    gettimeofday():  Mac OS X, Windows, Cygwin
+    gettimeofday():  macOS, Windows, Cygwin
     time() (as ultimate fallback, AFAIK unused).
 
     proc.time() uses currentTime() for elapsed time,
@@ -106,7 +106,7 @@ double currentTime(void)
 	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
 
 #elif defined(HAVE_GETTIMEOFDAY)
-    /* Mac OS X, mingw.org, used on mingw-w64.
+    /* macOS , mingw.org, used on mingw-w64.
        Has 2038 issue if time_t: tv.tv_sec is 32-bit.
      */
     struct timeval tv;

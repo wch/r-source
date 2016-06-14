@@ -46,7 +46,7 @@
    and when (as in R 2.15.x) a for() loop was used.
 */
 #ifdef __APPLE__
-/* it seems some OS X builds do not copy >= 2^32 bytes fully */
+/* it seems macOS builds did not copy >= 2^32 bytes fully */
 #define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from, deep) do {	\
   R_xlen_t __n__ = XLENGTH(from); \
   PROTECT(from); \

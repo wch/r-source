@@ -78,7 +78,7 @@ those limits where there is a 64-bit time_t and the conversions work
 there is code below to extrapolate from 1902-2037.
 
 Path 2) was added for R 3.1.0 and is the only one supported on
-Windows: it is the default on OS X.  The only currently (Jan 2014)
+Windows: it is the default on macOS.  The only currently (Jan 2014)
 known OS with 64-bit time_t and complete tables is Linux.
 
 */
@@ -409,7 +409,7 @@ static double mktime0 (stm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
-/* OS X 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 */
+/* macOS 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 */
 #ifdef HAVE_WORKING_64BIT_MKTIME
     if(sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || tm->tm_year >= 70;
@@ -888,7 +888,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(needTZ) settz = set_tz(tz1, oldtz);
     }
 
-    /* workaround for glibc/FreeBSD/MacOS X strftime: they have
+    /* workaround for glibc/FreeBSD/macOS strftime: they have
        non-POSIX/C99 time zone components
      */
     memset(&tm, 0, sizeof(tm));

@@ -60,7 +60,7 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
 }
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETPRIORITY)
-/* on OS X it seems sys/resource.h needed sys/time.h first at one time */
+/* on macOS it seems sys/resource.h needed sys/time.h first at one time */
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <errno.h>

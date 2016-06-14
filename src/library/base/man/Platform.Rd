@@ -30,14 +30,14 @@
     character string, giving the file name \bold{ext}ension of
     \bold{dyn}amically loadable \bold{lib}raries, e.g., \code{".dll"} on
     Windows and \code{".so"} or \code{".sl"} on Unix-alikes.  (Note for
-    OS X users: these are shared objects as loaded by
+    macOS users: these are shared objects as loaded by
     \code{\link{dyn.load}} and not dylibs: see \code{\link{dyn.load}}.)
   }
   \item{GUI}{
     character string, giving the type of GUI in use, or \code{"unknown"}
     if no GUI can be assumed.  Possible values are for Unix-alikes the
     values given via the \option{-g} command-line flag (\code{"X11"},
-    \code{"Tk"}), \code{"AQUA"} (running under \code{R.app} on OS X),
+    \code{"Tk"}), \code{"AQUA"} (running under \code{R.app} on macOS),
     \code{"Rgui"} and \code{"RTerm"} (Windows) and perhaps others under
     alternative front-ends or embedded \R.
   }
@@ -69,7 +69,7 @@
 }
 
 \section{AQUA}{
-  \code{.Platform$GUI} is set to \code{"AQUA"} under the OS X GUI,
+  \code{.Platform$GUI} is set to \code{"AQUA"} under the macOS GUI,
   \code{R.app}. This has a number of consequences:
   \itemize{
 %%     \item the \env{DISPLAY} environment variable is set to \code{":0"}

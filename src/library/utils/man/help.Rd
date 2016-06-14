@@ -49,7 +49,7 @@ help(topic, package = NULL, lib.loc = NULL,
     \item HTML help pages with hyperlinks to other topics, shown in a
     browser by \code{\link{browseURL}}.
 #ifdef unix
-    (Where possible an existing browser window is re-used: the OS X
+    (Where possible an existing browser window is re-used: the macOS
     GUI uses its own browser window.)
 #endif
     If for some reason HTML help is unavailable (see
@@ -59,7 +59,7 @@ help(topic, package = NULL, lib.loc = NULL,
     see the section on \sQuote{Offline help}.
   }
 #ifdef unix
-  The \sQuote{factory-fresh} default is text help except from the OS X
+  The \sQuote{factory-fresh} default is text help except from the macOS
   GUI, which uses HTML help displayed in its own browser window.
 #endif
 #ifdef windows

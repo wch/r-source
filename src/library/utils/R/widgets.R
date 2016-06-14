@@ -27,7 +27,7 @@ select.list <-
         if (.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
         return(.External2(C_selectlist, choices, preselect, multiple, title))
         ## must be Unix here
-        ## Tk might not require X11 on Mac OS X, but if DISPLAY is set
+        ## Tk might not require X11 on macOS, but if DISPLAY is set
         ## this will work for Aqua Tcl/Tk.
         ## OTOH, we do want to check Tk works!
         else if(graphics && capabilities("tcltk") &&

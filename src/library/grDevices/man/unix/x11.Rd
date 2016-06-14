@@ -81,7 +81,7 @@ X11.options(\dots, reset = FALSE)
     \code{"nbcairo"} or \code{"dbcairo"}.  Only the first will be
     available if the system was compiled without support for
     cairographics.  The default is \code{"cairo"} where available except
-    on OS X, otherwise \code{"Xlib"}.}
+    on macOS, otherwise \code{"Xlib"}.}
 
   \item{antialias}{for cairo types, the type of anti-aliasing (if any)
     to be used.  One of \code{c("default", "none", "gray", "subpixel")}.}
@@ -131,11 +131,11 @@ X11.options(\dots, reset = FALSE)
   Which version will be fastest depends on the X11 connection and the
   type of plotting.  You will probably want to use a buffered type
   unless backing store is in use on the X server (which for example it
-  always is on OS X displays), as otherwise repainting when the
+  always is on macOS displays), as otherwise repainting when the
   window is exposed will be slow.  On slow connections \code{type =
     "dbcairo"} will probably give the best performance.
 
-  Because of known problems with font selection on OS X without
+  Because of known problems with font selection on macOS without
   Pango (for example, the CRAN distribution), \code{type = "cairo"} is
   not the default there.  These problems have included mixing up bold
   and italic (since worked around), selecting incorrect glyphs and ugly
@@ -195,7 +195,7 @@ X11.options(\dots, reset = FALSE)
   \code{"Courier"}).
 
   The font selection is handled by \code{Pango} (usually \emph{via}
-  \code{fontconfig}) or \code{fontconfig} (on OS X and perhaps
+  \code{fontconfig}) or \code{fontconfig} (on macOS and perhaps
   elsewhere).  The results depend on the fonts installed on the system
   running \R -- setting the environmnent variable \env{FC_DEBUG} to 1
   normally allows some tracing of the selection process.

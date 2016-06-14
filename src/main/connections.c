@@ -55,7 +55,7 @@
    Solaris has a similar scheme: see 'man lf64', 'man lfcompile' and
    'man lfcompile64'.
 
-   On Mac OS X, off_t is typedef-ed to __darwin_off_t, which is
+   On macOS, off_t is typedef-ed to __darwin_off_t, which is
    __int64_t, so the issue never arises.  Similarly on FreeBSD.
 
    The situation with Windows is similar, but off64_t, fseeko64 etc

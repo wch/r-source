@@ -1031,7 +1031,7 @@ const char *getTZinfo(void)
     const char *p = getenv("TZ");
     if(p) return p;
 #ifdef HAVE_REALPATH
-    // This works on Linux, OS X and *BSD: other known OSes set TZ.
+    // This works on Linux, macOS and *BSD: other known OSes set TZ.
     static char abspath[PATH_MAX+1] = "";
     if(abspath[0]) return abspath + 20;
     if(realpath("/etc/localtime", abspath))
@@ -1814,7 +1814,7 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef USE_ICU
 # include <locale.h>
 #ifdef USE_ICU_APPLE
-/* Mac OS X is missing the headers */
+/* macOS is missing the headers */
 typedef int UErrorCode; /* really an enum these days */
 struct UCollator;
 typedef struct UCollator UCollator;

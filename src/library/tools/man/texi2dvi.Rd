@@ -88,14 +88,14 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   %% configure just looks for a texi2dvi command and does not check its
   %% version.  Howvever, it is normally distributed with texinfo, and
   %% that is checked to be >= 5.1.
-  %% The OS X distribution by default installs /usr/local/bin/texi2dvi,
-  %% but that is optional and OS X has /usr/bin/texi2dvi stuck at 4.8.
+  %% The macOS distribution by default installs /usr/local/bin/texi2dvi,
+  %% but that is optional and macOS has /usr/bin/texi2dvi stuck at 4.8.
   There are various versions of the \command{texi2dvi} script on
   Unix-alikes and quite a number of bugs have been seen, some of which
   this \R wrapper works around.
 
   One that was present with \command{texi2dvi} version \code{4.8} (as
-  supplied by OS X) is that it will not work correctly for paths which
+  supplied by macOS) is that it will not work correctly for paths which
   contain spaces, nor if the absolute path to a file would contain
   spaces.
 

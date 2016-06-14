@@ -3,7 +3,7 @@
 #endif
 
 #include <AvailabilityMacros.h> /* for MAC_OS_X_VERSION_10_* -- present on 10.2+ (according to Apple) */
-/* Since OS X 10.8 vecLib requires Accelerate to be included first (which in turn includes vecLib) */
+/* Since macOS 10.8 vecLib requires Accelerate to be included first (which in turn includes vecLib) */
 #if defined MAC_OS_X_VERSION_10_8 && MAC_OS_X_VERSION_MIN_REQUIRED >= 1040
 #include <Accelerate/Accelerate.h>
 #else

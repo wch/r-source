@@ -97,7 +97,7 @@ processes.  They can be created in one of three ways:
   This should be available on all \R{} platforms, although it is
   conceivable that zealous security measures could block the
   inter-process communication \emph{via} sockets.  Users of Windows
-  and OS X may expect pop-up dialog boxes from the firewall asking
+  and macOS may expect pop-up dialog boxes from the firewall asking
   if an \R{} process should accept incoming connections.
 
   Following \CRANpkg{snow}, a pool of worker processes listening
@@ -117,8 +117,8 @@ processes.  They can be created in one of three ways:
 
   Note that as it does share the complete process, it also shares any
   GUI elements, for example an \R{} console and on-screen devices.
-  This can cause havoc.\footnote{Some precautions are taken on Mac OS
-    X: for example the event loops for \command{R.app} and the
+  This can cause havoc.\footnote{Some precautions are taken on macOS:
+    for example the event loops for \command{R.app} and the
     \code{quartz} device are inhibited in the child.  This information
     is available at C level in the \code{Rboolean} variable
     \code{R\_isForkedChild}.}

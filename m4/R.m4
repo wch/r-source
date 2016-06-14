@@ -2445,7 +2445,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
 fi
 ## TK_XINCLUDES should be empty for Aqua Tk, so earlier test was wrong
 ## Our code does not include any X headers, but tk.h may ....
-## That is true even on OS X, but Aqua Tk has a private version of
+## That is true even on macOS, but Aqua Tk has a private version of
 ## X11 headers, and we want that one and not the XQuartz one.
 if test "${have_tcltk}" = yes; then
   if test "${found_tk_by_config}" = yes; then
@@ -2734,7 +2734,7 @@ if test "${acx_blas_ok}" = no; then
 fi
 
 ## Now check if zdotu works (fails on AMD64 with the wrong compiler;
-## also fails on OS X with Accelerate/vecLib and gfortran; 
+## also fails on macOS with Accelerate/vecLib and gfortran; 
 ## but in that case we have a work-around using USE_VECLIB_G95FIX)
 
 if test "${acx_blas_ok}" = yes; then
@@ -3432,7 +3432,7 @@ fi
 ## -------
 ## Look for iconv, possibly in libiconv.
 ## Need to include <iconv.h> as this may define iconv as a macro.
-## libiconv, e.g. on OS X, has iconv as a macro and needs -liconv.
+## libiconv, e.g. on macOS, has iconv as a macro and needs -liconv.
 AC_DEFUN([R_ICONV],
 [AC_CHECK_HEADERS(iconv.h)
 ## need to ignore cache for this as it may set LIBS

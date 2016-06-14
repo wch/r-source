@@ -255,7 +255,7 @@ generally to any implementation of the @R{} environment.
 Most users will find it necessary to interact directly with the
 operating system on their computer from time to time.  In this guide, we
 mainly discuss interaction with the operating system on UNIX machines.
-If you are running @R{} under Windows or OS X you will need to make
+If you are running @R{} under Windows or macOS you will need to make
 some small adjustments.
 
 Setting up a workstation to take full advantage of the customizable
@@ -558,7 +558,7 @@ you are given the opportunity to save all the currently available
 objects.  If you indicate that you want to do this, the objects are
 written to a file called @file{.RData}@footnote{The leading ``dot'' in
 this file name makes it @emph{invisible} in normal file listings in
-UNIX, and in default GUI file listings on OS X and Windows.} in the
+UNIX, and in default GUI file listings on macOS and Windows.} in the
 current directory, and the command lines used in the session are saved
 to a file called @file{.Rhistory}.
 
@@ -5348,7 +5348,7 @@ is also easy because at startup time @R{} initiates a graphics
 the display of interactive graphics.  Although this is done
 automatically, it may useful to know that the command used is
 @code{X11()} under UNIX, @code{windows()} under Windows and
-@code{quartz()} under OS X.  A new device can always be opened by
+@code{quartz()} under macOS.  A new device can always be opened by
 @code{dev.new()}.
 
 Once the device driver is running, @R{} plotting commands can be used to
@@ -6256,7 +6256,7 @@ For use with the X11 window system on Unix-alikes
 For use on Windows
 @item quartz()
 @findex quartz
-For use on OS X
+For use on macOS
 @item postscript()
 @findex postscript
 For printing on PostScript printers, or creating PostScript graphics
@@ -6346,7 +6346,7 @@ meanings are as follows:
 @itemx win.metafile()
 [Windows]
 @item quartz()
-[OS X]
+[macOS]
 @item postscript()
 @itemx pdf()
 @item png()
@@ -6446,7 +6446,7 @@ command like
 
 Users connected to the Internet can use the @code{install.packages()}
 and @code{update.packages()} functions (available through the
-@code{Packages} menu in the Windows and OS X GUIs, @pxref{Installing
+@code{Packages} menu in the Windows and macOS GUIs, @pxref{Installing
 packages, , , R-admin, R Installation and Administration}) to install
 and update packages.
 
@@ -6601,7 +6601,7 @@ package: @code{tk_choose.files} and @code{tk_choose.dir}.
 
 Functions @code{file.show} and @code{file.edit} will display and edit
 one or more files in a way appropriate to the @R{} port, using the
-facilities of a console (such as RGui on Windows or R.app on OS X) if
+facilities of a console (such as RGui on Windows or R.app on macOS) if
 one is in use.
 
 There is some support for @emph{links} in the filesystem: see functions
@@ -6624,7 +6624,7 @@ The following are some issues which have been encountered with filepaths.
 @item
 POSIX filesystems are case-sensitive, so @file{foo.png} and
 @file{Foo.PNG} are different files.  However, the defaults on Windows
-and OS X are to be case-insensitive, and FAT filesystems (commonly used
+and macOS are to be case-insensitive, and FAT filesystems (commonly used
 on removable storage) are not normally case-sensitive (and all filepaths
 may be mapped to lower case).
 
@@ -6968,13 +6968,13 @@ want to save it.
 @node Invoking R, The command-line editor, A sample session, Top
 @appendix Invoking R
 
-Users of @R{} on Windows or OS X should read the OS-specific section
+Users of @R{} on Windows or macOS should read the OS-specific section
 first, but command-line use is also supported.
 
 @menu
 * Invoking R from the command line::  
 * Invoking R under Windows::    
-* Invoking R under OS X::       
+* Invoking R under macOS::       
 * Scripting with R::            
 @end menu
 
@@ -7319,7 +7319,7 @@ batch file, or if it has extension @code{.sh} or @code{.pl} the
 appropriate interpreter (if available) is called to run it.
 
 
-@node Invoking R under Windows, Invoking R under OS X, Invoking R from the command line, Invoking R
+@node Invoking R under Windows, Invoking R under macOS, Invoking R from the command line, Invoking R
 @appendixsec Invoking R under Windows
 
 There are two ways to run @R{} under Windows.  Within a terminal window
@@ -7389,23 +7389,23 @@ will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
 this does not help with the MiKTeX build of @LaTeX{}, but
 @command{R CMD texify mydoc} will work in that case.)
 
-@node Invoking R under OS X, Scripting with R, Invoking R under Windows, Invoking R
-@appendixsec Invoking R under OS X
+@node Invoking R under macOS, Scripting with R, Invoking R under Windows, Invoking R
+@appendixsec Invoking R under macOS
 
-There are two ways to run @R{} under OS X.  Within a @code{Terminal.app}
+There are two ways to run @R{} under macOS.  Within a @code{Terminal.app}
 window by invoking @code{R}, the methods described in the first
 subsection apply.  There is also console-based GUI (@code{R.app}) that by
 default is installed in the @code{Applications} folder on your
-system.  It is a standard double-clickable OS X application.
+system.  It is a standard double-clickable macOS application.
 
-The startup procedure under OS X is very similar to that under UNIX, but
+The startup procedure under macOS is very similar to that under UNIX, but
 @code{R.app} does not make use of command-line arguments.  The `home
 directory' is the one inside the R.framework, but the startup and
 current working directory are set as the user's home directory unless a
 different startup directory is given in the Preferences window
 accessible from within the GUI.
 
-@node Scripting with R,  , Invoking R under OS X, Invoking R
+@node Scripting with R,  , Invoking R under macOS, Invoking R
 @appendixsec Scripting with R
 
 If you just want to run a file @file{foo.R} of @R{} commands, the
@@ -7464,7 +7464,7 @@ the usual way for the shell running the command.
 
 If you do not wish to hardcode the path to @command{Rscript} but have it
 in your path (which is normally the case for an installed @R{} except on
-Windows, but e.g.@: OS X users may need to add @file{/usr/local/bin}
+Windows, but e.g.@: macOS users may need to add @file{/usr/local/bin}
 to their path), use
 
 @example
@@ -7524,7 +7524,7 @@ When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
 is used.  Note that other versions of @strong{readline} exist and may be
-used by the inbuilt command line editor: this used to happen on OS X.
+used by the inbuilt command line editor: this used to happen on macOS.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}

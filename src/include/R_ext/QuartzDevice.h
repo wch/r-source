@@ -21,7 +21,7 @@
  *  device. Being unofficial, the API may change at any point without
  *  warning.
  *
- *  Quartz is a general device-independent way of drawing in Mac OS X,
+ *  Quartz is a general device-independent way of drawing in macOS,
  *  therefore the Quartz device modularizes the actual drawing target
  *  implementation into separate modules (e.g. Carbon and Cocoa for
  *  on-screen display and PDF, Bitmap for off-screen drawing). The API

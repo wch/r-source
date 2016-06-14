@@ -33,11 +33,11 @@ OlsonNames()
 
 \details{
   Time zones are a system-specific topic, but these days almost all \R
-  platforms use similar underlying code, used by Linux, OS X, Solaris,
+  platforms use similar underlying code, used by Linux, macOS, Solaris,
   AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed with \R on
   Windows.  Unfortunately there are many system-specific errors in the
   implementations.  It is possible to use \R's own version of the code
-  on Unix-alikes as well as on Windows: this is the default for OS X and
+  on Unix-alikes as well as on Windows: this is the default for macOS and
   recommended for Solaris.
 
   It should be possible to set the time zone via the environment
@@ -69,7 +69,7 @@ OlsonNames()
   1902 (so used local \sQuote{mean time} based on longitude) but for a
   few places there had been time-zone changes before then.  64-bit
   representations are becoming common; unfortunately on some 64-bit OSes
-  (notably OS X) the database information is 32-bit and so only
+  (notably macOS) the database information is 32-bit and so only
   available for the range 1901--2038, and incompletely for the end
   years.
 }
@@ -125,7 +125,7 @@ OlsonNames()
   The function \code{OlsonNames} returns the time-zone names known to
   the Olson/IANA database on the current system. The system-specific
   location in the file system varies, e.g.\sspace{}\file{/usr/share/zoneinfo}
-  (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
+  (Linux, macOS, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
   \ldots.  It is likely that there is a file named something like
   \file{zone.tab} under that directory listing the locations known as
   time-zone names (but not for example \code{EST5EDT}): this is read by
@@ -133,7 +133,7 @@ OlsonNames()
   \url{https://en.wikipedia.org/wiki/Zone.tab}.
 
   Where \R was configured with option \option{--with-internal-tzcode}
-  (the default on OS X and Windows: recommended on Solaris), the database at
+  (the default on macOS and Windows: recommended on Solaris), the database at
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
   \file{VERSION} in that directory states the version.  Environment
   variable \env{TZDIR} can be used to point to a different
@@ -169,14 +169,14 @@ OlsonNames()
 }
 
 \section{Warning}{
-%% glibc and OS X have _POSIX_TZNAME_MAX and define it as 6.
+%% glibc and macOS have _POSIX_TZNAME_MAX and define it as 6.
 %% Earlier versions of R's code assumed 10, and it was discovered
 %% that some implemntations did not abbreviate unusual names, thereby
 %% exceeding this.
 %% Olson's tzcode has a limit of 255 and does not check: this has been
 %% corrected in R's copy.
 %% sysconf(_SC_TZNAME_MAX) might allow it to be checked:
-%% that gives 27 on OS X.  However, seems it is dynamic on glibc.
+%% that gives 27 on macOS.  However, seems it is dynamic on glibc.
   There is a system-specific upper limit on the number of bytes in
   (abbreviated) time-zone names which can be as low as 6 (as required by
   POSIX).  Some OSes allow the setting of time zones with names which

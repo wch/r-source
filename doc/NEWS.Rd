@@ -100,22 +100,12 @@
       \item Illegal factors, e.g., with duplicated levels (illegal but
       constructable) now give a warning when printed, via new
       \code{.valid.factor}.
-
-      \item \code{extSoftVersion()} now reports the version (if any) of
-      the \code{readline} library in use.
     }
   }
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item \code{readline} headers (and not just the library) are
       required unless configuring with \option{--with-readline=no}.
-
-      \item Versions of the \code{readline} library >= 6.3 had been
-      changed so that terminal window resizes were not signalled to
-      \code{readline}: code has been added using a explicit signal
-      handler to work around that (when \R is compiled against readline
-      >= 6.3).  (\PR{16604})
-      %% The intention is to port this to 3.3.1 patched.
 
       \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
       binary builds.  The \file{tcltk*.chm} help file is no longer
@@ -154,6 +144,28 @@
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.3.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{extSoftVersion()} now reports the version (if any) of
+      the \code{readline} library in use.
+    }
+  }
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item Versions of the \code{readline} library >= 6.3 had been
+      changed so that terminal window resizes were not signalled to
+      \code{readline}: code has been added using a explicit signal
+      handler to work around that (when \R is compiled against readline
+      >= 6.3).  (\PR{16604})
+
+      \item \code{extSoftVersion()} now reports the version (if any) of
+      the \code{readline} library in use.
     }
   }
 }

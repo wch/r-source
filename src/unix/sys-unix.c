@@ -48,7 +48,7 @@
 #endif
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRUSAGE)
-/* on MacOS X it seems sys/resource.h needs sys/time.h first */
+/* on macOS it seems sys/resource.h needs sys/time.h first */
 # include <sys/time.h>
 # include <sys/resource.h>
 #endif

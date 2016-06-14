@@ -34,7 +34,7 @@ xedit(name = NULL, file = "")
     On Unix the default is set from the environment variables
     \env{EDITOR} or \env{VISUAL} if either is set, otherwise \code{vi}
     is used.  On Windows it defaults to \code{"internal"}, the script
-    editor.  On the OS X GUI the argument is ignored and the document
+    editor.  On the macOS GUI the argument is ignored and the document
     editor is always used.
 
     \code{editor} can also be a function, in which case it is called

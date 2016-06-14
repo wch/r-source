@@ -59,7 +59,7 @@ This is a guide to installation and administration for R.
 * Obtaining R::                 
 * Installing R under Unix-alikes::  
 * Installing R under Windows::  
-* Installing R under OS X::     
+* Installing R under macOS::     
 * Running R::                   
 * Add-on packages::             
 * Internationalization::        
@@ -101,7 +101,7 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 on systems that have a suitable@footnote{e.g.@: @acronym{GNU}
 @command{tar} version 1.15 or later, or that from the @samp{libarchive}
-(as used on OS X versions 10.6 and later) or `Heirloom Toolchest'
+(as used on macOS versions 10.6 and later) or `Heirloom Toolchest'
 distributions.}  @command{tar} installed.  On other systems you need to
 have the @command{gzip} program installed, when you can use
 
@@ -241,9 +241,9 @@ perhaps (it is tested less frequently on these platforms)
 @samp{powerpc-@/ibm-@/aix6*}
 
 @cindex Linux
-@cindex OS X
+@cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for OS X (formerly Mac OS).  See the @acronym{FAQ} for
+distributions and for macOS (formerly Mac OS).  See the @acronym{FAQ} for
 current details.  These are installed in platform-specific ways, so for
 the rest of this chapter we consider only building from the sources.
 
@@ -572,7 +572,7 @@ This requires @command{ebook-convert} from @command{Calibre}
 (@uref{http://calibre-ebook.com/download}), or from most Linux
 distributions).  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
-(which contains a commented value suitable for OS X).
+(which contains a commented value suitable for macOS).
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -1065,7 +1065,7 @@ LANGUAGE=en
 and use a UTF-8 or Latin-1 locale.
 
 
-@node Installing R under Windows, Installing R under OS X, Installing R under Unix-alikes, Top
+@node Installing R under Windows, Installing R under macOS, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
 @cindex Installing under Windows
 
@@ -1637,9 +1637,9 @@ differ from the reference output as some files are installed with
 Windows' CRLF line endings.
 
 
-@node Installing R under OS X, Running R, Installing R under Windows, Top
-@chapter Installing R under OS X
-@cindex OS X
+@node Installing R under macOS, Running R, Installing R under Windows, Top
+@chapter Installing R under macOS
+@cindex macOS
 
 @macro Rapp{}
 @sc{R.app}
@@ -1647,7 +1647,7 @@ Windows' CRLF line endings.
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
+and install it. This runs on macOS 10.9 and later (Mavericks, Yosemite,
 El Capitan, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
@@ -1680,23 +1680,23 @@ Various parts of the build require XQuartz to be installed: : see
 package and the @code{X11} device: attempting to use these without
 XQuartz will remind you.
 
-If you update your OS X version, you should re-install @R{} (and perhaps
+If you update your macOS version, you should re-install @R{} (and perhaps
 XQuartz): the installer tailors the installation to the current version
 of the OS.
 
-For building @R{} from source, see @ref{OS X}.
+For building @R{} from source, see @ref{macOS}.
 
 
 @menu
-* Running R under OS X::        
-* Uninstalling under OS X::     
+* Running R under macOS::        
+* Uninstalling under macOS::     
 * Multiple versions::           
 @end menu
 
-@node Running R under OS X, Uninstalling under OS X, Installing R under OS X, Installing R under OS X
-@section Running R under OS X
+@node Running R under macOS, Uninstalling under macOS, Installing R under macOS, Installing R under macOS
+@section Running R under macOS
 
-There are two ways to run @R{} on OS X from a @acronym{CRAN} binary
+There are two ways to run @R{} on macOS from a @acronym{CRAN} binary
 distribution.
 
 There is a GUI console normally installed with the @R{} icon in
@@ -1704,7 +1704,7 @@ There is a GUI console normally installed with the @R{} icon in
 Launchpad or Finder).  (If you cannot find it there it was possibly
 installed elsewhere so try searching for it in Spotlight.) This is
 usually referred to as @Rapp{} to distinguish it from command-line @R{}:
-its user manual is currently part of the OS X FAQ at
+its user manual is currently part of the macOS FAQ at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
 can be viewed from @Rapp{}'s `Help' menu.
 
@@ -1750,13 +1750,13 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
 default for command-line @R{} but not @Rapp{}) requires an X sub-system
-to be installed: see @ref{OS X}.  (As do the @pkg{tcltk} package and
+to be installed: see @ref{macOS}.  (As do the @pkg{tcltk} package and
 some third-party packages.)
 
-@node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
-@section Uninstalling under OS X
+@node Uninstalling under macOS, Multiple versions, Running R under macOS, Installing R under macOS
+@section Uninstalling under macOS
 
-@R{} for OS X consists of two parts: the GUI (@Rapp{}) and the R
+@R{} for macOS consists of two parts: the GUI (@Rapp{}) and the R
 framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them into the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
@@ -1806,7 +1806,7 @@ These are paths relative to @file{/}, the root of the file system.
 @c @noindent
 @c run as the owner of @file{/usr/local}.
 
-@node Multiple versions,  , Uninstalling under OS X, Installing R under OS X
+@node Multiple versions,  , Uninstalling under macOS, Installing R under macOS
 @section Multiple versions
 
 The installer will remove any previous version of the @R{} framework
@@ -1833,7 +1833,7 @@ version of @R{} (de-selecting @Rapp{}) and then switch back to the
 release version.
 
 
-@node Running R, Add-on packages, Installing R under OS X, Top
+@node Running R, Add-on packages, Installing R under macOS, Top
 @chapter Running R
 
 How to start @R{} and what command-line options are available is discussed
@@ -1979,7 +1979,7 @@ library paths, separated by colons (semicolons on Windows).
 
 @menu
 * Windows packages::            
-* OS X packages::               
+* macOS packages::               
 * Customizing package compilation::  
 * Multiple sub-architectures::  
 * Byte-compilation::            
@@ -2069,11 +2069,11 @@ local archives, local files, @dots{}).  Function
 Naive users sometimes forget that as well as installing a package, they
 have to use @code{library} to make its functionality available.
 
-@node Windows packages, OS X packages, Installing packages, Installing packages
+@node Windows packages, macOS packages, Installing packages, Installing packages
 @subsection Windows
 
 What @code{install.packages} does by default is different on Unix-alikes
-(except OS X) and Windows.  On Unix-alikes it consults the list of
+(except macOS) and Windows.  On Unix-alikes it consults the list of
 available @emph{source} packages on @acronym{CRAN} (or other
 repository/ies), downloads the latest version of the package sources,
 and installs them (via @code{R CMD INSTALL}).  On Windows it looks (by
@@ -2166,16 +2166,16 @@ the 64 bit path used in @file{etc/x64/Makeconf}. The version used by
 source}.
 
 
-@node OS X packages, Customizing package compilation, Windows packages, Installing packages
-@subsection OS X
+@node macOS packages, Customizing package compilation, Windows packages, Installing packages
+@subsection macOS
 
-On OS X @code{install.packages} works as it does on other Unix-alike
+On macOS @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types starting with @code{mac.binary}
 (available for the @acronym{CRAN} distribution but not when compiling
 from source: @code{mac.binary.mavericks} for a `Mavericks' build with
 @code{"default"} a synonym for the appropriate variant) which can be
 passed to @code{install.packages} in order to download and install
-binary packages from a suitable repository.  These OS X binary package
+binary packages from a suitable repository.  These macOS binary package
 files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
 for installation of either binary or source packages, from
 @acronym{CRAN} or local files.
@@ -2193,11 +2193,11 @@ particular series (e.g.@: @R{} 3.2.x or 3.3.x) of @R{}.
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
 `Command Line Tools' for @command{Xcode} and compilers which match those
-used to build @R{}: see @ref{OS X}.
+used to build @R{}: see @ref{macOS}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
-Tk.  See @ref{OS X} and @ref{Java (OS X)}.
+Tk.  See @ref{macOS} and @ref{Java (macOS)}.
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer.  These are required by a number
@@ -2212,9 +2212,9 @@ appropriate version at the time of writing was
 
 The default compilers specified in
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
-the version of OS X under which @R{} was installed, and are appropriate
+the version of macOS under which @R{} was installed, and are appropriate
 for the latest version of the `Command Line Tools' for that version of
-OS X and the recommended version of Fortran (see @ref{OS X}).  The
+macOS and the recommended version of Fortran (see @ref{macOS}).  The
 settings can be changed, either by editing that file or in a file such
 as @file{~/.R/Makevars} (see the next section).  Entries which may need
 to be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
@@ -2232,7 +2232,7 @@ CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
 
-@node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
+@node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
 
 The @R{} system and package-specific compilation flags can be overridden or
@@ -2265,7 +2265,7 @@ FCFLAGS=-g -O -mtune=native
 @end example
 
 Another use is to override the settings in a binary installation of R.
-For example, to use a different Fortran compiler on OS X
+For example, to use a different Fortran compiler on macOS
 
 @example
 F77 = /usr/local/gfortran/bin/gfortran
@@ -2357,7 +2357,7 @@ X), the libraries have to be found when the package is loaded and not
 just when it is installed.  How this should be done depends on the OS
 (and in some cases the version).
 
-For Unix-alikes except OS X the primary mechanism is the @code{ld.so}
+For Unix-alikes except macOS the primary mechanism is the @code{ld.so}
 cache controlled by @command{ldconfig}: external dynamic libraries
 recorded in that cache will be found.  Standard library locations will
 be covered by the cache, and well-designed software will add its
@@ -2370,7 +2370,7 @@ defaults which are normally set when @R{} is installed (but can be
 overridden in the environment) so @env{LD_LIBRARY_PATH} is the best
 choice for a user to set.
 
-On OS X the primary mechanism is to embed the absolute path to dependent
+On macOS the primary mechanism is to embed the absolute path to dependent
 dynamic libraries into an object when it is compiled.  Few @R{} packages
 arrange to do so, but it can be edited@footnote{They need to have been
 created using @option{-headerpad_max_install_names}, which is the
@@ -2379,7 +2379,7 @@ that only deals with direct dependencies and those would also need to be
 compiled to include the absolute paths of their dependencies.  If the
 choice of absolute path is to be deferred to load time, how they are
 resolved is described in @command{man dyld}: the role of
-@env{LD_LIBRARY_PATH} is replaced on OS X by @env{DYLD_LIBRARY_PATH} and
+@env{LD_LIBRARY_PATH} is replaced on macOS by @env{DYLD_LIBRARY_PATH} and
 latterly @env{DYLD_FALLBACK_LIBRARY_PATH}.  Running @command{R CMD otool
 -L} on the package shared object will show where (if anywhere) its
 dependencies are resolved. @env{DYLD_FALLBACK_LIBRARY_PATH} is preferred
@@ -2662,7 +2662,7 @@ some OSes offer only one charset per language.
 @menu
 * Locales under Unix-alikes::   
 * Locales under Windows::       
-* Locales under OS X::          
+* Locales under macOS::          
 @end menu
 
 @node Locales under Unix-alikes, Locales under Windows, Locales, Locales
@@ -2680,7 +2680,7 @@ Note that whereas UTF-8 locales are nowadays almost universally used,
 locales such as @samp{en_GB} use 8-bit encodings for backwards
 compatibility.
 
-@node Locales under Windows, Locales under OS X, Locales under Unix-alikes, Locales
+@node Locales under Windows, Locales under macOS, Locales under Unix-alikes, Locales
 @subsection Locales under Windows
 
 Windows also uses locales, but specified in a rather less concise way.
@@ -2696,10 +2696,10 @@ Some care is needed with Windows' locale names.  For example,
 @code{chinese} is Traditional Chinese and not Simplified Chinese as used
 in most of the Chinese-speaking world.
 
-@node Locales under OS X,  , Locales under Windows, Locales
-@subsection Locales under OS X
+@node Locales under macOS,  , Locales under Windows, Locales
+@subsection Locales under macOS
 
-OS X supports locales in its own particular way, but the @R{} GUI tries to
+macOS supports locales in its own particular way, but the @R{} GUI tries to
 make this easier for users. See
 @uref{https://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
 for how users can set their locales.  As with Windows, end users will
@@ -2710,7 +2710,7 @@ remotely and for batch jobs: note whether @command{Terminal} sets the
 @env{LANG} environment variable is an (advanced) preference, but does so
 by default).
 
-Internally OS X uses a form similar to Linux: the main difference from
+Internally macOS uses a form similar to Linux: the main difference from
 other Unix-alikes is that where a character set is not specified it is
 assumed to be @code{UTF-8}.
 
@@ -2815,7 +2815,7 @@ Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions.  Most OSes running on such @acronym{CPU}s offer the choice
 of building a 32-bit or a 64-bit version of @R{} (and details are given
 below under specific OSes).  For most a 32-bit version is the default,
-but for some (e.g., @cputype{x86_64} Linux and OS X >= 10.6)
+but for some (e.g., @cputype{x86_64} Linux and macOS >= 10.6)
 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
@@ -2869,7 +2869,7 @@ However, `other things' may not be equal.  In the specific case of
 (such as SSE2 instructions) which are guaranteed to be present but are
 optional on the 32-bit CPU, and also has more general-purpose registers.
 This means that on chips like a desktop Intel i7 the vanilla 64-bit
-version of @R{} has been around 10% faster on both Linux and OS X.
+version of @R{} has been around 10% faster on both Linux and macOS.
 (Laptop CPUs are usually relatively slower in 64-bit mode.)
 @end itemize
 
@@ -2974,7 +2974,7 @@ make
 
 @noindent
 will make standalone libraries @file{libRmath.a} and @file{libRmath.so}
-(@file{libRmath.dylib} on OS X): @samp{make static} and @samp{make
+(@file{libRmath.dylib} on macOS): @samp{make static} and @samp{make
 shared} will create just one of them.
 
 To use the routines in your own C or C++ programs, include
@@ -2991,7 +2991,7 @@ test the process (via @command{make test}).  Note that you will probably
 not be able to run it unless you add the directory containing
 @enindex LD_LIBRARY_PATH
 @file{libRmath.so} to the @env{LD_LIBRARY_PATH} environment variable
-(@file{libRmath.dylib}, @env{DYLD_FALLBACK_LIBRARY_PATH} on OS X).
+(@file{libRmath.dylib}, @env{DYLD_FALLBACK_LIBRARY_PATH} on macOS).
 
 The targets
 
@@ -3137,7 +3137,7 @@ run the compiler even for linking, such as those to set the
 architecture, should be specified as part of @code{CC} rather than in
 @code{CFLAGS}.)
 
-Unless you do not want to view graphs on-screen (or use OS X) you need
+Unless you do not want to view graphs on-screen (or use macOS) you need
 @samp{X11} installed, including its headers and client libraries. For
 recent Fedora/RedHat distributions it means (at least) RPMs
 @samp{libX11}, @samp{libX11-devel}, @samp{libXt} and @samp{libXt-devel}.
@@ -3159,7 +3159,7 @@ Unicode wide-character formats @code{"UCS-[24][BL]E"} --- this is true
 by default for @code{glibc}@footnote{However, it is possible to break
 the default behaviour of @code{glibc} by re-specifying the @code{gconv}
 modules to be loaded.} but not of most commercial Unixes.  However, you
-can make use of @acronym{GNU} @code{libiconv} (as used on OS X: see
+can make use of @acronym{GNU} @code{libiconv} (as used on macOS: see
 @uref{https://www.gnu.org/@/software/@/libiconv/}).
 
 The OS needs to have enough support@footnote{specifically, the C99
@@ -3363,7 +3363,7 @@ Debian meta-package @samp{xorg-dev}), but some distributions have split
 this into smaller parts, so for example recent versions of Fedora
 require the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 
-Some systems (notably OS X and at least some FreeBSD systems) have
+Some systems (notably macOS and at least some FreeBSD systems) have
 inadequate support for collation in multibyte locales.  It is possible
 to replace the OS's collation support by that from ICU (International
 Components for Unicode, @uref{http://site.icu-project.org/}), and this
@@ -3416,7 +3416,7 @@ Versions of Tcl/Tk up to 8.5.19 and 8.6.4 have been tested (including
 most versions of 8.4.x, but not recently).
 
 Note that the @file{tk.h} header includes@footnote{This is true even for
-the `Aqua' version of Tk on OS X, but distributions of that include a
+the `Aqua' version of Tk on macOS, but distributions of that include a
 copy of the X11 files needed.} X11 headers, so you will need X11 and its
 development files installed.
 
@@ -3549,7 +3549,7 @@ position-independent code), and that is not checked.
 Some enhanced @acronym{BLAS}es are compiler-system-specific
 (@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
-@code{Accelerate} on OS X).  The correct incantation for these is often
+@code{Accelerate} on macOS).  The correct incantation for these is often
 found @emph{via} @option{--with-blas} with no value on the appropriate
 platforms.
 
@@ -3701,7 +3701,7 @@ advisor' which will suggest appropriate incantations: its use is
 recommended.  Or see
 @uref{https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor}.
 
-There are also versions of MKL for OS X and Windows, but at the time
+There are also versions of MKL for macOS and Windows, but at the time
 these were tried they did not work with the standard compilers used for
 @R{} on those platforms.
 
@@ -3811,7 +3811,7 @@ library path or @command{ld.so} cache).
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{Accelerate} on OS X and ACML and MKL
+as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ACML and MKL
 on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
 is required.  This can only be done if @option{--with-blas} has been used.
 
@@ -4383,7 +4383,7 @@ FreeBSD: __FreeBSD__
 HP-UX: __hpux__, __hpux
 IRIX: sgi, __sgi
 Linux: __linux__
-OS X: __APPLE__
+macOS: __APPLE__
 NetBSD: __NetBSD__
 OpenBSD: __OpenBSD__
 Solaris: __sun, sun
@@ -4393,7 +4393,7 @@ Windows: _WIN32, _WIN64
 @menu
 * X11 issues::                  
 * Linux::                       
-* OS X::                        
+* macOS::                        
 * Solaris::                     
 * AIX::                         
 * FreeBSD::                     
@@ -4490,7 +4490,7 @@ directory or elsewhere, for example,
 @end example
 
 
-@node Linux, OS X, X11 issues, Platform notes
+@node Linux, macOS, X11 issues, Platform notes
 @section Linux
 @cindex Linux
 
@@ -4712,9 +4712,9 @@ the configure flag @option{--disable-largefile} was needed (since
 @file{glob.h} on that platform presumed @command{gcc} was being used).
 
 
-@node OS X, Solaris, Linux, Platform notes
-@section OS X
-@cindex OS X
+@node macOS, Solaris, Linux, Platform notes
+@section macOS
+@cindex macOS
 
 The instructions here are for @cputype{x86_64} builds on 10.9
 (Mavericks) or later.  In principle@footnote{It will be necessary to
@@ -4726,14 +4726,14 @@ To build @R{} you need Apple's `Command Line Tools': these can be
 fresh OS installation, running e.g.@: @command{make} in a terminal will
 offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
-reinstalled when OS X is upgraded, as upgrading partially removes them.)
+reinstalled when macOS is upgraded, as upgrading partially removes them.)
 
 You need @code{readline}@footnote{Apple provides a partial emulation of
 GNU readline 4.2 based on the NetBSD @code{editline} library.  That is
 not recommended but for the time being @R{}'s installation scripts will
 make use of it.} and a Fortran compiler.  Those and other binary
 components are available from @uref{https://r.research.att.com/libs}:
-you are likely to need @code{pcre} and @code{xz} (recent OS X provides
+you are likely to need @code{pcre} and @code{xz} (recent macOS provides
 libraries but not headers for these).
 
 An X sub-system is required unless configuring using
@@ -4836,7 +4836,7 @@ non-default options
 @noindent
 were used.
 
-Configure option @option{--with-internal-tzcode} is the default on OS X,
+Configure option @option{--with-internal-tzcode} is the default on macOS,
 as the system implementation of time zones does not work correctly for
 times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
@@ -4850,7 +4850,7 @@ which brought this to about 410MB.  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.
 
-One OS X quirk is that the default path has @file{/usr/local/bin} after
+One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
 that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
@@ -4864,12 +4864,12 @@ some upgrades but not others).
 @menu
 * El Capitan::                  
 * Tcl/Tk headers and libraries::  
-* Java (OS X)::                 
+* Java (macOS)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node El Capitan, Tcl/Tk headers and libraries, OS X, OS X
+@node El Capitan, Tcl/Tk headers and libraries, macOS, macOS
 @subsection El Capitan
 
 There are problems resulting from the new-to-El-Capitan restriction that
@@ -4891,7 +4891,7 @@ includes @file{/usr/X11R6}, @file{/usr/texbin}, @file{/usr/bin/R},
 although the linked versions under @file{/usr/X11} will be found (if the
 link is present).
 
-@node Tcl/Tk headers and libraries, Java (OS X), El Capitan, OS X
+@node Tcl/Tk headers and libraries, Java (macOS), El Capitan, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4910,10 +4910,10 @@ or
 Note that this requires a matching XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
-in the native OS X style: this will not work with @Rapp{} because of
-conflicts over the OS X menu, but for those only using command-line @R{}
+in the native macOS style: this will not work with @Rapp{} because of
+conflicts over the macOS menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
-users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
+users.  Most versions of macOS come with Aqua Tcl/Tk libraries, but these
 are not at all recent versions of Tcl/Tk (8.5.9 in El Capitan, which is
 not even the latest patched version in that series).  It is better to
 install Tcl/Tk 8.6.x from the sources or a binary distribution from
@@ -4925,7 +4925,7 @@ with
 @end example
 
 @noindent
-(for the versions bundled with OS X, use paths starting with
+(for the versions bundled with macOS, use paths starting with
 @file{/System/Library}).
 
 If you need to find out which distribution of Tk is in use at run time,
@@ -4935,13 +4935,13 @@ library(tcltk)
 tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @end example
 
-@node Java (OS X), Frameworks, Tcl/Tk headers and libraries, OS X
+@node Java (macOS), Frameworks, Tcl/Tk headers and libraries, macOS
 @subsection Java
 
-The situation with Java support on OS X is messy.@footnote{For more
+The situation with Java support on macOS is messy.@footnote{For more
 details see @uref{http://www.macstrategy.com/article.php?3}.}
 
-OS X no longer comes with an installed Java runtime (JRE), and an OS X
+macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade removes one if already installed: it is intended to be installed
 at first use.  Check if a JRE is installed by running @command{java
 -version} in a @command{Terminal} window: if Java is not installed this
@@ -4950,7 +4950,7 @@ latest Java from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
-@code{Java For OS X 2015-001} from
+@code{Java For macOS 2015-001} from
 @uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up messages
 even if you have a current version installed.
 
@@ -4988,7 +4988,7 @@ Note that it is necessary to set the environment variable @env{NOAWT}
 to @code{1} to install many of the Java-using packages.
 
 
-@node Frameworks, Building R.app, Java (OS X), OS X
+@node Frameworks, Building R.app, Java (macOS), macOS
 @subsection Frameworks
 
 The @acronym{CRAN} build of @R{} is installed as a framework, which is
@@ -5019,7 +5019,7 @@ non-standard location) and Unix utilities may not support it (e.g.@: the
 @command{pkg-config} file @file{libR.pc} will be put somewhere unknown
 to @command{pkg-config}).
 
-@node Building R.app,  , Frameworks, OS X
+@node Building R.app,  , Frameworks, macOS
 @subsection Building R.app
 
 Note that building the @Rapp{} GUI console is a separate project, using
@@ -5047,7 +5047,7 @@ application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
 
-@node Solaris, AIX, OS X, Platform notes
+@node Solaris, AIX, macOS, Platform notes
 @section Solaris
 @cindex Solaris
 

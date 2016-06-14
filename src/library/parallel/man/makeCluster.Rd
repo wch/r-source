@@ -61,7 +61,7 @@ setDefaultCluster(cl = NULL)
     \item{\code{master}}{The host name of the master, as known to the
       workers.  This may not be the same as it is known to the master,
       and on private subnets it may be necessary to specify this as a
-      numeric IP address.  For example, OS X is likely to detect a
+      numeric IP address.  For example, macOS is likely to detect a
       machine as \samp{somename.local}, a name known only to itself.}
     \item{\code{port}}{The port number for the socket connection,
       default taken from the environment variable \env{R_PARALLEL_PORT},

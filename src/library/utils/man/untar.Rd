@@ -67,7 +67,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   Modern GNU flavours of \command{tar} will support compressed archives,
   and since 1.15 are able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
-  version 1.22 for \command{xz} compression using LZMA2.  OS X 10.6 and
+  version 1.22 for \command{xz} compression using LZMA2.  macOS 10.6 and
   later (and FreeBSD and some other OSes) have a \command{tar} (also
   known as \command{bsdtar}) from the \samp{libarchive} project which
   can also detect \command{gzip} and \command{bzip2} compression

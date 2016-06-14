@@ -81,7 +81,7 @@ mcexit(exit.code = 0L, send = NULL)
   because it leads to several processes sharing the same GUI which will
   likely cause chaos (and possibly crashes).  Child processes should
   never use on-screen graphics devices.  Some precautions have been
-  taken to make this usable in \command{R.app} on OS X, but users of
+  taken to make this usable in \command{R.app} on macOS, but users of
   third-party front-ends should consult their documentation.
 
   This can also apply to other connections (e.g., to an X server) created

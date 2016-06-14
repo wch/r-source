@@ -192,7 +192,7 @@ Feedback via email to @email{Kurt.Hornik@@R-project.org} is of course
 most welcome.
 
 In particular, note that I do not have access to Windows or Mac
-systems.  Features specific to the Windows and OS X ports of R are
+systems.  Features specific to the Windows and macOS ports of R are
 described in the
 @url{https://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} and the
@@ -473,13 +473,13 @@ See the @url{https://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
 @subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package to run on OS X 10.6 (`Snow Leopard') and later.
+Apple installer package to run on macOS 10.9 (`Mavericks') and later.
 Once downloaded and executed, the installer will install the current
-release of R and an R.app OS X @acronym{GUI}.  This port of R for OS X
+release of R and R.app, the macOS @acronym{GUI}.  This port of R for macOS
 is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 (and previously by Stefano Iacus).  The
 @url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
-OS X @acronym{FAQ}} has more details.
+macOS @acronym{FAQ}} has more details.
 
 Snapshots of the r-patched and r-devel versions of R are available as
 Apple installer packages at @uref{https://r.research.att.com}.
@@ -790,7 +790,7 @@ From @CRAN{}, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current source trees), as gzipped and
 bzipped tar files, a wealth of additional contributed code, as well as
 prebuilt binaries for various operating systems (Linux, Mac OS Classic,
-OS X, and MS Windows).  @CRAN{} also provides access to
+macOS, and MS Windows).  @CRAN{} also provides access to
 documentation on R, existing mailing lists and the R Bug Tracking
 system.
 
@@ -2753,7 +2753,7 @@ Under a Unix-like, if your installation supports the
 problems, and the default settings should just work.  This option is not
 available for versions of R prior to 2.7.0, or without support for
 cairo.  From R 2.7.0 @code{png()} by default uses the Quartz device
-on OS X, and that too works in batch mode.
+on macOS, and that too works in batch mode.
 
 Earlier versions of the @code{png()} device used the X11 driver, which
 is a problem in batch mode or for remote operation.  If you have
@@ -3144,7 +3144,7 @@ For some common viewers, consider the following:
 There are options in Preferences to enable/disable text smoothing, image
 smoothing and line art smoothing.
 Disable line art smoothing.
-@item Preview (OS X)
+@item Preview (macOS)
 There is an option in Preferences to enable/disable anti-aliasing of
 text and line art.
 Disable this option. 
@@ -3397,7 +3397,7 @@ The requisite code to add to @file{.Rprofile} or @file{Rprofile.site} is:
 options(download.file.method = "wininet", url.method = "wininet")
 @r{(Windows)}
 options(download.file.method = "libcurl", url.method = "libcurl")
-@r{(Linux and OS X)}
+@r{(Linux and macOS)}
 @end example
 
 @noindent
@@ -3406,7 +3406,7 @@ options(download.file.method = "libcurl", url.method = "libcurl")
 Note that the @code{"libcurl"} method may or may not have been compiled
 in.  In the case that it was not, i.e.. @code{capabilities("libcurl") ==
 FALSE}, we recommend method @code{"wget"} on Linux and @code{"curl"} on
-OS X.  It is possible that system versions of @code{"libcurl"},
+macOS.  It is possible that system versions of @code{"libcurl"},
 @command{wget} or @command{curl} may have been compiled without
 @acronym{HTTPS} support, but this is unlikely.  As from R 3.3.0
 @code{"libcurl"} with @acronym{HTTPS} support is required except on
@@ -3415,7 +3415,7 @@ Windows.
 @node How can I get CRAN package binaries for outdated versions of R?,  , How can I enable secure https downloads in R?, R Miscellanea
 @section How can I get CRAN package binaries for outdated versions of R?
 
-Since March 2016, Windows and OS X binaries of @CRAN{} packages for old
+Since March 2016, Windows and macOS binaries of @CRAN{} packages for old
 versions of R (released more than 5 years ago) are made available from a
 central @CRAN{} archive server instead of the @CRAN{} mirrors.  To get
 these, one should set the @CRAN{} ``mirror'' element of the @code{repos}

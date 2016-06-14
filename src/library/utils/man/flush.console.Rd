@@ -8,7 +8,7 @@
 \title{Flush Output to A Console}
 \description{
   This does nothing except on console-based versions of \R.
-  On the OS X and Windows GUIs, it ensures that the display of
+  On the macOS and Windows GUIs, it ensures that the display of
   output in the console is current, even if output buffering is on.
 }
 \usage{

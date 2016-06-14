@@ -235,7 +235,7 @@
 
 ## Dynamic library path
 ## This is be default created from libraries added to LIBS.
-## Used for DYLD_FALLBACK_LIBRARY_PATH on OS X and LD_LIBRARY_PATH elsewhere.
+## Used for DYLD_FALLBACK_LIBRARY_PATH on macOS and LD_LIBRARY_PATH elsewhere.
 ## Allow user to override.
 ## R_LD_LIBRARY_PATH=
 

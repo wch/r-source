@@ -27,7 +27,7 @@ browseEnv(envir = .GlobalEnv, pattern,
     with matching names.}
   \item{html}{is used to display the workspace
     on a HTML page in your favorite browser.  The default except when
-    running from \command{R.app} on OS X.}
+    running from \command{R.app} on macOS.}
   \item{expanded}{whether to show one level of recursion.  It can be useful
     to switch it to \code{FALSE} if your workspace is large.  This
     option is ignored if \code{html} is set to \code{FALSE}.}
@@ -41,7 +41,7 @@ browseEnv(envir = .GlobalEnv, pattern,
 
 \details{
   Very experimental code: displays a static HTML page on all platforms
-  except \command{R.app} on OS X.
+  except \command{R.app} on macOS.
 
   Only allows one level of recursion into object structures.
 

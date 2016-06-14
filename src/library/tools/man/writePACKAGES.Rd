@@ -37,7 +37,7 @@ write_PACKAGES(dir = ".", fields = NULL,
   }
   \item{type}{
     Type of packages: currently source \file{.tar.\{gz,bz2,xz\}} archives,
-    and OS X or Windows binary (\file{.tgz} or \file{.zip},
+    and macOS or Windows binary (\file{.tgz} or \file{.zip},
     respectively) packages are supported.  Defaults to
     \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }

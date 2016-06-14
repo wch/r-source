@@ -23,7 +23,7 @@ Sys.timezone <- function(location = TRUE)
 {
     tz <- Sys.getenv("TZ", names = FALSE)
     if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
-    lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
+    lt <- normalizePath("/etc/localtime") # Linux, macOS, ...
     if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt)
     else NA_character_
 }
@@ -1044,7 +1044,7 @@ OlsonNames <- function()
     else {
         tzdirs <- c(Sys.getenv("TZDIR"),
                     file.path(R.home("share"), "zoneinfo"),
-                    "/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+                    "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
                     "/usr/share/lib/zoneinfo", # Solaris, AIX
                     "/usr/lib/zoneinfo",   # early glibc
                     "/usr/local/etc/zoneinfo", # tzcode default

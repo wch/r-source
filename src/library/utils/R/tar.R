@@ -348,7 +348,7 @@ tar <- function(tarfile, files = NULL,
                             "xz" = "-Jcf")
 
             if (grepl("darwin", R.version$os)) {
-                ## precaution for Mac OS X to omit resource forks
+                ## precaution for macOS to omit resource forks
                 ## we can't tell the running OS version from R.version$os
                 ## but at least it will not be older
                 tar <- paste("COPYFILE_DISABLE=1", tar) # >= 10.5, Leopard

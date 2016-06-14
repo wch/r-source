@@ -19,7 +19,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \arguments{
   \item{graphics}{Logical.  If true, use a graphical list: on Windows or
-    the OS X GUI use a list box, and on a Unix-alike  use a Tk widget if
+    the macOS GUI use a list box, and on a Unix-alike  use a Tk widget if
     package \pkg{tcltk} and an X server are available.  Otherwise use a
     text \code{\link{menu}}.}
   

@@ -16,7 +16,7 @@
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
  *
- *  Modular Quartz device for Mac OS X
+ *  Modular Quartz device for macOS
  *
  *  Partially based on code by Byron Ellis
  */
@@ -41,7 +41,7 @@
 
 #define DEVQUARTZ_VERSION 1 /* first public Quartz API version */
 
-#define QBE_NATIVE   1  /* either Cocoa or Carbon depending on the OS X version */
+#define QBE_NATIVE   1  /* either Cocoa or Carbon depending on the macOS version */
 #define QBE_COCOA    2  /* internal Cocoa */
 #define QBE_CARBON   3  /* internal Carbon */
 #define QBE_BITMAP   4  /* bitmap file creating */
@@ -75,7 +75,7 @@ const quartz_module_t quartz_modules[] = {
 
 
 
-/* for compatibility with OS X <10.5 */
+/* for compatibility with macOS <10.5 */
 #ifndef CGFLOAT_DEFINED
 typedef float CGFloat;
 #define CGFLOAT_MIN FLT_MIN
@@ -506,7 +506,7 @@ QuartzFunctions_t *getQuartzAPI() {
     return &qfn;
 }
 
-/* old OS X versions has different names for some of the CGFont stuff */
+/* old macOS versions has different names for some of the CGFont stuff */
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
 #define CGFontCreateWithFontName CGFontCreateWithName
 #define CGFontGetGlyphBBoxes CGFontGetGlyphBoundingBoxes
@@ -661,7 +661,7 @@ CGFontRef RQuartz_Font(CTXDESC)
         if (!atsFont) { /* not in the cache? Then we need to find the 
 			   proper font name from the family name and face */
             /* as it turns out kATSFontFilterSelectorFontFamily is not 
-	       implemented in OS X (!!) so there is no way to query for a 
+	       implemented in macOS (!!) so there is no way to query for a 
 	       font from a specific family. Therefore we have to use 
 	       text-matching heuristics ... very nasty ... */
             char compositeFontName[256];
@@ -1497,7 +1497,7 @@ SEXP Quartz(SEXP args)
 
 static double cached_darwin_version = 0.0;
 
-/* Darwin version X.Y maps to OS X version 10.(X - 4).Y */
+/* Darwin version X.Y maps to macOS version 10.(X - 4).Y */
 static double darwin_version() {
     char ver[32];
     size_t len = sizeof(ver) - 1;
@@ -1526,7 +1526,7 @@ extern kern_return_t bootstrap_info(mach_port_t , /* bootstrap port */
    interactively via LS. Although ssh to a machine that has a running
    session for the same user will allow a WS connection, this function
    will still return 0 in that case.
-   NOTE: on Mac OS X 10.5 we are currently NOT searching the parent
+   NOTE: on macOS 10.5 we are currently NOT searching the parent
    namespaces. This is currently OK, because the session service will
    be registered in the session namespace which is the last in the
    chain. However, this could change in the future.
@@ -1570,7 +1570,7 @@ static int has_wss() {
 	if (bport != MACH_PORT_NULL)
 	    mach_port_deallocate(mach_task_self(), bport);
     } else {
-	/* On Mac OS X 10.7 (Lion) and higher two things changed:
+	/* On macOS 10.7 (Lion) and higher two things changed:
 	   a) there is no com.apple.windowserver.session anymore 
 	   so the above will fail
 	   b) every process has now the full bootstrap info, 

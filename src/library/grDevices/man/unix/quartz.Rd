@@ -8,9 +8,9 @@
 \alias{quartz.options}
 \alias{quartz.save}
 
-\title{OS X Quartz Device}
+\title{macOS Quartz Device}
 \description{
-  \code{quartz} starts a graphics device driver for the OS X System.
+  \code{quartz} starts a graphics device driver for the macOS System.
   It supports plotting both to the screen (the default) and to various
   graphics file formats.
 }
@@ -131,7 +131,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
 \note{
   For a long time the default font family was documented as
   \code{"Helvetica"} after it had been changed to \code{"Arial"} to work
-  around a deficiency in OS X 10.4.   It may be changed back in future.
+  around a deficiency in macOS 10.4.   It may be changed back in future.
   
   A fairly common Mac problem is no text appearing on plots due to
   corrupted or duplicated fonts on your system.  You may be able to

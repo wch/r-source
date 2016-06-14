@@ -37,7 +37,7 @@ select.list(choices, preselect = NULL, multiple = FALSE,
   \sQuote{Cancel} button or pressing Escape.
 #endif
 #ifdef unix
-  Under the OS X GUI this brings up a modal dialog box
+  Under the macOS GUI this brings up a modal dialog box
   with a (scrollable) list of items, which can be selected by the mouse.
   On other Unix-like platforms it will use a
   Tcl/Tk listbox widget if possible.

@@ -3,7 +3,7 @@ config.h.
 
 We have remapped the POSIX entry points with a tre_ suffix: without
 it there was confusion with entry points in OS libraries on some OSes
-(e.g. Mac OS X).
+(e.g. macOS).
 
 alloca has been disabled: the declarations used do not work on
 Windows, and most likely not on FreeBSD.

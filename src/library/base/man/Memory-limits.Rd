@@ -15,7 +15,7 @@
 }
 \details{
   Currently \R runs on 32- and 64-bit operating systems, and most 64-bit
-  OSes (including Linux, Solaris, Windows and OS X) can run either
+  OSes (including Linux, Solaris, Windows and macOS) can run either
   32- or 64-bit builds of \R.  The memory limits depends mainly on the
   build, but for a 32-bit build of \R on Windows they also depend on the
   underlying OS version.

@@ -97,6 +97,6 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
 
 #if defined(HAVE_TANPI) || defined(HAVE___TANPI)
 // we document that tanpi(0.5) is NaN, but TS 18661-4:2015
-// does not require this and the Solaris and OS X versions give Inf.
+// does not require this and the Solaris and macOS versions give Inf.
 double Rtanpi(double);
 #endif

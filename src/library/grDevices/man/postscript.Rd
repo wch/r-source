@@ -368,7 +368,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   anti-aliasing in your viewer if you can) and missing or incorrect glyphs
   in text (viewers silently doing font substitution).
 
-  Unfortunately the default viewers on most Linux and OS X systems
+  Unfortunately the default viewers on most Linux and macOS systems
   have these problems, and no obvious way to turn off graphics anti-aliasing.
 }
 

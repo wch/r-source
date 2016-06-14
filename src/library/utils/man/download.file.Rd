@@ -171,10 +171,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   configuration file for \code{wget}.
 
   \command{wget} (\url{http://www.gnu.org/software/wget/}) is commonly
-  installed on Unix-alikes (but not OS X).  Windows binaries are
+  installed on Unix-alikes (but not macOS).  Windows binaries are
   available from Cygwin, gnuwin32 and elsewhere.
 
-  \command{curl} (\url{http://curl.haxx.se/}) is installed on OS X and
+  \command{curl} (\url{http://curl.haxx.se/}) is installed on macOS and
   commonly on Unix-alikes.  Windows binaries are available at that URL.
 }
 \section{Setting Proxies}{

@@ -230,7 +230,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   in your viewer if you can) and missing or incorrect glyphs in text
   (viewers silently doing font substitution).
 
-  Unfortunately the default viewers on most Linux and OS X systems
+  Unfortunately the default viewers on most Linux and macOS systems
   have these problems, and no obvious way to turn off graphics anti-aliasing.
 
   Acrobat Reader does not use the fonts specified but rather emulates
@@ -285,11 +285,11 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{\link{postscript}}.
 
 #ifdef unix
-  \code{\link{cairo_pdf}} and (on OS X only) \code{\link{quartz}}
+  \code{\link{cairo_pdf}} and (on macOS only) \code{\link{quartz}}
   for other devices that can produce PDF.
 #endif
 #ifdef windows
-  \code{\link{cairo_pdf}} and (on OS X only) \code{quartz}
+  \code{\link{cairo_pdf}} and (on macOS only) \code{quartz}
   for other devices that can produce PDF.
 #endif
 

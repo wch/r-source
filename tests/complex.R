@@ -122,8 +122,8 @@ asinh(z)
 acosh(z)
 atan(z)
 ## According to C99, should have continuity from the side given if there
-## are not signed zeros
-## Both glibc 2.12 and Mac OS X 10.6 use continuity from above in the first set
+## are not signed zeros.
+## Both glibc 2.12 and macOS 10.6 used continuity from above in the first set
 ## but they seem to assume signed zeros.
 ## Windows gave incorrect (NaN) values on the cuts.
 

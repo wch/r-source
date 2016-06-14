@@ -3620,7 +3620,7 @@ load("x.Rda")
 x
 stopifnot(identical(x, y))
 unlink("x.Rda")
-## 00 00 00 00 00 in 2.1.0 on MacOS X
+## 00 00 00 00 00 in 2.1.0 on OS X (now macOS)
 ## fixed for 2.1.1, but test added only in 2.2.x
 
 

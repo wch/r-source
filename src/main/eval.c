@@ -3632,7 +3632,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 
 #define R_MSG_NA	_("NaNs produced")
 #define CMP_ISNAN ISNAN
-//On Linux this is quite a bit faster; not on Mac OS X El Capitan:
+//On Linux this is quite a bit faster; not on macOS El Capitan:
 //#define CMP_ISNAN(x) ((x) != (x))
 #define FastMath1(fun, sym) do {					\
 	scalar_value_t vx;						\

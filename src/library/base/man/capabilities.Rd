@@ -18,7 +18,7 @@ capabilities(what = NULL)
     required components.  \code{NULL} implies that all are required.}
 }
 #ifdef unix
-\section{Note to OS X users}{
+\section{Note to macOS users}{
   Capabilities \code{"jpeg"}, \code{"png"} and \code{"tiff"} refer to
   the X11-based versions of these devices.  If
   \code{capabilities("aqua")} is true, then these devices with
@@ -46,7 +46,7 @@ capabilities(what = NULL)
     contacted unless a \code{X11} device has already been used.}
 
   \item{aqua}{is the \code{\link{quartz}} function operational?
-    Only on some OS X builds, including \acronym{CRAN} binary
+    Only on some macOS builds, including \acronym{CRAN} binary
     distributions of \R.
 
     Note that this is distinct from \code{.Platform$GUI == "AQUA"},
@@ -54,7 +54,7 @@ capabilities(what = NULL)
 #endif
 #ifdef windows
   \item{X11}{always \code{FALSE} on Windows.}
-  \item{aqua}{\code{FALSE} except on OS X.}
+  \item{aqua}{\code{FALSE} except on macOS.}
 #endif
   \item{http/ftp}{does the internal method for \code{\link{url}} and
     \code{\link{download.file}} support \samp{http://} and \samp{ftp://}

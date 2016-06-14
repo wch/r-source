@@ -21,7 +21,7 @@ menu <- function(choices, graphics = FALSE, title = NULL)
     if(!interactive()) stop("menu() cannot be used non-interactively")
     if(isTRUE(graphics)) {
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
-           ## Tk might not require X11 on Mac OS X, but if DISPLAY is set
+           ## Tk might not require X11 on macOS, but if DISPLAY is set
            ## this will work for Aqua Tcl/Tk.
            ## OTOH, we do want to check Tk works!
            || (capabilities("tcltk") && capabilities("X11") &&

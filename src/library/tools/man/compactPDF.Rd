@@ -48,7 +48,7 @@ compactPDF(paths,
 \details{
   This by default makes use of \command{qpdf}, available from
   \url{http://qpdf.sourceforge.net/} (including as a Windows binary) and
-  included with the CRAN OS X distribution of \R.  If \code{gs_cmd}
+  included with the CRAN macOS distribution of \R.  If \code{gs_cmd}
   is non-empty and \code{gs_quality != "none"}, GhostScript will used
   first, then \command{qpdf} if it is available.  If \code{gs_quality !=
   "none"} and \code{gs_cmd} is \code{""}, an attempt will be made to find a

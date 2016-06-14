@@ -41,7 +41,7 @@ browseURL(url, browser = getOption("browser"),
   
   On many platforms it is best to set option \code{"browser"} to a
   generic program/script and let that invoke the user's choice of
-  browser.  For example, on OS X use \command{open} and on many other
+  browser.  For example, on macOS use \command{open} and on many other
   Unix-alikes use \command{xdg-open}.
   
   If \code{browser} supports remote control and \R knows how to perform

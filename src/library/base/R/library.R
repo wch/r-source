@@ -23,7 +23,7 @@ function(built, run)
     ## remove vendor field
     built <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", built)
     run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
-    ## Mac OS X supports multiple CPUs by using 'universal' binaries
+    ## macOS supports multiple CPUs by using 'universal' binaries
     if (startsWith(built, "universal-darwin") && nzchar(.Platform$r_arch))
         built <- sub("^universal", R.version$arch, built)
     ## allow for small mismatches, e.g. OS version number and i686 vs i586.
