@@ -1,5 +1,5 @@
 
-R version 3.3.1 beta (2016-06-11 r70762) -- "Bug in Your Hair"
+R version 3.3.1 RC (2016-06-14 r70774) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -703,4 +703,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.126   0.019   1.132 
+  1.110   0.022   1.120 
