@@ -473,9 +473,9 @@ See the @url{https://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
 @subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package to run on OS X 10.6 (`Snow Leopard') and later.
+Apple installer package to run on OS X 10.9 (`Mavericks') and later.
 Once downloaded and executed, the installer will install the current
-release of R and an R.app OS X @acronym{GUI}.  This port of R for OS X
+release of R and R.app, the OS X @acronym{GUI}.  This port of R for OS X
 is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 (and previously by Stefano Iacus).  The
 @url{https://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
