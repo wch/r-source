@@ -100,6 +100,12 @@
       \item Illegal factors, e.g., with duplicated levels (illegal but
       constructable) now give a warning when printed, via new
       \code{.valid.factor}.
+
+      \item \code{sessionInfo()} has been updated for Apple's change in
+      OS naming as from \sQuote{10.12} (\sQuote{macOS Sierra}).
+
+      Its \code{toLatex()} method now includes the \code{running}
+      component.
     }
   }
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
@@ -109,7 +115,8 @@
 
       \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
       binary builds.  The \file{tcltk*.chm} help file is no longer
-      included; please use \url{http://www.tcl.tk/man/} instead.
+      included; please use consult the online help at
+      \url{http://www.tcl.tk/man/} instead.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -146,7 +153,7 @@
       nicely now, mostly thanks to a suggestion by Richie Cotton.
 
       \item Rotated symbols in plotmath expressions are now positioned
-      correctly on x11(type="Xlib") (\PR{16948}).
+      correctly on \code{x11(type = "Xlib")}. (\PR{16948})
     }
   }
 }

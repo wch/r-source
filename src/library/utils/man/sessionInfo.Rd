@@ -25,8 +25,8 @@ sessionInfo(package = NULL)
   \item{\dots}{currently not used.}
 }
 \value{
-  An object of class \code{"sessionInfo"}, which has \code{print} and
-  \code{\link{toLatex} methods.  This is a list with components
+  An object of class \code{"sessionInfo"} which has \code{print} and
+  \code{\link{toLatex}} methods.  This is a list with components
   \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
   \item{platform}{a character string describing the platform \R was
     built under.  Where sub-architectures are in use this is of the form
