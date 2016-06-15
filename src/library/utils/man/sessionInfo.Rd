@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -25,15 +25,15 @@ sessionInfo(package = NULL)
   \item{\dots}{currently not used.}
 }
 \value{
-  An object of class \code{"sessionInfo"}, which has a \code{print}
-  method. This is a list with components
+  An object of class \code{"sessionInfo"}, which has \code{print} and
+  \code{\link{toLatex} methods.  This is a list with components
   \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
   \item{platform}{a character string describing the platform \R was
     built under.  Where sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
   \item{running}{a character string describing the OS and version which
     it is running under (as distinct from built under).  This attempts
-    to name the Linux distribution and give the OS name on an Apple Mac.}
+    to name a Linux distribution and give the OS name on an Apple Mac.}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}

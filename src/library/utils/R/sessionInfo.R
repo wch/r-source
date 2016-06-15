@@ -120,9 +120,11 @@ print.sessionInfo <- function(x, locale = TRUE, ...)
     cat("Platform: ", x$platform, "\n", sep = "")
     if (!is.null(x$running)) cat("Running under: ",  x$running, "\n", sep = "")
     cat("\n")
-    if(locale)
-        cat(sprintf("locale: %s\n\n",
-                    strsplit(x$locale, ";", fixed = TRUE)[[1L]]))
+    if(locale) {
+        cat("locale:\n")
+	print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE, ...)
+        cat("\n")
+    }
     cat("attached base packages:\n")
     print(x$basePkgs, quote=FALSE, ...)
     if(!is.null(x$otherPkgs)){
