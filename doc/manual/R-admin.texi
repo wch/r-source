@@ -243,9 +243,10 @@ perhaps (it is tested less frequently on these platforms)
 @cindex Linux
 @cindex macOS
 In addition, binary distributions are available for some common Linux
-distributions and for macOS (formerly Mac OS).  See the @acronym{FAQ} for
-current details.  These are installed in platform-specific ways, so for
-the rest of this chapter we consider only building from the sources.
+distributions and for macOS (formerly OS X and Mac OS).  See the
+@acronym{FAQ} for current details.  These are installed in
+platform-specific ways, so for the rest of this chapter we consider only
+building from the sources.
 
 Cross-building is not possible: installing @R{} builds a minimal version
 of @R{} and then runs many @R{} scripts to complete the build.
@@ -1645,6 +1646,8 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
+(`macOS' was known as `OS X' from 2012--2016.)
+
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.9 and later (Mavericks, Yosemite,
@@ -2169,16 +2172,16 @@ source}.
 @node macOS packages, Customizing package compilation, Windows packages, Installing packages
 @subsection macOS
 
-On macOS @code{install.packages} works as it does on other Unix-alike
-systems, but there are additional types starting with @code{mac.binary}
-(available for the @acronym{CRAN} distribution but not when compiling
-from source: @code{mac.binary.mavericks} for a `Mavericks' build with
-@code{"default"} a synonym for the appropriate variant) which can be
-passed to @code{install.packages} in order to download and install
-binary packages from a suitable repository.  These macOS binary package
-files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
-for installation of either binary or source packages, from
-@acronym{CRAN} or local files.
+On macOS (formerly OS X) @code{install.packages} works as it does on
+other Unix-alike systems, but there are additional types starting with
+@code{mac.binary} (available for the @acronym{CRAN} distribution but not
+when compiling from source: @code{mac.binary.mavericks} for a
+`Mavericks' build with @code{"default"} a synonym for the appropriate
+variant) which can be passed to @code{install.packages} in order to
+download and install binary packages from a suitable repository.  These
+macOS binary package files have the extension @samp{.tgz}.  The @Rapp{}
+GUI provides menus for installation of either binary or source packages,
+from @acronym{CRAN} or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -4715,6 +4718,8 @@ the configure flag @option{--disable-largefile} was needed (since
 @node macOS, Solaris, Linux, Platform notes
 @section macOS
 @cindex macOS
+
+(`macOS' was known as `OS X' from 2012--2016.)
 
 The instructions here are for @cputype{x86_64} builds on 10.9
 (Mavericks) or later.  In principle@footnote{It will be necessary to

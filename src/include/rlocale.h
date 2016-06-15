@@ -70,7 +70,7 @@ extern int Ri18n_wcwidth(wchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
 
 /* macOS CJK and WindowXP(Japanese)
- * iswctypes of MacOSX calls isctypes. no i18n.
+ * iswctypes of macOS calls isctypes. no i18n.
  * For example, iswprint of Windows does not accept a macron of
  * Japanese "a-ru" of R as a letter. 
  * Therefore Japanese "Buraian.Ripuri-" of "Brian Ripley" is

@@ -137,7 +137,7 @@ rsharedir = @rsharedir@
 rincludedir = @rincludedir@
 rdocdir = @rdocdir@
 
-## Overrides for installing R as a framework (MacOS X).
+## Overrides for installing R as a framework (macOS).
 @WANT_R_FRAMEWORK_TRUE@FW_VERSION = @FW_VERSION@
 @WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources
 @WANT_R_FRAMEWORK_TRUE@bindir = $(rhome)

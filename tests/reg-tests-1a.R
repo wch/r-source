@@ -1917,7 +1917,7 @@ stopifnot(is.na(z[1]))
 ## gave (randomly) 1 or 3 in 1.6.1
 
 
-## PR#2469: read.table on MacOS CR-terminated files.
+## PR#2469: read.table on Mac OS CR-terminated files.
 tmp <- tempfile()
 x <- c("aaa", "bbb", "ccc")
 cat(x, sep="\r", file=tmp)
