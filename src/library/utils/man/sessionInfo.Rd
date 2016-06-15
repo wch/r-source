@@ -28,11 +28,12 @@ sessionInfo(package = NULL)
   An object of class \code{"sessionInfo"}, which has a \code{print}
   method. This is a list with components
   \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
-  \item{platform}{a character string describing the platform.  Where
-    sub-architectures are in use this is of the form
+  \item{platform}{a character string describing the platform \R was
+    built under.  Where sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
   \item{running}{a character string describing the OS and version which
-    it is running under (as distinct from compiled under).}
+    it is running under (as distinct from built under).  This attempts
+    to name the Linux distribution and give the OS name on an Apple Mac.}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}
