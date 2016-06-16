@@ -196,3 +196,15 @@ try(nchar(x, "w"))
 nchar(x, "c", allowNA = TRUE)
 nchar(x, "w", allowNA = TRUE)
 ## Results differed by platform, but some gave incorrect results on string 10.
+
+if(require("Matrix")) {
+    M = Matrix(diag(1:10),sparse=T)
+    setClass("TestM",representation(M='numeric'))
+    setMethod("+", c("TestM","TestM"), function(e1,e2) {
+        e1@M + e2@M
+    })
+    M+M # works the first time
+    M+M # was an error
+    rm(M)
+    detach("package:Matrix", unload=TRUE)
+}##{Matrix}

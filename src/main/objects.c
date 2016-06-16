@@ -1431,7 +1431,7 @@ SEXP attribute_hidden
 R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 		    Rboolean promisedArgs)
 {
-    SEXP fundef, value, mlist=R_NilValue, s, a, b;
+    SEXP fundef, value, mlist=R_NilValue, s, a, b, suppliedvars;
     int offset;
     prim_methods_t current;
     offset = PRIMOFFSET(op);
@@ -1462,17 +1462,22 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
             if (inherits(value, "internalDispatchMethod")) {
                 return(NULL);
             }
+            PROTECT(suppliedvars = list1(mkString(PRIMNAME(op))));
+            SET_TAG(suppliedvars, R_dot_Generic);
 	    /* found a method, call it with promised args */
 	    if(!promisedArgs) {
 		PROTECT(s = promiseArgs(CDR(call), rho));
 		if (length(s) != length(args)) error(_("dispatch error"));
 		for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
 		    SET_PRVALUE(CAR(b), CAR(a));
-		value =  applyClosure(call, value, s, rho, R_NilValue);
-		UNPROTECT(1);
+		value =  applyClosure(call, value, s, rho, suppliedvars);
+		UNPROTECT(2);
 		return value;
-	    } else
-		return applyClosure(call, value, args, rho, R_NilValue);
+	    } else {
+		value = applyClosure(call, value, args, rho, suppliedvars);
+                UNPROTECT(1);
+                return value;
+            }
 	}
 	/* else, need to perform full method search */
     }

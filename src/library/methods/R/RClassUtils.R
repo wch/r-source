@@ -1562,14 +1562,26 @@ setDataPart <- function(object, value, check = TRUE) {
         f <- byExt@replace
         byExpr <- body(f)
         if(!strictBy) {
-            toDef <- getClassDef(to)
-            byDef <- getClassDef(by)
+            toDef <- getClassDef(to, package=packageSlot(toExt))
+            byDef <- getClassDef(by, package=packageSlot(byExt))
             strictBy <- is.null(toDef) || is.null(byDef) || toDef@virtual || byDef@virtual
         }
-        ## Is there a danger of infinite loop below?
-        expr <- substitute({.value <- as(from, BY, STRICT); as(.value, TO) <- value; value <- .value; BYEXPR},
-                           list(BY=by, TO = to, BYEXPR = byExpr, STRICT = strictBy))
-        body(f, envir = environment(f)) <- expr
+        if (isVirtualClass(by, .requirePackage(packageSlot(byExt)))) {
+            skipDef <- getClassDef(by, package=packageSlot(byExt))
+            skipExt <- skipDef@contains[[to]]
+            if (!is.null(skipExt)) {
+                body(f, envir = environment(f)) <-
+                    call("as", body(skipExt@replace), byExt@subClass)
+            }
+        } else {
+            expr <- substitute({
+                .value <- as(from, BY, STRICT)
+                as(.value, TO) <- value
+                value <- .value
+                BYEXPR
+            }, list(BY=by, TO = to, BYEXPR = byExpr, STRICT = strictBy))
+            body(f, envir = environment(f)) <- expr
+        }
         toExt@replace <- f
         toExt@by <- toExt@subClass
         toExt@subClass <- byExt@subClass

@@ -352,11 +352,11 @@ SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 static Rboolean islistfactor(SEXP X)
 {
     int i, n = length(X);
-
-    if(n == 0) return FALSE;
+    
     switch(TYPEOF(X)) {
     case VECSXP:
     case EXPRSXP:
+        if(n == 0) return NA_LOGICAL;
 	for(i = 0; i < LENGTH(X); i++)
 	    if(!islistfactor(VECTOR_ELT(X, i))) return FALSE;
 	return TRUE;
@@ -396,11 +396,15 @@ SEXP attribute_hidden do_islistfactor(SEXP call, SEXP op, SEXP args, SEXP rho)
 	default:
 	    goto do_ans;
 	}
-	for(i = 0; i < LENGTH(X); i++)
-	    if(!islistfactor(VECTOR_ELT(X, i))) {
+        lans = FALSE;
+	for(i = 0; i < LENGTH(X); i++) {
+            Rboolean isfactor = islistfactor(VECTOR_ELT(X, i));
+	    if(!isfactor) {
 		lans = FALSE;
 		break;
-	    }
+	    } else if (isfactor == TRUE)
+                lans = TRUE;
+        }
     }
 do_ans:
     return ScalarLogical(lans);

@@ -825,3 +825,18 @@ stopifnot(
     identical(formals(getGeneric("as.vector")), formals(base::as.vector)),
     identical(formals(getGeneric("unlist")),    formals(base::unlist)))
 ## failed for a while in R-devel (3.3.0)
+
+setClass("myInteger", contains=c("integer", "VIRTUAL"))
+setClass("mySubInteger", contains="myInteger")
+new("mySubInteger", 1L)
+## caused infinite recursion in R 3.3.0
+
+detach("package:methods", force=TRUE)
+methods::setClass("test1", methods::representation(date="POSIXct"))
+methods::setClass("test2", contains="test1")
+test <- function(x) UseMethod('test', x)
+test.test1 <- function(x) 'Hi'
+test(methods::new("test2", date=as.POSIXct("2003-10-09")))
+stopifnot(require("methods"))
+## S3 dispatch to superclass methods failed on S4 objects when
+## methods package was not attached

@@ -1618,3 +1618,8 @@ print(cbind(format = format(z), t(zRI), mz), quote=FALSE)
 stopifnot(identical(mz, sapply(z, match, table = z)))
 ## the latter has length(x) == 1 in match(x,*)  and failed in R 3.3.0
 
+## PR#16925, radix sorting INT_MAX w/ decreasing=TRUE and na.last=TRUE
+## failed ASAN check and segfaulted on some systems.
+data <- c(2147483645L, 2147483646L, 2147483647L, 2147483644L)
+stopifnot(identical(sort(data, decreasing = TRUE, method = "radix"),
+                    c(2147483647L, 2147483646L, 2147483645L, 2147483644L)))
