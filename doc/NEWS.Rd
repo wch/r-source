@@ -115,7 +115,7 @@
 
       \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
       binary builds.  The \file{tcltk*.chm} help file is no longer
-      included; please use consult the online help at
+      included; please consult the online help at
       \url{http://www.tcl.tk/man/} instead.
     }
   }
