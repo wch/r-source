@@ -48,22 +48,6 @@
 
       \item \code{diff(<difftime>)} now keeps the \code{"units"}
       attribute, as subtraction already did, \PR{16940}.
-
-      \item \code{as<-()} avoids an infinite loop when a virtual class
-      comes between a subclass and an actual superclass.
-      
-      \item Fix level propagation in \code{unlist()} when the list
-      contains zero-length lists or factors.
-
-      \item Fix S3 dispatch on S4 objects when the \pkg{methods} package is
-      not attached.
-
-      \item Internal S4 dispatch sets \code{.Generic} in the method frame for
-      consistency with \code{standardGeneric()} (\PR{16929}).
-
-      \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
-      integer vector containing \code{MAX_INT}. Ported from a fix Matt
-      Dowle made to \CRANpkg{data.table}.
     }
   }
 }

@@ -198,13 +198,15 @@ static int nblock[NBLOCK];
 #define TEND(i)
 #endif
 
-static int range, xmin; // used by both icount and do_radixsort
+static int range, off; // used by both icount and do_radixsort
 static void setRange(int *x, int n)
 {
-    xmin = NA_INTEGER;
-    int xmax = NA_INTEGER;
+    int xmin = NA_INTEGER, xmax = NA_INTEGER;
     double overflow;
 
+    off = (nalast == 1) ? 0 : 1;   // nalast^decreasing ? 0 : 1;
+    // off = 0 will store values starting from index 0. NAs will go last.
+    // off = 1 will store values starting from index 1. NAs will be at 0th index.
     int i = 0;
     while(i < n && x[i] == NA_INTEGER) i++;
     if (i < n) xmax = xmin = x[i];
@@ -231,6 +233,9 @@ static void setRange(int *x, int n)
     }
 
     range = xmax - xmin + 1;
+    // so that  off+order*x[i]  (below in icount)
+    // => (x[i]-xmin)+0|1  or  (xmax-x[i])+0|1
+    off = order == 1 ? -xmin + off : xmax + off;
 
     return;
 }
@@ -252,7 +257,7 @@ static void icount(int *x, int *o, int n)
    3. Pushes group sizes onto stack
 */
 {
-    int napos = range; // NA's always counted in last bin
+    int napos = (nalast == 1) ? range : 0;  // take care of 'nalast' argument
     // static is IMPORTANT, counting sort is called repetitively.
     static unsigned int counts[N_RANGE + 1] = { 0 };
     /* counts are set back to 0 at the end efficiently. 1e5 = 0.4MB i.e
@@ -268,36 +273,26 @@ static void icount(int *x, int *o, int n)
 	if (x[i] == NA_INTEGER)
 	    counts[napos]++;
 	else
-	    counts[x[i] - xmin]++;
+	    counts[off + order * x[i]]++;
     }
     
     int tmp = 0;
-    if (nalast != 1 && counts[napos]) {
-        push(counts[napos]);
-        tmp += counts[napos];
-    }
-    int w = (order==1) ? 0 : range-1;
-    for (int i = 0; i < range; i++) 
+    for (int i = 0; i <= range; i++) 
         /* no point in adding tmp < n && i <= range, since range includes max, 
            need to go to max, unlike 256 loops elsewhere in radixsort.c */
     {
-	if (counts[w]) {
+	if (counts[i]) {
 	    // cumulate but not through 0's.
 	    // Helps resetting zeros when n < range, below.
-	    push(counts[w]);
-	    counts[w] = (tmp += counts[w]);
+	    push(counts[i]);
+	    counts[i] = (tmp += counts[i]);
 	}
-        w += order; // order is +1 or -1
-    }
-    if (nalast == 1 && counts[napos]) {
-        push(counts[napos]);
-        counts[napos] = (tmp += counts[napos]);
     }
     for (int i = n - 1; i >= 0; i--) {
 	// This way na.last=TRUE/FALSE cases will have just a
 	// single if-check overhead.
 	o[--counts[(x[i] == NA_INTEGER) ? napos :
-		   x[i] - xmin]] = (int) (i + 1);
+		   off + order * x[i]]] = (int) (i + 1);
     }
     // nalast = 1, -1 are both taken care already.
     if (nalast == 0)
@@ -314,7 +309,7 @@ static void icount(int *x, int *o, int n)
 	counts[napos] = 0;
 	for (int i = 0; i < n; i++) {
 	    if (x[i] != NA_INTEGER)
-		counts[x[i] - xmin] = 0;
+		counts[off + order * x[i]] = 0;
 	}
     } else
 	memset(counts, 0, (range + 1) * sizeof(int));
