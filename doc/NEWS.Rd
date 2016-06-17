@@ -154,6 +154,22 @@
 
       \item Rotated symbols in plotmath expressions are now positioned
       correctly on \code{x11(type = "Xlib")}. (\PR{16948})
+      
+      \item \code{as<-()} avoids an infinite loop when a virtual class
+      is interposed between a subclass and an actual superclass.
+
+      \item Fix level propagation in \code{unlist()} when the list
+      contains zero-length lists or factors.
+
+      \item Fix S3 dispatch on S4 objects when the \pkg{methods} package is
+      not attached.
+
+      \item Internal S4 dispatch sets \code{.Generic} in the method frame for
+      consistency with \code{standardGeneric()} (\PR{16929}).
+
+      \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
+      integer vector containing \code{MAX_INT}. Ported from a fix Matt
+      Dowle made to \CRANpkg{data.table}.
     }
   }
 }
@@ -218,22 +234,6 @@
       terminal interface is now supported when \R{} was compiled against
       \code{readline} >= 6.0 (\code{Ctrl-G} always worked).
       (\PR{16603})
-
-      \item \code{as<-()} avoids an infinite loop when a virtual class
-      is interposed between a subclass and an actual superclass.
-
-      \item Fix level propagation in \code{unlist()} when the list
-      contains zero-length lists or factors.
-
-      \item Fix S3 dispatch on S4 objects when the \pkg{methods} package is
-      not attached.
-
-      \item Internal S4 dispatch sets \code{.Generic} in the method frame for
-      consistency with \code{standardGeneric()} (\PR{16929}).
-
-      \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
-      integer vector containing \code{MAX_INT}. Ported from a fix Matt
-      Dowle made to \CRANpkg{data.table}.
 
       \item \code{diff(<difftime>)} now keeps the \code{"units"}
       attribute, as subtraction already did, \PR{16940}.
