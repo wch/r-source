@@ -57,7 +57,7 @@ sessionInfo <- function(package = NULL)
                        ver <- sub("</string>$", "", ver)
                        ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
                        sprintf("%s %s (%s)",
-                               ifelse(ver1 < 12, "OS X", "macOS"),
+                               ifelse(as.numeric(ver1) < 12, "OS X", "macOS"),
                                switch(ver1,
                                       "4" = "Tiger",
                                       "5" = "Leopard",
