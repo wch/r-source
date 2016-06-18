@@ -56,11 +56,10 @@ sessionInfo <- function(package = NULL)
                        ver <- sub(".*<string>", "", ver)
                        ver <- sub("</string>$", "", ver)
                        ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
-                       sprintf("%s %s (%s)",
+                       sprintf("%s %s %s",
                                ifelse(as.numeric(ver1) < 12, "OS X", "macOS"),
                                switch(ver1,
-                                      "4" = "Tiger",
-                                      "5" = "Leopard",
+                                      ## 10.6 is earliest that can be installed
                                       "6" = "Snow Leopard",
                                       "7" = "Lion",
                                       "8" = "Mountain Lion",
@@ -68,7 +67,7 @@ sessionInfo <- function(package = NULL)
                                       "10" = "Yosemite",
                                       "11" = "El Capitan",
                                       "12" = "Sierra",
-                                      "unknown"), ver)
+                                      ""), ver)
                    },
                    "SunOS" = {
                        ver <- system('uname -r', intern = TRUE)
