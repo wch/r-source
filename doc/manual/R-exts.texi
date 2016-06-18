@@ -2040,13 +2040,11 @@ are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
 and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
-_OPENMP}: note that some toolchains used for @R{} (including many of
-those using @command{clang}@footnote{Some builds of @command{clang}
-3.7.0 have support for OpenMP 3.1 (this is built by default as from
-3.8.0), but even if the compiler has, the @code{libomp} library may not
-be installed.  At the time of writing Apple builds of @command{clang}
-for macOS had no support.})  have no OpenMP support at all, not even
-@file{omp.h}.
+_OPENMP}: note that some toolchains used for @R{} (including that of
+macOS and some others using @command{clang}@footnote{Default builds of
+@command{clang} 3.8.0 and later have support for OpenMP, but the
+@code{libomp} library may not be installed.}) have no OpenMP support at
+all, not even @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines

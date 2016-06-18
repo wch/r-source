@@ -4736,10 +4736,11 @@ reinstalled when macOS is upgraded, as upgrading partially removes them.)
 You need @code{readline}@footnote{Apple provides a partial emulation of
 GNU readline 4.2 based on the NetBSD @code{editline} library.  That is
 not recommended but for the time being @R{}'s installation scripts will
-make use of it.} and a Fortran compiler.  Those and other binary
-components are available from @uref{https://r.research.att.com/libs}:
-you are likely to need @code{pcre} and @code{xz} (recent macOS provides
-libraries but not headers for these).
+make use of it if GNU readline is not found.} and a Fortran compiler.
+Those and other binary components are available from
+@uref{https://r.research.att.com/libs}: you are likely to need
+@code{pcre} and @code{xz} (recent macOS provides libraries but not
+headers for these).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
