@@ -4104,14 +4104,18 @@ files.
 R-admin, R Installation and Administration},
 @end ifset
 
-Although there is a 2011 version of the C++ standard, even partial
-implementations are not universally available.  Portable C++ code needs
-to follow the 1998 standard (and not use features from C99).  See also
-@ref{Using C++11 code} to specify a C++11 compiler.
+Although there is a 2011 version of the C++ standard, implementations
+are not universally available.  Portable C++ code needs to follow the
+1998 standard (and not use features from C99).  See also @ref{Using
+C++11 code} to specify a C++11 compiler where available.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
 of conformance to the standard.
+
+If using Fortran 95 with the GNU compiler, use the flag
+@option{-std=f95} which rejects most GNU extensions and features from
+later standards.
 
 Not all common @R{} platforms conform to the expected standards, e.g.@:
 C99 for C code.  One common area of problems is the @code{*printf}
