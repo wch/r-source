@@ -1423,6 +1423,7 @@ static Rboolean RunFinalizers(void)
 	s = next;
     }
     running = FALSE;
+    R_finalizers_pending = FALSE;
     return finalizer_run;
 }
 
