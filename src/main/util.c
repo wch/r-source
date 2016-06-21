@@ -614,9 +614,7 @@ static void isort_with_index(int *x, int *indx, int n)
 
 
 // body(x) without attributes "srcref", "srcfile", "wholeSrcref" :
-// used by R_compute_identical.
 // NOTE: Callers typically need  PROTECT(R_body_no_src(.))
-// and 'x' needs to be protected.
 SEXP R_body_no_src(SEXP x) {
     SEXP b = PROTECT(duplicate(BODY_EXPR(x)));
     /* R's removeSource() works *recursively* on the body()
