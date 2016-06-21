@@ -3343,14 +3343,6 @@ version of TRE. (The current sources are in the @command{git} repository
 at @url{https://github.com/laurikari/tre/}, but at the time of writing
 the resulting build will not pass its checks.).
 
-@c 5.0.3 was released on 2011-05-21
-Library @code{liblzma} from @code{xz-utils} version 5.0.3 or later
-(including 5.2.x) will be used if installed: the version in the @R{}
-sources can be selected instead by configuring with
-@option{--without-system-xz}.  Systems differ in what they call the
-package including this: e.g.@: on Fedora the library is in
-@samp{xz-libs} and the headers in @samp{xz-devel}.
-
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
 have higher performance).  @acronym{XDR} is part of @acronym{RPC} and
@@ -4878,14 +4870,10 @@ some upgrades but not others).
 @node El Capitan, Tcl/Tk headers and libraries, macOS, macOS
 @subsection El Capitan
 
-There are problems resulting from the new-to-El-Capitan restriction that
-only Apple is allowed to install software under @file{/usr}: this
-affects @emph{inter alia} @code{MacTeX} and @code{XQuartz}.  For
-@code{MacTeX} it is necessary to include @file{/Library/TeX/texbin} in
-your path rather than @file{/usr/texbin}.  Upgrading will move
-disallowed files to under @file{/Library/SystemMigration/usr}: this
-includes @file{/usr/X11R6}, @file{/usr/texbin}, @file{/usr/bin/R},
-@file{/usr/bin/Rscript} but not the link @file{/usr/X11}.
+There have been problems resulting from the new-to-El-Capitan
+restriction that only Apple is allowed to install software under
+@file{/usr}: this affects @emph{inter alia} @code{MacTeX} and
+@code{XQuartz} which changed their installation locations.
 
 @command{configure} can be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
@@ -4894,8 +4882,7 @@ includes @file{/usr/X11R6}, @file{/usr/texbin}, @file{/usr/bin/R},
 @end example
 
 @noindent
-although the linked versions under @file{/usr/X11} will be found (if the
-link is present).
+although linked versions under @file{/usr/X11} will be found.
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan, macOS
 @subsection Tcl/Tk headers and libraries
