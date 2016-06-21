@@ -4668,7 +4668,7 @@ tryCmpfun <- function(f)
     tryCatch(cmpfun(f), error = function(e) f)
 @ %def tryCmpfun
 
-A similar usility for expressions for use in JIT compilation of loops:
+A similar utility for expressions for use in JIT compilation of loops:
 <<[[tryCompile]] function>>=
 tryCompile <- function(e, ...)
     tryCatch(compile(e, ...), error = function(err) e)
