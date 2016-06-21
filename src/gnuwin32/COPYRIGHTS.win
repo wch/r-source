@@ -141,6 +141,6 @@ distribution used is that at https://www.rforge.net/Cairo/files/ .
 
 A binary build may contain compiled components from ICU, whose license
 can be viewed at
-http://source.icu-project.org/repos/icu/icu/trunk/license.html: the
+http://source.icu-project.org/repos/icu/icu/trunk/LICENSE: the
 sources and binary libraries used are available at
 http://www.stats.ox.ac.uk/pub/Rtools/ .
