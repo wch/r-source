@@ -5,6 +5,25 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.3.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{extSoftVersion()} now reports the version (if any) of
+      the \code{readline} library in use.
+    }
+  }
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item Versions of the \code{readline} library >= 6.3 had been
+      changed so that terminal window resizes were not signalled to
+      \code{readline}: code has been added using a explicit signal
+      handler to work around that (when \R is compiled against readline
+      >= 6.3).  (\PR{16604})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.3.1}{
   \subsection{BUG FIXES}{
     \itemize{

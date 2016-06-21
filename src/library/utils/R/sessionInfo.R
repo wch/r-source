@@ -56,7 +56,8 @@ sessionInfo <- function(package = NULL)
                        ver <- sub(".*<string>", "", ver)
                        ver <- sub("</string>$", "", ver)
                        ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
-                       sprintf("OS X %s (%s)", ver,
+                       sprintf("%s %s (%s)",
+                               ifelse(as.numeric(ver1) < 12, "OS X", "macOS"),
                                switch(ver1,
                                       "4" = "Tiger",
                                       "5" = "Leopard",
@@ -67,7 +68,7 @@ sessionInfo <- function(package = NULL)
                                       "10" = "Yosemite",
                                       "11" = "El Capitan",
                                       "12" = "Sierra",
-                                     "unknown"))
+                                      "unknown"), ver)
                    },
                    "SunOS" = {
                        ver <- system('uname -r', intern = TRUE)

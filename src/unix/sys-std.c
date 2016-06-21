@@ -417,7 +417,6 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 }
 
 
-
 #ifdef HAVE_LIBREADLINE
 
 # ifdef HAVE_READLINE_READLINE_H
@@ -427,6 +426,15 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 #  if !defined (_RL_FUNCTION_TYPEDEF)
 typedef void rl_vcpfunc_t (char *);
 #  endif /* _RL_FUNCTION_TYPEDEF */
+
+# if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0603
+/* readline 6.3's rl_callback_handler_install() no longer installs
+   signal handlers, so as from that version we need an explicit
+   one. (PR#16604)  (This could have been controlled in earlier versions
+   by setting rl_catch_sigwinch.)
+ */
+#  define NEED_INT_HANDLER
+# endif
 # else
 typedef void rl_vcpfunc_t (char *);
 extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
@@ -513,6 +521,15 @@ static struct {
   rl_vcpfunc_t *fun[MAX_READLINE_NESTING];
 } ReadlineStack = {-1, MAX_READLINE_NESTING - 1};
 
+#ifdef NEED_INT_HANDLER
+static volatile Rboolean caught_sigwinch = FALSE;
+
+static RETSIGTYPE
+R_readline_sigwinch_handler(int sig)
+{
+    caught_sigwinch = TRUE;
+}
+#endif
 
 /*
   Registers the specified routine and prompt with readline
@@ -527,6 +544,11 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
      ReadlineStack.fun[++ReadlineStack.current] = f;
 
    rl_callback_handler_install(prompt, f);
+
+#ifdef NEED_INT_HANDLER
+   signal(SIGWINCH, R_readline_sigwinch_handler);
+#endif
+
    /* flush stdout in case readline wrote the prompt, but didn't flush
       stdout to make it visible. (needed for Apple's readline emulation). */
    fflush(stdout);
@@ -534,7 +556,7 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
 
 #if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0600
 /*
-  Fix for PR#16603.
+  Fix for PR#16603, for readline >= 6.0.
 
   The readline interface is somewhat messy. readline contains the
   function rl_free_line_state(), which its internal SIGINT handler
@@ -716,9 +738,8 @@ static void initialize_rlcompletion(void)
     /* Tell the completer that we want a crack first. */
     rl_attempted_completion_function = R_custom_completion;
 
-    /* Disable sorting of possible completions; only readline >= 6 */
+    /* Disable sorting of possible completions; only readline >= 6.0 */
 #if RL_READLINE_VERSION >= 0x0600
-    /* if (rl_readline_version >= 0x0600) */
     rl_sort_completion_matches = 0;
 #endif
 
@@ -954,6 +975,14 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))
 		wt = Rg_wait_usec;
 	    what = R_checkActivityEx(wt, 0, handleInterrupt);
+#ifdef NEED_INT_HANDLER
+            if (UsingReadline && caught_sigwinch) {
+		caught_sigwinch = FALSE;
+		// iintroduced in readline 4.0: only used for >= 6.3
+		rl_resize_terminal();
+            }
+#endif
+
 	    /* This is slightly clumsy. We have advertised the
 	     * convention that R_wait_usec == 0 means "wait forever",
 	     * but we also need to enable R_checkActivity to return
