@@ -47,7 +47,7 @@
 
       \item \code{pretty(d, ..)} for date-time \code{d} rarely failed
       when \code{"halfmonth"} time steps were tried (\PR{16923}) and
-      on \sQuote{inaccurate} platforms such as 32-bit windows or
+      on \sQuote{inaccurate} platforms such as 32-bit Windows or
       a configuration with \command{--disable-long-double}; see comment
       #15 of \PR{16761}.
 
@@ -62,8 +62,9 @@
 
       \item Use of \code{Ctrl-C} to terminate a reverse incremental
       search started by \code{Ctrl-R} in the \code{readline}-based Unix
-      terminal interface is now supported for \code{readline} >= 6.3
-      (\code{Ctrl-G} always worked).  (\PR{16603})
+      terminal interface is now supported when \R{} was compiled against
+      \code{readline} >= 6.0 (\code{Ctrl-G} always worked).
+      (\PR{16603})
 
       \item \code{diff(<difftime>)} now keeps the \code{"units"}
       attribute, as subtraction already did, \PR{16940}.
