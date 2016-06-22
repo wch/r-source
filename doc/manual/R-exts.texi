@@ -4283,6 +4283,15 @@ accepted on recent Linux, AIX, FreeBSD, macOS and Solaris (at least).
 However, some Linux distributions micro-package, so locales defined by
 @pkg{glibc} (including these examples) may not be installed.
 
+@item
+Avoid spaces in file names, not least as they can cause difficulties for
+external tools.  A recent example was a package with a @pkg{knitr}
+vignette that used spaces in plot names: this caused some versions of
+@command{pandoc} to fail with a baffling error message.
+@c msmtools in June 2016 failed with pandoc 1.12 but not 1.16.
+
+Non-ASCII filenames can also cause problems (particularly in non-UTF-8
+locales).
 @end itemize
 
 Do be careful in what your tests (and examples) actually test.  Bad
