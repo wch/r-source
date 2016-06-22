@@ -219,7 +219,7 @@
 
       \item \code{pretty(d, ..)} for date-time \code{d} rarely failed
       when \code{"halfmonth"} time steps were tried (\PR{16923}) and
-      on \sQuote{inaccurate} platforms such as 32-bit windows or
+      on \sQuote{inaccurate} platforms such as 32-bit Windows or
       a configuration with \command{--disable-long-double}; see comment
       #15 of \PR{16761}.
 
