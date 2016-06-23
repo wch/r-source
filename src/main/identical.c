@@ -135,6 +135,12 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	    if(length(ax) != length(ay)) return FALSE;
 	    /* They are the same length and should have
 	       unique non-empty non-NA tags */
+	    /* ax, ay might be fresh allocations from duplicating into
+	       x_, y_) above, so need to be protected from possible
+	       allocations in getAttrib and recursive calls to
+	       R_compute_identical in the loop. */
+	    PROTECT(ax);
+	    PROTECT(ay);
 	    for(elx = ax; elx != R_NilValue; elx = CDR(elx)) {
 		const char *tx = CHAR(PRINTNAME(TAG(elx)));
 		for(ely = ay; ely != R_NilValue; ely = CDR(ely))
@@ -144,17 +150,24 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 			    PROTECT(atrx = getAttrib(x, R_RowNamesSymbol));
 			    PROTECT(atry = getAttrib(y, R_RowNamesSymbol));
 			    if(!R_compute_identical(atrx, atry, flags)) {
-				UNPROTECT(2);
+				UNPROTECT(4); /* atrx, atry, ax, ay */
 				return FALSE;
 			    } else
-				UNPROTECT(2);
+				UNPROTECT(2); /* atrx, atry */
 			} else
-			    if(!R_compute_identical(CAR(elx), CAR(ely), flags))
+			    if(!R_compute_identical(CAR(elx), CAR(ely),
+						    flags)) {
+				UNPROTECT(2); /* ax, ay */
 				return FALSE;
+			    }
 			break;
 		    }
-		if(ely == R_NilValue) return FALSE;
+		if(ely == R_NilValue) {
+		    UNPROTECT(2); /* ax, ay */
+		    return FALSE;
+		}
 	    }
+	    UNPROTECT(2); /* ax, ay */    
 	}
     }
     switch (TYPEOF(x)) {
