@@ -837,6 +837,20 @@ void attribute_hidden R_init_jit_enabled(void)
 		R_disable_bytecode = FALSE;
 	}
     }
+
+    /* -1 ... duplicate constants on LDCONST and PUSHCONSTARG, no checking
+        0 ... no checking (no duplication for >= 0) [DEFAULT]
+	1 ... check at error, session exit and reclamation
+	2 ... check also at full GC
+	3 ... check also at partial GC
+	4 ... check also at .Call
+	5 ... (very) verbose report on modified constants
+    */
+    if (R_check_constants <= 1) {
+	char *check = getenv("R_CHECK_CONSTANTS");
+	if (check != NULL)
+	    R_check_constants = atoi(check);
+    }
 }
 
 SEXP attribute_hidden R_cmpfun(SEXP fun)
@@ -3080,6 +3094,13 @@ static SEXP R_NotSym = NULL;
 static SEXP R_CSym = NULL;
 static SEXP R_LogSym = NULL;
 
+/* R_ConstantsRegistry allows runtime detection of modification of compiler
+   constants. It is a linked list of weak references. Each weak reference
+   refers to a byte-code object (BCODESXPs) as key and to a deep copy of the
+   object's constants as value. The head of the list has a nil payload
+   instead of a weak reference, stays in the list forever, and is a GC root.*/
+static SEXP R_ConstantsRegistry = NULL;
+
 #if defined(__GNUC__) && ! defined(BC_PROFILING) && (! defined(NO_THREADED_CODE))
 # define THREADED_CODE
 #endif
@@ -3109,6 +3130,12 @@ void R_initialize_bcode(void)
 #ifdef THREADED_CODE
   bcEval(NULL, NULL, FALSE);
 #endif
+
+  /* the first constants record always stays in place for protection */
+  R_ConstantsRegistry = allocVector(VECSXP, 2);
+  R_PreserveObject(R_ConstantsRegistry);
+  SET_VECTOR_ELT(R_ConstantsRegistry, 0, R_NilValue);
+  SET_VECTOR_ELT(R_ConstantsRegistry, 1, R_NilValue);
 }
 
 enum {
@@ -5414,6 +5441,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(LDCONST, 1):
       R_Visible = TRUE;
       value = VECTOR_ELT(constants, GETOP());
+      if (R_check_constants < 0)
+          value = duplicate(value);
       MARK_NOT_MUTABLE(value);
       BCNPUSH(value);
       NEXT();
@@ -5598,6 +5627,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  be defensive against bad package C code */
     OP(PUSHCONSTARG, 1):
       value = VECTOR_ELT(constants, GETOP());
+      if (R_check_constants < 0)
+          value = duplicate(value);
       MARK_NOT_MUTABLE(value);
       PUSHCALLARG(value);
       NEXT();
@@ -6241,6 +6272,182 @@ SEXP R_bcEncode(SEXP x) { return x; }
 SEXP R_bcDecode(SEXP x) { return duplicate(x); }
 #endif
 
+/* Add BCODESXP bc into the constants registry, performing a deep copy of the
+   bc's constants */
+#define CONST_CHECK_COUNT 1000
+void attribute_hidden R_registerBC(SEXP bcBytes, SEXP bcode)
+{
+    if (R_check_constants <= 0)
+	return;
+    if (TYPEOF(bcBytes) != INTSXP)
+	error("registerBC requires integer vector as bcBytes");
+    if (TYPEOF(bcode) != BCODESXP)
+	error("registerBC requires BCODESXP object as bcode");
+
+    static int count = CONST_CHECK_COUNT;
+    if (--count <= 0) {
+	count = CONST_CHECK_COUNT;
+	R_checkConstants(TRUE);
+    }
+
+    /* The constants registry is a linked list of constant records. Each
+       constant record is a generic vector, its first element is a pointer
+       to the next constant record, the second element is a weak reference
+       to the byte-code object and the following elements are interleaved
+       original and copied constants. A constant registry corresponds to a one
+       constant pool. When the weak reference gets cleared, the respective
+       constant record can be removed from the list.
+
+       One could simply compare/duplicate the lists of all constants (the whole
+       constant pools), but that turned out too expensive */
+
+    SEXP consts = BCCONSTS(bcode); /* all constants, VECSXP */
+
+//#define CHECK_ALL_CONSTANTS
+#ifndef CHECK_ALL_CONSTANTS
+    int *ipc = INTEGER(bcBytes);
+    int n = LENGTH(bcBytes);
+    int i;
+    int loadableConsts = 0;
+
+    /* add only constants loaded by certain instructions  */
+    for(i = 0; i < n; i += opinfo[ipc[i]].argc + 1)
+        if (ipc[i] == LDCONST_OP || ipc[i] == PUSHCONSTARG_OP ||
+		ipc[i] == CALLSPECIAL_OP)
+            loadableConsts++;
+
+    SEXP constsRecord = PROTECT(allocVector(VECSXP, loadableConsts * 2 + 2));
+    int crIdx = 2;
+    for(i = 0; i < n; i += opinfo[ipc[i]].argc + 1)
+        if (ipc[i] == LDCONST_OP || ipc[i] == PUSHCONSTARG_OP ||
+		ipc[i] == CALLSPECIAL_OP) {
+            SEXP corig = VECTOR_ELT(consts, ipc[i + 1]);
+            SET_VECTOR_ELT(constsRecord, crIdx++, corig);
+            SET_VECTOR_ELT(constsRecord, crIdx++, duplicate(corig));
+        }
+#else
+    /* add the whole constant pool */
+    SEXP constsRecord = PROTECT(allocVector(VECSXP, 2 + 2));
+    SET_VECTOR_ELT(constsRecord, 2, consts);
+    SET_VECTOR_ELT(constsRecord, 3, duplicate(consts));
+#endif
+
+    SEXP wref = R_MakeWeakRef(bcode, R_NilValue, R_NilValue, FALSE);
+    SET_VECTOR_ELT(constsRecord, 0, VECTOR_ELT(R_ConstantsRegistry, 0));
+    SET_VECTOR_ELT(constsRecord, 1, wref);
+    SET_VECTOR_ELT(R_ConstantsRegistry, 0, constsRecord);
+    UNPROTECT(1); /* constsRecord */
+}
+
+/* A potentially very verbose report for modified compiler constant. */
+static void reportModifiedConstant(SEXP crec, SEXP orig, SEXP copy, int idx)
+{
+    if (R_check_constants < 5)
+	return;
+
+    SEXP bc = R_WeakRefKey(VECTOR_ELT(crec, 1));
+    if (bc == R_NilValue)
+	return;
+
+    SEXP consts = BCCONSTS(bc);
+    int n = LENGTH(consts);
+    int i;
+    if (idx == -1) {
+	for(i = 0; i < n; i++)
+	    if (VECTOR_ELT(consts, i) == orig) {
+		idx = i;
+		break;
+	    }
+    }
+    int oldout = R_OutputCon; /* redirect standard to error output */
+    R_OutputCon = 2;
+    int oldcheck = R_check_constants; /* guard against recursive invocation */
+    R_check_constants = 0;
+    REprintf("ERROR: the modified value of the constant is:\n");
+    PrintValue(orig);
+    REprintf("ERROR: the original value of the constant is:\n");
+    PrintValue(copy);
+    REprintf("ERROR: the modified constant is at index %d\n", idx);
+    REprintf("ERROR: the modified constant is in this function body:\n");
+    PrintValue(VECTOR_ELT(consts, 0));
+    R_check_constants = oldcheck;
+    R_OutputCon = oldout;
+}
+
+/* Checks whether compiler constants linked from the given record
+   were modified. */
+static Rboolean checkConstantsInRecord(SEXP crec, Rboolean abortOnError)
+{
+    int i;
+    int n = LENGTH(crec);
+    Rboolean constsOK = TRUE;
+
+    for (i = 2; i < n;) {
+	SEXP corig = VECTOR_ELT(crec, i++);
+	SEXP ccopy = VECTOR_ELT(crec, i++);
+
+	/* 7: not numerical comparison, not single NA, not attributes
+           as set do ignore byte-code, do ignore environments of closures */
+	if (!R_compute_identical(corig, ccopy, 7)) {
+
+#ifndef CHECK_ALL_CONSTANTS
+	    REprintf("ERROR: modification of compiler constant of type %s"
+		", length %d\n", CHAR(type2str(TYPEOF(ccopy))), length(ccopy));
+	    reportModifiedConstant(crec, corig, ccopy, -1);
+#else
+	    int nc = LENGTH(corig);
+	    /* some variables are volatile to prevent the compiler from
+	       optimizing them out, for easier debugging */
+	    volatile int ci;
+	    for(ci = 0; ci < nc; ci++) {
+		volatile SEXP orig = VECTOR_ELT(corig, ci);
+		volatile SEXP copy = VECTOR_ELT(ccopy, ci);
+		if (!R_compute_identical(orig, copy, 7)) {
+		    REprintf("ERROR: modification of compiler constant"
+			" of type %s, length %d\n",
+			CHAR(type2str(TYPEOF(copy))), length(copy));
+		    reportModifiedConstant(crec, orig, copy, ci);
+		}
+	    }
+#endif
+	    constsOK = FALSE;
+        }
+    }
+
+    if (!constsOK && abortOnError) {
+	/* turn off constant checking to avoid infinite recursion through
+	   R_Suicide -> ... -> R_RunExitFinalizers -> R_checkConstants. */
+	R_check_constants = 0;
+	R_Suicide("compiler constants were modified!\n");
+    }
+
+    return constsOK;
+}
+
+/* Checks if constants of any registered BCODESXP have been modified.
+   Returns TRUE if the constants are ok, otherwise returns false or aborts.*/
+Rboolean attribute_hidden R_checkConstants(Rboolean abortOnError)
+{
+    if (R_check_constants <= 0 || R_ConstantsRegistry == NULL)
+	return TRUE;
+    SEXP prev_crec = R_ConstantsRegistry;
+    SEXP crec = VECTOR_ELT(prev_crec, 0);
+    Rboolean constsOK = TRUE;
+    while(crec != R_NilValue) {
+	SEXP wref = VECTOR_ELT(crec, 1);
+	SEXP bc = R_WeakRefKey(wref);
+	if (!checkConstantsInRecord(crec, abortOnError))
+	    constsOK = FALSE;
+	if (bc == R_NilValue)
+	    /* remove no longer needed record from the registry */
+	    SET_VECTOR_ELT(prev_crec, 0, VECTOR_ELT(crec, 0));
+	else
+            prev_crec = crec;
+	crec = VECTOR_ELT(crec, 0);
+    }
+    return constsOK;
+}
+
 SEXP attribute_hidden do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP bytes, consts, ans;
@@ -6248,8 +6455,10 @@ SEXP attribute_hidden do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     bytes = CAR(args);
     consts = CADR(args);
-    ans = CONS(R_bcEncode(bytes), consts);
+    ans = PROTECT(CONS(R_bcEncode(bytes), consts));
     SET_TYPEOF(ans, BCODESXP);
+    R_registerBC(bytes, ans);
+    UNPROTECT(1); /* ans */
     return ans;
 }
 

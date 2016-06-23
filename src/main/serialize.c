@@ -1876,10 +1876,12 @@ static SEXP ReadBC1(SEXP ref_table, SEXP reps, R_inpstream_t stream)
     R_ReadItemDepth++;
     SETCAR(s, ReadItem(ref_table, stream)); /* code */
     R_ReadItemDepth--;
-    SETCAR(s, R_bcEncode(CAR(s)));
+    SEXP bytes = PROTECT(CAR(s));
+    SETCAR(s, R_bcEncode(bytes));
     SETCDR(s, ReadBCConsts(ref_table, reps, stream)); /* consts */
     SET_TAG(s, R_NilValue); /* expr */
-    UNPROTECT(1);
+    R_registerBC(bytes, s);
+    UNPROTECT(2);
     return s;
 }
 
