@@ -4026,13 +4026,13 @@ specification is available at
 @uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
 anything not documented there should be regarded as an extension to be
 avoided.)  Commonly misused GNU extensions are conditional inclusions
-(@code{ifeq} and the like), @code{$@{shell ...@}} and @code{$@{wildcard
-...@}}, and the use of @code{+=}@footnote{This was apparently introduced
-in SunOS 4, and is available elsewhere @emph{provided} it is surrounded
-by spaces.}  and @code{:=}.  Also, the use of @code{$<} other than in
-implicit rules is a GNU extension, as is the @code{$^} macro.
-Unfortunately makefiles which use GNU extensions often run on other
-platforms but do not have the intended results.
+(@code{ifeq} and the like), @code{$@{shell ...@}}, @code{$@{wildcard
+...@}} and similar, and the use of @code{+=}@footnote{This was
+apparently introduced in SunOS 4, and is available elsewhere
+@emph{provided} it is surrounded by spaces.} and @code{:=}.  Also, the
+use of @code{$<} other than in implicit rules is a GNU extension, as is
+the @code{$^} macro.  Unfortunately makefiles which use GNU extensions
+often run on other platforms but do not have the intended results.
 
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
@@ -4123,6 +4123,20 @@ functions where Windows does not support @code{%lld}, @code{%Lf} and
 similar formats (and has its own formats such as @code{%I64d} for 64-bit
 integers).  It is very rare to need to output such types, and 64-bit
 integers can usually be converted to doubles for output.
+
+@item
+@command{R CMD check} performs some checks for non-portable
+compiler/linker flags in @file{src/Makevars}.  However, it cannot check
+the meaning of such flags, and some are commonly accepted but with
+compiler-specific meanings.  There are other non-portable flags such as
+@option{-isystem} which are not checked and @file{src/Makefile} files
+and makefiles is sub-directories are also not checked.  As a comment in
+the code says
+
+@quotation
+It is hard to think of anything apart from @option{-I*} and @option{-D*}
+that is safe for general use @dots{}
+@end quotation
 
 @item
 Do be very careful with passing arguments between @R{}, C and

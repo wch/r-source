@@ -5,7 +5,7 @@
 ##                sprintf("\t@echo %sFLAGS: \"$(%sFLAGS)\"",
 ##                        prefixes, prefixes)))
 
-all:
+makevars_test:
 	@echo PKG_CPPFLAGS: "$(PKG_CPPFLAGS)"
 	@echo PKG_CFLAGS: "$(PKG_CFLAGS)"
 	@echo PKG_CXXFLAGS: "$(PKG_CXXFLAGS)"

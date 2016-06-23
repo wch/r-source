@@ -3480,7 +3480,7 @@ function(aar, strict = FALSE)
             else {
                 attr(out, "Author") <- s
                 if(strict >= 1L) {
-                    has_no_name <- 
+                    has_no_name <-
                         vapply(aar,
                                function(e)
                                is.null(e$given) && is.null(e$family),
@@ -3789,7 +3789,8 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
-    command <- sprintf("%s -f %s -f %s -f %s",
+    ## needs a target to avoid targets in src/Makevars
+    command <- sprintf("%s -f %s -f %s -f %s makevars_test",
                        make,
                        shQuote(file.path(R.home("share"), "make",
                                          "check_vars_ini.mk")),
@@ -3834,6 +3835,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                         "W[^l].*", # -Wl, might just be portable
                         "ansi", "pedantic", "traditional",
                         "f.*", "m.*", "std.*",
+                        "isystem", # gcc and clones
                         "x",
                         "q"),
                       collapse = "|"))
@@ -7074,7 +7076,7 @@ function(dir)
     skip_dates <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DATES_",
                                          "FALSE"))
-    
+
     ## Check Date
     date <- trimws(as.vector(meta["Date"]))
     if(!is.na(date)) {
@@ -7100,7 +7102,7 @@ function(dir)
                 "This build time stamp is over a month old."
         }
     }
-    
+
     ## Check URLs.
     if(capabilities("libcurl")) {
         ## Be defensive about building the package URL db.
