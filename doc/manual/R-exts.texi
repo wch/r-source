@@ -4673,6 +4673,16 @@ compiler intrinsic for the imaginary unit).
 @item
 @code{typedef}s in OS headers can conflict with those in the package: an
 example is @code{index_t} defined in @file{<sys/types.h>} on Solaris.
+
+@item
+If you use OpenMP, check careully that you have followed the advice in
+the subsection on @ref{OpenMP support}.  In particular, any use of
+OpenMP in C/C++ code will need to use
+@example
+#ifdef _OPENMP
+# include <omp.h>
+#endif
+@end example
 @end itemize
 
 Some additional information for C++ is available at
