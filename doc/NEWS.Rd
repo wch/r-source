@@ -194,6 +194,14 @@
       >= 6.3).  (\PR{16604})
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The check for non-portable flags in \command{R CMD check}
+      could be stymied by \file{src/Makevars} files which contained
+      targets.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.3.1}{
