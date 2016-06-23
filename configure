@@ -1752,7 +1752,7 @@ Optional Features:
                           tracemem() [no]
   --enable-R-framework[=DIR]
                           macOS only: build R framework (if possible), and
-                          specify its installation prefix [yes,
+                          specify its installation prefix [no,
                           /Library/Frameworks]
   --enable-R-shlib        build the shared/dynamic library 'libR' [no]
   --enable-R-static-lib   build the static library 'libR.a' [no]
