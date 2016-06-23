@@ -3747,7 +3747,8 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
-    command <- sprintf("%s -f %s -f %s -f %s",
+    ## needs a target to avoid targets in src/Makevars
+    command <- sprintf("%s -f %s -f %s -f %s makevars_test",
                        make,
                        shQuote(file.path(R.home("share"), "make",
                                          "check_vars_ini.mk")),
@@ -3792,6 +3793,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                         "W[^l].*", # -Wl, might just be portable
                         "ansi", "pedantic", "traditional",
                         "f.*", "m.*", "std.*",
+                        "isystem", # gcc and clones
                         "x",
                         "q"),
                       collapse = "|"))
