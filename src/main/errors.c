@@ -1256,6 +1256,10 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
 	i++;
     }
 
+/* clang pre-3.9.0 says
+      warning: passing an object that undergoes default argument promotion to 
+      'va_start' has undefined behavior [-Wvarargs]
+*/
     va_start(ap, which_warn);
     Rvsnprintf(buf, BUFSIZE, _(WarningDB[i].format), ap);
     va_end(ap);
