@@ -2990,7 +2990,7 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     double time = asReal(CAR(args));
     if (ISNAN(time) || time < 0.)
-	errorcall(call, _("invalid '%s' value"), "time");
+	error(_("invalid '%s' value"), "time");
     Rsleep(time);
     return R_NilValue;
 }

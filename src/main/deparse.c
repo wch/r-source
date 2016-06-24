@@ -409,7 +409,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */
     if(opts == NA_INTEGER || opts < 0 || opts > 1024)
-	errorcall(call, _("'opts' should be small non-negative integer"));
+	error(_("'opts' should be small non-negative integer"));
     evaluate = asLogical(CAD4R(args));
     if (!evaluate) opts |= DELAYPROMISES;
 

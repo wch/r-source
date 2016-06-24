@@ -85,7 +85,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 	eenv = R_BaseEnv;
     } else
     if (!isEnvironment(eenv))
-	errorcall(call, _("invalid '%s' argument"), "eval.env");
+	error(_("invalid '%s' argument"), "eval.env");
 
     args = CDR(args);
     aenv = CAR(args);
@@ -94,7 +94,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 	aenv = R_BaseEnv;
     } else
     if (!isEnvironment(aenv))
-	errorcall(call, _("invalid '%s' argument"), "assign.env");
+	error(_("invalid '%s' argument"), "assign.env");
 
     defineVar(name, mkPROMISE(expr, eenv), aenv);
     return R_NilValue;
@@ -649,9 +649,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 #endif
 	    else
-		errorcall(call,
-			  _("argument %d (type '%s') cannot be handled by 'cat'"),
-			  1+iobj, type2char(TYPEOF(s)));
+		error(_("argument %d (type '%s') cannot be handled by 'cat'"),
+		      1+iobj, type2char(TYPEOF(s)));
 	    /* FIXME : cat(...) should handle ANYTHING */
 	    size_t w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);
