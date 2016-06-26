@@ -3276,6 +3276,15 @@ Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
 
+Those distributing binary versions of @R{} may need to be aware of the
+licences of the external libraries it is linked to (including `useful'
+libraries from the next section).  The @code{liblzma} library is in the
+public domain and X11, @code{libbzip2}, @code{libcurl} and @code{zlib}
+have MIT-style licences. PCRE has a BSD-style licence which requires
+distribution of the licence (included in @R{}'s @file{COPYRIGHTS} file)
+in binary distributions.  GNU @code{readline} is licensed under GPL
+(which version(s) depending on the @code{readline} version).
+
 @node Useful libraries and programs, Linear algebra, Essential programs and libraries, Essential and useful other programs under a Unix-alike
 @section Useful libraries and programs
 

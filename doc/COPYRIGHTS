@@ -369,30 +369,33 @@ src/main/valid_utf8.h
 For binary builds of R that requires us to include
 
   Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions are met:
+  modification, are permitted provided that the following conditions
+  are met:
 
-      * Redistributions of source code must retain the above copyright notice,
-	this list of conditions and the following disclaimer.
+      * Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
 
-      * Redistributions in binary form must reproduce the above copyright
-	notice, this list of conditions and the following disclaimer in the
-	documentation and/or other materials provided with the distribution.
+      * Redistributions in binary form must reproduce the above
+	copyright notice, this list of conditions and the following
+	disclaimer in the documentation and/or other materials
+	provided with the distribution.
 
-      * Neither the name of the University of Cambridge nor the name of Google
-	Inc. nor the names of their contributors may be used to endorse or
-	promote products derived from this software without specific prior
-	written permission.
+      * Neither the name of the University of Cambridge nor the name
+	of Google Inc. nor the names of their contributors may be used
+	to endorse or promote products derived from this software
+	without specific prior written permission.
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
 
 
@@ -583,3 +586,80 @@ src/gnuwin32/installer/R.bmp
 
    The design of the current logo is based on the previous logo that
    was included in the R source from 1998 to 2016.
+
+	---------------------------------------------------
+
+Binary distributions of R may include compiled code from the PCRE
+library whose licence is:
+
+  THE BASIC LIBRARY FUNCTIONS
+  ---------------------------
+  Written by:       Philip Hazel
+  Email local part: ph10
+  Email domain:     cam.ac.uk
+
+  University of Cambridge Computing Service, Cambridge, England.
+
+  Copyright (c) 1997-2015 University of Cambridge
+  All rights reserved.
+
+  PCRE JUST-IN-TIME COMPILATION SUPPORT
+  -------------------------------------
+  Written by:       Zoltan Herczeg
+  Email local part: hzmester
+  Emain domain:     freemail.hu
+
+  Copyright(c) 2010-2015 Zoltan Herczeg
+  All rights reserved.
+
+  STACK-LESS JUST-IN-TIME COMPILER
+  --------------------------------
+  Written by:       Zoltan Herczeg
+  Email local part: hzmester
+  Emain domain:     freemail.hu
+
+  Copyright(c) 2009-2015 Zoltan Herczeg
+  All rights reserved.
+
+  THE C++ WRAPPER FUNCTIONS
+  -------------------------
+  Contributed by:   Google Inc.
+
+  Copyright (c) 2007-2012, Google Inc.
+  All rights reserved.
+
+
+  THE "BSD" LICENCE
+  -----------------
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+      * Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+      * Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials
+        provided with the distribution.
+
+      * Neither the name of the University of Cambridge nor the name
+        of Google Inc. nor the names of their contributors may be used
+        to endorse or promote products derived from this software
+        without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
+
+	---------------------------------------------------
