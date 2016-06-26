@@ -14,6 +14,7 @@ Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN 
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo Justiniano Ribeiro Junior <paulojus # ufpr.br>",1,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
+"Brazil (SP 1) [https]",Brazil,"Sao Paulo",https://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br
 "Brazil (SP 1)",Brazil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","aafgarci # esalq.usp.br",1,br,"maintainer_address_bounces"
 Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg
