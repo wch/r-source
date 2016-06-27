@@ -36167,7 +36167,7 @@ if test -n "${CURL_CONFIG}"; then
     CURL_LIBS=`${CURL_CONFIG} --libs`
   fi
 fi
-r_save_CPPFLAGS="${CPPLAGS}"
+r_save_CPPFLAGS="${CPPFLAGS}"
 CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
 r_save_LIBS="${LIBS}"
 LIBS="${CURL_LIBS} ${LIBS}"
