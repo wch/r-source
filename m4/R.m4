@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2015 R Core Team
+### Copyright (C) 1998-2016 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -4165,7 +4165,7 @@ if test -n "${CURL_CONFIG}"; then
     CURL_LIBS=`${CURL_CONFIG} --libs`
   fi
 fi
-r_save_CPPFLAGS="${CPPLAGS}"
+r_save_CPPFLAGS="${CPPFLAGS}"
 CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
 r_save_LIBS="${LIBS}"
 LIBS="${CURL_LIBS} ${LIBS}"
