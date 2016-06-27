@@ -4624,7 +4624,7 @@ project (@url{http://libcxx.llvm.org/}) has also been tested: for some
 
 Most builds of @command{clang} have no OpenMP support.  Builds of
 version 3.7.0 or later may.@footnote{This also needs the OpenMP runtime,
-which is usually distributed separately, e.g.@: at
+which has sometimes been distributed separately, e.g.@: for 3.7.0 at
 @uref{http://llvm.org/releases}.}
 
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
@@ -4795,7 +4795,8 @@ More recent and complete distributions of @command{clang} are usually
 available from @uref{http://llvm.org/releases/}.  In particular, these
 include support for the `Address Sanitizer' (not included by Apple until
 Xcode 7) and for OpenMP@footnote{This also needs the OpenMP runtime,
-which is distributed separately at that site.} in version 3.7.0 and later.
+which was distributed separately at that site for 3.7.0.} in version
+3.7.0 and later.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will

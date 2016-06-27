@@ -2073,12 +2073,17 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).
 
-
-There is nothing to say what version of OpenMP is supported: version 3.0
-(May 2008) is supported by recent versions of the Linux, Windows and
-Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  macOS currently uses Apple builds of
-@command{clang} with no OpenMP support.
+@c http://openmp.org/wp/openmp-compilers/
+@c clang 3.8.x reports 201307 but has full suport only for 3.1 (201111)
+There is nothing@footnote{In most implementations the
+@code{_OPENMP} macro has value a date which can be mapped to an OpenMP
+version: for example, value @code{201307} is the date of version 4.0
+(July 2013). However this may be used to denote the latest version which
+is partially supported, not that which is fully implemented.}  to say
+what version of OpenMP is supported: version 3.1 is supported by recent
+versions of the Linux, Windows and Solaris platforms, but portable
+packages cannot assume that end users have recent versions.  macOS
+currently uses Apple builds of @command{clang} with no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and earlier Apple macOS implementations have substantial
