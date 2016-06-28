@@ -165,6 +165,10 @@ getOption(x, default = NULL)
       limit is reached an error is thrown.  The current number under
       evaluation can be found by calling \code{\link{Cstack_info}}.}
 
+    \item{\code{interrupt}:}{a function taking no arguments to be called
+      on a user interrupt if the interrupt condition is not otherwise
+      handled.
+
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored internally
       allowing comments to be kept in the right places.  Retrieve the

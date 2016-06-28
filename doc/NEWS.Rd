@@ -106,6 +106,12 @@
 
       Its \code{toLatex()} method now includes the \code{running}
       component.
+
+      \code{options("interrupt")} can be used to specify a default
+      action for user interrupts. For now, if this option is not set and
+      the \code{error} option is set, then an unhandled user interrupt
+      invokes the \code{error} option. This may be dropped in the future
+      as \code{interrupt} conditions are not \code{error} conditions.
     }
   }
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
