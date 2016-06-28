@@ -167,7 +167,7 @@ getOption(x, default = NULL)
 
     \item{\code{interrupt}:}{a function taking no arguments to be called
       on a user interrupt if the interrupt condition is not otherwise
-      handled.
+      handled.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored internally
