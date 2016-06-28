@@ -26,6 +26,7 @@
 
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
+\alias{.tryResumeInterrupt}
 
 \alias{as.character.condition}
 \alias{as.character.error}
@@ -74,6 +75,7 @@ restartFormals(r)
 
 .signalSimpleWarning(msg, call)
 .handleSimpleError(h, msg, call)
+.tryResumeInterrupt()
 }
 
 \arguments{
@@ -192,8 +194,9 @@ restartFormals(r)
    \code{interactive} method queries the user for values for the
    formal arguments of the handler function.
 
-   \code{.signalSimpleWarning} and \code{.handleSimpleError}
-   are used internally and should not be called directly.
+   \code{.signalSimpleWarning}, \code{.handleSimpleError}, and
+   \code{.tryResumeInterrupt} are used internally and should not be
+   called directly.
 }
 
 \references{The \code{tryCatch} mechanism is similar to Java

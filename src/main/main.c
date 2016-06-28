@@ -1243,7 +1243,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = FALSE;
 	}
 	R_GlobalContext = &thiscontext;
-	R_InsertRestartHandlers(&thiscontext, TRUE);
+	R_InsertRestartHandlers(&thiscontext, "browser");
 	R_ReplConsole(rho, savestack, browselevel+1);
 	endcontext(&thiscontext);
     }

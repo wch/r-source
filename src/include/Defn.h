@@ -927,6 +927,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define NewEnvironment		Rf_NewEnvironment
 # define OneIndex		Rf_OneIndex
 # define onintr			Rf_onintr
+# define onintrNoResume		Rf_onintrNoResume
 # define onsigusr1              Rf_onsigusr1
 # define onsigusr2              Rf_onsigusr2
 # define parse			Rf_parse
@@ -1128,6 +1129,7 @@ SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkTrue(void);
 SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr(void);
+void onintrNoResume(void);
 RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
 R_xlen_t OneIndex(SEXP, SEXP, R_xlen_t, int, SEXP*, int, SEXP);
@@ -1190,7 +1192,7 @@ void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int framedepth(RCNTXT*);
-void R_InsertRestartHandlers(RCNTXT *, Rboolean);
+void R_InsertRestartHandlers(RCNTXT *, const char *);
 void NORET R_JumpToContext(RCNTXT *, int, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);

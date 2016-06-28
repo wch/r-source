@@ -62,6 +62,10 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
       function calls.  Again, byte compiled functions make
       \code{s} equivalent to \code{c}.}
     \item{\code{where}}{print a stack trace of all active function calls.}
+    \item{\code{r}}{invoke a \code{"resume"} restart if one is
+      available; interpeted as an \R expression otherwise. Typically
+      \code{"resume"} restarts are established for continuing from user
+      interrupts.}
     \item{\code{Q}}{exit the browser and the current evaluation and
       return to the top-level prompt.}
   }

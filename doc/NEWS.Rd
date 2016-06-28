@@ -107,11 +107,18 @@
       Its \code{toLatex()} method now includes the \code{running}
       component.
 
-      \code{options("interrupt")} can be used to specify a default
+      \item \code{options("interrupt")} can be used to specify a default
       action for user interrupts. For now, if this option is not set and
       the \code{error} option is set, then an unhandled user interrupt
       invokes the \code{error} option. This may be dropped in the future
       as \code{interrupt} conditions are not \code{error} conditions.
+
+      \item In most cases user interrupt handlers will be called with a
+      \code{"resume"} restart available.  Handlers can invoke this
+      restart to resume computation. At the browser prompt the \code{r}
+      command will invoke a \code{"resume"} restart if one is
+      available. Some read operations cannot be resumed properly when
+      interrupted and do not provide a \code{"resume"} restart.
     }
   }
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{

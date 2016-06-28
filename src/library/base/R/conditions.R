@@ -310,15 +310,6 @@ withRestarts <- function(expr, ...) {
 .handleSimpleError <- function(h, msg, call)
     h(simpleError(msg, call))
 
-.signalInterrupt <- function (intr) 
-    withRestarts({
-        .Internal(.signalCondition(intr, NULL, NULL))
-        op <- getOption("interrupt")
-        if (is.function(op)) op()
-	##.Internal(.dfltInterrupt(intr))
-        FALSE
-    }, resume = function() TRUE)
-
 .tryResumeInterrupt <- function() {
     r <- findRestart("resume")
     if (! is.null(r))

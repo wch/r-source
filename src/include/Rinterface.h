@@ -78,9 +78,11 @@ extern char *R_Home;		    /* Root of the R tree */
 # define jump_to_toplevel	Rf_jump_to_toplevel
 # define mainloop		Rf_mainloop
 # define onintr			Rf_onintr
+# define onintrNoResume		Rf_onintrNoResume
 void NORET jump_to_toplevel(void);
 void mainloop(void);
 void onintr(void);
+void onintrNoResume(void);
 #ifndef DEFN_H_
 extern void* R_GlobalContext;    /* Need opaque pointer type for export */
 #endif
