@@ -1136,7 +1136,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 	from the function body.  */
 
     if ((SETJMP(cntxt.cjmpbuf))) {
-	if (R_ReturnedValue == R_RestartToken) {
+	if (! cntxt.jumptarget && /* ignores intermediate jumps for on.exits */
+	    R_ReturnedValue == R_RestartToken) {
+	    REprintf("flag = %d\n", cntxt.callflag);
 	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
 	    R_ReturnedValue = R_NilValue;  /* remove restart token */
 	    PROTECT(tmp = eval(body, newrho));
