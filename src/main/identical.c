@@ -114,7 +114,11 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	ax = ATTRIB(x); ay = ATTRIB(y);
     }
     if (!ATTR_AS_SET) {
-	if(!R_compute_identical(ax, ay, flags)) return FALSE;
+	PROTECT(ax);
+	PROTECT(ay);
+	Rboolean idattr = R_compute_identical(ax, ay, flags);
+	UNPROTECT(2);
+	if(! idattr) return FALSE;
     }
     /* Attributes are special: they should be tagged pairlists.  We
        don't test them if they are not, and we do not test the order
