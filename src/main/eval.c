@@ -6297,17 +6297,18 @@ void attribute_hidden R_registerBC(SEXP bcBytes, SEXP bcode)
     /* The constants registry is a linked list of constant records. Each
        constant record is a generic vector, its first element is a pointer
        to the next constant record, the second element is a weak reference
-       to the byte-code object and the following elements are interleaved
-       original and copied constants. A constant registry corresponds to a one
-       constant pool. When the weak reference gets cleared, the respective
-       constant record can be removed from the list.
+       to the byte-code object, the third element is a reference to the whole
+       constant pool, and the following elements are interleaved original and
+       copied constants. A constant registry corresponds to a constant pool.
+       When the weak reference gets cleared, the respective constant record
+       can be removed from the list.
 
        One could simply compare/duplicate the lists of all constants (the whole
        constant pools), but that turned out too expensive */
 
     SEXP consts = BCCONSTS(bcode); /* all constants, VECSXP */
 
-//#define CHECK_ALL_CONSTANTS
+#define CHECK_ALL_CONSTANTS
 #ifndef CHECK_ALL_CONSTANTS
     int *ipc = INTEGER(bcBytes);
     int n = LENGTH(bcBytes);
@@ -6320,8 +6321,8 @@ void attribute_hidden R_registerBC(SEXP bcBytes, SEXP bcode)
 		ipc[i] == CALLSPECIAL_OP)
             loadableConsts++;
 
-    SEXP constsRecord = PROTECT(allocVector(VECSXP, loadableConsts * 2 + 2));
-    int crIdx = 2;
+    SEXP constsRecord = PROTECT(allocVector(VECSXP, loadableConsts * 2 + 3));
+    int crIdx = 3;
     for(i = 0; i < n; i += opinfo[ipc[i]].argc + 1)
         if (ipc[i] == LDCONST_OP || ipc[i] == PUSHCONSTARG_OP ||
 		ipc[i] == CALLSPECIAL_OP) {
@@ -6331,14 +6332,16 @@ void attribute_hidden R_registerBC(SEXP bcBytes, SEXP bcode)
         }
 #else
     /* add the whole constant pool */
-    SEXP constsRecord = PROTECT(allocVector(VECSXP, 2 + 2));
-    SET_VECTOR_ELT(constsRecord, 2, consts);
-    SET_VECTOR_ELT(constsRecord, 3, duplicate(consts));
+    SEXP constsRecord = PROTECT(allocVector(VECSXP, 2 + 3));
+    SET_VECTOR_ELT(constsRecord, 3, consts);
+    /* the consts reference is in the record twice to make the code simpler */
+    SET_VECTOR_ELT(constsRecord, 4, duplicate(consts));
 #endif
 
     SEXP wref = R_MakeWeakRef(bcode, R_NilValue, R_NilValue, FALSE);
     SET_VECTOR_ELT(constsRecord, 0, VECTOR_ELT(R_ConstantsRegistry, 0));
     SET_VECTOR_ELT(constsRecord, 1, wref);
+    SET_VECTOR_ELT(constsRecord, 2, consts);
     SET_VECTOR_ELT(R_ConstantsRegistry, 0, constsRecord);
     UNPROTECT(1); /* constsRecord */
 }
@@ -6349,11 +6352,7 @@ static void reportModifiedConstant(SEXP crec, SEXP orig, SEXP copy, int idx)
     if (R_check_constants < 5)
 	return;
 
-    SEXP bc = R_WeakRefKey(VECTOR_ELT(crec, 1));
-    if (bc == R_NilValue)
-	return;
-
-    SEXP consts = BCCONSTS(bc);
+    SEXP consts = VECTOR_ELT(crec, 2);
     int n = LENGTH(consts);
     int i;
     if (idx == -1) {
@@ -6386,13 +6385,18 @@ static Rboolean checkConstantsInRecord(SEXP crec, Rboolean abortOnError)
     int n = LENGTH(crec);
     Rboolean constsOK = TRUE;
 
-    for (i = 2; i < n;) {
+    for (i = 3; i < n;) {
 	SEXP corig = VECTOR_ELT(crec, i++);
 	SEXP ccopy = VECTOR_ELT(crec, i++);
 
-	/* 7: not numerical comparison, not single NA, not attributes
-           as set do ignore byte-code, do ignore environments of closures */
-	if (!R_compute_identical(corig, ccopy, 7)) {
+	/* 39: not numerical comparison, not single NA, not attributes as
+           set, do ignore byte-code, do ignore environments of closures,
+           not ignore srcref
+
+           srcref is not ignored because ignoring it is expensive
+           (it triggers duplication)
+        */
+	if (!R_compute_identical(corig, ccopy, 39)) {
 
 #ifndef CHECK_ALL_CONSTANTS
 	    REprintf("ERROR: modification of compiler constant of type %s"
@@ -6406,7 +6410,7 @@ static Rboolean checkConstantsInRecord(SEXP crec, Rboolean abortOnError)
 	    for(ci = 0; ci < nc; ci++) {
 		volatile SEXP orig = VECTOR_ELT(corig, ci);
 		volatile SEXP copy = VECTOR_ELT(ccopy, ci);
-		if (!R_compute_identical(orig, copy, 7)) {
+		if (!R_compute_identical(orig, copy, 39)) {
 		    REprintf("ERROR: modification of compiler constant"
 			" of type %s, length %d\n",
 			CHAR(type2str(TYPEOF(copy))), length(copy));
@@ -6434,6 +6438,13 @@ Rboolean attribute_hidden R_checkConstants(Rboolean abortOnError)
 {
     if (R_check_constants <= 0 || R_ConstantsRegistry == NULL)
 	return TRUE;
+    static Rboolean checkingInProgress = FALSE;
+    if (checkingInProgress)
+	/* recursive invocation is possible because of allocation
+           in R_compute_identical */
+	return TRUE;
+    /* NOTE: non-local return could disable checking */
+    checkingInProgress = TRUE;
     SEXP prev_crec = R_ConstantsRegistry;
     SEXP crec = VECTOR_ELT(prev_crec, 0);
     Rboolean constsOK = TRUE;
@@ -6449,6 +6460,7 @@ Rboolean attribute_hidden R_checkConstants(Rboolean abortOnError)
             prev_crec = crec;
 	crec = VECTOR_ELT(crec, 0);
     }
+    checkingInProgress = FALSE;
     return constsOK;
 }
 
