@@ -1,6 +1,6 @@
 % File src/library/base/man/exists.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{exists}
@@ -87,7 +87,8 @@ get0(x, envir = pos.to.env(-1L), mode = "any", inherits = TRUE,
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{get}}.  For quite a different kind of \dQuote{existence}
+  \code{\link{get}} and \code{\link{hasName}}.  For quite a different 
+  kind of \dQuote{existence}
   checking, namely if function arguments were specified,
   \code{\link{missing}};
   and for yet a different kind, namely if a file exists,

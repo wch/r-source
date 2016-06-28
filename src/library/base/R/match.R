@@ -34,6 +34,8 @@ pmatch <- function(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
     .Internal(pmatch(as.character(x), as.character(table), nomatch,
                      duplicates.ok))
 
+# "utils::hasName(x, name)" is defined to be the same as "name %in% names(x)",
+# so change it if this changes.
 `%in%`  <- function(x, table) match(x, table, nomatch = 0L) > 0L
 
 match.arg <- function (arg, choices, several.ok = FALSE)
