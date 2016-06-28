@@ -182,6 +182,10 @@
     \itemize{
       \item \code{extSoftVersion()} now reports the version (if any) of
       the \code{readline} library in use.
+      
+      \item Convenience function \code{hasName()} has been added; it 
+      is intended to replace the common idiom \code{!is.null(x$name)}
+      without the usually unintended partial name matching.
     }
   }
 
