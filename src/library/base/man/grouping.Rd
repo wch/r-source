@@ -22,15 +22,16 @@ grouping(\dots)
 }
 \details{
   The function partially sorts the elements so that identical values are
-  adjacent. \code{NA} values come first.  This is guaranteed to be
+  adjacent. \code{NA} values come last.  This is guaranteed to be
   stable, so ties are preserved, and if the data are already
   grouped/sorted, the grouping is unchanged.  This is useful for
   aggregation and is particularly fast for character vectors.
 
   Under the covers, the \code{"radix"} method of \code{\link{order}} is
-  used, and the same caveats apply, including reduced precision when
-  comparing real values, restrictions on character encodings and lack of
-  support for long vectors (those with \eqn{2^{31}}{2^31} or more elements).
+  used, and the same caveats apply, including restrictions on character
+  encodings and lack of support for long vectors (those with
+  \eqn{2^{31}}{2^31} or more elements). Real-valued numbers are slightly
+  rounded to account for numerical imprecision.
   
   Like \code{order}, for a classed \R object the grouping is based on
   the result of \code{\link{xtfrm}}.

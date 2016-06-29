@@ -119,6 +119,9 @@
       command will invoke a \code{"resume"} restart if one is
       available. Some read operations cannot be resumed properly when
       interrupted and do not provide a \code{"resume"} restart.
+
+      \item The radix sort is now the default algorithm for double
+      vectors. It no longer rounds.
     }
   }
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
@@ -189,6 +192,9 @@
 
       \item Fix caching by \code{callNextMethod()}, resolves \PR{16973}
       and \PR{16974}.
+
+      \item \code{grouping()} puts NAs last, to be consistent with the
+      default behavior of \code{order()}.
     }
   }
 }

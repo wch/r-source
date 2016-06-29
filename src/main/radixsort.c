@@ -613,7 +613,6 @@ static void iradix_r(int *xsub, int *osub, int n, int radix)
 // + changed to MSD and hooked into do_radixsort framework here.
 // + replaced tolerance with rounding s.f.
 
-static int dround = 2;
 static unsigned long long dmask1;
 static unsigned long long dmask2;
 
@@ -621,22 +620,6 @@ static void setNumericRounding(int dround)
 {
     dmask1 = dround ? 1 << (8 * dround - 1) : 0;
     dmask2 = 0xffffffffffffffff << dround * 8;
-}
-
-SEXP attribute_hidden do_setNumericRounding(SEXP droundArg)
-{
-    if (!isInteger(droundArg) || LENGTH(droundArg) != 1)
-	error("Must an integer or numeric vector length 1");
-    if (INTEGER(droundArg)[0] < 0 || INTEGER(droundArg)[0] > 2)
-	error("Must be 2 (default) or 1 or 0");
-    dround = INTEGER(droundArg)[0];
-    setNumericRounding(dround);
-    return R_NilValue;
-}
-
-SEXP attribute_hidden do_getNumericRounding()
-{
-    return ScalarInteger(dround);
 }
 
 static union {
@@ -1581,11 +1564,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (sizeof(double) != 8) {
         error("radix sort assumes sizeof(double) == 8");
     }
-
-    /* (ML) Controls the precision of numeric vector sorting; may want
-       to make this a parameter */
-    setNumericRounding(dround);
-
+    
     nalast = (asLogical(CAR(args)) == NA_LOGICAL) ? 0 :
 	(asLogical(CAR(args)) == TRUE) ? 1 : -1; // 1=TRUE, -1=FALSE, 0=NA
     args = CDR(args);
@@ -1602,6 +1581,9 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
     sortStr = asLogical(CAR(args));
     args = CDR(args);
+
+    /* When grouping, we round off doubles to account for imprecision */
+    setNumericRounding(retGrp ? 2 : 0);
 
     if (args == R_NilValue)
 	return R_NilValue;
@@ -1902,7 +1884,12 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
         }
         SEXP s_maxgrpn = install("maxgrpn");
         setAttrib(ans, s_maxgrpn, ScalarInteger(maxgrpn));
-        setAttrib(ans, R_ClassSymbol, mkString("grouping"));
+        SEXP nms;
+        PROTECT(nms = allocVector(STRSXP, 2));
+        SET_STRING_ELT(nms, 0, mkChar("grouping"));
+        SET_STRING_ELT(nms, 1, mkChar("integer"));
+        setAttrib(ans, R_ClassSymbol, nms);
+        UNPROTECT(1);
     }
 
     Rboolean dropZeros = !retGrp && !isSorted && nalast == 0;

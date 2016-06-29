@@ -56,8 +56,9 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   Complex values are sorted first by the real part, then the imaginary
   part.
 
-  The \code{"auto"} method selects \code{"radix"} for integer vectors,
-  logical vectors and factors; otherwise, \code{"shell"}.
+  The \code{"auto"} method selects \code{"radix"} for short (less than
+  \eqn{2^{31}}{2^31} elements) numeric vectors, integer vectors, logical
+  vectors and factors; otherwise, \code{"shell"}.
   
   Except for method \code{"radix"},
   the sort order for character vectors will depend on the collating
@@ -106,9 +107,9 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 
   The \code{"radix"} method generally outperforms the other methods,
   especially for character vectors and small integers. Compared to quick
-  sort, it is slightly faster for (large) integers and double vectors
-  (but unlike quick sort, radix is stable and supports all
-  \code{na.last} options). The implementation is order of magnitudes
+  sort, it is slightly faster for vectors with large integer or real
+  values (but unlike quick sort, radix is stable and supports all
+  \code{na.last} options). The implementation is orders of magnitude
   faster than shell sort for character vectors, in part thanks to clever
   use of the internal \code{CHARSXP} table.
 
@@ -118,10 +119,6 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
       If \code{x} is a \code{character} vector, all elements must share
       the same encoding. Only UTF-8 (including ASCII) and Latin-1
       encodings are supported. Collation always follows the "C" locale.
-    }
-    \item{
-      There is a small loss of precision when comparing double
-      values. This may be configurable in the future.
     }
     \item{
       Long vectors (with more than 2^32 elements) and \code{complex}

@@ -38,7 +38,8 @@ sort.int <-
     method <- match.arg(method)
     useRadix <- method == "radix" ||
         (method == "auto" && is.null(partial) &&
-             (is.integer(x) || is.factor(x) || is.logical(x)))
+         (is.numeric(x) || is.factor(x) || is.logical(x)) &&
+         is.integer(length(x)))
     if (useRadix) {
         if (!is.null(partial)) {
             stop("'partial' sorting not supported by radix method")
@@ -117,11 +118,11 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 
     method <- match.arg(method)
     if (method == "auto") {
-        ints <- all(vapply(z, function(x) { 
-                               is.integer(x) || is.factor(x) || is.logical(x)
-                           },
-                           logical(1L)))
-        method <- if (ints) "radix" else "shell"
+        useRadix <- all(vapply(z, function(x) { 
+            (is.numeric(x) || is.factor(x) || is.logical(x)) &&
+                is.integer(length(x))
+        }, logical(1L)))
+        method <- if (useRadix) "radix" else "shell"
     } else {
         method <- "shell"
     }
@@ -156,7 +157,8 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
                       method = c("auto", "shell", "quick", "radix"))
 {
     method <- match.arg(method)
-    if (method == "auto" && (is.integer(x) || is.factor(x) || is.logical(x)))
+    if (method == "auto" && (is.numeric(x) || is.factor(x) || is.logical(x)) &&
+        is.integer(length(x)))
         method <- "radix"
     if(!is.atomic(x))
         stop("'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?")
@@ -215,7 +217,7 @@ grouping <- function(...) {
         z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
         return(do.call("grouping", z))
     }
-    nalast <- FALSE
+    nalast <- TRUE
     decreasing <- rep_len(FALSE, length(z))
     group <- TRUE
     sortStr <- FALSE
