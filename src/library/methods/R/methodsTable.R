@@ -710,7 +710,10 @@
       ## have package attribute--see .sigLabel
       defined <-  new("signature", fdef, c(defined@.Data, rep("ANY", n-m)))
     excluded <- c(prev, .sigLabel(defined))
-    methods <- .findInheritedMethods(defined, fdef, mtable = NULL, excluded = excluded)
+    allTable <- .getMethodsTable(fdef, inherited = TRUE)
+    methods <- .findInheritedMethods(defined, fdef, mtable = NULL,
+                                     table = allTable,
+                                     excluded = excluded)
     if(length(methods) == 0L) # use default method, maybe recursively.
         methods <- list(finalDefaultMethod(fdef@default)) #todo: put a label on it?
     if(length(methods) > 1L)
@@ -1007,6 +1010,11 @@
     ## check for missing direct objects; usually a non-existent AllMTable?
     if(any(is.na(match(direct, allObjects)))) {
         list2env(as.list(mtable, all.names=TRUE), allTable)
+    }
+    for (d in direct) {
+        m <- allTable[[d]]
+        if (is(m, "MethodWithNext"))
+            allTable[[d]] <- as(m, "MethodDefinition")
     }
     NULL
 }

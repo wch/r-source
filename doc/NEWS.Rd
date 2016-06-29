@@ -186,6 +186,9 @@
       \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
       integer vector containing \code{MAX_INT}. Ported from a fix Matt
       Dowle made to \CRANpkg{data.table}.
+
+      \item Fix caching by \code{callNextMethod()}, resolves \PR{16973}
+      and \PR{16974}.
     }
   }
 }
