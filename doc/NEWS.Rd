@@ -123,7 +123,7 @@
       \item The radix sort is now the default algorithm for double
       vectors. It no longer rounds.
 
-      \item \code(stack.data.frame} and \code{stack.default} preserve
+      \item \code{stack.data.frame} and \code{stack.default} preserve
       the names of empty elements in the levels of the \code{ind} column
       of the return value. Set the new \code{drop} argument to
       \code{TRUE} for the previous behavior.
