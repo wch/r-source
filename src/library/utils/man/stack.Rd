@@ -1,6 +1,6 @@
 % File src/library/utils/man/stack.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stack}
@@ -18,8 +18,8 @@
 }
 \usage{
 stack(x, \dots)
-\method{stack}{default}(x, \dots)
-\method{stack}{data.frame}(x, select, \dots)
+\method{stack}{default}(x, drop=FALSE, \dots)
+\method{stack}{data.frame}(x, select, drop=FALSE, \dots)
 
 unstack(x, \dots)
 \method{unstack}{default}(x, form, \dots)
@@ -33,6 +33,9 @@ unstack(x, \dots)
     vector to be unstacked and whose right side evaluates to the
     indicator of the groups to create.  Defaults to \code{\link{formula}(x)}
     in the data frame method for \code{unstack}.}
+  \item{drop}{Whether to drop the unused levels from the \dQuote{ind}
+    column of the return value.
+  }
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
