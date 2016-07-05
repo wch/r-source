@@ -4850,9 +4850,11 @@ times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
-4GB, but a smaller version is available at
+5GB, but a smaller version is available at
 @uref{https://www.tug.org/mactex/morepackages.html}: you will need to
-add some packages, e.g.@: for the 2015 version we needed to add
+add some packages, e.g.@: for the 2016 version we needed to
+add@footnote{E.g.@: @emph{via}
+@command{tlmgr install cm-super helvetic inconsolata texinfo} .}
 @pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
 which brought this to about 410MB.  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
