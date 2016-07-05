@@ -2113,7 +2113,7 @@ dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
 can be done via environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
-Solaris Studio, Intel and Clang 3.7.x compilers.}  Alternatively, the
+Solaris Studio, Intel and Clang compilers.}  Alternatively, the
 number of threads per region can be limited by the environment variable
 @env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
 better, for the regions in your code as part of their
@@ -2439,14 +2439,13 @@ compilers commonly accept C99 extensions to C++98.  A minor update to
 C++11 (often known as C++14) was approved in August 2014.
 
 What standard a C++ compiler aims to support can be hard to determine.
-As from version 6 (to be released in 2016), @command{g++} will default
-to C++14: earlier versions aim to support C++03 with many extensions
-(including support for TR1).  @command{clang} with its
-native@footnote{Some distributions, notably Debian, have supplied a
-build of @command{clang} with @command{g++}'s headers and library.
-Conversely, Apple's command named @command{g++} is based on
-@command{clang} using @code{libcxx}.}  @code{libcxx} headers and library
-includes many C++11 features, and does not support TR1.
+As from version 6, @command{g++} defaults to C++14: earlier versions aim
+to support C++03 with many extensions (including support for TR1).
+@command{clang} with its native@footnote{Some distributions, notably
+Debian, have supplied a build of @command{clang} with @command{g++}'s
+headers and library.  Conversely, Apple's command named @command{g++} is
+based on @command{clang} using @code{libcxx}.}  @code{libcxx} headers
+and library includes many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -8121,7 +8120,7 @@ desirable for @R{} uses).  At the time of writing the @code{object-size}
 and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 so should be disabled.
 
-GCC 6 will add
+GCC 6 added
 @example
 -fsanitize=bounds-strict
 @end example
