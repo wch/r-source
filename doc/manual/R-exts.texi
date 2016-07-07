@@ -2083,11 +2083,14 @@ is partially supported, not that which is fully implemented.}  to say
 what version of OpenMP is supported: version 3.1 is supported by recent
 versions of the Linux, Windows and Solaris platforms, but portable
 packages cannot assume that end users have recent versions.  macOS
-currently uses Apple builds of @command{clang} with no OpenMP support.
+currently uses Apple builds of @command{clang} with no OpenMP support
+(even if invoked as @command{gcc} and despite the @command{man} page
+including the flag @option{-fopenmp} for that command).
 
-The performance of OpenMP varies substantially between platforms.  Both
-the Windows and earlier Apple macOS implementations have substantial
-overheads and are only beneficial if quite substantial tasks are run in
+The performance of OpenMP varies substantially between platforms.  The
+Windows implementation has substantial overheads@footnote{as did the
+GCC-based Apple implementation, but not if the Intel OpenMP runtime was
+used.}, so is only beneficial if quite substantial tasks are run in
 parallel.  Also, on Windows new threads are started with the
 default@footnote{Windows default, not MinGW-w64 default.} FPU control
 word, so computations done on OpenMP threads will not make use of
