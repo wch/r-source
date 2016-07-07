@@ -212,7 +212,7 @@
       the \code{readline} library in use.
       
       \item Convenience function \code{hasName()} has been added; it 
-      is intended to replace the common idiom \code{!is.null(x$name)}
+      is intended to replace the common idiom \code{!is.null(x$name)} 
       without the usually unintended partial name matching.
     }
   }
@@ -232,6 +232,10 @@
       \item The check for non-portable flags in \command{R CMD check}
       could be stymied by \file{src/Makevars} files which contained
       targets.
+      
+      \item (Windows only) When using certain desktop themes in Windows 
+      7 or higher, \kbd{Alt-Tab} could cause \command{Rterm} to stop
+      accepting input.  (\PR{14406}; patch submitted by Jan Gleixner.)
     }
   }
 }
