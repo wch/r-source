@@ -147,9 +147,9 @@ gl_getc(void)
       st = r.Event.KeyEvent.dwControlKeyState;
       vk = r.Event.KeyEvent.wVirtualKeyCode;
       if (r.Event.KeyEvent.bKeyDown) {
-	if (vk == VK_MENU && (st & LEFT_ALT_PRESSED)) { /* VK_MENU is
+        AltIsDown = (st & LEFT_ALT_PRESSED);
+	if (vk == VK_MENU && AltIsDown) { /* VK_MENU is
 							   Alt or AltGr */
-	  AltIsDown = 1;
 	  nAlt = 0;
 	  bbb  = 0;
 	} 
