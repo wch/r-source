@@ -1270,7 +1270,10 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		constsOK = FALSE;
 	if (!constsOK) {
 	    REprintf("ERROR: detected compiler constant(s) modification after"
-		" .Call invocation of function %s.\n", buf);
+		" .Call invocation of function %s from library %s (%s).\n",
+		buf,
+		symbol.dll ? symbol.dll->name : "unknown",
+		symbol.dll ? symbol.dll->path : "unknown");
 	    for(i = 0; i < nargs; i++)
 		if (!R_compute_identical(cargs[i], cargscp[i], 39))
 		    REprintf("NOTE: .Call function %s modified its argument"
