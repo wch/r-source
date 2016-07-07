@@ -52,10 +52,10 @@
       \item \code{xy.coords()} and \code{xyz.coords()} get new
       \code{setLab} option.
 
-      \item \code{sort.list()}, \code{order()} and \code{sort.int()}
-      \code{method} argument gains an \code{"auto"} option (the default)
-      which should behave the same as before when \code{method} was left
-      missing.
+      \item The \code{method} argument of \code{sort.list()},
+      \code{order()} and \code{sort.int()} gains an \code{"auto"} option
+      (the default) which should behave the same as before when
+      \code{method} was left missing.
 
       \item \code{stopifnot(E, ..)} now reports differences when
       \code{E} is a call to \code{all.equal()} and that is not true.
@@ -65,10 +65,10 @@
       \code{split.default()} which itself newly gets \code{lex.order} to
       pass to \code{interaction()} for more flexibility.
 
-      \item The \code{plot} method for \code{ppr} got enhanced default
+      \item The \code{plot} method for \code{ppr} has enhanced default
       labels (xmin and main).
 
-      \item \code{sample.int()} got an explicit \code{useHash} option
+      \item \code{sample.int()} gains an explicit \code{useHash} option
       (with a back compatible default).
 
       \item \code{identical()} gets an \code{ignore.srcref} option
@@ -83,8 +83,8 @@
       directly, gets a \code{hatvalues()} method and keeps \code{tol} in
       result.
 
-      \item \code{addNA()} is faster now, e.g., when applied twice;
-      (part of \PR{16895}).
+      \item \code{addNA()} is faster now, e.g., when applied twice.
+      (Part of \PR{16895}.)
 
       \item New option \code{rstandard(<lm>, type = "predicted")}
       provides the \dQuote{PRESS}-related leave-one-out
@@ -98,19 +98,20 @@
       inspired by Mikko Korpela's proposal in \PR{16527}.
 
       \item Illegal factors, e.g., with duplicated levels (illegal but
-      constructable) now give a warning when printed, via new
-      \code{.valid.factor}.
+      constructable) now give a warning when printed, via new function
+      \code{.valid.factor()}.
 
       \item \code{sessionInfo()} has been updated for Apple's change in
-      OS naming as from \sQuote{10.12} (\sQuote{macOS Sierra}).
+      OS naming as from \sQuote{10.12} (\sQuote{macOS Sierra} \emph{vs}
+      \sQuote{OS X El Capitan}).
 
       Its \code{toLatex()} method now includes the \code{running}
       component.
 
       \item \code{options("interrupt")} can be used to specify a default
-      action for user interrupts. For now, if this option is not set and
+      action for user interrupts.  For now, if this option is not set and
       the \code{error} option is set, then an unhandled user interrupt
-      invokes the \code{error} option. This may be dropped in the future
+      invokes the \code{error} option.  This may be dropped in the future
       as \code{interrupt} conditions are not \code{error} conditions.
 
       \item In most cases user interrupt handlers will be called with a
@@ -120,12 +121,12 @@
       available. Some read operations cannot be resumed properly when
       interrupted and do not provide a \code{"resume"} restart.
 
-      \item The radix sort is now the default algorithm for double
+      \item Radix sort is now the default algorithm for double
       vectors. It no longer rounds.
 
       \item \code{stack.data.frame} and \code{stack.default} preserve
       the names of empty elements in the levels of the \code{ind} column
-      of the return value. Set the new \code{drop} argument to
+      of the return value.  Set the new \code{drop} argument to
       \code{TRUE} for the previous behavior.
     }
   }
@@ -160,7 +161,7 @@
       \item When a class name matches multiple classes in the cache,
       perform a dynamic search in order to obey namespace imports. This
       should eliminate annoying messages about multiple hits in the
-      class cache. Also, pass along the package from the
+      class cache.  Also, pass along the package from the
       \code{ClassExtends} object when looking up superclasses in the
       cache.
 
@@ -188,11 +189,11 @@
       \item Fix S3 dispatch on S4 objects when the \pkg{methods} package is
       not attached.
 
-      \item Internal S4 dispatch sets \code{.Generic} in the method frame for
-      consistency with \code{standardGeneric()} (\PR{16929}).
+      \item Internal S4 dispatch sets \code{.Generic} in the method
+      frame for consistency with \code{standardGeneric()}.  (\PR{16929})
 
-      \item Fix \code{order(x, decreasing=TRUE)} when \code{x} is an
-      integer vector containing \code{MAX_INT}. Ported from a fix Matt
+      \item Fix \code{order(x, decreasing = TRUE)} when \code{x} is an
+      integer vector containing \code{MAX_INT}.  Ported from a fix Matt
       Dowle made to \CRANpkg{data.table}.
 
       \item Fix caching by \code{callNextMethod()}, resolves \PR{16973}
