@@ -3177,7 +3177,6 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 @code{setenv}.} are essential, and others@footnote{such as
 @code{realpath}, @code{symlink}.} will be used if available.
 
-@c PCRE[1] 8.32 is from Nov 2012
 @c zlib 1.2.5 is from July 2010, bzip2 1.0.6 from Sept 2010
 @c xz 5.0.3 is from May 2011
 @c libcurl 7.28.0 was released in Oct 2012
@@ -3189,9 +3188,9 @@ possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
 later are required.
 
+@c PCRE[1] 8.32 is from Nov 2012
 PCRE@footnote{sometimes known as PCRE1, and not PCRE2 which started at
-version 10.0.} (version 8.32 or later, although versions 8.10--8.31 will
-be accepted with a deprecation warning) is required (or just its library
+version 10.0.} (version 8.32 or later) is required (or just its library
 and headers if packaged separately).  PCRE must be built with UTF-8
 support (not the default, and checked by @command{configure}) and
 support for Unicode properties is assumed by some @R{} packages.  JIT
