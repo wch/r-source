@@ -109,10 +109,11 @@
       component.
 
       \item \code{options("interrupt")} can be used to specify a default
-      action for user interrupts.  For now, if this option is not set and
-      the \code{error} option is set, then an unhandled user interrupt
-      invokes the \code{error} option.  This may be dropped in the future
-      as \code{interrupt} conditions are not \code{error} conditions.
+      action for user interrupts.  For now, if this option is not set
+      and the \code{error} option is set, then an unhandled user
+      interrupt invokes the \code{error} option.  This may be dropped in
+      the future as \code{interrupt} conditions are not \code{error}
+      conditions.
 
       \item In most cases user interrupt handlers will be called with a
       \code{"resume"} restart available.  Handlers can invoke this
@@ -121,15 +122,20 @@
       available. Some read operations cannot be resumed properly when
       interrupted and do not provide a \code{"resume"} restart.
 
-      \item Radix sort is now the default algorithm for double
-      vectors. It no longer rounds.
+      \item Radix sort is now the \code{"auto"} algorithm for
+      \code{sort.int()} for double vectors (and hence used for
+      \code{sort()} for unclassed double vectors), excluding
+      \sQuote{long} vectors.
 
-      \item \code{stack.data.frame} and \code{stack.default} preserve
-      the names of empty elements in the levels of the \code{ind} column
-      of the return value.  Set the new \code{drop} argument to
-      \code{TRUE} for the previous behavior.
+      \code{sort.int(method = "radix")} no longer rounds double vectors.
+
+      \item The \code{default} and \code{data.frame} methods for
+      \code{stack()} preserve the names of empty elements in the levels
+      of the \code{ind} column of the return value.  Set the new
+      \code{drop} argument to \code{TRUE} for the previous behavior.
     }
   }
+
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item \code{readline} headers (and not just the library) are
@@ -141,17 +147,16 @@
       \url{http://www.tcl.tk/man/} instead.
     }
   }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item The deprecated support for PCRE versions 8.10 to 8.31 will
-      be removed prior to \R 3.4.0.
-
       \item (Windows only) Function \code{setInternet2()} is defunct.
       
       \item Installation support for \code{readline} emulations based on
       \code{editline} (aka \code{libedit}) is deprecated.
     }
   }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Getting or setting \code{body()} or \code{formals()} on
