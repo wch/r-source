@@ -4682,7 +4682,7 @@ compiler intrinsic for the imaginary unit).
 example is @code{index_t} defined in @file{<sys/types.h>} on Solaris.
 
 @item
-If you use OpenMP, check careully that you have followed the advice in
+If you use OpenMP, check carefully that you have followed the advice in
 the subsection on @ref{OpenMP support}.  In particular, any use of
 OpenMP in C/C++ code will need to use
 @example
@@ -4690,6 +4690,10 @@ OpenMP in C/C++ code will need to use
 # include <omp.h>
 #endif
 @end example
+@noindent
+And do not hardocde @option{-lgomp}: not only is that specific to the
+GCC family of compilers, the correct linker flag sets up the run-time
+path to the library.
 @end itemize
 
 Some additional information for C++ is available at
