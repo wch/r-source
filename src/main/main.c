@@ -1140,6 +1140,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    SEXP hooksym = install(".tryResumeInterrupt");
 	    if (SYMVALUE(hooksym) != R_UnboundValue) {
 		SEXP hcall;
+		R_Busy(1);
 		PROTECT(hcall = LCONS(hooksym, R_NilValue));
 		eval(hcall, R_GlobalEnv);
 		UNPROTECT(1);
