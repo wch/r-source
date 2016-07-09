@@ -8057,11 +8057,11 @@ Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
 the user manual for your version of @command{clang}, e.g.@:
-@uref{http://llvm.org/@/releases/@/3.6.2@//tools/@/docs/@/UsersManual.html}.}
+@uref{http://llvm.org/@/releases/@/3.8.0@//tools/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
-float-divide-by-zero,function,integer-divide-by-zero,non-null-attribute,
+float-divide-by-zero,function,integer-divide-by-zero,nonnull-attribute,
 null,object-size,return,returns-nonnull-attribute,shift,
 signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
@@ -8112,7 +8112,7 @@ the manual for your version of GCC, installed or @emph{via}
 GCC: 5.3 supports
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
-integer-divide-by-zero,non-null-attribute,null,object-size,
+integer-divide-by-zero,nonnull-attribute,null,object-size,
 return,returns-nonnull-attribute,shift,signed-integer-overflow,
 unreachable,vla-bound,vptr
 @end example
