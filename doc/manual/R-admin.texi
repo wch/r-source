@@ -3589,7 +3589,7 @@ well as @code{LSAME}), and appears to be usable.  However, an external
 position-independent code), and that is not checked.
 
 Some enhanced @acronym{BLAS}es are compiler-system-specific
-(@code{sunperf} on Solaris@footnote{Using the Oracle Solaris Studio
+(@code{sunperf} on Solaris@footnote{Using the Oracle Developer Studio
 @command{cc} and @command{f95} compilers}, @code{libessl} on IBM,
 @code{Accelerate} on macOS).  The correct incantation for these is often
 found @emph{via} @option{--with-blas} with no value on the appropriate
@@ -4639,7 +4639,6 @@ the additional flags being needed to resolve problems linking against
 @menu
 * Clang::                       
 * Intel compilers::             
-* Oracle Solaris Studio compilers::  
 @end menu
 
 @node Clang, Intel compilers, Linux, Linux
@@ -4665,7 +4664,7 @@ version 3.7.0 or later may.@footnote{This also needs the OpenMP runtime,
 which has sometimes been distributed separately, e.g.@: for 3.7.0 at
 @uref{http://llvm.org/releases}.}
 
-@node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
+@node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
@@ -4716,43 +4715,6 @@ CXXFLAGS="$fast"
 FC=$F77
 FCFLAGS=$F77FLAGS
 @end example
-
-
-@node Oracle Solaris Studio compilers,  , Intel compilers, Linux
-@subsection Oracle Solaris Studio compilers
-
-Brian Ripley tested the Sun Studio 12 compilers, since renamed to Oracle
-Solaris Studio.  On @cputype{x86_64} Linux with
-
-@example
-CC=suncc
-CFLAGS="-xO5 -xc99 -xlibmil -nofstore"
-CPICFLAGS=-Kpic
-F77=sunf95
-FFLAGS="-O5 -libmil -nofstore"
-FPICFLAGS=-Kpic
-CXX="sunCC -library=stlport4"
-CXXFLAGS="-xO5 -xlibmil -nofstore -features=tmplrefstatic"
-CXXPICFLAGS=-Kpic
-FC=sunf95
-FCFLAGS=$FFLAGS
-FCPICFLAGS=-Kpic
-LDFLAGS=-L/opt/sunstudio12.1/rtlibs/amd64
-SHLIB_LDFLAGS=-shared
-SHLIB_CXXLDFLAGS=-G
-SHLIB_FCLDFLAGS=-G
-SAFE_FFLAGS="-O5 -libmil"
-@end example
-
-@noindent
-@option{-m64} could be added, but was the default.  Do not use
-@option{-fast}: see the warnings under Solaris. (The C++ options are
-also explained under Solaris.)
-
-Others have found on at least some versions of @cputype{ix86} Linux that
-the configure flag @option{--disable-largefile} was needed (since
-@file{glob.h} on that platform presumed @command{gcc} was being used).
-
 
 @node macOS, Solaris, Linux, Platform notes
 @section macOS
@@ -5095,15 +5057,14 @@ in the @file{/Applications} folder.
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using the (zero cost) Oracle Solaris Studio compilers:
-there has been some success with
+@cputype{x86}) using the (zero cost) Oracle Developer
+Studio@footnote{Oracle Solaris Studio prior to 2016, and previously Sun
+Studio.} compilers: there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}.  (Recent Sun machines are AMD
 Opterons or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but
 32-bit @cputype{x86} executables are the default.)
 
 There have been few reports on Solaris 11, with no known extra issues.
-Solaris 9 and earlier are now so old that it is unlikely that @R{} is
-still used with them, and they will not be considered here.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -5146,9 +5107,9 @@ option @option{--with-internal-tzcode} is recommended, and required if
 you find time-zone abbreviations being given odd values (as has been
 seen on 64-bit builds without it).
 
-When using the Oracle compilers@footnote{including @command{gcc} for
-Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
-disables @acronym{IEEE} arithmetic and @command{make check} will fail.
+When using the Oracle compilers do @emph{not} specify @option{-fast}, as
+this disables @acronym{IEEE} arithmetic and @command{make check} will
+fail.
 
 It has been reported that some Solaris installations need
 
@@ -5211,7 +5172,7 @@ packages currently on CRAN).
 
 Currently @cputype{amd64} and @cputype{sparcv9} builds work
 out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
-12.3: @file{libRblas.so} and @file{lapack.so} are generated with code
+later: @file{libRblas.so} and @file{lapack.so} are generated with code
 that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building 64-bit @R{} as a shared library
 may be impossible with Solaris Studio >= 12.2.  For a standard build the
@@ -5532,8 +5493,7 @@ environment can be found in the ``R on AIX'' project on R-Forge
 There have been few recent reports on FreeBSD.
 
 There is a `port' at @uref{https://www.freebsd.org/ports/math.html}, for
-@R{} 3.0.2 at the time of writing.  Davor Cubranic reported some success
-on x86_64 FreeBSD 10.2 for @R{} 3.2.2.
+@R{} 3.3.1 at the time of writing.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
@@ -5545,7 +5505,9 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{http://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}.
+@uref{http://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}. (Downgrading
+the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
+developers.)
 
 @node Cygwin, New platforms, OpenBSD, Platform notes
 @section Cygwin
