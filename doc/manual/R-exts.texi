@@ -2512,12 +2512,18 @@ different dialect of the standard, such as @option{-std=gnu++11}, or
 enable support for the 2014 revision using something like
 @option{-std=c++14} or @option{-std=c++1y}.
 
-As noted above, support for C++11 varies across platforms.  The default
-compiler on Windows is GCC 4.6.x and supports the @option{-std=c++0x}
-flag and some C++11 features (see
-@uref{https://gcc.gnu.org/@/gcc-4.6/@/cxx0x_status.html}).  On some
+As noted above, support for C++11 varies across platforms: on some
 platforms, it may be possible or necessary to select a different
 compiler for C++11, @emph{via} personal or site @file{Makevars} files.
+Note too that support for C++11 may include C++14 support, so that
+including emulation of C++14 features should be done by something like
+@example
+#if __cplusplus >= 201402L
+using std::make_unique;
+#else
+// your emulation
+#endif
+@end example
 
 There is no guarantee that C++11 can be used in a package in combination
 with any other compiled language (even C), as the C++11 compiler may be
@@ -4691,9 +4697,12 @@ OpenMP in C/C++ code will need to use
 #endif
 @end example
 @noindent
+Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads} also
+needs to be conditioned.
+
 And do not hardocde @option{-lgomp}: not only is that specific to the
-GCC family of compilers, the correct linker flag sets up the run-time
-path to the library.
+GCC family of compilers, using the correct linker flag sets up the
+run-time path to the library.
 @end itemize
 
 Some additional information for C++ is available at

@@ -59,7 +59,7 @@ This is a guide to installation and administration for R.
 * Obtaining R::                 
 * Installing R under Unix-alikes::  
 * Installing R under Windows::  
-* Installing R under macOS::     
+* Installing R under macOS::    
 * Running R::                   
 * Add-on packages::             
 * Internationalization::        
@@ -938,9 +938,10 @@ environment variable @env{TZ}.
 
 @menu
 * OpenMP Support::              
+* C++ Support::                 
 @end menu
 
-@node OpenMP Support,  , Other Options, Other Options
+@node OpenMP Support, C++ Support, Other Options, Other Options
 @subsection OpenMP Support
 
 By default @command{configure} searches for suitable
@@ -974,6 +975,42 @@ OpenMP).  The @command{configure} detection test is to compile and link
 a standalone OpenMP program, which is not the same as compiling a shared
 object and loading it into the C program of @R{}'s executable.  Note
 that overridden values are not tested.
+
+@node C++ Support,  , OpenMP Support, Other Options
+@subsection C++ Support
+
+C++ is not used by @R{} itself, but support is provided for installing
+packages with C++ code via @command{make} macros defined in file
+@file{etc/Makeconf} (and with explanations in file @file{config.site}):
+@example
+CXX
+CXXFLAGS
+CXXPICFLAGS
+CXX1X
+CXX1XSTD
+CXX1XFLAGS
+CXX1XPICFLAGS
+@end example
+@noindent
+@command{configure} will attempt to set these suitably, choosing for
+@code{CXX1XSTD} a suitable flag such as @option{--std=c++11} for C++11
+support.  The inferred values can be overridden in file
+@file{config.site} or on the @command{configure} command line.
+
+It may be@footnote{This is true for earlier versions of @code{g++} such
+as 4.2.1, and also for commonly used versions of the Solaris compiler
+@code{CC}.} that there is no suitable flag for C++11 support, in which
+case a different compiler could be selected for @code{CXX1X} and its
+corresponding flags.  Conversely, some compilers by default assume a
+later standard than C++98 whereas the latter is assumed by some
+packages.  So users of GCC 6 might like to specify
+@example
+CXX='g++ --std=gnu++98'
+CXX1X=g++
+CXX1XSTD='--std=c++11'
+@end example
+
+For the use of C++11 in @R{} packages see the `Writing R Extensions' manual.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -1691,8 +1728,8 @@ For building @R{} from source, see @ref{macOS}.
 
 
 @menu
-* Running R under macOS::        
-* Uninstalling under macOS::     
+* Running R under macOS::       
+* Uninstalling under macOS::    
 * Multiple versions::           
 @end menu
 
@@ -1982,7 +2019,7 @@ library paths, separated by colons (semicolons on Windows).
 
 @menu
 * Windows packages::            
-* macOS packages::               
+* macOS packages::              
 * Customizing package compilation::  
 * Multiple sub-architectures::  
 * Byte-compilation::            
@@ -2665,7 +2702,7 @@ some OSes offer only one charset per language.
 @menu
 * Locales under Unix-alikes::   
 * Locales under Windows::       
-* Locales under macOS::          
+* Locales under macOS::         
 @end menu
 
 @node Locales under Unix-alikes, Locales under Windows, Locales, Locales
@@ -3487,10 +3524,10 @@ configure variables @code{CXX}, @code{CXXFLAGS} and similar.
 most cases this will be a C++98 compiler, and as from @R{} 3.1.0 it is
 possible to specify an alternative compiler for use with C++11 by the
 configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
-similar.  Again, @command{configure} will normally find a suitable value
-for @code{CXX1XSTD} if the compiler given by @code{CXX} is capable of
-compiling C++11 code, but it is possible that a completely different
-compiler will be needed.
+similar (@pxref{C++ Support}).  Again, @command{configure} will normally
+find a suitable value for @code{CXX1XSTD} if the compiler given by
+@code{CXX} is capable of compiling C++11 code, but it is possible that a
+completely different compiler will be needed.
 
 Other packages need full Fortran 90 (or later) support.  For source
 files with extension @file{.f90} or @file{.f95}, the compiler defined by
@@ -4398,7 +4435,7 @@ Windows: _WIN32, _WIN64
 @menu
 * X11 issues::                  
 * Linux::                       
-* macOS::                        
+* macOS::                       
 * Solaris::                     
 * AIX::                         
 * FreeBSD::                     
@@ -4875,7 +4912,7 @@ some upgrades but not others).
 @menu
 * El Capitan::                  
 * Tcl/Tk headers and libraries::  
-* Java (macOS)::                 
+* Java (macOS)::                
 * Frameworks::                  
 * Building R.app::              
 @end menu

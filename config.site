@@ -256,14 +256,15 @@
 ## CXX1XFLAGS=
 ## CXX1XPICFLAGS=
 ## SHLIB_CXXIXLD=
-## SHLIB_CXXiXLDFLAGS=
+## SHLIB_CXX1XLDFLAGS=
 
 ## Additional libraries to link the internet module against.
 ## Some claim Solaris needs -lsocket -lnsl
 ## INTERNET_LIBS=
 
 ## Script from texinfo 5.1 or later.
-## Can be texi2any (the default) or makeinfo or a full path to either.
+## Usually the full path to texi2any.
+## (The name is historical: this was 'makeinfo' in texinfo 4.x)
 ## MAKEINFO=
 
 ## Full path to version of curl-config to be used
@@ -285,7 +286,8 @@
 ## OpenMP settings.
 ## The configure code is conservative about enabling OpenMP 
 ## so use can be forced here (or non-use if set but empty).
-## For packages
+## For packages (note that SHLIB_OPENMP_CXXFLAGS is for CXX, not
+## necessarily for CXX1X).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
 ## SHLIB_OPENMP_FCFLAGS=
