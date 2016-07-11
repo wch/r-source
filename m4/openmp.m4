@@ -1,6 +1,7 @@
 # This file is part of Autoconf.			-*- Autoconf -*-
 # Programming languages support.
 # Copyright (C) 2001-2012 Free Software Foundation, Inc.
+# Copyright (C) 2015-2016 R Core Team
 
 # This file is part of Autoconf.  This program is free
 # software; you can redistribute it and/or modify it under the
@@ -27,7 +28,7 @@
 # Franc,ois Pinard, Karl Berry, Richard Pixley, Ian Lance Taylor,
 # Roland McGrath, Noah Friedman, david d zuhn, and many others.
 
-# [a small part, modified for clang and icc in 2015.]
+# [a small part, modified for clang and Intel in 2015,6.]
 
 
 # R_OPENMP
