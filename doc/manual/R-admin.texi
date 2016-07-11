@@ -1001,13 +1001,14 @@ It may be@footnote{This is true for earlier versions of @code{g++} such
 as 4.2.1, and also for commonly used versions of the Solaris compiler
 @code{CC}.} that there is no suitable flag for C++11 support, in which
 case a different compiler could be selected for @code{CXX1X} and its
-corresponding flags.  Conversely, some compilers by default assume a
-later standard than C++98 whereas the latter is assumed by some
+corresponding flags.  Conversely, some compilers@footnote{Currently only
+GCC 6 and later, but this has been mooted for others.} by default assume
+a later standard than C++98 whereas the latter is assumed by some
 packages.  So users of GCC 6 might like to specify
 @example
-CXX='g++ --std=gnu++98'
+CXX='g++ -std=gnu++98'
 CXX1X=g++
-CXX1XSTD='--std=c++11'
+CXX1XSTD='-std=c++11'
 @end example
 
 For the use of C++11 in @R{} packages see the `Writing R Extensions' manual.

@@ -164,7 +164,7 @@ OlsonNames()
   mainland France) and switched to \samp{GMT+0} in 1911.
 
   %% it is a ksh script so could well pop up elsewhere.
-  Some systems (notably Linux) have \command{tzselect} command which
+  Some systems (notably Linux) have a \command{tzselect} command which
   allows the interactive selection of a supported time zone name.
 }
 

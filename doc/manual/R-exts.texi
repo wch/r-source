@@ -2442,13 +2442,14 @@ compilers commonly accept C99 extensions to C++98.  A minor update to
 C++11 (often known as C++14) was approved in August 2014.
 
 What standard a C++ compiler aims to support can be hard to determine.
-As from version 6, @command{g++} defaults to C++14: earlier versions aim
-to support C++03 with many extensions (including support for TR1).
-@command{clang} with its native@footnote{Some distributions, notably
-Debian, have supplied a build of @command{clang} with @command{g++}'s
-headers and library.  Conversely, Apple's command named @command{g++} is
-based on @command{clang} using @code{libcxx}.}  @code{libcxx} headers
-and library includes many C++11 features, and does not support TR1.
+As from version 6, @command{g++} defaults to C++14 (with GNU
+extensions): earlier versions aim to support C++03 with many extensions
+(including support for TR1).  @command{clang} with its
+native@footnote{Some distributions, notably Debian, have supplied a
+build of @command{clang} with @command{g++}'s headers and library.
+Conversely, Apple's command named @command{g++} is based on
+@command{clang} using @code{libc++}.}  @code{libc++} headers and library
+includes many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2499,18 +2500,19 @@ the @R{} sources.}, or in a personal or site @file{Makevars} file.
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration}.
 @end ifset
-If C++11 support is not available then these macros are both
-empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
-compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
-@option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).  It
-is possible to specify @samp{CXX1X} to be a distinct compiler just for
-C++11--using packages, e.g.@: @command{g++} on Solaris.  Note however
-that different C++ compilers (and even different versions of the same
-compiler) often differ in their ABI so their outputs can rarely be
-mixed. By setting @samp{CXX1XSTD} it is also possible to choose a
-different dialect of the standard, such as @option{-std=gnu++11}, or
-enable support for the 2014 revision using something like
-@option{-std=c++14} or @option{-std=c++1y}.
+If C++11 support is not available then these macros are both empty; if
+it is available by default, @samp{CXX1X} defaults to @samp{CXX} and
+@samp{CXX1XSTD} is empty . Otherwise, @samp{CXX1X} defaults to the same
+value as the C++ compiler @samp{CXX} and the flag @samp{CXX1XSTD}
+defaults to @option{-std=c++11} or @option{-std=c++0x} (the latter on
+Windows).  It is possible to specify @samp{CXX1X} to be a distinct
+compiler just for C++11--using packages, e.g.@: @command{g++} on
+Solaris.  Note however that different C++ compilers (and even different
+versions of the same compiler) often differ in their ABI so their
+outputs can rarely be mixed. By setting @samp{CXX1XSTD} it is also
+possible to choose a different dialect of the standard such as
+@option{-std=gnu++11}, or enable support for the 2014 revision using
+something like @option{-std=c++14} or @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms: on some
 platforms, it may be possible or necessary to select a different
@@ -9393,7 +9395,7 @@ destructor Y
 The @R{} for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
 to compile this example under Windows.
 
-Earlier version of this example used C++ iostreams: this is best
+Earlier versions of this example used C++ iostreams: this is best
 avoided.  There is no guarantee that the output will appear in the @R{}
 console, and indeed it will not on the @R{} for Windows console.  Use
 @R{} code or the C entry points (@pxref{Printing}) for all I/O if at all
@@ -9406,24 +9408,14 @@ should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
 such a block has caused compilation errors.}).  It may not be possible
 to include some @R{} headers as they in turn include system header files
-that may cause conflicts---if this happens, try defining
-@samp{NO_C_HEADERS} before including the @R{} headers, and include C++
-versions (such as @samp{cmath} and @samp{cstdlib}) of the appropriate
-headers yourself before the @R{} headers. (Headers @file{R.h} and
-@file{Rmath.h} support @samp{NO_C_HEADERS}: the legacy header @file{S.h}
-does not.  Header @file{Rinternals.h} does as from @R{} 3.3.0.)
+that may cause conflicts---if this happens, first try including the
+appropriate headers yourself before the @R{} headers, then try defining
+@samp{NO_C_HEADERS} before including the @R{} headers.  (Headers
+@file{R.h}, @file{Rinternals.h} and @file{Rmath.h} support
+@samp{NO_C_HEADERS}: @file{cstddef} needs to be included before
+@file{R.h} if @samp{NO_C_HEADERS} is defined.)
 
-By default header @file{Rmath.h} includes @file{math.h} or @file{cmath}.
-Header @file{R.h} includes
-
-@example
-limits.h math.h stddef.h stdio.h stdlib.h string.h
-@end example
-
-@noindent
-or their C++ equivalents directly or indirectly, and either
-@file{stddef.h} or @file{cstddef} needs to be included before @file{R.h}
-if @samp{NO_C_HEADERS} is defined.
+Legacy header @file{S.h} cannot be used with C++.
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
@@ -9436,12 +9428,12 @@ and @code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
 In the past most Fortran compilers implemented I/O on top of the C I/O
 system and so the two interworked successfully.  This was true of
 @command{g77}, but it is less true of @command{gfortran} as used in
-@code{gcc 4.y.z}.  In particular, any package that makes use of Fortran
-I/O will when compiled on Windows interfere with C I/O: when the Fortran
-I/O is initialized (typically when the package is loaded) the C
+@command{gcc} 4 and later.  In particular, any package that makes use of
+Fortran I/O will when compiled on Windows interfere with C I/O: when the
+Fortran I/O is initialized (typically when the package is loaded) the C
 @code{stdout} and @code{stderr} are switched to LF line endings.
-(Function @code{init} in file @file{src/modules/lapack/init_win.c} shows how to
-mitigate this.)
+(Function @code{init} in file @file{src/modules/lapack/init_win.c} shows
+how to mitigate this.)
 
 @node Linking to other packages, Handling R objects in C, Fortran I/O, System and foreign language interfaces
 @section Linking to other packages
