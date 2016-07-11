@@ -872,7 +872,10 @@ get_exclude_patterns <- function()
             resultLog(Log, "NO")
             do_exit(1L)
         }
-        intname <- desc["Package"]
+	if(is.na(intname <- desc["Package"]) || !length(intname) ||
+	   !nchar(intname)) {
+	    errorLog(Log, "invalid 'Package' field"); do_exit(1L)
+	}
         ## make a copy, cd to parent of copy
         setwd(dirname(pkgdir))
         filename <- paste0(intname, "_", desc["Version"], ".tar")
