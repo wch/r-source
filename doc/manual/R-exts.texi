@@ -2054,9 +2054,10 @@ PKG_CFLAGS = $(SHLIB_OPENMP_CFLAGS)
 PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
-Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the C++98
-compiler and not necessarily to the C++11 compiler: users of the latter
-should do their own @command{configure} checks.
+Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
+C++ compiler and not necessarily to the C++11 compiler: users of the
+latter should do their own @command{configure} checks (an example is
+available in CRAN package @CRANpkg{ARTP2}).
 
 Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
@@ -2538,7 +2539,7 @@ essential that it selects the correct compiler, @emph{via} something like
 @example
 CXX1X=`"$@{R_HOME@}/bin/R" CMD config CXX1X`
 CXX1XSTD=`"$@{R_HOME@}/bin/R" CMD config CXX1XSTD`
-CXX="$(CXX1X) $(CXX1XSTD)"
+CXX="$@{CXX1X@} $@{CXX1XSTD@}"
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX1XFLAGS`
 AC_LANG(C++)
 @end example
