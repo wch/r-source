@@ -8068,7 +8068,7 @@ Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
 the user manual for your version of @command{clang}, e.g.@:
-@uref{http://llvm.org/@/releases/@/3.8.0@//tools/@/docs/@/UsersManual.html}.}
+@uref{http://llvm.org/@/releases/@/3.8.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
