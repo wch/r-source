@@ -1,6 +1,7 @@
 # This file is part of Autoconf.			-*- Autoconf -*-
 # Programming languages support.
 # Copyright (C) 2001-2012 Free Software Foundation, Inc.
+# Copyright (C) 2015-2016 R Core Team
 
 # This file is part of Autoconf.  This program is free
 # software; you can redistribute it and/or modify it under the
@@ -27,7 +28,7 @@
 # Franc,ois Pinard, Karl Berry, Richard Pixley, Ian Lance Taylor,
 # Roland McGrath, Noah Friedman, david d zuhn, and many others.
 
-# [a small part, modified for clang and icc in 2015.]
+# [a small part, modified for clang and Intel in 2015,6.]
 
 
 # R_OPENMP
@@ -53,18 +54,21 @@ AC_DEFUN([R_OPENMP],
 	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='none needed'],
 	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='unsupported'
 	  dnl Try these flags:
-	  dnl   GCC >= 4.2           -fopenmp
-	  dnl   clang 3.7.0	     -fopenmp=libomp
+	  dnl   GCC >= 4.2, clang 3.8 -fopenmp
+	  dnl   clang 3.7.x	      -fopenmp=libomp
 	  dnl   (-fopenmp is accepted but does not work)
-	  dnl   SolarisStudio C      -xopenmp
-	  dnl   Intel C              -openmp (deprecated)
-	  dnl   icc (ca 2015) 	     -qopenmp
-	  dnl   SGI C, PGI C         -mp
-	  dnl   Tru64 Compaq C       -omp
-	  dnl   IBM C (AIX, Linux)   -qsmp=omp
-          dnl   Cray CCE             -homp
-          dnl   NEC SX               -Popenmp
-          dnl   Lahey Fortran (Linux)  --openmp
+	  dnl   Oracle C, Fortran     -xopenmp
+          dnl   (also accepts -fopenmp as from 12.4)
+	  dnl   Intel C, Fortran      -qopenmp
+	  dnl   Intel                 -openmp (deprecated)
+          dnl   (https://software.intel.com/en-us/node/581863,
+	  dnl    https://software.intel.com/en-us/node/525020)
+	  dnl   SGI C, PGI C          -mp
+	  dnl   Tru64 Compaq C        -omp
+	  dnl   IBM C (AIX, Linux)    -qsmp=omp
+          dnl   Cray CCE              -homp
+          dnl   NEC SX                -Popenmp
+          dnl   Lahey Fortran (Linux) --openmp
 	  dnl If in this loop a compiler is passed an option that it doesn't
 	  dnl understand or that it misinterprets, the AC_LINK_IFELSE test
 	  dnl will fail (since we know that it failed without the option),

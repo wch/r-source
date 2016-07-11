@@ -10,7 +10,8 @@ redistribute it.  R as a whole is distributed under GPL version 2 or
 3: most source files contain a copyright statement allowing use of
 that file under GPL version 2 or later: the main exceptions are the
 included versions of packages 'MASS', 'class', 'nnet', 'rpart' and
-'spatial' (GPL-2 or GPL-3).
+'spatial' (GPL-2 or GPL-3).  (The auxiliary file m4/openmp.m4 is under
+GPL-3, but its incorporation into 'configure' is not.)
 
 The status of files used only in the Windows port is in file
 src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
@@ -516,6 +517,12 @@ tools/mdate-sh
 tools/missing
 
    Copyright various dates Free Software Foundation
+
+m4/openmp.m4
+  Copyright (C) 2001-2012 Free Software Foundation, Inc.
+  Copyright (C) 2015-2016 R Core Team
+
+  Under GPL-3 with the Autoconf Configure Script Exception, version 3.0.
 
 tools/config.quess
 tools/config.sub
