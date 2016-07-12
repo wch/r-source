@@ -63,7 +63,7 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
       \code{s} equivalent to \code{c}.}
     \item{\code{where}}{print a stack trace of all active function calls.}
     \item{\code{r}}{invoke a \code{"resume"} restart if one is
-      available; interpeted as an \R expression otherwise. Typically
+      available; interpreted as an \R expression otherwise. Typically
       \code{"resume"} restarts are established for continuing from user
       interrupts.}
     \item{\code{Q}}{exit the browser and the current evaluation and

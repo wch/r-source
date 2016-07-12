@@ -4703,7 +4703,7 @@ OpenMP in C/C++ code will need to use
 Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads} also
 needs to be conditioned.
 
-And do not hardocde @option{-lgomp}: not only is that specific to the
+And do not hardcode @option{-lgomp}: not only is that specific to the
 GCC family of compilers, using the correct linker flag sets up the
 run-time path to the library.
 @end itemize
