@@ -8,6 +8,8 @@
 \alias{pkgDepends}
 \title{Functions to Retrieve Dependency Information}
 \description{
+  These functions are \emph{deprecated} (since Feb. 2016).
+
   These functions retrieve information about the dependencies of
   a package or a dependency matrix, resulting in a \code{DependsList} object.
 
