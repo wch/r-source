@@ -13,7 +13,7 @@ Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN 
 "Belgium (Ghent)",Belgium,Ghent,http://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo Justiniano Ribeiro Junior <paulojus # ufpr.br>",1,br
-"Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
+"Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo.cruz # fiocruz.br",1,br
 "Brazil (SP 1) [https]",Brazil,"Sao Paulo",https://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br
 "Brazil (SP 1)",Brazil,"Sao Paulo",http://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","aafgarci # esalq.usp.br",1,br,"maintainer_address_bounces"
@@ -25,7 +25,6 @@ Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexan
 "Canada (ON)",Canada,Toronto,http://cran.utstat.utoronto.ca/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
 "Chile [https]",Chile,Santiago,https://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
-"China (Beijing 2)",China,Bejing,http://mirror.bjtu.edu.cn/cran/,"Beijing Jiaotong University, Beijing","idealities # gmail.com",0,cn
 "China (Beijing 3)",China,Beijing,http://mirrors.opencas.cn/cran/,"Chinese Academy of Sciences, Beijing","admin # opencas.cn",0,cn
 "China (Beijing 4) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Beijing 4)",China,Beijing,http://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
@@ -43,7 +42,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Lyon 2)",France,Lyon,http://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille)",France,Marseille,"http://cran.biotools.fr/","IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr
 "France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr
-"France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",0,fr
+"France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "France (Paris 2) [https]",France,Paris,https://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
 "Germany (Göttingen)",Germany,Göttingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Göttingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
@@ -63,7 +62,6 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","angelo.mineo # unipa.it, apontillo # gmail.com",1,it
 "Japan (Tokyo) [https]",Japan,Tokyo,https://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
-"Japan (Yamagata)",Japan,Yamagata,http://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","ftp-admin # ftp.yz.yamagata-u.ac.jp",0,jp
 "Korea (Seoul 1)",Korea,Seoul,http://cran.nexr.com/,"NexR Corporation, Seoul","mining # nexr.com",1,kr
 "Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",1,kr,"secure_mirror_from_master"
 "Korea (Ulsan)",Korea,Ulsan,http://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","dr.kyusang.lee # gmail.com",1,kr
@@ -73,7 +71,6 @@ Malaysia,Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysi
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Mexico City)",Mexico,"Mexico City",http://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx
-"Mexico (Queretaro)",Mexico,Queretaro,http://cran.jellyfish.lol/,"Jellyfish Foundation","Marco Galicia <galprasmarco # gmail.com>",0,mx
 "Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.xl-mirror.nl/,"XL-Data, Amsterdam","werner # xl-mirror.nl",1,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
