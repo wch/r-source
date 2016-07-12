@@ -1024,9 +1024,9 @@ The @option{-std} flag is supported by the GCC, @command{clang}, Intel
 and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
-g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++1z gnu++1y
-Intel:   gnu+98 c++11
-Solaris: c++03 c++11
+g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++1z gnu++1z
+Intel:   gnu+98 c++11 c++14 (from 16.0)
+Solaris: c++03 c++11 c++14 (from 12.5)
 @end example
 @noindent
 (Those for @command{clang++} are not documented, but seem to be based on
