@@ -104,7 +104,16 @@ Rd_expr_doi <- function(x)
     ## Be nice ...
     x <- .canonicalize_doi(x)
 
-    sprintf("\\ifelse{text}{%s}{%s}",
-            sprintf("doi: %s (URL: http://doi.org/%s)", x, x),
-            sprintf("\\href{http://doi.org/%s}{doi:\\sspace{}%s}", x, x))
+    ## Poor person's way to allow LaTeX to break lines at slashes and
+    ## dashes:
+    y <- gsub("/", "\\\\out{\\\\slash{}}", gsub("-", "\\\\out{\\\\-}", x))
+
+    sprintf("\\ifelse{text}{%s}{\\ifelse{latex}{%s}{%s}}",
+            sprintf("doi: %s (URL: http://doi.org/%s)",
+                    x, x),
+            sprintf("doi:\\out{\\nobreakspace{}}\\href{http://doi.org/%s}{%s}",
+                    x, y),
+            sprintf("doi: \\href{http://doi.org/%s}{%s}",
+                    x, x)
+            )
 }
