@@ -997,9 +997,9 @@ CXX1YPICFLAGS
 @end example
 @noindent
 @command{configure} will attempt to set these suitably, choosing for
-@code{CXX1XSTD} a suitable flag such as @option{--std=c++11} for C++11
+@code{CXX1XSTD} a suitable flag such as @option{-std=c++11} for C++11
 support. Similarly, configure will choose for @code{CXX1YSTD} a flag
-such as @option{--std=c++14} for C++14 support. The inferred values
+such as @option{-std=c++14} for C++14 support. The inferred values
 can be overridden in file @file{config.site} or on the
 @command{configure} command line.
 
