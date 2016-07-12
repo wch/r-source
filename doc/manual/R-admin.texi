@@ -990,18 +990,25 @@ CXX1X
 CXX1XSTD
 CXX1XFLAGS
 CXX1XPICFLAGS
+CXX1Y
+CXX1YSTD
+CXX1YFLAGS
+CXX1YPICFLAGS
 @end example
 @noindent
 @command{configure} will attempt to set these suitably, choosing for
 @code{CXX1XSTD} a suitable flag such as @option{--std=c++11} for C++11
-support.  The inferred values can be overridden in file
-@file{config.site} or on the @command{configure} command line.
+support. Similarly, configure will choose for @code{CXX1YSTD} a flag
+such as @option{--std=c++14} for C++14 support. The inferred values
+can be overridden in file @file{config.site} or on the
+@command{configure} command line.
 
 It may be@footnote{This is true for earlier versions of @code{g++} such
 as 4.2.1, and also for commonly used versions of the Solaris compiler
 @code{CC}.} that there is no suitable flag for C++11 support, in which
 case a different compiler could be selected for @code{CXX1X} and its
-corresponding flags.  Conversely, some compilers@footnote{Currently only
+corresponding flags.  Likewise, a different compiler can be specified for
+C++144 support with @{CXX1Y}. Some compilers@footnote{Currently only
 GCC 6 and later, but this has been mooted for others.} by default assume
 a later standard than C++98 whereas the latter is assumed by some
 packages.  So users of GCC 6 might like to specify
@@ -1009,6 +1016,8 @@ packages.  So users of GCC 6 might like to specify
 CXX='g++ -std=gnu++98'
 CXX1X=g++
 CXX1XSTD='-std=c++11'
+CXX1Y=g++
+CXX1YSTD='-std=c++14'
 @end example
 
 The @option{-std} flag is supported by the GCC, @command{clang}, Intel
@@ -3537,7 +3546,7 @@ configure variables @code{CXX}, @code{CXXFLAGS} and similar.
 most cases this will be a C++98 compiler, and as from @R{} 3.1.0 it is
 possible to specify an alternative compiler for use with C++11 by the
 configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
-similar (@pxref{C++ Support}).  Again, @command{configure} will normally
+similar (@pxref{C++ Support}). Again, @command{configure} will normally
 find a suitable value for @code{CXX1XSTD} if the compiler given by
 @code{CXX} is capable of compiling C++11 code, but it is possible that a
 completely different compiler will be needed.

@@ -1738,7 +1738,8 @@ AC_SUBST(STATICR2)
 AC_SUBST(R_DYLIB_EXT)
 
 ## C++11 and later
-R_CXX1X
+R_CXX1X([11], [CXX1X])
+R_CXX1X([14], [CXX1Y])
 
 ### OpenMP.
 
@@ -2803,6 +2804,7 @@ AC_OUTPUT
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 r_cxx1x_compiler="${CXX1X} ${CXX1XSTD} ${CXX1XFLAGS}"
+r_cxx1y_compiler="${CXX1Y} ${CXX1YSTD} ${CXX1YFLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -2930,6 +2932,7 @@ R is now configured for ${host}
 
   C++ compiler:              ${r_cxx_compiler}
   C++11 compiler:            ${r_cxx1x_compiler}
+  C++14 compiler:            ${r_cxx1y_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 

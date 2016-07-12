@@ -1743,6 +1743,7 @@ pkg-config --list-all | sort
 * Configure example::           
 * Using F95 code::              
 * Using C++11 code::            
+* Using C++14 code::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2055,7 +2056,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++11 compiler: users of the
+C++ compiler and not necessarily to the C++11 or C++14 compiler: users of the
 latter should do their own @command{configure} checks (an example is
 available in CRAN package @CRANpkg{ARTP2}).
 
@@ -2426,7 +2427,7 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C++11 code,  , Using F95 code, Configure and cleanup
+@node Using C++11 code,  Using C++14 code, Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -2512,21 +2513,11 @@ Solaris.  Note however that different C++ compilers (and even different
 versions of the same compiler) often differ in their ABI so their
 outputs can rarely be mixed. By setting @samp{CXX1XSTD} it is also
 possible to choose a different dialect of the standard such as
-@option{-std=gnu++11}, or enable support for the 2014 revision using
-something like @option{-std=c++14} or @option{-std=c++1y}.
+@option{-std=gnu++11}.
 
 As noted above, support for C++11 varies across platforms: on some
 platforms, it may be possible or necessary to select a different
 compiler for C++11, @emph{via} personal or site @file{Makevars} files.
-Note too that support for C++11 may include C++14 support, so that
-including emulation of C++14 features should be done by something like
-@example
-#if __cplusplus >= 201402L
-using std::make_unique;
-#else
-// your emulation
-#endif
-@end example
 
 There is no guarantee that C++11 can be used in a package in combination
 with any other compiled language (even C), as the C++11 compiler may be
@@ -2546,6 +2537,40 @@ AC_LANG(C++)
 
 @noindent
 (paying attention to all the quotes required).
+
+@node Using C++14 code,  , Using C++11 code, Configure and cleanup
+@subsection Using C++14 code
+
+Support for a C++14 has been explicitly added to @R{} from version
+3.4.0. Similar considerations to C++11 apply, except that the
+variables associated with the C++14 compiler use the prefix
+@samp{CXX1Y} instead of @samp{CXX1X} for C++11. Hence, to use C++14
+code in a package, the package's @file{Makevars}
+file (or @file{Makevars.win} on Windows) should include the line
+@example
+CXX_STD = CXX14
+@end example
+In the absence of a @file{Makevars} file, C++14 support can also be
+requested by the line:
+@example
+SystemRequirements: C++14
+@end example
+@noindent
+in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
+used systematically by setting the environment variable @env{USE_CXX1Y}.
+
+Note that code written for C++11 that emulates features of C++14 will
+not necessarily compile under a C++14 compiler, since the emulation
+typically leads to a namespace clash. In order to ensure that the code
+also compiles under C++14, something like the following should be
+done:
+@example
+#if __cplusplus >= 201402L
+using std::make_unique;
+#else
+// your emulation
+#endif
+@end example
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages

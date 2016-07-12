@@ -249,14 +249,31 @@
 ## $(CXX1X) $(CXX1XSTD) for both compiling and linking DSOs/DLLs.  
 ## '-std=c++11' and '-std=c++0x' are tried in turn by configure.
 ## '-std=gnu++11' is another possibility.
-## Experimental support such as '-std=c++1y' could be used.
 ## CXX1XSTD=
 
 ## Analogues for the C++11 compiler: default to the settings for C++
 ## CXX1XFLAGS=
 ## CXX1XPICFLAGS=
-## SHLIB_CXXIXLD=
+## SHLIB_CXX1XLD=
 ## SHLIB_CXX1XLDFLAGS=
+
+## C++14 compiler, optional for use in packages.
+## Introduced in R 3.4.0
+## The command which runs the C++14 compiler: defaults to $(CXX), but
+## empty if that (plus standard) cannot compile the tested C++14 code.
+## CXX14=
+
+## The 'standard' for the C++14 compilier, which is invoked as
+## $(CXX1Y) $(CXX1YSTD) for both compiling and linking DSOs/DLLs.  
+## '-std=c++14' is tried by configure;
+## '-std=gnu++14' is another possibility.
+## CXX1YSTD=
+
+## Analogues for the C++14 compiler: default to the settings for C++
+## CXX1YFLAGS=
+## CXX1YPICFLAGS=
+## SHLIB_CXX1YLD=
+## SHLIB_CXX1YLDFLAGS=
 
 ## Additional libraries to link the internet module against.
 ## Some claim Solaris needs -lsocket -lnsl

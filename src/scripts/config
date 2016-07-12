@@ -60,9 +60,15 @@ Variables:
 		shared library
   CXX1X         compiler command for C++11 code
   CXX1XSTD      flag used with CXX1X to enable C++11 support
-  CXX1XFLAGS    further compiler flags for CXX1X
+  CXX1XFLAGS    further compiler flags for CXX11
   CXX1XPICFLAGS
                 special flags for compiling C++11 code to be included in
+                a shared library
+  CXX1Y         compiler command for C++14 code
+  CXX1YSTD      flag used with CXX1X to enable C++14 support
+  CXX1YFLAGS    further compiler flags for CXX14
+  CXX1YPICFLAGS
+                special flags for compiling C++14 code to be included in
                 a shared library
   DYLIB_EXT	file extension (including '.') for dynamic libraries
   DYLIB_LD      command for linking dynamic libraries which contain

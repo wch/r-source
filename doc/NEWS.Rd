@@ -145,6 +145,15 @@
       binary builds.  The \file{tcltk*.chm} help file is no longer
       included; please consult the online help at
       \url{http://www.tcl.tk/man/} instead.
+
+      \item \command{configure} now adds a compiler switch for C++11
+      code, even if the compiler supports C++11 by default.
+
+      \item \command{configure} now tests for a C++14-compliant compiler
+      by testing some basic features.  This by default tries flags for
+      the compiler specified by \samp{CXX}, but an alternative compiler,
+      options and standard can be specified by variables \samp{CXX1Y},
+      \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \samp{-std=gnu++14}).
     }
   }
 

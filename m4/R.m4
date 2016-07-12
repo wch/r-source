@@ -4097,54 +4097,55 @@ fi
 
 ## R_CXX1X
 ## -------
-## Support for C++11 and later, for use in packages.
+## Support for C++11 or later, for use in packages.
+## R_CXX1X(VERSION, PREFIX, DEFAULT)
 AC_DEFUN([R_CXX1X],
 [r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 
-: ${CXX1X=${CXX}}
-: ${CXX1XFLAGS=${CXXFLAGS}}
-: ${CXX1XPICFLAGS=${CXXPICFLAGS}}
+: ${$2=${CXX}}
+: ${$2FLAGS=${CXXFLAGS}}
+: ${$2PICFLAGS=${CXXPICFLAGS}}
 
-CXX="${CXX1X} ${CXX1XSTD}"
-CXXFLAGS="${CXX1XFLAGS} ${CXX1XPICFLAGS}"
+CXX="${$2} ${$2STD}"
+CXXFLAGS="${$2FLAGS} ${$2PICFLAGS}"
 AC_LANG_PUSH([C++])dnl
-AX_CXX_COMPILE_STDCXX_11([noext], [optional])
+AX_CXX_COMPILE_STDCXX([$1], [noext], [optional])
 AC_LANG_POP([C++])dnl Seems the macro does not always get this right
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
-if test "${HAVE_CXX11}" = "1"; then
-  CXX1XSTD="${CXX1XSTD} ${switch}"
+if test "${HAVE_CXX$1}" = "1"; then
+  $2STD="${$2STD} ${switch}"
 else
-  CXX1X=""
-  CXX1XSTD=""
-  CXX1XFLAGS=""
-  CXX1XPICFLAGS=""
+  $2=""
+  $2STD=""
+  $2FLAGS=""
+  $2PICFLAGS=""
 fi
 
-AC_SUBST(CXX1X)
-AC_SUBST(CXX1XSTD)
-AC_SUBST(CXX1XFLAGS)
-AC_SUBST(CXX1XPICFLAGS)
-if test -z "${SHLIB_CXX1XLD}"; then
-  SHLIB_CXX1XLD="\$(CXX1X) \$(CXX1XSTD)"
+AC_SUBST($2)
+AC_SUBST($2STD)
+AC_SUBST($2FLAGS)
+AC_SUBST($2PICFLAGS)
+if test -z "${SHLIB_$2LD}"; then
+  SHLIB_$2LD="\$($2) \$($2STD)"
 fi
-AC_SUBST(SHLIB_CXX1XLD)
-: ${SHLIB_CXX1XLDFLAGS=${SHLIB_CXXLDFLAGS}}
-AC_SUBST(SHLIB_CXX1XLDFLAGS)
+AC_SUBST(SHLIB_$2LD)
+: ${SHLIB_$2LDFLAGS=${SHLIB_CXXLDFLAGS}}
+AC_SUBST(SHLIB_$2LDFLAGS)
 
-AC_ARG_VAR([CXX1X], [C++11 compiler command])
-AC_ARG_VAR([CXX1XSTD],
-           [special flag for compiling and for linking C++11 code, e.g. -std=c++11])
-AC_ARG_VAR([CXX1XFLAGS], [C++11 compiler flags])
-AC_ARG_VAR([CXX1XPICFLAGS],
-           [special flags for compiling C++11 code to be turned into a
+AC_ARG_VAR([$2], [C++$1 compiler command])
+AC_ARG_VAR([$2STD],
+           [special flag for compiling and for linking C++$1 code, e.g. -std=c++$1])
+AC_ARG_VAR([$2FLAGS], [C++$1 compiler flags])
+AC_ARG_VAR([$2PICFLAGS],
+           [special flags for compiling C++$1 code to be turned into a
             shared object])
-AC_ARG_VAR([SHLIB_CXX1XLD],
+AC_ARG_VAR([SHLIB_$2LD],
            [command for linking shared objects which contain object
-            files from the C++11 compiler])
-AC_ARG_VAR([SHLIB_CXX1XLDFLAGS], [special flags used by SHLIB_CXX1XLD])
-])# R_CXX1X
+            files from the C++$1 compiler])
+AC_ARG_VAR([SHLIB_$2LDFLAGS], [special flags used by SHLIB_$2LD])
+])# R_CXX1XYZ
 
 ## R_LIBCURL
 ## ----------------

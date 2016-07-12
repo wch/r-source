@@ -3803,7 +3803,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 
-    prefixes <- c("CPP", "C", "CXX", "CXX1X", "F", "FC", "OBJC", "OBJCXX")
+    prefixes <- c("CPP", "C", "CXX", "CXX1X", "CXX1Y", "F", "FC", "OBJC", "OBJCXX")
 
     uflags_re <- sprintf("^(%s)FLAGS: *(.*)$",
                          paste(prefixes, collapse = "|"))
