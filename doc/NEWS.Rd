@@ -36,6 +36,8 @@
       \item (Windows only) When using certain desktop themes in Windows
       7 or higher, \kbd{Alt-Tab} could cause \command{Rterm} to stop
       accepting input.  (\PR{14406}; patch submitted by Jan Gleixner.)
+
+      \code{pretty(d, ..)} for date-time \code{d} tweaked more nicely (\PR{16923}).
     }
   }
 }
