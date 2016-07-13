@@ -1228,7 +1228,7 @@ c Var
       double precision knot(29), coef(25), work((17+25)*25)
       double precision dx(2500),dy(2500), dw(2500),dsmo(2500), lev(2500)
       double precision param(4), df1, lambda, crit, p, s
-      integer iparms(3), i, nk, ip, ier
+      integer iparms(4), i, nk, ip, ier
 
       double precision  df, gcvpen
       integer                       ismethod
@@ -1265,8 +1265,9 @@ C     iparms(1:2) := (icrit, ispar)  for ./sbart.c
       endif
 c     ispar := 0 <==> estimate `spar' :
       iparms(2) = 0
-c     maxit = 500 :
-      iparms(3) = 500
+      iparms(3) = 500 ! maxit = 500
+      iparms(4) = 0   ! spar (!= lambda)
+c
       param(1) = 0d0
       param(2) = 1.5d0
 c  tol for `spar' estimation:
