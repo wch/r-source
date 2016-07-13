@@ -221,6 +221,7 @@ seqDtime <- function(beg, end, by, length=NULL) {
     } else if(md < 15) { ## e.g., southern hemisphere, seen 14
         at2$mday <- md + 14L # consistent w (1 -> 15) in 1st case; ok even in Feb.
     }
+    at2$isdst <- -1L
     at2 <- rbind(at, as.POSIXct(at2), deparse.level = 0L)
     structure(at2[i], class = class(at), tzone = attr(at, "tzone"))
 }

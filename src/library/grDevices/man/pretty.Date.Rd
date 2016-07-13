@@ -28,6 +28,9 @@
   length one, when \code{min.n = 0} and there is only one unique
   \code{x}.
 }
+%% \note{The current algorithm is geared towards small \code{n}, not
+%% larger than say, 50 or 100.
+%% }
 \value{
   A vector (of the suitable class) of locations, with attribute
   \code{"labels"} giving corresponding formatted character labels.

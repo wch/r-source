@@ -160,7 +160,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item (Windows only) Function \code{setInternet2()} is defunct.
-      
+
       \item Installation support for \code{readline} emulations based on
       \code{editline} (aka \code{libedit}) is deprecated.
     }
@@ -193,7 +193,7 @@
 
       \item Rotated symbols in plotmath expressions are now positioned
       correctly on \code{x11(type = "Xlib")}. (\PR{16948})
-      
+
       \item \code{as<-()} avoids an infinite loop when a virtual class
       is interposed between a subclass and an actual superclass.
 
@@ -224,9 +224,9 @@
     \itemize{
       \item \code{extSoftVersion()} now reports the version (if any) of
       the \code{readline} library in use.
-      
-      \item Convenience function \code{hasName()} has been added; it 
-      is intended to replace the common idiom \code{!is.null(x$name)} 
+
+      \item Convenience function \code{hasName()} has been added; it
+      is intended to replace the common idiom \code{!is.null(x$name)}
       without the usually unintended partial name matching.
     }
   }
@@ -246,10 +246,12 @@
       \item The check for non-portable flags in \command{R CMD check}
       could be stymied by \file{src/Makevars} files which contained
       targets.
-      
-      \item (Windows only) When using certain desktop themes in Windows 
+
+      \item (Windows only) When using certain desktop themes in Windows
       7 or higher, \kbd{Alt-Tab} could cause \command{Rterm} to stop
       accepting input.  (\PR{14406}; patch submitted by Jan Gleixner.)
+
+      \code{pretty(d, ..)} for date-time \code{d} tweaked more nicely (\PR{16923}).
     }
   }
 }
