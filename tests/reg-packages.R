@@ -66,7 +66,7 @@ options(oo)
 ## --- keep this at end --- so we do not need a large if(.) { .. }
 ## More building & installing packages
 ## NB: tests were added here for 2.11.0.
-## NB^2: do not do this in the R sources!
+## NB^2: do not do this in the R sources (but in a build != src directory!)
 ## and this testdir is not installed.
 if(interactive() && Sys.getenv("USER") == "maechler")
     Sys.setenv(SRCDIR = normalizePath("~/R/D/r-devel/R/tests"))
