@@ -10,9 +10,9 @@
     \itemize{
       \item \code{extSoftVersion()} now reports the version (if any) of
       the \code{readline} library in use.
-      
-      \item Convenience function \code{hasName()} has been added; it 
-      is intended to replace the common idiom \code{!is.null(x$name)} 
+
+      \item Convenience function \code{hasName()} has been added; it
+      is intended to replace the common idiom \code{!is.null(x$name)}
       without the usually unintended partial name matching.
     }
   }
@@ -32,8 +32,8 @@
       \item The check for non-portable flags in \command{R CMD check}
       could be stymied by \file{src/Makevars} files which contained
       targets.
-      
-      \item (Windows only) When using certain desktop themes in Windows 
+
+      \item (Windows only) When using certain desktop themes in Windows
       7 or higher, \kbd{Alt-Tab} could cause \command{Rterm} to stop
       accepting input.  (\PR{14406}; patch submitted by Jan Gleixner.)
     }
@@ -84,6 +84,13 @@
 
       \item \code{diff(<difftime>)} now keeps the \code{"units"}
       attribute, as subtraction already did, \PR{16940}.
+
+      \item When a class name matches multiple classes in the cache,
+      perform a dynamic search in order to obey namespace imports. This
+      should eliminate annoying messages about multiple hits in the
+      class cache. Also, pass along the package from the
+      \code{ClassExtends} object when looking up superclasses in the
+      cache.
     }
   }
 }

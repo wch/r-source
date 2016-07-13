@@ -141,12 +141,19 @@ if(dir.exists(file.path("myLib", "exNSS4")) &&
     ## Both exNSS4 and Matrix define "atomicVector" *the same*,
     ## but  'exNSS4'  has it extended - and hence *both* are registered in cache -> "conflicts"
     requireNamespace("exNSS4", lib= "myLib")
+    ## Found in cache, since there is only one definition.
+    ## Might confuse users.
+    stopifnot(isVirtualClass(getClass("atomicVector")))
     requireNamespace("Matrix", lib= .Library)
-    tools::assertCondition( ## condition, because this *still* uses message():
+    ## Throws an error, because there is ambiguity in the cache,
+    ## and the dynamic search will not find anything, since the packages
+    ## are not attached.
+    tools::assertCondition(
         acl <- getClass("atomicVector")
-    ) ## gave an Error: “atomicVector” is not a defined class
-    ##   ... because it was found non-uniquely
-    stopifnot(is(acl, "classRepresentation"), isVirtualClass(acl))
+        )
+    ## Once Matrix is attached, we find a unique definition.
+    library(Matrix)
+    stopifnot(isVirtualClass(getClass("atomicVector")))
 }
 
 ## clean up
