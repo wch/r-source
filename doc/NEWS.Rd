@@ -176,13 +176,6 @@
       non-functions for now signals a warning and may become an error
       for setting.
 
-      \item When a class name matches multiple classes in the cache,
-      perform a dynamic search in order to obey namespace imports. This
-      should eliminate annoying messages about multiple hits in the
-      class cache.  Also, pass along the package from the
-      \code{ClassExtends} object when looking up superclasses in the
-      cache.
-
       \item \code{match(x, t)}, \code{duplicated(x)} and
       \code{unique(x)} work as documented for complex numbers with \code{NA}s
       or \code{NaN}s, namely by treating them as two equivalence
@@ -304,6 +297,13 @@
 
       \item \code{diff(<difftime>)} now keeps the \code{"units"}
       attribute, as subtraction already did, \PR{16940}.
+
+      \item When a class name matches multiple classes in the cache,
+      perform a dynamic search in order to obey namespace imports. This
+      should eliminate annoying messages about multiple hits in the
+      class cache. Also, pass along the package from the
+      \code{ClassExtends} object when looking up superclasses in the
+      cache.
     }
   }
 }
