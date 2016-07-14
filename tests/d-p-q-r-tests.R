@@ -975,6 +975,14 @@ stopifnot(all.equal(d, dpois(x, mu)),
 options(op)
 ## size = Inf -- mostly gave NaN  in R <= 3.2.3
 
+## qpois(p, *) for invalid 'p' should give NaN -- PR#16972
+stopifnot(is.nan(suppressWarnings(c(qpois(c(-2,3, NaN), 3), qpois(1, 3, log.p=TRUE),
+                                    qpois(.5, 0, log.p=TRUE), qpois(c(-1,pi), 0)))))
+## those in the 2nd line gave 0 in R <= 3.3.1
+## Similar but different for qgeom():
+stopifnot(qgeom((0:8)/8, prob=1) == 0, ## p=1 gave Inf in R <= 3.3.1
+          is.nan(suppressWarnings(qgeom(c(-1/4, 1.1), prob=1))))
+
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
