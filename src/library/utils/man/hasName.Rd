@@ -32,7 +32,7 @@ hasName(x, name)
   \code{\link{\%in\%}}, \code{\link{exists}}
 }
 \examples{
-x <- list(abc = 1)
+x <- list(abc = 1, def = 2)
 !is.null(x$abc) # correct
 !is.null(x$a)   # this is the wrong test!
 hasName(x, "abc")

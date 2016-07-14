@@ -18,4 +18,4 @@
 
 # "hasName(x, name)" is defined to be the same as "name %in% names(x)"
 
-hasName <- function(x, name) match(names(x), name, nomatch = 0L) > 0L
+hasName <- function(x, name) match(name, names(x), nomatch = 0L) > 0L
