@@ -1,7 +1,7 @@
 #  File src/library/base/R/sapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ simplify2array <- function(x, higher = TRUE)
     else if(common.len > 1L) {
         n <- length(x)
         ## make sure that array(*) will not call rep() {e.g. for 'call's}:
-        r <- as.vector(unlist(x, recursive = FALSE))
+	r <- unlist(x, recursive = FALSE, use.names = FALSE)
         if(higher && length(c.dim <- unique(lapply(x, dim))) == 1 &&
            is.numeric(c.dim <- c.dim[[1L]]) &&
            prod(d <- c(c.dim, n)) == length(r)) {

@@ -133,6 +133,10 @@
       \code{stack()} preserve the names of empty elements in the levels
       of the \code{ind} column of the return value.  Set the new
       \code{drop} argument to \code{TRUE} for the previous behavior.
+
+      Speedup in \code{simplify2array()} and hence \code{sapply()} and
+      \code{mapply()} (for the case of names and common length > 1),
+      thanks to Suharto Anggono's \PR{17118}.
     }
   }
 
