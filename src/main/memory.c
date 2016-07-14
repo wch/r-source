@@ -652,7 +652,7 @@ static R_size_t R_NodesInUse = 0;
     { \
       int i; \
       for (i = 0; i < LENGTH(__n__); i++) \
-	dc__action__(STRING_ELT(__n__, i), dc__extra__); \
+	dc__action__(VECTOR_ELT(__n__, i), dc__extra__); \
     } \
     break; \
   case ENVSXP: \
