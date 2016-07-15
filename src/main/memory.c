@@ -630,16 +630,9 @@ static R_size_t R_NodesInUse = 0;
 #else
 #define FREE_FORWARD_CASE
 #endif
-/*** assume for now all ALTREP nodes are based on CONS nodes */
 #define DO_CHILDREN(__n__,dc__action__,dc__extra__) do { \
   if (HAS_GENUINE_ATTRIB(__n__)) \
     dc__action__(ATTRIB(__n__), dc__extra__); \
-  if (ALTREP(__n__)) {					\
-	  dc__action__(TAG(__n__), dc__extra__);	\
-	  dc__action__(CAR(__n__), dc__extra__);	\
-	  dc__action__(CDR(__n__), dc__extra__);	\
-      }							\
-  else \
   switch (TYPEOF(__n__)) { \
   case NILSXP: \
   case BUILTINSXP: \
@@ -2456,7 +2449,6 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    VALGRIND_MAKE_MEM_UNDEFINED(DATAPTR(s), actual_size);
 #endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
-	    s->sxpinfo.scalar = type;
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
 	    ATTRIB(s) = R_NilValue;
@@ -2636,14 +2628,12 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 #ifdef LONG_VECTOR_SUPPORT
 		    if (length > R_SHORT_LEN_MAX) {
 			s = (SEXP) (((char *) mem) + sizeof(R_long_vec_hdr_t));
-			SETALTREP(s, 0);
 			SET_SHORT_VEC_LENGTH(s, R_LONG_VEC_TOKEN);
 			SET_LONG_VEC_LENGTH(s, length);
 			SET_LONG_VEC_TRUELENGTH(s, 0);
 		    }
 		    else {
 			s = mem;
-			SETALTREP(s, 0);
 			SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
 		    }
 #else
@@ -2689,7 +2679,6 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	GC_PROT(s = allocSExpNonCons(type));
 	SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
     }
-    SETALTREP(s, 0);
     SET_SHORT_VEC_TRUELENGTH(s, 0);
     SET_NAMED(s, 0);
     INIT_REFCNT(s);
@@ -3398,36 +3387,7 @@ SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
-    if (ALTREP(x) == 1) {
-	SEXP data = CAR(x);
-	if (data != R_NilValue) {
-	    if (CADR(x) == R_NilValue) {
-		R_xlen_t n = XLENGTH(x);
-		SEXP val = allocVector(STRSXP, n);
-		memset(RAWDATAPTR(val), 0, n * sizeof(SEXP));
-		SETCDR(x, CONS(val, R_NilValue));
-	    }
-	    SEXP val = CADR(x);
-	    SEXP elt = STRING_ELT(val, i);
-	    if (elt == NULL) {
-		int warn = FALSE;
-		switch(TYPEOF(data)) {
-		case INTSXP:
-		    elt = StringFromInteger(INTEGER_ELT(data, i), &warn);
-		    break;
-		case REALSXP:
-		    elt = StringFromReal(REAL_ELT(data, i), &warn);
-		    break;
-		default:
-		    error("unsupported type for deferred string coercion");
-		}
-		if (warn) CoercionWarning(warn);
-		SET_STRING_ELT(val, i, elt);
-	    }
-	    return elt;
-	}
-    }
-    return CHK(STRING_PTR(x)[i]);
+    return CHK(STRING_ELT(x, i));
 }
 
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
@@ -3446,14 +3406,6 @@ int *(LOGICAL)(SEXP x) {
 	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
   return LOGICAL(x);
 }
-int *(LOGICAL0)(SEXP x) {
-    if(TYPEOF(x) != LGLSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-	error("can't apply LOGICAL0 to ALTREP");
-    return LOGICAL0(x);
-}
 
 /* Maybe this should exclude logicals, but it is widely used */
 int *(INTEGER)(SEXP x) {
@@ -3462,28 +3414,12 @@ int *(INTEGER)(SEXP x) {
 	      "INTEGER", "integer", type2char(TYPEOF(x)));
     return INTEGER(x);
 }
-int *(INTEGER0)(SEXP x) {
-    if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "INTEGER", "integer", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-	error("can't apply INTEGER0 to ALTREP");
-    return INTEGER0(x);
-}
 
 Rbyte *(RAW)(SEXP x) {
     if(TYPEOF(x) != RAWSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "RAW", "raw", type2char(TYPEOF(x)));
     return RAW(x);
-}
-Rbyte *(RAW0)(SEXP x) {
-    if(TYPEOF(x) != RAWSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "RAW", "raw", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-	error("can't apply RAW0 to ALTREP");
-    return RAW0(x);
 }
 
 double *(REAL)(SEXP x) {
@@ -3492,28 +3428,12 @@ double *(REAL)(SEXP x) {
 	      "REAL", "numeric", type2char(TYPEOF(x)));
     return REAL(x);
 }
-double *(REAL0)(SEXP x) {
-    if(TYPEOF(x) != REALSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "REAL", "numeric", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-	error("can't apply REAL0 to ALTREP");
-    return REAL0(x);
-}
 
 Rcomplex *(COMPLEX)(SEXP x) {
     if(TYPEOF(x) != CPLXSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "COMPLEX", "complex", type2char(TYPEOF(x)));
     return COMPLEX(x);
-}
-Rcomplex *(COMPLEX0)(SEXP x) {
-    if(TYPEOF(x) != CPLXSXP)
-	error("%s() can only be applied to a '%s', not a '%s'",
-	      "COMPLEX", "complex", type2char(TYPEOF(x)));
-    if (ALTREP(x))
-	error("can't apply COMPLEX0 to ALTREP");
-    return COMPLEX0(x);
 }
 
 SEXP *(STRING_PTR)(SEXP x) { return STRING_PTR(CHK(x)); }
@@ -3535,7 +3455,7 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	      i, XLENGTH(x));
     FIX_REFCNT(x, STRING_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
-    STRING_PTR(x)[i] = v;
+    STRING_ELT(x, i) = v;
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
@@ -3976,156 +3896,5 @@ int Seql(SEXP a, SEXP b)
 R_len_t NORET R_BadLongVector(SEXP x, const char *file, int line)
 {
     error(_("long vectors not supported yet: %s:%d"), file, line);
-}
-
-int (ALTREP)(SEXP x) { return ALTREP(x); }
-int (IS_SCALAR)(SEXP x, int type) { return IS_SCALAR(x, type); }
-
-void *(RAWDATAPTR)(SEXP x)
-{
-    if (ALTREP(x))
-	error("can't get RAWDATAPTR from ALTREP object");
-    if (! isVector(x))
-	error("RAWDATAPTR can only be applied to a vector, not a '%s'",
-	      type2char(TYPEOF(x)));
-    return RAWDATAPTR(x);
-}
-
-R_len_t ALTVECLENGTH(SEXP x) {
-    switch(TYPEOF(x)) {
-    case INTSXP:
-	return INTEGER0(CAR(x))[0];
-    case STRSXP:
-	return CAR(x) == R_NilValue ? LENGTH(CADR(x)) : LENGTH(CAR(x));
-    }
-    error("unknown ALTREP type");
-    return 0;
-}
-
-R_len_t ALTVECTRUELENGTH(SEXP x) { return 0; }
-
-static R_INLINE void ExpandALTREP(SEXP x)
-{
-    if (R_in_gc)
-	error("can't expand ALTREP data during GC");
-    int enabled = R_GCEnabled;
-    R_GCEnabled = FALSE;
-    switch(TYPEOF(x)) {
-    case INTSXP:
-	if (CDR(x) == R_NilValue) {
-	    /* no need to re-run if expended data exists */
-	    int *info = INTEGER(CAR(x));
-	    int n = info[0], n1 = info[1];
-	    SEXP val = allocVector(INTSXP, n);
-	    int * data = INTEGER(val);
-	    switch(ALTREP(x)) {
-	    case 1: /* compact sequences n1 : n2 with n1 <= n2 */
-		for (int i = 0; i < n; i++)
-		    data[i] = n1 + i;
-		break;
-	    case 2: /* compact sequences n1 : n2 with n1 > n2 */
-		for (int i = 0; i < n; i++)
-		    data[i] = n1 - i;
-		break;
-	    default:
-		error("unsupported INTSXP ALTREP type");
-	    }
-	    SETCDR(x, CONS(val, R_NilValue));
-	}
-	break;
-    case STRSXP: /* deferred string coersions */
-	if (ALTREP(x) != 1)
-	    error("unsupported STRSXP ALTREP type");
-	if (CAR(x) != R_NilValue) {
-	    /* expanded data may be incomplete until original data is removed */
-	    R_xlen_t n = XLENGTH(x), i;
-	    SEXP data = CAR(x);
-	    SEXP val = CADR(x);
-	    if (val == R_NilValue) {
-		val = allocVector(STRSXP, n);
-		memset(RAWDATAPTR(val), 0, n * sizeof(SEXP));
-	    }
-	    PROTECT(val);
-	    int warn = FALSE;
-	    for (i = 0; i < n; i++)
-		if (STRING_ELT(val, i) == NULL) {
-		    SEXP elt;
-		    switch(TYPEOF(data)) {
-		    case INTSXP: 
-			elt = StringFromInteger(INTEGER_ELT(data, i),
-						&warn);
-			break;
-		    case REALSXP: 
-			elt = StringFromReal(REAL_ELT(data, i), &warn);
-			break;
-		    default:
-			error("unsupported type for deferred string coercion");
-		    }
-		    SET_STRING_ELT(val, i, elt);
-		}
-	    SETCDR(x, CONS(val, R_NilValue));
-	    SETCAR(x, R_NilValue); /* allow original to be reclaimed */
-	    UNPROTECT(1);
-	    if (warn) CoercionWarning(warn);
-	}
-	break;
-    default:
-	error("unsupported ALTREP type");
-    }
-    R_GCEnabled = enabled;
-}
-
-void *ALTVECDATAPTR(SEXP x)
-{
-    ExpandALTREP(x);
-    return DATAPTR(CADR(x));
-}
-
-SEXP ALTREPDUPLICATE(SEXP x, Rboolean deep)
-{
-    /* Expand the object before duplicating. */
-    ExpandALTREP(x);
-
-    SEXP ans = PROTECT(duplicate(CADR(x)));
-    SEXP attr = ATTRIB(x);
-    if (attr != R_NilValue) {
-	SET_ATTRIB(ans, deep ? duplicate(attr) : shallow_duplicate(attr));
-	SET_OBJECT(ans, OBJECT(x));
-	IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
-    }
-    UNPROTECT(1);
-    return ans;
-}
-
-SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
-{
-    if (n1 <= INT_MIN || n1 > INT_MAX || n2 <= INT_MIN || n2 > INT_MAX)
-	error("compact versions of long sequences nut supported yet");
-
-    R_xlen_t n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
-    SEXP info = allocVector(INTSXP, 2);
-    INTEGER(info)[0] = n;
-    INTEGER(info)[1] = n1;
-    SEXP ans = CONS(info, R_NilValue);
-    TYPEOF(ans) = INTSXP;
-    SETALTREP(ans, n1 <= n2 ? 1 : 2);
-    MARK_NOT_MUTABLE(ans); /* force duplicate on modify */
-    return ans;
-}
-
-SEXP attribute_hidden R_deferred_coerceToString(SEXP v)
-{
-    SEXP ans = R_NilValue;
-    switch (TYPEOF(v)) {
-    case INTSXP:
-    case REALSXP:
-	ans = CONS(v, R_NilValue);
-	TYPEOF(ans) = STRSXP;
-	SETALTREP(ans, 1);
-	break;
-    default:
-	error("unsupported type for deferred string coercion");
-    }
-    return ans;
 }
 #endif
