@@ -992,7 +992,7 @@ CXX1XPICFLAGS
 @end example
 @noindent
 @command{configure} will attempt to set these suitably, choosing for
-@code{CXX1XSTD} a suitable flag such as @option{--std=c++11} for C++11
+@code{CXX1XSTD} a suitable flag such as @option{-std=c++11} for C++11
 support.  The inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line.
 
@@ -1000,10 +1000,10 @@ It may be@footnote{This is true for earlier versions of @code{g++} such
 as 4.2.1, and also for commonly used versions of the Solaris compiler
 @code{CC}.} that there is no suitable flag for C++11 support, in which
 case a different compiler could be selected for @code{CXX1X} and its
-corresponding flags.  Conversely, some compilers@footnote{Currently only
-GCC 6 and later, but this has been mooted for others.} by default assume
-a later standard than C++98 whereas the latter is assumed by some
-packages.  So users of GCC 6 might like to specify
+corresponding flags.  Some compilers@footnote{Currently only GCC 6 and
+later, but this has been mooted for others.} by default assume a later
+standard than C++98 whereas the latter is assumed by some packages.  So
+users of GCC 6 might like to specify
 @example
 CXX='g++ -std=gnu++98'
 CXX1X=g++
@@ -1014,9 +1014,9 @@ The @option{-std} flag is supported by the GCC, @command{clang}, Intel
 and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
-g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++1z gnu++1y
-Intel:   gnu+98 c++11
-Solaris: c++03 c++11
+g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++1z gnu++1z
+Intel:   gnu+98 c++11 c++14 (from 16.0)
+Solaris: c++03 c++11 c++14 (from 12.5)
 @end example
 @noindent
 (Those for @command{clang++} are not documented, but seem to be based on
