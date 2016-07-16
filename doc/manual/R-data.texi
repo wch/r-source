@@ -342,8 +342,8 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 
 By default strings are quoted (including the row and column names).
 Argument @code{quote} controls if  character and factor variables are
-quoted: some programs, for example @pkg{Mondrian}, do not accept quoted
-strings (which are the default).
+quoted: some programs, for example @CRANpkg{Mondrian}, do not accept
+quoted strings (which are the default).
 
 Some care is needed if the strings contain embedded quotes.  Three
 useful forms are

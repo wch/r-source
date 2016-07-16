@@ -52,7 +52,7 @@ replayPlot(x, reloadPkgs=FALSE)
   \code{\link{recordGraphics}} which in turn contains an expression
   that calls code from a non-base package other than \pkg{graphics}
   or \pkg{grid}.  The most well-known example of this is a plot
-  drawn with the package \pkg{ggplot2}.  One solution is to load
+  drawn with the package \CRANpkg{ggplot2}.  One solution is to load
   the relevant package(s) before replaying the recorded plot.
   The \code{load} and \code{attach} arguments to \code{recordPlot}
   can be used to automate this - any packages named in \code{load}
