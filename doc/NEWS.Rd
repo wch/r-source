@@ -134,7 +134,7 @@
       of the \code{ind} column of the return value.  Set the new
       \code{drop} argument to \code{TRUE} for the previous behavior.
 
-      Speedup in \code{simplify2array()} and hence \code{sapply()} and
+      \item Speedup in \code{simplify2array()} and hence \code{sapply()} and
       \code{mapply()} (for the case of names and common length > 1),
       thanks to Suharto Anggono's \PR{17118}.
     }
@@ -252,7 +252,8 @@
       7 or higher, \kbd{Alt-Tab} could cause \command{Rterm} to stop
       accepting input.  (\PR{14406}; patch submitted by Jan Gleixner.)
 
-      \code{pretty(d, ..)} for date-time \code{d} tweaked more nicely (\PR{16923}).
+      \item \code{pretty(d, ..)} behaves better for date-time \code{d} 
+      (\PR{16923}).
 
       \item When a class name matches multiple classes in the cache,
       perform a dynamic search in order to obey namespace imports. This
