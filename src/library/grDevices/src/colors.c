@@ -109,6 +109,8 @@ static void hsv2rgb(double h, double s, double v,
     double f, p, q, t;
     int i;
 
+    if (!R_FINITE(h) || !R_FINITE(s) || !R_FINITE(v)) 
+	error(_("inputs must be finite")); 
     f = modf(h * 6.0, &t);
     i = ((int) t) % 6;
 
