@@ -151,13 +151,23 @@
       \url{http://www.tcl.tk/man/} instead.
 
       \item \command{configure} now adds a compiler switch for C++11
-      code, even if the compiler supports C++11 by default.
+      code, even if the compiler supports C++11 by default.  (This
+      ensures that \command{gcc} 6.x uses C++11 mode and not its default
+      C++14 mode.)
 
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX}, but an alternative compiler,
       options and standard can be specified by variables \samp{CXX1Y},
       \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \samp{-std=gnu++14}).
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item There is support for compiling C++14 code in packages on
+      suitable platforms: see \sQuote{Writing R Extensions} for how to
+      request this.
     }
   }
 
