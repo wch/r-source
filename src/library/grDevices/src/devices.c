@@ -85,20 +85,25 @@ SEXP devcur(SEXP args)
 SEXP devnext(SEXP args)
 {
     checkArity_length;
-    return ScalarInteger( nextDevice(INTEGER(CAR(args))[0] - 1) + 1 );
+    int nxt = INTEGER(CAR(args))[0];
+    if (nxt == NA_INTEGER) error(_("NA argument is invalid"));
+    return ScalarInteger( nextDevice(nxt - 1) + 1 );
 }
 
 SEXP devprev(SEXP args)
 {
     checkArity_length;
-    return ScalarInteger( prevDevice(INTEGER(CAR(args))[0] - 1) + 1 );
+    int prev = INTEGER(CAR(args))[0];
+    if (prev == NA_INTEGER) error(_("NA argument is invalid"));
+    return ScalarInteger( prevDevice(prev - 1) + 1 );
 }
 
 SEXP devset(SEXP args)
 {
     checkArity_length;
-    int devNum = INTEGER(CAR(args))[0] - 1;
-    return ScalarInteger( selectDevice(devNum) + 1 );
+    int devNum = INTEGER(CAR(args))[0];
+    if (devNum == NA_INTEGER) error(_("NA argument is invalid"));
+    return ScalarInteger( selectDevice(devNum - 1) + 1 );
 }
 
 SEXP devoff(SEXP args)
