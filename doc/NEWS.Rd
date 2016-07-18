@@ -262,15 +262,17 @@
       7 or higher, \kbd{Alt-Tab} could cause \command{Rterm} to stop
       accepting input.  (\PR{14406}; patch submitted by Jan Gleixner.)
 
-      \item \code{pretty(d, ..)} behaves better for date-time \code{d} 
+      \item \code{pretty(d, ..)} behaves better for date-time \code{d}
       (\PR{16923}).
 
       \item When a class name matches multiple classes in the cache,
-      perform a dynamic search in order to obey namespace imports. This
+      perform a dynamic search in order to obey namespace imports.  This
       should eliminate annoying messages about multiple hits in the
-      class cache. Also, pass along the package from the
+      class cache.  Also, pass along the package from the
       \code{ClassExtends} object when looking up superclasses in the
       cache.
+
+      \item \code{sample(NA_real_)} now works.
     }
   }
 }
