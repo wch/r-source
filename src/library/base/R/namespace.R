@@ -298,7 +298,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                            lapply(type,
                                   function(sym) {
                                       varName <- paste0(fixes[1L], sym$name, fixes[2L])
-                                      if(exists(varName, envir = env))
+                                      if(exists(varName, envir = env, inherits = FALSE))
                                           warning(gettextf("failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
                                                            sym$name, varName, varName, sQuote(package)),
                                                   domain = NA, call. = FALSE)
@@ -321,7 +321,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                        ## maintain the original names.
                        varName <- names(symNames)[i]
                        origVarName <- symNames[i]
-                       if(exists(varName, envir = env))
+                       if(exists(varName, envir = env, inherits = FALSE))
                            if(origVarName != varName)
                                warning(gettextf("failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, varName, sQuote(package)),
