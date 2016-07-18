@@ -1727,7 +1727,7 @@ stopifnot(vapply(ldd, units, "") == "secs",
 
 
 ## sample(NA_real_) etc
-for(xx in list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_, "NA", 1i))
+for(xx in list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_, "NA"))
     stopifnot(identical(xx, sample(xx)))
 ## error in R <= 3.3.1
 
