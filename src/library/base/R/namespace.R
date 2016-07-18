@@ -440,7 +440,10 @@ loadNamespace <- function (package, lib.loc = NULL,
         codename <- strsplit(package, "_", fixed = TRUE)[[1L]][1L]
         codeFile <- file.path(pkgpath, "R", codename)
         if (file.exists(codeFile)) {
+	    # The code file has been converted to the native encoding
+	    save.enc <- options(encoding = "native.enc")
             res <- try(sys.source(codeFile, env, keep.source = keep.source))
+	    options(save.enc)
             if(inherits(res, "try-error"))
                 stop(gettextf("unable to load R code in package %s",
                               sQuote(package)), call. = FALSE, domain = NA)

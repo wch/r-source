@@ -273,6 +273,9 @@
       cache.
 
       \item \code{sample(NA_real_)} now works.
+      
+      \item Packages using non-ASCII encodings in their code did not 
+      install data properly on systems using different encodings.
     }
   }
 }
