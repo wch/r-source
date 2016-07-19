@@ -18,7 +18,7 @@
 
 parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
                      verbose = FALSE, fragment = FALSE,
-                     warningCalls = TRUE, 
+                     warningCalls = TRUE,
                      macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"),
 		     permissive = FALSE)
 {
@@ -34,7 +34,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         }
     } else file0 <- "<connection>"
     lines <- readLines(file, warn = FALSE)
-    if(is.character(macros)) 
+    if(is.character(macros))
     	macros <- initialRdMacros(macros = macros)
     ## remove old-style marking for data, keep line nos
     lines[lines == "\\non_function{}"] <- ""
@@ -43,7 +43,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     ## Note this is required to be on a line by itself,
     ## but some people have preceding whitespace
     enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
-    enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
+    enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc],
+                value = TRUE)
     if(length(enc)) {
         if(length(enc) > 1L)
             warning(file0, ": multiple \\encoding lines, using the first",
@@ -73,20 +74,22 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     tcon <- file()
     writeLines(lines, tcon, useBytes = TRUE)
     on.exit(close(tcon))
-    
+
     warndups <- config_val_to_logical(Sys.getenv("_R_WARN_DUPLICATE_RD_MACROS_", "FALSE"))
 
-    if (permissive) 
+    if (permissive)
 	# FIXME:  this should test for a special class of warning rather than testing the
 	#         message, but those are currently not easily generated from C code.
 	result <- withCallingHandlers(.External2(C_parseRd, tcon, srcfile, "UTF-8",
-                            verbose, basename, fragment, warningCalls, macros, warndups),
-		       warning = function(w) 
+                                                 verbose, basename, fragment,
+                                                 warningCalls, macros, warndups),
+		       warning = function(w)
 			    if (grepl("unknown macro", conditionMessage(w)))
 				invokeRestart("muffleWarning") )
     else
 	result <- .External2(C_parseRd, tcon, srcfile, "UTF-8",
-                         verbose, basename, fragment, warningCalls, macros, warndups)
+                             verbose, basename, fragment, warningCalls,
+                             macros, warndups)
     result <- expandDynamicFlags(result)
     if (permissive)
 	result <- permissify(result)
@@ -186,12 +189,13 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
 
 deparseRdElement <- function(element, state)
     .Call(C_deparseRd, element, state)
-    
+
 # Convert unknown tags into text displaying the tag with braces if necessary
 # This allows unknown LateX macros to be embedded in the text, and to be just passed
 # through.
 
-permissify <- function(Rd) {  
+permissify <- function(Rd)
+{
     tags <- RdTags(Rd)
     oldclass <- class(Rd)
     oldsrcref <- utils::getSrcref(Rd)
@@ -203,9 +207,10 @@ permissify <- function(Rd) {
    	    Rd[[i]] <- tagged(Rd[[i]], "TEXT", utils::getSrcref(Rd[[i]]))
             while (i < length(tags)) {
 		if (tags[i+1] == "LIST") {
-		    Rd <- c(Rd[seq_len(i)], list(tagged("{", "TEXT", utils::getSrcref(Rd[[i+1]]))), 
-		                        permissify(Rd[[i+1]]), 
-            	                        list(tagged("}", "TEXT", utils::getSrcref(Rd[[i+1]]))), 
+		    Rd <- c(Rd[seq_len(i)],
+                            list(tagged("{", "TEXT", utils::getSrcref(Rd[[i+1]]))),
+                            permissify(Rd[[i+1]]),
+                            list(tagged("}", "TEXT", utils::getSrcref(Rd[[i+1]]))),
 			    Rd[seq_along(Rd)[-seq_len(i+1)]])
 		    tags <- RdTags(Rd)
 		    i <- i+3
