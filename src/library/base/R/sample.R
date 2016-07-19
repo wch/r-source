@@ -18,7 +18,7 @@
 
 sample <- function(x, size, replace = FALSE, prob = NULL)
 {
-    if(length(x) == 1L && is.finite(x) && x >= 1) {
+    if(length(x) == 1L && is.numeric(x) && is.finite(x) && x >= 1) {
 	if(missing(size)) size <- x
 	sample.int(x, size, replace, prob)
     } else {
