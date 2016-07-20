@@ -3871,10 +3871,10 @@ setRlibs <-
         desc
     }
 
-    check_CRAN_incoming <- function()
+    check_CRAN_incoming <- function(localOnly)
     {
         checkingLog(Log, "CRAN incoming feasibility")
-        res <- .check_package_CRAN_incoming(pkgdir)
+        res <- .check_package_CRAN_incoming(pkgdir, localOnly)
         bad <- FALSE
         if(length(res)) {
             out <- format(res)
@@ -4781,7 +4781,11 @@ setRlibs <-
             check_incoming <- if(check_incoming == "NA") as_cran else {
                 config_val_to_logical(check_incoming)
             }
-            if (check_incoming) check_CRAN_incoming()
+            check_incoming_remote <- Sys.getenv("_R_CHECK_CRAN_INCOMING_REMOTE_", "NA")
+            check_incoming_remote <- if(check_incoming_remote == "NA") as_cran else {
+                config_val_to_logical(check_incoming_remote)
+            }            
+            if (check_incoming) check_CRAN_incoming(!check_incoming_remote)
 
             ## <NOTE>
             ## We want to check for dependencies early, since missing

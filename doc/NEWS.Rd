@@ -170,6 +170,15 @@
       request this.
     }
   }
+  
+  \subsection{UTILITIES}{
+    \itemize{
+      \item Running \command{R CMD check --as-cran} with
+      \env{_R_CHECK_CRAN_INCOMING_REMOTE_} false now skips tests that
+      require remote access.  The remaining (local) tests typically
+      run very quickly compared to the remote tests.
+    }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{

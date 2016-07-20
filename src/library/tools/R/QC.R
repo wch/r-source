@@ -6536,8 +6536,10 @@ function(x, ...)
 
 ### * .check_package_CRAN_incoming
 
+## localOnly means to skip tests requiring Internet access. These are all done first.
+
 .check_package_CRAN_incoming <-
-function(dir)
+function(dir, localOnly)
 {
     out <- list()
     class(out) <- "check_package_CRAN_incoming"
@@ -6610,8 +6612,6 @@ function(dir)
             out$spelling <- a
     }
 
-    urls <- .get_standard_repository_URLs()
-
     parse_description_field <- function(desc, field, default = TRUE)
     {
         tmp <- desc[field]
@@ -6620,42 +6620,6 @@ function(dir)
                     "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
                     "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
                     default)
-    }
-
-    ## If a package has a FOSS license, check whether any of its strong
-    ## recursive dependencies restricts use.
-    if(foss) {
-        available <-
-            utils::available.packages(utils::contrib.url(urls, "source"),
-                                      filters =
-                                      c("R_version", "duplicates"))
-        ## We need the current dependencies of the package (so batch
-        ## upload checks will not necessarily do "the right thing").
-        package <- meta["Package"]
-        depends <- c("Depends", "Imports", "LinkingTo")
-        ## Need to be careful when merging the dependencies of the
-        ## package (in case it is not yet available).
-        if(!is.na(pos <- match(package, rownames(available)))) {
-            available[package, depends] <- meta[depends]
-        } else {
-            entry <- rbind(meta[colnames(available)])
-            rownames(entry) <- package
-            available <- rbind(available, entry)
-        }
-        ldb <- analyze_licenses(available[, "License"], available)
-        depends <- unlist(package_dependencies(package, available,
-                                               recursive = TRUE))
-        ru <- ldb$restricts_use
-        pnames_restricts_use_TRUE <- rownames(available)[!is.na(ru) & ru]
-        pnames_restricts_use_NA <- rownames(available)[is.na(ru)]
-        bad <- intersect(depends, pnames_restricts_use_TRUE)
-        if(length(bad))
-            out$depends_with_restricts_use_TRUE <- bad
-        bad <- intersect(depends, pnames_restricts_use_NA)
-        if(length(bad))
-            out$depends_with_restricts_use_NA <- bad
-        bv <- parse_description_field(meta, "BuildVignettes", TRUE)
-        if (!bv) out$foss_with_BuildVignettes <- TRUE
     }
 
     ## Check for possibly mis-spelled field names.
@@ -6667,200 +6631,6 @@ function(dir)
        length(nms <- nms[is.na(match(nms, paste0(stdNms,"Note")))]))
         out$fields <- nms
 
-    ## We do not want to use utils::available.packages() for now, as
-    ## this unconditionally filters according to R version and OS type.
-    ## <FIXME>
-    ## This is no longer true ...
-    ## </FIXME>
-    .repository_db <- function(u) {
-        con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", u), "rb"))
-        on.exit(close(con))
-        ## hopefully all these fields are ASCII, or we need to re-encode.
-        cbind(read.dcf(con,
-                       c(.get_standard_repository_db_fields(), "Path")),
-              Repository = u)
-
-    }
-    db <- tryCatch(lapply(urls, .repository_db), error = identity)
-    if(inherits(db, "error")) {
-        message("NB: need Internet access to use CRAN incoming checks")
-        ## Actually, all repositories could be local file:// mirrors.
-        return(out)
-    }
-    db <- do.call(rbind, db)
-
-    ## Note that .get_standard_repository_URLs() puts the CRAN master first.
-    CRAN <- urls[1L]
-
-    ## Check for CRAN repository db overrides and possible conflicts.
-    con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
-    odb <- read.dcf(con)
-    close(con)
-    ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
-    ## need to re-encode.  Eventually, it might be in UTF-8 ...
-    entry <- odb[odb[, "Package"] == meta["Package"], ]
-    entry <- entry[!is.na(entry) &
-                   !(names(entry) %in% c("Package", "X-CRAN-History"))]
-    if(length(entry)) {
-        ## Check for conflicts between package license implications and
-        ## repository overrides.  Note that the license info predicates
-        ## are logicals (TRUE, NA or FALSE) and the repository overrides
-        ## are character ("yes", missing or "no").
-        if(!is.na(iif <- info$is_FOSS) &&
-           !is.na(lif <- entry["License_is_FOSS"]) &&
-           ((lif == "yes") != iif))
-            out$conflict_in_license_is_FOSS <- lif
-        if(!is.na(iru <- info$restricts_use) &&
-           !is.na(lru <- entry["License_restricts_use"]) &&
-           ((lru == "yes") != iru))
-            out$conflict_in_license_restricts_use <- lru
-
-        fmt <- function(s)
-            unlist(lapply(s,
-                          function(e) {
-                              paste(strwrap(e, indent = 2L, exdent = 4L),
-                                    collapse = "\n")
-                          }))
-        nms <- names(entry)
-        ## Report all overrides for visual inspection.
-        entry <- fmt(sprintf("  %s: %s", nms, entry))
-        names(entry) <- nms
-        out$overrides <- entry
-        fields <- intersect(names(meta), nms)
-        if(length(fields)) {
-            ## Find fields where package metadata and repository
-            ## overrides are in conflict.
-            ind <- ! unlist(Map(identical,
-                                fmt(sprintf("  %s: %s", fields, meta[fields])),
-                                entry[fields]))
-            if(any(ind))
-                out$conflicts <- fields[ind]
-        }
-    }
-
-    archive_db <- CRAN_archive_db()
-    packages_in_CRAN_archive <- names(archive_db)
-
-    ## Package names must be unique within standard repositories when
-    ## ignoring case.
-    package <- meta["Package"]
-    packages <- db[, "Package"]
-    if(! package %in% packages) out$new_submission <- TRUE
-    clashes <- character()
-    pos <- which((tolower(packages) == tolower(package)) &
-                 (packages != package))
-    if(length(pos))
-        clashes <-
-            sprintf("%s [%s]", packages[pos], db[pos, "Repository"])
-    ## If possible, also catch clashes with archived CRAN packages
-    ## (which might get un-archived eventually).
-    if(length(packages_in_CRAN_archive)) {
-        pos <- which((tolower(packages_in_CRAN_archive) ==
-                      tolower(package)) &
-                     (packages_in_CRAN_archive != package))
-        if(length(pos)) {
-            clashes <-
-                c(clashes,
-                  sprintf("%s [CRAN archive]",
-                          packages_in_CRAN_archive[pos]))
-        }
-    }
-    if(length(clashes))
-        out$bad_package <- list(package, clashes)
-
-    ## Is this duplicated from another repository?
-    repositories <- db[(packages == package) &
-                       (db[, "Repository"] != CRAN),
-                       "Repository"]
-    if(length(repositories))
-        out$repositories <- repositories
-
-    ## Does this have strong dependencies not in mainstream
-    ## repositories?  This should not happen, and hence is not compared
-    ## against possibly given additional repositories.
-    strong_dependencies <-
-        setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
-                         .extract_dependency_package_names(meta["Imports"]),
-                         .extract_dependency_package_names(meta["LinkingTo"]))),
-                c(.get_standard_package_names()$base, db[, "Package"]))
-    if(length(strong_dependencies)) {
-        out$strong_dependencies_not_in_mainstream_repositories <-
-            strong_dependencies
-    }
-
-    ## Does this have Suggests or Enhances not in mainstream
-    ## repositories?
-    suggests_or_enhances <-
-        setdiff(unique(c(.extract_dependency_package_names(meta["Suggests"]),
-                         .extract_dependency_package_names(meta["Enhances"]))),
-                c(.get_standard_package_names()$base, db[, "Package"]))
-    if(length(suggests_or_enhances)) {
-        out$suggests_or_enhances_not_in_mainstream_repositories <-
-            suggests_or_enhances
-    }
-    if(!is.na(aurls <- meta["Additional_repositories"])) {
-        aurls <- .read_additional_repositories_field(aurls)
-        ## Get available packages separately for each given URL, so that
-        ## we can spot the ones which do not provide any packages.
-        adb <-
-            tryCatch(lapply(aurls,
-                            function(u) {
-                                utils::available.packages(utils::contrib.url(u,
-                                                                             "source"),
-                                                          filters =
-                                                              c("R_version",
-                                                                "duplicates"))
-                            }),
-                     error = identity)
-        if(inherits(adb, "error")) {
-            out$additional_repositories_analysis_failed_with <-
-                conditionMessage(adb)
-        } else {
-            ## Check for additional repositories with no packages.
-            ind <- sapply(adb, NROW) == 0L
-            if(any(ind))
-                out$additional_repositories_with_no_packages <-
-                    aurls[ind]
-            ## Merge available packages dbs and remove duplicates.
-            adb <- do.call(rbind, adb)
-            adb <- utils:::available_packages_filters_db$duplicates(adb)
-            ## Ready.
-            dependencies <- unique(c(strong_dependencies, suggests_or_enhances))
-            pos <- match(dependencies, rownames(adb), nomatch = 0L)
-            ind <- (pos > 0L)
-            tab <- matrix(character(), nrow = 0L, ncol = 3L)
-            if(any(ind))
-                tab <- rbind(tab,
-                             cbind(dependencies[ind],
-                                   "yes",
-                                   adb[pos[ind], "Repository"]))
-            ind <- !ind
-            if(any(ind))
-                tab <- rbind(tab,
-                             cbind(dependencies[ind],
-                                   "no",
-                                   "?"))
-            ## Map Repository fields to URLs, and determine unused
-            ## URLs.
-            ## Note that available.packages() possibly adds Path
-            ## information in the Repository field, so matching
-            ## given contrib URLs to these fields is not trivial.
-            unused <- character()
-            for(u in aurls) {
-                cu <- utils::contrib.url(u, "source")
-                ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
-                if(any(ind)) {
-                    tab[ind, 3L] <- u
-                } else {
-                    unused <- c(unused, u)
-                }
-            }
-            if(length(unused))
-                tab <- rbind(tab, cbind("?", "?", unused))
-            dimnames(tab) <- NULL
-            out$additional_repositories_analysis_results <- tab
-        }
-    }
 
     uses <- character()
     BUGS <- character()
@@ -7103,23 +6873,6 @@ function(dir)
         }
     }
 
-    ## Check URLs.
-    if(capabilities("libcurl")) {
-        ## Be defensive about building the package URL db.
-        bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
-                        error = identity)
-        if(inherits(bad, "error") || NROW(bad))
-            out$bad_urls <- bad
-    } else out$no_url_checks <- TRUE
-
-    ## Check DOIs.
-    if(capabilities("libcurl")) {
-        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir)),
-                        error = identity)
-        if(inherits(bad, "error") || NROW(bad))
-            out$bad_dois <- bad
-    }
-
     ## Are there non-ASCII characters in the R source code without a
     ## package encoding in DESCRIPTION?
     ## Note that checking always runs .check_package_ASCII_code() which
@@ -7156,6 +6909,261 @@ function(dir)
                        unset = NA_character_)
     if(!is.na(size) && (as.integer(size) > 5000000))
         out$size_of_tarball <- size
+
+    ## Checks from here down require Internet access, so drop out now if we
+    ## don't want that.
+    if (localOnly)
+        return(out)
+
+    urls <- .get_standard_repository_URLs()
+
+    ## If a package has a FOSS license, check whether any of its strong
+    ## recursive dependencies restricts use.
+    if(!localOnly && foss) {
+        available <-
+            utils::available.packages(utils::contrib.url(urls, "source"),
+                                      filters =
+                                      c("R_version", "duplicates"))
+        ## We need the current dependencies of the package (so batch
+        ## upload checks will not necessarily do "the right thing").
+        package <- meta["Package"]
+        depends <- c("Depends", "Imports", "LinkingTo")
+        ## Need to be careful when merging the dependencies of the
+        ## package (in case it is not yet available).
+        if(!is.na(pos <- match(package, rownames(available)))) {
+            available[package, depends] <- meta[depends]
+        } else {
+            entry <- rbind(meta[colnames(available)])
+            rownames(entry) <- package
+            available <- rbind(available, entry)
+        }
+        ldb <- analyze_licenses(available[, "License"], available)
+        depends <- unlist(package_dependencies(package, available,
+                                               recursive = TRUE))
+        ru <- ldb$restricts_use
+        pnames_restricts_use_TRUE <- rownames(available)[!is.na(ru) & ru]
+        pnames_restricts_use_NA <- rownames(available)[is.na(ru)]
+        bad <- intersect(depends, pnames_restricts_use_TRUE)
+        if(length(bad))
+            out$depends_with_restricts_use_TRUE <- bad
+        bad <- intersect(depends, pnames_restricts_use_NA)
+        if(length(bad))
+            out$depends_with_restricts_use_NA <- bad
+        bv <- parse_description_field(meta, "BuildVignettes", TRUE)
+        if (!bv) out$foss_with_BuildVignettes <- TRUE
+    }
+
+    ## We do not want to use utils::available.packages() for now, as
+    ## this unconditionally filters according to R version and OS type.
+    ## <FIXME>
+    ## This is no longer true ...
+    ## </FIXME>
+    .repository_db <- function(u) {
+        con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", u), "rb"))
+        on.exit(close(con))
+        ## hopefully all these fields are ASCII, or we need to re-encode.
+        cbind(read.dcf(con,
+                       c(.get_standard_repository_db_fields(), "Path")),
+              Repository = u)
+
+    }
+    db <- tryCatch(lapply(urls, .repository_db), error = identity)
+    if(inherits(db, "error")) {
+        message("NB: need Internet access to use CRAN incoming checks")
+        ## Actually, all repositories could be local file:// mirrors.
+        return(out)
+    }
+    db <- do.call(rbind, db)
+
+    ## Note that .get_standard_repository_URLs() puts the CRAN master first.
+    CRAN <- urls[1L]
+
+    ## Check for CRAN repository db overrides and possible conflicts.
+    con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
+    odb <- read.dcf(con)
+    close(con)
+    ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
+    ## need to re-encode.  Eventually, it might be in UTF-8 ...
+    entry <- odb[odb[, "Package"] == meta["Package"], ]
+    entry <- entry[!is.na(entry) &
+                   !(names(entry) %in% c("Package", "X-CRAN-History"))]
+    if(length(entry)) {
+        ## Check for conflicts between package license implications and
+        ## repository overrides.  Note that the license info predicates
+        ## are logicals (TRUE, NA or FALSE) and the repository overrides
+        ## are character ("yes", missing or "no").
+        if(!is.na(iif <- info$is_FOSS) &&
+           !is.na(lif <- entry["License_is_FOSS"]) &&
+           ((lif == "yes") != iif))
+            out$conflict_in_license_is_FOSS <- lif
+        if(!is.na(iru <- info$restricts_use) &&
+           !is.na(lru <- entry["License_restricts_use"]) &&
+           ((lru == "yes") != iru))
+            out$conflict_in_license_restricts_use <- lru
+
+        fmt <- function(s)
+            unlist(lapply(s,
+                          function(e) {
+                              paste(strwrap(e, indent = 2L, exdent = 4L),
+                                    collapse = "\n")
+                          }))
+        nms <- names(entry)
+        ## Report all overrides for visual inspection.
+        entry <- fmt(sprintf("  %s: %s", nms, entry))
+        names(entry) <- nms
+        out$overrides <- entry
+        fields <- intersect(names(meta), nms)
+        if(length(fields)) {
+            ## Find fields where package metadata and repository
+            ## overrides are in conflict.
+            ind <- ! unlist(Map(identical,
+                                fmt(sprintf("  %s: %s", fields, meta[fields])),
+                                entry[fields]))
+            if(any(ind))
+                out$conflicts <- fields[ind]
+        }
+    }
+
+    archive_db <- CRAN_archive_db()
+    packages_in_CRAN_archive <- names(archive_db)
+
+    ## Package names must be unique within standard repositories when
+    ## ignoring case.
+    package <- meta["Package"]
+    packages <- db[, "Package"]
+    if(! package %in% packages) out$new_submission <- TRUE
+    clashes <- character()
+    pos <- which((tolower(packages) == tolower(package)) &
+                 (packages != package))
+    if(length(pos))
+        clashes <-
+            sprintf("%s [%s]", packages[pos], db[pos, "Repository"])
+    ## If possible, also catch clashes with archived CRAN packages
+    ## (which might get un-archived eventually).
+    if(length(packages_in_CRAN_archive)) {
+        pos <- which((tolower(packages_in_CRAN_archive) ==
+                      tolower(package)) &
+                     (packages_in_CRAN_archive != package))
+        if(length(pos)) {
+            clashes <-
+                c(clashes,
+                  sprintf("%s [CRAN archive]",
+                          packages_in_CRAN_archive[pos]))
+        }
+    }
+    if(length(clashes))
+        out$bad_package <- list(package, clashes)
+
+    ## Is this duplicated from another repository?
+    repositories <- db[(packages == package) &
+                       (db[, "Repository"] != CRAN),
+                       "Repository"]
+    if(length(repositories))
+        out$repositories <- repositories
+
+    ## Does this have strong dependencies not in mainstream
+    ## repositories?  This should not happen, and hence is not compared
+    ## against possibly given additional repositories.
+    strong_dependencies <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
+                         .extract_dependency_package_names(meta["Imports"]),
+                         .extract_dependency_package_names(meta["LinkingTo"]))),
+                c(.get_standard_package_names()$base, db[, "Package"]))
+    if(length(strong_dependencies)) {
+        out$strong_dependencies_not_in_mainstream_repositories <-
+            strong_dependencies
+    }
+
+    ## Does this have Suggests or Enhances not in mainstream
+    ## repositories?
+    suggests_or_enhances <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Suggests"]),
+                         .extract_dependency_package_names(meta["Enhances"]))),
+                c(.get_standard_package_names()$base, db[, "Package"]))
+    if(length(suggests_or_enhances)) {
+        out$suggests_or_enhances_not_in_mainstream_repositories <-
+            suggests_or_enhances
+    }
+    if(!is.na(aurls <- meta["Additional_repositories"])) {
+        aurls <- .read_additional_repositories_field(aurls)
+        ## Get available packages separately for each given URL, so that
+        ## we can spot the ones which do not provide any packages.
+        adb <-
+            tryCatch(lapply(aurls,
+                            function(u) {
+                                utils::available.packages(utils::contrib.url(u,
+                                                                             "source"),
+                                                          filters =
+                                                              c("R_version",
+                                                                "duplicates"))
+                            }),
+                     error = identity)
+        if(inherits(adb, "error")) {
+            out$additional_repositories_analysis_failed_with <-
+                conditionMessage(adb)
+        } else {
+            ## Check for additional repositories with no packages.
+            ind <- sapply(adb, NROW) == 0L
+            if(any(ind))
+                out$additional_repositories_with_no_packages <-
+                    aurls[ind]
+            ## Merge available packages dbs and remove duplicates.
+            adb <- do.call(rbind, adb)
+            adb <- utils:::available_packages_filters_db$duplicates(adb)
+            ## Ready.
+            dependencies <- unique(c(strong_dependencies, suggests_or_enhances))
+            pos <- match(dependencies, rownames(adb), nomatch = 0L)
+            ind <- (pos > 0L)
+            tab <- matrix(character(), nrow = 0L, ncol = 3L)
+            if(any(ind))
+                tab <- rbind(tab,
+                             cbind(dependencies[ind],
+                                   "yes",
+                                   adb[pos[ind], "Repository"]))
+            ind <- !ind
+            if(any(ind))
+                tab <- rbind(tab,
+                             cbind(dependencies[ind],
+                                   "no",
+                                   "?"))
+            ## Map Repository fields to URLs, and determine unused
+            ## URLs.
+            ## Note that available.packages() possibly adds Path
+            ## information in the Repository field, so matching
+            ## given contrib URLs to these fields is not trivial.
+            unused <- character()
+            for(u in aurls) {
+                cu <- utils::contrib.url(u, "source")
+                ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                if(any(ind)) {
+                    tab[ind, 3L] <- u
+                } else {
+                    unused <- c(unused, u)
+                }
+            }
+            if(length(unused))
+                tab <- rbind(tab, cbind("?", "?", unused))
+            dimnames(tab) <- NULL
+            out$additional_repositories_analysis_results <- tab
+        }
+    }
+
+    ## Check URLs.
+    if(capabilities("libcurl")) {
+        ## Be defensive about building the package URL db.
+        bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
+                        error = identity)
+        if(inherits(bad, "error") || NROW(bad))
+            out$bad_urls <- bad
+    } else out$no_url_checks <- TRUE
+
+    ## Check DOIs.
+    if(capabilities("libcurl")) {
+        bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir)),
+                        error = identity)
+        if(inherits(bad, "error") || NROW(bad))
+            out$bad_dois <- bad
+    }
 
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &

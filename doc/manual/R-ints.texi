@@ -3999,6 +3999,10 @@ TRUE}.
 Check whether package is suitable for publication on CRAN.
 Default: false, except for CRAN submission checks.
 
+@item _R_CHECK_CRAN_INCOMING_REMOTE_
+Include checks that require remote access among the above.
+Default: same as @code{_R_CHECK_CRAN_INCOMING_}
+
 @item _R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_
 When checking anchored Rd xrefs, use Rd aliases from the CRAN package
 web areas in addition to those in the packages installed locally.
@@ -4097,6 +4101,7 @@ CRAN's submission checks use something like
 
 @example
 _R_CHECK_CRAN_INCOMING_=TRUE
+_R_CHECK_CRAN_INCOMING_REMOTE_=TRUE
 _R_CHECK_VC_DIRS_=TRUE
 _R_CHECK_TIMINGS_=10
 _R_CHECK_INSTALL_DEPENDS_=TRUE
