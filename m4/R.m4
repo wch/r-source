@@ -3261,7 +3261,7 @@ if test "x${r_cv_have_bzlib}" = xno; then
 fi
 AC_MSG_CHECKING([whether bzip2 support suffices])
 if test "x${have_bzlib}" = xyes; then
-  AC_MSG_RESULT([no])
+  AC_MSG_RESULT([yes])
   LIBS="-lbz2 ${LIBS}"
 else
   AC_MSG_ERROR([bzip2 library and headers are required])
