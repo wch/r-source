@@ -2709,7 +2709,7 @@ static void PopState() {
 
 /* "do_parseLatex" 
 
- .External2(CC_parseLatex, file, srcfile, verbose, basename, warningCalls)
+ .External2(C_parseLatex, file, srcfile, verbose, basename, warningCalls)
  If there is text then that is read and the other arguments are ignored.
 */
 
