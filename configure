@@ -36478,8 +36478,8 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether bzip2 support suffices" >&5
 $as_echo_n "checking whether bzip2 support suffices... " >&6; }
 if test "x${have_bzlib}" = xyes; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
   LIBS="-lbz2 ${LIBS}"
 else
   as_fn_error $? "bzip2 library and headers are required" "$LINENO" 5
