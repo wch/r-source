@@ -28,7 +28,9 @@ all: Makefile R docs
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile svnonly NEWS.rds
+## FIXME:  NEWS.rds is needed by news() and hence in principle part of 'R', but
+##  it can only be built by R_EXE which at this point does not exist (if built from scratch)
+R: Makefile svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
