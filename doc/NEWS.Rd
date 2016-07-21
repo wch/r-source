@@ -170,7 +170,7 @@
       request this.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item Running \command{R CMD check --as-cran} with
@@ -235,6 +235,10 @@
       \item Point mass limit cases: \code{qpois(-2, 0)} now gives
       \code{NaN} with a warning and \code{qgeom(1, 1)} is \code{0}.
       (\PR{16972})
+
+      \item Package installation into a library where the package exists
+      via symbolic link now should work wherever \code{\link{Sys.readlink}()}
+      works, resolving \PR{16725}.
     }
   }
 }
@@ -282,8 +286,8 @@
       cache.
 
       \item \code{sample(NA_real_)} now works.
-      
-      \item Packages using non-ASCII encodings in their code did not 
+
+      \item Packages using non-ASCII encodings in their code did not
       install data properly on systems using different encodings.
     }
   }
