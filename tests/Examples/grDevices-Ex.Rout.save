@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-07-11 r70888) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-07-21 r70950) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3766,7 +3766,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.897 0.147 8.045 0 0 
+Time elapsed:  7.906 0.141 8.047 0 0 
 > grDevices::dev.off()
 null device 
           1 
