@@ -200,7 +200,7 @@ valid.data <- function(units, data) {
 }
 
 valid.units <- function(units) {
-  .Call(validUnits, units)
+  .Call(L_validUnits, units)
 }
 
 as.character.unit <- function(x, ...) {
