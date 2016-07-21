@@ -1,7 +1,7 @@
 #  File src/library/grid/R/ls.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -71,8 +71,8 @@ gridListDL <- function(x, grobs=TRUE, viewports=FALSE,
     if (is.null(dev.list())) {
         result <- list(gridList(NULL))
     } else {
-        display.list <- grid.Call(L_getDisplayList)
-        dl.index <- grid.Call(L_getDLindex)
+        display.list <- grid.Call(C_getDisplayList)
+        dl.index <- grid.Call(C_getDLindex)
         result <- lapply(display.list[1L:dl.index], gridList,
                          grobs=grobs, viewports=viewports,
                          fullNames=fullNames, recursive=recursive)

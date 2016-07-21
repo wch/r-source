@@ -1,7 +1,7 @@
 #  File src/library/grid/R/grid.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,18 +38,18 @@ push.vp.viewport <- function(vp, recording) {
   # being pushed from within a gTree which has enforced gpar
   # settings (i.e., the gTree$gp is enforced between this viewport
   # and the this viewport's parent$gp)
-  vp$parentgpar <- grid.Call(L_getGPar)
+  vp$parentgpar <- grid.Call(C_getGPar)
   # Enforce gpar settings
   set.gpar(vp$gp)
   # Store the entire set of gpar settings for this viewport
-  vp$gpar <- grid.Call(L_getGPar)
+  vp$gpar <- grid.Call(C_getGPar)
   # Pass in the pushedvp structure which will be used to store
   # things like the viewport transformation, parent-child links, ...
   # In C code, a pushedvp object is created, with a call to pushedvp(),
   # for the system to keep track of
   # (it happens in C code so that a "normal" vp gets recorded on the
   #  display list rather than a "pushedvp")
-  grid.Call.graphics(L_setviewport, vp, TRUE)
+  grid.Call.graphics(C_setviewport, vp, TRUE)
 }
 
 # For all but the last viewport, push the
@@ -160,19 +160,19 @@ buildPath <- function(desc, anc, depth) {
 }
 
 downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
-    start <- grid.Call(L_currentViewport)
+    start <- grid.Call(C_currentViewport)
     if (name$n == 1)
-        result <- grid.Call.graphics(L_downviewport, name$name, strict)
+        result <- grid.Call.graphics(C_downviewport, name$name, strict)
     else
-        result <- grid.Call.graphics(L_downvppath,
+        result <- grid.Call.graphics(C_downvppath,
                                      name$path, name$name, strict)
     # If the downViewport() fails, there is an error in C code
     # so none of the following code will be run
 
     # Enforce the gpar settings for the viewport
-    pvp <- grid.Call(L_currentViewport)
+    pvp <- grid.Call(C_currentViewport)
     # Do not call set.gpar because set.gpar accumulates cex
-    grid.Call.graphics(L_setGPar, pvp$gpar)
+    grid.Call.graphics(C_setGPar, pvp$gpar)
     # Record the viewport operation
     # ... including the depth navigated down
     if (recording) {
@@ -195,7 +195,7 @@ seekViewport <- function(name, recording=TRUE) {
 
 # Depth of the current viewport
 vpDepth <- function() {
-  pvp <- grid.Call(L_currentViewport)
+  pvp <- grid.Call(C_currentViewport)
   count <- 0
   while (!is.null(pvp$parent)) {
     pvp <- pvp$parent
@@ -214,7 +214,7 @@ popViewport <- function(n=1, recording=TRUE) {
   if (n == 0)
     n <- vpDepth()
   if (n > 0) {
-    grid.Call.graphics(L_unsetviewport, as.integer(n))
+    grid.Call.graphics(C_unsetviewport, as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "pop"
@@ -236,7 +236,7 @@ upViewport <- function(n=1, recording=TRUE) {
   if (n > 0) {
     path <- current.vpPath()
     upPath <- path[(depth(path) - n + 1):depth(path)]
-    grid.Call.graphics(L_upviewport, as.integer(n))
+    grid.Call.graphics(C_upviewport, as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "up"
@@ -249,7 +249,7 @@ upViewport <- function(n=1, recording=TRUE) {
 # Return the full vpPath to the current viewport
 current.vpPath <- function() {
   names <- NULL
-  pvp <- grid.Call(L_currentViewport)
+  pvp <- grid.Call(C_currentViewport)
   while (!rootVP(pvp)) {
     names <- c(names, pvp$name)
     pvp <- pvp$parent
@@ -264,7 +264,7 @@ current.vpPath <- function() {
 current.viewport <- function() {
     # The system stores a pushedvp;  the user should only
     # ever see normal viewports, so convert.
-    vpFromPushedvp(grid.Call(L_currentViewport))
+    vpFromPushedvp(grid.Call(C_currentViewport))
 }
 
 # Return the parent of the current viewport
@@ -272,7 +272,7 @@ current.viewport <- function() {
 current.parent <- function(n=1) {
     if (n < 1)
         stop("Invalid number of generations")
-    vp <- grid.Call(L_currentViewport)
+    vp <- grid.Call(C_currentViewport)
     generation <- 1
     while (generation <= n) {
         if (is.null(vp))
@@ -304,12 +304,12 @@ vpTreeFromNode <- function(node) {
 # Either from the current location in the tree down
 # or ALL of the tree
 current.vpTree <- function(all=TRUE) {
-  cpvp <- grid.Call(L_currentViewport)
+  cpvp <- grid.Call(C_currentViewport)
   moving <- all && vpDepth() > 0
   if (moving) {
     savedname <- cpvp$name
     upViewport(0, recording=FALSE)
-    cpvp <- grid.Call(L_currentViewport)
+    cpvp <- grid.Call(C_currentViewport)
   }
   tree <- vpTreeFromNode(cpvp)
   if (moving) {
@@ -319,11 +319,11 @@ current.vpTree <- function(all=TRUE) {
 }
 
 current.transform <- function() {
-    grid.Call(L_currentViewport)$trans
+    grid.Call(C_currentViewport)$trans
 }
 
 current.rotation <- function() {
-    grid.Call(L_currentViewport)$rotation
+    grid.Call(C_currentViewport)$rotation
 }
 
 # Call this function if you want the graphics device erased or moved
@@ -340,12 +340,12 @@ grid.newpage <- function(recording=TRUE) {
     # NOTE that we do NOT do grid.Call here because we have to do
     # things slightly differently if grid.newpage is the first grid operation
     # on a new device
-    .Call(L_newpagerecording)
-    .Call(L_newpage)
-    .Call(L_initGPar)
-    .Call(L_initViewportStack)
+    .Call(C_newpagerecording)
+    .Call(C_newpage)
+    .Call(C_initGPar)
+    .Call(C_initViewportStack)
     if (recording) {
-        .Call(L_initDisplayList)
+        .Call(C_initDisplayList)
         grDevices:::recordPalette()
         for (fun in getHook("grid.newpage"))  {
             if(is.character(fun)) fun <- get(fun)
@@ -363,8 +363,8 @@ grid.newpage <- function(recording=TRUE) {
 # that we can redraw upon edit.
 
 inc.display.list <- function() {
-  display.list <- grid.Call(L_getDisplayList)
-  dl.index <- grid.Call(L_getDLindex)
+  display.list <- grid.Call(C_getDisplayList)
+  dl.index <- grid.Call(C_getDLindex)
   dl.index <- dl.index + 1
   n <- length(display.list)
   # The " - 1" below is because dl.index is now stored internally
@@ -375,25 +375,25 @@ inc.display.list <- function() {
     display.list <- vector("list", n + 100L)
     display.list[1L:n] <- temp
   }
-  grid.Call(L_setDisplayList, display.list)
-  grid.Call(L_setDLindex, as.integer(dl.index))
+  grid.Call(C_setDisplayList, display.list)
+  grid.Call(C_setDLindex, as.integer(dl.index))
 }
 
 # This will either ...
 #   (i) turn on AND INITIALISE the display list or ...
 #   (ii) turn off AND ERASE the display list
 grid.display.list <- function(on=TRUE) {
-  grid.Call(L_setDLon, as.logical(on))
+  grid.Call(C_setDLon, as.logical(on))
   if (on) {
-    grid.Call(L_setDisplayList, vector("list", 100L))
-    grid.Call(L_setDLindex, 0L)
+    grid.Call(C_setDisplayList, vector("list", 100L))
+    grid.Call(C_setDLindex, 0L)
   }
   else
-    grid.Call(L_setDisplayList, NULL)
+    grid.Call(C_setDisplayList, NULL)
 }
 
 record <- function(x) {
-  if (grid.Call(L_getDLon))
+  if (grid.Call(C_getDLon))
     UseMethod("record")
 }
 
@@ -402,28 +402,28 @@ record <- function(x) {
 record.default <- function(x) {
   if (!is.numeric(x))
     stop("invalid object inserted on the display list")
-  grid.Call(L_setDLelt, x)
+  grid.Call(C_setDLelt, x)
   inc.display.list()
 }
 
 record.grob <- function(x) {
-  grid.Call(L_setDLelt, x)
+  grid.Call(C_setDLelt, x)
   inc.display.list()
 }
 
 record.viewport <- function(x) {
-  grid.Call(L_setDLelt, x)
+  grid.Call(C_setDLelt, x)
   inc.display.list()
 }
 
 record.vpPath <- function(x) {
-  grid.Call(L_setDLelt, x)
+  grid.Call(C_setDLelt, x)
   inc.display.list()
 }
 
 # This controls whether grid is using the graphics engine's display list
 engine.display.list <- function(on=TRUE) {
-  grid.Call(L_setEngineDLon, as.logical(on))
+  grid.Call(C_setEngineDLon, as.logical(on))
 }
 
 # Rerun the grid DL
@@ -444,21 +444,21 @@ grid.refresh <- function() {
 grid.DLapply <- function(FUN, ...) {
     FUN <- match.fun(FUN)
     # Traverse DL and do something to each entry
-#    gridDL <- grid.Call(L_getDisplayList)
-    gridDLindex <- grid.Call(L_getDLindex)
+#    gridDL <- grid.Call(C_getDisplayList)
+    gridDLindex <- grid.Call(C_getDLindex)
     newDL <- vector("list", gridDLindex)
     for (i in 1:(gridDLindex - 1)) {
-        elt <- grid.Call(L_getDLelt, i)
+        elt <- grid.Call(C_getDLelt, i)
         newElt <- FUN(elt, ...)
         if (!(is.null(newElt) || inherits(newElt, class(elt))))
             stop("invalid modification of the display list")
         newDL[[i]] <- newElt
     }
     for (i in 1:(gridDLindex - 1)) {
-        grid.Call(L_setDLindex, i)
-        grid.Call(L_setDLelt, newDL[[i]])
+        grid.Call(C_setDLindex, i)
+        grid.Call(C_setDLelt, newDL[[i]])
     }
-    grid.Call(L_setDLindex, gridDLindex)
+    grid.Call(C_setDLindex, gridDLindex)
 }
 
 # Wrapper for .Call and .Call.graphics
@@ -469,23 +469,23 @@ grid.DLapply <- function(FUN, ...) {
 # .Call.graphics unless you have a good reason and you know what
 # you are doing -- this will be a bit of overkill, but is for safety
 grid.Call <- function(fnname, ...) {
-  .Call(L_gridDirty)
+  .Call(C_gridDirty)
   .Call(dontCheck(fnname), ...)  # skip code analysis checks, keep runtime checks
 }
 
 grid.Call.graphics <- function(fnname, ...) {
   # Only record graphics operations on the graphics engine's display
   # list if the engineDLon flag is set
-  engineDLon <- grid.Call(L_getEngineDLon)
+  engineDLon <- grid.Call(C_getEngineDLon)
   if (engineDLon) {
-    # NOTE that we need a .Call.graphics("L_gridDirty") so that
+    # NOTE that we need a .Call.graphics(C_gridDirty) so that
     # the first thing on the engine display list is a dirty
     # operation;  this is necessary in case the display list is
     # played on another device (e.g., via replayPlot() or dev.copy())
-    .Call.graphics(L_gridDirty)
+    .Call.graphics(C_gridDirty)
     result <- .Call.graphics(dontCheck(fnname), ...)
   } else {
-    .Call(L_gridDirty)
+    .Call(C_gridDirty)
     result <- .Call(dontCheck(fnname), ...)
   }
   result

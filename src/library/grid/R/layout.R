@@ -1,7 +1,7 @@
 #  File src/library/grid/R/layout.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ layout.torture <- function() {
 
 # Return the region allocated by the layout of the current viewport
 layoutRegion <- function(layout.pos.row=1, layout.pos.col=1) {
-  region <- grid.Call(L_layoutRegion,
+  region <- grid.Call(C_layoutRegion,
                       # This conversion matches the vailidity check in
                       # valid.viewport()
                       if (is.null(layout.pos.row)) layout.pos.row

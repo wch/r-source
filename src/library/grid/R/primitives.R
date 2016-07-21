@@ -1,7 +1,7 @@
 #  File src/library/grid/R/primitives.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ validDetails.move.to <- function(x) {
 }
 
 drawDetails.move.to <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_moveTo, x$x, x$y)
+  grid.Call.graphics(C_moveTo, x$x, x$y)
 }
 
 moveToGrob <- function(x=0, y=0,
@@ -116,7 +116,7 @@ validDetails.line.to <- function(x) {
 }
 
 drawDetails.line.to <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_lineTo, x$x, x$y, x$arrow)
+  grid.Call.graphics(C_lineTo, x$x, x$y, x$arrow)
 }
 
 lineToGrob <- function(x=1, y=1,
@@ -155,13 +155,13 @@ validDetails.lines <- function(x) {
 }
 
 drawDetails.lines <- function(x, recording=TRUE) {
-    grid.Call.graphics(L_lines, x$x, x$y,
+    grid.Call.graphics(C_lines, x$x, x$y,
                        list(as.integer(1L:max(length(x$x), length(x$y)))),
                        x$arrow)
 }
 
 xDetails.lines <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -169,7 +169,7 @@ xDetails.lines <- function(x, theta) {
 }
 
 yDetails.lines <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -177,7 +177,7 @@ yDetails.lines <- function(x, theta) {
 }
 
 widthDetails.lines <- function(x) {
-  bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+  bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -185,7 +185,7 @@ widthDetails.lines <- function(x) {
 }
 
 heightDetails.lines <- function(x) {
-  bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+  bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -248,7 +248,7 @@ validDetails.polyline <- function(x) {
 
 drawDetails.polyline <- function(x, recording=TRUE) {
     if (is.null(x$id) && is.null(x$id.lengths))
-        grid.Call.graphics(L_lines, x$x, x$y,
+        grid.Call.graphics(C_lines, x$x, x$y,
                            list(as.integer(seq_along(x$x))),
                            x$arrow)
     else {
@@ -260,12 +260,12 @@ drawDetails.polyline <- function(x, recording=TRUE) {
             id <- x$id
         }
         index <- split(as.integer(seq_along(x$x)), id)
-        grid.Call.graphics(L_lines, x$x, x$y, index, x$arrow)
+        grid.Call.graphics(C_lines, x$x, x$y, index, x$arrow)
     }
 }
 
 xDetails.polyline <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -273,7 +273,7 @@ xDetails.polyline <- function(x, theta) {
 }
 
 yDetails.polyline <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -281,7 +281,7 @@ yDetails.polyline <- function(x, theta) {
 }
 
 widthDetails.polyline <- function(x) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else
@@ -289,7 +289,7 @@ widthDetails.polyline <- function(x) {
 }
 
 heightDetails.polyline <- function(x) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else
@@ -328,7 +328,7 @@ validDetails.segments <- function(x) {
 }
 
 drawDetails.segments <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_segments, x$x0, x$y0, x$x1, x$y1, x$arrow)
+  grid.Call.graphics(C_segments, x$x0, x$y0, x$x1, x$y1, x$arrow)
 }
 
 segmentBounds <- function(x, theta) {
@@ -338,7 +338,7 @@ segmentBounds <- function(x, theta) {
     x1 <- rep(x$x1, length.out=n)
     y0 <- rep(x$y0, length.out=n)
     y1 <- rep(x$y1, length.out=n)
-    grid.Call(L_locnBounds, unit.c(x0, x1), unit.c(y0, y1), theta)
+    grid.Call(C_locnBounds, unit.c(x0, x1), unit.c(y0, y1), theta)
 }
 
 xDetails.segments <- function(x, theta) {
@@ -485,11 +485,11 @@ drawDetails.arrows <- function(x, recording=TRUE) {
     yy <- rep(x$y, length.out=n)
     ynm1 <- yy[n - 1]
     yn <- yy[n]
-    grid.Call.graphics(L_lines, x$x, x$y,
+    grid.Call.graphics(C_lines, x$x, x$y,
                        list(as.integer(1L:n)),
                        NULL)
   }
-  grid.Call.graphics(L_arrows, x1, x2, xnm1, xn, y1, y2, ynm1, yn,
+  grid.Call.graphics(C_arrows, x1, x2, xnm1, xn, y1, y2, ynm1, yn,
                      x$angle, x$length, x$ends, x$type)
 }
 
@@ -500,7 +500,7 @@ widthDetails.arrows <- function(x) {
     lineThing <- getGrob(x, childNames(x))
     widthDetails(lineThing)
   } else {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
     if (is.null(bounds))
       unit(0, "inches")
     else
@@ -515,7 +515,7 @@ heightDetails.arrows <- function(x) {
     lineThing <- getGrob(x, childNames(x))
     heightDetails(lineThing)
   } else {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
     if (is.null(bounds))
       unit(0, "inches")
     else
@@ -566,7 +566,7 @@ validDetails.polygon <- function(x) {
 
 drawDetails.polygon <- function(x, recording=TRUE) {
   if (is.null(x$id) && is.null(x$id.lengths))
-    grid.Call.graphics(L_polygon, x$x, x$y,
+    grid.Call.graphics(C_polygon, x$x, x$y,
                        list(as.integer(seq_along(x$x))))
   else {
     if (is.null(x$id)) {
@@ -577,12 +577,12 @@ drawDetails.polygon <- function(x, recording=TRUE) {
       id <- x$id
     }
     index <- split(as.integer(seq_along(x$x)), id)
-    grid.Call.graphics(L_polygon, x$x, x$y, index)
+    grid.Call.graphics(C_polygon, x$x, x$y, index)
   }
 }
 
 xDetails.polygon <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -590,7 +590,7 @@ xDetails.polygon <- function(x, theta) {
 }
 
 yDetails.polygon <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -598,7 +598,7 @@ yDetails.polygon <- function(x, theta) {
 }
 
 widthDetails.polygon <- function(x) {
-  bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+  bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -606,7 +606,7 @@ widthDetails.polygon <- function(x) {
 }
 
 heightDetails.polygon <- function(x) {
-  bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+  bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -661,7 +661,7 @@ validDetails.pathgrob <- function(x) {
 }
 
 xDetails.pathgrob <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -669,7 +669,7 @@ xDetails.pathgrob <- function(x, theta) {
 }
 
 yDetails.pathgrob <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -677,7 +677,7 @@ yDetails.pathgrob <- function(x, theta) {
 }
 
 widthDetails.pathgrob <- function(x) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else
@@ -685,7 +685,7 @@ widthDetails.pathgrob <- function(x) {
 }
 
 heightDetails.pathgrob <- function(x) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else
@@ -695,7 +695,7 @@ heightDetails.pathgrob <- function(x) {
 
 drawDetails.pathgrob <- function(x, recording=TRUE) {
       if (is.null(x$id) && is.null(x$id.lengths))
-          grid.Call.graphics(L_polygon, x$x, x$y,
+          grid.Call.graphics(C_polygon, x$x, x$y,
                              list(as.integer(seq_along(x$x))))
   else {
     if (is.null(x$id)) {
@@ -706,7 +706,7 @@ drawDetails.pathgrob <- function(x, recording=TRUE) {
       id <- x$id
     }
     index <- split(as.integer(seq_along(x$x)), id)
-    grid.Call.graphics(L_path, x$x, x$y, index,
+    grid.Call.graphics(C_path, x$x, x$y, index,
                        switch(x$rule, winding=1L, evenodd=0L))
   }
 }
@@ -785,12 +785,12 @@ xsplineIndex <- function(x) {
 }
 
 drawDetails.xspline <- function(x, recording=TRUE) {
-    grid.Call.graphics(L_xspline, x$x, x$y, x$shape, x$open, x$arrow,
+    grid.Call.graphics(C_xspline, x$x, x$y, x$shape, x$open, x$arrow,
                        x$repEnds, xsplineIndex(x))
 }
 
 xDetails.xspline <- function(x, theta) {
-  bounds <- grid.Call(L_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
+  bounds <- grid.Call(C_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
                       x$repEnds, xsplineIndex(x), theta)
   if (is.null(bounds))
     unit(0.5, "npc")
@@ -799,7 +799,7 @@ xDetails.xspline <- function(x, theta) {
 }
 
 yDetails.xspline <- function(x, theta) {
-  bounds <- grid.Call(L_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
+  bounds <- grid.Call(C_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
                       x$repEnds, xsplineIndex(x), theta)
   if (is.null(bounds))
     unit(0.5, "npc")
@@ -808,7 +808,7 @@ yDetails.xspline <- function(x, theta) {
 }
 
 widthDetails.xspline <- function(x) {
-  bounds <- grid.Call(L_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
+  bounds <- grid.Call(C_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
                       x$repEnds, list(as.integer(seq_along(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
@@ -817,7 +817,7 @@ widthDetails.xspline <- function(x) {
 }
 
 heightDetails.xspline <- function(x) {
-  bounds <- grid.Call(L_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
+  bounds <- grid.Call(C_xsplineBounds, x$x, x$y, x$shape, x$open, x$arrow,
                       x$repEnds, list(as.integer(seq_along(x$x))), 0)
   if (is.null(bounds))
     unit(0, "inches")
@@ -845,13 +845,13 @@ grid.xspline <- function(...) {
 
 xsplinePoints <- function(x) {
     # Mimic drawGrob() to ensure x$vp and x$gp enforced
-    dlon <- grid.Call(L_setDLon, FALSE)
-    on.exit(grid.Call(L_setDLon, dlon))
-    tempgpar <- grid.Call(L_getGPar)
-    on.exit(grid.Call(L_setGPar, tempgpar), add=TRUE)
+    dlon <- grid.Call(C_setDLon, FALSE)
+    on.exit(grid.Call(C_setDLon, dlon))
+    tempgpar <- grid.Call(C_getGPar)
+    on.exit(grid.Call(C_setGPar, tempgpar), add=TRUE)
     preDraw(x)
     # Raw pts in dev coords
-    devPoints <- grid.Call(L_xsplinePoints,
+    devPoints <- grid.Call(C_xsplinePoints,
                            x$x, x$y, x$shape, x$open, x$arrow,
                            x$repEnds, xsplineIndex(x), 0)
     postDraw(x)
@@ -1005,11 +1005,11 @@ validDetails.circle <- function(x) {
 }
 
 drawDetails.circle <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_circle, x$x, x$y, x$r)
+  grid.Call.graphics(C_circle, x$x, x$y, x$r)
 }
 
 xDetails.circle <- function(x, theta) {
-  bounds <- grid.Call(L_circleBounds, x$x, x$y, x$r, theta)
+  bounds <- grid.Call(C_circleBounds, x$x, x$y, x$r, theta)
   if (is.null(bounds))
     unit(0.5, "npc")
   else
@@ -1017,7 +1017,7 @@ xDetails.circle <- function(x, theta) {
 }
 
 yDetails.circle <- function(x, theta) {
-  bounds <- grid.Call(L_circleBounds, x$x, x$y, x$r, theta)
+  bounds <- grid.Call(C_circleBounds, x$x, x$y, x$r, theta)
   if (is.null(bounds))
     unit(0.5, "npc")
   else
@@ -1025,7 +1025,7 @@ yDetails.circle <- function(x, theta) {
 }
 
 widthDetails.circle <- function(x) {
-  bounds <- grid.Call(L_circleBounds, x$x, x$y, x$r, 0)
+  bounds <- grid.Call(C_circleBounds, x$x, x$y, x$r, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -1033,7 +1033,7 @@ widthDetails.circle <- function(x) {
 }
 
 heightDetails.circle <- function(x) {
-  bounds <- grid.Call(L_circleBounds, x$x, x$y, x$r, 0)
+  bounds <- grid.Call(C_circleBounds, x$x, x$y, x$r, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -1081,13 +1081,13 @@ validDetails.rect <- function(x) {
 }
 
 drawDetails.rect <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_rect, x$x, x$y, x$width, x$height,
+  grid.Call.graphics(C_rect, x$x, x$y, x$width, x$height,
                      resolveHJust(x$just, x$hjust),
                      resolveVJust(x$just, x$vjust))
 }
 
 xDetails.rect <- function(x, theta) {
-  bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+  bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       theta)
@@ -1098,7 +1098,7 @@ xDetails.rect <- function(x, theta) {
 }
 
 yDetails.rect <- function(x, theta) {
-  bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+  bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       theta)
@@ -1109,7 +1109,7 @@ yDetails.rect <- function(x, theta) {
 }
 
 widthDetails.rect <- function(x) {
-  bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+  bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       0)
@@ -1120,7 +1120,7 @@ widthDetails.rect <- function(x) {
 }
 
 heightDetails.rect <- function(x) {
-  bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+  bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       0)
@@ -1244,7 +1244,7 @@ drawDetails.rastergrob <- function(x, recording=TRUE) {
                              "inches")
         }
     }
-    grid.Call.graphics(L_raster, x$raster,
+    grid.Call.graphics(C_raster, x$raster,
                        x$x, x$y, x$width, x$height,
                        resolveHJust(x$just, x$hjust),
                        resolveVJust(x$just, x$vjust),
@@ -1253,7 +1253,7 @@ drawDetails.rastergrob <- function(x, recording=TRUE) {
 
 xDetails.rastergrob <- function(x, theta) {
     x <- resolveRasterSize(x)
-    bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+    bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                         resolveHJust(x$just, x$hjust),
                         resolveVJust(x$just, x$vjust),
                         theta)
@@ -1265,7 +1265,7 @@ xDetails.rastergrob <- function(x, theta) {
 
 yDetails.rastergrob <- function(x, theta) {
     x <- resolveRasterSize(x)
-    bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+    bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                         resolveHJust(x$just, x$hjust),
                         resolveVJust(x$just, x$vjust),
                         theta)
@@ -1277,7 +1277,7 @@ yDetails.rastergrob <- function(x, theta) {
 
 widthDetails.rastergrob <- function(x) {
     x <- resolveRasterSize(x)
-    bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+    bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                         resolveHJust(x$just, x$hjust),
                         resolveVJust(x$just, x$vjust),
                         0)
@@ -1289,7 +1289,7 @@ widthDetails.rastergrob <- function(x) {
 
 heightDetails.rastergrob <- function(x) {
     x <- resolveRasterSize(x)
-    bounds <- grid.Call(L_rectBounds, x$x, x$y, x$width, x$height,
+    bounds <- grid.Call(C_rectBounds, x$x, x$y, x$width, x$height,
                         resolveHJust(x$just, x$hjust),
                         resolveVJust(x$just, x$vjust),
                         0)
@@ -1361,7 +1361,7 @@ validDetails.text <- function(x) {
 }
 
 drawDetails.text <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_text, as.graphicsAnnot(x$label),
+  grid.Call.graphics(C_text, as.graphicsAnnot(x$label),
                      x$x, x$y,
                      resolveHJust(x$just, x$hjust),
                      resolveVJust(x$just, x$vjust),
@@ -1369,7 +1369,7 @@ drawDetails.text <- function(x, recording=TRUE) {
 }
 
 xDetails.text <- function(x, theta) {
-  bounds <- grid.Call(L_textBounds, as.graphicsAnnot(x$label),
+  bounds <- grid.Call(C_textBounds, as.graphicsAnnot(x$label),
                       x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
@@ -1381,7 +1381,7 @@ xDetails.text <- function(x, theta) {
 }
 
 yDetails.text <- function(x, theta) {
-  bounds <- grid.Call(L_textBounds, as.graphicsAnnot(x$label),
+  bounds <- grid.Call(C_textBounds, as.graphicsAnnot(x$label),
                       x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
@@ -1393,7 +1393,7 @@ yDetails.text <- function(x, theta) {
 }
 
 widthDetails.text <- function(x) {
-  bounds <- grid.Call(L_textBounds, as.graphicsAnnot(x$label),
+  bounds <- grid.Call(C_textBounds, as.graphicsAnnot(x$label),
                       x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
@@ -1405,7 +1405,7 @@ widthDetails.text <- function(x) {
 }
 
 heightDetails.text <- function(x) {
-  bounds <- grid.Call(L_textBounds, as.graphicsAnnot(x$label),
+  bounds <- grid.Call(C_textBounds, as.graphicsAnnot(x$label),
                       x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
@@ -1418,7 +1418,7 @@ heightDetails.text <- function(x) {
 
 ascentDetails.text <- function(x) {
     if (length(x$label) == 1) {
-        metrics <- grid.Call(L_stringMetric, as.graphicsAnnot(x$label))
+        metrics <- grid.Call(C_stringMetric, as.graphicsAnnot(x$label))
         unit(metrics[[1]], "inches")
     } else {
         heightDetails(x)
@@ -1427,7 +1427,7 @@ ascentDetails.text <- function(x) {
 
 descentDetails.text <- function(x) {
     if (length(x$label) == 1) {
-        metrics <- grid.Call(L_stringMetric, as.graphicsAnnot(x$label))
+        metrics <- grid.Call(C_stringMetric, as.graphicsAnnot(x$label))
         unit(metrics[[2]], "inches")
     } else {
         unit(0, "inches")
@@ -1488,12 +1488,12 @@ validDetails.points <- function(x) {
 }
 
 drawDetails.points <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_points, x$x, x$y, x$pch, x$size)
+  grid.Call.graphics(C_points, x$x, x$y, x$pch, x$size)
 }
 
 # FIXME:  does not take into account the size of the symbols
 xDetails.points <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -1501,7 +1501,7 @@ xDetails.points <- function(x, theta) {
 }
 
 yDetails.points <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -1509,7 +1509,7 @@ yDetails.points <- function(x, theta) {
 }
 
 widthDetails.points <- function(x) {
-  bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+  bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -1517,7 +1517,7 @@ widthDetails.points <- function(x) {
 }
 
 heightDetails.points <- function(x) {
-  bounds <- grid.Call(L_locnBounds, x$x, x$y, 0)
+  bounds <- grid.Call(C_locnBounds, x$x, x$y, 0)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -1572,7 +1572,7 @@ validDetails.clip <- function(x) {
 }
 
 drawDetails.clip <- function(x, recording=TRUE) {
-  grid.Call.graphics(L_clip, x$x, x$y, x$width, x$height,
+  grid.Call.graphics(C_clip, x$x, x$y, x$width, x$height,
                      resolveHJust(x$just, x$hjust),
                      resolveVJust(x$just, x$vjust))
 }
@@ -1622,7 +1622,7 @@ drawDetails.null <- function(x, recording=TRUE) {
 }
 
 xDetails.null <- function(x, theta) {
-    bounds <- grid.Call(L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call(C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -1630,7 +1630,7 @@ xDetails.null <- function(x, theta) {
 }
 
 yDetails.null <- function(x, theta) {
-    bounds <- grid.Call( L_locnBounds, x$x, x$y, theta)
+    bounds <- grid.Call( C_locnBounds, x$x, x$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else

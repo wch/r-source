@@ -1,7 +1,7 @@
 #  File src/library/grid/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ utils::globalVariables(c("n", "vp", "path"))
 {
     ## want eval in C code to see unexported objects
     environment(.GridEvalEnv) <- asNamespace("grid")
-    .Call(L_initGrid, .GridEvalEnv)
+    .Call(C_initGrid, .GridEvalEnv)
     .grid.loaded <<- TRUE
 }
 
@@ -52,7 +52,7 @@ utils::globalVariables(c("n", "vp", "path"))
             warning("shutting down all devices when unloading 'grid' namespace",
                     call. = FALSE)
         graphics.off()
-        .Call(L_killGrid)
+        .Call(C_killGrid)
     }
     library.dynam.unload("grid", libpath)
 }

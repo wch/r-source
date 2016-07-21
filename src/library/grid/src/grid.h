@@ -631,7 +631,7 @@ SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
 
 /* From unit.c */
-SEXP L_validUnits(SEXP units);
+SEXP validUnits(SEXP units);
 
 /* From gpar.c */
 SEXP L_getGPar(void);

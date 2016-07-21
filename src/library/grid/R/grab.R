@@ -1,7 +1,7 @@
 #  File src/library/grid/R/grab.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ rootVP <- function(pvp) {
 
 # List the children of the current vp (as a vpList)
 current.vpList <- function() {
-  cpvp <- grid.Call(L_currentViewport)
+  cpvp <- grid.Call(C_currentViewport)
   if (no.children(cpvp$children))
     NULL
   else
@@ -36,7 +36,7 @@ current.vpList <- function() {
 }
 
 current.vpNames <- function() {
-  ls(grid.Call(L_currentViewport)$children)
+  ls(grid.Call(C_currentViewport)$children)
 }
 
 # vp might be a viewport, or a vpList, or a vpStack, or a vpTree
@@ -45,7 +45,7 @@ vpExists <- function(vp) {
 }
 
 vpExists.viewport <- function(vp) {
-  exists(vp$name, .Call(L_currentViewport)$children)
+  exists(vp$name, .Call(C_currentViewport)$children)
 }
 
 vpExists.vpStack <- function(vp) {
@@ -107,7 +107,7 @@ wrap.vpPath <- function(x) {
 #   in a gTree
 grabDL <- function(warn, wrap, ...) {
   gList <- NULL
-  dl.index <- grid.Call(L_getDLindex)
+  dl.index <- grid.Call(C_getDLindex)
   if (dl.index > 1) {
     if (warn > 0) {
       names <- getNames()
@@ -122,7 +122,7 @@ grabDL <- function(warn, wrap, ...) {
       # dispatching to a function call per element because
       # we need to work with whole DL at times, not
       # just individual elements
-      elt <- grid.Call(L_getDLelt, as.integer(i - 1))
+      elt <- grid.Call(C_getDLelt, as.integer(i - 1))
       if (wrap)
         gList <- addToGList(wrap(elt), gList)
       else {
@@ -228,7 +228,7 @@ grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
 
 grid.cap <- function() {
     # This does not need recording on the display list
-    grid.Call(L_cap)
+    grid.Call(C_cap)
 }
 
 

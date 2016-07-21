@@ -18,7 +18,7 @@
 
 
 grid.locator <- function(unit="native") {
-  location <- c(grid.Call(L_locator), 1)
+  location <- c(grid.Call(C_locator), 1)
   if (is.na(location[1L]))
     invisible(NULL)
   else {

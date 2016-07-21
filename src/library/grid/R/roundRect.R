@@ -1,7 +1,7 @@
 #  File src/library/grid/R/roundrect.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ makeContent.roundrect <- function(x) {
 
 xDetails.roundrect <- function(x, theta) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, theta)
+    bounds <- grid.Call(C_locnBounds, boundary$x, boundary$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -133,7 +133,7 @@ xDetails.roundrect <- function(x, theta) {
 
 yDetails.roundrect <- function(x, theta) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, theta)
+    bounds <- grid.Call(C_locnBounds, boundary$x, boundary$y, theta)
     if (is.null(bounds))
         unit(0.5, "npc")
     else
@@ -142,7 +142,7 @@ yDetails.roundrect <- function(x, theta) {
 
 widthDetails.roundrect <- function(x) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, 0)
+    bounds <- grid.Call(C_locnBounds, boundary$x, boundary$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else
@@ -151,7 +151,7 @@ widthDetails.roundrect <- function(x) {
 
 heightDetails.roundrect <- function(x) {
     boundary <- rrpoints(x)
-    bounds <- grid.Call(L_locnBounds, boundary$x, boundary$y, 0)
+    bounds <- grid.Call(C_locnBounds, boundary$x, boundary$y, 0)
     if (is.null(bounds))
         unit(0, "inches")
     else

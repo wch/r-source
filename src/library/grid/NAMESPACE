@@ -1,4 +1,4 @@
-useDynLib("grid", .registration = TRUE)
+useDynLib("grid", .registration = TRUE, .fixes = "C_")
 
 import(grDevices)
 importFrom(utils, str)
@@ -21,7 +21,7 @@ export(
        "gpar", "get.gpar",
        "grid.collection",
        "grid.copy", "grid.display.list", "grid.draw",
-       "grid.record", "grid.delay", "grid.DLapply", 
+       "grid.record", "grid.delay", "grid.DLapply",
        "grid.grill",
        "grid.layout", "grid.locator",
        "grid.newpage",
@@ -69,7 +69,7 @@ export(
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob", "forceGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
        "grid.grab", "grid.grabExpr",
-       "grid.force", "grid.revert", 
+       "grid.force", "grid.revert",
        "grid.reorder", "reorderGrob",
        "grid.cap",
        "setChildren",

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2013 The R Core Team
+ *                2003-2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1899,7 +1899,7 @@ int convertUnit(SEXP unit, int index)
     return result;
 }
 	    
-SEXP L_validUnits(SEXP units) 
+SEXP validUnits(SEXP units) 
 {
     int i;
     int n = LENGTH(units);

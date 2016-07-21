@@ -1,7 +1,7 @@
 #  File src/library/grid/R/util.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,6 @@ is.odd <- function(x) !is.even(x)
 grid.pretty <- function(range) {
   if (!is.numeric(range))
     stop("'range' must be numeric")
-  .Call(L_pretty, range)
+  .Call(C_pretty, range)
 }
 
