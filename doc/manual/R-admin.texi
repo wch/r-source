@@ -5166,9 +5166,10 @@ R_LD_LIBRARY_PATH="/usr/local/lib::/opt/csw/lib"
 @noindent
 For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
-@code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate.
+@code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
+library directories if used, e.g.@: @code{-L/opt/csw/lib/arm64}).
 It will also be necessary to point @command{pkg-config} at the 64-bit
-directories, e.g.@: one of
+directories, e.g.@: something like one of
 
 @example
 PKG_CONFIG_PATH=/opt/csw/lib/amd64/pkgconfig:/usr/lib/amd64/pkgconfig
@@ -5195,9 +5196,9 @@ FCLIBS="-lfai -lfai2 -lfsu"
 (and possibly other Fortran libraries, but this suffices for the
 packages currently on CRAN).
 
-Currently @cputype{amd64} and @cputype{sparcv9} builds work
+@cputype{amd64} and @cputype{sparcv9} builds worked
 out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
-later: @file{libRblas.so} and @file{lapack.so} are generated with code
+12.3: @file{libRblas.so} and @file{lapack.so} are generated with code
 that causes relocation errors (which is being linked in from the Fortran
 libraries).  This means that building 64-bit @R{} as a shared library
 may be impossible with Solaris Studio >= 12.2.  For a standard build the
