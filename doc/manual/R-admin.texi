@@ -1708,7 +1708,7 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-(`macOS' was known as `OS X' from 2012--2016.)
+(`macOS' was known as `OS X' from 2012--2016 and `Mac OS X' before that.)
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
@@ -3549,7 +3549,7 @@ configure variables @code{CXX}, @code{CXXFLAGS} and similar.
 most cases this will be a C++98 compiler, and as from @R{} 3.1.0 it is
 possible to specify an alternative compiler for use with C++11 by the
 configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
-similar (@pxref{C++ Support}). Again, @command{configure} will normally
+similar (@pxref{C++ Support}).  Again, @command{configure} will normally
 find a suitable value for @code{CXX1XSTD} if the compiler given by
 @code{CXX} is capable of compiling C++11 code, but it is possible that a
 completely different compiler will be needed.
@@ -5160,7 +5160,7 @@ CXXFLAGS=-O
 FC=f95
 FCFLAGS=$FFLAGS
 FCLIBS="-lfai -lfsu"
-R_LD_LIBRARY_PATH="/usr/local/lib::/opt/csw/lib"
+R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/lib"
 @end example
 
 @noindent
