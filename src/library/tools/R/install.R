@@ -321,7 +321,7 @@
 
         ## Add read permission to all, write permission to owner
         ## If group-write permissions were requested, set them
-        .Call(dirchmod, instdir, group.writable)
+        .Call(C_dirchmod, instdir, group.writable)
         is_first_package <<- FALSE
 
         if (tar_up) { # Unix only
@@ -413,7 +413,7 @@
                 for(arch in archs) {
                     ss <- paste("src", arch, sep = "-")
                     ## it seems fixing permissions is sometimes needed
-                    .Call(dirchmod, ss, group.writable)
+                    .Call(C_dirchmod, ss, group.writable)
                     unlink(ss, recursive = TRUE)
                 }
 
@@ -774,7 +774,7 @@
                             dir.create(ss, showWarnings = FALSE)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
                             ## avoid read-only files/dir such as nested .svn
-			    .Call(dirchmod, ss, group.writable)
+			    .Call(C_dirchmod, ss, group.writable)
                             setwd(ss)
 
                             ra <- paste0("/", arch)
@@ -1031,7 +1031,7 @@
             i_dirs <- grep(.vc_dir_names_re, i_dirs,
                            invert = TRUE, value = TRUE)
             ## This ignores any restrictive permissions in the source
-            ## tree, since the later .Call(dirchmod) call will
+            ## tree, since the later .Call(C_dirchmod) call will
             ## fix the permissions.
 
             ## handle .Rinstignore:

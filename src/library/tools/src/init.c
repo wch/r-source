@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-12   The R Core Team.
+ *  Copyright (C) 2003-2016   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(codeFilesAppend, 2),
     CALLDEF(delim_match, 2),
     CALLDEF(dirchmod, 2),
-    {"C_getfmts", (DL_FUNC) &getfmts, 1},
+    CALLDEF(getfmts, 1),
     CALLDEF(Rmd5, 1),
     CALLDEF(check_nonASCII, 2),
     CALLDEF(check_nonASCII2, 1),
@@ -49,7 +49,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(ps_priority, 2),
     CALLDEF(startHTTPD, 2),
     CALLDEF(stopHTTPD, 0),
-    CALLDEF(C_deparseRd, 2),
+    CALLDEF(deparseRd, 2),
     CALLDEF(splitString, 2),
 
     {NULL, NULL, 0}
@@ -57,8 +57,8 @@ static const R_CallMethodDef CallEntries[] = {
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 static const R_ExternalMethodDef ExtEntries[] = {
-    EXTDEF(C_parseLatex, 4),
-    EXTDEF(C_parseRd, 9),
+    EXTDEF(parseLatex, 4),
+    EXTDEF(parseRd, 9),
 
     {NULL, NULL, 0}
 };

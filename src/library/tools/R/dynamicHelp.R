@@ -636,7 +636,7 @@ startDynamicHelp <- function(start = TRUE)
         for(i in seq_along(ports)) {
             ## the next can throw an R-level error,
             ## so do not assign port unless it succeeds.
-	    status <- .Call(startHTTPD, "127.0.0.1", ports[i])
+	    status <- .Call(C_startHTTPD, "127.0.0.1", ports[i])
 	    if (status == 0L) {
                 OK <- TRUE
                 httpdPort(ports[i])
@@ -656,7 +656,7 @@ startDynamicHelp <- function(start = TRUE)
         }
     } else {
         ## Not really tested
-        .Call(stopHTTPD)
+        .Call(C_stopHTTPD)
     	httpdPort(0L)
     }
     invisible(httpdPort())

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3  Paul Murrell
- *                2003-12 The R Core Team
+ *                2003-16 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_locator", (DL_FUNC) &L_locator, 0},
     {"L_convert", (DL_FUNC) &L_convert, 4},
     {"L_layoutRegion", (DL_FUNC) &L_layoutRegion, 2},
-    {"validUnits", (DL_FUNC) &validUnits, 1},
+    {"L_validUnits", (DL_FUNC) &L_validUnits, 1},
     {"L_getGPar", (DL_FUNC) &L_getGPar, 0},
     {"L_setGPar", (DL_FUNC) &L_setGPar, 1},
     {"L_circleBounds", (DL_FUNC) &L_circleBounds, 4},

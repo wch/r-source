@@ -4328,7 +4328,7 @@ function(pkgDir)
             utf8 <<- utf8 + sum(enc == "UTF-8")
             bytes <<- bytes + sum(enc == "bytes")
             unk <- xx[enc == "unknown"]
-            ind <- .Call(check_nonASCII2, unk)
+            ind <- .Call(C_check_nonASCII2, unk)
             if(length(ind)) {
                 non_ASCII <<- c(non_ASCII, unk[ind])
                 where <<- c(where, rep.int(ds, length(ind)))
@@ -4670,7 +4670,7 @@ function(dir, respect_quotes = FALSE)
                                         OS_subdirs = OS_subdirs)
         for(f in R_files) {
             text <- readLines(file.path(code_dir, f), warn = FALSE)
-            if(.Call(check_nonASCII, text, !respect_quotes))
+            if(.Call(C_check_nonASCII, text, !respect_quotes))
                 wrong_things <- c(wrong_things, f)
         }
     }

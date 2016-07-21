@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ tabExpand <- function(x) {
     srcref <- attr(x, "srcref")
     if (is.null(srcref)) start <- 0L
     else start <- srcref[5L] - 1L
-    .Call(doTabExpand, x, start)
+    .Call(C_doTabExpand, x, start)
 }
 
 Rd2txt_options <- local({

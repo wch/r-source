@@ -1,4 +1,4 @@
-useDynLib(tools, .registration = TRUE)
+useDynLib(tools, .registration = TRUE, .fixes = "C_")
 
 ## Bootstrapping R ==> do _not_ import, rather use  ' :: '
 

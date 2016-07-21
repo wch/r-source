@@ -3,7 +3,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *  Copyright (C) 2010 Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -900,11 +900,11 @@ static void PopState() {
 
 /* "do_parseLatex" 
 
- .External2(CC_parseLatex, file, srcfile, verbose, basename, warningCalls)
+ .External2("parseLatex", file, srcfile, verbose, basename, warningCalls)
  If there is text then that is read and the other arguments are ignored.
 */
 
-SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     args = CDR(args);
 

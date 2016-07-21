@@ -1,7 +1,7 @@
 #  File src/library/tools/R/md5.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 md5sum <- function(files)
-    structure(.Call(Rmd5, files), names=files)
+    structure(.Call(C_Rmd5, files), names=files)
 
 .installMD5sums <- function(pkgDir, outDir = pkgDir)
 {

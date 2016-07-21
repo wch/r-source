@@ -204,7 +204,7 @@ function(x, delim = c("{", "}"), syntax = "Rd")
     if(syntax != "Rd")
         stop("only Rd syntax is currently supported")
 
-    .Call(delim_match, x, delim)
+    .Call(C_delim_match, x, delim)
 }
 
 
@@ -675,7 +675,7 @@ function(file1, file2)
 {
     ## Use a fast version of file.append() that ensures LF between
     ## files.
-    .Call(codeFilesAppend, file1, file2)
+    .Call(C_codeFilesAppend, file1, file2)
 }
 
 ### ** .file_path_relative_to_dir
@@ -2031,13 +2031,13 @@ Rcmd <- function(args, ...)
 ### ** pskill
 
 pskill <- function(pid, signal = SIGTERM)
-    invisible(.Call(ps_kill, pid, signal))
+    invisible(.Call(C_ps_kill, pid, signal))
 
 ### ** psnice
 
 psnice <- function(pid = Sys.getpid(), value = NA_integer_)
 {
-    res <- .Call(ps_priority, pid, value)
+    res <- .Call(C_ps_priority, pid, value)
     if(is.na(value)) res else invisible(res)
 }
 
@@ -2071,7 +2071,7 @@ toTitleCase <- function(text)
                        tolower(substring(x, 3L)))
             else paste0(toupper(x1), tolower(substring(x, 2L)))
         }
-        xx <- .Call(splitString, x, ' -/"()\n')
+        xx <- .Call(C_splitString, x, ' -/"()\n')
         ## for 'alone' we could insist on that exact capitalization
         alone <- xx %in% c(alone, either)
         alone <- alone | grepl("^'.*'$", xx)

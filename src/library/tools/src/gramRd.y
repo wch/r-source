@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1787,7 +1787,7 @@ static void PopState() {
  If there is text then that is read and the other arguments are ignored.
 */
 
-SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     args = CDR(args);
 
@@ -1854,7 +1854,7 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
  .External2(C_deparseRd, element, state)
 */
 
-SEXP C_deparseRd(SEXP e, SEXP state)
+SEXP deparseRd(SEXP e, SEXP state)
 {
     SEXP result;
     int  outlen, *statevals, quoteBraces, inRComment;

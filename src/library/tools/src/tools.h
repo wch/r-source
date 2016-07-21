@@ -44,8 +44,8 @@ SEXP startHTTPD(SEXP sIP, SEXP sPort);
 SEXP stopHTTPD(void);
 SEXP splitString(SEXP string, SEXP delims);
 
-SEXP C_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP C_deparseRd(SEXP e, SEXP state);
+SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP parseRd(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP deparseRd(SEXP e, SEXP state);
 
 #endif
