@@ -6545,17 +6545,17 @@ function(dir, localOnly)
     class(out) <- "check_package_CRAN_incoming"
 
     meta <- .get_package_metadata(dir, FALSE)
-    info <- analyze_license(meta["License"])
+    lic_info <- analyze_license(meta["License"])
     ## Use later to indicate changes from FOSS to non-FOSS licence.
-    foss <- info$is_verified
+    foss <- lic_info$is_verified
     ## Record to notify about components extending a base license which
     ## permits extensions.
-    if(length(extensions <- info$extensions) &&
+    if(length(extensions <- lic_info$extensions) &&
        any(ind <- extensions$extensible)) {
         out$extensions <- extensions$components[ind]
         out$pointers <-
             Filter(length,
-                   lapply(info$pointers,
+                   lapply(lic_info$pointers,
                           function(p) {
                               fp <- file.path(dir, p)
                               if(file_test("-f", fp)) {
@@ -6857,12 +6857,12 @@ function(dir, localOnly)
     }
 
     ## Check build time stamp
-    info <- trimws(as.vector(meta["Packaged"]))
-    if(is.na(info)) {
+    ptime <- trimws(as.vector(meta["Packaged"]))
+    if(is.na(ptime)) {
         out$build_time_stamp_msg <-
             "The build time stamp is missing."
     } else {
-        ts <- strptime(info, "%Y-%m-%d", tz = "GMT")
+        ts <- strptime(ptime, "%Y-%m-%d", tz = "GMT")
         if(is.na(ts)) {
             out$build_time_stamp_msg <-
                 "The build time stamp has invalid/outdated format."
@@ -6992,11 +6992,11 @@ function(dir, localOnly)
         ## repository overrides.  Note that the license info predicates
         ## are logicals (TRUE, NA or FALSE) and the repository overrides
         ## are character ("yes", missing or "no").
-        if(!is.na(iif <- info$is_FOSS) &&
+        if(!is.na(iif <- lic_info$is_FOSS) &&
            !is.na(lif <- entry["License_is_FOSS"]) &&
            ((lif == "yes") != iif))
             out$conflict_in_license_is_FOSS <- lif
-        if(!is.na(iru <- info$restricts_use) &&
+        if(!is.na(iru <- lic_info$restricts_use) &&
            !is.na(lru <- entry["License_restricts_use"]) &&
            ((lru == "yes") != iru))
             out$conflict_in_license_restricts_use <- lru
