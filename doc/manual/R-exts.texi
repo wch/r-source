@@ -2223,7 +2223,7 @@ PKG_LIBS = -LCsdp/lib -lsdp $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 $(SHLIB): Csdp/lib/libsdp.a
 
-Csdp/lib/libsdp.a
+Csdp/lib/libsdp.a:      
         @@(cd Csdp/lib && $(MAKE) libsdp.a \
           CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
 @end smallexample
@@ -2537,6 +2537,14 @@ AC_LANG(C++)
 
 @noindent
 (paying attention to all the quotes required).
+
+If you want to compile C++11 code in a subdirectory, make sure you pass
+down the macros to specify that compiler, e.g.@: in @file{src/Makevars}
+@example
+sublibs:
+         @@(cd libs && $(MAKE) \
+            CXX="$(CXX1X) $(CXX1XSTD)" CXXFLAGS="$(CXX1XFLAGS) $(CXX1XPICFLAGS)")
+@end example
 
 @node Using C++14 code,  , Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
