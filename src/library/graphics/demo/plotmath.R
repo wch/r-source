@@ -1,4 +1,4 @@
-#  Copyright (C) 2002-2009 The R Core Team
+#  Copyright (C) 2002-2016 The R Core Team
 
 require(datasets)
 require(grDevices); require(graphics)
@@ -37,7 +37,7 @@ draw.plotmath.cell <- function(expr, i, nr, string = NULL) {
         string <- deparse(expr)
         string <- substr(string, 12, nchar(string) - 1)
     }
-    text((2*(c - 1) + 1), -r, string, col="grey")
+    text((2*(c - 1) + 1), -r, string, col="grey50")
     text((2*c), -r, expr, adj=c(.5,.5))
     rect((2*(c - 1) + .5), -(r - .5), (2*c + .5), -(r + .5), border="grey")
 }
@@ -176,13 +176,15 @@ draw.plotmath.cell(expression(min(g(x), x >= 0)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(inf(S)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(sup(S)), i, nr); i <- i + 1
 
+nr <- 11
 make.table(nr, nc)
 i <- 0
 draw.title.cell("Grouping", i, nr); i <- i + 1
+# Those involving '{ . }' have to be done "by hand"
+draw.plotmath.cell(expression({}(x , y)), i, nr, string="{}(x, y)"); i <- i + 1
 draw.plotmath.cell(expression((x + y)*z), i, nr); i <- i + 1
-draw.plotmath.cell(expression(x^y + z), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x^y + z),   i, nr); i <- i + 1
 draw.plotmath.cell(expression(x^(y + z)), i, nr); i <- i + 1
-# have to do this one by hand
 draw.plotmath.cell(expression(x^{y + z}), i, nr, string="x^{y + z}"); i <- i + 1
 draw.plotmath.cell(expression(group("(", list(a, b), "]")), i, nr); i <- i + 1
 draw.plotmath.cell(expression(bgroup("(", atop(x, y), ")")), i, nr); i <- i + 1
