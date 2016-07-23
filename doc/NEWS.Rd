@@ -137,6 +137,10 @@
       \item Speedup in \code{simplify2array()} and hence \code{sapply()} and
       \code{mapply()} (for the case of names and common length > 1),
       thanks to Suharto Anggono's \PR{17118}.
+
+      %% Would need more work (notably in  ../src/main/sort.c )
+      %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
+      %% avoid the name problem seen in \PR{17119}.
     }
   }
 
@@ -289,6 +293,10 @@
 
       \item Packages using non-ASCII encodings in their code did not
       install data properly on systems using different encodings.
+
+      \item \code{merge(df1, df2)} now also works for data frames with
+      column names \code{"na.last"}, \code{"decreasing"}, or
+      \code{"method"}.  (\PR{17119})
     }
   }
 }

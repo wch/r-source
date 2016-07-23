@@ -1732,6 +1732,23 @@ for(xx in list(NA, NA_integer_, NA_real_, NA_character_, NA_complex_, "NA", 1i))
 ## error in R <= 3.3.1
 
 
+## merge.data.frame with names matching order()'s arguments (PR#17119)
+nf <- names(formals(order))
+nf <- nf[nf != "..."]
+v1 <- c(1,3,2)
+v2 <- c(4,2,3)
+for(nm in nf)  {
+    cat(nm,":\n")
+    mdf <- merge(
+        as.data.frame(setNames(list(v1), nm=nm)),
+        as.data.frame(setNames(list(v2), nm=nm)), all = TRUE)
+    stopifnot(identical(mdf,
+                        as.data.frame(setNames(list(0+ 1:4), nm=nm))))
+}
+## some were wrong, others gave an error in R <= 3.3.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
