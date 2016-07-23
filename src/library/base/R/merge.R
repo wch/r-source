@@ -1,7 +1,7 @@
 #  File src/library/base/R/merge.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -169,9 +169,11 @@ merge.data.frame <-
         res <- cbind(x, y)
 
         if (sort)
-            res <- res[if(all.x || all.y) ## does NOT work
-                       do.call("order", x[, seq_len(l.b), drop = FALSE])
-            else sort.list(bx[m$xi]),, drop = FALSE]
+	    res <- res[if(all.x || all.y) {
+			   x <- x[, seq_len(l.b), drop = FALSE]
+			   attributes(x) <- NULL
+			   do.call("order", x)
+		       } else sort.list(bx[m$xi]),, drop = FALSE]
     }
     attr(res, "row.names") <- .set_row_names(nrow(res))
     res

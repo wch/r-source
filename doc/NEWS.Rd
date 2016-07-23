@@ -51,6 +51,10 @@
       
       \item Packages using non-ASCII encodings in their code did not 
       install data properly on systems using different encodings.
+
+      \item \code{merge(df1, df2)} now also works for data frames with
+      column names \code{"na.last"}, \code{"decreasing"}, or
+      \code{"method"}.  (\PR{17119})
     }
   }
 }
