@@ -1040,7 +1040,7 @@ supported, see
 this is currently still accepted as a deprecated synonym for
 @option{-std=c++11}.  Option @option{-std=c++14} was introduced in
 version 5.x, with @option{-std=c++1y} (introduced@footnote{See
-@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14} for whch C++14
+@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14} for which C++14
 features it supported.} in version 4.9.x) remainng as a deprecated
 synonym.
 

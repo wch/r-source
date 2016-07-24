@@ -2454,7 +2454,7 @@ native@footnote{Some distributions, notably Debian, have supplied a
 build of @command{clang} with @command{g++}'s headers and library.
 Conversely, Apple's command named @command{g++} is based on
 @command{clang} using @code{libc++}.}  @code{libc++} headers and library
-includes many C++11 features, and does not support TR1.
+include many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2582,6 +2582,23 @@ using std::make_unique;
 // your emulation
 #endif
 @end example
+
+@noindent
+Code needing C++14 features would do better to test for their presence
+@emph{via} `SD-6 feature
+tests'@footnote{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations},
+although that is not universally implemented at the time of writing.  If
+it were, that test could be
+
+@example
+#if defined(__cpp_lib_make_unique) && (__cpp_lib_make_unique >= 201304)
+using std::make_unique;
+#else
+// your emulation
+#endif
+@end example
+
+
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
