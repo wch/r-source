@@ -283,11 +283,11 @@ operating systems.  Support for Mac OS Classic ended with R 1.7.1.
 
 The current version of R will configure and build under a number of
 common Unix-like (e.g., @uref{https://en.wikipedia.org/wiki/Unix-like})
-platforms including @var{cpu}-linux-gnu for the i386, amd64, alpha,
-arm/armel, hppa, ia64, m68k, mips/mipsel, powerpc, s390 and sparc 
-@acronym{CPU}s (e.g., @url{https://buildd.debian.org/build.php?&pkg=r-base}),
-i386-hurd-gnu, @var{cpu}-kfreebsd-gnu for i386 and amd64, 
-powerpc-apple-darwin, mips-sgi-irix,
+platforms including @var{cpu}-linux-gnu for the i386, amd64/x86_64,
+alpha, arm, arm64, hppa, mips/mipsel, powerpc, s390x and sparc
+@acronym{CPU}s (e.g.,
+@url{https://buildd.debian.org/build.php?&pkg=r-base}), i386-hurd-gnu,
+@var{cpu}-kfreebsd-gnu for i386 and amd64,
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
@@ -295,12 +295,14 @@ powerpc-apple-darwin, mips-sgi-irix,
 @c i386-freebsd reported by B. Gian James" <gian.james@gmail.com> on
 @c 2009-01-11
 @c (Architecture: i386, OS: FreeBSD 7.1-PRERELEASE, Vendor: PC-BSD)
-i386-freebsd,
+@c i386-freebsd,
+@c but all recent reports are on x86_64
 @c </COMMENT>
-@c i386-sun-solaris,
 @c hppa-hp-hpux, 
+@c mips-sgi-irix,
 @c </FIXME>
-rs6000-ibm-aix, and sparc-sun-solaris.
+i386-pc-solaris, rs6000-ibm-aix, sparc-sun-solaris, x86_64-apple-darwin,
+x86_64-unknown-freebsd and x86_64-unknown-openbsd.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
