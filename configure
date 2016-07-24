@@ -27504,6 +27504,7 @@ fi
     fi
     ;;
   darwin*)
+    ## which these days mean macOS
     $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
     ;;
@@ -27575,6 +27576,7 @@ fi
 
     ;;
   irix*)
+    ## final release in 2006
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler needs -OPT:IEEE_NaN_inf=ON" >&5
 $as_echo_n "checking whether C compiler needs -OPT:IEEE_NaN_inf=ON... " >&6; }
 if ${r_cv_c_optieee+:} false; then :
@@ -27837,6 +27839,7 @@ fi
     fi
     ;;
   osf*)
+    ## does that really still exist?
     $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
     ;;
