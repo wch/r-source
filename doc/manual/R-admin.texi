@@ -1033,7 +1033,16 @@ Solaris: c++03 c++11 c++14 (from 12.5)
 @end example
 @noindent
 (Those for @command{clang++} are not documented, but seem to be based on
-@code{g++}.)
+@code{g++}.)  Versions 4.3.x to 4.8.x of @command{g++} accepted flag
+@option{-std=c++0x} with partial support@footnote{For when features were
+supported, see
+@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx11}.} for C++11:
+this is currently still accepted as a deprecated synonym for
+@option{-std=c++11}.  Option @option{-std=c++14} was introduced in
+version 5.x, with @option{-std=c++1y} (introduced@footnote{See
+@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14} for whch C++14
+features it supported.} in version 4.9.x) remainng as a deprecated
+synonym.
 
 For the use of C++11 in @R{} packages see the `Writing R Extensions' manual.
 
