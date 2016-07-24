@@ -1413,7 +1413,7 @@ collation, or set the environment variable @env{R_ICU_LOCALE}.
 @node Support for libcurl, Checking the build, Using ICU for collation, Building from source
 @subsection Support for libcurl
 
-@code{libcurl} version 7.28.0 or later can be used to support
+@code{libcurl} version 7.28.0 or later is used to support
 @code{curlGetHeaders} and the @code{"libcurl"} methods of
 @code{download.file} and @code{url}.
 
@@ -3241,7 +3241,6 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 
 @c zlib 1.2.5 is from July 2010, bzip2 1.0.6 from Sept 2010
 @c xz 5.0.3 is from May 2011
-@c libcurl 7.28.0 was released in Oct 2012
 Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 (version 1.0.6 or later: called @pkg{bzip2-libs}/@pkg{bzip2-devel} or
 @pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions),
@@ -3268,12 +3267,14 @@ Unicode properties can be checked at run-time by calling
 @noindent  
 The @option{--enable-jit} flag is supported for most common CPUs.
 
-Library @code{libcurl} (version 7.28.0 or later) is required.
-Information on @code{libcurl} is found from the @command{curl-config}
-script: if that is missing or needs to be overridden@footnote{for
-example to specify static linking with a build which has both shared and
-static libraries.} there are macros to do so described in file
-@file{config.site}.
+@c libcurl 7.28.0 was released in Oct 2012
+Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
+version greater than 7 should there ever be one: the major version has
+been 7 since 2000.}) is required.  Information on @code{libcurl} is
+found from the @command{curl-config} script: if that is missing or needs
+to be overridden@footnote{for example to specify static linking with a
+build which has both shared and static libraries.} there are macros to
+do so described in file @file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as

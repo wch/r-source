@@ -2233,7 +2233,10 @@ Note the quotes: the macros can contain spaces, e.g.@: @code{CC = "gcc
 -m64 -std=gnu99"}.  Several authors have forgotten about parallel makes:
 the static library in the subdirectory must be made before the shared
 object (@code{$(SHLIB)}) and so the latter must depend on the former.
-Others forget the need for position-independent code.
+Others forget the need@footnote{A few OSes (AIX, IRIX, Windows) do not
+need special flags for such code, but most do---although compilers will
+often generate PIC code when not asked to do so.} for
+position-independent code.
 
 We really do not recommend using @file{src/Makefile} instead of
 @file{src/Makevars}, and as the example above shows, it is not
