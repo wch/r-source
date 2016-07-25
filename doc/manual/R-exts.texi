@@ -2598,6 +2598,9 @@ using std::make_unique;
 #endif
 @end example
 
+The webpage @uref{http://en.cppreference.com/w/cpp/compiler_support}
+gives some information on which compilers are known to support recent C++
+features.
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
@@ -9479,6 +9482,35 @@ appropriate headers yourself before the @R{} headers, then try defining
 @file{R.h} if @samp{NO_C_HEADERS} is defined.)
 
 Legacy header @file{S.h} cannot be used with C++.
+
+@subsection External C++ code
+
+Quite a lot of external C++ software is header-only (e.g.@: most of the
+Boost `libraries' including all those supplied by package @CRANpkg{BH},
+and most of Armadillo as supplied by package @CRANpkg{RcppArmadillo})
+and so is compiled when an @R{} package is using it is installed.  This
+typically causes few problems.
+
+A small number of external libraries used in @R{} packages have a C++
+interface to a library of compiled code, e.g.@: packages @CRANpkg{rgdal}
+and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
+uses name-mangling which depends on the compiler, version and even C++
+defines, so requires the package C++ code to be compiled in exactly the
+same way as the library (and what that was is often undocumented).
+Examples include use of @command{g++} @emph{vs} @command{clang++} and on
+Linux, the two ABIs available for C++11 for @command{g++} with
+different defaults for GCC 4.9 and 5.x.
+
+Even fewer external libraries use C++ internally but present a C
+interface, such as @CRANpkg{rgeos}.  These require the C++ runtime
+library to be linked into the package's shared object/DLL, and this is
+best done by including a dummy C++ file in the package sources.
+
+There is a recent trend to link to the C++ interfaces offered by C
+software such as @pkg{hdf5}, @pkg{pcre} and @pkg{ImageMagick}.  Their C
+interfaces are much preferred for portability (and can be used from C++
+code).
+
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces
 @section Fortran I/O
