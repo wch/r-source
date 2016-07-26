@@ -1049,6 +1049,9 @@ version 5.x, with @option{-std=c++1y} (introduced@footnote{See
 features it supported.} in version 4.9.x) remainng as a deprecated
 synonym.
 
+`Standards' for @command{g++} starting with @samp{gnu} enable `GNU
+extensions': what those are is hard to track down.
+
 For the use of C++11 in @R{} packages see the `Writing R Extensions' manual.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
@@ -4456,7 +4459,7 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{http://sourceforge.net/p/predef/wiki/Home/} Can be
+(currently) at @uref{http://sourceforge.net/p/predef/wiki/Home/} can be
 helpful.  The @R{} sources currently use
 @example
 AIX: _AIX
@@ -5100,9 +5103,13 @@ in the @file{/Applications} folder.
 @cputype{x86}) using the (zero cost) Oracle Developer
 Studio@footnote{Oracle Solaris Studio prior to 2016, and previously Sun
 Studio.} compilers: there has been some success with
-@command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD
-Opterons or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but
-32-bit @cputype{x86} executables are the default.)
+@command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
+or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
+@cputype{x86} executables are the default.)  How these compilers
+identify@footnote{using the @option{-V} flag.} themselves is slightly
+confusing: Solaris Studio versions 12.3 and 12.4 report versions 5.12
+and 5.13, and Developer Studio 12.5 reports 5.14.  We will only consider
+12.3 (Nov 2011) and later.
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5172,7 +5179,7 @@ F77=f95
 FFLAGS=-O
 CXX="CC -library=stlport4"
 CXXFLAGS=-O
-FC=f95
+FC=$F77
 FCFLAGS=$FFLAGS
 FCLIBS="-lfai -lfui -lfsu"
 R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/lib"
@@ -5203,25 +5210,24 @@ JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
   -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
 @end example
 @noindent
-With Solaris Studio 12.[23] on Sparc, @code{FCLIBS} needs to be
+With version 12.3 on Sparc, @code{FCLIBS} needs to be
 
 @example
-FCLIBS="-lfai -lfai2 -lfsu"
+FCLIBS="-lfai -lfui -lfai2 -lfsu"
 @end example
 
 @noindent
 (and possibly other Fortran libraries, but this suffices for the
 packages currently on CRAN).
 
-@cputype{amd64} and @cputype{sparcv9} builds worked
-out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
-12.3: @file{libRblas.so} and @file{lapack.so} are generated with code
-that causes relocation errors (which is being linked in from the Fortran
-libraries).  This means that building 64-bit @R{} as a shared library
-may be impossible with Solaris Studio >= 12.2.  For a standard build the
+Builds of @cputype{amd64} and @cputype{sparcv9} stopped working at
+Solaris Studio 12.3: @file{libRblas.so} and @file{lapack.so} are
+generated with code that causes relocation errors (code which is being
+linked in from the Fortran libraries).  This means that building 64-bit
+@R{} as a shared library may be impossible.  For a standard build the
 trick seems to be to manually set @code{FLIBS} to avoid the troublesome
 libraries.  For example, on @cputype{amd64} set in @file{config.site}
-something like
+something like (for 12.3)
 
 @example
 FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
@@ -5237,7 +5243,7 @@ FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
  /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1"
 @end example
 
-By default the Solaris Studio compilers do not by default conform to the C99
+By default the Oracle compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
 @code{log}: use @option{-xlibmieee} to ensure this.
 
@@ -5245,7 +5251,7 @@ You can target specific Sparc architectures for (slightly) higher
 performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
 compilation to the current machine.
 
-Using @code{-xlibmil} in @code{CFLAGS} and @code{-xlibmil} in
+Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
 @code{FFLAGS} allows more system mathematical functions to be inlined.
 
 
@@ -5263,7 +5269,7 @@ but the use of @code{-nofstore} can be less numerically stable, and some
 packages (notably @CRANpkg{mgcv} on @cputype{x86}) failed to compile at
 higher optimization levels with version 12.3.
 
-The Solaris Studio compilers provide several implementations of the
+The Oracle compilers provide several implementations of the
 C++98 standard which select both the set of headers and a C++ runtime
 library.  These are selected by the @option{-library} flag, which as it
 is needed for both compiling and linking is best specified as part of
@@ -5276,20 +5282,12 @@ built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the option @option{-library=stlport4,Crun}
 has been needed.
 
-Several @acronym{CRAN} packages using C++ need the more liberal
-interpretation given by adding
-
-@example
-CXXFLAGS="-features=tmplrefstatic"
-@end example
-
-
 @cindex BLAS library
 @cindex LAPACK library
 
 The performance library @code{sunperf} is available for use with the
-Solaris Studio compilers.  If selected as a @acronym{BLAS}, it must also
-be selected as LAPACK @emph{via} (for Solaris Studio 12.2 and later)
+Oracle compilers.  If selected as a @acronym{BLAS}, it must also be
+selected as LAPACK @emph{via}
 
 @example
 ./configure --with-blas='-library=sunperf' --with-lapack
@@ -5297,9 +5295,9 @@ be selected as LAPACK @emph{via} (for Solaris Studio 12.2 and later)
 
 @noindent
 This has often given test failures in the past, in several different
-places.  At the time of writing it fails in @file{tests/reg-BLAS.R}, and on
-some builds, including for @cputype{amd64}, it fails in
-@code{example(eigen)}.
+places.@footnote{When last checked it failed in @file{tests/reg-BLAS.R},
+and on some builds, including for @cputype{amd64}, it failed in
+@code{example(eigen)}.}
 
 Parsing very complex @R{} expressions needs a lot of stack space when
 the Oracle compilers are used: several packages require the stack
@@ -5338,7 +5336,7 @@ CC="gcc -m32"
 CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
 F77="gfortran -m32"
 CXX="g++ -m32"
-FC="gfortran -m32"
+FC=$F77
 LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
 @end example
 
@@ -5348,10 +5346,8 @@ For an @cputype{amd64} target we used
 CC="gcc -m64"
 CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
 F77="gfortran -m64"
-FPICFLAGS=-fPIC
 CXX="g++ -m64"
 FC=$F77
-FCPICFLAGS=$FPICFLAGS
 LDFLAGS="-L/opt/csw/lib/amd64 -L/usr/local/lib/amd64"
 @end example
 
@@ -5366,10 +5362,10 @@ Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.9.2 or
 
 @example
 CC="gcc -m32"
+CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
 F77="gfortran -m32"
 CXX="g++ -m32"
 FC=$F77
-CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
 LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
 @end example
 
@@ -5377,10 +5373,10 @@ LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
 and for a 64-bit Sparc target
 @example
 CC="gcc -m64"
+CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
 F77="gfortran -m64"
 CXX="g++ -m64"
 FC=$F77
-CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
 LDFLAGS="-L/opt/csw/lib/sparcv9 -L/usr/local/lib/sparcv9"
 @end example
 
@@ -5594,8 +5590,8 @@ directory.
 
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
-@acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
-Studio compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
+@acronym{IEEE} model.  For example, using @option{-fast} on the Oracle
+compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
 @command{gcc}'s @option{-ffast-math} and @command{clang}'s
 @option{-Ofast} have given incorrect results.
 
