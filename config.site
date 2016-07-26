@@ -169,6 +169,9 @@
 ## an attempt is made to automatically detect the correct value.
 ## CXXPICFLAGS=
 
+## Option to specify the default C++ standard, e.g. -std=c++98
+## CXXSTD=
+
 ## The command to be used to load shared objects which contain object
 ## files from the C++ compiler.  This is usually the C++ compiler/linker,
 ## but the automatic choice can be overridden by means of this
