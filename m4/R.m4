@@ -4121,7 +4121,12 @@ AC_LANG_POP([C++])dnl Seems the macro does not always get this right
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX$1}" = "1"; then
-  $2STD="${$2STD} ${switch}"
+dnl for aesthetics avoid leading space
+  if test "${$2STD}" = "x";  then
+    $2STD="${switch}"
+  else
+    $2STD="${$2STD} ${switch}"
+  fi
 else
   $2=""
   $2STD=""
@@ -4151,7 +4156,7 @@ AC_ARG_VAR([SHLIB_$2LD],
            [command for linking shared objects which contain object
             files from the C++$1 compiler])
 AC_ARG_VAR([SHLIB_$2LDFLAGS], [special flags used by SHLIB_$2LD])
-])# R_CXX1XYZ
+])# R_CXX1X
 
 ## R_LIBCURL
 ## ----------------
