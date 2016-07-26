@@ -28894,7 +28894,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX11}" = "1"; then
-  if test "${CXX1XSTD}" = "x";  then
+  if test "${CXX1XSTD}"x = "x";  then
     CXX1XSTD="${switch}"
   else
     CXX1XSTD="${CXX1XSTD} ${switch}"
@@ -29419,7 +29419,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX14}" = "1"; then
-  if test "${CXX1YSTD}" = "x";  then
+  if test "${CXX1YSTD}"x = "x";  then
     CXX1YSTD="${switch}"
   else
     CXX1YSTD="${CXX1YSTD} ${switch}"

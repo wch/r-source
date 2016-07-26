@@ -4122,7 +4122,7 @@ CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX$1}" = "1"; then
 dnl for aesthetics avoid leading space
-  if test "${$2STD}" = "x";  then
+  if test "${$2STD}"x = "x";  then
     $2STD="${switch}"
   else
     $2STD="${$2STD} ${switch}"
