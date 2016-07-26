@@ -985,19 +985,23 @@ packages with C++ code via @command{make} macros defined in file
 CXX
 CXXFLAGS
 CXXPICFLAGS
+
 CXX1X
 CXX1XSTD
 CXX1XFLAGS
 CXX1XPICFLAGS
 @end example
 @noindent
-@command{configure} will attempt to set these suitably, choosing for
-@code{CXX1XSTD} a suitable flag such as @option{-std=c++11} for C++11
-support.  The inferred values can be overridden in file
-@file{config.site} or on the @command{configure} command line.
+The macros @code{CXX} etc are those used by default for C++ code: their
+values are not checked.  @command{configure} will attempt to set the
+rest suitably, choosing for @code{CXX1XSTD} a suitable flag such as
+@option{-std=c++11} for C++11 support.  The inferred values can be
+overridden in file @file{config.site} or on the @command{configure}
+command line: user-supplied values will be tested compiling some C++11
+code.
 
-It may be@footnote{This is true for earlier versions of @code{g++} such
-as 4.2.1, and also for commonly used versions of the Solaris compiler
+It may be@footnote{This is true for earlier versions of @command{g++} such
+as 4.2.1, and also for commonly-used versions of the Solaris compiler
 @code{CC}.} that there is no suitable flag for C++11 support, in which
 case a different compiler could be selected for @code{CXX1X} and its
 corresponding flags.  Some compilers@footnote{Currently only GCC 6 and
@@ -5084,9 +5088,13 @@ in the @file{/Applications} folder.
 @cputype{x86}) using the (zero cost) Oracle Developer
 Studio@footnote{Oracle Solaris Studio prior to 2016, and previously Sun
 Studio.} compilers: there has been some success with
-@command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD
-Opterons or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but
-32-bit @cputype{x86} executables are the default.)
+@command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
+or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
+@cputype{x86} executables are the default.)  How these compilers
+identify@footnote{using the @option{-V} flag.} themselves is slightly
+confusing: Solaris Studio versions 12.3 and 12.4 report versions 5.12
+and 5.13, and Developer Studio 12.5 reports 5.14.  We will only consider
+12.3 (Nov 2011) and later.
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5156,13 +5164,15 @@ F77=f95
 FFLAGS=-O
 CXX="CC -library=stlport4"
 CXXFLAGS=-O
-FC=f95
+FC=$F77
 FCFLAGS=$FFLAGS
-FCLIBS="-lfai -lfsu"
+FCLIBS="-lfai -lfui -lfsu"
 R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/lib"
 @end example
 
 @noindent
+(For version 12.5 of the compiler use @code{FCLIBS=-lfsu}.)
+
 For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
 @code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
@@ -5185,25 +5195,24 @@ JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
   -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
 @end example
 @noindent
-With Solaris Studio 12.[23] on Sparc, @code{FCLIBS} needs to be
+With version 12.3 on Sparc, @code{FCLIBS} needs to be
 
 @example
-FCLIBS="-lfai -lfai2 -lfsu"
+FCLIBS="-lfai -lfui -lfai2 -lfsu"
 @end example
 
 @noindent
 (and possibly other Fortran libraries, but this suffices for the
 packages currently on CRAN).
 
-@cputype{amd64} and @cputype{sparcv9} builds worked
-out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
-12.3: @file{libRblas.so} and @file{lapack.so} are generated with code
-that causes relocation errors (which is being linked in from the Fortran
-libraries).  This means that building 64-bit @R{} as a shared library
-may be impossible with Solaris Studio >= 12.2.  For a standard build the
+Builds of @cputype{amd64} and @cputype{sparcv9} stopped working at
+Solaris Studio 12.3: @file{libRblas.so} and @file{lapack.so} are
+generated with code that causes relocation errors (code which is being
+linked in from the Fortran libraries).  This means that building 64-bit
+@R{} as a shared library may be impossible.  For a standard build the
 trick seems to be to manually set @code{FLIBS} to avoid the troublesome
 libraries.  For example, on @cputype{amd64} set in @file{config.site}
-something like
+something like (for 12.3)
 
 @example
 FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
@@ -5219,7 +5228,7 @@ FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
  /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1"
 @end example
 
-By default the Solaris Studio compilers do not by default conform to the C99
+By default the Oracle compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
 @code{log}: use @option{-xlibmieee} to ensure this.
 
@@ -5227,7 +5236,7 @@ You can target specific Sparc architectures for (slightly) higher
 performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
 compilation to the current machine.
 
-Using @code{-xlibmil} in @code{CFLAGS} and @code{-xlibmil} in
+Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
 @code{FFLAGS} allows more system mathematical functions to be inlined.
 
 
@@ -5245,7 +5254,7 @@ but the use of @code{-nofstore} can be less numerically stable, and some
 packages (notably @CRANpkg{mgcv} on @cputype{x86}) failed to compile at
 higher optimization levels with version 12.3.
 
-The Solaris Studio compilers provide several implementations of the
+The Oracle compilers provide several implementations of the
 C++98 standard which select both the set of headers and a C++ runtime
 library.  These are selected by the @option{-library} flag, which as it
 is needed for both compiling and linking is best specified as part of
@@ -5257,14 +5266,6 @@ Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the option @option{-library=stlport4,Crun}
 has been needed.
-
-Several @acronym{CRAN} packages using C++ need the more liberal
-interpretation given by adding
-
-@example
-CXXFLAGS="-features=tmplrefstatic"
-@end example
-
 
 @cindex BLAS library
 @cindex LAPACK library
