@@ -7666,6 +7666,9 @@ else
   cat > conftest.c <<EOF
 int foo __attribute__ ((visibility ("hidden"))) = 1;
 int bar __attribute__ ((visibility ("default"))) = 1;
+#ifndef __GNUC__
+# error unsupported compiler
+#endif
 EOF
 r_cv_visibility_attribute=no
 if { ac_try='${CC-cc} -Werror -S conftest.c -o conftest.s 1>&5'
@@ -7723,8 +7726,8 @@ if test "${r_cv_prog_cc_vis}" = yes; then
     C_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-## Need to exclude Intel compilers, where this does not work.
-## The flag is documented, and is effective but also hides
+## Need to exclude Intel compilers, where this does not work correctly.
+## The flag is documented and is effective, but also hides
 ## unsatisfied references. We cannot test for GCC, as icc passes that test.
 case  "${CC}" in
   ## Intel compiler: note that -c99 may have been appended
@@ -25057,7 +25060,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25060: \"$ac_link\") >&5
+(eval echo $as_me:25063: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25132,7 +25135,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25135: \"$ac_link\") >&5
+(eval echo $as_me:25138: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
