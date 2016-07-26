@@ -12995,10 +12995,12 @@ visibility of entry points.  These are only effective when
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
 is configured and recorded in header @file{Rconfig.h} (included by
 @file{R_ext/Visibility.h}).  It is generally defined on modern
-Unix-alikes with a recent compiler, but not supported on macOS nor
-Windows.  Minimizing the visibility of symbols in a shared library will
-both speed up its loading (unlikely to be significant) and reduce the
-possibility of linking to other entry points of the same name.
+Unix-alikes with a recent compiler@footnote{It is defined by the Intel
+compilers, but also hides unsatisfied references and so cannot be used
+with @R{}.}, but not supported on macOS nor Windows.  Minimizing the
+visibility of symbols in a shared library will both speed up its loading
+(unlikely to be significant) and reduce the possibility of linking to
+other entry points of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for

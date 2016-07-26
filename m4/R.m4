@@ -3665,13 +3665,19 @@ done
 ])# R_CHECK_FUNCS
 
 ## R_GCC4_VISIBILITY
-## Sets up suitable macros for visibility attributes in gcc4/gfortran
+## Sets up suitable macros for visibility attributes in gcc/gfortran
+## Also accepted on clang (which defines __GNUC__). 
+## Intel also defines __GNUC__ but is excluded below, and
+## Solaris <= 12.4 rejected -Werror, but 12.5 did not.
 AC_DEFUN([R_GCC4_VISIBILITY],
 [AC_CACHE_CHECK([whether __attribute__((visibility())) is supported],
                 [r_cv_visibility_attribute],
 [cat > conftest.c <<EOF
 int foo __attribute__ ((visibility ("hidden"))) = 1;
 int bar __attribute__ ((visibility ("default"))) = 1;
+#ifndef __GNUC__
+# error unsupported compiler
+#endif
 EOF
 r_cv_visibility_attribute=no
 if AC_TRY_COMMAND(${CC-cc} -Werror -S conftest.c -o conftest.s 1>&AS_MESSAGE_LOG_FD); then
@@ -3698,8 +3704,8 @@ if test "${r_cv_prog_cc_vis}" = yes; then
     C_VISIBILITY="-fvisibility=hidden"
   fi
 fi
-## Need to exclude Intel compilers, where this does not work.
-## The flag is documented, and is effective but also hides
+## Need to exclude Intel compilers, where this does not work correctly.
+## The flag is documented and is effective, but also hides
 ## unsatisfied references. We cannot test for GCC, as icc passes that test.
 case  "${CC}" in
   ## Intel compiler: note that -c99 may have been appended
