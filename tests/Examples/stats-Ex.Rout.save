@@ -881,6 +881,11 @@ c    3    2    1    0    2    1    0    1    0     0
 > plot(x, pbinom(x, 100, 0.01), type = "s", ylab = "F(x)",
 +      main = "Binomial(100, 0.01) CDF")
 > 
+> ## The (limit) case  lambda = 0 :
+> stopifnot(identical(dpois(0,0), 1),
++ 	  identical(ppois(0,0), 1),
++ 	  identical(qpois(1,0), 0))
+> 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))

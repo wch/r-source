@@ -1,6 +1,6 @@
 % File src/library/stats/man/Poisson.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Poisson}
@@ -40,8 +40,8 @@ rpois(n, lambda)
 
   The length of the result is determined by \code{n} for
   \code{rpois}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -52,6 +52,9 @@ rpois(n, lambda)
   \deqn{p(x) = \frac{\lambda^x e^{-\lambda}}{x!}}{p(x) = \lambda^x exp(-\lambda)/x!}
   for \eqn{x = 0, 1, 2, \ldots} .
   The mean and variance are \eqn{E(X) = Var(X) = \lambda}.
+
+  Note that \eqn{\lambda = 0} is really a limit case (setting
+  \eqn{0^0 = 1}) resulting in a point mass at \eqn{0}, see also the example.
 
   If an element of \code{x} is not integer, the result of \code{dpois}
   is zero, with a warning.
@@ -101,5 +104,10 @@ x <- seq(-0.01, 5, 0.01)
 plot(x, ppois(x, 1), type = "s", ylab = "F(x)", main = "Poisson(1) CDF")
 plot(x, pbinom(x, 100, 0.01), type = "s", ylab = "F(x)",
      main = "Binomial(100, 0.01) CDF")
+
+## The (limit) case  lambda = 0 :
+stopifnot(identical(dpois(0,0), 1),
+	  identical(ppois(0,0), 1),
+	  identical(qpois(1,0), 0))
 }
 \keyword{distribution}
