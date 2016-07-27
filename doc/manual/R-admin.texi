@@ -4998,7 +4998,7 @@ latest Java from Oracle (currently from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
-@code{Java For macOS 2015-001} from
+@code{Java For OS X 2015-001} from
 @uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up messages
 even if you have a current version installed.
 
@@ -5177,7 +5177,8 @@ CC="cc -xc99"
 CFLAGS="-O -xlibmieee"
 F77=f95
 FFLAGS=-O
-CXX="CC -library=stlport4"
+CXX=CC
+CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
