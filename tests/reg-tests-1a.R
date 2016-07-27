@@ -226,8 +226,9 @@ stopifnot(all.equal(cov(X,X,method="spearman",use="complete"),
                     cov(X1,X1,method="spearman",use="complete")))
 
 ## DateTimeClasses
-(dls <- .leap.seconds[-1] - .leap.seconds[-22])
+(dls <- .leap.seconds[-1] - .leap.seconds[-length(.leap.seconds)])
 table(dls)
+stopifnot(sum(dls == 365) >= 11)
 ## end of moved from DateTimeClasses.Rd
 
 
