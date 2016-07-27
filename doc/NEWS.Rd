@@ -250,6 +250,10 @@
       \item Package installation into a library where the package exists
       via symbolic link now should work wherever \code{\link{Sys.readlink}()}
       works, resolving \PR{16725}.
+
+      \item \code{table()} no longer drops an \code{"NaN"} factor level,
+      and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
+      patch for \PR{16936}.% to be backported
     }
   }
 }

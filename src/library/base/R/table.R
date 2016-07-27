@@ -1,7 +1,7 @@
 #  File src/library/base/R/table.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,11 +63,10 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	if (is.null(lens)) lens <- length(a)
 	else if (length(a) != lens)
 	    stop("all arguments must have the same length")
+        fact.a <- is.factor(a)
         cat <-
-            if (is.factor(a)) {
-                if (any(is.na(levels(a)))) # Don't touch this!
+	    if (fact.a)
                     a
-                else {
                     ## The logic here is tricky because it tries to do
                     ## something sensible if both 'exclude' and
                     ## 'useNA' are set.
@@ -76,32 +75,24 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
                     ## excluded levels to missing, which is different
                     ## from the <NA> factor level. Excluded levels are
                     ## NOT tabulated, even if 'useNA' is set.
-                    if (is.null(exclude) && useNA != "no")
-                        addNA(a, ifany = (useNA == "ifany"))
-                    else {
-                        if (useNA != "no")
-                            a <- addNA(a, ifany = (useNA == "ifany"))
-                        ll <- levels(a)
-                        a <- factor(a, levels = ll[!(ll %in% exclude)],
-                               exclude = if (useNA == "no") NA)
-                    }
-                }
-            }
-            else { # NB: this excludes first, unlike the case above.
-                a <- factor(a, exclude = exclude)
-                if (useNA != "no")
-                    addNA(a, ifany = (useNA == "ifany"))
-                else
-                    a
-            }
+	    else # NB: this excludes first, unlike the case above.
+		factor(a, exclude = exclude)
+        if (useNA != "no" && !anyNA(levels(cat)))
+            cat <- addNA(cat, ifany = (useNA == "ifany"))
+        ll <- levels(cat)
+        cat <- as.integer(cat)
+        if (fact.a && !missing(exclude)) {
+            ll <- ll[used <- which(is.na(match(ll, exclude)))]
+            cat <- match(cat, used)
+        }
 
-	nl <- length(ll <- levels(cat))
+	nl <- length(ll)
 	dims <- c(dims, nl)
         if (prod(dims) > .Machine$integer.max)
             stop("attempt to make a table with >= 2^31 elements")
 	dn <- c(dn, list(ll))
-	## requiring   all(unique(as.integer(cat)) == 1L:nlevels(cat))  :
-	bin <- bin + pd * (as.integer(cat) - 1L)
+	## requiring   all(unique(cat) == 1:nl)  :
+	bin <- bin + pd * (cat - 1L)
 	pd <- pd * nl
     }
     names(dn) <- dnn
@@ -254,4 +245,4 @@ function(x, i, j, ..., drop = TRUE)
     if((ldr > 1L) || (ldr == length(dim(x))))
         class(ret) <- "table"
     ret
-}    
+}
