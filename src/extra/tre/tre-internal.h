@@ -54,6 +54,10 @@ typedef wint_t tre_cint_t;
   Solaris-sparcv9   WCHAR_MAX = INT32_MAX
   Linux amd64       WCHAR_MAX = INT32_MAX
 */
+/*
+   [U]INT32_MAX need to be declared: this is a C99 header which we assume
+ */
+#include <stdint.h>
 #if WCHAR_MAX == UINT32_MAX
 # define TRE_CHAR_MAX INT32_MAX
 #else
