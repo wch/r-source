@@ -1,6 +1,6 @@
 % File src/library/base/man/c.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{c}
@@ -28,6 +28,12 @@ c(\dots, recursive = FALSE)
   < list < expression.  Pairlists are treated as lists, but non-vector
   components (such names and calls) are treated as one-element lists
   which cannot be unlisted even if \code{recursive = TRUE}.
+
+  %% Should we say "(currently)" ?
+  Note that \code{\link{factor}}s are treated only via their
+  internal \code{\link{integer}} codes; one proposal has been to use
+\preformatted{   c.factor <- function(..., recursive=TRUE) unlist(list(...), recursive=recursive)}
+  if factor concatenation by \code{c()} should give a \code{\link{factor}}.
 
   \code{c} is sometimes used for its side effect of removing attributes
   except names, for example to turn an array into a vector.
