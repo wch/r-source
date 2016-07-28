@@ -1,9 +1,10 @@
 % File src/library/base/man/srcfile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{srcfile}
+\title{References to Source Files and Code}
 \alias{srcfile}
 \alias{srcfilecopy}
 \alias{getSrcLines}
@@ -25,9 +26,12 @@
 \alias{open.srcfilealias}
 \alias{close.srcfilealias}
 
-\title{References to source files}
 \description{
-These functions are for working with source files.
+  These functions are for working with source files and more generally
+  with \dQuote{source references} (\code{"srcref"}), i.e., references to
+  source code.  The resulting data is used for printing and source level
+  debugging, and is typically available in interactive \R sessions,
+  namely when \code{\link{options}(keep.source = TRUE)}.
 }
 \usage{
 srcfile(filename, encoding = getOption("encoding"), Enc = "unknown")
@@ -115,7 +119,7 @@ srcref(srcfile, lloc)
   method will read the associated source file to obtain the text
   corresponding to the reference.  If the \code{to} argument is given,
   it should be a second \code{srcref} that follows the first, in the
-  same file; they will be treated as one reference to the whole 
+  same file; they will be treated as one reference to the whole
   range.  The exact behaviour depends on the
   class of the source file.  If the source file inherits from
   class \code{srcfilecopy}, the lines are taken from the saved copy
@@ -150,7 +154,9 @@ srcref(srcfile, lloc)
 \code{srcref} returns a \code{srcref} object.
 }
 \seealso{
-\code{\link{getSrcFilename}} for extracting information from a source reference.
+  \code{\link{getSrcFilename}} for extracting information from a source
+  reference, or \code{\link{removeSource}} to remove it from a
+  (non-primitive) function (aka \sQuote{closure}).
 }
 \author{Duncan Murdoch}
 \examples{\donttest{ # has timestamp

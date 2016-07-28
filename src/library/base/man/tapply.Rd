@@ -1,6 +1,6 @@
 % File src/library/base/man/tapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tapply}
@@ -16,16 +16,18 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \arguments{
   \item{X}{an atomic object, typically a vector.}
-  \item{INDEX}{list of one or more factors, each of same length as
-    \code{X}.  The elements are coerced to factors by \code{\link{as.factor}}.}
+  \item{INDEX}{a \code{\link{list}} of one or more \code{\link{factor}}s,
+    each of same length as \code{X}.  The elements are coerced to
+    factors by \code{\link{as.factor}}.}
   \item{FUN}{the function to be applied, or \code{NULL}.  In the case of
     functions like \code{+}, \code{\%*\%}, etc., the function name must
     be backquoted or quoted.  If \code{FUN} is \code{NULL}, tapply
     returns a vector which can be used to subscript the multi-way array
     \code{tapply} normally produces.}
   \item{\dots}{optional arguments to \code{FUN}: the Note section.}
-  \item{simplify}{If \code{FALSE}, \code{tapply} always returns an array
-    of mode \code{"list"}.  If \code{TRUE} (the default), then if
+  \item{simplify}{logical; if \code{FALSE}, \code{tapply} always returns
+    an array of mode \code{"list"}; in other words, a \code{\link{list}}
+    with a \code{\link{dim}} attribute.  If \code{TRUE} (the default), then if
     \code{FUN} always returns a scalar, \code{tapply} returns an array
     with the mode of the scalar.}
 }

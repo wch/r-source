@@ -1,15 +1,15 @@
 % File src/library/methods/man/getMethod.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getMethod}
+\title{Get or Test for the Definition of a Method}
 \alias{getMethod}
 \alias{findMethod}
 \alias{existsMethod}
 \alias{selectMethod}
 \alias{hasMethod}
-\title{ Get or Test for the Definition of a Method }
 \description{
   Functions to look for a method corresponding to a given generic function and signature.
   The functions \code{getMethod} and \code{selectMethod} return the method; the functions
@@ -23,60 +23,57 @@
   contain a method for this function and signature.
 }
 \usage{
-getMethod(f, signature=character(), where, optional = FALSE,
-          mlist, fdef)
-
 existsMethod(f, signature = character(), where)
 
-findMethod(f, signature, where)
+  findMethod(f, signature, where)
+
+   getMethod(f, signature = character(), where, optional = FALSE, mlist, fdef)
+
+   hasMethod(f, signature = character(), where)
 
 selectMethod(f, signature, optional = FALSE, useInherited =,
              mlist = , fdef = , verbose = , doCache = )
-
-hasMethod(f, signature=character(), where)
-
 }
 \arguments{
-  \item{f}{A  generic function or the character-string name of one.}
+  \item{f}{a generic function or the character-string name of one.}
   \item{signature}{the signature of classes to match to the arguments
-    of \code{f}.  See the details below.
+    of \code{f}.  See the details below.}
+  \item{where}{the position or environment in which to look for the
+    method(s):  by default, the table of methods defined in the generic
+    function itself is used.}
 
-  }
-  \item{where}{The position or environment in which to look for the
-    method(s):  by default, the table of methods defined in the generic function itself is used.}
-
-  \item{optional}{If the selection in \code{selectMethod} does not find a valid method
-    an error is generated, unless this argument is \code{TRUE}.  In that
-    case, the value returned is \code{NULL} if no method matches.}
-  \item{mlist, fdef, useInherited, verbose, doCache}{Optional
-      arguments  to  \code{getMethod} and \code{selectMethod} for
-      internal use.  Avoid
-      these: some will work as expected and others will not, and none of them is required for normal use of the functions.
-    }
-
+  \item{optional}{if the selection in \code{selectMethod} does not find
+    a valid method an error is generated, unless \code{optional} is
+    true.  In that case, the value returned is \code{NULL} if no method
+    matches.}
+  \item{mlist, fdef, useInherited, verbose, doCache}{optional arguments
+    to  \code{getMethod} and \code{selectMethod} for internal use.  Avoid
+    these: some will work as expected and others will not, and none of
+    them is required for normal use of the functions.}
 }
 \details{
-  The \code{signature} argument specifies classes, corresponding to formal arguments of the generic function; to be precise, to the \code{signature} slot of the generic function object.
-    The argument may be a vector of strings identifying
-    classes, and may be named or not.  Names, if supplied, match the
-    names of those formal arguments included in the signature of the
-    generic.  That signature is normally all the arguments except
-    \dots.  However, generic functions can be specified with only a
-    subset of the arguments permitted, or with the signature taking
-    the arguments in a different order.
+  The \code{signature} argument specifies classes, corresponding to
+  formal arguments of the generic function; to be precise, to the
+  \code{signature} slot of the generic function object.  The argument
+  may be a vector of strings identifying classes, and may be named or
+  not.  Names, if supplied, match the names of those formal arguments
+  included in the signature of the generic.  That signature is normally
+  all the arguments except \dots.  However, generic functions can be
+  specified with only a subset of the arguments permitted, or with the
+  signature taking the arguments in a different order.
 
-    It's a good idea to name the arguments in the signature to avoid
-    confusion, if you're dealing with a generic that does something
-    special with its signature.   In any case, the elements of the
-    signature are matched to the formal signature by the same rules
-    used in matching arguments in function calls (see
-    \code{\link{match.call}}).
+  It's a good idea to name the arguments in the signature to avoid
+  confusion, if you're dealing with a generic that does something
+  special with its signature.  In any case, the elements of the
+  signature are matched to the formal signature by the same rules used
+  in matching arguments in function calls (see
+  \code{\link{match.call}}).
 
-    The strings in the signature may be class names, \code{"missing"}
-    or \code{"ANY"}.  See \link{Methods} for the meaning of these in
-    method selection.  Arguments not supplied in the signature
-    implicitly correspond to class \code{"ANY"}; in particular, giving
-    an empty signature means to look for the default method.
+  The strings in the signature may be class names, \code{"missing"} or
+  \code{"ANY"}.  See \link{Methods} for the meaning of these in method
+  selection.  Arguments not supplied in the signature implicitly
+  correspond to class \code{"ANY"}; in particular, giving an empty
+  signature means to look for the default method.
 
   A call to \code{getMethod} returns the method for a particular
   function and signature.  As with other \code{get} functions,

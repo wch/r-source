@@ -211,7 +211,7 @@ Sys.junction(from, to)
 
   \code{\link{Sys.glob}} to expand wildcards in file specifications.
 
-  \code{\link{file_test}}, \code{\link{Sys.readlink}}.
+  \code{\link{file_test}}, \code{\link{Sys.readlink}} (for \sQuote{symlink}s).
 
   \url{https://en.wikipedia.org/wiki/Hard_link} and
   \url{https://en.wikipedia.org/wiki/Symbolic_link} for the concepts of

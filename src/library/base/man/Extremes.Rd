@@ -1,16 +1,16 @@
 % File src/library/base/man/Extremes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extremes}
+\title{Maxima and Minima}
 \alias{max}
 \alias{min}
 \alias{pmax}
 \alias{pmin}
 \alias{pmax.int}
 \alias{pmin.int}
-\title{Maxima and Minima}
 \description{
   Returns the (parallel) maxima and minima of the input values.
 }
@@ -56,7 +56,8 @@ pmin.int(\dots, na.rm = FALSE)
   elements of all the arguments and so on.  Shorter inputs (of non-zero
   length) are recycled if necessary.  Attributes (see
   \code{\link{attributes}}: such as \code{\link{names}} or
-  \code{\link{dim}}) are copied from the first argument (if applicable).
+  \code{\link{dim}}) are copied from the first argument (if applicable,
+  e.g., \emph{not} for an \code{S4} object).
 
   \code{pmax.int} and \code{pmin.int} are faster internal versions only
   used when all arguments are atomic vectors and there are no classes:
