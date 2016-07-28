@@ -9488,8 +9488,8 @@ Legacy header @file{S.h} cannot be used with C++.
 Quite a lot of external C++ software is header-only (e.g.@: most of the
 Boost `libraries' including all those supplied by package @CRANpkg{BH},
 and most of Armadillo as supplied by package @CRANpkg{RcppArmadillo})
-and so is compiled when an @R{} package is using it is installed.  This
-typically causes few problems.
+and so is compiled when an @R{} package which uses it is installed.
+This causes few problems.
 
 A small number of external libraries used in @R{} packages have a C++
 interface to a library of compiled code, e.g.@: packages @CRANpkg{rgdal}
@@ -9497,9 +9497,10 @@ and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
 uses name-mangling which depends on the compiler, version and even C++
 defines, so requires the package C++ code to be compiled in exactly the
 same way as the library (and what that was is often undocumented).
-Examples include use of @command{g++} @emph{vs} @command{clang++} and on
-Linux, the two ABIs available for C++11 for @command{g++} with
-different defaults for GCC 4.9 and 5.x.
+Examples include use of @command{g++} @emph{vs} @command{clang++} or
+Solaris' @command{CC}, and the two ABIs available for C++11 in
+@command{g++} with different defaults for GCC 4.9 and 5.x in some Linux
+distributions.
 
 Even fewer external libraries use C++ internally but present a C
 interface, such as @CRANpkg{rgeos}.  These require the C++ runtime
