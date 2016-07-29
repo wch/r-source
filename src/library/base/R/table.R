@@ -38,20 +38,16 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	    nm
 	}
     }
-    if (!missing(exclude) && is.null(exclude))
-        useNA <- "always"
-
-    useNA <- match.arg(useNA)
+    useNA <- if (!missing(exclude) && is.null(exclude)) "always"
+	     else match.arg(useNA)
     args <- list(...)
     if (!length(args))
 	stop("nothing to tabulate")
     if (length(args) == 1L && is.list(args[[1L]])) {
 	args <- args[[1L]]
-	if (length(dnn) != length(args))
-	    dnn <- if (!is.null(argn <- names(args)))
-		 argn
-	    else
-		 paste(dnn[1L], seq_along(args), sep = ".")
+	if (length(dnn) != 1L) # == length(args)
+	    dnn <- if (!is.null(argn <- names(args))) argn
+		   else paste(dnn[1L], seq_along(args), sep = ".")
     }
     # 0L, 1L, etc: keep 'bin' and 'pd' integer - as long as tabulate() requires it
     bin <- 0L
@@ -64,26 +60,24 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	else if (length(a) != lens)
 	    stop("all arguments must have the same length")
         fact.a <- is.factor(a)
-        cat <-
-	    if (fact.a)
-                    a
-                    ## The logic here is tricky because it tries to do
-                    ## something sensible if both 'exclude' and
-                    ## 'useNA' are set.
-                    ##
-                    ## A non-null setting of 'exclude' sets the
-                    ## excluded levels to missing, which is different
-                    ## from the <NA> factor level. Excluded levels are
-                    ## NOT tabulated, even if 'useNA' is set.
-	    else # NB: this excludes first, unlike the case above.
-		factor(a, exclude = exclude)
-        if (useNA != "no" && !anyNA(levels(cat)))
-            cat <- addNA(cat, ifany = (useNA == "ifany"))
-        ll <- levels(cat)
-        cat <- as.integer(cat)
+        ## The logic here is tricky because it tries to do
+        ## something sensible if both 'exclude' and
+        ## 'useNA' are set.
+        ##
+        ## A non-null setting of 'exclude' sets the
+        ## excluded levels to missing, which is different
+        ## from the <NA> factor level. Excluded levels are
+        ## NOT tabulated, even if 'useNA' is set.
+
+        if (!fact.a) # NB: this excludes first, unlike the case above.
+            a <- factor(a, exclude = exclude)
+        if (useNA != "no" && !anyNA(levels(a)))
+            a <- addNA(a, ifany = (useNA == "ifany"))
+        ll <- levels(a)
+        a <- as.integer(a)
         if (fact.a && !missing(exclude)) {
-            ll <- ll[used <- which(is.na(match(ll, exclude)))]
-            cat <- match(cat, used)
+	    ll <- ll[keep <- which(is.na(match(ll, exclude)))]
+	    a <- match(a, keep)
         }
 
 	nl <- length(ll)
@@ -91,8 +85,8 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
         if (prod(dims) > .Machine$integer.max)
             stop("attempt to make a table with >= 2^31 elements")
 	dn <- c(dn, list(ll))
-	## requiring   all(unique(cat) == 1:nl)  :
-	bin <- bin + pd * (cat - 1L)
+	## requiring   all(unique(a) == 1:nl)  :
+	bin <- bin + pd * (a - 1L)
 	pd <- pd * nl
     }
     names(dn) <- dnn
