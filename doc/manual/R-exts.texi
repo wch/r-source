@@ -1500,7 +1500,7 @@ comments later on about the Windows port of @R{}.
 If your package needs some system-dependent configuration before
 installation you can include an executable (Bourne@footnote{The script
 should only assume a POSIX-compliant @command{/bin/sh} -- see
-@uref{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html}.
+@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/V3_chap02.html}.
 In particular @command{bash} extensions must not be used, and not all
 @R{} platforms have a @command{bash} command, let alone one at
 @file{/bin/bash}.  All known shells used with @R{} support the use of
@@ -2443,18 +2443,24 @@ optional addition to the `C++03' revision which was published in 2007.
 A revised standard was published in 2011 and compilers with pretty much
 complete implementations are becoming available.  C++11 added all of the
 C99 features which are not otherwise implemented in C++, and C++
-compilers commonly accept C99 extensions to C++98.  A minor update to
-C++11 (often known as C++14) was approved in August 2014.
+compilers commonly accept C99 extensions to C++98.  A minor
+update@footnote{The changes are linked from
+@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
+to C++11 (C++14) was approved in August 2014.
 
-What standard a C++ compiler aims to support can be hard to determine.
-As from version 6, @command{g++} defaults to C++14 (with GNU
-extensions): earlier versions aim to support C++03 with many extensions
-(including support for TR1).  @command{clang} with its
-native@footnote{Some distributions, notably Debian, have supplied a
-build of @command{clang} with @command{g++}'s headers and library.
-Conversely, Apple's command named @command{g++} is based on
-@command{clang} using @code{libc++}.}  @code{libc++} headers and library
-include many C++11 features, and does not support TR1.
+What standard a C++ compiler aims to support can be hard to determine:
+the value@footnote{Values @code{199711}, @code{201103L} and
+@code{201402L} are most commonly used for C++98, C++11 and C++14
+respectively.} of @code{__cplusplus} may help but some compiler use it
+to denote a standard which is partially supported and some the latest
+standard with is (almost) fully supported.  As from version 6,
+@command{g++} defaults to C++14 (with GNU extensions): earlier versions
+aim to support C++03 with many extensions (including support for TR1).
+@command{clang} with its native@footnote{Some distributions, notably
+Debian, have supplied a build of @command{clang} with @command{g++}'s
+headers and library.  Conversely, Apple's command named @command{g++} is
+based on @command{clang} using @code{libc++}.}  @code{libc++} headers
+and library include many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2463,8 +2469,9 @@ configured, it will determine whether the C++ compiler supports C++11
 and which compiler flags, if any, are required to enable C++11 support.
 For example, recent versions of @command{g++} or @command{clang++}
 accept the compiler flag @option{-std=c++11}, and earlier versions
-support a flag @option{-std=c++0x}, but the latter only provides partial
-support for the C++11 standard.
+support a flag @option{-std=c++0x}, but the latter only provided partial
+support for the C++11 standard (it later became a deprecated synonym for
+@option{-std=c++11}).
 
 In order to use C++11 code in a package, the package's @file{Makevars}
 file (or @file{Makevars.win} on Windows) should include the line
@@ -2509,14 +2516,13 @@ If C++11 support is not available then these macros are both empty; if
 it is available by default, @samp{CXX1X} defaults to @samp{CXX} and
 @samp{CXX1XSTD} is empty . Otherwise, @samp{CXX1X} defaults to the same
 value as the C++ compiler @samp{CXX} and the flag @samp{CXX1XSTD}
-defaults to @option{-std=c++11} or @option{-std=c++0x} (the latter on
-Windows).  It is possible to specify @samp{CXX1X} to be a distinct
-compiler just for C++11--using packages, e.g.@: @command{g++} on
-Solaris.  Note however that different C++ compilers (and even different
-versions of the same compiler) often differ in their ABI so their
-outputs can rarely be mixed. By setting @samp{CXX1XSTD} it is also
-possible to choose a different dialect of the standard such as
-@option{-std=gnu++11}.
+defaults to @option{-std=c++11} or similar.  It is possible to specify
+@samp{CXX1X} to be a distinct compiler just for C++11--using packages,
+e.g.@: @command{g++} on Solaris.  Note however that different C++
+compilers (and even different versions of the same compiler) often
+differ in their ABI so their outputs can rarely be mixed. By setting
+@samp{CXX1XSTD} it is also possible to choose a different dialect of the
+standard such as @option{-std=gnu++11}.
 
 As noted above, support for C++11 varies across platforms: on some
 platforms, it may be possible or necessary to select a different
@@ -2553,11 +2559,11 @@ sublibs:
 @subsection Using C++14 code
 
 Support for a C++14 has been explicitly added to @R{} from version
-3.4.0. Similar considerations to C++11 apply, except that the
-variables associated with the C++14 compiler use the prefix
-@samp{CXX1Y} instead of @samp{CXX1X} for C++11. Hence, to use C++14
-code in a package, the package's @file{Makevars}
-file (or @file{Makevars.win} on Windows) should include the line
+3.4.0. Similar considerations to C++11 apply, except that the variables
+associated with the C++14 compiler use the prefix @samp{CXX1Y} instead
+of @samp{CXX1X}. Hence to use C++14 code in a package, the package's
+@file{Makevars} file (or @file{Makevars.win} on Windows) should include
+the line
 @example
 CXX_STD = CXX14
 @end example
@@ -2586,11 +2592,13 @@ using std::make_unique;
 @noindent
 Code needing C++14 features would do better to test for their presence
 @emph{via} `SD-6 feature
-tests'@footnote{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations},
+tests'@footnote{@uref{See https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
+or @uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.},
 although that is not universally implemented at the time of writing.  If
 it were, that test could be
 
 @example
+#include <memory> // header where this is defined
 #if defined(__cpp_lib_make_unique) && (__cpp_lib_make_unique >= 201304)
 using std::make_unique;
 #else
@@ -2598,7 +2606,7 @@ using std::make_unique;
 #endif
 @end example
 
-The webpage @uref{http://en.cppreference.com/w/cpp/compiler_support}
+The webpage @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support}
 gives some information on which compilers are known to support recent C++
 features.
 
@@ -9494,13 +9502,16 @@ This causes few problems.
 A small number of external libraries used in @R{} packages have a C++
 interface to a library of compiled code, e.g.@: packages @CRANpkg{rgdal}
 and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
-uses name-mangling which depends on the compiler, version and even C++
-defines, so requires the package C++ code to be compiled in exactly the
-same way as the library (and what that was is often undocumented).
-Examples include use of @command{g++} @emph{vs} @command{clang++} or
-Solaris' @command{CC}, and the two ABIs available for C++11 in
-@command{g++} with different defaults for GCC 4.9 and 5.x in some Linux
-distributions.
+uses name-mangling and the
+ABI@footnote{@uref{https://en.wikipedia.org/wiki/Application_binary_interface}.}
+may depend on the compiler, version and even C++ defines@footnote{For
+example, @samp{_GLIBCXX_USE_CXX11_ABI} in @command{g++} 5.1 and later:
+@uref{https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html}.},
+so requires the package C++ code to be compiled in exactly the same way
+as the library (and what that was is often undocumented).  Examples
+include use of @command{g++} @emph{vs} @command{clang++} or Solaris'
+@command{CC}, and the two ABIs available for C++11 in @command{g++} with
+different defaults for GCC 4.9 and 5.x in some Linux distributions.
 
 Even fewer external libraries use C++ internally but present a C
 interface, such as @CRANpkg{rgeos}.  These require the C++ runtime
@@ -9510,7 +9521,9 @@ best done by including a dummy C++ file in the package sources.
 There is a recent trend to link to the C++ interfaces offered by C
 software such as @pkg{hdf5}, @pkg{pcre} and @pkg{ImageMagick}.  Their C
 interfaces are much preferred for portability (and can be used from C++
-code).
+code).  Also, the C++ interfaces are often optional in the software
+build or packaged separately and so users installing from package
+sources are far less likely to already have them installed.
 
 
 @node Fortran I/O, Linking to other packages, Interfacing C++ code, System and foreign language interfaces

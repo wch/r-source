@@ -496,7 +496,7 @@ monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
 @pkg{inconsolata}@footnote{Instructions on how to install the latest
 version are at
-@uref{https://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
+@uref{https://www.ctan.org/@/tex-archive/@/fonts/@/inconsolata/}.} or
 @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
@@ -1041,11 +1041,11 @@ Solaris: c++03 c++11 c++14 (from 12.5)
 @code{g++}.)  Versions 4.3.x to 4.8.x of @command{g++} accepted flag
 @option{-std=c++0x} with partial support@footnote{For when features were
 supported, see
-@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx11}.} for C++11:
+@uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx11}.} for C++11:
 this is currently still accepted as a deprecated synonym for
 @option{-std=c++11}.  Option @option{-std=c++14} was introduced in
 version 5.x, with @option{-std=c++1y} (introduced@footnote{See
-@uref{https://gcc.gnu.org/projects/cxx-status.html#cxx14} for which C++14
+@uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx14} for which C++14
 features it supported.} in version 4.9.x) remainng as a deprecated
 synonym.
 
@@ -1322,12 +1322,10 @@ build you will also need
 @itemize
 
 @item
-The Tcl/Tk support files are contained in @file{Rtools*.exe} and
-available as @file{.zip} files from
-@uref{https://www.stats.ox.ac.uk/pub/Rtools}.  Please make sure you
-install the right version: there is a 32-bit version and a 64-bit
-version.  They should be installed to @file{@var{R_HOME}}, creating
-directory @file{Tcl} there.
+The Tcl/Tk support files are contained in @file{Rtools*.exe}.  Please
+make sure you install the right version: there is a 32-bit version and a
+64-bit version.  They should be installed to @file{@var{R_HOME}},
+creating directory @file{Tcl} there.
 
 @end itemize
 
@@ -1396,7 +1394,7 @@ first used.  It is not built by default, and needs to be built (after
 
 To enable the building of these devices you need to install the static
 cairographics libraries built by Simon Urbanek at
-@uref{https://www.rforge.net/Cairo/files/cairo-current-win.tar.gz}.  Set
+@uref{https://www.rforge.net/@/Cairo/@/files/@/cairo-current-win.tar.gz}.  Set
 the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
 tarball unpacks with a top-level directory @file{src/}:
 @samp{CAIRO_HOME} needs to include that directory in its path.)
@@ -1435,7 +1433,7 @@ collation, or set the environment variable @env{R_ICU_LOCALE}.
 @code{download.file} and @code{url}.
 
 A suitable distribution can be found @emph{via}
-@uref{https://www.stats.ox.ac.uk/pub/Rtools/libs.html} and its unpacked
+@uref{https://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html} and its unpacked
 location should be specified in file @file{MkRules.local}.
 
 For secure use of e.g.@: @samp{https://} URLs Windows users may need to
@@ -1810,7 +1808,7 @@ preferences are stored, so if it fails when launched for the very first
 time, try it again (the first attempt will store some preferences).
 
 Users of @Rapp{} need to be aware of the `App Nap' feature
-(@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
+(@uref{https://developer.apple.com/@/library/@/mac/@/releasenotes/@/MacOSX/@/WhatsNewInOSX/@/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
 producing output in the console.  Here are ways to avoid it:
 
@@ -1826,7 +1824,7 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 @end example
 
 @noindent
-(see @uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html}).
+(see @uref{https://developer.apple.com/@/library/@/mac/@/releasenotes/@/MacOSX/@/WhatsNewInOSX/@/Articles/MacOSX10_9.html}).
 @end itemize
 
 Using the @code{X11} device or the X11-based versions of @code{View()}
@@ -2290,7 +2288,7 @@ system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
 framework installed from @uref{https://r.research.att.com/libs/}: the
 appropriate version at the time of writing was
-@uref{https://r.research.att.com/libs/GTK_2.24.17-X11.pkg}
+@uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified in
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
@@ -2768,7 +2766,7 @@ compatibility.
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
 information and lists can be found at
-@uref{https://msdn.microsoft.com/en-us/library/hzz3tw78(v=vs.80)}
+@uref{https://msdn.microsoft.com/@/en-us/@/library/@/hzz3tw78(v=vs.80)}
 (or if Microsoft moves it yet again, search for @samp{Windows language
 country strings}).
 
@@ -3296,7 +3294,7 @@ do so described in file @file{config.site}.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{https://github.com/libarchive/libarchive/}, as used by FreeBSD and OS
+@uref{https://github.com/@/libarchive/@/libarchive/}, as used by FreeBSD and OS
 X 10.6 and later) or @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
@@ -3396,7 +3394,7 @@ installed: Linux users will want the @code{urw-fonts} package.  On
 platforms which have it available, the @code{msttcorefonts}
 package@footnote{also known as @code{ttf-mscorefonts-installer} in the
 Debian/Ubuntu world: see also
-@uref{https://en.wikipedia.org/wiki/Core_fonts_for_the_Web}.} provides
+@uref{https://en.wikipedia.org/@/wiki/@/Core_fonts_for_the_Web}.} provides
 TrueType versions of Monotype fonts such as Arial and Times New Roman.
 Another useful set of fonts is the `liberation' TrueType fonts available
 at
@@ -3406,7 +3404,7 @@ plus a fair range of signs.  These share metrics with Arial, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
 (@uref{https://en.wikipedia.org/@/wiki/@/Liberation_fonts}).  Then there
 is the `Free UCS Outline Fonts' project
-(@uref{https://www.gnu.org/software/freefont/}) which are
+(@uref{https://www.gnu.org/@/software/@/freefont/}) which are
 OpenType/TrueType fonts based on the URW fonts but with extended Unicode
 coverage.  See the @R{} help on @code{X11} on selecting such fonts.
 
@@ -3784,7 +3782,7 @@ encouraged to read the MKL User's Guide, which is installed with the
 library, before attempting to link to MKL.  This includes a `link line
 advisor' which will suggest appropriate incantations: its use is
 recommended.  Or see
-@uref{https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor}.
+@uref{https://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor}.
 
 There are also versions of MKL for macOS and Windows, but at the time
 these were tried they did not work with the standard compilers used for
@@ -3961,7 +3959,7 @@ have that support.
 
 If you have a pure FORTRAN 77 compiler which cannot compile LAPACK it
 may be possible to use CLAPACK from
-@uref{http://www.netlib.org/clapack/} by something like
+@uref{http://www.netlib.org/@/clapack/} by something like
 @example
 -with-lapack="-lclapack -lf2c"
 @end example
@@ -4321,7 +4319,7 @@ you will need to set
 @env{FPICFLAGS} appropriately.  Also, the included LAPACK sources
 contain constructs that @command{f2c} is unlikely to be able to process,
 so you would need to use an external LAPACK library (such as CLAPACK
-from @uref{http://www.netlib.org/clapack/}).
+from @uref{http://www.netlib.org/@/clapack/}).
 
 @node Compile and load flags, Maintainer mode, Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
@@ -4459,7 +4457,7 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{http://sourceforge.net/p/predef/wiki/Home/} can be
+(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/} can be
 helpful.  The @R{} sources currently use
 @example
 AIX: _AIX
@@ -4822,13 +4820,13 @@ FCFLAGS=$F77FLAGS
 @noindent
 with @command{clang} and @command{clang++} from the `Command Line
 Tools' and the Fortran compiler from
-@uref{https://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
+@uref{https://r.research.att.com/@/libs/@/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
 not run on Core 2 Duo Macs.}
 
 Other builds of @command{gfortran} are available: see
-@uref{https://gcc.gnu.org/wiki/GFortranBinaries} and
+@uref{https://gcc.gnu.org/@/wiki/@/GFortranBinaries} and
 @uref{http://coudert.name/software.html}.  To use one of these with a
 binary distribution of @R{} you will probably need to specify the name
 or path in a personal or site @file{Makevars} file (@pxref{Customizing
@@ -4965,7 +4963,7 @@ users.  Most versions of macOS come with Aqua Tcl/Tk libraries, but these
 are not at all recent versions of Tcl/Tk (8.5.9 in El Capitan, which is
 not even the latest patched version in that series).  It is better to
 install Tcl/Tk 8.6.x from the sources or a binary distribution from
-@uref{https://www.activestate.com/activetcl/downloads}.  Configure @R{}
+@uref{https://www.activestate.com/@/activetcl/2/downloads}.  Configure @R{}
 with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
@@ -4987,7 +4985,7 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @subsection Java
 
 The situation with Java support on macOS is messy.@footnote{For more
-details see @uref{http://www.macstrategy.com/article.php?3}.}
+details see @uref{http://www.macstrategy.com/@/article.php?3}.}
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade removes one if already installed: it is intended to be installed
@@ -4995,11 +4993,11 @@ at first use.  Check if a JRE is installed by running @command{java
 -version} in a @command{Terminal} window: if Java is not installed this
 should prompt you to install it.  You can also install directly the
 latest Java from Oracle (currently from
-@uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html}).
+@uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @code{Java For OS X 2015-001} from
-@uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up messages
+@uref{https://support.apple.com/@/kb/@/DL1572}.} to suppress pop-up messages
 even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
@@ -5087,7 +5085,7 @@ by e.g.@:
 xcodebuild -target R -configuration Release
 @end example
 See also the @file{INSTALL} file in the checkout or directly at
-@uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
+@uref{https://svn.r-project.org/@/R-packages/@/trunk/@/Mac-GUI/@/INSTALL}.
 
 @Rapp{} does not need to be installed in any specific way. Building
 @Rapp{} results in the @Rapp{} bundle which appears as one @R{} icon. This
@@ -5107,8 +5105,8 @@ Studio.} compilers: there has been some success with
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
 identify@footnote{using the @option{-V} flag.} themselves is slightly
-confusing: Solaris Studio versions 12.3 and 12.4 report versions 5.12
-and 5.13, and Developer Studio 12.5 reports 5.14.  We will only consider
+confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12
+and 5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
 12.3 (Nov 2011) and later.
 
 There have been few reports on Solaris 11, with no known extra issues.
@@ -5225,10 +5223,10 @@ Builds of @cputype{amd64} and @cputype{sparcv9} stopped working at
 Solaris Studio 12.3: @file{libRblas.so} and @file{lapack.so} are
 generated with code that causes relocation errors (code which is being
 linked in from the Fortran libraries).  This means that building 64-bit
-@R{} as a shared library may be impossible.  For a standard build the
+@R{} as a shared library may be impossible.  For a standard build a
 trick seems to be to manually set @code{FLIBS} to avoid the troublesome
 libraries.  For example, on @cputype{amd64} set in @file{config.site}
-something like (for 12.3)
+something like (for 12.3: we did not find a workaround for 12.5)
 
 @example
 FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
@@ -5236,7 +5234,7 @@ FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
   /opt/solarisstudio12.3/lib/amd64/libfsu.so"
 @end example
 @noindent
-For 64-bit Sparc, set in @file{config.site} something like
+For 64-bit Sparc, set in @file{config.site} something like (for 12.3)
 @example
 FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
  -lifai -lsunimath -lfai -lfai2 -lfsumai -lfprodai -lfminlai -lfmaxlai
@@ -5277,7 +5275,7 @@ is needed for both compiling and linking is best specified as part of
 the compiler.  The examples above use @samp{stlport4}, currently the
 most modern of the options: the default (but still needed to be
 specified as it is needed for linking) is @samp{Cstd}: see
-@uref{http://www.oracle.com/technetwork/server-storage/solaris/cmp-stlport-libcstd-142559.html}.
+@uref{http://www.oracle.com/@/technetwork/@/server-storage/@/solaris/@/cmp-stlport-libcstd-142559.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the option @option{-library=stlport4,Crun}
@@ -5543,7 +5541,7 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 There have been few recent reports on FreeBSD.
 
-There is a `port' at @uref{https://www.freebsd.org/ports/math.html}, for
+There is a `port' at @uref{https://www.freebsd.org/@/ports/@/math.html}, for
 @R{} 3.3.1 at the time of writing.
 
 Use of ICU for collation and the @command{configure} option
@@ -5556,7 +5554,7 @@ Use of ICU for collation and the @command{configure} option
 Ingo Feinerer installed @R{} version 3.2.2 on OpenBSD 5.8 arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{http://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/}. (Downgrading
+@uref{http://cvsweb.openbsd.org/@/cgi-bin/@/cvsweb/@/ports/@/math/@/R/}. (Downgrading
 the @code{zlib} requirement to 1.2.3 is against the advice of the @R{}
 developers.)
 
