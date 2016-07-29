@@ -140,7 +140,7 @@ while test -n "${1}"; do
       shift;
       export R_ARCH
       . "${R_HOME}/etc${R_ARCH}/ldpaths"
-      exec sh "${R_HOME}/bin/Rcmd" @OSF_SH_BUG@ ;;
+      exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     -g|--gui)
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	gui="${2}"
@@ -258,7 +258,7 @@ fi
 
 ## Startup
 if test -z "${debugger}"; then
-  exec "${R_binary}" @R_BATCHSAVE@ ${args} @OSF_SH_BUG@
+  exec "${R_binary}" @R_BATCHSAVE@ ${args} "${@}"
 else
   ## Ideally, we would like the debugger to start R with additional
   ## ('inferior') arguments, but not all debuggers can do this.  We know
@@ -285,7 +285,7 @@ else
     echo ""
     exec ${debugger} ${debugger_args} "${R_binary}"
   else
-    exec ${debugger} ${debugger_args} "${R_binary}" ${args} @OSF_SH_BUG@
+    exec ${debugger} ${debugger_args} "${R_binary}" ${args} "${@}"
   fi
 fi
 

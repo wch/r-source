@@ -9503,7 +9503,7 @@ A small number of external libraries used in @R{} packages have a C++
 interface to a library of compiled code, e.g.@: packages @CRANpkg{rgdal}
 and @CRANpkg{rjags}.  This raises many more problems!  The C++ interface
 uses name-mangling and the
-ABI@footnote{@uref{https://en.wikipedia.org/wiki/Application_binary_interface}.}
+ABI@footnote{@uref{https://en.wikipedia.org/@/wiki/@/Application_binary_interface}.}
 may depend on the compiler, version and even C++ defines@footnote{For
 example, @samp{_GLIBCXX_USE_CXX11_ABI} in @command{g++} 5.1 and later:
 @uref{https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html}.},

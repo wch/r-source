@@ -956,40 +956,6 @@ case "${host_cpu}" in
     ## We used to add -mieee-fp here, but it seems it is really a
     ## linker flag for old Linuxen adding -lieee to a non-shared link.
     ;;
-  alpha*)
-    ## <NOTE>
-    ## * IEEE math
-    ## We really need to use @option{-ieee_with_inexact} (called
-    ## @option{-mieee-with-inexact} for GCC) for the C compiler:
-    ## @option{-ieee} (or @option{-mieee}) are not enough.
-    ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
-    ## <luke@stat.uiowa.edu>, @option{-fpe3} is what we want for the
-    ## native Fortran 77 compiler: seems that not all versions map
-    ## @option{-ieee} to @option{-fpe3}.
-    ## What about the C++ compilers?
-    if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG([-mieee-with-inexact],
-                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-with-inexact]))
-    else
-      R_PROG_CC_FLAG([-ieee_with_inexact],
-                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-ieee_with_inexact]))
-    fi
-    if test "${G77}" = yes; then
-      R_PROG_F77_FLAG([-mieee],
-                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mieee]))
-    else
-      R_PROG_F77_FLAG([-fpe3],
-                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-fpe3]))
-    fi
-    if test "${GXX}" = yes; then
-      R_PROG_CXX_FLAG([-mieee],
-                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mieee]))
-    else
-      R_PROG_CXX_FLAG([-ieee],
-                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-ieee]))
-    fi
-    ## </NOTE>
-    ;;
 esac
 
 AH_TEMPLATE([HAVE_NO_SYMBOL_UNDERSCORE],
@@ -1025,23 +991,6 @@ case "${host_os}" in
 	;;
     esac
     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
-    ;;
-  irix*)
-    ## final release in 2006
-    R_C_OPTIEEE
-    ## <NOTE>
-    ## We really should test explictly whether the Fortran and C++
-    ## compilers *need* '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
-    ## check whether the non-GNU tools *accept* the flag.
-    if test "${G77}" != yes; then
-      R_PROG_F77_FLAG([-OPT:IEEE_NaN_inf=ON],
-                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-OPT:IEEE_NaN_inf=ON]))
-    fi
-    if test "${GXX}" != yes; then
-      R_PROG_CXX_FLAG([-OPT:IEEE_NaN_inf=ON],
-                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-OPT:IEEE_NaN_inf=ON]))
-    fi
-    ## </NOTE>
     ;;
   linux*)
     case  "${CC}" in
@@ -1135,10 +1084,6 @@ case "${host_os}" in
       AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     fi
     ;;
-  osf*)
-    ## does that really still exist?
-    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    ;;  
 esac
 
 if test "${SAFE_FFLAGS+set}" != set; then
@@ -1417,13 +1362,6 @@ rm -f libconftest${DYLIB_EXT} conftest.c
       shlib_cxxldflags="-shared -fPIC"
     fi
     ;;
-  irix*)
-    cpicflags=
-    cxxpicflags=
-    fpicflags=
-    shlib_ldflags="-shared"
-    shlib_cxxldflags="-shared"
-    ;;
   linux*aout)			# GNU Linux/aout
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
@@ -1507,12 +1445,6 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         ;;
     esac
     ;;
-  osf*)
-    cpicflags=
-    cxxpicflags=
-    fpicflags=
-    shlib_ldflags="-shared"
-    ;;
   solaris*)
 ## SPARC has only an 8k global object table, 1024 entries on 64-bit,
 ## so need PIC not pic.  They are the same on other Solaris platforms.
@@ -1586,7 +1518,7 @@ R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
@@ -1598,7 +1530,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FPICFLAGS.])
@@ -1610,7 +1542,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -2548,7 +2480,7 @@ esac
 : ${FCPICFLAGS="${fcpicflags}"}
 if test -z "${FCPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       AC_MSG_WARN([I could not determine FCPICFLAGS.])
@@ -2655,19 +2587,6 @@ AC_SUBST(XTRA_INTL_CPPFLAGS)
 
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
-
-### * bug fixes
-# PR#9375 claims that sh on OSF1 is not POSIX-compliant and that is 
-# not a bug in the OS: we add a workaround for such benighted OSes
-case "${host_os}" in
-  osf*)
-    OSF_SH_BUG='"${1+@}"'
-  ;;
-  *)
-    OSF_SH_BUG='"${@}"'
-  ;;
-esac
-AC_SUBST(OSF_SH_BUG)
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
 ### since some AIX systems have zsh as sh.

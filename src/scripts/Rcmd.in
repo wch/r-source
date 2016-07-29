@@ -59,7 +59,7 @@ case "${1}" in
 esac
 shift
 
-exec "${cmd}" ${extra} @OSF_SH_BUG@
+exec "${cmd}" ${extra} "${@}"
 
 ### Local Variables: ***
 ### mode: sh ***
