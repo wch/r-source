@@ -157,8 +157,8 @@
 
 ## The command which runs the C++ compiler.  It not specified, configure
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
-## and then looks under the names 'c++', 'g++', 'gcc', 'CC', 'cxx', and
-## 'cc++' (in that order).
+## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
+## names (from autoconf).
 ## CXX=
 
 ## Options for the C++ compiler.
