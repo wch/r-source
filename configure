@@ -635,7 +635,6 @@ ac_includes_default="\
 ac_header_list=
 gt_needs=
 ac_subst_vars='LTLIBOBJS
-OSF_SH_BUG
 BUILD_LIBINTL_FALSE
 BUILD_LIBINTL_TRUE
 USE_NLS_FALSE
@@ -25092,7 +25091,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25095: \"$ac_link\") >&5
+(eval echo $as_me:25094: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25167,7 +25166,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25170: \"$ac_link\") >&5
+(eval echo $as_me:25169: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26981,388 +26980,6 @@ fi
     ## We used to add -mieee-fp here, but it seems it is really a
     ## linker flag for old Linuxen adding -lieee to a non-shared link.
     ;;
-  alpha*)
-    ## <NOTE>
-    ## * IEEE math
-    ## We really need to use @option{-ieee_with_inexact} (called
-    ## @option{-mieee-with-inexact} for GCC) for the C compiler:
-    ## @option{-ieee} (or @option{-mieee}) are not enough.
-    ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
-    ## <luke@stat.uiowa.edu>, @option{-fpe3} is what we want for the
-    ## native Fortran 77 compiler: seems that not all versions map
-    ## @option{-ieee} to @option{-fpe3}.
-    ## What about the C++ compilers?
-    if test "${GCC}" = yes; then
-      ac_safe=_mieee_with_inexact
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CC} accepts -mieee-with-inexact" >&5
-$as_echo_n "checking whether ${CC} accepts -mieee-with-inexact... " >&6; }
-if eval \${r_cv_prog_cc_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-r_save_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} -mieee-with-inexact"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  eval "r_cv_prog_cc_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_cc_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-CFLAGS="${r_save_CFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_CFLAGS}"; then
-  R_XTRA_CFLAGS="-mieee-with-inexact"
-else
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS}${separator}-mieee-with-inexact"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    else
-      ac_safe=_ieee_with_inexact
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CC} accepts -ieee_with_inexact" >&5
-$as_echo_n "checking whether ${CC} accepts -ieee_with_inexact... " >&6; }
-if eval \${r_cv_prog_cc_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-r_save_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} -ieee_with_inexact"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  eval "r_cv_prog_cc_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_cc_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-CFLAGS="${r_save_CFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_CFLAGS}"; then
-  R_XTRA_CFLAGS="-ieee_with_inexact"
-else
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS}${separator}-ieee_with_inexact"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    fi
-    if test "${G77}" = yes; then
-      ac_safe=_mieee
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${F77} accepts -mieee" >&5
-$as_echo_n "checking whether ${F77} accepts -mieee... " >&6; }
-if eval \${r_cv_prog_f77_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=f
-ac_compile='$F77 -c $FFLAGS conftest.$ac_ext >&5'
-ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_f77_compiler_gnu
-
-r_save_FFLAGS="${FFLAGS}"
-FFLAGS="${FFLAGS} -mieee"
-cat > conftest.$ac_ext <<_ACEOF
-      program main
-
-      end
-_ACEOF
-if ac_fn_f77_try_link "$LINENO"; then :
-  eval "r_cv_prog_f77_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_f77_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-FFLAGS="${r_save_FFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_f77_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_FFLAGS}"; then
-  R_XTRA_FFLAGS="-mieee"
-else
-  R_XTRA_FFLAGS="${R_XTRA_FFLAGS}${separator}-mieee"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    else
-      ac_safe=_fpe3
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${F77} accepts -fpe3" >&5
-$as_echo_n "checking whether ${F77} accepts -fpe3... " >&6; }
-if eval \${r_cv_prog_f77_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=f
-ac_compile='$F77 -c $FFLAGS conftest.$ac_ext >&5'
-ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_f77_compiler_gnu
-
-r_save_FFLAGS="${FFLAGS}"
-FFLAGS="${FFLAGS} -fpe3"
-cat > conftest.$ac_ext <<_ACEOF
-      program main
-
-      end
-_ACEOF
-if ac_fn_f77_try_link "$LINENO"; then :
-  eval "r_cv_prog_f77_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_f77_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-FFLAGS="${r_save_FFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_f77_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_FFLAGS}"; then
-  R_XTRA_FFLAGS="-fpe3"
-else
-  R_XTRA_FFLAGS="${R_XTRA_FFLAGS}${separator}-fpe3"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    fi
-    if test "${GXX}" = yes; then
-      ac_safe=_mieee
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CXX-c++} accepts -mieee" >&5
-$as_echo_n "checking whether ${CXX-c++} accepts -mieee... " >&6; }
-if eval \${r_cv_prog_cxx_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-r_save_CXXFLAGS="${CXXFLAGS}"
-CXXFLAGS="${CXXFLAGS} -mieee"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-  eval "r_cv_prog_cxx_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_cxx_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-CXXFLAGS="${r_save_CXXFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_CXXFLAGS}"; then
-  R_XTRA_CXXFLAGS="-mieee"
-else
-  R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS}${separator}-mieee"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    else
-      ac_safe=_ieee
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CXX-c++} accepts -ieee" >&5
-$as_echo_n "checking whether ${CXX-c++} accepts -ieee... " >&6; }
-if eval \${r_cv_prog_cxx_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-r_save_CXXFLAGS="${CXXFLAGS}"
-CXXFLAGS="${CXXFLAGS} -ieee"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-  eval "r_cv_prog_cxx_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_cxx_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-CXXFLAGS="${r_save_CXXFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_CXXFLAGS}"; then
-  R_XTRA_CXXFLAGS="-ieee"
-else
-  R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS}${separator}-ieee"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    fi
-    ## </NOTE>
-    ;;
 esac
 
 
@@ -27579,175 +27196,6 @@ if test "x$ac_cv_lib_dld_shl_load" = xyes; then :
 fi
 
     ;;
-  irix*)
-    ## final release in 2006
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler needs -OPT:IEEE_NaN_inf=ON" >&5
-$as_echo_n "checking whether C compiler needs -OPT:IEEE_NaN_inf=ON... " >&6; }
-if ${r_cv_c_optieee+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "$cross_compiling" = yes; then :
-  r_cv_c_optieee=no
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#include <math.h>
-#include <stdlib.h>
-#include <ieeefp.h>
-int main () {
-  double x = 0;
-  fpsetmask(0); x = x / x; exit (x != x);
-}
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_c_optieee=yes
-else
-  r_cv_c_optieee=no
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_c_optieee" >&5
-$as_echo "$r_cv_c_optieee" >&6; }
-if test "${r_cv_c_optieee}" = yes; then
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_CFLAGS}"; then
-  R_XTRA_CFLAGS="-OPT:IEEE_NaN_inf=ON"
-else
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS}${separator}-OPT:IEEE_NaN_inf=ON"
-fi
-fi
-
-    ## <NOTE>
-    ## We really should test explictly whether the Fortran and C++
-    ## compilers *need* '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
-    ## check whether the non-GNU tools *accept* the flag.
-    if test "${G77}" != yes; then
-      ac_safe=_OPT_IEEE_NaN_inf_ON
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${F77} accepts -OPT:IEEE_NaN_inf=ON" >&5
-$as_echo_n "checking whether ${F77} accepts -OPT:IEEE_NaN_inf=ON... " >&6; }
-if eval \${r_cv_prog_f77_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=f
-ac_compile='$F77 -c $FFLAGS conftest.$ac_ext >&5'
-ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_f77_compiler_gnu
-
-r_save_FFLAGS="${FFLAGS}"
-FFLAGS="${FFLAGS} -OPT:IEEE_NaN_inf=ON"
-cat > conftest.$ac_ext <<_ACEOF
-      program main
-
-      end
-_ACEOF
-if ac_fn_f77_try_link "$LINENO"; then :
-  eval "r_cv_prog_f77_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_f77_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-FFLAGS="${r_save_FFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_f77_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_FFLAGS}"; then
-  R_XTRA_FFLAGS="-OPT:IEEE_NaN_inf=ON"
-else
-  R_XTRA_FFLAGS="${R_XTRA_FFLAGS}${separator}-OPT:IEEE_NaN_inf=ON"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    fi
-    if test "${GXX}" != yes; then
-      ac_safe=_OPT_IEEE_NaN_inf_ON
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CXX-c++} accepts -OPT:IEEE_NaN_inf=ON" >&5
-$as_echo_n "checking whether ${CXX-c++} accepts -OPT:IEEE_NaN_inf=ON... " >&6; }
-if eval \${r_cv_prog_cxx_flag_${ac_safe}+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-r_save_CXXFLAGS="${CXXFLAGS}"
-CXXFLAGS="${CXXFLAGS} -OPT:IEEE_NaN_inf=ON"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-  eval "r_cv_prog_cxx_flag_${ac_safe}=yes"
-else
-  eval "r_cv_prog_cxx_flag_${ac_safe}=no"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-CXXFLAGS="${r_save_CXXFLAGS}"
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-
-fi
-
-if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_XTRA_CXXFLAGS}"; then
-  R_XTRA_CXXFLAGS="-OPT:IEEE_NaN_inf=ON"
-else
-  R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS}${separator}-OPT:IEEE_NaN_inf=ON"
-fi
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-    fi
-    ## </NOTE>
-    ;;
   linux*)
     case  "${CC}" in
       ## Intel compiler
@@ -27841,11 +27289,6 @@ fi
       $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
 
     fi
-    ;;
-  osf*)
-    ## does that really still exist?
-    $as_echo "#define HAVE_NO_SYMBOL_UNDERSCORE 1" >>confdefs.h
-
     ;;
 esac
 
@@ -28253,13 +27696,6 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
       shlib_cxxldflags="-shared -fPIC"
     fi
     ;;
-  irix*)
-    cpicflags=
-    cxxpicflags=
-    fpicflags=
-    shlib_ldflags="-shared"
-    shlib_cxxldflags="-shared"
-    ;;
   linux*aout)			# GNU Linux/aout
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
@@ -28343,12 +27779,6 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
         ;;
     esac
     ;;
-  osf*)
-    cpicflags=
-    cxxpicflags=
-    fpicflags=
-    shlib_ldflags="-shared"
-    ;;
   solaris*)
 ## SPARC has only an 8k global object table, 1024 entries on 64-bit,
 ## so need PIC not pic.  They are the same on other Solaris platforms.
@@ -28428,7 +27858,7 @@ fi
 : ${CPICFLAGS="${cpicflags}"}
 if test -z "${CPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine CPICFLAGS." >&5
@@ -28441,7 +27871,7 @@ fi
 : ${FPICFLAGS="${fpicflags}"}
 if test -z "${FPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine FPICFLAGS." >&5
@@ -28454,7 +27884,7 @@ fi
 : ${CXXPICFLAGS="${cxxpicflags}"}
 if test -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
@@ -42265,7 +41695,7 @@ esac
 : ${FCPICFLAGS="${fcpicflags}"}
 if test -z "${FCPICFLAGS}"; then
   case "${host_os}" in
-    aix*|irix*|mingw*|osf*)
+    aix*|mingw*)
       ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: I could not determine FCPICFLAGS." >&5
@@ -46594,19 +46024,6 @@ else
   BUILD_LIBINTL_TRUE='#'
   BUILD_LIBINTL_FALSE=
 fi
-
-
-### * bug fixes
-# PR#9375 claims that sh on OSF1 is not POSIX-compliant and that is
-# not a bug in the OS: we add a workaround for such benighted OSes
-case "${host_os}" in
-  osf*)
-    OSF_SH_BUG='"${1+@}"'
-  ;;
-  *)
-    OSF_SH_BUG='"${@}"'
-  ;;
-esac
 
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
