@@ -1041,13 +1041,17 @@ Solaris: c++03 c++11 c++14 (from 12.5)
 @code{g++}.)  Versions 4.3.x to 4.8.x of @command{g++} accepted flag
 @option{-std=c++0x} with partial support@footnote{For when features were
 supported, see
-@uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx11}.} for C++11:
-this is currently still accepted as a deprecated synonym for
-@option{-std=c++11}.  Option @option{-std=c++14} was introduced in
-version 5.x, with @option{-std=c++1y} (introduced@footnote{See
-@uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx14} for which C++14
-features it supported.} in version 4.9.x) remainng as a deprecated
-synonym.
+@uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx11}.} for
+C++11: this is currently still accepted as a deprecated synonym for
+@option{-std=c++11}.  (At least for versions 4.8.x it has sufficient
+support to be picked by @command{configure}.)  Option
+@option{-std=c++14} was introduced in version 5.x.
+
+@c c++1y does not pass the configure test in 4.9.3
+@c , with @option{-std=c++1y} (introduced@footnote{See
+@c @uref{https://gcc.gnu.org/@/projects/@/cxx-status.html#cxx14} for which
+@c C++14 features it supported.} in version 4.9.x) remainng as a deprecated
+@c synonym.
 
 `Standards' for @command{g++} starting with @samp{gnu} enable `GNU
 extensions': what those are is hard to track down.

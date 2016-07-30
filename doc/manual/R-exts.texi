@@ -2451,16 +2451,17 @@ to C++11 (C++14) was approved in August 2014.
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
 @code{201402L} are most commonly used for C++98, C++11 and C++14
-respectively.} of @code{__cplusplus} may help but some compiler use it
-to denote a standard which is partially supported and some the latest
-standard with is (almost) fully supported.  As from version 6,
-@command{g++} defaults to C++14 (with GNU extensions): earlier versions
-aim to support C++03 with many extensions (including support for TR1).
-@command{clang} with its native@footnote{Some distributions, notably
-Debian, have supplied a build of @command{clang} with @command{g++}'s
-headers and library.  Conversely, Apple's command named @command{g++} is
-based on @command{clang} using @code{libc++}.}  @code{libc++} headers
-and library include many C++11 features, and does not support TR1.
+respectively, but some compilers set @code{1L}.} of @code{__cplusplus}
+may help but some compiler use it to denote a standard which is
+partially supported and some the latest standard with is (almost) fully
+supported.  As from version 6, @command{g++} defaults to C++14 (with GNU
+extensions): earlier versions aim to support C++03 with many extensions
+(including support for TR1).  @command{clang} with its
+native@footnote{Some distributions, notably Debian, have supplied a
+build of @command{clang} with @command{g++}'s headers and library.
+Conversely, Apple's command named @command{g++} is based on
+@command{clang} using @code{libc++}.}  @code{libc++} headers and library
+include many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2577,7 +2578,10 @@ in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
 used systematically by setting the environment variable @env{USE_CXX1Y}.
 
 Note that code written for C++11 that emulates features of C++14 will
-not necessarily compile under a C++14 compiler, since the emulation
+not necessarily compile under a C++14 compiler@footnote{As from @R{}
+3.4.0, @command{configure} attempts to supply a C++14 compiler only if
+explicitly requested.  However, earlier versions of @R{} will use the
+default C++14 mode of @command{g++} 6 and later.}, since the emulation
 typically leads to a namespace clash. In order to ensure that the code
 also compiles under C++14, something like the following should be
 done:
@@ -2591,11 +2595,13 @@ using std::make_unique;
 
 @noindent
 Code needing C++14 features would do better to test for their presence
-@emph{via} `SD-6 feature
-tests'@footnote{@uref{See https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
-or @uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.},
-although that is not universally implemented at the time of writing.  If
-it were, that test could be
+@emph{via} `SD-6 feature tests'@footnote{@uref{See
+https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
+or
+@uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
+It seems a reasonable assumption that any compiler promising some C++14
+conformance will provide these---e.g.@: @command{g++} 4.9.x did but
+4.8.5 did not.}.  That test could be
 
 @example
 #include <memory> // header where this is defined
