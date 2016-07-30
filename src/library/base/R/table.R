@@ -71,7 +71,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 
         if (!fact.a) # NB: this excludes first, unlike the case above.
             a <- factor(a, exclude = exclude)
-        if (useNA != "no" && !anyNA(levels(a)))
+	if (useNA != "no" && (anyNA(a) || !anyNA(levels(a))))
             a <- addNA(a, ifany = (useNA == "ifany"))
         ll <- levels(a)
         a <- as.integer(a)

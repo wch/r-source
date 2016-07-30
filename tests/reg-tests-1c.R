@@ -1756,6 +1756,15 @@ for(nm in nf)  {
 stopifnot(identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L)),
 	  identical(c(tN),  structure(2:1, .Names = c("A", NA))))
 ## both failed in R <= 3.3.1
+## Part II:
+x <- factor(c(1, 2, NA), exclude = NULL) ; is.na(x)[2] <- TRUE
+x
+stopifnot(identical(x, structure(as.integer(c(1, NA, 3)),
+				 .Label = c("1", "2", NA), class = "factor")))
+(txx <- table(x, exclude = NULL))
+stopifnot(identical(txx, table(x, useNA = "always")),
+	  identical(as.vector(txx), c(1:0, 2L)))
+## wrongly gave  1 0 1  for R versions  2.8.0 <= Rver <= 3.3.1
 
 
 

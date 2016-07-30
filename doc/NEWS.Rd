@@ -164,14 +164,14 @@
       the compiler specified by \samp{CXX}, but an alternative compiler,
       options and standard can be specified by variables \samp{CXX1Y},
       \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \samp{-std=gnu++14}).
-      
+
       \item There is a new macro \code{CXXSTD} to help specify the
       standard for C++ code, e.g.\sspace{}\code{-std=c++98}.  This makes
       it easier to work with compilers which default to a later
       standard: with \code{CXX=g++6 CXXSTD=-std=c++98}
       \command{configure} will select commands for g++ 6.x which conform
       to C++11 and C++14 where specified but otherwise use C++98.
-      
+
       \item Support for the defunct IRIX and OSF/1 OSes and Alpha CPU
       has been removed.
 
@@ -259,7 +259,8 @@
 
       \item \code{table()} no longer drops an \code{"NaN"} factor level,
       and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
-      patch for \PR{16936}.% to be backported
+      patch for \PR{16936}.  Also, in the case of \code{exclude=NULL}
+      and \code{NA}s, these are tabulated correctly (again).% to be backported
     }
   }
 }
