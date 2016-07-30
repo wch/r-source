@@ -24,6 +24,9 @@
       \code{readline}: code has been added using a explicit signal
       handler to work around that (when \R is compiled against readline
       >= 6.3).  (\PR{16604})
+
+      \item \command{configure} works better with Oracle Developer
+      Studio 12.5.
     }
   }
 
@@ -48,7 +51,7 @@
       cache.
 
       \item \code{sample(NA_real_)} now works.
-      
+
       \item Packages using non-ASCII encodings in their code did not 
       install data properly on systems using different encodings.
 
