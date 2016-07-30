@@ -999,17 +999,17 @@ CXX1YFLAGS
 CXX1YPICFLAGS
 @end example
 @noindent
-The macros @code{CXX} etc are those used by default for C++ code: their
-values are not checked.  @command{configure} will attempt to set the
-rest suitably, choosing for @code{CXX1XSTD} a suitable flag such as
-@option{-std=c++11} for C++11 support. Similarly, configure will if
-possible choose for @code{CXX1YSTD} a flag@footnote{Currently this is a
-valid option for @command{g++} 5 and later and 2016 versions of the
-Intel and Solaris compilers.  For earlier versions of @command{g++} one
-could try @option{-std=c++1y}.} such as @option{-std=c++14} for C++14
-support. The inferred values can be overridden in file
-@file{config.site} or on the @command{configure} command line:
-user-supplied values will be tested compiling some C++11/14 code.
+The macros @code{CXX} etc are those used by default for C++ code.
+@command{configure} will attempt to set the rest suitably, choosing for
+@code{CXX1XSTD} a suitable flag such as @option{-std=c++11} for C++11
+support. Similarly, configure will if possible choose for
+@code{CXX1YSTD} a flag@footnote{Currently this is a valid option for
+@command{g++} 5 and later and 2016 versions of the Intel and Solaris
+compilers.  For earlier versions of @command{g++} one could try
+@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support. The
+inferred values can be overridden in file @file{config.site} or on the
+@command{configure} command line: user-supplied values will be tested
+compiling some C++11/14 code.
 
 It may be@footnote{This is true for earlier versions of @command{g++} such
 as 4.2.1, and also for commonly-used versions of the Solaris compiler

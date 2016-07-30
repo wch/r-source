@@ -174,6 +174,9 @@
       
       \item Support for the defunct IRIX and OSF/1 OSes and Alpha CPU
       has been removed.
+
+      \item \command{configure} checks if the compiler specified by
+      \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
     }
   }
 

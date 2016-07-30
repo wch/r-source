@@ -617,14 +617,23 @@ AC_ARG_VAR([PKG_CONFIG_PATH], [directories to add to pkg-config's search path])
 AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search path])
 
 AC_PROG_CC
-
 AC_PROG_GCC_TRADITIONAL
+AC_GNU_SOURCE ## needed for libintl
+
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
-## see if the user set FFLAGS: used for Intel compilers
+
+## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
 R_PROG_F77
+
+## User may have set CXXSTD but not set CXX, so add to flags pro tem
+r_save_CXXFLAGS="${CXXFLAGS}"
+CXXFLAGS="${CXXSTD} ${CXXFLAGS}"
 AC_PROG_CXX
+## check this actually compiles
+R_PROG_CXX
+CXXFLAGS="${r_save_CXXFLAGS}"
 AC_PROG_CXXCPP
 if test "${CXXCPP}" = "${CXX} -E"; then
   CXXCPP0="\$(CXX) -E"
@@ -632,8 +641,8 @@ else
   CXXCPP0=${CXXCPP}
 fi
 AC_SUBST(CXXCPP0)
+
 R_GCC4_VISIBILITY
-AC_GNU_SOURCE ## needed for libintl
 
 AC_PROG_OBJC
 ## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
@@ -1190,7 +1199,7 @@ if test -n "${XMKMF}"; then
   fi
   cxx=`"${srcdir}/tools/GETMAKEVAL" CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
-  if test -n "${cxx}" ; then
+  if test -n "${cxx}" -a  -n "${CXX}"; then
     r_cxx_cmd=`echo ${CXX} | sed "s/ .*//"`
     if test "`which ${cxx}`" = "`which ${r_cxx_cmd}`"; then
       cxxpicflags=`"${srcdir}/tools/GETMAKEVAL" CXXPICFLAGS`
@@ -1540,13 +1549,12 @@ if test -z "${FPICFLAGS}"; then
 fi
 
 : ${CXXPICFLAGS="${cxxpicflags}"}
-if test -z "${CXXPICFLAGS}"; then
+if test -n "${CXX}" -a -z "${CXXPICFLAGS}"; then
   case "${host_os}" in
     aix*|mingw*)
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS."
-      AC_MSG_WARN([${warn_cxxpicflags}])
       ;;
   esac
 fi
@@ -1574,7 +1582,7 @@ if test -z "${SHLIB_CXXLD}"; then
   fi
   R_SH_VAR_ADD(SHLIB_CXXLDFLAGS, [${shlib_cxxldflags}])
 fi
-if test -z "${SHLIB_CXXLDFLAGS}"; then
+if test  -n "${CXX}" -a -z "${SHLIB_CXXLDFLAGS}"; then
   warn_shlib_cxxldflags="I could not determine SHLIB_CXXLDFLAGS"
   AC_MSG_WARN([${warn_shlib_cxxldflags}])
 fi

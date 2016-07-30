@@ -538,6 +538,28 @@ esac
 
 ### * C++ compiler and its characteristics.
 
+## R_PROG_CXX
+## ----------
+## Check whether the C++ compiler can compile code
+AC_DEFUN([R_PROG_CXX],
+[AC_CACHE_CHECK([whether ${CXX} ${CXXFLAGS} works], [r_cv_prog_cxx],
+[AC_LANG_PUSH([C++])dnl
+AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+[#ifndef __cplusplus
+# error "not a C++ compiler"
+#endif
+#include <cmath>
+])],
+          [r_cv_prog_cxx=yes], [r_cv_prog_cxx=no])
+AC_LANG_POP([C++])dnl
+])
+if test "${r_cv_prog_cxx}" = no; then
+  CXX=
+  CXXFLAGS=
+fi
+])# R_PROG_CXX
+
+
 ## R_PROG_CXX_M
 ## ------------
 ## Check whether the C++ compiler accepts '-M' for generating
