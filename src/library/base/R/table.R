@@ -45,7 +45,7 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	stop("nothing to tabulate")
     if (length(args) == 1L && is.list(args[[1L]])) {
 	args <- args[[1L]]
-	if (length(dnn) != 1L) # == length(args)
+	if (length(dnn) != length(args))
 	    dnn <- if (!is.null(argn <- names(args))) argn
 		   else paste(dnn[1L], seq_along(args), sep = ".")
     }

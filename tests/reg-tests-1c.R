@@ -1765,6 +1765,8 @@ stopifnot(identical(x, structure(as.integer(c(1, NA, 3)),
 stopifnot(identical(txx, table(x, useNA = "always")),
 	  identical(as.vector(txx), c(1:0, 2L)))
 ## wrongly gave  1 0 1  for R versions  2.8.0 <= Rver <= 3.3.1
+stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
+		    c("Age", "Survived", "Freq"))) # was wrong for ~ 32 hours
 
 
 
