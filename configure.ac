@@ -594,7 +594,7 @@ R_PROG_PAGER
 AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar], "")
 ## TeXMF stuff
 R_PROG_TEXMF
-## Unzip && zip && gzip && bip2
+## Unzip & zip & gzip & bip2
 AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
 AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 AC_PATH_PROGS(R_GZIPCMD, [${GZIP} gzip], true)
@@ -603,13 +603,14 @@ AC_PATH_PROGS(R_BZIPCMD, [${BZIP} bzip2], "")
 R_PROG_BROWSER
 ## PDF viewer
 R_PROG_PDFVIEWER
-## Noweb
+## Noweb - used for maintainer mode only
 AC_PATH_PROG(NOTANGLE, notangle, false)
 ## javareconf needs this
 AC_PATH_PROG(REALPATH, realpath, false)
 
 
-## cairographics needs pkg-config
+## Search for cairographics needs pkg-config, 
+## helps find jpeg, libpng and libtiff.
 AC_PATH_PROG(PKGCONF, pkg-config , [], 
 	     [$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
 AC_ARG_VAR([PKGCONF], [path to pkg-config utility])
