@@ -156,17 +156,19 @@
 
       \item \command{configure} now adds a compiler switch for C++11
       code, even if the compiler supports C++11 by default.  (This
-      ensures that \command{gcc} 6.x uses C++11 mode and not its default
-      C++14 mode.)
+      ensures that \command{g++} 6.x uses C++11 mode and not its default
+      mode of C++14 with \sQuote{GNU extensions}.)
+
+      The tests for C++11 compliance are now much more comprehensive.
 
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX}, but an alternative compiler,
       options and standard can be specified by variables \samp{CXX1Y},
-      \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \samp{-std=gnu++14}).
+      \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \option{-std=gnu++14}).
 
       \item There is a new macro \code{CXXSTD} to help specify the
-      standard for C++ code, e.g.\sspace{}\code{-std=c++98}.  This makes
+      standard for C++ code, e.g.\sspace{}\option{-std=c++98}.  This makes
       it easier to work with compilers which default to a later
       standard: with \code{CXX=g++6 CXXSTD=-std=c++98}
       \command{configure} will select commands for g++ 6.x which conform

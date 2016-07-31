@@ -542,7 +542,8 @@ esac
 ## ----------
 ## Check whether the C++ compiler can compile code
 AC_DEFUN([R_PROG_CXX],
-[AC_CACHE_CHECK([whether ${CXX} ${CXXFLAGS} works], [r_cv_prog_cxx],
+[AC_CACHE_CHECK([whether ${CXX} ${CXXFLAGS} can compile C++ code],
+[r_cv_prog_cxx],
 [AC_LANG_PUSH([C++])dnl
 AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 [#ifndef __cplusplus
