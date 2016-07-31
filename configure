@@ -7743,8 +7743,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 ## check this actually compiles
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CXX} ${CXXFLAGS} works" >&5
-$as_echo_n "checking whether ${CXX} ${CXXFLAGS} works... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${CXX} ${CXXFLAGS} can compile C++ code" >&5
+$as_echo_n "checking whether ${CXX} ${CXXFLAGS} can compile C++ code... " >&6; }
 if ${r_cv_prog_cxx+:} false; then :
   $as_echo_n "(cached) " >&6
 else
