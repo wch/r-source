@@ -279,7 +279,7 @@
       
       \item The version of LAPACK included in the sources has been
       updated to 3.6.1, a bug-fix release including a speedup for the
-      non-symmmetric case of \code{eigen()}.
+      non-symmetric case of \code{eigen()}.
     }
   }
 
