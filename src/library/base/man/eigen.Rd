@@ -90,7 +90,6 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-  Springer-Verlag Lecture Notes in Computer Science \bold{6}.
 
   Wilkinson, J. H. (1965) \emph{The Algebraic Eigenvalue Problem.}
   Clarendon Press, Oxford.
