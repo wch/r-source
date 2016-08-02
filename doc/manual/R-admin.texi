@@ -997,17 +997,18 @@ values are not checked.  @command{configure} will attempt to set the
 rest suitably, choosing for @code{CXX1XSTD} a suitable flag such as
 @option{-std=c++11} for C++11 support.  The inferred values can be
 overridden in file @file{config.site} or on the @command{configure}
-command line: user-supplied values will be tested compiling some C++11
-code.
+command line: user-supplied values will be tested compiling by C++11
+code using some features added in that standard. (Later versions of @R{}
+are likely to check compliance more thoroughly.)
 
-It may be@footnote{This is true for earlier versions of @command{g++} such
-as 4.2.1, and also for commonly-used versions of the Solaris compiler
-@code{CC}.} that there is no suitable flag for C++11 support, in which
-case a different compiler could be selected for @code{CXX1X} and its
-corresponding flags.  Some compilers@footnote{Currently only GCC 6 and
-later, but this has been mooted for others.} by default assume a later
-standard than C++98 whereas the latter is assumed by some packages.  So
-users of GCC 6 might like to specify
+It may be@footnote{This is true for earlier versions of @command{g++}
+such as 4.2.1, and also for some commonly-used versions of the Solaris
+compiler @code{CC}.} that there is no suitable flag for C++11 support,
+in which case a different compiler could be selected for @code{CXX1X}
+and its corresponding flags.  Some compilers@footnote{Currently only GCC
+6 and later, but this has been mooted for others.} by default assume a
+later standard than C++98 whereas the latter is assumed by some
+packages.  So users of GCC 6 might like to specify
 @example
 CXX='g++ -std=gnu++98'
 CXX1X=g++
@@ -5091,9 +5092,9 @@ Studio.} compilers: there has been some success with
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
 identify@footnote{using the @option{-V} flag.} themselves is slightly
-confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12
-and 5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
-12.3 (Nov 2011) and later.
+confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and
+5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
+version 12.3 (Nov 2011) and later.
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5287,6 +5288,19 @@ Parsing very complex @R{} expressions needs a lot of stack space when
 the Oracle compilers are used: several packages require the stack
 increased to at least 20MB.
 
+Version 12.3 of the Oracle C++ compiler has no support for C++11.
+Versions 12.4 and 12.5 have sufficient support to pass the
+@command{configure} test for C++11 by specifying something like
+
+@example
+CXX="CC -library=stlport4"
+CXXFLAGS="-O -xlibmil -xtarget=native -nofstore"
+CXX1X=CC
+@end example
+
+@noindent
+as options @option{-library=stlport4} and @option{-std=c++11} cannot be
+used together.
 
 @menu
 * Using gcc::                   
