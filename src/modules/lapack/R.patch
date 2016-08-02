@@ -1,15 +1,3 @@
---- dlapack.f.orig	2015-12-30 12:37:21.000000000 +0000
-+++ dlapack.f	2015-12-30 12:42:25.000000000 +0000
-@@ -19077,7 +19077,8 @@
- *
- *        Compute Householder transform when N=1
- *
--         CALL DLARFG( M, A, A( MIN( 2, M ), 1 ), 1, T )
-+*  R change to stop gfortran warning
-+         CALL DLARFG( M, A(1,1), A( MIN( 2, M ), 1 ), 1, T(1,1) )
- *         
-       ELSE
- *
 --- dlamch.f.orig	2015-11-15 20:33:40.000000000 +0000
 +++ dlamch.f	2016-01-01 08:33:45.000000000 +0000
 @@ -69,7 +69,7 @@

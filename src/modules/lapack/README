@@ -94,9 +94,12 @@ iparmq.f
 DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
 DEPRECATED/dtzrqf.f
+dtrevc3.f
 
 dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
 are new in LAPACK 3.6.0 and were added in R 3.3.0.
+dtrevc3 is new in LAPACK 3.6.1 and was added in R 3.4.0.
+
 
 
 cmplx.f is the concatenation of
@@ -129,6 +132,7 @@ zungbr.f	zunghr.f	zungl2.f	zunglq.f	zungql.f
 zungqr.f	zungr2.f	zungrq.f	zungtr.f	zunm2l.f
 zunm2r.f	zunmbr.f	zunmhr.f	zunml2.f	zunmlq.f
 zunmql.f	zunmqr.f	zunmtr.f        DEPRECATED/zlahrd.f
+ztrevc3.f
 
 zlahr2 zlaqr0 zlaqr1 zlaqr2 zlaqr3 zlaqr4 zlaqr5 zlartg zpotf2 zpotrf
 zrot ztrexc
@@ -146,6 +150,9 @@ were added in R 3.1.0.
 zgetrf2 zpotrf2
 are new in LAPACK 3.6.0 and were added in R 3.3.0.
 
+ztrevc3 is new in LAPACK 3.6.1 and was added in R 3.4.0.
+
+
 zgeequ zgees zgels zgerfs zgesc2 zgesvx zgetc2 zgetri zggbak zggbal
 zgges zggev zgghrd zheevd zhgeqz zlaed0 zlaed7 zlaed8 zlaqge zlasyf
 zlatdf zlauu2 zlauum zpotri zstedc zsymv zsyr zsytf2 zsytrf zsytri
@@ -155,8 +162,7 @@ were added in R 3.3.0 for use by a CRAN package.
 
 -------------------------------------------------
 
-R.patch suppresses compilation warnings, and helps with Fortran
-array-bounds checking.
+R.patch helps with Fortran array-bounds checking.
 
 -------------------------------------------------
 
