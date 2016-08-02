@@ -14,6 +14,10 @@
       \item Convenience function \code{hasName()} has been added; it
       is intended to replace the common idiom \code{!is.null(x$name)}
       without the usually unintended partial name matching.
+      
+      \item The version of LAPACK included in the sources has been
+      updated to 3.6.1, a bug-fix release including a speedup for the
+      non-symmmetric case of \code{eigen()}.
     }
   }
 
