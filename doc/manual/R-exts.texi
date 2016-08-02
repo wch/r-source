@@ -1784,7 +1784,7 @@ example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
 When writing a @file{Makevars} file for a package you intend to
 distribute, take care to ensure that it is not specific to your
 compiler: flags such as @option{-O2 -Wall -pedantic} (and all other
-@option{-W} flags: for the Solaris compiler these are used to pass
+@option{-W} flags: for the Oracle compilers these are used to pass
 arguments to compiler phases) are all specific to GCC.
 
 Also, do not set variables such as @code{CPPFLAGS}, @code{CFLAGS} etc.:
@@ -2118,7 +2118,7 @@ dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
 can be done via environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
-Solaris Studio, Intel and Clang compilers.}  Alternatively, the
+Oracle, Intel and Clang compilers.}  Alternatively, the
 number of threads per region can be limited by the environment variable
 @env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
 better, for the regions in your code as part of their
@@ -2411,7 +2411,7 @@ accept Fortran 2003 or 2008 code: such code should still use file
 extension @file{.f90} or @file{.f95}.  For platforms using
 @command{gfortran}, you may need to include @option{-std=f2003} or
 @option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
-Fortran 95 with non-standard extensions.  The Solaris @command{f95}
+Fortran 95 with non-standard extensions.  The Oracle @command{f95}
 compiler `accepts some Fortran 2003 features'.
 
 Modern versions of Fortran support modules, whereby compiling one source
@@ -4130,7 +4130,7 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 which works in all versions of @command{make} known@footnote{GNU make,
 BSD make formerly in FreeBSD and macOS, AT&T make as implemented on
 Solaris, @command{pmake} in FreeBSD, `Distributed Make' (@code{dmake}),
-part of Solaris Studio and available in other versions.} to be used with
+part of Oracle Studio and available in other versions.} to be used with
 @R{}.
 
 If you really must require GNU make, declare it in the @file{DESCRIPTION}
@@ -4609,7 +4609,7 @@ so it is strongly recommended to check in a UTF-8 locale.
 @subsection Portable C and C++ code
 
 Writing portable C and C++ code is mainly a matter of observing the
-standards (C99, C++98 or where declared C++11) and testing that
+standards (C99, C++98 or where declared C++11/14) and testing that
 extensions (such as POSIX functions) are supported.  However, some
 common errors are worth pointing out here.  It can be helpful to look up
 functions at @uref{http://www.cplusplus.com/reference/} or
@@ -4619,8 +4619,8 @@ various standards.
 Both the compiler and OS (@emph{via} system header files, which differ
 by architecture even for nominally the same OS) affect the compilability
 of C/C++ code.  Compilers from the GCC, @command{clang}, Intel and
-Solaris Studio suites are routinely used with @R{}, and both
-@command{clang} and Solaris have more than one implementation of C++
+Oracle Studio suites are routinely used with @R{}, and both
+@command{clang} and Oracle have more than one implementation of C++
 headers and library.  The range of possibilities makes comprehensive
 empirical checking impossible, and regrettably compilers are patchy at
 best on warning about non-standard code.
@@ -4815,8 +4815,8 @@ runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
 
 For macOS, using @code{R CMD otool -L} on the package's shared object(s)
 in the @file{libs} directory will show what they depend on: watch for
-any dependencies in @file{/usr/local/lib}, notably
-@file{libgfortran.2.dylib}, @file{libgfortran.3.dylib} or
+any dependencies in @file{/usr/local/lib} or
+@file{/usr/local/gfortran/lib}, notably @file{libgfortran.?.dylib} and
 @file{libquadmath.0.dylib}.
 
 Many people (including the @acronym{CRAN} package repository) will not
@@ -4832,9 +4832,6 @@ additional software from a URL, as e.g.@: package @CRANpkg{Cairo} does.
 (For @acronym{CRAN}.)
 To negotiate with Uwe Ligges to host the additional components on
 WinBuilder, and write a @file{configure.win} file to install them.
-There used to be many examples, e.g.@: package @CRANpkg{rgdal} (however
-nowadays @acronym{CRAN} prefers to use a uniform cross-compilation approach for
-software such as GDAL).
 
 @end itemize
 
@@ -8282,7 +8279,7 @@ and detects memory access errors, uninitialized reads and memory leaks.
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Solaris Studio has @option{-C}.  This will
+@option{-fbounds-check} and Oracle Studio has @option{-C}.  This will
 give an error when the upper or lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
