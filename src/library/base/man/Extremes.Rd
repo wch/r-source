@@ -12,7 +12,13 @@
 \alias{pmax.int}
 \alias{pmin.int}
 \description{
-  Returns the (parallel) maxima and minima of the input values.
+  Returns the (regular or \bold{p}arallel) maxima and minima of the
+  input values.
+
+  \code{pmax*()} and \code{pmin*()} take one or more vectors as
+  arguments, recycle them to common length and return a single vector
+  giving the \emph{\sQuote{parallel}} maxima (or minima) of the argument
+  vectors.
 }
 \usage{
 max(\dots, na.rm = FALSE)
@@ -111,9 +117,9 @@ pmin.int(\dots, na.rm = FALSE)
   and logical (coerced to integer).  For historical reasons, \code{NULL}
   is accepted as equivalent to \code{integer(0)}.% PR#1283
 
-  \code{pmax} and \code{pmin} will also work on classed objects with
-  appropriate methods for comparison, \code{is.na} and \code{rep} (if
-  recycling of arguments is needed).
+  \code{pmax} and \code{pmin} will also work on classed S3 or S4 objects
+  with appropriate methods for comparison, \code{is.na} and \code{rep}
+  (if recycling of arguments is needed).
 }
 \seealso{
   \code{\link{range}} (\emph{both} min and max) and

@@ -137,7 +137,7 @@
       \item Speedup in \code{simplify2array()} and hence \code{sapply()} and
       \code{mapply()} (for the case of names and common length > 1),
       thanks to Suharto Anggono's \PR{17118}.
-      
+
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.
@@ -262,7 +262,11 @@
       \item \code{table()} no longer drops an \code{"NaN"} factor level,
       and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
       patch for \PR{16936}.  Also, in the case of \code{exclude=NULL}
-      and \code{NA}s, these are tabulated correctly (again).% to be backported
+      and \code{NA}s, these are tabulated correctly (again).% to be % backported
+
+      \item \code{pmax()} and \code{pmin()} now work with (more ?)
+      classed objects, such \code{"Matrix"} from the \CRANpkg{Matrix}
+      package, as documented for a long time.
     }
   }
 }
@@ -276,7 +280,7 @@
       \item Convenience function \code{hasName()} has been added; it
       is intended to replace the common idiom \code{!is.null(x$name)}
       without the usually unintended partial name matching.
-      
+
       \item The version of LAPACK included in the sources has been
       updated to 3.6.1, a bug-fix release including a speedup for the
       non-symmetric case of \code{eigen()}.

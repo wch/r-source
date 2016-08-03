@@ -641,12 +641,26 @@ An object of class "foo"
 + 	  ## all above worked in 2.7.0, however:
 + 	  isGeneric("show",  where=e4),
 + 	  hasMethods("show", where=e4), hasMethods("show", where=em),
-+ 	  ## isGeneric("dim", where=as.environment("package:Matrix"))
 + 	  identical(as.character(gg4), #gg4 has packages attr.; tools::: doesn't
 + 		    tools:::get_S4_generics_with_methods(e4))
 + 	  )
 > ## the last failed in R 2.7.0 : was not showing  "show"
-> ## TODO: use "Matrix" checks once that is >= 1.0
+> 
+> if(require("Matrix")) {
++     stopifnot(isGeneric("dim", where=as.environment("package:Matrix")),
++ 	      identical((D5. <- Diagonal(x = 5:1)), pmin(D5.)),
++ 	      identical(D5., pmax(D5.)),
++ 	      identical(D5., pmax(D5., -1)),
++ 	      identical(D5., pmin(D5., 7)),
++ 	      inherits((D5.3 <- pmin(D5.+2, 3)), "Matrix"),
++ 	      identical(as.matrix(pmin(D5.+2 , 3)),
++ 			pmin(as.matrix(D5.+2), 3)),
++ 	      identical(pmin(1, D5.), pmin(1, as.matrix(D5.))),
++ 	      ##
++ 	      TRUE)
++ }
+Loading required package: Matrix
+> 
 > 
 > ## containing "array" ("matrix", "ts", ..)
 > t. <- ts(1:10, frequency = 4, start = c(1959, 2))
