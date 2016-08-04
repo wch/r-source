@@ -1769,6 +1769,12 @@ stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
 		    c("Age", "Survived", "Freq"))) # was wrong for ~ 32 hours
 
 
+## unique.warnings() needs better duplicated():
+.tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
+stopifnot(length(uw <- unique(warnings())) == 2)
+## unique() gave only one warning in  R <= 3.3.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
