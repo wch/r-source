@@ -63,8 +63,11 @@ function (x = seq(0, 1, length.out = nrow(z)),
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1L], Hershey$typeface),
                    fontindex = pmatch(vfont[2L], Hershey$fontindex))
-    if (!is.null(labels))
+    if (!is.null(labels)) {
         labels <- as.character(labels)
+	if (drawlabels && !length(labels))
+	    stop("'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels.")
+    }
     .External.graphics(C_contour, x, y, z, levels, labels, labcex, drawlabels,
                        method, vfont, col, lty, lwd)
     if(!add) {

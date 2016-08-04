@@ -1769,6 +1769,12 @@ stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
 		    c("Age", "Survived", "Freq"))) # was wrong for ~ 32 hours
 
 
+## contour() did not check args sufficiently
+tryCatch(contour(matrix(rnorm(100), 10, 10), levels = 0, labels = numeric()),
+         error = function(e) e$message)
+## caused segfault in R 3.3.1 and earlier
+
+
 ## unique.warnings() needs better duplicated():
 .tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
 stopifnot(length(uw <- unique(warnings())) == 2)
