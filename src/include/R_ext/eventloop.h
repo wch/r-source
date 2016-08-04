@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2007 The R Core Team.
+ *  Copyright (C) 2000-2016 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,9 @@
    the R event loop (on all platforms).
 
    Not part of the API and subject to change without notice.
+
+   NB: HAVE_SYS_SELECT_H should be checked and defined before this is
+   included (or <sys/select.h> included if NO_C_HEADERS is defined).
  */
 
 #ifndef R_EXT_EVENTLOOP_H

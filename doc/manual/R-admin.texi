@@ -3215,11 +3215,12 @@ the C compilers it knows about, but you may have to set @code{CC} or
 @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
-extensions to include the POSIX functionality.  The default mode for GCC
-5.1 and later is @option{-std=gnu11}.}.  (Note that options essential to
-run the compiler even for linking, such as those to set the
-architecture, should be specified as part of @code{CC} rather than in
-@code{CFLAGS}.)
+extensions to include the POSIX functionality for @R{} itself: this does
+not apply to badly-written packages.  The default mode for GCC 5.1 and
+later is @option{-std=gnu11}, which currently includes the optional
+features @R{} needs.}.  (Note that options essential to run the
+compiler even for linking, such as those to set the architecture, should
+be specified as part of @code{CC} rather than in @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen (or use macOS) you need
 @samp{X11} installed, including its headers and client libraries. For

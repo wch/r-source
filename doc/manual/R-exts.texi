@@ -13152,7 +13152,7 @@ packages
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
 @item @file{R_ext/Visibility.h} @tab definitions controlling visibility
 @item @file{R_ext/eventloop.h} @tab for add-on front-ends and for
-packages that need to share in the @R{} event loops (on all platforms)
+packages that need to share in the @R{} event loops (not Windows)
 @end multitable
 @end quotation
 
@@ -13905,7 +13905,10 @@ the @pkg{tcltk} package.
 
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
-up and removes its handlers when its namespace is unloaded.
+up and removes its handlers when its namespace is unloaded.  Note that
+the header @file{sys/select.h} is required: users should check this
+is available and define @code{HAVE_SYS_SELECT_H} before including
+@file{R_ext/eventloop.h}.
 
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
