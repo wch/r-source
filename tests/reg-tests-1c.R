@@ -1781,6 +1781,14 @@ stopifnot(length(uw <- unique(warnings())) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
 
 
+## findInterval(x, vec)  when 'vec' is of length zero
+n0 <- numeric(); TF <- c(TRUE, FALSE)
+stopifnot(0 == unlist(lapply(TF, function(L1)
+    lapply(TF, function(L2) lapply(TF, function(L3)
+        findInterval(x=8:9, vec=n0, L1, L2, L3))))))
+## did return -1's for all.inside=TRUE  in R <= 3.3.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

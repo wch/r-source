@@ -2236,7 +2236,8 @@ SEXP attribute_hidden do_tabulate(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* .Internal(findInterval(vec, x, rightmost.closed, all.inside,  left.open))
+/* Note: R's findInterval( x , vec, ...)  has first two arguments swapped !
+ * .Internal(findInterval(vec, x, rightmost.closed, all.inside,  left.open))
  *                         xt  x    right             inside       leftOp
  * x can be a long vector but xt cannot since the result is integer
 */

@@ -338,6 +338,9 @@
 
       \item \code{unique(warnings())} works more correctly, thanks to a
       new \code{duplicated.warnings()} method.
+
+      \item \code{findInterval(x, vec=numeric(), all.inside=TRUE)} now
+      returns \code{0}s as documented.  (Reported by Bill Dunlap.)
     }
   }
 }
