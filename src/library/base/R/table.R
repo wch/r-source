@@ -71,12 +71,12 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 
         if (!fact.a) # NB: this excludes first, unlike the case above.
             a <- factor(a, exclude = exclude)
-	if (useNA != "no" && (anyNA(a) || !anyNA(levels(a))))
+	if (useNA != "no") # not needed:  && (anyNA(a) || !anyNA(levels(a))))
             a <- addNA(a, ifany = (useNA == "ifany"))
         ll <- levels(a)
         a <- as.integer(a)
         if (fact.a && !missing(exclude)) {
-	    ll <- ll[keep <- which(is.na(match(ll, exclude)))]
+	    ll <- ll[keep <- which(match(ll, exclude, nomatch=0L) == 0L)]
 	    a <- match(a, keep)
         }
 
