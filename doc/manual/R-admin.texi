@@ -1732,7 +1732,8 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.9 and later (Mavericks, Yosemite,
-El Capitan, @dots{}).
+El Capitan, Sierra, @dots{}). (It may be possible to install from the
+sources for earlier OS versions: see @ref{macOS}.)
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
@@ -4772,7 +4773,7 @@ FCFLAGS=$F77FLAGS
 The instructions here are for @cputype{x86_64} builds on 10.9
 (Mavericks) or later.  In principle@footnote{It will be necessary to
 install later versions of software such as @code{libcurl}.} @R{} can be
-built for 10.6 to 10.8 but these has not been tested recently.
+built for 10.6 to 10.8 but these have not been tested recently.
 
 To build @R{} you need Apple's `Command Line Tools': these can be
 (re-)installed by @command{xcode-select --install}.  (If you have a
