@@ -288,6 +288,9 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.6.1, a bug-fix release including a speedup for the
       non-symmetric case of \code{eigen()}.
+
+      \item Use \code{options(deparse.max.lines)} to limit the number of
+      lines recorded in .Traceback and other deparsing activities.
     }
   }
 
