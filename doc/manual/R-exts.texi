@@ -7994,7 +7994,9 @@ and macOS platforms.  See
 More thorough checks of C++ code are done if the C++ library has been
 `annotated': at the time of writing this applied to @code{std::vector}
 in @code{libc++} for use with @command{clang} and gives rise to
-@samp{container-overflow} reports.
+@samp{container-overflow}@footnote{see
+@uref{http://llvm.org/devmtg/2014-04/PDFs/LightningTalks/EuroLLVM%202014%20--%20container%20overflow.pdf}
+reports.
 
 It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address} and compiling with @code{-fno-omit-frame-pointer}

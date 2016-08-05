@@ -3209,18 +3209,19 @@ FORTRAN}).  Your C compiler should be
 @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
 that C11 compilers need not be C99-compliant: @R{} requires support for
 @code{double complex} and variable-length arrays which are optional in
-C11 but is mandatory in C99.}  @R{} tries to choose suitable flags for
-the C compilers it knows about, but you may have to set @code{CC} or
-@code{CFLAGS} suitably.  For many versions of @command{gcc} with
-@code{glibc} this means including
+C11 but is mandatory in C99.}  @R{} tries to choose suitable
+flags@footnote{Examples are @option{-std=gnu99}, @option{-std=c99} and
+@option{-c99}.} for the C compilers it knows about, but you may have to
+set @code{CC} or @code{CFLAGS} suitably.  For versions of @command{gcc}
+prior to 5.1 with @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality for @R{} itself: this does
 not apply to badly-written packages.  The default mode for GCC 5.1 and
 later is @option{-std=gnu11}, which currently includes the optional
-features @R{} needs.}.  (Note that options essential to run the
-compiler even for linking, such as those to set the architecture, should
-be specified as part of @code{CC} rather than in @code{CFLAGS}.)
+features @R{} needs.}.  (Note that options essential to run the compiler
+even for linking, such as those to set the architecture, should be
+specified as part of @code{CC} rather than in @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen (or use macOS) you need
 @samp{X11} installed, including its headers and client libraries. For
