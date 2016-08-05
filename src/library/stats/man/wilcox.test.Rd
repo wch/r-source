@@ -1,14 +1,14 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
+\title{Wilcoxon Rank Sum and Signed Rank Tests}
 \alias{wilcox.test}
 \alias{wilcox.test.default}
 \alias{wilcox.test.formula}
 \concept{Mann-Whitney Test}
-\title{Wilcoxon Rank Sum and Signed Rank Tests}
 \description{
   Performs one- and two-sample Wilcoxon tests on vectors of data; the
   latter is also known as \sQuote{Mann-Whitney} test.
@@ -102,6 +102,12 @@ wilcox.test(x, \dots)
   With small samples it may not be possible to achieve very high
   confidence interval coverages. If this happens a warning will be given
   and an interval with lower coverage will be substituted.
+
+  When \code{x} (and \code{y} if applicable) are valid, the function now
+  always returns, also in the \code{conf.int = TRUE} case when a
+  confidence interval cannot be computed, in which case the interval
+  boundaries and sometimes the \code{estimate} now contain
+  \code{\link{NaN}}.
 }
 \value{
   A list with class \code{"htest"} containing the following components:

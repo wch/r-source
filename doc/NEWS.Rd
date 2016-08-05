@@ -265,8 +265,12 @@
       and \code{NA}s, these are tabulated correctly (again).% to be % backported
 
       \item \code{pmax()} and \code{pmin()} now work with (more ?)
-      classed objects, such \code{"Matrix"} from the \CRANpkg{Matrix}
+      classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
       package, as documented for a long time.
+
+      \item \code{wilcox.test(x, conf.int=TRUE)} no longer errors out in
+      cases where the confidence interval is not available, such as for
+      \code{x = 0:2}.
     }
   }
 }

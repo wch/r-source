@@ -1,7 +1,7 @@
 #  File src/library/stats/R/wilcox.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -147,89 +147,115 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## Algorithm not published, thus better documented here.
                 x <- x + mu
                 alpha <- 1 - conf.level
-                ## These are sample based limits for the median
-                ## [They don't work if alpha is too high]
-                mumin <- min(x)
-                mumax <- max(x)
-                ## wdiff(d, zq) returns the absolute difference between
-                ## the asymptotic Wilcoxon statistic of x - mu - d and
-                ## the quantile zq.
-                wdiff <- function(d, zq) {
-                    xd <- x - d
-                    xd <- xd[xd != 0]
-                    nx <- length(xd)
-                    dr <- rank(abs(xd))
-		    zd <- sum(dr[xd > 0]) - nx * (nx + 1)/4
-		    NTIES.CI <- table(dr)
-		    SIGMA.CI <- sqrt(nx * (nx + 1) * (2 * nx + 1) / 24
-				     - sum(NTIES.CI^3 - NTIES.CI) / 48)
-                    if (SIGMA.CI == 0)
-                        stop("cannot compute confidence interval when all observations are tied", call.=FALSE)
-		    CORRECTION.CI <-
-			if(correct) {
-                            switch(alternative,
-                                   "two.sided" = sign(zd) * 0.5,
-                                   "greater" = 0.5,
-                                   "less" = -0.5)
-			} else 0
-		    (zd - CORRECTION.CI) / SIGMA.CI - zq
-                }
-                ## Here we optimize the function wdiff in d over the set
-                ## c(mumin, mumax).
-                ## This returns a value from c(mumin, mumax) for which
-                ## the asymptotic Wilcoxon statistic is equal to the
-                ## quantile zq.  This means that the statistic is not
-                ## within the critical region, and that implies that d
-                ## is a confidence limit for the median.
-                ##
-                ## As in the exact case, interchange quantiles.
-                cint <- switch(alternative, "two.sided" = {
-                  repeat {
-                      mindiff <- wdiff(mumin,zq = qnorm(alpha/2, lower.tail = FALSE))
-                      maxdiff <- wdiff(mumax,zq = qnorm(alpha/2))
-                      if(mindiff < 0 || maxdiff > 0)  alpha <- alpha*2  else break
-                  }
-                  if(1 - conf.level < alpha*0.75) {
-                    conf.level <- 1 - alpha
-                    warning("requested conf.level not achievable")
-                  }
-                  l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                               zq=qnorm(alpha/2, lower.tail=FALSE))$root
-                  u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                               zq = qnorm(alpha/2))$root
-                  c(l, u)
-                }, "greater" = {
-                  repeat {
-                      mindiff <- wdiff(mumin, zq = qnorm(alpha, lower.tail = FALSE))
-                      if(mindiff < 0)  alpha <- alpha*2  else break
-                  }
-                  if(1 - conf.level < alpha*0.75) {
-                    conf.level <- 1 - alpha
-                    warning("requested conf.level not achievable")
-                  }
-                  l <- uniroot(wdiff, c(mumin, mumax), tol = 1e-4,
-                               zq = qnorm(alpha, lower.tail = FALSE))$root
-                  c(l, +Inf)
-                }, "less" = {
-                  repeat {
-                      maxdiff <- wdiff(mumax, zq = qnorm(alpha))
-                      if(maxdiff > 0)  alpha <- alpha * 2  else break
-                  }
-                  if (1 - conf.level < alpha*0.75) {
-                    conf.level <- 1 - alpha
-                    warning("requested conf.level not achievable")
-                  }
-                  u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                               zq = qnorm(alpha))$root
-                  c(-Inf, u)
-                })
-                attr(cint, "conf.level") <- conf.level
-		correct <- FALSE # no continuity correction for estimate
-		ESTIMATE <- c("(pseudo)median" =
-			      uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-				      zq = 0)$root)
-            }
+		if(n > 0) {
+		    ## These are sample based limits for the median
+		    ## [They don't work if alpha is too high]
+		    mumin <- min(x)
+		    mumax <- max(x)
+		    ## wdiff(d, zq) returns the absolute difference between
+		    ## the asymptotic Wilcoxon statistic of x - mu - d and
+		    ## the quantile zq.
+                    W <- function(d) { ## also fn(x, correct, alternative)
+			xd <- x - d
+			xd <- xd[xd != 0]
+			nx <- length(xd)
+			dr <- rank(abs(xd))
+			zd <- sum(dr[xd > 0]) - nx * (nx + 1)/4
+			NTIES.CI <- table(dr)
+			SIGMA.CI <- sqrt(nx * (nx + 1) * (2 * nx + 1) / 24
+					 - sum(NTIES.CI^3 - NTIES.CI) / 48)
+			if (SIGMA.CI == 0)
+			    warning(
+			"cannot compute confidence interval when all observations are zero or tied",
+				    call.=FALSE)
+			CORRECTION.CI <-
+			    if(correct) {
+				switch(alternative,
+				       "two.sided" = sign(zd) * 0.5,
+				       "greater" = 0.5,
+				       "less" = -0.5)
+			    } else 0
+			(zd - CORRECTION.CI) / SIGMA.CI
+		    }
+		    Wmumin <- W(mumin)
+		    Wmumax <- if(!is.finite(Wmumin)) NA else W(mumax) # if(): warn only once
+		}
+		if(n == 0 || !is.finite(Wmumax)) { # incl. "all zero / ties" warning above
+		    cint <- structure(c(if(alternative == "less"   ) -Inf else NaN,
+					if(alternative == "greater") +Inf else NaN),
+				      conf.level = 0)
+		    ESTIMATE <- if(n > 0) c(midrange = (mumin+mumax)/2) else NaN
+		} else { # (Wmumin, Wmumax) are finite
+                    wdiff <- function(d, zq) W(d) - zq
+                    ## Here we optimize the function wdiff in d over the set
+                    ## c(mumin, mumax).
+                    ## This returns a value from c(mumin, mumax) for which
+                    ## the asymptotic Wilcoxon statistic is equal to the
+                    ## quantile zq.  This means that the statistic is not
+                    ## within the critical region, and that implies that d
+                    ## is a confidence limit for the median.
+                    ##
+                    ## As in the exact case, interchange quantiles.
+                    root <- function(zq) {
+                        uniroot(wdiff, lower = mumin, upper = mumax,
+                                f.lower = Wmumin - zq, f.upper = Wmumax - zq,
+                                tol = 1e-4, zq = zq)$root
+                    }
 
+		    cint <- switch(alternative, "two.sided" = {
+			repeat { ## FIXME: no need to loop for finding boundary alpha !!
+			    mindiff <- Wmumin - qnorm(alpha/2, lower.tail = FALSE)
+			    maxdiff <- Wmumax - qnorm(alpha/2)
+			    if(mindiff < 0 || maxdiff > 0)  alpha <- alpha*2  else break
+			}
+			if (alpha >= 1 || 1 - conf.level < alpha*0.75) {
+			    conf.level <- 1 - pmin(1, alpha)
+			    warning("requested conf.level not achievable")
+			}
+			if(alpha < 1) {
+			    l <- root(zq = qnorm(alpha/2, lower.tail = FALSE))
+			    u <- root(zq = qnorm(alpha/2))
+			    c(l, u)
+			} else { ## alpha >= 1
+			    rep(median(x), 2)
+			}
+		    }, "greater" = {
+			repeat { ## FIXME: no need to loop for finding boundary alpha !!
+			    mindiff <- Wmumin - qnorm(alpha, lower.tail = FALSE)
+			    if(mindiff < 0)  alpha <- alpha*2  else break
+			}
+			if (alpha >= 1 || 1 - conf.level < alpha*0.75) {
+			    conf.level <- 1 - pmin(1, alpha)
+			    warning("requested conf.level not achievable")
+			}
+			l <- if(alpha < 1)
+				 root(zq = qnorm(alpha, lower.tail = FALSE))
+			     else   ## alpha >= 1
+				 median(x)
+			c(l, +Inf)
+
+		    }, "less" = {
+			repeat { ## FIXME: no need to loop for finding boundary alpha !!
+			    maxdiff <- Wmumax - qnorm(alpha/2)
+			    if(maxdiff > 0)  alpha <- alpha * 2  else break
+			}
+			if (alpha >= 1 || 1 - conf.level < alpha*0.75) {
+			    conf.level <- 1 - pmin(1, alpha)
+			    warning("requested conf.level not achievable")
+			}
+			u <- if(alpha < 1)
+				 root(zq = qnorm(alpha))
+			     else
+				 median(x)
+			c(-Inf, u)
+		    })
+		    attr(cint, "conf.level") <- conf.level
+		    correct <- FALSE # for W(): no continuity correction for estimate
+		    ESTIMATE <- c("(pseudo)median" =
+				  uniroot(W, lower = mumin, upper = mumax,
+					  tol = 1e-4)$root)
+                } # regular (Wmumin, Wmumax)
+            } # end{conf.int}
             if(exact && TIES) {
                 warning("cannot compute exact p-value with ties")
                 if(conf.int)
@@ -303,7 +329,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ESTIMATE <- c("difference in location" = median(diffs))
             }
         }
-        else {
+        else { ## not exact, maybe ties or zeroes
             NTIES <- table(r)
             z <- STATISTIC - n.x * n.y / 2
             SIGMA <- sqrt((n.x * n.y / 12) *
@@ -333,11 +359,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 alpha <- 1 - conf.level
                 mumin <- min(x) - max(y)
                 mumax <- max(x) - min(y)
-                wdiff <- function(d, zq) {
+                W <- function(d) { ## also fn (x, y, n.x, n.y, correct, alternative)
                     dr <- rank(c(x - d, y))
                     NTIES.CI <- table(dr)
-                    dz <- (sum(dr[seq_along(x)])
-                           - n.x * (n.x + 1) / 2 - n.x * n.y / 2)
+                    dz <- sum(dr[seq_along(x)]) - n.x * (n.x + 1) / 2 - n.x * n.y / 2
 		    CORRECTION.CI <-
 			if(correct) {
                             switch(alternative,
@@ -350,17 +375,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                       - sum(NTIES.CI^3 - NTIES.CI)
                                       / ((n.x + n.y) * (n.x + n.y - 1))))
                     if (SIGMA.CI == 0)
-                        stop("cannot compute confidence interval when all observations are tied", call.=FALSE)
-                    (dz - CORRECTION.CI) / SIGMA.CI - zq
+			warning(
+			"cannot compute confidence interval when all observations are tied",
+                                call.=FALSE)
+                    (dz - CORRECTION.CI) / SIGMA.CI
                 }
+                wdiff <- function(d, zq) W(d) - zq
+                Wmumin <- W(mumin)
+                Wmumax <- W(mumax)
                 root <- function(zq) {
                     ## in extreme cases we need to return endpoints,
                     ## e.g.  wilcox.test(1, 2:60, conf.int=TRUE)
-                    f.lower <- wdiff(mumin, zq)
+                    f.lower <- Wmumin - zq
                     if(f.lower <= 0) return(mumin)
-                    f.upper <- wdiff(mumax, zq)
+                    f.upper <- Wmumax - zq
                     if(f.upper >= 0) return(mumax)
-                    uniroot(wdiff, c(mumin, mumax),
+                    uniroot(wdiff, lower=mumin, upper=mumax,
                             f.lower = f.lower, f.upper = f.upper,
                             tol = 1e-4, zq = zq)$root
                 }
@@ -379,10 +409,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                    c(-Inf, u)
                                })
                 attr(cint, "conf.level") <- conf.level
-		correct <- FALSE # no continuity correction for estimate
+		correct <- FALSE # for W(): no continuity correction for estimate
 		ESTIMATE <- c("difference in location" =
-			      uniroot(wdiff, c(mumin, mumax), tol = 1e-4,
-				      zq = 0)$root)
+			      uniroot(W, lower=mumin, upper=mumax,
+				      tol = 1e-4)$root)
             }
 
             if(exact && TIES) {
