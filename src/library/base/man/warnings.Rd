@@ -33,6 +33,11 @@ warnings(\dots)
   \code{warnings()} is used.  In essence this is if \code{options(warn =
     0)} and \code{warning} has been called at least once.
 
+  Note that the \code{\link{length}(last.warning)} is maximally
+  \code{\link{getOption}("nwarnings")} (at the time the warnings are
+  generated) which is \code{50} by default.  To increase, use something
+  like \preformatted{  options(nwarnings = 10000)  }
+
   It is possible that \code{last.warning} refers to the last recorded
   warning and not to the last warning, for example if \code{options(warn)} has
   been changed or if a catastrophic error occurred.
