@@ -38,9 +38,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
    \code{spar = c(lambda = *)}.}
  \item{cv}{ordinary leave-one-out (\code{TRUE}) or \sQuote{generalized} cross-validation
    (GCV) when \code{FALSE}; is used for smoothing parameter computation
-   only when \code{df} is not specified; it is used however
-   to determine \code{cv.crit} in the result.  Setting it to \code{NA}
-   for speedup skips the evaluation of leverages and any score.}
+   only when both \code{spar} and \code{df} are not specified; it is
+   used however to determine \code{cv.crit} in the result.  Setting it
+   to \code{NA} for speedup skips the evaluation of leverages and any
+   score.}
  \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used as
    knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
@@ -182,7 +183,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
     on \code{cv}.  The CV score is often called \dQuote{PRESS} (and
     labeled on \code{\link{print}()}), for \sQuote{\bold{PRE}diction
       \bold{S}um of \bold{S}quares}.}
-  \item{pen.crit}{penalized criterion}
+  \item{pen.crit}{the penalized criterion, a non-negative number; simply
+    the (weighted) residual sum of squares (RSS), \code{ sum(.$w * residuals(.)^2) }.}
   \item{crit}{the criterion value minimized in the underlying
     \code{.Fortran} routine \file{sslvrg}.  When \code{df} has been specified,
     the criterion is \eqn{3 + (tr(S_\lambda) - df)^2}{3 + (tr(S[lambda]) - df)^2},
@@ -240,23 +242,21 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
 }
 \examples{
 require(graphics)
-
-attach(cars)
-plot(speed, dist, main = "data(cars)  &  smoothing splines")
-cars.spl <- smooth.spline(speed, dist)
-(cars.spl)
+plot(dist ~ speed, data = cars, main = "data(cars)  &  smoothing splines")
+cars.spl <- with(cars, smooth.spline(speed, dist))
+cars.spl
 ## This example has duplicate points, so avoid cv = TRUE
 \dontshow{
-  stopifnot(cars.spl $ w == table(speed)) # weights = multiplicities
+  stopifnot(cars.spl $ w == table(cars$speed)) # weights = multiplicities
   utils::str(cars.spl, digits = 5, vec.len = 6)
   cars.spl$fit
 }
 lines(cars.spl, col = "blue")
-lines(smooth.spline(speed, dist, df = 10), lty = 2, col = "red")
+ss10 <- smooth.spline(cars[,"speed"], cars[,"dist"], df = 10)
+lines(ss10, lty = 2, col = "red")
 legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
                "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
        bg = 'bisque')
-detach() # cars
 
 
 ## Residual (Tukey Anscombe) plot:

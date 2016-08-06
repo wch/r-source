@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-07-30 r71012) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-08-05 r71038) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -15425,11 +15425,9 @@ S Tukey smoother resulting from  smooth(x = x3R, kind = "S")
 > ### ** Examples
 > 
 > require(graphics)
-> 
-> attach(cars)
-> plot(speed, dist, main = "data(cars)  &  smoothing splines")
-> cars.spl <- smooth.spline(speed, dist)
-> (cars.spl)
+> plot(dist ~ speed, data = cars, main = "data(cars)  &  smoothing splines")
+> cars.spl <- with(cars, smooth.spline(speed, dist))
+> cars.spl
 Call:
 smooth.spline(x = speed, y = dist)
 
@@ -15439,7 +15437,7 @@ Penalized Criterion: 4187.776
 GCV: 244.1044
 > ## This example has duplicate points, so avoid cv = TRUE
 > ## Don't show: 
->   stopifnot(cars.spl $ w == table(speed)) # weights = multiplicities
+>   stopifnot(cars.spl $ w == table(cars$speed)) # weights = multiplicities
 >   utils::str(cars.spl, digits = 5, vec.len = 6)
 List of 16
  $ x       : num [1:19] 4 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ...
@@ -15494,11 +15492,11 @@ attr(,"class")
 [1] "smooth.spline.fit"
 > ## End(Don't show)
 > lines(cars.spl, col = "blue")
-> lines(smooth.spline(speed, dist, df = 10), lty = 2, col = "red")
+> ss10 <- smooth.spline(cars[,"speed"], cars[,"dist"], df = 10)
+> lines(ss10, lty = 2, col = "red")
 > legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
 +                "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
 +        bg = 'bisque')
-> detach() # cars
 > 
 > 
 > ## Residual (Tukey Anscombe) plot:
