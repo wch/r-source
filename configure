@@ -23370,21 +23370,11 @@ fi
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 ##
-## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
-## pwd.h strings.h sys/resource.h sys/select.h sys/socket.h
-## sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
-## dl.h seems to be for HP-UX
-## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.
-## (It is probably only used for fpsetmask on FreeBSD).
-## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
-## sys/param.h is one way to get PATH_MAX.
-## sched.h is POSIX, but we use it for Linux-specific features (affinity)
-## stdalign.h is C11.
-for ac_header in arpa/inet.h dl.h dlfcn.h elf.h features.h fcntl.h \
-  floatingpoint.h fpu_control.h glob.h grp.h langinfo.h \
-  netdb.h netinet/in.h pwd.h sched.h strings.h \
-  sys/param.h sys/resource.h sys/select.h sys/socket.h \
-  sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
+## The following headers are POSIX,
+## We use sched.h for Linux-specific features (affinity)
+for ac_header in dlfcn.h fcntl.h glob.h grp.h pwd.h sched.h strings.h \
+  sys/resource.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
+  sys/times.h sys/utsname.h unistd.h utime.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -23397,7 +23387,24 @@ fi
 
 done
 
-## </NOTE>
+## dl.h is used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
+## features.h is used by date-time code on Linux.
+## floatingpoint.h is used for fpsetmask on FreeBSD.
+## sys/param.h is one way to get PATH_MAX.
+for ac_header in arpa/inet.h dl.h elf.h features.h floatingpoint.h \
+  langinfo.h netdb.h netinet/in.h sys/param.h
+do :
+  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
+if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
 ## stdalign.h is C11.
 for ac_header in stdalign.h
 do :
@@ -23411,7 +23418,6 @@ fi
 
 done
 
-## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
 for ac_header in errno.h inttypes.h limits.h locale.h stdarg.h stdbool.h \
@@ -25138,7 +25144,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25141: \"$ac_link\") >&5
+(eval echo $as_me:25147: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25213,7 +25219,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25216: \"$ac_link\") >&5
+(eval echo $as_me:25222: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -29902,6 +29908,67 @@ _ACEOF
 fi
 done
 
+for ac_func in select
+do
+as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
+$as_echo_n "checking whether $ac_func exists and is declared... " >&6; }
+if eval \${$as_ac_Symbol+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#ifdef HAVE_SYS_SELECT_H
+#include <sys/select.h>
+#endif
+
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  eval "$as_ac_Symbol=yes"
+else
+  eval "$as_ac_Symbol=no"
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+fi
+eval ac_res=\$$as_ac_Symbol
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+if test `eval 'as_val=${'$as_ac_Symbol'};$as_echo "$as_val"'` = yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+if test "${ac_cv_have_decl_select}" = "no"; then
+  case "${host_os}" in
+    mingw*|windows*|winnt)
+    ;;
+    *)
+     as_fn_error $? "Building R on Unix requires the 'select' system call" "$LINENO" 5
+    ;;
+  esac
+fi
 ## Windows has neither setenv nor unsetenv
 for ac_func in setenv unsetenv
 do
@@ -30544,7 +30611,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_PUTENV $ac_have_decl
 _ACEOF
 
-## this is a GNU extension so usually hidden.  Not on Solaris
+## this is a GNU extension so usually hidden.  Not in Solaris 10
 for ac_func in vasprintf
 do :
   ac_fn_c_check_func "$LINENO" "vasprintf" "ac_cv_func_vasprintf"
@@ -30568,7 +30635,7 @@ cat >>confdefs.h <<_ACEOF
 #define HAVE_DECL_VASPRINTF $ac_have_decl
 _ACEOF
 
-## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
+## mempcpy is a GNU extension used by the included gettext.  Not in Solaris 10
 for ac_func in mempcpy
 do :
   ac_fn_c_check_func "$LINENO" "mempcpy" "ac_cv_func_mempcpy"
@@ -30934,7 +31001,7 @@ fi
 
 
 ## Do we need substitutes?
-## mkdtemp is not on Solaris, added in POSIX 2008
+## mkdtemp is not on Solaris 10, added in POSIX 2008
 ## strdup strncasecmp were first required in POSIX 2008.
 ac_fn_c_check_func "$LINENO" "mkdtemp" "ac_cv_func_mkdtemp"
 if test "x$ac_cv_func_mkdtemp" = xyes; then :
@@ -31201,49 +31268,6 @@ if test "$ac_res" != no; then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 fi
-
-ac_fn_c_check_func "$LINENO" "__setfpucw" "ac_cv_func___setfpucw"
-if test "x$ac_cv_func___setfpucw" = xyes; then :
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether __setfpucw is needed" >&5
-$as_echo_n "checking whether __setfpucw is needed... " >&6; }
-if ${r_cv_func___setfpucw_needed+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "$cross_compiling" = yes; then :
-  r_cv_func___setfpucw_needed=no
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-int main () {
-#include <fpu_control.h>
-#include <stdlib.h>
-#if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
-  exit(_FPU_DEFAULT != _FPU_IEEE);
-#endif
-  exit(0);
-}
-
-_ACEOF
-if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_func___setfpucw_needed=no
-else
-  r_cv_func___setfpucw_needed=yes
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_func___setfpucw_needed" >&5
-$as_echo "$r_cv_func___setfpucw_needed" >&6; }
-if test "x${r_cv_func___setfpucw_needed}" = xyes; then
-
-$as_echo "#define NEED___SETFPUCW 1" >>confdefs.h
-
-fi
-fi
-
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for working calloc" >&5
 $as_echo_n "checking for working calloc... " >&6; }
