@@ -1818,6 +1818,19 @@ if test "${ac_cv_have_decl_popen}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'popen' system call])
 fi
 R_CHECK_FUNCS([getline], [#include <stdio.h>])
+R_CHECK_FUNCS([select], 
+[#ifdef HAVE_SYS_SELECT_H
+#include <sys/select.h>
+#endif])
+if test "${ac_cv_have_decl_select}" = "no"; then
+  case "${host_os}" in
+    mingw*|windows*|winnt)
+    ;;
+    *)
+     AC_MSG_ERROR([Building R on Unix requires the 'select' system call])
+    ;;
+  esac
+fi
 ## Windows has neither setenv nor unsetenv
 R_CHECK_FUNCS([setenv unsetenv], [#include <stdlib.h>])
 R_CHECK_FUNCS([getrlimit getrusage getpriority], [#include <sys/resource.h>])
@@ -1849,10 +1862,10 @@ R_CHECK_FUNCS([clock_gettime timespec_get], [#include <time.h>])
 ## It is not always declared, so we do not require a declaration.
 AC_CHECK_FUNCS(putenv)
 AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
-## this is a GNU extension so usually hidden.  Not on Solaris
+## this is a GNU extension so usually hidden.  Not in Solaris 10
 AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
-## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
+## mempcpy is a GNU extension used by the included gettext.  Not in Solaris 10
 AC_CHECK_FUNCS(mempcpy)
 ## realpath is POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
@@ -1941,7 +1954,7 @@ fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
-## mkdtemp is not on Solaris, added in POSIX 2008
+## mkdtemp is not on Solaris 10, added in POSIX 2008
 ## strdup strncasecmp were first required in POSIX 2008.
 AC_REPLACE_FUNCS([mkdtemp strdup strncasecmp])
 ## Enable declarations in Defn.h?

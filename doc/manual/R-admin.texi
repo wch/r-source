@@ -3255,11 +3255,12 @@ functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{mbstowcs}, @code{wcrtomb}, @code{wcscoll}, @code{wcstombs},
 @code{wctrans}, @code{wctype}, and @code{iswctype}.} for wide-character
 types: this is checked at configuration.  A small number of POSIX
-functions@footnote{including the @code{opendir}, @code{readdir},
+functions@footnote{including @code{opendir}, @code{readdir},
 @code{closedir}, @code{popen}, @code{stat}, @code{glob}, @code{access},
-@code{getcwd} and @code{chdir} system calls, and either @code{putenv} or
-@code{setenv}.} are essential, and others@footnote{such as
-@code{realpath}, @code{symlink}.} will be used if available.
+@code{getcwd} and @code{chdir} system calls, @code{select} on a
+Unix-alike, and either @code{putenv} or @code{setenv}.} are essential,
+and others@footnote{such as @code{realpath}, @code{symlink}.} will be
+used if available.
 
 @c zlib 1.2.5 is from July 2010, bzip2 1.0.6 from Sept 2010
 @c xz 5.0.3 is from May 2011
