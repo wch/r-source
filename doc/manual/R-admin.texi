@@ -1710,7 +1710,7 @@ The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on OS X 10.9 and later (Mavericks, Yosemite,
 El Capitan, Sierra, @dots{}). (It may be possible to install from the
-sources for earlier OS versions: see @ref{macOS}.)
+sources for earlier OS versions: see @ref{OS X}.)
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
