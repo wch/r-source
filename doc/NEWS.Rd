@@ -138,6 +138,11 @@
       \code{mapply()} (for the case of names and common length > 1),
       thanks to Suharto Anggono's \PR{17118}.
 
+      \item \code{str(x)}'s default method is more \dQuote{accurate} and
+      hence somewhat more generous in displaying character vectors; this
+      will occasionally change R outputs (and need adaption in some
+      \file{*.Rout(.save)} files).
+
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.

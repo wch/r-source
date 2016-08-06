@@ -534,10 +534,7 @@ str.default <-
 	    if(le > max.len) le <- length(object <- object[seq_len(max.len)])
 	    ## For very long strings, truncated later anyway,
 	    ## both nchar(*, type="w") and encodeString() are too expensive
-	    nc1 <- nchar(str1, type="w")
-	    rhs <- width - (4 + 5*nest.lev + nc1)
-	    trimWidth <- pmax.int(as.integer(nchar.max),
-				  as.integer(rhs) - 5L * seq_len(le))
+	    trimWidth <- as.integer(nchar.max)
 	    ## FIXME: need combined  encode.and.trim.string(object, m)  with O(m) !
 	    encObj <- tryCatch(strtrim(object, trimWidth), error=function(e) NULL)
 	    encObj <-
@@ -546,15 +543,17 @@ str.default <-
 			    trimWidth)
 		else
 		    encodeString(encObj, quote= '"', na.encode= FALSE)
+	    if(le > 0) ## truncate if LONG char:
+		encObj <- maybe_truncate(encObj)
 	    v.len <-
 		if(missing(vec.len)) {
-		    max(1,sum(cumsum(3 + if(le>0) nchar(encObj, type="w") else 0) <
-			      width - (4 + 5*nest.lev + nc1)))
+		    max(1,sum(cumsum(1 + if(le>0) nchar(encObj, type="w") else 0) <
+			      width - (4 + 5*nest.lev + nchar(str1, type="w"))))
 		}		      # '5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
-	    if(ile >= 1) ## truncate if LONG char:
-		object <- maybe_truncate(encObj[seq_len(ile)])
+	    if(ile >= 1)
+		object <- encObj[seq_len(ile)]
 	    formObj <- function(x) paste(as.character(x), collapse = " ")
 	}
 	else { # not char.like
