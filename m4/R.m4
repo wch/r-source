@@ -1462,36 +1462,6 @@ AC_SUBST(OBJCXX)
 
 ### * Library functions
 
-## R_FUNC___SETFPUCW
-## -----------------
-AC_DEFUN([R_FUNC___SETFPUCW],
-[AC_CHECK_FUNC(__setfpucw,
-[AC_CACHE_CHECK([whether __setfpucw is needed],
-	        [r_cv_func___setfpucw_needed],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-int main () {
-#include <fpu_control.h>
-#include <stdlib.h>
-#if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
-  exit(_FPU_DEFAULT != _FPU_IEEE);
-#endif
-  exit(0);
-}
-]])],
-              [r_cv_func___setfpucw_needed=no],
-              [r_cv_func___setfpucw_needed=yes],
-              [r_cv_func___setfpucw_needed=no])])
-if test "x${r_cv_func___setfpucw_needed}" = xyes; then
-  AC_DEFINE(NEED___SETFPUCW, 1,
-	    [Define if your system needs __setfpucw() to control
-             FPU rounding.
-             This was used to control floating point precision,
-             rounding and floating point exceptions on older Linux
-             systems.
-             As of GLIBC 2.1 this function is not used anymore.])
-fi])
-])# R_FUNC___SETFPUCW
-
 ## R_FUNC_CALLOC
 ## -------------
 AC_DEFUN([R_FUNC_CALLOC],

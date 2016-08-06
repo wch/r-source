@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -463,12 +463,6 @@ void R_ProcessEvents(void)
 # endif
 #endif
 
-#ifdef linux
-# ifdef HAVE_FPU_CONTROL_H
-#  include <fpu_control.h>
-# endif
-#endif
-
 /* patch from Ei-ji Nakama for Intel compilers on ix86.
    From http://www.nakama.ne.jp/memo/ia32_linux/R-2.1.1.iccftzdaz.patch.txt.
    Since updated to include x86_64.
@@ -486,9 +480,6 @@ void fpu_setup(Rboolean start)
     fpsetmask(0);
 #endif
 
-#ifdef NEED___SETFPUCW
-    __setfpucw(_FPU_IEEE);
-#endif
 #if (defined(__i386) || defined(__x86_64)) && defined(__INTEL_COMPILER) && __INTEL_COMPILER > 800
     _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_OFF);
     _MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_OFF);
@@ -496,10 +487,6 @@ void fpu_setup(Rboolean start)
     } else {
 #ifdef __FreeBSD__
     fpsetmask(~0);
-#endif
-
-#ifdef NEED___SETFPUCW
-    __setfpucw(_FPU_DEFAULT);
 #endif
     }
 }

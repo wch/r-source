@@ -282,9 +282,6 @@
    can do arithmetic on the latter. */
 #undef HAVE_FORTRAN_DOUBLE_COMPLEX
 
-/* Define to 1 if you have the <fpu_control.h> header file. */
-#undef HAVE_FPU_CONTROL_H
-
 /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
 #undef HAVE_FSEEKO
 
@@ -957,12 +954,6 @@
 
 /* Define if mktime sets errno. */
 #undef MKTIME_SETS_ERRNO
-
-/* Define if your system needs __setfpucw() to control FPU rounding. This was
-   used to control floating point precision, rounding and floating point
-   exceptions on older Linux systems. As of GLIBC 2.1 this function is not
-   used anymore. */
-#undef NEED___SETFPUCW
 
 /* Define to disable Valgrind instrumentation */
 #undef NVALGRIND

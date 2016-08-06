@@ -814,25 +814,19 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 ##
-## The following headers are POSIX: dlfcn.h fcntl.h glob.h grp.h
-## pwd.h strings.h sys/resource.h sys/select.h sys/socket.h 
-## sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h
-## dl.h seems to be for HP-UX
-## floatingpoint.h is on FreeBSD and Solaris, originating in SysV.  
-## (It is probably only used for fpsetmask on FreeBSD).
-## fpu_control.h is only used on Linux, for the obsolete __setfpucw.
+## The following headers are POSIX,
+## We use sched.h for Linux-specific features (affinity)
+AC_CHECK_HEADERS(dlfcn.h fcntl.h glob.h grp.h pwd.h sched.h strings.h \
+  sys/resource.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
+  sys/times.h sys/utsname.h unistd.h utime.h)
+## dl.h is used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
+## features.h is used by date-time code on Linux.
+## floatingpoint.h is used for fpsetmask on FreeBSD.
 ## sys/param.h is one way to get PATH_MAX.
-## sched.h is POSIX, but we use it for Linux-specific features (affinity)
-## stdalign.h is C11.
-AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h features.h fcntl.h \
-  floatingpoint.h fpu_control.h glob.h grp.h langinfo.h \
-  netdb.h netinet/in.h pwd.h sched.h strings.h \
-  sys/param.h sys/resource.h sys/select.h sys/socket.h \
-  sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
-## </NOTE>
+AC_CHECK_HEADERS(arpa/inet.h dl.h elf.h features.h floatingpoint.h \
+  langinfo.h netdb.h netinet/in.h sys/param.h)
 ## stdalign.h is C11.
 AC_CHECK_HEADERS(stdalign.h)
-## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
 AC_CHECK_HEADERS(errno.h inttypes.h limits.h locale.h stdarg.h stdbool.h \
@@ -1957,7 +1951,6 @@ AC_SEARCH_LIBS(connect, [socket])
 # gethostbyname was removed in POSIX 2008 (in favour of getaddrinfo, POSIX 2004)
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl tirpc])
-R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
