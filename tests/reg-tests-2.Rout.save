@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-07-21 r70950) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-08-07 r71054) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5109,7 +5109,6 @@ Calls: do.call -> <Anonymous>
 2: (function (...) 
    stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
    19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
-    ...
 1: do.call(f, mtcars)
 > 
 > options(op)
@@ -6405,15 +6404,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3a990a0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x47c8730> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3a8f108> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x47bf690> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3a8f108> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x47bf690> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
