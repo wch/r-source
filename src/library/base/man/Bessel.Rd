@@ -106,7 +106,7 @@ besselY(x, nu)
 \author{
   Original Fortran code:
   W. J. Cody, Argonne National Laboratory \cr
-  Translation to C and adaption to \R:
+  Translation to C and adaptation to \R:
   Martin Maechler \email{maechler@stat.math.ethz.ch}.
 }
 \examples{

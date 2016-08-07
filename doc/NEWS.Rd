@@ -140,7 +140,7 @@
 
       \item \code{str(x)}'s default method is more \dQuote{accurate} and
       hence somewhat more generous in displaying character vectors; this
-      will occasionally change R outputs (and need adaption in some
+      will occasionally change R outputs (and need adaptation in some
       \file{*.Rout(.save)} files).
 
       %% Would need more work (notably in  ../src/main/sort.c )
