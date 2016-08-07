@@ -637,6 +637,9 @@ AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
 CXXFLAGS="${r_save_CXXFLAGS}"
+
+R_PROG_CXX98FLAG
+
 AC_PROG_CXXCPP
 if test "${CXXCPP}" = "${CXX} -E"; then
   CXXCPP0="\$(CXX) -E"

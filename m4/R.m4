@@ -560,6 +560,51 @@ if test "${r_cv_prog_cxx}" = no; then
 fi
 ])# R_PROG_CXX
 
+## R_PROG_CXX98FLAG
+## ----------
+## Find a flag for CXX which specifies C++98
+AC_DEFUN([R_PROG_CXX98FLAG],
+[AC_CACHE_CHECK([for a flag so ${CXX} ${CXXFLAGS} compiles in C++98 mode],
+[r_cv_prog_cxx98],
+[AC_LANG_PUSH([C++])dnl
+ac_success=
+R_save_CXX="$CXX"
+## gnu+98 is g++, clang++, Intel.  c++03 is Oracle Studio (and default)
+for switch in "${CXXSTD}" "" -std=gnu++98 -std=c++98 -std=c++03; do
+   CXX="$CXX $switch"
+AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+[#ifndef __cplusplus
+# error "not a C++ compiler"
+#endif
+// or we could test for later than C++03 
+#if __cplusplus >= 201103L
+# error "C++11 compiler"
+#endif
+])], [ac_success=yes], [ac_success=no])
+if test "$ac_success" = "yes"; then 
+  break
+fi
+done
+CXX="${R_save_CXX}"
+if test "$ac_success" = "yes"; then 
+  if test -n "$switch"; then
+    r_cv_prog_cxx98="$switch"
+  else
+    r_cv_prog_cxx98="none needed"
+  fi
+else
+ r_cv_prog_cxx98="unknown"
+fi
+AC_LANG_POP([C++])dnl
+])
+if test "$r_cv_prog_cxx98" != "unknown"; then
+  CXX98STD="$r_cv_prog_cxx98"
+fi
+if test "$r_cv_prog_cxx98" = "none needed"; then
+  CXX98STD=
+fi
+AC_SUBST(CXX98STD)
+])# R_PROG_CXX98FLAG
 
 ## R_PROG_CXX_M
 ## ------------

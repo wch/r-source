@@ -846,6 +846,7 @@ F77_VISIBILITY
 C_VISIBILITY
 CXXCPP0
 CXXCPP
+CXX98STD
 ac_ct_CXX
 CXXFLAGS
 CXX
@@ -7780,6 +7781,70 @@ if test "${r_cv_prog_cxx}" = no; then
 fi
 
 CXXFLAGS="${r_save_CXXFLAGS}"
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for a flag so ${CXX} ${CXXFLAGS} compiles in C++98 mode" >&5
+$as_echo_n "checking for a flag so ${CXX} ${CXXFLAGS} compiles in C++98 mode... " >&6; }
+if ${r_cv_prog_cxx98+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+ac_success=
+R_save_CXX="$CXX"
+for switch in "${CXXSTD}" "" -std=gnu++98 -std=c++98 -std=c++03; do
+   CXX="$CXX $switch"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#ifndef __cplusplus
+# error "not a C++ compiler"
+#endif
+// or we could test for later than C++03
+#if __cplusplus >= 201103L
+# error "C++11 compiler"
+#endif
+
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+  ac_success=yes
+else
+  ac_success=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+if test "$ac_success" = "yes"; then
+  break
+fi
+done
+CXX="${R_save_CXX}"
+if test "$ac_success" = "yes"; then
+  if test -n "$switch"; then
+    r_cv_prog_cxx98="$switch"
+  else
+    r_cv_prog_cxx98="none needed"
+  fi
+else
+ r_cv_prog_cxx98="unknown"
+fi
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_prog_cxx98" >&5
+$as_echo "$r_cv_prog_cxx98" >&6; }
+if test "$r_cv_prog_cxx98" != "unknown"; then
+  CXX98STD="$r_cv_prog_cxx98"
+fi
+if test "$r_cv_prog_cxx98" = "none needed"; then
+  CXX98STD=
+fi
+
+
+
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -25102,7 +25167,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25105: \"$ac_link\") >&5
+(eval echo $as_me:25170: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25177,7 +25242,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25180: \"$ac_link\") >&5
+(eval echo $as_me:25245: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
