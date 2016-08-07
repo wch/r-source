@@ -184,6 +184,10 @@
 
       \item \command{configure} checks if the compiler specified by
       \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
+      
+      \item Configuration on a Unix-alike checks for the required header
+      \file{sys/select.h} and system call \code{select} and aborts if
+      they are not found.
     }
   }
 

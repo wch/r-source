@@ -1824,12 +1824,12 @@ R_CHECK_FUNCS([select],
 [#ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
 #endif])
-if test "${ac_cv_have_decl_select}" = "no"; then
+if test "${ac_cv_have_decl_select}" = "no" -o "${ac_cv_header_sys_select_h}" = "no"; then
   case "${host_os}" in
     mingw*|windows*|winnt)
     ;;
     *)
-     AC_MSG_ERROR([Building R on Unix requires the 'select' system call])
+     AC_MSG_ERROR([Building R on Unix requires the <sys/select.h> header and the 'select' system call])
     ;;
   esac
 fi

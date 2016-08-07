@@ -13932,9 +13932,11 @@ the @pkg{tcltk} package.
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
 up and removes its handlers when its namespace is unloaded.  Note that
-the header @file{sys/select.h} is required: users should check this
-is available and define @code{HAVE_SYS_SELECT_H} before including
-@file{R_ext/eventloop.h}.
+the header @file{sys/select.h} is required: users should check this is
+available and define @code{HAVE_SYS_SELECT_H} before including
+@file{R_ext/eventloop.h}. (This was in principle needed prior to @R{}
+3.4.0, but it was possible that another header will include
+@file{sys/select.h} before @file{eventloop.h} is processed.)
 
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
