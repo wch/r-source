@@ -28,6 +28,8 @@
 
 /* See system.txt for a description of functions */
 
+/* select() is essential here, but configure has required it */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

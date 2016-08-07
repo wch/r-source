@@ -56,9 +56,11 @@ AH_TOP([#ifndef R_CONFIG_H
 AH_BOTTOM([
 #endif /* not R_CONFIG_H */])
 
-## The gettext macros call AC_GNU_SOURCE early, so all the
-## C compiling makes use of that.  If it is ever removed, we
-## would need it or something similar here.
+## We call AC_GNU_SOURCE early (it is a prerequisite for the gettext
+## macros), so all the C compiling makes use of that.  glibc then
+## defines all its extensions (_POSIX_C_SOURCE, _XOPEN_SOURCE,
+## _BSD_SOURCE) and these unlock declarations of non-C99 functions and
+## constants.
 
 
 ### ** Platform.
@@ -619,7 +621,7 @@ AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search pat
 
 AC_PROG_CC
 AC_PROG_GCC_TRADITIONAL
-AC_GNU_SOURCE ## needed for libintl
+AC_GNU_SOURCE ## see note above
 
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS

@@ -4785,6 +4785,30 @@ needs to be conditioned.
 And do not hardcode @option{-lgomp}: not only is that specific to the
 GCC family of compilers, using the correct linker flag sets up the
 run-time path to the library.
+
+@item
+Package authors commonly assume things are part of C99 when they are
+not: the most common example is POSIX function @code{strdup}.  The most
+common C library on Linux, @code{glibc}, will hide the declarations of
+such extensions unless a `feature-test macro' is defined @strong{before}
+(almost) any header is included.  So for @code{strdup} you need
+@example
+#define _POSIX_C_SOURCE 200809L
+...
+#include <string.h>
+...
+strdup call(s)
+@end example
+where the appropriate value can be found by @command{man strdup} on
+Linux.  (Use of @code{strncasecmp} is similar.)
+
+However, modes of @command{gcc} with `GNU EXTENSIONS' (which are the
+default, either @option{-std=gnu99} or @option{-std=gnu11}) declare
+enough macros to ensure that missing declarations are rarely seen.
+
+This applies also to constants such as @code{M_PI}, which are part of
+the X/Open standard: to use these define @code{_XOPEN_SOURCE} before
+including any headers.
 @end itemize
 
 Some additional information for C++ is available at
