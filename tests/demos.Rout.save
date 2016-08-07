@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-07-21 r70950) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-08-07 r71054) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.044 0.017 1.061 0 0 
+Time elapsed:  0.969 0.012 0.981 0 0 
 > 

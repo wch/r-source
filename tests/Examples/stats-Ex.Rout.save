@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-07-21 r70950) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-08-07 r71054) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3792,7 +3792,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x2b084e8>
+<environment: 0x3f92968>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4755,7 +4755,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x28a5150>
+<bytecode: 0x43e6928>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7285,7 +7285,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x2678478>
+<environment: 0x41d04e8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11766,14 +11766,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x60d0f70>
-<environment: 0x60d89b0>
+<bytecode: 0x7c0ebb8>
+<environment: 0x7c179f8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x60d0e58>
-<environment: 0x60d89b0>
+<bytecode: 0x7c0eaa0>
+<environment: 0x7c179f8>
 
 > 
 > 
@@ -15771,8 +15771,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x1f0ba48>
-<environment: 0x64b29a0>
+<bytecode: 0x3a4d460>
+<environment: 0x7feefd8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18049,7 +18049,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.326 0.102 4.428 0 0 
+Time elapsed:  4.512 0.1 4.613 0 0 
 > grDevices::dev.off()
 null device 
           1 
