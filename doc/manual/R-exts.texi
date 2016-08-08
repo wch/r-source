@@ -2452,8 +2452,8 @@ What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
 @code{201402L} are most commonly used for C++98, C++11 and C++14
 respectively, but some compilers set @code{1L}.} of @code{__cplusplus}
-may help but some compiler use it to denote a standard which is
-partially supported and some the latest standard with is (almost) fully
+may help but some compilers use it to denote a standard which is
+partially supported and some the latest standard which is (almost) fully
 supported.  As from version 6, @command{g++} defaults to C++14 (with GNU
 extensions): earlier versions aim to support C++03 with many extensions
 (including support for TR1).  @command{clang} with its
