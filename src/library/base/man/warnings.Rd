@@ -1,6 +1,6 @@
 % File src/library/base/man/warnings.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{warnings}
@@ -10,6 +10,7 @@
 \alias{print.warnings}
 \alias{[.warnings}
 \alias{c.warnings}
+\alias{duplicated.warnings}
 \alias{unique.warnings}
 \description{
   \code{warnings} and its \code{print} method print the

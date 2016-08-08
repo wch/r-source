@@ -14,7 +14,7 @@
       \item Convenience function \code{hasName()} has been added; it
       is intended to replace the common idiom \code{!is.null(x$name)}
       without the usually unintended partial name matching.
-      
+
       \item The version of LAPACK included in the sources has been
       updated to 3.6.1, a bug-fix release including a speedup for the
       non-symmetric case of \code{eigen()}.
@@ -59,7 +59,7 @@
 
       \item \code{sample(NA_real_)} now works.
 
-      \item Packages using non-ASCII encodings in their code did not 
+      \item Packages using non-ASCII encodings in their code did not
       install data properly on systems using different encodings.
 
       \item \code{merge(df1, df2)} now also works for data frames with
@@ -68,6 +68,9 @@
 
       \item \code{contour()} caused a segfault if the \code{labels}
       argument had length zero.  (Reported by Bill Dunlap.)
+
+      \item \code{unique(warnings())} works more correctly, thanks to a
+      new \code{duplicated.warnings()} method.
     }
   }
 }

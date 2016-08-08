@@ -1,7 +1,7 @@
 #  File src/library/base/R/warnings.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@ warnings <- function(...)
 c.warnings <- function (..., recursive = FALSE)
     structure(NextMethod("c"), class = "warnings")
 
+duplicated.warnings <- function(x, incomparables = FALSE, ...)
+    duplicated(paste(names(x), as.character(x)), incomparables, ...)
 unique.warnings <- function(x, incomparables = FALSE, ...)
     x[!duplicated(x, incomparables, ...)]
 
