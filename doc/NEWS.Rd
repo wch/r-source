@@ -149,15 +149,10 @@
     }
   }
 
-  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item \code{readline} headers (and not just the library) are
       required unless configuring with \option{--with-readline=no}.
-
-      \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
-      binary builds.  The \file{tcltk*.chm} help file is no longer
-      included; please consult the online help at
-      \url{http://www.tcl.tk/man/} instead.
 
       \item \command{configure} now adds a compiler switch for C++11
       code, even if the compiler supports C++11 by default.  (This
@@ -173,9 +168,9 @@
       \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \option{-std=gnu++14}).
 
       \item There is a new macro \code{CXXSTD} to help specify the
-      standard for C++ code, e.g.\sspace{}\option{-std=c++98}.  This makes
-      it easier to work with compilers which default to a later
-      standard: with \code{CXX=g++6 CXXSTD=-std=c++98}
+      standard for C++ code, e.g.\sspace{}\option{-std=c++98}.  This
+      makes it easier to work with compilers which default to a later
+      standard: for example, with \code{CXX=g++6 CXXSTD=-std=c++98}
       \command{configure} will select commands for g++ 6.x which conform
       to C++11 and C++14 where specified but otherwise use C++98.
 
@@ -185,11 +180,21 @@
       \item \command{configure} checks if the compiler specified by
       \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
       
-      \item Configuration on a Unix-alike checks for the required header
+      \item Configuration checks for the required header
       \file{sys/select.h} and system call \code{select} and aborts if
       they are not found.
     }
   }
+
+  \subsection{INCLUDED SOFTWARE}{
+    \itemize{
+      \item (Windows only) Tcl/Tk version 8.6.4 is now included in the
+      binary builds.  The \file{tcltk*.chm} help file is no longer
+      included; please consult the online help at
+      \url{http://www.tcl.tk/man/} instead.
+    }
+  }
+
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
