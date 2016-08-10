@@ -19,7 +19,7 @@
 
 /* 
    For use by alternative front-ends and packages which need to share
-   the R event loop (on all platforms).
+   the R event loop (on Unix-alikes).
 
    Not part of the API and subject to change without notice.
 
@@ -32,9 +32,12 @@
 
 #ifndef NO_C_HEADERS
 # ifdef HAVE_SYS_SELECT_H
-#  include <sys/select.h>	/* for fd_set according to recent POSIX */
+#  include <sys/select.h> /* for fd_set, select according to POSIX 2004 */
 # endif
-/* NOTE: Needed at least on FreeBSD so that fd_set is defined. */
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>	 /* according to earlier POSIX and perhaps HP-UX */
+# endif
+/* NOTE: At one time needed on FreeBSD so that fd_set is defined. */
 # include <sys/types.h>
 #endif
 
