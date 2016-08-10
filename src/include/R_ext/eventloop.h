@@ -35,7 +35,7 @@
 #  include <sys/select.h> /* for fd_set, select according to POSIX 2004 */
 # endif
 # ifdef HAVE_SYS_TIME_H
-#  include <sys/time.h>	 /* according to earlier POSIX and perhaps HP-UX */
+#  include <sys/time.h>	 /* ... according to earlier POSIX and perhaps HP-UX */
 # endif
 /* NOTE: At one time needed on FreeBSD so that fd_set is defined. */
 # include <sys/types.h>
