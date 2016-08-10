@@ -23503,6 +23503,9 @@ fi
 done
 
 ## only vsnprintf.c requires stdarg.h
+
+## We also use without checking sys/sysctl.h, but only on *BSD and macOS
+## The default includes check for sys/types.h (POSIX), which we use unconditionally
 ## </NOTE>
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether setjmp.h is POSIX.1 compatible" >&5
@@ -23634,7 +23637,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-## xz needs uint64_t
+## liblzma uses uint64_t: used unconditionally in src/main/util.c
 ac_fn_c_find_uintX_t "$LINENO" "64" "ac_cv_c_uint64_t"
 case $ac_cv_c_uint64_t in #(
   no|yes) ;; #(
@@ -25212,7 +25215,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25215: \"$ac_link\") >&5
+(eval echo $as_me:25218: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25287,7 +25290,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25290: \"$ac_link\") >&5
+(eval echo $as_me:25293: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -29987,7 +29990,10 @@ else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #ifdef HAVE_SYS_SELECT_H
-#include <sys/select.h>
+#include <sys/select.h>  /* POSIX >= 2004 */
+#endif
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>  /* Earlier POSIX, HP-UX? */
 #endif
 
 #ifdef F77_DUMMY_MAIN
@@ -30028,15 +30034,18 @@ _ACEOF
 fi
 done
 
-if test "${ac_cv_have_decl_select}" = "no" -o "${ac_cv_header_sys_select_h}" = "no"; then
-  case "${host_os}" in
-    mingw*|windows*|winnt)
-    ;;
-    *)
-     as_fn_error $? "Building R on Unix requires the <sys/select.h> header and the 'select' system call" "$LINENO" 5
-    ;;
-  esac
-fi
+case "${host_os}" in
+  mingw*|windows*|winnt)
+  ;;
+  *)
+  if test "${ac_cv_have_decl_select}" = "no"; then
+     as_fn_error $? "Building R on Unix requires the 'select' system call" "$LINENO" 5
+  fi
+  if test "${ac_cv_header_sys_select_h}" = "no" -a "${ac_cv_header_sys_times_h} = "no""; then
+     as_fn_error $? "Building R on Unix requires either <sys/select.h> or <sys/time.h>" "$LINENO" 5
+  fi
+  ;;
+esac
 ## Windows has neither setenv nor unsetenv
 for ac_func in setenv unsetenv
 do
