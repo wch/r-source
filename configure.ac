@@ -837,6 +837,9 @@ AC_CHECK_HEADERS(stdalign.h)
 AC_CHECK_HEADERS(errno.h inttypes.h limits.h locale.h stdarg.h stdbool.h \
                  stdint.h string.h)
 ## only vsnprintf.c requires stdarg.h
+
+## We also use without checking sys/sysctl.h, but only on *BSD and macOS
+## The default includes check for sys/types.h (POSIX), which we use unconditionally
 ## </NOTE>
 
 R_HEADER_SETJMP
@@ -845,7 +848,7 @@ R_HEADER_GLIBC2
 ### * Checks for types.
 
 AC_TYPE_SIGNAL
-## xz needs uint64_t
+## liblzma uses uint64_t: used unconditionally in src/main/util.c
 AC_TYPE_UINT64_T
 AC_CHECK_TYPES([int64_t, int_fast64_t])
 AC_TYPE_PID_T
@@ -1825,17 +1828,23 @@ fi
 R_CHECK_FUNCS([getline], [#include <stdio.h>])
 R_CHECK_FUNCS([select], 
 [#ifdef HAVE_SYS_SELECT_H
-#include <sys/select.h>
+#include <sys/select.h>  /* POSIX >= 2004 */
+#endif
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>  /* Earlier POSIX, HP-UX? */
 #endif])
-if test "${ac_cv_have_decl_select}" = "no" -o "${ac_cv_header_sys_select_h}" = "no"; then
-  case "${host_os}" in
-    mingw*|windows*|winnt)
-    ;;
-    *)
-     AC_MSG_ERROR([Building R on Unix requires the <sys/select.h> header and the 'select' system call])
-    ;;
-  esac
-fi
+case "${host_os}" in
+  mingw*|windows*|winnt)
+  ;;
+  *)
+  if test "${ac_cv_have_decl_select}" = "no"; then
+     AC_MSG_ERROR([Building R on Unix requires the 'select' system call])
+  fi
+  if test "${ac_cv_header_sys_select_h}" = "no" -a "${ac_cv_header_sys_times_h} = "no""; then
+     AC_MSG_ERROR([Building R on Unix requires either <sys/select.h> or <sys/time.h>])
+  fi
+  ;;
+esac
 ## Windows has neither setenv nor unsetenv
 R_CHECK_FUNCS([setenv unsetenv], [#include <stdlib.h>])
 R_CHECK_FUNCS([getrlimit getrusage getpriority], [#include <sys/resource.h>])

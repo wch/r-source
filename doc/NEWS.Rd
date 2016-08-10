@@ -181,8 +181,8 @@
       \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
       
       \item Configuration checks for the required header
-      \file{sys/select.h} and system call \code{select} and aborts if
-      they are not found.
+      \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
+      system call \code{select} and aborts if they are not found.
     }
   }
 

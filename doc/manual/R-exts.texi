@@ -13932,35 +13932,19 @@ the @pkg{tcltk} package.
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
 up and removes its handlers when its namespace is unloaded.  Note that
-the header @file{sys/select.h} is required: users should check this is
-available and define @code{HAVE_SYS_SELECT_H} before including
-@file{R_ext/eventloop.h}. (This was in principle needed prior to @R{}
-3.4.0, but it was possible that another header will include
-@file{sys/select.h} before @file{eventloop.h} is processed.)
+the header @file{sys/select.h} is needed@footnote{At least according to
+POSIX 2004 and later.  Earlier standards prescribed @file{sys/time.h}
+and HP-UX continued to use that: @file{R_ext/eventloop.h} will include
+it from @R{} 3.4.0 if @code{HAVE_SYS_TIME_H} is defined.}: users should
+check this is available and define @code{HAVE_SYS_SELECT_H} before
+including @file{R_ext/eventloop.h}. (It is often the case that another
+header will include @file{sys/select.h} before @file{eventloop.h} is
+processed, but this should not be relied on.)
 
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
-during events of the second type.  This is not handled very well in the
-existing examples.  The GNOME front-end ran a private handler for polled
-events by setting
-
-@example
-extern int (*R_timeout_handler)();
-extern long R_timeout_val;
-
-      if (R_timeout_handler && R_timeout_val)
-          gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
-      gtk_main ();
-@end example
-
-@noindent
-whilst it is waiting for console input.  This obviously handles events
-for Gtk windows (such as the graphics device in the @pkg{gtkDevice}
-package), but not X11 events (such as the @code{X11()} device) or for
-other event handlers that might have been registered with @R{}.  It does
-not attempt to keep itself alive whilst @R{} is waiting on sockets.  The
-ability to add a polled handler as @code{R_timeout_handler} is used by
-the @pkg{tcltk} package.
+during events of the second type.  The ability to add a polled handler
+as @code{R_timeout_handler} is used by the @pkg{tcltk} package.
 
 
 @node Threading issues,  , Meshing event loops, Embedding R under Unix-alikes
@@ -14000,7 +13984,7 @@ suppressed by setting the variable @code{R_SignalHandlers} (declared in
 @file{Rinterface.h}) to @code{0}.
 
 Note that these variables must not be changed by an @R{}
-@strong{package}: a package should not calling @R{} internals which
+@strong{package}: a package should not call @R{} internals which
 makes use of the stack-checking mechanism on a secondary thread.
 
 @node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R

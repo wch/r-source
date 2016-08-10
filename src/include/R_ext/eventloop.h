@@ -19,18 +19,25 @@
 
 /* 
    For use by alternative front-ends and packages which need to share
-   the R event loop.
+   the R event loop (on Unix-alikes).
 
    Not part of the API and subject to change without notice.
+
+   NB: HAVE_SYS_SELECT_H should be checked and defined before this is
+   included (or <sys/select.h> included if NO_C_HEADERS is defined).
  */
 
 #ifndef R_EXT_EVENTLOOP_H
 #define R_EXT_EVENTLOOP_H
 
 #ifndef NO_C_HEADERS
-/* configure required this header */
-# include <sys/select.h>  /* also for fd_set according to recent POSIX */
-/* NOTE: Needed at least on FreeBSD so that fd_set is defined. */
+# ifdef HAVE_SYS_SELECT_H
+#  include <sys/select.h> /* for fd_set, select according to POSIX 2004 */
+# endif
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>	 /* according to earlier POSIX and perhaps HP-UX */
+# endif
+/* NOTE: At one time needed on FreeBSD so that fd_set is defined. */
 # include <sys/types.h>
 #endif
 
