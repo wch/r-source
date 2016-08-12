@@ -4610,9 +4610,25 @@ so it is strongly recommended to check in a UTF-8 locale.
 
 Writing portable C and C++ code is mainly a matter of observing the
 standards (C99, C++98 or where declared C++11/14) and testing that
-extensions (such as POSIX functions) are supported.  However, some
-common errors are worth pointing out here.  It can be helpful to look up
-functions at @uref{http://www.cplusplus.com/reference/} or
+extensions (such as POSIX functions) are supported.  Note that the POSIX
+standards only require recently-defined functions to be declared if
+certain macros are defined with large enough values, and on some
+compiler/OS combinations@footnote{This is seen on Linux and Solaris,
+although each has other ways to turn on all extensions, e.g.@: defining
+@code{_GNU_SOURCE} or @code{__EXTENSIONS__}: the GCC compilers by
+default define @code{_GNU_SOURCE}.  On OS X extensions are declared
+unless one of these macros is given too small a value.} they are not
+declared otherwise.  So you may need to include one of
+@example
+#define _XOPEN_SOURCE 700
+#define _POSIX_C_SOURCE 200809L
+@end example
+before @emph{any} headers.  (@code{strdup} and @code{strncasecmp} are
+two such functions.)
+
+However, some common errors are worth pointing out here.  It can be
+helpful to look up functions at
+@uref{http://www.cplusplus.com/reference/} or
 @uref{http://en.cppreference.com/w/} and compare what is defined in the
 various standards.
 
