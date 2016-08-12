@@ -365,6 +365,10 @@
 
       \item \code{findInterval(x, vec=numeric(), all.inside=TRUE)} now
       returns \code{0}s as documented.  (Reported by Bill Dunlap.)
+      
+      \item (Windows only) \command{R CMD SHLIB} failed when a symbol
+      in the resulting library had the same name as a keyword in
+      the \file{.def} file.  (\PR{17130})
     }
   }
 }
