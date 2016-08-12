@@ -38,7 +38,9 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	    nm
 	}
     }
-    useNA <- if (!missing(exclude) && is.null(exclude)) "always"
+    ## useNA <- if (!missing(exclude) && is.null(exclude)) "always" (2.8.0 <= R <= 3.3.1)
+    useNA <- if (missing(useNA) && !missing(exclude) &&
+		 !match(NA, exclude, nomatch=0L)) "always" ## FIXME to  "ifany"
 	     else match.arg(useNA)
     args <- list(...)
     if (!length(args))

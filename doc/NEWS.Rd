@@ -180,7 +180,7 @@
 
       \item \command{configure} checks if the compiler specified by
       \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
-      
+
       \item \command{configure} checks for the required header
       \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
       system call \code{select} and aborts if they are not found.
@@ -283,7 +283,11 @@
       \item \code{table()} no longer drops an \code{"NaN"} factor level,
       and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
       patch for \PR{16936}.  Also, in the case of \code{exclude=NULL}
-      and \code{NA}s, these are tabulated correctly (again).% to be % backported
+      and \code{NA}s, these are tabulated correctly (again).
+
+      Additionally, all cases of empty \code{exclude} are equivalent,
+      and \code{useNA} is not overwritten when specified (as it was by
+      \code{exclude=NULL}).
 
       \item \code{pmax()} and \code{pmin()} now work with (more ?)
       classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}

@@ -1756,17 +1756,43 @@ for(nm in nf)  {
 stopifnot(identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L)),
 	  identical(c(tN),  structure(2:1, .Names = c("A", NA))))
 ## both failed in R <= 3.3.1
-## Part II:
-x <- factor(c(1, 2, NA), exclude = NULL) ; is.na(x)[2] <- TRUE
-x
-stopifnot(identical(x, structure(as.integer(c(1, NA, 3)),
-				 .Label = c("1", "2", NA), class = "factor")))
-(txx <- table(x, exclude = NULL))
-stopifnot(identical(txx, table(x, useNA = "always")),
-	  identical(as.vector(txx), c(1:0, 2L)))
-## wrongly gave  1 0 1  for R versions  2.8.0 <= Rver <= 3.3.1
 stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
 		    c("Age", "Survived", "Freq"))) # was wrong for ~ 32 hours
+##
+## Part II:
+x <- factor(c(1, 2, NA, NA), exclude = NULL) ; is.na(x)[2] <- TRUE
+x # << two "different" NA's (in codes | w/ level) looking the same in print()
+stopifnot(identical(x, structure(as.integer(c(1, NA, 3, 3)),
+				 .Label = c("1", "2", NA), class = "factor")))
+(txx <- table(x, exclude = NULL))
+stopifnot(identical(txx, table(x, useNA = "ifany")),
+	  identical(as.vector(txx), c(1:0, 3L)))
+## wrongly gave  1 0 2  for R versions  2.8.0 <= Rver <= 3.3.1
+u.opt <- list(no="no", ifa = "ifany", alw = "always")
+l0 <- c(list(`_` = table(x)),
+           lapply(u.opt, function(use) table(x, useNA=use)))
+xcl <- list(NULL=NULL, none=""[0], `NA`=NA, NANaN = c(NA,NaN))
+lt <- lapply(xcl, function(X)
+    c(list(`_` = table(x, exclude=X)),
+      lapply(u.opt, function(use) table(x, exclude=X, useNA=use))))
+
+stopifnot(
+    vapply(lt, function(i) all(vapply(i, class, "") == "table"), NA),
+    identical((ltNA <- lt[["NA"  ]]), lt[["NANaN"]]),
+    identical((ltNl <- lt[["NULL"]]), lt[["none" ]]))
+## 'NULL' behaved special (2.8.0 <= R <= 3.3.1)  and
+##  *all* tables in l0 and lt were == (1 0 2) !
+ltN1 <- ltNA[[1]]
+lNl1 <- ltNl[[1]]
+stopifnot(
+    vapply(names(ltNA)[-1], function(n) identical(ltNA[[n]], ltN1), NA),
+    identical(2L, dim(ltN1)),
+    identical(3L, dim(lNl1)),
+    identical(dimnames(ltN1), list(x = c("1","2"))),
+    identical(dimnames(lNl1), list(x = c("1","2", NA))),
+    identical(1:0,       as.vector(ltN1)),
+    identical(c(1:0,3L), as.vector(lNl1))
+)
 
 
 ## contour() did not check args sufficiently
