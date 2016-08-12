@@ -65,8 +65,8 @@
       \code{split.default()} which itself newly gets \code{lex.order} to
       pass to \code{interaction()} for more flexibility.
 
-      \item The \code{plot} method for \code{ppr} has enhanced default
-      labels (xmin and main).
+      \item The \code{plot()} method for \code{ppr()} has enhanced
+      default labels (\code{xmin} and \code{main}).
 
       \item \code{sample.int()} gains an explicit \code{useHash} option
       (with a back compatible default).
@@ -140,7 +140,7 @@
 
       \item \code{str(x)}'s default method is more \dQuote{accurate} and
       hence somewhat more generous in displaying character vectors; this
-      will occasionally change R outputs (and need adaptation in some
+      will occasionally change \R outputs (and need changes to some
       \file{*.Rout(.save)} files).
 
       %% Would need more work (notably in  ../src/main/sort.c )
@@ -171,8 +171,9 @@
       standard for C++ code, e.g.\sspace{}\option{-std=c++98}.  This
       makes it easier to work with compilers which default to a later
       standard: for example, with \code{CXX=g++6 CXXSTD=-std=c++98}
-      \command{configure} will select commands for g++ 6.x which conform
-      to C++11 and C++14 where specified but otherwise use C++98.
+      \command{configure} will select commands for \command{g++} 6.x
+      which conform to C++11 and C++14 where specified but otherwise use
+      C++98.
 
       \item Support for the defunct IRIX and OSF/1 OSes and Alpha CPU
       has been removed.
@@ -180,9 +181,15 @@
       \item \command{configure} checks if the compiler specified by
       \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
       
-      \item Configuration checks for the required header
+      \item \command{configure} checks for the required header
       \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
       system call \code{select} and aborts if they are not found.
+
+      \item [In progress.] \command{configure} looks for a flag for the
+      C++ compiler which approximates C++98/C++03 compliance, and uses
+      it as part of the \code{CXX98} macro in file \file{etc/Makeconf}.
+      For example, \option{-std=gnu++98} is selected for \command{g++}
+      6.x.
     }
   }
 
