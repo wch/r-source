@@ -29,11 +29,11 @@
 
 #define USE_RINTERNALS
 
-#include <stdarg.h>
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#include <stdarg.h>
 
 #include <R_ext/RS.h> /* for S4 allocation */
 #include <R_ext/Print.h>

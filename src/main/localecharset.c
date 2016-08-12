@@ -34,16 +34,15 @@
  *                                or                                 *
  *         cc -o localecharset -DDEBUG_TEST=2  localecharset.c       *
  *********************************************************************/
-#ifdef DEBUG_TEST
-#define SPRINT(x) printf("%6d:" #x "=%s\n", __LINE__, x)
-#define DPRINT(x) printf("%6d:" #x "=%d\n", __LINE__, x)
-#define HAVE_STRING_H
-#endif
-
-
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
+#endif
+
+#ifdef DEBUG_TEST
+#define SPRINT(x) printf("%6d:" #x "=%s\n", __LINE__, x)
+#define DPRINT(x) printf("%6d:" #x "=%d\n", __LINE__, x)
+//#define HAVE_STRING_H
 #endif
 
 #include <string.h>

@@ -28,7 +28,7 @@
  *
  */
 
-#include <config.h> /* needed for HAVE_*, IEEE_754 */
+#include <config.h> /* needed for HAVE_* */
 #include "nmath.h"
 
 
