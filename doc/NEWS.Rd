@@ -71,6 +71,10 @@
 
       \item \code{unique(warnings())} works more correctly, thanks to a
       new \code{duplicated.warnings()} method.
+      
+      \item (Windows only) \command{R CMD SHLIB} failed when a symbol
+      in the resulting library had the same name as a keyword in
+      the \file{.def} file.  (\PR{17130})
     }
   }
 }

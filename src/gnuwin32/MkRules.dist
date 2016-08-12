@@ -18,9 +18,7 @@
 
 # Path of library directory containing zlib, bzlib, liblzma, pcre,
 # libpng, libjpeg, libtiff.
-# A suitable version can be found at
-# https://www.stats.ox.ac.uk/pub/Rtools/libs.html
-# or use 'make rsync-extsoft' to populate the default directory.
+# Use 'make rsync-extsoft' to populate the default directory.
 # EXT_LIBS = $(LOCAL_SOFT)
 
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
