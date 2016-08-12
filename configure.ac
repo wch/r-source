@@ -59,7 +59,7 @@ AH_BOTTOM([
 ## We call AC_GNU_SOURCE early (it is a prerequisite for the gettext
 ## macros), so all the C compiling makes use of that.  Nowadays it calls
 ## AC_USE_SYSTEM_EXTENSIONS ....
-## This sets _GNU_SOURCE, so glibc efines all its extensions
+## This sets _GNU_SOURCE, so glibc defines all its extensions
 ## (_POSIX_C_SOURCE, _XOPEN_SOURCE, _BSD_SOURCE, __USE_MISC) and these
 ## unlock declarations of non-C99 functions and constants.  
 ## Ditto for __EXTENSIONS__ on Solaris and _ALL_SOURCE on AIX.
