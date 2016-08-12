@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-08-07 r71054) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-08-12 r71083) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6405,15 +6405,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3b7eb60> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x1291c0b8> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3b6c8f8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x12910f90> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3b6c8f8> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x12910f90> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -7810,7 +7810,7 @@ structure(list(one = 1, two = ), .Names = c("one", "two"))
 > ## 2 of 4  summary(.) above did not show NA's  in R <= 3.2.3
 > 
 > 
-> ## Printing complex matrix 
+> ## Printing complex matrix
 > matrix(1i,2,13)
      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
 [1,] 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i 0+1i  0+1i  0+1i  0+1i  0+1i
@@ -7822,4 +7822,28 @@ structure(list(one = 1, two = ), .Names = c("one", "two"))
 > str(E)
   expression(poly = x^3 - 3 * x^2)
 > ## no longer shows "structure(...., .Names = ..)"
+> 
+> 
+> ## summary(<logical>) working via table():
+> logi <- c(NA, logical(3), NA, !logical(2), NA)
+> summary(logi)
+   Mode   FALSE    TRUE    NA's 
+logical       3       2       3 
+> summary(logi[!is.na(logi)])
+   Mode   FALSE    TRUE 
+logical       3       2 
+> summary(TRUE)
+   Mode    TRUE 
+logical       1 
+> ## was always showing counts for NA's even when 0 in  2.8.0 <= R <= 3.3.1
+> ii <- as.integer(logi)
+> summary(ii)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    0.0     0.0     0.0     0.4     1.0     1.0       3 
+> summary(ii[!is.na(ii)])
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0     0.4     1.0     1.0 
+> summary(1L)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      1       1       1       1       1       1 
 > 

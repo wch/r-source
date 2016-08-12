@@ -143,6 +143,13 @@
       will occasionally change \R outputs (and need changes to some
       \file{*.Rout(.save)} files).
 
+      \item \code{table(x, exclude=NULL)} now sets \code{useNA =
+      "ifany"} (instead of \code{"always"}).  Together with the bug
+      fixes for this case, this recovers more consistent behaviour, also
+      compatible to older versions of R.  As a consequence,
+      \code{summary()} for a logical vector no longer reports (zero)
+      counts for \code{NA} when there are no \code{NA}s.
+
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.
@@ -369,7 +376,7 @@
 
       \item \code{findInterval(x, vec=numeric(), all.inside=TRUE)} now
       returns \code{0}s as documented.  (Reported by Bill Dunlap.)
-      
+
       \item (Windows only) \command{R CMD SHLIB} failed when a symbol
       in the resulting library had the same name as a keyword in
       the \file{.def} file.  (\PR{17130})

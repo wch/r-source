@@ -43,8 +43,7 @@ is.table(x)
     passed to specific methods; for \code{as.data.frame}, unused.)}
   \item{exclude}{levels to remove for all factors in \code{\dots}.  If
     it does not contain \code{\link{NA}} and \code{useNA} is not
-    specified, it implies \code{useNA = "always"}.  This may be changed
-    to \code{useNA = "ifany"} before the release of R 3.4.0.  See
+    specified, it implies \code{useNA = "ifany"}.  See
     \sQuote{Details} for its interpretation for non-factor arguments.}
   \item{useNA}{whether to include \code{NA} values in the table.
     See \sQuote{Details}.  Can be abbreviated.}

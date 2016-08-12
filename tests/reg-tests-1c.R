@@ -1767,6 +1767,7 @@ stopifnot(identical(x, structure(as.integer(c(1, NA, 3, 3)),
 (txx <- table(x, exclude = NULL))
 stopifnot(identical(txx, table(x, useNA = "ifany")),
 	  identical(as.vector(txx), c(1:0, 3L)))
+(y <- factor(c(4,5,6:5)))
 ## wrongly gave  1 0 2  for R versions  2.8.0 <= Rver <= 3.3.1
 u.opt <- list(no="no", ifa = "ifany", alw = "always")
 l0 <- c(list(`_` = table(x)),
@@ -1775,24 +1776,39 @@ xcl <- list(NULL=NULL, none=""[0], `NA`=NA, NANaN = c(NA,NaN))
 lt <- lapply(xcl, function(X)
     c(list(`_` = table(x, exclude=X)),
       lapply(u.opt, function(use) table(x, exclude=X, useNA=use))))
+ly <-  lapply(xcl, function(X)
+    c(list(`_` = table(y, exclude=X)),
+      lapply(u.opt, function(use) table(y, exclude=X, useNA=use))))
+lxy <-  lapply(xcl, function(X)
+    c(list(`_` = table(x, y, exclude=X)),
+      lapply(u.opt, function(use) table(x, y, exclude=X, useNA=use))))
 
 stopifnot(
     vapply(lt, function(i) all(vapply(i, class, "") == "table"), NA),
+    vapply(ly, function(i) all(vapply(i, class, "") == "table"), NA),
     identical((ltNA <- lt[["NA"  ]]), lt[["NANaN"]]),
-    identical((ltNl <- lt[["NULL"]]), lt[["none" ]]))
+    identical((ltNl <- lt[["NULL"]]), lt[["none" ]]),
+    identical((lyNA <- ly[["NA"  ]]), ly[["NANaN"]]),
+    identical((lyNl <- ly[["NULL"]]), ly[["none" ]]))
 ## 'NULL' behaved special (2.8.0 <= R <= 3.3.1)  and
 ##  *all* tables in l0 and lt were == (1 0 2) !
-ltN1 <- ltNA[[1]]
-lNl1 <- ltNl[[1]]
+ltN1 <- ltNA[[1]]; lyN1 <- lyNA[[1]]
+lNl1 <- ltNl[[1]]; lyl1 <- lyNl[[1]]
+
 stopifnot(
     vapply(names(ltNA)[-1], function(n) identical(ltNA[[n]], ltN1), NA),
-    identical(2L, dim(ltN1)),
+    vapply(names(lyNA)[-1], function(n) identical(lyNA[[n]], lyN1), NA),
+    identical(lyN1, lyl1),
+    identical(2L, dim(ltN1)), identical(3L, dim(lyN1)),
     identical(3L, dim(lNl1)),
     identical(dimnames(ltN1), list(x = c("1","2"))),
     identical(dimnames(lNl1), list(x = c("1","2", NA))),
+    identical(dimnames(lyN1), list(y = paste(4:6))),
     identical(1:0,       as.vector(ltN1)),
-    identical(c(1:0,3L), as.vector(lNl1))
+    identical(c(1:0,3L), as.vector(lNl1)),
+    identical(c(1:2,1L), as.vector(lyN1))
 )
+
 
 
 ## contour() did not check args sufficiently
