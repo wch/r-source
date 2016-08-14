@@ -71,7 +71,10 @@
 
       \item \code{unique(warnings())} works more correctly, thanks to a
       new \code{duplicated.warnings()} method.
-      
+
+      \item \code{findInterval(x, vec = numeric(), all.inside = TRUE)}
+      now returns \code{0}s as documented.  (Reported by Bill Dunlap.)
+
       \item (Windows only) \command{R CMD SHLIB} failed when a symbol
       in the resulting library had the same name as a keyword in
       the \file{.def} file.  (\PR{17130})
@@ -95,7 +98,7 @@
       \item \code{unloadNamespace(ns)} also works again when \code{ns} is a
       \sQuote{namespace}, as from \code{getNamespace()}.
 
-      \item \code{rgamma(1,Inf)} or \code{rgamma(1, 0,0)} no longer give
+      \item \code{rgamma(1, Inf)} or \code{rgamma(1, 0, 0)} no longer give
       \code{NaN} but the correct limit.
 
       \item \code{length(baseenv())} is correct now.
