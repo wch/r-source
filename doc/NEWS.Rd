@@ -375,8 +375,8 @@
       \item \code{unique(warnings())} works more correctly, thanks to a
       new \code{duplicated.warnings()} method.
 
-      \item \code{findInterval(x, vec=numeric(), all.inside = TRUE)} now
-      returns \code{0}s as documented.  (Reported by Bill Dunlap.)
+      \item \code{findInterval(x, vec = numeric(), all.inside = TRUE)}
+      now returns \code{0}s as documented.  (Reported by Bill Dunlap.)
 
       \item (Windows only) \command{R CMD SHLIB} failed when a symbol
       in the resulting library had the same name as a keyword in
