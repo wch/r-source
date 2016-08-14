@@ -52,7 +52,7 @@ NEWS.rds: $(srcdir)/NEWS.Rd
 	  'NEWS.rds')" | $(R_EXE)
 
 NEWS: NEWS.rds
-	@$(ECHO) "creating NEWS"
+	@$(ECHO) "creating doc/NEWS"
 	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.rds", "NEWS")' |  $(R_EXE)
 
 html/NEWS.html: NEWS.rds
@@ -66,7 +66,7 @@ NEWS.pdf: NEWS.rds
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "'pdflatex' is needed to make NEWS.pdf but is missing on your system."; \
 	else \
-	 $(ECHO) "creating NEWS.pdf"; \
+	 $(ECHO) "creating doc/NEWS.pdf"; \
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
 	fi
 

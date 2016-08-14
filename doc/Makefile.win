@@ -23,13 +23,13 @@ CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
 
 ## Force ASCII output, for portability on Windows
 NEWS: NEWS.rds
-	@$(ECHO) "creating NEWS"
+	@$(ECHO) "creating doc/NEWS"
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE) LC_ALL=C
 
 ## Should be allowed to fail if pdflatex is not available
 NEWS.pdf: NEWS.rds
-	@$(ECHO) "creating NEWS.pdf"
+	@$(ECHO) "creating doc/NEWS.pdf"
 	-@$(ECHO) "options(warn=1);tools:::Rd2pdf_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
 
