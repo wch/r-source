@@ -4223,6 +4223,9 @@ It is hard to think of anything apart from @option{-I*} and @option{-D*}
 that is safe for general use @dots{}
 @end quotation
 
+@noindent
+although @option{-pthread} is pretty close to portable.
+
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
