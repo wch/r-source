@@ -4214,10 +4214,9 @@ integers can usually be converted to doubles for output.
 @command{R CMD check} performs some checks for non-portable
 compiler/linker flags in @file{src/Makevars}.  However, it cannot check
 the meaning of such flags, and some are commonly accepted but with
-compiler-specific meanings.  There are other non-portable flags such as
-@option{-isystem} which are not checked and @file{src/Makefile} files
-and makefiles is sub-directories are also not checked.  As a comment in
-the code says
+compiler-specific meanings.  There are other non-portable flags which
+are not checked, nor are @file{src/Makefile} files and makefiles in
+sub-directories.  As a comment in the code says
 
 @quotation
 It is hard to think of anything apart from @option{-I*} and @option{-D*}
@@ -4632,10 +4631,10 @@ helpful to look up functions at
 @uref{http://en.cppreference.com/w/} and compare what is defined in the
 various standards.
 
-Both the compiler and OS (@emph{via} system header files, which differ
-by architecture even for nominally the same OS) affect the compilability
-of C/C++ code.  Compilers from the GCC, @command{clang}, Intel and
-Oracle Studio suites are routinely used with @R{}, and both
+Both the compiler and OS (@emph{via} system header files, which may
+differ by architecture even for nominally the same OS) affect the
+compilability of C/C++ code.  Compilers from the GCC, @command{clang},
+Intel and Oracle Studio suites are routinely used with @R{}, and both
 @command{clang} and Oracle have more than one implementation of C++
 headers and library.  The range of possibilities makes comprehensive
 empirical checking impossible, and regrettably compilers are patchy at
@@ -4714,10 +4713,14 @@ The GNU Fortran compiler also supports a large number of non-portable
 extensions, the most commonly encountered one being
 @code{ISNAN}@footnote{There is a portable way to do this in Fortran 2003
 (@code{ieee_is_nan()} in module @code{ieee_arithmetic}), but ironically
-that is not supported in the commonly-used versions 4.x of GNU
-Fortran.  A pretty robust alternative is to test @code{if(my_var /=
-my_var)}.}.  Some are listed at
-@uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Extensions-implemented-in-GNU-Fortran.html}
+that is not supported in the commonly-used versions 4.x of GNU Fortran.
+A pretty robust alternative is to test @code{if(my_var /= my_var)}.}.
+Some are listed at
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gfortran/@/Extensions-implemented-in-GNU-Fortran.html}.
+One that frequently catches package writers is that it allows
+out-of-order declarations: in standard-conformant Fortran variables must
+be declared (explicitly or implicitly) before use in other declarations
+such as dimensions.
 
 @item
 Including C-style headers in C++ code is not portable.  Including the
@@ -4807,7 +4810,7 @@ Package authors commonly assume things are part of C99 when they are
 not: the most common example is POSIX function @code{strdup}.  The most
 common C library on Linux, @code{glibc}, will hide the declarations of
 such extensions unless a `feature-test macro' is defined @strong{before}
-(almost) any header is included.  So for @code{strdup} you need
+(almost) any system header is included.  So for @code{strdup} you need
 @example
 #define _POSIX_C_SOURCE 200809L
 ...
