@@ -30,7 +30,7 @@
       \item Add \code{utils::strcapture()}. Given a character vector and
       a regular expression containing capture expressions,
       \code{strcapture()} will extract the captured tokens into a
-      tabular data structure, typically a data.frame.
+      tabular data structure, typically a \code{data.frame}.
 
       \item \code{str()} and \code{strOptions()} get a new option
       \code{drop.deparse.attr} with improved but \emph{changed} default
@@ -49,21 +49,22 @@
       \item Zero-length date and datetime objects (\code{"POSIX[cl]?t"})
       now \code{print()} \dQuote{recognizably}.
 
-      \item \code{xy.coords()} and \code{xyz.coords()} get new
+      \item \code{xy.coords()} and \code{xyz.coords()} get a new
       \code{setLab} option.
 
       \item The \code{method} argument of \code{sort.list()},
       \code{order()} and \code{sort.int()} gains an \code{"auto"} option
       (the default) which should behave the same as before when
-      \code{method} was left missing.
+      \code{method} was not supplied.
 
       \item \code{stopifnot(E, ..)} now reports differences when
       \code{E} is a call to \code{all.equal()} and that is not true.
 
       \item \code{boxplot(<formula>, *)} gets optional arguments
       \code{drop}, \code{sep}, and \code{lex.order} to pass to
-      \code{split.default()} which itself newly gets \code{lex.order} to
-      pass to \code{interaction()} for more flexibility.
+      \code{split.default()} which itself newly gets an argument
+      \code{lex.order} to pass to \code{interaction()} for more
+      flexibility.
 
       \item The \code{plot()} method for \code{ppr()} has enhanced
       default labels (\code{xmin} and \code{main}).
@@ -79,11 +80,11 @@
       for logical, integer and raw \code{x} (and as previously for
       complex and numeric).
 
-      \item \code{smooth.spline()} now allows to specify lambda
-      directly, gets a \code{hatvalues()} method and keeps \code{tol} in
-      result.
+      \item \code{smooth.spline()} now allows direct specification of
+      lambda, gets a \code{hatvalues()} method and keeps \code{tol} in
+      the result.
 
-      \item \code{addNA()} is faster now, e.g., when applied twice.
+      \item \code{addNA()} is faster now, e.g.{} when applied twice.
       (Part of \PR{16895}.)
 
       \item New option \code{rstandard(<lm>, type = "predicted")}
@@ -91,8 +92,8 @@
       cross-validation errors for linear models.
 
       \item After seven years of deprecation, duplicated factor levels
-      now produce an error in \code{levels<-} instead of a warning, and
-      a warning when printed.
+      now produce a warning when printed and an error in \code{levels<-}
+      instead of a warning.
 
       \item \code{str(<looooooooong_string>)} is no longer very slow;
       inspired by Mikko Korpela's proposal in \PR{16527}.
@@ -108,12 +109,12 @@
       Its \code{toLatex()} method now includes the \code{running}
       component.
 
-      \item \code{options("interrupt")} can be used to specify a default
+      \item \code{options(interrupt=)} can be used to specify a default
       action for user interrupts.  For now, if this option is not set
       and the \code{error} option is set, then an unhandled user
-      interrupt invokes the \code{error} option.  This may be dropped in
+      interrupt invokes the \code{error} option.  (This may be dropped in
       the future as \code{interrupt} conditions are not \code{error}
-      conditions.
+      conditions.)
 
       \item In most cases user interrupt handlers will be called with a
       \code{"resume"} restart available.  Handlers can invoke this
@@ -143,12 +144,12 @@
       will occasionally change \R outputs (and need changes to some
       \file{*.Rout(.save)} files).
 
-      \item \code{table(x, exclude=NULL)} now sets \code{useNA =
-      "ifany"} (instead of \code{"always"}).  Together with the bug
-      fixes for this case, this recovers more consistent behaviour, also
-      compatible to older versions of R.  As a consequence,
-      \code{summary()} for a logical vector no longer reports (zero)
-      counts for \code{NA} when there are no \code{NA}s.
+      \item \code{table(x, exclude = NULL)} now sets
+      \code{useNA = "ifany"} (instead of \code{"always"}).
+      Together with the bug fixes for this case, this recovers more
+      consistent behaviour  compatible to older versions of \R.  As
+      a consequence, \code{summary()} for a logical vector no longer
+      reports (zero) counts for \code{NA} when there are no \code{NA}s.
 
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
@@ -185,14 +186,14 @@
       \item Support for the defunct IRIX and OSF/1 OSes and Alpha CPU
       has been removed.
 
-      \item \command{configure} checks if the compiler specified by
+      \item \command{configure} checks that the compiler specified by
       \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
 
       \item \command{configure} checks for the required header
       \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
       system call \code{select} and aborts if they are not found.
 
-      \item [In progress.] \command{configure} looks for a flag for the
+      \item (In progress.) \command{configure} looks for a flag for the
       C++ compiler which approximates C++98/C++03 compliance, and uses
       it as part of the \code{CXX98} macro in file \file{etc/Makeconf}.
       For example, \option{-std=gnu++98} is selected for \command{g++}
@@ -284,17 +285,17 @@
       (\PR{16972})
 
       \item Package installation into a library where the package exists
-      via symbolic link now should work wherever \code{\link{Sys.readlink}()}
+      via symbolic link now should work wherever \code{Sys.readlink()}
       works, resolving \PR{16725}.
 
       \item \code{table()} no longer drops an \code{"NaN"} factor level,
       and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
-      patch for \PR{16936}.  Also, in the case of \code{exclude=NULL}
+      patch for \PR{16936}.  Also, in the case of \code{exclude = NULL}
       and \code{NA}s, these are tabulated correctly (again).
 
       Additionally, all cases of empty \code{exclude} are equivalent,
       and \code{useNA} is not overwritten when specified (as it was by
-      \code{exclude=NULL}).
+      \code{exclude = NULL}).
 
       \item \code{pmax()} and \code{pmin()} now work with (more ?)
       classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
@@ -374,7 +375,7 @@
       \item \code{unique(warnings())} works more correctly, thanks to a
       new \code{duplicated.warnings()} method.
 
-      \item \code{findInterval(x, vec=numeric(), all.inside=TRUE)} now
+      \item \code{findInterval(x, vec=numeric(), all.inside = TRUE)} now
       returns \code{0}s as documented.  (Reported by Bill Dunlap.)
 
       \item (Windows only) \command{R CMD SHLIB} failed when a symbol
@@ -400,7 +401,7 @@
       \item \code{unloadNamespace(ns)} also works again when \code{ns} is a
       \sQuote{namespace}, as from \code{getNamespace()}.
 
-      \item \code{rgamma(1,Inf)} or \code{rgamma(1, 0,0)} no longer give
+      \item \code{rgamma(1, Inf)} or \code{rgamma(1, 0, 0)} no longer give
       \code{NaN} but the correct limit.
 
       \item \code{length(baseenv())} is correct now.
