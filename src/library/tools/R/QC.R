@@ -3839,6 +3839,7 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                         "isystem", # gcc and clones
                         "x",
                         "cpp", # gfortran
+                        "g",  # not portable, waste of space
                         "q"),
                       collapse = "|"))
     for(i in seq_along(lines)) {
