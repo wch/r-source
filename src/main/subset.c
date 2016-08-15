@@ -203,7 +203,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	if (
 	    ((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
 	    ( /* here we might have an array.  Use row names if 1D */
-		isArray(x) && LENGTH(getAttrib(x, R_DimNamesSymbol)) == 1 &&
+		isArray(x) && length(getAttrib(x, R_DimNamesSymbol)) == 1 &&
 		(attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue &&
 		(attrib = GetRowNames(attrib)) != R_NilValue
 		)

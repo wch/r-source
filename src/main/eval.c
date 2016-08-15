@@ -4930,10 +4930,15 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, R_xlen_t i, int typev,
 	}
     }
     else if (typev == TYPEOF(vec)) {
-	if (XLENGTH(vec) <= i) return FALSE;
 	switch(typev) {
-	case INTSXP: INTEGER(vec)[i] = v->ival; return TRUE;
-	case LGLSXP: LOGICAL(vec)[i] = INTEGER_TO_LOGICAL(v->ival); return TRUE;
+	case INTSXP:
+	    if (XLENGTH(vec) <= i) return FALSE;
+	    INTEGER(vec)[i] = v->ival;
+	    return TRUE;
+	case LGLSXP:
+	    if (XLENGTH(vec) <= i) return FALSE;
+	    LOGICAL(vec)[i] = INTEGER_TO_LOGICAL(v->ival);
+	    return TRUE;
 	}
     }
     return FALSE;

@@ -154,9 +154,9 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    setAttrib(x, R_DimNamesSymbol, ynames);
     }
     else {
-	if(XLENGTH(x) == XLENGTH(xnames))
+	if(xnames != R_NilValue && XLENGTH(x) == XLENGTH(xnames))
 	    setAttrib(x, R_NamesSymbol, xnames);
-	else if(XLENGTH(x) == XLENGTH(ynames))
+	else if(ynames != R_NilValue && XLENGTH(x) == XLENGTH(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
     }
 

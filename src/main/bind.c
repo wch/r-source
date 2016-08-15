@@ -1315,9 +1315,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     }
     else { /* everything else, currently REALSXP, INTSXP, LGLSXP */
 	for (t = args; t != R_NilValue; t = CDR(t)) {
-	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
+	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL, or NULL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
-		R_xlen_t k = XLENGTH(u);
+		R_xlen_t k = xlength(u); /* use xlength since u can be NULL */
 		R_xlen_t idx = (!isMatrix(u)) ? rows : k;
 		if (TYPEOF(u) <= INTSXP) { /* INT or LGL */
 		    if (mode <= INTSXP) {
