@@ -4224,7 +4224,10 @@ that is safe for general use @dots{}
 @end quotation
 
 @noindent
-although @option{-pthread} is pretty close to portable.
+although @option{-pthread} is pretty close to portable.  (Option
+@option{-U} is portable but little use on the command line as it will
+only cancel built-in defines (not portable) and those defined earlier on
+the command line (@R{} does not use any).)
 
 @item
 Do be very careful with passing arguments between @R{}, C and

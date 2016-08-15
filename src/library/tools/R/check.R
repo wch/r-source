@@ -3552,7 +3552,6 @@ setRlibs <-
                              ## clang warning about invalid returns.
                              "warning: void function",
                              "warning: control reaches end of non-void function",
-                             "warning: control may reach end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
@@ -3681,6 +3680,8 @@ setRlibs <-
                 ## suppress filtering out by setting the internal
                 ## environment variable _R_CHECK_WALL_FORTRAN_ to
                 ## something "true".
+                ## All gfortran -Wall warnings start Warning: so have been
+                ## included.  We exclude some now.
                 check_src_flag <- Sys.getenv("_R_CHECK_WALL_FORTRAN_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
                     warn_re <-
@@ -3689,7 +3690,22 @@ setRlibs <-
                           "ASSIGN statement at \\(1\\)",
                           "Assigned GOTO statement at \\(1\\)",
                           "arithmetic IF statement at \\(1\\)",
-                          "Nonconforming tab character (in|at)")
+                          "Nonconforming tab character (in|at)",
+                          "Obsolescent feature:")
+                    warn_re <- c(warn_re,
+                                 "Warning: .*\\[-Wconversion]",
+                                 ## We retain [-Wuninitialized]
+                                 "Warning: .*\\[-Wmaybe-uninitialized]",
+                                 "Warning: .*\\[-Wintrinsic-shadow]",
+                                 ## R itself uses this one.
+                                 "Warning: GNU Extension: DOUBLE COMPLEX"
+                                 )
+                    check_src_flag <-
+                        Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
+                    if (!config_val_to_logical(check_src_flag))
+                        warn_re <- c(warn_re,
+                                     "Warning: .*\\[-Wunused-function]",
+                                     "Warning: .*\\[-Wunused-dummy-argument]")
                     warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
                     lines <- grep(warn_re, lines, invert = TRUE, value = TRUE)
                 }
@@ -4784,7 +4800,7 @@ setRlibs <-
             check_incoming_remote <- Sys.getenv("_R_CHECK_CRAN_INCOMING_REMOTE_", "NA")
             check_incoming_remote <- if(check_incoming_remote == "NA") as_cran else {
                 config_val_to_logical(check_incoming_remote)
-            }            
+            }
             if (check_incoming) check_CRAN_incoming(!check_incoming_remote)
 
             ## <NOTE>
