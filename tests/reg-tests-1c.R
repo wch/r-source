@@ -1749,12 +1749,16 @@ for(nm in nf)  {
 
 
 ## PR#16936: table() dropping "NaN" level & 'exclude' sometimes failing
+op <- options(warn = 2)# no warnings allowed
 (fN1 <- factor(c("NA", NA, "NbN", "NaN")))
 (tN1 <- table(fN1)) ##--> was missing 'NaN'
 (fN <- factor(c(rep(c("A","B"), 2), NA), exclude = NULL))
-(tN <- table(fN, exclude = "B")) ## had extraneous "B"
-stopifnot(identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L)),
-	  identical(c(tN),  structure(2:1, .Names = c("A", NA))))
+(tN  <- table(fN, exclude = "B"))       ## had extraneous "B"
+(tN. <- table(fN, exclude = c("B",NA))) ## had extraneous "B" and NA
+stopifnot(identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L))
+        , identical(c(tN),  structure(2:1, .Names = c("A", NA)))
+        , identical(c(tN.), structure(2L,  .Names = "A"))
+)
 ## both failed in R <= 3.3.1
 stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
 		    c("Age", "Survived", "Freq"))) # was wrong for ~ 32 hours
@@ -1767,48 +1771,72 @@ stopifnot(identical(x, structure(as.integer(c(1, NA, 3, 3)),
 (txx <- table(x, exclude = NULL))
 stopifnot(identical(txx, table(x, useNA = "ifany")),
 	  identical(as.vector(txx), c(1:0, 3L)))
-(y <- factor(c(4,5,6:5)))
 ## wrongly gave  1 0 2  for R versions  2.8.0 <= Rver <= 3.3.1
 u.opt <- list(no="no", ifa = "ifany", alw = "always")
 l0 <- c(list(`_` = table(x)),
            lapply(u.opt, function(use) table(x, useNA=use)))
-xcl <- list(NULL=NULL, none=""[0], `NA`=NA, NANaN = c(NA,NaN))
+xcl <- list(NULL=NULL, none=""[0], "NA"=NA, NANaN = c(NA,NaN))
+options(op) # warnings ok:
 lt <- lapply(xcl, function(X)
-    c(list(`_` = table(x, exclude=X)),
+    c(list(`_` = table(x, exclude=X)), #--> 4 warnings from (exclude, useNA):
       lapply(u.opt, function(use) table(x, exclude=X, useNA=use))))
+(y <- factor(c(4,5,6:5)))
 ly <-  lapply(xcl, function(X)
-    c(list(`_` = table(y, exclude=X)),
+    c(list(`_` = table(y, exclude=X)), #--> 4 warnings ...
       lapply(u.opt, function(use) table(y, exclude=X, useNA=use))))
 lxy <-  lapply(xcl, function(X)
-    c(list(`_` = table(x, y, exclude=X)),
+    c(list(`_` = table(x, y, exclude=X)), #--> 4 warnings ...
       lapply(u.opt, function(use) table(x, y, exclude=X, useNA=use))))
+op <- options(warn = 2)# no warnings allowed
 
 stopifnot(
     vapply(lt, function(i) all(vapply(i, class, "") == "table"), NA),
     vapply(ly, function(i) all(vapply(i, class, "") == "table"), NA),
-    identical((ltNA <- lt[["NA"  ]]), lt[["NANaN"]]),
-    identical((ltNl <- lt[["NULL"]]), lt[["none" ]]),
-    identical((lyNA <- ly[["NA"  ]]), ly[["NANaN"]]),
-    identical((lyNl <- ly[["NULL"]]), ly[["none" ]]))
+    vapply(lxy,function(i) all(vapply(i, class, "") == "table"), NA)
+    , identical((ltNA  <- lt [["NA"  ]]), lt [["NANaN"]])
+    , identical((ltNl  <- lt [["NULL"]]), lt [["none" ]])
+    , identical((lyNA  <- ly [["NA"  ]]), ly [["NANaN"]])
+    , identical((lyNl  <- ly [["NULL"]]), ly [["none" ]])
+    , identical((lxyNA <- lxy[["NA"  ]]), lxy[["NANaN"]])
+    , identical((lxyNl <- lxy[["NULL"]]), lxy[["none" ]])
+)
 ## 'NULL' behaved special (2.8.0 <= R <= 3.3.1)  and
 ##  *all* tables in l0 and lt were == (1 0 2) !
-ltN1 <- ltNA[[1]]; lyN1 <- lyNA[[1]]
-lNl1 <- ltNl[[1]]; lyl1 <- lyNl[[1]]
+ltN1 <- ltNA[[1]]; lyN1 <- lyNA[[1]]; lxyN1 <- lxyNA[[1]]
+lNl1 <- ltNl[[1]]; lyl1 <- lyNl[[1]]; lxyl1 <- lxyNl[[1]]
 
 stopifnot(
-    vapply(names(ltNA)[-1], function(n) identical(ltNA[[n]], ltN1), NA),
-    vapply(names(lyNA)[-1], function(n) identical(lyNA[[n]], lyN1), NA),
+    vapply(names(ltNA) [-1], function(n) identical(ltNA [[n]], ltN1 ), NA),
+    vapply(names(lyNA) [-1], function(n) identical(lyNA [[n]], lyN1 ), NA),
+    vapply(names(lxyNA)[-1], function(n) identical(lxyNA[[n]], lxyN1), NA),
     identical(lyN1, lyl1),
     identical(2L, dim(ltN1)), identical(3L, dim(lyN1)),
     identical(3L, dim(lNl1)),
     identical(dimnames(ltN1), list(x = c("1","2"))),
     identical(dimnames(lNl1), list(x = c("1","2", NA))),
     identical(dimnames(lyN1), list(y = paste(4:6))),
-    identical(1:0,       as.vector(ltN1)),
+    identical(  1:0    , as.vector(ltN1)),
     identical(c(1:0,3L), as.vector(lNl1)),
     identical(c(1:2,1L), as.vector(lyN1))
+    , identical(c(1L, rep(0L, 5)), as.vector(lxyN1))
+    , identical(dimnames(lxyN1), c(dimnames(ltN1), dimnames(lyN1)))
 )
 
+x3N <- c(1:3,NA)
+(tt <- table(x3N, exclude=NaN))
+stopifnot(tt == 1, length(nt <- names(tt)) == 4, is.na(nt[4])
+	, identical(tt, table(x3N, useNA = "ifany"))
+	, identical(tt, table(x3N, exclude = integer(0)))
+	, identical(t3N <- table(x3N), table(x3N, useNA="no"))
+	, identical(c(t3N), setNames(rep(1L, 3), as.character(1:3)))
+	##
+	, identical(c("2" = 1L), c(table(1:2, exclude=1) -> t12.1))
+	, identical(t12.1, table(1:2, exclude=1, useNA= "no"))
+	, identical(t12.1, table(1:2, exclude=1, useNA= "ifany"))
+	, identical(structure(1:0, .Names = c("2", NA)),
+		    c(     table(1:2, exclude=1, useNA= "always")))
+)
+options(op) # (revert to default)
 
 
 ## contour() did not check args sufficiently

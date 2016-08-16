@@ -6,10 +6,15 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-  %%   \itemize{
-  %%   }
-  %% }
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{table()} has been amended to be more internally
+      consistent and become back compatible to \R <= 2.7.2 again.
+      Consequently, \code{table(1:2, exclude=NULL)} no longer contains a
+      zero count for \code{<NA>}, but \code{useNA = "always"} continues
+      to do so.
+    }
+  }
   \subsection{NEW FEATURES}{
     \itemize{
       \item User errors such as \code{integrate(f, 0:1, 2)} are now caught.
@@ -225,14 +230,14 @@
       \env{_R_CHECK_CRAN_INCOMING_REMOTE_} false now skips tests that
       require remote access.  The remaining (local) tests typically
       run very quickly compared to the remote tests.
-      
+
       \item \command{R CMD check} reports more dubious flags in files
       \file{src/Makevars[.in]}, includng \option{-w} and \option{-g}.
-      
+
       \item \command{R CMD check} has been set up to filter important
       warnings from recent versions of \command{gfortran} with
       \option{-Wall -pedantic}: this now reports non-portable GNU
-      extensions such as out-of-order declarations. 
+      extensions such as out-of-order declarations.
     }
   }
 
@@ -300,6 +305,9 @@
       and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
       patch for \PR{16936}.  Also, in the case of \code{exclude = NULL}
       and \code{NA}s, these are tabulated correctly (again).
+
+      Further, \code{table(1:2, exclude = 1, useNA = "ifany")} no longer
+      erronously reports \code{<NA>} counts.
 
       Additionally, all cases of empty \code{exclude} are equivalent,
       and \code{useNA} is not overwritten when specified (as it was by
