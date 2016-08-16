@@ -650,8 +650,12 @@ SEXP mc_children()
 	/* in theory signals can flag a pid as closed in the
 	   meantime, we may end up with fewer children than
 	   expected - highly unlikely but possible */
-	if (pids - INTEGER(res) < LENGTH(res))
-	    SETLENGTH(res, (int)(pids - INTEGER(res)));
+	if (pids - INTEGER(res) < LENGTH(res)) {
+	    R_len_t len = pids - INTEGER(res);
+	    PROTECT(res);
+	    res = lengthgets(res, len);
+	    UNPROTECT(1);
+	}
     }
     return res;
 }
