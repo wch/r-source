@@ -156,6 +156,10 @@
       a consequence, \code{summary()} for a logical vector no longer
       reports (zero) counts for \code{NA} when there are no \code{NA}s.
 
+      \item \code{dump.frames()} gets a new option
+      \code{include.GlobalEnv} which allows to also dump the global
+      environment, thanks to Andreas Kersting's proposal in \PR{17116}.
+
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.

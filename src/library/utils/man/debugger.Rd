@@ -1,6 +1,6 @@
 % File src/library/utils/man/debugger.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{debugger}
@@ -12,15 +12,20 @@
   dumped frames.
 }
 \usage{
-dump.frames(dumpto = "last.dump", to.file = FALSE)
+dump.frames(dumpto = "last.dump", to.file = FALSE,
+            include.GlobalEnv = FALSE)
 debugger(dump = last.dump)
 }
 \arguments{
   \item{dumpto}{a character string. The name of the object or file to
     dump to.}
-  \item{to.file}{logical. Should the dump be to an \R object or to a
+  \item{to.file}{logical.  Should the dump be to an \R object or to a
     file?}
-  \item{dump}{An \R dump object created by \code{dump.frames}.}
+  \item{include.GlobalEnv}{logical indicating if a \emph{copy} of the
+    \code{\link{.GlobalEnv}} environment should be included in addition
+    to the \code{\link{sys.frames}()}.  Will be particularly useful when
+    used in a batch job.}
+  \item{dump}{an \R dump object created by \code{dump.frames}.}
 }
 \details{
   To use post-mortem debugging, set the option \code{error} to be a call
@@ -68,7 +73,7 @@ debugger(dump = last.dump)
 \seealso{
   \code{\link{browser}} for the actions available at the \code{Browse}
   prompt.
-  
+
   \code{\link{options}} for setting \code{error} options;
   \code{\link{recover}} is an interactive debugger working similarly to
   \code{debugger} but directly after the error occurs.

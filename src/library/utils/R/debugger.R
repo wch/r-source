@@ -1,7 +1,7 @@
 #  File src/library/utils/R/debugger.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,11 +16,19 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-dump.frames <- function(dumpto = "last.dump", to.file = FALSE)
+dump.frames <- function(dumpto = "last.dump", to.file = FALSE,
+                        include.GlobalEnv = FALSE)
 {
     calls <- sys.calls()
     last.dump <- sys.frames()
     names(last.dump) <- limitedLabels(calls)
+    if (include.GlobalEnv) {
+	## include a copy of (and not just a reference to) .GlobalEnv in the dump
+        ## cp_envir(EE) := as.environment(as.list(EE, all.names=TRUE))
+	last.dump <- c(".GlobalEnv" =
+                           as.environment(as.list(.GlobalEnv, all.names = TRUE)),
+		       last.dump)
+    }
     last.dump <- last.dump[-length(last.dump)] # remove this function
     attr(last.dump, "error.message") <- geterrmessage()
     class(last.dump) <- "dump.frames"
