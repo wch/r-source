@@ -78,6 +78,10 @@
       \item (Windows only) \command{R CMD SHLIB} failed when a symbol
       in the resulting library had the same name as a keyword in
       the \file{.def} file.  (\PR{17130})
+
+      \item \code{pmax()} and \code{pmin()} now work with (more ?)
+      classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
+      package, as documented for a long time.
     }
   }
 }
