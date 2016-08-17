@@ -317,10 +317,6 @@
       and \code{useNA} is not overwritten when specified (as it was by
       \code{exclude = NULL}).
 
-      \item \code{pmax()} and \code{pmin()} now work with (more ?)
-      classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
-      package, as documented for a long time.
-
       \item \code{wilcox.test(x, conf.int=TRUE)} no longer errors out in
       cases where the confidence interval is not available, such as for
       \code{x = 0:2}.
@@ -401,6 +397,10 @@
       \item (Windows only) \command{R CMD SHLIB} failed when a symbol
       in the resulting library had the same name as a keyword in
       the \file{.def} file.  (\PR{17130})
+
+      \item \code{pmax()} and \code{pmin()} now work with (more ?)
+      classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
+      package, as documented for a long time.
     }
   }
 }
