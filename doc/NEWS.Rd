@@ -401,6 +401,8 @@
       \item \code{pmax()} and \code{pmin()} now work with (more ?)
       classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
       package, as documented for a long time.
+
+      \item \code{droplevels(f)} now keeps <NA> levels when present.
     }
   }
 }

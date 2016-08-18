@@ -1859,6 +1859,13 @@ stopifnot(0 == unlist(lapply(TF, function(L1)
 ## did return -1's for all.inside=TRUE  in R <= 3.3.1
 
 
+## droplevels(<factor with NA-level>)
+L3 <- c("A","B","C")
+d <- factor(rep(L3, 2), levels = c(L3, "XX")); is.na(d) <- 3:4
+(d <- addNA(d)) ## levels: A B C XX <NA>
+stopifnot(identical(levels(print(droplevels(d))), c(L3, NA)))
+## only XX must be dropped; R <= 3.3.1 also dropped <NA>
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

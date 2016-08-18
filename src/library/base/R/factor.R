@@ -103,12 +103,13 @@ nlevels <- function(x) length(levels(x))
 }
 
 droplevels <- function(x, ...) UseMethod("droplevels")
-droplevels.factor <- function(x, ...) factor(x)
-droplevels.data.frame <- function(x, except = NULL, ...)
+droplevels.factor <- function(x, exclude = NULL, ...)
+    factor(x, exclude = exclude)
+droplevels.data.frame <- function(x, except = NULL, exclude = NULL, ...)
   {
     ix <- vapply(x, is.factor, NA)
     if (!is.null(except)) ix[except] <- FALSE
-    x[ix] <- lapply(x[ix], factor)
+    x[ix] <- lapply(x[ix], factor, exclude = exclude)
     x
   }
 

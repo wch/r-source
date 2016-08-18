@@ -1,10 +1,10 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{droplevels}
-\title{droplevels}
+\title{Drop Unused Levels from Factors}
 \alias{droplevels}
 \alias{droplevels.factor}
 \alias{droplevels.data.frame}
@@ -12,26 +12,30 @@
 \concept{enumerated type}
 \concept{category}
 \description{
-  The function \code{droplevels} is used to drop unused levels from a factor or, more commonly, from factors in a data frame.
+  The function \code{droplevels} is used to drop unused levels from a
+  \code{\link{factor}} or, more commonly, from factors in a data frame.
 }
 \usage{
-\S3method{droplevels}{factor}(x, \dots)
-\S3method{droplevels}{data.frame}(x, except, \dots)
+\S3method{droplevels}{factor}(x, exclude = NULL, \dots)
+\S3method{droplevels}{data.frame}(x, except, exclude = NULL, \dots)
 }
 \arguments{
   \item{x}{an object from which to drop unused factor levels.}
+  \item{exclude}{passed to \code{\link{factor}()}; factor levels which
+    should be excluded from the result even if present.}
   \item{\dots}{further arguments passed to methods}
   \item{except}{indices of columns from which \emph{not} to drop levels}
 }
 \value{
   \code{droplevels} returns an object of the same class as \code{x}}
 \details{
-  The method for class \code{"factor"} is essentially equivalent to \code{factor(x)}.
+  The method for class \code{"factor"} is currently equivalent to
+  \code{factor(x, exclude=exclude)}.
 
   The \code{except} argument follow the usual indexing rules.
 }
 
-\note{ This function was introduced in R 2.12.0. It is primarily
+\note{ This function was introduced in R 2.12.0.  It is primarily
   intended for cases where one or more factors in a data frame
   contains only elements from a reduced level set after
   subsetting.  (Notice that subsetting does \emph{not} in general drop
