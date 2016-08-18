@@ -58,6 +58,7 @@ Iceland,Iceland,Reykjavik,http://cran.hafro.is/,"Marine Research Institute","cra
 India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
 "Indonesia (Jakarta)",Indonesia,Jakarta,http://cran.repo.bppt.go.id/,"Agency for The Application and Assessment of Technology","Imam Cartealy <icx # biotek.bppt.go.id>",1,id,"maintainer_address_bounces"
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
+"Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
@@ -96,6 +97,7 @@ Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University 
 Sweden,Sweden,Umeå,http://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se
 "Switzerland [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 Switzerland,Switzerland,Zürich,http://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
+"Taiwan (Chungli) [https]",Taiwan,Chungli,https://ftp.yzu.edu.tw/CRAN/,"Department of Computer Science and Engineering, Yuan Ze University","Peter Dave Hello <hsu # peterdavehello.org>",1,tw
 "Taiwan (Chungli)",Taiwan,Chungli,http://ftp.yzu.edu.tw/CRAN/,"Department of Computer Science and Engineering, Yuan Ze University","Peter Dave Hello <hsu # peterdavehello.org>",1,tw
 "Taiwan (Taipei)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw,"maintainer_address_bounces"
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
