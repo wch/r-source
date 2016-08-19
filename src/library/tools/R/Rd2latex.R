@@ -306,7 +306,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- psub("(?<!\\\\)([&$%_#])", "\\\\\\1", x)
         x <- fsub("^", "\\textasciicircum{}", x)
         x <- fsub("~", "\\textasciitilde{}", x)
-        x <- fsub("<-", "<\\Rdash", x)
+        x <- fsub("<-", "<\\Rdash{}", x)
         x <- psub("([!|])", '"\\1', x)
         x
     }

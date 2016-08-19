@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@
 
 axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 {
-    mat <- missing(at) || is.null(at)
-    if(!mat) x <- as.POSIXct(at) else x <- as.POSIXct(x)
-    range <- par("usr")[if(side %%2) 1L:2L else 3L:4L]
+    has.at <- !missing(at) && !is.null(at)
+    x <- as.POSIXct(if(has.at) at else x)
+    range <- sort(par("usr")[if(side %% 2) 1L:2L else 3L:4L])
     ## find out the scale involved
     d <- range[2L] - range[1L]
     z <- c(range, x[is.finite(x)])
@@ -72,7 +72,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         z <- as.POSIXct(.POSIXlt(zz))
         if(missing(format)) format <- "%Y"
     }
-    if(!mat) z <- x[is.finite(x)] # override changes
+    if(has.at) z <- x[is.finite(x)] # override changes
     keep <- z >= range[1L] & z <= range[2L]
     z <- z[keep]
     if (!is.logical(labels)) labels <- labels[keep]
@@ -206,9 +206,9 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
 
 axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 {
-    mat <- missing(at) || is.null(at)
-    if(!mat) x <- as.Date(at) else x <- as.Date(x)
-    range <- par("usr")[if(side %%2) 1L:2L else 3:4L]
+    has.at <- !missing(at) && !is.null(at)
+    x <- as.Date(if(has.at) at else x)
+    range <- sort(par("usr")[if(side %% 2) 1L:2L else 3:4L])
     range[1L] <- ceiling(range[1L])
     range[2L] <- floor(range[2L])
     ## find out the scale involved
@@ -236,7 +236,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
         z <- as.Date(zz)
         if(missing(format)) format <- "%Y"
     }
-    if(!mat) z <- x[is.finite(x)] # override changes
+    if(has.at) z <- x[is.finite(x)] # override changes
     keep <- z >= range[1L] & z <= range[2L]
     z <- z[keep]
     z <- sort(unique(z)); class(z) <- "Date"
