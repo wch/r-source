@@ -71,25 +71,27 @@ is.table(x)
   \code{deparse.level = 1} uses the supplied argument if it is a symbol,
   and \code{deparse.level = 2} will deparse the argument.
 
-  Only when \code{exclude} is specified and non-NULL (i.e., not by
-  default), will \code{table} potentially drop levels of factor
+  Only when \code{exclude} is specified (i.e., not by default) and
+  non-empty, will \code{table} potentially drop levels of factor
   arguments.
 
   \code{useNA} controls if the table includes counts of \code{NA}
-  values: the allowed values correspond to never, only if the count is
-  positive and even for zero counts.  This is overridden by specifying
-  \code{exclude = NULL}.  Note that levels specified in \code{exclude}
-  are mapped to \code{NA} and so included in \code{NA} counts.
+  values: the allowed values correspond to never (\code{"no"}), only if the count is
+  positive (\code{"ifany"}) and even for zero counts (\code{"always"}).
+  Note the somewhat \dQuote{pathological} case of two different kinds of
+  \code{NA}s which are treated differently, depending on both
+  \code{useNA} and \code{exclude}, see \code{d.patho} in the
+  \sQuote{Examples:} below.
 
-  Both \code{exclude} and \code{useNA} operate on an "all or none"
+  Both \code{exclude} and \code{useNA} operate on an \dQuote{all or none}
   basis.  If you want to control the dimensions of a multiway table
   separately, modify each argument using \code{\link{factor}} or
   \code{\link{addNA}}.
 
-  It is best to supply factors rather than rely on coercion.  In
-  particular, \code{exclude} will be used in coercion to a factor, and
-  so values (not levels) which appear in \code{exclude} before coercion
-  will be mapped to \code{NA} rather than be discarded.
+  Non-factor arguments \code{a} are coerced via \code{factor(a,
+    exclude=exclude)}.  Since \R 3.4.0, care is taken \emph{not} to
+  count the excluded values (where they were included in the \code{NA}
+  count, previously).
 
   The \code{summary} method for class \code{"table"} (used for objects
   created by \code{table} or \code{\link{xtabs}}) which gives basic
@@ -100,8 +102,8 @@ is.table(x)
 \value{
   \code{table()} returns a \emph{contingency table}, an object of
   class \code{"table"}, an array of integer values.
-  Note that unlike S the result is always an array, a 1D array if one
-  factor is given.
+  Note that unlike S the result is always an \code{\link{array}}, a 1D
+  array if one factor is given.
 
   \code{as.table} and \code{is.table} coerce to and test for contingency
   table, respectively.
@@ -119,6 +121,9 @@ is.table(x)
   Use \code{\link{ftable}} for printing (and more) of
   multidimensional tables.  \code{\link{margin.table}},
   \code{\link{prop.table}}, \code{\link{addmargins}}.
+
+  \code{\link{addNA}} for constructing factors with \code{\link{NA}} as
+  a level.
 
   \code{\link{xtabs}} for cross tabulation of data frames with a
   formula interface.
@@ -153,8 +158,8 @@ all(tab == UCBAdmissions)
 all.equal(dimnames(tab), dimnames(UCBAdmissions))
 
 a <- rep(c(NA, 1/0:3), 10)
-table(a)
-table(a, exclude = NULL)
+table(a)                 # does not report NA's
+table(a, exclude = NULL) # reports NA's
 b <- factor(rep(c("A","B","C"), 10))
 table(b)
 table(b, exclude = "B")
@@ -169,6 +174,18 @@ d.[1:7]
 table(d.) # ", exclude = NULL" is not needed
 ## i.e., if you want to count the NA's of 'd', use
 table(d, useNA = "ifany")
+
+## "pathological" case:
+d.patho <- addNA(c(1,NA,1:2,1:3))[-7]; is.na(d.patho) <- 3:4
+d.patho
+## just 3 consecutive NA's ? --- well, have *two* kinds of NAs here :
+as.integer(d.patho) # 1 4 NA NA 1 2
+##
+## In R >= 3.4.0, table() allows to differentiate:
+table(d.patho)                   # counts the "unusual" NA
+table(d.patho, useNA = "ifany")  # counts all three
+table(d.patho, exclude = NULL)   #  (ditto)
+table(d.patho, exclude = NA)     # counts none
 
 ## Two-way tables with NA counts. The 3rd variant is absurd, but shows
 ## something that cannot be done using exclude or useNA.
