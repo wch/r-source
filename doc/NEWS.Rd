@@ -403,6 +403,11 @@
       package, as documented for a long time.
 
       \item \code{droplevels(f)} now keeps <NA> levels when present.
+
+      \item \code{axis(side, x = D)} and hence \code{Axis()} and
+      \code{plot()} now work correctly for \code{"Date"} and time
+      objects \code{D}, even when \dQuote{time goes backward}, e.g.,
+      with decreasing \code{xlim}.  (Reported by William May).
     }
   }
 }

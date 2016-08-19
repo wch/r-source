@@ -149,3 +149,8 @@ hc <- hclust(dst <- dist(c(1:2, 5)), method="ave")
 plot(hc, cex = 2, axes=FALSE, ann=FALSE)
 ## cex was not used in 3.0.[01]
 
+## axis.Date() and axis.POSIXct() with reversed 'xlim'
+dates <- c(as.Date("2016-08-19") - 10, Sys.Date())
+plot(dates, 1:2, xlim = rev(dates),
+     ann=FALSE, yaxt="n", frame.plot=FALSE)
+## failed to label the dates in R <= 3.3.1
