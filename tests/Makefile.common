@@ -196,8 +196,7 @@ test-Packages1:
 	  $(ECHO) "checking package '$${p}'"; \
 	  _R_CHECK_FF_CALLS_=registration \
 	  _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_=true \
-	  $(top_builddir)/bin/R CMD check --install=skip \
-	    --no-build-vignettes \
+	  $(top_builddir)/bin/R CMD check --install=skip --no-build-vignettes \
 	    $(top_srcdir)/src/library/$${p} || $(ECHO); \
 	done
 
@@ -453,7 +452,7 @@ INSTFILES = README \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \
 	  reg-S4.Rout.save \
-	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
+	  reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
 	  encodings.R utf8-regex.R \
