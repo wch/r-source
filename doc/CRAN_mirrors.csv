@@ -15,10 +15,10 @@ Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN 
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo Justiniano Ribeiro Junior <paulojus # ufpr.br>",1,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo.cruz # fiocruz.br",1,br
-"Brazil (SP 1) [https]",Brazil,"Sao Paulo",https://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br
-"Brazil (SP 1)",Brazil,"Sao Paulo",http://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,
-"Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","aafgarci # esalq.usp.br",1,br,"maintainer_address_bounces"
-Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg
+"Brazil (SP) [https]",Brazil,"Sao Paulo",https://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,"secure_mirror_from_master"
+"Brazil (SP)",Brazil,"Sao Paulo",http://vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br,"secure_mirror_from_master"
+"Bulgaria [https]",Bulgaria,Sofia,https://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
+Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","gripe # sfu.ca",1,ca,"maintainer_address_bounces"
 "Canada (MB) [https]",Canada,Winnipeg,https://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca
 "Canada (MB)",Canada,Winnipeg,http://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca
@@ -56,10 +56,9 @@ Hungary,Hungary,Budapest,http://cran.rapporter.net/,"Rapporter.net, Budapest","D
 "Iceland [https]",Iceland,Reykjavik,https://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 Iceland,Iceland,Reykjavik,http://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
-"Indonesia (Jakarta)",Indonesia,Jakarta,http://cran.repo.bppt.go.id/,"Agency for The Application and Assessment of Technology","Imam Cartealy <icx # biotek.bppt.go.id>",1,id,"maintainer_address_bounces"
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
-"Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie
-Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie
+"Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,"secure_mirror_from_master"
+Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,"secure_mirror_from_master"
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
@@ -70,8 +69,8 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",1,kr,"secure_mirror_from_master"
 "Korea (Ulsan)",Korea,Ulsan,http://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","dr.kyusang.lee # gmail.com",1,kr
 Lebanon,Lebanon,Byblos,http://rmirror.lau.edu.lb/,"Lebanese American University, Byblos","gGeorges Khazen <khazen # lau.edu.lb>",1,lb,"maintainer_address_bounces"
-"Malaysia [https]",Malaysia,Serdang,https://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my
-Malaysia,Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my
+"Malaysia [https]",Malaysia,Serdang,https://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
+Malaysia,Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Mexico City)",Mexico,"Mexico City",http://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx
@@ -81,11 +80,10 @@ Malaysia,Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysi
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no
 Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Edward Santos <edward.p.santos # upd.edu.ph>, ops # pregi.net",1,ph
-Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl,"maintainer_address_bounces"
 "Portugal (Lisbon)",Portugal,Lisbon,http://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Portugal (Porto)",Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",0,pt
-"Russia (Moscow) [https]",Russia,Moscow,https://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
-"Russia (Moscow)",Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
+"Russia (Moscow) [https]",Russia,Moscow,https://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru,"secure_mirror_from_master"
+"Russia (Moscow)",Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru,"secure_mirror_from_master"
 "Serbia [https]",Serbia,Belgrade,https://fourdots.com/mirror/CRAN/,"Four Dots","Goran Tepsic <goran.tepsic # fourdots.com>",1,rs
 Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
 "South Africa (Cape Town)","South Africa","Cape Town",http://r.adu.org.za/,"University of Cape Town","michael.brooks # uct.ac.za",1,za
@@ -101,6 +99,7 @@ Switzerland,Switzerland,Zürich,http://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.
 "Taiwan (Chungli)",Taiwan,Chungli,http://ftp.yzu.edu.tw/CRAN/,"Department of Computer Science and Engineering, Yuan Ze University","Peter Dave Hello <hsu # peterdavehello.org>",1,tw
 "Taiwan (Taipei)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw,"maintainer_address_bounces"
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
+"Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr
 "Turkey (Denizli)",Turkey,Denizli,http://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr
 "Turkey (Mersin)",Turkey,Mersin,http://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","atasiran # metu.edu.tr, ncc-cc # metu.edu.tr",1,tr
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
@@ -132,6 +131,6 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (TN)",USA,"Oak Ridge",http://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us
 "USA (TX) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
 "USA (TX)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
-"USA (WA) [https]",USA,Seattle,https://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","Dan Tenenbaum <dtenenba # fredhutch.org>",1,us
-"USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","Dan Tenenbaum <dtenenba # fredhutch.org>",1,us
+"USA (WA) [https]",USA,Seattle,https://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","Dan Tenenbaum <dtenenba # fredhutch.org>",1,us,"secure_mirror_from_master"
+"USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","Dan Tenenbaum <dtenenba # fredhutch.org>",1,us,"secure_mirror_from_master"
 Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",1,ve
