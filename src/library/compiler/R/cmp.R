@@ -2176,7 +2176,8 @@ setInlineHandler("$", function(e, cb, cntxt) {
 
 setInlineHandler("local", function(e, cb, cntxt) {
     if (length(e) == 2) {
-        ee <- as.call(list(as.call(list(as.name("function"), NULL, e[[2]]))))
+        ee <- as.call(list(as.call(list(
+            as.name("function"), NULL, e[[2]], NULL))))
         cmp(ee, cb, cntxt)
         TRUE
     }
