@@ -16,13 +16,16 @@
   \code{\link{factor}} or, more commonly, from factors in a data frame.
 }
 \usage{
-\S3method{droplevels}{factor}(x, exclude = NULL, \dots)
-\S3method{droplevels}{data.frame}(x, except, exclude = NULL, \dots)
+\S3method{droplevels}{factor}(x, exclude = if(anyNA(levels(x))) NULL else NA, \dots)
+\S3method{droplevels}{data.frame}(x, except, exclude, \dots)
 }
 \arguments{
   \item{x}{an object from which to drop unused factor levels.}
   \item{exclude}{passed to \code{\link{factor}()}; factor levels which
-    should be excluded from the result even if present.}
+    should be excluded from the result even if present.  Note that this
+    was \emph{implicitly} \code{NA} in \R <= 3.3.1 (and explicitly
+    \code{NA} in \R 3.3.x (x >= 2)) which did drop \code{NA} levels even
+    when present in \code{x}, contrary to the documentation.}
   \item{\dots}{further arguments passed to methods}
   \item{except}{indices of columns from which \emph{not} to drop levels}
 }
@@ -30,7 +33,10 @@
   \code{droplevels} returns an object of the same class as \code{x}}
 \details{
   The method for class \code{"factor"} is currently equivalent to
-  \code{factor(x, exclude=exclude)}.
+  \code{factor(x, exclude=exclude)}.  For the data frame method, you
+  should rarely specify \code{exclude} \dQuote{globally} for all factor
+  columns; rather the default uses the same factor-specific
+  \code{exclude} as the factor method itself.
 
   The \code{except} argument follow the usual indexing rules.
 }
@@ -54,7 +60,7 @@
 \examples{
 aq <- transform(airquality, Month = factor(Month, labels = month.abb[5:9]))
 aq <- subset(aq, Month != "Jul")
-table(aq$Month)
+table(           aq $Month)
 table(droplevels(aq)$Month)
 }
 \keyword{category}
