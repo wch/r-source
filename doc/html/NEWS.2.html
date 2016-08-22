@@ -332,7 +332,7 @@ for years in spite of the help page claiming it did not.
 </li>
 <li> <p><code>qqline()</code> has new optional arguments
 <code>distribution</code>, <code>probs</code> and <code>qtype</code>, following the
-example of <a href="http://CRAN.R-project.org/package=lattice"><span class="pkg">lattice</span></a>'s <code>panel.qqmathline()</code>.
+example of <a href="https://CRAN.R-project.org/package=lattice"><span class="pkg">lattice</span></a>'s <code>panel.qqmathline()</code>.
 </p>
 </li>
 <li><p> The handling of single quotes in the <code>en@quot</code>
@@ -760,7 +760,7 @@ vector was too long for <i>2^30</i> or more).
 </p>
 </li>
 <li> <p><code>parallel::stopCluster()</code> now works with MPI
-clusters without <a href="http://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> being on the search path.
+clusters without <a href="https://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> being on the search path.
 </p>
 </li>
 <li> <p><code>terms.formula()</code> could exhaust the stack, and the
@@ -897,7 +897,7 @@ people have tried it with incorrectly named source packages).
 <li> <p><code>splineDesign()</code> and <code>spline.des()</code> in package
 <span class="pkg">splines</span> have a new option <code>sparse</code> which can be used
 for efficient construction of a sparse B-spline design matrix
-(<em>via</em> <a href="http://CRAN.R-project.org/package=Matrix"><span class="pkg">Matrix</span></a>).
+(<em>via</em> <a href="https://CRAN.R-project.org/package=Matrix"><span class="pkg">Matrix</span></a>).
 </p>
 </li>
 <li> <p><code>norm()</code> now allows <code>type = "2"</code> (the
@@ -1032,8 +1032,8 @@ variable <span class="env">R_WIN_NO_JUNCTIONS</span> to a non-empty value (e.g.,
 <li> <p><code>R CMD INSTALL</code> with <span class="env">_R_CHECK_INSTALL_DEPENDS_</span>
 set to a true value (as done by <code>R CMD check --as-cran</code>)
 now restricts the packages available when lazy-loading as well
-as when test-loading (since packages such as <a href="http://CRAN.R-project.org/package=ETLUtils"><span class="pkg">ETLUtils</span></a>
-and <a href="http://CRAN.R-project.org/package=agsemisc"><span class="pkg">agsemisc</span></a> had top-level calls to <code>library()</code>
+as when test-loading (since packages such as <a href="https://CRAN.R-project.org/package=ETLUtils"><span class="pkg">ETLUtils</span></a>
+and <a href="https://CRAN.R-project.org/package=agsemisc"><span class="pkg">agsemisc</span></a> had top-level calls to <code>library()</code>
 for undeclared packages).
 </p>
 <p>This check is now also available on Windows.
@@ -1099,7 +1099,7 @@ names specified in <code>by</code> match multiple columns are errors.
 </p>
 </li>
 <li><p> Nonsense uses such as <code>seq(1:50, by = 5)</code> (from package
-<a href="http://CRAN.R-project.org/package=plotrix"><span class="pkg">plotrix</span></a>) and <code>seq.int(1:50, by = 5)</code> are now errors.
+<a href="https://CRAN.R-project.org/package=plotrix"><span class="pkg">plotrix</span></a>) and <code>seq.int(1:50, by = 5)</code> are now errors.
 </p>
 </li>
 <li><p> The residuals in the 5-number summary printed by
@@ -2119,7 +2119,7 @@ an environment from which to export.
 </p>
 </li>
 <li> <p><code>tempfile()</code> on a Unix-alike now takes the process ID
-into account.  This is needed with <a href="http://CRAN.R-project.org/package=multicore"><span class="pkg">multicore</span></a> (and as part of
+into account.  This is needed with <a href="https://CRAN.R-project.org/package=multicore"><span class="pkg">multicore</span></a> (and as part of
 <span class="pkg">parallel</span>) because the parent and all the children share a
 session temporary directory, and they can share the C random
 number stream used to produce the unique part.  Further, two
@@ -2340,17 +2340,17 @@ versions of <span style="font-family: Courier New, Courier; color: #666666;"><b>
 <li><p> There is a new package <span class="pkg">parallel</span>.
 </p>
 <p>It incorporates (slightly revised) copies of packages
-<a href="http://CRAN.R-project.org/package=multicore"><span class="pkg">multicore</span></a> and <a href="http://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> (excluding MPI, PVM and NWS
+<a href="https://CRAN.R-project.org/package=multicore"><span class="pkg">multicore</span></a> and <a href="https://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> (excluding MPI, PVM and NWS
 clusters).  Code written to use the higher-level API functions in
 those packages should work unchanged (apart from changing any
 references to their namespaces to a reference to <span class="pkg">parallel</span>,
-and links explicitly to <a href="http://CRAN.R-project.org/package=multicore"><span class="pkg">multicore</span></a> or <a href="http://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> on help
+and links explicitly to <a href="https://CRAN.R-project.org/package=multicore"><span class="pkg">multicore</span></a> or <a href="https://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> on help
 pages).
 </p>
 <p>It also contains support for multiple RNG streams following
 L'Ecuyer <em>et al</em> (2002), with support for both
-<code>mclapply</code> and <a href="http://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> clusters.  This replaces functions
-like <code>clusterSetupRNG()</code> from <a href="http://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> (which are not in
+<code>mclapply</code> and <a href="https://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> clusters.  This replaces functions
+like <code>clusterSetupRNG()</code> from <a href="https://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> (which are not in
 <span class="pkg">parallel</span>).
 </p>
 <p>The version released for <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> 2.14.0 contains base functionality:
@@ -2715,7 +2715,7 @@ of help pages, vignettes and demos.
 </p>
 </li>
 <li> <p><code>socketConnection()</code> now has a <code>timeout</code> argument.
-It is now documented that large values (package <a href="http://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> used a
+It is now documented that large values (package <a href="https://CRAN.R-project.org/package=snow"><span class="pkg">snow</span></a> used a
 year) do not work on some OSes.
 </p>
 </li>
@@ -3836,7 +3836,7 @@ file.
 
 <ul>
 <li><p> No parts of <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> are now licensed solely under GPL-2.  The
-licences for packages <a href="http://CRAN.R-project.org/package=rpart"><span class="pkg">rpart</span></a> and <a href="http://CRAN.R-project.org/package=survival"><span class="pkg">survival</span></a> have been
+licences for packages <a href="https://CRAN.R-project.org/package=rpart"><span class="pkg">rpart</span></a> and <a href="https://CRAN.R-project.org/package=survival"><span class="pkg">survival</span></a> have been
 changed, which means that the licence terms for <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> as distributed
 are GPL-2 | GPL-3.
 </p>
@@ -5154,7 +5154,7 @@ Extensions&rsquo;.
 <ul>
 <li><p> The <span class="samp">zlib</span> sources in the distribution are now built
 with all symbols remapped: this is intended to avoid problems seen
-with packages such as <a href="http://CRAN.R-project.org/package=XML"><span class="pkg">XML</span></a> and <a href="http://CRAN.R-project.org/package=rggobi"><span class="pkg">rggobi</span></a> which link to
+with packages such as <a href="https://CRAN.R-project.org/package=XML"><span class="pkg">XML</span></a> and <a href="https://CRAN.R-project.org/package=rggobi"><span class="pkg">rggobi</span></a> which link to
 &lsquo;<span class="file">zlib.so.1</span>&rsquo; on systems using <span class="samp">zlib 1.2.5</span>.
 </p>
 </li>
@@ -5179,7 +5179,7 @@ file will be used to set the value for the
 </li>
 <li><p> Files &lsquo;<span class="file">R/sysdata.rda</span>&rsquo; of more than 1Mb are now stored
 in the lazyload database using <code>xz</code> compression: this for
-example halves the installed size of package <a href="http://CRAN.R-project.org/package=Imap"><span class="pkg">Imap</span></a>.
+example halves the installed size of package <a href="https://CRAN.R-project.org/package=Imap"><span class="pkg">Imap</span></a>.
 </p>
 </li>
 <li> <p><code>R CMD INSTALL</code> now ensures that directories
@@ -5343,7 +5343,7 @@ resetting the methods tables for the members of the group (patch
 contributed by Martin Morgan).
 </p>
 </li>
-<li><p> In some circumstances (including for package <a href="http://CRAN.R-project.org/package=XML"><span class="pkg">XML</span></a>),
+<li><p> In some circumstances (including for package <a href="https://CRAN.R-project.org/package=XML"><span class="pkg">XML</span></a>),
 <code>R CMD INSTALL</code> installed version-control directories from
 source packages.
 </p>
@@ -5658,7 +5658,7 @@ treated as true.
 objects now insert linebreaks in long calls in the same way that
 the <code>print()</code> methods for <code>"summary.[g]lm"</code> objects
 have long done.  This does change the layout of the examples for
-a number of packages, e.g. <a href="http://CRAN.R-project.org/package=MASS"><span class="pkg">MASS</span></a>.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14250">PR#14250</a>)
+a number of packages, e.g. <a href="https://CRAN.R-project.org/package=MASS"><span class="pkg">MASS</span></a>.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14250">PR#14250</a>)
 </p>
 </li>
 <li> <p><code>constrOptim()</code> can now be used with method
@@ -8304,7 +8304,7 @@ have been added to the tools package to provide support for
 </p>
 </li>
 <li> <p><code>xtabs()</code> with the new argument <code>sparse = TRUE</code>
-now returns a sparse Matrix, using package <a href="http://CRAN.R-project.org/package=Matrix"><span class="pkg">Matrix</span></a>.
+now returns a sparse Matrix, using package <a href="https://CRAN.R-project.org/package=Matrix"><span class="pkg">Matrix</span></a>.
 </p>
 </li>
 <li> <p><code>contr.sum()</code> etc gain an argument <code>sparse</code>
@@ -8771,7 +8771,7 @@ compression at the expense of slower installation times, and
 <span class="option">--data-compress=xz</span>, often giving even better compression
 on large datasets at the expense of much longer installation
 times.  (The latter is used for the recommended packages: it is
-particularly effective for <a href="http://CRAN.R-project.org/package=survival"><span class="pkg">survival</span></a>.)
+particularly effective for <a href="https://CRAN.R-project.org/package=survival"><span class="pkg">survival</span></a>.)
 </p>
 </li>
 <li> <p><code>file()</code> for open = <code>""</code>, <code>"r"</code> or

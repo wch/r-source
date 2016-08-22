@@ -36,7 +36,7 @@ presentations.
 A package specification allows the production of loadable modules for
 specific purposes, and several thousand contributed packages are made
 available through the CRAN sites (see
-http://CRAN.R-project.org/mirrors.html for the current members).
+https://CRAN.R-project.org/mirrors.html for the current members).
 
 
 2. HISTORY
