@@ -160,6 +160,10 @@
       \code{include.GlobalEnv} which allows to also dump the global
       environment, thanks to Andreas Kersting's proposal in \PR{17116}.
 
+      \item \code{system.time()} now uses \code{message()} instead of
+      \code{cat()} when terminated early, such that
+      \code{suppressMessages()} has an effect; suggested by Ben Bolker.
+
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.

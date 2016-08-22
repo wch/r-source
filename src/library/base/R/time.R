@@ -1,7 +1,7 @@
 #  File src/library/base/R/time.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@ system.time <- function(expr, gcFirst = TRUE)
     ppt <- function(y) {
         if(!is.na(y[4L])) y[1L] <- y[1L] + y[4L]
         if(!is.na(y[5L])) y[2L] <- y[2L] + y[5L]
-        y[1L:3L]
+        paste(formatC(y[1L:3L]), collapse = " ")
     }
     if(!exists("proc.time")) return(rep(NA_real_, 5L))
     if(gcFirst)  gc(FALSE)
     time <- proc.time()
     ## need on.exit after 'time' has been set:
     ## on some systems proc.time throws an error.
-    on.exit(cat("Timing stopped at:", ppt(proc.time() - time), "\n"))
+    on.exit(message("Timing stopped at: ", ppt(proc.time() - time)))
     expr # evaluated here because of lazy evaluation
     new.time <- proc.time()
     on.exit()
