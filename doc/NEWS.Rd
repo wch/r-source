@@ -238,14 +238,6 @@
       \env{_R_CHECK_CRAN_INCOMING_REMOTE_} false now skips tests that
       require remote access.  The remaining (local) tests typically
       run very quickly compared to the remote tests.
-
-      \item \command{R CMD check} reports more dubious flags in files
-      \file{src/Makevars[.in]}, including \option{-w} and \option{-g}.
-
-      \item \command{R CMD check} has been set up to filter important
-      warnings from recent versions of \command{gfortran} with
-      \option{-Wall -pedantic}: this now reports non-portable GNU
-      extensions such as out-of-order declarations.
     }
   }
 
@@ -357,6 +349,18 @@
 
       \item \command{configure} works better with Oracle Developer
       Studio 12.5.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} reports more dubious flags in files
+      \file{src/Makevars[.in]}, including \option{-w} and \option{-g}.
+
+      \item \command{R CMD check} has been set up to filter important
+      warnings from recent versions of \command{gfortran} with
+      \option{-Wall -pedantic}: this now reports non-portable GNU
+      extensions such as out-of-order declarations.
     }
   }
 
