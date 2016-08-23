@@ -37,6 +37,18 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} reports more dubious flags in files
+      \file{src/Makevars[.in]}, including \option{-w} and \option{-g}.
+
+      \item \command{R CMD check} has been set up to filter important
+      warnings from recent versions of \command{gfortran} with
+      \option{-Wall -pedantic}: this now reports non-portable GNU
+      extensions such as out-of-order declarations.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item The check for non-portable flags in \command{R CMD check}
