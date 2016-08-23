@@ -147,7 +147,7 @@ stopifnot(p > 0.001)
 Dates <- seq(as.Date("2005/01/01"), as.Date("2009/01/01"), "day")
 months <- format(Dates, format = "%m")
 years <- format(Dates, format = "%Y")
-mn <- as.vector(unlist(sapply(split(months, years), table)))
+mn <- unlist(lapply(unname(split(months, years)), table), use.names=FALSE)
 ty <- as.vector(table(years))
 # Test hist.Date() for months
 stopifnot(identical(hist(Dates, "month", plot = FALSE)$counts, mn))

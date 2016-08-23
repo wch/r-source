@@ -84,12 +84,12 @@ all.equal.numeric <-
 	return(msg)
     }
     out <- out | target == current
-    if(all(out)) { if (is.null(msg)) return(TRUE) else return(msg) }
+    if(all(out)) return(if(is.null(msg)) TRUE else msg)
 
     target <- target[!out]
     current <- current[!out]
     if(is.integer(target) && is.integer(current)) target <- as.double(target)
-    xy <- mean((if(cplx) Mod else abs)(target - current))
+    xy <- mean(abs(target - current)) ## abs(z) == Mod(z) for complex
     what <-
 	if(is.null(scale)) {
 	    xn <- mean(abs(target))

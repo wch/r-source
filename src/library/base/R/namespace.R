@@ -1485,7 +1485,7 @@ registerS3methods <- function(info, package, env)
        nrow(overwrite) &&
        Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_")
           %in% c(package, "all")) {
-        std <- as.vector(unlist(tools:::.get_standard_package_names()))
+        std <- unlist(tools:::.get_standard_package_names(), use.names=FALSE)
         overwrite <- overwrite[overwrite[, 2L] %in% std, , drop = FALSE]
        if(nr <- nrow(overwrite)) {
            msg <- ngettext(nr,
