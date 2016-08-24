@@ -53,10 +53,15 @@ Variables:
   CPP           C preprocessor
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
 		headers in a nonstandard directory <dir>
-  CXX           compiler command for C++98 code
-  CXXCPP        C++98 preprocessor
+  CXX           default compiler command for C++ code
+  CXXCPP        C++ preprocessor
   CXXFLAGS      compiler flags for CXX
-  CXXPICFLAGS   special flags for compiling C++98 code to be included in a
+  CXXPICFLAGS   special flags for compiling C++ code to be included in a
+		shared library
+  CXX98         compiler command for C++98 code
+  CXX98CPP      C++98 preprocessor
+  CXX98FLAGS    compiler flags for CXX98
+  CXX98PICFLAGS special flags for compiling C++98 code to be included in a
 		shared library
   CXX1X         compiler command for C++11 code
   CXX1XSTD      flag used with CXX1X to enable C++11 support

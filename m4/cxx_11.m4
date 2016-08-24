@@ -10,8 +10,8 @@
 #
 #   Check for baseline language coverage in the compiler for the specified
 #   version of the C++ standard.  If necessary, add switches to CXX and
-#   CXXCPP to enable support.  VERSION may be '11' (for the C++11 standard)
-#   or '14' (for the C++14 standard).
+#   CXXCPP to enable support.  VERSION may be '11' (for the C++11 standard),
+#   '14' (for the C++14 standard), or '98' (for the C++98 standard).
 #
 #   The second argument, if specified, indicates whether you insist on an
 #   extended mode (e.g. -std=gnu++11) or a strict conformance mode (e.g.
@@ -43,11 +43,27 @@
 
 dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
 dnl  (serial version number 13). It has been modified to remove the check
-dnl  to see if the given standard is supported by default.
+dnl  to see if the given standard is supported by default, and extended to
+dnl  include a search for a flag to support C++98 code.
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
-  m4_if([$1], [11], [],
-        [$1], [14], [],
+  m4_if([$1], [98], [
+  	      dnl gnu+98 is g++, clang++, Intel.
+	      dnl c++03 is Oracle Studio (and default)
+       	      ax_cxx_ext_switches="-std=gnu++98"
+	      ax_cxx_noext_switches="-std=c++98 -std=c++03"
+  	],
+  	[$1], [11], [
+	      dnl HP's aCC needs +std=c++11
+	      dnl Cray's crayCC needs "-h std=c++11"
+	      dnl Both omitted here
+       	      ax_cxx_ext_switches="-std=gnu++11 -std=gnu++0x"
+	      ax_cxx_noext_switches="-std=c++11 -std=c++0x"
+	],
+        [$1], [14], [
+       	      ax_cxx_ext_switches="-std=gnu++14 -std=gnu++0y"
+	      ax_cxx_noext_switches="-std=c++14 -std=c++0y"
+	],
         [$1], [17], [m4_fatal([support for C++17 not yet implemented in AX_CXX_COMPILE_STDCXX])],
         [m4_fatal([invalid first argument `$1' to AX_CXX_COMPILE_STDCXX])])dnl
   m4_if([$2], [], [],
@@ -63,7 +79,7 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
 
   m4_if([$2], [noext], [], [dnl
   if test x$ac_success = xno; then
-    for switch in -std=gnu++$1 -std=gnu++0x; do
+    for switch in $ax_cxx_ext_switches; do
       cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx$1_$switch])
       AC_CACHE_CHECK(whether $CXX supports C++$1 features with $switch,
                      $cachevar,
@@ -86,10 +102,7 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
 
   m4_if([$2], [ext], [], [dnl
   if test x$ac_success = xno; then
-    dnl HP's aCC needs +std=c++11 according to:
-    dnl http://h21007.www2.hp.com/portal/download/files/unprot/aCxx/PDF_Release_Notes/769149-001.pdf
-    dnl Cray's crayCC needs "-h std=c++11"
-    for switch in -std=c++$1 -std=c++0x +std=c++$1 "-h std=c++$1"; do
+    for switch in $ax_cxx_noext_switches; do
       cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx$1_$switch])
       AC_CACHE_CHECK(whether $CXX supports C++$1 features with $switch,
                      $cachevar,
@@ -126,6 +139,17 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   AC_SUBST(HAVE_CXX$1)
 ])
 
+dnl  Test body for checking C++98 support
+
+m4_define([_AX_CXX_COMPILE_STDCXX_testbody_98],[
+#ifndef __cplusplus
+# error "not a C++ compiler"
+#endif
+// or we could test for later than C++03 
+#if __cplusplus >= 201103L
+# error "C++11 compiler"
+#endif
+])
 
 dnl  Test body for checking C++11 support
 
