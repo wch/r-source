@@ -96,12 +96,15 @@ c     solve the truncated least squares problem for each rhs.
 c
       if(k .gt. 0) then
          do 20 jj=1,ny
-   20       call dqrsl(x,n,n,k,qraux,y(1,jj),rsd(1,jj),qty(1,jj),
+            call dqrsl(x,n,n,k,qraux,y(1,jj),rsd(1,jj),qty(1,jj),
      1           b(1,jj),rsd(1,jj),rsd(1,jj),1110,info)
+   20       continue
       else
-         do 30 i=1,n
+         do 35 i=1,n
             do 30 jj=1,ny
-   30           rsd(i,jj) = y(i,jj)
+                rsd(i,jj) = y(i,jj)
+   30       continue
+   35   continue
       endif
 c
 c     set the unused components of b to zero.
