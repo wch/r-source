@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -177,9 +177,10 @@ try(sw[, "Ferti"]) # column names must match exactly
 stopifnot(identical(sw[, 1], sw[[1]]),
           identical(sw[, 1][1], 80.2),
           identical(sw[, 1, drop = FALSE], sw[1]),
-          is.data.frame(sw[1]), dim(sw[1] ) == c(5,1),
+          is.data.frame(sw[1 ]), dim(sw[1 ]) == c(5,1),
           is.data.frame(sw[1,]), dim(sw[1,]) == c(1,4),
           is.list(s1 <- sw[1, , drop = TRUE]), identical(s1$Fertility, 80.2))
+tools::assertError(sw[, "Ferti"])
 }
 swiss[ c(1, 1:2), ]   # duplicate row, unique row names are created
 
@@ -199,15 +200,19 @@ sw[6:8] <- list(letters[10:14], NULL, aa = 1:5)
 sw
 
 ## matrices in a data frame
-A <- data.frame(x = 1:3, y = I(matrix(4:6)), z = I(matrix(letters[1:9], 3, 3)))
+A <- data.frame(x = 1:3, y = I(matrix(4:9, 3, 2)),
+                         z = I(matrix(letters[1:9], 3, 3)))
 A[1:3, "y"] # a matrix
 A[1:3, "z"] # a matrix
 A[, "y"]    # a matrix
+stopifnot(identical(colnames(A), c("x", "y", "z")), ncol(A) == 3L,
+          identical(A[,"y"], A[1:3, "y"]),
+          inherits (A[,"y"], "AsIs"))
 
 ## keeping special attributes: use a class with a
-## "as.data.frame" and "[" method:
-% "avector" := vector that keeps attributes and we could provide a constructor
-%  avector <- function(x) { class(x) <- c("avector", class(x)); x }
+## "as.data.frame" and "[" method;
+## "avector" := vector that keeps attributes.   Could provide a constructor
+##  avector <- function(x) { class(x) <- c("avector", class(x)); x }
 as.data.frame.avector <- as.data.frame.vector
 
 `[.avector` <- function(x,i,...) {

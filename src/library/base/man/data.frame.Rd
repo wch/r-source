@@ -1,6 +1,6 @@
 % File src/library/base/man/data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data.frame}
@@ -84,8 +84,7 @@ default.stringsAsFactors()
   \code{stringsAsFactors} is false.  If a list or data
   frame or matrix is passed to \code{data.frame} it is as if each
   component or column had been passed as a separate argument (except for
-  matrices of class \code{"\link{model.matrix}"} and those protected by
-  \code{\link{I}}).
+  matrices protected by \code{\link{I}}).
 
   Objects passed to \code{data.frame} should have the same number of
   rows, but atomic vectors (see \code{\link{is.vector}}), factors and
@@ -129,7 +128,8 @@ default.stringsAsFactors()
   \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
   \code{\link{row.names}}, \code{\link{names}} (for the column names),
-  \code{\link{[.data.frame}} for subsetting methods,% ./Extract.data.frame.Rd
+  \code{\link{[.data.frame}} for subsetting methods % ./Extract.data.frame.Rd
+  and \code{I(matrix(..))} examples;
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;
   \code{\link{read.table}},
