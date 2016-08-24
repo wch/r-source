@@ -316,6 +316,8 @@
       \item \code{wilcox.test(x, conf.int=TRUE)} no longer errors out in
       cases where the confidence interval is not available, such as for
       \code{x = 0:2}.
+
+      \item \code{droplevels(f)} now keeps <NA> levels when present.
     }
   }
 }
@@ -410,12 +412,12 @@
       classed objects, such as \code{"Matrix"} from the \CRANpkg{Matrix}
       package, as documented for a long time.
 
-      \item \code{droplevels(f)} now keeps <NA> levels when present.
-
       \item \code{axis(side, x = D)} and hence \code{Axis()} and
       \code{plot()} now work correctly for \code{"Date"} and time
       objects \code{D}, even when \dQuote{time goes backward}, e.g.,
       with decreasing \code{xlim}.  (Reported by William May).
+
+      \item \code{str(I(matrix(..)))} now looks as always intended.
     }
   }
 }

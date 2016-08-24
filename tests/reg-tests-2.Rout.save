@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-08-16 r71104) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-08-23 r71136) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7846,4 +7846,10 @@ logical       1
 > summary(1L)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
       1       1       1       1       1       1 
+> 
+> 
+> ## str.default() for "AsIs" arrays
+> str(I(m <- matrix(pi*1:4, 2)))
+ AsIs [1:2, 1:2] 3.14 6.28 9.42 12.57
+> ## did look ugly (because of toString() for numbers) in R <= 3.3.1
 > 

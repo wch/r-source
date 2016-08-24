@@ -3036,3 +3036,8 @@ ii <- as.integer(logi)
 summary(ii)
 summary(ii[!is.na(ii)])
 summary(1L)
+
+
+## str.default() for "AsIs" arrays
+str(I(m <- matrix(pi*1:4, 2)))
+## did look ugly (because of toString() for numbers) in R <= 3.3.1

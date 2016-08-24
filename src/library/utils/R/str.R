@@ -347,6 +347,8 @@ str.default <-
 		    pDi <- function(...) paste(c("[", ..., "]"), collapse = "")
 		    le.str <- (if(rnk == 1) pDi(di[1L], "(1d)") else
 			       pDi(paste0(di[-rnk], ", "), di[rnk]))
+		    if(m <- match("AsIs", cl, 0L)) ## workaround bad format.AsIs()
+			oldClass(object) <- cl[-m]
                     std.attr <- c("dim", if(is.ts) c("tsp", "class"))
 		} else if(!is.null(names(object))) {
 		    mod <- paste("Named", mod)
