@@ -23,9 +23,9 @@
   \item{x}{an object from which to drop unused factor levels.}
   \item{exclude}{passed to \code{\link{factor}()}; factor levels which
     should be excluded from the result even if present.  Note that this
-    was \emph{implicitly} \code{NA} in \R <= 3.3.1 (and explicitly
-    \code{NA} in \R 3.3.x (x >= 2)) which did drop \code{NA} levels even
-    when present in \code{x}, contrary to the documentation.}
+    was \emph{implicitly} \code{NA} in \R <= 3.3.1 which did drop
+    \code{NA} levels even when present in \code{x}, contrary to the
+    documentation.  The current default is compatible with \code{x[ , drop=FALSE]}.}
   \item{\dots}{further arguments passed to methods}
   \item{except}{indices of columns from which \emph{not} to drop levels}
 }
