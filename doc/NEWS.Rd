@@ -332,6 +332,9 @@
 
       \item Use \code{options(deparse.max.lines)} to limit the number of
       lines recorded in .Traceback and other deparsing activities.
+
+      \item \code{format(<AsIs>)} looks more regular, also for
+      non-character atomic matrices.
     }
   }
 
