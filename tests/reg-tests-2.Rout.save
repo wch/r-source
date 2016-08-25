@@ -978,7 +978,7 @@ $B$subset
 > x <- c(round(runif(10), 2), 10000)
 > summary(x)
      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    0.060     0.320     0.630   909.600     0.905 10000.000 
+    0.060     0.320     0.630   909.592     0.905 10000.000 
 > summary(data.frame(x))
        x            
  Min.   :    0.060  

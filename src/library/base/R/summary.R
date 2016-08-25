@@ -18,17 +18,20 @@
 
 summary <- function (object, ...) UseMethod("summary")
 
-summary.default <-
-    function(object, ..., digits = max(3L, getOption("digits") - 3L))
+summary.default <- function(object, ..., digits)
 {
     if(is.factor(object))
 	return(summary.factor(object, ...))
-    else if(is.matrix(object))
-	return(summary.matrix(object, digits = digits, ...))
+    else if(is.matrix(object)) {
+	if(missing(digits))
+            return(summary.matrix(object, ...))
+        else
+            return(summary.matrix(object, digits = digits, ...))
+    }
 
     value <- if(is.logical(object)) # scalar or array!
 	c(Mode = "logical",
-          {tb <- table(object, exclude = NULL) # incl. NA s
+          {tb <- table(object, exclude = NULL, useNA = "ifany") # incl. NA s
            if(!is.null(n <- dimnames(tb)[[1L]]) && any(iN <- is.na(n)))
                dimnames(tb)[[1L]][iN] <- "NA's"
            tb
@@ -37,7 +40,8 @@ summary.default <-
 	nas <- is.na(object)
 	object <- object[!nas]
 	qq <- stats::quantile(object)
-	qq <- signif(c(qq[1L:3L], mean(object), qq[4L:5L]), digits)
+        qq <- c(qq[1L:3L], mean(object), qq[4L:5L])
+	if(!missing(digits)) qq <- signif(qq, digits)
 	names(qq) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
 	if(any(nas))
 	    c(qq, "NA's" = sum(nas))
@@ -62,7 +66,7 @@ summary.default <-
     value
 }
 
-format.summaryDefault <- function(x, ...)
+format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     xx <- x
     if(is.numeric(x) || is.complex(x)) {
@@ -73,14 +77,14 @@ format.summaryDefault <- function(x, ...)
     m <- match("NA's", names(x), 0)
     if(inherits(x, "Date") || inherits(x, "POSIXct")) {
         if(length(a <- attr(x, "NAs")))
-            c(format(xx, ...), "NA's" = as.character(a))
-        else format(xx)
+            c(format(xx, digits=digits, ...), "NA's" = as.character(a))
+        else format(xx, digits=digits)
     } else if(m && !is.character(x))
-        xx <- c(format(xx[-m], ...), "NA's" = as.character(xx[m]))
-    else format(xx, ...)
+        xx <- c(format(xx[-m], digits=digits, ...), "NA's" = as.character(xx[m]))
+    else format(xx, digits=digits, ...)
 }
 
-print.summaryDefault <- function(x, ...)
+print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
     xx <- x
     if(is.numeric(x) || is.complex(x)) {
@@ -91,21 +95,21 @@ print.summaryDefault <- function(x, ...)
     m <- match("NA's", names(xx), 0)
     if(inherits(x, "Date") || inherits(x, "POSIXct")) {
         xx <- if(length(a <- attr(x, "NAs")))
-            c(format(xx), "NA's" = as.character(a))
-        else format(xx)
-        print(xx, ...)
+            c(format(xx, digits=digits), "NA's" = as.character(a))
+        else format(xx, digits=digits)
+        print(xx, digits=digits, ...)
         return(invisible(x))
     } else if(m && !is.character(x))
-        xx <- c(format(xx[-m]), "NA's" = as.character(xx[m]))
-    print.table(xx, ...)
+        xx <- c(format(xx[-m], digits=digits), "NA's" = as.character(xx[m]))
+    print.table(xx, digits=digits, ...)
     invisible(x)
 }
 
-summary.factor <- function(object, maxsum = 100, ...)
+summary.factor <- function(object, maxsum = 100L, ...)
 {
     nas <- is.na(object)
     ll <- levels(object)
-    if(any(nas)) maxsum <- maxsum - 1
+    if(ana <- any(nas)) maxsum <- maxsum - 1L
     tbl <- table(object)
     tt <- c(tbl) # names dropped ...
     names(tt) <- dimnames(tbl)[[1L]]
@@ -114,11 +118,11 @@ summary.factor <- function(object, maxsum = 100, ...)
 	o <- sort.list(tt, decreasing = TRUE)
 	tt <- c(tt[o[ - drop]], "(Other)" = sum(tt[o[drop]]))
     }
-    if(any(nas)) c(tt, "NA's" = sum(nas)) else tt
+    if(ana) c(tt, "NA's" = sum(nas)) else tt
 }
 
 summary.matrix <- function(object, ...) {
-    ## we do want this changed into separate columns, so use matrix method
+    ## we do want this changed into separate columns, so use data.frame method
     summary.data.frame(as.data.frame.matrix(object), ...)
 }
 
@@ -149,7 +153,7 @@ summary.data.frame <-
             ## across rows
             cn <- paste(nm[i], gsub("^ +", "", colnames(sms), useBytes = TRUE),
                         sep=".")
-            tmp <- format(sms)
+	    tmp <- format(sms)# <- digits = ??  --currently take getOption("digits") !!!
             if(nrow(sms) < nr)
                 tmp <- rbind(tmp, matrix("", nr - nrow(sms), ncol(sms)))
             sms <- apply(tmp, 1L, function(x) paste(x, collapse="  "))
@@ -162,15 +166,14 @@ summary.data.frame <-
             cn <- paste0(substring(blanks, 1L, pad0), cn,
                          substring(blanks, 1L, pad1))
             nm[i] <- paste(cn, collapse="  ")
-            z[[i]] <- sms
         } else {
             sms <- format(sms, digits = digits) # may add NAs row
             lbs <- format(names(sms))
             sms <- paste0(lbs, ":", sms, "  ")
             lw[i] <- ncw(lbs[1L])
             length(sms) <- nr
-            z[[i]] <- sms
         }
+	z[[i]] <- sms
     }
     if (nv) {
 	z <- unlist(z, use.names=TRUE)

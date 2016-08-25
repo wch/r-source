@@ -13,6 +13,10 @@
       Consequently, \code{table(1:2, exclude=NULL)} no longer contains a
       zero count for \code{<NA>}, but \code{useNA = "always"} continues
       to do so.
+
+      \item \code{summary.default()} no longer rounds, but its print
+      method does, resulting in much less extraneous rounding notably of
+      numbers in the ten thousands.
     }
   }
   \subsection{NEW FEATURES}{

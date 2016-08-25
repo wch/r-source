@@ -1,9 +1,10 @@
 % File src/library/base/man/summary.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summary}
+\title{Object Summaries}
 \alias{summary}
 \alias{summary.default}
 \alias{summary.data.frame}
@@ -11,7 +12,6 @@
 \alias{summary.matrix}
 \alias{format.summaryDefault}
 \alias{print.summaryDefault}
-\title{Object Summaries}
 \description{
   \code{summary} is a generic function used to produce result summaries
   of the results of various model fitting functions.  The function
@@ -21,13 +21,16 @@
 \usage{
 summary(object, \dots)
 
-\method{summary}{default}(object, \dots, digits = max(3, getOption("digits")-3))
+\method{summary}{default}(object, \dots, digits)
 \method{summary}{data.frame}(object, maxsum = 7,
        digits = max(3, getOption("digits")-3), \dots)
 
 \method{summary}{factor}(object, maxsum = 100, \dots)
 
 \method{summary}{matrix}(object, \dots)
+
+\method{format}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), \dots)
+ \method{print}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), \dots)
 }
 \arguments{
   \item{object}{an object for which a summary is desired.}
@@ -35,7 +38,11 @@ summary(object, \dots)
     \code{\link{factor}}s.}
   \item{digits}{integer, used for number formatting with
     \code{\link{signif}()} (for \code{summary.default}) or
-    \code{\link{format}()} (for \code{summary.data.frame}).}
+    \code{\link{format}()} (for \code{summary.data.frame}).  In
+    \code{summary.default}, if not specified (i.e.,
+    \code{\link{missing}(.)}), \code{signif()} will \emph{not} be called
+    anymore (since \R >= 3.4.0, where the default has been changed to
+    only round in the \code{print} and \code{format} methods).}% for "summaryDefault"
   \item{\dots}{additional arguments affecting the summary produced.}
 }
 \details{
@@ -54,9 +61,9 @@ summary(object, \dots)
     methods for details of what is produced by that method.
 
     The default method returns an object of class
-    \code{c("summaryDefault", "\link{table}")} which has a specialized
-    \code{print} method.  The \code{\link{factor}} method returns an
-    integer vector.
+    \code{c("summaryDefault", "\link{table}")} which has specialized
+    \code{\link{format}} and \code{\link{print}} methods.  The
+    \code{\link{factor}} method returns an integer vector.
 
     The matrix and data frame methods return a matrix of class
     \code{"\link{table}"}, obtained by applying \code{summary} to each
