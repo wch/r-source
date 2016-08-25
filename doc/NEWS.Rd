@@ -205,12 +205,6 @@
       \item \command{configure} checks for the required header
       \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
       system call \code{select} and aborts if they are not found.
-
-      \item (In progress.) \command{configure} looks for a flag for the
-      C++ compiler which approximates C++98/C++03 compliance, and uses
-      it as part of the \code{CXX98} macro in file \file{etc/Makeconf}.
-      For example, \option{-std=gnu++98} is selected for \command{g++}
-      6.x.
     }
   }
 
