@@ -1889,7 +1889,7 @@
             }
         }
     }
-    if (!use_cxx1x && !use_cxx1y) {
+    if (!use_cxx1x && !use_cxx1y && !use_cxx98) {
         valy <- Sys.getenv("USE_CXX1Y", NA_character_)
         valx <- Sys.getenv("USE_CXX1X", NA_character_)
         val98 <- Sys.getenv("USE_CXX98", NA_character_)

@@ -42,9 +42,8 @@
 # cxx_compile_stdcxx serial 4
 
 dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
-dnl  (serial version number 13). It has been modified to remove the check
-dnl  to see if the given standard is supported by default, and extended to
-dnl  include a search for a flag to support C++98 code.
+dnl  (serial version number 13). It has been extended to include a search for
+dnl  flag to support C++98 code.
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [98], [
@@ -76,6 +75,16 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
         [m4_fatal([invalid third argument `$3' to AX_CXX_COMPILE_STDCXX])])
   AC_LANG_PUSH([C++])dnl
   ac_success=no
+
+  switch=""
+  AC_CACHE_CHECK(whether $CXX supports C++$1 features by default,
+  ax_cv_cxx_compile_cxx$1,
+  [AC_COMPILE_IFELSE([AC_LANG_SOURCE([_AX_CXX_COMPILE_STDCXX_testbody_$1])],
+    [ax_cv_cxx_compile_cxx$1=yes],
+    [ax_cv_cxx_compile_cxx$1=no])])
+  if test x$ax_cv_cxx_compile_cxx$1 = xyes; then
+    ac_success=yes
+  fi
 
   m4_if([$2], [noext], [], [dnl
   if test x$ac_success = xno; then
@@ -143,45 +152,45 @@ dnl  Test body for checking C++98 support
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_98],[
 #ifndef __cplusplus
-# error "not a C++ compiler"
+# error "This is not a C++ compiler"
 #endif
 // or we could test for later than C++03 
 #if __cplusplus >= 201103L
-# error "C++11 compiler"
+# error "This is a C++11 or C++14 compiler"
 #endif
 ])
 
 dnl  Test body for checking C++11 support
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_11],
+#ifndef __cplusplus
+# error "This is not a C++ compiler"
+#elif __cplusplus < 201103L
+# error "This is not a C++11 compiler"
+#elif __cplusplus >= 201402L
+# error "This is a C++14 compiler"
+#else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
+#endif
 )
 
 
 dnl  Test body for checking C++14 support
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_14],
+#ifndef __cplusplus
+# error "This is not a C++ compiler"
+#elif __cplusplus < 201402L
+# error "This is not a C++14 compiler"
+#else
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_11
   _AX_CXX_COMPILE_STDCXX_testbody_new_in_14
+#endif
 )
-
 
 dnl  Tests for new features in C++11
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_11], [[
-
-// If the compiler admits that it is not ready for C++11, why torture it?
-// Hopefully, this will speed up the test.
-
-#ifndef __cplusplus
-
-#error "This is not a C++ compiler"
-
-#elif __cplusplus < 201103L
-
-#error "This is not a C++11 compiler"
-
-#else
 
 namespace cxx11
 {
@@ -404,10 +413,17 @@ namespace cxx11
     template <int...>
     struct sum;
 
+    /*
+       Original test code used the auto keyword instead of declaring
+       the type of "value" to be int. This causes Oracle Solaris Studio
+       12.4 to fail. This is possibly a compiler bug but in any case
+       current test code works around it by an explicit declaration.
+    */
+       
     template <int N0, int... N1toN>
     struct sum<N0, N1toN...>
     {
-      static constexpr auto value = N0 + sum<N1toN...>::value;
+      static constexpr int value = N0 + sum<N1toN...>::value;
     };
 
     template <>
@@ -450,8 +466,6 @@ namespace cxx11
 
 }  // namespace cxx11
 
-#endif  // __cplusplus >= 201103L
-
 ]])
 
 
@@ -462,15 +476,6 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_14], [[
 // If the compiler admits that it is not ready for C++14, why torture it?
 // Hopefully, this will speed up the test.
 
-#ifndef __cplusplus
-
-#error "This is not a C++ compiler"
-
-#elif __cplusplus < 201402L
-
-#error "This is not a C++14 compiler"
-
-#else
 
 namespace cxx14
 {
@@ -573,7 +578,5 @@ namespace cxx14
   }
 
 }  // namespace cxx14
-
-#endif  // __cplusplus >= 201402L
 
 ]])
