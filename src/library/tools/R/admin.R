@@ -100,6 +100,9 @@ function(dir, outDir, builtStamp=character())
     saveInfo <- .split_description(db)
     saveRDS(saveInfo, file.path(outMetaDir, "package.rds"))
 
+    features <- list(internalsID = .Internal(internalsID()))
+    saveRDS(features, file.path(outMetaDir, "features.rds"))
+
     invisible()
 }
 

@@ -94,6 +94,10 @@ typedef int R_len_t;
  *			--> TypeTable[] in ../main/util.c for  typeof()
  */
 
+/* UUID identifying the internals version -- packages using compiled
+   code should be re-installed when this changes */
+#define R_INTERNALS_UUID "0310d4b8-ccb1-4bb8-ba94-d36a55f60262"
+
 /*  These exact numeric values are seldom used, but they are, e.g., in
  *  ../main/subassign.c, and they are serialized.
 */

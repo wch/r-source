@@ -2510,7 +2510,8 @@ catalogs.
 
 Directory @file{Meta} contains several files in @code{.rds} format, that
 is serialized @R{} objects written by @code{saveRDS}.  All packages
-have files @file{Rd.rds}, @file{hsearch.rds}, @file{links.rds} and
+have files @file{Rd.rds}, @file{hsearch.rds}, @file{links.rds},
+@file{features.rds}, and
 @file{package.rds}.  Packages with namespaces have a file
 @file{nsInfo.rds}, and those with data, demos or vignettes have
 @file{data.rds}, @file{demo.rds} or @file{vignette.rds} files.

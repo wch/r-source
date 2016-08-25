@@ -210,6 +210,7 @@ SEXP do_inspect(SEXP, SEXP, SEXP, SEXP);
 SEXP do_intToUtf8(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interactive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_internal(SEXP, SEXP, SEXP, SEXP);
+SEXP do_internalsID(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interruptsSuspended(SEXP, SEXP, SEXP, SEXP);
 SEXP do_intToBits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_invisible(SEXP, SEXP, SEXP, SEXP);
