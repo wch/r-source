@@ -4783,14 +4783,14 @@ offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
 reinstalled when macOS is upgraded, as upgrading partially removes them.)
 
-You need @code{readline}@footnote{Apple provides a partial emulation of
-GNU readline 4.2 based on the NetBSD @code{editline} library.  That is
-not recommended but for the time being @R{}'s installation scripts will
-make use of it if GNU readline is not found.} and a Fortran compiler.
-Those and other binary components are available from
+You need GNU @code{readline}@footnote{Apple provides a partial emulation
+of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
+is not recommended but for the time being @R{}'s installation scripts
+will make use of it if GNU readline is not found.} and a Fortran
+compiler.  Those and other binary components are available from
 @uref{https://r.research.att.com/libs}: you are likely to need
-@code{pcre} and @code{xz} (recent macOS provides libraries but not
-headers for these).
+@code{pcre} and @code{xz} (for @code{libzma}: recent macOS provides
+libraries but not headers for these).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
@@ -4799,10 +4799,10 @@ To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
 would only be used for the command-line-@R{} data editor/viewer and one
-version of Tcl/Tk.  (This needs an Objective-C compiler@footnote{These
-days that is defined by Apple's implementation of @code{clang}, so it is
-strongly recommended to use that.} which can compile the source code of
-@code{quartz()}.)
+version of Tcl/Tk.  (This option needs an Objective-C
+compiler@footnote{These days that is defined by Apple's implementation
+of @code{clang}, so it is strongly recommended to use that.} which can
+compile the source code of @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4818,10 +4818,10 @@ CXX=clang++
 F77=gfortran-4.8
 FC=$F77
 OBJC=clang
-CFLAGS=-Wall -mtune=core2 -g -O2
-CXXFLAGS=-Wall -mtune=core2 -g -O2'
-OBJCFLAGS=-Wall -mtune=core2 -g -O2
-F77FLAGS=-Wall -g -O2
+CFLAGS='-Wall -mtune=core2 -g -O2'
+CXXFLAGS='-Wall -mtune=core2 -g -O2'
+OBJCFLAGS='-Wall -mtune=core2 -g -O2'
+F77FLAGS='-Wall -g -O2'
 FCFLAGS=$F77FLAGS
 @end example
 
@@ -5031,7 +5031,7 @@ JAVA_LIBS="-framework JavaVM"
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_72.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
