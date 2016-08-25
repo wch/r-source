@@ -49,9 +49,9 @@ dnl  include a search for a flag to support C++98 code.
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   m4_if([$1], [98], [
   	      dnl gnu+98 is g++, clang++, Intel.
-	      dnl c++03 is Oracle Studio (and default)
+	      dnl c++03 and sun03 are Oracle Studio
        	      ax_cxx_ext_switches="-std=gnu++98"
-	      ax_cxx_noext_switches="-std=c++98 -std=c++03"
+	      ax_cxx_noext_switches="-std=c++98 -std=c++03 -std=sun03"
   	],
   	[$1], [11], [
 	      dnl HP's aCC needs +std=c++11
