@@ -8,3 +8,4 @@ Description: R statistical functions.
 License: Part of R @VERSION@
 Imports: utils, grDevices, graphics
 Suggests: MASS, Matrix, SuppDists, methods, stats4
+NeedsCompilation: yes

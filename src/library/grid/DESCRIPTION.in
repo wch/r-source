@@ -9,3 +9,4 @@ Description: A rewrite of the graphics layout capabilities, plus some
 Imports: grDevices, utils
 Suggests: lattice
 License: Part of R @VERSION@
+NeedsCompilation: yes

@@ -7,3 +7,4 @@ Maintainer: R Core Team <R-core@r-project.org>
 Description: R utility functions.
 License: Part of R @VERSION@
 Suggests: methods, XML
+NeedsCompilation: yes

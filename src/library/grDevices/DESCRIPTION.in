@@ -7,3 +7,4 @@ Maintainer: R Core Team <R-core@r-project.org>
 Description: Graphics devices and support for base and grid graphics.
 License: Part of R @VERSION@
 Suggests: KernSmooth
+NeedsCompilation: yes
