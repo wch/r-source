@@ -114,8 +114,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## version.  Other mismatches should be caught earlier by the
         ## version checks.
         needsComp <- isTRUE(pkgInfo$DESCRIPTION["NeedsCompilation"] == "yes")
-        isBase <- isTRUE(pkgInfo$DESCRIPTION["Priority"] == "base")
-        if (needsComp || isBase) {
+        if (needsComp) {
             internalsID <- features$internalsID
             if (is.null(internalsID))
                 ## the initial internalsID for packages installed
