@@ -419,6 +419,10 @@
       with decreasing \code{xlim}.  (Reported by William May).
 
       \item \code{str(I(matrix(..)))} now looks as always intended.
+
+      \item \code{plot.ts()}, the \code{plot()} method for time series,
+      now obeys \code{cex}, \code{lwd}, and \code{lty}.  (Reported by
+      Greg Werbin).
     }
   }
 }
