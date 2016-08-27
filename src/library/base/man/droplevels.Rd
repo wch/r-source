@@ -25,7 +25,7 @@
     should be excluded from the result even if present.  Note that this
     was \emph{implicitly} \code{NA} in \R <= 3.3.1 which did drop
     \code{NA} levels even when present in \code{x}, contrary to the
-    documentation.  The current default is compatible with \code{x[ , drop=FALSE]}.}
+    documentation.  The current default is compatible with \code{x[ , drop=TRUE]}.}
   \item{\dots}{further arguments passed to methods}
   \item{except}{indices of columns from which \emph{not} to drop levels}
 }
