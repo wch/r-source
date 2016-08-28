@@ -5,13 +5,14 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
+"Australia (Melbourne) [https]",Australia,Melbourne,https://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au
 "Australia (Melbourne)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au
 "Australia (Perth) [https]",Australia,Perth,https://cran.curtin.edu.au/,"Curtin University of Technology","unix # curtin.edu.au",1,au,"secure_mirror_from_master"
 "Austria [https]",Austria,Wien,https://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at
 Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at
 "Belgium (Antwerp)",Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
-"Belgium (Ghent) [https]",Belgium,Ghent,https://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be
-"Belgium (Ghent)",Belgium,Ghent,http://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be
+"Belgium (Ghent) [https]",Belgium,Ghent,https://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be,"secure_mirror_from_master"
+"Belgium (Ghent)",Belgium,Ghent,http://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be,"secure_mirror_from_master"
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo Justiniano Ribeiro Junior <paulojus # ufpr.br>",1,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo.cruz # fiocruz.br",1,br
@@ -79,7 +80,8 @@ Malaysia,Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysi
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
-Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no
+"Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
+Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
 Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Edward Santos <edward.p.santos # upd.edu.ph>, ops # pregi.net",1,ph
 "Portugal (Lisbon)",Portugal,Lisbon,http://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Portugal (Porto)",Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",0,pt
