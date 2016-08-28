@@ -6,5 +6,5 @@ Author: R Core Team
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Tools for package development, administration and documentation.
 License: Part of R @VERSION@
-Suggests: codetools, methods, xml2
+Suggests: codetools, methods, xml2, curl
 NeedsCompilation: yes

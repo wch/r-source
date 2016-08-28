@@ -310,14 +310,19 @@ table_of_FTP_server_return_codes <-
 check_url_db <-
 function(db, verbose = FALSE)
 {
+    use_curl <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_URL_DB_USE_CURL_",
+                                         "FALSE"))
+        
     .gather <- function(u = character(),
                         p = list(),
                         s = rep.int("", length(u)),
                         m = rep.int("", length(u)),
+                        new = rep.int("", length(u)),
                         cran = rep.int("", length(u)),
                         spaces = rep.int("", length(u))) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
-                        CRAN = cran, Spaces = spaces,
+                        New = new, CRAN = cran, Spaces = spaces,
                         stringsAsFactors = FALSE)
         y$From <- p
         class(y) <- c("check_url_db", "data.frame")
@@ -328,6 +333,9 @@ function(db, verbose = FALSE)
         if(verbose) message(sprintf("processing %s", u))
         h <- tryCatch(curlGetHeaders(u), error = identity)
         if(inherits(h, "error")) {
+            ## Currently, this info is only used in .check_http().
+            ## Might be useful for checking ftps too, so simply leave it
+            ## here instead of moving to .check_http().
             msg <- conditionMessage(h)
             if (grepl("libcurl error code (51|60)", msg)) {
                 h2 <- tryCatch(curlGetHeaders(u, verify = FALSE),
@@ -371,6 +379,14 @@ function(db, verbose = FALSE)
             if (length(ind))
                 newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
         }
+        ##
+        if((s != "200") && use_curl) {
+            g <- .curl_GET_status(u)
+            if(g == "200") {
+                s <- g
+                msg <- "OK"
+            }
+        }
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
@@ -393,8 +409,15 @@ function(db, verbose = FALSE)
                  "https://cran.rstudio.com/")
     mirrors <- tolower(sub("/$", "", mirrors))
 
-    parents <- split(db$Parent, db$URL)
-    urls <- names(parents)
+    if(inherits(db, "check_url_db")) {
+        ## Allow re-checking check results.
+        parents <- db$From
+        urls <- db$URL
+    } else {
+        parents <- split(db$Parent, db$URL)
+        urls <- names(parents)
+    }
+
     parts <- parse_URI_reference(urls)
 
     ## Empty URLs.
@@ -458,13 +481,11 @@ function(db, verbose = FALSE)
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            url <- urls[pos]; newLoc <- results[ind, 3L]
-            ind2 <- nzchar(newLoc)
-            url[ind2] <-
-                paste0(url[ind2], " (moved to ", newLoc[ind2], ")")
             bad <- rbind(bad,
-                         .gather(url, parents[pos], s, m,
-                                 results[ind, 4L], results[ind, 5L]))
+                         .gather(urls[pos], parents[pos], s, m,
+                                 results[ind, 3L],
+                                 results[ind, 4L],
+                                 results[ind, 5L]))
         }
     }
     bad
@@ -475,7 +496,12 @@ function(x, ...)
 {
     if(!NROW(x)) return(character())
 
-    paste0(sprintf("URL: %s", x$URL),
+    u <- x$URL
+    new <- x$New
+    ind <- nzchar(new)
+    u[ind] <- sprintf("%s (moved to %s)", u[ind], new[ind])
+
+    paste0(sprintf("URL: %s", u),
            sprintf("\nFrom: %s",
                    sapply(x$From, paste, collapse = "\n      ")),
            ifelse((s <- x$Status) == "",
@@ -499,4 +525,16 @@ function(x, ...)
     if(NROW(x))
         writeLines(paste(format(x), collapse = "\n\n"))
     invisible(x)
+}
+
+.curl_GET_status <-
+function(u, verbose = FALSE)
+{
+    if(verbose)
+        message(sprintf("processing %s", u))
+    g <- tryCatch(curl::curl_fetch_memory(u), error = identity)
+    if(inherits(g, "error"))
+        -1L
+    else
+        g$status_code
 }
