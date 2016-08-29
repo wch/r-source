@@ -34,6 +34,7 @@ summary(object, \dots)
 }
 \arguments{
   \item{object}{an object for which a summary is desired.}
+  \item{x}{a result of the \emph{default} method of \code{summary()}.}
   \item{maxsum}{integer, indicating how many levels should be shown for
     \code{\link{factor}}s.}
   \item{digits}{integer, used for number formatting with
