@@ -3285,7 +3285,7 @@ Unicode properties can be checked at run-time by calling
 @code{pcre_config()}.  If building PCRE for use with @R{} a suitable
 @command{configure} command might be
 @example
-/configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
+./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
 The @option{--enable-jit} flag is supported for most common CPUs.
