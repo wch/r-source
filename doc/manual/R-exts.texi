@@ -4621,12 +4621,20 @@ certain macros are defined with large enough values, and on some
 compiler/OS combinations@footnote{This is seen on Linux and Solaris,
 although each has other ways to turn on all extensions, e.g.@: defining
 @code{_GNU_SOURCE} or @code{__EXTENSIONS__}: the GCC compilers by
-default define @code{_GNU_SOURCE}.  On OS X extensions are declared
-unless one of these macros is given too small a value.} they are not
-declared otherwise.  So you may need to include one of
+default define @code{_GNU_SOURCE} unless a strict standard such as
+@option{-std=c99} is used.  On OS X extensions are declared unless one
+of these macros is given too small a value.} they are not declared
+otherwise.  So you may need to include something like one of
+@footnote{Solaris 10 does not recognize this value of
+@code{_POSIX_C_SOURCE}, nor values of @code{_XOPEN_SOURCE} beyond 600.}
 @example
-#define _XOPEN_SOURCE 700
-#define _POSIX_C_SOURCE 200809L
+#define _XOPEN_SOURCE 500
+@end example
+or
+@example
+#ifdef __GLIBC__
+# define _POSIX_C_SOURCE 200809L
+#endif
 @end example
 before @emph{any} headers.  (@code{strdup} and @code{strncasecmp} are
 two such functions.)
