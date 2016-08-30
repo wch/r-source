@@ -41,11 +41,12 @@ endsWith   <- function(x, suffix) .Internal(endsWith  (x, suffix))
 
 abbreviate <-
     function(names.arg, minlength = 4L, use.classes = TRUE, dot = FALSE,
-             strict = FALSE, method = c("left.kept", "both.sides"))
+             strict = FALSE, method = c("left.kept", "both.sides"),
+             named = TRUE)
 {
     if(minlength <= 0L) {
         x <- rep.int("", length(names.arg))
-        names(x) <- names.arg
+        if(named) names(x) <- names.arg
         return(x)
     }
     ## need to remove leading/trailing spaces before we check for dups
@@ -85,7 +86,7 @@ abbreviate <-
 	chgd <- x != old
 	x[chgd] <- paste0(x[chgd],".")
     }
-    names(x) <- old
+    if(named) names(x) <- old
     x
 }
 

@@ -346,6 +346,8 @@
 
       \item \code{format(<AsIs>)} looks more regular, also for
       non-character atomic matrices.
+
+      \item \code{abbreviate()} gets option \code{named = TRUE}.
     }
   }
 

@@ -1,7 +1,7 @@
 % File src/library/base/man/abbreviate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
-% Copyright 2008      The R Foundation
+% Copyright 1995-2016 R Core Team
+% Copyright 2008-2016 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{abbreviate}
@@ -9,7 +9,7 @@
 \usage{
 abbreviate(names.arg, minlength = 4, use.classes = TRUE,
            dot = FALSE, strict = FALSE,
-           method = c("left.kept", "both.sides"))
+           method = c("left.kept", "both.sides"), named = TRUE)
 }
 \alias{abbreviate}
 \arguments{
@@ -22,7 +22,9 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
     Note that setting \code{strict = TRUE} may return \emph{non}-unique
     strings.}
   \item{method}{a character string specifying the method used with default
-    \code{"left.kept"}, see \sQuote{Details} below. Partial matches allowed.}
+    \code{"left.kept"}, see \sQuote{Details} below.  Partial matches
+    allowed.}
+  \item{named}{logical: should \code{names} (with original vector) be returned.}
 }
 \description{
   Abbreviate strings to at least \code{minlength} characters,
@@ -60,8 +62,9 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   are found for those elements only.  This process is repeated until all
   unique elements of \code{names.arg} have unique abbreviations.
 
-  The character version of \code{names.arg} is attached to the returned
-  value as a names argument: no other attributes are retained.
+  If \code{names} is true, the character version of \code{names.arg} is
+  attached to the returned value as a \code{\link{names}} attribute: no
+  other attributes are retained.
 
   If a input element contains non-ASCII characters, the corresponding
   value will be in UTF-8 and marked as such (see \code{\link{Encoding}}).
@@ -87,6 +90,8 @@ abbreviate(x, 2)
 abbreviate(x, 2, strict = TRUE) # >> 1st and 3rd are == "ab"
 
 (st.abb <- abbreviate(state.name, 2))
+stopifnot(identical(unname(st.abb),
+           abbreviate(state.name, 2, named=FALSE)))
 table(nchar(st.abb)) # out of 50, 3 need 4 letters :
 as <- abbreviate(state.name, 3, strict = TRUE)
 as[which(as == "Mss")]
