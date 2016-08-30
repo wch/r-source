@@ -316,6 +316,9 @@
       \code{x = 0:2}.
 
       \item \code{droplevels(f)} now keeps <NA> levels when present.
+
+      \item In integer arithmetic, \code{NULL} is now treated as
+      \code{integer(0)} where it was \code{double(0)}, previously.
     }
   }
 }

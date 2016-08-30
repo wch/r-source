@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015	    The R Core Team.
- *  Copyright (C) 2003--2015	    The R Foundation
+ *  Copyright (C) 1998--2016	    The R Core Team.
+ *  Copyright (C) 2003--2016	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -510,7 +510,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define FIXUP_NULL_AND_CHECK_TYPES(v, vpi) do { \
     switch (TYPEOF(v)) { \
-    case NILSXP: REPROTECT(v = allocVector(REALSXP,0), vpi); break; \
+    case NILSXP: REPROTECT(v = allocVector(INTSXP,0), vpi); break; \
     case CPLXSXP: case REALSXP: case INTSXP: case LGLSXP: break; \
     default: errorcall(lcall, _("non-numeric argument to binary operator")); \
     } \

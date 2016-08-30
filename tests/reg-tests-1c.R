@@ -1873,6 +1873,22 @@ stopifnot(identical(levels(print(droplevels(dn))), c(L3, NA))
 	  )
 
 
+## summary.default() no longer rounds (just its print() method does):
+set.seed(0)
+replicate(256, { x <- rnorm(1); stopifnot(summary(x) == x)}) -> .t
+replicate(256, { x <- rnorm(2+rpois(1,pi))
+    stopifnot(min(x) <= (sx <- summary(x)), sx <= max(x))}) -> .t
+## was almost always wrong in R <= 3.3.x
+
+
+## NULL in integer arithmetic
+i0 <- integer(0)
+stopifnot(identical(1L + NULL, 1L + integer()),
+	  identical(2L * NULL, i0),
+	  identical(3L - NULL, i0))
+## gave double() in R <= 3.3.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
