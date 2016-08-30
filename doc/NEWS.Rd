@@ -432,6 +432,10 @@
       \item \code{plot.ts()}, the \code{plot()} method for time series,
       now obeys \code{cex}, \code{lwd}, and \code{lty}.  (Reported by
       Greg Werbin).
+
+      \item \code{mccollect()} now returns a named list (as
+      documented) called with \code{wait=FALSE}.  (Reported by
+      Michel Lang.)
     }
   }
 }
