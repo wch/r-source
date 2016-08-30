@@ -4178,13 +4178,13 @@ should not use @option{-n} (as the first argument) nor escape sequences.
 
 @item
 Make use of the abilities of your compilers to check the
-standards-conformance of your code.  For example, @command{gcc} can be
-used with options @option{-Wall -pedantic} to alert you to potential
-problems.  This is particularly important for C++, where @code{g++ -Wall
--pedantic} will alert you to the use of GNU extensions which fail to
-compile on most other C++ compilers. If @R{} was not configured
-accordingly, one can achieve this @emph{via} personal @file{Makevars}
-files.
+standards-conformance of your code.  For example, @command{gcc} and
+@command{gfortran} can be used with options @option{-Wall -pedantic} to
+alert you to potential problems.  This is particularly important for
+C++, where @code{g++ -Wall -pedantic} will alert you to the use of GNU
+extensions which fail to compile on most other C++ compilers. If @R{}
+was not configured accordingly, one can achieve this @emph{via} personal
+@file{Makevars} files.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
@@ -4199,9 +4199,16 @@ If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
 of conformance to the standard.
 
-If using Fortran 95 with the GNU compiler, use the flag
-@option{-std=f95} which rejects most GNU extensions and features from
-later standards.
+If using Fortran 9x with the GNU compiler, use the flags
+@option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
+features from later standards.
+
+@R{} has tested that @code{DOUBLE COMPLEX} works (although an extension
+to the Fortran standards) and so preferred to @code{COMPLEX*16}.
+(Fortran 9x code can use something like
+@code{COMPLEX(KIND=KIND(0.0D0)}@footnote{See
+@uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
+
 
 Not all common @R{} platforms conform to the expected standards, e.g.@:
 C99 for C code.  One common area of problems is the @code{*printf}
