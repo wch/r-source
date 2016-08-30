@@ -3697,9 +3697,10 @@ setRlibs <-
                                  ## We retain [-Wuninitialized]
                                  "Warning: .*\\[-Wmaybe-uninitialized]",
                                  "Warning: .*\\[-Wintrinsic-shadow]",
-                                 ## R itself uses this one.
-                                 "Warning: GNU Extension: DOUBLE COMPLEX"
-                                 )
+                                 ## R itself uses these, the latter in LAPACK
+                                 "Warning: GNU Extension: DOUBLE COMPLEX",
+                                 "Warning: GNU Extension: .*COMPLEX[*]16"
+                                )
                     check_src_flag <-
                         Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
                     if (!config_val_to_logical(check_src_flag))
