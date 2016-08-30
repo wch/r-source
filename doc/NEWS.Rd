@@ -99,6 +99,10 @@
       \code{plot()} now work correctly for \code{"Date"} and time
       objects \code{D}, even when \dQuote{time goes backward}, e.g.,
       with decreasing \code{xlim}.  (Reported by William May).
+
+      \item \code{plot.ts()}, the \code{plot()} method for time series,
+      now obeys \code{cex}, \code{lwd}, and \code{lty}.  (Reported by
+      Greg Werbin).
     }
   }
 }

@@ -490,9 +490,10 @@ plot.ts <-
 	    on.exit(par(oldpar))
 	    for(i in 1L:nser) {
 		plot.default(x[, i], axes = FALSE, xlab="", ylab="",
-		     log = log, col = col, bg = bg, pch = pch, ann = ann,
-		     type = "n", ...)
-		panel(x[, i], col = col, bg = bg, pch = pch, type=type, ...)
+                             log = log, col = col, bg = bg, pch = pch, ann = ann,
+                             type = "n", ...)
+		panel(x[, i], col = col, bg = bg, pch = pch,
+		      cex = cex, lwd = lwd, lty = lty, type = type, ...)
 		if(frame.plot) box(...)
 		y.side <- if (i %% 2 || !yax.flip) 2 else 4
 		do.xax <- i %% nr == 0 || i == nser
@@ -508,7 +509,7 @@ plot.ts <-
                           font=font.lab, ...)
 		    if(do.xax)
 			mtext(xlab, side=1, line=3, cex=cex.lab, col=col.lab,
-                          font=font.lab, ...)
+			      font=font.lab, ...)
 		}
 	    }
 	    if(ann && !is.null(main)) {
@@ -534,21 +535,24 @@ plot.ts <-
 	    ylab <- if (missing(ylab)) xy$ylab else ylab
 	    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
 	    ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
-	    n <- length(xy $ x)		  #-> default for xy.l(ines|abels)
+	    n <- length(xy $ x)
 	    if(missing(xy.labels)) xy.labels <- (n <= 150)
-	    if(!is.logical(xy.labels)) {
-		if(!is.character(xy.labels))
-		    stop("'xy.labels' must be logical or character")
-		do.lab <- TRUE
-	    } else do.lab <- xy.labels
+	    do.lab <-
+		if(is.logical(xy.labels))
+		    xy.labels
+		else {
+		    if(!is.character(xy.labels))
+			stop("'xy.labels' must be logical or character")
+		    TRUE
+		}
+	    ptype <- if(do.lab) "n" else if(missing(type)) "p" else type
 
             dev.hold(); on.exit(dev.flush())
-	    ptype <-
-		if(do.lab) "n" else if(missing(type)) "p" else type
 	    plot.default(xy, type = ptype,
 			 xlab = xlab, ylab = ylab,
 			 xlim = xlim, ylim = ylim, log = log, col = col, bg = bg,
-			 pch = pch, axes = axes, frame.plot = frame.plot,
+			 pch=pch, cex=cex, lty=lty, lwd=lwd,
+                         axes = axes, frame.plot = frame.plot,
 			 ann = ann, main = main, ...)
 	    if(missing(xy.lines)) xy.lines <- do.lab
 	    if(do.lab)
@@ -591,11 +595,13 @@ plot.ts <-
 			      lwd = lwd[(i-1L) %% length(lwd) + 1L],
 			      bg  = bg [(i-1L) %% length(bg) + 1L],
 			      pch = pch[(i-1L) %% length(pch) + 1L],
+			      cex = cex[(i-1L) %% length(cex) + 1L],
 			      type = type)
 	}
 	else {
 	    lines.default(xy$x, x, col = col[1L], bg = bg, lty = lty[1L],
-			  lwd = lwd[1L], pch = pch[1L], type = type)
+			  lwd = lwd[1L], pch = pch[1L],
+			  cex = cex[1L], type = type)
 	}
 	if (ann)
 	    title(main = main, xlab = xlab, ylab = ylab, ...)
@@ -604,7 +610,8 @@ plot.ts <-
 	    axis(2, ...)
 	}
 	if (frame.plot) box(...)
-    }
+    }## {plotts}
+
     xlabel <- if (!missing(x)) deparse(substitute(x))# else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))
     plotts(x = x, y = y, plot.type = plot.type,
