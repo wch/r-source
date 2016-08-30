@@ -19,6 +19,7 @@ readCitationFile(file, meta = NULL)
   \item{package}{a character string with the name of a single package.
     An error occurs if more than one package name is given.}
   \item{lib.loc}{a character vector with path names of \R libraries, or
+    the directory containing the source for \code{package}, or
     \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
     packages are searched before the libraries.}
@@ -41,10 +42,10 @@ readCitationFile(file, meta = NULL)
   Execute function \code{citation()} for information on how to cite the
   base R system in publications.  If the name of a non-base package is
   given, the function either returns the information contained in the
-  \file{CITATION} file of the package or auto-generates citation
-  information.  In the latter case the package \file{DESCRIPTION} file
-  is parsed, the resulting citation object may be arbitrarily bad, but
-  is quite useful (at least as a starting point) in most cases.
+  \file{CITATION} file of the package (using \code{readCitationFile}
+  with \code{meta} equal to \code{packageDescription(package, lib.loc)})
+  or auto-generates citation information from the \file{DESCRIPTION}
+  file.
 
   In \R >= 2.14.0, one can use a \samp{Authors@R} field in
   \file{DESCRIPTION} to provide (\R code giving) a

@@ -1144,7 +1144,12 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         ## if(is.null(auto)): Use default auto-citation if no CITATION
         ## available.
         citfile <- file.path(dir, "CITATION")
-        if(is.null(auto)) auto <- !file_test("-f", citfile)
+        test <- file_test("-f", citfile)
+        if(!test) {                     # allow package source
+            citfile <- file.path(dir, "inst", "CITATION")
+            test <- file_test("-f", citfile)
+        }
+        if(is.null(auto)) auto <- !test
         ## if CITATION is available
         if(!auto) {
             return(readCitationFile(citfile, meta))
