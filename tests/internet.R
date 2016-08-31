@@ -4,8 +4,11 @@
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
-# test do_download.
-nrow(available.packages(contrib.url("http://cran.r-project.org")))
+# test do_download (and "record" #{packages}):
+ap <- available.packages(contrib.url("http://cran.r-project.org"))
+## IGNORE_RDIFF_BEGIN
+nrow(ap)
+## IGNORE_RDIFF_END
 
 # test url connections on http
 zz <- url("http://cran.r-project.org/")
