@@ -1851,6 +1851,8 @@ stopifnot(length(uw <- unique(warnings())) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
 
 
+op <- options(warn = 2)# no warnings allowed
+
 ## findInterval(x, vec)  when 'vec' is of length zero
 n0 <- numeric(); TF <- c(TRUE, FALSE)
 stopifnot(0 == unlist(lapply(TF, function(L1)
@@ -1887,6 +1889,16 @@ stopifnot(identical(1L + NULL, 1L + integer()),
 	  identical(2L * NULL, i0),
 	  identical(3L - NULL, i0))
 ## gave double() in R <= 3.3.x
+
+
+##  factor(x, exclude)  when  'x' or 'exclude' are  character:
+stopifnot(identical(factor(c(1:2, NA), exclude = ""),
+		    factor(c(1:2, NA), exclude = NULL) -> f12N))
+fab <- factor(factor(c("a","b","c")), exclude = "c")
+stopifnot(identical(levels(fab), c("a","b")))
+faN <- factor(c("a", NA), exclude=NULL)
+stopifnot(identical(faN, factor(faN, exclude="c")))
+## differently with NA coercion warnings in R <= 3.3.x
 
 
 

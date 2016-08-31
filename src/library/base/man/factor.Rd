@@ -59,8 +59,9 @@ addNA(x, ifany = FALSE)
     removing those in \code{exclude}), \emph{or} a character string of
     length 1.}
   \item{exclude}{a vector of values to be excluded when forming the
-    set of levels.  This should be of the same type as \code{x}, and
-    will be coerced if necessary.}
+    set of levels.  This should be a \code{character} (when \code{x} is
+    a \code{factor} already) or of the same type (\code{\link{typeof}})
+    as \code{x}, and will be coerced if necessary.}
   \item{ordered}{logical flag to determine if the levels should be regarded
     as ordered (in the order given).}
   \item{nmax}{an upper bound on the number of levels; see \sQuote{Details}.}
@@ -125,9 +126,10 @@ addNA(x, ifany = FALSE)
   \code{factor(x, exclude = NULL)} applied to a factor without
   \code{\link{NA}}s is a no-operation unless there are unused levels: in
   that case, a factor with the reduced level set is returned.  If
-  \code{exclude} is used it should either be a factor with the same
-  level set as \code{x} or a set of codes for the levels to be
-  excluded.
+  \code{exclude} is used, since \R version 3.4.0, excluding non-existing
+  character levels is equivalent to excluding nothing, and when
+  \code{exclude} is a \code{\link{character}} vector, that \emph{is}
+  applied to the levels of \code{x}.
 
   The codes of a factor may contain \code{\link{NA}}.  For a numeric
   \code{x}, set \code{exclude = NULL} to make \code{\link{NA}} an extra
@@ -233,6 +235,14 @@ is.na(x)[2] <- TRUE
 x  # [1] 1    <NA> <NA>
 is.na(x)
 # [1] FALSE  TRUE FALSE
+
+## More rational, since R 3.4.0 :
+factor(c(1:2, NA), exclude =  "" ) # keeps <NA> , as
+factor(c(1:2, NA), exclude = NULL) # always did
+## exclude = <character>
+z # ordered levels 'A < B < C'
+factor(z, exclude = "C") # does exclude
+factor(z, exclude = "B") # ditto
 
 ## Using addNA()
 Month <- airquality$Month

@@ -17,6 +17,9 @@
       \item \code{summary.default()} no longer rounds, but its print
       method does, resulting in much less extraneous rounding notably of
       numbers in the ten thousands.
+
+      \item \code{factor(x, exclude = L)} behaves more rationally when
+      \code{x} or \code{L} are character vectors.
     }
   }
   \subsection{NEW FEATURES}{

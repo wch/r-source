@@ -321,7 +321,7 @@ stopifnot(identical(unclass(z), c('z', 'y', 'x', 'w')))
 ## repeated third and later args in R < 2.7.1.
 
 ## PD found that f==f contains NA when f has NA levels (but no missing value)
-f1 <- factor(c(1, 2, NA), exclude = "")
+f1 <- factor(c(1, 2, NA), levels = 1:2)
 f2 <- factor(c(1, 2, NA), exclude = NULL)
 stopifnot(identical(f1, factor(c(1,2,NA))),
           nlevels(f1) == 2, nlevels(f2) == 3,

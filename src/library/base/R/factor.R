@@ -28,8 +28,12 @@ factor <- function(x = character(), levels, labels = levels,
 	levels <- unique(y[ind])
     }
     force(ordered) # check if original x is an ordered factor
-    exclude <- as.vector(exclude, typeof(x)) # may result in NA
-    x <- as.character(x)
+    if(!is.character(x)) {
+	if(!is.character(exclude))
+	    exclude <- as.vector(exclude, typeof(x)) # may result in NA
+	x <- as.character(x)
+    } else
+	exclude <- as.vector(exclude, typeof(x)) # may result in NA
     ## levels could be a long vectors, but match will not handle that.
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
