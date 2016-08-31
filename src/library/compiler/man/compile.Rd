@@ -102,7 +102,9 @@ setCompilerOptions(...)
   The default value is returned unless a value is supplied in the
   \code{options} argument; the \code{options} argument is primarily for
   internal use.  \code{setCompilerOption} sets the default option
-  values. It returns a named list of the previous values.
+  values. Options to set are identified by argument names, e.g.
+  \code{setCompilerOptions(suppressAll = TRUE, optimize = 3)}.
+  It returns a named list of the previous values.
 
   Calling the compiler a byte code compiler is actually a bit of a
   misnomer: the external representation of code objects currently uses
