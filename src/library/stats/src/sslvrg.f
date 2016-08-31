@@ -41,11 +41,12 @@ C compute the coefficients coef() of estimated smooth
  4    continue
 
       do 6 i=1,(nk-2)
- 6       abd(2,i+2) = hs2(i)+lambda*sg2(i)
+         abd(2,i+2) = hs2(i)+lambda*sg2(i)
+ 6    continue
 
       do 8 i=1,(nk-3)
- 8       abd(1,i+3) = hs3(i)+lambda*sg3(i)
-
+         abd(1,i+3) = hs3(i)+lambda*sg3(i)
+ 8    continue
 c     factorize banded matrix abd:
       call dpbfa(abd,ld4,nk,3,info)
       if(info.ne.0) then
@@ -58,7 +59,8 @@ c     solve linear system (from factorize abd):
 C     Value of smooth at the data points
       do 12 i=1,n
          xv = x(i)
- 12      sz(i) = bvalue(knot,coef,nk,4,xv,0)
+         sz(i) = bvalue(knot,coef,nk,4,xv,0)
+ 12   continue
 
 C     Compute the criterion function if requested
 
@@ -118,7 +120,8 @@ c            call dblepr("crit", 4, crit, 1)
 C     Ordinary CV
                crit = 0d0
                do 30 i = 1,n
- 30               crit = crit + (((y(i)-sz(i))*w(i))/(1-lev(i)))**2
+                  crit = crit + (((y(i)-sz(i))*w(i))/(1-lev(i)))**2
+ 30            continue
                crit = crit/n
 c            call dblepr("spar", 4, spar, 1)
 c            call dblepr("crit", 4, crit, 1)
@@ -126,7 +129,8 @@ c            call dblepr("crit", 4, crit, 1)
 C     df matching
             crit = 0d0
             do 32 i=1,n
- 32            crit = crit+lev(i)
+               crit = crit+lev(i)
+ 32         continue
             crit = 3 + (dofoff-crit)**2
          endif
          return

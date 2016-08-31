@@ -49,11 +49,13 @@ c Common Vars
 
       sw=0d0
       do 161 j=1,n
- 161     sw=sw+w(j)
-      do 201 j=1,n
+         sw=sw+w(j)
+ 161  continue
+      do 202 j=1,n
          do 201 i=1,q
             r(i,j)=y(q*(j-1)+i)
- 201  continue
+ 201    continue
+ 202  continue
       do 241 i=1,q
          s=0d0
          do 251 j=1,n
@@ -62,14 +64,17 @@ c Common Vars
          yb(i)=s/sw
  241  continue
 c     yb is vector of means
-      do 261 j=1,n
+      do 262 j=1,n
         do 261 i=1,q
- 261       r(i,j)=r(i,j)-yb(i)
+          r(i,j)=r(i,j)-yb(i)
+ 261    continue
+ 262  continue
       ys=0.d0
       do 281 i=1,q
          s=0.d0
          do 291 j=1,n
- 291        s=s+w(j)*r(i,j)**2
+            s=s+w(j)*r(i,j)**2
+ 291     continue
          ys=ys+ww(i)*s/sw
  281  continue
       if(ys .gt. 0d0) goto 311
@@ -79,9 +84,11 @@ c     ys is the overall standard deviation -- quit if zero
  311  continue
       ys=sqrt(ys)
       s=1.d0/ys
-      do 331 j=1,n
+      do 332 j=1,n
          do 331 i=1,q
- 331        r(i,j)=r(i,j)*s
+            r(i,j)=r(i,j)*s
+ 331     continue
+ 332  continue
 
 c     r is now standardized residuals
 c     subfit adds up to m  terms one at time; lm is the number fitted.
@@ -94,19 +101,23 @@ C REPEAT
         sc(l,1)=l+0.1d0
         s=0d0
         do 391 i=1,q
- 391       s=s+ww(i)*abs(b(i,l))
+           s=s+ww(i)*abs(b(i,l))
+ 391       continue
         sc(l,2)=-s
  381  continue
       call sort(sc(1,2),sc,1,lm)
-      do 461 j=1,n
+      do 462 j=1,n
          do 461 i=1,q
- 461        r(i,j)=y(q*(j-1)+i)
+            r(i,j)=y(q*(j-1)+i)
+ 461     continue
+ 462  continue
       do 521 i=1,q
         do 531 j=1,n
            r(i,j)=r(i,j)-yb(i)
            s=0.d0
            do 541 l=1,lm
- 541          s=s+b(i,l)*f(j,l)
+              s=s+b(i,l)*f(j,l)
+ 541       continue
           r(i,j)=r(i,j)/ys-s
 531     continue
 521   continue
@@ -114,21 +125,26 @@ C REPEAT
 c back to integer:
       l=int(sc(lm,1))
       asr1=0d0
-      do 561 j=1,n
+      do 562 j=1,n
         do 561 i=1,q
           r(i,j)=r(i,j)+b(i,l)*f(j,l)
-561     asr1=asr1+w(j)*ww(i)*r(i,j)**2
+          asr1=asr1+w(j)*ww(i)*r(i,j)**2
+ 561   continue
+ 562  continue
       asr1=asr1/sw
       asr(1)=asr1
       if(l .ge. lm) goto 591
       do 601 i=1,p
- 601     a(i,l)=a(i,lm)
+         a(i,l)=a(i,lm)
+ 601  continue
       do 611 i=1,q
- 611     b(i,l)=b(i,lm)
+         b(i,l)=b(i,lm)
+ 611  continue
       do 621 j=1,n
          f(j,l)=f(j,lm)
- 621     t(j,l)=t(j,lm)
-591   continue
+         t(j,l)=t(j,lm)
+ 621  continue
+ 591  continue
       lm=lm-1
       call fulfit(lm,lf,p,q,n,w,sw,x,r,ww,a,b,f,t,asr,sc,bt,g,dp,edf)
       goto 371
@@ -167,9 +183,11 @@ c Common Vars
 c does 'edf' mean 'edf(1)' or 'edf(l)'?
          call onetrm(0,p,q,n,w,sw,x,r,ww,a(1,lm),b(1,lm),
      &        f(1,lm),t(1,lm),asr(1),sc,g,dp,edf(1))
-         do 10 j=1,n
+         do 20 j=1,n
             do 10 i=1,q
- 10            r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
+               r(i,j)=r(i,j)-b(i,lm)*f(j,lm)
+ 10         continue
+ 20      continue
          if(lm.eq.1) goto 100
          if(lf.gt.0) then
             if(lm.eq.m) return
@@ -217,31 +235,39 @@ C Outer loop:
       asrold=asri
       iter=iter+1
       do 100 lp=1,lm
-        do 1 i=1,q
- 1         bt(i)=b(i,lp)
-        do 2 i=1,p
- 2         g(i,3)=a(i,lp)
-        do 3 j=1,n
-          do 3 i=1,q
- 3           r(i,j)=r(i,j)+bt(i)*f(j,lp)
+        do 10 i=1,q
+           bt(i)=b(i,lp)
+ 10     continue
+        do 20 i=1,p
+           g(i,3)=a(i,lp)
+ 20     continue
+        do 35 j=1,n
+          do 30 i=1,q
+             r(i,j)=r(i,j)+bt(i)*f(j,lp)
+ 30       continue
+ 35    continue
 
         call onetrm(1,p,q,n,w,sw,x,r,ww,g(1,3),bt,sc(1,14),sc(1,15),
      &            asri,sc,g,dp,edf(lp))
         if(asri .lt. asrold) then
-           do 4 i=1,q
- 4            b(i,lp)=bt(i)
-           do 5 i=1,p
- 5            a(i,lp)=g(i,3)
-           do 6 j=1,n
+           do 40 i=1,q
+              b(i,lp)=bt(i)
+ 40        continue
+           do 50 i=1,p
+              a(i,lp)=g(i,3)
+ 50        continue
+           do 60 j=1,n
               f(j,lp)=sc(j,14)
               t(j,lp)=sc(j,15)
- 6         continue
+ 60        continue
         else
            asri=asrold
         endif
-        do 8 j=1,n
-          do 8 i=1,q
- 8           r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
+        do 85 j=1,n
+          do 80 i=1,q
+             r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
+ 80       continue
+ 85    continue
 100   continue
       if((iter .le. maxit) .and. ((asri .gt. 0d0)
      &     .and. ((asrold-asri)/asrold .ge. conv))) goto 1000
@@ -282,24 +308,27 @@ C REPEAT
       do 11 j=1,n
          s=0d0
          do 21 i=1,q
- 21         s=s+ww(i)*b(i)*y(i,j)
+            s=s+ww(i)*b(i)*y(i,j)
+ 21      continue
          sc(j,13)=s
-11    continue
+ 11   continue
       call oneone(max0(jfl,iter-1),p,n,w,sw,sc(1,13),x,a,f,t,
      &                 asr,sc,g,dp,edf)
       do 31 i=1,q
         s=0d0
         do 41 j=1,n
- 41        s=s+w(j)*y(i,j)*f(j)
+           s=s+w(j)*y(i,j)*f(j)
+ 41     continue
         b(i)=s/sw
-31    continue
+ 31   continue
       asr=0d0
       do 51 i=1,q
          s=0d0
          do 61 j=1,n
- 61         s=s+w(j)*(y(i,j)-b(i)*f(j))**2
+            s=s+w(j)*(y(i,j)-b(i)*f(j))**2
+ 61      continue
          asr=asr+ww(i)*s/sw
-51    continue
+ 51   continue
       if((q .ne. 1) .and. (iter .le. maxit) .and. (asr .gt. 0d0)
      &      .and. (asrold-asr)/asrold .ge. conv) goto 1000
       return
@@ -424,7 +453,8 @@ c--------------
       if(v .gt. 0d0) then
         v=1d0/sqrt(v/sw)
         do 230 j=1,n
- 230      f(j)=f(j)*v
+          f(j)=f(j)*v
+ 230   continue
       endif
       return
       end
@@ -1238,7 +1268,8 @@ c Var
       do 10 i = 1,n
         dx(i) = (x(i)-x(1))/(x(n)-x(1))
         dy(i) = y(i)
- 10     dw(i) = w(i)
+        dw(i) = w(i)
+ 10   continue
       nk = min(n,15)
       knot(1) = dx(1)
       knot(2) = dx(1)
@@ -1280,11 +1311,13 @@ c   this was `eps' (=? sqrt(machine eps)) in ./sbart.c :
      &     crit,iparms,lambda,param, work,4,1,ier)
       if(ier .gt. 0) call intpr('TROUBLE:',8, ier, 1)
       do 50 i = 1,n
- 50      smo(i) = dsmo(i)
+         smo(i) = dsmo(i)
+ 50   continue
 c      call dblepr('smoothed',8, dsmo, n)
       s = 0
       do 60 i = 1, n
- 60      s = s + lev(i)
+         s = s + lev(i)
+ 60   continue
       edf = s
       if(ismethod.lt.0) then
          call dblepr('lambda', 6, lambda, 1)

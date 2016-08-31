@@ -46,13 +46,15 @@ c
             hold = a(j)
             k = l - j + 1
             a(j) = a(j) + a(l)*a(k)
-   10       a(k) = a(k) + a(l)*hold
+            a(k) = a(k) + a(l)*hold
+   10       continue
           if (2*l1 .ne. l - 2) a(l2+1) = a(l2+1)*(1.0d0 + a(l))
         endif
         v = v + a(l)*d
         f(l,l) = (g(l+1) - q)/v
         do 40 j = 1, l-1
-   40     f(l,j) = f(l-1, j) + f(l, l)*a(l-j+1)
+          f(l,j) = f(l-1, j) + f(l, l)*a(l-j+1)
+   40     continue
 c  estimate the innovations variance
         var(l) = var(l-1) * (1 - f(l,l)*f(l,l))
         if (l .eq. lr) return
@@ -61,7 +63,8 @@ c  estimate the innovations variance
         do 50 i = 1, l
           k = l-i+2
           d = d + a(i)*r(k)
-   50     q = q + f(l,i)*r(k)
+          q = q + f(l,i)*r(k)
+   50     continue
    60   continue
       return
       end

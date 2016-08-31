@@ -1850,7 +1850,7 @@ c     pseudovalues
       integer a(ncmax),c(vc,ncmax),hi(ncmax),lo(ncmax),pi(n),vhit(nvmax)
       DOUBLE PRECISION fd, v(nvmax,d),x(n,d),xi(ncmax)
 
-      logical i1,i2,i3,leaf
+      logical i1,i2,leaf
       integer i4,inorm2,k,l,m,p,u, upper, lower, check, offset
       DOUBLE PRECISION diam,diag(8),sigma(8)
 

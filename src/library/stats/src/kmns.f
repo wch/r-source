@@ -38,7 +38,7 @@ C
 C     For each point I, find its two closest centres, IC1(I) and
 C     IC2(I).     Assign it to IC1(I).
 C
-      DO 50 I = 1, M
+      DO 60 I = 1, M
         IC1(I) = 1
         IC2(I) = 2
         DO IL = 1, 2
@@ -72,6 +72,7 @@ C
              IC1(I) = L
           end IF
  50    CONTINUE
+ 60    CONTINUE
 C
 C     Update cluster centres to be the average of points contained
 C     within them.
