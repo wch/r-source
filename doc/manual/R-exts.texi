@@ -2442,18 +2442,25 @@ optional addition to the `C++03' revision which was published in 2007.
 A revised standard was published in 2011 and compilers with pretty much
 complete implementations are becoming available.  C++11 added all of the
 C99 features which are not otherwise implemented in C++, and C++
-compilers commonly accept C99 extensions to C++98.  A minor update to
-C++11 (often known as C++14) was approved in August 2014.
+compilers commonly accept C99 extensions to C++98.  A minor
+update@footnote{The changes are linked from
+@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
+to C++11 (C++14) was approved in August 2014.
 
-What standard a C++ compiler aims to support can be hard to determine.
-As from version 6, @command{g++} defaults to C++14 (with GNU
+What standard a C++ compiler aims to support can be hard to determine:
+the value@footnote{Values @code{199711}, @code{201103L} and
+@code{201402L} are most commonly used for C++98, C++11 and C++14
+respectively, but some compilers set @code{1L}.} of @code{__cplusplus}
+may help but some compilers use it to denote a standard which is
+partially supported and some the latest standard which is (almost) fully
+supported.  As from version 6, @command{g++} defaults to C++14 (with GNU
 extensions): earlier versions aim to support C++03 with many extensions
 (including support for TR1).  @command{clang} with its
 native@footnote{Some distributions, notably Debian, have supplied a
 build of @command{clang} with @command{g++}'s headers and library.
 Conversely, Apple's command named @command{g++} is based on
 @command{clang} using @code{libc++}.}  @code{libc++} headers and library
-includes many C++11 features, and does not support TR1.
+include many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2510,12 +2517,12 @@ it is available by default, @samp{CXX1X} defaults to @samp{CXX} and
 @samp{CXX1XSTD} is empty . Otherwise, @samp{CXX1X} defaults to the same
 value as the C++ compiler @samp{CXX} and the flag @samp{CXX1XSTD}
 defaults to @option{-std=c++11} or @option{-std=c++0x} (the latter on
-Windows).  It is possible to specify @samp{CXX1X} to be a distinct
-compiler just for C++11--using packages, e.g.@: @command{g++} on
-Solaris.  Note however that different C++ compilers (and even different
-versions of the same compiler) often differ in their ABI so their
-outputs can rarely be mixed. By setting @samp{CXX1XSTD} it is also
-possible to choose a different dialect of the standard such as
+Windows prior to @R{} 3.3.0).  It is possible to specify @samp{CXX1X} to
+be a distinct compiler just for C++11--using packages, e.g.@:
+@command{g++} on Solaris.  Note however that different C++ compilers
+(and even different versions of the same compiler) often differ in their
+ABI so their outputs can rarely be mixed. By setting @samp{CXX1XSTD} it
+is also possible to choose a different dialect of the standard such as
 @option{-std=gnu++11}, or enable support for the 2014 revision using
 something like @option{-std=c++14} or @option{-std=c++1y}.
 
@@ -4121,7 +4128,9 @@ should not use @option{-n} (as the first argument) nor escape sequences.
 @item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} and
-@command{gfortran} can be used with options @option{-Wall -pedantic} to
+@command{gfortran}@footnote{@uref{http://fortranwiki.org/@/fortran/@/show/Modernizing+Old+Fortran}
+may help explain some of the warnings from @command{gfortran -Wall
+-pedantic}.}  can be used with options @option{-Wall -pedantic} to
 alert you to potential problems.  This is particularly important for
 C++, where @code{g++ -Wall -pedantic} will alert you to the use of GNU
 extensions which fail to compile on most other C++ compilers. If @R{}
@@ -4146,7 +4155,7 @@ If using Fortran 9x with the GNU compiler, use the flags
 features from later standards.
 
 @R{} has tested that @code{DOUBLE COMPLEX} works (although an extension
-to the Fortran standards) and so preferred to @code{COMPLEX*16}.
+to the Fortran standards) and so is preferred to @code{COMPLEX*16}.
 (Fortran 9x code can use something like
 @code{COMPLEX(KIND=KIND(0.0D0)}@footnote{See
 @uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
@@ -4171,6 +4180,12 @@ sub-directories.  As a comment in the code says
 It is hard to think of anything apart from @option{-I*} and @option{-D*}
 that is safe for general use @dots{}
 @end quotation
+
+@noindent
+although @option{-pthread} is pretty close to portable.  (Option
+@option{-U} is portable but little use on the command line as it will
+only cancel built-in defines (not portable) and those defined earlier on
+the command line (@R{} does not use any).)
 
 @item
 Do be very careful with passing arguments between @R{}, C and
@@ -6985,8 +7000,7 @@ surprising memory use. For example, in the `survey' package we have
 @smallexample
 print.svycoxph <- function (x, ...)
 @{
-    print(x$survey.design, varnames = FALSE, design.summaries = FALSE,
-	...)
+    print(x$survey.design, varnames = FALSE, design.summaries = FALSE, ...)
     x$call <- x$printcall
     NextMethod()
 @}
@@ -13920,27 +13934,8 @@ but this should not be relied on.)
 
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
-during events of the second type.  This is not handled very well in the
-existing examples.  The GNOME front-end ran a private handler for polled
-events by setting
-
-@example
-extern int (*R_timeout_handler)();
-extern long R_timeout_val;
-
-      if (R_timeout_handler && R_timeout_val)
-          gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
-      gtk_main ();
-@end example
-
-@noindent
-whilst it is waiting for console input.  This obviously handles events
-for Gtk windows (such as the graphics device in the @pkg{gtkDevice}
-package), but not X11 events (such as the @code{X11()} device) or for
-other event handlers that might have been registered with @R{}.  It does
-not attempt to keep itself alive whilst @R{} is waiting on sockets.  The
-ability to add a polled handler as @code{R_timeout_handler} is used by
-the @pkg{tcltk} package.
+during events of the second type.  The ability to add a polled handler
+as @code{R_timeout_handler} is used by the @pkg{tcltk} package.
 
 
 @node Threading issues,  , Meshing event loops, Embedding R under Unix-alikes
@@ -13980,7 +13975,7 @@ suppressed by setting the variable @code{R_SignalHandlers} (declared in
 @file{Rinterface.h}) to @code{0}.
 
 Note that these variables must not be changed by an @R{}
-@strong{package}: a package should not calling @R{} internals which
+@strong{package}: a package should not call @R{} internals which
 makes use of the stack-checking mechanism on a secondary thread.
 
 @node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R
