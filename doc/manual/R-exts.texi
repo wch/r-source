@@ -4179,7 +4179,7 @@ should not use @option{-n} (as the first argument) nor escape sequences.
 @item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} and
-@command{gfortran}@footnote{@urf{http://fortranwiki.org/@/fortran/@/show/Modernizing+Old+Fortran}
+@command{gfortran}@footnote{@uref{http://fortranwiki.org/@/fortran/@/show/Modernizing+Old+Fortran}
 may help explain some of the warnings from @command{gfortran -Wall
 -pedantic}.}  can be used with options @option{-Wall -pedantic} to
 alert you to potential problems.  This is particularly important for
