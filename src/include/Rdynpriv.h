@@ -198,8 +198,10 @@ DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all);
 DL_FUNC R_dlsym(DllInfo *info, char const *name, 
 		R_RegisteredNativeSymbol *symbol);
 
-SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
-DL_FUNC R_ExternalPtrAddrFn(SEXP s);
+/* Moved to API in R 3.4.0
+  SEXP R_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot);
+  DL_FUNC R_ExternalPtrAddrFn(SEXP s);
+*/
 DL_FUNC R_dotCallFn(SEXP, SEXP, int);
 SEXP R_doDotCall(DL_FUNC, int, SEXP *, SEXP);
 

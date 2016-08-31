@@ -4179,7 +4179,9 @@ should not use @option{-n} (as the first argument) nor escape sequences.
 @item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} and
-@command{gfortran} can be used with options @option{-Wall -pedantic} to
+@command{gfortran}@footnote{@urf{http://fortranwiki.org/@/fortran/@/show/Modernizing+Old+Fortran}
+may help explain some of the warnings from @command{gfortran -Wall
+-pedantic}.}  can be used with options @option{-Wall -pedantic} to
 alert you to potential problems.  This is particularly important for
 C++, where @code{g++ -Wall -pedantic} will alert you to the use of GNU
 extensions which fail to compile on most other C++ compilers. If @R{}
@@ -4204,7 +4206,7 @@ If using Fortran 9x with the GNU compiler, use the flags
 features from later standards.
 
 @R{} has tested that @code{DOUBLE COMPLEX} works (although an extension
-to the Fortran standards) and so preferred to @code{COMPLEX*16}.
+to the Fortran standards) and so is preferred to @code{COMPLEX*16}.
 (Fortran 9x code can use something like
 @code{COMPLEX(KIND=KIND(0.0D0)}@footnote{See
 @uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
@@ -11433,10 +11435,20 @@ the external pointer represents, if that memory is allocated from the
 @R{} heap.  Both @code{tag} and @code{prot} can be @code{R_NilValue},
 and often are.
 
+An alternative way as from @R{} 3.4.0 to create an external pointer from
+a function pointer is
+
+@example
+typedef void * (*R_DL_FUNC)();
+SEXP R_MakeExternalPtrFn(R_DL_FUNC p, SEXP tag, SEXP prot);
+@end example
+
+
 The elements of an external pointer can be accessed and set @emph{via}
 
 @example
 void *R_ExternalPtrAddr(SEXP s);
+DL_FUNC R_ExternalPtrAddrFn(SEXP s);
 SEXP R_ExternalPtrTag(SEXP s);
 SEXP R_ExternalPtrProtected(SEXP s);
 void R_ClearExternalPtr(SEXP s);

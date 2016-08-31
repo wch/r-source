@@ -181,6 +181,15 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item There are new entry points \code{R_MakeExternalPtrFn} and
+      \code{R_ExternalPtrFn} to facilitate creating and retrieving an
+      \R{} external pointer from a C function pointer without ISO C
+      warnings about the conversion of function pointers.
+    }
+  }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item \code{readline} headers (and not just the library) are
