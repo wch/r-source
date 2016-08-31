@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-08-16 r71104) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-08-31 r71183) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -198,6 +198,28 @@ factor> is.na(x)
 
 factor> # [1] FALSE  TRUE FALSE
 factor> 
+factor> ## More rational, since R 3.4.0 :
+factor> factor(c(1:2, NA), exclude =  "" ) # keeps <NA> , as
+[1] 1    2    <NA>
+Levels: 1 2 <NA>
+
+factor> factor(c(1:2, NA), exclude = NULL) # always did
+[1] 1    2    <NA>
+Levels: 1 2 <NA>
+
+factor> ## exclude = <character>
+factor> z # ordered levels 'A < B < C'
+[1] C B A
+Levels: A < B < C
+
+factor> factor(z, exclude = "C") # does exclude
+[1] <NA> B    A   
+Levels: A < B
+
+factor> factor(z, exclude = "B") # ditto
+[1] C    <NA> A   
+Levels: A < C
+
 factor> ## Using addNA()
 factor> Month <- airquality$Month
 
