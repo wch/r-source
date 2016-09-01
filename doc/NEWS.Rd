@@ -385,6 +385,9 @@
       warnings from recent versions of \command{gfortran} with
       \option{-Wall -pedantic}: this now reports non-portable GNU
       extensions such as out-of-order declarations.
+      
+      \item \command{R CMD config} copes better with paths containing
+      spaces, even home directories.
     }
   }
 

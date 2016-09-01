@@ -2320,15 +2320,17 @@ CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
 
-The @R{} system and package-specific compilation flags can be overridden or
-added to by setting the appropriate Make variables in the personal file
-@file{@var{HOME}/.R/Makevars-@var{R_PLATFORM}} (but
+The @R{} system and package-specific compilation flags can be overridden
+or added to by setting the appropriate Make variables in the personal
+file @file{@var{HOME}/.R/Makevars-@var{R_PLATFORM}} (but
 @file{@var{HOME}/.R/Makevars.win} or @file{@var{HOME}/.R/Makevars.win64}
 on Windows), or if that does not exist, @file{@var{HOME}/.R/Makevars},
 where @samp{R_PLATFORM} is the platform for which @R{} was built, as
 available in the @code{platform} component of the @R{} variable
-@code{R.version}.  An alternative personal file can be specified
-@emph{via} the environment variable @env{R_MAKEVARS_USER}.
+@code{R.version}.  The path to an alternative personal
+file@footnote{using a path containing spaces is likely to cause
+problems} can be specified @emph{via} the environment variable
+@env{R_MAKEVARS_USER}.
 
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
@@ -2364,8 +2366,8 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin14/5.2.0
 
 There is also provision for a site-wide @file{Makevars.site} file under
 @file{@var{R_HOME}/etc} (in a sub-architecture-specific directory if
-appropriate).  This is read immediately after @file{Makeconf}, and an
-alternative file can be specified by environment variable
+appropriate).  This is read immediately after @file{Makeconf}, and the
+path to an alternative file can be specified by environment variable
 @env{R_MAKEVARS_SITE}.
 
 Note that these mechanisms do not work with packages which fail to pass

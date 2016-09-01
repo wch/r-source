@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-2015 The R Core Team
+## Copyright (C) 2002-2016 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -231,31 +231,32 @@ while test -n "${1}"; do
   shift
 done
 
+## quotes added in R 3.3.2
 if test "${site}" = "yes"; then
 : ${R_MAKEVARS_SITE="${R_HOME}/etc${R_ARCH}/Makevars.site"}
   if test -f "${R_MAKEVARS_SITE}"; then
-    makefiles="${makefiles} -f ${R_MAKEVARS_SITE}"
+    makefiles="${makefiles} -f \"${R_MAKEVARS_SITE}\""
   fi
 fi
 if test "${personal}" = "yes"; then
   if test "${R_OSTYPE}" = "windows"; then
     if test -f "${R_MAKEVARS_USER}"; then
-      makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
+      makefiles="${makefiles} -f \"${R_MAKEVARS_USER}\""
     elif test ${R_ARCH} = "/x64" -a -f "${HOME}/.R/Makevars.win64"; then
-      makefiles="${makefiles} -f ${HOME}/.R/Makevars.win64"
+      makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars.win64"
     elif test -f "${HOME}/.R/Makevars.win"; then
-      makefiles="${makefiles} -f ${HOME}/.R/Makevars.win"
+      makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars.win"
     elif test -f "${HOME}/.R/Makevars"; then
-      makefiles="${makefiles} -f ${HOME}/.R/Makevars"
+      makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars"
     fi
   else
     . ${R_HOME}/etc${R_ARCH}/Renviron
     if test -f "${R_MAKEVARS_USER}"; then
-      makefiles="${makefiles} -f ${R_MAKEVARS_USER}"
+      makefiles="${makefiles} -f \"${R_MAKEVARS_USER}\""
     elif test -f "${HOME}/.R/Makevars-${R_PLATFORM}"; then
-      makefiles="${makefiles} -f ${HOME}/.R/Makevars-${R_PLATFORM}"
+      makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars-${R_PLATFORM}"
     elif test -f "${HOME}/.R/Makevars"; then
-      makefiles="${makefiles} -f ${HOME}/.R/Makevars"
+      makefiles="${makefiles} -f \"${HOME}\"/.R/Makevars"
     fi
   fi
 fi
