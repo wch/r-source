@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-08-07 r71054) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-09-01 r71193) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -115,8 +115,8 @@ List of 2
 +     "\n\t starting with 'is.' :\t  ",
 +     sum(grepl("^is\\.", ls.base[base.is.f])), "\n", sep = "")
 
-Number of base objects:		1318
-Number of functions in base:	1276
+Number of base objects:		1319
+Number of functions in base:	1277
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  0.969 0.012 0.981 0 0 
+Time elapsed:  0.961 0.021 0.981 0 0 
 > 
