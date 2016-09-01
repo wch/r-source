@@ -85,7 +85,6 @@
  R_ExactSymbol
  R_Expressions
  R_Expressions_keep
- R_ExternalPtrAddrFn
  R_FileMtime
  R_FinalizeSrcRefState
  R_FreeSEXP
