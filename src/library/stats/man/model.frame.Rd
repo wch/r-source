@@ -15,8 +15,8 @@
 model.frame(formula, \dots)
 
 \method{model.frame}{default}(formula, data = NULL,
-           subset = NULL, na.action = na.fail,
-           drop.unused.levels = FALSE, xlev = NULL, \dots)
+            subset = NULL, na.action = na.fail,
+            drop.unused.levels = FALSE, xlev = NULL, \dots)
 
 \method{model.frame}{aovlist}(formula, data = NULL, \dots)
 
