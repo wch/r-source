@@ -1,6 +1,6 @@
 % File src/library/base/man/try.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{try}
@@ -11,11 +11,16 @@
   the user's code to handle error-recovery.
 }
 \usage{
-try(expr, silent = FALSE)
+try(expr, silent = FALSE,
+    outFile = getOption("try.outFile", default = stderr()))
 }
 \arguments{
   \item{expr}{an \R expression to try.}
-  \item{silent}{logical: should the report of error messages be suppressed?}
+  \item{silent}{logical: should the report of error messages be
+     suppressed?}
+  \item{outFile}{a \link{connection}, or a character string naming the
+    file to print to (via \code{\link{cat}(*, file = outFile)});
+    used only if \code{silent} is false, as by default.}
 }
 \details{
   \code{try} evaluates an expression and traps any errors that occur
@@ -31,6 +36,12 @@ try(expr, silent = FALSE)
   programming, instead of \code{try(expr, silent = TRUE)}, something like
   \code{tryCatch(expr, error = function(e) e)} (or other simple
   error handler functions) may be more efficient and flexible.
+
+  It may be useful to set the default for \code{outFile} to
+  \code{\link{stdout}()}, i.e., \preformatted{  options(try.outFile = stdout()) }
+  instead of the default \code{\link{stderr}()},
+  notably when \code{try()} is used inside a \code{\link{Sweave}} code
+  chunk and the error message should appear in the resulting document.
 }
 \value{
   The value of the expression if \code{expr} is evaluated without error,

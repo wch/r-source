@@ -178,6 +178,10 @@
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.
+
+      \item \code{try()} gets a new argument \code{outFile} with a default
+      that can be modified via \code{options(try.outFile = .)}, useful
+      notably for \code{Sweave}.
     }
   }
 
@@ -385,7 +389,7 @@
       warnings from recent versions of \command{gfortran} with
       \option{-Wall -pedantic}: this now reports non-portable GNU
       extensions such as out-of-order declarations.
-      
+
       \item \command{R CMD config} copes better with paths containing
       spaces, even home directories.
     }

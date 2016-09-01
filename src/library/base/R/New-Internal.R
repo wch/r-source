@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
 
 geterrmessage <- function() .Internal(geterrmessage())
 
-try <- function(expr, silent = FALSE) {
+try <- function(expr, silent = FALSE,
+                outFile = getOption("try.outFile", default = stderr())) {
     tryCatch(expr, error = function(e) {
         call <- conditionCall(e)
         if (! is.null(call)) {
@@ -46,7 +47,7 @@ try <- function(expr, silent = FALSE) {
         ## geterrmessage().
         .Internal(seterrmessage(msg[1L]))
         if (! silent && identical(getOption("show.error.messages"), TRUE)) {
-            cat(msg, file = stderr())
+            cat(msg, file = outFile)
             .Internal(printDeferredWarnings())
         }
         invisible(structure(msg, class = "try-error", condition = e))
@@ -293,6 +294,9 @@ curlGetHeaders <- function(url, redirect = TRUE, verify = TRUE)
 
 
 lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))
+
+withVisible <- function(x) .Internal(withVisible(x))
+
 
 ## base has no S4 generics
 .noGenerics <- TRUE
