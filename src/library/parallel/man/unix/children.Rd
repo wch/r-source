@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/children.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mcchildren}
@@ -56,7 +56,8 @@ mckill(process, signal = 2L)
 \details{
   \code{children} returns currently active children.
 
-  \code{readChild} reads data from a given child process.
+  \code{readChild} reads data (sent by \code{sendMaster}) from a given
+  child process.
 
   \code{selectChildren} checks children for available data.
 
@@ -99,10 +100,15 @@ mckill(process, signal = 2L)
 \author{
   Simon Urbanek and R Core.
 
-  Derived from the \CRANpkg{multicore} package.
+  Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
 }
 \section{Warning}{
-  This is a very low-level API for expert use only.
+  This is a very low-level interface for expert use only: it not
+  regarded as part of the \R API and subject to change without notice.
+
+  \code{sendMaster}, \code{readChild} and \code{sendChildStdin} did not
+  support long vectors prior to \R 3.4.0 and so were limited to
+  \eqn{2^{31} - 1}{2^31 - 1} bytes (and still are on 32-bit platforms).
 }
 \seealso{
   \code{\link{mcfork}}, \code{\link{sendMaster}}, \code{\link{mcparallel}}

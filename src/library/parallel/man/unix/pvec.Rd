@@ -82,7 +82,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 \author{
   Simon Urbanek and R Core.
 
-  Derived from the \CRANpkg{multicore} package.
+  Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{mclapply}},

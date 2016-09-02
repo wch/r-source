@@ -96,7 +96,7 @@ mcexit(exit.code = 0L, send = NULL)
 \author{
   Simon Urbanek and R Core.
 
-  Derived from the \CRANpkg{multicore} package.
+  Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
 }
 \section{Warning}{
   This is a very low-level API for expert use only.
