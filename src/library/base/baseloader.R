@@ -120,3 +120,9 @@ local({
         lapply(routines[[i]],
                function(sym) assign(paste0(".C_", sym$name), sym, envir = .BaseNamespaceEnv))
 })
+
+## make sure these two promises are forced to avoid recursive invocation
+## of "args" and consequent "promise already under evaluation" error
+
+invisible(force(.ArgsEnv))
+invisible(force(.GenericArgsEnv))
