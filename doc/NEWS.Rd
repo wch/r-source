@@ -390,8 +390,8 @@
       \option{-Wall -pedantic}: this now reports non-portable GNU
       extensions such as out-of-order declarations.
 
-      \item \command{R CMD config} copes better with paths containing
-      spaces, even home directories.
+      \item \command{R CMD config} works better with paths containing
+      spaces, even those of home directories (as reported by Ken Beath).
     }
   }
 
