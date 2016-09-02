@@ -1,6 +1,6 @@
 % File src/library/parallel/man/mclapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mclapply}
@@ -82,9 +82,9 @@ mcMap(f, ...)
 
   By default (\code{mc.preschedule = TRUE}) the input \code{X} is split
   into as many parts as there are cores (currently the values are spread
-  across the cores sequentially, i.e.\sspace{}first value to core 1, second to
-  core 2, \ldots (core + 1)-th value to core 1 etc.) and then one process
-  is forked to each core and the results are collected.
+  across the cores sequentially, i.e.\sspace{}first value to core 1,
+  second to core 2, \ldots (core + 1)-th value to core 1 etc.) and then
+  one process is forked to each core and the results are collected.
 
   Without prescheduling, a separate job is forked for each value of
   \code{X}.  To ensure that no more than \code{mc.cores} jobs are
@@ -103,7 +103,12 @@ mcMap(f, ...)
   than 100 cores or so (see \code{ulimit -n} or similar in your OS
   documentation) unless you raise the limit of permissible open file
   descriptors (fork will fail with error \code{"unable to create a
-  pipe"}).
+    pipe"}).
+  
+  Prior to \R 3.4.0 and on a 32-bit platform, the \link{serialize}d
+  result from each forked process is limited to \eqn{2^{31} - 1}{2^31 -
+    1} bytes.  (Returning very large results via serialization is
+  inefficient and should be avoided.)
 }
 
 \value{
@@ -143,7 +148,7 @@ mcMap(f, ...)
 \author{
   Simon Urbanek and R Core.
 
-  Derived from the \CRANpkg{multicore} package.
+  Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
 }
 \seealso{
   \code{\link{mcparallel}}, \code{\link{pvec}},

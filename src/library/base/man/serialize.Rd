@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{serialize}
@@ -65,8 +65,9 @@ unserialize(connection, refhook = NULL)
   The option of \code{xdr = FALSE} was introduced in \R 2.15.0.  As
   almost all systems in current use are little-endian, this can be used
   to avoid byte-shuffling at both ends when transferring data from one
-  little-endian machine to another.  Depending on the system, this can
-  speed up serialization and unserialization by a factor of up to 3x.
+  little-endian machine to another (or between processes on the same
+  machine).  Depending on the system, this can speed up serialization
+  and unserialization by a factor of up to 3x.
 }
 \section{Warning}{
   These functions have provided a stable interface since \R 2.4.0 (when

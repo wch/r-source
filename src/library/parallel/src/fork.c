@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  (C) Copyright 2008-11 Simon Urbanek
- *      Copyright 2011-2015 R Core Team.
+ *  (C) Copyright 2008-2011 Simon Urbanek
+ *      Copyright 2011-2016 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -363,18 +363,20 @@ SEXP mc_close_fds(SEXP sFDS)
     return ScalarLogical(1);
 }
 
+/* This format is read by read_child_ci (only).
+   Prior to R 3.4.0 len was unsigned int and the format did not
+   allow long vectors.
+ */
 SEXP mc_send_master(SEXP what)
 {
-    unsigned char *b;
-    unsigned int len = 0, i = 0;
     if (is_master)
 	error(_("only children can send data to the master process"));
     if (master_fd == -1) 
 	error(_("there is no pipe to the master process"));
     if (TYPEOF(what) != RAWSXP) 
 	error(_("content to send must be RAW, use serialize() if needed"));
-    len = LENGTH(what);
-    b = RAW(what);
+    R_xlen_t len = XLENGTH(what);
+    unsigned char *b = RAW(what);
 #ifdef MC_DEBUG
     Dprintf("child %d: send_master (%d bytes)\n", getpid(), len);
 #endif
@@ -383,22 +385,20 @@ SEXP mc_send_master(SEXP what)
 	master_fd = -1;
 	error(_("write error, closing pipe to the master"));
     }
-    while (i < len) {
-	ssize_t n = write(master_fd, b + i, len - i);
+    ssize_t n;
+    for (R_xlen_t i = 0; i < len; i += n) {
+	n = write(master_fd, b + i, len - i);
 	if (n < 1) {
 	    close(master_fd);
 	    master_fd = -1;
 	    error(_("write error, closing pipe to the master"));
 	}
-	i += n;
     }
     return ScalarLogical(1);
 }
 
 SEXP mc_send_child_stdin(SEXP sPid, SEXP what) 
 {
-    unsigned char *b;
-    unsigned int len = 0, i = 0, fd;
     int pid = asInteger(sPid);
     if (!is_master) 
 	error(_("only the master process can send data to a child process"));
@@ -409,10 +409,10 @@ SEXP mc_send_child_stdin(SEXP sPid, SEXP what)
 	ci = ci -> next;
     }
     if (!ci) error(_("child %d does not exist"), pid);
-    len = LENGTH(what);
-    b = RAW(what);
-    fd = ci -> sifd;
-    while (i < len) {
+    R_xlen_t  len = XLENGTH(what);
+    unsigned char *b = RAW(what);
+     unsigned int fd = ci -> sifd;
+    for (R_xlen_t i = 0; i < len;) {
 	ssize_t n = write(fd, b + i, len - i);
 	if (n < 1) error(_("write error"));
 	i += n;
@@ -515,7 +515,7 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 
 static SEXP read_child_ci(child_info_t *ci) 
 {
-    unsigned int len = 0;
+    R_xlen_t len;
     int fd = ci->pfd;
     ssize_t n = read(fd, &len, sizeof(len));
 #ifdef MC_DEBUG
@@ -530,7 +530,7 @@ static SEXP read_child_ci(child_info_t *ci)
     } else {
 	SEXP rv = allocVector(RAWSXP, len);
 	unsigned char *rvb = RAW(rv);
-	unsigned int i = 0;
+	R_xlen_t i = 0;
 	while (i < len) {
 	    n = read(fd, rvb + i, len - i);
 #ifdef MC_DEBUG
