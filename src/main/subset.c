@@ -1108,6 +1108,7 @@ SEXP attribute_hidden dispatch_subset2(SEXP x, R_xlen_t i, SEXP call, SEXP rho)
         x_elt = do_subset2(call, bracket_op, args, rho);
         UNPROTECT(1);
     } else {
+      // FIXME: throw error if not a list
         x_elt = VECTOR_ELT(x, i);
     }
     return(x_elt);

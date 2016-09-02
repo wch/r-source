@@ -144,7 +144,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \code{sort.list}) as quicksort is not stable.  For \code{method ==
   "radix"}, \code{index.return} is supported for all \code{na.last}
   modes. The other methods only support \code{index.return}
-  when \code{na.last} is \code{NA}, so the index vector
+  when \code{na.last} is \code{NA}. The index vector
   refers to element numbers \emph{after removal of \code{NA}s}: see
   \code{\link{order}} if you want the original element numbers.
 
@@ -220,7 +220,7 @@ system.time(x1 <- sort(x, method = "shell"))
 system.time(x2 <- sort(x, method = "quick"))
 system.time(x3 <- sort(x, method = "radix"))
 stopifnot(identical(x1, x2))
-stopifnot(all.equal(x1, x3)) # imprecision in radix sort
+stopifnot(identical(x1, x3))
 }}
 \keyword{univar}
 \keyword{manip}

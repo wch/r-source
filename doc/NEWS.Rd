@@ -346,6 +346,13 @@
 
       \item In integer arithmetic, \code{NULL} is now treated as
       \code{integer(0)} whereas it was previously treated as \code{double(0)}.
+
+      \item The radix sort considers \code{NA_real_} and \code{NaN} to
+      be equivalent in rank (like the other sort algorithms).
+
+      \item When \code{index.return=TRUE} is passed to \code{sort.int()},
+      the radix sort treats \code{NA}s like \code{sort.list()} does
+      (like the other sort algorithms).
     }
   }
 }

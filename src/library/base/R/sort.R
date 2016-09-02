@@ -36,13 +36,17 @@ sort.int <-
              index.return = FALSE)
 {
     method <- match.arg(method)
-    useRadix <- method == "radix" ||
-        (method == "auto" && is.null(partial) &&
-         (is.numeric(x) || is.factor(x) || is.logical(x)) &&
-         is.integer(length(x)))
-    if (useRadix) {
+    if (method == "auto" && is.null(partial) &&
+        (is.numeric(x) || is.factor(x) || is.logical(x)) &&
+        is.integer(length(x)))
+        method <- "radix"
+    if (method == "radix") {
         if (!is.null(partial)) {
             stop("'partial' sorting not supported by radix method")
+        }
+        if (index.return && is.na(na.last)) {
+            x <- x[!is.na(x)]
+            na.last <- TRUE
         }
         o <- order(x, na.last = na.last, decreasing = decreasing,
                    method = "radix")

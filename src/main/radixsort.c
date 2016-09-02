@@ -634,24 +634,7 @@ unsigned long long dtwiddle(void *p, int i, int order)
     if (R_FINITE(u.d)) {
 	u.ull = (u.d != 0.0) ? u.ull + ((u.ull & dmask1) << 1) : 0;
     } else if (ISNAN(u.d)) {
-	/* 1. NA twiddled to all bits 0, sorts first.  R's value 1954 cleared.
-
-	   2. NaN twiddled to set just bit 13, sorts immediately after
-	   NA. 13th bit to be consistent with "quiet" na bit but any
-	   bit outside last 2 bytes would do.  (ref:
-	   http://r.789695.n4.nabble.com/Question-re-NA-NaNs-in-R-td4685014.html)
-
-	   3. This also normalises a difference between NA on 32bit R
-	   (bit 13 set) and 64bit R (bit 13 not set)
-
-	   4. -Inf twiddled to : 0 sign, exponent all 0, mantissa all
-	   1, sorts after NaN
-
-	   5. +Inf twiddled to : 1 sign, exponent all 1, mantissa all
-	   0, sorts last since finite numbers are defined by not-all-1
-	   in exponent
-	*/
-	u.ull = (ISNA(u.d) ? 0 : (1ULL << 51));
+	u.ull = 0;
 	return (nalast == 1 ? ~u.ull : u.ull);
     }
     unsigned long long mask = (u.ull & 0x8000000000000000) ?
