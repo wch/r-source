@@ -3549,6 +3549,8 @@ setRlibs <-
                              ": warning: .* makes pointer from integer", # gcc
                              ": warning: .* pointer.* conversion", # clang
                              ": warning: improper pointer", # Solaris
+                             ": warning: unknown escape sequence", # gcc
+                             ": warning: use of non-standard escape character", # clang
                              ## clang warning about invalid returns.
                              "warning: void function",
                              "warning: control reaches end of non-void function",
