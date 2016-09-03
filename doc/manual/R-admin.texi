@@ -2236,8 +2236,8 @@ sources on Windows without any additional tools.
 Packages with compiled code may need to have paths to the compilers
 set explicitly, and there is provision to make use of a system-wide
 library of installed external software. The compiler paths are set
-using the @command{make} variables @code{BINPREF} (and in some cases
-@code{BINPREF64}).  The library location is set using @command{make}
+using the @command{make} variables @code{BINPREF} and (usually)
+@code{BINPREF64}.  The library location is set using @command{make}
 variable @code{LOCAL_SOFT}, to give an equivalent of @file{/usr/local}
 on a Unix-alike.  All of these can be set in
 @file{src/gnuwin32/MkRules.local} when @R{} is built from sources (see
@@ -5842,15 +5842,10 @@ The preferred toolchain is part of @code{Rtools*.exe}: this uses a
 version of @command{gcc 4.9.3} and version rt_v3 of the MinGW-w64
 project's runtime.
 
-This toolchain uses @emph{multilib}: that is there is a single front-end
-such as @command{gcc.exe} for each of the compilers and 32-bit (the
-default) and 64-bit compilation are selected by the flags@footnote{these
-flags apply to the compilers: some of the tools use different flags.
-32-bit builds are the default.}  @option{-m32} and @option{-m64}
-respectively.  The tools are all 32-bit Windows executables and should
-be able to run on any current version of Windows---however you do need a
-64-bit version of Windows to build 64-bit @R{} as the build process runs
-@R{}.
+This toolchain does not use @emph{multilib}: separate front-ends are
+used for 32-bit and 64-bit compilation.  These compilers need to be
+specified in @code{BINPREF} and @code{BINPREF64} make variables as 
+described previously at the end of @ref{Windows packages}.
 
 To select a 32-bit or 64-bit build of @R{}, set the options in
 @file{MkRules.local} appropriately (following the comments in the file).
