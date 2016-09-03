@@ -297,7 +297,18 @@ get_exclude_patterns <- function()
                 if (basename(vigns$dir) == "vignettes") {
                     ## inst may not yet exist
                     dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-                    file.copy(c(vigns$docs, vigns$outputs, unlist(vigns$sources)), doc_dir)
+                    tocopy <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
+                    copied <- file.copy(tocopy, doc_dir)
+                    if (!all(copied)) {
+                    	warning(sQuote("inst/doc"),
+                    	        ngettext(sum(!copied), " file\n", " files\n"), 
+                    	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "), 
+                    	                indent = 4, exdent = 2),
+			        "\n  ignored as vignettes have been rebuilt.",
+			        "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",
+			     call. = FALSE)
+			file.copy(tocopy[!copied], doc_dir, overwrite = TRUE)
+		    }
                     unlink(c(vigns$outputs, unlist(vigns$sources)))
                     extras_file <- file.path("vignettes", ".install_extras")
                     if (file.exists(extras_file)) {

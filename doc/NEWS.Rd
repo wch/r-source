@@ -263,6 +263,11 @@
       \env{_R_CHECK_CRAN_INCOMING_REMOTE_} false now skips tests that
       require remote access.  The remaining (local) tests typically
       run very quickly compared to the remote tests.
+      
+      \item \command{R CMD build} will now give priority to vignettes
+      produced from files in the \file{vignettes} directory over those
+      in the \file{inst/doc} directory, with a warning that the latter
+      are being ignored.
     }
   }
 
