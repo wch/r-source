@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,20 +33,20 @@
 #define NINTERRUPT 10000000
 
 static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
-static SEXP real_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP real_relop   (RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call);
-static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
-static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP string_relop (RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP raw_relop    (RELOP_TYPE code, SEXP s1, SEXP s2);
 
-#define DO_SCALAR_RELOP(oper, x, y) do {			\
-	switch (oper) {						\
-	case EQOP: return ScalarLogical((x) == (y));		\
-	case NEOP: return ScalarLogical((x) != (y));		\
-	case LTOP: return ScalarLogical((x) < (y));		\
-	case GTOP: return ScalarLogical((x) > (y));		\
-	case LEOP: return ScalarLogical((x) <= (y));		\
-	case GEOP: return ScalarLogical((x) >= (y));		\
-	}							\
+#define DO_SCALAR_RELOP(oper, x, y) do {		\
+	switch (oper) {					\
+	case EQOP: return ScalarLogical((x) == (y));	\
+	case NEOP: return ScalarLogical((x) != (y));	\
+	case LTOP: return ScalarLogical((x) < (y));	\
+	case GTOP: return ScalarLogical((x) > (y));	\
+	case LEOP: return ScalarLogical((x) <= (y));	\
+	case GEOP: return ScalarLogical((x) >= (y));	\
+	}						\
     } while (0)
 
 SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -107,19 +107,16 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_relop_dflt(call, op, arg1, arg2);
 }
 
+// also called from cmp_relop() in eval.c :
 SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
-    SEXP klass = R_NilValue, dims, tsp = R_NilValue, xnames, ynames;
-    R_xlen_t nx, ny;
-    int xarray, yarray, xts, yts;
-    Rboolean mismatch = FALSE, iS;
+    R_xlen_t
+	nx = xlength(x),
+	ny = xlength(y);
+    SEXPTYPE
+	typex = TYPEOF(x),
+	typey = TYPEOF(y);
     PROTECT_INDEX xpi, ypi;
-    SEXPTYPE typex, typey;
-
-    nx = xlength(x);
-    ny = xlength(y);
-    typex = TYPEOF(x);
-    typey = TYPEOF(y);
 
     /* pre-test to handle the most common case quickly.
        Used to skip warning too ....
@@ -150,6 +147,11 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	}
 
 	/* non-scalar case */
+
+	if (nx > 0 && ny > 0 &&
+	    ((nx > ny) ? nx % ny : ny % nx) != 0) // mismatch
+	    warningcall(call, _("longer object length is not "
+				"a multiple of shorter object length"));
 	PROTECT_WITH_INDEX(x, &xpi);
 	PROTECT_WITH_INDEX(y, &ypi);
 	SEXP ans;
@@ -162,14 +164,6 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 		REPROTECT(y = coerceVector(y, REALSXP), ypi);
 	    ans = real_relop(PRIMVAL(op), x, y);
 	}
-	if (nx > 0 && ny > 0)
-	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
-	if (mismatch) {
-	    PROTECT(ans);
-	    warningcall(call, _("longer object length is not "
-				"a multiple of shorter object length"));
-	    UNPROTECT(1);
-	}
 	UNPROTECT(2);
 	return ans;
     }
@@ -177,6 +171,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
 
+    Rboolean iS;
     /* That symbols and calls were allowed was undocumented prior to
        R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
@@ -196,34 +191,30 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	UNPROTECT(1);
     }
 
-    if (!isVector(x) || !isVector(y)) {
-	if (isNull(x) || isNull(y)) {
-	    UNPROTECT(2);
-	    return allocVector(LGLSXP,0);
-	}
+    if (isNull(x)) REPROTECT(x = allocVector(INTSXP,0), xpi);
+    if (isNull(y)) REPROTECT(y = allocVector(INTSXP,0), ypi);
+    if (!isVector(x) || !isVector(y))
 	errorcall(call,
 		  _("comparison (%d) is possible only for atomic and list types"),
 		  PRIMVAL(op));
-    }
 
     if (TYPEOF(x) == EXPRSXP || TYPEOF(y) == EXPRSXP)
 	errorcall(call, _("comparison is not allowed for expressions"));
 
     /* ELSE :  x and y are both atomic or list */
 
+    // FIXME: typically *not* ok if x or y is array
     if (XLENGTH(x) <= 0 || XLENGTH(y) <= 0) {
 	UNPROTECT(2);
 	return allocVector(LGLSXP, 0);
     }
 
-    mismatch = FALSE;
-    xarray = isArray(x);
-    yarray = isArray(y);
-    xts = isTs(x);
-    yts = isTs(y);
-    if (nx > 0 && ny > 0)
-	mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
-
+    Rboolean
+	xarray = isArray(x),
+	yarray = isArray(y),
+	xts = isTs(x),
+	yts = isTs(y);
+    SEXP dims, xnames, ynames;
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
@@ -244,6 +235,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));
     }
+    SEXP klass = NULL, tsp = NULL; // -Wall
     if (xts || yts) {
 	if (xts && yts) {
 	    if (!tsConform(x, y))
@@ -264,9 +256,11 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
 	}
     }
-    if (mismatch)
-	warningcall(call, _("longer object length is not a multiple of shorter object length"));
 
+    if (nx > 0 && ny > 0 &&
+	((nx > ny) ? nx % ny : ny % nx) != 0) { // mismatch
+	warningcall(call, _("longer object length is not a multiple of shorter object length"));
+    }
     if (isString(x) || isString(y)) {
 	REPROTECT(x = coerceVector(x, STRSXP), xpi);
 	REPROTECT(y = coerceVector(y, STRSXP), ypi);
