@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2015  The R Core Team.
+ *  Copyright (C) 1999--2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,27 +67,27 @@ SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 {
 /* logical binary : "&" or "|" */
-    SEXP x, y, dims, tsp, klass, xnames, ynames;
-    R_xlen_t mismatch, nx, ny;
-    int xarray, yarray, xts, yts;
-    mismatch = 0;
-    x = CAR(args);
-    y = CADR(args);
+    SEXP
+	x = CAR(args),
+	y = CADR(args);
+
     if (isRaw(x) && isRaw(y)) {
     }
-    else if (!isNumber(x) || !isNumber(y))
+    else if ( !(isNull(x) || isNumber(x)) ||
+	      !(isNull(y) || isNumber(y)) )
 	errorcall(call,
 		  _("operations are possible only for numeric, logical or complex types"));
-    tsp = R_NilValue;		/* -Wall */
-    klass = R_NilValue;		/* -Wall */
-    xarray = isArray(x);
-    yarray = isArray(y);
-    xts = isTs(x);
-    yts = isTs(y);
+
+    SEXP dims, xnames, ynames;
+    Rboolean
+	xarray = isArray(x),
+	yarray = isArray(y),
+	xts = isTs(x),
+	yts = isTs(y);
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
-		error(_("binary operation on non-conformable arrays"));
+		errorcall(call, _("non-conformable arrays"));
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
 	else if (xarray) {
@@ -104,12 +104,10 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));
     }
-    nx = XLENGTH(x);
-    ny = XLENGTH(y);
-    if(nx > 0 && ny > 0) {
-	if(nx > ny) mismatch = nx % ny;
-	else mismatch = ny % nx;
-    }
+    R_xlen_t
+	nx = XLENGTH(x),
+	ny = XLENGTH(y);
+    SEXP klass = NULL, tsp = NULL; // -Wall
     if (xts || yts) {
 	if (xts && yts) {
 	    if (!tsConform(x, y))
@@ -130,18 +128,23 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
 	}
     }
-    if(mismatch)
+    if (nx > 0 && ny > 0 &&
+	((nx > ny) ? nx % ny : ny % nx) != 0) // mismatch
 	warningcall(call,
 		    _("longer object length is not a multiple of shorter object length"));
 
     if (isRaw(x) && isRaw(y)) {
 	PROTECT(x = binaryLogic2(PRIMVAL(op), x, y));
-    } else {
-	if (!isNumber(x) || !isNumber(y))
-	    errorcall(call,
-		      _("operations are possible only for numeric, logical or complex types"));
-	x = SETCAR(args, coerceVector(x, LGLSXP));
-	y = SETCADR(args, coerceVector(y, LGLSXP));
+    }
+    else {
+	if(isNull(x))
+	    x = SETCAR(args, allocVector(LGLSXP, 0));
+	else // isNumeric(x)
+	    x = SETCAR(args, coerceVector(x, LGLSXP));
+	if(isNull(y))
+	    y = SETCAR(args, allocVector(LGLSXP, 0));
+	else // isNumeric(y)
+	    y = SETCADR(args, coerceVector(y, LGLSXP));
 	PROTECT(x = binaryLogic(PRIMVAL(op), x, y));
     }
 
