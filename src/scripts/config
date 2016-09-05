@@ -41,8 +41,9 @@ Options:
 			a C/C++ file using R as a library
       --ldflags         print linker flags needed for linking a front-end
                         against the R library
-      --no-user-files  ignore customization files under ~/.R
-      --no-site-files  ignore site customization files under R_HOME/etc
+      --no-user-files   ignore customization files under ~/.R
+      --no-site-files   ignore site customization files under R_HOME/etc
+      --all             print names and values of all variables below
 
 Variables:
   BLAS_LIBS     flags needed for linking against external BLAS libraries
@@ -182,6 +183,7 @@ fi
 var=
 personal="yes"
 site="yes"
+all="no"
 while test -n "${1}"; do
   case "${1}" in
     -h|--help)
@@ -218,6 +220,9 @@ while test -n "${1}"; do
       ;;
     --no-site-files)
       site="no"
+      ;;
+    --all)
+      all="yes"
       ;;
     *)
       if test -z "${var}"; then
@@ -272,6 +277,17 @@ ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT COMPILED_BY"
+
+if test "${all}" = "yes"; then
+  query="${MAKE} -s ${makefiles} print-name-and-value R_HOME=${R_HOME}"
+  for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_f77_vars} \
+	   ${ok_objc_vars} ${ok_java_vars} \
+	   ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
+	   ${ok_other_vars}; do
+    eval "${query} VAR=${v}"
+  done
+  exit 0
+fi
 
 ## Can we do this elegantly using case?
 
