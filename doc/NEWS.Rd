@@ -21,7 +21,7 @@
       \item \code{factor(x, exclude = L)} behaves more rationally when
       \code{x} or \code{L} are character vectors.
 
-      Arithmetic, logic (\code{&}, \code{|}) and comparison (aka
+      \item Arithmetic, logic (\code{&}, \code{|}) and comparison (aka
       \sQuote{relational}, e.g., \code{<}, \code{==}) operations with
       arrays now behave consistently.  Arithmetic between length-1 arrays
       and longer non-arrays had silently dropped the array attributes
