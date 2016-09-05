@@ -7156,8 +7156,26 @@ function(dir, localOnly)
         ## Be defensive about building the package URL db.
         bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
                         error = identity)
-        if(inherits(bad, "error") || NROW(bad))
+        if(inherits(bad, "error")) {
             out$bad_urls <- bad
+        } else if(NROW(bad)) {
+            ## When checking a new submission, take the canonical CRAN
+            ## package URL as ok, and signal variants using http instead
+            ## of https as non-canonical instead of showing "not found".
+            url <- sprintf("https://cran.r-project.org/package=%s",
+                           package)
+            if(any(ind <- (tolower(bad$URL) == url)))
+                bad <- bad[!ind, ]
+            url <- sprintf("http://cran.r-project.org/package=%s",
+                           package)
+            if(any(ind <- (tolower(bad$URL) == url)))
+                bad[ind, c("URL", "Status", "Message", "CRAN")] <-
+                    do.call(rbind,
+                            rep.int(list(c(url, "", "", url)),
+                                    sum(ind)))
+            if(NROW(bad))
+                out$bad_urls <- bad
+        }
     } else out$no_url_checks <- TRUE
 
     ## Check DOIs.
