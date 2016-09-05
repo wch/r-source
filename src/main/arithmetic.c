@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2016	    The R Core Team.
- *  Copyright (C) 2003--2016	    The R Foundation
+ *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--2016 The R Core Team.
+ *  Copyright (C) 2003--2016 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -512,17 +512,13 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (TYPEOF(v)) { \
     case NILSXP: REPROTECT(v = allocVector(INTSXP,0), vpi); break; \
     case CPLXSXP: case REALSXP: case INTSXP: case LGLSXP: break; \
-    default: errorcall(lcall, _("non-numeric argument to binary operator")); \
+    default: errorcall(call, _("non-numeric argument to binary operator")); \
     } \
 } while (0)
 
 SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 {
-    SEXP klass, dims, tsp, xnames, ynames, val;
-    R_xlen_t nx, ny, mismatch = 0;
-    int xarray, yarray, xts, yts, xS4 = 0, yS4 = 0;
-    int xattr, yattr;
-    SEXP lcall = call;
+    Rboolean xattr, yattr, xarray, yarray, xts, yts, xS4, yS4;
     PROTECT_INDEX xpi, ypi;
     ARITHOP_TYPE oper = (ARITHOP_TYPE) PRIMVAL(op);
     int nprotect = 2; /* x and y */
@@ -534,46 +530,54 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     FIXUP_NULL_AND_CHECK_TYPES(x, xpi);
     FIXUP_NULL_AND_CHECK_TYPES(y, ypi);
 
-    nx = XLENGTH(x);
+    R_xlen_t
+	nx = XLENGTH(x),
+	ny = XLENGTH(y);
     if (ATTRIB(x) != R_NilValue) {
 	xattr = TRUE;
 	xarray = isArray(x);
 	xts = isTs(x);
 	xS4 = isS4(x);
     }
-    else xarray = xts = xattr = FALSE;
-    ny = XLENGTH(y);
+    else xattr = xarray = xts = xS4 = FALSE;
     if (ATTRIB(y) != R_NilValue) {
 	yattr = TRUE;
 	yarray = isArray(y);
 	yts = isTs(y);
 	yS4 = isS4(y);
     }
-    else yarray = yts = yattr = FALSE;
+    else yattr = yarray = yts = yS4 = FALSE;
 
     /* If either x or y is a matrix with length 1 and the other is a
        vector, we want to coerce the matrix to be a vector.
        Do we want to?  We don't do it!  BDR 2004-03-06
+
+       From 3.4.0 (Sep. 2016), this signals a warning,
+       and in the future we will disable these 2 clauses,
+       so it will give an error.
     */
 
     /* FIXME: Danger Will Robinson.
      * -----  We might be trashing arguments here.
      */
     if (xarray != yarray) {
-	if (xarray && nx==1 && ny!=1) {
-	    REPROTECT(x = duplicate(x), xpi);
-	    setAttrib(x, R_DimSymbol, R_NilValue);
-	}
-	if (yarray && ny==1 && nx!=1) {
-	    REPROTECT(y = duplicate(y), ypi);
-	    setAttrib(y, R_DimSymbol, R_NilValue);
-	}
+    	if (xarray && nx==1 && ny!=1) {
+	    warningcall(call, _("dropping dim() of array of length one.  Will become ERROR"));
+    	    REPROTECT(x = duplicate(x), xpi);
+    	    setAttrib(x, R_DimSymbol, R_NilValue);
+    	}
+    	if (yarray && ny==1 && nx!=1) {
+	    warningcall(call, _("dropping dim() of array of length one.  Will become ERROR"));
+    	    REPROTECT(y = duplicate(y), ypi);
+    	    setAttrib(y, R_DimSymbol, R_NilValue);
+    	}
     }
 
+    SEXP dims, xnames, ynames;
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
-		errorcall(lcall, _("non-conformable arrays"));
+		errorcall(call, _("non-conformable arrays"));
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
 	else if (xarray) {
@@ -607,39 +611,36 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	}
 	else ynames = R_NilValue;
     }
-    if (nx == ny || nx == 1 || ny == 1) mismatch = 0;
-    else if (nx > 0 && ny > 0) {
-	if (nx > ny) mismatch = nx % ny;
-	else mismatch = ny % nx;
-    }
 
+    SEXP klass = NULL, tsp = NULL; // -Wall
     if (xts || yts) {
 	if (xts && yts) {
 	    if (!tsConform(x, y))
-		errorcall(lcall, _("non-conformable time-series"));
+		errorcall(call, _("non-conformable time-series"));
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else if (xts) {
 	    if (nx < ny)
-		ErrorMessage(lcall, ERROR_TSVEC_MISMATCH);
+		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else {			/* (yts) */
 	    if (ny < nx)
-		ErrorMessage(lcall, ERROR_TSVEC_MISMATCH);
+		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
 	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
 	}
 	nprotect += 2;
     }
-    else klass = tsp = NULL; /* -Wall */
 
-    if (mismatch)
-	warningcall(lcall,
+    if (nx > 0 && ny > 0 &&
+	((nx > ny) ? nx % ny : ny % nx) != 0) // mismatch
+	warningcall(call,
 		    _("longer object length is not a multiple of shorter object length"));
 
+    SEXP val;
     /* need to preserve object here, as *_binary copies class attributes */
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
 	COERCE_IF_NEEDED(x, CPLXSXP, xpi);
@@ -653,7 +654,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	if (TYPEOF(y) != INTSXP) COERCE_IF_NEEDED(y, REALSXP, ypi);
 	val = real_binary(oper, x, y);
     }
-    else val = integer_binary(oper, x, y, lcall);
+    else val = integer_binary(oper, x, y, call);
 
     /* quick return if there are no attributes */
     if (! xattr && ! yattr) {
@@ -664,18 +665,12 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     PROTECT(val);
     nprotect++;
 
-    /* Don't set the dims if one argument is an array of size 0 and the
-       other isn't of size zero, cos they're wrong */
-    /* Not if the other argument is a scalar (PR#1979) */
     if (dims != R_NilValue) {
-	if (!((xarray && (nx == 0) && (ny > 1)) ||
-	      (yarray && (ny == 0) && (nx > 1)))){
 	    setAttrib(val, R_DimSymbol, dims);
 	    if (xnames != R_NilValue)
 		setAttrib(val, R_DimNamesSymbol, xnames);
 	    else if (ynames != R_NilValue)
 		setAttrib(val, R_DimNamesSymbol, ynames);
-	}
     }
     else {
 	if (XLENGTH(val) == xlength(xnames))

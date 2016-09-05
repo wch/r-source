@@ -2,7 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
-#  Copyright (C) 2000-2015 The R Core Team
+#  Copyright (C) 2000-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -156,7 +156,7 @@ nlsModel.plinear <- function(form, data, start, wts)
                  B <- qr.qty(QR.rhs, .swts * ddot(attr(rhs, "gradient"), lin))
                  B[1L:p1, ] <- dtdot(.swts * attr(rhs, "gradient"), rr)
                  R <- t( qr.R(QR.rhs)[1L:p1, ] )
-                 if(p1 == 1) B[1, ] <- B[1, ]/R
+                 if(p1 == 1) B[1, ] <- B[1, ]/ c(R)
                  else B[1L:p1, ] <- forwardsolve(R, B[1L:p1, ])
                  assign("QR.B", qr(B), envir = thisEnv)
                  rr <- qr.qty(QR.B, cc)
@@ -422,7 +422,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
         }
     } else
     	low <- upp <- numeric()
-    	
+
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
         .Call(C_port_nlsb, m,
