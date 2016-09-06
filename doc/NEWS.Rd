@@ -23,12 +23,13 @@
 
       \item Arithmetic, logic (\code{&}, \code{|}) and comparison (aka
       \sQuote{relational}, e.g., \code{<}, \code{==}) operations with
-      arrays now behave consistently.  Arithmetic between length-1 arrays
-      and longer non-arrays had silently dropped the array attributes
-      and recycled.  This now gives a warning and will signal an error in
-      the future, as it has always for logic and comparison operations
-      in these cases (e.g., compare \code{matrix(1,1) + 2:3} and
-      \code{matrix(1,1) < 2:3}).
+      arrays now behave consistently, notably for arrays of length zero.
+
+      Arithmetic between length-1 arrays and longer non-arrays had
+      silently dropped the array attributes and recycled.  This now
+      gives a warning and will signal an error in the future, as it has
+      always for logic and comparison operations in these cases (e.g.,
+      compare \code{matrix(1,1) + 2:3} and \code{matrix(1,1) < 2:3}).
     }
   }
   \subsection{NEW FEATURES}{
