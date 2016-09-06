@@ -2080,6 +2080,15 @@ setRlibs <-
         }
 
         files <- dir(file.path(pkgdir, "vignettes"))
+        if(length(files) &&
+           !length(dir(file.path(pkgdir, "vignettes"),
+                       pattern = pattern)) &&
+           is.na(desc["VignetteBuilder"])) {
+            noteLog(Log)
+            any <- TRUE
+            printLog0(Log,
+                      "Package has only non-Sweave vignette sources but no VignetteBuilder field.\n")
+        }
         already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
         bad <- files[files %in% already]
         if (length(bad)) {
