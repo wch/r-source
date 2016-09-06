@@ -277,6 +277,9 @@
       produced from files in the \file{vignettes} directory over those
       in the \file{inst/doc} directory, with a warning that the latter
       are being ignored.
+
+      \item \command{R CMD config} gains a \option{--all} option for
+      printing names and values of all basic configure variables.
     }
   }
 
