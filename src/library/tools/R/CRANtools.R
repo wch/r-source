@@ -206,7 +206,7 @@ function()
 ## more-freqently-updated mirror.
 CRAN_baseurl_for_web_area <-
 function()
-    Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    Sys.getenv("R_CRAN_WEB", .get_standard_repository_URLs()[1L])
 
 read_CRAN_object <-
 function(cran, path)
