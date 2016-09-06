@@ -390,9 +390,13 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
-        cran <- (grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
-                       u, ignore.case = TRUE) ||
-                 any(substring(tolower(u), 1L, nchar(mirrors)) == mirrors))
+        ul <- tolower(u)
+        cran <- ((grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
+                        ul) &&
+                  (ul !=
+                   "https://cran.r-project.org/web/packages/packages.rds")) ||
+                  startsWith(ul, "http://cran.r-project.org") ||
+                  any(substring(ul, 1L, nchar(mirrors)) == mirrors))
         spaces <- grepl(" ", u)
         c(s, msg, newLoc, if(cran) u else "", if(spaces) u else "")
     }
