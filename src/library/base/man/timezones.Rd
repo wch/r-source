@@ -207,7 +207,7 @@ OlsonNames()
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
 
   \url{https://en.wikipedia.org/wiki/Time_zone} and
-  \url{https://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
+  \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
 \examples{
