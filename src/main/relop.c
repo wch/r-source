@@ -215,12 +215,14 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 		errorcall(call, _("non-conformable arrays"));
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
-	else if (xarray) {
+	else if (xarray && (ny != 0 || nx == 0)) {
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
-	else /*(yarray)*/ {
+	else if (yarray && (nx != 0 || ny == 0)) {
 	    PROTECT(dims = getAttrib(y, R_DimSymbol));
-	}
+	} else
+	    PROTECT(dims = R_NilValue);
+
 	PROTECT(xnames = getAttrib(x, R_DimNamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_DimNamesSymbol));
     }
@@ -229,6 +231,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));
     }
+
     SEXP klass = NULL, tsp = NULL; // -Wall
     if (xts || yts) {
 	if (xts && yts) {
@@ -289,6 +292,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
   } else { // nx == 0 || ny == 0
 	x = allocVector(LGLSXP, 0);
   }
+
     PROTECT(x);
     if (dims != R_NilValue) {
 	setAttrib(x, R_DimSymbol, dims);
@@ -298,9 +302,9 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	    setAttrib(x, R_DimNamesSymbol, ynames);
     }
     else {
-	if (xlength(x) == xlength(xnames))
+	if (xnames != R_NilValue && xlength(x) == xlength(xnames))
 	    setAttrib(x, R_NamesSymbol, xnames);
-	else if (xlength(x) == xlength(ynames))
+	else if (ynames != R_NilValue && xlength(x) == xlength(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
     }
     if (xts || yts) {

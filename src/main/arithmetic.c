@@ -562,11 +562,13 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
      */
     if (xarray != yarray) {
     	if (xarray && nx==1 && ny!=1) {
+	    if(ny != 0)
 	    warningcall(call, _("dropping dim() of array of length one.  Will become ERROR"));
     	    REPROTECT(x = duplicate(x), xpi);
     	    setAttrib(x, R_DimSymbol, R_NilValue);
     	}
     	if (yarray && ny==1 && nx!=1) {
+	    if(nx != 0)
 	    warningcall(call, _("dropping dim() of array of length one.  Will become ERROR"));
     	    REPROTECT(y = duplicate(y), ypi);
     	    setAttrib(y, R_DimSymbol, R_NilValue);
@@ -575,18 +577,20 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 
     SEXP dims, xnames, ynames;
     if (xarray || yarray) {
+	/* if one is a length-atleast-1-array and the
+	 * other  is a length-0 *non*array, then do not use array treatment */
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
 		errorcall(call, _("non-conformable arrays"));
-	    PROTECT(dims = getAttrib(x, R_DimSymbol));
+	    PROTECT(dims = getAttrib(x, R_DimSymbol)); nprotect++;
 	}
-	else if (xarray) {
-	    PROTECT(dims = getAttrib(x, R_DimSymbol));
+	else if (xarray && (ny != 0 || nx == 0)) {
+	    PROTECT(dims = getAttrib(x, R_DimSymbol)); nprotect++;
 	}
-	else {			/* (yarray) */
-	    PROTECT(dims = getAttrib(y, R_DimSymbol));
-	}
-	nprotect++;
+	else if (yarray && (nx != 0 || ny == 0)) {
+	    PROTECT(dims = getAttrib(y, R_DimSymbol)); nprotect++;
+	} else
+	    dims = R_NilValue;
 	if (xattr) {
 	    PROTECT(xnames = getAttrib(x, R_DimNamesSymbol));
 	    nprotect++;

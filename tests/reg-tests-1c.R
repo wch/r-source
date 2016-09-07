@@ -1931,16 +1931,21 @@ tools::assertError(m1  & 1:2) # ERR: dims [product 1] do not match the length of
 tools::assertError(m1 <= 1:2) # ERR:                  (ditto)
 ##
 ## non-0-length arrays combined with {NULL or double() or ...} *fail*
-
-if(FALSE) { # in the future (~ 2018):
-tools::assertError(m1 + NULL) ## was numeric(0) in R <= 3.3.x
-} else tools::assertWarning(m1N <- m1 + NULL); stopifnot(identical(m1N, numeric()))
-tools::assertError(m1 & NULL)
-tools::assertError(m1 > NULL) ## was logical(0) in R <= 3.3.x
+n0 <- numeric(0)
+l0 <- logical(0)
+stopifnot(identical(m1 + NULL, n0), # as "always"
+	  identical(m1 +  n0 , n0), # as "always"
+	  identical(m1 & NULL, l0), # ERROR in R <= 3.3.x
+	  identical(m1 &  l0,  l0), # ERROR in R <= 3.3.x
+	  identical(m1 > NULL, l0), # as "always"
+	  identical(m1 >  n0 , l0)) # as "always"
 ## m2 was slightly different:
-tools::assertError(m2 + NULL)
-tools::assertError(m2 & NULL)
-tools::assertError(m2 == NULL) ## was logical(0) in R <= 3.3.x
+stopifnot(identical(m2 + NULL, n0), # ERROR in R <= 3.3.x
+	  identical(m2 +  n0 , n0), # ERROR in R <= 3.3.x
+	  identical(m2 & NULL, l0), # ERROR in R <= 3.3.x
+	  identical(m2 &  l0 , l0), # ERROR in R <= 3.3.x
+	  identical(m2 == NULL, l0), # as "always"
+	  identical(m2 ==  n0 , l0)) # as "always"
 
 
 
