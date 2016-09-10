@@ -1,6 +1,6 @@
 % File src/library/methods/man/validObject.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{validObject}
@@ -98,7 +98,7 @@ getValidity(ClassDef)
 }
 \examples{
 setClass("track",
-          representation(x="numeric", y = "numeric"))
+          slots = c(x="numeric", y = "numeric"))
 t1 <- new("track", x=1:10, y=sort(stats::rnorm(10)))
 ## A valid "track" object has the same number of x, y values
 validTrackObject <- function(object) {
@@ -117,15 +117,15 @@ t2@x <- 1:20
 \dontrun{try(validObject(t2))}
 \dontshow{stopifnot(is(try(validObject(t2)), "try-error"))}
 
-setClass("trackCurve",
-         representation("track", smooth = "numeric"))
+setClass("trackCurve", contains = "track",
+         slots = c("track", smooth = "numeric"))
 
 ## all superclass validity methods are used when validObject
 ## is called from initialize() with arguments, so this fails
 \dontrun{trynew("trackCurve", t2)}
 \dontshow{stopifnot(is(try(new("trackCurve", t2)), "try-error"))}
 
-setClass("twoTrack", representation(tr1 = "track", tr2 ="track"))
+setClass("twoTrack", slots = c(tr1 = "track", tr2 ="track"))
 
 ## validity tests are not applied recursively by default,
 ## so this object is created (invalidly)

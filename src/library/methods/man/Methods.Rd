@@ -1,6 +1,6 @@
 % File src/library/methods/man/Methods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Methods}
@@ -488,7 +488,7 @@ The  \code{"target"} slot starts off equal to the \code{"defined"}
 ## methods.
 
 setClass("myFrame", contains = "data.frame",
-    representation(timestamps = "POSIXt"))
+    slots = c(timestamps = "POSIXt"))
 
 df1 <- data.frame(x = 1:10, y = rnorm(10), z = sample(letters,10))
 
@@ -540,7 +540,7 @@ stopifnot(identical(f3(mLt), f3.POSIXt(mLt)))
 
 
 setClass("classA", contains = "numeric",
-         representation(realData = "numeric"))
+         slots = c(realData = "numeric"))
 
 Math.classA <- function(x) {(getFunction(.Generic))(x@realData)}
 setMethod("Math", "classA", Math.classA)

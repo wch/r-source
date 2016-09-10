@@ -1,6 +1,6 @@
 % File src/library/methods/man/setMethod.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setMethod}
@@ -154,13 +154,10 @@ redefine a method rather than leave no definition.
 }
 \examples{
 \dontshow{  require(stats)
-  setClass("track",
-    representation(x="numeric", y = "numeric"))
-  setClass("trackCurve", representation("track",
-    smooth = "numeric"))
-  setClass("trackMultiCurve", representation(x="numeric", y="matrix", smooth="matrix"),
-          prototype = list(x=numeric(), y=matrix(0,0,0), smooth=
-  matrix(0,0,0)))
+  setClass("track", slots = c(x="numeric", y = "numeric"))
+  setClass("trackCurve", contains = "track", slots = c(smooth = "numeric"))
+  setClass("trackMultiCurve", slots = c(x="numeric", y="matrix", smooth="matrix"),
+          prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
 }
 
 require(graphics)
@@ -223,7 +220,7 @@ setGeneric("summary") ## make the function into a generic
 
 setMethod("summary", "missing", function() "<No Object>")
 
-\dontshow{
+\dontshow{% <--------------------> all the following are "assertion" tests
 
 stopifnot(identical(summary(), "<No Object>"))
 
@@ -251,11 +248,8 @@ ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
 setMethod("Arith", c("track", "numeric"), function(e1, e2){e1@y <-
   callGeneric(e1@y , e2); e1})
 
-
 t1  - 100.
-
 t1/2
-
 
 ## check it hasn't screwed up S3 methods
 ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
@@ -322,21 +316,21 @@ removeMethods("length")
 
 ## methods for \%*\%, which isn't done by the same C code as other ops
 
-setClass("foo", representation(m="matrix"))
+setClass("foo", slots = c(m="matrix"))
 m1 <- matrix(1:12,3,4)
 f1 = new("foo", m=m1)
 f2 = new("foo", m=t(m1))
 
 setMethod("\%*\%", c("foo", "foo"),
- function(x,y)callGeneric(x@m, y@m))
+          function(x,y) callGeneric(x@m, y@m))
 
 stopifnot(identical(f1\%*\%f2, m1\%*\% t(m1)))
 
 removeMethods("\%*\%")
-
 removeMethods("plot")
 
-## Hold until removeMethods revised: stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
+if(FALSE) ## Hold until removeMethods revised:
+  stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
 
 ## methods for plotData
 plotData <- function(x, y, ...) plot(x, y, ...)
@@ -344,25 +338,22 @@ plotData <- function(x, y, ...) plot(x, y, ...)
 setGeneric("plotData")
 
 setMethod("plotData", signature(x="track", y="missing"),
-  function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
-)
+          function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...))
+
 ## and now remove the whole generic
 removeGeneric("plotData")
 
 stopifnot(!exists("plotData", 1))
 
 ##  Tests of method inheritance & multiple dispatch
-setClass("A0", representation(a0 = "numeric"))
+setClass("A0", slots = c(a0 = "numeric"))
+setClass("A1", contains = "A0", slots = c(a1 = "character"))
 
-setClass("A1", representation("A0", a1 = "character"))
+setClass("B0", slots = c(b0 = "numeric"))
+setClass("B1", "B0") # (meaning 'contains = *')
+setClass("B2", contains = "B1", slots = c(b2 = "logical"))
 
-setClass("B0" ,representation(b0 = "numeric"))
-
-setClass("B1", "B0")
-
-setClass("B2", representation("B1", b2 = "logical"))
-
-setClass("AB0", representation("A1", "B2", ab0 = "matrix"))
+setClass("AB0", contains = c("A1", "B2"), slots = c(ab0 = "matrix"))
 
 f1 <- function(x,  y)"ANY"
 
@@ -408,15 +399,13 @@ setGeneric("doubleAnything", function(x) {
 setMethod("doubleAnything", "ANY", function(x)x)
 
 setMethod("doubleAnything", "character",
-function(x)paste("<",x,">",sep=""))
+          function(x) paste("<",x,">",sep=""))
 
 mustEqual(doubleAnything(1:10), c(1:10, 1:10))
 mustEqual(doubleAnything("junk"), rep("<junk>",2))
 
 removeGeneric("doubleAnything")
-
-
-}
+}% dontshow the above
 }
 
 \seealso{

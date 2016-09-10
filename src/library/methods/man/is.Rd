@@ -1,6 +1,6 @@
 % File src/library/methods/man/is.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is}
@@ -320,7 +320,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 \dontshow{
 ## A simple class with two slots
 setClass("track",
-         representation(x="numeric", y="numeric"))
+         slots = c(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
 }
 ## Two examples of setIs() with coerce= and replace= arguments
@@ -333,11 +333,11 @@ setClass("track",
 ## First example:
 ## a class definition (see \link{setClass} for class "track")
 setClass("trackCurve", contains = "track",
-         representation( smooth = "numeric"))
+         slots = c( smooth = "numeric"))
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
 setClass("trackMultiCurve",
-         representation(x="numeric", y="matrix", smooth="matrix"),
+         slots = c(x="numeric", y="matrix", smooth="matrix"),
          prototype = structure(list(), x=numeric(), y=matrix(0,0,0),
 
                                smooth= matrix(0,0,0)))
@@ -367,7 +367,7 @@ removeClass("track")
 ## Second Example:
 ## A class that adds a slot to "character"
 setClass("stringsDated", contains = "character",
-         representation(stamp="POSIXt"))
+         slots = c(stamp="POSIXt"))
 
 ## Convert automatically to a factor by explicit coerce
 setIs("stringsDated", "factor",
@@ -386,7 +386,7 @@ levels(ld) # will be NULL--see comment in section on inheritance above.
 ## In contrast, a class that simply extends "factor"
 ## has no such ambiguities
 setClass("factorDated", contains = "factor",
-         representation(stamp="POSIXt"))
+         slots = c(stamp="POSIXt"))
 fd <- new("factorDated", factor(ll), stamp = Sys.time())
 identical(levels(fd), levels(as(fd, "factor")))
 }

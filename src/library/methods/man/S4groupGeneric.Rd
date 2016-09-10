@@ -1,6 +1,6 @@
 % File src/library/methods/man/S4groupGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{S4groupGeneric}
@@ -133,7 +133,7 @@ There are also
   See \link{S3groupGeneric} for S3 group generics.
 }
 \examples{
-setClass("testComplex", representation(zz = "complex"))
+setClass("testComplex", slots = c(zz = "complex"))
 ## method for whole group "Complex"
 setMethod("Complex", "testComplex",
           function(z) c("groupMethod", callGeneric(z@zz)))

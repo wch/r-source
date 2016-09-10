@@ -1,6 +1,6 @@
 % File src/library/methods/man/setOldClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2010, 2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setOldClass}
@@ -309,8 +309,8 @@ showClass("data.frame")# to see the predefined S4 "oldClass"
 
 ## two examples extending S3 class "lm", class "xlm" directly
 ## and "ylm" indirectly
-setClass("xlm", representation(eps = "numeric"), contains = "lm")
-setClass("ylm", representation(header = "character"), contains = "xlm")
+setClass("xlm", slots = c(eps = "numeric"), contains = "lm")
+setClass("ylm", slots = c(header = "character"), contains = "xlm")
 ym1 = new("ylm", myLm, header = "Example", eps = 0.)
 ## for more examples, see ?\link{S3Class}.
 
@@ -342,7 +342,7 @@ print.stamped <- function(x, ...) {
 }
 
 ## Now, an S4 class with the same structure:
-setClass("stamped4", contains = "vector", representation(date = "POSIXt"))
+setClass("stamped4", contains = "vector", slots = c(date = "POSIXt"))
 
 ## We can use the S4 class to register "stamped", with its attributes:
 setOldClass("stamped", S4Class = "stamped4")
@@ -365,12 +365,11 @@ new("stamped", 1:10, date = ISOdatetime(1976, 5, 5, 15, 10, 0))
 
 \dontrun{
 ## The code in R that defines "ts" as an S4 class
-setClass("ts", contains = "structure",
-      representation(tsp = "numeric"),
-      prototype(NA, tsp = rep(1,3)))
-# prototype to be a legal S3 time-series
+setClass("ts", contains = "structure", slots = c(tsp = "numeric"),
+         prototype(NA, tsp = rep(1,3)))
+       # prototype to be a legal S3 time-series
 ## and now registers it as an S3 class
-    setOldClass("ts", S4Class = "ts", where = envir)
+setOldClass("ts", S4Class = "ts", where = envir)
 }
 
 \dontshow{

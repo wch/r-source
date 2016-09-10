@@ -1,6 +1,6 @@
 % File src/library/methods/man/as.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as}
@@ -276,10 +276,8 @@ As with the \code{coerce} method, the first two arguments are
 ## using the definition of class "track" from \link{setClass}
 
 \dontshow{
-setClass("track",
-         representation(x="numeric", y="numeric"))
-setClass("trackCurve",
-         representation("track", smooth = "numeric"))
+setClass("track", slots = c(x="numeric", y="numeric"))
+setClass("trackCurve", contains = "track", slots = c(smooth = "numeric"))
 }
 
 setAs("track", "numeric", function(from) from@y)
@@ -292,9 +290,9 @@ as(t1, "numeric")
 ##  1. A virtual class to define setAs for several classes at once.
 ##  2. as() using inherited information
 
-setClass("ca", representation(a = "character", id = "numeric"))
+setClass("ca", slots = c(a = "character", id = "numeric"))
 
-setClass("cb", representation(b = "character", id = "numeric"))
+setClass("cb", slots = c(b = "character", id = "numeric"))
 
 setClass("id")
 setIs("ca", "id")

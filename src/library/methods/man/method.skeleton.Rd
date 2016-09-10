@@ -1,6 +1,6 @@
 % File src/library/methods/man/method.skeleton.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{method.skeleton}
@@ -46,7 +46,7 @@ method.skeleton(generic, signature, file, external = FALSE, where)
 }
 \examples{
 \dontshow{oWD <- setwd(tempdir())}
-setClass("track", representation(x ="numeric", y="numeric"))
+setClass("track", slots = c(x ="numeric", y="numeric"))
 method.skeleton("show", "track")            ## writes show_track.R
 method.skeleton("Ops", c("track", "track")) ## writes "Ops_track_track.R"
 
