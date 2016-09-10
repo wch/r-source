@@ -121,9 +121,9 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 	    ## or	table(1:3, exclude = 1, useNA = "always")
 	    if(ifany && !aNA && add.ll) { # rm the NA-level again (why did we add it?)
 		ll <- ll[!is.na(ll)]
-		is.na(a) <- match(a0, c(exclude,NA), nomatch=0L)
+		is.na(a) <- match(a0, c(exclude,NA), nomatch=0L) > 0L
 	    } else { # e.g. !ifany :  useNA == "always"
-		is.na(a) <- match(a0,   exclude,     nomatch=0L)
+		is.na(a) <- match(a0,   exclude,     nomatch=0L) > 0L
 	    }
         }
 

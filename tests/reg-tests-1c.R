@@ -1820,6 +1820,8 @@ stopifnot(
     identical(c(1:2,1L), as.vector(lyN1))
     , identical(c(1L, rep(0L, 5)), as.vector(lxyN1))
     , identical(dimnames(lxyN1), c(dimnames(ltN1), dimnames(lyN1)))
+    , identical(c(1L,1:0), as.vector(table(3:1, exclude=1, useNA = "always")))
+    , identical(c(1L,1L ), as.vector(table(3:1, exclude=1)))
 )
 
 x3N <- c(1:3,NA)
