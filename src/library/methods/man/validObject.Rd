@@ -118,7 +118,7 @@ t2@x <- 1:20
 \dontshow{stopifnot(is(try(validObject(t2)), "try-error"))}
 
 setClass("trackCurve", contains = "track",
-         slots = c("track", smooth = "numeric"))
+         slots = c(smooth = "numeric"))
 
 ## all superclass validity methods are used when validObject
 ## is called from initialize() with arguments, so this fails
