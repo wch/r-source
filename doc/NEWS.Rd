@@ -281,6 +281,13 @@
 
       \item \command{R CMD config} gains a \option{--all} option for
       printing names and values of all basic configure variables.
+      
+      \item \command{R CMD check} now checks that output files in 
+      \file{inst/doc} are newer than the source files in \file{vignettes}.
+      
+      \item For consistency with other package subdirectories, files
+      named \file{*.r} in the \file{tests} directory are now recognized
+      as tests by \command{R CMD check}. (Wish of \PR{17143})
     }
   }
 

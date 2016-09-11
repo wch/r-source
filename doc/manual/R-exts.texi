@@ -1281,7 +1281,7 @@ is too complex to put in the @file{DESCRIPTION} file.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
-Test code can either be provided directly in a @file{.R} file, or
+Test code can either be provided directly in a @file{.R} (or @file{.r}) file, or
 @emph{via} a @file{.Rin} file containing code which in turn creates the
 corresponding @file{.R} file (e.g., by collecting all function objects
 in the package and then calling them with the strangest arguments).  The
@@ -3220,7 +3220,10 @@ placing them in the @file{inst/doc} hierarchy of the source package or
 by using calls to @code{system.file()}.  All other files needed to
 re-make the vignettes (such as @LaTeX{} style files, Bib@TeX{} input
 files and files for any figures not created by running the code in the
-vignette) must be in the vignette source directory.
+vignette) must be in the vignette source directory.  @code{R CMD check} 
+will check that vignette production has succeeded by comparing
+modification times of output files in @file{inst/doc} with
+the source in @file{vignettes}.
 
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create the

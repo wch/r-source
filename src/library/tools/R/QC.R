@@ -5938,7 +5938,7 @@ function(dir, testdir, lib.loc = NULL)
     od <- setwd(testsrcdir)
     on.exit(setwd(od))
     Rinfiles <- dir(".", pattern="\\.Rin$") # only trackOjs has *.Rin
-    Rfiles <- dir(".", pattern="\\.R$")
+    Rfiles <- dir(".", pattern="\\.[rR]$")
     .check_packages_used_helper(db, c(Rinfiles, Rfiles))
 }
 
