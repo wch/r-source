@@ -6539,10 +6539,11 @@ function(x, ...)
 
 ### * .check_package_CRAN_incoming
 
-## localOnly means to skip tests requiring Internet access. These are all done first.
+## localOnly means to skip tests requiring Internet access.
+## These are all done first.
 
 .check_package_CRAN_incoming <-
-function(dir, localOnly)
+function(dir, localOnly = FALSE)
 {
     out <- list()
     class(out) <- "check_package_CRAN_incoming"
