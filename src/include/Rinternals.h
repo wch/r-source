@@ -964,6 +964,12 @@ Rboolean R_checkConstants(Rboolean);
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 SEXP R_ExecWithCleanup(SEXP (*fun)(void *), void *data,
 		       void (*cleanfun)(void *), void *cleandata);
+SEXP R_tryCatch(SEXP (*)(void *), void *,       /* body closure*/
+		SEXP,                           /* condition classes (STRSXP) */
+		SEXP (*)(SEXP, void *), void *, /* handler closure */
+		void (*)(void *), void *);      /* finally closure */
+SEXP R_tryCatchError(SEXP (*)(void *), void *,        /* body closure*/
+		     SEXP (*)(SEXP, void *), void *); /* handler closure */
 
 /* Environment and Binding Features */
 void R_RestoreHashCount(SEXP rho);
