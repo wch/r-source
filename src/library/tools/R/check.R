@@ -2078,13 +2078,57 @@ setRlibs <-
                      "")
             printLog0(Log, paste(msg, collapse = "\n"))
         }
+        
+	## Did the vignettes get updated in inst/doc?
+	inst_doc_files <- list.files(file.path(pkgdir, "inst", "doc"), 
+				     recursive = TRUE)
+	vignette_files <- list.files(vign_dir, recursive = TRUE)
+	if (!is_base_pkg && length(vignette_files)) {
+	    if (!length(inst_doc_files)) {
+		if (!any) warningLog(Log)
+		any <- TRUE
+		msg <- c("Files in the 'vignettes' directory but no files in 'inst/doc':",
+			 strwrap(paste(sQuote(vignette_files), collapse = ", "),
+				 indent = 2L, exdent = 4L),
+			 "")
+		printLog0(Log, paste(msg, collapse = "\n"))
+	    } else {
+		vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
+		inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
+		if (max(vignette_times) > max(inst_doc_times)) {
+		    if (!any) warningLog(Log)
+		    any <- TRUE
+		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
+			     strwrap(paste(sQuote(vignette_files[vignette_times > max(inst_doc_times)]), 
+					   collapse = ", "),
+				     indent = 2L, exdent = 4L),
+			     "")
+		    keep <- vignette_times <= max(inst_doc_times)
+		    vignette_files <- vignette_files[keep]
+		    vignette_times <- vignette_times[keep]
+		    printLog0(Log, paste(msg, collapse = "\n"))
+		}
+		matches <- match(vignette_files, inst_doc_files)
+		newer <- !is.na(matches) & vignette_times > inst_doc_times[matches]
+		if (any(newer)) {
+		    if (!any) warningLog(Log)
+		    any <- TRUE
+		    msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
+			     strwrap(paste(sQuote(vignette_files[newer]), 
+					   collapse = ", "),
+				     indent = 2L, exdent = 4L),
+			     "")
+		    printLog0(Log, paste(msg, collapse = "\n"))   
+		}
+	    }
+	}
 
         files <- dir(file.path(pkgdir, "vignettes"))
         if(length(files) &&
            !length(dir(file.path(pkgdir, "vignettes"),
                        pattern = pattern)) &&
            is.na(desc["VignetteBuilder"])) {
-            noteLog(Log)
+            if(!any) noteLog(Log)
             any <- TRUE
             printLog0(Log,
                       "Package has only non-Sweave vignette sources but no VignetteBuilder field.\n")
@@ -2092,7 +2136,7 @@ setRlibs <-
         already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
         bad <- files[files %in% already]
         if (length(bad)) {
-            noteLog(Log)
+            if(!any) noteLog(Log)
             any <- TRUE
             printLog0(Log,
                       "The following files are already in R: ",
@@ -2147,49 +2191,6 @@ setRlibs <-
                       "\nPlease remove from your package.\n")
         }
         
-        ## Did the vignettes get updated in inst/doc?
-        inst_doc_files <- list.files(file.path(pkgdir, "inst", "doc"), 
-                                     recursive = TRUE)
-        vignette_files <- list.files(vign_dir, recursive = TRUE)
-        if (length(vignette_files)) {
-            if (!length(inst_doc_files)) {
-        	warningLog(Log)
-		any <- TRUE
-		msg <- c("Files in the 'vignettes' directory but no files in 'inst/doc':",
-	                 strwrap(paste(sQuote(vignette_files), collapse = ", "),
-	                         indent = 2L, exdent = 4L),
-	                 "")
-        	printLog0(Log, paste(msg, collapse = "\n"))
-            } else {
-        	vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
-        	inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
-        	if (max(vignette_times) > max(inst_doc_times)) {
-        	    warningLog(Log)
-		    any <- TRUE
-		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
-		             strwrap(paste(sQuote(vignette_files[vignette_times > max(inst_doc_times)]), 
-		                           collapse = ", "),
-		                     indent = 2L, exdent = 4L),
-		             "")
-		    keep <- vignette_times <= max(inst_doc_times)
-		    vignette_files <- vignette_files[keep]
-		    vignette_times <- vignette_times[keep]
-        	    printLog0(Log, paste(msg, collapse = "\n"))
-        	}
-        	matches <- match(vignette_files, inst_doc_files)
-        	newer <- !is.na(matches) & vignette_times > inst_doc_times[matches]
-        	if (any(newer)) {
-        	    warningLog(Log)
-		    any <- TRUE
-		    msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
-		             strwrap(paste(sQuote(vignette_files[newer]), 
-		                           collapse = ", "),
-		                     indent = 2L, exdent = 4L),
-		             "")
-        	    printLog0(Log, paste(msg, collapse = "\n"))   
-        	}
-            }
-        }
         if (!any) resultLog(Log, "OK")
     }
 
