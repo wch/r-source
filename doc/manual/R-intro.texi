@@ -1519,8 +1519,7 @@ is a very simple one liner, specified by the assignment:
 
 @noindent
 (Writing functions will be considered later in @ref{Writing your own
-functions}, and in this case was unnecessary as @R{} also has a builtin
-function @code{sd()}.)
+functions}.  Note that @R{}'s a builtin function @code{sd()} is something different.)
 @findex sd
 @findex var
 After this assignment, the standard errors are calculated by
