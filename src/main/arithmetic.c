@@ -563,13 +563,15 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     if (xarray != yarray) {
     	if (xarray && nx==1 && ny!=1) {
 	    if(ny != 0)
-	    warningcall(call, _("dropping dim() of array of length one.  Will become ERROR"));
+		warningcall(call,
+		_("dropping dim() of array of length one.  Will become an error."));
     	    REPROTECT(x = duplicate(x), xpi);
     	    setAttrib(x, R_DimSymbol, R_NilValue);
     	}
     	if (yarray && ny==1 && nx!=1) {
 	    if(nx != 0)
-	    warningcall(call, _("dropping dim() of array of length one.  Will become ERROR"));
+		warningcall(call,
+		_("dropping dim() of array of length one.  Will become an error."));
     	    REPROTECT(y = duplicate(y), ypi);
     	    setAttrib(y, R_DimSymbol, R_NilValue);
     	}
