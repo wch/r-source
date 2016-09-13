@@ -46,7 +46,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   Wadsworth & Brooks/Cole.
   
   Murdoch, D. (2010).  
-  \href{http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source 
+  \href{https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source 
   References}.  \emph{The R Journal} 2/2, 16-19.
 }
 \seealso{
