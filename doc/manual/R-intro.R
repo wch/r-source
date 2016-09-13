@@ -123,9 +123,9 @@ incomes <- c(60, 49, 40, 61, 64, 60, 59, 54, 62, 69, 70, 42, 56,
 incmeans <- tapply(incomes, statef, mean)
 incmeans
 
-stderr <- function(x) sqrt(var(x)/length(x))
+stdError <- function(x) sqrt(var(x)/length(x))
 
-incster <- tapply(incomes, statef, stderr)
+incster <- tapply(incomes, statef, stdError)
 incster
 
 ##
