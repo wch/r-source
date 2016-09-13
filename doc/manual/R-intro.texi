@@ -1514,7 +1514,7 @@ function @code{var()} to calculate the sample variance, such a function
 is a very simple one liner, specified by the assignment:
 
 @example
-> stderr <- function(x) sqrt(var(x)/length(x))
+> stdError <- function(x) sqrt(var(x)/length(x))
 @end example
 
 @noindent
