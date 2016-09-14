@@ -1528,7 +1528,7 @@ settings available use
 which also explains how the various types of completion work.
 
 This feature is very similar to the completion available in the
-@code{readline}-based command line interface on Unix-alikes: the OS X
+@code{readline}-based command line interface on Unix-alikes: the macOS
 GUI @code{R.app} has a different completion scheme.
 
 @newchap{}
@@ -1539,7 +1539,7 @@ GUI @code{R.app} has a different completion scheme.
 @menu
 * My workspace gets saved in a strange place.  How do I stop this?::  
 * How do I store my workspace in a different place?::  
-* Can I load workspaces saved under Unix/GNU-Linux or OS X?::  
+* Can I load workspaces saved under Unix/GNU-Linux or macOS?::  
 @end menu
 
 
@@ -1549,7 +1549,7 @@ GUI @code{R.app} has a different completion scheme.
 Have you changed the working directory?: see Q6.2.
 
 
-@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or OS X?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
+@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or macOS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
 @section How do I store my workspace in a different place?
 
 Use the `File | Change Dir...' menu item to select a new working
@@ -1561,8 +1561,8 @@ From the command line you can change the working directory by the
 function @code{setwd}: see its help page.
 
 
-@node Can I load workspaces saved under Unix/GNU-Linux or OS X?,  , How do I store my workspace in a different place?, Workspaces
-@section Can I load workspaces saved under Unix/GNU-Linux or Mac OS X?
+@node Can I load workspaces saved under Unix/GNU-Linux or macOS?,  , How do I store my workspace in a different place?, Workspaces
+@section Can I load workspaces saved under Unix/GNU-Linux or Mac macOS?
 
 Yes.  All ports of R use the same format for saved workspaces, so they
 are interchangeable (for the same 3.x.? version of R, at least).
@@ -1573,7 +1573,7 @@ non-@acronym{ASCII} character data may not be interchangeable even on
 the same OS.  Since R marks character data when it knows it to be in
 UTF-8 or Latin-1 (including its Windows superset, CP1252), strings in
 those encodings are likely to be transferred correctly: fortunately this
-covers most of the common cases (OS X normally uses UTF-8, and Linux
+covers most of the common cases (macOS normally uses UTF-8, and Linux
 users are likely to use UTF-8 or perhaps Latin-1).
 
 It is possible to save references to package namespaces when saving the

@@ -223,7 +223,7 @@ intro.dat: UTF-8 Unicode (with BOM) text
 @end example
 
 @noindent
-Modern Unix-alike systems, including OS X, are likely to produce
+Modern Unix-alike systems, including macOS, are likely to produce
 UTF-8 files.  Windows may produce what it calls `Unicode' files
 (@code{UCS-2LE} or just possibly @code{UTF-16LE}@footnote{the
 distinction is subtle,
@@ -380,7 +380,7 @@ Windows applications may expect a Byte Order Mark which the
 implementation of @code{iconv} used by @R{} may or may not add depending
 on the platform.}, that is @code{"UTF-16LE"}.  Using UTF-8 is a good way
 to make portable files that will not easily be confused with any other
-encoding, but even OS X applications (where UTF-8 is the system
+encoding, but even macOS applications (where UTF-8 is the system
 encoding) may not recognize them, and Windows applications are most
 unlikely to.  Apparently Excel:mac 2004/8 expects @code{.csv} files in
 @code{"macroman"} encoding (the encoding used in much earlier versions
@@ -1166,7 +1166,7 @@ from a database for separate analysis.
 Increasingly OSes are themselves making use of DBMSs for these reasons,
 so it is nowadays likely that one will be already installed on your
 (non-Windows) OS.  @uref{https://en.wikipedia.org/wiki/Akonadi, Akonadi}
-is used by KDE4 to store personal information.  Several OS X
+is used by KDE4 to store personal information.  Several macOS
 applications, including Mail and Address Book, use SQLite.
 @c https://www.actualtech.com/sqlite_applications.php
 
@@ -1192,7 +1192,7 @@ non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
 @uref{https://msdn.microsoft.com/@/en-us/@/library/@/ms710252%28v=vs.85%29.aspx})
-but is also implemented on Linux/Unix/OS X.
+but is also implemented on Linux/Unix/macOS.
 
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
@@ -1370,7 +1370,7 @@ versions had a substantially different interface.  The current version
 requires the @CRANpkg{DBI} package, and this description will apply with
 minor changes to all the other back-ends to @CRANpkg{DBI}.
 
-MySQL exists on Unix/Linux/OS X and Windows: there is a `Community
+MySQL exists on Unix/Linux/macOS and Windows: there is a `Community
 Edition' released under GPL but commercial licenses are also available.
 MySQL was originally a `light and lean' database.  (It preserves the
 case of names where the operating file system is case-sensitive, so not
@@ -1457,7 +1457,7 @@ Arkansas          8.8     190       50 19.5
 Package @CRANpkg{RODBC} on @acronym{CRAN} provides an interface to
 database sources supporting an @acronym{ODBC} interface.  This is very
 widely available, and allows the same @R{} code to access different
-database systems.  @CRANpkg{RODBC} runs on Unix/Linux, Windows and OS X,
+database systems.  @CRANpkg{RODBC} runs on Unix/Linux, Windows and macOS,
 and almost all database systems provide support for @acronym{ODBC}.  We
 have tested Microsoft SQL Server, Access, MySQL, PostgreSQL, Oracle and
 IBM DB2 on Windows and MySQL, MariaDB, Oracle, PostgreSQL and SQLite on
@@ -1469,7 +1469,7 @@ running on a Unix server from a Windows client, and @emph{vice versa}.
 On Windows ODBC support is part of the OS.  On Unix/Linux you will need
 an @acronym{ODBC} Driver Manager such as unixODBC
 (@uref{http://www.unixODBC.org}) or iOBDC (@uref{http://www.iODBC.org}:
-this is pre-installed in OS X) and an installed driver for your
+this is pre-installed in macOS) and an installed driver for your
 database system.
 
 @cindex Excel
@@ -1487,7 +1487,7 @@ search for `Office ODBC', which will lead to
 latter has a version for 64-bit Windows, and that will also read earlier
 versions).
 
-On OS X the Actual Technologies
+On macOS the Actual Technologies
 (@url{https://www.actualtech.com/product_access.php}) drivers
 provide ODBC interfaces to Access databases (including Access 2007/2010)
 and to Excel spreadsheets (not including Excel 2007/2010).
@@ -1834,7 +1834,7 @@ facilities of its own to read raster files and links to many others.
 Which formats it supports is determined when GDAL is compiled: use
 @code{gdalDrivers()} to see what these are for the build you are using.
 It can be useful for uncommon formats such as JPEG 2000 (which is a
-different format from JPEG, and not currently supported in the OS X
+different format from JPEG, and not currently supported in the macOS
 nor Windows binary versions of @CRANpkg{rgdal}).
 
 
@@ -2291,7 +2291,7 @@ depending on your ODBC drivers: by calling @code{odbcConnect} directly
 versions back to Excel 3.0 can be read).  The version
 @code{odbcConnectExcel2007} will read the Excel 2007 formats as well as
 earlier ones (provided the drivers are installed, including with 64-bit
-Windows @R{}: @pxref{RODBC}).  OS X users can also use @CRANpkg{RODBC} if
+Windows @R{}: @pxref{RODBC}).  macOS users can also use @CRANpkg{RODBC} if
 they have a suitable driver (e.g.@: that from Actual Technologies).
 
 @findex read.xls

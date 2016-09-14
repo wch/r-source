@@ -2342,7 +2342,7 @@ internationalized in the same way as other packages.
 * R code::                      
 * Main C code::                 
 * Windows-GUI-specific code::   
-* OS X GUI::                    
+* macOS GUI::                    
 * Updating::                    
 @end menu
 
@@ -2409,7 +2409,7 @@ The macro @code{_("msg")} can safely be used in directory
 translation.  (This does not apply to @code{N_} or @code{P_}).
 
 
-@node Windows-GUI-specific code, OS X GUI, Main C code, Internationalization in the R sources
+@node Windows-GUI-specific code, macOS GUI, Main C code, Internationalization in the R sources
 @section Windows-GUI-specific code
 
 Messages for the Windows GUI are in a separate domain @samp{RGui}.  This
@@ -2439,14 +2439,14 @@ The template and message catalogs for the @samp{RGui} domain are in the
 top-level @file{po} directory.
 
 
-@node OS X GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
-@section OS X GUI
+@node macOS GUI, Updating, Windows-GUI-specific code, Internationalization in the R sources
+@section macOS GUI
 
 This is handled separately: see
 @uref{https://developer.r-project.org/Translations30.html}.
 
 
-@node Updating,  , OS X GUI, Internationalization in the R sources
+@node Updating,  , macOS GUI, Internationalization in the R sources
 @section Updating
 
 See file @file{po/README} for how to update the message templates and catalogs.
@@ -2634,13 +2634,13 @@ All these functions do tilde expansion, in the same way as
 @code{path.expand}, with the deliberate exception of @code{Sys.glob}.
 
 File names may be case sensitive or not: the latter is the norm on
-Windows and OS X, the former on other Unix-alikes.  Note that this
+Windows and macOS, the former on other Unix-alikes.  Note that this
 is a property of both the OS and the file system: it is often possible
 to map names to upper or lower case when mounting the file system.  This
 can affect the matching of patterns in @code{list.files} and
 @code{Sys.glob}.
 
-File names commonly contain spaces on Windows and OS X but not
+File names commonly contain spaces on Windows and macOS but not
 elsewhere.  As file names are handled as character strings by @R{},
 spaces are not usually a concern unless file names are passed to other
 process, e.g.@: by a @code{system} call.
@@ -3594,7 +3594,7 @@ modified startup sequence.
 
 However, the main way to run a GUI console is to launch a separate
 program which runs embedded @R{}: this is done by @command{Rgui.exe} on
-Windows and @command{R.app} on OS X.  The first is an integral part
+Windows and @command{R.app} on macOS.  The first is an integral part
 of @R{} and the code for the console is currently in @file{R.dll}.
 
 @menu
@@ -3604,16 +3604,16 @@ of @R{} and the code for the console is currently in @file{R.dll}.
 @node R.app,  , GUI consoles, GUI consoles
 @section R.app
 
-@command{R.app} is a OS X application which provides a console.  Its
+@command{R.app} is a macOS application which provides a console.  Its
 sources are a separate project@footnote{an Xcode project, in SVN at
 @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI}.}, and its binaries
 link to an @R{} installation which it runs as a dynamic library
 @file{libR.dylib}.  The standard @acronym{CRAN} distribution of @R{} for
-OS X bundles the GUI and @R{} itself, but installing the GUI is optional
+macOS bundles the GUI and @R{} itself, but installing the GUI is optional
 and either component can be updated separately.
 
 @command{R.app} relies on @file{libR.dylib} being in a specific place,
-and hence on @R{} having been built and installed as a Mac OS X
+and hence on @R{} having been built and installed as a Mac macOS
 `framework'.  Specifically, it uses
 @file{/Library/Frameworks/R.framework/R}.  This is a symbolic link, as
 frameworks can contain multiple versions of @R{}.  It eventually
@@ -3622,13 +3622,13 @@ resolves to
 which is (in the @acronym{CRAN} distribution) a `fat' binary containing
 multiple sub-architectures.
 
-OS X applications are directory trees: each @command{R.app} contains
+macOS applications are directory trees: each @command{R.app} contains
 a front-end written in Objective-C for one sub-architecture: in the
 standard distribution there are separate applications for 32- and 64-bit
 Intel architectures.
 
 Originally the @R{} sources contained quite a lot of code used only by
-the OS X GUI, but by @R{} 3.0.0 this was been migrated to the
+the macOS GUI, but by @R{} 3.0.0 this was been migrated to the
 @command{R.app} sources.
 
 @command{R.app} starts @R{} as an embedded application with a
@@ -3646,7 +3646,7 @@ There is a @command{configure} option @option{--with-aqua} for @R{}
 which customizes the way @R{} is built: this is distinct from the
 @option{--enable-R-framework} option which causes @command{make install}
 to install @R{} as the framework needed for use with @code{R.app}.  (The
-option @option{--with-aqua} is the default on OS X.)  It sets the
+option @option{--with-aqua} is the default on macOS.)  It sets the
 macro @code{HAVE_AQUA} in @file{config.h} and the make variable
 @code{BUILD_AQUA_TRUE}.  These have several consequences:
 
@@ -3655,7 +3655,7 @@ macro @code{HAVE_AQUA} in @file{config.h} and the make variable
 The @code{quartz()} device is built (other than as a stub) in package
 @pkg{grDevices}: this needs an Objective-C compiler.  Then
 @code{quartz()} can be used with terminal @R{} provided the latter has
-access to the OS X screen.
+access to the macOS screen.
 
 @item
 File @file{src/unix/aqua.c} is compiled.  This now only contains an
@@ -3905,7 +3905,7 @@ Should @command{du} be used to find the installed sizes of packages?
 but this option allows the check to be overruled if an unsuitable
 command is found (including one that does not respect the @option{-k}
 flag to report in units of 1Kb, or reports in a different format -- the
-GNU, OS X and Solaris @command{du} commands have been tested).
+GNU, macOS and Solaris @command{du} commands have been tested).
 Default: true if @command{du} is found.
 @item _R_CHECK_DOC_SIZES_
 Should @command{qpdf} be used to check the installed sizes of PDFs?
@@ -4007,7 +4007,7 @@ Default: false.
 @item _R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_
 Make the checks of compiled code more accurate by recording the symbol
 tables for objects (@file{.o} files) at installation in a file
-@file{symbols.rds}.  (Only currently supported on Linux, Solaris, OS X,
+@file{symbols.rds}.  (Only currently supported on Linux, Solaris, macOS,
 Windows and FreeBSD.)
 Default: true.
 
@@ -4134,7 +4134,7 @@ other commonly-used repositories.
 
 @cindex coding standards
 @R{} is meant to run on a wide variety of platforms, including Linux and
-most variants of Unix as well as Windows and OS X.
+most variants of Unix as well as Windows and macOS.
 Therefore, when extending @R{} by either adding to the @R{} base
 distribution or by providing an add-on package, one should not rely on
 features specific to only a few supported platforms, if this can be
@@ -4152,7 +4152,7 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
 1003.1 must be tested for, typically using Autoconf unless you are sure
 they are supported on all mainstream @R{} platforms (including Windows
-and OS X).
+and macOS).
 
 @item
 A FORTRAN 77 compiler (but not Fortran 9x, although it is nowadays
