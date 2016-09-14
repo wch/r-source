@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-09-01 r71193) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-09-14 r71249) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 9059
+[1] 9145
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
