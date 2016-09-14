@@ -3415,9 +3415,9 @@ if necessary.
 @findex ifelse
 There is a vectorized version of the @code{if}/@code{else} construct,
 the @code{ifelse} function.  This has the form @code{ifelse(condition, a,
-b)} and returns a vector of the length of its longest argument, with
+b)} and returns a vector of the same length as @code{condition}, with
 elements @code{a[i]} if @code{condition[i]} is true, otherwise
-@code{b[i]}.
+@code{b[i]} (where @code{a} and @code{b} are recycled as necessary).
 
 
 @node Repetitive execution,  , Conditional execution, Control statements
