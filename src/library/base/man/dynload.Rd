@@ -62,7 +62,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   
   The objects \code{dyn.load} loads are called \sQuote{dynamically
     loadable libraries} (abbreviated to \sQuote{DLL}) on all platforms
-  except OS X, which uses the term for a different sort
+  except macOS, which uses the term for a different sort
   of object.  On Unix-alikes they are also called \sQuote{dynamic
     shared objects} (\sQuote{DSO}), or \sQuote{shared objects} for
   short.  (The POSIX standards use \sQuote{executable object file},

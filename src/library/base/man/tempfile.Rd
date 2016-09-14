@@ -34,7 +34,7 @@ tempdir()
   
   The value will be an absolute path (unless \code{tmpdir} is set to a
   relative path), but it need not be canonical (see
-  \code{\link{normalizePath}}) and on OS X usually is not.
+  \code{\link{normalizePath}}) and on macOS usually is not.
 #endif
 }
 \details{

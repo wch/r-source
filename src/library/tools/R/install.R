@@ -182,7 +182,7 @@
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
-            "      --dsym            (OS X only) generate dSYM directory",
+            "      --dsym            (macOS only) generate dSYM directory",
             "      --built-timestamp=STAMP",
             "                   set timestamp for Built: entry in DESCRIPTION",
             "\nand on Windows only",
@@ -470,7 +470,7 @@
                 ## not clear if this is still necessary, but sh version did so
 		if (!WINDOWS)
 		    Sys.chmod(file.path(dest, files), dmode)
-		## OS X does not keep debugging symbols in binaries
+		## macOS does not keep debugging symbols in binaries
 		## anymore so optionally we can create dSYMs. This is
 		## important since we will blow away .o files so there
 		## is no way to create it later.

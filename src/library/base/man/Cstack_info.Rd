@@ -20,7 +20,7 @@ Cstack_info()
 
   %% Reports in Feb 2016 that this is broken by 'musl' on Linux.
   The information on the stack base address is thought to be accurate on
-  Windows, Linux (using \code{glibc}), OS X and FreeBSD but a heuristic
+  Windows, Linux (using \code{glibc}), macOS and FreeBSD but a heuristic
   is used on other platforms.  Because this might be slightly
   inaccurate, the current usage could be estimated as negative.  (The
   heuristic is not used on embedded uses of \R on platforms where the

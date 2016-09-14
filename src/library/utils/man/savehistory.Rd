@@ -57,7 +57,7 @@ timestamp(stamp = date(),
   example, in batch use or in an embedded application).  Note that \R
   can be built without \code{readline}.
 
-  \command{R.app}, the console on OS X, has a separate and largely
+  \command{R.app}, the console on macOS, has a separate and largely
   incompatible history mechanism, which by default uses a file
   \file{.Rapp.history} and saves up to 250 entries.  These functions are
   not currently implemented there.

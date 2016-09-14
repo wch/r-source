@@ -139,7 +139,7 @@ points(x, \dots)
   If the symbol font (\code{\link{par}(font = 5)}) is used, numerical
   values should be used for \code{pch}: the range is
   \code{c(32:126, 160:254)} in all locales (but \code{240} is not
-  defined (used for \sQuote{apple} on OS X) and \code{160}, Euro, may
+  defined (used for \sQuote{apple} on macOS) and \code{160}, Euro, may
   not be present).
 }
 \note{
@@ -242,7 +242,7 @@ TestChars <- function(sign = 1, font = 1, ...)
 TestChars()
 try(TestChars(sign = -1))
 TestChars(font = 5)  # Euro might be at 160 (0+10*16).
-                     # Mac OS has apple at 240 (0+15*16).
+                     # macOS has apple at 240 (0+15*16).
 try(TestChars(-1, font = 2))  # bold
 }}
 \keyword{aplot}

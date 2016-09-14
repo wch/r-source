@@ -126,7 +126,7 @@ void R_setupHistory()
 }
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
-/* on MacOS X it seems sys/resource.h needs sys/time.h first */
+/* on macOS it seems sys/resource.h needs sys/time.h first */
 # ifdef HAVE_SYS_TIME_H
 #  include <sys/time.h>
 # endif

@@ -57,7 +57,7 @@ create.post(instructions = character(), description = "post",
       (including address, Cc: address and subject) for you to edit and
       send.
 
-      This works where default mailers are set up (usual on OS X and
+      This works where default mailers are set up (usual on macOS and
       Windows, and where \command{xdg-open} is available and configured on
       other Unix-alikes: if that fails it tries the browser set by
       \env{R_BROWSER}).

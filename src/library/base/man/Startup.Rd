@@ -150,7 +150,7 @@
   distinct from \file{\var{\link{R_HOME}}/etc/Renviron.site}.
 
   Command-line options may well not apply to alternative front-ends:
-  they do not apply to \command{R.app} on OS X.
+  they do not apply to \command{R.app} on macOS.
 #endif
 #ifdef windows
   The startup options are for \command{Rgui}, \command{Rterm} and

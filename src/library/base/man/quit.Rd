@@ -87,7 +87,7 @@ quit(save = "default", status = 0, runLast = TRUE)
   \code{\link{reg.finalizer}}.
 }
 \note{
-  The \code{R.app} GUI on OS X has its own version of these functions
+  The \code{R.app} GUI on macOS has its own version of these functions
   with slightly different behaviour for the \code{save} argument (the
   GUI's \sQuote{Startup} preferences for this action are taken into account).
 }

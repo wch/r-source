@@ -402,7 +402,7 @@ static int xxungetc(int c)
     R_ParseContextLine = parseState.xxlineno;
     
     R_ParseContext[R_ParseContextLast] = '\0';
-    /* Mac OS X requires us to keep this non-negative */
+    /* macOS requires us to keep this non-negative */
     R_ParseContextLast = (R_ParseContextLast + PARSE_CONTEXT_SIZE - 1) 
 	% PARSE_CONTEXT_SIZE;
     if(npush >= PUSHBACK_BUFSIZE - 2) return R_EOF;

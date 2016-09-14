@@ -46,7 +46,7 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 
 \note{
   The canonical form of paths may not be what you expect.  For example,
-  on OS X absolute paths such as \file{/tmp} and \file{/var} are
+  on macOS absolute paths such as \file{/tmp} and \file{/var} are
   symbolic links.
 }
 

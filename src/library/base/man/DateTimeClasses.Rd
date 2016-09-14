@@ -101,7 +101,7 @@
   }
   (The last two components are not present for times in UTC and are
   platform-dependent: they are supported on platforms based on BSD or
-  \code{glibc} (including Linux and OS X) and those using the
+  \code{glibc} (including Linux and macOS) and those using the
   \code{tzcode} implementation shipped with \R (including Windows). But
   they are not necessarily set.).  Note that the internal list structure
   is somewhat hidden, as many methods (including

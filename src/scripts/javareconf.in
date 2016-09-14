@@ -199,13 +199,13 @@ hostos=`uname 2>/dev/null`
 if test "${hostos}" = "Darwin"; then
      pref=`echo "${JAVA_HOME}" | grep "/Home$"`
      if test "${pref}" = "${JAVA_HOME}"; then 
-       echo "System Java on OS X"
+       echo "System Java on macOS"
        JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
        JAVA_LIBS="-framework JavaVM"
        JAVA_LD_LIBRARY_PATH=
 	has_libjvm=unknown
     else
-       echo "Non-system Java on OS X"
+       echo "Non-system Java on macOS"
     fi
 fi
 ## we now look for a path to put in R_LD_LIBRARY_PATH which will

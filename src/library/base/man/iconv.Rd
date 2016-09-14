@@ -70,7 +70,7 @@ iconvlist()
 \section{Implementation Details}{
   There are three main implementations of \code{iconv} in use.
   Linux's C runtime \samp{glibc} contains one.  Several platforms
-  supply GNU \samp{libiconv}, including OS X, FreeBSD and Cygwin, in
+  supply GNU \samp{libiconv}, including macOS, FreeBSD and Cygwin, in
   some cases with additional encodings.  On Windows we use a version of
   Yukihiro Nakadaira's \samp{win_iconv}, which is based on Windows'
   codepages.  (We have added many encoding names for compatibility

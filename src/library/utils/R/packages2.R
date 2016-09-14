@@ -371,12 +371,12 @@ install.packages <-
 
 
     ## Look at type == "both"
-    ## NB it is only safe to use binary packages with a Mac OS X
+    ## NB it is only safe to use binary packages with a macOS
     ## build that uses the same R foundation layout as CRAN since
     ## paths in DSOs are hard-coded.
     if (type == "both") {
         if (type2 == "source")
-            stop("type == \"both\" can only be used on Windows or a CRAN build for Mac OS X")
+            stop("type == \"both\" can only be used on Windows or a CRAN build for macOS")
         if (!missing(contriburl) || !is.null(available)) type <- type2
     }
 
@@ -539,7 +539,7 @@ install.packages <-
 
     if(.Platform$OS.type == "windows") {
         if(substr(type, 1L, 10L) == "mac.binary")
-            stop("cannot install MacOS X binary packages on Windows")
+            stop("cannot install macOS binary packages on Windows")
 
         if(type %in% "win.binary") {
             ## include local .zip files
@@ -565,7 +565,7 @@ install.packages <-
     } else {
         if(substr(type, 1L, 10L) == "mac.binary") {
             if(!grepl("darwin", R.version$platform))
-                stop("cannot install MacOS X binary packages on this platform")
+                stop("cannot install macOS binary packages on this platform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
                                destdir = destdir,

@@ -92,7 +92,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   
   In principle these devices are independent of X11 (as is seen by their
   presence on Windows).  But on a Unix-alike the cairo libraries may be
-  distributed as part of the X11 system and hence that (on OS X,
+  distributed as part of the X11 system and hence that (on macOS,
   XQuartz) may need to be installed.
 }
 

@@ -108,7 +108,7 @@ icuGetCollate(type = c("actual", "valid"))
   likely to report \code{"root"}.
 }
 \note{
-  ICU is used by default wherever it is available: this include OS X,
+  ICU is used by default wherever it is available: this include macOS,
   Solaris and many Linux installations.  As it works internally in
   UTF-8, it will be most efficient in UTF-8 locales.
 

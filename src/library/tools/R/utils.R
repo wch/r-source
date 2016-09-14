@@ -306,7 +306,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## That has [A-Za-z], earlier versions [A-z], both of which may be
         ## invalid in some locales.
         env0 <- "LC_COLLATE=C"
-        ## texi2dvi, at least on OS X (4.8) does not accept TMPDIR with spaces.
+        ## texi2dvi, at least on macOS (4.8) does not accept TMPDIR with spaces.
         if (grepl(" ", Sys.getenv("TMPDIR")))
             env0 <- paste(env0,  "TMPDIR=/tmp")
         out <- .system_with_capture(texi2dvi,
@@ -587,7 +587,7 @@ function(val) {
 ### ** .canonicalize_doi
 
 .canonicalize_doi <-
-function(x)    
+function(x)
 {
     x <- sub("^((doi|DOI):)?[[:space:]]*http://(dx[.])?doi[.]org/", "",
              x)

@@ -36,7 +36,7 @@
 
   Objective C and Objective C++ support is optional and will work only
   if the corresponding compilers were available at \R configure time:
-  their main usage is on OS X.
+  their main usage is on macOS.
 
   Compilation arranges to include the paths to the \R public C/C++ headers.
 

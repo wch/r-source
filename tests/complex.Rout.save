@@ -256,7 +256,7 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 [1]  1.5708+0.5493i  1.5708+0.5493i -1.5708-0.5493i -1.5708-0.5493i
 > ## According to C99, should have continuity from the side given if there
 > ## are not signed zeros
-> ## Both glibc 2.12 and Mac OS X 10.6 use continuity from above in the first set
+> ## Both glibc 2.12 and macOS 10.6 use continuity from above in the first set
 > ## but they seem to assume signed zeros.
 > ## Windows gave incorrect (NaN) values on the cuts.
 > 

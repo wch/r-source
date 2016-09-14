@@ -23,7 +23,7 @@
  *  It provides replacements for the wctype functions on
  *  Windows (where they are not correct in e.g. Japanese)
  *  AIX (missing)
- *  OS X in CJK (where these just call the ctype functions)
+ *  macOS in CJK (where these just call the ctype functions)
  *
  *  It also provides wc[s]width, where widths of CJK fonts are often
  *  wrong in vendor-supplied versions and in Markus Kuhn's version
@@ -108,7 +108,7 @@ static int wcwidthsearch(int wint, const struct interval_wcwidth *table,
    nor what font was used for non-Windows, nor where the values came
    from.
 
-   Except perhaps on OS X, the non-Windows locale names are for the
+   Except perhaps on macOS, the non-Windows locale names are for the
    default MBCS encodings (e.g. GBK, GB1312, BIG5, EUCJP, EUCKR).
    There are other non-UTF-8 encodings for those locales,
    e.g. ja_JP.SJIS, ko_KR.CP949, zh_CN.eucCN, zh_HK.Big5HKSCS.
@@ -199,7 +199,7 @@ int Ri18n_wcswidth (const wchar_t *s, size_t n)
 }
 
 /*********************************************************************
- *  OS X's wide character type functions are based on FreeBSD
+ *  macOS's wide character type functions are based on FreeBSD
  *  and only work correctly for Latin-1 characters.
  *  So we replace them.  May also be needed on FreeBSD.
  ********************************************************************/

@@ -29,7 +29,7 @@ retracemem(x, previous = NULL)
   compiled with memory profiling; \code{retracemem} does not (so it can be
   left in code during development).
 
-  It is enabled in the CRAN OS X and Windows builds of \R.
+  It is enabled in the CRAN macOS and Windows builds of \R.
 
   When an object is traced any copying of the object by the C function
   \code{duplicate} produces a message to standard output, as does type

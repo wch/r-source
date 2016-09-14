@@ -153,7 +153,7 @@ tiff(filename = "Rplot\%03d.tif",
     \item On platforms with support for X11, plotting to a hidden X11
     display.
 
-    \item On OS X when working at the console and when \R is
+    \item On macOS when working at the console and when \R is
     compiled with suitable support, using Apple's Quartz plotting
     system.
 

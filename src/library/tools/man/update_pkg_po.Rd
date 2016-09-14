@@ -73,7 +73,7 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
   \command{gettext-tools}: \command{xgettext}, \command{msgmerge},
   \command{msgfmt}, \command{msginit} and \command{msgconv}.  These are
   part of most Linux distributions and easily compiled from the sources
-  on Unix-alikes (including OS X).  Pre-compiled versions for
+  on Unix-alikes (including macOS).  Pre-compiled versions for
   Windows are available in
   \url{https://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
 

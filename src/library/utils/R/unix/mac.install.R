@@ -64,15 +64,15 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
         setwd(tmpDir)
         ## sanity check: people have tried to install source .tgz files
         if (!file.exists(file <- file.path(pkgname, "Meta", "package.rds")))
-            stop(gettextf("file %s is not an OS X binary package", sQuote(pkg)),
+            stop(gettextf("file %s is not a macOS binary package", sQuote(pkg)),
                  domain = NA, call. = FALSE)
         desc <- readRDS(file)$DESCRIPTION
         if (length(desc) < 1L)
-            stop(gettextf("file %s is not an OS X binary package", sQuote(pkg)),
+            stop(gettextf("file %s is not a macOS binary package", sQuote(pkg)),
                  domain = NA, call. = FALSE)
         desc <- as.list(desc)
         if (is.null(desc$Built))
-            stop(gettextf("file %s is not an OS X binary package", sQuote(pkg)),
+            stop(gettextf("file %s is not a macOS binary package", sQuote(pkg)),
                  domain = NA, call. = FALSE)
 
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))

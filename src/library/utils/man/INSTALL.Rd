@@ -105,7 +105,7 @@
 #ifdef unix
 
   Option \option{--build} can be used to tar up the installed package
-  for distribution as a binary package (as used on OS X).  This is done
+  for distribution as a binary package (as used on macOS).  This is done
   by \code{utils::tar} unless environment variable \env{R_INSTALL_TAR}
   is set.
 #endif

@@ -68,7 +68,7 @@
     cairo_show_text
     cairo_text_extents
 
-    cairo_ft_font_face_create_for_ft_face [OS X]
+    cairo_ft_font_face_create_for_ft_face [macOS]
 
     g_object_unref  (glib)
 
@@ -718,7 +718,7 @@ static cairo_font_face_t *FC_getFont(const char *family, int style)
 		    FcFontSetDestroy (fs);
 
 #ifdef __APPLE__
-		    /* FreeType is broken on OS X in that face index
+		    /* FreeType is broken on macOS in that face index
 		       is often wrong (unfortunately even for Helvetica!)
 		       - we try to find the best match through enumeration.
 		       And italic and bold are swapped */

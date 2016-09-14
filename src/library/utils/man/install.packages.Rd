@@ -40,7 +40,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     or binary package archive files (as created by \command{R CMD build
       --binary}).  (\code{http://} and \code{file://} URLs are also
     accepted and the files will be downloaded and installed from local
-    copies.)  On a CRAN build of \R for OS X these can be \file{.tgz}
+    copies.)  On a CRAN build of \R for macOS these can be \file{.tgz}
     files containing binary package archives.
     Tilde-expansion will be done on file paths.
 #endif
@@ -111,7 +111,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     In all of these, \code{"LinkingTo"} is omitted for binary packages.
   }
   \item{type}{character, indicating the type of package to download and
-    install.  Will be \code{"source"} except on Windows and some OS X
+    install.  Will be \code{"source"} except on Windows and some macOS
     builds: see the section on \sQuote{Binary packages} for those.
   }
   \item{configure.args}{
@@ -177,7 +177,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{\dots}{
     Arguments to be passed to \code{\link{download.file}} or to the
-    functions for binary installs on OS X and Windows (which accept
+    functions for binary installs on macOS and Windows (which accept
     an argument \code{"lock"}: see the section on \sQuote{Locking}).
   }
 }
@@ -209,12 +209,12 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 }
 \section{Binary packages}{
   This section applies only to platforms where binary packages are
-  available: Windows and CRAN builds for OS X.
+  available: Windows and CRAN builds for macOS.
   
   \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
   also supported, and the type most commonly used on Windows and by the
-  CRAN builds for OS X.  This function can install either type, either by
+  CRAN builds for macOS.  This function can install either type, either by
   downloading a file from a repository or from a local file.
 
   Possible values of \code{type} are (currently) \code{"source"},
@@ -260,7 +260,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   problem, but the installation may fail as Windows locks files in use.
 #endif
 #ifdef unix
-  Otherwise, on OS X you otherwise need to have installed the
+  Otherwise, on macOS you otherwise need to have installed the
   \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
     and Administration Manual}) and if needed by the package a Fortran
   compiler, and have them in your path.
@@ -284,7 +284,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \option{--no-lock}.
   % and also options(install.lock = FALSE) in an \R startup file.
 
-  For an OS X or Windows binary install, no locking is done by
+  For a macOS or Windows binary install, no locking is done by
   default.  Setting argument \code{lock} to \code{TRUE} (it defaults to
   the value of \code{\link{getOption}("install.lock", FALSE)}) will use
   per-directory locking as described for source installs: if the value

@@ -384,7 +384,7 @@ forkal(Starma G, int d, int il, double *delta, double *y, double *amse,
 
     sigma2 = 0.0;
     for (j = 0; j < nt; j++) {
-	/* MacOS X/gcc 3.5 does/didn't have isnan defined properly */
+	/* macOS/gcc 3.5 didn't have isnan defined properly */
 	tmp = G->resid[j];
 	if(!ISNAN(tmp)) { nu++; sigma2 += tmp * tmp; }
     }

@@ -145,7 +145,7 @@ system(command, intern = FALSE,
   For GUIs, what happens to output sent to \file{stdout} or
   \file{stderr} if \code{intern = FALSE} is interface-specific, and it
   is unsafe to assume that such messages will appear on a GUI console
-  (they do on the OS X GUI's console, but not on some others).
+  (they do on the macOS GUI's console, but not on some others).
 }
 #endif
 

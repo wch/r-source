@@ -18,7 +18,7 @@
 /* HAVE_COSPI etc will not be defined in standalone-use: the
    intention is to make the versions here available in that case.
 
-   The __cospi etc variants are from OS X (and perhaps other BSD-based systems).
+   The __cospi etc variants are from macOS (and perhaps other BSD-based systems).
 */
 
 #ifdef HAVE_COSPI

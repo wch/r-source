@@ -71,7 +71,7 @@
     \item{\env{R_BROWSER}:}{The path to the default browser.  Used to
       set the default value of \code{\link{options}("browser")}.}
     \item{\env{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
-      command-line completion is not used.  (Not used by OS X GUI.)}
+      command-line completion is not used.  (Not used by the macOS GUI.)}
     \item{\env{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
       which are to be attached in every session.  See \code{\link{options}}.}
     \item{\env{R_DOC_DIR}:}{The location of the \R \file{doc}

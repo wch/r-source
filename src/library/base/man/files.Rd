@@ -117,7 +117,7 @@ Sys.junction(from, to)
   \code{file.symlink} and \code{file.link} make symbolic and hard links
   on those file systems which support them.  For \code{file.symlink} the
   \code{to} argument can specify a single existing directory.  (Unix and
-  OS X native filesystems support both.  Windows has hard links to
+  macOS native filesystems support both.  Windows has hard links to
   files on NTFS file systems and concepts related to symbolic links on
   recent versions: see the section below on the Windows version of this
   help page.  What happens on a FAT or SMB-mounted file system is OS-specific.)
@@ -133,7 +133,7 @@ Sys.junction(from, to)
 }
 
 \section{Case-insensitive file systems}{
-  Case-insensitive file systems are the norm on Windows and OS X,
+  Case-insensitive file systems are the norm on Windows and macOS,
   but can be found on all OSes (for example a FAT-formatted USB drive is
   probably case-insensitive).
 

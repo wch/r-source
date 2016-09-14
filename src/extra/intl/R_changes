@@ -18,7 +18,7 @@ Various small changes were made to avoid warnings.
 
 BDR
 
-One more change for Mac OS X: the locale detection is simply off-loaded
+One more change for macOS: the locale detection is simply off-loaded
 to locale2charset, because the built-in detection in gettext doesn't work.
 This also ensures that R and gettext are in sync wrt the charset used.
 

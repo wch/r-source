@@ -30,6 +30,6 @@ make -f Make.zi VERSION=2016d ZIC=/usr/sbin/zic
 
 NB: it seems that this needs to be done on a system with 64-bit time_t
 or the catalogs will be confined to 1902-2038.  And even that did not
-suffice on OS X.  As a sanity check, the size of zoneinfo.zip should
+suffice on macOS.  As a sanity check, the size of zoneinfo.zip should
 be about 400KB if 64-bit: a 32-bit version will be about 280KB.
 

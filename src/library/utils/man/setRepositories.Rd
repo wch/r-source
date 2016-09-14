@@ -15,7 +15,7 @@ setRepositories(graphics = getOption("menu.graphics"),
 }
 \arguments{
   \item{graphics}{Logical. If true, use a graphical list: on Windows or
-    OS X GUI use a list box, and on a Unix-alike if \pkg{tcltk} and an X
+    macOS GUI use a list box, and on a Unix-alike if \pkg{tcltk} and an X
     server are available, use Tk widget. Otherwise use a text
     \code{\link{menu}}.}
   \item{ind}{\code{NULL} or a vector of integer indices, which have the
@@ -43,7 +43,7 @@ setRepositories(graphics = getOption("menu.graphics"),
 
   The list of repositories offered depends on the setting of option
   \code{"pkgType"} as some repositories only offer a subset of types
-  (e.g., only source packages or not OS X binary packages).
+  (e.g., only source packages or not macOS binary packages).
   Further, for binary packages some repositories (notably R-Forge) only
   offer packages for the current or recent versions of \R.
   (Type \code{"both"} is equivalent to \code{"source"}.)

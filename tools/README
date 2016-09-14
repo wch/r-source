@@ -72,8 +72,8 @@ The files are as follows.
 	create links with simplified names to these.
 
   updatefat
-	updates a fat file by adding a new architecture (Mac OS X only)
-	it is essentially a smart wrapper for "lipo".
+	updates a fat file by adding a new architecture (macOS only)
+	it is essentially a smart wrapper for "lipo".  (No longer used.)
 
 GETCONFIG, GETVERSION, copy-if-change and move-if-change are used on Windows,
 and require cmp, cp, echo, expr, grep, mv and sed.

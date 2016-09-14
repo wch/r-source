@@ -178,7 +178,7 @@ strptime(x, format, tz = "")
   the standards specify that in the \samp{C} locale they must be the
   first three letters of the capitalized English name: this convention
   is widely used in English-language locales but for example the French
-  month abbreviations are not the same on any two of Linux, OS X, Solaris
+  month abbreviations are not the same on any two of Linux, macOS, Solaris
   and Windows). Knowing what the abbreviations are is essential
   if you wish to use \code{\%a}, \code{\%b} or \code{\%h} as part of an
   input format: see the examples for how to check.
@@ -255,7 +255,7 @@ strptime(x, format, tz = "")
   Some platforms support modifiers from POSIX 2008 (and others).  On
   Linux the format \code{"\%04Y"} assures a minimum of four characters
   and zero-padding.  The internal code (as used on Windows and by
-  default on OS X) uses zero-padding by default, and formats
+  default on macOS) uses zero-padding by default, and formats
   \code{\%_4Y} and \code{\%_Y} can be used for space padding and no
   padding.
 }
@@ -316,7 +316,7 @@ strptime(x, format, tz = "")
   
   That \code{\%A \%a \%B \%b} on input match both full and abbreviated names
   caused problems in some locales prior to \R 3.0.3: e.g.\sspace{}in French on
-  OS X \samp{juillet} was matched by \code{jui}, the abbreviation for
+  macOS \samp{juillet} was matched by \code{jui}, the abbreviation for
   June.
   
 }

@@ -488,7 +488,7 @@ isIncomplete(con)
   (\url{http://www.vergenet.net/~conrad/software/xsel/}), for example by
   \code{pipe("xclip -i", "w")} for the primary selection.
 
-  OS X users can use \code{pipe("pbpaste")} and
+  macOS users can use \code{pipe("pbpaste")} and
   \code{pipe("pbcopy", "w")} to read from and write to that system's
   clipboard.
 #endif

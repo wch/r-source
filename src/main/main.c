@@ -554,12 +554,12 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 		s = "invalid alignment";
 		break;
 #endif
-#ifdef BUS_ADRERR /* not on MacOS X, apparently */
+#ifdef BUS_ADRERR /* not on macOS, apparently */
 	    case BUS_ADRERR:
 		s = "non-existent physical address";
 		break;
 #endif
-#ifdef BUS_OBJERR /* not on MacOS X, apparently */
+#ifdef BUS_OBJERR /* not on macOS, apparently */
 	    case BUS_OBJERR:
 		s = "object specific hardware error";
 		break;

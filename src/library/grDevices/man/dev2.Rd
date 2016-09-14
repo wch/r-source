@@ -27,7 +27,7 @@ dev.control(displaylist = c("inhibit", "enable"))
     \code{\link{postscript}} arguments.}
   \item{which}{A device number specifying the device to copy to.}
   \item{out.type}{The name of the output device: can be \code{"pdf"}, or
-    \code{"quartz"} (some OS X builds) or \code{"cairo"} (Windows
+    \code{"quartz"} (some macOS builds) or \code{"cairo"} (Windows
     and some Unix-alikes, see \code{\link{cairo_pdf}}).}
   \item{displaylist}{A character string: the only valid values are
     \code{"inhibit"} and \code{"enable"}.}

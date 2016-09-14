@@ -383,7 +383,7 @@ dev.capabilities <- function(what = NULL)
             if(.Platform$OS.type == "windows") windows
             else {
                 ## This detects if quartz() was built and if we are
-                ## running at the OS X console (both of which have to
+                ## running at the macOS console (both of which have to
                 ## be true under R.app).
                 if(.Platform$GUI == "AQUA" ||.Call(C_makeQuartzDefault)) quartz
                 else if(nzchar(Sys.getenv("DISPLAY"))

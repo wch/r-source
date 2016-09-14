@@ -12,7 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 ## When compiling rbitmap.c it is essential that we find the
-## png.h matching BITMAP_LIBS.  Since /opt/X11 on OS X contains libpng
+## png.h matching BITMAP_LIBS.  Since /opt/X11 on macOS contains libpng
 ## and we might want our own version, we give priority to BITMAP_*
 ALL_CPPFLAGS = @BITMAP_CPPFLAGS@ $(R_XTRA_CPPFLAGS) $(X_CFLAGS) @CAIROX11_CPPFLAGS@ \
   -I$(top_srcdir)/src/library/grDevices/src/cairo $(CPPFLAGS) $(DEFS)

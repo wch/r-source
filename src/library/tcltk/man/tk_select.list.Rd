@@ -40,7 +40,7 @@ tk_select.list(choices, preselect = NULL, multiple = FALSE,
   \code{Cancel} was used) then a character vector of length 0 is returned.
 }
 \seealso{
-  \code{\link{select.list}} (a text version except on Windows and the OS X GUI),
+  \code{\link{select.list}} (a text version except on Windows and the macOS GUI),
   \code{\link{menu}} (whose \code{graphics = TRUE} mode uses this
   on most Unix-alikes).
 }

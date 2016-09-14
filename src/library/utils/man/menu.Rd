@@ -23,7 +23,7 @@ menu(choices, graphics = FALSE, title = NULL)
 }
 \details{
   If \code{graphics = TRUE} and a windowing system is available
-  (Windows, OS X or X11 \emph{via} Tcl/Tk) a listbox widget is
+  (Windows, macOS or X11 \emph{via} Tcl/Tk) a listbox widget is
   used, otherwise a text menu.  It is an error to use \code{menu} in a
   non-interactive session.
 

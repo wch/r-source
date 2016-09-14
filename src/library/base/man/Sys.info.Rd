@@ -41,7 +41,7 @@ Sys.info()
 }
 \details{
   This uses POSIX or Windows system calls.  Note that OS names might not
-  be what you expect: for example OS X identifies itself as
+  be what you expect: for example macOS identifies itself as
   \samp{Darwin} and Solaris as \samp{SunOS}.
 
   \code{Sys.info()} returns details of the platform \R is running on,
@@ -56,7 +56,7 @@ Sys.info()
 \preformatted{
   "4.1.3-100.fc21.x86_64"   # Linux (Fedora)
   "3.2.0-4-amd64"           # Linux (Debian)
-  "14.5.0"                  # OS X 10.10.5
+  "14.5.0"                  # macOS 10.10.5
   "5.11"                    # Solaris
 }
   

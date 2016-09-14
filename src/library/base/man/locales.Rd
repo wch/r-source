@@ -86,7 +86,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   For \code{category = "LC_ALL"} the details of the string are
   system-specific: it might be a single locale name or a set of locale
-  names separated by \code{"/"} (Solaris, OS X) or \code{";"}
+  names separated by \code{"/"} (Solaris, macOS) or \code{";"}
   (Windows, Linux).  For portability, it is best to query categories
   individually: it is not necessarily the case that the result of
   \code{foo <- Sys.getlocale()} can be used in
@@ -133,7 +133,7 @@ Sys.getlocale("LC_TIME")
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
 Sys.setlocale("LC_TIME", "de_DE.utf8")   # Modern Linux etc.
 Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # ditto
-Sys.setlocale("LC_TIME", "de_DE")  # OS X, in UTF-8
+Sys.setlocale("LC_TIME", "de_DE")  # macOS, in UTF-8
 Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
