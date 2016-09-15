@@ -1992,6 +1992,23 @@ static SEXP default_tryCatch_handler(SEXP cond, void *data)
 
 static void default_tryCatch_finally(void *data) { }
 
+static SEXP trycatch_callback = NULL;
+static const char* trycatch_callback_source =
+    "function(code, conds, fin) {\n"
+    "    handler <- function(cond)\n"
+    "        if (inherits(cond, conds))\n"
+    "            .Internal(C_tryCatchHelper(code, 1L, cond))\n"
+    "        else\n"
+    "            signalCondition(cond)\n"
+    "    if (fin)\n"
+    "        tryCatch(.Internal(C_tryCatchHelper(code, 0L)),\n"
+    "                 condition = handler,\n"
+    "                 finally = .Internal(C_tryCatchHelper(code, 2L)))\n"
+    "    else\n"
+    "        tryCatch(.Internal(C_tryCatchHelper(code, 0L)),\n"
+    "                 condition = handler)\n"
+    "}";
+
 SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
 		SEXP conds,
 		SEXP (*handler)(SEXP, void *), void *hdata,
@@ -1999,8 +2016,12 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
 {
     if (body == NULL) error("must supply a body function");
 
-    SEXP fsym = install("..C_tryCatchHelper");
-
+    if (trycatch_callback == NULL) {
+	trycatch_callback = R_ParseEvalString(trycatch_callback_source,
+					      R_BaseNamespace);
+	R_PreserveObject(trycatch_callback);
+    }
+    
     tryCatchData_t tcd = {
 	.body = body,
 	.bdata = bdata,
@@ -2012,7 +2033,7 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
 
     SEXP fin = finally != NULL ? R_TrueValue : R_FalseValue;
     SEXP tcdptr = R_MakeExternalPtr(&tcd, R_NilValue, R_NilValue);
-    SEXP expr = lang4(fsym, tcdptr, conds, fin);
+    SEXP expr = lang4(trycatch_callback, tcdptr, conds, fin);
     PROTECT(expr);
     SEXP val = eval(expr, R_GlobalEnv);
     UNPROTECT(1); /* expr */
