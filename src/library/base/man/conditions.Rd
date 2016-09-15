@@ -27,7 +27,7 @@
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
 \alias{.tryResumeInterrupt}
-\alias{..C_tryCatchHlpr}
+\alias{..C_tryCatchHelper}
 
 \alias{as.character.condition}
 \alias{as.character.error}
@@ -77,7 +77,7 @@ restartFormals(r)
 .signalSimpleWarning(msg, call)
 .handleSimpleError(h, msg, call)
 .tryResumeInterrupt()
-..C_tryCatchHlpr(code, conds, fin)
+..C_tryCatchHelper(code, conds, fin)
 }
 
 \arguments{
@@ -200,7 +200,7 @@ restartFormals(r)
    formal arguments of the handler function.
 
    \code{.signalSimpleWarning}, \code{.handleSimpleError}, 
-   \code{.tryResumeInterrupt}, and \code{..C_tryCatchHlpr}
+   \code{.tryResumeInterrupt}, and \code{..C_tryCatchHelper}
    are used internally and should not be called directly.
 }
 
