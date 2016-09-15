@@ -2866,12 +2866,18 @@ setRlibs <-
                 ## Don't just fail: try to log where the problem occurred.
                 ## First, find the test which failed.
                 ## (Maybe there was an error without a failing test.)
-                bad_files <- dir(".", pattern="\\.Rout\\.fail")
+                bad_files <- dir(".", pattern="\\.Rout\\.fail$")
                 if (length(bad_files)) {
                     ## Read in output from the (first) failed test.
                     file <- bad_files[1L]
                     lines <- readLines(file, warn = FALSE)
-                    file <- file.path(test_dir, sub("out\\.fail", "", file))
+                    file <- file.path(test_dir, sub("out\\.fail$", "", file))
+                    src_files <- dir(".", pattern = "\\.[rR]$")
+                    if (!(basename(file) %in% src_files)) {
+                    	file <- sub("R$", "r", file)  # This assumes only one of foo.r and foo.R exists.
+                    	if (!(basename(file) %in% src_files))
+                    	    file <- sub("r$", "[rR]", file)  # Just in case the test script got deleted somehow, show the pattern.
+                    }
                     ll <- length(lines)
                     keep <- as.integer(Sys.getenv("_R_CHECK_TESTS_NLINES_",
                                                   "13"))
