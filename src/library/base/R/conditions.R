@@ -316,16 +316,16 @@ withRestarts <- function(expr, ...) {
         invokeRestart(r)
 }
 
-..C_tryCatchHelper <- function(code, conds, fin) {
+..C_tryCatchHlpr <- function(code, conds, fin) {
     handler <- function(cond)
         if (inherits(cond, conds))
-            .Internal(C_tryCatchHelper(code, 1L, cond))
+            .Internal(C_tryCatchHlpr(code, 1L, cond))
         else
             signalCondition(cond)
     if (fin)
-        tryCatch(.Internal(C_tryCatchHelper(code, 0L)),
+        tryCatch(.Internal(C_tryCatchHlpr(code, 0L)),
                  condition = handler,
-                 finally = .Internal(C_tryCatchHelper(code, 2L)))
+                 finally = .Internal(C_tryCatchHlpr(code, 2L)))
     else
-        tryCatch(.Internal(C_tryCatchHelper(code, 0L)), condition = handler)
+        tryCatch(.Internal(C_tryCatchHlpr(code, 0L)), condition = handler)
 }

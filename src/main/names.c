@@ -154,7 +154,7 @@ FUNTAB R_FunTab[] =
 {"delayedAssign",do_delayed,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
 {"makeLazy",	do_makelazy,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	  0}},
 {"identical",	do_identical,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	  0}},
-{"C_tryCatchHelper",do_tryCatchHelper,0,11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"C_tryCatchHlpr",do_tryCatchHlpr,0,11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 
 /* Binary Operators, all primitives */
