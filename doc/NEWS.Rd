@@ -281,10 +281,10 @@
 
       \item \command{R CMD config} gains a \option{--all} option for
       printing names and values of all basic configure variables.
-      
-      \item \command{R CMD check} now checks that output files in 
+
+      \item \command{R CMD check} now checks that output files in
       \file{inst/doc} are newer than the source files in \file{vignettes}.
-      
+
       \item For consistency with other package subdirectories, files
       named \file{*.r} in the \file{tests} directory are now recognized
       as tests by \command{R CMD check}. (Wish of \PR{17143})
@@ -378,6 +378,11 @@
       \item When \code{index.return=TRUE} is passed to \code{sort.int()},
       the radix sort treats \code{NA}s like \code{sort.list()} does
       (like the other sort algorithms).
+
+      \item When in \code{tabulate(bin, nbin)} \code{length(bin)} is
+      larger than the maximal integer, the result is now of type
+      \code{double} and hence no longer silently overflows to wrong
+      values.  (\PR{17140})
     }
   }
 }
