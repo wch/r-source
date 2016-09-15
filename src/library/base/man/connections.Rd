@@ -389,10 +389,10 @@ isIncomplete(con)
   \url{https://en.wikipedia.org/wiki/UTF-16}: the use of characters in
   the \sQuote{Supplementary Planes} which need surrogate pairs is very
   rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
-  widely implemented).  
-  
-  One caveat:  \R's implementation of \code{"UCS-2LE"} and similar for 
-  output does not currently work on Windows, and on Unix it will default 
+  widely implemented).
+
+  One caveat:  \R's implementation of \code{"UCS-2LE"} and similar for
+  output does not currently work on Windows, and on Unix it will default
   to Unix-style line endings.  We recommend use of \code{UTF-8} instead.
 
   As from \R 3.0.0 the encoding \code{"UTF-8-BOM"} is accepted for
@@ -533,10 +533,10 @@ isIncomplete(con)
 
   \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
   connection.
-  
+
   \code{\link{options}} \code{HTTPUserAgent}, \code{internet.info} and
   \code{timeout} are used by some of the methods for URL connections.
-  
+
   \code{\link{memCompress}} for more ways to (de)compress and references
   on data compression.
 #ifdef windows
@@ -559,10 +559,12 @@ close(zz)
 readLines(zz <- gzfile("ex.gz"))
 close(zz)
 unlink("ex.gz")
+zz # an invalid connection
 
 zz <- bzfile("ex.bz2", "w")  # bzip2-ed file
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
+zz # print() method: invalid connection
 print(readLines(zz <- bzfile("ex.bz2")))
 close(zz)
 unlink("ex.bz2")
@@ -576,7 +578,9 @@ seek(Tfile, 0, rw = "r") # reset to beginning
 readLines(Tfile)
 cat("ghi\n", file = Tfile)
 readLines(Tfile)
+Tfile # -> print() :  "valid" connection
 close(Tfile)
+Tfile # -> print() :  "invalid" connection
 unlink("test1")
 
 ## We can do the same thing with an anonymous file.

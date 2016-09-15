@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -175,7 +175,18 @@ clearPushBack <- function(connection)
 
 print.connection <- function(x, ...)
 {
-    print(unlist(summary(x)))
+    usumm <- tryCatch(unlist(summary(x)), error = function(e) {})
+    ## could also show  as.numeric(x) {as str() currently does}
+    if(is.null(usumm)) {
+	cl <- oldClass(x); cl <- cl[cl != "connection"]
+	cat("A connection, ",
+	    if(length(cl)) paste0("specifically, ",
+				  paste(sQuote(cl), collapse=", "), ", "),
+	    "but invalid.\n", sep = "")
+    } else {
+	cat("A connection with") # {newline from print() below}
+	print(cbind(` ` = usumm), ...)
+    }
     invisible(x)
 }
 

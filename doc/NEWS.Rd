@@ -199,6 +199,9 @@
       limits on higher-level functions such as \code{mclapply()} (but
       returning gigabyte results from forked processes \emph{via}
       serialization should be avoided if at all possible).
+
+      \item Connections now \code{print()} without error, even if
+      invalid, i.e., typically after having been closed.
     }
   }
 
