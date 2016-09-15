@@ -2095,21 +2095,23 @@ setRlibs <-
 	    } else {
 		vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
 		inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
-		if (max(vignette_times) > max(inst_doc_times)) {
+		if (sum(!is.na(vignette_times)) && sum(!is.na(inst_doc_times)) &&
+                    max(vignette_times, na.rm = TRUE) > max(inst_doc_times, na.rm = TRUE)) {
 		    if (!any) warningLog(Log)
 		    any <- TRUE
 		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
-			     strwrap(paste(sQuote(vignette_files[vignette_times > max(inst_doc_times)]), 
+			     strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]), 
 					   collapse = ", "),
 				     indent = 2L, exdent = 4L),
 			     "")
-		    keep <- vignette_times <= max(inst_doc_times)
+		    keep <- is.na(vignette_times) | vignette_times <= max(inst_doc_times)
 		    vignette_files <- vignette_files[keep]
 		    vignette_times <- vignette_times[keep]
 		    printLog0(Log, paste(msg, collapse = "\n"))
 		}
 		matches <- match(vignette_files, inst_doc_files)
-		newer <- !is.na(matches) & vignette_times > inst_doc_times[matches]
+		newer <- vignette_times > inst_doc_times[matches]
+		newer <- !is.na(matches) & !is.na(newer) & newer
 		if (any(newer)) {
 		    if (!any) warningLog(Log)
 		    any <- TRUE
