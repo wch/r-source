@@ -113,8 +113,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## version or the package was build with an unrelease devel
         ## version.  Other mismatches should be caught earlier by the
         ## version checks.
-        needsComp <- isTRUE(pkgInfo$DESCRIPTION["NeedsCompilation"] == "yes")
-        if (needsComp) {
+        needsComp <- as.character(pkgInfo$DESCRIPTION["NeedsCompilation"])
+        if (identical(needsComp, "yes")) {
             internalsID <- features$internalsID
             if (is.null(internalsID))
                 ## the initial internalsID for packages installed
