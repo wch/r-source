@@ -30,9 +30,6 @@
 #ifdef __cplusplus
 # ifndef NO_C_HEADERS
 #  include <cstdio>
-#  ifdef __SUNPRO_CC
-using std::FILE;
-#  endif
 #  include <climits>
 #  include <cstddef>
 # endif
@@ -1051,12 +1048,21 @@ void R_InitOutPStream(R_outpstream_t stream, R_pstream_data_t data,
 		      void (*outbytes)(R_outpstream_t, void *, int),
 		      SEXP (*phook)(SEXP, SEXP), SEXP pdata);
 
+#ifdef __cplusplus
+void R_InitFileInPStream(R_inpstream_t stream, std::FILE *fp,
+			 R_pstream_format_t type,
+			 SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+void R_InitFileOutPStream(R_outpstream_t stream, std::FILE *fp,
+			  R_pstream_format_t type, int version,
+			  SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+#else
 void R_InitFileInPStream(R_inpstream_t stream, FILE *fp,
 			 R_pstream_format_t type,
 			 SEXP (*phook)(SEXP, SEXP), SEXP pdata);
 void R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 			  R_pstream_format_t type, int version,
 			  SEXP (*phook)(SEXP, SEXP), SEXP pdata);
+#endif
 
 #ifdef NEED_CONNECTION_PSTREAMS
 /* The connection interface is not available to packages.  To
@@ -1106,7 +1112,11 @@ void R_RunExitFinalizers(void);	/* in memory.c */
 
 /* Replacements for popen and system */
 #ifdef HAVE_POPEN
+# ifdef __cplusplus
+std::FILE *R_popen(const char *, const char *);
+# else
 FILE *R_popen(const char *, const char *);
+# endif
 #endif
 int R_system(const char *);
 
