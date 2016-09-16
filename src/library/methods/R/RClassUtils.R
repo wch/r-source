@@ -2085,6 +2085,18 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 	    }
 	}
 
+.getClassFromCache <- function(name, where, package = packageSlot(name),
+                               resolve.confl = "first", resolve.msg = TRUE)
+{
+    value <- .getClassesFromCache(name)
+    if(is.list(value)) {
+        ## multiple classes with this name -- choose at most one
+        value <- .resolveClassList(value, where, package, resolve.confl,
+                                   resolve.msg)
+    }
+    value
+}
+
 ### insert superclass information into all the subclasses of this
 ### class.  Used to incorporate inheritance information from
 ### ClassUnions
