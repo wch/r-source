@@ -32,8 +32,7 @@
 /* interval at which to check interrupts, a guess */
 #define NINTERRUPT 10000000
 
-static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
-static SEXP real_relop   (RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP numeric_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call);
 static SEXP string_relop (RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP raw_relop    (RELOP_TYPE code, SEXP s1, SEXP s2);
@@ -155,15 +154,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	PROTECT_WITH_INDEX(x, &xpi);
 	PROTECT_WITH_INDEX(y, &ypi);
 	SEXP ans;
-	if (typex == INTSXP && typey == INTSXP)
-	    ans = integer_relop(PRIMVAL(op), x, y);
-	else {
-	    if (typex == INTSXP)
-		REPROTECT(x = coerceVector(x, REALSXP), xpi);
-	    if (typey == INTSXP)
-		REPROTECT(y = coerceVector(y, REALSXP), ypi);
-	    ans = real_relop(PRIMVAL(op), x, y);
-	}
+	ans = numeric_relop(PRIMVAL(op), x, y);
 	UNPROTECT(2);
 	return ans;
     }
@@ -269,20 +260,23 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	REPROTECT(y = coerceVector(y, CPLXSXP), ypi);
 	x = complex_relop((RELOP_TYPE) PRIMVAL(op), x, y, call);
     }
+    else if ((isNumeric(x) || isLogical(x)) && (isNumeric(y) || isLogical(y))) {
+        x = numeric_relop((RELOP_TYPE) PRIMVAL(op), x, y);
+    } // rest of cases only apply when 'x' or 'y' is raw
     else if (isReal(x) || isReal(y)) {
 	REPROTECT(x = coerceVector(x, REALSXP), xpi);
 	REPROTECT(y = coerceVector(y, REALSXP), ypi);
-	x = real_relop((RELOP_TYPE) PRIMVAL(op), x, y);
+	x = numeric_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (isInteger(x) || isInteger(y)) {
 	REPROTECT(x = coerceVector(x, INTSXP), xpi);
 	REPROTECT(y = coerceVector(y, INTSXP), ypi);
-	x = integer_relop((RELOP_TYPE) PRIMVAL(op), x, y);
+	x = numeric_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (isLogical(x) || isLogical(y)) {
 	REPROTECT(x = coerceVector(x, LGLSXP), xpi);
 	REPROTECT(y = coerceVector(y, LGLSXP), ypi);
-	x = integer_relop((RELOP_TYPE) PRIMVAL(op), x, y);
+	x = numeric_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (TYPEOF(x) == RAWSXP || TYPEOF(y) == RAWSXP) {
 	REPROTECT(x = coerceVector(x, RAWSXP), xpi);
@@ -317,10 +311,79 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     return x;
 }
 
-static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
+#define ISNA_INT(x) x == NA_INTEGER
+
+#define NUMERIC_RELOP(type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2) do { \
+    type1 x1;                                                           \
+    type2 x2;                                                           \
+                                                                        \
+    switch (code) {                                                     \
+    case EQOP:                                                          \
+	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1)[i1];                                     \
+	    x2 = ACCESSOR2(s2)[i2];                                     \
+	    if (ISNA1(x1) || ISNA2(x2))                                 \
+		LOGICAL(ans)[i] = NA_LOGICAL;                           \
+	    else                                                        \
+		LOGICAL(ans)[i] = (x1 == x2);                           \
+	});                                                             \
+	break;                                                          \
+    case NEOP:                                                          \
+	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+	    x1 = ACCESSOR1(s1)[i1];                                     \
+	    x2 = ACCESSOR2(s2)[i2];                                     \
+	    if (ISNA1(x1) || ISNA2(x2))                                 \
+		LOGICAL(ans)[i] = NA_LOGICAL;                           \
+	    else                                                        \
+		LOGICAL(ans)[i] = (x1 != x2);                           \
+	});                                                             \
+	break;                                                          \
+    case LTOP:                                                          \
+	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+	    x1 = ACCESSOR1(s1)[i1];                                     \
+	    x2 = ACCESSOR2(s2)[i2];                                     \
+	    if (ISNA1(x1) || ISNA2(x2))                                 \
+		LOGICAL(ans)[i] = NA_LOGICAL;                           \
+	    else                                                        \
+		LOGICAL(ans)[i] = (x1 < x2);                            \
+	});                                                             \
+	break;                                                          \
+    case GTOP:                                                          \
+	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+	    x1 = ACCESSOR1(s1)[i1];                                     \
+	    x2 = ACCESSOR2(s2)[i2];                                     \
+	    if (ISNA1(x1) || ISNA2(x2))                                 \
+		LOGICAL(ans)[i] = NA_LOGICAL;                           \
+	    else                                                        \
+		LOGICAL(ans)[i] = (x1 > x2);                            \
+	});                                                             \
+	break;                                                          \
+    case LEOP:                                                          \
+	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+	    x1 = ACCESSOR1(s1)[i1];                                     \
+	    x2 = ACCESSOR2(s2)[i2];                                     \
+	    if (ISNA1(x1) || ISNA2(x2))                                 \
+		LOGICAL(ans)[i] = NA_LOGICAL;                           \
+	    else                                                        \
+		LOGICAL(ans)[i] = (x1 <= x2);                           \
+	});                                                             \
+	break;                                                          \
+    case GEOP:                                                          \
+	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1)[i1];                                     \
+	    x2 = ACCESSOR2(s2)[i2];                                     \
+	    if (ISNA1(x1) || ISNA2(x2))                                 \
+		LOGICAL(ans)[i] = NA_LOGICAL;                           \
+	    else                                                        \
+		LOGICAL(ans)[i] = (x1 >= x2);                           \
+	});                                                             \
+	break;                                                          \
+    }                                                                   \
+} while(0)
+
+static SEXP numeric_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     R_xlen_t i, i1, i2, n, n1, n2;
-    int x1, x2;
     SEXP ans;
 
     n1 = XLENGTH(s1);
@@ -330,159 +393,18 @@ static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     PROTECT(s2);
     ans = allocVector(LGLSXP, n);
 
-    switch (code) {
-    case EQOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 == x2);
-	});
-	break;
-    case NEOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 != x2);
-	});
-	break;
-    case LTOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 < x2);
-	});
-	break;
-    case GTOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 > x2);
-	});
-	break;
-    case LEOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 <= x2);
-	});
-	break;
-    case GEOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 >= x2);
-	});
-	break;
+    if (isInteger(s1) || isLogical(s1)) {
+        if (isInteger(s2) || isLogical(s2)) {
+            NUMERIC_RELOP(int, INTEGER, ISNA_INT, int, INTEGER, ISNA_INT);
+        } else {
+            NUMERIC_RELOP(int, INTEGER, ISNA_INT, double, REAL, ISNAN);
+        }
+    } else if (isInteger(s2) || isLogical(s2)) {
+        NUMERIC_RELOP(double, REAL, ISNAN, int, INTEGER, ISNA_INT);
+    } else {
+        NUMERIC_RELOP(double, REAL, ISNAN, double, REAL, ISNAN);
     }
-    UNPROTECT(2);
-    return ans;
-}
-
-static SEXP real_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
-{
-    R_xlen_t i, i1, i2, n, n1, n2;
-    double x1, x2;
-    SEXP ans;
-
-    n1 = XLENGTH(s1);
-    n2 = XLENGTH(s2);
-    n = (n1 > n2) ? n1 : n2;
-    PROTECT(s1);
-    PROTECT(s2);
-    ans = allocVector(LGLSXP, n);
-
-    switch (code) {
-    case EQOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNAN(x1) || ISNAN(x2))
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 == x2);
-	});
-	break;
-    case NEOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNAN(x1) || ISNAN(x2))
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 != x2);
-	});
-	break;
-    case LTOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNAN(x1) || ISNAN(x2))
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 < x2);
-	});
-	break;
-    case GTOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNAN(x1) || ISNAN(x2))
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 > x2);
-	});
-	break;
-    case LEOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNAN(x1) || ISNAN(x2))
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 <= x2);
-	});
-	break;
-    case GEOP:
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNAN(x1) || ISNAN(x2))
-		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else
-		LOGICAL(ans)[i] = (x1 >= x2);
-	});
-	break;
-    }
+    
     UNPROTECT(2);
     return ans;
 }
