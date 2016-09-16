@@ -853,3 +853,23 @@ test(methods::new("test2", date=as.POSIXct("2003-10-09")))
 stopifnot(require("methods"))
 ## S3 dispatch to superclass methods failed on S4 objects when
 ## methods package was not attached
+
+
+## Tests for class fetching and conflict resolution
+setClass("htest1", slots=c(a="numeric",b="data.frame"), package="package1")
+setClass("htest2", slots=c(a="logical"), package="package2")
+class.list = list(
+    package1=getClassDef("htest1", where=class_env1),
+    package2=getClassDef("htest2", where=class_env2)
+)
+
+firstclass  <- methods:::.resolveClassList(class.list,.GlobalEnv,
+                                           package="package1")
+secondclass <- methods:::.resolveClassList(class.list,.GlobalEnv,
+                                           package="package2")
+alsofirstclass <- methods:::.resolveClassList(class.list,.GlobalEnv,
+                                              package="package3")
+stopifnot(!identical(firstclass, secondclass))
+stopifnot(identical(firstclass, class.list[[1]]))
+stopifnot(identical(secondclass, class.list[[2]]))
+stopifnot(identical(alsofirstclass, class.list[[1]]))

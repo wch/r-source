@@ -235,13 +235,15 @@ getClassDef <-
   function(Class, where = topenv(parent.frame()), package = packageSlot(Class),
            inherits = TRUE)
 {
-    value <- if(inherits)
-                 .getClassFromCache(Class, where, package=package,
-                                    resolve.confl="none")
-    ## else NULL # want to force a search for the metadata in this case (Why?)
+    if(inherits) {
+                 value <- .getClassesFromCache(Class)
+                 if(is.list(value))
+                     value <- .resolveClassList(value, where, package)
+    } else
+        value <- NULL
+    
     if(is.null(value)) {
-	cname <-
-	    classMetaName(if(length(Class) > 1L)
+	cname <- classMetaName(if(length(Class) > 1L)
 			  ## S3 class; almost certainly has no packageSlot,
 			  ## but we'll continue anyway
 			  Class[[1L]] else Class)
