@@ -524,10 +524,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## defaults to exportPatterns
             if(!length(classPatterns))
                 classPatterns <- nsInfo$exportPatterns
-            for (p in classPatterns) {
-                pClasses <- c(aClasses[grep(p, aClasses)], pClasses)
-            }
-            pClasses <- unique(pClasses)
+            pClasses <- unique(unlist(lapply(classPatterns, grep, aClasses,
+                                             value=TRUE)))
             if( length(pClasses) ) {
                 good <- vapply(pClasses, methods::isClass, NA, where = ns)
                 if( !any(good) && length(nsInfo$exportClassPatterns))
