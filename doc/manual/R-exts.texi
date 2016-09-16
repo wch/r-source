@@ -9564,7 +9564,16 @@ appropriate headers yourself before the @R{} headers, then try defining
 @samp{NO_C_HEADERS} before including the @R{} headers.  (Headers
 @file{R.h}, @file{Rinternals.h} and @file{Rmath.h} support
 @samp{NO_C_HEADERS}: @file{cstddef} needs to be included before
-@file{R.h} if @samp{NO_C_HEADERS} is defined.)
+@file{R.h} if @samp{NO_C_HEADERS} is defined.  The requirements for
+@file{Rinternals.h} depend on the version of @R{} (it is only supported
+as from @R{} 3.3.0) and the platform, but
+@example
+#include <cstdio>
+#include <climits>
+#include <cstddef>
+using std::FILE;
+@end example
+is likely to suffice.)
 
 Legacy header @file{S.h} cannot be used with C++.
 
