@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-09-16 r71269) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-09-16 r71272) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1211,4 +1211,26 @@ attr(,"class")
 Loading required package: methods
 > ## S3 dispatch to superclass methods failed on S4 objects when
 > ## methods package was not attached
+> 
+> 
+> ## Tests for class fetching and conflict resolution
+> setClass("htest1", slots=c(a="numeric",b="data.frame"), package="package1")
+> setClass("htest2", slots=c(a="logical"), package="package2")
+> class.list = list(
++     package1=getClassDef("htest1", where=class_env1),
++     package2=getClassDef("htest2", where=class_env2)
++ )
+> 
+> firstclass  <- methods:::.resolveClassList(class.list,.GlobalEnv,
++                                            package="package1")
+> secondclass <- methods:::.resolveClassList(class.list,.GlobalEnv,
++                                            package="package2")
+> alsofirstclass <- methods:::.resolveClassList(class.list,.GlobalEnv,
++                                               package="package3")
+Found more than one class "htest1" in cache; using the first, from namespace 'package1'
+Also defined by 'package2'
+> stopifnot(!identical(firstclass, secondclass))
+> stopifnot(identical(firstclass, class.list[[1]]))
+> stopifnot(identical(secondclass, class.list[[2]]))
+> stopifnot(identical(alsofirstclass, class.list[[1]]))
 > 
