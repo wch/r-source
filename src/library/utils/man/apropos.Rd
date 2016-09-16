@@ -1,6 +1,6 @@
 % File src/library/utils/man/apropos.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{apropos}
@@ -18,8 +18,7 @@ find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
   \item{where, numeric}{a logical indicating whether positions in the
     search list should also be returned}
   \item{ignore.case}{logical indicating if the search should be
-    case-insensitive, \code{TRUE} by default.  Note that in \R versions
-    prior to 2.5.0, the default was implicitly \code{ignore.case = FALSE}.}
+    case-insensitive, \code{TRUE} by default.}
   \item{mode}{character; if not \code{"any"}, only objects whose
     \code{\link{mode}} equals \code{mode} are searched.}
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
@@ -34,17 +33,18 @@ find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
 \details{
   If \code{mode != "any"} only those objects which are of mode \code{mode}
   are considered.
-  If \code{where} is \code{TRUE}, the positions in the search list are
-  returned as the names attribute.
 
   \code{find} is a different user interface for the same task as
   \code{apropos}. However, by default (\code{simple.words == TRUE}),
   only full words are searched with \code{\link{grep}(fixed = TRUE)}.
 }
-\author{Kurt Hornik and Martin Maechler (May 1997).}
+\author{Originally, Kurt Hornik and Martin Maechler (May 1997).}
 \value{
-  For \code{apropos} character vector, sorted by name, possibly with
-  names giving the (numerical) positions on the search path.
+  For \code{apropos} a character vector, sorted by name, for \code{where
+  = TRUE} with names giving the (numerical) positions on the search
+  path.  Unlike the default behaviour of \code{\link{ls}}, names which
+  begin with a \samp{.} are included (and these are often
+  \sQuote{internal} objects).
 
   For \code{find}, either a character vector of environment names, or for
   \code{numeric = TRUE}, a numerical vector of positions on the search path,
