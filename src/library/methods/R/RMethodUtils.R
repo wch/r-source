@@ -535,7 +535,7 @@ getGeneric <-
             ##  fdef <- def <- .makeGenericForCache(def)
             pkg <- prev@package
             if(identical(pkg, newpkg)) { # redefinition
-                assign(name, def, envir = table)
+                table[[name]] <- def
                 return(fdef)
             }
             prev <- list(prev)          # start a per-package list
@@ -552,7 +552,7 @@ getGeneric <-
     }
 
     .getMethodsTable(fdef)              # force initialization
-    assign(name, def, envir = table)
+    table[[name]] <- def
     fdef
 }
 
@@ -813,14 +813,19 @@ cacheMetaData <-
     ## to update class and method information.
     pkg <- getPackageName(where)
     classes <- getClasses(where)
-    for(cl in classes) {
-        cldef <- (if(attach) get(classMetaName(cl), where) # NOT getClassDef, it will use cache
-                  else  getClassDef(cl, searchWhere))
-        if(is(cldef, "classRepresentation")) {
-            if(attach) {
-                .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"), where)
-            }
-            else if(identical(cldef@package, pkg)) {
+    if (attach) {
+        for(cl in classes) {
+            ## NOT getClassDef, it will use cache
+            cldef <- get(classMetaName(cl), where) 
+            if(is(cldef, "classRepresentation"))
+                .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"),
+                            where)
+        }
+    } else {
+        for(cl in classes) {
+            cldef <- getClassDef(cl, searchWhere)
+            if(is(cldef, "classRepresentation") &&
+               identical(cldef@package, pkg)) {
                 .uncacheClass(cl, cldef)
                 .removeSuperclassBackRefs(cl, cldef, searchWhere)
             }
