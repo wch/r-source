@@ -172,6 +172,7 @@ LIBR=`eval $query VAR=LIBR`
 STATIC_LIBR=`eval $query VAR=STATIC_LIBR`
 MAIN_LDFLAGS=`eval $query VAR=MAIN_LDFLAGS`
 LIBS=`eval $query VAR=LIBS`
+LDFLAGS=`eval $query VAR=LDFLAGS`
 
 
 if test -n "${R_ARCH}"; then
