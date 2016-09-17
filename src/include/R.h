@@ -64,6 +64,8 @@
 #  undef SO
 #  undef SS
 # endif
+#else
+#warning "use of NO_C_HEADERS is deprecated"
 #endif
 
 #include <Rconfig.h>

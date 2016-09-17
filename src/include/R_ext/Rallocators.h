@@ -30,6 +30,8 @@
 # else
 #  include <stddef.h> /* for size_t */
 # endif
+#else
+#warning "use of NO_C_HEADERS is deprecated"
 #endif
 
 /* R_allocator_t typedef is also declared in Rinternals.h 

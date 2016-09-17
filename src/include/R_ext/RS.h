@@ -31,6 +31,8 @@ using std::size_t;
 #  include <string.h>		/* for memcpy, memset */
 #  include <stddef.h> /* for size_t */
 # endif
+#else
+#warning "use of NO_C_HEADERS is deprecated"
 #endif
 
 #include <Rconfig.h>		/* for F77_APPEND_UNDERSCORE */

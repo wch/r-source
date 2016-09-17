@@ -32,6 +32,8 @@
 #  include <cstdio>
 #  include <climits>
 #  include <cstddef>
+# else
+#warning "use of NO_C_HEADERS is deprecated"
 # endif
 extern "C" {
 #else
@@ -39,6 +41,8 @@ extern "C" {
 #  include <stdio.h>
 #  include <limits.h> /* for INT_MAX */
 #  include <stddef.h> /* for ptrdiff_t */
+# else
+#warning "use of NO_C_HEADERS is deprecated"
 # endif
 #endif
 
@@ -908,7 +912,7 @@ SEXP Rf_mkCharCE(const char *, cetype_t);
 SEXP Rf_mkCharLenCE(const char *, int, cetype_t);
 const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
 
-				/* return(.) NOT reached : for -Wall */
+				/* match(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 

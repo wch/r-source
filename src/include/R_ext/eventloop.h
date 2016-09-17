@@ -39,6 +39,8 @@
 # endif
 /* NOTE: At one time needed on FreeBSD so that fd_set is defined. */
 # include <sys/types.h>
+#else
+#warning "use of NO_C_HEADERS is deprecated"
 #endif
 
 #ifdef  __cplusplus
