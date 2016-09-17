@@ -3539,6 +3539,8 @@ setRlibs <-
                              ## ": #warning",
                              ## gcc indents these, igraph has space after #
                              "^ *# *warning",
+                             ## Solaris cc has
+                             "Warning: # *warning",
                              # these are from era of static HTML
                              "missing links?:")
                 ## Warnings spotted by gcc with
