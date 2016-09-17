@@ -2078,9 +2078,9 @@ setRlibs <-
                      "")
             printLog0(Log, paste(msg, collapse = "\n"))
         }
-        
+
 	## Did the vignettes get updated in inst/doc?
-	inst_doc_files <- list.files(file.path(pkgdir, "inst", "doc"), 
+	inst_doc_files <- list.files(file.path(pkgdir, "inst", "doc"),
 				     recursive = TRUE)
 	vignette_files <- list.files(vign_dir, recursive = TRUE)
 	if (!is_base_pkg && length(vignette_files)) {
@@ -2100,7 +2100,7 @@ setRlibs <-
 		    if (!any) warningLog(Log)
 		    any <- TRUE
 		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
-			     strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]), 
+			     strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]),
 					   collapse = ", "),
 				     indent = 2L, exdent = 4L),
 			     "")
@@ -2116,11 +2116,11 @@ setRlibs <-
 		    if (!any) warningLog(Log)
 		    any <- TRUE
 		    msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
-			     strwrap(paste(sQuote(vignette_files[newer]), 
+			     strwrap(paste(sQuote(vignette_files[newer]),
 					   collapse = ", "),
 				     indent = 2L, exdent = 4L),
 			     "")
-		    printLog0(Log, paste(msg, collapse = "\n"))   
+		    printLog0(Log, paste(msg, collapse = "\n"))
 		}
 	    }
 	}
@@ -2192,7 +2192,7 @@ setRlibs <-
                                     indent = 2, exdent = 2), collapse = "\n"),
                       "\nPlease remove from your package.\n")
         }
-        
+
         if (!any) resultLog(Log, "OK")
     }
 
@@ -3617,6 +3617,7 @@ setRlibs <-
                              "warning: control reaches end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
+                             "^#warning",
                              # these are from era of static HTML
                              "missing links?:")
                 ## Warnings spotted by gcc with
