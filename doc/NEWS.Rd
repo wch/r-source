@@ -445,7 +445,15 @@
       spaces, even those of home directories (as reported by Ken Beath).
     }
   }
-  
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Use of the C/C++ macro \samp{NO_C_HEADERS} is deprecated
+      (no C headers are included by \R headers from C++ as from \R
+      3.3.0, so it should no longer be needed).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item The check for non-portable flags in \command{R CMD check}

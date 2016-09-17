@@ -9573,7 +9573,10 @@ as from @R{} 3.3.0) and the platform, but
 #include <cstddef>
 using std::FILE;
 @end example
-is likely to suffice.)
+is likely to suffice.)  As from @R{} 3.3.0, @R{} headers do not include
+legacy headers when used with C++, so @samp{NO_C_HEADERS} will only be
+needed if the package C++ code includes legacy headers or for earlier
+versions of @R{}: it is deprecated and likely to be removed in future.
 
 Legacy header @file{S.h} cannot be used with C++.
 
