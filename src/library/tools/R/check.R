@@ -3617,7 +3617,8 @@ setRlibs <-
                              "warning: control reaches end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
-                             "^#warning",
+                             ## gcc indents these, igraph has space after #
+                             "^ *# *warning",
                              # these are from era of static HTML
                              "missing links?:")
                 ## Warnings spotted by gcc with
