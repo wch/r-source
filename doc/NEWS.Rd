@@ -46,9 +46,17 @@
       warnings from recent versions of \command{gfortran} with
       \option{-Wall -pedantic}: this now reports non-portable GNU
       extensions such as out-of-order declarations.
-      
+
       \item \command{R CMD config} works better with paths containing
       spaces, even those of home directories (as reported by Ken Beath).
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Use of the C/C++ macro \samp{NO_C_HEADERS} is deprecated
+      (no C headers are included by \R headers from C++ as from \R
+      3.3.0, so it should no longer be needed).
     }
   }
 
