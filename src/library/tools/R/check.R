@@ -1567,7 +1567,6 @@ setRlibs <-
             out7 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
-
         ## Use of deprecated, defunct and platform-specific devices?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
             win <- !is.na(OS_type) && OS_type == "windows"
@@ -2638,9 +2637,9 @@ setRlibs <-
 		times <-
                     utils::read.table(tfile, header = TRUE, row.names = 1L,
                                       colClasses = c("character", rep("numeric", 3)))
-                o <- order(times[[1]]+times[[2]], decreasing = TRUE)
+                o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
                 times <- times[o, ]
-                keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
+                keep <- (times[[1L]] + times[[2L]] > 5) | (times[[3L]] > 5)
                 if(any(keep)) {
                     printLog(Log, "Examples with CPU or elapsed time > 5s\n")
                     times <- utils::capture.output(format(times[keep, ]))
@@ -3536,7 +3535,10 @@ setRlibs <-
                              "warning: void function",
                              "warning: control reaches end of non-void function",
                              "warning: no return statement in function returning non-void",
-                             ": #warning",
+                             ## gcc-only form
+                             ## ": #warning",
+                             ## gcc indents these, igraph has space after #
+                             "^ *# *warning",
                              # these are from era of static HTML
                              "missing links?:")
                 ## Warnings spotted by gcc with
