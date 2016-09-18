@@ -4793,6 +4793,14 @@ namespace.  One way to do so is to use declarations such as
 @example
 using std::floor;
 @end example
+but it is usually preferable to use explicit namespace prefixes in the code.
+
+Examples seen in @acronym{CRAN} packages include
+@example
+abs acos atan calloc ceil div exp fabs floor fmod free log malloc memcpy
+memset pow printf qsort round sin sprintf sqrt strcmp strcpy strerror
+strlen strncmp strtol tan trunc
+@end example
 
 @item
 Macros defined by the compiler/OS can cause problems.  Identifiers
@@ -4857,6 +4865,16 @@ enough macros to ensure that missing declarations are rarely seen.
 This applies also to constants such as @code{M_PI}, which are part of
 the X/Open standard: to use these define @code{_XOPEN_SOURCE} before
 including any headers.
+
+@item
+Similarly, package authors commonly assume things are part of C++ when
+they were introduced in C++11 if at all.  Recent examples from
+@acronym{CRAN} packages include the C99/C++11 functions
+@example
+erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
+@end example
+and the POSIX function @code{strdup}.
+
 @end itemize
 
 Some additional information for C++ is available at
