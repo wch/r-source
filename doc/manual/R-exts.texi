@@ -11863,10 +11863,10 @@ This is only recommended for experts.
 Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
 
-Note that although @var{n} is @code{size_t}, there may be limits imposed
-by @R{}'s internal allocation mechanism.  These will only come into play
-on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
-just under 16Gb.
+@c Note that although @var{n} is @code{size_t}, there may be limits imposed
+@c by @R{}'s internal allocation mechanism.  These will only come into play
+@c on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
+@c just under 16Gb.
 
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which

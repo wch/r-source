@@ -29,16 +29,22 @@
 # ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 #  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 # endif
-/* The C++ headers in Solaris Studio are strict C++98, and many 
-   packages fail because of not using e.g. std::round 
-   or using C99 functions such as snprintf. 
+/* The C++ headers in Solaris Studio are strict C++98, and 100+ 
+   packages would fail because of not using e.g. std::round 
+   or using C99 functions such as 
+
+   erf exmp1 floorf fmin fminf fmax lgamma lround loglp round
+   snprintf strcasecmp trunc
+
+   We workaround the first, here and in Rmath.h.
+
+   DO_NOT_USE_CXX_HEADERS is legacy, left as a last resort.
 */
 # if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstdlib>
 #  include <cstdio>
 #  include <climits>
 #  include <cmath>
-// Solaris is much stricter about namespaces
 #  ifdef __SUNPRO_CC
 using namespace std;
 #  endif
