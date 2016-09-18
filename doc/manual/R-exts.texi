@@ -12454,9 +12454,10 @@ missing or infinite or @code{NaN}.
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
-This should be provided by your platform, in which case it is not included
-in @file{Rmath.h}, but is (probably) in @file{math.h} which
-@file{Rmath.h} includes.
+This should be provided by your platform, in which case it is not
+included in @file{Rmath.h}, but is (probably) in @file{math.h} which
+@file{Rmath.h} includes (except under C++, so it may not be declared for
+C++98).
 @end deftypefun
 
 @deftypefun double log1pmx (double @var{x})
@@ -12475,9 +12476,10 @@ accurately, notably for large @var{x}, e.g., @eqn{x > 720, x > 720}.
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
-This should be provided by your platform, in which case it is not included
-in @file{Rmath.h}, but is (probably) in @file{math.h} which
-@file{Rmath.h} includes.
+This should be provided by your platform, in which case it is not
+included in @file{Rmath.h}, but is (probably) in @file{math.h} which
+@file{Rmath.h} includes (except under C++, so it may not be declared for
+C++98).
 @end deftypefun
 
 @deftypefun double lgamma1p (double @var{x})
@@ -12559,15 +12561,16 @@ This is the function used by @R{}'s @code{signif()}.
 Returns the value of @var{x} rounded to @var{digits} @emph{significant}
 decimal digits.
 
-This is the function used by @R{}'s @code{round()}.
+This is the function used by @R{}'s @code{round()}.  (Note that C99/C++11
+provide a @code{round} function but C++98 need not.)
 @end deftypefun
 
 @deftypefun double ftrunc (double @var{x})
 Returns the value of @var{x} truncated (to an integer value) towards
 zero.
 
-Note that this is no longer needed in C code, as C99 provide a
-@code{trunc} function.  It is needed for portable C++98 code.
+(Note that C99/C++11 provide a @code{round} function but C++98 need
+not.)
 @end deftypefun
 
 @node Mathematical constants,  , Numerical Utilities, Numerical analysis subroutines
