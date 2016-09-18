@@ -775,6 +775,7 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
   else
+    R_CHECK_FUNCS([rl_completion_matches], 
 [#include <stdio.h>
 #include <readline/readline.h>]
                  )
