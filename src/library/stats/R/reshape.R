@@ -78,15 +78,10 @@ reshape <-
 
             ## multiple id variables
             if (length(idvar) > 1L) {
-                repeat({
-                    tempidname <- basename(tempfile("tempID"))
-                    if (!(tempidname %in% names(data))) break
-                })
-                data[ ,tempidname] <- interaction(data[, idvar], drop=TRUE)
-                idvar <- tempidname
-                drop.idvar <- TRUE
-            } else drop.idvar <- FALSE
-
+                ids <- interaction(data[, idvar], drop=TRUE)
+            } else if (idvar %in% names(data)) {
+                ids <- data[, idvar]
+            }
 
             d <- data
             all.varying <- unlist(varying)
@@ -94,22 +89,21 @@ reshape <-
 
             if (is.null(v.names))
                 v.names <- vapply(varying, `[`, 1L, FUN.VALUE=character(1L))
-
-            if (!(idvar %in% names(data))) d[, idvar] <- ids
-
+                
             rval <- do.call(rbind, lapply(seq_along(times), function(i) {
                 d[, timevar] <- times[i]
                 varying.i <- vapply(varying, `[`, i, FUN.VALUE=character(1L))
                 d[, v.names] <- data[, varying.i]
                 if (is.null(new.row.names))
-                    row.names(d) <- paste(d[, idvar], times[i], sep = ".")
+                    row.names(d) <- paste(ids, times[i], sep = ".")
                 else
                     row.names(d) <- new.row.names[(i-1L)*NROW(d) + 1L:NROW(d)]
                 d
             }))
 
-            ## if we created a temporary id variable, drop it
-            if (drop.idvar) rval[, idvar] <- NULL
+            if (length(idvar) == 1L && !(idvar %in% names(data))) {
+                rval[, idvar] <- ids
+            }
 
             attr(rval,"reshapeLong") <- undoInfo
             return(rval)
