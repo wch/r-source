@@ -47,15 +47,16 @@ is <- function(object, class2)
     else if(.identC(class1, class2) || .identC(class2, "ANY"))
         TRUE
     else { ## look for class1 in the known subclasses of class2
-        if(!is.null(contained <- class1Def@contains[[ class2 ]]))
+        if(!is.null(contained <- class1Def@contains[[class2]]))
             contained@simple || contained@test(object)
         else if (is.null(class2Def))
             FALSE
         else if(!.identC(class(class2Def), "classRepresentation") &&
                 isClassUnion(class2Def))
-            any(c(class1, names(ext)) %in% names(class2Def2subclasses) )
+            any(c(class1, names(class1Def@contains)) %in%
+                names(class2Def@subclasses))
         else {
-            ext <- class2Def@subclasses[[ class1 ]]
+            ext <- class2Def@subclasses[[class1]]
             !is.null(ext) && (ext@simple || ext@test(object))
         }
     }
