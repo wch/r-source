@@ -97,17 +97,6 @@ reshape <-
 
             if (!(idvar %in% names(data))) d[, idvar] <- ids
 
-            rval <- d
-
-            if (length(times) == 1L) {
-                if (drop.idvar) rval[, idvar] <- NULL
-                return(rval)
-            }
-            if (is.null(new.row.names))
-                row.names(rval) <- paste(d[, idvar], times[1L], sep = ".")
-            else
-                row.names(rval) <- new.row.names[1L:NROW(rval)]
-
             rval <- do.call(rbind, lapply(seq_along(times), function(i) {
                 d[, timevar] <- times[i]
                 varying.i <- vapply(varying, `[`, i, FUN.VALUE=character(1L))
