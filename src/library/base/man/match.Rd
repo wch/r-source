@@ -68,7 +68,7 @@ x \%in\% table
   Character strings will be compared as byte sequences if any input is
   marked as \code{"bytes"}, and otherwise are regarded as equal if they are
   in different encodings but would agree when translated to UTF-8 (see
-  \code{\link{Encoding}}.
+  \code{\link{Encoding}}).
 
   That \code{\%in\%} never returns \code{NA} makes it particularly
   useful in \code{if} conditions.

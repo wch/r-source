@@ -866,7 +866,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     PROTECT(table = coerceVector(table, type)); nprot++;
 
     // special case scalar x -- for speed only :
-    if(LENGTH(x) == 1 && !incomp) {
+    if(XLENGTH(x) == 1 && !incomp) {
       PROTECT(ans = ScalarInteger(nmatch)); nprot++;
       switch (type) {
       case STRSXP: {
