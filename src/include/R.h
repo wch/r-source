@@ -33,14 +33,15 @@
    packages fail because of not using e.g. std::round 
    or using C99 functions such as snprintf. 
 */
-# ifdef __SUNPRO_CC
-#  define DO_NOT_USE_CXX_HEADERS
-# endif
 # if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 #  include <cstdlib>
 #  include <cstdio>
 #  include <climits>
 #  include <cmath>
+// Solaris is much stricter about namespaces
+#  ifdef __SUNPRO_CC
+using namespace std;
+#  endif
 # else
 #  include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
 #  include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
