@@ -273,6 +273,12 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
     SEXP t;
     R_xlen_t i, n;
 
+    if (ALTREP(s)) {
+	SEXP ans = ALTREP_DUPLICATE(s, deep);
+	if (ans != NULL)
+	    return ans;
+    }
+
     switch (TYPEOF(s)) {
     case NILSXP:
     case SYMSXP:

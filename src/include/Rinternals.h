@@ -75,10 +75,8 @@ typedef int R_len_t;
 
 #ifdef LONG_VECTOR_SUPPORT
     typedef ptrdiff_t R_xlen_t;
-    typedef struct { R_xlen_t lv_length, lv_truelength; } R_long_vec_hdr_t;
 # define R_XLEN_T_MAX 4503599627370496
 # define R_SHORT_LEN_MAX 2147483647
-# define R_LONG_VEC_TOKEN -1
 #else
     typedef int R_xlen_t;
 # define R_XLEN_T_MAX R_LEN_T_MAX
@@ -98,7 +96,8 @@ typedef int R_len_t;
 
 /* UUID identifying the internals version -- packages using compiled
    code should be re-installed when this changes */
-#define R_INTERNALS_UUID "0310d4b8-ccb1-4bb8-ba94-d36a55f60262"
+#define R_INTERNALS_UUID "2fdf6c18-697a-4ba7-b8ef-11c0d92f1327"
+
 
 /*  These exact numeric values are seldom used, but they are, e.g., in
  *  ../main/subassign.c, and they are serialized.
@@ -188,6 +187,29 @@ typedef enum {
 #define TYPE_BITS 5
 #define MAX_NUM_SEXPTYPE (1<<TYPE_BITS)
 
+typedef struct SEXPREC *SEXP;
+
+#define STRUCT_SUBTYPES
+#ifdef STRUCT_SUBTYPES
+# define R_SEXP(x) (x).ptr
+# define R_SUBTYPE_INIT(x) { x }
+  typedef struct { SEXP ptr; } R_scalar_logical_t;
+  typedef struct { SEXP ptr; } R_scalar_integer_t;
+  typedef struct { SEXP ptr; } R_scalar_real_t;
+  typedef struct { SEXP ptr; } R_scalar_complex_t;
+  typedef struct { SEXP ptr; } R_scalar_raw_t;
+  typedef struct { SEXP ptr; } R_altrep_class_t;
+#else
+# define R_SEXP(x) ((SEXP) (x))
+# define R_SUBTYPE_INIT(x) (void *) (x)
+  typedef struct R_scallgl *R_scalar_logical_t;
+  typedef struct R_scalint *R_SCALAR_INTEGER_T;
+  typedef struct R_scalreal *R_scalar_real_t;
+  typedef struct R_scalclpx *R_scalar_complex_t;
+  typedef struct R_scalraw *R_scalar_raw_t;
+  typedef struct R_altcls *R_altrep_class_t;
+#endif
+
 // ======================= USE_RINTERNALS section
 #ifdef USE_RINTERNALS
 /* This is intended for use only within R itself.
@@ -196,28 +218,34 @@ typedef enum {
  * (which are always defined).
  */
 
+#define NAMED_BITS 16
+
 /* Flags */
 
 
 struct sxpinfo_struct {
-    SEXPTYPE type      :  TYPE_BITS;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
+    SEXPTYPE type     :  TYPE_BITS;
+                            /* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
 			     * -> warning: `type' is narrower than values
 			     *              of its type
 			     * when SEXPTYPE was an enum */
+    unsigned int scalar:  1;
     unsigned int obj   :  1;
-    unsigned int named :  2;
+    unsigned int alt   :  1;
     unsigned int gp    : 16;
     unsigned int mark  :  1;
     unsigned int debug :  1;
     unsigned int trace :  1;  /* functions and memory tracing */
-    unsigned int spare :  1;  /* currently unused */
+    unsigned int spare :  1;  /* used on closures and when REFCNT is defined */
     unsigned int gcgen :  1;  /* old generation number */
     unsigned int gccls :  3;  /* node class */
-}; /*		    Tot: 32 */
+    unsigned int named : NAMED_BITS;
+    unsigned int extra : 32 - NAMED_BITS;
+}; /*		    Tot: 64 */
 
 struct vecsxp_struct {
-    R_len_t	length;
-    R_len_t	truelength;
+    R_xlen_t	length;
+    R_xlen_t	truelength;
 };
 
 struct primsxp_struct {
@@ -266,7 +294,7 @@ struct promsxp_struct {
 #if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
 # define COMPUTE_REFCNT_VALUES
 #endif
-#define REFCNTMAX (4 - 1)
+#define REFCNTMAX ((1 << NAMED_BITS) - 1)
 
 #define SEXPREC_HEADER \
     struct sxpinfo_struct sxpinfo; \
@@ -285,7 +313,7 @@ typedef struct SEXPREC {
 	struct closxp_struct closxp;
 	struct promsxp_struct promsxp;
     } u;
-} SEXPREC, *SEXP;
+} SEXPREC;
 
 /* The generational collector uses a reduced version of SEXPREC as a
    header in vector nodes.  The layout MUST be kept consistent with
@@ -311,10 +339,13 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define RTRACE(x)	((x)->sxpinfo.trace)
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
-#define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
+#define SET_TYPEOF(x,v)	(((x)->sxpinfo.type) = (v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
 #define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
+#define ALTREP(x)       ((x)->sxpinfo.alt)
+#define SETALTREP(x, v) (((x)->sxpinfo.alt) = (v))
+#define SETSCALAR(x, v) (((x)->sxpinfo.scalar) = (v))
 
 #if defined(COMPUTE_REFCNT_VALUES)
 # define REFCNT(x) ((x)->sxpinfo.named)
@@ -339,59 +370,34 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
-# define IS_LONG_VEC(x) (SHORT_VEC_LENGTH(x) == R_LONG_VEC_TOKEN)
-# define SHORT_VEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
-# define SHORT_VEC_TRUELENGTH(x) (((VECSEXP) (x))->vecsxp.truelength)
-# define LONG_VEC_LENGTH(x) ((R_long_vec_hdr_t *) (x))[-1].lv_length
-# define LONG_VEC_TRUELENGTH(x) ((R_long_vec_hdr_t *) (x))[-1].lv_truelength
-# define XLENGTH(x) (IS_LONG_VEC(x) ? LONG_VEC_LENGTH(x) : SHORT_VEC_LENGTH(x))
-# define XTRUELENGTH(x)	(IS_LONG_VEC(x) ? LONG_VEC_TRUELENGTH(x) : SHORT_VEC_TRUELENGTH(x))
-# define LENGTH(x) (IS_LONG_VEC(x) ? R_BadLongVector(x, __FILE__, __LINE__) : SHORT_VEC_LENGTH(x))
-# define TRUELENGTH(x) (IS_LONG_VEC(x) ? R_BadLongVector(x, __FILE__, __LINE__) : SHORT_VEC_TRUELENGTH(x))
-# define SET_SHORT_VEC_LENGTH(x,v) (SHORT_VEC_LENGTH(x) = (v))
-# define SET_SHORT_VEC_TRUELENGTH(x,v) (SHORT_VEC_TRUELENGTH(x) = (v))
-# define SET_LONG_VEC_LENGTH(x,v) (LONG_VEC_LENGTH(x) = (v))
-# define SET_LONG_VEC_TRUELENGTH(x,v) (LONG_VEC_TRUELENGTH(x) = (v))
-# define SETLENGTH(x,v) do { \
-      SEXP sl__x__ = (x); \
-      R_xlen_t sl__v__ = (v); \
-      if (IS_LONG_VEC(sl__x__)) \
-	  SET_LONG_VEC_LENGTH(sl__x__,  sl__v__); \
-      else SET_SHORT_VEC_LENGTH(sl__x__, (R_len_t) sl__v__); \
-  } while (0)
-# define SET_TRUELENGTH(x,v) do { \
-      SEXP sl__x__ = (x); \
-      R_xlen_t sl__v__ = (v); \
-      if (IS_LONG_VEC(sl__x__)) \
-	  SET_LONG_VEC_TRUELENGTH(sl__x__, sl__v__); \
-      else SET_SHORT_VEC_TRUELENGTH(sl__x__, (R_len_t) sl__v__); \
-  } while (0)
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
+# define IS_LONG_VEC(x) (XLENGTH(x) > R_SHORT_LEN_MAX)
 #else
-# define SHORT_VEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
-# define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
-# define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
-# define XLENGTH(x) LENGTH(x)
-# define XTRUELENGTH(x) TRUELENGTH(x)
-# define SETLENGTH(x,v)		((((VECSEXP) (x))->vecsxp.length)=(v))
-# define SET_TRUELENGTH(x,v)	((((VECSEXP) (x))->vecsxp.truelength)=(v))
-# define SET_SHORT_VEC_LENGTH SETLENGTH
-# define SET_SHORT_VEC_TRUELENGTH SET_TRUELENGTH
 # define IS_LONG_VEC(x) 0
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && LENGTH(x) == 1)
 #endif
+#define STDVEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
+#define STDVEC_TRUELENGTH(x) (((VECSEXP) (x))->vecsxp.truelength)
+#define SET_STDVEC_TRUELENGTH(x, v) (STDVEC_TRUELENGTH(x)=(v))
+#define SET_TRUELENGTH(x,v) do {				\
+	SEXP sl__x__ = (x);					\
+	R_xlen_t sl__v__ = (v);					\
+	if (ALTREP(x)) error("can't set ALTREP truelength");	\
+	SET_STDVEC_TRUELENGTH(sl__x__, (R_len_t) sl__v__);	\
+    } while (0)
+
+#define IS_SCALAR(x, t) (((x)->sxpinfo.type == (t)) && (x)->sxpinfo.scalar)
+#define LENGTH(x) LENGTH_EX(x, __FILE__, __LINE__)
+#define TRUELENGTH(x) TRUELENGTH_EX(x, __FILE__, __LINE__)
 
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
    known offset from the node SEXP. */
-#define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
-#define CHAR(x)		((const char *) DATAPTR(x))
+#define RAWDATAPTR(x)	((void *) (((SEXPREC_ALIGN *) (x)) + 1))
+#define CHAR(x)		((const char *) RAWDATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
 #define RAW(x)		((Rbyte *) DATAPTR(x))
 #define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define REAL(x)		((double *) DATAPTR(x))
-#define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define STRING_PTR(x)	((SEXP *) DATAPTR(x))
 #define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
@@ -448,8 +454,6 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #else /* not USE_RINTERNALS */
 // ======================= not USE_RINTERNALS section
 
-typedef struct SEXPREC *SEXP;
-
 #define CHAR(x)		R_CHAR(x)
 const char *(R_CHAR)(SEXP x);
 
@@ -464,11 +468,16 @@ Rboolean (Rf_isEnvironment)(SEXP s);
 Rboolean (Rf_isString)(SEXP s);
 Rboolean (Rf_isObject)(SEXP s);
 
-# define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
 
 #define IS_SIMPLE_SCALAR(x, type) \
     (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
+#define IS_SIMPLE_SCALAR_REAL(x, pv) \
+    (IS_SCALAR_REAL(x, pv) && ATTRIB(x) == R_NilValue)
+#define IS_SIMPLE_SCALAR_INTEGER(x, pv) \
+    (IS_SCALAR_INTEGER(x, pv) && ATTRIB(x) == R_NilValue)
+#define IS_SIMPLE_SCALAR_LOGICAL(x, pv) \
+    (IS_SCALAR_LOGICAL(x, pv) && ATTRIB(x) == R_NilValue)
 
 #define NAMEDMAX 2
 #define INCREMENT_NAMED(x) do {				\
@@ -550,13 +559,16 @@ void (UNSET_S4_OBJECT)(SEXP x);
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
 int  (TRUELENGTH)(SEXP x);
-void (SETLENGTH)(SEXP x, int v);
 void (SET_TRUELENGTH)(SEXP x, int v);
-R_xlen_t  (XLENGTH)(SEXP x);
-R_xlen_t  (XTRUELENGTH)(SEXP x);
 int  (IS_LONG_VEC)(SEXP x);
 int  (LEVELS)(SEXP x);
 int  (SETLEVELS)(SEXP x, int v);
+#ifdef TESTING_WRITE_BARRIER
+R_xlen_t (STDVEC_LENGTH)(SEXP);
+R_xlen_t (STDVEC_TRUELENGTH)(SEXP);
+void (SETALTREP)(SEXP, int);
+void (SETTYPEOF)(SEXP, int);
+#endif
 
 int  *(LOGICAL)(SEXP x);
 int  *(INTEGER)(SEXP x);
@@ -569,6 +581,32 @@ void SET_STRING_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP SET_VECTOR_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP *(STRING_PTR)(SEXP x);
 SEXP * NORET (VECTOR_PTR)(SEXP x);
+
+/* ALTREP support */
+void *(RAWDATAPTR)(SEXP x);
+int (IS_SCALAR)(SEXP x, int type);
+int (ALTREP)(SEXP x);
+SEXP ALTREP_DUPLICATE(SEXP x, Rboolean deep);
+SEXP ALTREP_COERCE(SEXP x, int type);
+Rboolean ALTREP_INSPECT(SEXP, int, int, int, void (*)(SEXP, int, int, int));
+SEXP ALTREP_SERIALIZED_CLASS(SEXP);
+SEXP ALTREP_SERIALIZED_STATE(SEXP);
+SEXP ALTREP_UNSERIALIZE(SEXP, SEXP, SEXP);
+R_xlen_t ALTVEC_LENGTH(SEXP x);
+R_xlen_t ALTVEC_TRUELENGTH(SEXP x);
+void *ALTVEC_DATAPTR(SEXP x);
+void *ALTVEC_DATAPTR_OR_NULL(SEXP x);
+SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
+int ALTINTEGER_ELT(SEXP x, R_xlen_t i);
+int ALTLOGICAL_ELT(SEXP x, R_xlen_t i);
+double ALTREAL_ELT(SEXP x, R_xlen_t i);
+SEXP ALTSTRING_ELT(SEXP, R_xlen_t);
+Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
+R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
+Rboolean INTEGER_IS_SORTED(SEXP x);
+R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
+SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
+SEXP R_deferred_coerceToString(SEXP v);
 
 #ifdef LONG_VECTOR_SUPPORT
     R_len_t NORET R_BadLongVector(SEXP, const char *, int);
@@ -809,6 +847,7 @@ SEXP Rf_lazy_duplicate(SEXP);
 SEXP Rf_duplicated(SEXP, Rboolean);
 Rboolean R_envHasNoSpecialSymbols(SEXP);
 SEXP Rf_eval(SEXP, SEXP);
+SEXP Rf_ExtractSubset(SEXP, SEXP, SEXP);
 SEXP Rf_findFun(SEXP, SEXP);
 void Rf_findFunctionForBody(SEXP);
 SEXP Rf_findVar(SEXP, SEXP);
@@ -961,6 +1000,9 @@ void R_registerBC(SEXP, SEXP);
 Rboolean R_checkConstants(Rboolean);
 #define PREXPR(e) R_PromiseExpr(e)
 #define BODY_EXPR(e) R_ClosureExpr(e)
+
+void R_init_altrep();
+void R_reinit_altrep_classes(DllInfo *);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
@@ -1190,6 +1232,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define elt			Rf_elt
 #define errorcall		Rf_errorcall
 #define eval			Rf_eval
+#define ExtractSubset		Rf_ExtractSubset
 #define findFun			Rf_findFun
 #define findFunctionForBody	Rf_findFunctionForBody
 #define findVar			Rf_findVar
@@ -1384,6 +1427,10 @@ SEXP	 Rf_ScalarRaw(Rbyte);
 SEXP	 Rf_ScalarReal(double);
 SEXP	 Rf_ScalarString(SEXP);
 R_xlen_t  Rf_xlength(SEXP);
+R_xlen_t  (XLENGTH)(SEXP x);
+R_xlen_t  (XTRUELENGTH)(SEXP x);
+int LENGTH_EX(SEXP x, const char *file, int line);
+int TRUELENGTH_EX(SEXP x, const char *file, int line);
 # ifdef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
 void Rf_unprotect(int);
@@ -1391,6 +1438,15 @@ void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
 SEXP R_FixupRHS(SEXP x, SEXP y);
+void *(DATAPTR)(SEXP x);
+void *(DATAPTR_OR_NULL)(SEXP x);
+void *(RAWDATAPTR)(SEXP x);
+int (INTEGER_ELT)(SEXP x, R_xlen_t i);
+double (REAL_ELT)(SEXP x, R_xlen_t i);
+SEXP R_altrep_data1(SEXP x);
+SEXP R_altrep_data2(SEXP x);
+void R_set_altrep_data1(SEXP x, SEXP v);
+void R_set_altrep_data2(SEXP x, SEXP v);
 #endif
 
 #ifdef USE_RINTERNALS

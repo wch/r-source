@@ -29,11 +29,11 @@
 
 #define USE_RINTERNALS
 
+#include <stdarg.h>
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-
-#include <stdarg.h>
 
 #include <R_ext/RS.h> /* for S4 allocation */
 #include <R_ext/Print.h>
@@ -100,6 +100,9 @@ extern void *Rm_realloc(void * p, size_t n);
 #define realloc Rm_realloc
 #define free Rm_free
 #endif
+
+/* Length modification macros; formally in Rinternals.h */
+#define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
@@ -506,7 +509,11 @@ typedef union PAGE_HEADER {
   double align;
 } PAGE_HEADER;
 
-#define BASE_PAGE_SIZE 2000
+#if ( SIZEOF_SIZE_T > 4 )
+# define BASE_PAGE_SIZE 8000
+#else
+# define BASE_PAGE_SIZE 2000
+#endif
 #define R_PAGE_SIZE \
   (((BASE_PAGE_SIZE - sizeof(PAGE_HEADER)) / sizeof(SEXPREC)) \
    * sizeof(SEXPREC) \
@@ -629,9 +636,16 @@ static R_size_t R_NodesInUse = 0;
 #else
 #define FREE_FORWARD_CASE
 #endif
+/*** assume for now all ALTREP nodes are based on CONS nodes */
 #define DO_CHILDREN(__n__,dc__action__,dc__extra__) do { \
   if (HAS_GENUINE_ATTRIB(__n__)) \
     dc__action__(ATTRIB(__n__), dc__extra__); \
+  if (ALTREP(__n__)) {					\
+	  dc__action__(TAG(__n__), dc__extra__);	\
+	  dc__action__(CAR(__n__), dc__extra__);	\
+	  dc__action__(CDR(__n__), dc__extra__);	\
+      }							\
+  else \
   switch (TYPEOF(__n__)) { \
   case NILSXP: \
   case BUILTINSXP: \
@@ -884,7 +898,7 @@ static void GetNewPage(int node_class)
 	INIT_REFCNT(s);
 	SET_NODE_CLASS(s, node_class);
 #ifdef PROTECTCHECK
-	TYPEOF(s) = NEWSXP;
+	SET_TYPEOF(s, NEWSXP);
 #endif
 	base = s;
 	R_GenHeap[node_class].Free = s;
@@ -1020,23 +1034,9 @@ static void ReleaseLargeFreeVectors()
 		R_GenHeap[node_class].AllocCount--;
 		if (node_class == LARGE_NODE_CLASS) {
 		    R_LargeVallocSize -= size;
-#ifdef LONG_VECTOR_SUPPORT
-		    if (IS_LONG_VEC(s))
-			free(((char *) s) - sizeof(R_long_vec_hdr_t));
-		    else
-			free(s);
-#else
 		    free(s);
-#endif
 		} else {
-#ifdef LONG_VECTOR_SUPPORT
-		    if (IS_LONG_VEC(s))
-			custom_node_free(((char *) s) - sizeof(R_long_vec_hdr_t));
-		    else
-			custom_node_free(s);
-#else
 		    custom_node_free(s);
-#endif
 		}
 	    }
 	    s = next;
@@ -1726,7 +1726,7 @@ static void RunGenCollect(R_size_t size_needed)
 	    if (TYPEOF(s) != NEWSXP) {
 		if (TYPEOF(s) != FREESXP) {
 		    SETOLDTYPE(s, TYPEOF(s));
-		    TYPEOF(s) = FREESXP;
+		    SET_TYPEOF(s, FREESXP);
 		}
 		if (gc_inhibit_release)
 		    FORWARD_NODE(s);
@@ -1745,10 +1745,10 @@ static void RunGenCollect(R_size_t size_needed)
 			  calculating size */
 		    if (CHAR(s) != NULL) {
 			R_size_t size = getVecSizeInVEC(s);
-			SETLENGTH(s, size);
+			SET_STDVEC_LENGTH(s, size);
 		    }
 		    SETOLDTYPE(s, TYPEOF(s));
-		    TYPEOF(s) = FREESXP;
+		    SET_TYPEOF(s, FREESXP);
 		}
 		if (gc_inhibit_release)
 		    FORWARD_NODE(s);
@@ -2448,12 +2448,13 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    VALGRIND_MAKE_MEM_UNDEFINED(DATAPTR(s), actual_size);
 #endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+	    SETSCALAR(s, 1);
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
 	    ATTRIB(s) = R_NilValue;
 	    SET_TYPEOF(s, type);
-	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length); // is 1
-	    SET_SHORT_VEC_TRUELENGTH(s, 0);
+	    SET_STDVEC_LENGTH(s, (R_len_t) length); // is 1
+	    SET_STDVEC_TRUELENGTH(s, 0);
 	    SET_NAMED(s, 0);
 	    INIT_REFCNT(s);
 	    return(s);
@@ -2601,15 +2602,11 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    INIT_REFCNT(s);
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
-	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
+	    SET_STDVEC_LENGTH(s, (R_len_t) length);
 	}
 	else {
 	    Rboolean success = FALSE;
 	    R_size_t hdrsize = sizeof(SEXPREC_ALIGN);
-#ifdef LONG_VECTOR_SUPPORT
-	    if (length > R_SHORT_LEN_MAX)
-		hdrsize = sizeof(SEXPREC_ALIGN) + sizeof(R_long_vec_hdr_t);
-#endif
 	    void *mem = NULL; /* initialize to suppress warning */
 	    if (size < (R_SIZE_T_MAX / sizeof(VECREC)) - hdrsize) { /*** not sure this test is quite right -- why subtract the header? LT */
 		mem = allocator ?
@@ -2625,21 +2622,8 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 			malloc(hdrsize + size * sizeof(VECREC));
 		}
 		if (mem != NULL) {
-#ifdef LONG_VECTOR_SUPPORT
-		    if (length > R_SHORT_LEN_MAX) {
-			s = (SEXP) (((char *) mem) + sizeof(R_long_vec_hdr_t));
-			SET_SHORT_VEC_LENGTH(s, R_LONG_VEC_TOKEN);
-			SET_LONG_VEC_LENGTH(s, length);
-			SET_LONG_VEC_TRUELENGTH(s, 0);
-		    }
-		    else {
-			s = mem;
-			SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
-		    }
-#else
 		    s = mem;
-		    SETLENGTH(s, length);
-#endif
+		    SET_STDVEC_LENGTH(s, length);
 		    success = TRUE;
 		}
 		else s = NULL;
@@ -2677,9 +2661,10 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
     }
     else {
 	GC_PROT(s = allocSExpNonCons(type));
-	SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
+	SET_STDVEC_LENGTH(s, (R_len_t) length);
     }
-    SET_SHORT_VEC_TRUELENGTH(s, 0);
+    SETALTREP(s, 0);
+    SET_STDVEC_TRUELENGTH(s, 0);
     SET_NAMED(s, 0);
     INIT_REFCNT(s);
 
@@ -3323,6 +3308,8 @@ int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
 int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
 int (REFCNT)(SEXP x) { return REFCNT(x); }
+int (ALTREP)(SEXP x) { return ALTREP(x); }
+int (IS_SCALAR)(SEXP x, int type) { return IS_SCALAR(x, type); }
 
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
@@ -3371,11 +3358,14 @@ static R_INLINE SEXP CHK2(SEXP x)
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(CHK2(x)); }
 int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
-void (SETLENGTH)(SEXP x, int v) { SETLENGTH(CHK2(x), v); }
 void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK2(x), v); }
-R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK2(x)); }
-R_xlen_t (XTRUELENGTH)(SEXP x) { return XTRUELENGTH(CHK2(x)); }
 int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
+#ifdef TESTING_WRITE_BARRIER
+R_xlen_t (STDVEC_LENGTH)(SEXP x) { return STDVEC_LENGTH(CHK2(x)); }
+R_xlen_t (STDVEC_TRUELENGTH)(SEXP x) { return STDVEC_TRUELENGTH(CHK2(x)); }
+void (SETALTREP)(SEXP x, int v) { SETALTREP(x, v); }
+void (SETTYPEOF)(SEXP x, int v) { SETTYPEOF(x, v); }
+#endif
 
 const char *(R_CHAR)(SEXP x) {
     if(TYPEOF(x) != CHARSXP)
@@ -3388,7 +3378,10 @@ SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
-    return CHK(STRING_ELT(x, i));
+    if (ALTREP(x))
+	return CHK(ALTSTRING_ELT(x, i));
+    else
+	return CHK(STRING_PTR(x)[i]);
 }
 
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
@@ -3399,6 +3392,16 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", type2char(TYPEOF(x)));
     return CHK(VECTOR_ELT(x, i));
+}
+
+void *(RAWDATAPTR)(SEXP x)
+{
+    if (ALTREP(x))
+	error("cannot get RAWDATAPTR from ALTREP object");
+    if (! isVector(x))
+	error("RAWDATAPTR can only be applied to a vector, not a '%s'",
+	      type2char(TYPEOF(x)));
+    return RAWDATAPTR(x);
 }
 
 int *(LOGICAL)(SEXP x) {
@@ -3456,7 +3459,7 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	      i, XLENGTH(x));
     FIX_REFCNT(x, STRING_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
-    STRING_ELT(x, i) = v;
+    STRING_PTR(x)[i] = v;
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {

@@ -714,7 +714,7 @@ static SEXP coerceToRaw(SEXP v)
     return ans;
 }
 
-static SEXP coerceToString(SEXP v)
+/*static*/ SEXP coerceToString(SEXP v)
 {
     SEXP ans;
     int savedigits, warn = 0;
@@ -1152,6 +1152,12 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 
     if (TYPEOF(v) == type)
 	return v;
+
+    if (ALTREP(v)) {
+	ans = ALTREP_COERCE(v, type);
+	if (ans) return ans;
+    }
+
     /* code to allow classes to extend ENVSXP, SYMSXP, etc */
     if(IS_S4_OBJECT(v) && TYPEOF(v) == S4SXP) {
 	SEXP vv = R_getS4DataSlot(v, ANYSXP);
@@ -1247,6 +1253,12 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	case RAWSXP:
 	    ans = coerceToRaw(v);	    break;
 	case STRSXP:
+	    if (ATTRIB(v) == R_NilValue)
+		switch(TYPEOF(v)) {
+		case INTSXP:
+		case REALSXP:
+		    return R_deferred_coerceToString(v);
+		}
 	    ans = coerceToString(v);	    break;
 	case EXPRSXP:
 	    ans = coerceToExpression(v);    break;

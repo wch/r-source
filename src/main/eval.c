@@ -1490,13 +1490,26 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 {
     Rboolean cond = NA_LOGICAL;
 
-    if (length(s) > 1) {
+    /* handle most common special case directly */
+    if (IS_SCALAR(s, LGLSXP)) {
+	cond = SCALAR_LVAL(R_cast_scalar_logical(s));
+	if (cond != NA_LOGICAL)
+	    return cond;
+    }
+    else if (IS_SCALAR(s, INTSXP)) {
+	int val = SCALAR_IVAL(R_cast_scalar_integer(s));
+	if (val != NA_INTEGER)
+	    return val != 0;
+    }
+
+    int len = length(s);
+    if (len > 1) {
 	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
 	warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
 	UNPROTECT(1);
     }
-    if (length(s) > 0) {
+    if (len > 0) {
 	/* inline common cases for efficiency */
 	switch(TYPEOF(s)) {
 	case LGLSXP:
@@ -1511,9 +1524,9 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
     }
 
     if (cond == NA_LOGICAL) {
-	char *msg = length(s) ? (isLogical(s) ?
-				 _("missing value where TRUE/FALSE needed") :
-				 _("argument is not interpretable as logical")) :
+	char *msg = len ? (isLogical(s) ?
+			   _("missing value where TRUE/FALSE needed") :
+			   _("argument is not interpretable as logical")) :
 	    _("argument is of length zero");
 	PROTECT(s);	/* Maybe needed in some weird circumstance. */
 	errorcall(call, msg);
@@ -1574,7 +1587,9 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
     }
 }
 
-static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
+#define R_ALWAYS_INLINE  __attribute__((always_inline)) R_INLINE
+
+static R_ALWAYS_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
     /* This depends on the current implementation of bindings */
     if (loc != R_NilValue &&
 	! BINDING_IS_LOCKED(loc) && ! IS_ACTIVE_BINDING(loc)) {
@@ -1652,6 +1667,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     case CTXT_BREAK: goto for_break;
     case CTXT_NEXT: goto for_next;
     }
+
     for (i = 0; i < n; i++) {
 
 	switch (val_type) {
@@ -1677,19 +1693,19 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    switch (val_type) {
 	    case LGLSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		LOGICAL(v)[0] = LOGICAL(val)[i];
+		SET_SCALAR_LVAL(R_cast_scalar_logical(v), LOGICAL_ELT(val, i));
 		break;
 	    case INTSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		INTEGER(v)[0] = INTEGER(val)[i];
+		SET_SCALAR_IVAL(R_cast_scalar_integer(v), INTEGER_ELT(val, i));
 		break;
 	    case REALSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		REAL(v)[0] = REAL(val)[i];
+		SET_SCALAR_DVAL(R_cast_scalar_real(v), REAL_ELT(val, i));
 		break;
 	    case CPLXSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		COMPLEX(v)[0] = COMPLEX(val)[i];
+		SET_SCALAR_CVAL(R_cast_scalar_complex(v), COMPLEX_ELT(val, i));
 		break;
 	    case STRSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
@@ -1697,7 +1713,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    case RAWSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		RAW(v)[0] = RAW(val)[i];
+		SET_SCALAR_BVAL(R_cast_scalar_raw(v), RAW(val)[i]);
 		break;
 	    default:
 		errorcall(call, _("invalid for() loop sequence"));
@@ -3283,25 +3299,7 @@ SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
-static SEXP seq_int(int n1, int n2)
-{
-    int n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
-    SEXP ans = allocVector(INTSXP, n);
-    int *data = INTEGER(ans);
-    if (n1 <= n2)
-	for (int i = 0; i < n; i++)
-	    data[i] = n1 + i;
-    else
-	for (int i = 0; i < n; i++)
-	    data[i] = n1 - i;
-    return ans;
-}
-
 #ifdef TYPED_STACK
-# define COMPACT_INTSEQ
-# ifdef COMPACT_INTSEQ
-#  define INTSEQSXP 9999
-# endif
 #define CACHE_SCALARS
 static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 {
@@ -3313,34 +3311,26 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 	if (R_CachedScalarReal != NULL) {
 	    value = R_CachedScalarReal;
 	    R_CachedScalarReal = NULL;
+	    SET_SCALAR_DVAL(R_cast_scalar_real(value), s->u.dval);
 	}
 	else
 #endif
-	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = s->u.dval;
+	value = ScalarReal(s->u.dval);
 	break;
     case INTSXP:
 #ifdef CACHE_SCALARS
 	if (R_CachedScalarInteger != NULL) {
 	    value = R_CachedScalarInteger;
 	    R_CachedScalarInteger = NULL;
+	    SET_SCALAR_IVAL(R_cast_scalar_integer(value), s->u.ival);
 	}
 	else
 #endif
-	value = allocVector(INTSXP, 1);
-	INTEGER(value)[0] = s->u.ival;
+	value = ScalarInteger(s->u.ival);
 	break;
     case LGLSXP:
 	value = ScalarLogical(s->u.ival);
 	break;
-#ifdef COMPACT_INTSEQ
-    case INTSEQSXP:
-	{
-	    int *seqinfo = INTEGER(s->u.sxpval);
-	    value = seq_int(seqinfo[0], seqinfo[1]);
-	}
-	break;
-#endif
     default: /* not reached */
 	value = NULL;
     }
@@ -3397,18 +3387,8 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 #define IS_STACKVAL_BOXED(idx)	(TRUE)
 #endif
 
-#if defined(TYPED_STACK) && defined(COMPACT_INTSEQ)
-#define SETSTACK_INTSEQ(idx, rn1, rn2) do {	\
-	SEXP info = allocVector(INTSXP, 2);	\
-	INTEGER(info)[0] = (int) rn1;		\
-	INTEGER(info)[1] = (int) rn2;		\
-	R_BCNodeStackTop[idx].u.sxpval = info;	\
-	R_BCNodeStackTop[idx].tag = INTSEQSXP;	\
-    } while (0)
-#else
 #define SETSTACK_INTSEQ(idx, rn1, rn2) \
-    SETSTACK(idx, seq_int((int) rn1, (int) rn2))
-#endif
+    SETSTACK(idx, R_compact_intrange(rn1, rn2))
 
 #define GETSTACK_SXPVAL(i) GETSTACK_SXPVAL_PTR(R_BCNodeStackTop + (i))
 
@@ -3440,12 +3420,12 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 	SETSTACK_INTEGER(idx, ival);			\
     } while (0)
 #else
-#define SETSTACK_REAL_EX(idx, dval, ans) do { \
-	if (ans) {			      \
-	    REAL(ans)[0] = dval;	      \
-	    SETSTACK(idx, ans);		      \
-	}				      \
-	else SETSTACK_REAL(idx, dval);	      \
+#define SETSTACK_REAL_EX(idx, dval, ans) do {			\
+	if (ans) {						\
+	    SET_SCALAR_DVAL(R_cast_scalar_real(ans), dval);	\
+	    SETSTACK(idx, ans);					\
+	}							\
+	else SETSTACK_REAL(idx, dval);				\
     } while (0)
 
 #define SETSTACK_INTEGER_EX(idx, ival, ans) do { \
@@ -3466,7 +3446,7 @@ typedef union { double dval; int ival; } scalar_value_t;
    second argument; if not, then zero is returned as the function
    value. The boxed value can be returned through a pointer argument
    if it is suitable for re-use. */
-static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
+static R_ALWAYS_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 				    SEXP *pv)
 {
 #ifdef TYPED_STACK
@@ -3484,18 +3464,18 @@ static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 #ifndef NO_SAVE_ALLOC
 	if (pv && NO_REFERENCES(x)) *pv = x;
 #endif
-	v->dval = REAL(x)[0];
+	v->dval = SCALAR_DVAL(R_cast_scalar_real(x));
 	return REALSXP;
     }
     else if (IS_SIMPLE_SCALAR(x, INTSXP)) {
 #ifndef NO_SAVE_ALLOC
 	if (pv && NO_REFERENCES(x)) *pv = x;
 #endif
-	v->ival = INTEGER(x)[0];
+	v->ival = SCALAR_IVAL(R_cast_scalar_integer(x));
 	return INTSXP;
     }
     else if (IS_SIMPLE_SCALAR(x, LGLSXP)) {
-	v->ival = LOGICAL(x)[0];
+	v->ival = SCALAR_LVAL(R_cast_scalar_logical(x));
 	return LGLSXP;
     }
     else return 0;
@@ -3992,19 +3972,6 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	}								\
 	Builtin1(do_seq_len, install("seq_len"), rho);			\
     } while (0)
-
-static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
-{
-#if defined(TYPED_STACK) && defined(COMPACT_INTSEQ)
-    R_bcstack_t *s = R_BCNodeStackTop + offset;
-    if (s->tag == INTSEQSXP) {
-	*iscompact = TRUE;
-	return s->u.sxpval;
-    }
-#endif
-    *iscompact = FALSE;
-    return GETSTACK(offset);
-}
 
 #define BCNPUSH(v) do { \
   SEXP __value__ = (v); \
@@ -4676,12 +4643,13 @@ static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
 #endif
     SEXP idx = GETSTACK_SXPVAL_PTR(s);
     if (IS_SCALAR(idx, INTSXP)) {
-	if (INTEGER(idx)[0] != NA_INTEGER)
-	    return INTEGER(idx)[0];
+	int ival = SCALAR_IVAL(R_cast_scalar_integer(idx));
+	if (ival != NA_INTEGER)
+	    return ival;
 	else return -1;
     }
     else if (IS_SCALAR(idx, REALSXP)) {
-	double val = REAL(idx)[0];
+	double val = SCALAR_DVAL(R_cast_scalar_real(idx));
 	if (! ISNAN(val) && val <= R_XLEN_T_MAX && val > 0)
 	    return (R_xlen_t) val;
 	else return -1;
@@ -4700,19 +4668,19 @@ static R_INLINE SEXP mkVector1(SEXP s)
 	switch (TYPEOF(vec)) {					\
 	case REALSXP:						\
 	    if (XLENGTH(vec) <= i) break;			\
-	    SETSTACK_REAL_PTR(sv, REAL(vec)[i]);		\
+	    SETSTACK_REAL_PTR(sv, REAL_ELT(vec, i));		\
 	    return;						\
 	case INTSXP:						\
 	    if (XLENGTH(vec) <= i) break;			\
-	    SETSTACK_INTEGER_PTR(sv, INTEGER(vec)[i]);		\
+	    SETSTACK_INTEGER_PTR(sv, INTEGER_ELT(vec, i));	\
 	    return;						\
 	case LGLSXP:						\
 	    if (XLENGTH(vec) <= i) break;			\
-	    SETSTACK_LOGICAL_PTR(sv, LOGICAL(vec)[i]);		\
+	    SETSTACK_LOGICAL_PTR(sv, LOGICAL_ELT(vec, i));	\
 	    return;						\
 	case CPLXSXP:						\
 	    if (XLENGTH(vec) <= i) break;			\
-	    SETSTACK_PTR(sv, ScalarComplex(COMPLEX(vec)[i]));	\
+	    SETSTACK_PTR(sv, ScalarComplex(COMPLEX_ELT(vec, i)));	\
 	    return;						\
 	case RAWSXP:						\
 	    if (XLENGTH(vec) <= i) break;			\
@@ -5189,12 +5157,13 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 	return s->u.ival;
 #endif
     SEXP value = GETSTACK_PTR(s);
-    if (IS_SCALAR(value, LGLSXP) && LOGICAL(value)[0] != NA_LOGICAL)
-	return LOGICAL(value)[0];
-    else {
-	SEXP call = VECTOR_ELT(constants, callidx);
-	return asLogicalNoNA(value, call);
+    if (IS_SCALAR(value, LGLSXP)) {
+	Rboolean lval = SCALAR_LVAL(R_cast_scalar_logical(value));
+	if (lval != NA_LOGICAL)
+	    return lval;
     }
+    SEXP call = VECTOR_ELT(constants, callidx);
+    return asLogicalNoNA(value, call);
 }
 
 static SEXP markSpecialArgs(SEXP args)
@@ -5315,8 +5284,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(DOLOOPBREAK, 0): findcontext(CTXT_BREAK, rho, R_NilValue);
     OP(STARTFOR, 3):
       {
-	Rboolean iscompact = FALSE;
-	SEXP seq = getForLoopSeq(-1, &iscompact);
+	SEXP seq = GETSTACK(-1);
 	int callidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	int label = GETOP();
@@ -5331,19 +5299,12 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	BCNPUSH(GET_BINDING_CELL(symbol, rho));
 
 	value = allocVector(INTSXP, 2);
-	INTEGER(value)[0] = -1;
-#ifdef COMPACT_INTSEQ
-	if (iscompact) {
-	    int n1 = INTEGER(seq)[0];
-	    int n2 = INTEGER(seq)[1];
-	    INTEGER(value)[1] = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
-	}
-	else
-#endif
+	int *info = INTEGER0(value);
+	info[0] = -1;
 	if (isVector(seq))
-	  INTEGER(value)[1] = LENGTH(seq);
+	  info[1] = LENGTH(seq);
 	else if (isList(seq) || isNull(seq))
-	  INTEGER(value)[1] = length(seq);
+	  info[1] = length(seq);
 	else errorcall(VECTOR_ELT(constants, callidx),
 		       _("invalid for() loop sequence"));
 	BCNPUSH(value);
@@ -5374,39 +5335,28 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(STEPFOR, 1):
       {
 	int label = GETOP();
-	int *loopinfo = INTEGER(GETSTACK_SXPVAL(-2));
+	int *loopinfo = INTEGER0(GETSTACK_SXPVAL(-2));
 	int i = ++loopinfo[0];
 	int n = loopinfo[1];
 	if (i < n) {
-	  Rboolean iscompact = FALSE;
-	  SEXP seq = getForLoopSeq(-4, &iscompact);
+	  SEXP seq = GETSTACK(-4);
 	  SEXP cell = GETSTACK(-3);
 	  switch (TYPEOF(seq)) {
 	  case LGLSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    LOGICAL(value)[0] = LOGICAL(seq)[i];
+	    SET_SCALAR_LVAL(R_cast_scalar_logical(value), LOGICAL_ELT(seq, i));
 	    break;
 	  case INTSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-#ifdef COMPACT_INTSEQ
-	    if (iscompact) {
-		int *info = INTEGER(seq);
-		int n1 = info[0];
-		int n2 = info[1];
-		int val = n1 <= n2 ? n1 + i : n1 - i;
-		INTEGER(value)[0] = val;
-	    }
-	    else
-#endif
-	    INTEGER(value)[0] = INTEGER(seq)[i];
+	    SET_SCALAR_IVAL(R_cast_scalar_integer(value), INTEGER_ELT(seq, i));
 	    break;
 	  case REALSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    REAL(value)[0] = REAL(seq)[i];
+	    SET_SCALAR_DVAL(R_cast_scalar_real(value), REAL_ELT(seq, i));
 	    break;
 	  case CPLXSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    COMPLEX(value)[0] = COMPLEX(seq)[i];
+	    SET_SCALAR_CVAL(R_cast_scalar_complex(value), COMPLEX_ELT(seq, i));
 	    break;
 	  case STRSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
@@ -5414,7 +5364,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    break;
 	  case RAWSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    RAW(value)[0] = RAW(seq)[i];
+	    SET_SCALAR_BVAL(R_cast_scalar_raw(value), RAW(seq)[i]);
 	    break;
 	  case EXPRSXP:
 	  case VECSXP:
@@ -5439,8 +5389,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(ENDFOR, 0):
       {
 #ifdef COMPUTE_REFCNT_VALUES
-	Rboolean iscompact = FALSE;
-	SEXP seq = getForLoopSeq(-4, &iscompact);
+	SEXP seq = GETSTACK(-4);
 	DECREMENT_REFCNT(seq);
 #endif
 	R_BCNodeStackTop -= 3;
@@ -5487,9 +5436,15 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		   then we can copy the stack value into the binding
 		   value */
 		switch (s->tag) {
-		case REALSXP: REAL(x)[0] = s->u.dval; NEXT();
-		case INTSXP: INTEGER(x)[0] = s->u.ival; NEXT();
-		case LGLSXP: LOGICAL(x)[0] = s->u.ival; NEXT();
+		case REALSXP:
+		    SET_SCALAR_DVAL(R_cast_scalar_real(x), s->u.dval);
+		    NEXT();
+		case INTSXP:
+		    SET_SCALAR_IVAL(R_cast_scalar_integer(x), s->u.ival);
+		    NEXT();
+		case LGLSXP:
+		    SET_SCALAR_LVAL(R_cast_scalar_logical(x), s->u.ival);
+		    NEXT();
 		}
 	    }
 	}
@@ -5888,7 +5843,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&");
 	value = GETSTACK(-1);
-	if (LOGICAL(value)[0] == FALSE)
+	if (SCALAR_LVAL(R_cast_scalar_logical(value)) == FALSE)
 	    pc = codebase + label;
 	NEXT();
     }
@@ -5900,7 +5855,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   not TRUE then its value is the result. If the second
 	   argument is TRUE, then the first argument's value is the
 	   result. */
-	if (LOGICAL(value)[0] != TRUE)
+	Rboolean val = SCALAR_LVAL(R_cast_scalar_logical(value));
+	if (val == FALSE || val == NA_LOGICAL)
 	    SETSTACK(-2, value);
 	R_BCNodeStackTop -= 1;
 	NEXT();
@@ -5910,7 +5866,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||");
 	value = GETSTACK(-1);
-	if (LOGICAL(value)[0] != NA_LOGICAL && LOGICAL(value)[0]) /* is true */
+	Rboolean val = SCALAR_LVAL(R_cast_scalar_logical(value));
+	if (val != NA_LOGICAL &&
+	    val != FALSE) /* is true */
 	    pc = codebase + label;
 	NEXT();
     }
@@ -5922,7 +5880,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   not FALSE then its value is the result. If the second
 	   argument is FALSE, then the first argument's value is the
 	   result. */
-	if (LOGICAL(value)[0] != FALSE)
+	if (SCALAR_LVAL(R_cast_scalar_logical(value)) != FALSE)
 	    SETSTACK(-2, value);
 	R_BCNodeStackTop -= 1;
 	NEXT();

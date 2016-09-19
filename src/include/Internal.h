@@ -265,6 +265,7 @@ SEXP do_memoryprofile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_merge(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mget(SEXP, SEXP, SEXP, SEXP);
 SEXP do_missing(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mmap_file(SEXP, SEXP, SEXP, SEXP);
 SEXP do_names(SEXP, SEXP, SEXP, SEXP);
 SEXP do_namesgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_nargs(SEXP, SEXP, SEXP, SEXP);
