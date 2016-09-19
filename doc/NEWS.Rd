@@ -211,10 +211,20 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item There are new entry points \code{R_MakeExternalPtrFn} and
-      \code{R_ExternalPtrFn} to facilitate creating and retrieving an
-      \R{} external pointer from a C function pointer without ISO C
-      warnings about the conversion of function pointers.
+      \item Entry points \code{R_MakeExternalPtrFn} and
+      \code{R_ExternalPtrFn} are now declared in \file{Rinternals.h} to
+      facilitate creating and retrieving an \R{} external pointer from a
+      C function pointer without ISO C warnings about the conversion of
+      function pointers.
+      
+      \item There was an exception for the native Solaris C++ compiler
+      to the dropping (in \R 3.3.0) of legacy C++ headers from headers
+      such as \file{R.h} and \file{Rmath.h} --- this has now been
+      removed.  That compiler has strict C++98 compliance hence does not
+      include extensions in its (non-legacy) C++ headers, so some
+      packages will need to request C++11 or replace non-C++98 calls
+      such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R
+	Extensions}.
     }
   }
 
