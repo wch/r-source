@@ -400,6 +400,9 @@
       larger than the maximal integer, the result is now of type
       \code{double} and hence no longer silently overflows to wrong
       values.  (\PR{17140})
+
+      \item \code{as.character.factor()} respects S4 inheritance when
+      checking the type of its argument. (\PR{17141})
     }
   }
 }

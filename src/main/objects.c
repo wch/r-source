@@ -829,7 +829,32 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
+/** Version of inherits() that supports S4 inheritance and implicit
+    classes.  The inlined inherits() does not have access to private
+    entry points R_data_class() and R_data_class2(). The semantics of
+    inherits2() are identical to that of the R-level inherits(),
+    except there is no translation.
+*/
 
+Rboolean attribute_hidden inherits2(SEXP x, const char *what) {
+    if (OBJECT(x)) {
+	SEXP klass;
+  
+	if(IS_S4_OBJECT(x))
+	    PROTECT(klass = R_data_class2(x));
+	else
+	    PROTECT(klass = R_data_class(x, FALSE));
+	int nclass = length(klass);
+	for (int i = 0; i < nclass; i++) {
+	    if (!strcmp(CHAR(STRING_ELT(klass, i)), what)) {
+		UNPROTECT(1);
+		return TRUE;
+	    }
+	}
+	UNPROTECT(1);
+    }
+    return FALSE;
+}
 
 /* NOTE: Fast  inherits(x, what)    in ../include/Rinlinedfuns.h
  * ----        ----------------- */
@@ -858,13 +883,7 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 
     if( !isLogical(which) || (LENGTH(which) != 1) )
 	error(_("'which' must be a length 1 logical vector"));
-    int isvec = asLogical(which);
-
-#ifdef _be_too_picky_
-    if(IS_S4_OBJECT(x) && nwhat == 1 && !isvec &&
-       !isNull(R_getClassDef(translateChar(STRING_ELT(what, 0)))))
-	warning(_("use 'is()' instead of 'inherits()' on S4 objects"));
-#endif
+    Rboolean isvec = asLogical(which);
 
     if(isvec)
 	PROTECT(rval = allocVector(INTSXP, nwhat));

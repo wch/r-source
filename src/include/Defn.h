@@ -1094,6 +1094,7 @@ Rboolean R_current_debug_state(void);
 Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, Rboolean);
+Rboolean inherits2(SEXP, const char *);
 void InitGraphics(void);
 void InitMemory(void);
 void InitNames(void);
