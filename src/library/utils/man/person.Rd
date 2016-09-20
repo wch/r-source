@@ -45,12 +45,13 @@ person(given = NULL, family = NULL, middle = NULL,
     or a list thereof.}
   \item{middle}{a character string with the collapsed middle name(s).
     Deprecated, see \bold{Details}.}
-  \item{email}{a character string giving the email address,
+  \item{email}{a character string (or vector) giving an e-mail address
+    (each),
     or a list thereof.}
   \item{role}{a character vector specifying the role(s) of the person
     (see \bold{Details}),
     or a list thereof.}
-  \item{comment}{a character string providing a comment,
+  \item{comment}{a character string (or vector) providing comments,
     or a list thereof.}
   \item{first}{a character string giving the first name.
     Deprecated, see \bold{Details}.}
@@ -84,10 +85,12 @@ person(given = NULL, family = NULL, middle = NULL,
   \dQuote{embraced} using the respective element of \code{braces}, and
   finally collapsed into one string separated by white space.  If
   \code{braces} and/or \code{collapse} do not specify characters for all
-  fields, the defaults shown in the usage are imputed.  The
-  \code{print()} method calls the \code{format()} method and prints the
-  result, the \code{toBibtex()} method creates a suitable BibTeX
-  representation.
+  fields, the defaults shown in the usage are imputed.
+  If \code{collapse} is \code{FALSE} or \code{NA} (as for \code{email}
+  by default) the corresponding field is not collapsed but only the
+  first element is used.  The \code{print()} method calls the
+  \code{format()} method and prints the result, the \code{toBibtex()}
+  method creates a suitable BibTeX representation.
 
   Person objects can be subscripted by fields (using \code{$}) or by
   position (using \code{[}).

@@ -1417,7 +1417,8 @@ function(x)
     ## If this leaves nothing or more than one ...
     if(length(x) != 1L) return("")
     display <- format(x, include = c("given", "family"))
-    address <- format(x, include = c("email"))
+    address <- format(x, include = c("email"),
+                      collapse = list(email = FALSE))
     ## Need to quote display names at least when they contain commas
     ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
     if(any(ind <- grepl(",", display))) {
