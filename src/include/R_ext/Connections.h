@@ -30,6 +30,8 @@
 #  include <stddef.h> /* for size_t */
 #  include <stdarg.h> /* for va_list */
 # endif
+#else
+#warning "use of NO_C_HEADERS is deprecated"
 #endif
 
 /* IMPORTANT: we do not expect future connection APIs to be

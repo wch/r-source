@@ -32,6 +32,8 @@
 #  include <cstdio>
 #  include <climits>
 #  include <cstddef>
+# else
+#warning "use of NO_C_HEADERS is deprecated"
 # endif
 extern "C" {
 #else
@@ -39,6 +41,8 @@ extern "C" {
 #  include <stdio.h>
 #  include <limits.h> /* for INT_MAX */
 #  include <stddef.h> /* for ptrdiff_t */
+# else
+#warning "use of NO_C_HEADERS is deprecated"
 # endif
 #endif
 

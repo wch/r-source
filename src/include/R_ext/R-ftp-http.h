@@ -34,6 +34,8 @@
 # else
 #  include <stdint.h>
 # endif
+#else
+#warning "use of NO_C_HEADERS is deprecated"
 #endif
 typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 
