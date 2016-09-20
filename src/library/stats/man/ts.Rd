@@ -105,7 +105,7 @@ is.ts(x)
   
   For other definitions of \sQuote{time series} (e.g.,
   time-ordered observations) see the CRAN task view at
-  \url{https://cran.r-project.org/web/views/TimeSeries.html}.
+  \url{https://CRAN.R-project.org/view=TimeSeries}.
 }
 \examples{
 require(graphics)

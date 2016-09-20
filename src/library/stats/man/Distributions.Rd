@@ -63,7 +63,7 @@
   \code{\link{RNG}} about random number generation in \R.
 
   The CRAN task view on distributions,
-  \url{https://cran.r-project.org/web/views/Distributions.html},
+  \url{https://CRAN.R-project.org/view=Distributions},
   mentioning several CRAN packages for additional distributions.
 }
 \keyword{distribution}
