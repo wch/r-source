@@ -40,7 +40,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep(x, length.out = max(args_length)))
+    args <- lapply(args, function(x) rep_len(x, max(args_length)))
 
     ## <COMMENT Z>
     ## We could do this more elegantly, but let's just go through the
@@ -233,7 +233,7 @@ function(x, name, value)
 {
     name <- match.arg(name, c("given", "family", "role", "email", "comment"))
     x <- .listify(unclass(x))
-    value <- rep(value, length.out = length(x))
+    value <- rep_len(value, length(x))
 
     if(name == "role")
         value <- lapply(value, .canonicalize_person_role)
@@ -512,7 +512,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep(x, length.out = max_length))
+    args <- lapply(args, function(x) rep_len(x, max_length))
 
     other_length <- lengths(other)
     if(!all(other_length_ok <- other_length %in% c(1L, max_length)))
@@ -520,7 +520,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(other)[!other_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    other <- lapply(other, function(x) rep(x, length.out = max_length))
+    other <- lapply(other, function(x) rep_len(x, max_length))
 
     bibentry1 <-
     function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL, ..., other = list())
@@ -962,7 +962,7 @@ function(x, name, value)
     name <- tolower(name)
 
     ## recycle value
-    value <- rep(.listify(value), length.out = length(x))
+    value <- rep_len(.listify(value), length(x))
 
     ## check bibtype
     if(name == "bibtype") {
