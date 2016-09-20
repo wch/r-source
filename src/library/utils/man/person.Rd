@@ -86,11 +86,11 @@ person(given = NULL, family = NULL, middle = NULL,
   finally collapsed into one string separated by white space.  If
   \code{braces} and/or \code{collapse} do not specify characters for all
   fields, the defaults shown in the usage are imputed.
-  If \code{collapse} is \code{FALSE} or \code{NA} (as for \code{email}
-  by default) the corresponding field is not collapsed but only the
-  first element is used.  The \code{print()} method calls the
-  \code{format()} method and prints the result, the \code{toBibtex()}
-  method creates a suitable BibTeX representation.
+  If \code{collapse} is \code{FALSE} or \code{NA} the corresponding
+  field is not collapsed but only the first element is used.
+  The \code{print()} method calls the \code{format()} method and prints
+  the result, the \code{toBibtex()} method creates a suitable BibTeX
+  representation.
 
   Person objects can be subscripted by fields (using \code{$}) or by
   position (using \code{[}).
