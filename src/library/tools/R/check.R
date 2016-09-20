@@ -695,8 +695,10 @@ setRlibs <-
                 enc <- db["Encoding"]
                 aar <- utils:::.read_authors_at_R_field(aar)
                 tmp <- utils:::.format_authors_at_R_field_for_author(aar)
-                ## uses strwrap, so will be in current locale
-                if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
+                ## <FIXME>
+                ## ## uses strwrap, so will be in current locale
+                ## if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
+                ## </FIXME>
                 y <- c(Author = tmp,
                        Maintainer =
                        utils:::.format_authors_at_R_field_for_maintainer(aar))

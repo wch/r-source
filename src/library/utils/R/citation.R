@@ -1310,7 +1310,14 @@ function(x)
 .read_authors_at_R_field <-
 function(x)
 {
-    out <- eval(parse(text = x))
+    out <- if((Encoding(x) == "UTF-8") && !l10n_info()$"UTF-8") {
+        con <- file()
+        on.exit(close(con))
+        writeLines(x, con, useBytes = TRUE)
+        eval(parse(con, encoding = "UTF-8"))
+    } else {
+        eval(parse(text = x))
+    }
 
     ## Let's by nice ...
     ## Alternatively, we could throw an error.
@@ -1383,9 +1390,12 @@ function(x)
     ## all subsequent lines are indented (as .write_description avoids
     ## folding for Author fields).  We use a common indentation of 2,
     ## with an extra indentation of 2 within single author descriptions.
-    out <- paste(lapply(strwrap(x, indent = 0L, exdent = 4L,
-                                simplify = FALSE),
-                        paste, collapse = "\n"),
+    out <- paste(lapply(x,
+                        function(e) {
+                            paste(strwrap(e, indent = 0L, exdent = 4L),
+                                  ## simplify = FALSE),
+                                  collapse = "\n")
+                        }),
                  collapse = ",\n  ")
     if(!is.null(header)) {
         header <- paste(strwrap(header, indent = 0L, exdent = 2L),
