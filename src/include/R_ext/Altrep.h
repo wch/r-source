@@ -56,8 +56,6 @@ typedef R_xlen_t
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 
-#define USE_DEFINING_MACROS
-#ifdef USE_DEFINING_MACROS
 #define DECLARE_METHOD_SETTER(CNAME, MNAME)				\
     void								\
     R_set_##CNAME##_##MNAME##_method(R_altrep_class_t cls,		\
@@ -84,58 +82,5 @@ DECLARE_METHOD_SETTER(altreal, Elt)
 DECLARE_METHOD_SETTER(altreal, Get_region)
 
 DECLARE_METHOD_SETTER(altstring, Elt)
-#else
-void
-R_set_altrep_Unserialize_method(R_altrep_class_t cls,
-				R_altrep_Unserialize_method_t fun)
-void
-R_set_altrep_Unserialize_core_method(R_altrep_class_t cls,
-				     R_altrep_Unserialize_core_method_t fun);
-void
-R_set_altrep_Serialized_state_method(R_altrep_class_t cls,
-				     R_altrep_Serialized_state_method_t fun);
-void
-R_set_altrep_Duplicate_method(R_altrep_class_t cls,
-			      R_altrep_Duplicate_method_t fun);
-void
-R_set_altrep_Duplicate_core_method(R_altrep_class_t cls,
-				   R_altrep_Duplicate_method_t fun);
-void
-R_set_altrep_Coerce_method(R_altrep_class_t cls, R_altrep_Coerce_method_t fun);
-void
-R_set_altrep_Inspect_method(R_altrep_class_t cls,
-			    R_altrep_Inspect_method_t fun);
-
-void
-R_set_altvec_Length_method(R_altrep_class_t cls, R_altvec_Length_method_t fun);
-void
-R_set_altvec_Dataptr_method(R_altrep_class_t cls,
-			    R_altvec_Dataptr_method_t fun);
-void
-R_set_altvec_Dataptr_or_null_method(R_altrep_class_t cls,
-				    R_altvec_Dataptr_or_null_method_t fun);
-void
-R_set_altvec_Extract_subset_method(R_altrep_class_t cls,
-				   R_altvec_Extract_subset_method_t fun);
-
-void
-R_set_altinteger_Elt_method(R_altrep_class_t cls,
-			    R_altinteger_Elt_method_t fun);
-void
-R_set_altinteger_Get_region_method(R_altrep_class_t cls,
-				   R_altinteger_Get_region_method_t fun);
-void
-R_set_altinteger_Is_sorted_method(R_altrep_class_t cls,
-				  R_altinteger_Is_sorted_method_t fun);
-
-void
-R_set_altreal_Elt_method(R_altrep_class_t cls, R_altreal_Elt_method_t fun);
-void
-R_set_altreal_Get_region_method(R_altrep_class_t cls,
-				R_altreal_Get_region_method_t fun);
-
-void
-R_set_altstring_Elt_method(R_altrep_class_t cls, R_altstring_Elt_method_t fun);
-#endif /* USE_DEFINING_MACROS */
 
 #endif /* R_EXT_ALTREP_H_ */

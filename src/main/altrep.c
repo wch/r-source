@@ -588,40 +588,20 @@ make_altrep_class(int type, const char *cname, const char *pname, DllInfo *dll)
     return R_cast_altrep_class(class);
 }
 
-#ifdef USE_DEFINING_MACROS
 /*  Using macros like this makes it easier to add new mehtods, but
     makes searching for source harder. Probably a good ideea on
     balance though. */
 #define DEFINE_CLASS_CONSTRUCTOR(cls, type) \
-    R_altrep_class_t R_make_alt##cls##_class(const char *cname, \
-					     const char *pname,	\
-					     DllInfo *dll)	\
+    R_altrep_class_t R_make_##cls##_class(const char *cname,	\
+					  const char *pname,	\
+					  DllInfo *dll)		\
     {								\
 	return  make_altrep_class(type, cname, pname, dll);	\
     }
 
-DEFINE_CLASS_CONSTRUCTOR(string, STRSXP)
-DEFINE_CLASS_CONSTRUCTOR(integer, INTSXP)
-DEFINE_CLASS_CONSTRUCTOR(real, REALSXP)
-#else
-R_altrep_class_t R_make_altstring_class(const char *cname, const char *pname,
-					DllInfo *dll)
-{
-    return  make_altrep_class(STRSXP, cname, pname, dll);
-}
-
-R_altrep_class_t R_make_altinteger_class(const char *cname, const char *pname,
-					 DllInfo *dll)
-{
-    return  make_altrep_class(INTSXP, cname, pname, dll);
-}
-
-R_altrep_class_t R_make_altreal_class(const char *cname, const char *pname,
-				      DllInfo *dll)
-{
-    return  make_altrep_class(REALSXP, cname, pname, dll);
-}
-#endif /* USE_DEFINING_MACROS */
+DEFINE_CLASS_CONSTRUCTOR(altstring, STRSXP)
+DEFINE_CLASS_CONSTRUCTOR(altinteger, INTSXP)
+DEFINE_CLASS_CONSTRUCTOR(altreal, REALSXP)
 
 static void reinit_altrep_class(SEXP class)
 {
@@ -638,7 +618,6 @@ static void reinit_altrep_class(SEXP class)
  ** ALTREP Method Setters
  **/
 
-#ifdef USE_DEFINING_MACROS
 #define DEFINE_METHOD_SETTER(CNAME, MNAME)				\
     void R_set_##CNAME##_##MNAME##_method(R_altrep_class_t cls,		\
 					  R_##CNAME##_##MNAME##_method_t fun) \
@@ -668,128 +647,6 @@ DEFINE_METHOD_SETTER(altreal, Elt)
 DEFINE_METHOD_SETTER(altreal, Get_region)
 
 DEFINE_METHOD_SETTER(altstring, Elt)
-#else
-void R_set_altrep_Unserialize_method(R_altrep_class_t cls,
-				     R_altrep_Unserialize_method_t fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Unserialize = fun;
-}
-
-void R_set_altrep_Unserialize_core_method(R_altrep_class_t cls,
-					  R_altrep_Unserialize_core_method_t
-					  fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Unserialize_core = fun;
-}
-
-void R_set_altrep_Serialized_state_method(R_altrep_class_t cls,
-					  R_altrep_Serialized_state_method_t
-					  fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Serialized_state = fun;
-}
-
-void R_set_altrep_Duplicate_method(R_altrep_class_t cls,
-				   R_altrep_Duplicate_method_t fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Duplicate = fun;
-}
-
-void R_set_altrep_Duplicate_core_method(R_altrep_class_t cls,
-					R_altrep_Duplicate_method_t fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Duplicate_core = fun;
-}
-
-void R_set_altrep_Coerce_method(R_altrep_class_t cls,
-				R_altrep_Coerce_method_t fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Coerce = fun;
-}
-
-void R_set_altrep_Inspect_method(R_altrep_class_t cls,
-				 R_altrep_Inspect_method_t fun)
-{
-    altrep_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Inspect = fun;
-}
-
-void R_set_altvec_Length_method(R_altrep_class_t cls,
-				R_altvec_Length_method_t fun)
-{
-    altvec_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Length = fun;
-}
-
-void R_set_altvec_Dataptr_method(R_altrep_class_t cls,
-				 R_altvec_Dataptr_method_t fun)
-{
-    altvec_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Dataptr = fun;
-}
-
-void R_set_altvec_Dataptr_or_null_method(R_altrep_class_t cls,
-					 R_altvec_Dataptr_or_null_method_t fun)
-{
-    altvec_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Dataptr_or_null = fun;
-}
-
-void R_set_altvec_Extract_subset_method(R_altrep_class_t cls,
-					R_altvec_Extract_subset_method_t fun)
-{
-    altvec_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Extract_subset = fun;
-}
-
-void R_set_altinteger_Elt_method(R_altrep_class_t cls,
-				 R_altinteger_Elt_method_t fun)
-{
-    altinteger_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Elt = fun;
-}
-
-void R_set_altinteger_Get_region_method(R_altrep_class_t cls,
-					R_altinteger_Get_region_method_t fun)
-{
-    altinteger_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Get_region = fun;
-}
-
-void R_set_altinteger_Is_sorted_method(R_altrep_class_t cls,
-				       R_altinteger_Is_sorted_method_t fun)
-{
-    altinteger_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Is_sorted = fun;
-}
-
-void R_set_altreal_Elt_method(R_altrep_class_t cls,
-				 R_altreal_Elt_method_t fun)
-{
-    altreal_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Elt = fun;
-}
-
-void R_set_altreal_Get_region_method(R_altrep_class_t cls,
-					R_altreal_Get_region_method_t fun)
-{
-    altreal_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Get_region = fun;
-}
-
-void R_set_altstring_Elt_method(R_altrep_class_t cls,
-				R_altstring_Elt_method_t fun)
-{
-    altstring_methods_t *m = CLASS_METHODS_TABLE(R_SEXP(cls));
-    m->Elt = fun;
-}
-#endif /* USE_DEFINING_MACROS */
 
 
 /**
