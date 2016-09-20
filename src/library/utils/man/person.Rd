@@ -47,8 +47,8 @@ person(given = NULL, family = NULL, middle = NULL,
     Deprecated, see \bold{Details}.}
   \item{email}{a character string giving the email address,
     or a list thereof.}
-  \item{role}{a character string specifying the role of the person (see
-    \bold{Details}),
+  \item{role}{a character vector specifying the role(s) of the person
+    (see \bold{Details}),
     or a list thereof.}
   \item{comment}{a character string providing a comment,
     or a list thereof.}
