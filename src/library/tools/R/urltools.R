@@ -308,7 +308,7 @@ table_of_FTP_server_return_codes <-
       )
 
 check_url_db <-
-function(db, verbose = FALSE)
+function(db, remote = TRUE, verbose = FALSE)
 {
     use_curl <-
         config_val_to_logical(Sys.getenv("_R_CHECK_URL_DB_USE_CURL_",
@@ -358,7 +358,12 @@ function(db, verbose = FALSE)
         c(s, msg, "", "")
     }
 
-    .check_http <- function(u) {
+    .check_http <- if(remote)
+        function(u) c(.check_http_A(u), .check_http_B(u))
+    else
+        function(u) c(rep.int("", 3L), .check_http_B(u))
+    
+    .check_http_A <- function(u) {
         h <- .fetch(u)
         newLoc <- ""
         if(inherits(h, "error")) {
@@ -390,15 +395,20 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
+        c(s, msg, newLoc)
+    }
+
+    .check_http_B <- function(u) {
         ul <- tolower(u)
-        cran <- ((grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
-                        ul) &&
-                  (ul !=
-                   "https://cran.r-project.org/web/packages/packages.rds")) ||
-                  startsWith(ul, "http://cran.r-project.org") ||
-                  any(substring(ul, 1L, nchar(mirrors)) == mirrors))
+        cran <- ((grepl("^https?://cran.r-project.org/web/packages", ul) &&
+                  !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]]+(html|pdf|rds)$",
+                         ul)) ||
+                 (grepl("^https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
+                        ul)) ||
+                 startsWith(ul, "http://cran.r-project.org") ||
+                 any(substring(ul, 1L, nchar(mirrors)) == mirrors))
         spaces <- grepl(" ", u)
-        c(s, msg, newLoc, if(cran) u else "", if(spaces) u else "")
+        c(if(cran) u else "", if(spaces) u else "")
     }
 
     bad <- .gather()
@@ -455,7 +465,7 @@ function(db, verbose = FALSE)
 
     ## ftp.
     pos <- which(schemes == "ftp")
-    if(length(pos)) {
+    if(length(pos) && remote) {
         results <- do.call(rbind, lapply(urls[pos], .check_ftp))
         status <- as.numeric(results[, 1L])
         ind <- (status < 0L) | (status >= 400L)
@@ -477,11 +487,12 @@ function(db, verbose = FALSE)
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ind <- !(status %in% c(200L, 405L)) |
+        ind <- is.na(match(status, c(200L, 405L, NA))) |
             nzchar(results[, 4L]) | nzchar(results[, 5L])
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
+            s[is.na(s)] <- ""
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
