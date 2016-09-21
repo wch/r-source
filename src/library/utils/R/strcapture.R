@@ -37,6 +37,14 @@ strcapture <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     if (isS4(proto)) {
         methods::as(ans, class(proto))
     } else {
-        as.data.frame(ans)
+        as.data.frame(ans, optional=TRUE, stringsAsFactors=FALSE)
     }
 }
+
+## Not yet exported
+strextract <- function(pattern, x, perl = FALSE, useBytes = FALSE) {
+    m <- regexec(pattern, x, perl=perl, useBytes=useBytes)
+    unlist(regmatches(x, m))
+}
+
+### TODO: strslice(), like strcapture() but based on strsplit().

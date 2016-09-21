@@ -206,6 +206,9 @@
       \item \code{apropos()} and \code{find(simple.words = FALSE)} no
       longer match object names starting with \samp{.} which are known
       to be internal objects (such as \code{.__S3MethodsTable__.}).
+
+      \item \code{strcapture()} no longer fixes column names nor coerces
+      strings to factors.
     }
   }
 
