@@ -3158,7 +3158,7 @@ discussed in the platform-specific FAQs.
 
 Finally, at least one web-based service is available for building binary
 packages from (checked) source code: WinBuilder (see
-@uref{http://win-builder.R-project.org/}) is able to build Windows
+@uref{https://win-builder.R-project.org/}) is able to build Windows
 binaries. Note that this is intended for developers on other platforms
 who do not have access to Windows but wish to provide binaries for the
 Windows platform.
@@ -4348,7 +4348,7 @@ Where possible @command{R CMD build} will replace them by copies.
 
 @item
 If you do not yourself have a Windows system, consider submitting your
-source package to WinBuilder (@uref{http://win-builder.r-project.org/})
+source package to WinBuilder (@uref{https://win-builder.r-project.org/})
 before distribution.
 
 @item
@@ -5299,7 +5299,7 @@ Several members of the @R{} project have set up services to assist those
 writing @R{} packages, particularly those intended for public
 distribution.
 
-@uref{http://win-builder.r-project.org, win-builder.r-project.org}
+@uref{https://win-builder.r-project.org, win-builder.r-project.org}
 offers the automated preparation of (32/64-bit) Windows binaries from
 well-tested source packages.
 

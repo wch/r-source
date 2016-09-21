@@ -2206,7 +2206,7 @@ to @samp{tar.exe}.
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
 the building service offered at
-@uref{http://win-builder.r-project.org/}.
+@uref{https://win-builder.r-project.org/}.
 
 For almost all packages @command{R CMD INSTALL} will attempt to install
 both 32- and 64-bit builds of a package if run from a 32/64-bit install
