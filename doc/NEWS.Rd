@@ -21,6 +21,8 @@
 
       \item Use \code{options(deparse.max.lines)} to limit the number of
       lines recorded in .Traceback and other deparsing activities.
+
+      \item \code{abbreviate()} gets option \code{named = TRUE}.
     }
   }
 
