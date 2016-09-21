@@ -9575,26 +9575,10 @@ resetting buffers on open files).
 Most @R{} header files can be included within C++ programs but they
 should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
-such a block has caused compilation errors.}).  It may not be possible
-to include some @R{} headers as they in turn include system header files
-that may cause conflicts---if this happens, first try including the
-appropriate headers yourself before the @R{} headers, then try defining
-@samp{NO_C_HEADERS} before including the @R{} headers.  (Headers
-@file{R.h}, @file{Rinternals.h} and @file{Rmath.h} support
-@samp{NO_C_HEADERS}: @file{cstddef} needs to be included before
-@file{R.h} if @samp{NO_C_HEADERS} is defined.  The requirements for
-@file{Rinternals.h} depend on the version of @R{} (it is only supported
-as from @R{} 3.3.0) and the platform, but
-@example
-#include <cstdio>
-#include <climits>
-#include <cstddef>
-using std::FILE;
-@end example
-is likely to suffice.)  As from @R{} 3.3.0, @R{} headers do not include
-legacy headers when used with C++, so @samp{NO_C_HEADERS} will only be
-needed if the package C++ code includes legacy headers or for earlier
-versions of @R{}: it is deprecated and likely to be removed in future.
+such a block has caused compilation errors.}).  The inclusion of system
+headers in C++ changed in @R{} 3.3.0@footnote{with an exception for the
+Solaris C++ compiler, removed in @R{} 3.4.0.}, so if you care about
+earlier versions of @R{} please check your package there.
 
 Legacy header @file{S.h} cannot be used with C++.
 
