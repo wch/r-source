@@ -180,6 +180,37 @@ get_exclude_patterns <- function()
 
     temp_install_pkg <- function(pkgdir, libdir) {
 	dir.create(libdir, mode = "0755", showWarnings = FALSE)
+        install_missing_dependencies <-
+            config_val_to_logical(Sys.getenv("_R_BUILD_INSTALL_MISSING_DEPENDENCIES_",
+                                             "no"))
+        if(install_missing_dependencies &&
+           all((repos <- getOption("repos")) != "@CRAN@")) {
+            ## try installing missing dependencies too
+            available <- utils::available.packages(repos = repos)
+            db <- .read_description(file.path(pkgdir, "DESCRIPTION"))
+            package <- db["Package"]
+            available <-
+                rbind(available[available[, "Package"] != package, ,
+                                drop = FALSE],
+                      db[colnames(available)])
+            depends <- package_dependencies(package, available,
+                                            which = "most")
+            depends <- setdiff(unlist(depends),
+                               utils::installed.packages())
+            if(length(depends)) {
+                message(paste(strwrap(sprintf("installing dependencies %s",
+                                              paste(sQuote(sort(depends)),
+                                                    collapse = ", ")),
+                                      exdent = 2L),
+                              collapse = "\n"), domain = NA)
+                utils::install.packages(depends,
+                                        libdir,
+                                        available = 
+                                            available[-nrow(available), ,
+                                                      drop = FALSE],
+                                        dependencies = NA)
+            }
+        }
         ## assume vignettes only need one arch
         if (WINDOWS) {
             cmd <- file.path(R.home("bin"), "Rcmd.exe")
