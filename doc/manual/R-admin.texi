@@ -1727,7 +1727,7 @@ Windows' CRLF line endings.
 @sc{R.app}
 @end macro
 
-(`macOS' was known as `OS X' from 2012--2016 and `Mac OS X' before that.)
+(`macOS' was known as `OS X' from 2012--2016 and as `Mac OS X' before that.)
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
@@ -1739,7 +1739,7 @@ Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
 
 For some older versions of the OS you can in principle (it is little
-tested) install @R{} from the sources.
+tested) install @R{} from the sources (see @ref{macOS}).
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Updates' from the `App Store' to be sure.
@@ -1748,9 +1748,10 @@ is fully updated: look at `Updates' from the `App Store' to be sure.
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
 currently shows four components: everyone will need the `R Framework'
-component: the remaining components are optional. (The `Tcl/Tk' component
-is needed to use package @pkg{tcltk}. The `Texinfo' component is only
-needed by those installing source packages.)
+component: the remaining components are optional. (The `Tcl/Tk'
+component is needed to use package @pkg{tcltk}. The `Texinfo' component
+is only needed by those installing source packages or @R{} from its
+sources.)
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
@@ -1835,22 +1836,22 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
 default for command-line @R{} but not @Rapp{}) requires an X sub-system
-to be installed: see @ref{macOS}.  (As do the @pkg{tcltk} package and
-some third-party packages.)
+to be installed: see @ref{macOS}.  So do the @pkg{tcltk} package and
+some third-party packages.
 
 @node Uninstalling under macOS, Multiple versions, Running R under macOS, Installing R under macOS
 @section Uninstalling under macOS
 
 @R{} for macOS consists of two parts: the GUI (@Rapp{}) and the R
 framework. The un-installation is as simple as removing those folders
-(e.g.@: by dragging them into the Trash). The typical installation will
+(e.g.@: by dragging them onto the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
 links to @file{R} and @file{Rscript} in @file{/usr/bin} or
 @file{/usr/local/bin} should also be removed.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
-run (use @file{/usr/local/bin} as from El Capitan):
+run (use @file{/usr/local/bin} for El Capitan and Sierra):
 
 @example
 sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
@@ -4791,8 +4792,8 @@ is not recommended but for the time being @R{}'s installation scripts
 will make use of it if GNU readline is not found.} and a Fortran
 compiler.  Those and other binary components are available from
 @uref{https://r.research.att.com/libs}: you are likely to need
-@code{pcre} and @code{xz} (for @code{libzma}: recent macOS provides
-libraries but not headers for these).
+@code{pcre} and @code{xz} (for @code{libzma}) as recent macOS versions
+provide libraries but not headers for these).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
@@ -4851,10 +4852,10 @@ which was distributed separately at that site for 3.7.0.} in version
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg} and @code{tiff}.
-@code{pkg-config} is not provided by Apple and used for many packages:
-it will also be used if present when configuring the @code{X11()} and
-bitmap devices.
+most likely want at least @code{jpeg} and @code{tiff}.  The
+@code{pkg-config} utility is not provided by Apple and used for the
+installation from source of many packages: it will also be used if
+present when configuring the @code{X11()} and bitmap devices.
 
 Support for @code{cairo} (without @code{Pango}) can be enabled in two
 ways: both need @code{pkg-config} available.  XQuartz ships @code{cairo}
@@ -4901,15 +4902,14 @@ times before 1902 or after 2037 (despite using a 64-bit @code{time_t}).
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
-5GB, but a smaller version is available at
-@uref{https://www.tug.org/mactex/morepackages.html}: you will need to
-add some packages, e.g.@: for the 2016 version we needed to
-add@footnote{E.g.@: @emph{via}
-@command{tlmgr install cm-super helvetic inconsolata texinfo} .}
-@pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
-which brought this to about 410MB.  @samp{TeX Live Utility} (available
-@emph{via} the MacTeX front page) provides a graphical means to manage
-@TeX{} packages.
+5GB, but a smaller version (`Basic TeX') is available at
+@uref{https://www.tug.org/mactex/morepackages.html} to which you will
+need to add some packages, e.g.@: for the 2016 version we needed to
+add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
+inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about 410MB.
+@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
+provides a graphical means to manage @TeX{} packages.
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
@@ -4923,20 +4923,20 @@ some upgrades but not others).
 
 
 @menu
-* El Capitan::                  
+* El Capitan and Sierra::       
 * Tcl/Tk headers and libraries::  
 * Java (macOS)::                
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node El Capitan, Tcl/Tk headers and libraries, macOS, macOS
-@subsection El Capitan
+@node El Capitan and Sierra, Tcl/Tk headers and libraries, macOS, macOS
+@subsection El Capitan and Sierra
 
-There have been problems resulting from the new-to-El-Capitan
-restriction that only Apple is allowed to install software under
-@file{/usr}: this affects @emph{inter alia} @code{MacTeX} and
-@code{XQuartz} which changed their installation locations.
+There were problems resulting from the new-to-El-Capitan restriction
+that only Apple is allowed to install software under @file{/usr}: this
+affected @emph{inter alia} @code{MacTeX} and @code{XQuartz} which
+changed their installation locations.
 
 @command{configure} can be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
@@ -4947,7 +4947,7 @@ restriction that only Apple is allowed to install software under
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-@node Tcl/Tk headers and libraries, Java (macOS), El Capitan, macOS
+@node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4970,10 +4970,10 @@ in the native macOS style: this will not work with @Rapp{} because of
 conflicts over the macOS menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of macOS come with Aqua Tcl/Tk libraries, but these
-are not at all recent versions of Tcl/Tk (8.5.9 in El Capitan, which is
+are not at all recent versions of Tcl/Tk (8.5.9 in Sierra, which is
 not even the latest patched version in that series).  It is better to
 install Tcl/Tk 8.6.x from the sources or a binary distribution from
-@uref{https://www.activestate.com/@/activetcl/2/downloads}.  Configure @R{}
+@uref{https://www.activestate.com/@/activetcl/@/downloads}.  Configure @R{}
 with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
@@ -4998,11 +4998,11 @@ The situation with Java support on macOS is messy.@footnote{For more
 details see @uref{http://www.macstrategy.com/@/article.php?3}.}
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
-upgrade removes one if already installed: it is intended to be installed
-at first use.  Check if a JRE is installed by running @command{java
--version} in a @command{Terminal} window: if Java is not installed this
-should prompt you to install it.  You can also install directly the
-latest Java from Oracle (currently from
+upgrade may remove one if already installed: it is intended to be
+installed at first use.  Check if a JRE is installed by running
+@command{java -version} in a @command{Terminal} window: if Java is not
+installed this should prompt you to install it.  You can also install
+directly the latest Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
@@ -5054,8 +5054,8 @@ selected by the option
 ./configure --enable-R-framework
 @end example
 
-(This is intended to be used with an Apple toolchain: other compilers may
-not support frameworks correctly. It was the default prior to @R{} 3.3.0.)
+(This is intended to be used with an Apple toolchain: others may not
+support frameworks correctly. It was the default prior to @R{} 3.3.0.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
