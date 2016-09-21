@@ -208,7 +208,10 @@
       to be internal objects (such as \code{.__S3MethodsTable__.}).
 
       \item \code{strcapture()} no longer fixes column names nor coerces
-      strings to factors.
+      strings to factors (suggested by Bill Dunlap).
+
+      \item \code{strcapture()} returns \code{NA} for non-matching
+      values in \code{x} (suggested by Bill Dunlap).
     }
   }
 

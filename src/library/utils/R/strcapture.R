@@ -20,9 +20,8 @@ strcapture <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     m <- regexec(pattern, x, perl=perl, useBytes=useBytes)
     str <- regmatches(x, m)
     ntokens <- length(proto) + 1L
-    if (!all(lengths(str) == ntokens)) {
-        stop("number of matches does not always match ncol(proto)")
-    }
+    nomatch <- lengths(str) == 0L
+    str[nomatch] <- list(rep(NA_character_, ntokens))
     mat <- matrix(as.character(unlist(str)), ncol=ntokens,
                   byrow=TRUE)[,-1L,drop=FALSE]
     ans <- lapply(seq_along(proto), function(i) {

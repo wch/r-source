@@ -38,7 +38,8 @@ strcapture(pattern, x, proto, perl = FALSE, useBytes = FALSE)
   A tabular data structure of the same type as \code{proto}, so
   typically a \code{data.frame}, containing a column for each capture
   expression. The column types and names are inherited from
-  \code{proto}.
+  \code{proto}. Cases in \code{x} that do not match \code{pattern} have
+  \code{NA} in every column.
 }
 \seealso{
   \code{\link{regexec}} and \code{\link{regmatches}} for related
