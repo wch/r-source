@@ -6,7 +6,7 @@
 \name{c}
 \title{Combine Values into a Vector or List}
 \usage{
-c(\dots, recursive = FALSE)
+c(\dots, recursive = FALSE, use.names = TRUE)
 }
 \alias{c}
 \description{
@@ -21,6 +21,8 @@ c(\dots, recursive = FALSE)
   \item{recursive}{logical.  If \code{recursive = TRUE}, the function
     recursively descends through lists (and pairlists) combining all
     their elements into a vector.}
+  \item{use.names}{logical indicating if \code{\link{names}} should be
+    preserved.}
 }
 \details{
   The output type is determined from the highest type of the components

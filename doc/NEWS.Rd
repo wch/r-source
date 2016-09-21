@@ -202,7 +202,7 @@
 
       \item Connections now \code{print()} without error, even if
       invalid, i.e., typically after having been closed.
-      
+
       \item \code{apropos()} and \code{find(simple.words = FALSE)} no
       longer match object names starting with \samp{.} which are known
       to be internal objects (such as \code{.__S3MethodsTable__.}).
@@ -216,7 +216,7 @@
       facilitate creating and retrieving an \R{} external pointer from a
       C function pointer without ISO C warnings about the conversion of
       function pointers.
-      
+
       \item There was an exception for the native Solaris C++ compiler
       to the dropping (in \R 3.3.0) of legacy C++ headers from headers
       such as \file{R.h} and \file{Rmath.h} --- this has now been
@@ -527,6 +527,8 @@
       \item \code{parallel::mccollect()} now returns a named list (as
       documented) when called with \code{wait = FALSE}.  (Reported by
       Michel Lang.)
+
+      \item \code{c()}'s argument \code{use.names} is documented now.
     }
   }
 }
