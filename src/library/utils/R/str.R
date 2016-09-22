@@ -103,8 +103,9 @@ str.default <-
     ## ------------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
 
-    ## Get defaults for these
-    oDefs <- c("vec.len", "digits.d", "strict.width", "formatNum")
+    ## strOptions() defaults for
+    oDefs <- c("vec.len", "digits.d", "strict.width", "formatNum",
+	       "drop.deparse.attr")
     ## from
     strO <- getOption("str")
     if (!is.list(strO)) {
@@ -161,6 +162,7 @@ str.default <-
         vec.len <- 0
     }
 
+    ## x: character
     maybe_truncate <- function(x, nx = nchar(x, type="w"), S = "\"", ch = "| __truncated__")
     {
 	ok <- if(anyNA(nx)) !is.na(nx) else TRUE
@@ -559,12 +561,13 @@ str.default <-
 	    formObj <- function(x) paste(as.character(x), collapse = " ")
 	}
 	else { # not char.like
-	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
+	    if(!exists("format.fun"))
 		format.fun <-
 		    if(mod == "num" || mod == "cplx") format else as.character
 	    ## v.len <- max(1,round(v.len))
 	    ile <- min(v.len, le)
-	    formObj <- function(x) maybe_truncate(paste(format.fun(x), collapse = " "))
+	    formObj <- function(x) maybe_truncate(paste(format.fun(x), collapse = " "),
+						  S = "") # *not* string-like
 	}
 
 	cat(if(give.head) paste0(str1, " "),
