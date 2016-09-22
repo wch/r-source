@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2015  The R Core Team.
+ *  Copyright (C) 2000-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,22 +24,23 @@
     Notes on various time functions:
     ===============================
 
-    The current (2008) POSIX recommendation to find the calendar time
-    is to call clock_gettime(), defined in <time.h>.  This may also be
-    used to find time since some unspecified starting point
-    (e.g. machine reboot), but is not currently so used in R.  It
-    returns in second and nanoseconds, although not necessarily to
+    The current (2008/13) POSIX recommendation to find the calendar
+    time is to call clock_gettime(), defined in <time.h>.  This may
+    also be used to find the time since some unspecified starting
+    point (e.g. machine reboot), but is not currently so used in R.
+    It returns in second and nanoseconds, although not necessarily to
     more than clock-tick accuracy.
 
-    C11 adds 'struct timespec' to <time.h>.  And timespec_get() can get
-    the current time or interval after a base time.
+    C11 adds 'struct timespec' to <time.h>.  And timespec_get() which
+    can get the current time or interval after a base time.
 
     The previous POSIX recommendation was gettimeofday(), defined in
     <sys/time.h>.  This returns in seconds and microseconds (with
     unspecified granularity).
 
     Many systems (including AIX, FreeBSD, Linux, Solaris) have
-    clock_gettime().  macOS and Cygwin have gettimeofday().
+    clock_gettime(): it appeared in macOS 10.12.  macOS and Cygwin
+    have gettimeofday().
 
     Function time() is C99 and defined in <time.h>.  C99 does not
     mandate the units, but POSIX does (as the number of seconds since
@@ -61,8 +62,8 @@
     It is available on Cygwin, FreeBSD, macOS, Linux and Solaris.
 
     currentTime() (in this file) uses
-    clock_gettime(): AIX, FreeBSD, Linux, Solaris
-    gettimeofday():  macOS, Windows, Cygwin
+    clock_gettime(): AIX, FreeBSD, Linux, Solaris, macOS >= 10.12
+    gettimeofday():  macOS <= 10.11, Windows, Cygwin
     time() (as ultimate fallback, AFAIK unused).
 
     proc.time() uses currentTime() for elapsed time,
