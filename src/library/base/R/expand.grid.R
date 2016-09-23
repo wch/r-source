@@ -1,7 +1,7 @@
 #  File src/library/base/R/expand.grid.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
             x <- x[rep.int(rep.int(seq_len(nx),
                                    rep.int(rep.fac, nx)), orep)]
 	    ## avoid sorting the levels of character variates
-	    if(stringsAsFactors && !is.factor(x) && is.character(x))
+	    if(stringsAsFactors && is.character(x) && !is.factor(x))
 		x <- factor(x, levels = unique(x))
             cargs[[i]] <- x
             rep.fac <- rep.fac * nx
