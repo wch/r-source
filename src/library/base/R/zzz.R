@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ assign("as.integer", function(x, ...) UseMethod("as.integer"),
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
        envir = .GenericArgsEnv)
 #assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
-assign("c", function(..., recursive = FALSE) UseMethod("c"),
+assign("c", function(..., recursive = FALSE, use.names = TRUE) UseMethod("c"),
        envir = .GenericArgsEnv)
 #assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)
 assign("dim<-", function(x, value) UseMethod("dim<-"), envir = .GenericArgsEnv)

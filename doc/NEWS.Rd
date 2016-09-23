@@ -116,6 +116,8 @@
       \item \code{plot.ts()}, the \code{plot()} method for time series,
       now respects \code{cex}, \code{lwd} and \code{lty}.  (Reported by
       Greg Werbin.)
+
+      \item \code{c()}'s argument \code{use.names} is documented now.
     }
   }
 }
