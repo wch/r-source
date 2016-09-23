@@ -311,6 +311,10 @@
       \item For consistency with other package subdirectories, files
       named \file{*.r} in the \file{tests} directory are now recognized
       as tests by \command{R CMD check}. (Wish of \PR{17143})
+
+      \item \command{R CMD build} and \command{R CMD check} now use the
+      \emph{union} of \env{R_LIBS} \code{.libPaths()}.  They may not be
+      equivalent, e.g., when the latter is determined by \env{R_PROFILE}.
     }
   }
 

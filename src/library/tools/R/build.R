@@ -75,7 +75,7 @@ get_exclude_patterns <- function()
 
 .build_packages <- function(args = NULL, no.q = interactive())
 {
-    ## this requires on Windows sh make
+    ## on Windows, this requires   sh make
 
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -94,7 +94,7 @@ get_exclude_patterns <- function()
     system_with_capture <- function (command, args) {
         outfile <- tempfile("xshell")
         on.exit(unlink(outfile))
-        status <- system2(command, args, outfile, outfile)
+        status <- system2(command, args, stdout=outfile, stderr=outfile)
         list(status = status, stdout = readLines(outfile, warn = FALSE))
     }
     ## Run silently
@@ -103,26 +103,16 @@ get_exclude_patterns <- function()
 
     do_exit <-
 	if(no.q)
-	    function(status = 1L) stop(".build_package() exit status ", status)
+	    function(status = 1L) (if(status) stop else message)(
+		".build_packages() exit status ", status)
 	else
 	    function(status = 1L) q("no", status = status, runLast = FALSE)
-
-    env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
 
     ## Used for BuildVignettes, BuildManual, BuildKeepEmpty,
     ## and (character not logical) BuildResaveData
     parse_description_field <-
         function(desc, field, default = TRUE, logical = TRUE)
-    {
-        tmp <- desc[field]
-        if (is.na(tmp)) default
-        else if(logical)
-            switch(tmp,
-                   "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                   "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                   default)
-        else tmp
-    }
+            str_parse(desc[field], default=default, logical=logical)
 
     Usage <- function() {
         cat("Usage: R CMD build [options] pkgdirs",
@@ -205,7 +195,7 @@ get_exclude_patterns <- function()
                               collapse = "\n"), domain = NA)
                 utils::install.packages(depends,
                                         libdir,
-                                        available = 
+                                        available =
                                             available[-nrow(available), ,
                                                       drop = FALSE],
                                         dependencies = NA)
@@ -232,7 +222,7 @@ get_exclude_patterns <- function()
 	}
 	Sys.setenv("R_BUILD_TEMPLIB" = libdir)
 	TRUE
-    }
+    } ## {temp_install_pkg}
 
     prepare_pkg <- function(pkgdir, desc, Log)
     {
@@ -294,13 +284,13 @@ get_exclude_patterns <- function()
                 R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
                 if (!is.na(R_LIBS)) {
                     on.exit(Sys.setenv(R_LIBS = R_LIBS), add = TRUE)
-                    Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
-                } else {
+                    Sys.setenv(R_LIBS = path_and_libPath(libdir, R_LIBS))
+                } else { # no .libPaths() here (speed; ok ?)
                     on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
                     Sys.setenv(R_LIBS = libdir)
                 }
 
-                # Tangle all vignettes now.
+                ## Tangle all vignettes now.
 
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
@@ -332,8 +322,8 @@ get_exclude_patterns <- function()
                     copied <- file.copy(tocopy, doc_dir)
                     if (!all(copied)) {
                     	warning(sQuote("inst/doc"),
-                    	        ngettext(sum(!copied), " file\n", " files\n"), 
-                    	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "), 
+                    	        ngettext(sum(!copied), " file\n", " files\n"),
+                    	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "),
                     	                indent = 4, exdent = 2),
 			        "\n  ignored as vignettes have been rebuilt.",
 			        "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",
@@ -421,7 +411,7 @@ get_exclude_patterns <- function()
 	    ## And finally, clean up again.
             cleanup_pkg(pkgdir, Log)
         }
-    }
+    } ## {prepare_pkg}
 
     cleanup_pkg <- function(pkgdir, Log)
     {
@@ -509,11 +499,13 @@ get_exclude_patterns <- function()
     update_Rd_index <- function(oldindex, Rd_files, Log)
     {
         newindex <- tempfile()
-        res <- try(Rdindex(Rd_files, newindex))
-        if (inherits(res, "try-error")) {
-            errorLog(Log, "computing Rd index failed")
-            do_exit(1L)
-        }
+	res <- tryCatch(
+	    Rdindex(Rd_files, newindex),
+	    error = function(e) {
+		errorLog(Log, "computing Rd index failed:",
+			 conditionMessage(e))
+		do_exit(1L)
+	    })
         checkingLog(Log, "whether ", sQuote(oldindex), " is up-to-date")
         if (file.exists(oldindex)) {
             ol <- readLines(oldindex, warn = FALSE) # e.g. BaM had missing final NL
@@ -597,7 +589,7 @@ get_exclude_patterns <- function()
 	               pkgdir), quit = FALSE)
         }
 	return(TRUE)
-    }
+    } ## {build_Rd_db}
 
     ## also fixes up missing final NL
     fix_nonLF_in_files <- function(pkgname, dirPattern, Log)
@@ -620,7 +612,7 @@ get_exclude_patterns <- function()
         fix_nonLF_in_files(pkgname,
                            paste0("^(",
                                   paste(c("Makefile", "Makefile.in", "Makefile.win",
-                                       "Makevars", "Makevars.in", "Makevars.win"),
+                                          "Makevars", "Makevars.in", "Makevars.win"),
                                         collapse = "|"), ")$"), Log)
         ## Other Makefiles
         makes <- dir(pkgname, pattern = "^Makefile$",
@@ -629,7 +621,7 @@ get_exclude_patterns <- function()
             lines <- readLines(ff, warn = FALSE)
             writeLinesNL(lines, ff)
         }
-   }
+    }
 
     find_empty_dirs <- function(d)
     {
@@ -779,7 +771,7 @@ get_exclude_patterns <- function()
                 if (!OK) fixup_R_dep(pkgname, "2.10")
             }
         }
-    }
+    } ## {resave_data_others}
 
     force <- FALSE
     vignettes <- TRUE
@@ -894,11 +886,10 @@ get_exclude_patterns <- function()
         ## This does not easily work if $pkg is a symbolic link.
         ## Hence, we now convert to absolute paths.'
         setwd(startdir)
-	res <- tryCatch(setwd(pkg), error = function(e)e)
-	if (inherits(res, "error")) {
+	res <- tryCatch(setwd(pkg), error = function(e) {
             errorLog(Log, "cannot change to directory ", sQuote(pkg))
             do_exit(1L)
-        }
+        })
         pkgdir <- getwd()
         pkgname <- basename(pkgdir)
         checkingLog(Log, "for file ", sQuote(file.path(pkg, "DESCRIPTION")))
@@ -1049,7 +1040,7 @@ get_exclude_patterns <- function()
                      printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
             ## allow per-package override
             resave_data1 <- parse_description_field(desc, "BuildResaveData",
-                                                    resave_data, FALSE)
+                                                    resave_data, logical=FALSE)
             resave_data_others(pkgname, resave_data1)
             resave_data_rda(pkgname, resave_data1)
         }
