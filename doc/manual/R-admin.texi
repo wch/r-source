@@ -2317,6 +2317,17 @@ CFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
+Apple includes a wealth of Open Source libraries in macOS but
+increasingly without the corresponding headers (not even in Xcode nor
+the Command Line Tools): they are often rather old versions.  If
+installing packages from source using them it is usually easiest to
+install a statically-linked up-to-date copy of the Open Source package
+from its sources or from @uref{https://r.research.att.com/libs}.  But
+sometimes it is desirable/necessary to use Apple's dynamically linked
+library, in which case appropriate headers could be extracted from the
+sources@footnote{Note that capitalization and version may differ from
+the Open Source project.} available via
+@uref{https://opensource.apple.com}.
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
 @subsection Customizing package compilation
