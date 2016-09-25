@@ -1,26 +1,39 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{source}
-\title{Read R Code from a File or a Connection}
+\title{Read R Code from a File, a Connection or Expressions}
+\alias{source}
+\alias{withAutoprint}
 \description{
   \code{source} causes \R to accept its input from the named file or URL
-  or connection.  Input is read and \code{\link{parse}}d from that file
+  or connection or expressions directly.  Input is read and
+  \code{\link{parse}}d from that file
   until the end of the file is reached, then the parsed expressions are
   evaluated sequentially in the chosen environment.
+
+  \code{withAutoprint(exprs)} is a wrapper for \code{source(exprs = exprs, ..)}
+  with different defaults.  Its main purpose is to evaluate and
+  auto-print expressions as if in a toplevel context, e.g, as in the \R
+  console.
 }
 \usage{
 source(file, local = FALSE, echo = verbose, print.eval = echo,
+       exprs, spaced = use_file,
        verbose = getOption("verbose"),
        prompt.echo = getOption("prompt"),
-       max.deparse.length = 150, chdir = FALSE,
+       max.deparse.length = 150, width.cutoff = 60L,
+       chdir = FALSE,
        encoding = getOption("encoding"),
        continue.echo = getOption("continue"),
        skip.echo = 0, keep.source = getOption("keep.source"))
+
+withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
+              max.deparse.length = Inf,
+              width.cutoff = max(20, getOption("width")), \dots)
 }
-\alias{source}
 \arguments{
   \item{file}{a \link{connection} or a character string giving the pathname
     of the file or URL to read from.  \code{""} indicates the connection
@@ -32,9 +45,12 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     \code{source} is called.}
   \item{echo}{logical; if \code{TRUE}, each expression is printed
     after parsing, before evaluation.}
-  \item{print.eval}{logical; if \code{TRUE}, the result of
+  \item{print.eval, print.}{logical; if \code{TRUE}, the result of
     \code{eval(i)} is printed for each expression \code{i}; defaults
     to the value of \code{echo}.}
+  \item{exprs}{}
+  \item{spaced}{logical indicating if newline (hence emptly line) should
+    be printed before each expression (when \code{echo = TRUE}).}
   \item{verbose}{if \code{TRUE}, more diagnostics (than just
     \code{echo = TRUE}) are printed during parsing and evaluation of
     input, including extra info for \bold{each} expression.}
@@ -43,6 +59,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{max.deparse.length}{integer; is used only if \code{echo} is
     \code{TRUE} and gives the maximal number of characters output for
     the deparse of a single expression.}
+  \item{width.cutoff}{integer, passed to \code{\link{deparse}()} which
+    is used (only) when there are no source references.}
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
@@ -56,6 +74,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
     file to skip if \code{echo = TRUE}.}
   \item{keep.source}{logical: should the source formatting be retained
     when echoing expressions, if possible?}
+  \item{\dots}{(for \code{withAutoprint()}:) further (non-file related)
+    arguments to be passed to \code{source(.)}.}
 }
 \details{
   Note that running code via \code{source} differs in a few respects
@@ -137,6 +157,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   directives.
 }
 \examples{
+withAutoprint({ x <- 1:12; x-1; (y <- (x-5)^2); z <- y; z - 10 })
+
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
  sourceDir <- function(path, trace = TRUE, ...) {
@@ -146,6 +168,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
        if(trace) cat("\n")
     }
  }
+
+withAutoprint(expression(formals(sourceDir), body(sourceDir)),
+              max.dep = 20, verbose = TRUE)
 }
 \keyword{file}
 \keyword{programming}

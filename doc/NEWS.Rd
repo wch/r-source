@@ -212,6 +212,10 @@
 
       \item \code{strcapture()} returns \code{NA} for non-matching
       values in \code{x} (suggested by Bill Dunlap).
+
+      \item \code{source()} gets new optional arguments, notably
+      \code{exprs}; this is made use of in the new utility function
+      \code{withAutoprint()}.
     }
   }
 
