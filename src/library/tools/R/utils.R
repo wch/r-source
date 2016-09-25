@@ -2104,9 +2104,9 @@ path_and_libPath <- function(...)
 {
     lP <- .libPaths()
     ## don't call normalizePath on paths which do not exist: allowed in R_LIBS!
-    ep0 <- c(strsplit(env_path(...), ":", fixed = TRUE)[[1L]], lP[-length(lP)])
+    ep0 <- c(strsplit(env_path(...), .Platform$path.sep, fixed = TRUE)[[1L]], lP[-length(lP)])
     ep0 <- ep0[dir.exists(ep0)]
-    paste(unique(normalizePath(ep0)), collapse = ":")
+    paste(unique(normalizePath(ep0)), collapse = .Platform$path.sep)
 }
 
 ### ** str_parse_logic
