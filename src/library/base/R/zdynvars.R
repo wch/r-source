@@ -43,10 +43,11 @@
         if(!missing(new)) {
             ## paths don't really need to be unique, but searching
             ## large library trees repeatedly would be inefficient.
-            ## Use normalizePath for display: but also does path.expand
+            ## Use normalizePath for display
             new <- Sys.glob(path.expand(new))
-            paths <- unique(normalizePath(c(new, .Library.site, .Library), '/'))
-            .lib.loc <<- paths[dir.exists(paths)]
+            paths <- c(new, .Library.site, .Library)
+            paths <- paths[dir.exists(paths)]
+            .lib.loc <<- unique(normalizePath(paths))
         }
         else
             .lib.loc
