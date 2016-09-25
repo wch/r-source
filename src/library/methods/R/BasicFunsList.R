@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicFunsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ list(
 , "%*%" = function(x, y) standardGeneric("%*%")
 , "xtfrm" = function(x) standardGeneric("xtfrm")
 ### these have a different arglist from the primitives
-, "c" = structure(function(x, ..., recursive = FALSE, use.names = TRUE) standardGeneric("c"),
+, "c" = structure(function(x, ..., recursive = FALSE) standardGeneric("c"),
                   signature="x")
 , "all" = structure(function(x, ..., na.rm = FALSE) standardGeneric("all"),
                     signature="x")
