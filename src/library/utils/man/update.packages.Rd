@@ -44,7 +44,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \item{repos}{
     character vector, the base URL(s) of the repositories
     to use, e.g., the URL of a CRAN mirror such as
-    \code{"http://cran.us.r-project.org"}.
+    \code{"https://cloud.r-project.org"}.
   }
   \item{contriburl}{URL(s) of the contrib sections of the
     repositories.  Use this argument if your repository is
