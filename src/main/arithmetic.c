@@ -548,8 +548,11 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     }
     else yattr = yarray = yts = yS4 = FALSE;
 
+#define R_ARITHMETIC_ARRAY_1_SPECIAL
+
+#ifdef R_ARITHMETIC_ARRAY_1_SPECIAL
     /* If either x or y is a matrix with length 1 and the other is a
-       vector, we want to coerce the matrix to be a vector.
+       vector of a different length, we want to coerce the matrix to be a vector.
        Do we want to?  We don't do it!  BDR 2004-03-06
 
        From 3.4.0 (Sep. 2016), this signals a warning,
@@ -563,19 +566,22 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     if (xarray != yarray) {
     	if (xarray && nx==1 && ny!=1) {
 	    if(ny != 0)
-		warningcall(call,
-		_("dropping dim() of array of length one.  Will become an error."));
+		warningcall(call, _(
+	"Recycling array of length 1 in array-vector arithmetic is deprecated.\n\
+ Use c() or as.vector() instead.\n"));
     	    REPROTECT(x = duplicate(x), xpi);
     	    setAttrib(x, R_DimSymbol, R_NilValue);
     	}
     	if (yarray && ny==1 && nx!=1) {
 	    if(nx != 0)
-		warningcall(call,
-		_("dropping dim() of array of length one.  Will become an error."));
+		warningcall(call, _(
+	"Recycling array of length 1 in vector-array arithmetic is deprecated.\n\
+ Use c() or as.vector() instead.\n"));
     	    REPROTECT(y = duplicate(y), ypi);
     	    setAttrib(y, R_DimSymbol, R_NilValue);
     	}
     }
+#endif
 
     SEXP dims, xnames, ynames;
     if (xarray || yarray) {
