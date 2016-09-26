@@ -23,6 +23,11 @@
       lines recorded in .Traceback and other deparsing activities.
 
       \item \code{abbreviate()} gets option \code{named = TRUE}.
+
+      \item The online documentation for package \pkg{methods} is
+        extensively rewritten.  The goals are to simplify
+        documentation for basic use, to note old features not
+        recommended and to correct out-of-date information.
     }
   }
 

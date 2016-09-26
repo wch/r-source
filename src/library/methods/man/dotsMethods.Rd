@@ -41,7 +41,7 @@
 
 }
 \section{Method Selection and Dispatch for "..."}{
-  See \link{Methods} for a general discussion.  The following assumes
+  See \link{Methods_Details} for a general discussion.  The following assumes
   you have read the \dQuote{Method Selection and Dispatch} section of
   that documentation.
 
@@ -190,7 +190,7 @@ for(cl in c("Number", "vdate", "cdate")) removeClass(cl)
  Springer (For the original S4 version.)
 }
 \seealso{
-For the general discussion of methods, see  \link{Methods} and links
+For the general discussion of methods, see  \link{Methods_Details} and links
 from there.
 }
 \keyword{programming}

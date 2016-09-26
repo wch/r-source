@@ -68,7 +68,7 @@
             # the names attribute
 }
 \section{Objects from the Classes}{
-  If a class is not virtual (see section in \code{\link{Classes}}),
+  If a class is not virtual (see section in \code{\link{Classes_Details}}),
   objects can be created by calls of the form \code{new(Class, ...)},
   where \code{Class} is the quoted class name, and the remaining
   arguments if any are objects to be interpreted as vectors of this

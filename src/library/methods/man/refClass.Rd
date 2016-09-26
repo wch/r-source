@@ -829,9 +829,13 @@ interactive debugging and  \code{trace(what, edit = TRUE)} to edit the
 reference method interactively.
 
 }
-\author{
-  John Chambers
+\references{
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 11.)
 }
+
 
 \examples{
 ## a simple editor for matrix objects.  Method  $edit() changes some

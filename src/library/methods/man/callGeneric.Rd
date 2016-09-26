@@ -57,7 +57,7 @@ callGeneric(...)
  Springer (For the original S4 version.)
 }
 \seealso{\code{\link{GroupGenericFunctions}} for other information
-  about group generic functions; \link{Methods} for the general behavior
+  about group generic functions; \link{Methods_Details} for the general behavior
   of method dispatch
 }
 \examples{

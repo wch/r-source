@@ -74,6 +74,6 @@
 \seealso{
   See function \code{\link{setClass}} to supply the information in the
   class definition.
-  See \link{Classes} for a more basic discussion of class information.
+  See \link{Classes_Details} for a more basic discussion of class information.
 }
 \keyword{classes}

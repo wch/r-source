@@ -89,7 +89,7 @@ initialize(.Object, ...)
  \emph{Programming with Data}
  Springer (For the original S4 version.)
 }
-\seealso{ \link{Classes} for an overview of defining class, and
+\seealso{ \link{Classes_Details} for details of class definitions, and
   \code{\link{setOldClass}} for the relation to S3 classes. }
 
 \examples{

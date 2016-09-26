@@ -85,7 +85,7 @@ callNextMethod(...)
 }
 \seealso{\code{\link{callGeneric}} to call the generic function with the
  current dispatch rules (typically for a group generic function);
- \link{Methods} for the general behavior of method dispatch.
+ \link{Methods_Details} for the general behavior of method dispatch.
 }
 
 \examples{

@@ -14,27 +14,31 @@ Formally defined methods and classes for R objects, plus
 other programming tools, as described in the references.
 }
 \details{
-  This package provides the \sQuote{S4} or \sQuote{S version 4}
+  This package provides the \dQuote{S4} or \dQuote{S version 4}
   approach to methods and classes in a functional language.
 
-  See the documentation entries \code{\link{Classes}},
-  \code{\link{Methods}}, and \code{\link{GenericFunctions}} for general discussion of these topics, at a
-  fairly technical level.  Links from those pages, and the
-  documentation of \code{\link{setClass}} and \code{\link{setMethod}}
-  cover the main programming tools needed.
+  For basic use of the techniques, start with \link{Introduction} and
+  follow the links there to the key functions for programming, notably
+  \code{\link{setClass}} and \code{\link{setMethod}}. 
+
+  For detailed discussion, see the documentation entries \code{\link{Classes_Details}},
+  \code{\link{Methods_Details}}, and \code{\link{GenericFunctions}} for these topics, at a
+  fairly technical level.
 
   For a complete
   list of functions and classes, use \code{library(help="methods")}.
 }
 
 \references{
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
+
  Chambers, John M. (2008)
  \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
+  Springer.  (Chapter 10 has some additional details.)
 
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
 }
 \author{
 R Core Team

@@ -70,7 +70,7 @@ selectMethod(f, signature, optional = FALSE, useInherited =,
   \code{\link{match.call}}).
 
   The strings in the signature may be class names, \code{"missing"} or
-  \code{"ANY"}.  See \link{Methods} for the meaning of these in method
+  \code{"ANY"}.  See \link{Methods_Details} for the meaning of these in method
   selection.  Arguments not supplied in the signature implicitly
   correspond to class \code{"ANY"}; in particular, giving an empty
   signature means to look for the default method.
@@ -120,7 +120,7 @@ Note therefore that the only reliable test that the search failed is \code{is.nu
  \emph{Programming with Data}
  Springer (For the original S4 version.)
 }
-\seealso{\code{\link{Methods}} for the details of method
+\seealso{\code{\link{Methods_Details}} for the details of method
   selection; \code{\link{GenericFunctions}} for other functions
   manipulating methods and generic function objects;
   \code{\linkS4class{MethodDefinition}} for the class that represents

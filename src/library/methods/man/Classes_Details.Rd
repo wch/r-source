@@ -1,10 +1,10 @@
 % File src/library/methods/man/Classes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
-\name{Classes}
-\alias{Classes}
+\name{Classes_Details}
+\alias{Classes_Details}
 \alias{__ClassMetaData}
 \alias{.environment-class}
 \alias{.externalptr-class}
@@ -151,23 +151,7 @@
     }
   }
 }
-\section{Virtual classes; Basic classes}{
-
-      Classes exist for which no actual objects can be created by a
-      call to \code{\link{new}}, the \emph{virtual} classes, in fact a
-      very important programming tool.  They are used to group together
-      ordinary classes that want to share some programming behavior,
-      without necessarily restricting how the behavior is implemented.
-      Virtual class definitions may if you want include
-      slots (to provide some common behavior without fully defining
-      the object---see the class \code{\linkS4class{traceable}} for an example).
-
-      A simple and useful form of virtual class is the \emph{class
-        union}, a virtual class that is defined in a call to
-      \code{\link{setClassUnion}} by listing one or
-      more of subclasses (classes that extend the class union).  Class
-      unions can include as subclasses basic object types (whose
-      definition is otherwise sealed).
+\section{Basic classes}{
 
       There are a number of \sQuote{basic} classes, corresponding to the
       ordinary kinds of data occurring in \R.  For example,
@@ -319,27 +303,16 @@ S3 classes, which must have been registered by a previous call to
 
 
 
+
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
-
-  Chambers, John M.  and Hastie, Trevor  J. eds (1992)
-  \emph{Statistical Models in S.}
-  Wadsworth & Brooks/Cole (Appendix A for S3 classes.)
-
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
-  \emph{The New S Language}.
-  Wadsworth & Brooks/Cole. (Out of print.) (The description of
-  vectors, matrix, array and time-series objects.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
 
 \seealso{
-  \code{\link{Methods}} for analogous discussion of methods,
+  \code{\link{Methods_Details}} for analogous discussion of methods,
   \code{\link{setClass}} for details of specifying class definitions,
   \code{\link{is}},
   \code{\link{as}},
