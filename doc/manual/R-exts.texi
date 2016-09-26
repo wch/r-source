@@ -6823,7 +6823,7 @@ structure and detect mis-matched braces, and so on.
 
 The system most commonly used for this is some version of
 @command{Emacs} (including @command{XEmacs}) with the @acronym{ESS}
-package (@uref{http://ess.r-project.org/}: it is often is installed with
+package (@uref{https://ESS.R-project.org/}: it is often is installed with
 @command{Emacs} but may need to be loaded, or even installed,
 separately).
 

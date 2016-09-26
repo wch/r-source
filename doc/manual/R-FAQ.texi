@@ -2086,8 +2086,7 @@ editing saved transcripts, and re-evaluating commands from transcript
 files).
 
 The latest stable version of @acronym{ESS} is available via @CRAN{} or
-the @url{http://ESS.R-project.org/, ESS web page}, an https version
-of which can be found at @url{https://stat.ethz.ch/ESS/}.
+the @url{https://ESS.R-project.org/, ESS web page}.
 
 @acronym{ESS} comes with detailed installation instructions.
 
