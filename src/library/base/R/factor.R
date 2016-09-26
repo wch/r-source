@@ -149,12 +149,10 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
     if (length(x) == 0L)
         cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
     else {
-        ## The idea here is to preserve all relevant attributes such as
-        ## names and dims
-        xx <- x
-        class(xx) <- NULL
-        levels(xx) <- NULL
+        xx <- character(length(x))
         xx[] <- as.character(x)
+        keepAttrs <- setdiff(names(attributes(x)), c("levels", "class"))
+        attributes(xx)[keepAttrs] <- attributes(x)[keepAttrs]
         print(xx, quote = quote, ...)
     }
     maxl <- if(is.null(max.levels)) TRUE else max.levels

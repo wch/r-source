@@ -417,6 +417,10 @@
 
       \item \code{as.character.factor()} respects S4 inheritance when
       checking the type of its argument. (\PR{17141})
+
+      \item \code{print.factor()} no longer sets the class of the factor
+      to \code{NULL}, which would violate a basic constraint of an S4
+      object.
     }
   }
 }
