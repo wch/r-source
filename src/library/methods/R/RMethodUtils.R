@@ -398,9 +398,11 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
 	trailingArgs <- fnames[seq.int(to = length(fnames), length.out = ntrail)]
 	if(!identical(	mnames[seq.int(to = length(mnames), length.out = ntrail)],
 		      trailingArgs))
-	    stop(gettextf("arguments (%s) after '...' in the generic must appear in the method, in the same place at the end of the argument list",
-			  paste(trailingArgs, collapse=", ")),
-                 call. = TRUE, domain = NA)
+	    stop(gettextf("%s arguments (%s) after %s in the generic must appear in the method, in the same place at the end of the argument list",
+                          .renderSignature(generic@generic, signature),
+			  paste(sQuote(trailingArgs), collapse = ", "),
+                          sQuote("...")),
+                 call. = FALSE, domain = NA)
 	newCallNames <- character(length(newCall))
 	newCallNames[seq.int(to = length(newCallNames), length.out = ntrail)] <-
 	    trailingArgs
@@ -816,7 +818,7 @@ cacheMetaData <-
     if (attach) {
         for(cl in classes) {
             ## NOT getClassDef, it will use cache
-            cldef <- get(classMetaName(cl), where) 
+            cldef <- get(classMetaName(cl), where)
             if(is(cldef, "classRepresentation"))
                 .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"),
                             where)

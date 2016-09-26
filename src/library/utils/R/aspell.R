@@ -78,7 +78,7 @@ function(files, filter, control = list(), encoding = "unknown",
     else if(!is.function(filter))
         stop("Invalid 'filter' argument.")
 
-    encoding <- rep(encoding, length.out = length(files))
+    encoding <- rep_len(encoding, length(files))
 
     verbose <- getOption("verbose")
 
@@ -721,7 +721,7 @@ function(ifile, encoding = "unknown", ignore = character())
                 col1 <- which(ptab == col1) + 1L
             }
             substring(lines[line1], col1) <- texts[1L]
-            pos <- seq(from = 2, length.out = n - 2)
+            pos <- seq(from = 2L, length.out = n - 2L)
             if(length(pos))
                 lines[line1 + pos - 1] <- texts[pos]
             if(length(ptab <- tab[[as.character(line2)]])) {

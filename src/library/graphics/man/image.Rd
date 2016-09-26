@@ -1,6 +1,6 @@
 % File src/library/graphics/man/image.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{image}
@@ -84,7 +84,7 @@ image(x, \dots)
 
   Rectangles corresponding to missing values are not plotted (and so are
   transparent and (unless \code{add = TRUE}) the default background
-  painted in \code{par("bg")} will show though and if that is
+  painted in \code{par("bg")} will show through and if that is
   transparent, the canvas colour will be seen).
 
   If \code{breaks} is specified then \code{zlim} is unused and the

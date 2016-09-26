@@ -40,7 +40,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep(x, length.out = max(args_length)))
+    args <- lapply(args, function(x) rep_len(x, max(args_length)))
 
     ## <COMMENT Z>
     ## We could do this more elegantly, but let's just go through the
@@ -233,7 +233,7 @@ function(x, name, value)
 {
     name <- match.arg(name, c("given", "family", "role", "email", "comment"))
     x <- .listify(unclass(x))
-    value <- rep(value, length.out = length(x))
+    value <- rep_len(value, length(x))
 
     if(name == "role")
         value <- lapply(value, .canonicalize_person_role)
@@ -331,7 +331,9 @@ function(x)
         else NULL
         x <- sub("[[:space:]]*\\([^)]*\\)", "", x)
         email <- if(grepl("<.*>", x))
-            sub(".*<([^>]*)>.*", "\\1", x)
+            unlist(strsplit(gsub("[[:space:]]*", "",
+                                 sub(".*<([^>]*)>.*", "\\1", x)),
+                            ",", fixed = TRUE))
         else NULL
         x <- sub("[[:space:]]*<[^>]*>", "", x)
         role <- if(grepl("\\[.*\\]", x))
@@ -441,11 +443,26 @@ function(x,
     braces <- braces[include]
     collapse <- collapse[include]
 
+    paste_collapse <- function(x, collapse) {
+        if(is.na(collapse) || identical(collapse, FALSE)) {
+ 	    x[1L]
+ 	} else {
+ 	    paste(x, collapse = collapse)
+ 	}
+    }
+
     ## format 1 person
     format_person1 <- function(p) {
-	rval <- lapply(seq_along(p), function(i) if(is.null(p[[i]])) NULL else
-		       paste0(braces[[i]][1L], paste(p[[i]], collapse = collapse[[i]]),
-			      braces[[i]][2L]))
+	rval <- lapply(seq_along(p),
+                       function(i) {
+                           if(is.null(p[[i]]))
+                               NULL
+                           else
+                               paste0(braces[[i]][1L],
+                                      paste_collapse(p[[i]],
+                                                     collapse[[i]]),
+                                      braces[[i]][2L])
+                       })
 	paste(do.call("c", rval), collapse = " ")
     }
 
@@ -495,7 +512,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(args)[!args_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    args <- lapply(args, function(x) rep(x, length.out = max_length))
+    args <- lapply(args, function(x) rep_len(x, max_length))
 
     other_length <- lengths(other)
     if(!all(other_length_ok <- other_length %in% c(1L, max_length)))
@@ -503,7 +520,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
                          paste(names(other)[!other_length_ok],
                                collapse = ", ")),
                 domain = NA)
-    other <- lapply(other, function(x) rep(x, length.out = max_length))
+    other <- lapply(other, function(x) rep_len(x, max_length))
 
     bibentry1 <-
     function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL, ..., other = list())
@@ -945,7 +962,7 @@ function(x, name, value)
     name <- tolower(name)
 
     ## recycle value
-    value <- rep(.listify(value), length.out = length(x))
+    value <- rep_len(.listify(value), length(x))
 
     ## check bibtype
     if(name == "bibtype") {
@@ -1293,7 +1310,14 @@ function(x)
 .read_authors_at_R_field <-
 function(x)
 {
-    out <- eval(parse(text = x))
+    out <- if((Encoding(x) == "UTF-8") && !l10n_info()$"UTF-8") {
+        con <- file()
+        on.exit(close(con))
+        writeLines(x, con, useBytes = TRUE)
+        eval(parse(con, encoding = "UTF-8"))
+    } else {
+        eval(parse(text = x))
+    }
 
     ## Let's by nice ...
     ## Alternatively, we could throw an error.
@@ -1366,9 +1390,12 @@ function(x)
     ## all subsequent lines are indented (as .write_description avoids
     ## folding for Author fields).  We use a common indentation of 2,
     ## with an extra indentation of 2 within single author descriptions.
-    out <- paste(lapply(strwrap(x, indent = 0L, exdent = 4L,
-                                simplify = FALSE),
-                        paste, collapse = "\n"),
+    out <- paste(lapply(x,
+                        function(e) {
+                            paste(strwrap(e, indent = 0L, exdent = 4L),
+                                  ## simplify = FALSE),
+                                  collapse = "\n")
+                        }),
                  collapse = ",\n  ")
     if(!is.null(header)) {
         header <- paste(strwrap(header, indent = 0L, exdent = 2L),
@@ -1400,7 +1427,8 @@ function(x)
     ## If this leaves nothing or more than one ...
     if(length(x) != 1L) return("")
     display <- format(x, include = c("given", "family"))
-    address <- format(x, include = c("email"))
+    address <- format(x, include = c("email"),
+                      collapse = list(email = FALSE))
     ## Need to quote display names at least when they contain commas
     ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
     if(any(ind <- grepl(",", display))) {

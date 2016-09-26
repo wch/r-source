@@ -211,7 +211,7 @@ genCode <- function(e, cntxt, gen = NULL) {
         cmp(e, cb, cntxt)
     else
         gen(cb, cntxt)
-    codeBufCode(cb)
+    codeBufCode(cb, cntxt)
 }
 @ %def genCode
 [[genCode]] creates a code buffer, fills the code buffer, and then
@@ -870,11 +870,11 @@ by [[patchlabels]].  Labels can appear directly in the instruction
 stream and in lists that have been placed in the instruction stream;
 this is used for the [[SWITCH]] instruction.
 <<label management interface>>=
-patchlabels <- function() {
+patchlabels <- function(cntxt) {
     offset <- function(lbl) {
         if (is.null(labels[[lbl]]))
-            stop(gettextf("no offset recorded for label \"%s\"", lbl),
-                 domain = NA)
+            cntxt$stop(gettextf("no offset recorded for label \"%s\"", lbl),
+                       cntxt)
         labels[[lbl]]
     }
     for (i in 1 : codeCount) {
@@ -893,8 +893,8 @@ patchlabels <- function() {
 The contents of the code buffer is extracted into a code object by
 calling [[codeBufCode]]:
 <<[[codeBufCode]] function>>=
-codeBufCode <- function(cb) {
-    cb$patchlabels()
+codeBufCode <- function(cb, cntxt) {
+    cb$patchlabels(cntxt)
     .Internal(mkCode(cb$code(), cb$const()))
 }
 @ %def codeBufCode
@@ -1218,6 +1218,22 @@ notifyNoSwitchcases <- function(cntxt)
         cntxt$warn(gettext("'switch' with no alternatives"), cntxt)
 @ %def notifyNoSwitchcases
 
+When the compiler encounters an error during JIT or package
+compilation, it catches the error and returns the original uncompiled
+code letting the AST interpreter handle it. This can happen due to a
+compiler bug or when the code being compiled violates certain
+assumptions made by the compiler (such as a certain discipline on
+frame types in the evaluation environment, as checked in
+[[frameTypes]]). The compiler will notify about catching such errors
+via [[notifyCompilerError]].
+
+<<[[notifyCompilerError]] function>>=
+notifyCompilerError <- function(msg)
+    if (!compilerOptions$suppressAll)
+        cat(paste(gettext("Error: compilation failed - "), msg, "\n"))
+@ %def notifyCompilerError
+
+
 \section{Compilation environments}
 \label{sec:environments}
 %% **** lambda lifting/eliminating variables not captured
@@ -1473,50 +1489,46 @@ environment.
 A simple approach for identifying all local variables created within
 an expression is given by
 <<findlocals0>>=
-findLocals0 <- function(e) {
+findLocals0 <- function(e, cntxt) {
     if (typeof(e) == "language") {
         if (typeof(e[[1]]) %in% c("symbol", "character"))
             switch(as.character(e[[1]]),
                    <<[[findLocals0]] switch clauses>>
-                   findLocalsList0(e[-1]))
-         else findLocalsList0(e)
+                   findLocalsList0(e[-1], cntxt))
+         else findLocalsList0(e, cntxt)
     }
     else character(0)
 }
 
-findLocalsList0 <- function(elist)
-    unique(unlist(lapply(elist, findLocals0)))
+findLocalsList0 <- function(elist, cntxt)
+    unique(unlist(lapply(elist, findLocals0, cntxt)))
 @ %def findLocals0 findLocalsList0
 
 For assignment expressions the assignment variable is added to any
 variables found in the value expression.
 <<[[findLocals0]] switch clauses>>=
 "=" =,
-"<-" = unique(c(getAssignedVar(e),
-                findLocalsList0(e[-1]))),
+"<-" = unique(c(getAssignedVar(e, cntxt),
+                findLocalsList0(e[-1], cntxt))),
 @ %def
 The assigned variable is determined by [[getAssignedVar]]:
 <<[[getAssignedVar]] function>>=
-getAssignedVar <- function(e) {
+getAssignedVar <- function(e, cntxt) {
     v <- e[[2]]
     if (missing(v))
-        stop(gettextf("bad assignment: %s", pasteExpr(e)),
-             domain = NA)
+        cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
     else if (typeof(v) %in% c("symbol", "character"))
         as.character(v)
     else {
         while (typeof(v) == "language") {
             if (length(v) < 2)
-                stop(gettextf("bad assignment: %s", pasteExpr(e)),
-                     domain = NA)
+                cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
             v <- v[[2]]
             if (missing(v))
-                stop(gettextf("bad assignment: %s", pasteExpr(e)),
-                     domain = NA)
+                cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
         }
         if (typeof(v) != "symbol")
-            stop(gettextf("bad assignment: %s", pasteExpr(e)),
-                 domain = NA)
+            cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
         as.character(v)
     }
 }
@@ -1526,7 +1538,7 @@ For [[for]] loops the loop variable is added to any variables found in
 the sequence and body expressions.
 <<[[findLocals0]] switch clauses>>=
 "for" = unique(c(as.character(e[2]),
-                 findLocalsList0(e[-2]))),
+                 findLocalsList0(e[-2], cntxt))),
 @ %def
 
 The variable in [[assign]] and [[delayedAssign]] expressions is
@@ -1537,8 +1549,8 @@ environment argument.
 "assign" = if (length(e) == 3 &&
                is.character(e[[2]]) &&
                length(e[[2]]) == 1)
-               c(e[[2]], findLocals0(e[[3]], shadowed))
-           else findLocalsList1(e[1], shadowed),
+               c(e[[2]], findLocals0(e[[3]], cntxt))
+           else findLocalsList0(e[1], cntxt),
 @ %def
 
 Variables defined within local functions created by [[function]]
@@ -1555,7 +1567,7 @@ evaluate their arguments and so do not contribute new local variables.
 "function" = character(0),
 "~" = character(0),
 "local" = if (length(e) == 2) character(0)
-          else findLocalsList0(e[-1]),
+          else findLocalsList0(e[-1], cntxt),
 "expression" =,
 "quote" = character(0),
 @ %def findLocals0
@@ -1573,38 +1585,38 @@ surrounding function.  To allow for this we can add an optional
 variable [[shadowed]] for providing a character vector of names of
 variables with shadowing local definitions.
 <<[[findLocals1]] function>>=
-findLocals1 <- function(e, shadowed = character(0)) {
+findLocals1 <- function(e, shadowed = character(0), cntxt) {
     if (typeof(e) == "language") {
         if (typeof(e[[1]]) %in% c("symbol", "character")) {
             v <- as.character(e[[1]])
             switch(v,
                    <<[[findLocals1]] switch clauses>>
-                   findLocalsList1(e[-1], shadowed))
+                   findLocalsList1(e[-1], shadowed, cntxt))
         }
-         else findLocalsList1(e, shadowed)
+         else findLocalsList1(e, shadowed, cntxt)
     }
     else character(0)
 }
 @ %def findLocals1 
 %% **** merge into single chunk??
 <<[[findLocalsList1]] function>>=
-findLocalsList1 <- function(elist, shadowed)
-    unique(unlist(lapply(elist, findLocals1, shadowed)))
+findLocalsList1 <- function(elist, shadowed, cntxt)
+    unique(unlist(lapply(elist, findLocals1, shadowed, cntxt)))
 @ %def findLocalsList1
 The handling of assignment operators, [[for]] loops, [[function]] and
 [[~]] expressions is analogous to the approach in [[findLocals0]].
 <<[[findLocals1]] switch clauses>>=
 "=" =,
-"<-" = unique(c(getAssignedVar(e),
-                findLocalsList1(e[-1], shadowed))),
+"<-" = unique(c(getAssignedVar(e, cntxt),
+                findLocalsList1(e[-1], shadowed, cntxt))),
 "for" = unique(c(as.character(e[2]),
-                 findLocalsList1(e[-2], shadowed))),
+                 findLocalsList1(e[-2], shadowed, cntxt))),
 "delayedAssign" =,
 "assign" = if (length(e) == 3 &&
                is.character(e[[2]]) &&
                length(e[[2]]) == 1)
-               c(e[[2]], findLocals1(e[[3]], shadowed))
-           else findLocalsList1(e[1], shadowed),
+               c(e[[2]], findLocals1(e[[3]], shadowed, cntxt))
+           else findLocalsList1(e[1], shadowed, cntxt),
 "function" = character(0),
 "~" = character(0),
 @ %def
@@ -1614,11 +1626,11 @@ definitions.
 <<[[findLocals1]] switch clauses>>=
 "local" = if (! v %in% shadowed && length(e) == 2)
               character(0)
-          else findLocalsList1(e[-1], shadowed),
+          else findLocalsList1(e[-1], shadowed, cntxt),
 "expression" =,
 "quote" = if (! v %in% shadowed)
               character(0)
-          else findLocalsList1(e[-1], shadowed),
+          else findLocalsList1(e[-1], shadowed, cntxt),
 @ %def
 The assignment functions could also be shadowed, but this is not very
 common, and assuming that they are not errs in the conservative
@@ -1644,7 +1656,6 @@ not to be shadowed.  This can be iterated to convergence.  It is also
 useful to check before returning whether any of the syntactically
 special variables has been assigned to.  If so, so a warning is
 issued.
-%% **** allow overriding of the warning function by cntxt?
 %% **** look into speeding up findLocalsList
 <<[[findLocalsList]] function>>=
 findLocalsList <- function(elist, cntxt) {
@@ -1654,7 +1665,7 @@ findLocalsList <- function(elist, cntxt) {
     sf <- initialShadowedFuns
     nsf <- length(sf)
     repeat {
-        vals <- findLocalsList1(elist, sf)
+        vals <- findLocalsList1(elist, sf, cntxt)
         redefined <- sf %in% vals
         last.nsf <- nsf
         sf <- unique(c(shadowed, sf[redefined]))
@@ -1666,8 +1677,8 @@ findLocalsList <- function(elist, cntxt) {
                 msg <- ngettext(sum(rdsf),
                                 "local assignment to syntactic function: ",
                                 "local assignments to syntactic functions: ")
-                warning(msg, paste(vals[rdsf], collapse = ", "),
-                        domain = NA)
+                cntxt$warn(paste(msg, paste(vals[rdsf], collapse = ", ")),
+                           cntxt)
             }
             return(vals)
         }
@@ -1793,7 +1804,7 @@ getInlineInfo <- function(name, cntxt) {
             frame <- info$frame
             if (ftype == "namespace") {
                 <<fixup for a namespace import frame>>
-                info$package <- nsName(findHomeNS(name, frame))
+                info$package <- nsName(findHomeNS(name, frame, cntxt))
                 info
             }
             else if (ftype == "global" &&
@@ -2994,7 +3005,9 @@ cmpMath1 <- function(e, cb, cntxt) {
         name <- as.character(e[[1]])
         idx <- match(name, math1funs) - 1
         if (is.na(idx))
-            stop(sQuote(name), "is not a registered math1 function")
+            cntxt$stop(
+                paste(sQuote(name), "is not a registered math1 function"),
+                cntxt)
         ncntxt <- make.nonTailCallContext(cntxt)
         cmp(e[[2]], cb, ncntxt);
         ci <- cb$putconst(e)
@@ -3779,7 +3792,7 @@ cmpAssign <- function(e, cb, cntxt) {
     superAssign <- as.character(e[[1]]) == "<<-"
     lhs <- e[[2]]
     value <- e[[3]]
-    symbol <- as.name(getAssignedVar(e))
+    symbol <- as.name(getAssignedVar(e, cntxt))
     if (superAssign && ! findVar(symbol, cntxt))
         notifyNoSuperAssignVar(symbol, cntxt)
     if (is.name(lhs) || is.character(lhs))
@@ -4075,7 +4088,7 @@ order. An argument context is used since there are already values on
 the stack.
 <<compile code to compute left hand side values>>=
 ncntxt <- make.argContext(cntxt)
-flatPlace <- flattenPlace(lhs)
+flatPlace <- flattenPlace(lhs, cntxt)
 for (p in rev(flatPlace[-1]))
     cmpGetterCall(p, cb, ncntxt)
 @ %def
@@ -4087,18 +4100,18 @@ right hand side value, to preserve the stack invariant.
 
 The function [[flattenPlace]] is defined as
 <<[[flattenPlace]] function>>=
-flattenPlace <- function(place) {
+flattenPlace <- function(place, cntxt) {
     places <- NULL
     while (typeof(place) == "language") {
         if (length(place) < 2)
-            stop("bad assignment 1")
+            cntxt$stop(gettext("bad assignment 1"), cntxt)
         tplace <- place
         tplace[[2]] <- as.name("*tmp*")
         places <- c(places, list(tplace))
         place <- place[[2]]
     }
     if (typeof(place) != "symbol")
-        stop("bad assignment 2")
+        cntxt$stop(gettext("bad assignment 2"), cntxt)
     places
 }
 @ %def flattenPlace
@@ -4666,13 +4679,19 @@ have a variant that returns the uncompiled function if there is an
 error during compilation.
 <<[[tryCmpfun]] function>>=
 tryCmpfun <- function(f)
-    tryCatch(cmpfun(f), error = function(e) f)
+    tryCatch(cmpfun(f), error = function(e) {
+        notifyCompilerError(paste(e$message, "at", deparse(e$call)))
+        f
+    })
 @ %def tryCmpfun
 
 A similar utility for expressions for use in JIT compilation of loops:
 <<[[tryCompile]] function>>=
 tryCompile <- function(e, ...)
-    tryCatch(compile(e, ...), error = function(err) e)
+    tryCatch(compile(e, ...), error = function(err) {
+        notifyCompilerError(paste(err$message, "at", deparse(err$call)))
+        e
+    })
 @ %def tryCompile
 
 
@@ -5378,7 +5397,7 @@ its imports, or if the home namespace cannot be determined.
 ## imports environment) find the namespace in which the symbol's value
 ## was originally defined. Returns NULL if the symbol is not found via
 ## the namespace.
-findHomeNS <- function(sym, ns) {
+findHomeNS <- function(sym, ns, cntxt) {
     <<if [[ns]] is an imports frame find the corresponding namespace>>
     if (exists(sym, ns, inherits = FALSE))
         ns
@@ -5404,7 +5423,8 @@ if (! isNamespace(ns)) {
     ## namespace.
     name <- attr(ns, "name")
     if (is.null(name))
-        stop("'ns' must be a namespace or a namespace imports environment")
+        cntxt$stop("'ns' must be a namespace or a namespace imports environment",
+            cntxt)
     ns <- getNamespace(sub("imports:", "", attr(ns, "name")))
 }
 @ %def
@@ -5437,7 +5457,7 @@ if (identical(ins, .BaseNamespaceEnv))
 else
     exports <- get(".__NAMESPACE__.", ins)$exports
 if (exists(sym, exports, inherits = FALSE))
-    return(findHomeNS(sym, ins))
+    return(findHomeNS(sym, ins, cntxt))
 @ %def
 
 For selective imports the [[imports]] entry is a named character
@@ -5454,7 +5474,7 @@ if (pos) {
     ## renaming this is still supported by the
     ## namespace code.)
     if (sym == exports[pos])
-        return(findHomeNS(sym, ins))
+        return(findHomeNS(sym, ins, cntxt))
     else
         return(NULL)
 }
@@ -6264,6 +6284,8 @@ Opcodes.names <- names(Opcodes.argc)
 <<[[notifyMultipleSwitchDefaults]] function>>
 
 <<[[notifyNoSwitchcases]] function>>
+
+<<[[notifyCompilerError]] function>>
 
 
 ##

@@ -1113,7 +1113,7 @@ are because people have not done so.
 
 If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
-documented at @url{http://win-builder.r-project.org}.
+documented at @url{https://win-builder.r-project.org}.
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages into libraries in this version?, Packages
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
@@ -1306,7 +1306,7 @@ Presumably one not available on CRAN, BioC or a similar repository.
 
 If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
-documented at @url{http://win-builder.r-project.org}.  If the package is
+documented at @url{https://win-builder.r-project.org}.  If the package is
 not yours, please remember to change the maintainer address so the
 results go to you and not the author(s)!
 

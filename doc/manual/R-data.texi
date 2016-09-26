@@ -86,8 +86,7 @@ principal authors of the packages mentioned are
 @item @CRANpkg{dataframes2xls} @tab Guido van Steen
 @item @CRANpkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
 @item @CRANpkg{gdata} @tab Gregory R. Warnes
-@item @CRANpkg{hdf5} @tab Marcus Daniels
-@item @CRANpkg{ncdf}, @CRANpkg{ncdf4} @tab David Pierce
+@item @CRANpkg{ncdf4} @tab David Pierce
 @item @CRANpkg{rJava} @tab Simon Urbanek
 @item @CRANpkg{RJDBC} @tab Simon Urbanek
 @item @CRANpkg{RMySQL} @tab David James and Saikat DebRoy
@@ -101,7 +100,6 @@ principal authors of the packages mentioned are
 @item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
 @item @CRANpkg{WriteXLS} @tab Marc Schwartz
 @item @CRANpkg{XLConnect} @tab Mirai Solutions GmbH
-@item @CRANpkg{xlsReadWrite} @tab Hans-Peter Suter
 @item @CRANpkg{XML} @tab Duncan Temple Lang
 @end multitable
 @end quotation
@@ -154,6 +152,10 @@ after export.  The case study in Becker, Chambers & Wilks (1988, Chapter
 manipulate the data before input to @Sl{}. The traditional Unix tools
 are now much more widely available, including for Windows.
 
+This manual was first written in 2000, and the number of scope of @R{}
+packages has increased a hundredfold since.  For specialist data formats
+it is worth searching to see if a suitable package already exists.
+
 @menu
 * Imports::                     
 * Export to text files::        
@@ -163,10 +165,6 @@ are now much more widely available, including for Windows.
 @node Imports, Export to text files, Introduction, Introduction
 @section Imports
 @findex scan
-
-@menu
-* Encodings::                   
-@end menu
 
 The easiest form of data to import into @R{} is a simple text file, and
 this will often be acceptable for problems of small or medium scale.
@@ -202,6 +200,10 @@ using the DBMS to extract a plain file, but for many such DBMSs the
 extraction operation can be done directly from an @R{} package:
 @xref{Relational databases}.  Importing data via network connections is
 discussed in @ref{Network interfaces}.
+
+@menu
+* Encodings::                   
+@end menu
 
 @node Encodings,  , Imports, Imports
 @subsection Encodings
@@ -257,9 +259,9 @@ called `Mac Roman' encoding.
 
 Exporting results from @R{} is usually a less contentious task, but
 there are still a number of pitfalls.  There will be a target
-application in mind, and normally a text file will be the most
-convenient interchange vehicle.  (If a binary file is required, see
-@ref{Binary files}.)
+application in mind, and often a text file will be the most convenient
+interchange vehicle.  (If a binary file is required, see @ref{Binary
+files}.)
 
 @findex cat
 Function @code{cat} underlies the functions for exporting data.  It
@@ -341,9 +343,10 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 @cindex Quoting strings
 
 By default strings are quoted (including the row and column names).
-Argument @code{quote} controls if  character and factor variables are
-quoted: some programs, for example @CRANpkg{Mondrian}, do not accept
-quoted strings (which are the default).
+Argument @code{quote} controls if character and factor variables are
+quoted: some programs, for example @pkg{Mondrian}
+(@uref{https://en.wikipedia.org/wiki/Mondrian_(software)}, do not accept
+quoted strings.
 
 Some care is needed if the strings contain embedded quotes.  Three
 useful forms are
@@ -382,7 +385,7 @@ on the platform.}, that is @code{"UTF-16LE"}.  Using UTF-8 is a good way
 to make portable files that will not easily be confused with any other
 encoding, but even macOS applications (where UTF-8 is the system
 encoding) may not recognize them, and Windows applications are most
-unlikely to.  Apparently Excel:mac 2004/8 expects @code{.csv} files in
+unlikely to.  Apparently Excel:mac 2004/8 expected @code{.csv} files in
 @code{"macroman"} encoding (the encoding used in much earlier versions
 of Mac OS).
 
@@ -441,11 +444,13 @@ writing @acronym{XML} documents within @R{}.
 @c the scope of this document: see the package's Web page at
 @c @uref{http://www.omegahat.net/RSXML} for details and examples.
 Package @CRANpkg{StatDataML} on @acronym{CRAN} is one example building
-on @CRANpkg{XML}.
+on @CRANpkg{XML}.  Another interface to the @pkg{libxml2} C library is
+provided by pacakge @CRANpkg{xml2}.
 
-NB: @CRANpkg{XML} is available as a binary package for Windows, normally
-from the `CRAN extras' repository (which is selected by default on
-Windows).
+@cindex yaml
+@acronym{yaml} is another system for structuring text data, with
+emphasis on human-readability: it is supported by package
+@CRANpkg{yaml}.
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
 @chapter Spreadsheet-like data
@@ -668,9 +673,9 @@ read.table("intro.dat", fileEncoding = "UTF-8-BOM")
 @noindent
 (This would most likely work without specifying an encoding in a UTF-8 locale.)
 
-Another problem with this (real-life) example is that whereas
-@command{file-5.03} reported the BOM, @command{file-4.17} found on OS
-10.5 (Leopard) did not.
+@c Another problem with this (real-life) example is that whereas
+@c @command{file-5.03} reported the BOM, @command{file-4.17} found on OS
+@c 10.5 (Leopard) did not.
 @end enumerate
 
 @findex read.csv
@@ -1075,11 +1080,10 @@ to handle these.
 @findex read.dta
 @findex write.dta
 Stata @file{.dta} files are a binary file format. Files from versions 5
-up to 11 of Stata can be read and written by functions @code{read.dta}
+up to 12 of Stata can be read and written by functions @code{read.dta}
 and @code{write.dta}.  Stata variables with value labels are optionally
-converted to (and from) @R{} factors.  Stata version 12 by default
-writes `format-115 datasets': @code{read.dta} currently may not be able
-to read those.
+converted to (and from) @R{} factors. For  Stata versions 13 and later
+see @acronym{CRAN} packages @CRANpkg{readstata13} and @CRANpkg{haven}.
 
 
 @cindex Systat
@@ -1333,23 +1337,23 @@ All except @CRANpkg{RODBC} are tied to one DBMS, but there has been a
 proposal for a unified `front-end' package @CRANpkg{DBI}
 (@uref{https://developer.r-project.org/db}) in conjunction with a
 `back-end', the most developed of which is @CRANpkg{RMySQL}.  Also on
-@acronym{CRAN} are the back-ends @CRANpkg{ROracle}, @CRANpkg{RPostgreSQL} and
-@CRANpkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
-@uref{https://www.sqlite.org}),  @CRANpkg{RJDBC} (which uses Java and can
-connect to any DBMS that has a JDBC driver) and @CRANpkg{RpgSQL} (a
-specialist interface to PostgreSQL built on top of @CRANpkg{RJDBC}).
+@acronym{CRAN} are the back-ends @CRANpkg{ROracle},
+@CRANpkg{RPostgreSQL} and @CRANpkg{RSQLite} (which works with the
+bundled DBMS @code{SQLite}, @uref{https://www.sqlite.org}) and
+@CRANpkg{RJDBC} (which uses Java and can connect to any DBMS that has a
+JDBC driver).
 
-The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
-@acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
+@c The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
+@c @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
 
 @pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
 Package @CRANpkg{RMongo} provides an @R{} interface to a Java client for
-`MongoDB' (@uref{https://en.wikipedia.org/wiki/MongoDB}) databases, which
-are queried using JavaScript rather than SQL.  Package @CRANpkg{rmongodb} is
-another client using @pkg{mongodb}'s C driver.
+`MongoDB' (@uref{https://en.wikipedia.org/wiki/MongoDB}) databases,
+which are queried using JavaScript rather than SQL.  Package
+@CRANpkg{mongolite} is another client using @pkg{mongodb}'s C driver.
 
 
 @menu
@@ -1473,7 +1477,6 @@ this is pre-installed in macOS) and an installed driver for your
 database system.
 
 @cindex Excel
-@findex .xls
 @cindex Dbase
 @findex .dbf
 Windows provides drivers not just for DBMSs but also for Excel
@@ -1488,9 +1491,9 @@ latter has a version for 64-bit Windows, and that will also read earlier
 versions).
 
 On macOS the Actual Technologies
-(@url{https://www.actualtech.com/product_access.php}) drivers
-provide ODBC interfaces to Access databases (including Access 2007/2010)
-and to Excel spreadsheets (not including Excel 2007/2010).
+(@url{https://www.actualtech.com/product_access.php}) drivers provide
+ODBC interfaces to Access databases and to Excel spreadsheets (not
+including Excel 2007/2010).
 
 @findex odbcConnect
 @findex odbcDriverConnect
@@ -1747,9 +1750,9 @@ handle binary files.
 @findex netCDF
 @cindex network Common Data Form
 
-Packages @CRANpkg{hdf5}, @CRANpkg{h5r}, Bioconductor's @pkg{rhdf5},
-@CRANpkg{RNetCDF}, @CRANpkg{ncdf} and @CRANpkg{ncdf4} on @acronym{CRAN} provide
-interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format, see
+Packages @CRANpkg{h5}, Bioconductor's @pkg{rhdf5}, @CRANpkg{RNetCDF} and
+@CRANpkg{ncdf4} on @acronym{CRAN} provide interfaces to @acronym{NASA}'s
+HDF5 (Hierarchical Data Format, see
 @uref{https://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
 (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/software/netcdf/}).
@@ -1762,8 +1765,8 @@ matrices.
 
 NetCDF's version 4 format (confusingly, implemented in netCDF 4.1.1 and
 later, but not in 4.0.1) includes the use of various HDF5 formats.  This
-is handled by package @CRANpkg{ncdf4} whereas @CRANpkg{RNetCDF} and
-@CRANpkg{ncdf} handle version 3 files.
+is handled by package @CRANpkg{ncdf4} whereas @CRANpkg{RNetCDF} handles
+version 3 files.
 
 The availability of software to support these formats is somewhat
 limited by platform, especially on Windows.
@@ -1822,8 +1825,8 @@ formats after which they are named.  See also packages @CRANpkg{biOps}
 and @CRANpkg{Momocs}, and Bioconductor package @pkg{EBImage}.
 
 TIFF is more a meta-format, a wrapper within which a very large variety
-of image formats can be embedded.  Packages @CRANpkg{rtiff} (orphaned)
-and @CRANpkg{tiff} can read some of the sub-formats (depending on the
+of image formats can be embedded.  Packages @CRANpkg{rtiff} and
+@CRANpkg{tiff} can read some of the sub-formats (depending on the
 external @code{libtiff} software against which they are compiled).
 There some facilities for specialized sub-formats, for example in
 Bioconductor package @pkg{beadarray}.
@@ -1933,10 +1936,10 @@ available for @R{} input from that connection.
 
 @cindex URL connections
 @findex url
-@acronym{URL}s of types @samp{http://}, @samp{ftp://} and @samp{file://}
-can be read from using the function @code{url}.  For convenience,
-@code{file} will also accept these as the file specification and call
-@code{url}.  On most platforms @samp{https://} are also accepted.
+@acronym{URL}s of types @samp{http://}, @samp{https://}, @samp{ftp://}
+and @samp{file://} can be read from using the function @code{url}.  For
+convenience, @code{file} will also accept these as the file
+specification and call @code{url}.
 
 @cindex Sockets
 @findex socketConnection
@@ -2036,9 +2039,9 @@ scan(pipe("sed -e s/,$// data"), sep=",")
 @end example
 
 @cindex URL connections
-For convenience, if the @code{file} argument specifies a FTP or HTTP
-@acronym{URL}, the @acronym{URL} is opened for reading via @code{url}.
-Specifying files via @samp{file://foo.bar} is also allowed.
+For convenience, if the @code{file} argument specifies a FTP, HTTP or
+HTTPS @acronym{URL}, the @acronym{URL} is opened for reading via
+@code{url}.  Specifying files via @samp{file://foo.bar} is also allowed.
 
 @menu
 * Pushback::                    
@@ -2238,16 +2241,19 @@ The earlier low-level interface is given by functions @code{make.socket},
 @node Using download.file,  , Reading from sockets, Network interfaces
 @section Using @code{download.file}
 
-Function @code{download.file} is provided to read a file from a
-Web resource via FTP or HTTP and write it to a file.  Often this can be
-avoided, as functions such as @code{read.table} and @code{scan} can read
-directly from a URL, either by explicitly using @code{url} to open a
-connection, or implicitly using it by giving a URL as the @code{file}
-argument.
+Function @code{download.file} is provided to read a file from a Web
+resource via FTP or HTTP (including HTTPS) and write it to a file.
+Often this can be avoided, as functions such as @code{read.table} and
+@code{scan} can read directly from a URL, either by explicitly using
+@code{url} to open a connection, or implicitly using it by giving a URL
+as the @code{file} argument.
 
 
 @node Reading Excel spreadsheets, References, Network interfaces, Top
 @chapter Reading Excel spreadsheets
+
+@findex .xls
+@findex .xlsx
 
 The most common R data import/export question seems to be `how do I read
 an Excel spreadsheet'.  This chapter collects together advice and
@@ -2302,29 +2308,23 @@ provides a basic wrapper in its @code{read.xls} function.  With suitable
 @code{Perl} modules installed this function can also read Excel 2007
 spreadsheets.
 
-@findex xlsReadWrite
-32-bit Windows package @CRANpkg{xlsReadWrite} from
-@uref{http://www.swissr.org/} and CRAN has a function @code{read.xls} to
-read @file{.xls} files (based on a third-party non-Open-Source Delphi
-component).
-
 @findex dataframes2xls
 @findex WriteXLS
 Packages @CRANpkg{dataframes2xls} and @CRANpkg{WriteXLS} each contain a function
 to @emph{write} one or more data frames to an @file{.xls} file, using
-Python and Perl respectively.  Another version of @code{write.xls} in
-available in package @CRANpkg{xlsReadWrite}.
+Python and Perl respectively.
 
 @findex xlsx
-@findex RExcelXML
-Two packages which can read and and manipulate Excel 2007/10
-spreadsheets but not earlier formats are @CRANpkg{xlsx} (which requires
-Java) and the Omegahat package @pkg{RExcelXML}.
+Packages @CRANpkg{xlsx} can read and and manipulate Excel 2007 and later
+spreadsheets: it requires Java.
 
 @findex XLConnect
 Package @CRANpkg{XLConnect} can read, write and manipulate both Excel
-97--2003 and Excel 2007/10 spreadsheets, requiring Java.
+97--2003 and Excel 2007/10 spreadsheets, using Java.
 
+@findex readxl
+Package @CRANpkg{readxl} can read both Excel 97--2003 and Excel 2007/10
+spreadsheets, using an included C library.
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
 @appendix References

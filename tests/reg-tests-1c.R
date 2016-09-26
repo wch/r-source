@@ -1949,8 +1949,12 @@ stopifnot(identical(m2 + NULL, n0), # ERROR in R <= 3.3.x
 	  identical(m2 == NULL, l0), # as "always"
 	  identical(m2 ==  n0 , l0)) # as "always"
 
-
-
+## strcapture()
+stopifnot(identical(strcapture("(.+) (.+)",
+                               c("One 1", "noSpaceInLine", "Three 3"),
+                               proto=data.frame(Name="", Number=0)),
+                    data.frame(Name=c("One", NA, "Three"),
+                               Number=c(1, NA, 3))))
 
 
 ## keep at end

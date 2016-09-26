@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-09-16 r71269) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-09-20 r71321) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6354,7 +6354,7 @@ callFunc(default = TRUE)
 > sink(con <- textConnection("of", "w")) ; c ; sink(NULL); close(con)
 > of2 <- capture.output(print(c))
 > stopifnot(identical(of2, of),
-+           identical(of2, "function (..., recursive = FALSE)  .Primitive(\"c\")"))
++           identical(of2, "function (..., recursive = FALSE, use.names = TRUE)  .Primitive(\"c\")"))
 > ## ^^ would have failed up to R 2.9.x
 > foo
 function(given = NULL) {

@@ -6914,6 +6914,36 @@ function(dir, localOnly = FALSE)
     if(!is.na(size) && (as.integer(size) > 5000000))
         out$size_of_tarball <- size
 
+    ## Check URLs.
+    if(!capabilities("libcurl") && !localOnly)
+        out$no_url_checks <- TRUE
+    else {
+        bad <- tryCatch(check_url_db(url_db_from_package_sources(dir),
+                                     remote = !localOnly),
+                        error = identity)
+        if(inherits(bad, "error")) {
+            out$bad_urls <- bad
+        } else if(NROW(bad)) {
+            ## When checking a new submission, take the canonical CRAN
+            ## package URL as ok, and signal variants using http instead
+            ## of https as non-canonical instead of showing "not found".
+            prefix <- "https://cran.r-project.org/package="
+            ncp <- nchar(prefix)
+            ind <- ((substring(tolower(bad$URL), 1L, ncp) == prefix) &
+                    (substring(bad$URL, ncp + 1L) == package))
+            if(any(ind))
+                bad <- bad[!ind, ]
+            prefix <- "http://cran.r-project.org/package="
+            ncp <- nchar(prefix)
+            ind <- ((substring(tolower(bad$URL), 1L, ncp) == prefix) &
+                    (substring(bad$URL, ncp + 1L) == package))
+            if(any(ind))
+                bad[ind, c("Status", "Message")] <- ""
+            if(NROW(bad))
+                out$bad_urls <- bad
+        }
+    }
+
     ## Checks from here down require Internet access, so drop out now if we
     ## don't want that.
     if (localOnly)
@@ -7151,33 +7181,6 @@ function(dir, localOnly = FALSE)
             out$additional_repositories_analysis_results <- tab
         }
     }
-
-    ## Check URLs.
-    if(capabilities("libcurl")) {
-        ## Be defensive about building the package URL db.
-        bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
-                        error = identity)
-        if(inherits(bad, "error")) {
-            out$bad_urls <- bad
-        } else if(NROW(bad)) {
-            ## When checking a new submission, take the canonical CRAN
-            ## package URL as ok, and signal variants using http instead
-            ## of https as non-canonical instead of showing "not found".
-            url <- sprintf("https://cran.r-project.org/package=%s",
-                           package)
-            if(any(ind <- (tolower(bad$URL) == url)))
-                bad <- bad[!ind, ]
-            url <- sprintf("http://cran.r-project.org/package=%s",
-                           package)
-            if(any(ind <- (tolower(bad$URL) == url)))
-                bad[ind, c("URL", "Status", "Message", "CRAN")] <-
-                    do.call(rbind,
-                            rep.int(list(c(url, "", "", url)),
-                                    sum(ind)))
-            if(NROW(bad))
-                out$bad_urls <- bad
-        }
-    } else out$no_url_checks <- TRUE
 
     ## Check DOIs.
     if(capabilities("libcurl")) {
@@ -7489,15 +7492,23 @@ function(x, ...)
                           collapse = "\n")
             },
             if(length(y) && any(nzchar(z <- y$CRAN))) {
-                ind <-
-                    grepl("https?://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
-                          z, ignore.case = TRUE)
-                paste(c(if(any(ind)) {
+                ul <- tolower(z)
+                indp <- (grepl("^https?://cran.r-project.org/web/packages",
+                               ul) &
+                         !grepl("^https?://cran.r-project.org/web/packages/[.[:alnum:]]+(html|pdf|rds)$",
+                                ul))
+                indv <- grepl("https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
+                              ul)
+                paste(c(if(any(indp)) {
                             c("  The canonical URL of the CRAN page for a package is ",
-                              "  https://cran.r-project.org/package=pkgname")
+                              "    https://CRAN.R-project.org/package=pkgname")
                         },
-                        if(any(nzchar(z) & !ind)) {
-                            "  A canonical CRAN URL starts with https://cran.r-project.org/"
+                        if(any(indv)) {
+                            c("  The canonical URL of the CRAN page for a task view is ",
+                              "    https://CRAN.R-project.org/view=viewname")
+                        },
+                        if(any(nzchar(z) & !indp & !indv)) {
+                            "  A canonical CRAN URL starts with https://CRAN.R-project.org/"
                         }),
                       collapse = "\n")
             },

@@ -189,6 +189,8 @@ showNonASCIIfile <-
 function(file)
     showNonASCII(readLines(file, warn = FALSE))
 
+env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
+
 ### * Text utilities.
 
 ### ** delimMatch
@@ -2094,6 +2096,41 @@ toTitleCase <- function(text)
         stop("'text' must be a character vector")
     sapply(text, titleCase1, USE.NAMES = FALSE)
 }
+
+### ** path_and_libPath
+
+##' Typically the union of R_LIBS and current .libPaths(); may differ e.g. via R_PROFILE
+path_and_libPath <- function(...)
+{
+    lP <- .libPaths()
+    ## don't call normalizePath on paths which do not exist: allowed in R_LIBS!
+    ep0 <- c(strsplit(env_path(...), .Platform$path.sep, fixed = TRUE)[[1L]], lP[-length(lP)])
+    ep0 <- ep0[dir.exists(ep0)]
+    paste(unique(normalizePath(ep0)), collapse = .Platform$path.sep)
+}
+
+### ** str_parse_logic
+
+##' @param otherwise: can be call, such as quote(errmesg(...))
+str_parse_logic <- function(ch, default = TRUE, otherwise = default) {
+    if (is.na(ch)) default
+    else switch(ch,
+                "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
+                "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
+                eval(otherwise))
+}
+
+### ** str_parse
+
+str_parse <- function(ch, default = TRUE, logical = TRUE, otherwise = default) {
+    if(logical)
+        str_parse_logic(ch, default=default, otherwise=otherwise)
+    else if(is.na(ch))
+        default
+    else
+        ch
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

@@ -127,7 +127,7 @@ frameTypes <- function(env) {
 ## imports environment) find the namespace in which the symbol's value
 ## was originally defined. Returns NULL if the symbol is not found via
 ## the namespace.
-findHomeNS <- function(sym, ns) {
+findHomeNS <- function(sym, ns, cntxt) {
     if (! isNamespace(ns)) {
         ## As a convenience this allows for 'ns' to be the imports fame
         ## of a namespace. It appears that these now have a 'name'
@@ -135,7 +135,8 @@ findHomeNS <- function(sym, ns) {
         ## namespace.
         name <- attr(ns, "name")
         if (is.null(name))
-            stop("'ns' must be a namespace or a namespace imports environment")
+            cntxt$stop("'ns' must be a namespace or a namespace imports environment",
+                cntxt)
         ns <- getNamespace(sub("imports:", "", attr(ns, "name")))
     }
     if (exists(sym, ns, inherits = FALSE))
@@ -151,7 +152,7 @@ findHomeNS <- function(sym, ns) {
                 else
                     exports <- get(".__NAMESPACE__.", ins)$exports
                 if (exists(sym, exports, inherits = FALSE))
-                    return(findHomeNS(sym, ins))
+                    return(findHomeNS(sym, ins, cntxt))
             }
             else {
                 exports <- imports[[i]]
@@ -162,7 +163,7 @@ findHomeNS <- function(sym, ns) {
                     ## renaming this is still supported by the
                     ## namespace code.)
                     if (sym == exports[pos])
-                        return(findHomeNS(sym, ins))
+                        return(findHomeNS(sym, ins, cntxt))
                     else
                         return(NULL)
                 }
@@ -198,64 +199,60 @@ nsName <- function(ns) {
 ## Finding possible local variables
 ##
 
-getAssignedVar <- function(e) {
+getAssignedVar <- function(e, cntxt) {
     v <- e[[2]]
     if (missing(v))
-        stop(gettextf("bad assignment: %s", pasteExpr(e)),
-             domain = NA)
+        cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
     else if (typeof(v) %in% c("symbol", "character"))
         as.character(v)
     else {
         while (typeof(v) == "language") {
             if (length(v) < 2)
-                stop(gettextf("bad assignment: %s", pasteExpr(e)),
-                     domain = NA)
+                cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
             v <- v[[2]]
             if (missing(v))
-                stop(gettextf("bad assignment: %s", pasteExpr(e)),
-                     domain = NA)
+                cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
         }
         if (typeof(v) != "symbol")
-            stop(gettextf("bad assignment: %s", pasteExpr(e)),
-                 domain = NA)
+            cntxt$stop(gettextf("bad assignment: %s", pasteExpr(e)), cntxt)
         as.character(v)
     }
 }
 
-findLocals1 <- function(e, shadowed = character(0)) {
+findLocals1 <- function(e, shadowed = character(0), cntxt) {
     if (typeof(e) == "language") {
         if (typeof(e[[1]]) %in% c("symbol", "character")) {
             v <- as.character(e[[1]])
             switch(v,
                    "=" =,
-                   "<-" = unique(c(getAssignedVar(e),
-                                   findLocalsList1(e[-1], shadowed))),
+                   "<-" = unique(c(getAssignedVar(e, cntxt),
+                                   findLocalsList1(e[-1], shadowed, cntxt))),
                    "for" = unique(c(as.character(e[2]),
-                                    findLocalsList1(e[-2], shadowed))),
+                                    findLocalsList1(e[-2], shadowed, cntxt))),
                    "delayedAssign" =,
                    "assign" = if (length(e) == 3 &&
                                   is.character(e[[2]]) &&
                                   length(e[[2]]) == 1)
-                                  c(e[[2]], findLocals1(e[[3]], shadowed))
-                              else findLocalsList1(e[1], shadowed),
+                                  c(e[[2]], findLocals1(e[[3]], shadowed, cntxt))
+                              else findLocalsList1(e[1], shadowed, cntxt),
                    "function" = character(0),
                    "~" = character(0),
                    "local" = if (! v %in% shadowed && length(e) == 2)
                                  character(0)
-                             else findLocalsList1(e[-1], shadowed),
+                             else findLocalsList1(e[-1], shadowed, cntxt),
                    "expression" =,
                    "quote" = if (! v %in% shadowed)
                                  character(0)
-                             else findLocalsList1(e[-1], shadowed),
-                   findLocalsList1(e[-1], shadowed))
+                             else findLocalsList1(e[-1], shadowed, cntxt),
+                   findLocalsList1(e[-1], shadowed, cntxt))
         }
-         else findLocalsList1(e, shadowed)
+         else findLocalsList1(e, shadowed, cntxt)
     }
     else character(0)
 }
 
-findLocalsList1 <- function(elist, shadowed)
-    unique(unlist(lapply(elist, findLocals1, shadowed)))
+findLocalsList1 <- function(elist, shadowed, cntxt)
+    unique(unlist(lapply(elist, findLocals1, shadowed, cntxt)))
 
 findLocals <- function(e, cntxt)
     findLocalsList(list(e), cntxt)
@@ -267,7 +264,7 @@ findLocalsList <- function(elist, cntxt) {
     sf <- initialShadowedFuns
     nsf <- length(sf)
     repeat {
-        vals <- findLocalsList1(elist, sf)
+        vals <- findLocalsList1(elist, sf, cntxt)
         redefined <- sf %in% vals
         last.nsf <- nsf
         sf <- unique(c(shadowed, sf[redefined]))
@@ -279,8 +276,8 @@ findLocalsList <- function(elist, cntxt) {
                 msg <- ngettext(sum(rdsf),
                                 "local assignment to syntactic function: ",
                                 "local assignments to syntactic functions: ")
-                warning(msg, paste(vals[rdsf], collapse = ", "),
-                        domain = NA)
+                cntxt$warn(paste(msg, paste(vals[rdsf], collapse = ", ")),
+                           cntxt)
             }
             return(vals)
         }
@@ -801,11 +798,11 @@ make.codeBuf <- function(expr) {
     labels <- vector("list")
     makelabel <- function() { idx <<- idx + 1; paste0("L", idx) }
     putlabel <- function(name) labels[[name]] <<- codeCount
-    patchlabels <- function() {
+    patchlabels <- function(cntxt) {
         offset <- function(lbl) {
             if (is.null(labels[[lbl]]))
-                stop(gettextf("no offset recorded for label \"%s\"", lbl),
-                     domain = NA)
+                cntxt$stop(gettextf("no offset recorded for label \"%s\"", lbl),
+                           cntxt)
             labels[[lbl]]
         }
         for (i in 1 : codeCount) {
@@ -830,8 +827,8 @@ make.codeBuf <- function(expr) {
     cb
 }
 
-codeBufCode <- function(cb) {
-    cb$patchlabels()
+codeBufCode <- function(cb, cntxt) {
+    cb$patchlabels(cntxt)
     .Internal(mkCode(cb$code(), cb$const()))
 }
 
@@ -841,7 +838,7 @@ genCode <- function(e, cntxt, gen = NULL) {
         cmp(e, cb, cntxt)
     else
         gen(cb, cntxt)
-    codeBufCode(cb)
+    codeBufCode(cb, cntxt)
 }
 
 
@@ -1162,7 +1159,7 @@ getInlineInfo <- function(name, cntxt) {
                         cntxt$stop(gettext("bad namespace import frame"))
                     frame <- top
                 }
-                info$package <- nsName(findHomeNS(name, frame))
+                info$package <- nsName(findHomeNS(name, frame, cntxt))
                 info
             }
             else if (ftype == "global" &&
@@ -1392,7 +1389,7 @@ cmpAssign <- function(e, cb, cntxt) {
     superAssign <- as.character(e[[1]]) == "<<-"
     lhs <- e[[2]]
     value <- e[[3]]
-    symbol <- as.name(getAssignedVar(e))
+    symbol <- as.name(getAssignedVar(e, cntxt))
     if (superAssign && ! findVar(symbol, cntxt))
         notifyNoSuperAssignVar(symbol, cntxt)
     if (is.name(lhs) || is.character(lhs))
@@ -1402,18 +1399,18 @@ cmpAssign <- function(e, cb, cntxt) {
     else cmpSpecial(e, cb, cntxt) # punt for now
 }
 
-flattenPlace <- function(place) {
+flattenPlace <- function(place, cntxt) {
     places <- NULL
     while (typeof(place) == "language") {
         if (length(place) < 2)
-            stop("bad assignment 1")
+            cntxt$stop(gettext("bad assignment 1"), cntxt)
         tplace <- place
         tplace[[2]] <- as.name("*tmp*")
         places <- c(places, list(tplace))
         place <- place[[2]]
     }
     if (typeof(place) != "symbol")
-        stop("bad assignment 2")
+        cntxt$stop(gettext("bad assignment 2"), cntxt)
     places
 }
 
@@ -1501,7 +1498,7 @@ cmpComplexAssign <- function(symbol, lhs, value, superAssign, cb, cntxt) {
     cb$putcode(startOP, csi)
 
     ncntxt <- make.argContext(cntxt)
-    flatPlace <- flattenPlace(lhs)
+    flatPlace <- flattenPlace(lhs, cntxt)
     for (p in rev(flatPlace[-1]))
         cmpGetterCall(p, cb, ncntxt)
     cmpSetterCall(flatPlace[[1]], value, cb, ncntxt)
@@ -1954,7 +1951,9 @@ cmpMath1 <- function(e, cb, cntxt) {
         name <- as.character(e[[1]])
         idx <- match(name, math1funs) - 1
         if (is.na(idx))
-            stop(sQuote(name), "is not a registered math1 function")
+            cntxt$stop(
+                paste(sQuote(name), "is not a registered math1 function"),
+                cntxt)
         ncntxt <- make.nonTailCallContext(cntxt)
         cmp(e[[2]], cb, ncntxt);
         ci <- cb$putconst(e)
@@ -2675,6 +2674,10 @@ notifyNoSwitchcases <- function(cntxt)
     if (! suppressAll(cntxt))
         cntxt$warn(gettext("'switch' with no alternatives"), cntxt)
 
+notifyCompilerError <- function(msg)
+    if (!compilerOptions$suppressAll)
+        cat(paste(gettext("Error: compilation failed - "), msg, "\n"))
+
 
 ##
 ## Compiler interface
@@ -2707,10 +2710,16 @@ cmpfun <- function(f, options = NULL) {
 }
 
 tryCmpfun <- function(f)
-    tryCatch(cmpfun(f), error = function(e) f)
+    tryCatch(cmpfun(f), error = function(e) {
+        notifyCompilerError(paste(e$message, "at", deparse(e$call)))
+        f
+    })
 
 tryCompile <- function(e, ...)
-    tryCatch(compile(e, ...), error = function(err) e)
+    tryCatch(compile(e, ...), error = function(err) {
+        notifyCompilerError(paste(err$message, "at", deparse(err$call)))
+        e
+    })
 
 cmpframe <- function(inpos, file) {
     expr.needed <- 1000

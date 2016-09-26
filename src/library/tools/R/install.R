@@ -224,16 +224,9 @@
 
     ## used for LazyData, KeepSource, ByteCompile, Biarch
     parse_description_field <- function(desc, field, default = TRUE)
-    {
-        tmp <- desc[field]
-        if (is.na(tmp)) default
-        else switch(tmp,
-                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                    ## default
-                    errmsg("invalid value of ", field, " field in DESCRIPTION")
-                    )
-    }
+	str_parse_logic(desc[field], default = default,
+			otherwise = quote(
+			    errmsg("invalid value of ", field, " field in DESCRIPTION")))
 
     starsmsg <- function(stars, ...)
         message(stars, " ", ..., domain = NA)
@@ -245,10 +238,7 @@
     }
 
     pkgerrmsg <- function(msg, pkg)
-    {
-        message("ERROR: ", msg, " for package ", sQuote(pkg), domain = NA)
-        do_exit_on_error()
-    }
+	errmsg(msg, " for package ", sQuote(pkg))
 
     ## 'pkg' is the absolute path to package sources.
     do_install <- function(pkg)
@@ -1104,14 +1094,13 @@
 	## LazyLoading/Compiling
 	if (install_R && dir.exists("R") && length(dir("R"))) {
             BC <- if (!is.na(byte_compile)) byte_compile
-            else
-                parse_description_field(desc, "ByteCompile", default = FALSE)
+                  else
+                      parse_description_field(desc, "ByteCompile", default = FALSE)
             rcps <- Sys.getenv("R_COMPILE_PKGS")
             rcp <- switch(rcps,
-                "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
-                "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
-                as.numeric(rcps)
-            )
+                          "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
+                          "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
+                          as.numeric(rcps))
             BC <- BC || (!is.na(rcp) && rcp > 0)
             if (BC) {
                 starsmsg(stars,
