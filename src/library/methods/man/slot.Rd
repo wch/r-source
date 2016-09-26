@@ -122,8 +122,8 @@ getSlots(x)
 }
 \seealso{
   \code{\link{@}},
-  \code{\link{Classes}},
-  \code{\link{Methods}},
+  \code{\link{Classes_Details}},
+  \code{\link{Methods_Details}},
   \code{\link{getClass}},
   \code{\link{names}}.
 }

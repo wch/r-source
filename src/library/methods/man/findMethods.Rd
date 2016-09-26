@@ -167,7 +167,7 @@ Class \code{"\linkS4class{vector}"}, by class \code{"namedList"}, distance 3.
 }
 
 
-\seealso{ \code{\link{showMethods}}, \code{\link{selectMethod}}, \link{Methods} }
+\seealso{ \code{\link{showMethods}}, \code{\link{selectMethod}}, \link{Methods_Details} }
 \examples{
 mm <-  findMethods("Ops")
 findMethodSignatures(methods = mm)

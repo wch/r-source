@@ -5,45 +5,46 @@
 
 \name{setMethod}
 \alias{setMethod}
-\alias{removeMethod}
 \title{ Create and Save a Method }
 \description{
-  Create and save a formal method for a given function and list of classes.
+Create a method for a generic function, corresponding to a signature of classes for the arguments. Standard usage will be of the form:
+
+\code{setMethod(f, signature, definition)}
+
+where \code{f} is the name of the function, \code{signature} specifies the argument classes for which the method applies and \code{definition} is the function definition for the method. 
 }
 \usage{
 setMethod(f, signature=character(), definition,
           where = topenv(parent.frame()),
           valueClass = NULL, sealed = FALSE)
-
-removeMethod(f, signature, where)
 }
 \arguments{
-  \item{f}{ A generic function or the character-string name of the
-  function. Non-primitive base functions that dispatch internally need
-  to be specified by character-string.}
-  \item{signature}{ A match of formal argument names for \code{f} with
-    the character-string names of corresponding classes.  See the
-    details below; however, if the signature is not trivial, you should use \code{\link{method.skeleton}} to generate a valid call to \code{setMethod}.}
+  \item{f}{ The character-string name of the generic function. The unquoted name usually works as well (evaluating to the generic function), except for a few functions in the base package.}
+  \item{signature}{ The classes required for some of the arguments. Most applications just require one or two character strings matching the first argument(s) in the signature. More complicated cases follow R's rule for argument matching. See the details below; however, if the signature is not trivial, you should use \code{\link{method.skeleton}} to generate a valid call to \code{setMethod}.}
   \item{definition}{ A function definition, which will become the method
     called when the arguments in a call to \code{f} match the
-    classes in \code{signature}, directly or through inheritance. }
-  \item{where}{the environment in which to store the definition of the
-    method.
-For \code{setMethod}, it is recommended to omit this argument and to include the call in source code that is evaluated at the top level; that is, either in an R session by something equivalent to a call to \code{\link{source}}, or as part of the R source code for a package.
+    classes in \code{signature}, directly or through inheritance.
+    The definition must be a function with the same formal arguments
+    as the generic; however, \code{setMethod()} will handle methods
+    that add arguments, if \code{\dots} is a formal argument to the generic.
+  See the Details section.
+  }
+  \item{where, valueClass, sealed}{\emph{These arguments are allowed
+        but either obsolete or rarely appropriate.}
 
-    For \code{removeMethod}, the default is the location of the (first)
-    instance of the method for this signature.}
-  \item{valueClass}{ Obsolete and unused, but see the same argument for \code{\link{setGeneric}}. }
-  \item{sealed}{ If \code{TRUE}, the method so defined cannot be
-      redefined by another call to \code{setMethod} (although it can
-      be removed and then re-assigned).}
+      \code{where}: where to store the definition; should be the
+      default, the namespace for the package.
+
+  \code{valueClass}{ Obsolete. }
+
+  \code{sealed}{ prevents the method being redefined, but should never
+    be needed when the method is defined in the source code of a
+    package.}
+}
 }
 \value{
-  These functions exist for their side-effect, in setting or removing a
-  method in the object defining methods for the specified generic.
-
-  The value returned by \code{removeMethod} is \code{TRUE} if a method
-  was found to be removed.
+  The function exists for its side-effect. The definition will be stored in a special metadata object and incorporated in the generic function when the corresponding package is loaded into an R session. 
+  
 }
 \details{
 The call to \code{setMethod} stores the supplied method definition  in
@@ -95,9 +96,10 @@ the table in the generic function itself, for the duration of the session.
 
 
   Method definitions can
-  have default expressions for arguments, but a current limitation is
-  that the generic function must have \emph{some} default expression for the
-  same argument in order for the method's defaults to be used.
+  have default expressions for arguments, but only if
+  the generic function must have \emph{some} default expression for the
+  same argument. (This restriction is imposed by the way \R manages
+  formal arguments.)
   If so, and if the corresponding argument is
   missing in the call to the generic function, the default expression
   in the method is used.  If the method definition has no default for
@@ -105,12 +107,13 @@ the table in the generic function itself, for the duration of the session.
   generic function itself is used, but note that this expression will
   be evaluated using the enclosing environment of the method, not of
   the generic function.
-  Note also that specifying class \code{"missing"} in the signature
-  does not require any default expressions, and method selection does
+  Method selection does
   not evaluate default expressions.
   All actual (non-missing) arguments in the signature of the
   generic function will be evaluated when a method is selected---when
   the call to \code{standardGeneric(f)} occurs.
+  Note that specifying class \code{"missing"} in the signature
+  does not require any default expressions.
 
   It is possible to have some differences between the
   formal arguments to a method supplied to \code{setMethod} and those
@@ -135,23 +138,17 @@ the table in the generic function itself, for the duration of the session.
   the inheritance calculations only need to be done once per session
   per sequence of actual classes.
   See
-  \link{Methods} for more details.
-
-The function \code{removeMethod} removes the specified method from the
-metadata table in the corresponding environment.
-It's not a function that is used much, since one normally wants to
-redefine a method rather than leave no definition.
+  \link{Methods_Details} and Section 10.7 of the reference for more details.
 
 }
+
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
+
 \examples{
 \dontshow{  require(stats)
   setClass("track", slots = c(x="numeric", y = "numeric"))
@@ -410,9 +407,14 @@ removeGeneric("doubleAnything")
 
 \seealso{
 
+\link{Methods_for_Nongenerics} discusses method definition for
+functions that are not generic functions in their original package;
+\link{Methods_for_S3} discusses the integration of formal methods with the
+older S3 methods.
+
 \code{\link{method.skeleton}}, which is the recommended way to generate a skeleton of the call to \code{setMethod}, with the correct formal arguments and other details.
 
-\link{Methods} and the links there for a general discussion, \code{\link{dotsMethods}} for methods that dispatch on
+\link{Methods_Details} and the links there for a general discussion, \code{\link{dotsMethods}} for methods that dispatch on
   \dQuote{\dots}, and \code{\link{setGeneric}} for generic functions.
 }
 

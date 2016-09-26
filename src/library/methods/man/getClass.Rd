@@ -73,7 +73,7 @@ getClassDef(Class, where, package, inherits = TRUE)
  Springer (For the original S4 version.)
 }
 \seealso{
-  \link{Classes},
+  \link{Classes_Details},
   \code{\link{setClass}},
   \code{\link{isClass}}.
 }

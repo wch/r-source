@@ -29,7 +29,7 @@ old-style objects. }
   argument has that class.  See the details below.}
   \item{\code{allMethods}:}{A named list,  contains
     all the directly defined methods from the \code{methods} slot, plus
-    any inherited methods.  Ignored when methods tables are used for dispatch (see \link{Methods} }
+    any inherited methods.  Ignored when methods tables are used for dispatch (see \link{Methods_Details} }
 }}
 
 \details{
