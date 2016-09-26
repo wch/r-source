@@ -4723,9 +4723,9 @@ project (@url{http://libcxx.llvm.org/}) has also been tested: for some
 @R{} packages only the variant using @code{libcxxabi} was successful.
 
 Most builds of @command{clang} have no OpenMP support.  Builds of
-version 3.7.0 or later may.@footnote{This also needs the OpenMP runtime,
-which has sometimes been distributed separately, e.g.@: for 3.7.0 at
-@uref{http://llvm.org/releases}.}
+versions 3.7.0 or later may.@footnote{This also needs the OpenMP
+runtime which has sometimes been distributed separately, e.g.@: for
+3.7.0 at @uref{http://llvm.org/releases}.}
 
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
@@ -4802,9 +4802,10 @@ of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
 is not recommended but for the time being @R{}'s installation scripts
 will make use of it if GNU readline is not found.} and a Fortran
 compiler.  Those and other binary components are available from
-@uref{https://r.research.att.com/libs}: you are likely to need
-@code{pcre} and @code{xz} (for @code{libzma}) as recent macOS versions
-provide libraries but not headers for these).
+@uref{https://r.research.att.com/libs}: you will need @code{pcre} and
+@code{xz} (for @code{libzma}) as recent macOS versions provide libraries
+but not headers for these (and the system @code{pcre} is too old at
+version 8.02) .
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
