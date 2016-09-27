@@ -231,11 +231,15 @@
       to the dropping (in \R 3.3.0) of legacy C++ headers from headers
       such as \file{R.h} and \file{Rmath.h} --- this has now been
       removed.  That compiler has strict C++98 compliance hence does not
-      include extensions in its (non-legacy) C++ headers, so some
+      include extensions in its (non-legacy) C++ headers: some
       packages will need to request C++11 or replace non-C++98 calls
       such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R
 	Extensions}.
     }
+    
+    \item When included from C++, the \R headers now use forms such as
+    \code{std::FILE} directly rather than \code{using std::FILE}.  C++
+    code including these headers might be relying on the latter.
   }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{

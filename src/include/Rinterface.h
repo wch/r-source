@@ -29,6 +29,9 @@
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
 
+#include <R_ext/Boolean.h>
+#include <R_ext/RStartup.h>
+
 #ifdef __cplusplus
 # include <cstdio>
 extern "C" {
@@ -41,9 +44,6 @@ extern "C" {
 #else
 # define NORET
 #endif
-
-#include <R_ext/Boolean.h>
-#include <R_ext/RStartup.h>
 
 /* from Defn.h */
 /* this duplication will be removed in due course */

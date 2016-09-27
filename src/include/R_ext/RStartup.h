@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2010  The R Core Team
+ *  Copyright (C) 1999-2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,14 @@
 
 #ifndef R_EXT_RSTARTUP_H_
 #define R_EXT_RSTARTUP_H_
+
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstddef>
+# define R_SIZE_T std::size_t
+#else
+# include <stddef.h> /* for size_t */
+# define R_SIZE_T size_t
+#endif
 
 #include <R_ext/Boolean.h>	/* TRUE/FALSE */
 
@@ -67,11 +75,11 @@ typedef struct
     Rboolean DebugInitFile;
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;
-    size_t vsize;
-    size_t nsize;
-    size_t max_vsize;
-    size_t max_nsize;
-    size_t ppsize;
+    R_SIZE_T vsize;
+    R_SIZE_T nsize;
+    R_SIZE_T max_vsize;
+    R_SIZE_T max_nsize;
+    R_SIZE_T ppsize;
     int NoRenviron;
 
 #ifdef Win32

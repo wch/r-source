@@ -30,9 +30,10 @@
 
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 # include <cstddef>
-using std::size_t;
+# define R_SIZE_T std::size_t
 #else
 # include <stddef.h>
+# define R_SIZE_T size_t
 #endif
 
 #define revsort       Rf_revsort
@@ -62,9 +63,9 @@ void	cPsort(Rcomplex*, int, int);
 
 /* ../../main/qsort.c : */
 /* dummy renamed to II to avoid problems with g++ on Solaris */
-void R_qsort    (double *v,         size_t i, size_t j);
+void R_qsort    (double *v,         R_SIZE_T i, R_SIZE_T j);
 void R_qsort_I  (double *v, int *II, int i, int j);
-void R_qsort_int  (int *iv,         size_t i, size_t j);
+void R_qsort_int  (int *iv,         R_SIZE_T i, R_SIZE_T j);
 void R_qsort_int_I(int *iv, int *II, int i, int j);
 #ifdef R_RS_H
 void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
@@ -90,7 +91,7 @@ char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);
-void R_CheckStack2(size_t);
+void R_CheckStack2(R_SIZE_T);
 
 
 /* ../../appl/interv.c: also in Applic.h */

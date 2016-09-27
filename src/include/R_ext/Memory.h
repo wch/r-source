@@ -27,9 +27,10 @@
 
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 # include <cstddef>
-using std::size_t;
+# define R_SIZE_T std::size_t
 #else
 # include <stddef.h> /* for size_t */
+# define R_SIZE_T size_t
 #endif
 
 #ifdef  __cplusplus
@@ -42,8 +43,8 @@ void	vmaxset(const void *);
 void	R_gc(void);
 int	R_gc_running();
 
-char*	R_alloc(size_t, int);
-long double *R_allocLD(size_t nelem);
+char*	R_alloc(R_SIZE_T, int);
+long double *R_allocLD(R_SIZE_T nelem);
 char*	S_alloc(long, int);
 char*	S_realloc(char *, long, long, int);
 
