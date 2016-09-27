@@ -23,6 +23,8 @@
 
 #include <Defn.h>
 #include <R_ext/Altrep.h>
+#include <float.h> /* for DBL_DIG */
+#include <Print.h> /* for R_print */
 
 
 /**
@@ -1153,6 +1155,7 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
 
     SEXP elt = STRING_ELT(val, i);
     if (elt == NULL) {
+	int savedigits;
 	SEXP data = DEFERRED_STRING_ARG(x);
 	int oldwarn = *pwarn;
 	switch(TYPEOF(data)) {
@@ -1160,7 +1163,10 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
 	    elt = StringFromInteger(INTEGER_ELT(data, i), pwarn);
 	    break;
 	case REALSXP:
+	    savedigits = R_print.digits;
+	    R_print.digits = DBL_DIG;/* MAX precision */
 	    elt = StringFromReal(REAL_ELT(data, i), pwarn);
+	    R_print.digits = savedigits;
 	    break;
 	default:
 	    error("unsupported type for deferred string coercion");
