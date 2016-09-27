@@ -22,17 +22,13 @@
 #ifndef R_RS_H
 #define R_RS_H
 
-#ifndef NO_C_HEADERS
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cstring>
-#  include <cstddef>
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstring>
+# include <cstddef>
 using std::size_t;
-# else
-#  include <string.h>		/* for memcpy, memset */
-#  include <stddef.h> /* for size_t */
-# endif
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <string.h>		/* for memcpy, memset */
+# include <stddef.h> /* for size_t */
 #endif
 
 #include <Rconfig.h>		/* for F77_APPEND_UNDERSCORE */

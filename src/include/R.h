@@ -24,11 +24,10 @@
 # define USING_R
 #endif
 
-#ifndef NO_C_HEADERS
 /* same as Rmath.h: needed for cospi etc */
-# ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
-#  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
-# endif
+#ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
+# define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
+#endif
 /* The C++ headers in Solaris Studio are strict C++98, and 100+ 
    packages would fail because of not using e.g. std::round 
    or using C99 functions such as 
@@ -40,39 +39,35 @@
 
    DO_NOT_USE_CXX_HEADERS is legacy, left as a last resort.
 */
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cstdlib>
-#  include <cstdio>
-#  include <climits>
-#  include <cmath>
-#  ifdef __SUNPRO_CC
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstdlib>
+# include <cstdio>
+# include <climits>
+# include <cmath>
+# ifdef __SUNPRO_CC
 using namespace std;
-#  endif
-# else
-#  include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
-#  include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
-#  include <limits.h> /* for INT_MAX */
-#  include <math.h>
-# endif 
+# endif
+#else
+# include <stdlib.h> /* Not used by R itself, but widely assumed in packages */
+# include <stdio.h>  /* Used by ca 200 packages, but not in R itself */
+# include <limits.h> /* for INT_MAX */
+# include <math.h>
+#endif 
 /* 
    math.h is also included by R_ext/Arith.h, except in C++ code
    stddef.h (or cstddef) is included by R_ext/Memory.h
    string.h (or cstring) is included by R_ext/RS.h
-   All guarded by NO_C_HEADERS.
 */
-# if defined(__sun)
+#if defined(__sun)
 /* Solaris' stdlib.h includes a header which defines these (and more) */
-#  undef CS
-#  undef DO
-#  undef DS
-#  undef ES
-#  undef FS
-#  undef GS
-#  undef SO
-#  undef SS
-# endif
-#else
-#warning "use of NO_C_HEADERS is deprecated"
+# undef CS
+# undef DO
+# undef DS
+# undef ES
+# undef FS
+# undef GS
+# undef SO
+# undef SS
 #endif
 
 #include <Rconfig.h>

@@ -29,19 +29,14 @@
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
 
-// Support for NO_C_HEADERS added in R 3.3.0
 #ifdef __cplusplus
-# ifndef NO_C_HEADERS
-#  include <cstdio>
-#  ifdef __SUNPRO_CC
+# include <cstdio>
+# ifdef __SUNPRO_CC
 using std::FILE;
-#  endif
 # endif
 extern "C" {
 #else
-# ifndef NO_C_HEADERS
-#  include <stdio.h>
-#endif
+# include <stdio.h>
 #endif
 
 #if defined(__GNUC__) && __GNUC__ >= 3

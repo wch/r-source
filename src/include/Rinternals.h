@@ -26,24 +26,15 @@
 #ifndef R_INTERNALS_H_
 #define R_INTERNALS_H_
 
-// Support for NO_C_HEADERS added in R 3.3.0
 #ifdef __cplusplus
-# ifndef NO_C_HEADERS
-#  include <cstdio>
-#  include <climits>
-#  include <cstddef>
-# else
-#warning "use of NO_C_HEADERS is deprecated"
-# endif
+# include <cstdio>
+# include <climits>
+# include <cstddef>
 extern "C" {
 #else
-# ifndef NO_C_HEADERS
-#  include <stdio.h>
-#  include <limits.h> /* for INT_MAX */
-#  include <stddef.h> /* for ptrdiff_t */
-# else
-#warning "use of NO_C_HEADERS is deprecated"
-# endif
+# include <stdio.h>
+# include <limits.h> /* for INT_MAX */
+# include <stddef.h> /* for ptrdiff_t */
 #endif
 
 #include <R_ext/Arith.h>

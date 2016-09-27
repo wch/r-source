@@ -28,15 +28,12 @@
   allow for 'large' files (>= 2GB) on 32-bit systems, where supported.
 */
 /* required by C99/C11 */
-#ifndef NO_C_HEADERS
-# ifdef __cplusplus
-#  include <cstdint>
-# else
-#  include <stdint.h>
-# endif
+#ifdef __cplusplus
+# include <cstdint>
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <stdint.h>
 #endif
+
 typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 
 #ifdef __cplusplus

@@ -32,11 +32,9 @@
 #include <R_ext/libextern.h>
 #ifdef  __cplusplus
 extern "C" {
-#elif !defined(NO_C_HEADERS)
+#else
 /* needed for isnan and isfinite, neither of which are used under C++ */
 # include <math.h>
-#else
-#warning "use of NO_C_HEADERS is deprecated"
 #endif
 
 /* implementation of these : ../../main/arithmetic.c */

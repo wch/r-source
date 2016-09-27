@@ -31,24 +31,18 @@
 #ifndef RMATH_H
 #define RMATH_H
 
-/* Note that on some systems you need to include math.h before the
-   defines below. If so, define this yourself. */
-#ifndef NO_C_HEADERS
 /* needed for cospi etc */
-# ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
-#  define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
-# endif
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cmath>
+#ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
+# define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
+#endif
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cmath>
 // See comment in R.h
-#  ifdef __SUNPRO_CC
+# ifdef __SUNPRO_CC
 using namespace std;
-#  endif
-# else
-#  include <math.h>
 # endif
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <math.h>
 #endif
 
 /*-- Mathlib as part of R --  define this for standalone : */

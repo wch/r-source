@@ -24,14 +24,10 @@
 #ifndef R_EXT_RALLOCATORS_H_
 #define R_EXT_RALLOCATORS_H_
 
-#ifndef NO_C_HEADERS
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cstddef>
-# else
-#  include <stddef.h> /* for size_t */
-# endif
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstddef>
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <stddef.h> /* for size_t */
 #endif
 
 /* R_allocator_t typedef is also declared in Rinternals.h 

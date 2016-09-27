@@ -25,15 +25,11 @@
 #ifndef R_EXT_MEMORY_H_
 #define R_EXT_MEMORY_H_
 
-#ifndef NO_C_HEADERS
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cstddef>
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstddef>
 using std::size_t;
-# else
-#  include <stddef.h> /* for size_t */
-# endif
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <stddef.h> /* for size_t */
 #endif
 
 #ifdef  __cplusplus

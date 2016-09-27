@@ -285,6 +285,12 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Use of the C/C++ macro \samp{NO_C_HEADERS} is defunct and
+      silently ignored.
+    }
+  }
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{

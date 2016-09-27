@@ -28,15 +28,11 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
 
-#ifndef NO_C_HEADERS
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cstddef>
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstddef>
 using std::size_t;
-# else
-#  include <stddef.h>
-# endif
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <stddef.h>
 #endif
 
 #define revsort       Rf_revsort
