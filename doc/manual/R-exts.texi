@@ -12112,9 +12112,10 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream.
 
 Functions @code{Rvprintf} and @code{REvprintf} are analogues using the
-@code{vprintf} interface.  Because that is a C99 interface, they are
-only defined by @file{R_ext/Print.h} in C++ code if the macro
-@code{R_USE_C99_IN_CXX} is defined when it is included.
+@code{vprintf} interface.  Because that is a C99@footnote{also part of
+C++11.} interface, they are only defined by @file{R_ext/Print.h} in C++
+code if the macro @code{R_USE_C99_IN_CXX} is defined when it is
+included.
 
 Another circumstance when it may be important to use these functions is
 when using parallel computation on a cluster of computational nodes, as
