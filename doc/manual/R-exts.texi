@@ -6769,7 +6769,7 @@ structure and detect mis-matched braces, and so on.
 
 The system most commonly used for this is some version of
 @command{Emacs} (including @command{XEmacs}) with the @acronym{ESS}
-package (@uref{http://ess.r-project.org/}: it is often is installed with
+package (@uref{https://ESS.R-project.org/}: it is often is installed with
 @command{Emacs} but may need to be loaded, or even installed,
 separately).
 
@@ -9521,26 +9521,10 @@ resetting buffers on open files).
 Most @R{} header files can be included within C++ programs but they
 should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
-such a block has caused compilation errors.}).  It may not be possible
-to include some @R{} headers as they in turn include system header files
-that may cause conflicts---if this happens, first try including the
-appropriate headers yourself before the @R{} headers, then try defining
-@samp{NO_C_HEADERS} before including the @R{} headers.  (Headers
-@file{R.h}, @file{Rinternals.h} and @file{Rmath.h} support
-@samp{NO_C_HEADERS}: @file{cstddef} needs to be included before
-@file{R.h} if @samp{NO_C_HEADERS} is defined.  The requirements for
-@file{Rinternals.h} depend on the version of @R{} (it is only supported
-as from @R{} 3.3.0) and the platform, but
-@example
-#include <cstdio>
-#include <climits>
-#include <cstddef>
-using std::FILE;
-@end example
-is likely to suffice.)  As from @R{} 3.3.0, @R{} headers do not include
-legacy headers when used with C++, so @samp{NO_C_HEADERS} will only be
-needed if the package C++ code includes legacy headers or for earlier
-versions of @R{}: it is deprecated and likely to be removed in future.
+such a block has caused compilation errors.}).  The inclusion of system
+headers in C++ changed in @R{} 3.3.0@footnote{with an exception for the
+Solaris C++ compiler to be removed in @R{} 3.4.0.}, so if you care about
+earlier versions of @R{} please check your package there.
 
 Legacy header @file{S.h} cannot be used with C++.
 
@@ -11817,10 +11801,10 @@ This is only recommended for experts.
 Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
 
-Note that although @var{n} is @code{size_t}, there may be limits imposed
-by @R{}'s internal allocation mechanism.  These will only come into play
-on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
-just under 16Gb.
+@c Note that although @var{n} is @code{size_t}, there may be limits imposed
+@c by @R{}'s internal allocation mechanism.  These will only come into play
+@c on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
+@c just under 16Gb.
 
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
