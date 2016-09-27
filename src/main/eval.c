@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015	The R Core Team.
+ *  Copyright (C) 1998--2016	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2677,8 +2677,9 @@ static SEXP evalArgs(SEXP el, SEXP rho, int dropmissing, SEXP call, int n)
 
 
 /* A version of DispatchOrEval that checks for possible S4 methods for
- * any argument, not just the first.  Used in the code for `[` in
- * do_subset.  Differs in that all arguments are evaluated
+ * any argument, not just the first.  Used in the code for `c()` in do_c()
+ * and previously used in the code for `[` in do_subset.
+ * Differs in that all arguments are evaluated
  * immediately, rather than after the call to R_possible_dispatch.
  */
 attribute_hidden
