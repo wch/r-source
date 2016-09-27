@@ -235,11 +235,11 @@
       packages will need to request C++11 or replace non-C++98 calls
       such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R
 	Extensions}.
-    }
     
-    \item When included from C++, the \R headers now use forms such as
-    \code{std::FILE} directly rather than \code{using std::FILE}.  C++
-    code including these headers might be relying on the latter.
+      \item When included from C++, the \R headers now use forms such as
+      \code{std::FILE} directly rather than including the line \preformatted{using std::FILE;}
+      C++ code including these headers might be relying on the latter.
+    }
   }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
