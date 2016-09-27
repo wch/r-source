@@ -31,9 +31,6 @@
 
 #ifdef __cplusplus
 # include <cstdio>
-# ifdef __SUNPRO_CC
-using std::FILE;
-# endif
 extern "C" {
 #else
 # include <stdio.h>
@@ -86,9 +83,13 @@ void process_site_Renviron(void);
 void process_system_Renviron(void);
 void process_user_Renviron(void);
 
+#ifdef __cplusplus
+extern std::FILE * R_Consolefile;
+extern std::FILE * R_Outputfile;
+#else
 extern FILE * R_Consolefile;
 extern FILE * R_Outputfile;
-
+#endif
 
 /* in ../unix/sys-unix.c */
 void R_setStartTime(void);
