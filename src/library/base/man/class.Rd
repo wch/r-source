@@ -99,8 +99,9 @@ oldClass(x) <- value
   only the first.  However, S3 method selection attempts to treat objects
   from an S4 class as if they had the appropriate S3 class attribute, as
   does \code{inherits}.  Therefore, S3 methods can be defined for S4
-  classes.  See the \sQuote{\link{Classes}} and \sQuote{\link{Methods}}
-  help pages for details.
+  classes.  See the \sQuote{\link[methods]{Introduction}} and \sQuote{\link{Methods_for_S3}}
+  help pages for basic information on S4 methods and for the relation
+  between these and S3 methods.
 
   The replacement version of the function sets the class to the value
   provided.  For classes that have a formal definition, directly

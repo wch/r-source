@@ -61,8 +61,9 @@ asS3(object, flag = TRUE, complete = TRUE)
 }
 
 \seealso{
-  \code{\link{is.object}} for a more general test; \link{Methods}
-  for general information on S4.
+  \code{\link{is.object}} for a more general test; \link[methods]{Introduction}
+  for general information on S4; \link[methods]{Classes_Details} for more on S4
+  class definitions.
 }
 
 \examples{
