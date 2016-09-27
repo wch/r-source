@@ -27,20 +27,19 @@
    defined in namespace std.  It is part of the C++11 standard. */
 # ifdef R_USE_C99_IN_CXX
 #  include <cstdarg>
-#  ifdef __SUNPRO_CC
-using _STLP_VENDOR_CSTD::va_list;
-#  endif
+#  define R_VA_LIST std::va_list
 # endif
 extern "C" {
 #else
 # include <stdarg.h>
+# define R_VA_LIST va_list
 #endif
 
 void Rprintf(const char *, ...);
 void REprintf(const char *, ...);
 #if !defined(__cplusplus) || defined R_USE_C99_IN_CXX
-void Rvprintf(const char *, va_list);
-void REvprintf(const char *, va_list);
+void Rvprintf(const char *, R_VA_LIST);
+void REvprintf(const char *, R_VA_LIST);
 #endif
 
 #ifdef  __cplusplus
