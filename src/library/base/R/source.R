@@ -22,6 +22,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 verbose = getOption("verbose"),
 	 prompt.echo = getOption("prompt"),
 	 max.deparse.length = 150, width.cutoff = 60L,
+         deparseCtrl = "showAttributes", ## rather?  c("keepInteger", "showAttributes", "keepNA"),
          chdir = FALSE,
          encoding = getOption("encoding"),
          continue.echo = getOption("continue"),
@@ -198,7 +199,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	if (!tail) {
 		    # Deparse.  Must drop "expression(...)"
 		    dep <- substr(paste(deparse(ei, width.cutoff = width.cutoff,
-                                                control = "showAttributes"),
+						control = deparseCtrl),
 					collapse = "\n"), 12L, 1e+06L)
 		    dep <- paste0(prompt.echo,
 				  gsub("\n", paste0("\n", continue.echo), dep))
@@ -237,8 +238,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		    print(yy$value)
 	    }
 	    if (verbose)
-		cat(" .. after ", sQuote(deparse(ei,
-		    control = c("showAttributes","useSource"))), "\n", sep = "")
+		cat(" .. after ", sQuote(deparse(ei, control =
+					  unique(c(deparseCtrl, "useSource")))),
+		    "\n", sep = "")
  	}
     }
     invisible(yy)
@@ -275,7 +277,9 @@ function(file, envir = baseenv(), chdir = FALSE,
 
 withAutoprint <- function(exprs, local = TRUE, print. = TRUE, echo = TRUE,
                           max.deparse.length = Inf,
-                          width.cutoff = max(20, getOption("width")), ...)
+                          width.cutoff = max(20, getOption("width")),
+                          deparseCtrl = c("keepInteger", "showAttributes", "keepNA"),
+                          ...)
 {
     if(is.expression(exprs)) {
 	## just use it
@@ -292,5 +296,6 @@ withAutoprint <- function(exprs, local = TRUE, print. = TRUE, echo = TRUE,
     }
 
     source(exprs = exprs, local = local, print.eval = print., echo = echo,
-           max.deparse.length = max.deparse.length, width.cutoff = width.cutoff, ...)
+           max.deparse.length = max.deparse.length, width.cutoff = width.cutoff,
+	   deparseCtrl = deparseCtrl, ...)
 }

@@ -14,10 +14,10 @@
   until the end of the file is reached, then the parsed expressions are
   evaluated sequentially in the chosen environment.
 
-  \code{withAutoprint(exprs)} is a wrapper for \code{source(exprs = exprs, ..)}
-  with different defaults.  Its main purpose is to evaluate and
-  auto-print expressions as if in a toplevel context, e.g, as in the \R
-  console.
+  \code{withAutoprint(exprs)} is a wrapper for \code{source(exprs =
+  exprs, ..)} with different defaults.  Its main purpose is to evaluate
+  and auto-print expressions as if in a toplevel context, e.g, as in the
+  \R console.
 }
 \usage{
 source(file, local = FALSE, echo = verbose, print.eval = echo,
@@ -25,6 +25,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
        verbose = getOption("verbose"),
        prompt.echo = getOption("prompt"),
        max.deparse.length = 150, width.cutoff = 60L,
+       deparseCtrl = "showAttributes",
        chdir = FALSE,
        encoding = getOption("encoding"),
        continue.echo = getOption("continue"),
@@ -32,12 +33,14 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
 withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
               max.deparse.length = Inf,
-              width.cutoff = max(20, getOption("width")), \dots)
+              width.cutoff = max(20, getOption("width")),
+              deparseCtrl = c("keepInteger", "showAttributes", "keepNA"),
+              \dots)
 }
 \arguments{
-  \item{file}{a \link{connection} or a character string giving the pathname
-    of the file or URL to read from.  \code{""} indicates the connection
-    \code{\link{stdin}()}.}
+  \item{file}{a \link{connection} or a character string giving the
+    pathname of the file or URL to read from.  \code{""} indicates the
+    connection \code{\link{stdin}()}.}
   \item{local}{\code{TRUE}, \code{FALSE} or an environment, determining
     where the parsed expressions are evaluated.  \code{FALSE} (the
     default) corresponds to the user's workspace (the global
@@ -48,7 +51,10 @@ withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
   \item{print.eval, print.}{logical; if \code{TRUE}, the result of
     \code{eval(i)} is printed for each expression \code{i}; defaults
     to the value of \code{echo}.}
-  \item{exprs}{}
+  \item{exprs}{\emph{instead} of specifying \code{file}, an
+    \code{\link{expression}}, \code{\link{call}}, or \code{\link{list}}
+    of \code{\link{call}}'s.  Typically (unevaluated) expressions inside
+    braces, i.e., of the form \code{\{ .... \}}.}
   \item{spaced}{logical indicating if newline (hence emptly line) should
     be printed before each expression (when \code{echo = TRUE}).}
   \item{verbose}{if \code{TRUE}, more diagnostics (than just
@@ -61,6 +67,12 @@ withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
     the deparse of a single expression.}
   \item{width.cutoff}{integer, passed to \code{\link{deparse}()} which
     is used (only) when there are no source references.}
+  \item{deparseCtrl}{\code{\link{character}} vector, passed as
+    \code{control} to \code{\link{deparse}()}, see also
+    \code{\link{.deparseOpts}}.  In \R version <= 3.3.x, this was
+    hardcoded to \code{"showAttributes"}, which is the default
+    currently; \code{deparseCtrl = "all"} may be preferable, when strict
+    back compatibility is not of importance.}
   \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
     the \R working directory is temporarily changed to the directory
     containing \code{file} for evaluating.}
