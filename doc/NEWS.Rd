@@ -217,9 +217,12 @@
       \code{exprs}; this is made use of in the new utility function
       \code{withAutoprint()}.
 
-      \item \code{sys.source} gets a new \code{toplevel.env} argument.
+      \item \code{sys.source()} gets a new \code{toplevel.env} argument.
       This argument is useful for frameworks running package tests;
       contributed by Tomas Kalibera.
+      
+      \item \code{Sys.setFileTime()} will set fractions of seconds
+      on platforms which support it (not currently Windows nor macOS).
     }
   }
 

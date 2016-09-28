@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011 R Core Team
+% Copyright 2011-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.setFileTime}
@@ -21,15 +21,17 @@ Sys.setFileTime(path, time)
   }
   \item{time}{
     A date-time of class \code{"\link{POSIXct}"} or an object which can
-    be coerced to one.  Fractions of a second are ignored.
+    be coerced to one.  Fractions of a second may be ignored.
   }
 }
 \details{
   This attempts sets the file time to the value specified.
 
-  On a Unix-alike it uses the system call \code{utimes} if that is
-  available, otherwise \code{utime}.  On a POSIX file system it sets
-  both the last-access and modification times.
+  On a Unix-alike it uses the system call \code{utimensat} if that is
+  available, otherwise \code{utimes} or \code{utime}.  On a POSIX file
+  system it sets both the last-access and modification times.
+  Fractional seconds will set as from \R 3.4.0 on OSes with the
+  requisite system calls and suitable filesystems.
 
   On Windows it uses the system call \code{SetFileTime} to set the
   \sQuote{last write time}.  Some Windows file systems only record the

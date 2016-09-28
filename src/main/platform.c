@@ -2392,11 +2392,14 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #else
 
-# ifdef HAVE_UTIMES
-#  include <sys/time.h>
-# elif defined(HAVE_UTIME)
-#  include <utime.h>
-# endif
+#if defined(HAVE_UTIMENSAT)
+# include <fcntl.h>
+# include <sys/stat.h>
+#elif defined(HAVE_UTIMES)
+# include <sys/time.h>
+#elif defined(HAVE_UTIME)
+# include <utime.h>
+#endif
 
 static void copyFileTime(const char *from, const char * to)
 {
@@ -2413,7 +2416,13 @@ static void copyFileTime(const char *from, const char * to)
     ftime = (double) sb.st_mtime;
 #endif
 
-#if defined(HAVE_UTIMES)
+#if defined(HAVE_UTIMENSAT)
+    struct timespec times[2];
+
+    times[0].tv_sec = times[1].tv_sec = (int)ftime;
+    times[0].tv_nsec = times[1].tv_nsec = (int)(1e9*(ftime - (int)ftime));
+    utimensat(AT_FDCWD, to, times, 0);
+#elif defined(HAVE_UTIMES)
     struct timeval times[2];
 
     times[0].tv_sec = times[1].tv_sec = (int)ftime;
@@ -2815,20 +2824,28 @@ do_setFileTime(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     const char *fn = translateChar(STRING_ELT(CAR(args), 0));
-    int ftime = asInteger(CADR(args)), res;
+    double ftime = asReal(CADR(args));
+    int res;
 
 #ifdef Win32
     res  = winSetFileTime(fn, (time_t)ftime);
+#elif defined(HAVE_UTIMENSAT)
+    struct timespec times[2];
+
+    times[0].tv_sec = times[1].tv_sec = (int)ftime;
+    times[0].tv_nsec = times[1].tv_nsec = (int)(1e9*(ftime - (int)ftime));
+
+    res = utimensat(AT_FDCWD, fn, times, 0) == 0;
 #elif defined(HAVE_UTIMES)
     struct timeval times[2];
 
-    times[0].tv_sec = times[1].tv_sec = ftime;
-    times[0].tv_usec = times[1].tv_usec = 0;
+    times[0].tv_sec = times[1].tv_sec = (int)ftime;
+    times[0].tv_usec = times[1].tv_usec = (int)(1e6*(ftime - (int)ftime));
     res = utimes(fn, times) == 0;
 #elif defined(HAVE_UTIME)
     struct utimbuf settime;
 
-    settime.actime = settime.modtime = ftime;
+    settime.actime = settime.modtime = (int)ftime;
     res = utime(fn, &settime) == 0;
 #endif
     return ScalarLogical(res);
