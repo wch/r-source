@@ -2088,10 +2088,12 @@ setRlibs <-
 			 "")
 		printLog0(Log, paste(msg, collapse = "\n"))
 	    } else {
+                ## allow for some imprecision in file times (in secs)
+                time_tol <- as.double(Sys.getenv("_R_CHECK_FILE_TIMES_TOL_", 10))
 		vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
 		inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
 		if (sum(!is.na(vignette_times)) && sum(!is.na(inst_doc_times)) &&
-                    max(vignette_times, na.rm = TRUE) > max(inst_doc_times, na.rm = TRUE)) {
+                    max(vignette_times, na.rm = TRUE) > max(inst_doc_times, na.rm = TRUE) + time_tol) {
 		    if (!any) warningLog(Log)
 		    any <- TRUE
 		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
@@ -2099,13 +2101,14 @@ setRlibs <-
 					   collapse = ", "),
 				     indent = 2L, exdent = 4L),
 			     "")
-		    keep <- is.na(vignette_times) | vignette_times <= max(inst_doc_times)
+		    keep <- is.na(vignette_times) |
+                        vignette_times <= max(inst_doc_times, na.rm = TRUE) + time_tol
 		    vignette_files <- vignette_files[keep]
 		    vignette_times <- vignette_times[keep]
 		    printLog0(Log, paste(msg, collapse = "\n"))
 		}
 		matches <- match(vignette_files, inst_doc_files)
-		newer <- vignette_times > inst_doc_times[matches]
+		newer <- vignette_times > inst_doc_times[matches] + time_tol
 		newer <- !is.na(matches) & !is.na(newer) & newer
 		if (any(newer)) {
 		    if (!any) warningLog(Log)
