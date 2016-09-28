@@ -248,13 +248,14 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 
 sys.source <-
 function(file, envir = baseenv(), chdir = FALSE,
-	 keep.source = getOption("keep.source.pkgs"))
+	 keep.source = getOption("keep.source.pkgs"),
+	 toplevel.env = as.environment(envir))
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(gettextf("'%s' is not an existing file", file))
     keep.source <- as.logical(keep.source)
     oop <- options(keep.source = keep.source,
-		   topLevelEnvironment = as.environment(envir))
+		   topLevelEnvironment = toplevel.env)
     on.exit(options(oop))
     if (keep.source) {
     	lines <- readLines(file, warn = FALSE)

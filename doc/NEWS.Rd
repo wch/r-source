@@ -216,6 +216,10 @@
       \item \code{source()} gets new optional arguments, notably
       \code{exprs}; this is made use of in the new utility function
       \code{withAutoprint()}.
+
+      \item \code{sys.source} gets a new \code{toplevel.env} argument.
+      This argument is useful for frameworks running package tests;
+      contributed by Tomas Kalibera.
     }
   }
 

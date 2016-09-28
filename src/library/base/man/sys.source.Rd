@@ -12,7 +12,8 @@
 }
 \usage{
 sys.source(file, envir = baseenv(), chdir = FALSE,
-           keep.source = getOption("keep.source.pkgs"))
+           keep.source = getOption("keep.source.pkgs"),
+           toplevel.env = as.environment(envir))
 }
 \arguments{
   \item{file}{a character string naming the file to be read from}
@@ -26,6 +27,9 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
   \item{keep.source}{logical.  If \code{TRUE}, functions keep
     their source including comments, see
     \code{\link{options}(keep.source = *)} for more details.}
+  \item{toplevel.env}{an \R environment to be used as top level while
+    evaluating the expressions.  This argument is useful for frameworks
+    running package tests; the default should be used in other cases}
 }
 \details{
   For large files, \code{keep.source = FALSE} may save quite a bit of
