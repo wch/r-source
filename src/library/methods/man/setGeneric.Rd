@@ -25,7 +25,7 @@
 
   \code{setGeneric(name, def)}
 
-  where the function definition  \code{def} specifies the formal
+  where the function definition \code{def} specifies the formal
   arguments and becomes the default method.
 
 }
@@ -51,7 +51,7 @@ setGeneric(name, def= , group=list(), valueClass=character(),
   \item{group}{ The name of the group
     generic function to which this function belongs.  See
     \link{Methods_Details} for details of group generic functions in method
-    selection and \link{S4GroupGenerics} for existing groups.
+    selection and \link{S4groupGeneric} for existing groups.
   }
   \item{valueClass}{ A character vector specifying one or more class
     names.  The value returned by the generic function must
