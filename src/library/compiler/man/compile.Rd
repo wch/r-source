@@ -16,7 +16,7 @@
 \title{Byte Code Compiler}
 \usage{
 cmpfun(f, options = NULL)
-compile(e, env = .GlobalEnv, options = NULL)
+compile(e, env = .GlobalEnv, options = NULL, srcref = NULL)
 cmpfile(infile, outfile, ascii = FALSE, env = .GlobalEnv,
         verbose = FALSE, options = NULL)
 loadcmp(file, envir = .GlobalEnv, chdir = FALSE)
@@ -30,6 +30,7 @@ setCompilerOptions(...)
   \item{f}{a closure.}
   \item{options}{list of named compiler options}
   \item{env}{the top level environment for the compiling.}
+  \item{srcref}{initial source reference for the expression.}
   \item{file,infile,outfile}{pathnames; outfile defaults to infile with a .Rc
                              extension in place of any existing extension.}
   \item{ascii}{logical; should the compiled file be saved in ascii format?}

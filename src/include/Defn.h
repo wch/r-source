@@ -522,7 +522,10 @@ typedef struct RCNTXT {
     void *cenddata;		/* data for C "on.exit" thunk */
     void *vmax;		        /* top of R_alloc stack */
     int intsusp;                /* interrupts are suspended */
-    int gcenabled;		/* R_GCenabled value */
+    int gcenabled;		/* R_GCEnabled value */
+    int bcintactive;            /* R_BCIntActive value */
+    SEXP bcbody;                /* R_BCbody value */
+    void* bcpc;                 /* R_BCpc value */
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
@@ -643,7 +646,11 @@ LibExtern char *R_Home;		    /* Root of the R tree */
 extern0 R_size_t R_NSize  INI_as(R_NSIZE);/* Size of cons cell heap */
 extern0 R_size_t R_VSize  INI_as(R_VSIZE);/* Size of the vector heap */
 extern0 int	R_GCEnabled INI_as(1);
-extern0 int     R_in_gc INI_as(0);
+extern0 int	R_in_gc INI_as(0);
+extern0 int	R_BCIntActive INI_as(0); /* bcEval called more recently than
+                                            eval */
+extern0 void*	R_BCpc INI_as(NULL);/* current byte code instruction */
+extern0 SEXP	R_BCbody INI_as(NULL); /* current byte code object */
 extern0 SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern0 SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern0 R_size_t R_Collected;	    /* Number of free cons cells (after gc) */
@@ -777,6 +784,11 @@ extern0 int R_check_constants INI_as(0);
 extern SEXP R_cmpfun(SEXP);
 extern void R_init_jit_enabled(void);
 extern void R_initAsignSymbols(void);
+#ifdef R_USE_SIGNALS
+extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
+#endif
+extern SEXP R_getCurrentSrcref();
+extern SEXP R_getBCInterpreterExpression();
 
 LibExtern SEXP R_CachedScalarReal INI_as(NULL);
 LibExtern SEXP R_CachedScalarInteger INI_as(NULL);

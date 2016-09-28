@@ -134,10 +134,14 @@ stopifnot(identical(checkAssign(quote(f(g("x")) <- 1), cntxt), FALSE))
 
 ## flattenPlace
 flattenPlace <- compiler:::flattenPlace
-stopifnot(identical(flattenPlace(quote(f(g(h(x, k), j), i))),
+stopifnot(identical(flattenPlace(quote(f(g(h(x, k), j), i)))$places,
                     list(quote(f(`*tmp*`, i)),
                          quote(g(`*tmp*`, j)),
                          quote(h(`*tmp*`, k)))))
+stopifnot(identical(flattenPlace(quote(f(g(h(x, k), j), i)))$origplaces,
+                    list(quote(f(g(h(x, k), j), i)),
+                         quote(g(h(x, k), j)),
+                         quote(h(x, k)))))
 
 ## getAssignFun
 getAssignFun <- compiler:::getAssignFun

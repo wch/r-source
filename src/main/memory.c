@@ -1584,6 +1584,7 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_UnboundValue);
     FORWARD_NODE(R_RestartToken);
     FORWARD_NODE(R_MissingArg);
+    FORWARD_NODE(R_InBCInterpreter);
 
     FORWARD_NODE(R_GlobalEnv);	           /* Global environment */
     FORWARD_NODE(R_BaseEnv);
@@ -1594,6 +1595,7 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_HandlerStack);          /* Condition handler stack */
     FORWARD_NODE(R_RestartStack);          /* Available restarts stack */
 
+    FORWARD_NODE(R_BCbody);                /* Current byte code object */
     FORWARD_NODE(R_Srcref);                /* Current source reference */
 
     FORWARD_NODE(R_TrueValue);
@@ -1627,6 +1629,7 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(ctxt->sysparent);     /* calling environment */
 	FORWARD_NODE(ctxt->call);          /* the call */
 	FORWARD_NODE(ctxt->cloenv);        /* the closure environment */
+	FORWARD_NODE(ctxt->bcbody);        /* the current byte code object */
 	FORWARD_NODE(ctxt->handlerstack);  /* the condition handler stack */
 	FORWARD_NODE(ctxt->restartstack);  /* the available restarts stack */
 	FORWARD_NODE(ctxt->srcref);	   /* the current source reference */
@@ -2461,11 +2464,9 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
     }
 
     if (length > R_XLEN_T_MAX)
-	errorcall(R_GlobalContext->call,
-		  _("vector is too large")); /**** put length into message */
+	error(_("vector is too large")); /**** put length into message */
     else if (length < 0 )
-	errorcall(R_GlobalContext->call,
-		  _("negative length vectors are not allowed"));
+	error(_("negative length vectors are not allowed"));
     /* number of vector cells to allocate */
     switch (type) {
     case NILSXP:
@@ -2491,8 +2492,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(int))
-		errorcall(R_GlobalContext->call,
-			  _("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %d"), length);
 	    size = INT2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length*sizeof(int);
@@ -2504,8 +2504,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(double))
-		errorcall(R_GlobalContext->call,
-			  _("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %d"), length);
 	    size = FLOAT2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(double);
@@ -2517,8 +2516,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(Rcomplex))
-		errorcall(R_GlobalContext->call,
-			  _("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %d"), length);
 	    size = COMPLEX2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(Rcomplex);
@@ -2532,8 +2530,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(SEXP))
-		errorcall(R_GlobalContext->call,
-			  _("cannot allocate vector of length %d"), length);
+		error(_("cannot allocate vector of length %d"), length);
 	    size = PTR2VEC(length);
 #if VALGRIND_LEVEL > 0
 	    actual_size = length * sizeof(SEXP);

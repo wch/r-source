@@ -1139,6 +1139,15 @@ SEXP attribute_hidden installDDVAL(int n) {
 }
 
 
+static SEXP mkSymMarker(SEXP pname)
+{
+    SEXP ans = allocSExp(SYMSXP);
+    SET_SYMVALUE(ans, ans);
+    SET_ATTRIB(ans, R_NilValue);
+    SET_PRINTNAME(ans, pname);
+    return ans;
+}
+
 /* initialize the symbol table */
 void attribute_hidden InitNames()
 {
@@ -1146,21 +1155,12 @@ void attribute_hidden InitNames()
     if (!(R_SymbolTable = (SEXP *) calloc(HSIZE, sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for symbol table");
 
-    /* R_UnboundValue */
-    R_UnboundValue = allocSExp(SYMSXP);
-    SET_SYMVALUE(R_UnboundValue, R_UnboundValue);
-    SET_PRINTNAME(R_UnboundValue, R_NilValue);
-    SET_ATTRIB(R_UnboundValue, R_NilValue);
-    /* R_MissingArg */
-    R_MissingArg = allocSExp(SYMSXP);
-    SET_SYMVALUE(R_MissingArg, R_MissingArg);
-    SET_PRINTNAME(R_MissingArg, mkChar(""));
-    SET_ATTRIB(R_MissingArg, R_NilValue);
-    /* R_RestartToken */
-    R_RestartToken = allocSExp(SYMSXP);
-    SET_SYMVALUE(R_RestartToken, R_RestartToken);
-    SET_PRINTNAME(R_RestartToken, mkChar(""));
-    SET_ATTRIB(R_RestartToken, R_NilValue);
+    /* Create marker values */
+    R_UnboundValue = mkSymMarker(R_NilValue);
+    R_MissingArg = mkSymMarker(mkChar(""));
+    R_InBCInterpreter = mkSymMarker(mkChar("<in-bc-interp>"));
+    R_RestartToken = mkSymMarker(mkChar(""));
+
     /* String constants (CHARSXP values) */
     /* Note: we don't want NA_STRING to be in the CHARSXP cache, so that
        mkChar("NA") is distinct from NA_STRING */
