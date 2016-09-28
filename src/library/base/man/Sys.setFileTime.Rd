@@ -28,7 +28,7 @@ Sys.setFileTime(path, time)
   This attempts sets the file time to the value specified.
 
   On a Unix-alike it uses the system call \code{utimes} if that is
-  available, otherwise \code{utimes}.  On a POSIX file system it sets
+  available, otherwise \code{utime}.  On a POSIX file system it sets
   both the last-access and modification times.
 
   On Windows it uses the system call \code{SetFileTime} to set the
