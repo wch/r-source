@@ -213,7 +213,7 @@ selection can be done explicitly by calling the function
 \code{\link{selectMethod}}.
 Note that some computations may use this function directly, with
 optional arguments.
-The prime example is the use of \code{\link{coerece}()} methods by
+The prime example is the use of \code{\link{coerce}()} methods by
 function \code{\link{as}()}.
 There has been some confusion from comparing coerce methods to a call
 to \code{\link{selectMethod}} with other options.
