@@ -28,6 +28,10 @@
         extensively rewritten.  The goals are to simplify
         documentation for basic use, to note old features not
         recommended and to correct out-of-date information.
+
+      \item Calls to \code{setMethod()} no longer print a message when
+        creating a generic function in the cases where that is
+        natural: S3 generics and primitives.
     }
   }
 
