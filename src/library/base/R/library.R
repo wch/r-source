@@ -712,7 +712,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     if(length(package) == 1L  &&
        package %in% c("base", "tools", "utils", "grDevices", "graphics",
                       "stats", "datasets", "methods", "grid", "parallel",
-                      "splines", "stats4", "tcltk"))
+                      "splines", "stats4", "tcltk", "compiler"))
         return(file.path(.Library, package))
 
     if(is.null(package)) package <- .packages()
