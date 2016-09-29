@@ -127,6 +127,10 @@
       Greg Werbin.)
 
       \item \code{c()}'s argument \code{use.names} is documented now.
+
+      \item If a package added a class to a class union in another
+        package, loading the first package gave erroneous warnings
+        about \dQuote{undefined subclass}.
     }
   }
 }
