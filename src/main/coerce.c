@@ -1257,7 +1257,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 		switch(TYPEOF(v)) {
 		case INTSXP:
 		case REALSXP:
-		    return R_deferred_coerceToString(v);
+		    return R_deferred_coerceToString(v, NULL);
 		}
 	    ans = coerceToString(v);	    break;
 	case EXPRSXP:

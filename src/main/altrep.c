@@ -1100,30 +1100,42 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
  * Methods
  */
 
-#define DEFERRED_STRING_ARG(x) R_altrep_data1(x)
-#define	CLEAR_DEFERRED_STRING_ARG(x) R_set_altrep_data1(x, R_NilValue)
+#define DEFERRED_STRING_STATE(x) R_altrep_data1(x)
+#define	CLEAR_DEFERRED_STRING_STATE(x) R_set_altrep_data1(x, R_NilValue)
 #define DEFERRED_STRING_EXPANDED(x) R_altrep_data2(x)
 #define SET_DEFERRED_STRING_EXPANDED(x, v) R_set_altrep_data2(x, v)
+
+#define MAKE_DEFERRED_STRING_STATE(v, sp) CONS(v, sp)
+#define DEFERRED_STRING_STATE_ARG(s) CAR(s)
+#define DEFERRED_STRING_STATE_SCIPEN(s) CDR(s)
+
+#define DEFERRED_STRING_ARG(x) \
+    DEFERRED_STRING_STATE_ARG(DEFERRED_STRING_STATE(x))
+#define DEFERRED_STRING_SCIPEN(x) \
+    DEFERRED_STRING_STATE_SCIPEN(DEFERRED_STRING_STATE(x))
 
 static SEXP deferred_string_Serialized_state(SEXP x)
 {
     /* this drops through to standard serialization for fully expanded
 	  deferred string conversions */
-    SEXP arg = DEFERRED_STRING_ARG(x);
-    return arg != R_NilValue ? arg : NULL;
+    SEXP state = DEFERRED_STRING_STATE(x);
+    return state != R_NilValue ? state : NULL;
 }
 
 static SEXP deferred_string_Unserialize_core(SEXP class, SEXP state)
 {
-    return R_deferred_coerceToString(state);
+    SEXP arg = DEFERRED_STRING_STATE_ARG(state);
+    SEXP sp = DEFERRED_STRING_STATE_SCIPEN(state);
+    return R_deferred_coerceToString(arg, sp);
 }
 
 static
 Rboolean deferred_string_Inspect(SEXP x, int pre, int deep, int pvec,
 				 void (*inspect_subtree)(SEXP, int, int, int))
 {
-    SEXP arg = DEFERRED_STRING_ARG(x);
-    if (arg != R_NilValue) {
+    SEXP state = DEFERRED_STRING_STATE(x);
+    if (state != R_NilValue) {
+	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
 	Rprintf("  <deferred string conversion>\n");
 	inspect_subtree(arg, pre, deep, pvec);
     }
@@ -1136,9 +1148,10 @@ Rboolean deferred_string_Inspect(SEXP x, int pre, int deep, int pvec,
 
 static R_INLINE R_xlen_t deferred_string_Length(SEXP x)
 {
-    SEXP arg = DEFERRED_STRING_ARG(x);
-    return arg == R_NilValue ?
-	XLENGTH(DEFERRED_STRING_EXPANDED(x)) : XLENGTH(arg);
+    SEXP state = DEFERRED_STRING_STATE(x);
+    return state == R_NilValue ?
+	XLENGTH(DEFERRED_STRING_EXPANDED(x)) :
+	XLENGTH(DEFERRED_STRING_STATE_ARG(state));
 }
 
 static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
@@ -1155,7 +1168,7 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
 
     SEXP elt = STRING_ELT(val, i);
     if (elt == NULL) {
-	int savedigits;
+	int savedigits, savescipen;
 	SEXP data = DEFERRED_STRING_ARG(x);
 	int oldwarn = *pwarn;
 	switch(TYPEOF(data)) {
@@ -1164,9 +1177,12 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
 	    break;
 	case REALSXP:
 	    savedigits = R_print.digits;
+	    savescipen = R_print.scipen;
 	    R_print.digits = DBL_DIG;/* MAX precision */
+	    R_print.scipen = INTEGER0(DEFERRED_STRING_SCIPEN(x))[0];
 	    elt = StringFromReal(REAL_ELT(data, i), pwarn);
 	    R_print.digits = savedigits;
+	    R_print.scipen = savescipen;
 	    break;
 	default:
 	    error("unsupported type for deferred string coercion");
@@ -1182,8 +1198,8 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
 
 static void *deferred_string_Dataptr(SEXP x)
 {
-    SEXP arg = DEFERRED_STRING_ARG(x);
-    if (arg != R_NilValue) {
+    SEXP state = DEFERRED_STRING_STATE(x);
+    if (state != R_NilValue) {
 	/* expanded data may be incomplete until original data is removed */
 	PROTECT(x);
 	int warn = FALSE;
@@ -1193,7 +1209,7 @@ static void *deferred_string_Dataptr(SEXP x)
 	else
 	    for (i = 0; i < n; i++)
 		ExpandDeferredStringElt(x, i, &warn);
-	CLEAR_DEFERRED_STRING_ARG(x); /* allow arg to be reclaimed */
+	CLEAR_DEFERRED_STRING_STATE(x); /* allow arg to be reclaimed */
 	if (warn) CoercionWarning(warn);
 	UNPROTECT(1);
     }
@@ -1202,14 +1218,14 @@ static void *deferred_string_Dataptr(SEXP x)
 
 static void *deferred_string_Dataptr_or_null(SEXP x)
 {
-    SEXP arg = DEFERRED_STRING_ARG(x);
-    return arg != R_NilValue ? NULL : DATAPTR(DEFERRED_STRING_EXPANDED(x));
+    SEXP state = DEFERRED_STRING_STATE(x);
+    return state != R_NilValue ? NULL : DATAPTR(DEFERRED_STRING_EXPANDED(x));
 }
 
 static SEXP deferred_string_Elt(SEXP x, R_xlen_t i)
 {
-    SEXP data = DEFERRED_STRING_ARG(x);
-    if (data == R_NilValue)
+    SEXP state = DEFERRED_STRING_STATE(x);
+    if (state == R_NilValue)
 	/* string is fully expanded */
 	return STRING_ELT(DEFERRED_STRING_EXPANDED(x), i);
     else {
@@ -1227,13 +1243,14 @@ static SEXP deferred_string_Extract_subset(SEXP x, SEXP indx, SEXP call)
     SEXP result = NULL;
 
     if (! OBJECT(x) && ATTRIB(x) == R_NilValue &&
-	DEFERRED_STRING_ARG(x) != R_NilValue) {
+	DEFERRED_STRING_STATE(x) != R_NilValue) {
 	/* For deferred string coercions, create a new conversion
 	   using the subset of the argument.  Could try to
 	   preserve/share coercions already done, if there are any. */
 	SEXP data = DEFERRED_STRING_ARG(x);
+	SEXP sp = DEFERRED_STRING_SCIPEN(x);
 	PROTECT(result = ExtractSubset(data, indx, call));
-	result = R_deferred_coerceToString(result);
+	result = R_deferred_coerceToString(result, sp);
 	UNPROTECT(1);
 	return result;
     }
@@ -1274,13 +1291,17 @@ static void InitDefferredStringClass()
  * Constructor
  */
 
-SEXP attribute_hidden R_deferred_coerceToString(SEXP v)
+SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP sp)
 {
     SEXP ans = R_NilValue;
     switch (TYPEOF(v)) {
     case INTSXP:
     case REALSXP:
-	ans = R_new_altrep(R_deferred_string_class, v, R_NilValue);
+	if (sp == NULL)
+	    sp = ScalarInteger(R_print.scipen);
+	ans = PROTECT(MAKE_DEFERRED_STRING_STATE(v, sp));
+	ans = R_new_altrep(R_deferred_string_class, ans, R_NilValue);
+	UNPROTECT(1); /* ans */
 	break;
     default:
 	error("unsupported type for deferred string coercion");
