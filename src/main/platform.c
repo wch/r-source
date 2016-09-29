@@ -874,7 +874,39 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(atime)[i] = (double) STAT_TIMESPEC(sb, st_atim).tv_sec
 		+ 1e-9 * (double) STAT_TIMESPEC(sb, st_atim).tv_nsec;
 #else
-	    /* FIXME: there are higher-resolution ways to do this on Windows */
+#ifdef Win32
+#define WINDOWS_TICK 10000000
+#define SEC_TO_UNIX_EPOCH 11644473600LL
+	    {
+		FILETIME c_ft, a_ft, m_ft; 
+		HANDLE h;
+		int success = 0;
+		h = CreateFileW(wfn, GENERIC_READ, 0, NULL, OPEN_EXISTING,
+				    FILE_FLAG_BACKUP_SEMANTICS, NULL);
+		if (h != INVALID_HANDLE_VALUE) {
+		    int res  = GetFileTime(h, &c_ft, &a_ft, &m_ft);
+		    CloseHandle(h);
+		    if (res) { 
+			ULARGE_INTEGER time;
+			time.LowPart = m_ft.dwLowDateTime;
+			time.HighPart = m_ft.dwHighDateTime;
+			REAL(mtime)[i] = (((double) time.QuadPart) / WINDOWS_TICK - SEC_TO_UNIX_EPOCH);
+			time.LowPart = c_ft.dwLowDateTime;
+			time.HighPart = c_ft.dwHighDateTime;
+			REAL(ctime)[i] = (((double) time.QuadPart) / WINDOWS_TICK - SEC_TO_UNIX_EPOCH);
+			time.LowPart = a_ft.dwLowDateTime;
+			time.HighPart = a_ft.dwHighDateTime;
+			REAL(atime)[i] = (((double) time.QuadPart) / WINDOWS_TICK - SEC_TO_UNIX_EPOCH);
+			success = 1;
+		    }
+		}
+		if (!success) {
+		    REAL(mtime)[i] = NA_REAL;
+		    REAL(ctime)[i] = NA_REAL;
+		    REAL(atime)[i] = NA_REAL;	
+	        }
+	    }
+#else
 	    REAL(mtime)[i] = (double) sb.st_mtime;
 	    REAL(ctime)[i] = (double) sb.st_ctime;
 	    REAL(atime)[i] = (double) sb.st_atime;
@@ -883,6 +915,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(ctime)[i] += STAT_TIMESPEC_NS (sb, st_ctim);
 	    REAL(atime)[i] += STAT_TIMESPEC_NS (sb, st_atim);
 # endif
+#endif
 #endif
 	    if (extras) {
 #ifdef UNIX_EXTRAS
@@ -2204,7 +2237,7 @@ static void copyFileTime(const wchar_t *from, const wchar_t * to)
     hFrom = CreateFileW(from, GENERIC_READ, 0, NULL, OPEN_EXISTING,
 			FILE_FLAG_BACKUP_SEMANTICS, NULL);
     if (hFrom == INVALID_HANDLE_VALUE) return;
-    int res  = GetFileTime(hFrom, NULL, &modft, NULL);
+    int res  = GetFileTime(hFrom, NULL, NULL, &modft);
     CloseHandle(hFrom);
     if(!res) return;
 
@@ -2790,14 +2823,15 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32
-static int winSetFileTime(const char *fn, time_t ftime)
+static int winSetFileTime(const char *fn, double ftime)
 {
     SYSTEMTIME st;
     FILETIME modft;
     struct tm *utctm;
     HANDLE hFile;
+    time_t ftimei = (time_t) ftime;
 
-    utctm = gmtime(&ftime);
+    utctm = gmtime(&ftimei);
     if (!utctm) return 0;
 
     st.wYear         = (WORD) utctm->tm_year + 1900;
@@ -2807,7 +2841,7 @@ static int winSetFileTime(const char *fn, time_t ftime)
     st.wHour         = (WORD) utctm->tm_hour;
     st.wMinute       = (WORD) utctm->tm_min;
     st.wSecond       = (WORD) utctm->tm_sec;
-    st.wMilliseconds = (WORD) 0;
+    st.wMilliseconds = (WORD) 1000*(ftime - ftimei);
     if (!SystemTimeToFileTime(&st, &modft)) return 0;
 
     hFile = CreateFile(fn, GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
@@ -2828,7 +2862,7 @@ do_setFileTime(SEXP call, SEXP op, SEXP args, SEXP rho)
     int res;
 
 #ifdef Win32
-    res  = winSetFileTime(fn, (time_t)ftime);
+    res  = winSetFileTime(fn, ftime);
 #elif defined(HAVE_UTIMENSAT)
     struct timespec times[2];
 

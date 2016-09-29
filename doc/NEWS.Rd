@@ -221,9 +221,13 @@
       This argument is useful for frameworks running package tests;
       contributed by Tomas Kalibera.
 
-      \item (Unix-alikes only.)  \code{Sys.setFileTime()} and
+      \item \code{Sys.setFileTime()} and
       \code{file.copy(copy.date = TRUE)} will set timestamps with
       fractions of seconds on platforms/filesystems which support this.
+      
+      \item (Windows only.) \code{file.info()} now returns file timestamps
+      including fractions of seconds; it has done so on other
+      systems since \R 2.14.0.
     }
   }
 
