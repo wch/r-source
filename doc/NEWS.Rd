@@ -221,8 +221,9 @@
       This argument is useful for frameworks running package tests;
       contributed by Tomas Kalibera.
 
-      \item \code{Sys.setFileTime()} will set fractions of seconds
-      on platforms which support it (not currently Windows nor macOS).
+      \item (Unix-alikes only.)  \code{Sys.setFileTime()} and
+      \code{file.copy(copy.date = TRUE)} will set timestamps with
+      fractions of seconds on platforms/filesystems which support this.
     }
   }
 
@@ -284,6 +285,10 @@
       \item \command{configure} checks for the required header
       \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
       system call \code{select} and aborts if they are not found.
+
+      \item If available, the POSIX 2008 system call \code{utimensat}
+      will be used by \code{setFileTime()} and \code{file.copy()}.  This
+      may result in slightly more accurate file times.
     }
   }
 
