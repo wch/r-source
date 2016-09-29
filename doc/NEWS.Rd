@@ -220,7 +220,7 @@
       \item \code{sys.source()} gets a new \code{toplevel.env} argument.
       This argument is useful for frameworks running package tests;
       contributed by Tomas Kalibera.
-      
+
       \item \code{Sys.setFileTime()} will set fractions of seconds
       on platforms which support it (not currently Windows nor macOS).
     }
@@ -242,7 +242,7 @@
       packages will need to request C++11 or replace non-C++98 calls
       such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R
 	Extensions}.
-    
+
       \item When included from C++, the \R headers now use forms such as
       \code{std::FILE} directly rather than including the line \preformatted{using std::FILE;}
       C++ code including these headers might be relying on the latter.
@@ -563,7 +563,11 @@
       documented) when called with \code{wait = FALSE}.  (Reported by
       Michel Lang.)
 
-      \item \code{c()}'s argument \code{use.names} is documented now.
+      \item \code{c()}'s argument \code{use.names} is documented now, as
+      belonging to the (C internal) default method.   In
+      \dQuote{parallel}, argument \code{recursive} is also moved from
+      the generic to the default method, such that the formal argument list
+      of \pkg{base} generic \code{c()} is just \code{(...)}.
     }
   }
 }

@@ -67,6 +67,10 @@ langElts <- c("(", "{", ":", "~",
 	      "&&", "||",
 	      "break", "for", "function", "if", "next", "repeat", "return", "while")
 
+## Code "existing conceptually" in base,
+## typically function names of default methods for .Primitive s:
+conceptual_base_code <- c("c.default")
+
 ##' a "default" print method used "below" (in several *.R):
 .print.via.format <- function(x, ...) {
     writeLines(format(x, ...))
@@ -360,8 +364,11 @@ function(package, dir, lib.loc = NULL,
                 unique(c(objects_in_code, objects_in_ns, ns_S3_methods))
             objects_in_ns <- setdiff(objects_in_ns, objects_in_code)
         }
-        else
-            objects_in_code_or_namespace <- objects_in_code
+	else { ## typically only 'base'
+	    if(is_base)
+		objects_in_code <- c(objects_in_code, conceptual_base_code)
+	    objects_in_code_or_namespace <- objects_in_code
+	}
         package_name <- package
     }
     else {
@@ -6616,15 +6623,8 @@ function(dir, localOnly = FALSE)
             out$spelling <- a
     }
 
-    parse_description_field <- function(desc, field, default = TRUE)
-    {
-        tmp <- desc[field]
-        if (is.na(tmp)) default
-        else switch(tmp,
-                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                    default)
-    }
+    parse_description_field <- function(desc, field, default=TRUE)
+        str_parse_logic(desc[field], default=default)
 
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
