@@ -102,7 +102,7 @@ Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University 
 "Spain (A Coruña)","Spain","A Coruña",http://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid)",Spain,Madrid,http://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
-Sweden,Sweden,Umeå,http://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se
+Sweden,Sweden,Umeå,http://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
 "Switzerland [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 Switzerland,Switzerland,Zürich,http://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 "Taiwan (Chungli) [https]",Taiwan,Chungli,https://ftp.yzu.edu.tw/CRAN/,"Department of Computer Science and Engineering, Yuan Ze University","Peter Dave Hello <hsu # peterdavehello.org>",1,tw
