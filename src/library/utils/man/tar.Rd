@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2015 R Core Team
+% Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -129,6 +129,10 @@ tar(tarfile, files = NULL,
   (10KB).  Implementations which pad differ on whether the block padding
   should occur before or after compression (or both): padding was
   designed for improved performance on physical tape drives.
+  
+  The \sQuote{ustar} format records file modification times to a
+  resolution of 1 second: on file systems with higher resolution it is
+  conventional to discard fractional seconds.
 }
 
 \seealso{
