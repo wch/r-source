@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-09-27 r71382) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-09-28 r71397) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1393,8 +1393,60 @@ N
 > stopifnot(qgeom((0:8)/8, prob=1) == 0, ## p=1 gave Inf in R <= 3.3.1
 +           is.nan(suppressWarnings(qgeom(c(-1/4, 1.1), prob=1))))
 > 
+> ## all our RNG  r<dist>() functions:
+> ##' catch all: value and warnings or error <-- demo(error.catching) :
+> tryCatch.W.E <- function(expr) {
++     W <- NULL
++     w.handler <- function(w){ # warning handler
++ 	W <<- w
++ 	invokeRestart("muffleWarning")
++     }
++     list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
++ 				     warning = w.handler),
++ 	 warning = W)
++ }
+> .stat.ns <- asNamespace("stats")
+> Ns <- 4
+> for(dist in PDQR) {
++     fn <- paste0("r",dist)
++     cat(sprintf("%-9s(%d, ..): ", fn, Ns))
++     F <- get(fn, envir = .stat.ns)
++     nArg <- length(fms <- formals(F))
++     if(dist %in% c("nbinom", "gamma")) ## cannot specify *both* 'prob' & 'mu' / 'rate' & 'scale'
++         nArg <- nArg - 1
++     nA1 <- nArg - 1 # those beside the first (= 'n' mostly)
++     expected <- rep(if(dist %in% PDQRinteg) NA_integer_ else NaN, Ns)
++     for(ia in seq_len(nA1)) {
++         aa <- rep(list(1), nA1)
++         aa[[ia]] <- NA
++         cat(ia,"")
++         R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
++         if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
++         if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
++     }
++     cat(" [Ok]\n")
++ }
+rbinom   (4, ..): 1 2  [Ok]
+rgeom    (4, ..): 1  [Ok]
+rhyper   (4, ..): 1 2 3  [Ok]
+rnbinom  (4, ..): 1 2  [Ok]
+rpois    (4, ..): 1  [Ok]
+rsignrank(4, ..): 1  [Ok]
+rwilcox  (4, ..): 1 2  [Ok]
+rbeta    (4, ..): 1 2 3  [Ok]
+rcauchy  (4, ..): 1 2  [Ok]
+rchisq   (4, ..): 1 2  [Ok]
+rexp     (4, ..): 1  [Ok]
+rf       (4, ..): 1 2 3  [Ok]
+rgamma   (4, ..): 1 2  [Ok]
+rlnorm   (4, ..): 1 2  [Ok]
+rlogis   (4, ..): 1 2  [Ok]
+rnorm    (4, ..): 1 2  [Ok]
+rt       (4, ..): 1 2  [Ok]
+runif    (4, ..): 1 2  [Ok]
+rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.147 0.014 1.162 0 0 
+Time elapsed:  1.141 0.06 1.233 0 0 
 > 

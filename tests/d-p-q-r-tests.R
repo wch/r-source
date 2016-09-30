@@ -983,6 +983,39 @@ stopifnot(is.nan(suppressWarnings(c(qpois(c(-2,3, NaN), 3), qpois(1, 3, log.p=TR
 stopifnot(qgeom((0:8)/8, prob=1) == 0, ## p=1 gave Inf in R <= 3.3.1
           is.nan(suppressWarnings(qgeom(c(-1/4, 1.1), prob=1))))
 
+## all our RNG  r<dist>() functions:
+##' catch all: value and warnings or error <-- demo(error.catching) :
+tryCatch.W.E <- function(expr) {
+    W <- NULL
+    w.handler <- function(w){ # warning handler
+	W <<- w
+	invokeRestart("muffleWarning")
+    }
+    list(value = withCallingHandlers(tryCatch(expr, error = function(e) e),
+				     warning = w.handler),
+	 warning = W)
+}
+.stat.ns <- asNamespace("stats")
+Ns <- 4
+for(dist in PDQR) {
+    fn <- paste0("r",dist)
+    cat(sprintf("%-9s(%d, ..): ", fn, Ns))
+    F <- get(fn, envir = .stat.ns)
+    nArg <- length(fms <- formals(F))
+    if(dist %in% c("nbinom", "gamma")) ## cannot specify *both* 'prob' & 'mu' / 'rate' & 'scale'
+        nArg <- nArg - 1
+    nA1 <- nArg - 1 # those beside the first (= 'n' mostly)
+    expected <- rep(if(dist %in% PDQRinteg) NA_integer_ else NaN, Ns)
+    for(ia in seq_len(nA1)) {
+        aa <- rep(list(1), nA1)
+        aa[[ia]] <- NA
+        cat(ia,"")
+        R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
+        if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
+        if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
+    }
+    cat(" [Ok]\n")
+}
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

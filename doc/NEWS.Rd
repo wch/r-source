@@ -224,7 +224,7 @@
       \item \code{Sys.setFileTime()} and
       \code{file.copy(copy.date = TRUE)} will set timestamps with
       fractions of seconds on platforms/filesystems which support this.
-      
+
       \item (Windows only.) \code{file.info()} now returns file timestamps
       including fractions of seconds; it has done so on other
       systems since \R 2.14.0.
@@ -577,6 +577,11 @@
       \dQuote{parallel}, argument \code{recursive} is also moved from
       the generic to the default method, such that the formal argument list
       of \pkg{base} generic \code{c()} is just \code{(...)}.
+      %% TODO: port from trunk
+
+      \item \code{rbeta(4, NA)} and similarly \code{rgamma()} and
+      \code{rnbinom()} now return \code{NaN}'s with a warning, as other
+      r<dist>(), and as documented.  (\PR{17155})
     }
   }
 }

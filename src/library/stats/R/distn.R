@@ -133,7 +133,8 @@ qbeta <- function(p, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     else .Call(C_qnbeta, p, shape1, shape2, ncp, lower.tail, log.p)
 }
 rbeta <- function(n, shape1, shape2, ncp = 0) {
-    if(ncp == 0) .Call(C_rbeta, n, shape1, shape2)
+    if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
+    else if(ncp == 0) .Call(C_rbeta, n, shape1, shape2)
     else {
         X <- rchisq(n, 2*shape1, ncp =ncp)
         X/(X + rchisq(n, 2*shape2))
