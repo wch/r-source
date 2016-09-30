@@ -465,22 +465,23 @@
       updated to 3.6.1, a bug-fix release including a speedup for the
       non-symmetric case of \code{eigen()}.
 
-      \item Use \code{options(deparse.max.lines)} to limit the number of
-      lines recorded in .Traceback and other deparsing activities.
+      \item Use \code{options(deparse.max.lines=)} to limit the number
+      of lines recorded in \code{.Traceback} and other deparsing
+      activities.
 
       \item \code{format(<AsIs>)} looks more regular, also for
       non-character atomic matrices.
 
-      \item \code{abbreviate()} gets option \code{named = TRUE}.
+      \item \code{abbreviate()} gains an option \code{named = TRUE}.
 
       \item The online documentation for package \pkg{methods} is
-        extensively rewritten.  The goals are to simplify
-        documentation for basic use, to note old features not
-        recommended and to correct out-of-date information.
+      extensively rewritten.  The goals are to simplify
+      documentation for basic use, to note old features not
+      recommended and to correct out-of-date information.
 
       \item Calls to \code{setMethod()} no longer print a message when
-        creating a generic function in the cases where that is
-        natural: S3 generics and primitives.
+      creating a generic function in those cases where that is
+      natural: S3 generics and primitives.
     }
   }
 
@@ -533,10 +534,10 @@
       \item \code{pretty(d, ..)} behaves better for date-time \code{d}
       (\PR{16923}).
 
-      \item When a class name matches multiple classes in the cache,
-      perform a dynamic search in order to obey namespace imports.  This
-      should eliminate annoying messages about multiple hits in the
-      class cache.  Also, pass along the package from the
+      \item When an S4 class name matches multiple classes in the S4
+      cache, perform a dynamic search in order to obey namespace
+      imports.  This should eliminate annoying messages about multiple
+      hits in the class cache.  Also, pass along the package from the
       \code{ClassExtends} object when looking up superclasses in the
       cache.
 
@@ -594,6 +595,10 @@
       \item \code{rbeta(4, NA)} and similarly \code{rgamma()} and
       \code{rnbinom()} now return \code{NaN}'s with a warning, as other
       r<dist>(), and as documented.  (\PR{17155})
+      
+      \item Using \code{options(checkPackageLicense = TRUE)} no longer
+      requires acceptance of the licence for non-default standard
+      packages such as \pkg{compiler}.  (Reported by Mikko Korpela.)
     }
   }
 }
