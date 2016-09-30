@@ -4841,12 +4841,13 @@ FCFLAGS=$F77FLAGS
 @end example
 
 @noindent
-with @command{clang} and @command{clang++} from the `Command Line
-Tools' and the Fortran compiler from
+with @command{clang} and @command{clang++} from the `Command Line Tools'
+and the Fortran compiler from
 @uref{https://r.research.att.com/@/libs/@/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
-not run on Core 2 Duo Macs.}
+not run on Core 2 Duo Macs, and has been reported not to work on macOS
+Sierra.}
 
 Other builds of @command{gfortran} are available: see
 @uref{https://gcc.gnu.org/@/wiki/@/GFortranBinaries} and
@@ -4958,6 +4959,10 @@ changed their installation locations.
 
 @noindent
 although linked versions under @file{/usr/X11} will be found.
+
+The Fortran compiler for El Capitan at
+@uref{http://coudert.name/software.html} works on Sierra: those at
+@uref{https://r.research.att.com/} may not.
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries
