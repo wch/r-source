@@ -32,6 +32,7 @@
       compare \code{matrix(1,1) + 2:3} and \code{matrix(1,1) < 2:3}).
     }
   }
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item User errors such as \code{integrate(f, 0:1, 2)} are now caught.
@@ -307,13 +308,6 @@
     }
   }
 
-  \subsection{DEPRECATED AND DEFUNCT}{
-    \itemize{
-      \item Use of the C/C++ macro \samp{NO_C_HEADERS} is defunct and
-      silently ignored.
-    }
-  }
-
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item There is support for compiling C++14 code in packages on
@@ -356,6 +350,9 @@
 
       \item Installation support for \code{readline} emulations based on
       \code{editline} (aka \code{libedit}) is deprecated.
+
+      \item Use of the C/C++ macro \samp{NO_C_HEADERS} is defunct and
+      silently ignored.
     }
   }
 
