@@ -129,6 +129,10 @@
       now respects \code{cex}, \code{lwd} and \code{lty}.  (Reported by
       Greg Werbin.)
 
+      \item \code{parallel::mccollect()} now returns a named list (as
+      documented) when called with \code{wait = FALSE}.  (Reported by
+      Michel Lang.)
+
       \item If a package added a class to a class union in another
       package, loading the first package gave erroneous warnings
       about \dQuote{undefined subclass}.
