@@ -219,7 +219,9 @@ assign("as.integer", function(x, ...) UseMethod("as.integer"),
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
        envir = .GenericArgsEnv)
 #assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
-assign("c", function(..., recursive = FALSE, use.names = TRUE) UseMethod("c"),
+## Conceptually, this is the argument list of  *default* method, not the generic :
+## assign("c", function(..., recursive = FALSE, use.names = TRUE) UseMethod("c"),
+assign("c", function(...) UseMethod("c"),
        envir = .GenericArgsEnv)
 #assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)
 assign("dim<-", function(x, value) UseMethod("dim<-"), envir = .GenericArgsEnv)

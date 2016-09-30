@@ -2339,7 +2339,7 @@ rbind(mapply(sprintf, forms,               nums),
 sink(con <- textConnection("of", "w")) ; c ; sink(NULL); close(con)
 of2 <- capture.output(print(c))
 stopifnot(identical(of2, of),
-          identical(of2, "function (..., recursive = FALSE, use.names = TRUE)  .Primitive(\"c\")"))
+          identical(of2, "function (...)  .Primitive(\"c\")"))
 ## ^^ would have failed up to R 2.9.x
 foo
 print(foo, useSource = FALSE)

@@ -1,7 +1,7 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
-% Copyright 2003-2013 The R Foundation
+% Copyright 1995-2016 R Core Team
+% Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{format}
@@ -93,8 +93,9 @@ format(x, \dots)
   then calls the default method (and so \code{justify} applies).
 
   \code{format.AsIs} deals with columns of complicated objects that
-  have been extracted from a data frame.  Character objects are passed
-  to the default method (and so \code{width} does not apply).
+  have been extracted from a data frame.  Character objects and (atomic)
+  matrices are passed to the default method (and so \code{width} does
+  not apply).
   Otherwise it calls \code{\link{toString}} to convert the object
   to character (if a vector or list, element by element) and then
   right-justifies the result.

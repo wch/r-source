@@ -22,6 +22,9 @@
       \item Use \code{options(deparse.max.lines)} to limit the number of
       lines recorded in .Traceback and other deparsing activities.
 
+      \item \code{format(<AsIs>)} looks more regular, also for
+      non-character atomic matrices.
+
       \item \code{abbreviate()} gets option \code{named = TRUE}.
 
       \item The online documentation for package \pkg{methods} is
@@ -126,11 +129,19 @@
       now respects \code{cex}, \code{lwd} and \code{lty}.  (Reported by
       Greg Werbin.)
 
-      \item \code{c()}'s argument \code{use.names} is documented now.
-
       \item If a package added a class to a class union in another
-        package, loading the first package gave erroneous warnings
-        about \dQuote{undefined subclass}.
+      package, loading the first package gave erroneous warnings
+      about \dQuote{undefined subclass}.
+
+      \item \code{c()}'s argument \code{use.names} is documented now, as
+      belonging to the (C internal) default method.   In
+      \dQuote{parallel}, argument \code{recursive} is also moved from
+      the generic to the default method, such that the formal argument list
+      of \pkg{base} generic \code{c()} is just \code{(...)}.
+
+      \item \code{rbeta(4, NA)} and similarly \code{rgamma()} and
+      \code{rnbinom()} now return \code{NaN}'s with a warning, as other
+      r<dist>(), and as documented.  (\PR{17155})
     }
   }
 }
