@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-09-20 r71323) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-09-30 r71413) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6405,15 +6405,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3a95a28> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x11435d00> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3a8b490> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x1142abd8> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3a8b490> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x1142abd8> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -7808,4 +7808,10 @@ structure(list(one = 1, two = ), .Names = c("one", "two"))
  Max.   :1969-12-28   Max.   :7.0   Max.   :6.00  
  NA's   :3                          NA's   :1     
 > ## 2 of 4  summary(.) above did not show NA's  in R <= 3.2.3
+> 
+> 
+> ## str.default() for "AsIs" arrays
+> str(I(m <- matrix(pi*1:4, 2)))
+ AsIs [1:2, 1:2] 3.14 6.28 9.42 12.57
+> ## did look ugly (because of toString() for numbers) in R <= 3.3.1
 > 
