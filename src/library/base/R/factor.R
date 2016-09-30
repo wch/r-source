@@ -24,16 +24,11 @@ factor <- function(x = character(), levels, labels = levels,
     if (missing(levels)) {
 	y <- unique(x, nmax = nmax)
 	ind <- sort.list(y) # or possibly order(x) which is more (too ?) tolerant
-	y <- as.character(y)
-	levels <- unique(y[ind])
+	levels <- unique(as.character(y)[ind])
     }
     force(ordered) # check if original x is an ordered factor
-    if(!is.character(x)) {
-	if(!is.character(exclude))
-	    exclude <- as.vector(exclude, typeof(x)) # may result in NA
+    if(!is.character(x))
 	x <- as.character(x)
-    } else
-	exclude <- as.vector(exclude, typeof(x)) # may result in NA
     ## levels could be a long vectors, but match will not handle that.
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)

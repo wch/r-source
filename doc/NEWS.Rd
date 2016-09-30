@@ -19,7 +19,8 @@
       numbers in the ten thousands.
 
       \item \code{factor(x, exclude = L)} behaves more rationally when
-      \code{x} or \code{L} are character vectors.
+      \code{x} or \code{L} are character vectors.  Further,
+      \code{exclude = <factor>} now behaves as documented for long.
 
       \item Arithmetic, logic (\code{&}, \code{|}) and comparison (aka
       \sQuote{relational}, e.g., \code{<}, \code{==}) operations with
@@ -207,6 +208,10 @@
       \item \code{apropos()} and \code{find(simple.words = FALSE)} no
       longer match object names starting with \samp{.} which are known
       to be internal objects (such as \code{.__S3MethodsTable__.}).
+
+      \item Convenience function \code{hasName()} has been added; it
+      is intended to replace the common idiom \code{!is.null(x$name)}
+      without the usually unintended partial name matching.
 
       \item \code{strcapture()} no longer fixes column names nor coerces
       strings to factors (suggested by Bill Dunlap).
@@ -455,10 +460,6 @@
     \itemize{
       \item \code{extSoftVersion()} now reports the version (if any) of
       the \code{readline} library in use.
-
-      \item Convenience function \code{hasName()} has been added; it
-      is intended to replace the common idiom \code{!is.null(x$name)}
-      without the usually unintended partial name matching.
 
       \item The version of LAPACK included in the sources has been
       updated to 3.6.1, a bug-fix release including a speedup for the

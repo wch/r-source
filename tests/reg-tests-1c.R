@@ -1893,7 +1893,7 @@ stopifnot(identical(1L + NULL, 1L + integer()),
 ## gave double() in R <= 3.3.x
 
 
-##  factor(x, exclude)  when  'x' or 'exclude' are  character:
+## factor(x, exclude)  when  'x' or 'exclude' are  character -------
 stopifnot(identical(factor(c(1:2, NA), exclude = ""),
 		    factor(c(1:2, NA), exclude = NULL) -> f12N))
 fab <- factor(factor(c("a","b","c")), exclude = "c")
@@ -1901,6 +1901,18 @@ stopifnot(identical(levels(fab), c("a","b")))
 faN <- factor(c("a", NA), exclude=NULL)
 stopifnot(identical(faN, factor(faN, exclude="c")))
 ## differently with NA coercion warnings in R <= 3.3.x
+
+## factor(x, exclude = X) - coercing 'exclude' or not
+## From r-help/2005-April/069053.html :
+fNA <- factor(as.integer(c(1,2,3,3,NA)), exclude = NaN)
+stopifnot(identical(levels(fNA), c("1", "2", "3", NA)))
+## did exclude NA wrongly in R <= 3.3.x
+## Now when 'exclude' is a factor,
+cc <- c("x", "y", "NA")
+ff <- factor(cc)
+f2 <- factor(ff, exclude = ff[3]) # it *is* used
+stopifnot(identical(levels(f2), cc[1:2]))
+## levels(f2) still contained NA in R <= 3.3.x
 
 
 ## arithmetic, logic, and comparison (relop) for 0-extent arrays

@@ -59,9 +59,8 @@ addNA(x, ifany = FALSE)
     removing those in \code{exclude}), \emph{or} a character string of
     length 1.}
   \item{exclude}{a vector of values to be excluded when forming the
-    set of levels.  This should be a \code{character} (when \code{x} is
-    a \code{factor} already) or of the same type (\code{\link{typeof}})
-    as \code{x}, and will be coerced if necessary.}
+    set of levels.  This may be factor with the same level set as \code{x}
+    or should be a \code{character}.}
   \item{ordered}{logical flag to determine if the levels should be regarded
     as ordered (in the order given).}
   \item{nmax}{an upper bound on the number of levels; see \sQuote{Details}.}
@@ -130,6 +129,8 @@ addNA(x, ifany = FALSE)
   character levels is equivalent to excluding nothing, and when
   \code{exclude} is a \code{\link{character}} vector, that \emph{is}
   applied to the levels of \code{x}.
+  Alternatively, \code{exclude} can be factor with the same level set as
+  \code{x} and will exclude the levels present in \code{exclude}.
 
   The codes of a factor may contain \code{\link{NA}}.  For a numeric
   \code{x}, set \code{exclude = NULL} to make \code{\link{NA}} an extra
