@@ -474,6 +474,15 @@
       non-character atomic matrices.
 
       \item \code{abbreviate()} gets option \code{named = TRUE}.
+
+      \item The online documentation for package \pkg{methods} is
+        extensively rewritten.  The goals are to simplify
+        documentation for basic use, to note old features not
+        recommended and to correct out-of-date information.
+
+      \item Calls to \code{setMethod()} no longer print a message when
+        creating a generic function in the cases where that is
+        natural: S3 generics and primitives.
     }
   }
 
@@ -574,12 +583,15 @@
       documented) when called with \code{wait = FALSE}.  (Reported by
       Michel Lang.)
 
+      \item If a package added a class to a class union in another
+      package, loading the first package gave erroneous warnings
+      about \dQuote{undefined subclass}.
+
       \item \code{c()}'s argument \code{use.names} is documented now, as
       belonging to the (C internal) default method.   In
       \dQuote{parallel}, argument \code{recursive} is also moved from
       the generic to the default method, such that the formal argument list
       of \pkg{base} generic \code{c()} is just \code{(...)}.
-      %% TODO: port from trunk
 
       \item \code{rbeta(4, NA)} and similarly \code{rgamma()} and
       \code{rnbinom()} now return \code{NaN}'s with a warning, as other
