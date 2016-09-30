@@ -276,8 +276,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             testRversion(pkgInfo, package, pkgpath)
             ## avoid any bootstrapping issues by these exemptions
             if(!package %in% c("datasets", "grDevices", "graphics", "methods",
-                               "splines", "stats", "stats4", "tcltk", "tools",
-                               "utils") &&
+                               "stats", "tools", "utils") &&
                isTRUE(getOption("checkPackageLicense", FALSE)))
                 checkLicense(package, pkgInfo, pkgpath)
 

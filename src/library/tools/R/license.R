@@ -620,6 +620,11 @@ function(x)
             Map(paste, expansions[ind], regmatches(components, m))
     }
 
+    if(any(grepl("^Part of R", components))) { # base package
+        is_verified <- is_FOSS <- TRUE
+        restricts_use <- FALSE
+    }
+
     .make_results(is_canonical = is_canonical,
                   bad_components = bad_components,
                   is_standardizable = is_standardizable,
