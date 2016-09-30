@@ -225,9 +225,11 @@
       \code{file.copy(copy.date = TRUE)} will set timestamps with
       fractions of seconds on platforms/filesystems which support this.
 
-      \item (Windows only.) \code{file.info()} now returns file timestamps
-      including fractions of seconds; it has done so on other
-      systems since \R 2.14.0.
+      \item (Windows only.) \code{file.info()} now returns file
+      timestamps including fractions of seconds; it has done so on other
+      platforms since \R 2.14.0.  (NB: some filesystems do not
+      record modification and access timestamps to sub-second
+      resolution.)
     }
   }
 
@@ -291,8 +293,8 @@
       system call \code{select} and aborts if they are not found.
 
       \item If available, the POSIX 2008 system call \code{utimensat}
-      will be used by \code{setFileTime()} and \code{file.copy()}.  This
-      may result in slightly more accurate file times.
+      will be used by \code{setFileTime()} and \code{file.copy(copy.date
+	= TRUE)}.  This may result in slightly more accurate file times.
     }
   }
 
