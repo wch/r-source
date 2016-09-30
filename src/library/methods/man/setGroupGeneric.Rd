@@ -1,6 +1,6 @@
 % File src/library/methods/man/setGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setGroupGeneric}
@@ -24,24 +24,23 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
                 knownMembers=list(), package= , where= )
 }
 \arguments{
-  \item{name}{ The character string name of the generic function.
-  }
+  \item{name}{the character string name of the generic function.
+   }
   \item{def}{A function object.  There isn't likely to be an existing
-      nongeneric of this name, so some function needs to be supplied.
-      Any known member or other function with the same argument list will do, because the group generic cannot be called
-      directly. 
+    nongeneric of this name, so some function needs to be supplied.  Any
+    known member or other function with the same argument list will do,
+    because the group generic cannot be called directly.
   }
-  \item{group, valueClass, signature, simpleInheritanceOnly}{ Arguments to pass to \code{\link{setGeneric}}.
+  \item{group, valueClass}{arguments to pass to
+    \code{\link{setGeneric}}.
   }
-  \item{package, where, useAsDefault, genericFunction}{ Passed to \code{\link{setGeneric}}, but
-      obsolete and to be avoided.
-  }
-  \item{knownMembers}{
-    The names of functions that are
+  \item{knownMembers}{the names of functions that are
     known to be members of this group.  This information is used to
     reset cached definitions of the member generics when information
     about the group generic is changed.
   }
+  \item{package, where}{passed to \code{\link{setGeneric}}, but
+    obsolete and to be avoided.}
 }
 \value{
   The \code{setGroupGeneric} function exists for its side effect: saving the
