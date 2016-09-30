@@ -190,8 +190,8 @@ replacement function for \code{S3Part} may be useful.}
 }
 
 \seealso{
-\link{Methods_S3_Generics} for suggested implementation of methods
-that work for both S3 and S4 dispatch.
+  \link{Methods_for_S3} for suggested implementation of methods
+  that work for both S3 and S4 dispatch.
 }
 
 \examples{
