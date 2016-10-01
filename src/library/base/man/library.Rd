@@ -104,7 +104,9 @@ require(package, lib.loc = NULL, quietly = FALSE,
   user is asked to view and accept the license: a list of accepted
   licenses is stored in file \file{~/.R/licensed}.  In a non-interactive
   session it is an error to use such a package whose license has not
-  already been accepted.
+  already been recorded as accepted.
+
+  As from \R 3.4.0 the license check is done when the namespace is loaded.
 
   Free or Open Source Software (FOSS,
   e.g.\sspace{}\url{https://en.wikipedia.org/wiki/FOSS}) packages are

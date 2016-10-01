@@ -77,8 +77,8 @@ getOption(x, default = NULL)
       disabled as a synonym for \code{"n"} in the browser.}
 
     \item{\code{checkPackageLicense}:}{logical, not set by default.  If
-      true, \code{\link{library}} asks a user to accept any non-standard
-      license at first use.
+      true, \code{\link{loadNamespace}} asks a user to accept any
+      non-standard license at first load of the package.
     }
 
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If

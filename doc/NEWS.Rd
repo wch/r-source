@@ -183,9 +183,9 @@
       \code{cat()} when terminated early, such that
       \code{suppressMessages()} has an effect; suggested by Ben Bolker.
 
-      \item \code{citation()} supports inst/CITATION files from package
-      source trees, with \code{lib.loc} pointing to the directory
-      containing the package.
+      \item \code{citation()} supports \file{inst/CITATION} files from
+      package source trees, with \code{lib.loc} pointing to the
+      directory containing the package.
 
       %% Would need more work (notably in  ../src/main/sort.c )
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
@@ -236,6 +236,10 @@
       platforms since \R 2.14.0.  (NB: some filesystems do not
       record modification and access timestamps to sub-second
       resolution.)
+
+      \item The license check enabled by
+      \code{options(checkPackageLicense = TRUE)} is now done when the
+      package's namespace is first loaded.
     }
   }
 
