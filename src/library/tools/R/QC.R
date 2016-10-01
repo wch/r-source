@@ -186,16 +186,16 @@ function(package, dir, lib.loc = NULL)
         ## to the package in their package slot, so eliminate any
         ## foreign generic functions from code_objs
         if(.isMethodsDispatchOn()) {
+            is <- methods::is # speed
             code_objs <-
                 Filter(function(f) {
-                    ## NB: this get() is expensive as it loads every object
-                    fdef <- get(f, envir = code_env)
-                    if(methods::is(fdef, "genericFunction"))
+                    fdef <- code_env[[f]] # faster than get()
+                    if(is(fdef, "genericFunction"))
                         fdef@package == pkgname
                     else
                         TRUE
                 },
-                       code_objs)
+                code_objs)
         }
 
         ## Allow group generics to be undocumented other than in base.
@@ -223,8 +223,8 @@ function(package, dir, lib.loc = NULL)
         ## </NOTE>
         ## The bad ones:
         S4_classes <-
-            S4_classes[!sapply(S4_classes,
-                               function(u) utils:::topicName("class", u))
+            S4_classes[!vapply(S4_classes, utils:::topicName, " ",
+                               type = "class", USE.NAMES=FALSE)
                        %in% all_doc_topics]
         undoc_things <-
             c(undoc_things, list("S4 classes" = unique(S4_classes)))
@@ -365,8 +365,6 @@ function(package, dir, lib.loc = NULL,
             objects_in_ns <- setdiff(objects_in_ns, objects_in_code)
         }
 	else { ## typically only 'base'
-	    if(is_base)
-		objects_in_code <- c(objects_in_code, conceptual_base_code)
 	    objects_in_code_or_namespace <- objects_in_code
 	}
         package_name <- package
@@ -444,6 +442,7 @@ function(package, dir, lib.loc = NULL,
             sort(names(baseenv()))
         objects_in_code <-
             c(objects_in_code,
+	      conceptual_base_code,
               Filter(.is_primitive_in_base, objects_in_base),
               c(".First.lib", ".Last.lib", ".Random.seed",
                 ".onLoad", ".onAttach", ".onDetach", ".onUnload"))
@@ -513,8 +512,9 @@ function(package, dir, lib.loc = NULL,
             !identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
                        FALSE)
         if(check_S4_methods) {
+            unRematchDef <- methods::unRematchDefinition
             get_formals_from_method_definition <- function(m)
-                formals(methods::unRematchDefinition(m))
+		formals(unRematchDef(m))
             lapply(.get_S4_generics(code_env),
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
@@ -574,8 +574,8 @@ function(package, dir, lib.loc = NULL,
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
-    ind <- as.logical(sapply(db_usages,
-                             function(x) !is.null(attr(x, "bad_lines"))))
+    ind <- vapply(db_usages,
+                  function(x) !is.null(attr(x, "bad_lines")), NA, USE.NAMES=FALSE)
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     bad_doc_objects <- list()
@@ -592,17 +592,16 @@ function(package, dir, lib.loc = NULL,
 
         ## Get variable names and data set usages first, mostly for
         ## curiosity.
-        ind <- ! sapply(exprs, is.call)
+        ind <- ! vapply(exprs, is.call, NA)
         if(any(ind)) {
             variables_in_usages <-
                 c(variables_in_usages,
                   sapply(exprs[ind], deparse))
             exprs <- exprs[!ind]
         }
-        ind <- as.logical(sapply(exprs,
-                                 function(e)
-                                 (length(e) == 2L)
-                                 && e[[1L]] == as.symbol("data")))
+        ind <- vapply(exprs, function(e) (length(e) == 2L) &&
+                                         e[[1L]] == as.symbol("data"),
+                      NA, USE.NAMES=FALSE)
         if(any(ind)) {
             data_sets <- sapply(exprs[ind],
                                 function(e) as.character(e[[2L]]))
@@ -613,8 +612,7 @@ function(package, dir, lib.loc = NULL,
             exprs <- exprs[!ind]
         }
         ## Split out replacement function usages.
-        ind <- as.logical(sapply(exprs,
-                                 .is_call_from_replacement_function_usage))
+        ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA, USE.NAMES=FALSE)
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
@@ -725,7 +723,7 @@ function(package, dir, lib.loc = NULL,
                 (is.call(b <- body(f))
                  && identical(as.character(b[[1L]]), ".Defunct"))
             }
-            functions[!sapply(functions, is_defunct)]
+            functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
         }
     objects_missing_from_usages <-
         if(!has_namespace) character() else {
@@ -967,7 +965,8 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    idx <- sApply(lapply(db, .Rd_get_doc_type), identical, "class")
+    idx <- vapply(lapply(db, .Rd_get_doc_type), identical, NA, "class",
+		  USE.NAMES=FALSE)
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
@@ -989,7 +988,7 @@ function(package, lib.loc = NULL)
     aliases <- unlist(aliases[idx], use.names = FALSE)
 
     Rd_slots <- lapply(db, .Rd_get_section, "Slots", FALSE)
-    idx <- sapply(Rd_slots, length) > 0L
+    idx <- lengths(Rd_slots) > 0L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
     stats["n.final"] <- length(db)
@@ -1017,7 +1016,8 @@ function(package, lib.loc = NULL)
 		      use.names=FALSE))
     }
 
-    S4topics <- sApply(S4_classes, utils:::topicName, type="class")
+    S4topics <- vapply(S4_classes, utils:::topicName, " ",
+                       type="class", USE.NAMES=FALSE)
     S4_checked <- S4_classes[has.a <- S4topics %in% aliases]
     idx <- match(S4topics[has.a], aliases)
     for(icl in seq_along(S4_checked)) {
@@ -6151,7 +6151,8 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
                        envir = code_env)
             ## The S4 'system' does **copy** base code into packages ....
-            any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") && any(codetools::findGlobals(v) %in% ".Internal"))))
+            any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") &&
+                                   any(codetools::findGlobals(v) %in% ".Internal"))))
         })
         gens[unlist(x)]
     }
