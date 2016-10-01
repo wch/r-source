@@ -310,7 +310,7 @@ x$name <- value
   \code{\link{NULL}} for details of indexing null objects.
 }
 %% Fixme: Link (to html in 'help.start()', pdf from 'ref manual',
-%% 'info' from ESS, see \url{http://cran.R-project.org/manuals.html}.
+%% 'info' from ESS, see \url{https://CRAN.R-project.org/manuals.html}.
 
 \examples{
 x <- 1:12

@@ -7527,7 +7527,7 @@ used by the inbuilt command line editor: this used to happen on macOS.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
-@uref{http://ESS.R-project.org}}) using the startup option
+@uref{https://ESS.R-project.org/}}) using the startup option
 @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing: see
