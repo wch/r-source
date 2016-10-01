@@ -599,10 +599,13 @@
       \item \code{rbeta(4, NA)} and similarly \code{rgamma()} and
       \code{rnbinom()} now return \code{NaN}'s with a warning, as other
       r<dist>(), and as documented.  (\PR{17155})
-      
+
       \item Using \code{options(checkPackageLicense = TRUE)} no longer
       requires acceptance of the licence for non-default standard
       packages such as \pkg{compiler}.  (Reported by Mikko Korpela.)
+
+      \item \code{split(<very_long>, *)} now works with long vectors.
+      (\PR{17193})
     }
   }
 }

@@ -58,6 +58,7 @@ HEADERS = \
 	gzio.h \
 	qsort-body.c \
 	rlocale_data.h \
+	split-incl.c \
 	unzip.h \
 	valid_utf8.h \
 	xspline.c \
@@ -126,7 +127,7 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 ## This target has been changed to ensure that R.bin and libR get
-## installed in the build tree if necessary, even if the corresponding 
+## installed in the build tree if necessary, even if the corresponding
 ## objects are not re-made.
 ## Note that dependencies in the test Makefiles used to depend on these objects,
 ## so copy-if-change is used.
@@ -185,7 +186,7 @@ YFLAGS=-l
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@$(ECHO) "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
-	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c	
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
 
 install: installdirs
 	@$(MAKE) install-bin
