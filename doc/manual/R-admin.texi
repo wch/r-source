@@ -4846,8 +4846,9 @@ and the Fortran compiler from
 @uref{https://r.research.att.com/@/libs/@/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
-not run on Core 2 Duo Macs, and has been reported not to work on macOS
-Sierra.}
+not run on Core 2 Duo Macs, and linking failures on macOS Sierra have
+been reported.  On other Sierra machines the reported examples work,
+albeit with many warnings.}
 
 Other builds of @command{gfortran} are available: see
 @uref{https://gcc.gnu.org/@/wiki/@/GFortranBinaries} and
@@ -4960,9 +4961,16 @@ changed their installation locations.
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-The Fortran compiler for El Capitan at
-@uref{http://coudert.name/software.html} works on Sierra: those at
-@uref{https://r.research.att.com/} may not.
+The Fortran compiler for El Capitan from (at the time of writing)
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works on
+Sierra: those at @uref{https://r.research.att.com/} have failure
+reports.  One way to use the Coudert build is to have a
+@file{~/.R/Makevars} file similar to
+@smallexample
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end smallexample
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries
