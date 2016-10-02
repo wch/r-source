@@ -137,10 +137,10 @@ print.help_files_with_topic <- function(x, ...)
                       browser)
         } else {
             writeLines(c(strwrap(msg), "",
-                         paste(" ",
-                               formatDL(c(gettext("Package"), basename(paths)),
-                                        c(gettext("Library"), dirname(paths)),
-                                        indent = 22))))
+                         paste0("  ",
+                                formatDL(c(gettext("Package"), basename(paths)),
+                                         c(gettext("Library"), dirname(paths)),
+                                         indent = 22))))
         }
     } else {
         if(length(paths) > 1L) {
@@ -159,7 +159,7 @@ print.help_files_with_topic <- function(x, ...)
             txt <- formatDL(c("Package", basename(paths)),
                             c("Library", dirname(paths)),
                             indent = 22L)
-            writeLines(c(strwrap(msg), "", paste(" ", txt), ""))
+            writeLines(c(strwrap(msg), "", paste0("  ", txt), ""))
             if(interactive()) {
                 fp <- file.path(paths, "Meta", "Rd.rds")
                 tp <- basename(p)
