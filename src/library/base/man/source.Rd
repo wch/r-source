@@ -55,7 +55,7 @@ withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
     \code{\link{expression}}, \code{\link{call}}, or \code{\link{list}}
     of \code{\link{call}}'s.  Typically (unevaluated) expressions inside
     braces, i.e., of the form \code{\{ .... \}}.}
-  \item{spaced}{logical indicating if newline (hence emptly line) should
+  \item{spaced}{logical indicating if newline (hence empty line) should
     be printed before each expression (when \code{echo = TRUE}).}
   \item{verbose}{if \code{TRUE}, more diagnostics (than just
     \code{echo = TRUE}) are printed during parsing and evaluation of
