@@ -21,18 +21,19 @@
     /* for the ith group. */
     PROTECT(vec = allocVector(VECSXP, nlevs));
     for (R_xlen_t i = 0;  i < nlevs; i++) {
-	SET_VECTOR_ELT(vec, i, allocVector(TYPEOF(x), _L_INTEG_(counts)[i]));
+	SET_VECTOR_ELT(vec, i, 
+		       allocVector(TYPEOF(x), (_L_int_)_L_INTEG_(counts)[i]));
 	setAttrib(VECTOR_ELT(vec, i), R_LevelsSymbol,
 		  getAttrib(x, R_LevelsSymbol));
 	if(have_names)
 	    setAttrib(VECTOR_ELT(vec, i), R_NamesSymbol,
-		      allocVector(STRSXP, _L_INTEG_(counts)[i]));
+		      allocVector(STRSXP, (_L_int_)_L_INTEG_(counts)[i]));
     }
     for (int i = 0; i < nlevs; i++) _L_INTEG_(counts)[i] = 0;
     MOD_ITERATE1(nobs, nfac, i, i1, {
 	int j = INTEGER(f)[i1];
 	if (j != NA_INTEGER) {
-	    _L_int_ k = _L_INTEG_(counts)[j - 1];
+	    _L_int_ k = (_L_int_)_L_INTEG_(counts)[j - 1];
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
 	    case INTSXP:
