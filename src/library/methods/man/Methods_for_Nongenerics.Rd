@@ -137,7 +137,7 @@ generic function.
 The \dQuote{signature} of an S3 method is identified  by the name to
 which the method is assigned, composed of the name of the
 generic function, followed by \code{"."}, followed by the name of the class.
-For details, see \link{UseMethod}.
+For details, see \code{\link{UseMethod}}.
 
 To implement a method for one of these functions corresponding to S4
 classes, there are two possibilities: either an S4 method or an S3 method with the
