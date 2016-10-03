@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-09-14 r71249) -- "Bug in Your Hair"
+R version 3.3.1 Patched (2016-10-03 r71439) -- "Bug in Your Hair"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.142   0.019   0.151 
+  0.136   0.015   0.139 
