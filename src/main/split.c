@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2006-2015 The R Core Team
+ *  Copyright (C) 2006-2016 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,64 +48,29 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("data length is not a multiple of split variable"));
     nm = getAttrib(x, R_NamesSymbol);
     have_names = nm != R_NilValue;
-    PROTECT(counts = allocVector(INTSXP, nlevs));
-    for (int i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
-    R_xlen_t i, i1;
-    MOD_ITERATE1(nobs, nfac, i, i1, {
-	int j = INTEGER(f)[i1];
-	if (j != NA_INTEGER) {
-	    /* protect against malformed factors */
-	    if (j > nlevs || j < 1) error(_("factor has bad level"));
-	    INTEGER(counts)[j - 1]++;
-	}
-    });
-    /* Allocate a generic vector to hold the results. */
-    /* The i-th element will hold the split-out data */
-    /* for the ith group. */
-    PROTECT(vec = allocVector(VECSXP, nlevs));
-    for (R_xlen_t i = 0;  i < nlevs; i++) {
-	SET_VECTOR_ELT(vec, i, allocVector(TYPEOF(x), INTEGER(counts)[i]));
-	setAttrib(VECTOR_ELT(vec, i), R_LevelsSymbol,
-		  getAttrib(x, R_LevelsSymbol));
-	if(have_names)
-	    setAttrib(VECTOR_ELT(vec, i), R_NamesSymbol,
-		      allocVector(STRSXP, INTEGER(counts)[i]));
-    }
-    for (int i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
-    MOD_ITERATE1(nobs, nfac, i, i1, {
-	int j = INTEGER(f)[i1];
-	if (j != NA_INTEGER) {
-	    int k = INTEGER(counts)[j - 1];
-	    switch (TYPEOF(x)) {
-	    case LGLSXP:
-	    case INTSXP:
-		INTEGER(VECTOR_ELT(vec, j - 1))[k] = INTEGER(x)[i];
-		break;
-	    case REALSXP:
-		REAL(VECTOR_ELT(vec, j - 1))[k] = REAL(x)[i];
-		break;
-	    case CPLXSXP:
-		COMPLEX(VECTOR_ELT(vec, j - 1))[k] = COMPLEX(x)[i];
-		break;
-	    case STRSXP:
-		SET_STRING_ELT(VECTOR_ELT(vec, j - 1), k, STRING_ELT(x, i));
-		break;
-	    case VECSXP:
-		SET_VECTOR_ELT(VECTOR_ELT(vec, j - 1), k, VECTOR_ELT(x, i));
-		break;
-	    case RAWSXP:
-		RAW(VECTOR_ELT(vec, j - 1))[k] = RAW(x)[i];
-		break;
-	    default:
-		UNIMPLEMENTED_TYPE("split", x);
-	    }
-	    if(have_names) {
-		nmj = getAttrib(VECTOR_ELT(vec, j - 1), R_NamesSymbol);
-		SET_STRING_ELT(nmj, k, STRING_ELT(nm, i));
-	    }
-	    INTEGER(counts)[j - 1] += 1;
-	}
-    });
+
+#ifdef LONG_VECTOR_SUPPORT
+    if (IS_LONG_VEC(x))
+# define _L_INTSXP_ REALSXP
+# define _L_INTEG_  REAL
+# define _L_int_    R_xlen_t
+# include "split-incl.c"
+
+# undef _L_INTSXP_
+# undef _L_INTEG_
+# undef _L_int_
+    else
+#endif
+
+# define _L_INTSXP_ INTSXP
+# define _L_INTEG_  INTEGER
+# define _L_int_    int
+# include "split-incl.c"
+
+# undef _L_INTSXP_
+# undef _L_INTEG_
+# undef _L_int_
+
     setAttrib(vec, R_NamesSymbol, getAttrib(f, R_LevelsSymbol));
     UNPROTECT(2);
     return vec;
