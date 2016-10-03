@@ -161,7 +161,7 @@
 ## names (from autoconf).
 ## CXX=
 
-## Options for the C++ compiler .
+## Options for the C++ compiler.
 ## CXXFLAGS=
 
 ## Any special flags which must be used when compiling C++ code to be

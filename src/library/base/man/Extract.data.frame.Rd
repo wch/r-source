@@ -177,8 +177,8 @@ try(sw[, "Ferti"]) # column names must match exactly
 stopifnot(identical(sw[, 1], sw[[1]]),
           identical(sw[, 1][1], 80.2),
           identical(sw[, 1, drop = FALSE], sw[1]),
-          is.data.frame(sw[1 ]), dim(sw[1 ]) == c(5,1),
-          is.data.frame(sw[1,]), dim(sw[1,]) == c(1,4),
+          is.data.frame(sw[1 ]), dim(sw[1 ]) == c(5, 1),
+          is.data.frame(sw[1,]), dim(sw[1,]) == c(1, 4),
           is.list(s1 <- sw[1, , drop = TRUE]), identical(s1$Fertility, 80.2))
 tools::assertError(sw[, "Ferti"])
 }

@@ -10,7 +10,7 @@ if test -n "${R_JAVA_LD_LIBRARY_PATH}"; then
 fi
 ## This is DYLD_FALLBACK_LIBRARY_PATH on Darwin (macOS) and
 ## LD_LIBRARY_PATH elsewhere.
-## However, on macOS 10.11 (if SIP is enabled, the default), the
+## However, on macOS >=10.11 (if SIP is enabled, the default), the
 ## environment value will not be passed to a script such as R.sh, so
 ## would not seen here.
 if test -z "${@Rshlibpath_var@}"; then

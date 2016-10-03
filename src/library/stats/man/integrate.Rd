@@ -44,8 +44,8 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
   \code{rel.tol} cannot be less than \code{max(50*.Machine$double.eps,
     0.5e-28)} if \code{abs.tol <= 0}.
 
-  In \R versions \eqn{\le}{<=} 3.2.x, the first entry of
-  \code{lower} and \code{upper} were used where as an error is signalled
+  In \R versions \eqn{\le}{<=} 3.2.x, the first entries of
+  \code{lower} and \code{upper} were used whereas an error is signalled
   now if they are not of length one.
 }
 \note{

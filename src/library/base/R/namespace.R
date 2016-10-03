@@ -394,7 +394,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                      domain = NA)
         }
 
-        ## moved from libray in R 3.4.0
+        ## moved from library in R 3.4.0
         checkLicense <- function(pkg, pkgInfo, pkgPath)
         {
             L <- tools:::analyze_license(pkgInfo$DESCRIPTION["License"])
