@@ -21,7 +21,7 @@ Sys.setFileTime(path, time)
   }
   \item{time}{
     A date-time of class \code{"\link{POSIXct}"} or an object which can
-    be coerced to one.  Fractions of a second are ignored.
+    be coerced to one.  Fractions of a second are ignored (prior to \R 3.4.0).
   }
 }
 \details{

@@ -244,7 +244,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   \code{X11.options}.  The class looked for is \code{R_x11}.  Note that
   the resource specifies the width and height in pixels and not in
   inches.  See for example \samp{man X} (or
-  \url{http://www.xfree86.org/current/X.7.html}).
+  \url{https://www.x.org/releases/current/}).
   An example line in \file{~/.Xresources} might be
 \preformatted{R_x11*geometry: 900x900-0+0
 }

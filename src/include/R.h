@@ -48,15 +48,18 @@
 #  include <math.h>
 # endif 
 /* 
-   math.h   is also included by R_ext/Arith.h, except in C++ code
-   stddef.h is included by R_ext/Memory.h
-   string.h is included by R_ext/RS.h
-   All guarded by NO_C_HEADERS.
+   math.h is also included by R_ext/Arith.h, except in C++ code
+   stddef.h (or cstddef) is included by R_ext/Memory.h
+   string.h (or cstring) is included by R_ext/RS.h
 */
 # if defined(__sun)
 /* Solaris' stdlib.h includes a header which defines these (and more) */
+#  undef CS
 #  undef DO
 #  undef DS
+#  undef ES
+#  undef FS
+#  undef GS
 #  undef SO
 #  undef SS
 # endif

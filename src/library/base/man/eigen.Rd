@@ -47,8 +47,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   only be interpreted by detailed study of the FORTRAN code.
 }
 \value{
-  The spectral decomposition of \code{x} is returned as components of a
-  list with components
+  The spectral decomposition of \code{x} is returned as a list with
+  components
 
   \item{values}{a vector containing the \eqn{p} eigenvalues of \code{x},
     sorted in \emph{decreasing} order, according to \code{Mod(values)}

@@ -66,7 +66,7 @@ static int Sock_error(Sock_error_t perr, int e, int he)
     return -1;
 }
 
-/* <FIXME> is this classic MacOS X? */
+/* <FIXME> is this classic Mac OS? */
 #ifdef MACINTOSH
 extern void __sinit(void);
 extern int __initialize (void *ignoredParameter);

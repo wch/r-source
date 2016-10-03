@@ -7,3 +7,4 @@ Maintainer: R Core Team <R-core@r-project.org>
 Description: R functions for base graphics.
 Imports: grDevices
 License: Part of R @VERSION@
+NeedsCompilation: yes

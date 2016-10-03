@@ -106,6 +106,8 @@ DIC
 dichotomized
 differenced
 differentiable
+differentially
+dimensionality
 dimnames
 discretization
 discretize
@@ -144,7 +146,10 @@ GARCH
 gaussian
 Gaussians
 GCV
+genomic
+genotype
 genotyped
+genotypes
 genotypic
 genotyping
 Ghostscript
@@ -259,6 +264,8 @@ NAs
 NCBI
 nonlinearity
 nonnegative
+Nonparametric
+nonparametric
 numerics
 OECD
 ok
@@ -267,6 +274,7 @@ Omegahat
 one's
 online
 orthogonalized
+outlier
 outliers
 overdispersed
 overdispersion
@@ -292,6 +300,9 @@ PDF
 pdf
 periodogram
 phenotypic
+Phylogenetic
+phylogenetic
+piecewise
 PLS
 plugin
 PNG
@@ -365,6 +376,7 @@ sqrt
 startup
 stationarity
 stepsize
+stepwise
 stochastically
 studentized
 subdirectories

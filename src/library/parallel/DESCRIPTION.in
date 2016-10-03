@@ -11,3 +11,4 @@ License: Part of R @VERSION@
 Imports: tools
 Suggests: methods
 Enhances: snow, nws, Rmpi
+NeedsCompilation: yes

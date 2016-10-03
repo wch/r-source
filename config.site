@@ -76,8 +76,6 @@
 ## g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
 ## On HPUX fort77 is the POSIX compliant FORTRAN compiler, and replaces
 ## f77 in the search list.
-## If CC is gcc, first preference is given to the matching FORTRAN
-## compiler (g77 or gfortran).
 ## If none of these is found, R cannot be compiled.
 ## F77=
 
@@ -155,10 +153,12 @@
 ## LDFLAGS=
 
 
-## The command which runs the C++ compiler.  It not specified, configure
+## The command which runs the C++ compiler.
+## This is optional, for use in packages.
+##  It not specified, configure
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
-## and then looks under the names 'c++', 'g++', 'gcc', 'CC', 'cxx', and
-## 'cc++' (in that order).
+## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
+## names (from autoconf).
 ## CXX=
 
 ## Options for the C++ compiler.
@@ -255,7 +255,7 @@
 ## Analogues for the C++11 compiler: default to the settings for C++
 ## CXX1XFLAGS=
 ## CXX1XPICFLAGS=
-## SHLIB_CXXIXLD=
+## SHLIB_CXX1XLD=
 ## SHLIB_CXX1XLDFLAGS=
 
 ## Additional libraries to link the internet module against.
@@ -282,6 +282,8 @@
 ## PKGCONF=
 ## search path for pkg-config
 ## PKG_CONFIG_PATH=
+## path overriding pkg-config's default search path
+## PKG_CONFIG_LIBDIR=
 
 ## OpenMP settings.
 ## The configure code is conservative about enabling OpenMP 

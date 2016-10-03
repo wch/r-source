@@ -29,7 +29,7 @@
 # include "blockinput.h"
 #endif
 
-/* If compiling with GCC 2, this file's not needed.  */
+/* If compiling with GCC >=2, this file's not needed.  */
 #if !defined (__GNUC__) || __GNUC__ < 2
 
 /* If someone has defined alloca as a macro,

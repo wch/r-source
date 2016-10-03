@@ -23,9 +23,11 @@
 #include <config.h>
 #endif
 
-/* Note: gcc may warn in several places about C99 features as extensions.
-   This is a very-long-standing GCC bug, http://gcc.gnu.org/PR7263
+/* Note: gcc -peantic may warn in several places about C99 features 
+   as extensions.
+   This was a very-long-standing GCC bug, http://gcc.gnu.org/PR7263
    The system <complex.h> header can work around it: some do.
+   It should have been resolved (after a decade) in 2012.
 */
 
 #if 0

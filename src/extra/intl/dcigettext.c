@@ -23,6 +23,8 @@
 # define _GNU_SOURCE	1
 #endif
 
+/* R comment: not true for our config.h, which does define _GNU_SOURCE */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

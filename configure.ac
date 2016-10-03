@@ -56,10 +56,13 @@ AH_TOP([#ifndef R_CONFIG_H
 AH_BOTTOM([
 #endif /* not R_CONFIG_H */])
 
-## The gettext macros call AC_GNU_SOURCE early, so all the
-## C compiling makes use of that.  If it is ever removed, we
-## would need it or something similar here.
-
+## We call AC_GNU_SOURCE early (it is a prerequisite for the gettext
+## macros), so all the C compiling makes use of that.  Nowadays it calls
+## AC_USE_SYSTEM_EXTENSIONS ....
+## This sets _GNU_SOURCE, so glibc defines all its extensions
+## (_POSIX_C_SOURCE, _XOPEN_SOURCE, _BSD_SOURCE, __USE_MISC) and these
+## unlock declarations of non-C99 functions and constants.  
+## Ditto for __EXTENSIONS__ on Solaris and _ALL_SOURCE on AIX.
 
 ### ** Platform.
 
@@ -594,7 +597,7 @@ R_PROG_PAGER
 AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar], "")
 ## TeXMF stuff
 R_PROG_TEXMF
-## Unzip && zip && gzip && bip2
+## Unzip & zip & gzip & bip2
 AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
 AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 AC_PATH_PROGS(R_GZIPCMD, [${GZIP} gzip], true)
@@ -603,7 +606,7 @@ AC_PATH_PROGS(R_BZIPCMD, [${BZIP} bzip2], "")
 R_PROG_BROWSER
 ## PDF viewer
 R_PROG_PDFVIEWER
-## Noweb
+## Noweb - used for maintainer mode only
 AC_PATH_PROG(NOTANGLE, notangle, false)
 ## javareconf needs this
 AC_PATH_PROG(REALPATH, realpath, false)
@@ -617,11 +620,13 @@ AC_ARG_VAR([PKG_CONFIG_PATH], [directories to add to pkg-config's search path])
 AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search path])
 
 AC_PROG_CC
-
 AC_PROG_GCC_TRADITIONAL
+AC_GNU_SOURCE ## see note above
+
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
-## see if the user set FFLAGS: used for Intel compilers
+
+## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
 R_PROG_F77
 AC_PROG_CXX
@@ -632,8 +637,8 @@ else
   CXXCPP0=${CXXCPP}
 fi
 AC_SUBST(CXXCPP0)
+
 R_GCC4_VISIBILITY
-AC_GNU_SOURCE ## needed for libintl
 
 AC_PROG_OBJC
 ## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
@@ -830,7 +835,7 @@ R_HEADER_GLIBC2
 ### * Checks for types.
 
 AC_TYPE_SIGNAL
-## xz needs uint64_t
+## liblzma uses uint64_t: used unconditionally in src/main/util.c
 AC_TYPE_UINT64_T
 AC_CHECK_TYPES([int64_t, int_fast64_t])
 AC_TYPE_PID_T
@@ -1894,7 +1899,7 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink 
 R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 ## utime was declared obsolescent in POSIX 2008 (use utimes instead)
 R_CHECK_FUNCS([utime], [#include <utime.h>])
-## clock_gettime is POSIX 1993, but not on macOS
+## clock_gettime is POSIX 1993, but not on macOS prior to 10.12 (Sierra)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
@@ -1906,10 +1911,10 @@ R_CHECK_FUNCS([clock_gettime timespec_get], [#include <time.h>])
 ## It is not always declared, so we do not require a declaration.
 AC_CHECK_FUNCS(putenv)
 AC_CHECK_DECLS([putenv], , , [#include <stdlib.h>])
-## this is a GNU extension so usually hidden.  Not on Solaris
+## this is a GNU extension so usually hidden.  Not in Solaris 10
 AC_CHECK_FUNCS(vasprintf)
 AC_CHECK_DECLS([vasprintf], , , [#include <stdio.h>])
-## mempcpy is a GNU extension used by the included gettext.  Not on Solaris
+## mempcpy is a GNU extension used by the included gettext.  Not in Solaris 10
 AC_CHECK_FUNCS(mempcpy)
 ## realpath is POSIX 2001 (and BSD)
 ## Some early GNU libc systems had it in unistd.h.
@@ -1998,14 +2003,14 @@ fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
-## mkdtemp is not on Solaris, added in POSIX 2008
-## strdup strncasecmp were first required in POSIX 2008.
+## mkdtemp is not on Solaris 10, added in POSIX 2008
+## strdup strncasecmp were first required in POSIX 2001.
 AC_REPLACE_FUNCS([mkdtemp strdup strncasecmp])
 ## Enable declarations in Defn.h?
 AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
 
 AC_SEARCH_LIBS(connect, [socket])
-# gethostbyname was removed in POSIX 2008 (in favour of getaddrinfo, POSIX 2004)
+# gethostbyname was removed in POSIX 2008 (in favour of getaddrinfo, POSIX 2001)
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl tirpc])
 R_FUNC___SETFPUCW

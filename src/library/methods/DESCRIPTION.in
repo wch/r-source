@@ -11,3 +11,4 @@ References: John M. Chambers (2008)
   ``Software for Data Analysis: Programming with R''; Springer NY.
 License: Part of R @VERSION@
 Suggests: codetools
+NeedsCompilation: yes
