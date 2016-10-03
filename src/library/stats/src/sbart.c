@@ -27,9 +27,10 @@ void F77_SUB(sbart)
     (double *penalt, double *dofoff,
      double *xs, double *ys, double *ws, double *ssw,
      int *n, double *knot, int *nk, double *coef,
-     double *sz, double *lev, double *crit, int *icrit,
-     double *spar, int *ispar, int *iter, double *lspar,
-     double *uspar, double *tol, double *eps, int *isetup,
+     double *sz, double *lev, double *crit,
+     int *icrit, double *spar, int *ispar, int *iter,
+     double *lspar, double *uspar, double *tol, double *eps, double *Ratio,
+     int *isetup,
      double *xwy, double *hs0, double *hs1, double *hs2,
      double *hs3, double *sg0, double *sg1, double *sg2,
      double *sg3, double *abd, double *p1ip, double *p2ip,
@@ -88,10 +89,10 @@ void F77_SUB(sbart)
    xwy			X'Wy
    hs0,hs1,hs2,hs3	the non-zero diagonals of the X'WX matrix
    sg0,sg1,sg2,sg3	the non-zero diagonals of the Gram matrix SIGMA
-   abd (ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
-   p1ip(ld4,nk)		inner products between columns of L inverse
-   p2ip(ldnk,nk)	all inner products between columns of L inverse
-			where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
+   abd (ld4, nk)	[ X'WX + lambda*SIGMA ] = R'R in banded form; output = R
+   p1ip(ld4, nk)	inner products between columns of R^{-1}
+   p2ip(ldnk,nk)	all inner products between columns of R inverse
+			where  R'R = [X'WX + lambda*SIGMA]  NOT REFERENCED
 */
 
 // "Correct" ./sslvrg.f (line 129):   crit = 3 + (dofoff-df)**2
@@ -116,13 +117,14 @@ void F77_SUB(sbart)
 
     /* unnecessary initializations to keep  -Wall happy */
     d = 0.; fu = 0.; u = 0.;
+    // never computed if(spar_is_lambda)
     ratio = 1.;
 
 /*  Compute SIGMA, X' W X, X' W z, trace ratio, s0, s1.
 
-	SIGMA	-> sg0,sg1,sg2,sg3
-	X' W X	-> hs0,hs1,hs2,hs3
-	X' W Z	-> xwy
+	SIGMA	-> sg0,sg1,sg2,sg3   -- via sgram() in ./sgram.f
+	X' W X	-> hs0,hs1,hs2,hs3   \
+	X' W Z	-> xwy               _\ via stxwx() in ./stxwx.f
 */
 
 /* trevor fixed this 4/19/88
@@ -169,6 +171,7 @@ void F77_SUB(sbart)
     if (*ispar == 1) { /* Value of spar supplied */
 	SSPLINE_COMP(*spar);
 	/* got through check 2 */
+	*Ratio = ratio;
 	return;
     }
 
@@ -377,6 +380,7 @@ void F77_SUB(sbart)
 
  L_End:
     if(tracing) Rprintf("  >>> %12g %12g\n", *lspar, CRIT(fx));
+    *Ratio = ratio;
     *spar = x;
     *crit = fx;
     return;

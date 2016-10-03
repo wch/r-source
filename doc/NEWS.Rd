@@ -106,7 +106,7 @@
 
       \item \code{smooth.spline()} now allows direct specification of
       lambda, gets a \code{hatvalues()} method and keeps \code{tol} in
-      the result.
+      the result, and optionally parts of the internal matrix computations.
 
       \item \code{addNA()} is faster now, e.g.{} when applied twice.
       (Part of \PR{16895}.)
@@ -240,6 +240,10 @@
       \item The license check enabled by
       \code{options(checkPackageLicense = TRUE)} is now done when the
       package's namespace is first loaded.
+
+      \item \code{ppr()} and \code{supsmu()} get an optional
+      \code{trace} argument, and \code{ppr(.., sm.method=..spline)} is no longer
+      limited to sample size \eqn{n \le 2500}{n <= 2500}.
     }
   }
 

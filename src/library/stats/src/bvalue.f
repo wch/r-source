@@ -3,7 +3,7 @@
 c Calculates value at  x  of  jderiv-th derivative of spline from B-repr.
 c The spline is taken to be continuous from the right.
 c
-C calls  interv
+C calls  interv()  (from ../../../appl/interv.c )
 c
 c******  i n p u t ******
 c  t, bcoef, n, k......forms the b-representation of the spline  f  to

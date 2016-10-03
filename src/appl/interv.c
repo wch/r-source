@@ -27,7 +27,8 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Utils.h>
 
-/* This is called from stats/src/bvalue.f, and packages gam and mda */
+/* This is called from stats/src/bvalue.f, 3 x stats/src/s*.f for smooth.spline()
+   and packages gam and mda */
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
 		    int *ilo, int *mflag)
