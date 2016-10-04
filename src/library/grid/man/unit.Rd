@@ -93,6 +93,11 @@ unit(x, units, data=NULL)
   and to specify the minimum or maximum of a list
   of unit objects (e.g., \code{min(unit(0.5, "npc"), unit(1,
     "inches"))}).
+
+  There is a \code{format} method for units, which should respond to
+  the arguments for the default \code{format} method, e.g.,
+  \code{digits} to control the number of significant digits
+  printed for numeric values.
 }
 \section{WARNING}{
   There is a special function \code{unit.c} for concatenating

@@ -1,4 +1,14 @@
 
+Changes from grid_3.3.* to grid_3.4.0:
+-------------------------------------
+
+1.  Added format() method for units, so, for example, the number of 
+    digits printed for numeric values can be controlled.
+
+    grid.show.layout() now uses format() for annotating layout
+    widths and heights.
+
+
 Changes from grid_3.2.* to grid_3.3.0:
 -------------------------------------
 
