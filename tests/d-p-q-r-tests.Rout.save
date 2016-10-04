@@ -30,6 +30,7 @@ Type 'q()' to quit R.
 > ##      ======== No warnings, unless explicitly asserted via
 > assertWarning <- tools::assertWarning
 > 
+> as.nan <- function(x) { x[is.na(x) & !is.nan(x)] <- NaN ; x }
 > ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 > opt.conformance <- 0
 > Meps <- .Machine $ double.eps
@@ -1407,7 +1408,6 @@ N
 + }
 > .stat.ns <- asNamespace("stats")
 > Ns <- 4
-> as.nan <- function(x) { if(is.atomic(x)) x[is.na(x) & !is.nan(x)] <- NaN ; x }
 > for(dist in PDQR) {
 +     fn <- paste0("r",dist)
 +     cat(sprintf("%-9s(%d, ..): ", fn, Ns))
@@ -1423,8 +1423,7 @@ N
 +         cat(ia,"")
 +         R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
 +         if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
-+ 	if(!(identical(       R$value,  expected) ||
-+ 	     identical(as.nan(R$value), expected))) cat(" .. not giving expected NA/NaN s")
++         if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
 +     }
 +     cat(" [Ok]\n")
 + }
@@ -1450,5 +1449,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.152 0.063 1.242 0 0 
+Time elapsed:  1.216 0.076 1.299 0 0 
 > 
