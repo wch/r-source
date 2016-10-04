@@ -212,6 +212,7 @@ qf <- function(p, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE) {
 rf <- function(n, df1, df2, ncp)
 {
     if(missing(ncp)) .Call(C_rf, n, df1, df2)
+    else if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
     else (rchisq(n, df1, ncp=ncp)/df1)/(rchisq(n, df2)/df2)
 }
 
@@ -286,6 +287,7 @@ qt <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
 }
 rt <- function(n, df, ncp) {
     if(missing(ncp)) .Call(C_rt, n, df)
+    else if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
     else rnorm(n, ncp)/sqrt(rchisq(n, df)/df)
 }
 
