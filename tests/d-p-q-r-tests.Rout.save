@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-10-03 r71439) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-10-04 r71444) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1407,6 +1407,7 @@ N
 + }
 > .stat.ns <- asNamespace("stats")
 > Ns <- 4
+> as.nan <- function(x) { if(is.atomic(x)) x[is.na(x) & !is.nan(x)] <- NaN ; x }
 > for(dist in PDQR) {
 +     fn <- paste0("r",dist)
 +     cat(sprintf("%-9s(%d, ..): ", fn, Ns))
@@ -1422,7 +1423,8 @@ N
 +         cat(ia,"")
 +         R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
 +         if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
-+         if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
++ 	if(!(identical(       R$value,  expected) ||
++ 	     identical(as.nan(R$value), expected))) cat(" .. not giving expected NA/NaN s")
 +     }
 +     cat(" [Ok]\n")
 + }
@@ -1448,5 +1450,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.168 0.012 1.179 0 0 
+Time elapsed:  1.152 0.063 1.242 0 0 
 > 

@@ -997,6 +997,7 @@ tryCatch.W.E <- function(expr) {
 }
 .stat.ns <- asNamespace("stats")
 Ns <- 4
+as.nan <- function(x) { if(is.atomic(x)) x[is.na(x) & !is.nan(x)] <- NaN ; x }
 for(dist in PDQR) {
     fn <- paste0("r",dist)
     cat(sprintf("%-9s(%d, ..): ", fn, Ns))
@@ -1012,7 +1013,8 @@ for(dist in PDQR) {
         cat(ia,"")
         R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
         if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
-        if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
+	if(!(identical(       R$value,  expected) ||
+	     identical(as.nan(R$value), expected))) cat(" .. not giving expected NA/NaN s")
     }
     cat(" [Ok]\n")
 }
