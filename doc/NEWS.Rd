@@ -608,8 +608,8 @@
       requires acceptance of the licence for non-default standard
       packages such as \pkg{compiler}.  (Reported by Mikko Korpela.)
 
-      \item \code{split(<very_long>, *)} now works with long vectors.
-      (\PR{17193})
+      \item \code{split(<very_long>, *)} now works even when the split
+      off parts are long. (\PR{17139})
     }
   }
 }
