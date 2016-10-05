@@ -1668,8 +1668,8 @@ static void InitMmapRealClass(DllInfo *dll)
 #include <unistd.h>
 #include <sys/mman.h>
 
-#define DEBUG_PRINT(x) REprintf(x);
-//#define DEBUG_PRINT(x) do { } while (0)
+//#define DEBUG_PRINT(x) REprintf(x);
+#define DEBUG_PRINT(x) do { } while (0)
 
 static void mmap_finalize(SEXP eptr)
 {
