@@ -1325,14 +1325,14 @@ SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP sp)
    
        file
        size and length in a REALSXP
-       type, ptrOK, wrtOK in an INTSXP
+       type, ptrOK, wrtOK, serOK in an INTSXP
 
    These are used by the methods, and also represent the serialized
    state object.
  */
 
 static SEXP make_mmap_state(SEXP file, size_t size, int type,
-			    Rboolean ptrOK, Rboolean wrtOK)
+			    Rboolean ptrOK, Rboolean wrtOK, Rboolean serOK)
 {
     SEXP sizes = PROTECT(allocVector(REALSXP, 2));
     double *dsizes = REAL(sizes);
@@ -1343,10 +1343,11 @@ static SEXP make_mmap_state(SEXP file, size_t size, int type,
     default: error("mmap for %s not supported yet", type2char(type));
     }
 
-    SEXP info = PROTECT(allocVector(INTSXP, 3));
+    SEXP info = PROTECT(allocVector(INTSXP, 4));
     INTEGER(info)[0] = type;
     INTEGER(info)[1] = ptrOK;
     INTEGER(info)[2] = wrtOK;
+    INTEGER(info)[3] = serOK;
 
     SEXP state = list3(file, sizes, info);
 
@@ -1360,6 +1361,7 @@ static SEXP make_mmap_state(SEXP file, size_t size, int type,
 #define MMAP_STATE_TYPE(x) INTEGER(CADDR(x))[0]
 #define MMAP_STATE_PTROK(x) INTEGER(CADDR(x))[1]
 #define MMAP_STATE_WRTOK(x) INTEGER(CADDR(x))[2]
+#define MMAP_STATE_SEROK(x) INTEGER(CADDR(x))[3]
 
 
 /*
@@ -1380,9 +1382,10 @@ static R_altrep_class_t mmap_real_class;
 
 static void register_mmap_eptr(SEXP eptr);
 static SEXP make_mmap(void *p, SEXP file, size_t size, int type,
-		      Rboolean ptrOK, Rboolean wrtOK)
+		      Rboolean ptrOK, Rboolean wrtOK, Rboolean serOK)
 {
-    SEXP state = PROTECT(make_mmap_state(file, size, type, ptrOK, wrtOK));
+    SEXP state = PROTECT(make_mmap_state(file, size,
+					 type, ptrOK, wrtOK, serOK));
     SEXP eptr = PROTECT(R_MakeExternalPtr(p, R_NilValue, state));
     register_mmap_eptr(eptr);
 
@@ -1410,6 +1413,7 @@ static SEXP make_mmap(void *p, SEXP file, size_t size, int type,
 #define MMAP_LENGTH(x) MMAP_STATE_LENGTH(MMAP_STATE(x))
 #define MMAP_PTROK(x) MMAP_STATE_PTROK(MMAP_STATE(x))
 #define MMAP_WRTOK(x) MMAP_STATE_WRTOK(MMAP_STATE(x))
+#define MMAP_SEROK(x) MMAP_STATE_SEROK(MMAP_STATE(x))
 
 #define MMAP_EPTR_STATE(x) R_ExternalPtrProtected(x)
 
@@ -1483,18 +1487,18 @@ static void finalize_mmap_objects()
 
 static SEXP mmap_Serialized_state(SEXP x)
 {
-    /**** For now, if ptrOK is true then serialize as a regular typed
-	  vector. If ptrOK is false, then serialize information to
-	  allow the mmap to be reconstructed. The original file name
-	  is serialized; it will be expanded again when unserializing,
-	  in a context where the result may be different. */
-    if (MMAP_PTROK(x))
-	return NULL;
-    else
+    /* If serOK is false then serialize as a regular typed vector. If
+       serOK is true, then serialize information to allow the mmap to
+       be reconstructed. The original file name is serialized; it will
+       be expanded again when unserializing, in a context where the
+       result may be different. */
+    if (MMAP_SEROK(x))
 	return MMAP_STATE(x);
+    else
+	return NULL;
 }
 
-static SEXP mmap_file(SEXP, int, Rboolean, Rboolean, Rboolean);
+static SEXP mmap_file(SEXP, int, Rboolean, Rboolean, Rboolean, Rboolean);
 
 static SEXP mmap_Unserialize(SEXP class, SEXP state, SEXP attr)
 {
@@ -1502,8 +1506,9 @@ static SEXP mmap_Unserialize(SEXP class, SEXP state, SEXP attr)
     int type = MMAP_STATE_TYPE(state);
     Rboolean ptrOK = MMAP_STATE_PTROK(state);
     Rboolean wrtOK = MMAP_STATE_WRTOK(state);
+    Rboolean serOK = MMAP_STATE_SEROK(state);
 
-    SEXP val = mmap_file(file, type, ptrOK, wrtOK, TRUE);
+    SEXP val = mmap_file(file, type, ptrOK, wrtOK, serOK, TRUE);
     if (val == NULL) {
 	/**** The attempt to memory map failed. Eventualy it would be
 	      good to have a mechanism to allow the user to try to
@@ -1521,8 +1526,9 @@ Rboolean mmap_Inspect(SEXP x, int pre, int deep, int pvec,
 {
     Rboolean ptrOK = MMAP_PTROK(x);
     Rboolean wrtOK = MMAP_WRTOK(x);
+    Rboolean serOK = MMAP_SEROK(x);
     Rprintf(" mmaped %s", type2char(TYPEOF(x)));
-    Rprintf(" [ptr=%d,wrt=%d]\n", ptrOK, wrtOK);
+    Rprintf(" [ptr=%d,wrt=%d,ser=%d]\n", ptrOK, wrtOK, serOK);
     return TRUE;
 }
 
@@ -1694,7 +1700,7 @@ static void mmap_finalize(SEXP eptr)
     } while (0)
 	    
 static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
-		      Rboolean warn)
+		      Rboolean serOK, Rboolean warn)
 {
     const char *efn = R_ExpandFileName(translateChar(STRING_ELT(file, 0)));
     struct stat sb;
@@ -1717,7 +1723,7 @@ static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
     if (p == MAP_FAILED)
 	MMAP_FILE_WARNING_OR_ERROR("mmap: %s", strerror(errno));
 
-    return make_mmap(p, file, sb.st_size, type, ptrOK, wrtOK);
+    return make_mmap(p, file, sb.st_size, type, ptrOK, wrtOK, serOK);
 }
 #endif
 
@@ -1739,6 +1745,7 @@ SEXP attribute_hidden do_mmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP stype = CADR(args);
     SEXP sptrOK = CADDR(args);
     SEXP swrtOK = CADDDR(args);
+    SEXP sserOK = CADDDR(CDR(args));
 
     int type = REALSXP;
     if (stype != R_NilValue) {
@@ -1754,11 +1761,12 @@ SEXP attribute_hidden do_mmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 
     Rboolean ptrOK = sptrOK == R_NilValue ? TRUE : asLogicalNA(sptrOK, FALSE);
     Rboolean wrtOK = swrtOK == R_NilValue ? FALSE : asLogicalNA(swrtOK, FALSE);
+    Rboolean serOK = sserOK == R_NilValue ? FALSE : asLogicalNA(sserOK, FALSE);
 
     if (TYPEOF(file) != STRSXP || LENGTH(file) != 1 || file == NA_STRING)
 	error("invalud 'file' argument");
 
-    return mmap_file(file, type, ptrOK, wrtOK, FALSE);
+    return mmap_file(file, type, ptrOK, wrtOK, serOK, FALSE);
 }
 
 #ifdef SIMPLEMMAP
