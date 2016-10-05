@@ -1116,8 +1116,11 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 
 static SEXP deferred_string_Serialized_state(SEXP x)
 {
-    /* this drops through to standard serialization for fully expanded
-	  deferred string conversions */
+    /* This drops through to standard serialization for fully expanded
+       deferred string conversions. Partial expansions are OK since
+       they still correspond to the original data. An assignment to
+       the object will access the DATAPTR and force a full expansion
+       and dropping the original data. */
     SEXP state = DEFERRED_STRING_STATE(x);
     return state != R_NilValue ? state : NULL;
 }
@@ -1154,7 +1157,7 @@ static R_INLINE R_xlen_t deferred_string_Length(SEXP x)
 	XLENGTH(DEFERRED_STRING_STATE_ARG(state));
 }
 
-static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
+static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i)
 {
     /* make sure the STRSXP for the expanded string is allocated */
     /* not yet expanded strings are NULL in the STRSXP */
@@ -1168,29 +1171,25 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i, int *pwarn)
 
     SEXP elt = STRING_ELT(val, i);
     if (elt == NULL) {
+	int warn; /* not used by the coercion functions */
 	int savedigits, savescipen;
 	SEXP data = DEFERRED_STRING_ARG(x);
-	int oldwarn = *pwarn;
 	switch(TYPEOF(data)) {
 	case INTSXP:
-	    elt = StringFromInteger(INTEGER_ELT(data, i), pwarn);
+	    elt = StringFromInteger(INTEGER_ELT(data, i), &warn);
 	    break;
 	case REALSXP:
 	    savedigits = R_print.digits;
 	    savescipen = R_print.scipen;
 	    R_print.digits = DBL_DIG;/* MAX precision */
 	    R_print.scipen = INTEGER0(DEFERRED_STRING_SCIPEN(x))[0];
-	    elt = StringFromReal(REAL_ELT(data, i), pwarn);
+	    elt = StringFromReal(REAL_ELT(data, i), &warn);
 	    R_print.digits = savedigits;
 	    R_print.scipen = savescipen;
 	    break;
 	default:
 	    error("unsupported type for deferred string coercion");
 	}
-	if (*pwarn && ! oldwarn)
-	    /* when called in a loop with the same address in warn
-	       this issues a warning only on the first instance */
-	    CoercionWarning(*pwarn);
 	SET_STRING_ELT(val, i, elt);
     }
     return elt;
@@ -1202,15 +1201,13 @@ static void *deferred_string_Dataptr(SEXP x)
     if (state != R_NilValue) {
 	/* expanded data may be incomplete until original data is removed */
 	PROTECT(x);
-	int warn = FALSE;
 	R_xlen_t n = XLENGTH(x), i;
 	if (n == 0)
 	    SET_DEFERRED_STRING_EXPANDED(x, allocVector(STRSXP, 0));
 	else
 	    for (i = 0; i < n; i++)
-		ExpandDeferredStringElt(x, i, &warn);
+		ExpandDeferredStringElt(x, i);
 	CLEAR_DEFERRED_STRING_STATE(x); /* allow arg to be reclaimed */
-	if (warn) CoercionWarning(warn);
 	UNPROTECT(1);
     }
     return DATAPTR(DEFERRED_STRING_EXPANDED(x));
@@ -1230,9 +1227,8 @@ static SEXP deferred_string_Elt(SEXP x, R_xlen_t i)
 	return STRING_ELT(DEFERRED_STRING_EXPANDED(x), i);
     else {
 	/* expand only the requested element */
-	int warn = FALSE;
 	PROTECT(x);
-	SEXP elt = ExpandDeferredStringElt(x, i, &warn);
+	SEXP elt = ExpandDeferredStringElt(x, i);
 	UNPROTECT(1);
 	return elt;
     }
