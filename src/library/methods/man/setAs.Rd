@@ -1,76 +1,49 @@
-% File src/library/methods/man/as.Rd
+% File src/library/methods/man/setAs.Rd
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
-\name{as}
-\alias{as}
-\alias{as<-}
-\title{Force an Object to Belong to a Class}
+\name{setAs}
+\alias{coerce}
+\alias{coerce<-}
+\alias{setAs}
+\alias{coerce-methods}
+\alias{coerce,ANY,array-method}
+\alias{coerce,ANY,call-method}
+\alias{coerce,ANY,character-method}
+\alias{coerce,ANY,complex-method}
+\alias{coerce,ANY,environment-method}
+\alias{coerce,ANY,expression-method}
+\alias{coerce,ANY,function-method}
+\alias{coerce,ANY,integer-method}
+\alias{coerce,ANY,list-method}
+\alias{coerce,ANY,logical-method}
+\alias{coerce,ANY,matrix-method}
+\alias{coerce,ANY,name-method}
+\alias{coerce,ANY,numeric-method}
+\alias{coerce,ANY,single-method}
+\alias{coerce,ANY,ts-method}
+\alias{coerce,ANY,vector-method}
+\alias{coerce,ANY,NULL-method}
+\title{Methods for Coercing an Object to a Class}
 \description{
-  These functions manage the relations that allow coercing an object to
-  a given class.
+  A call to \code{setAs} defines a method for coercing an object of
+  class \code{from} to class \code{to}.  The methods will then be used
+  by calls to \code{\link{as}} for objects with class \code{from},
+  including calls that replace part of the object.
+
+  Methods for this purpose work indirectly, by defining methods for
+  function \code{coerce}.  This function is \emph{not} to be called
+  directly, and method selection uses class inheritance only on the
+  first argument.
 }
 \usage{
-as(object, Class, strict=TRUE, ext)
 
-as(object, Class) <- value
+setAs(from, to, def, replace, where = topenv(parent.frame()))
 
 }
-\section{Summary of Functions}{
-  \describe{
-    \item{\code{as}:}{
-      Returns the version of this object coerced to be the given
-      \code{Class}.  When used in the replacement form on the left of
-      an assignment, the portion of the object corresponding to
-      \code{Class} is replaced by \code{value}.
 
-      The operation of \code{as()} in either form depends on the
-      definition of coerce methods.  Methods are defined automatically
-      when the two classes are related by inheritance; that is, when
-      one of the classes is a subclass of the other.  See the section
-      on inheritance  below for details.
-
-      Coerce methods are also predefined for basic classes (including all
-      the types of vectors, functions and a few others). See
-      \code{showMethods(coerce)} for a list of these.
-
-      Beyond these two sources of methods, further methods are defined
-      by calls to the \code{setAs} function.
-
-    }
-
-    \item{\code{setAs}:}{
-      Define methods for coercing an object of class \code{from} to be of class \code{to}; the \code{def} argument provides for direct coercing and the \code{replace} argument, if included, provides for replacement.  See the \dQuote{How} section below for details.
-    }
-
-    \item{\code{coerce}, \code{coerce<-}:}{
-      Coerce \code{from} to be of the same class as \code{to}.
-
-      These functions should not be called explicitly.  The function
-      \code{\link{setAs}} creates methods for them for the
-      \code{as} function to use.
-    }
-
-  }
-}
 \arguments{
-  \item{object}{any \R object.}
-  \item{Class}{the name of the class to which \code{object} should be
-    coerced. }
-  \item{strict}{logical flag.  If \code{TRUE}, the returned object
-    must be strictly from the target class (unless that class is a
-    virtual class, in which case the object will be from the closest
-    actual class, in particular the original object, if that class extends the
-    virtual class directly).
-
-    If \code{strict = FALSE}, any simple extension of the target class
-    will be returned, without further change.  A simple extension is,
-    roughly, one that just adds slots to an existing class.}
-  \item{value}{The value to use to modify \code{object} (see the
-    discussion below).  You should supply an object with class
-    \code{Class}; some coercion is done, but you're unwise to rely on
-    it.}
 
   \item{from, to}{The classes between which the coerce methods
       \code{def} and \code{replace} perform coercion.
@@ -83,16 +56,23 @@ as(object, Class) <- value
   \item{replace}{if supplied, the function to use as a replacement
     method, when \code{as} is used on the left of an assignment.
     Should be a function of two arguments, \code{from, value},
-    although \code{setAs} will attempt to substitute if the arguments differ.}
+    although \code{setAs} will attempt to substitute if the arguments
+    differ.
+
+\emph{The remaining arguments will not be used in standard applications.}
+
+}
+
   \item{where}{the position or environment in which to store the
-    resulting methods. For most applications, it is recommended to
-    omit this argument and to include the call to \code{setAs} in source code that is evaluated at the top level; that is, either in an R session by something equivalent to a call to \code{\link{source}}, or as part of the R source code for a package.}
+    resulting methods. Do not use this argument when defining a method
+    in a package.  Only the default, the namespace of the package,
+    should be used in normal situations.
+    }
   \item{ext}{the optional object
     defining how \code{Class} is extended by the class of the
     object (as returned by \code{\link{possibleExtends}}).
     This argument is used internally (to provide essential
-    information for non-public classes), but you are unlikely to want
-    to use it directly.
+    information for non-public classes).
   }
 }
 

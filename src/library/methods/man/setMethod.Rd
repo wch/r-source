@@ -46,7 +46,50 @@ setMethod(f, signature=character(), definition,
   The function exists for its side-effect. The definition will be stored in a special metadata object and incorporated in the generic function when the corresponding package is loaded into an R session. 
   
 }
-\details{
+\section{Method Selection: Avoiding Ambiguity}{
+When defining methods, it's important to ensure that methods are
+selected correctly; in particular, packages should be designed to
+avoid ambiguous method selection.
+
+To describe method selection, consider first the case where only one
+formal argument is in the active signature; that is, there is only one
+argument, \code{x} say, for which methods have been defined.
+The generic function has a table of methods, indexed by the class for
+the argument in the calls to \code{setMethod}.
+If there is a method in the table for the class of \code{x} in the
+call, this method is selected.
+
+If not, the next best methods would correspond to the direct
+superclasses of \code{class(x)}---those appearing in the
+\code{contains=} argument when that class was defined.
+If there is no method for any of these, the next best would correspond
+to the direct superclasses of the first set of superclasses, and so
+on.
+
+The first possible source of ambiguity arises if the class has several
+direct superclasses and methods have been defined for more than one of
+those;
+\R will consider these equally valid and report an ambiguous choice.
+If your package has the class definition for \code{class(x)}, then you
+need to define a method explicitly for this combination of generic
+function and class.
+
+When more than one formal argument appears in the method signature, \R
+requires the \dQuote{best} method to be chosen  unambiguously for each
+argument.
+Ambiguities arise when one method is specific about one argument while
+another is specific about a different argument.
+A call that satisfies both requirements is then ambiguous:  The two
+methods look equally valid, which should be chosen?
+In such cases the package needs to add a third method requiring both
+arguments to match.
+
+The most common examples arise with binary operators.  Methods may be
+defined for individual operators, for special groups of operators such as
+\code{\link{Arith}} or for group \code{\link{Ops}}.
+
+}
+\section{Details}{
 The call to \code{setMethod} stores the supplied method definition  in
 the metadata table for this generic function in the environment,
 typically the global environment or the namespace of a package.
@@ -150,52 +193,68 @@ the table in the generic function itself, for the duration of the session.
 }
 
 \examples{
-\dontshow{  require(stats)
+
+## examples for a simple class with two numeric slots.
+## (Run example(setMethod) to see the class and function definitions)
+\dontshow{
   setClass("track", slots = c(x="numeric", y = "numeric"))
-  setClass("trackCurve", contains = "track", slots = c(smooth = "numeric"))
+
+  cumdist <- function(x, y) c(0., cumsum(sqrt(diff(x)^2 + diff(y)^2)))
   setClass("trackMultiCurve", slots = c(x="numeric", y="matrix", smooth="matrix"),
           prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
-}
 
 require(graphics)
-## methods for plotting track objects (see the example for \link{setClass})
+}
+
+## methods for plotting track objects 
 ##
-## First, with only one object as argument:
+## First, with only one object as argument, plot the two slots
+##  y must be included in the signature, it would default to "ANY"
 setMethod("plot", signature(x="track", y="missing"),
-  function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
+  function(x,  y, ...) plot(x@x, x@y, ...)
 )
-## Second, plot the data from the track on the y-axis against anything
-## as the x data.
-setMethod("plot", signature(y = "track"),
- function(x, y, ...) plot(x, slot(y, "y"), ...)
+
+## plot numeric data on either axis against a track object
+## (reducing the track object to the cumulative distance along the track)
+## Using a short form for the signature, which matches like formal arguments
+setMethod("plot", c("track", "numeric"),
+ function(x, y, ...) plot(cumdist(x@x, x@y), y,  xlab = "Distance",...)
 )
-## and similarly with the track on the x-axis (using the short form of
-## specification for signatures)
-setMethod("plot", "track",
- function(x, y, ...) plot(slot(x, "y"), y,  ...)
+
+## and similarly for the other axis
+setMethod("plot", c("numeric", "track"),
+ function(x, y, ...) plot(x, cumdist(y@x, y@y),  ylab = "Distance",...)
 )
+
 t1 <- new("track", x=1:20, y=(1:20)^2)
-tc1 <- new("trackCurve", t1)
-slot(tc1, "smooth") <- smooth.spline(slot(tc1, "x"), slot(tc1, "y"))$y #$
 plot(t1)
 plot(qnorm(ppoints(20)), t1)
-## An example of inherited methods, and of conforming method arguments
-## (note the dotCurve argument in the method, which will be pulled out
-## of ... in the generic.
-setMethod("plot", c("trackCurve", "missing"),
-function(x, y, dotCurve = FALSE, ...) {
-  plot(as(x, "track"))
-  if(length(slot(x, "smooth") > 0))
-    lines(slot(x, "x"), slot(x, "smooth"),
-         lty = if(dotCurve) 2 else 1)
+
+## Now a class that inherits from "track", with a vector for data at
+## the points 
+  setClass("trackData", contains = c("numeric", "track"))
+
+
+tc1 <- new("trackData", t1, rnorm(20))
+
+
+## a method for plotting the object
+## This method has an extra argument, allowed because ... is an
+## argument to the generic function.
+setMethod("plot", c("trackData", "missing"),
+function(x, y, maxRadius = max(par("cin")), ...) {
+  plot(x@x, x@y, type = "n", ...)
+  symbols(x@x, x@y, circles = abs(x), inches = maxRadius)
   }
 )
-## the plot of tc1 alone has an added curve; other uses of tc1
-## are treated as if it were a "track" object.
-plot(tc1, dotCurve = TRUE)
+plot(tc1)
+
+## Without other methods for "trackData", methods for "track"
+## will be selected by inheritance
+
 plot(qnorm(ppoints(20)), tc1)
 
-## defining methods for a special function.
+## defining methods for primitive function.
 ## Although "[" and "length" are not ordinary functions
 ## methods can be defined for them.
 setMethod("[", "track",
@@ -208,201 +267,35 @@ plot(t1[1:15])
 setMethod("length", "track", function(x)length(x@y))
 length(t1)
 
-## methods can be defined for missing arguments as well
-setGeneric("summary") ## make the function into a generic
+## Methods for binary operators
+## A method for the group generic "Ops" will apply to all operators
+## unless a method for a more specific operator has been defined.
 
-## A method for summary()
-## The method definition can include the arguments, but
-## if they're omitted, class "missing" is assumed.
+## For one trackData argument, go on with just the data part
+setMethod("Ops", signature(e1 = "trackData"),
+    function(e1, e2) callGeneric(e1@.Data, e2))
 
-setMethod("summary", "missing", function() "<No Object>")
+setMethod("Ops", signature(e2 = "trackData"),
+    function(e1, e2) callGeneric(e1, e2@.Data))
 
-\dontshow{% <--------------------> all the following are "assertion" tests
+## At this point, the choice of a method for a call with BOTH
+## arguments from "trackData" is ambiguous.  We must define a method.
 
-stopifnot(identical(summary(), "<No Object>"))
+setMethod("Ops", signature(e1 = "trackData", e2 = "trackData"),
+    function(e1, e2) callGeneric(e1@.Data, e2@.Data))
+## (well, really we should only do this if the "track" part
+## of the two arguments matched)
 
-removeMethods("summary")
+tc1 +1
 
-## for the primitives
-## inherited methods
+1/tc1
 
-length(tc1)
-tc1[-1]
+all(tc1 == tc1)
 
-## make sure old-style methods still work.
-t11 <- t1[1:15]
-identical(t1@y[1:15], t11@y)
-
-## S3 methods, with nextMethod
-form <- y ~ x
-form[1]
-
-## S3 arithmetic methods
-ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
-
-## group methods
-
-setMethod("Arith", c("track", "numeric"), function(e1, e2){e1@y <-
-  callGeneric(e1@y , e2); e1})
-
-t1  - 100.
-t1/2
-
-## check it hasn't screwed up S3 methods
-ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
-
-## test the .Generic mechanism
-
-setMethod("Compare", signature("track", "track"),
-  function(e1,e2) {
-  switch(.Generic,
-   "==" = e1@y == e2@y,
-  NA)
- })
-
-#stopifnot(all(t1==t1))
-#stopifnot(identical(t1<t1, NA))
-
-
-## A test of nested calls to "[" with matrix-style arguments
-## applied to data.frames (S3 methods)
-
-setMethod("[", c("trackMultiCurve", "numeric", "numeric"), function(x, i, j, ..., drop) {
-### FIXME:  a better version has only 1st arg in signature
-### and uses callNextMethod, when this works with primitives.
-    x@y <- x@y[i, j, drop=FALSE]
-    x@x <- x@x[i]
-    x
-})
-
-
-"testFunc" <-
-function(cur) {
-    sorted <- cur[order(cur[,1]),]
-    sorted[ !is.na(sorted[,1]), ]
+\dontshow{
+removeClass("trackData")
+removeClass("track")
 }
-
-Nrow <- 1000 # at one time, values this large triggered a bug in gc/protect
-## the loop here was a trigger for the bug
-Niter <- 10
-for(i in 1:Niter)  {
-    yy <- matrix(stats::rnorm(10*Nrow), 10, Nrow)
-    tDF <- as.data.frame(yy)
-    testFunc(tDF)
-}
-
-
-tMC <- new("trackMultiCurve", x=seq_len(Nrow), y = yy)
-## not enough functions have methods for this class to use testFunc
-
-stopifnot(identical(tMC[1:10, 1:10]@y, yy[1:10, 1:10]))
-
-
-## verify we can remove methods and generic
-
-removeMethods("-")
-removeMethod("length", "track")
-removeMethods("Arith")
-removeMethods("Compare")
-
-## repeat the test one more time on the primitives
-
-length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
-
-removeMethods("length")
-
-## methods for \%*\%, which isn't done by the same C code as other ops
-
-setClass("foo", slots = c(m="matrix"))
-m1 <- matrix(1:12,3,4)
-f1 = new("foo", m=m1)
-f2 = new("foo", m=t(m1))
-
-setMethod("\%*\%", c("foo", "foo"),
-          function(x,y) callGeneric(x@m, y@m))
-
-stopifnot(identical(f1\%*\%f2, m1\%*\% t(m1)))
-
-removeMethods("\%*\%")
-removeMethods("plot")
-
-if(FALSE) ## Hold until removeMethods revised:
-  stopifnot(existsFunction("plot", FALSE) && !isGeneric("plot", 1))
-
-## methods for plotData
-plotData <- function(x, y, ...) plot(x, y, ...)
-
-setGeneric("plotData")
-
-setMethod("plotData", signature(x="track", y="missing"),
-          function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...))
-
-## and now remove the whole generic
-removeGeneric("plotData")
-
-stopifnot(!exists("plotData", 1))
-
-##  Tests of method inheritance & multiple dispatch
-setClass("A0", slots = c(a0 = "numeric"))
-setClass("A1", contains = "A0", slots = c(a1 = "character"))
-
-setClass("B0", slots = c(b0 = "numeric"))
-setClass("B1", "B0") # (meaning 'contains = *')
-setClass("B2", contains = "B1", slots = c(b2 = "logical"))
-
-setClass("AB0", contains = c("A1", "B2"), slots = c(ab0 = "matrix"))
-
-f1 <- function(x,  y)"ANY"
-
-setGeneric("f1")
-
-setMethod("f1", c("A0", "B1"), function(x, y)"A0 B1")
-setMethod("f1", c("B1", "A0"), function(x, y)"B1 A0")
-
-a0 <- new("A0")
-a1 <- new("A1")
-b0 <- new("B0")
-b1 <- new("B1")
-b2 <- new("B2")
-
-deparseText <- function(expr)
-    paste(deparse(expr), collapse = "\\  ")
-
-mustEqual <- function(e1, e2){
-    if(!identical(e1, e2))
-        stop(paste("!identical(", deparseText(substitute(e1)),
-                   ", ", deparseText(substitute(e2)), ")", sep=""))
-}
-
-mustEqual(f1(a0, b0), "ANY")
-mustEqual(f1(a1,b0), "ANY")
-mustEqual(f1(a1,b1), "A0 B1")
-mustEqual(f1(b1,a1), "B1 A0")
-mustEqual(f1(b1,b1), "ANY")
-
-## remove classes:  order matters so as not to undefine earlier classes
-for(.cl in c("AB0", "A1", "A0", "B2", "B1", "B0"))
-    removeClass(.cl)
-
-removeGeneric("f1")
-
-## test of nonstandard generic definition
-
-setGeneric("doubleAnything", function(x) {
-  methodValue <- standardGeneric("doubleAnything")
-  c(methodValue, methodValue)
-})
-
-setMethod("doubleAnything", "ANY", function(x)x)
-
-setMethod("doubleAnything", "character",
-          function(x) paste("<",x,">",sep=""))
-
-mustEqual(doubleAnything(1:10), c(1:10, 1:10))
-mustEqual(doubleAnything("junk"), rep("<junk>",2))
-
-removeGeneric("doubleAnything")
-}% dontshow the above
 }
 
 \seealso{
