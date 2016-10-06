@@ -47,7 +47,7 @@ test-src-reg-1 = array-subset.R \
   reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R \
   r-strict-tst.R \
-  reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-BLAS.R
+  reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-S4-examples.R reg-BLAS.R
 ## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
