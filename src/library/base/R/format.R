@@ -112,8 +112,9 @@ formatC <- function (x, digits = NULL, width = NULL,
                      drop0trailing = FALSE)
 {
     if(is.object(x)) {
+	if(!(is.atomic(x) || is(x, "vector")))
+	    warning("class of 'x' was discarded")
         x <- unclass(x)
-        warning("class of 'x' was discarded")
     }
     ## sanity check for flags added 2.1.0
     flag <- as.character(flag)
