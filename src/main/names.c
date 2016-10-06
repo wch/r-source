@@ -753,6 +753,7 @@ FUNTAB R_FunTab[] =
 {"l10n_info",	do_l10n_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"Cstack_info", do_Cstack_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"mmap_file",	do_mmap_file,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"munmap_file",	do_munmap_file,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Functions To Interact with the Operating System */
 

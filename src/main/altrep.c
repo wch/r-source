@@ -1773,6 +1773,10 @@ SEXP attribute_hidden do_mmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP do_munmap_file(SEXP args)
 {
     args = CDR(args);
+#else
+SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#endif
     SEXP x = CAR(args);
 
     /**** would be useful to have R_mmap_class virtual class as parent here */
@@ -1788,7 +1792,6 @@ static SEXP do_munmap_file(SEXP args)
 	error("munmap: %s", strerror(errno));
     return R_NilValue;
 }
-#endif
 
 
 /**
