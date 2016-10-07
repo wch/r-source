@@ -8,6 +8,11 @@ Changes from grid_3.3.* to grid_3.4.0:
     grid.show.layout() now uses format() for annotating layout
     widths and heights.
 
+2.  More robust handling of NA values in graphical parameter settings
+    that affect text.  NA values for fontsize, lineheight, cex, and
+    fontfamily are ignored, i.e., inherited from parent drawing context.
+    A mixture of NA and non-NA generates an error.
+
 
 Changes from grid_3.2.* to grid_3.3.0:
 -------------------------------------
