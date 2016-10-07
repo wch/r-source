@@ -242,8 +242,8 @@
       package's namespace is first loaded.
 
       \item \code{ppr()} and \code{supsmu()} get an optional
-      \code{trace} argument, and \code{ppr(.., sm.method=..spline)} is no longer
-      limited to sample size \eqn{n \le 2500}{n <= 2500}.
+      \code{trace} argument, and \code{ppr(.., sm.method = ..spline)} is
+      no longer limited to sample size \eqn{n \le 2500}{n <= 2500}.
     }
   }
 
@@ -261,12 +261,17 @@
       removed.  That compiler has strict C++98 compliance hence does not
       include extensions in its (non-legacy) C++ headers: some
       packages will need to request C++11 or replace non-C++98 calls
-      such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R
-	Extensions}.
+      such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R Extensions}.
 
       \item When included from C++, the \R headers now use forms such as
       \code{std::FILE} directly rather than including the line \preformatted{using std::FILE;}
       C++ code including these headers might be relying on the latter.
+
+      \item Headers \file{R_ext/BLAS.h} and \file{R_ext/Lapack.h} have
+      many improved declarations including \code{const} for
+      double-precision complex routines. \emph{Inter alia} this avoids
+      warnings when passing \sQuote{string literal} arguments from C++11
+      code.
     }
   }
 

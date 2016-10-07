@@ -2318,8 +2318,8 @@ F77_NAME(zlantr)(const char *norm, const char *uplo, const char *diag,
 */
 
 La_extern void
-F77_NAME(dbdsdc)(char *uplo, char *compq, int *n, double *
-	d, double *e, double *u, int *ldu, double *vt,
+F77_NAME(dbdsdc)(const char *uplo, const char *compq, int *n,
+	double * d, double *e, double *u, int *ldu, double *vt,
 	int *ldvt, double *q, int *iq, double *work, int * iwork, int *info);
 
 La_extern void
@@ -2714,25 +2714,25 @@ F77_NAME(dpstrf)(const char* uplo, const int* n,
 
 
 La_extern int
-F77_NAME(lsame)(char *ca, char *cb);
+F77_NAME(lsame)(const char *ca, const char *cb);
 
 La_extern void
-F77_NAME(zbdsqr)(char *uplo, int *n, int *ncvt, int *
+F77_NAME(zbdsqr)(const char *uplo, int *n, int *ncvt, int *
 	nru, int *ncc, double *d, double *e, Rcomplex *vt,
 	int *ldvt, Rcomplex *u, int *ldu, Rcomplex *c,
 	int *ldc, double *rwork, int *info);
 
 La_extern void
-F77_NAME(zdrot)(int *n, Rcomplex *cx, int *incx,
-	Rcomplex *cy, int *incy, double *c, double *s);
+F77_NAME(zdrot)(const int *n, const Rcomplex *cx, const int *incx,
+	Rcomplex *cy, const int *incy, const double *c, const double *s);
 
 La_extern void
-F77_NAME(zgebak)(char *job, char *side, int *n, int *ilo,
+F77_NAME(zgebak)(const char *job, const char *side, int *n, int *ilo,
 	int *ihi, double *scale, int *m, Rcomplex *v,
 	int *ldv, int *info);
 
 La_extern void
-F77_NAME(zgebal)(char *job, int *n, Rcomplex *a, int
+F77_NAME(zgebal)(const char *job, int *n, Rcomplex *a, int
 	*lda, int *ilo, int *ihi, double *scale, int *info);
 
 La_extern void
@@ -2782,22 +2782,22 @@ F77_NAME(zgetrf)(int *m, int *n, Rcomplex *a,
 	int *lda, int *ipiv, int *info);
 
 La_extern void
-F77_NAME(zgetrs)(char *trans, int *n, int *nrhs,
+F77_NAME(zgetrs)(const char *trans, int *n, int *nrhs,
 	Rcomplex *a, int *lda, int *ipiv, Rcomplex *b,
 	int *ldb, int *info);
 
 
 La_extern void
-F77_NAME(zhetd2)(char *uplo, int *n, Rcomplex *a, int *lda, double *d,
+F77_NAME(zhetd2)(const char *uplo, int *n, Rcomplex *a, int *lda, double *d,
 		 double *e, Rcomplex *tau, int *info);
 
 La_extern void
-F77_NAME(zhetrd)(char *uplo, int *n, Rcomplex *a,
+F77_NAME(zhetrd)(const char *uplo, int *n, Rcomplex *a,
 	int *lda, double *d, double *e, Rcomplex *tau,
 	Rcomplex *work, int *lwork, int *info);
 
 La_extern void
-F77_NAME(zhseqr)(char *job, char *compz, int *n, int *ilo,
+F77_NAME(zhseqr)(const char *job, const char *compz, int *n, int *ilo,
 	 int *ihi, Rcomplex *h, int *ldh, Rcomplex *w,
 	Rcomplex *z, int *ldz, Rcomplex *work, int *lwork,
 	 int *info);
@@ -2812,7 +2812,7 @@ La_extern void
 F77_NAME(zlacgv)(int *n, Rcomplex *x, int *incx);
 
 La_extern void
-F77_NAME(zlacpy)(char *uplo, int *m, int *n,
+F77_NAME(zlacpy)(const char *uplo, int *m, int *n,
 	Rcomplex *a, int *lda, Rcomplex *b, int *ldb);
 
 La_extern void
@@ -2822,15 +2822,15 @@ F77_NAME(zlahqr)(int *wantt, int *wantz, int *n,
 	int *ldz, int *info);
 
 La_extern double
-F77_NAME(zlange)(char *norm, int *m, int *n, Rcomplex *a, int *lda,
+F77_NAME(zlange)(const char *norm, int *m, int *n, Rcomplex *a, int *lda,
 		 double *work);
 
 La_extern double
-F77_NAME(zlanhe)(char *norm,  char *uplo, int *n, Rcomplex *a,
+F77_NAME(zlanhe)(const char *norm,  const char *uplo, int *n, Rcomplex *a,
 		 int *lda, double *work);
 
 La_extern double
-F77_NAME(zlanhs)(char *norm, int *n, Rcomplex *a, int *lda, double *work);
+F77_NAME(zlanhs)(const char *norm, int *n, Rcomplex *a, int *lda, double *work);
 
 
 La_extern void
@@ -2845,14 +2845,15 @@ F77_NAME(zlaqps)(int *m, int *n, int *offset, int
 	auxv, Rcomplex *f, int *ldf);
 
 La_extern void
-F77_NAME(zlarf)(char *side, int *m, int *n, Rcomplex
+F77_NAME(zlarf)(const char *side, int *m, int *n, Rcomplex
 	*v, int *incv, Rcomplex *tau, Rcomplex *c, int *
 	ldc, Rcomplex *work);
 
 La_extern void
-F77_NAME(zlarfb)(char *side, char *trans, char *direct, char *
-	storev, int *m, int *n, int *k, Rcomplex *v, int
-	*ldv, Rcomplex *t, int *ldt, Rcomplex *c, int *
+F77_NAME(zlarfb)(const char *side, const char *trans, 
+	const char *direct, const char * storev,
+        int *m, int *n, int *k, Rcomplex *v, int *ldv,
+	Rcomplex *t, int *ldt, Rcomplex *c, int *
 	ldc, Rcomplex *work, int *ldwork);
 
 La_extern void
@@ -2860,29 +2861,28 @@ F77_NAME(zlarfg)(int *n, Rcomplex *alpha, Rcomplex *
 	x, int *incx, Rcomplex *tau);
 
 La_extern void
-F77_NAME(zlarft)(char *direct, char *storev, int *n, int *
+F77_NAME(zlarft)(const char *direct, const char *storev, int *n, int *
 	k, Rcomplex *v, int *ldv, Rcomplex *tau, Rcomplex *
 	t, int *ldt);
 
 La_extern void
-F77_NAME(zlarfx)(char *side, int *m, int *n,
+F77_NAME(zlarfx)(const char *side, int *m, int *n,
 	Rcomplex *v, Rcomplex *tau, Rcomplex *c, int *
 	ldc, Rcomplex *work);
 
 La_extern void
-F77_NAME(zlascl)(char *type, int *kl, int *ku,
+F77_NAME(zlascl)(const char *type, int *kl, int *ku,
 	double *cfrom, double *cto, int *m, int *n,
 	Rcomplex *a, int *lda, int *info);
 
 La_extern void
-F77_NAME(zlaset)(char *uplo, int *m, int *n,
+F77_NAME(zlaset)(const char *uplo, int *m, int *n,
 	Rcomplex *alpha, Rcomplex *beta, Rcomplex *a, int *
 	lda);
 
 La_extern void
-F77_NAME(zlasr)(char *side, char *pivot, char *direct, int *m,
-	 int *n, double *c, double *s, Rcomplex *a,
-	int *lda);
+F77_NAME(zlasr)(const char *side, const char *pivot, const char *direct,
+        int *m, int *n, double *c, double *s, Rcomplex *a, int *lda);
 
 La_extern void
 F77_NAME(zlassq)(int *n, Rcomplex *x, int *incx,
@@ -2893,17 +2893,18 @@ F77_NAME(zlaswp)(int *n, Rcomplex *a, int *lda,
 	int *k1, int *k2, int *ipiv, int *incx);
 
 La_extern void
-F77_NAME(zlatrd)(char *uplo, int *n, int *nb,
+F77_NAME(zlatrd)(const char *uplo, int *n, int *nb,
 	Rcomplex *a, int *lda, double *e, Rcomplex *tau,
 	Rcomplex *w, int *ldw);
 
 La_extern void
-F77_NAME(zlatrs)(char *uplo, char *trans, char *diag, char *
-	normin, int *n, Rcomplex *a, int *lda, Rcomplex *x,
+F77_NAME(zlatrs)(const char *uplo, const char *trans, 
+	const char *diag, const char * normin,
+	int *n, Rcomplex *a, int *lda, Rcomplex *x,
 	double *scale, double *cnorm, int *info);
 
 La_extern void
-F77_NAME(zsteqr)(char *compz, int *n, double *d,
+F77_NAME(zsteqr)(const char *compz, int *n, double *d,
 	double *e, Rcomplex *z, int *ldz, double *work,
 	int *info);
 
@@ -2916,7 +2917,7 @@ F77_NAME(ztrcon)(const char *norm, const char *uplo, const char *diag,
 		 double *rcond, Rcomplex *work, double *rwork, int *info);
 
 La_extern void
-F77_NAME(ztrevc)(char *side, char *howmny, int *select,
+F77_NAME(ztrevc)(const char *side, const char *howmny, int *select,
 	int *n, Rcomplex *t, int *ldt, Rcomplex *vl,
 	int *ldvl, Rcomplex *vr, int *ldvr, int *mm, int
 	*m, Rcomplex *work, double *rwork, int *info);
@@ -2932,7 +2933,7 @@ F77_NAME(zung2r)(int *m, int *n, int *k,
 	work, int *info);
 
 La_extern void
-F77_NAME(zungbr)(char *vect, int *m, int *n, int *k,
+F77_NAME(zungbr)(const char *vect, int *m, int *n, int *k,
 	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
 	work, int *lwork, int *info);
 
@@ -2972,28 +2973,28 @@ F77_NAME(zungrq)(int *m, int *n, int *k,
 	work, int *lwork, int *info);
 
 La_extern void
-F77_NAME(zungtr)(char *uplo, int *n, Rcomplex *a,
+F77_NAME(zungtr)(const char *uplo, int *n, Rcomplex *a,
 	int *lda, Rcomplex *tau, Rcomplex *work, int *lwork,
 	 int *info);
 
 La_extern void
-F77_NAME(zunm2r)(char *side, char *trans, int *m, int *n,
+F77_NAME(zunm2r)(const char *side, const char *trans, int *m, int *n,
 	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
 	Rcomplex *c, int *ldc, Rcomplex *work, int *info);
 
 La_extern void
-F77_NAME(zunmbr)(char *vect, char *side, char *trans, int *m,
+F77_NAME(zunmbr)(const char *vect, const char *side, const char *trans, int *m,
 	int *n, int *k, Rcomplex *a, int *lda, Rcomplex
 	*tau, Rcomplex *c, int *ldc, Rcomplex *work, int *
 	lwork, int *info);
 
 La_extern void
-F77_NAME(zunml2)(char *side, char *trans, int *m, int *n,
+F77_NAME(zunml2)(const char *side, const char *trans, int *m, int *n,
 	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
 	Rcomplex *c, int *ldc, Rcomplex *work, int *info);
 
 La_extern void
-F77_NAME(zunmlq)(char *side, char *trans, int *m, int *n,
+F77_NAME(zunmlq)(const char *side, const char *trans, int *m, int *n,
 	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
 	Rcomplex *c, int *ldc, Rcomplex *work, int *lwork,
 	 int *info);
@@ -3022,7 +3023,7 @@ F77_NAME(zgelsd)(int *m, int *n, int *nrhs,
    included in a default build of LAPACK.
 
    Currently dgegv, dgeqpf, dggsvd and dggsvp are included in R, but
-   that may change before release of R 3.3.0.
+   that may change in future.
  */
 
 /* DGEGV - compute for a pair of n-by-n real nonsymmetric */
