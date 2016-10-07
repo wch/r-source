@@ -359,6 +359,11 @@
       \item \command{R CMD build} and \command{R CMD check} now use the
       \emph{union} of \env{R_LIBS} \code{.libPaths()}.  They may not be
       equivalent, e.g., when the latter is determined by \env{R_PROFILE}.
+      
+      \item \command{R CMD build} now preserves dates when it copies files
+      in preparing the tarball.  (Previously on Windows it changed the
+      dates on all files; on Unix, it changed some dates when installing
+      vignettes.)
     }
   }
 
