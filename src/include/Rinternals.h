@@ -947,11 +947,13 @@ void R_RunWeakRefFinalizer(SEXP w);
 
 SEXP R_PromiseExpr(SEXP);
 SEXP R_ClosureExpr(SEXP);
+SEXP R_BytecodeExpr(SEXP e);
 void R_initialize_bcode(void);
 SEXP R_bcEncode(SEXP);
 SEXP R_bcDecode(SEXP);
 void R_registerBC(SEXP, SEXP);
 Rboolean R_checkConstants(Rboolean);
+Rboolean R_BCVersionOK(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
 #define BODY_EXPR(e) R_ClosureExpr(e)
 

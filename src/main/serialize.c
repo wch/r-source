@@ -1891,7 +1891,7 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream)
     PROTECT(reps = allocVector(VECSXP, InInteger(stream)));
     ans = ReadBC1(ref_table, reps, stream);
     UNPROTECT(1);
-    return ans;
+    return R_BCVersionOK(ans) ? ans : R_BytecodeExpr(ans);
 }
 
 static void DecodeVersion(int packed, int *v, int *p, int *s)
