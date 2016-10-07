@@ -257,3 +257,50 @@ mustEqual(doubleAnything(1:10), c(1:10, 1:10))
 mustEqual(doubleAnything("junk"), rep("<junk>",2))
 
 removeGeneric("doubleAnything")
+
+### From setOldClass.Rd
+## Examples of S3 classes with guaranteed attributes
+## an S3 class "stamped" with a vector and  a "date" attribute
+## Here is a generator function and an S3 print method.
+## NOTE:  it's essential that the generator checks the attribute classes
+stamped <- function(x, date = Sys.time()) {
+    if(!inherits(date, "POSIXt"))
+      stop("bad date argument")
+    if(!is.vector(x))
+      stop("x must be a vector")
+    attr(x, "date") <- date
+    class(x) <- "stamped"
+    x
+}
+
+print.stamped <- function(x, ...) {
+    print(as.vector(x))
+    cat("Date: ",  format(attr(x,"date")), "\n")
+}
+
+## Now, an S4 class with the same structure:
+setClass("stamped4", contains = "vector", slots = c(date = "POSIXt"))
+
+## We can use the S4 class to register "stamped", with its attributes:
+setOldClass("stamped", S4Class = "stamped4")
+selectMethod("show", "stamped")
+## and then remove "stamped4" to clean up
+removeClass("stamped4")
+
+set.seed(113)
+someLetters <- stamped(sample(letters, 10),
+                       ISOdatetime(2008, 10, 15, 12, 0, 0))
+
+st <- new("stamped", someLetters)
+st
+# show() method prints the object's class, then calls the S3 print method.
+
+stopifnot(identical(S3Part(st, TRUE), someLetters))
+
+# creating the S4 object directly from its data part and slots
+new("stamped", 1:10, date = ISOdatetime(1976, 5, 5, 15, 10, 0))
+
+
+  removeClass("stamped")
+  rm(someLetters, st)
+

@@ -113,13 +113,11 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
   no formal definition, and therefore no formally defined slots.
   If no S4 class is supplied as a model, the class created will be a
   virtual class.
-  The main disadvantage is that the prototype object in an S4 class that
-  uses this class as a slot will have a \code{NULL} object in that slot,
-  which can sometimes lead to confusion.  You can supply the
-  \code{prototype} argument but such examples often can use the
-  \code{S4Class=} argument.
+  If a virtual class (any virtual class) is used for a slot in another class, then the
+  initializing method for the class needs to put something legal in
+  that slot; otherwise it will be set to \code{NULL}.
 
-  See \link{Methods_Details} for the details of method dispatch and
+  See \link{Methods_for_S3} for the details of method dispatch and
   inheritance with mixed S3 and S4 methods.
 
   Some S3 classes cannot be represented as an ordinary combination of S4
@@ -130,7 +128,7 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
   If you must deal with them, it is still possible to register
   such classes as S4 classes, but now the inheritance has to be verified
   for each object, and you must call \code{setOldClass} with argument
-  \code{test=TRUE} once for each superclass.
+  \code{test=TRUE}.
 }
 
 \section{Pre-Defined Old Classes}{
@@ -217,72 +215,46 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
 
 
 \examples{
+\dontshow{
+## All the predefined S3 classes with S4 versions
+sort(unlist(.OldClassesList))
+}
+
 require(stats)
-setOldClass(c("mlm", "lm"))
-setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
+
+## "lm" and "mlm" are predefined; if they were not this would do it:
+\dontrun{
+setOldClass(c("mlm", "lm"))}
+
+## Define a new generic function to compute the residual degrees of freedom
+setGeneric("dfResidual",
+  function(model) stop(gettextf(
+    "This function only works for fitted model objects, not class \%s",
+                                class(model))))
+
 setMethod("dfResidual", "lm", function(model)model$df.residual)
 
 ## dfResidual will work on mlm objects as well as lm objects
 myData <- data.frame(time = 1:10, y = (1:10)^.5)
 myLm <- lm(cbind(y, y^3)  ~ time, myData)
 
+\dontshow{
 showClass("data.frame")# to see the predefined S4 "oldClass"
+}
 
-## two examples extending S3 class "lm", class "xlm" directly
+## two examples extending S3 class "lm": class "xlm" directly
 ## and "ylm" indirectly
 setClass("xlm", slots = c(eps = "numeric"), contains = "lm")
 setClass("ylm", slots = c(header = "character"), contains = "xlm")
 ym1 = new("ylm", myLm, header = "Example", eps = 0.)
 ## for more examples, see ?\link{S3Class}.
 
-utils::str(.OldClassesList)
 
 \dontshow{
 stopifnot(identical(dfResidual(myLm), myLm$df.residual))
 removeClass("ylm"); removeClass("xlm")
 rm(myData, myLm)
 removeGeneric("dfResidual")}
-
-## Examples of S3 classes with guaranteed attributes
-## an S3 class "stamped" with a vector and  a "date" attribute
-## Here is a generator function and an S3 print method.
-## NOTE:  it's essential that the generator checks the attribute classes
-stamped <- function(x, date = Sys.time()) {
-    if(!inherits(date, "POSIXt"))
-      stop("bad date argument")
-    if(!is.vector(x))
-      stop("x must be a vector")
-    attr(x, "date") <- date
-    class(x) <- "stamped"
-    x
-}
-
-print.stamped <- function(x, ...) {
-    print(as.vector(x))
-    cat("Date: ",  format(attr(x,"date")), "\n")
-}
-
-## Now, an S4 class with the same structure:
-setClass("stamped4", contains = "vector", slots = c(date = "POSIXt"))
-
-## We can use the S4 class to register "stamped", with its attributes:
-setOldClass("stamped", S4Class = "stamped4")
-selectMethod("show", "stamped")
-## and then remove "stamped4" to clean up
-removeClass("stamped4")
-\dontshow{
-set.seed(113)}
-someLetters <- stamped(sample(letters, 10),
-                       ISOdatetime(2008, 10, 15, 12, 0, 0))
-
-st <- new("stamped", someLetters)
-st
-# show() method prints the object's class, then calls the S3 print method.
-
-stopifnot(identical(S3Part(st, TRUE), someLetters))
-
-# creating the S4 object directly from its data part and slots
-new("stamped", 1:10, date = ISOdatetime(1976, 5, 5, 15, 10, 0))
 
 \dontrun{
 ## The code in R that defines "ts" as an S4 class
@@ -291,11 +263,6 @@ setClass("ts", contains = "structure", slots = c(tsp = "numeric"),
        # prototype to be a legal S3 time-series
 ## and now registers it as an S3 class
 setOldClass("ts", S4Class = "ts", where = envir)
-}
-
-\dontshow{
-  removeClass("stamped")
-  rm(someLetters, st)
 }
 
 }

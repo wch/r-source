@@ -221,14 +221,12 @@ As with the \code{coerce} method, the first two arguments are
   \code{\link{canCoerce}(x, cl)} instead.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
+
 \examples{
 ## using the definition of class "track" from \link{setClass}
 
