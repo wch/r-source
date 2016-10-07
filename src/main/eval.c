@@ -5478,7 +5478,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   R_BCpc = &currentpc;
 
   /* check version */
-  /* must be kept in sync with isBcHandledByEval */
+  /* must be kept in sync with R_BCVersionOK */
   {
       int version = GETOP();
       if (version < R_bcMinVersion || version > R_bcVersion) {
