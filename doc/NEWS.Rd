@@ -359,7 +359,7 @@
       \item \command{R CMD build} and \command{R CMD check} now use the
       \emph{union} of \env{R_LIBS} \code{.libPaths()}.  They may not be
       equivalent, e.g., when the latter is determined by \env{R_PROFILE}.
-      
+
       \item \command{R CMD build} now preserves dates when it copies files
       in preparing the tarball.  (Previously on Windows it changed the
       dates on all files; on Unix, it changed some dates when installing
@@ -620,6 +620,9 @@
 
       \item \code{split(<very_long>, *)} now works even when the split
       off parts are long. (\PR{17139})
+
+      \item \code{min()} and \code{max()} now also work correctly when
+      the argument list starts with \code{character(0)}.  (\PR{17160})
     }
   }
 }

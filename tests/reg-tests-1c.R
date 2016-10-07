@@ -1961,12 +1961,25 @@ stopifnot(identical(m2 + NULL, n0), # ERROR in R <= 3.3.x
 	  identical(m2 == NULL, l0), # as "always"
 	  identical(m2 ==  n0 , l0)) # as "always"
 
+
 ## strcapture()
 stopifnot(identical(strcapture("(.+) (.+)",
                                c("One 1", "noSpaceInLine", "Three 3"),
                                proto=data.frame(Name="", Number=0)),
                     data.frame(Name=c("One", NA, "Three"),
                                Number=c(1, NA, 3))))
+
+
+## PR#17160: min() / max()  arg.list starting with empty character
+TFT <- 1:3 %% 2 == 1
+stopifnot(
+    identical(min(character(), TFT), "0"),
+    identical(max(character(), TFT), "1"),
+    identical(max(character(), 3:2, 5:7, 3:0), "7"),
+    identical(min(character(), 3:2, 5:7), "2"),
+    identical(min(character(), 3.3, -1:2), "-1"),
+    identical(max(character(), 3.3, 4:0), "4"))
+## all gave NA in R <= 3.3.0
 
 
 ## keep at end
