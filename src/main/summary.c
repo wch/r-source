@@ -598,13 +598,14 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else if(ans_type == STRSXP) {
 			if(int_a)
 			   stmp = StringFromInteger(itmp, &warn);
-			if(real_a)
+			else if(real_a)
 			   stmp = StringFromReal(tmp, &warn);
 
-			if(empty) scum = stmp;
+			if(empty)
+			    scum = stmp;
 			else if (scum != NA_STRING) {
 			    PROTECT(stmp);
-			    if(empty || stmp == NA_STRING ||
+			    if(stmp == NA_STRING ||
 			       (iop == 2 && stmp != scum && Scollate(stmp, scum) < 0) ||
 			       (iop == 3 && stmp != scum && Scollate(stmp, scum) > 0) )
 				scum = stmp;
