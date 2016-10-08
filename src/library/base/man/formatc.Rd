@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -81,11 +81,18 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     \emph{dropped} in this format, unless \code{flag} contains
     \code{"#"}.}
 
-  \item{flag}{For \code{formatC}, a character string giving a
-    format modifier as in Kernighan and Ritchie (1988, page 243).
-    \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
-    others are \code{"+"}, \code{" "}, and \code{"#"}.  There can be
-    more than one of these, in any order.
+  \item{flag}{for \code{formatC}, a character string giving a
+    format modifier as in Kernighan and Ritchie (1988, page 243) or the
+    C+99 standard.
+    \code{"0"} pads leading zeros; \code{"-"} does left adjustment,
+    others are \code{"+"}, \code{" "}, and \code{"#"}; on some
+    platform--locale combination, \code{"'"} activates
+    \dQuote{thousands' grouping} for decimal conversion, and versions of
+    \file{glibc} allow \code{"I"} for integer conversion to use the locale's
+    alternative output digits, if any.
+
+    There can be more than one of these, in any order.  Other characters
+    used to have no effect, and signal a warning since \R 3.4.0.
   }
 
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
@@ -255,6 +262,15 @@ head(fv <- format(zv), 3)
 prettyNum(fv)
 prettyNum(fv, drop0trailing = TRUE) # a bit nicer
 options(op)
+
+## The  '  flag :
+doLC <- FALSE # R warns, so change to TRUE manually if you want see the effect
+if(doLC)
+  oldLC <- Sys.setlocale("LC_NUMERIC", "de_CH.UTF-8")
+formatC(1.234 + 10^(0:4), format = "fg", width = 11, flag = "'")
+## -->  .....  "      1'001" "     10'001"   on supported platforms
+if(doLC) ## revert, typically to  "C"  :
+  Sys.setlocale("LC_NUMERIC", oldLC)
 }
 \keyword{character}
 \keyword{print}

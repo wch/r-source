@@ -119,9 +119,6 @@ formatC <- function (x, digits = NULL, width = NULL,
     ## sanity check for flags added 2.1.0
     flag <- as.character(flag)
     if(length(flag) != 1) stop("'flag' must be a string, i.e., of length 1")
-    nf <- strsplit(flag, "")[[1L]]
-    if(!all(nf %in% c("0", "+", "-", " ", "#")))
-	stop("'flag' can contain only '0+- #'")
 
     format.char <- function (x, width, flag)
     {
@@ -180,6 +177,9 @@ formatC <- function (x, digits = NULL, width = NULL,
     }
     if(is.null(width))	width <- digits + 1L
     else if (width == 0L) width <- digits
+    nf <- strsplit(flag, "")[[1L]]
+    if(!all(nf %in% c("0", "+", "-", " ", "#", "'", "I")))
+        warning("'flag' should contain only characters from [0+- #'I]")
     i.strlen <-
 	pmax(abs(as.integer(width)),
 	     if(format == "fg" || format == "f") {
@@ -199,8 +199,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 
     attr(x, "Csingle") <- NULL	# avoid interpreting as.single
     r <- .Internal(formatC(x, as.character(mode), width, digits,
-                           as.character(format), as.character(flag),
-                           i.strlen))
+			   as.character(format), flag, i.strlen))
     if (some.special) r[!Ok] <- format.char(rQ, width = width, flag = flag)
 
     if(nzchar(big.mark) || nzchar(small.mark) || decimal.mark != "." ||
