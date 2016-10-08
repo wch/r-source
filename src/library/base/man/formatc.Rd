@@ -92,7 +92,8 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     alternative output digits, if any.
 
     There can be more than one of these, in any order.  Other characters
-    used to have no effect, and signal a warning since \R 3.4.0.
+    used to have no effect for \code{character} formatting, but signal
+    an error since \R 3.4.0.
   }
 
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or

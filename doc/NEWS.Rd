@@ -469,6 +469,9 @@
       \item \code{print.factor()} no longer sets the class of the factor
       to \code{NULL}, which would violate a basic constraint of an S4
       object.
+
+      \item \code{formatC(x, flag=f)} allows two new flags, and signals an
+      error for invalid flags also in the case of character formatting.
     }
   }
 }
