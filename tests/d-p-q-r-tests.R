@@ -1013,7 +1013,10 @@ for(dist in PDQR) {
         cat(ia,"")
         R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
         if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
-        if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
+	if(!(identical(R$value, expected))) { ## allow NA/NaN mismatch in these cases for now:
+	    if(!(dist %in% c("beta","f","t") && all(is.na(R$value))))
+		cat(" .. not giving expected NA/NaN's ")
+        }
     }
     cat(" [Ok]\n")
 }
