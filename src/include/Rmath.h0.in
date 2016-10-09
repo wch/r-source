@@ -45,6 +45,10 @@ using namespace std;
 # include <math.h>
 #endif
 
+#ifdef NO_C_HEADERS
+# warning "use of NO_C_HEADERS is defunct and will be ignored"
+#endif
+
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 

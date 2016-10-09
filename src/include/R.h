@@ -29,7 +29,7 @@
 # define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #endif
 /* The C++ headers in Solaris Studio are strict C++98, and 100+ 
-   packages would fail because of not using e.g. std::round 
+   packages would fail because of not using e.g. std::floor 
    or using C99 functions such as 
 
    erf exmp1 floorf fmin fminf fmax lgamma lround loglp round
@@ -68,6 +68,10 @@ using namespace std;
 # undef GS
 # undef SO
 # undef SS
+#endif
+
+#ifdef NO_C_HEADERS
+# warning "use of NO_C_HEADERS is defunct and will be ignored"
 #endif
 
 #include <Rconfig.h>
