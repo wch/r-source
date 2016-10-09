@@ -112,7 +112,7 @@ formatC <- function (x, digits = NULL, width = NULL,
                      drop0trailing = FALSE)
 {
     if(is.object(x)) {
-	if(!(is.atomic(x) || is(x, "vector")))
+	if(!(is.atomic(x) || inherits(x, "vector")))
 	    warning("class of 'x' was discarded")
         x <- unclass(x)
     }
