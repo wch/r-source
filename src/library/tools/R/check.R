@@ -1516,7 +1516,8 @@ setRlibs <-
                                 paste(utils::tail(out3, -pos),
                                       collapse = " "))
                     miss <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
-                    if(length(miss)) {
+                    ## base has no NAMESPACE
+                    if(length(miss) && pkgname != "base") {
                         msg3 <- if(length(grep("^importFrom\\(\"methods\"",
                                                miss))) {
                             strwrap("to your NAMESPACE file (and ensure that your DESCRIPTION Imports field contains 'methods').")
