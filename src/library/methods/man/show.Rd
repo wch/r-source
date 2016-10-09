@@ -1,6 +1,6 @@
 % File src/library/methods/man/show.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{show}
@@ -52,10 +52,8 @@ the discussion in \code{\link{setIs}} for the general concept.
 }
 \examples{
 ## following the example shown in the setMethod documentation ...
-setClass("track",
-         representation(x="numeric", y="numeric"))
-setClass("trackCurve",
-         representation("track", smooth = "numeric"))
+setClass("track", slots = c(x="numeric", y="numeric"))
+setClass("trackCurve", contains = "track", slots = c(smooth = "numeric"))
 
 t1 <- new("track", x=1:20, y=(1:20)^2)
 

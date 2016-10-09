@@ -1,6 +1,6 @@
 % File src/library/methods/man/GenericFunctions.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{GenericFunctions}
@@ -287,7 +287,7 @@ mustDie(standardGeneric("show"))  # a generic, but not called from its body
 
 ## method dumping ------------------------------------
 
-setClass("A", representation(a="numeric"))
+setClass("A", slots = c(a="numeric"))
 setMethod("plot", "A", function(x,y,...){ cat("A meth\n") })
 dumpMethod("plot","A", file="")
 \dontrun{

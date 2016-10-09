@@ -1,6 +1,6 @@
 % File src/library/methods/man/selectSuperClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{selectSuperClasses}
@@ -53,9 +53,9 @@ selectSuperClasses(Class, dropVirtual = FALSE, namesOnly = TRUE,
 }
 \examples{
 setClass("Root")
-setClass("Base", contains = "Root", representation(length = "integer"))
-setClass("A", contains = "Base", representation(x = "numeric"))
-setClass("B", contains = "Base", representation(y = "character"))
+setClass("Base", contains = "Root", slots = c(length = "integer"))
+setClass("A", contains = "Base", slots = c(x = "numeric"))
+setClass("B", contains = "Base", slots = c(y = "character"))
 setClass("C", contains = c("A", "B"))
 
 extends("C")   #-->  "C"  "A" "B"  "Base" "Root"

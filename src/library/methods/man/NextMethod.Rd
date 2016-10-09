@@ -1,6 +1,6 @@
 % File src/library/methods/man/NextMethod.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{callNextMethod}
@@ -91,11 +91,9 @@ callNextMethod(...)
 \examples{
 
 ## some class definitions with simple inheritance
-setClass("B0" , representation(b0 = "numeric"))
-
-setClass("B1", representation(b1 = "character"), contains = "B0")
-
-setClass("B2", representation(b2 = "logical"), contains = "B1")
+setClass("B0", slots = c(b0 = "numeric"))
+setClass("B1", slots = c(b1 = "character"), contains = "B0")
+setClass("B2", slots = c(b2 = "logical"), contains = "B1")
 
 ## and a rather silly function to illustrate callNextMethod
 
@@ -140,12 +138,12 @@ removeGeneric("f")
 removeMethods("Ops")
 
 ## tests of multiple callNextMethod
-setClass("m1", representation(count = "numeric"), contains = "matrix",
+setClass("m1", slots = c(count = "numeric"), contains = "matrix",
          prototype = prototype(count = 0))
 mm1 <- new("m1", matrix(1:12, 3,4))
 setMethod("[", "m1", function(x, i, j, ..., drop) callNextMethod())
 
-setClass("m2", representation(sum = "numeric"), contains = "m1")
+setClass("m2", slots = c(sum = "numeric"), contains = "m1")
 
 setMethod("Ops", c("m1", "m1"), function(e1, e2) {
     as(e1, "matrix") <- callNextMethod()
@@ -156,7 +154,7 @@ mm2 <- new("m2", matrix(1:12, 3, 4), sum = sum(1:12))
 
 stopifnot(identical(mm2[,2], 4:6))
 
-setClass("m3", representation(rowtags = "character"),contains = "m2")
+setClass("m3", slots = c(rowtags = "character"),contains = "m2")
 
 setMethod("[", signature(x="m3", i = "character", j = "missing",
                          drop = "missing"),

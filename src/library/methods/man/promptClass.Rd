@@ -1,6 +1,6 @@
 % File src/library/methods/man/promptClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{promptClass}
@@ -93,14 +93,14 @@ promptClass(clName, filename = NULL, type = "class",
 ## from setClass
 ## A simple class with two slots
 setClass("track",
-         representation(x="numeric", y="numeric"))
+         slots = c(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
-setClass("trackCurve",
-         representation("track", smooth = "numeric"))
+setClass("trackCurve", contains = "track",
+         slots = c(smooth = "numeric"))
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
 setClass("trackMultiCurve",
-         representation(x="numeric", y="matrix", smooth="matrix"),
+         slots = c(x="numeric", y="matrix", smooth="matrix"),
          prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
 
 setIs("trackMultiCurve", "trackCurve",

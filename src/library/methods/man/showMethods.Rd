@@ -1,6 +1,6 @@
 % File src/library/methods/man/showMethods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{showMethods}
@@ -97,8 +97,7 @@ showMethods(f = character(), where = topenv(parent.frame()),
 \examples{
 require(graphics)
 \dontshow{
- setClass("track",
-          representation(x="numeric", y="numeric"))
+ setClass("track", slots = c(x="numeric", y="numeric"))
  ## First, with only one object as argument:
  setMethod("plot", signature(x="track", y="missing"),
            function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...))

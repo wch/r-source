@@ -1,6 +1,6 @@
 % File src/library/methods/man/isSealedMethod.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isSealedMethod}
@@ -65,8 +65,7 @@ isSealedClass(Class, where)
 isSealedMethod("+", c("numeric", "character"))
 isSealedClass("matrix")
 
-setClass("track",
-            representation(x="numeric", y="numeric"))
+setClass("track", slots = c(x="numeric", y="numeric"))
 ## but this is FALSE
 isSealedClass("track")
 ## and so is this

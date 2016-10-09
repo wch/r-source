@@ -1,6 +1,6 @@
 % File src/library/methods/man/setClassUnion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setClassUnion}
@@ -81,7 +81,7 @@ isClassUnion(Class)
 setClassUnion("maybeNumber", c("numeric", "logical"))
 
 ## use the union as the data part of another class
-setClass("withId", representation("maybeNumber", id = "character"))
+setClass("withId", contains = "maybeNumber", slots = c(id = "character"))
 
 w1 <- new("withId", 1:10, id = "test 1")
 w2 <- new("withId", sqrt(w1)\%\%1 < .01, id = "Perfect squares")
