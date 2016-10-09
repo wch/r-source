@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-10-04 r71444) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-10-09 r71474) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1423,7 +1423,10 @@ N
 +         cat(ia,"")
 +         R <- tryCatch.W.E( do.call(F, c(Ns, aa)) )
 +         if(!inherits(R$warning, "simpleWarning")) cat(" .. did *NOT* give a warning! ")
-+         if(!(identical(R$value, expected)))       cat(" .. not giving expected NA/NaN s")
++ 	if(!(identical(R$value, expected))) { ## allow NA/NaN mismatch in these cases for now:
++ 	    if(!(dist %in% c("beta","f","t") && all(is.na(R$value))))
++ 		cat(" .. not giving expected NA/NaN's ")
++         }
 +     }
 +     cat(" [Ok]\n")
 + }
@@ -1449,5 +1452,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.216 0.076 1.299 0 0 
+Time elapsed:  0.919 0.075 0.994 0 0 
 > 
