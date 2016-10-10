@@ -152,6 +152,9 @@
 
       \item \code{split(<very_long>, *)} now works even when the split
       off parts are long. (\PR{17139})
+
+      \item Subsetting very large matrices (\code{prod(dim(.)) >= 2^31})
+      now works thanks to Michael Schubmehl's \PR{17158}.
     }
   }
 }
