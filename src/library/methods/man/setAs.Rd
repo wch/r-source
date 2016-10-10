@@ -33,24 +33,20 @@
   including calls that replace part of the object.
 
   Methods for this purpose work indirectly, by defining methods for
-  function \code{coerce}.  This function is \emph{not} to be called
-  directly, and method selection uses class inheritance only on the
-  first argument.
+  function \code{coerce}.  The \code{coerce} function is \emph{not} to
+  be called directly, and method selection uses class inheritance only
+  on the first argument.
 }
 \usage{
-
 setAs(from, to, def, replace, where = topenv(parent.frame()))
-
 }
-
 \arguments{
-
   \item{from, to}{The classes between which the coerce methods
-      \code{def} and \code{replace} perform coercion.
-    }
+    \code{def} and \code{replace} perform coercion.
+  }
   \item{def}{function of one argument.  It will get an object from
     class \code{from} and had better return an object of class
-    \code{to}. The convention is that
+    \code{to}.  The convention is that
     the name of the argument is \code{from}; if another argument name
     is used, \code{setAs} will attempt to substitute \code{from}. }
   \item{replace}{if supplied, the function to use as a replacement
@@ -59,21 +55,14 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
     although \code{setAs} will attempt to substitute if the arguments
     differ.
 
-\emph{The remaining arguments will not be used in standard applications.}
-
-}
+\emph{The remaining argument will not be used in standard applications.}
+  }
 
   \item{where}{the position or environment in which to store the
     resulting methods. Do not use this argument when defining a method
     in a package.  Only the default, the namespace of the package,
     should be used in normal situations.
     }
-  \item{ext}{the optional object
-    defining how \code{Class} is extended by the class of the
-    object (as returned by \code{\link{possibleExtends}}).
-    This argument is used internally (to provide essential
-    information for non-public classes).
-  }
 }
 
 \section{Inheritance and Coercion}{
