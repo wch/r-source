@@ -491,6 +491,7 @@ typedef struct {
 } R_bcstack_t;
 # define PARTIALSXP_MASK (~255)
 # define IS_PARTIAL_SXP_TAG(x) ((x) & PARTIALSXP_MASK)
+# define RAWMEM_TAG 254
 #else
 typedef SEXP R_bcstack_t;
 #endif
@@ -534,8 +535,9 @@ typedef struct RCNTXT {
     IStackval *intstack;
 #endif
     SEXP srcref;	        /* The source line in effect */
-    int browserfinish;     /* should browser finish this context without stopping */
-    SEXP returnValue;			/* only set during on.exit calls */
+    int browserfinish;          /* should browser finish this context without
+                                   stopping */
+    SEXP returnValue;           /* only set during on.exit calls */
     struct RCNTXT *jumptarget;	/* target for a continuing jump */
     int jumpmask;               /* associated LONGJMP argument */
 } RCNTXT, *context;
@@ -772,7 +774,7 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 
 void resetTimeLimits(void);
 
-#define R_BCNODESTACKSIZE 100000
+#define R_BCNODESTACKSIZE 200000
 extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 #ifdef BC_INT_STACK
 # define R_BCINTSTACKSIZE 10000

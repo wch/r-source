@@ -3091,8 +3091,8 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 /* start of bytecode section */
-static int R_bcVersion = 8;
-static int R_bcMinVersion = 6;
+static int R_bcVersion = 9;
+static int R_bcMinVersion = 9;
 
 static SEXP R_AddSym = NULL;
 static SEXP R_SubSym = NULL;
@@ -3381,6 +3381,8 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 
 #define GETSTACK_SXPVAL_PTR(s) ((s)->u.sxpval)
 
+#define GETSTACK_IVAL_PTR(s) ((s)->u.ival)
+
 #define SETSTACK_PTR(s, v) do { \
     SEXP __v__ = (v); \
     (s)->tag = 0; \
@@ -3413,6 +3415,8 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 #define GETSTACK_PTR(s) (*(s))
 
 #define GETSTACK_SXPVAL_PTR(s) (*(s))
+
+#define GETSTACK_IVAL_PTR(s) INTEGER(*(s))[0]
 
 #define SETSTACK_PTR(s, v) do { \
     SEXP __v__ = (v); \
@@ -3450,6 +3454,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 #define SETSTACK_INTEGER(i, v) SETSTACK_INTEGER_PTR(R_BCNodeStackTop + (i), v)
 
 #define SETSTACK_LOGICAL(i, v) SETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (i), v)
+
 
 /* The next two macros will allow reuse a scalar box, if provided. The
    box is assumed to be of the correct type and size and to have no
@@ -4117,6 +4122,36 @@ static void NORET intStackOverflow()
 }
 #endif
 
+#ifdef TYPED_STACK
+
+/* Allocate consecutive space of nelems node stack elements */
+static R_INLINE void* BCNALLOC(int nelems) {
+    void *ans;
+
+    BCNSTACKCHECK(nelems + 1);
+    R_BCNodeStackTop->tag = RAWMEM_TAG;
+    R_BCNodeStackTop->u.ival = nelems;
+    R_BCNodeStackTop++;
+    ans = R_BCNodeStackTop;
+    R_BCNodeStackTop += nelems;
+    return ans;
+}
+#else
+# error BCNALLOC and such for untyped stack not available yet
+#endif
+
+/* Allocate R context on the node stack */
+#define RCNTXT_ELEMS ((sizeof(RCNTXT) + sizeof(R_bcstack_t) - 1) \
+			/ sizeof(R_bcstack_t))
+
+#define BCNALLOC_CNTXT() (RCNTXT *)BCNALLOC(RCNTXT_ELEMS)
+
+static R_INLINE void BCNPOP_AND_END_CNTXT() {
+    RCNTXT* cntxt = (RCNTXT *)(R_BCNodeStackTop - RCNTXT_ELEMS);
+    endcontext(cntxt);
+    R_BCNodeStackTop -= RCNTXT_ELEMS + 1;
+}
+
 static SEXP bytecodeExpr(SEXP e)
 {
     if (isByteCode(e)) {
@@ -4226,19 +4261,6 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
    new variable is defined in an intervening frame. Some mechanism for
    invalidating the cache would be needed. This is certainly possible,
    but finding an efficient mechanism does not seem to be easy.   LT */
-
-/* Both mechanisms implemented here make use of the stack to hold
-   cache information.  This is not a problem except for "safe" for()
-   loops using the STARTLOOPCNTXT instruction to run the body in a
-   separate bcEval call.  Since this approach expects loop setup
-   information to be passed on the stack from the outer bcEval call to
-   an inner one the inner one cannot put things on the stack. For now,
-   bcEval takes an additional argument that disables the cache in
-   calls via STARTLOOPCNTXT for all "safe" loops. It would be better
-   to deal with this in some other way, for example by having a
-   specific STARTFORLOOPCNTXT instruction that deals with transferring
-   the information in some other way. For now disabling the cache is
-   an expedient solution. LT */
 
 #define USE_BINDING_CACHE
 # ifdef USE_BINDING_CACHE
@@ -4681,16 +4703,6 @@ static int opcode_counts[OPCOUNT];
   } \
 } while (0)
 #endif
-
-static void loopWithContext(volatile SEXP code, volatile SEXP rho)
-{
-    RCNTXT cntxt;
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
-		 R_NilValue);
-    if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK)
-	bcEval(code, rho, FALSE);
-    endcontext(&cntxt);
-}
 
 static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
 {
@@ -5203,6 +5215,8 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	signalMissingArgError(args, call);
 }
 
+#define FOR_LOOP_STATE_SIZE 4
+
 #define GET_VEC_LOOP_VALUE(var, pos) do {		\
     (var) = GETSTACK(pos);				\
     if (MAYBE_SHARED(var)) {				\
@@ -5211,6 +5225,24 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	SET_NAMED(var, 1);				\
     }							\
 } while (0)
+
+/* Loops that cannot have their SETJMPs optimized out are bracketed by
+   STARTLOOPCNTXT and ENLOOPCNTXT instructions.  The STARTLOOPCNTXT
+   instruction stores the target offset for a 'break' and then the
+   target offset for a 'next' on the stack. For a 'for' loop the loop
+   state information is then pushed on the stack as well. The
+   following functions retrieve the offsets. */
+
+static R_INLINE int LOOP_BREAK_OFFSET(int loop_state_size)
+{
+    return GETSTACK_IVAL_PTR(R_BCNodeStackTop - 2 - loop_state_size);
+}
+
+static R_INLINE int LOOP_NEXT_OFFSET(int loop_state_size)
+{
+    return GETSTACK_IVAL_PTR(R_BCNodeStackTop - 1 - loop_state_size);
+}
+
 
 /* The CALLBUILTIN instruction handles calls to both true BUILTINs and
    to .Internals of type BUILTIN. To handle profiling in a way that is
@@ -5553,13 +5585,58 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(POP, 0): BCNPOP_IGNORE_VALUE(); NEXT();
     OP(DUP, 0): BCNDUP(); NEXT();
     OP(PRINTVALUE, 0): PrintValue(BCNPOP()); NEXT();
-    OP(STARTLOOPCNTXT, 1):
+    OP(STARTLOOPCNTXT, 2):
 	{
-	    SEXP code = VECTOR_ELT(constants, GETOP());
-	    loopWithContext(code, rho);
+	    Rboolean is_for_loop = GETOP();
+	    R_bcstack_t *oldtop = R_BCNodeStackTop;
+	    RCNTXT *cntxt = BCNALLOC_CNTXT();
+	    BCNPUSH_INTEGER(GETOP());       /* pc offset for 'break' */
+	    BCNPUSH_INTEGER(pc - codebase); /* pc offset for 'next' */
+	    if (is_for_loop) {
+		/* duplicate the for loop state data on the top of the stack */
+		R_bcstack_t *loopdata = oldtop - FOR_LOOP_STATE_SIZE;
+		BCNSTACKCHECK(FOR_LOOP_STATE_SIZE);
+		for (int i = 0; i < FOR_LOOP_STATE_SIZE; i++)
+		    R_BCNodeStackTop[i] = loopdata[i];
+		R_BCNodeStackTop += FOR_LOOP_STATE_SIZE;
+
+		begincontext(cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv,
+			     R_NilValue, R_NilValue);
+		switch (SETJMP(cntxt->cjmpbuf)) {
+		case CTXT_BREAK:
+		    pc = codebase + LOOP_BREAK_OFFSET(FOR_LOOP_STATE_SIZE);
+		    break;
+		case CTXT_NEXT:
+		    pc = codebase + LOOP_NEXT_OFFSET(FOR_LOOP_STATE_SIZE);
+		    break;
+		}
+	    }
+	    else {
+		begincontext(cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv,
+			     R_NilValue, R_NilValue);
+		switch (SETJMP(cntxt->cjmpbuf)) {
+		case CTXT_BREAK:
+		    pc = codebase + LOOP_BREAK_OFFSET(0);
+		    break;
+		case CTXT_NEXT:
+		    pc = codebase + LOOP_NEXT_OFFSET(0);
+		    break;
+		}
+	    }
+	    /* context, offsets on stack, to be popped by ENDLOOPCNTXT */
 	    NEXT();
 	}
-    OP(ENDLOOPCNTXT, 0): retvalue = R_NilValue; goto done;
+    OP(ENDLOOPCNTXT, 1):
+	{
+	    Rboolean is_for_loop = GETOP();
+	    if (is_for_loop)
+		/* remove the duplicated for loop state data */
+		R_BCNodeStackTop -= FOR_LOOP_STATE_SIZE;
+	    BCNPOP_IGNORE_VALUE(); /* 'next' target */
+	    BCNPOP_IGNORE_VALUE(); /* 'break' target */
+	    BCNPOP_AND_END_CNTXT();
+	    NEXT();
+	}
     OP(DOLOOPNEXT, 0): findcontext(CTXT_NEXT, rho, R_NilValue);
     OP(DOLOOPBREAK, 0): findcontext(CTXT_BREAK, rho, R_NilValue);
     OP(STARTFOR, 3):
@@ -5693,7 +5770,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP seq = getForLoopSeq(-4, &iscompact);
 	DECREMENT_REFCNT(seq);
 #endif
-	R_BCNodeStackTop -= 3;
+	R_BCNodeStackTop -= FOR_LOOP_STATE_SIZE - 1;
 	SETSTACK(-1, R_NilValue);
 	NEXT();
       }

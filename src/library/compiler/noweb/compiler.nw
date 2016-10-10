@@ -2624,9 +2624,22 @@ context for each loop, and [[break]] and [[next]] use [[longjmp]] to
 transfer control.  In general, compiled loops need to use a similar
 approach.  For now, this is implemented by the [[STARTLOOPCNTXT]] and
 [[ENDLOOPCNTXT]] instructions.  The [[STARTLOOPCNTXT]] instructions
-takes one argument, the constant pool index for a code object
-implementing the loop body.  The loop body should end with a call to
-[[ENDLOOPCNTXT]].
+takes two operands, a flag indicating whether the loop is a [[for]]
+loop or not, and a label which points after the loop. The interpreter
+jumps to this label in case of a non-local jump implementing
+[[break]].  The loop body should end with a call to [[ENDLOOPCNTXT]],
+which takes one operand indicating whether this is a [[for]] loop or
+not.  [[ENDLOOPCNTXT]] terminates the context established by
+[[STARTLOOPCNTXT]] and pops it off the context stack.  The context
+data is stored on the byte code interpreter stack; in the case of a
+[[for]] loop some loop state information is duplicated on the stack by
+[[STARTLOOPCNTXT]] and removed again by [[ENDLOOPCNTXT]]. The byte
+code intepreter stores the [[pc]] in a slot in the [[RCNTXT]]
+structure so it is available after a [[longjmp]] triggered by a
+[[break]] for retrieving the label on the [[ENDLOOPCNTXT]]
+instruction.  An alternative would be to add separate
+[[STARTFORLOOPCNTXT]] and [[ENDFORLOOPCNTXT]] instructions. Then the
+[[pc]] or the label could be stored on the note stack.
 
 At least with some assumptions it is often possible to implement
 [[break]] and [[next]] calls as simple [[GOTO]]s.  If all [[break]]
@@ -2648,7 +2661,7 @@ defined as
 <<inlining handler for [[repeat]] loops>>=
 setInlineHandler("repeat", function(e, cb, cntxt) {
     body <- e[[2]]
-    <<generate context and body code for [[repeat]] loop>>
+    <<generate context and body for [[repeat]] loop>>
     <<generate [[repeat]] and [[while]] loop wrap-up code>>
     TRUE
 })
@@ -2656,26 +2669,19 @@ setInlineHandler("repeat", function(e, cb, cntxt) {
 
 If a loop context is not needed then the code for the loop body is
 just written to the original code buffer.  The [[else]] clause in the
-code chunk below generates the code for the general case.  [[genCode]]
-is used to produce a new code object containing code for the loop body
-followed by the [[ENDLOOPCNTXT]] instruction, The code object is then
-installed in the context pool.  The [[STARTLOOPCNTXT]] instruction is
-emitted to the main code buffer.  When a separate code object is
-written the need for using [[RETURNJMP]] for [[return]] calls is
-indicated by setting the [[needRETURNJMP]] flag in the compiler
-context to [[TRUE]].
-<<generate context and body code for [[repeat]] loop>>=
+code chunk below generates the code for the general case. The need for
+using [[RETURNJMP]] for [[return]] calls is indicated by setting the
+[[needRETURNJMP]] flag in the compiler context to [[TRUE]].
+<<generate context and body for [[repeat]] loop>>=
 if (checkSkipLoopCntxt(body, cntxt))
     cmpRepeatBody(body, cb, cntxt)
 else {
     cntxt$needRETURNJMP <- TRUE ## **** do this a better way
-    code <- genCode(body, cntxt,
-                    function(cb, cntxt) {
-                        cmpRepeatBody(body, cb, cntxt)
-                        cb$putcode(ENDLOOPCNTXT.OP)
-                    }, loc = cb$savecurloc())
-    bi <- cb$putconst(code)
-    cb$putcode(STARTLOOPCNTXT.OP, bi)
+    ljmpend.label <- cb$makelabel()
+    cb$putcode(STARTLOOPCNTXT.OP, 0, ljmpend.label)
+    cmpRepeatBody(body, cb, cntxt)
+    cb$putlabel(ljmpend.label)
+    cb$putcode(ENDLOOPCNTXT.OP, 0)
 }
 @ %def
 
@@ -2752,7 +2758,7 @@ structure of the [[repeat]] code generator:
 setInlineHandler("while", function(e, cb, cntxt) {
     cond <- e[[2]]
     body <- e[[3]]
-    <<generate context and body code for [[while]] loop>>
+    <<generate context and body for [[while]] loop>>
     <<generate [[repeat]] and [[while]] loop wrap-up code>>
     TRUE
 })
@@ -2761,18 +2767,16 @@ The context and body generation chunk is similar as well. The
 expression stored in the code object isn't quite right as what is
 compiled includes both the test and the body, but this code object
 should not be externally visible.
-<<generate context and body code for [[while]] loop>>=
+<<generate context and body for [[while]] loop>>=
 if (checkSkipLoopCntxt(cond, cntxt) && checkSkipLoopCntxt(body, cntxt))
     cmpWhileBody(e, cond, body, cb, cntxt)
 else {
     cntxt$needRETURNJMP <- TRUE ## **** do this a better way
-    code <- genCode(body, cntxt, ## **** expr isn't quite right
-                    function(cb, cntxt) {
-                        cmpWhileBody(e, cond, body, cb, cntxt)
-                        cb$putcode(ENDLOOPCNTXT.OP)
-                    }, loc = cb$savecurloc())
-    bi <- cb$putconst(code)
-    cb$putcode(STARTLOOPCNTXT.OP, bi)
+    ljmpend.label <- cb$makelabel()
+    cb$putcode(STARTLOOPCNTXT.OP, 0, ljmpend.label)
+    cmpWhileBody(e, cond, body, cb, cntxt)
+    cb$putlabel(ljmpend.label)
+    cb$putcode(ENDLOOPCNTXT.OP, 0)
 }
 @ %def
 
@@ -2842,7 +2846,7 @@ setInlineHandler("for", function(e, cb, cntxt) {
     cmp(seq, cb, ncntxt)
     ci <- cb$putconst(sym)
     callidx <- cb$putconst(e)
-    <<generate context and body code for [[for]] loop>>
+    <<generate context and body for [[for]] loop>>
     <<generate [[for]] loop wrap-up code>>
     TRUE
 })
@@ -2857,7 +2861,7 @@ for the body will be a [[GOTO]] instruction that jumps to the
 [[STEPFOR]] instruction.  This design means the stepping and the jump
 can be handled by one instruction instead of two, a step instruction
 and a [[GOTO]].
-<<generate context and body code for [[for]] loop>>=
+<<generate context and body for [[for]] loop>>=
 if (checkSkipLoopCntxt(body, cntxt))
     cmpForBody(callidx, body, ci, cb, cntxt)
 else {
@@ -2865,13 +2869,11 @@ else {
     ctxt.label <- cb$makelabel()
     cb$putcode(STARTFOR.OP, callidx, ci, ctxt.label)
     cb$putlabel(ctxt.label)
-    code <- genCode(body, cntxt, ## **** expr isn't quite right
-                    function(cb, cntxt) {
-                        cmpForBody(NULL, body, NULL, cb, cntxt)
-                        cb$putcode(ENDLOOPCNTXT.OP)
-                    }, loc = cb$savecurloc())
-    bi <- cb$putconst(code)
-    cb$putcode(STARTLOOPCNTXT.OP, bi)
+    ljmpend.label <- cb$makelabel()
+    cb$putcode(STARTLOOPCNTXT.OP, 1, ljmpend.label)
+    cmpForBody(NULL, body, NULL, cb, cntxt)
+    cb$putlabel(ljmpend.label)
+    cb$putcode(ENDLOOPCNTXT.OP, 1)
 }
 @ %def
 
@@ -5859,8 +5861,8 @@ BRIFNOT.OP = 2,
 POP.OP = 0,
 DUP.OP = 0,
 PRINTVALUE.OP = 0,
-STARTLOOPCNTXT.OP = 1,
-ENDLOOPCNTXT.OP = 0,
+STARTLOOPCNTXT.OP = 2,
+ENDLOOPCNTXT.OP = 1,
 DOLOOPNEXT.OP = 0,
 DOLOOPBREAK.OP = 0,
 STARTFOR.OP = 3,
