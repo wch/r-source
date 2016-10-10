@@ -750,23 +750,23 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    R_xlen_t k = i - 1 + nrow * (j - 1);
 		    switch (TYPEOF(x)) {
 		    case REALSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarReal( REAL(x)[k] );
 			break;
 		    case INTSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarInteger( INTEGER(x)[k] );
 			break;
 		    case LGLSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarLogical( LOGICAL(x)[k] );
 			break;
 		    case CPLXSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarComplex( COMPLEX(x)[k] );
 			break;
 		    case RAWSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarRaw( RAW(x)[k] );
 			break;
 		    default: break;
