@@ -48,7 +48,7 @@ function(x, g, ...)
 
     if (LM) {
         n <- sapply(x, function(obj) obj$df.resid)
-        v <- sapply(x, function(obj) sum(obj$residuals^2))
+        v <- sapply(x, function(obj) sum(obj$residuals^2))/n
     } else {
         n <- sapply(x, "length") - 1
         if (any(n <= 0))
