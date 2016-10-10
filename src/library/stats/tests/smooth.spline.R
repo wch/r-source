@@ -1,12 +1,14 @@
 ## partly moved from ../man/smooth.spline.Rd , quite system-specific.
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
-s2. <- smooth.spline(y18, cv = TRUE,
-                     control = list(trace=TRUE, tol=1e-6, low= -3, maxit=20))
-s2. ## i386-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
+(use.l3 <- (Sys.info()[["machine"]] == "x86_64"))
+## i386-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
 ## It is the too low 'low = -3' which "kills" the algo; low= -2.6 still ok
 ## On other platforms, e.g., x64, ends quite differently (and fine)
 ## typically with Df = 8.636
+(s2. <- smooth.spline(y18, cv = TRUE,
+                      control = list(trace=TRUE, tol = 1e-6,
+                                     low = if(use.l3) -3 else -2)))
 plot(y18)
 xx <- seq(1,length(y18), len=201)
 lines(predict(s2., xx), col = 4)
