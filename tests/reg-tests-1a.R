@@ -2469,24 +2469,6 @@ update(pc.cr, ~ . + Rape)
 ## end of moved from princomp.Rd
 
 
-## smooth.spline.Rd
-y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
-xx  <- seq(1,length(y18), len=201)
-(use.l3 <- (Sys.info()[["machine"]] == "x86_64"))
-## 32 bit: now signals error ("too small ..") when low = -3
-## {others, e.g., may end quite differently!}
-(s2. <- smooth.spline(y18, cv=TRUE, control =
-         list(trace=TRUE, tol=1e-6, low = if(use.l3) -3 else -2)))
-lines(predict(s2., xx), col = 4)
-mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
-
-sdf8 <- smooth.spline(y18, df = 8, con=list(trace=TRUE))
-sdf8 ; sdf8$df - 8
-
-try(smooth.spline(y18, spar = 50)) #>> error : spar 'way too large'
-## end of moved from smooth.spline.Rd
-
-
 ## arima{0}
 (fit <- arima(lh, c(1,0,0)))
 tsdiag(fit)
