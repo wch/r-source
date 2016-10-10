@@ -59,21 +59,14 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
     although \code{setAs} will attempt to substitute if the arguments
     differ.
 
-\emph{The remaining arguments will not be used in standard applications.}
-
-}
+    \emph{The remaining argument will not be used in standard applications.}
+  }
 
   \item{where}{the position or environment in which to store the
     resulting methods. Do not use this argument when defining a method
     in a package.  Only the default, the namespace of the package,
     should be used in normal situations.
     }
-  \item{ext}{the optional object
-    defining how \code{Class} is extended by the class of the
-    object (as returned by \code{\link{possibleExtends}}).
-    This argument is used internally (to provide essential
-    information for non-public classes).
-  }
 }
 
 \section{Inheritance and Coercion}{
