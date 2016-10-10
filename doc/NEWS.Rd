@@ -629,6 +629,10 @@
 
       \item Subsetting very large matrices (\code{prod(dim(.)) >= 2^31})
       now works thanks to Michael Schubmehl's \PR{17158}.
+
+      \item \code{bartlett.test()} used residual sums of squares
+      instead of variances, when argument was a list of \code{lm} objects.
+      (Reported by Jens Ledet Jensen).
     }
   }
 }
