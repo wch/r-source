@@ -4412,7 +4412,7 @@ locales).
 
 @item
 A package with a hard-to-satisfy system requirement is by definition not
-portable, annoyingly so if this are not declared in the
+portable, annoyingly so if this is not declared in the
 @samp{SystemRequirements} field.  The most common example is the use of
 @command{pandoc}, which is only available for a very limited range of
 platforms (and has onerous requiremnts to install from source) and has
