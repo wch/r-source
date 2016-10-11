@@ -4409,6 +4409,22 @@ vignette that used spaces in plot names: this caused some versions of
 
 Non-ASCII filenames can also cause problems (particularly in non-UTF-8
 locales).
+
+@item
+A package with a hard-to-satisfy system requirement is by definition not
+portable, annoyingly so if this are not declared in the
+@samp{SystemRequirements} field.  The most common example is the use of
+@command{pandoc}, which is only available for a very limited range of
+platforms (and has onerous requiremnts to install from source) and has
+capabilities@footnote{For example, the ability to handle @samp{https://}
+URLs, which even the build in some major Linux distributions in 2016 did
+not possess.} that vary by build but are not documented.
+
+An external command can be an optional requirement for an imported
+package but needed for examples or tests in the package itself.  Such
+usage should always be conditional on a test for existence (perhaps
+using @code{Sys.which}), as well as declared in the
+@samp{SystemRequiremnts} field.
 @end itemize
 
 Do be careful in what your tests (and examples) actually test.  Bad
