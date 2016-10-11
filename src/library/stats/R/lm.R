@@ -323,11 +323,9 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     ans <- z[c("call", "terms", if(!is.null(z$weights)) "weights")]
     ans$residuals <- r
     ans$coefficients <-
-	cbind(est, se, tval, 2*pt(abs(tval), rdf, lower.tail = FALSE))
-    dimnames(ans$coefficients) <-
-	list(names(z$coefficients)[Qr$pivot[p1]],
-	     c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
-    ans$aliased <- is.na(coef(object))  # used in print method
+	cbind(Estimate = est, "Std. Error" = se, "t value" = tval,
+	      "Pr(>|t|)" = 2*pt(abs(tval), rdf, lower.tail = FALSE))
+    ans$aliased <- is.na(z$coefficients)  # used in print method
     ans$sigma <- sqrt(resvar)
     ans$df <- c(p, rdf, NCOL(Qr$qr))
     if (p != attr(z$terms, "intercept")) {
@@ -386,7 +384,7 @@ print.summary.lm <-
                 " not defined because of singularities)\n", sep = "")
         else cat("\nCoefficients:\n")
         coefs <- x$coefficients
-        if(!is.null(aliased <- x$aliased) && any(aliased)) {
+        if(any(aliased <- x$aliased)) {
             cn <- names(aliased)
             coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
             coefs[!aliased, ] <- x$coefficients
