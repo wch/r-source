@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,12 +60,14 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
     n <- length(r)
     if (any(show[2L:6L])) {
 	s <- if (inherits(x, "rlm")) x$s
-        else if(isGlm) sqrt(summary(x)$dispersion)
-        else sqrt(deviance(x)/df.residual(x))
-	hii <- lm.influence(x, do.coef = FALSE)$hat
+	     else if(isGlm) sqrt(summary(x)$dispersion)
+	     else sqrt(deviance(x)/df.residual(x))
+	hii <- (infl <- influence(x, do.coef = FALSE))$hat
 	if (any(show[4L:6L])) {
-	    cook <- if (isGlm) cooks.distance(x)
-            else cooks.distance(x, sd = s, res = r)
+	    cook <-
+		if (isGlm)
+		    cooks.distance (x, infl = infl)
+		else cooks.distance(x, infl = infl, sd = s, res = r, hat = hii)
 	}
     }
     if (any(show[2L:3L])) {
@@ -249,7 +251,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
             if (one.fig)
                 title(sub = sub.caption, ...)
             if(length(cook.levels)) {
-                p <- length(coef(x))
+                p <- x$rank # not length(coef(x))
                 usr <- par("usr")
                 hh <- seq.int(min(r.hat[1L], r.hat[2L]/100), usr[2L],
                               length.out = 101)
@@ -262,9 +264,8 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                        lty = 2, col = 2, bty = "n")
                 xmax <- min(0.99, usr[2L])
                 ymult <- sqrt(p*(1-xmax)/xmax)
-                aty <- c(-sqrt(rev(cook.levels))*ymult,
-                         sqrt(cook.levels)*ymult)
-                axis(4, at = aty,
+                aty <- sqrt(cook.levels)*ymult
+                axis(4, at = c(-rev(aty), aty),
                      labels = paste(c(rev(cook.levels), cook.levels)),
                      mgp = c(.25,.25,0), las = 2, tck = 0,
                      cex.axis = cex.id, col.axis = 2)
@@ -294,7 +295,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	axis(1, at = athat/(1-athat), labels = paste(athat))
 	if (one.fig)
 	    title(sub = sub.caption, ...)
-	p <- length(coef(x))
+	p <- x$rank
 	bval <- pretty(sqrt(p*cook/g), 5)
 
 	usr <- par("usr")
@@ -302,14 +303,14 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	ymax <- usr[4L]
 	for(i in seq_along(bval)) {
 	    bi2 <- bval[i]^2
-	    if(ymax > bi2*xmax) {
+	    if(p*ymax > bi2*xmax) {
 		xi <- xmax + strwidth(" ")/3
-		yi <- bi2*xi
+		yi <- bi2*xi/p
 		abline(0, bi2, lty = 2)
 		text(xi, yi, paste(bval[i]), adj = 0, xpd = TRUE)
 	    } else {
 		yi <- ymax - 1.5*strheight(" ")
-		xi <- yi/bi2
+		xi <- p*yi/bi2
 		lines(c(0, xi), c(0, yi), lty = 2)
 		text(xi, ymax-0.8*strheight(" "), paste(bval[i]),
 		     adj = 0.5, xpd = TRUE)
