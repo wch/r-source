@@ -5298,6 +5298,10 @@ static SEXP getLocTableElt(ptrdiff_t relpc, SEXP table, SEXP constants)
 static SEXP R_findBCInterpreterLocation(RCNTXT *cptr, const char *iname)
 {
     SEXP body = cptr ? cptr->bcbody : R_BCbody;
+    if (body == NULL)
+	/* This has happened, but it is not clear how. */
+	/* (R_Srcref == R_InBCInterpreter && R_BCbody == NULL) */
+	return R_NilValue;
     SEXP constants = BCCONSTS(body);
     SEXP ltable = findLocTable(constants, iname);
     if (ltable == R_NilValue)
@@ -5504,11 +5508,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
   if (R_disable_bytecode)
       return eval(bytecodeExpr(body), rho);
 
-  R_Srcref = R_InBCInterpreter;
-  R_BCIntActive = 1;
-  R_BCbody = body;
-  R_BCpc = &currentpc;
-
   /* check version */
   /* must be kept in sync with R_BCVersionOK */
   {
@@ -5530,6 +5529,10 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
   }
 
+  R_Srcref = R_InBCInterpreter;
+  R_BCIntActive = 1;
+  R_BCbody = body;
+  R_BCpc = &currentpc;
   R_binding_cache_t vcache = NULL;
   Rboolean smallcache = TRUE;
 #ifdef USE_BINDING_CACHE
