@@ -1852,6 +1852,8 @@ checkSkipLoopCntxt <- function(e, cntxt, breakOK = TRUE) {
                 TRUE
             else if (isLoopTopFun(fname, cntxt))
                 checkSkipLoopCntxtList(e[-1], cntxt, breakOK)
+            else if (fname %in% c("eval", "evalq"))
+                FALSE
             else
                 checkSkipLoopCntxtList(e[-1], cntxt, FALSE)
         }

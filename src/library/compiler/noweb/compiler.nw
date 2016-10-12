@@ -2938,7 +2938,12 @@ cannot contain relevant [[break]] or [[next]] calls.  These stop
 expressions are calls to the three loop functions and to [[function]].
 Calls to functions like [[quote]] that are known not to evaluate their
 arguments could also be included among the stop functions but this
-doesn't seem particularly worth while at this time.
+doesn't seem particularly worth while at this time. Loops that include a
+call to [[eval]] (or [[evalq]]) are compiled with context to support a
+programming pattern present e.g. in package [[Rmpi]]: a server application
+is implemented using an infinite loop, which evaluates de-serialized code
+received from the client; the server shuts down when it receives a
+serialized version of [[break]].
 
 The recursive checking function is defined as
 <<[[checkSkipLoopCntxt]] function>>=
@@ -2953,6 +2958,8 @@ checkSkipLoopCntxt <- function(e, cntxt, breakOK = TRUE) {
                 TRUE
             else if (isLoopTopFun(fname, cntxt))
                 checkSkipLoopCntxtList(e[-1], cntxt, breakOK)
+            else if (fname %in% c("eval", "evalq"))
+                FALSE
             else
                 checkSkipLoopCntxtList(e[-1], cntxt, FALSE)
         }
