@@ -2245,6 +2245,8 @@ setInlineHandler("function", function(e, cb, cntxt) {
     body <- e[[3]]
     sref <- e[[4]]
     ncntxt <- make.functionContext(cntxt, forms, body)
+    if (mayCallBrowser(body, cntxt))
+        return(FALSE)
     cbody <- genCode(body, ncntxt, loc = cb$savecurloc())
     ci <- cb$putconst(list(forms, cbody, sref))
     cb$putcode(MAKECLOSURE.OP, ci)
@@ -4839,6 +4841,8 @@ cmpfun <- function(f, options = NULL) {
     if (type == "closure") {
         cntxt <- make.toplevelContext(makeCenv(environment(f)), options)
         ncntxt <- make.functionContext(cntxt, formals(f), body(f))
+        if (mayCallBrowser(body(f), ncntxt))
+            return(f)
         if (typeof(body(f)) != "language" || body(f)[1] != "{")
             loc <- list(expr = body(f), srcref = getExprSrcref(f))
         else
@@ -4878,6 +4882,42 @@ tryCompile <- function(e, ...)
     })
 @ %def tryCompile
 
+If a function contains a call to [[browser]], it should not be compiled,
+because the byte-code interpreter does not support command-by-command
+execution ("n"). This function explores the AST of a closure to find out if
+it may contain a call to [[browser]]:
+
+<<[[mayCallBrowser]] function>>=
+mayCallBrowser <- function(e, cntxt) {
+    if (typeof(e) == "language") {
+        fun <- e[[1]]
+        if (typeof(fun) == "symbol") {
+            fname <- as.character(fun)
+            if (fname == "browser") ## not checking isBaseVar to err on the
+                                    ## positive
+                TRUE
+            else if (fname == "function" && isBaseVar(fname, cntxt))
+                FALSE
+            else
+                mayCallBrowserList(e[-1], cntxt)
+        }
+        else
+            mayCallBrowserList(e, cntxt)
+    }
+    else FALSE
+}
+@ %def mayCallBrowser
+
+A version that operates on a list of expressions is
+<<[[mayCallBrowserList]] function>>=
+mayCallBrowserList <- function(elist, cntxt) {
+    for (a in as.list(elist))
+        if (! missing(a) && mayCallBrowser(a, cntxt))
+            return(TRUE)
+    FALSE
+}
+@ %def mayCallBrowserList
+
 
 \subsection{Compiling and loading files}
 A file can be compiled with [[cmpfile]] and loaded with [[loadcmp]].
@@ -4914,7 +4954,8 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
                     cat(paste("compiling expression", deparse(e, 20)[1],
                               "...\n"))
             }
-            cforms[[i]] <- genCode(e, cntxt)
+            if (!mayCallBrowser(e, cntxt))
+                cforms[[i]] <- genCode(e, cntxt)
         }
         cat(gettextf("saving to file \"%s\" ... ", outfile))
         .Internal(save.to.file(cforms, outfile, ascii))
@@ -6202,6 +6243,9 @@ Opcodes.names <- names(Opcodes.argc)
 
 <<[[cmpTag]] function>>
 
+<<[[mayCallBrowser]] function>>
+
+<<[[mayCallBrowserList]] function>>
 
 ##
 ## Inlining mechanism
