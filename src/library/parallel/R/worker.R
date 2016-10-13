@@ -44,7 +44,9 @@ slaveLoop <- function(master)
                 t2 <- proc.time()
                 value <- list(type = "VALUE", value = value, success = success,
                               time = t2 - t1, tag = msg$data$tag)
+                msg <- NULL ## release for GC
                 sendData(master, value)
+                value <- NULL ## release for GC
             }
         }, interrupt = function(e) NULL)
 }
