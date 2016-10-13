@@ -2558,9 +2558,7 @@ double GEStrHeight(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDes
  * GEStrMetric
  ****************************************************************
 
- * This does not (currently) depend on the encoding.  It depends on
- * the string only through the number of lines of text (via embedded
- * \n) and we assume they are never part of an mbc.
+ * Modelled on GEText handling of encodings
  */
 void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc, 
                  double *ascent, double *descent, double *width,
@@ -2592,11 +2590,75 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
         double lineheight = gc->lineheight * gc->cex * dd->dev->cra[1] *
                             gc->ps/dd->dev->startps;
 	int n;
+        char *sb, *sbuf;
+        cetype_t enc2;
+	int noMetricInfo;
+       
+        const void *vmax = vmaxget();
+
+        GEMetricInfo('M', gc, &asc, &dsc, &wid, dd);
+        noMetricInfo = (asc == 0 && dsc == 0 && wid == 0) ? 1 : 0;
+
+        enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
+        if(enc2 != CE_SYMBOL)
+            enc2 = (dd->dev->hasTextUTF8 == TRUE) ? CE_UTF8 : CE_NATIVE;
+        else if(dd->dev->wantSymbolUTF8 == TRUE) enc2 = CE_UTF8;
+        else if(dd->dev->wantSymbolUTF8 == NA_LOGICAL) {
+            enc = CE_LATIN1;
+            enc2 = CE_UTF8;
+        }
+
+        /* Put the first line in a string */
+        sb = sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
+        s = str;
+        while (*s != '\n' && *s != '\0') {
+            *sb++ = *s++;
+        }
+        *sb = '\0';
+        /* Find the largest ascent for the first line */        
+        if (noMetricInfo) {
+            *ascent = GEStrHeight(sbuf, enc2, gc, dd);
+        } else {
+            s = reEnc(sbuf, enc, enc2, 2);
+            if(enc2 != CE_SYMBOL && !strIsASCII(s)) {
+                if(mbcslocale && enc2 == CE_NATIVE) {
+                    size_t n = strlen(s), used;
+                    wchar_t wc;
+                    mbstate_t mb_st;
+                    mbs_init(&mb_st);
+                    while ((used = mbrtowc(&wc, s, n, &mb_st)) > 0) {
+                        GEMetricInfo((int) wc, gc, &asc, &dsc, &wid, dd);
+                        if (asc > *ascent)
+                            *ascent = asc;
+                        s += used; n -=used;
+                    }
+                } else if (enc2 == CE_UTF8) {
+                    size_t used;
+                    wchar_t wc;
+                    while ((used = utf8toucs(&wc, s)) > 0) {
+                        GEMetricInfo(-(int) wc, gc, &asc, &dsc, &wid,dd);
+                        if (asc > *ascent)
+                            *ascent = asc;
+                        s += used;
+                    }
+                }
+            } else {
+                while (*s != '\0') {
+                    GEMetricInfo((unsigned char) *s++, gc, 
+                                 &asc, &dsc, &wid, dd);
+                    if (asc > *ascent)
+                        *ascent = asc;
+                }
+            }
+        }
+        
 	/* Count the lines of text minus one */
 	n = 0;
 	for(s = str; *s ; s++)
 	    if (*s == '\n')
 		n++;
+	h = n * lineheight;
+
         /* Where is the start of the last line? */
         if (n > 0) {
             while (*s != '\n') 
@@ -2605,19 +2667,53 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
         } else {
             s = str;
         }
-	h = n * lineheight;
-        /* Find the largest ascent and descent for the last line of text
-         */
-        while (*s) {
-            GEMetricInfo(*s, gc, &asc, &dsc, &wid, dd);
-            if (asc > *ascent)
-                *ascent = asc;
-            if (dsc > *descent)
-                *descent = dsc;
-            s++;
+        /* Put the last line in a string */
+        sb = sbuf;
+        while (*s != '\0') {
+            *sb++ = *s++;
         }
+        *sb = '\0';
+        /* Find the largest descent for the last line */
+        if (noMetricInfo) {
+            *descent = 0;
+        } else {
+            s = reEnc(sbuf, enc, enc2, 2);
+            if(enc2 != CE_SYMBOL && !strIsASCII(s)) {
+                if(mbcslocale && enc2 == CE_NATIVE) {
+                    size_t n = strlen(s), used;
+                    wchar_t wc;
+                    mbstate_t mb_st;
+                    mbs_init(&mb_st);
+                    while ((used = mbrtowc(&wc, s, n, &mb_st)) > 0) {
+                        GEMetricInfo((int) wc, gc, &asc, &dsc, &wid, dd);
+                        if (dsc > *descent)
+                            *descent = dsc;
+                        s += used; n -=used;
+                    }
+                } else if (enc2 == CE_UTF8) {
+                    size_t used;
+                    wchar_t wc;
+                    while ((used = utf8toucs(&wc, s)) > 0) {
+                        GEMetricInfo(-(int) wc, gc, &asc, &dsc, &wid,dd);
+                        if (dsc > *descent)
+                            *descent = dsc;
+                        s += used;
+                    }
+                }
+            } else {
+                while (*s != '\0') {
+                    GEMetricInfo((unsigned char) *s++, gc, 
+                                 &asc, &dsc, &wid, dd);
+                    if (dsc > *descent)
+                        *descent = dsc;
+                }
+            }
+        }
+
         *ascent = *ascent + h;
         *width = GEStrWidth(str, enc, gc ,dd);
+
+	vmaxset(vmax);
     }
 }
 

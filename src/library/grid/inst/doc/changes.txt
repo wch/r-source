@@ -13,6 +13,12 @@ Changes from grid_3.3.* to grid_3.4.0:
     fontfamily are ignored, i.e., inherited from parent drawing context.
     A mixture of NA and non-NA generates an error.
 
+3.  Improved support for calcStringMetric() function (and
+    stringAscent() and stringDescent() and grobAscent() and
+    grobDescent()) so that text encoding is now handled.
+
+    Reported by Hakon Malmedal and Hadley Wickham.
+
 
 Changes from grid_3.2.* to grid_3.3.0:
 -------------------------------------
