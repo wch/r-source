@@ -12,11 +12,21 @@ SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 GW32_HEADERS = iconv.h psignal.h
 
+## This omits GetX11Image.h QuartzDevice.h eventloop.h
+R_EXT_HEADERS = \
+  Applic.h Arith.h BLAS.h Boolean.h Callbacks.h Complex.h Connections.h \
+  Constants.h Error.h \
+  GraphicsDevice.h GraphicsEngine.h Itermacros.h \
+  Lapack.h Linpack.h MathThreads.h Memory.h \
+  Parse.h Print.h PrtUtil.h R-ftp-http.h RS.h Rallocators.h Random.h \
+  Rdynload.h Riconv.h RStartup.h Utils.h libextern.h \
+  stats_package.h stats_stubs.h Visibility.h
+
 all: fixh config.h trioremap.h
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
 	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) iconv.h $(R_HOME)/include
-	@cp -p R_ext/*.h $(R_HOME)/include/R_ext
+	@(cd R_ext; cp -p $(R_EXT_HEADERS) $(R_HOME)/include/R_ext)
 	@cp -p ../extra/graphapp/graphapp.h ../extra/graphapp/ga.h \
 	  $(R_HOME)/include
 
@@ -54,7 +64,7 @@ Rmath.h0: Rmath.h0.in $(R_HOME)/VERSION Makefile.win
 
 Rmath.h: Rmath.h0
 	@sh $(R_HOME)/tools/copy-if-change $< $@
-	
+
 trioremap.h: ../gnuwin32/fixed/h/trioremap.h
 	@cp $< $@
 

@@ -272,6 +272,10 @@
       double-precision complex routines. \emph{Inter alia} this avoids
       warnings when passing \sQuote{string literal} arguments from C++11
       code.
+      
+      \item Headers for Unix-only facilities \file{R_ext/GetX11Image.h},
+      \file{R_ext/QuartzDevice.h} and \file{R_ext/eventloop.h} are no
+      longer installed on Windows.
     }
   }
 
