@@ -5598,7 +5598,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    R_bcstack_t *oldtop = R_BCNodeStackTop;
 	    RCNTXT *cntxt = BCNALLOC_CNTXT();
 	    BCNPUSH_INTEGER(GETOP());       /* pc offset for 'break' */
-	    BCNPUSH_INTEGER(pc - codebase); /* pc offset for 'next' */
+	    BCNPUSH_INTEGER((int)(pc - codebase)); /* pc offset for 'next' */
 	    if (is_for_loop) {
 		/* duplicate the for loop state data on the top of the stack */
 		R_bcstack_t *loopdata = oldtop - FOR_LOOP_STATE_SIZE;
