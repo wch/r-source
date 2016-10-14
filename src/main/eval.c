@@ -2185,8 +2185,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(expr = assignCall(asymSymbol[PRIMVAL(op)], CDR(lhs),
 			      afun, R_TmpvalSymbol, CDDR(expr), rhsprom));
     expr = eval(expr, rho);
-    UNPROTECT(nprot);
     endcontext(&cntxt); /* which does not run the remove */
+    UNPROTECT(nprot);
     unbindVar(R_TmpvalSymbol, rho);
 #ifdef OLD_RHS_NAMED
     /* we do not duplicate the value, so to be conservative mark the
@@ -5845,11 +5845,11 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	/* get the function */
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	SEXP value = findFun(symbol, rho);
+	INIT_CALL_FRAME(value);
 	if(RTRACE(value)) {
 	  Rprintf("trace: ");
 	  PrintValue(symbol);
 	}
-	INIT_CALL_FRAME(value);
 	NEXT();
       }
     OP(GETGLOBFUN, 1):
@@ -5857,11 +5857,11 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	/* get the function */
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	SEXP value = findFun(symbol, R_GlobalEnv);
+	INIT_CALL_FRAME(value);
 	if(RTRACE(value)) {
 	  Rprintf("trace: ");
 	  PrintValue(symbol);
 	}
-	INIT_CALL_FRAME(value);
 	NEXT();
       }
     OP(GETSYMFUN, 1):

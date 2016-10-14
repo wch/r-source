@@ -1411,6 +1411,10 @@ static Rboolean RunFinalizers(void)
 	    saveToplevelContext = R_ToplevelContext;
 	    PROTECT(topExp = R_CurrentExpr);
 	    savestack = R_PPStackTop;
+	    /* The value of 'next' is protected to make it safe
+	       for this routine to be called recursively from a
+	       gc triggered by a finalizer. */
+	    PROTECT(next);
 	    if (! SETJMP(thiscontext.cjmpbuf)) {
 		R_GlobalContext = R_ToplevelContext = &thiscontext;
 
@@ -1422,14 +1426,10 @@ static Rboolean RunFinalizers(void)
 		    R_weak_refs = next;
 		else
 		    SET_WEAKREF_NEXT(last, next);
-		/* The value of 'next' is protected to make is safe
-		   for thsis routine to be called recursively from a
-		   gc triggered by a finalizer. */
-		PROTECT(next);
 		R_RunWeakRefFinalizer(s);
-		UNPROTECT(1);
 	    }
 	    endcontext(&thiscontext);
+	    UNPROTECT(1); /* next */
 	    R_ToplevelContext = saveToplevelContext;
 	    R_PPStackTop = savestack;
 	    R_CurrentExpr = topExp;
