@@ -221,9 +221,13 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     a = actuals;
     arg_i = 0;
     while (f != R_NilValue) {
-	if (TAG(f) != R_DotsSymbol) {
+      SEXP ftag = TAG(f);
+      const char *ftag_name = CHAR(PRINTNAME(ftag));
+      if (ftag != R_DotsSymbol) {
 	    for (b = supplied, i = 1; b != R_NilValue; b = CDR(b), i++) {
-		if (TAG(b) != R_NilValue && pmatch(TAG(f), TAG(b), /*exact*/ TRUE)) {
+	      SEXP btag = TAG(b);
+	      const char *btag_name = CHAR(PRINTNAME(btag));
+	      if (btag != R_NilValue && streql( ftag_name, btag_name )) {
 		    if (fargused[arg_i] == 2)
 			error(_("formal argument \"%s\" matched by multiple actual arguments"),
 			      CHAR(PRINTNAME(TAG(f))));
