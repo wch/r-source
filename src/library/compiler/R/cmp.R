@@ -2855,7 +2855,10 @@ compile <- function(e, env = .GlobalEnv, options = NULL, srcref = NULL) {
     cenv <- makeCenv(env)
     cntxt <- make.toplevelContext(cenv, options)
     cntxt$env <- addCenvVars(cenv, findLocals(e, cntxt))
-    if (is.null(srcref))
+    if (mayCallBrowser(e, cntxt))
+        ## NOTE: compilation will be attempted repeatedly
+        e
+    else if (is.null(srcref))
         genCode(e, cntxt)
     else
         genCode(e, cntxt, loc = list(expr = e, srcref = srcref))
