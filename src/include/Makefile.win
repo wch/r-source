@@ -26,7 +26,7 @@ all: fixh config.h trioremap.h
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
 	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) iconv.h $(R_HOME)/include
-	@(cd R_ext; cp -p $(R_EXT_HEADERS) $(R_HOME)/include/R_ext)
+	@(cd R_ext; cp -p $(R_EXT_HEADERS) ../../../include/R_ext)
 	@cp -p ../extra/graphapp/graphapp.h ../extra/graphapp/ga.h \
 	  $(R_HOME)/include
 
