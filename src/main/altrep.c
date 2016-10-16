@@ -337,7 +337,7 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 	return ALTINTEGER_DISPATCH(Get_region, sx, i, n, buf);
 }
 
-static Rboolean ALTINTEGER_IS_SORTED(SEXP x)
+static int ALTINTEGER_IS_SORTED(SEXP x)
 {
     return ALTINTEGER_DISPATCH0(Is_sorted, x);
 }
@@ -485,7 +485,7 @@ altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
     return ncopy;
 }
 
-static Rboolean altinteger_Is_sorted_default(SEXP x) { return FALSE; }
+static int altinteger_Is_sorted_default(SEXP x) { return FALSE; }
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
@@ -829,7 +829,11 @@ compact_intseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 	error("compact sequences with increment %d not supported yet", inc);
 }
 
-static Rboolean compact_intseq_Is_sorted(SEXP x) { return TRUE; }
+static int compact_intseq_Is_sorted(SEXP x)
+{
+    int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
+    return inc < 0 ? -1 : 1;
+}
 
 
 /*

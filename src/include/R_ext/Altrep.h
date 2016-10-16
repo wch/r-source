@@ -48,7 +48,7 @@ typedef SEXP (*R_altvec_Extract_subset_method_t)(SEXP, SEXP, SEXP);
 typedef int (*R_altinteger_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altinteger_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, int *);
-typedef Rboolean (*R_altinteger_Is_sorted_method_t)(SEXP);
+typedef int (*R_altinteger_Is_sorted_method_t)(SEXP);
 
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
