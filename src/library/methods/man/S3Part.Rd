@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{S3Part}
-\title{ S3-style Objects and S4-class Objects}
+\title{ S4 Classes that Contain S3 Classes}
 \alias{S3Part}
 \alias{S3Part<-}
 \alias{S3Class}
@@ -18,37 +18,43 @@
 \alias{coerce,ANY,S4-method}
 \alias{S3-class}
 \description{
-  Old-style (S3) classes may be registered as S4 classes (by calling
-  \code{\link{setOldClass}}), and many have been.  These classes can
-  then be contained in (that is, superclasses of) regular S4 classes,
-  allowing formal methods and slots to be added to the S3 behavior.  The
-  function \code{S3Part} extracts or replaces the S3 part of such an object.
-  \code{S3Class} extracts or
-  replaces the S3-style class.  \code{S3Class} also applies to object
-  from an S4 class with \code{S3methods=TRUE} in the call to \code{\link{setClass}}.
+  A regular (S4) class may contain an S3 class, if that class has been registered (by calling
+  \code{\link{setOldClass}}).  The functions described here provide
+  information about contained S3 classes.  See the section \sQuote{Functions}.
 
-  See the details below.  Also discussed are S3 <-> S4 coercion; see the
-  section \dQuote{S3 and S4 objects}
+  In modern \R, the functions are not
+  usually needed to program with these objects:  standard computations work as expected, including method selection
+  for both S4 and S3.  To coerce an object to its contained S3 class,
+  \code{as(object, S3Class)} or \code{as(object, "S3")} where
+  \code{S3Class} evaluates to the name of the contained class.  These
+  return slightly different objects, which in rare cases may need to
+  be distinguished.  See the section \sQuote{Contained S3 Objects}.
+
+
 }
+
 \usage{
 S3Part(object, strictS3 = FALSE, S3Class)
 
-S3Part(object, strictS3 = FALSE, needClass = ) <- value
-
 S3Class(object)
-
-S3Class(object) <-  value
 
 isXS3Class(classDef)
 
 slotsFromS3(object)
+
+## the replacement versions of the functions are not recommended
+## Create a new object from the class or use the replacement version of as().
+
+
+S3Part(object, strictS3 = FALSE, needClass = ) <- value
+
+S3Class(object) <-  value
+
 }
 \arguments{
   \item{object}{an object from some class that extends a registered
-    S3 class, usually because the class has as
-    one of its superclasses an S3 class registered by a call to
-    \code{\link{setOldClass}}, or from a class that extends a basic
-    vector, matrix or array object type.  See the details.
+    S3 class, or a basic
+    vector, matrix or array object type.
 
     For most of the functions, an S3 object can also be supplied,
     with the interpretation that it is its own S3 part.
@@ -62,102 +68,49 @@ slotsFromS3(object)
   }
   \item{S3Class}{the \code{\link{character}} vector to be stored as the
     S3 class slot in the object.  Usually, and by default, retains
-    the slot from \code{object}.
+    the slot from \code{object}, but an S3 superclass is allowed.
+    }
+
+  \item{classDef}{a class definition object, as returned by
+    \code{\link{getClass}}.
+
+\emph{The remaining arguments apply only to the replacement versions,
+  which are not recommended.}
   }
+
 
   \item{needClass}{Require that the replacement value be this class or a
     subclass of it.}
 
   \item{value}{For \code{S3Part<-}, the replacement value for the
-    S3 part of the object.  This does \emph{not} need to be an S4
-    object; in fact, the usual way to create objects from these
-    classes is by giving an S3 object of the right class as an
-    argument to \code{\link{new}}.
+    S3 part of the object.
 
     For \code{S3Class<-}, the character vector that will be used as
-    a proxy for \code{class(x)} in S3 method dispatch.  This
-    replacement function can be used to control S3 per-object method
-    selection.
+    a proxy for \code{class(x)} in S3 method dispatch.
   }
-
-  \item{classDef}{a class definition object, as returned by
-    \code{\link{getClass}}.}
 }
-\details{
-  Classes that register S3 classes by a call to
-  \code{\link{setOldClass}} have slot \code{".S3Class"} to hold
-  the corresponding S3 vector of class strings.
-  The prototype of such
-  a class has the value for this slot determined  by the argument to
-  \code{\link{setOldClass}}.
-  Other S4 classes will have the same slot if the argument
-  \code{S3methods = TRUE} is supplied to \code{\link{setClass}}; in
-  this case, the slot is set to the S4 inheritance of the class.
 
-  New S4 classes that extend (contain) such
-  classes also have the same slot, and by default the prototype has
-  the value determined  by the \code{contains=} argument to
-  \code{\link{setClass}}.
-  Individual objects from the S4 class may
-  have
-  an S3 class corresponding to the value in the prototype or to an
-  (S3) subclass of that value.  See the examples below.
+\section{Functions}{
 
-  \code{S3Part()} with \code{strictS3 = TRUE} constructs the underlying
+\code{S3Part}:  Returns an object from the S3 class that appeared
+   in the \code{contains=} argument to \code{\link{setClass}}.
+
+   If called with \code{strictS3 = TRUE}, \code{S3Part()} constructs the underlying
   S3 object by eliminating
   all the formally defined slots and turning off the S4 bit of the
   object.  With \code{strictS3 = FALSE} the object returned is from
   the corresponding S4 class.  For consistency and generality,
   \code{S3Part()} works also for classes that extend the basic vector,
-  matrix and array classes.  Since \R is somewhat arbitrary about what
-  it treats as an S3 class (\code{"ts"} is, but \code{"matrix"} is
-  not), \code{S3Part()} tries to return an S3 (that is, non-S4) object
-  whenever the S4 class has a suitable superclass, of either S3 or
-  basic object type.
+  matrix and array classes.
 
-  One general application that relies on this generality is to use
-  \code{S3Part()} to get a superclass object that is guaranteed not to
-  be an S4 object.  If you are calling some function that checks for
-  S4 objects, you need to be careful not to end up in a closed loop
-  (\code{fooS4} calls \code{fooS3}, which checks for an S4 object and
-  calls \code{fooS4} again, maybe indirectly).  Using \code{S3Part()}
-  with \code{strictS3 = TRUE} is a mechanism to avoid such loops.
+  A call to is equivalent coercing the object to class \code{"S3"} for
+  the strict case, or to whatever the specific S3 class was, for the
+  non-strict case.  The \code{as()} calls are usually easier for
+  readers to understand.
 
 
-  Because the contents of S3 class objects have no definition or
-  guarantee, the computations involving S3 parts  do
-  \emph{not} check for slot validity.  Slots are implemented
-  internally in \R as attributes, which are copied when present in the
-  S3 part.  Grave problems can occur if an S4 class
-  extending an S3 class uses the name of an S3 attribute as the name
-  of an S4 slot, and S3 code sets the attribute to an object from an
-  invalid class according to the S4 definition.
 
-  Frequently, \code{S3Part} can and should be avoided by simply
-  coercing objects to the desired class; methods are automatically
-  defined to deal correctly with the slots when \code{\link{as}} is
-  called to extract or replace superclass objects.
-
-  The function \code{slotsFromS3()} is a generic function used
-  internally to access the slots associated with the S3 part of the
-  object.  Methods for this function are created automatically when
-  \code{\link{setOldClass}} is called with the \code{S4Class}
-  argument.  Usually, there is only one S3 slot, containing the S3
-  class, but the \code{S4Class} argument may provide additional slots,
-  in the case that the S3 class has some guaranteed attributes that
-  can be used as formal S4 slots.  See the corresponding section in
-  the documentation of \code{\link{setOldClass}}.
-}
-\value{
-
-\code{S3Part}:  Returns or sets  the S3 information
-  (and possibly some S4 slots as well, depending on arguments
-  \code{S3Class} and \code{keepSlots}).  See the discussion of
-  argument \code{strict} above.  If it is \code{TRUE} the value
-  returned is an S3 object.
-
-
-\code{S3Class}:  Returns or sets the character vector of S3 class(es) stored in
+\code{S3Class}:  Returns the character vector of S3 class(es) stored in
   the object, if the class has the corresponding \code{.S3Class} slot.
   Currently, the function defaults to \code{\link{class}} otherwise.
 
@@ -168,6 +121,49 @@ slotsFromS3(object)
 
 \code{slotsFromS3}: returns a list of the relevant slot classes, or an
 empty list for any other object.
+
+
+  The function \code{slotsFromS3()} is a generic function used
+  internally to access the slots associated with the S3 part of the
+  object.  Methods for this function are created automatically when
+  \code{\link{setOldClass}} is called with the \code{S4Class}
+  argument.  Usually, there is only one S3 slot, containing the S3
+  class, but the \code{S4Class} argument may provide additional slots,
+  in the case that the S3 class has some guaranteed attributes that
+  can be used as formal S4 slots.  See the corresponding section in
+  the documentation of \code{\link{setOldClass}}.
+
+}
+
+\section{Contained S3 Objects}{
+  A class that extends an S3 class will have some basic type and
+  possibly some attributes.  For an S3 class that has an equivalent S4
+  definition (e.g., \code{"data.frame"}), an extending S4 class will
+  have a data part and slots.  For other S3 classes (e.g., \code{"lm"}) an
+  object from the extending S4 class will be some sort of basic type,
+  nearly always a vector type (e.g., \code{"list"} for \code{"lm"}).
+
+  Classes that register S3 classes by a call to
+  \code{\link{setOldClass}} have a slot \code{".S3Class"} to hold
+  the corresponding S3 vector of class strings.
+  New S4 classes that extend such
+  classes also have the same slot, set to the S3 class of the
+  contained S3 object,
+  which may be  an
+  (S3) subclass of the class.
+  For example, an S4 class might contain the S3 class \code{"lm"}, but
+  an object from the class might contain an object from class
+  \code{"lm"}, as in the \code{"xlm"}example below.
+  
+  \R is somewhat arbitrary about what
+  it treats as an S3 class: \code{"ts"} is, but \code{"matrix"} and \code{"array"}
+  are not.
+  For classes that extend
+  those, assuming they contain an S3 class is incorrect and will cause some
+  confusion---not usually disastrous, but the better strategy
+  is to stick to the explicit \dQuote{class}.
+  Thus \code{as(x, "matrix")} rather than \code{as(x, "S3")} or \code{S3Part(x)}.
+
 }
 
 \section{S3 and S4 Objects: Conversion Mechanisms}{
@@ -218,59 +214,35 @@ empty list for any other object.
 }
 \seealso{  \code{\link{setOldClass}} }
 \examples{
-## two examples extending S3 class "lm", class "xlm" directly
-## and "ylm" indirectly
-setClass("xlm", slots = c(eps = "numeric"), contains = "lm")
-setClass("ylm", slots = c(header = "character"), contains = "xlm")
-\dontshow{
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2,10,20, labels=c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-}
-## lm.D9 is as computed in the example for stats::lm
-y1 <- new("ylm", lm.D9, header = "test", eps = .1)
-xx <- new("xlm", lm.D9, eps =.1)
-y2 <- new("ylm", xx, header = "test")
-stopifnot(inherits(y2, "lm"))
-stopifnot(identical(y1, y2))
-stopifnot(identical(S3Part(y1, strict = TRUE), lm.D9))
 
-## note the these classes can insert an S3 subclass of "lm" as the S3 part:
-myData <- data.frame(time = 1:10, y = (1:10)^.5)
-myLm <- lm(cbind(y, y^3)  ~ time, myData) # S3 class: c("mlm", "lm")
-ym1 <- new("ylm", myLm, header = "Example", eps = 0.)
+## an "mlm" object, regressing two variables on two others
 
-##similar classes to "xlm" and "ylm", but extending S3 class c("mlm", "lm")
-setClass("xmm", slots = c(eps = "numeric"), contains = "mlm")
-setClass("ymm", slots = c(header="character"), contains = "xmm")
+sepal <- as.matrix(datasets::iris[,c("Sepal.Width", "Sepal.Length")])
+fit <- lm(sepal ~ Petal.Length + Petal.Width + Species, data = datasets::iris)
+class(fit) # S3 class: "mlm", "lm"
 
-ym2 <- new("ymm", myLm, header = "Example2", eps = .001)
+## a class that contains "mlm"
+myReg <- setClass("myReg", slots = c(title = "character"), contains = "mlm")
 
-# but for class "ymm", an S3 part of class "lm" is an error:
-try(new("ymm", lm.D9, header = "Example2", eps = .001))
-\dontshow{tools::assertError(
-    new("ymm", lm.D9, header = "Example2", eps = .001))}
+fit2 <- myReg(fit, title = "Sepal Regression for iris data")
 
-setClass("dataFrameD", slots = c(date = "Date"),
-         contains = "data.frame")
-myDD <- new("dataFrameD", myData, date = Sys.Date())
+fit2 # shows the inherited "mlm" object and the title
 
-## S3Part() applied to classes with a data part (.Data slot)
+identical(S3Part(fit2), as(fit2, "mlm"))
 
-setClass("NumX", contains="numeric", slots = c(id="character"))
-nn <- new("NumX", 1:10, id="test")
-stopifnot(identical(1:10, S3Part(nn, strict = TRUE)))
+class(as(fit2, "mlm")) # the S4 class, "mlm"
 
-m1 <- cbind(group, weight)
-setClass("MatX", contains = "matrix", slots = c(date = "Date"))
-mx1 <- new("MatX", m1, date = Sys.Date())
-stopifnot(identical(m1, S3Part(mx1, strict = TRUE)))
+class(as(fit2, "S3")) # the S3 class, c("mlm", "lm")
+
+## An object may contain an S3 class from a subclass of that declared:
+xlm <- setClass("xlm", slots = c(eps = "numeric"), contains = "lm")
+
+xfit <- xlm(fit, eps = .Machine$double.eps)
+
+xfit@.S3Class # c("mlm", lm")
 
 \dontshow{
-for(cl in c("ylm", "xlm", "ymm", "xmm", "dataFrameD", "NumX", "MatX"))
-    removeClass(cl)
+    removeClass("myReg")
 }
 }
 \keyword{ programming }
