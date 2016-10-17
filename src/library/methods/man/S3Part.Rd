@@ -140,6 +140,15 @@ empty list for any other object.
 }
 
 \section{Contained S3 Objects}{
+  Registering an S3 class defines an S4 class.  Objects from this
+  class are essentially identical in content to an object from the S3
+  class, except for two differences.  The value returned by
+  \code{\link{class}()} will always be a single string for the S4
+  object, and \code{\link{isS4}()} will return \code{TRUE} or
+  \code{FALSE} in the two cases.  See the example below.  It is barely
+  possible that some S3 code will not work with the S4 object; if so,
+  use \code{as(x, "S3")}.
+
   Objects from a class that extends an S3 class will have some basic type and
   possibly some attributes.  For an S3 class that has an equivalent S4
   definition (e.g., \code{"data.frame"}), an extending S4 class will
