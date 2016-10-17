@@ -22,13 +22,17 @@
   \code{\link{setOldClass}}).  The functions described here provide
   information about contained S3 classes.  See the section \sQuote{Functions}.
 
-  In modern \R, the functions are not
-  usually needed to program with these objects:  standard computations work as expected, including method selection
+  In modern \R, these functions are not
+  usually needed to program with objects from the S4 class.  Standard computations work as expected, including method selection
   for both S4 and S3.  To coerce an object to its contained S3 class,
-  \code{as(object, S3Class)} or \code{as(object, "S3")} where
+  use either of the expressions:
+
+\code{as(object, S3Class); as(object, "S3")} 
+
+  where
   \code{S3Class} evaluates to the name of the contained class.  These
   return slightly different objects, which in rare cases may need to
-  be distinguished.  See the section \sQuote{Contained S3 Objects}.
+  be distinguished.  See the section \dQuote{Contained S3 Objects}.
 
 
 }
@@ -136,24 +140,25 @@ empty list for any other object.
 }
 
 \section{Contained S3 Objects}{
-  A class that extends an S3 class will have some basic type and
+  Objects from a class that extends an S3 class will have some basic type and
   possibly some attributes.  For an S3 class that has an equivalent S4
   definition (e.g., \code{"data.frame"}), an extending S4 class will
   have a data part and slots.  For other S3 classes (e.g., \code{"lm"}) an
   object from the extending S4 class will be some sort of basic type,
-  nearly always a vector type (e.g., \code{"list"} for \code{"lm"}).
+  nearly always a vector type (e.g., \code{"list"} for \code{"lm"}),
+  but the data part will not have a formal definition.
 
-  Classes that register S3 classes by a call to
-  \code{\link{setOldClass}} have a slot \code{".S3Class"} to hold
+  Registering an S3 class by a call to
+  \code{\link{setOldClass}} creates a class of the same name with a slot \code{".S3Class"} to hold
   the corresponding S3 vector of class strings.
   New S4 classes that extend such
   classes also have the same slot, set to the S3 class of the
-  contained S3 object,
+  contained S3 \emph{object},
   which may be  an
-  (S3) subclass of the class.
+  (S3) subclass of the registered class.
   For example, an S4 class might contain the S3 class \code{"lm"}, but
   an object from the class might contain an object from class
-  \code{"lm"}, as in the \code{"xlm"}example below.
+  \code{"mlm"}, as in the \code{"xlm"}example below.
   
   \R is somewhat arbitrary about what
   it treats as an S3 class: \code{"ts"} is, but \code{"matrix"} and \code{"array"}
@@ -204,14 +209,12 @@ empty list for any other object.
 }
 
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version).
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10, particularly Section 10.8)
 }
+
 \seealso{  \code{\link{setOldClass}} }
 \examples{
 
