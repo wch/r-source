@@ -164,6 +164,10 @@
       contour lines for the standardized residuals for \code{which = 6}.
       It also takes the correct \eqn{p} in case of singularities (also
       for \code{which = 5}).  (\PR{17161})
+
+      \item reference class calls to \code{methods()} did not
+      re-analyse previously defined methods, meaning that calls to
+      methods defined later would fail. (Reported by Charles Tilford).
     }
   }
 }
