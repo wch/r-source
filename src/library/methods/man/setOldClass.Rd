@@ -58,12 +58,14 @@
 where \code{Classes} is the character vector that would be the
   \code{class} attribute of the S3 object. Calls to
   \code{setOldClass()} in the code for a package
-  allow the class to be used as a slot in formal classes and in
+  allow the class to be used as a slot in formal (S4) classes and in
   signatures for methods (see \link{Methods_for_S3}).
+  Formal classes can also contain a registered S3 class (see
+  \link{S3Part} for details).
 
   If the S3 class has a known set of attributes, an
   equivalent S4 class can be specified by \code{S4Class=} in the call to
-  \code{setOldClass()}; see the section on \sQuote{Known Attributes}.
+  \code{setOldClass()}; see the section  \dQuote{Known Attributes}.
 }
 
 \usage{
