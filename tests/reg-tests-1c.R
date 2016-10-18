@@ -1982,6 +1982,18 @@ stopifnot(
 ## all gave NA in R <= 3.3.0
 
 
+## PR#17147: xtabs(~ exclude) fails in R <= 3.3.1
+exc <- exclude <- c(TRUE, FALSE)
+xt1 <- xtabs(~ exclude) # failed : The name 'exclude' was too special
+xt2 <- xtabs(~ exc)
+xt3 <- xtabs(rep(1, length(exclude)) ~ exclude)
+stripXT <- function(x) structure(x, call = NULL, dimnames = unname(dimnames(x)))
+stopifnot(all.equal(stripXT(xt1), stripXT(xt2)),
+	  all.equal(stripXT(xt2), stripXT(xt3)))
+## [fix was to call table() directly instead of via do.call(.)]
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

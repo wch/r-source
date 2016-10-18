@@ -272,7 +272,7 @@
       double-precision complex routines. \emph{Inter alia} this avoids
       warnings when passing \sQuote{string literal} arguments from C++11
       code.
-      
+
       \item Headers for Unix-only facilities \file{R_ext/GetX11Image.h},
       \file{R_ext/QuartzDevice.h} and \file{R_ext/eventloop.h} are no
       longer installed on Windows.
@@ -642,6 +642,9 @@
       contour lines for the standardized residuals for \code{which = 6}.
       It also takes the correct \eqn{p} in case of singularities (also
       for \code{which = 5}).  (\PR{17161})
+
+      \item \code{xtabs(~ exclude)} no longer fails from wrong scope,
+      thanks to Suharto Anggono's \PR{17147}.
     }
   }
 }
@@ -1280,7 +1283,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.2.4 patched}{
+\section{\Rlogo CHANGES IN R 3.2.4 patched}{% released as 3.2.4-revised *and* 3.2.5
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{format.POSIXlt()} behaved incorrectly in \R 3.2.4.
