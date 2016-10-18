@@ -1385,7 +1385,7 @@ getMethodsAndAccessors <- function(Class) {
     for(what in names(methodsEnv)) {
         def <- get(what, envir = methodsEnv)
         if(is(def, "refMethodDef") && def@refClassName == className)
-            value[[what]] <- def #? or as.function(def)
+            value[[what]] <- def@.Data # the function only
     }
     value
 }
