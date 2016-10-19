@@ -1984,14 +1984,17 @@ stopifnot(
 
 ## PR#17147: xtabs(~ exclude) fails in R <= 3.3.1
 exc <- exclude <- c(TRUE, FALSE)
-xt1 <- xtabs(~ exclude) # failed : The name 'exclude' was too special
+xt1 <- xtabs(~ exclude) # failed : The name 'exclude' was special
 xt2 <- xtabs(~ exc)
 xt3 <- xtabs(rep(1, length(exclude)) ~ exclude)
+noCall  <- function(x) structure(x, call = NULL)
 stripXT <- function(x) structure(x, call = NULL, dimnames = unname(dimnames(x)))
-stopifnot(all.equal(stripXT(xt1), stripXT(xt2)),
-	  all.equal(stripXT(xt2), stripXT(xt3)))
+stopifnot(
+    identical(dimnames(xt1), list(exclude = c("FALSE", "TRUE"))),
+    identical(names(dimnames(xt2)), "exc"),
+    all.equal(stripXT(xt1), stripXT(xt2)),
+    all.equal(noCall (xt1), noCall (xt3)))
 ## [fix was to call table() directly instead of via do.call(.)]
-
 
 
 ## keep at end

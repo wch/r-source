@@ -58,7 +58,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     if(!sparse) {
 	x <-
 	    if(is.null(y))
-		table(by)
+		table(by, dnn = names(by))
 	    else if(NCOL(y) == 1L)
 		tapply(y, by, sum)
 	    else {
