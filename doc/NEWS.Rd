@@ -62,6 +62,18 @@
       \code{x}, \code{str(x)} now may remove extraneous white space and
       truncate long lines.
 
+      \item \code{str(<looooooooong_string>)} is no longer very slow;
+      inspired by Mikko Korpela's proposal in \PR{16527}.
+
+      \item \code{str(x)}'s default method is more \dQuote{accurate} and
+      hence somewhat more generous in displaying character vectors; this
+      will occasionally change \R outputs (and need changes to some
+      \file{*.Rout(.save)} files).
+      \cr %% same \item
+      For a classed integer vector such as \code{x <- xtabs(~ c(1,9,9,9))},
+      \code{str(x)} now shows both the class and \code{"int"}, instead
+      of only the latter.
+
       \item \code{isSymmetric(m)} is much faster for large asymmetric
       matrices \code{m} via pre-tests and a new option \code{tol1}
       (with which strict back compatibility is possible but not the
@@ -119,9 +131,6 @@
       now produce a warning when printed and an error in \code{levels<-}
       instead of a warning.
 
-      \item \code{str(<looooooooong_string>)} is no longer very slow;
-      inspired by Mikko Korpela's proposal in \PR{16527}.
-
       \item Illegal factors, e.g., with duplicated levels (illegal but
       constructable) now give a warning when printed, via new function
       \code{.valid.factor()}.
@@ -162,11 +171,6 @@
       \item Speedup in \code{simplify2array()} and hence \code{sapply()} and
       \code{mapply()} (for the case of names and common length > 1),
       thanks to Suharto Anggono's \PR{17118}.
-
-      \item \code{str(x)}'s default method is more \dQuote{accurate} and
-      hence somewhat more generous in displaying character vectors; this
-      will occasionally change \R outputs (and need changes to some
-      \file{*.Rout(.save)} files).
 
       \item \code{table(x, exclude = NULL)} now sets
       \code{useNA = "ifany"} (instead of \code{"always"}).

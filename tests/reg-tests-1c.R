@@ -1997,6 +1997,11 @@ stopifnot(
 ## [fix was to call table() directly instead of via do.call(.)]
 
 
+## str(xtabs( ~ <var>)):
+stopifnot(grepl("'xtabs' int", capture.output(str(xt2))[1]))
+## did not mention "xtabs" in R <= 3.3.1
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
