@@ -790,6 +790,7 @@ static void *compact_intseq_Dataptr_or_null(SEXP x)
 
 static int compact_intseq_Elt(SEXP x, R_xlen_t i)
 {
+    /* use expanded version if it exists */
     int *px = compact_intseq_Dataptr_or_null(x);
     if (px != NULL)
 	return px[i];
@@ -809,6 +810,11 @@ static int compact_intseq_Elt(SEXP x, R_xlen_t i)
 static R_xlen_t
 compact_intseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 {
+    /* use expanded version if it exists */
+    SEXP xexp = COMPACT_SEQ_EXPANDED(sx);
+    if (xexp != R_NilValue)
+	return altinteger_Get_region_default(xexp, i, n, buf);
+
     SEXP info = COMPACT_SEQ_INFO(sx);
     R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
     R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
@@ -988,6 +994,7 @@ static void *compact_realseq_Dataptr_or_null(SEXP x)
 
 static double compact_realseq_Elt(SEXP x, R_xlen_t i)
 {
+    /* use expanded version if it exists */
     double *px = compact_realseq_Dataptr_or_null(x);
     if (px != NULL)
 	return px[i];
@@ -1007,6 +1014,11 @@ static double compact_realseq_Elt(SEXP x, R_xlen_t i)
 static R_xlen_t
 compact_realseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 {
+    /* use expanded version if it exists */
+    SEXP xexp = COMPACT_SEQ_EXPANDED(sx);
+    if (xexp != R_NilValue)
+	return altreal_Get_region_default(xexp, i, n, buf);
+
     SEXP info = COMPACT_SEQ_INFO(sx);
     R_xlen_t size = COMPACT_REALSEQ_INFO_LENGTH(info);
     double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
