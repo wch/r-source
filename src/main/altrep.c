@@ -590,8 +590,8 @@ make_altrep_class(int type, const char *cname, const char *pname, DllInfo *dll)
     return R_cast_altrep_class(class);
 }
 
-/*  Using macros like this makes it easier to add new mehtods, but
-    makes searching for source harder. Probably a good ideea on
+/*  Using macros like this makes it easier to add new methods, but
+    makes searching for source harder. Probably a good idea on
     balance though. */
 #define DEFINE_CLASS_CONSTRUCTOR(cls, type) \
     R_altrep_class_t R_make_##cls##_class(const char *cname,	\
@@ -1514,7 +1514,7 @@ static SEXP mmap_Unserialize(SEXP class, SEXP state, SEXP attr)
 
     SEXP val = mmap_file(file, type, ptrOK, wrtOK, serOK, TRUE);
     if (val == NULL) {
-	/**** The attempt to memory map failed. Eventualy it would be
+	/**** The attempt to memory map failed. Eventually it would be
 	      good to have a mechanism to allow the user to try to
 	      resolve this.  For now, return a length zero vector with
 	      another warning. */
