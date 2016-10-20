@@ -694,8 +694,23 @@ Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t class)
 #define COMPACT_INTSEQ_INFO_FIRST(info) INTEGER0(info)[1]
 #define COMPACT_INTSEQ_INFO_INCR(info) INTEGER0(info)[2]
 
+/* By default, compact integer sequences are marked as not mutable at
+   creation time. Thus even when expanded the expanded data will
+   correspond to the original integer sequence (unless it runs into
+   mis-behaving C code). If COMPACT_INTSEQ_MUTABLE is defined, then
+   the sequence is not marked as not mutable. Once the DATAPTR has
+   been requested and releases, the expanded data might be modified by
+   an assignment and no longer correspond to the original sequence. */
+//#define COMPACT_INTSEQ_MUTABLE
+
 static SEXP compact_intseq_Serialized_state(SEXP x)
 {
+#ifdef COMPACT_INTSEQ_MUTABLE
+    /* This drops through to standard serialization for expanded
+       compact vectors */
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
+	return NULL;
+#endif
     return COMPACT_SEQ_INFO(x);
 }
 
@@ -718,6 +733,12 @@ static SEXP compact_intseq_Unserialize_core(SEXP class, SEXP state)
  
 static SEXP compact_intseq_Coerce(SEXP x, int type)
 {
+#ifdef COMPACT_INTSEQ_MUTABLE
+    /* This drops through to standard coercion for expanded compact
+       vectors */
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
+	return NULL;
+#endif
     if (type == REALSXP) {
 	SEXP info = COMPACT_SEQ_INFO(x);
 	R_xlen_t n = COMPACT_INTSEQ_INFO_LENGTH(info);
@@ -743,6 +764,14 @@ Rboolean compact_intseq_Inspect(SEXP x, int pre, int deep, int pvec,
     int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     if (inc != 1 && inc != -1)
 	error("compact sequences with increment %d not supported yet", inc);
+
+#ifdef COMPACT_INTSEQ_MUTABLE
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue) {
+	Rprintf("  <expanded compact integer sequence>\n");
+	inspect_subtree(COMPACT_SEQ_EXPANDED(x), pre, deep, pvec);
+	return TRUE;
+    }
+#endif
 
     int n = LENGTH(x);
     int n1 = INTEGER_ELT(x, 0);
@@ -845,6 +874,11 @@ compact_intseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 
 static int compact_intseq_Is_sorted(SEXP x)
 {
+#ifdef COMPACT_INTSEQ_MUTABLE
+    /* If the vector has been expanded it may have been modified. */
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
+	return 0;
+#endif
     int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     return inc < 0 ? -1 : 1;
 }
@@ -898,7 +932,9 @@ static SEXP new_compact_intseq(R_xlen_t n, int n1, int inc)
     INTEGER(info)[2] = inc;
 
     SEXP ans = R_new_altrep(R_compact_intseq_class, info, R_NilValue);
+#ifndef COMPACT_INTSEQ_MUTABLE
     MARK_NOT_MUTABLE(ans); /* force duplicate on modify */
+#endif
 
     return ans;
 }
