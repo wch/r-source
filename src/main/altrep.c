@@ -931,7 +931,7 @@ static
 Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
 				 void (*inspect_subtree)(SEXP, int, int, int))
 {
-    double inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
+    double inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     if (inc != 1 && inc != -1)
 	error("compact sequences with increment %f not supported yet", inc);
 
