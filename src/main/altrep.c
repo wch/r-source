@@ -476,12 +476,16 @@ static int altinteger_Elt_default(SEXP x, R_xlen_t i) { return INTEGER(x)[i]; }
 static R_xlen_t
 altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 {
-    int *x = INTEGER(sx);
     R_xlen_t size = XLENGTH(sx);
     R_xlen_t ncopy = size - i > n ? n : size - i;
-    for (R_xlen_t k = 0; k < ncopy; k++)
-	buf[k] = x[k + i];
-    //memcpy(buf, x + i, ncopy * sizeof(int));
+    int *x = DATAPTR_OR_NULL(sx);
+    if (x == NULL)
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = INTEGER_ELT(sx, k + i);
+    else
+	//memcpy(buf, x + i, ncopy * sizeof(int));
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = x[k + i];
     return ncopy;
 }
 
@@ -492,12 +496,16 @@ static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 static R_xlen_t
 altreal_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 {
-    double *x = REAL(sx);
     R_xlen_t size = XLENGTH(sx);
     R_xlen_t ncopy = size - i > n ? n : size - i;
-    for (R_xlen_t k = 0; k < ncopy; k++)
-	buf[k] = x[k + i];
-    //memcpy(buf, x + i, ncopy * sizeof(int));
+    double *x = DATAPTR_OR_NULL(sx);
+    if (x == NULL)
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = REAL_ELT(sx, k + i);
+    else
+	//memcpy(buf, x + i, ncopy * sizeof(int));
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = x[k + i];
     return ncopy;
 }
 
