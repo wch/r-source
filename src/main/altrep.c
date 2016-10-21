@@ -1339,6 +1339,7 @@ SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP sp)
     case REALSXP:
 	if (sp == NULL)
 	    sp = ScalarInteger(R_print.scipen);
+	MARK_NOT_MUTABLE(v); /* make sure it can't change once captured */
 	ans = PROTECT(MAKE_DEFERRED_STRING_STATE(v, sp));
 	ans = R_new_altrep(R_deferred_string_class, ans, R_NilValue);
 	UNPROTECT(1); /* ans */
