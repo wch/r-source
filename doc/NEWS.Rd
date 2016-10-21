@@ -168,6 +168,9 @@
       \item reference class calls to \code{methods()} did not
       re-analyse previously defined methods, meaning that calls to
       methods defined later would fail. (Reported by Charles Tilford).
+
+      \item \code{findInterval(x, vec, left.open = TRUE)} misbehaved in some
+      cases. (Reported by Dmitriy Chernykh.)
     }
   }
 }
