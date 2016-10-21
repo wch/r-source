@@ -649,6 +649,9 @@
 
       \item \code{xtabs(~ exclude)} no longer fails from wrong scope,
       thanks to Suharto Anggono's \PR{17147}.
+
+      \item \code{findInterval(x, vec, left.open = TRUE)} misbehaved in some
+      cases. (Reported by Dmitriy Chernykh.)
     }
   }
 }
