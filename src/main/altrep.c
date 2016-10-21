@@ -126,11 +126,11 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altrep_Duplicate_method_t Duplicate;			\
     R_altrep_Duplicate_method_t Duplicate_core;			\
     R_altrep_Coerce_method_t Coerce;				\
-    R_altrep_Inspect_method_t Inspect
+    R_altrep_Inspect_method_t Inspect;				\
+    R_altrep_Length_method_t Length
 
 #define ALTVEC_METHODS					\
     ALTREP_METHODS;					\
-    R_altvec_Length_method_t Length;			\
     R_altvec_Dataptr_method_t Dataptr;			\
     R_altvec_Dataptr_or_null_method_t Dataptr_or_null;	\
     R_altvec_Extract_subset_method_t Extract_subset
@@ -276,17 +276,17 @@ ALTREP_UNSERIALIZE(SEXP info, SEXP state, SEXP attr)
     return val;
 }
 
+R_xlen_t /*attribute_hidden*/ ALTREP_LENGTH(SEXP x)
+{
+    return ALTREP_DISPATCH0(Length, x);
+}
+
+R_xlen_t /*attribute_hidden*/ ALTREP_TRUELENGTH(SEXP x) { return 0; }
+
 
 /*
  * Generic ALTVEC support
  */
-
-R_xlen_t /*attribute_hidden*/ ALTVEC_TRUELENGTH(SEXP x) { return 0; }
-
-R_xlen_t /*attribute_hidden*/ ALTVEC_LENGTH(SEXP x)
-{
-    return ALTVEC_DISPATCH0(Length, x);
-}
 
 void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x)
 {
@@ -453,7 +453,7 @@ Rboolean altrep_Inspect_default(SEXP x, int pre, int deep, int pvec,
     return FALSE;
 }
 
-static R_xlen_t altvec_Length_default(SEXP x)
+static R_xlen_t altrep_Length_default(SEXP x)
 {
     error("no Length method defined");
 }
@@ -527,7 +527,7 @@ static altinteger_methods_t altinteger_default_methods = {
     .Duplicate_core = altrep_Duplicate_core_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
-    .Length = altvec_Length_default,
+    .Length = altrep_Length_default,
     .Dataptr = altvec_Dataptr_default,
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
@@ -544,7 +544,7 @@ static altreal_methods_t altreal_default_methods = {
     .Duplicate_core = altrep_Duplicate_core_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
-    .Length = altvec_Length_default,
+    .Length = altrep_Length_default,
     .Dataptr = altvec_Dataptr_default,
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
@@ -561,7 +561,7 @@ static altstring_methods_t altstring_default_methods = {
     .Duplicate_core = altrep_Duplicate_core_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
-    .Length = altvec_Length_default,
+    .Length = altrep_Length_default,
     .Dataptr = altvec_Dataptr_default,
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
@@ -643,8 +643,8 @@ DEFINE_METHOD_SETTER(altrep, Duplicate)
 DEFINE_METHOD_SETTER(altrep, Duplicate_core)
 DEFINE_METHOD_SETTER(altrep, Coerce)
 DEFINE_METHOD_SETTER(altrep, Inspect)
+DEFINE_METHOD_SETTER(altrep, Length)
 
-DEFINE_METHOD_SETTER(altvec, Length)
 DEFINE_METHOD_SETTER(altvec, Dataptr)
 DEFINE_METHOD_SETTER(altvec, Dataptr_or_null)
 DEFINE_METHOD_SETTER(altvec, Extract_subset)
@@ -902,9 +902,9 @@ static void InitCompactIntegerClass()
     R_set_altrep_Duplicate_core_method(cls, compact_intseq_Duplicate_core);
     R_set_altrep_Coerce_method(cls, compact_intseq_Coerce);
     R_set_altrep_Inspect_method(cls, compact_intseq_Inspect);
+    R_set_altrep_Length_method(cls, compact_intseq_Length);
 
     /* override ALTVEC methods */
-    R_set_altvec_Length_method(cls, compact_intseq_Length);
     R_set_altvec_Dataptr_method(cls, compact_intseq_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, compact_intseq_Dataptr_or_null);
 
@@ -1102,9 +1102,9 @@ static void InitCompactRealClass()
     R_set_altrep_Serialized_state_method(cls, compact_realseq_Serialized_state);
     R_set_altrep_Duplicate_core_method(cls, compact_realseq_Duplicate_core);
     R_set_altrep_Inspect_method(cls, compact_realseq_Inspect);
+    R_set_altrep_Length_method(cls, compact_realseq_Length);
 
     /* override ALTVEC methods */
-    R_set_altvec_Length_method(cls, compact_realseq_Length);
     R_set_altvec_Dataptr_method(cls, compact_realseq_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, compact_realseq_Dataptr_or_null);
 
@@ -1331,9 +1331,9 @@ static void InitDefferredStringClass()
     R_set_altrep_Unserialize_core_method(cls, deferred_string_Unserialize_core);
     R_set_altrep_Serialized_state_method(cls, deferred_string_Serialized_state);
     R_set_altrep_Inspect_method(cls, deferred_string_Inspect);
+    R_set_altrep_Length_method(cls, deferred_string_Length);
 
     /* override ALTVEC methods */
-    R_set_altvec_Length_method(cls, deferred_string_Length);
     R_set_altvec_Dataptr_method(cls, deferred_string_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, deferred_string_Dataptr_or_null);
     R_set_altvec_Extract_subset_method(cls, deferred_string_Extract_subset);
@@ -1685,9 +1685,9 @@ static void InitMmapIntegerClass(DllInfo *dll)
     R_set_altrep_Unserialize_method(cls, mmap_Unserialize);
     R_set_altrep_Serialized_state_method(cls, mmap_Serialized_state);
     R_set_altrep_Inspect_method(cls, mmap_Inspect);
+    R_set_altrep_Length_method(cls, mmap_Length);
 
     /* override ALTVEC methods */
-    R_set_altvec_Length_method(cls, mmap_Length);
     R_set_altvec_Dataptr_method(cls, mmap_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, mmap_Dataptr_or_null);
 
@@ -1706,9 +1706,9 @@ static void InitMmapRealClass(DllInfo *dll)
     R_set_altrep_Unserialize_method(cls, mmap_Unserialize);
     R_set_altrep_Serialized_state_method(cls, mmap_Serialized_state);
     R_set_altrep_Inspect_method(cls, mmap_Inspect);
+    R_set_altrep_Length_method(cls, mmap_Length);
 
     /* override ALTVEC methods */
-    R_set_altvec_Length_method(cls, mmap_Length);
     R_set_altvec_Dataptr_method(cls, mmap_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, mmap_Dataptr_or_null);
 

@@ -124,12 +124,12 @@ INLINE_FUN void *DATAPTR_OR_NULL(SEXP x) {
 
 INLINE_FUN R_xlen_t XLENGTH(SEXP x)
 {
-    return ALTREP(x) ? ALTVEC_LENGTH(x) : STDVEC_LENGTH(x);
+    return ALTREP(x) ? ALTREP_LENGTH(x) : STDVEC_LENGTH(x);
 }
 
 INLINE_FUN R_xlen_t XTRUELENGTH(SEXP x)
 {
-    return ALTREP(x) ? ALTVEC_TRUELENGTH(x) : STDVEC_TRUELENGTH(x);
+    return ALTREP(x) ? ALTREP_TRUELENGTH(x) : STDVEC_TRUELENGTH(x);
 }
 
 INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
@@ -148,7 +148,7 @@ INLINE_FUN int TRUELENGTH_EX(SEXP x, const char *file, int line)
     if (IS_LONG_VEC(x))
 	R_BadLongVector(x, file, line);
 #endif
-    return ALTREP(x) ? ALTVEC_TRUELENGTH(x) : STDVEC_TRUELENGTH(x);
+    return ALTREP(x) ? ALTREP_TRUELENGTH(x) : STDVEC_TRUELENGTH(x);
 }
 
 #ifdef STRICT_TYPECHECK

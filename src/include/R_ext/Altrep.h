@@ -39,8 +39,8 @@ typedef SEXP (*R_altrep_Duplicate_core_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altrep_Coerce_method_t)(SEXP, int);
 typedef Rboolean (*R_altrep_Inspect_method_t)(SEXP, int, int, int,
 					      void (*)(SEXP, int, int, int));
+typedef R_xlen_t (*R_altrep_Length_method_t)(SEXP);
 
-typedef R_xlen_t (*R_altvec_Length_method_t)(SEXP);
 typedef void *(*R_altvec_Dataptr_method_t)(SEXP);
 typedef void *(*R_altvec_Dataptr_or_null_method_t)(SEXP);
 typedef SEXP (*R_altvec_Extract_subset_method_t)(SEXP, SEXP, SEXP);
@@ -68,8 +68,8 @@ DECLARE_METHOD_SETTER(altrep, Duplicate)
 DECLARE_METHOD_SETTER(altrep, Duplicate_core)
 DECLARE_METHOD_SETTER(altrep, Coerce)
 DECLARE_METHOD_SETTER(altrep, Inspect)
+DECLARE_METHOD_SETTER(altrep, Length)
 
-DECLARE_METHOD_SETTER(altvec, Length)
 DECLARE_METHOD_SETTER(altvec, Dataptr)
 DECLARE_METHOD_SETTER(altvec, Dataptr_or_null)
 DECLARE_METHOD_SETTER(altvec, Extract_subset)
