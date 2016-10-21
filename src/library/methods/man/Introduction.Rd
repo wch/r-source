@@ -116,7 +116,7 @@ A class may inherit all the slots and methods of one or more existing
 classes by specifying the names of the inherited classes in the \code{contains =} argument to
 \code{\link{setClass}()}.
 
-To define a class that extends the \code{"Pos"} to a class
+To define a class that extends class \code{"Pos"} to a class
 \code{"GPS"} with a slot for the observation times:
 
 \code{GPS <- setClass("GPS", slots = c(time = "POSIXt"), contains = "Pos")}

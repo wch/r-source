@@ -46,6 +46,8 @@ extends(class1, class2, maybe = TRUE, fullInfo = FALSE)
   \code{extends(cl)}.  Additional arguments restrict the class names
   returned to direct superclasses and/or to non-virtual classes.
 
+  Either way, programming with the result, particularly using
+  \code{\link{sapply}}, can be useful.
 
   To find superclasses with more generally defined properties, one can program
   with the result returned by \code{extends} when called with one
