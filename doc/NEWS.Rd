@@ -484,7 +484,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.3.1 patched}{
+\section{\Rlogo CHANGES IN R 3.3.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{extSoftVersion()} now reports the version (if any) of
@@ -649,6 +649,10 @@
 
       \item \code{xtabs(~ exclude)} no longer fails from wrong scope,
       thanks to Suharto Anggono's \PR{17147}.
+
+      \item Reference class calls to \code{methods()} did not
+      re-analyse previously defined methods, meaning that calls to
+      methods defined later would fail. (Reported by Charles Tilford).
 
       \item \code{findInterval(x, vec, left.open = TRUE)} misbehaved in some
       cases. (Reported by Dmitriy Chernykh.)
@@ -1290,7 +1294,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.2.4 patched}{% released as 3.2.4-revised *and* 3.2.5
+\section{\Rlogo CHANGES IN R 3.2.5}{
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{format.POSIXlt()} behaved incorrectly in \R 3.2.4.
