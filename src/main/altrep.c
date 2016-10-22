@@ -158,25 +158,21 @@ typedef struct { ALTINTEGER_METHODS; } altinteger_methods_t;
 typedef struct { ALTREAL_METHODS; } altreal_methods_t;
 typedef struct { ALTSTRING_METHODS; } altstring_methods_t;
 
-#define ALTREP_DISPATCH(fun, x, ...) \
-    ALTREP_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
-#define ALTREP_DISPATCH0(fun, x) ALTREP_METHODS_TABLE(x)->fun(x)
+/* Macro to extract first element from ... macro argument.
+   From Richard Hansen's answer in
+   http://stackoverflow.com/questions/5588855/standard-alternative-to-gccs-va-args-trick 
+*/
+#define DISPATCH_TARGET(...) DISPATCH_TARGET_HELPER(__VA_ARGS__, dummy)
+#define DISPATCH_TARGET_HELPER(x, ...) x
 
-#define ALTVEC_DISPATCH(fun, x, ...) \
-    ALTVEC_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
-#define ALTVEC_DISPATCH0(fun, x) ALTVEC_METHODS_TABLE(x)->fun(x)
+#define DO_DISPATCH(type, fun, ...)					\
+    type##_METHODS_TABLE(DISPATCH_TARGET(__VA_ARGS__))->fun(__VA_ARGS__)
 
-#define ALTINTEGER_DISPATCH(fun, x, ...) \
-    ALTINTEGER_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
-#define ALTINTEGER_DISPATCH0(fun, x) ALTINTEGER_METHODS_TABLE(x)->fun(x)
-
-#define ALTREAL_DISPATCH(fun, x, ...) \
-    ALTREAL_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
-#define ALTREAL_DISPATCH0(fun, x) ALTREAL_METHODS_TABLE(x)->fun(x)
-
-#define ALTSTRING_DISPATCH(fun, x, ...)			\
-    ALTSTRING_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
-#define ALTSTRING_DISPATCH0(fun, x) ALTSTRING_METHODS_TABLE(x)->fun(x)
+#define ALTREP_DISPATCH(fun, ...) DO_DISPATCH(ALTREP, fun, __VA_ARGS__)
+#define ALTVEC_DISPATCH(fun, ...) DO_DISPATCH(ALTVEC, fun, __VA_ARGS__)
+#define ALTINTEGER_DISPATCH(fun, ...) DO_DISPATCH(ALTINTEGER, fun, __VA_ARGS__)
+#define ALTREAL_DISPATCH(fun, ...) DO_DISPATCH(ALTREAL, fun, __VA_ARGS__)
+#define ALTSTRING_DISPATCH(fun, ...) DO_DISPATCH(ALTSTRING, fun, __VA_ARGS__)
 
 
 /*
@@ -209,7 +205,7 @@ ALTREP_INSPECT(SEXP x, int pre, int deep, int pvec,
 SEXP attribute_hidden
 ALTREP_SERIALIZED_STATE(SEXP x)
 {
-    return ALTREP_DISPATCH0(Serialized_state, x);
+    return ALTREP_DISPATCH(Serialized_state, x);
 }
 
 SEXP attribute_hidden
@@ -283,7 +279,7 @@ ALTREP_UNSERIALIZE(SEXP info, SEXP state, SEXP attr)
 
 R_xlen_t /*attribute_hidden*/ ALTREP_LENGTH(SEXP x)
 {
-    return ALTREP_DISPATCH0(Length, x);
+    return ALTREP_DISPATCH(Length, x);
 }
 
 R_xlen_t /*attribute_hidden*/ ALTREP_TRUELENGTH(SEXP x) { return 0; }
@@ -301,7 +297,7 @@ void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x)
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
 
-    void *val = ALTVEC_DISPATCH0(Dataptr, x);
+    void *val = ALTVEC_DISPATCH(Dataptr, x);
 
     R_GCEnabled = enabled;
     return val;
@@ -309,7 +305,7 @@ void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x)
 
 void /*attribute_hidden*/ *ALTVEC_DATAPTR_OR_NULL(SEXP x)
 {
-    return ALTVEC_DISPATCH0(Dataptr_or_null, x);
+    return ALTVEC_DISPATCH(Dataptr_or_null, x);
 }
 
 SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
@@ -348,7 +344,7 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 
 static int ALTINTEGER_IS_SORTED(SEXP x)
 {
-    return ALTINTEGER_DISPATCH0(Is_sorted, x);
+    return ALTINTEGER_DISPATCH(Is_sorted, x);
 }
 
 int INTEGER_IS_SORTED(SEXP x)
@@ -378,7 +374,7 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 
 static int ALTREAL_IS_SORTED(SEXP x)
 {
-    return ALTREAL_DISPATCH0(Is_sorted, x);
+    return ALTREAL_DISPATCH(Is_sorted, x);
 }
 
 int REAL_IS_SORTED(SEXP x)
@@ -404,7 +400,7 @@ SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
 
 static int ALTSTRING_IS_SORTED(SEXP x)
 {
-    return ALTSTRING_DISPATCH0(Is_sorted, x);
+    return ALTSTRING_DISPATCH(Is_sorted, x);
 }
 
 int STRING_IS_SORTED(SEXP x)
