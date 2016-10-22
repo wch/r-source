@@ -49,14 +49,17 @@ typedef int (*R_altinteger_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altinteger_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, int *);
 typedef int (*R_altinteger_Is_sorted_method_t)(SEXP);
+typedef int (*R_altinteger_No_na_method_t)(SEXP);
 
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altreal_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, double *);
 typedef int (*R_altreal_Is_sorted_method_t)(SEXP);
+typedef int (*R_altreal_No_na_method_t)(SEXP);
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 typedef int (*R_altstring_Is_sorted_method_t)(SEXP);
+typedef int (*R_altstring_No_na_method_t)(SEXP);
 
 #define DECLARE_METHOD_SETTER(CNAME, MNAME)				\
     void								\
@@ -79,12 +82,15 @@ DECLARE_METHOD_SETTER(altvec, Extract_subset)
 DECLARE_METHOD_SETTER(altinteger, Elt)
 DECLARE_METHOD_SETTER(altinteger, Get_region)
 DECLARE_METHOD_SETTER(altinteger, Is_sorted)
+DECLARE_METHOD_SETTER(altinteger, No_na)
 
 DECLARE_METHOD_SETTER(altreal, Elt)
 DECLARE_METHOD_SETTER(altreal, Get_region)
 DECLARE_METHOD_SETTER(altreal, Is_sorted)
+DECLARE_METHOD_SETTER(altreal, No_na)
 
 DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
+DECLARE_METHOD_SETTER(altstring, No_na)
 
 #endif /* R_EXT_ALTREP_H_ */

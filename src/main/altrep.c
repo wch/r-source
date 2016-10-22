@@ -139,18 +139,21 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     ALTVEC_METHODS;					\
     R_altinteger_Elt_method_t Elt;			\
     R_altinteger_Get_region_method_t Get_region;	\
-    R_altinteger_Is_sorted_method_t Is_sorted
+    R_altinteger_Is_sorted_method_t Is_sorted;		\
+    R_altinteger_No_na_method_t No_na
 
 #define ALTREAL_METHODS				\
     ALTVEC_METHODS;				\
     R_altreal_Elt_method_t Elt;			\
     R_altreal_Get_region_method_t Get_region;	\
-    R_altreal_Is_sorted_method_t Is_sorted
+    R_altreal_Is_sorted_method_t Is_sorted;	\
+    R_altreal_No_na_method_t No_na
 
 #define ALTSTRING_METHODS			\
     ALTVEC_METHODS;				\
     R_altstring_Elt_method_t Elt;		\
-    R_altstring_Is_sorted_method_t Is_sorted
+    R_altstring_Is_sorted_method_t Is_sorted;	\
+    R_altstring_No_na_method_t No_na
 
 typedef struct { ALTREP_METHODS; } altrep_methods_t;
 typedef struct { ALTVEC_METHODS; } altvec_methods_t;
@@ -347,6 +350,11 @@ int INTEGER_IS_SORTED(SEXP x)
     return ALTREP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : 0;
 }
 
+int INTEGER_NO_NA(SEXP x)
+{
+    return ALTREP(x) ? ALTINTEGER_DISPATCH(No_na, x) : 0;
+}
+
 double attribute_hidden ALTREAL_ELT(SEXP x, R_xlen_t i)
 {
     return ALTREAL_DISPATCH(Elt, x, i);
@@ -372,6 +380,11 @@ int REAL_IS_SORTED(SEXP x)
     return ALTREP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : 0;
 }
 
+int REAL_NO_NA(SEXP x)
+{
+    return ALTREP(x) ? ALTREAL_DISPATCH(No_na, x) : 0;
+}
+
 SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
 {
     SEXP val = NULL;
@@ -391,6 +404,11 @@ SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
 int STRING_IS_SORTED(SEXP x)
 {
     return ALTREP(x) ? ALTSTRING_DISPATCH(Is_sorted, x) : 0;
+}
+
+int STRING_NO_NA(SEXP x)
+{
+    return ALTREP(x) ? ALTSTRING_DISPATCH(No_na, x) : 0;
 }
 
 
@@ -494,6 +512,7 @@ altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 }
 
 static int altinteger_Is_sorted_default(SEXP x) { return 0; }
+static int altinteger_No_na_default(SEXP x) { return 0; }
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
@@ -508,6 +527,7 @@ altreal_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 }
 
 static int altreal_Is_sorted_default(SEXP x) { return 0; }
+static int altreal_No_na_default(SEXP x) { return 0; }
 
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
@@ -515,6 +535,7 @@ static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 }
 
 static int altstring_Is_sorted_default(SEXP x) { return 0; }
+static int altstring_No_na_default(SEXP x) { return 0; }
 
 
 /**
@@ -535,7 +556,8 @@ static altinteger_methods_t altinteger_default_methods = {
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altinteger_Elt_default,
     .Get_region = altinteger_Get_region_default,
-    .Is_sorted = altinteger_Is_sorted_default
+    .Is_sorted = altinteger_Is_sorted_default,
+    .No_na = altinteger_No_na_default
 };
 
 static altreal_methods_t altreal_default_methods = {
@@ -552,7 +574,8 @@ static altreal_methods_t altreal_default_methods = {
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altreal_Elt_default,
     .Get_region = altreal_Get_region_default,
-    .Is_sorted = altreal_Is_sorted_default
+    .Is_sorted = altreal_Is_sorted_default,
+    .No_na = altreal_No_na_default
 };
 
 
@@ -569,7 +592,8 @@ static altstring_methods_t altstring_default_methods = {
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altstring_Elt_default,
-    .Is_sorted = altstring_Is_sorted_default
+    .Is_sorted = altstring_Is_sorted_default,
+    .No_na = altstring_No_na_default
 };
 
 
@@ -656,13 +680,16 @@ DEFINE_METHOD_SETTER(altvec, Extract_subset)
 DEFINE_METHOD_SETTER(altinteger, Elt)
 DEFINE_METHOD_SETTER(altinteger, Get_region)
 DEFINE_METHOD_SETTER(altinteger, Is_sorted)
+DEFINE_METHOD_SETTER(altinteger, No_na)
 
 DEFINE_METHOD_SETTER(altreal, Elt)
 DEFINE_METHOD_SETTER(altreal, Get_region)
 DEFINE_METHOD_SETTER(altreal, Is_sorted)
+DEFINE_METHOD_SETTER(altreal, No_na)
 
 DEFINE_METHOD_SETTER(altstring, Elt)
 DEFINE_METHOD_SETTER(altstring, Is_sorted)
+DEFINE_METHOD_SETTER(altstring, No_na)
 
 
 /**
@@ -885,6 +912,16 @@ static int compact_intseq_Is_sorted(SEXP x)
     return inc < 0 ? -1 : 1;
 }
 
+static int compact_intseq_No_na(SEXP x)
+{
+#ifdef COMPACT_INTSEQ_MUTABLE
+    /* If the vector has been expanded it may have been modified. */
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
+	return FALSE;
+#endif
+    return TRUE;
+}
+
 
 /*
  * Class Objects and Method Tables
@@ -914,6 +951,7 @@ static void InitCompactIntegerClass()
     R_set_altinteger_Elt_method(cls, compact_intseq_Elt);
     R_set_altinteger_Get_region_method(cls, compact_intseq_Get_region);
     R_set_altinteger_Is_sorted_method(cls, compact_intseq_Is_sorted);
+    R_set_altinteger_No_na_method(cls, compact_intseq_No_na);
 }
 
 
@@ -1092,6 +1130,16 @@ static int compact_realseq_Is_sorted(SEXP x)
     return inc < 0 ? -1 : 1;
 }
 
+static int compact_realseq_No_na(SEXP x)
+{
+#ifdef COMPACT_REALSEQ_MUTABLE
+    /* If the vector has been expanded it may have been modified. */
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
+	return FALSE;
+#endif
+    return TRUE;
+}
+
 
 /*
  * Class Objects and Method Tables
@@ -1121,6 +1169,7 @@ static void InitCompactRealClass()
     R_set_altreal_Elt_method(cls, compact_realseq_Elt);
     R_set_altreal_Get_region_method(cls, compact_realseq_Get_region);
     R_set_altreal_Is_sorted_method(cls, compact_realseq_Is_sorted);
+    R_set_altreal_No_na_method(cls, compact_realseq_No_na);
 }
 
 
@@ -1321,6 +1370,23 @@ static int deferred_string_Is_sorted(SEXP x)
     }
 }
 
+static int deferred_string_No_na(SEXP x)
+{
+    SEXP state = DEFERRED_STRING_STATE(x);
+    if (state == R_NilValue)
+	/* string is fully expanded and may have been modified. */
+	return FALSE;
+    else {
+	/* defer to the argument */
+	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
+	switch(TYPEOF(arg)) {
+	case INTSXP: return INTEGER_NO_NA(arg);
+	case REALSXP: return REAL_NO_NA(arg);
+	default: return FALSE;
+	}
+    }
+}
+
 static SEXP deferred_string_Extract_subset(SEXP x, SEXP indx, SEXP call)
 {
     SEXP result = NULL;
@@ -1368,6 +1434,7 @@ static void InitDefferredStringClass()
     /* override ALTSTRING methods */
     R_set_altstring_Elt_method(cls, deferred_string_Elt);
     R_set_altstring_Is_sorted_method(cls, deferred_string_Is_sorted);
+    R_set_altstring_No_na_method(cls, deferred_string_No_na);
 }
 
 
