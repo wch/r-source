@@ -346,7 +346,7 @@ static int ALTINTEGER_IS_SORTED(SEXP x)
     return ALTINTEGER_DISPATCH0(Is_sorted, x);
 }
 
-Rboolean INTEGER_IS_SORTED(SEXP x)
+int INTEGER_IS_SORTED(SEXP x)
 {
     return ALTREP(x) ? ALTINTEGER_IS_SORTED(x) : 0;
 }

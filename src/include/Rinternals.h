@@ -603,7 +603,7 @@ double ALTREAL_ELT(SEXP x, R_xlen_t i);
 SEXP ALTSTRING_ELT(SEXP, R_xlen_t);
 Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
-Rboolean INTEGER_IS_SORTED(SEXP x);
+int INTEGER_IS_SORTED(SEXP x);
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
 SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
 SEXP R_deferred_coerceToString(SEXP v, SEXP sp);
