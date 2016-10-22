@@ -2002,6 +2002,25 @@ stopifnot(grepl("'xtabs' int", capture.output(str(xt2))[1]))
 ## did not mention "xtabs" in R <= 3.3.1
 
 
+## findInterval(x_with_ties, vec, left.open=TRUE)
+stopifnot(identical(
+    findInterval(c(6,1,1), c(0,1,3,5,7), left.open=TRUE), c(4L, 1L, 1L)))
+set.seed(4)
+invisible(replicate(100, {
+ vec <- cumsum(1 + rpois(6, 2))
+ x <- rpois(50, 3) + 0.5 * rbinom(50, 1, 1/4)
+ i <- findInterval(x, vec, left.open = TRUE)
+ .v. <- c(-Inf, vec, Inf)
+ isIn <-  .v.[i+1] < x  &  x <= .v.[i+2]
+ if(! all(isIn)) {
+     dump(c("x", "vec"), file=stdout());
+     stop("not ok at ", paste(which(!isIn), collapse=", "))
+ }
+}))
+## failed in R <= 3.3.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
