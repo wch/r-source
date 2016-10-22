@@ -1,7 +1,7 @@
 #  File src/library/stats/R/xtabs.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     if(!sparse) {
 	x <-
 	    if(is.null(y))
-		do.call("table", by)
+		table(by, dnn = names(by))
 	    else if(NCOL(y) == 1L)
 		tapply(y, by, sum)
 	    else {
