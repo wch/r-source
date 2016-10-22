@@ -342,14 +342,9 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 	return ALTINTEGER_DISPATCH(Get_region, sx, i, n, buf);
 }
 
-static int ALTINTEGER_IS_SORTED(SEXP x)
-{
-    return ALTINTEGER_DISPATCH(Is_sorted, x);
-}
-
 int INTEGER_IS_SORTED(SEXP x)
 {
-    return ALTREP(x) ? ALTINTEGER_IS_SORTED(x) : 0;
+    return ALTREP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : 0;
 }
 
 double attribute_hidden ALTREAL_ELT(SEXP x, R_xlen_t i)
@@ -372,14 +367,9 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 	return ALTREAL_DISPATCH(Get_region, sx, i, n, buf);
 }
 
-static int ALTREAL_IS_SORTED(SEXP x)
-{
-    return ALTREAL_DISPATCH(Is_sorted, x);
-}
-
 int REAL_IS_SORTED(SEXP x)
 {
-    return ALTREP(x) ? ALTREAL_IS_SORTED(x) : 0;
+    return ALTREP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : 0;
 }
 
 SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
@@ -398,14 +388,9 @@ SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
     return val;
 }
 
-static int ALTSTRING_IS_SORTED(SEXP x)
-{
-    return ALTSTRING_DISPATCH(Is_sorted, x);
-}
-
 int STRING_IS_SORTED(SEXP x)
 {
-    return ALTREP(x) ? ALTSTRING_IS_SORTED(x) : 0;
+    return ALTREP(x) ? ALTSTRING_DISPATCH(Is_sorted, x) : 0;
 }
 
 
