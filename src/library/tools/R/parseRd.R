@@ -68,8 +68,15 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         if (any(is.na(iconv(lines, "", "ASCII"))))
             stop(file0, ": non-ASCII input and no declared encoding",
                  domain = NA, call. = warningCalls)
-    } else if (encoding != "UTF-8")
-    	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
+    } else {
+	if (encoding != "UTF-8")
+    	    lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
+        ## Strip UTF-8 BOM if necessary.
+        bytes <- charToRaw(lines[1L])
+        if(identical(as.integer(bytes[1L : 3L]),
+                     c(0xefL, 0xbbL, 0xbfL)))
+            lines[1L] <- rawToChar(bytes[-(1L : 3L)])
+    }
 
     tcon <- file()
     writeLines(lines, tcon, useBytes = TRUE)
