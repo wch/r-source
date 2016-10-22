@@ -487,7 +487,7 @@ altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
     return ncopy;
 }
 
-static int altinteger_Is_sorted_default(SEXP x) { return FALSE; }
+static int altinteger_Is_sorted_default(SEXP x) { return 0; }
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
