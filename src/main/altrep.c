@@ -144,11 +144,13 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 #define ALTREAL_METHODS				\
     ALTVEC_METHODS;				\
     R_altreal_Elt_method_t Elt;			\
-    R_altreal_Get_region_method_t Get_region
+    R_altreal_Get_region_method_t Get_region;	\
+    R_altreal_Is_sorted_method_t Is_sorted
 
 #define ALTSTRING_METHODS			\
     ALTVEC_METHODS;				\
-    R_altstring_Elt_method_t Elt
+    R_altstring_Elt_method_t Elt;		\
+    R_altstring_Is_sorted_method_t Is_sorted
 
 typedef struct { ALTREP_METHODS; } altrep_methods_t;
 typedef struct { ALTVEC_METHODS; } altvec_methods_t;
@@ -170,8 +172,11 @@ typedef struct { ALTSTRING_METHODS; } altstring_methods_t;
 
 #define ALTREAL_DISPATCH(fun, x, ...) \
     ALTREAL_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
-#define ALTSTRING_DISPATCH(fun, x, ...) \
+#define ALTREAL_DISPATCH0(fun, x) ALTREAL_METHODS_TABLE(x)->fun(x)
+
+#define ALTSTRING_DISPATCH(fun, x, ...)			\
     ALTSTRING_METHODS_TABLE(x)->fun(x, __VA_ARGS__)
+#define ALTSTRING_DISPATCH0(fun, x) ALTSTRING_METHODS_TABLE(x)->fun(x)
 
 
 /*
@@ -371,6 +376,16 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 	return ALTREAL_DISPATCH(Get_region, sx, i, n, buf);
 }
 
+static int ALTREAL_IS_SORTED(SEXP x)
+{
+    return ALTREAL_DISPATCH0(Is_sorted, x);
+}
+
+int REAL_IS_SORTED(SEXP x)
+{
+    return ALTREP(x) ? ALTREAL_IS_SORTED(x) : 0;
+}
+
 SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
 {
     SEXP val = NULL;
@@ -385,6 +400,16 @@ SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
 
     R_GCEnabled = enabled;
     return val;
+}
+
+static int ALTSTRING_IS_SORTED(SEXP x)
+{
+    return ALTSTRING_DISPATCH0(Is_sorted, x);
+}
+
+int STRING_IS_SORTED(SEXP x)
+{
+    return ALTREP(x) ? ALTSTRING_IS_SORTED(x) : 0;
 }
 
 
@@ -501,10 +526,14 @@ altreal_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
     return ncopy;
 }
 
+static int altreal_Is_sorted_default(SEXP x) { return 0; }
+
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
     return STRING_PTR(x)[i];
 }
+
+static int altstring_Is_sorted_default(SEXP x) { return 0; }
 
 
 /**
@@ -541,7 +570,8 @@ static altreal_methods_t altreal_default_methods = {
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altreal_Elt_default,
-    .Get_region = altreal_Get_region_default
+    .Get_region = altreal_Get_region_default,
+    .Is_sorted = altreal_Is_sorted_default
 };
 
 
@@ -557,7 +587,8 @@ static altstring_methods_t altstring_default_methods = {
     .Dataptr = altvec_Dataptr_default,
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
-    .Elt = altstring_Elt_default
+    .Elt = altstring_Elt_default,
+    .Is_sorted = altstring_Is_sorted_default
 };
 
 
@@ -647,8 +678,10 @@ DEFINE_METHOD_SETTER(altinteger, Is_sorted)
 
 DEFINE_METHOD_SETTER(altreal, Elt)
 DEFINE_METHOD_SETTER(altreal, Get_region)
+DEFINE_METHOD_SETTER(altreal, Is_sorted)
 
 DEFINE_METHOD_SETTER(altstring, Elt)
+DEFINE_METHOD_SETTER(altstring, Is_sorted)
 
 
 /**
@@ -1067,6 +1100,17 @@ compact_realseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 	error("compact sequences with increment %f not supported yet", inc);
 }
     
+static int compact_realseq_Is_sorted(SEXP x)
+{
+#ifdef COMPACT_REALSEQ_MUTABLE
+    /* If the vector has been expanded it may have been modified. */
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
+	return 0;
+#endif
+    int inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
+    return inc < 0 ? -1 : 1;
+}
+
 
 /*
  * Class Objects and Method Tables
@@ -1095,6 +1139,7 @@ static void InitCompactRealClass()
     /* override ALTREAL methods */
     R_set_altreal_Elt_method(cls, compact_realseq_Elt);
     R_set_altreal_Get_region_method(cls, compact_realseq_Get_region);
+    R_set_altreal_Is_sorted_method(cls, compact_realseq_Is_sorted);
 }
 
 
@@ -1278,6 +1323,23 @@ static SEXP deferred_string_Elt(SEXP x, R_xlen_t i)
     }
 }
 
+static int deferred_string_Is_sorted(SEXP x)
+{
+    SEXP state = DEFERRED_STRING_STATE(x);
+    if (state == R_NilValue)
+	/* string is fully expanded and may have been modified. */
+	return 0;
+    else {
+	/* defer to the argument */
+	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
+	switch(TYPEOF(arg)) {
+	case INTSXP: return INTEGER_IS_SORTED(arg);
+	case REALSXP: return REAL_IS_SORTED(arg);
+	default: return 0;
+	}
+    }
+}
+
 static SEXP deferred_string_Extract_subset(SEXP x, SEXP indx, SEXP call)
 {
     SEXP result = NULL;
@@ -1324,6 +1386,7 @@ static void InitDefferredStringClass()
 
     /* override ALTSTRING methods */
     R_set_altstring_Elt_method(cls, deferred_string_Elt);
+    R_set_altstring_Is_sorted_method(cls, deferred_string_Is_sorted);
 }
 
 

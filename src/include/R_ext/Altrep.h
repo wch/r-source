@@ -53,8 +53,10 @@ typedef int (*R_altinteger_Is_sorted_method_t)(SEXP);
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altreal_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, double *);
+typedef int (*R_altreal_Is_sorted_method_t)(SEXP);
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
+typedef int (*R_altstring_Is_sorted_method_t)(SEXP);
 
 #define DECLARE_METHOD_SETTER(CNAME, MNAME)				\
     void								\
@@ -80,7 +82,9 @@ DECLARE_METHOD_SETTER(altinteger, Is_sorted)
 
 DECLARE_METHOD_SETTER(altreal, Elt)
 DECLARE_METHOD_SETTER(altreal, Get_region)
+DECLARE_METHOD_SETTER(altreal, Is_sorted)
 
 DECLARE_METHOD_SETTER(altstring, Elt)
+DECLARE_METHOD_SETTER(altstring, Is_sorted)
 
 #endif /* R_EXT_ALTREP_H_ */
