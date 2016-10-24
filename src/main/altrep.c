@@ -124,7 +124,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altrep_Unserialize_method_t Unserialize;			\
     R_altrep_Serialized_state_method_t Serialized_state;	\
     R_altrep_DuplicateEX_method_t DuplicateEX;			\
-    R_altrep_Duplicate_core_method_t Duplicate_core;		\
+    R_altrep_Duplicate_method_t Duplicate;			\
     R_altrep_Coerce_method_t Coerce;				\
     R_altrep_Inspect_method_t Inspect;				\
     R_altrep_Length_method_t Length
@@ -187,9 +187,9 @@ SEXP attribute_hidden ALTREP_COERCE(SEXP x, int type)
     return ALTREP_DISPATCH(Coerce, x, type);
 }
 
-static SEXP ALTREP_DUPLICATE_CORE(SEXP x, Rboolean deep)
+static SEXP ALTREP_DUPLICATE(SEXP x, Rboolean deep)
 {
-    return ALTREP_DISPATCH(Duplicate_core, x, deep);
+    return ALTREP_DISPATCH(Duplicate, x, deep);
 }
 
 SEXP attribute_hidden ALTREP_DUPLICATE_EX(SEXP x, Rboolean deep)
@@ -451,16 +451,14 @@ static SEXP altrep_Unserialize_default(SEXP class, SEXP state)
 
 static SEXP altrep_Coerce_default(SEXP x, int type) { return NULL; }
 
-static SEXP altrep_Duplicate_core_default(SEXP x, Rboolean deep)
+static SEXP altrep_Duplicate_default(SEXP x, Rboolean deep)
 {
     return NULL;
 }
 
-static SEXP ALTREP_DUPLICATE_CORE(SEXP, Rboolean);
-
 static SEXP altrep_DuplicateEX_default(SEXP x, Rboolean deep)
 {
-    SEXP ans = ALTREP_DUPLICATE_CORE(x, deep);
+    SEXP ans = ALTREP_DUPLICATE(x, deep);
 
     if (ans != NULL &&
 	ans != x) { /* leave attributes alone if returning original */
@@ -550,7 +548,7 @@ static altinteger_methods_t altinteger_default_methods = {
     .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
     .DuplicateEX = altrep_DuplicateEX_default,
-    .Duplicate_core = altrep_Duplicate_core_default,
+    .Duplicate = altrep_Duplicate_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
     .Length = altrep_Length_default,
@@ -568,7 +566,7 @@ static altreal_methods_t altreal_default_methods = {
     .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
     .DuplicateEX = altrep_DuplicateEX_default,
-    .Duplicate_core = altrep_Duplicate_core_default,
+    .Duplicate = altrep_Duplicate_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
     .Length = altrep_Length_default,
@@ -587,7 +585,7 @@ static altstring_methods_t altstring_default_methods = {
     .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
     .DuplicateEX = altrep_DuplicateEX_default,
-    .Duplicate_core = altrep_Duplicate_core_default,
+    .Duplicate = altrep_Duplicate_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
     .Length = altrep_Length_default,
@@ -671,7 +669,7 @@ DEFINE_METHOD_SETTER(altrep, UnserializeEX)
 DEFINE_METHOD_SETTER(altrep, Unserialize)
 DEFINE_METHOD_SETTER(altrep, Serialized_state)
 DEFINE_METHOD_SETTER(altrep, DuplicateEX)
-DEFINE_METHOD_SETTER(altrep, Duplicate_core)
+DEFINE_METHOD_SETTER(altrep, Duplicate)
 DEFINE_METHOD_SETTER(altrep, Coerce)
 DEFINE_METHOD_SETTER(altrep, Inspect)
 DEFINE_METHOD_SETTER(altrep, Length)
@@ -785,7 +783,7 @@ static SEXP compact_intseq_Coerce(SEXP x, int type)
     else return NULL;
 }
 
-static SEXP compact_intseq_Duplicate_core(SEXP x, Rboolean deep)
+static SEXP compact_intseq_Duplicate(SEXP x, Rboolean deep)
 {
     R_xlen_t n = XLENGTH(x);
     SEXP val = allocVector(INTSXP, n);
@@ -941,7 +939,7 @@ static void InitCompactIntegerClass()
     /* override ALTREP methods */
     R_set_altrep_Unserialize_method(cls, compact_intseq_Unserialize);
     R_set_altrep_Serialized_state_method(cls, compact_intseq_Serialized_state);
-    R_set_altrep_Duplicate_core_method(cls, compact_intseq_Duplicate_core);
+    R_set_altrep_Duplicate_method(cls, compact_intseq_Duplicate);
     R_set_altrep_Coerce_method(cls, compact_intseq_Coerce);
     R_set_altrep_Inspect_method(cls, compact_intseq_Inspect);
     R_set_altrep_Length_method(cls, compact_intseq_Length);
@@ -1012,7 +1010,7 @@ static SEXP compact_realseq_Unserialize(SEXP class, SEXP state)
 	error("compact sequences with increment %f not supported yet", inc);
 }
 
-static SEXP compact_realseq_Duplicate_core(SEXP x, Rboolean deep)
+static SEXP compact_realseq_Duplicate(SEXP x, Rboolean deep)
 {
     R_xlen_t n = XLENGTH(x);
     SEXP val = allocVector(REALSXP, n);
@@ -1160,7 +1158,7 @@ static void InitCompactRealClass()
     /* override ALTREP methods */
     R_set_altrep_Unserialize_method(cls, compact_realseq_Unserialize);
     R_set_altrep_Serialized_state_method(cls, compact_realseq_Serialized_state);
-    R_set_altrep_Duplicate_core_method(cls, compact_realseq_Duplicate_core);
+    R_set_altrep_Duplicate_method(cls, compact_realseq_Duplicate);
     R_set_altrep_Inspect_method(cls, compact_realseq_Inspect);
     R_set_altrep_Length_method(cls, compact_realseq_Length);
 
