@@ -121,7 +121,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 
 #define ALTREP_METHODS						\
     R_altrep_UnserializeEX_method_t UnserializeEX;		\
-    R_altrep_Unserialize_core_method_t Unserialize_core;	\
+    R_altrep_Unserialize_method_t Unserialize;			\
     R_altrep_Serialized_state_method_t Serialized_state;	\
     R_altrep_Duplicate_method_t Duplicate;			\
     R_altrep_Duplicate_method_t Duplicate_core;			\
@@ -435,7 +435,7 @@ static SEXP altrep_UnserializeEX_default(SEXP class, SEXP state, SEXP attr,
 					 int objf, int levs)
 {
     altrep_methods_t *m = CLASS_METHODS_TABLE(class);
-    SEXP val = m->Unserialize_core(class, state);
+    SEXP val = m->Unserialize(class, state);
     SET_ATTRIB(val, attr);
     SET_OBJECT(val, objf);
     SETLEVELS(val, levs);
@@ -444,7 +444,7 @@ static SEXP altrep_UnserializeEX_default(SEXP class, SEXP state, SEXP attr,
 
 static SEXP altrep_Serialized_state_default(SEXP x) { return NULL; }
 
-static SEXP altrep_Unserialize_core_default(SEXP class, SEXP state)
+static SEXP altrep_Unserialize_default(SEXP class, SEXP state)
 {
     error("cannot unserialize this ALTREP object yet");
 }
@@ -547,7 +547,7 @@ static int altstring_No_NA_default(SEXP x) { return 0; }
 
 static altinteger_methods_t altinteger_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
-    .Unserialize_core = altrep_Unserialize_core_default,
+    .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
     .Duplicate = altrep_Duplicate_default,
     .Duplicate_core = altrep_Duplicate_core_default,
@@ -565,7 +565,7 @@ static altinteger_methods_t altinteger_default_methods = {
 
 static altreal_methods_t altreal_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
-    .Unserialize_core = altrep_Unserialize_core_default,
+    .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
     .Duplicate = altrep_Duplicate_default,
     .Duplicate_core = altrep_Duplicate_core_default,
@@ -584,7 +584,7 @@ static altreal_methods_t altreal_default_methods = {
 
 static altstring_methods_t altstring_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
-    .Unserialize_core = altrep_Unserialize_core_default,
+    .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
     .Duplicate = altrep_Duplicate_default,
     .Duplicate_core = altrep_Duplicate_core_default,
@@ -668,7 +668,7 @@ static void reinit_altrep_class(SEXP class)
     }
 
 DEFINE_METHOD_SETTER(altrep, UnserializeEX)
-DEFINE_METHOD_SETTER(altrep, Unserialize_core)
+DEFINE_METHOD_SETTER(altrep, Unserialize)
 DEFINE_METHOD_SETTER(altrep, Serialized_state)
 DEFINE_METHOD_SETTER(altrep, Duplicate)
 DEFINE_METHOD_SETTER(altrep, Duplicate_core)
@@ -753,7 +753,7 @@ static SEXP compact_intseq_Serialized_state(SEXP x)
 static SEXP new_compact_intseq(R_xlen_t, int, int);
 static SEXP new_compact_realseq(R_xlen_t, double, double);
 
-static SEXP compact_intseq_Unserialize_core(SEXP class, SEXP state)
+static SEXP compact_intseq_Unserialize(SEXP class, SEXP state)
 {
     int inc = COMPACT_INTSEQ_INFO_INCR(state);
 
@@ -939,7 +939,7 @@ static void InitCompactIntegerClass()
     R_compact_intseq_class = cls;
 
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_core_method(cls, compact_intseq_Unserialize_core);
+    R_set_altrep_Unserialize_method(cls, compact_intseq_Unserialize);
     R_set_altrep_Serialized_state_method(cls, compact_intseq_Serialized_state);
     R_set_altrep_Duplicate_core_method(cls, compact_intseq_Duplicate_core);
     R_set_altrep_Coerce_method(cls, compact_intseq_Coerce);
@@ -1000,7 +1000,7 @@ static SEXP compact_realseq_Serialized_state(SEXP x)
     return COMPACT_SEQ_INFO(x);
 }
 
-static SEXP compact_realseq_Unserialize_core(SEXP class, SEXP state)
+static SEXP compact_realseq_Unserialize(SEXP class, SEXP state)
 {
     int inc = COMPACT_INTSEQ_INFO_INCR(state);
 
@@ -1158,7 +1158,7 @@ static void InitCompactRealClass()
     R_compact_realseq_class = cls;
 
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_core_method(cls, compact_realseq_Unserialize_core);
+    R_set_altrep_Unserialize_method(cls, compact_realseq_Unserialize);
     R_set_altrep_Serialized_state_method(cls, compact_realseq_Serialized_state);
     R_set_altrep_Duplicate_core_method(cls, compact_realseq_Duplicate_core);
     R_set_altrep_Inspect_method(cls, compact_realseq_Inspect);
@@ -1247,7 +1247,7 @@ static SEXP deferred_string_Serialized_state(SEXP x)
     return state != R_NilValue ? state : NULL;
 }
 
-static SEXP deferred_string_Unserialize_core(SEXP class, SEXP state)
+static SEXP deferred_string_Unserialize(SEXP class, SEXP state)
 {
     SEXP arg = DEFERRED_STRING_STATE_ARG(state);
     SEXP sp = DEFERRED_STRING_STATE_SCIPEN(state);
@@ -1424,7 +1424,7 @@ static void InitDefferredStringClass()
     R_deferred_string_class = cls;
 
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_core_method(cls, deferred_string_Unserialize_core);
+    R_set_altrep_Unserialize_method(cls, deferred_string_Unserialize);
     R_set_altrep_Serialized_state_method(cls, deferred_string_Serialized_state);
     R_set_altrep_Inspect_method(cls, deferred_string_Inspect);
     R_set_altrep_Length_method(cls, deferred_string_Length);
@@ -1659,7 +1659,7 @@ static SEXP mmap_Serialized_state(SEXP x)
 
 static SEXP mmap_file(SEXP, int, Rboolean, Rboolean, Rboolean, Rboolean);
 
-static SEXP mmap_Unserialize_core(SEXP class, SEXP state)
+static SEXP mmap_Unserialize(SEXP class, SEXP state)
 {
     SEXP file = MMAP_STATE_FILE(state);
     int type = MMAP_STATE_TYPE(state);
@@ -1780,7 +1780,7 @@ static void InitMmapIntegerClass(DllInfo *dll)
     mmap_integer_class = cls;
  
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_core_method(cls, mmap_Unserialize_core);
+    R_set_altrep_Unserialize_method(cls, mmap_Unserialize);
     R_set_altrep_Serialized_state_method(cls, mmap_Serialized_state);
     R_set_altrep_Inspect_method(cls, mmap_Inspect);
     R_set_altrep_Length_method(cls, mmap_Length);
@@ -1801,7 +1801,7 @@ static void InitMmapRealClass(DllInfo *dll)
     mmap_real_class = cls;
 
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_core_method(cls, mmap_Unserialize_core);
+    R_set_altrep_Unserialize_method(cls, mmap_Unserialize);
     R_set_altrep_Serialized_state_method(cls, mmap_Serialized_state);
     R_set_altrep_Inspect_method(cls, mmap_Inspect);
     R_set_altrep_Length_method(cls, mmap_Length);
