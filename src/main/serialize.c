@@ -981,9 +981,10 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	SEXP info = ALTREP_SERIALIZED_CLASS(s);
 	SEXP state = ALTREP_SERIALIZED_STATE(s);
 	if (info != NULL && state != NULL) {
+	    int flags = PackFlags(ALTREP_SXP, LEVELS(s), OBJECT(s), 0, 0);
 	    PROTECT(state);
 	    PROTECT(info);
-	    OutInteger(stream, ALTREP_SXP);
+	    OutInteger(stream, flags);
 	    WriteItem(info, ref_table, stream);
 	    WriteItem(state, ref_table, stream);
 	    WriteItem(ATTRIB(s), ref_table, stream);
@@ -1583,6 +1584,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    SEXP state = PROTECT(ReadItem(ref_table, stream));
 	    SEXP attr = PROTECT(ReadItem(ref_table, stream));
 	    s = ALTREP_UNSERIALIZE(info, state, attr);
+	    SET_OBJECT(s, objf);
+	    SETLEVELS(s, levs);
 	    UNPROTECT(3); /* info, state, attr */
 	    R_ReadItemDepth--;
 	    return s;
