@@ -118,8 +118,14 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
     Rprintf("] ");
 
-    if (ALTREP(v) && ALTREP_INSPECT(v, pre, deep, pvec, inspect_subtree))
+    if (ALTREP(v) && ALTREP_INSPECT(v, pre, deep, pvec, inspect_subtree)) {
+	if (ATTRIB(v) && ATTRIB(v) != R_NilValue && TYPEOF(v) != CHARSXP) {
+	    pp(pre);
+	    Rprintf("ATTRIB:\n");
+	    inspect_tree(pre+2, ATTRIB(v), deep, pvec);
+	}
 	return;
+    }
 
     switch (TYPEOF(v)) {
     case VECSXP: case STRSXP: case LGLSXP: case INTSXP: case RAWSXP:
