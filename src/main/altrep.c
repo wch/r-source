@@ -1656,7 +1656,7 @@ static SEXP mmap_Serialized_state(SEXP x)
 
 static SEXP mmap_file(SEXP, int, Rboolean, Rboolean, Rboolean, Rboolean);
 
-static SEXP mmap_Unserialize(SEXP class, SEXP state, SEXP attr)
+static SEXP mmap_Unserialize_core(SEXP class, SEXP state)
 {
     SEXP file = MMAP_STATE_FILE(state);
     int type = MMAP_STATE_TYPE(state);
@@ -1673,7 +1673,6 @@ static SEXP mmap_Unserialize(SEXP class, SEXP state, SEXP attr)
 	warning("memory mapping failed; returning vector of length zero");
 	return allocVector(type, 0);
     }
-    SET_ATTRIB(val, attr);
     return val;
 }
 
@@ -1778,7 +1777,7 @@ static void InitMmapIntegerClass(DllInfo *dll)
     mmap_integer_class = cls;
  
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_method(cls, mmap_Unserialize);
+    R_set_altrep_Unserialize_core_method(cls, mmap_Unserialize_core);
     R_set_altrep_Serialized_state_method(cls, mmap_Serialized_state);
     R_set_altrep_Inspect_method(cls, mmap_Inspect);
     R_set_altrep_Length_method(cls, mmap_Length);
@@ -1799,7 +1798,7 @@ static void InitMmapRealClass(DllInfo *dll)
     mmap_real_class = cls;
 
     /* override ALTREP methods */
-    R_set_altrep_Unserialize_method(cls, mmap_Unserialize);
+    R_set_altrep_Unserialize_core_method(cls, mmap_Unserialize_core);
     R_set_altrep_Serialized_state_method(cls, mmap_Serialized_state);
     R_set_altrep_Inspect_method(cls, mmap_Inspect);
     R_set_altrep_Length_method(cls, mmap_Length);
