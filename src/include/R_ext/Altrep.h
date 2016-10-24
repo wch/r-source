@@ -34,7 +34,7 @@ Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t);
 typedef SEXP (*R_altrep_UnserializeEX_method_t)(SEXP, SEXP, SEXP, int, int);
 typedef SEXP (*R_altrep_Unserialize_method_t)(SEXP, SEXP);
 typedef SEXP (*R_altrep_Serialized_state_method_t)(SEXP);
-typedef SEXP (*R_altrep_Duplicate_method_t)(SEXP, Rboolean);
+typedef SEXP (*R_altrep_DuplicateEX_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altrep_Duplicate_core_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altrep_Coerce_method_t)(SEXP, int);
 typedef Rboolean (*R_altrep_Inspect_method_t)(SEXP, int, int, int,
@@ -69,7 +69,7 @@ typedef int (*R_altstring_No_NA_method_t)(SEXP);
 DECLARE_METHOD_SETTER(altrep, UnserializeEX)
 DECLARE_METHOD_SETTER(altrep, Unserialize)
 DECLARE_METHOD_SETTER(altrep, Serialized_state)
-DECLARE_METHOD_SETTER(altrep, Duplicate)
+DECLARE_METHOD_SETTER(altrep, DuplicateEX)
 DECLARE_METHOD_SETTER(altrep, Duplicate_core)
 DECLARE_METHOD_SETTER(altrep, Coerce)
 DECLARE_METHOD_SETTER(altrep, Inspect)

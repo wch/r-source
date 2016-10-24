@@ -123,8 +123,8 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altrep_UnserializeEX_method_t UnserializeEX;		\
     R_altrep_Unserialize_method_t Unserialize;			\
     R_altrep_Serialized_state_method_t Serialized_state;	\
-    R_altrep_Duplicate_method_t Duplicate;			\
-    R_altrep_Duplicate_method_t Duplicate_core;			\
+    R_altrep_DuplicateEX_method_t DuplicateEX;			\
+    R_altrep_Duplicate_core_method_t Duplicate_core;		\
     R_altrep_Coerce_method_t Coerce;				\
     R_altrep_Inspect_method_t Inspect;				\
     R_altrep_Length_method_t Length
@@ -192,9 +192,9 @@ static SEXP ALTREP_DUPLICATE_CORE(SEXP x, Rboolean deep)
     return ALTREP_DISPATCH(Duplicate_core, x, deep);
 }
 
-SEXP attribute_hidden ALTREP_DUPLICATE(SEXP x, Rboolean deep)
+SEXP attribute_hidden ALTREP_DUPLICATE_EX(SEXP x, Rboolean deep)
 {
-    return ALTREP_DISPATCH(Duplicate, x, deep);
+    return ALTREP_DISPATCH(DuplicateEX, x, deep);
 }
 
 Rboolean attribute_hidden
@@ -458,7 +458,7 @@ static SEXP altrep_Duplicate_core_default(SEXP x, Rboolean deep)
 
 static SEXP ALTREP_DUPLICATE_CORE(SEXP, Rboolean);
 
-static SEXP altrep_Duplicate_default(SEXP x, Rboolean deep)
+static SEXP altrep_DuplicateEX_default(SEXP x, Rboolean deep)
 {
     SEXP ans = ALTREP_DUPLICATE_CORE(x, deep);
 
@@ -549,7 +549,7 @@ static altinteger_methods_t altinteger_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
-    .Duplicate = altrep_Duplicate_default,
+    .DuplicateEX = altrep_DuplicateEX_default,
     .Duplicate_core = altrep_Duplicate_core_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
@@ -567,7 +567,7 @@ static altreal_methods_t altreal_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
-    .Duplicate = altrep_Duplicate_default,
+    .DuplicateEX = altrep_DuplicateEX_default,
     .Duplicate_core = altrep_Duplicate_core_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
@@ -586,7 +586,7 @@ static altstring_methods_t altstring_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize = altrep_Unserialize_default,
     .Serialized_state = altrep_Serialized_state_default,
-    .Duplicate = altrep_Duplicate_default,
+    .DuplicateEX = altrep_DuplicateEX_default,
     .Duplicate_core = altrep_Duplicate_core_default,
     .Coerce = altrep_Coerce_default,
     .Inspect = altrep_Inspect_default,
@@ -670,7 +670,7 @@ static void reinit_altrep_class(SEXP class)
 DEFINE_METHOD_SETTER(altrep, UnserializeEX)
 DEFINE_METHOD_SETTER(altrep, Unserialize)
 DEFINE_METHOD_SETTER(altrep, Serialized_state)
-DEFINE_METHOD_SETTER(altrep, Duplicate)
+DEFINE_METHOD_SETTER(altrep, DuplicateEX)
 DEFINE_METHOD_SETTER(altrep, Duplicate_core)
 DEFINE_METHOD_SETTER(altrep, Coerce)
 DEFINE_METHOD_SETTER(altrep, Inspect)

@@ -274,7 +274,7 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
     R_xlen_t i, n;
 
     if (ALTREP(s)) {
-	SEXP ans = ALTREP_DUPLICATE(s, deep);
+	SEXP ans = ALTREP_DUPLICATE_EX(s, deep);
 	if (ans != NULL)
 	    return ans;
     }
