@@ -31,7 +31,7 @@ R_altrep_class_t
 R_make_altreal_class(const char *cname, const char *pname, DllInfo *info);
 Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t);
 
-typedef SEXP (*R_altrep_Unserialize_method_t)(SEXP, SEXP, SEXP);
+typedef SEXP (*R_altrep_UnserializeEX_method_t)(SEXP, SEXP, SEXP, int, int);
 typedef SEXP (*R_altrep_Unserialize_core_method_t)(SEXP, SEXP);
 typedef SEXP (*R_altrep_Serialized_state_method_t)(SEXP);
 typedef SEXP (*R_altrep_Duplicate_method_t)(SEXP, Rboolean);
@@ -66,7 +66,7 @@ typedef int (*R_altstring_No_NA_method_t)(SEXP);
     R_set_##CNAME##_##MNAME##_method(R_altrep_class_t cls,		\
 				     R_##CNAME##_##MNAME##_method_t fun);
 
-DECLARE_METHOD_SETTER(altrep, Unserialize)
+DECLARE_METHOD_SETTER(altrep, UnserializeEX)
 DECLARE_METHOD_SETTER(altrep, Unserialize_core)
 DECLARE_METHOD_SETTER(altrep, Serialized_state)
 DECLARE_METHOD_SETTER(altrep, Duplicate)

@@ -120,7 +120,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 #define ALTSTRING_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altstring)
 
 #define ALTREP_METHODS						\
-    R_altrep_Unserialize_method_t Unserialize;			\
+    R_altrep_UnserializeEX_method_t UnserializeEX;		\
     R_altrep_Unserialize_core_method_t Unserialize_core;	\
     R_altrep_Serialized_state_method_t Serialized_state;	\
     R_altrep_Duplicate_method_t Duplicate;			\
@@ -239,7 +239,7 @@ static SEXP ALTREP_UNSERIALIZE_CLASS(SEXP info)
 }
 
 SEXP attribute_hidden
-ALTREP_UNSERIALIZE(SEXP info, SEXP state, SEXP attr)
+ALTREP_UNSERIALIZE_EX(SEXP info, SEXP state, SEXP attr, int objf, int levs)
 {
     SEXP csym = ALTREP_SERIALIZED_CLASS_CLSSYM(info);
     SEXP psym = ALTREP_SERIALIZED_CLASS_PKGSYM(info);
@@ -276,7 +276,7 @@ ALTREP_UNSERIALIZE(SEXP info, SEXP state, SEXP attr)
     
     /* dispatch to a class method */
     altrep_methods_t *m = CLASS_METHODS_TABLE(class);
-    SEXP val = m->Unserialize(class, state, attr);
+    SEXP val = m->UnserializeEX(class, state, attr, objf, levs);
     return val;
 }
 
@@ -431,11 +431,14 @@ Rcomplex attribute_hidden ALTCOMPLEX_ELT(SEXP x, R_xlen_t i)
  ** ALTREP Default Methods
  **/
 
-static SEXP altrep_Unserialize_default(SEXP class, SEXP state, SEXP attr)
+static SEXP altrep_UnserializeEX_default(SEXP class, SEXP state, SEXP attr,
+					 int objf, int levs)
 {
     altrep_methods_t *m = CLASS_METHODS_TABLE(class);
     SEXP val = m->Unserialize_core(class, state);
     SET_ATTRIB(val, attr);
+    SET_OBJECT(val, objf);
+    SETLEVELS(val, levs);
     return val;
 }
 
@@ -543,7 +546,7 @@ static int altstring_No_NA_default(SEXP x) { return 0; }
  **/
 
 static altinteger_methods_t altinteger_default_methods = {
-    .Unserialize = altrep_Unserialize_default,
+    .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize_core = altrep_Unserialize_core_default,
     .Serialized_state = altrep_Serialized_state_default,
     .Duplicate = altrep_Duplicate_default,
@@ -561,7 +564,7 @@ static altinteger_methods_t altinteger_default_methods = {
 };
 
 static altreal_methods_t altreal_default_methods = {
-    .Unserialize = altrep_Unserialize_default,
+    .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize_core = altrep_Unserialize_core_default,
     .Serialized_state = altrep_Serialized_state_default,
     .Duplicate = altrep_Duplicate_default,
@@ -580,7 +583,7 @@ static altreal_methods_t altreal_default_methods = {
 
 
 static altstring_methods_t altstring_default_methods = {
-    .Unserialize = altrep_Unserialize_default,
+    .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize_core = altrep_Unserialize_core_default,
     .Serialized_state = altrep_Serialized_state_default,
     .Duplicate = altrep_Duplicate_default,
@@ -664,7 +667,7 @@ static void reinit_altrep_class(SEXP class)
 	m->MNAME = fun;							\
     }
 
-DEFINE_METHOD_SETTER(altrep, Unserialize)
+DEFINE_METHOD_SETTER(altrep, UnserializeEX)
 DEFINE_METHOD_SETTER(altrep, Unserialize_core)
 DEFINE_METHOD_SETTER(altrep, Serialized_state)
 DEFINE_METHOD_SETTER(altrep, Duplicate)

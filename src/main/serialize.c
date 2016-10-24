@@ -1583,9 +1583,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    SEXP info = PROTECT(ReadItem(ref_table, stream));
 	    SEXP state = PROTECT(ReadItem(ref_table, stream));
 	    SEXP attr = PROTECT(ReadItem(ref_table, stream));
-	    s = ALTREP_UNSERIALIZE(info, state, attr);
-	    SET_OBJECT(s, objf);
-	    SETLEVELS(s, levs);
+	    s = ALTREP_UNSERIALIZE_EX(info, state, attr, objf, levs);
 	    UNPROTECT(3); /* info, state, attr */
 	    R_ReadItemDepth--;
 	    return s;
