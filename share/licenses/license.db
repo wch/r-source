@@ -314,6 +314,6 @@ FOSS: yes
 Name: ACM Software License Agreement
 Version: 1998
 Abbrev: ACM
-URL: http://www.acm.org/publications/policies/softwarecrnotice
+URL: https://www.acm.org/publications/policies/software-copyright-notice
 FOSS: no
 Restricts_use: yes
