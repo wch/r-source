@@ -152,6 +152,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 #define ALTSTRING_METHODS			\
     ALTVEC_METHODS;				\
     R_altstring_Elt_method_t Elt;		\
+    R_altstring_Set_elt_method_t Set_elt;	\
     R_altstring_Is_sorted_method_t Is_sorted;	\
     R_altstring_No_NA_method_t No_NA
 
@@ -401,6 +402,19 @@ SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
     return val;
 }
 
+void attribute_hidden ALTSTRING_SET_ELT(SEXP x, R_xlen_t i, SEXP v)
+{
+    /**** move GC disabling into method? */
+    if (R_in_gc)
+	error("cannot get ALTSTRING_ELT during GC");
+    int enabled = R_GCEnabled;
+    R_GCEnabled = FALSE;
+
+    ALTSTRING_DISPATCH(Set_elt, x, i, v);
+
+    R_GCEnabled = enabled;
+}
+
 int STRING_IS_SORTED(SEXP x)
 {
     return ALTREP(x) ? ALTSTRING_DISPATCH(Is_sorted, x) : 0;
@@ -532,7 +546,12 @@ static int altreal_No_NA_default(SEXP x) { return 0; }
 
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
-    return STRING_PTR(x)[i];
+    error("ALTSTRING classes must provide an Elt method");
+}
+
+static void altstring_Set_elt_default(SEXP x, R_xlen_t i, SEXP v)
+{
+    error("ALTSTRING classes must provide a Set_elt method");
 }
 
 static int altstring_Is_sorted_default(SEXP x) { return 0; }
@@ -593,6 +612,7 @@ static altstring_methods_t altstring_default_methods = {
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altstring_Elt_default,
+    .Set_elt = altstring_Set_elt_default,
     .Is_sorted = altstring_Is_sorted_default,
     .No_NA = altstring_No_NA_default
 };
@@ -689,6 +709,7 @@ DEFINE_METHOD_SETTER(altreal, Is_sorted)
 DEFINE_METHOD_SETTER(altreal, No_NA)
 
 DEFINE_METHOD_SETTER(altstring, Elt)
+DEFINE_METHOD_SETTER(altstring, Set_elt)
 DEFINE_METHOD_SETTER(altstring, Is_sorted)
 DEFINE_METHOD_SETTER(altstring, No_NA)
 
@@ -1315,7 +1336,7 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i)
     return elt;
 }
 
-static void *deferred_string_Dataptr(SEXP x)
+static R_INLINE void expand_deferred_string(SEXP x)
 {
     SEXP state = DEFERRED_STRING_STATE(x);
     if (state != R_NilValue) {
@@ -1330,6 +1351,11 @@ static void *deferred_string_Dataptr(SEXP x)
 	CLEAR_DEFERRED_STRING_STATE(x); /* allow arg to be reclaimed */
 	UNPROTECT(1);
     }
+}
+
+static void *deferred_string_Dataptr(SEXP x)
+{
+    expand_deferred_string(x);
     return DATAPTR(DEFERRED_STRING_EXPANDED(x));
 }
 
@@ -1352,6 +1378,12 @@ static SEXP deferred_string_Elt(SEXP x, R_xlen_t i)
 	UNPROTECT(1);
 	return elt;
     }
+}
+
+static void deferred_string_Set_elt(SEXP x, R_xlen_t i, SEXP v)
+{
+    expand_deferred_string(x);
+    SET_STRING_ELT(DEFERRED_STRING_EXPANDED(x), i, v);
 }
 
 static int deferred_string_Is_sorted(SEXP x)
@@ -1434,6 +1466,7 @@ static void InitDefferredStringClass()
 
     /* override ALTSTRING methods */
     R_set_altstring_Elt_method(cls, deferred_string_Elt);
+    R_set_altstring_Set_elt_method(cls, deferred_string_Set_elt);
     R_set_altstring_Is_sorted_method(cls, deferred_string_Is_sorted);
     R_set_altstring_No_NA_method(cls, deferred_string_No_NA);
 }

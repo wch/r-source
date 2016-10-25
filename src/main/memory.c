@@ -3459,7 +3459,10 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	      i, XLENGTH(x));
     FIX_REFCNT(x, STRING_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
-    STRING_PTR(x)[i] = v;
+    if (ALTREP(x))
+	ALTSTRING_SET_ELT(x, i, v);
+    else
+	STRING_PTR(x)[i] = v;
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {

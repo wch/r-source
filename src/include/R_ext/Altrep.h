@@ -58,6 +58,7 @@ typedef int (*R_altreal_Is_sorted_method_t)(SEXP);
 typedef int (*R_altreal_No_NA_method_t)(SEXP);
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
+typedef void (*R_altstring_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
 typedef int (*R_altstring_Is_sorted_method_t)(SEXP);
 typedef int (*R_altstring_No_NA_method_t)(SEXP);
 
@@ -90,6 +91,7 @@ DECLARE_METHOD_SETTER(altreal, Is_sorted)
 DECLARE_METHOD_SETTER(altreal, No_NA)
 
 DECLARE_METHOD_SETTER(altstring, Elt)
+DECLARE_METHOD_SETTER(altstring, Set_elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
 
