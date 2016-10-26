@@ -1,4 +1,4 @@
-C     Dqrdc2 is a *modification* Linpack's dqrdc ('DQRDC') for R
+C     Dqrdc2 is a *modification* of Linpack's dqrdc ('DQRDC') for R
 c
 c     dqrdc2 uses householder transformations to compute the qr
 c     factorization of an n by p matrix x.  a limited column
