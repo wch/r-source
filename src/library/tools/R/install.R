@@ -1056,8 +1056,8 @@
             for(e in ignore)
                 i_files <- grep(e, i_files, perl = TRUE, invert = TRUE,
                                 value = TRUE, ignore.case = TRUE)
-            i_files <- i_files[!i_files %in%
-                               c("inst/doc/Rplots.pdf", "inst/doc/Rplots.ps")]
+            i_files <- i_files %w/o% c("inst/doc/Rplots.pdf",
+                                       "inst/doc/Rplots.ps")
             i_files <- grep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",
                             i_files, perl = TRUE, invert = TRUE,
                             value = TRUE, ignore.case = TRUE)
@@ -1066,7 +1066,7 @@
                 i_files <- grep("inst/doc/.*[.](png|jpg|jpeg|gif|ps|eps)$",
                                 i_files, perl = TRUE, invert = TRUE,
                                 value = TRUE, ignore.case = TRUE)
-            i_files <- i_files[! i_files %in% "Makefile"]
+            i_files <- i_files %w/o% "Makefile"
             i2_files <- gsub("^inst", instdir, i_files)
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
@@ -1448,7 +1448,7 @@
             f  <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             if (length(archs) > 1L) {
-                args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+                args <- args0 %w/o% c("--merge-multiarch", "--build")
                 ## this will report '* DONE (foo)' if it works, which
                 ## R CMD check treats as an indication of success.
                 ## so use a backdoor to suppress it.
@@ -1470,7 +1470,7 @@
         } else {
             archs  <- dir(file.path(R.home("bin"), "exec"))
             if (length(archs) > 1L) {
-                args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+                args <- args0 %w/o% c("--merge-multiarch", "--build")
                 ## this will report '* DONE (foo)' if it works, which
                 ## R CMD check treats as an indication of success.
                 ## so use a backdoor to suppress it.
@@ -1525,7 +1525,7 @@
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)
-            new <- nf[!nf %in% of]
+            new <- nf %w/o% of
             if (!length(new))
                 errmsg("cannot extract package from ", sQuote(pkg))
             if (length(new) > 1L)
@@ -2280,21 +2280,21 @@
         type <- "html"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.html", "", basename(have))
-        drop <- have[! have2 %in% c(bfs, "00Index", "R.css")]
+        drop <- have[have2 %notin% c(bfs, "00Index", "R.css")]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("latex" %in% types) {
         type <- "latex"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.tex", "", basename(have))
-        drop <- have[! have2 %in% bfs]
+        drop <- have[have2 %notin% bfs]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("example" %in% types) {
         type <- "example"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.R", "", basename(have))
-        drop <- have[! have2 %in% bfs]
+        drop <- have[have2 %notin% bfs]
         unlink(file.path(outDir, dirname[type], drop))
     }
 

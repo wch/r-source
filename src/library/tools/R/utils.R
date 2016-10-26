@@ -535,12 +535,18 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### * Internal utility functions.
 
+### ** %notin%
+
+`%notin%` <-
+function(x, y)
+    is.na(match(x, y))
+
 ### ** %w/o%
 
 ## x without y, as in the examples of ?match.
 `%w/o%` <-
 function(x, y)
-    x[!x %in% y]
+    x[is.na(match(x, y))]
 
 ### ** .OStype
 

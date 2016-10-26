@@ -425,7 +425,7 @@ function(dir = NULL, files = NULL,
  	    built <- built[!some_os]
  	    names_built <- names(built)
  	}
- 	built[!(names_built %in% basenames)] <- NULL
+ 	built[names_built %notin% basenames] <- NULL
  	if (length(built)) {
  	    which <- match(names(built), basenames)
  	    if (all(file_test("-nt", built_file, files[which]))) {

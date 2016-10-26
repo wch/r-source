@@ -2156,13 +2156,13 @@ function(package, dir, file, lib.loc = NULL,
     if(check_DUP) attr(bad_exprs, "dup_false") <- dup_false
     if (length(bad_pkg)) {              # check against dependencies.
         bases <- .get_standard_package_names()$base
-        bad <- bad_pkg[!bad_pkg %in% bases]
+        bad <- bad_pkg %w/o% bases
         if (length(bad)) {
             depends <- .get_requires_from_package_db(db, "Depends")
             imports <- .get_requires_from_package_db(db, "Imports")
             suggests <- .get_requires_from_package_db(db, "Suggests")
             enhances <- .get_requires_from_package_db(db, "Enhances")
-            bad <- bad[!bad %in% c(depends, imports, suggests, enhances)]
+            bad <- bad %w/o% c(depends, imports, suggests, enhances)
             attr(bad_exprs, "undeclared") <- bad
         }
     }
@@ -2967,10 +2967,10 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             ## These need both to be declared and installed
             ## If people explicitly state 'utils' they ought really to
             ## declare it, but skip for now.
-            bad <- VB[! VB %in% c(package_name, "utils", depends, imports, suggests)]
+            bad <- VB %w/o% c(package_name, "utils", depends, imports, suggests)
             if(length(bad))
                 bad_depends$required_for_checking_but_not_declared <- bad
-            bad2 <- VB[! VB %in% c(package_name, installed)]
+            bad2 <- VB %w/o% c(package_name, installed)
             bad2 <- setdiff(bad2, bad)
             if(length(bad2))
                 bad_depends$required_for_checking_but_not_installed <- bad2
@@ -4196,7 +4196,7 @@ function(package, dir, lib.loc = NULL)
         paste0("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}")
 
     ## Check the targets from the non-anchored xrefs.
-    db[!have_anchor, "bad"] <- !( db[!have_anchor, 1L] %in% unlist(aliases))
+    db[!have_anchor, "bad"] <- db[!have_anchor, 1L] %notin% unlist(aliases)
 
     ## and then check the anchored ones if we can.
     have_colon <- grepl(":", anchor, fixed = TRUE)
