@@ -7509,12 +7509,19 @@ function(x, ...)
                               "    https://CRAN.R-project.org/view=viewname")
                         },
                         if(any(nzchar(z) & !indp & !indv)) {
-                            "  A canonical CRAN URL starts with https://CRAN.R-project.org/"
+                            "  Canonical CRAN.R-project.org URLs use https."
                         }),
                       collapse = "\n")
             },
             if(length(y) && any(nzchar(y$Spaces))) {
                 "  Spaces in an http[s] URL should probably be replaced by %20"
+            },
+            if(length(y) && any(ind <- nzchar(z <- y$R))) {
+                ul <- tolower(z[ind])
+                elts <- unique(sub("^http://([^.]+)[.].*", "\\1", ul))
+                paste(sprintf("  Canonical %s.R-project.org URLs use https.",
+                              elts),
+                      collapse = "\n")
             },
             if(length(y <- x$no_url_checks) && y) {
                 "Checking URLs requires 'libcurl' support in the R build"
