@@ -1,6 +1,6 @@
 % File src/library/base/man/qr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{qr}
@@ -88,10 +88,19 @@ as.qr(x)
   error giving a positive error code: these can only be interpreted by
   detailed study of the FORTRAN code.
 }
+\section{\code{*)}\sspace{} \code{dqrdc2} instead of LINPACK's DQRDC}{
+  In the (default) LINPACK case (\code{LAPACK = FALSE}), \code{qr()}
+  uses a \emph{modified} version of LINPACK's DQRDC, called
+  \sQuote{\code{dqrdc2}}.  It differs by using the tolerance \code{tol}
+  for a pivoting strategy which moves columns with near-zero 2-norm to
+  the right-hand edge of the x matrix.  This strategy means that
+  sequential one degree-of-freedom effects can be computed in a natural
+  way.
+}
 \value{
-  The QR decomposition of the matrix as computed by LINPACK or LAPACK.
+  The QR decomposition of the matrix as computed by LINPACK(*) or LAPACK.
   The components in the returned value correspond directly
-  to the values returned by DQRDC/DGEQP3/ZGEQP3.
+  to the values returned by DQRDC(2)/DGEQP3/ZGEQP3.
   \item{qr}{a matrix with the same dimensions as \code{x}.
     The upper triangle contains the \eqn{\bold{R}} of the decomposition
     and the lower triangle contains information on the \eqn{\bold{Q}} of
@@ -99,7 +108,7 @@ as.qr(x)
     used by DQRDC and DGEQP3 differs.}
   \item{qraux}{a vector of length \code{ncol(x)} which contains
     additional information on \eqn{\bold{Q}}.}
-  \item{rank}{the rank of \code{x} as computed by the decomposition:
+  \item{rank}{the rank of \code{x} as computed by the decomposition(*):
     always full rank in the LAPACK case.}
   \item{pivot}{information on the pivoting strategy used during
     the decomposition.}
@@ -116,7 +125,8 @@ as.qr(x)
   does not attempt to detect rank-deficient matrices.
 }
 \source{
-  For \code{qr}, the LINPACK routine \code{DQRDC} and the LAPACK
+  For \code{qr}, the LINPACK routine \code{DQRDC} (but modified to
+  \code{dqrdc2}(*)) and the LAPACK
   routines \code{DGEQP3} and \code{ZGEQP3}.  Further LINPACK and LAPACK
   routines are used for \code{qr.coef}, \code{qr.qy} and \code{qr.aty}.
 

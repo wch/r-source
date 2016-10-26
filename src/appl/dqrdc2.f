@@ -1,3 +1,4 @@
+C     Dqrdc2 is a *modification* of Linpack's dqrdc ('DQRDC') for R
 c
 c     dqrdc2 uses householder transformations to compute the qr
 c     factorization of an n by p matrix x.  a limited column
@@ -55,21 +56,23 @@ c                with its columns permuted as described by jpvt.
 c
 c        k       integer.
 c                k contains the number of columns of x judged
-c                to be linearly independent.
+c                to be linearly independent, i.e., "the rank"
 c
 c        qraux   double precision(p).
 c                qraux contains further information required to recover
 c                the orthogonal part of the decomposition.
 c
-c        jpvt    jpvt(k) contains the index of the column of the
+c        jpvt    jpvt(j) contains the index of the column of the
 c                original matrix that has been interchanged into
-c                the k-th column.
+c                the j-th column.  Consequently, jpvt[] codes a
+c		 permutation of 1:p; it is called 'pivot' in R
+
 c
 c     original (dqrdc.f) linpack version dated 08/14/78 .
 c     g.w. stewart, university of maryland, argonne national lab.
 c
-c     this version dated 22 august 1995
-c     ross ihaka
+C     This version dated 22 August 1995
+C     Ross Ihaka
 c
 c     bug fixes 29 September 1999 BDR (p > n case, inaccurate ranks)
 c
