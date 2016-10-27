@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-10-10 r71494) -- "Bug in Your Hair"
+R version 3.3.2 RC (2016-10-26 r71594) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -45,4 +45,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.101   0.016   0.208 
+  0.154   0.019   0.260 

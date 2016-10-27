@@ -1,5 +1,5 @@
 
-R version 3.3.1 Patched (2016-10-10 r71494) -- "Bug in Your Hair"
+R version 3.3.2 RC (2016-10-26 r71594) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -408,4 +408,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.211   0.021   0.218 
+  0.160   0.017   0.168 
