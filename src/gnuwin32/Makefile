@@ -362,6 +362,7 @@ recommended:
 	@$(ECHO) "--- Making recommended packages"
 	@$(MK) -C ../library/Recommended -f Makefile.win
 
+## Note that R_COMPILER_SUPPRESS_ALL is now on by default
 bytecode-recommended:
 	@$(ECHO) "--- Making and compiling recommended packages"
 	@rm ../library/Recommended/*.ts

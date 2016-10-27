@@ -3,6 +3,7 @@
 
 .PHONY: Rsimple Rlazy Rlazycomp
 
+## Note that R_COMPILER_SUPPRESS_ALL is now on by default
 $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@if test -n "$(R_NO_BASE_COMPILE)"; then \

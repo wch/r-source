@@ -1107,7 +1107,9 @@
                          "byte-compile and prepare package for lazy loading")
                 ## need to disable JIT
                 Sys.setenv(R_ENABLE_JIT = 0L)
+                compiler::enableJIT(0)
                 compiler::compilePKGS(1L)
+                compiler::setCompilerOptions(suppressAll = FALSE)
                 compiler::setCompilerOptions(suppressUndefined = TRUE)
             } else
                 starsmsg(stars, "preparing package for lazy loading")
