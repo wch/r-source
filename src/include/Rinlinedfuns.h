@@ -98,6 +98,30 @@ INLINE_FUN void *DATAPTR(SEXP x) {
 	return RAWDATAPTR(x);
 }
 
+INLINE_FUN void *DATAPTR_RO(SEXP x) {
+#ifdef STRICT_TYPECHECK
+    switch (TYPEOF(x)) {
+    case CHARSXP:
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case VECSXP:
+    case EXPRSXP:
+    case RAWSXP:
+    case WEAKREFSXP:
+	break;
+    default:
+	error("cannot get data pointer of '%s' objects", type2char(TYPEOF(x)));
+    }
+#endif
+    if (ALTREP(x))
+	return ALTVEC_DATAPTR(x, FALSE);
+    else
+	return RAWDATAPTR(x);
+}
+
 INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
 #ifdef STRICT_TYPECHECK
     switch (TYPEOF(x)) {

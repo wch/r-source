@@ -1445,6 +1445,7 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
 SEXP R_FixupRHS(SEXP x, SEXP y);
 void *(DATAPTR)(SEXP x);
+void *(DATAPTR_RO)(SEXP x);
 void *(DATAPTR_OR_NULL)(SEXP x, Rboolean writeable);
 void *(RAWDATAPTR)(SEXP x);
 int (INTEGER_ELT)(SEXP x, R_xlen_t i);
