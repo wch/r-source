@@ -4357,6 +4357,24 @@ Non-ASCII filenames can also cause problems (particularly in non-UTF-8
 locales).
 
 @item
+Make sure that any version requirement for Java code is both declared in
+the @samp{SystemRequirements} field and tested at runtime (not least as
+the Java installation when the package is installed might not be the
+same as when the package is run and will not be for binary packages).
+Java 8 (aka 1.8) is available for fewer platforms than Java 7.  A
+suitable test for packages using @CRANpkg{rJava} would be
+@example
+.jinit()
+jv <- .jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
+jvn <- as.numeric(paste0(strsplit(jv, "[.]")[[1L]][1:2], collapse = "."))
+if(jvn < 1.8) stop("Java 8 is needed for this package but not available")
+@end example
+
+Some packages have stated a requirement on a particular JDK, but a
+package should only be requiring a JRE unless providing its own Java
+interface.
+
+@item
 A package with a hard-to-satisfy system requirement is by definition not
 portable, annoyingly so if this is not declared in the
 @samp{SystemRequirements} field.  The most common example is the use of
@@ -4763,6 +4781,16 @@ abs acos atan calloc ceil div exp fabs floor fmod free log malloc memcpy
 memset pow printf qsort round sin sprintf sqrt strcmp strcpy strerror
 strlen strncmp strtol tan trunc
 @end example
+
+@item
+Some C++ compilers refuse to compile constructs such as
+@example
+      if(ptr > 0) @{ ....@}
+@end example
+which compares a pointer to the integer @code{0}.  This could just use
+@code{if(ptr)} (pointer addresses cannot be negative) but if needed
+pointers can be tested against @code{nullptr} (C++11 and later) or
+@code{NULL}.
 
 @item
 Macros defined by the compiler/OS can cause problems.  Identifiers
