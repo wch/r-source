@@ -293,7 +293,7 @@ R_xlen_t /*attribute_hidden*/ ALTREP_TRUELENGTH(SEXP x) { return 0; }
  * Generic ALTVEC support
  */
 
-void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x)
+void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x, Rboolean writeable)
 {
     /**** move GC disabling into methods? */
     if (R_in_gc)
@@ -307,7 +307,7 @@ void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x)
     return val;
 }
 
-void /*attribute_hidden*/ *ALTVEC_DATAPTR_OR_NULL(SEXP x)
+void /*attribute_hidden*/ *ALTVEC_DATAPTR_OR_NULL(SEXP x, Rboolean writeable)
 {
     return ALTVEC_DISPATCH(Dataptr_or_null, x);
 }
@@ -323,7 +323,7 @@ SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
  */
 
 #define CHECK_NOT_EXPANDED(x)					\
-    if (DATAPTR_OR_NULL(x) != NULL)				\
+    if (DATAPTR_OR_NULL(x, FALSE) != NULL)			\
 	error("method should only handle unexpanded vectors")
 
 int attribute_hidden ALTINTEGER_ELT(SEXP x, R_xlen_t i)
@@ -333,7 +333,7 @@ int attribute_hidden ALTINTEGER_ELT(SEXP x, R_xlen_t i)
 
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 {
-    int *x = DATAPTR_OR_NULL(sx);
+    int *x = DATAPTR_OR_NULL(sx, FALSE);
     if (x != NULL) {
 	R_xlen_t size = XLENGTH(sx);
 	R_xlen_t ncopy = size - i > n ? n : size - i;
@@ -363,7 +363,7 @@ double attribute_hidden ALTREAL_ELT(SEXP x, R_xlen_t i)
 
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 {
-    double *x = DATAPTR_OR_NULL(sx);
+    double *x = DATAPTR_OR_NULL(sx, FALSE);
     if (x != NULL) {
 	R_xlen_t size = XLENGTH(sx);
 	R_xlen_t ncopy = size - i > n ? n : size - i;

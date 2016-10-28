@@ -63,7 +63,7 @@
 	 }							        \
     } while (0)
 #define ITERATE_BY_REGION(sx, px, idx, nb, etype, vtype, expr) do {	\
-	etype *px = DATAPTR_OR_NULL(sx);				\
+	etype *px = DATAPTR_OR_NULL(sx, FALSE);				\
 	if (px != NULL) {						\
 	    R_xlen_t __ibr_n__ = XLENGTH(sx);				\
 	    R_xlen_t nb = __ibr_n__;					\

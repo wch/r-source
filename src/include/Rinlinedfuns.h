@@ -93,12 +93,12 @@ INLINE_FUN void *DATAPTR(SEXP x) {
     }
 #endif
     if (ALTREP(x))
-	return ALTVEC_DATAPTR(x);
+	return ALTVEC_DATAPTR(x, TRUE);
     else
 	return RAWDATAPTR(x);
 }
 
-INLINE_FUN void *DATAPTR_OR_NULL(SEXP x) {
+INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
 #ifdef STRICT_TYPECHECK
     switch (TYPEOF(x)) {
     case CHARSXP:
@@ -117,7 +117,7 @@ INLINE_FUN void *DATAPTR_OR_NULL(SEXP x) {
     }
 #endif
     if (ALTREP(x))
-	return ALTVEC_DATAPTR_OR_NULL(x);
+	return ALTVEC_DATAPTR_OR_NULL(x, writeable);
     else
 	return RAWDATAPTR(x);
 }
@@ -253,7 +253,7 @@ INLINE_FUN void R_set_altrep_data2(SEXP x, SEXP v) { SETCDR(x, v); }
 #define COMPACT_INTSEQ_INCR(x) INTEGER0(R_altrep_data1(x))[2]
 INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 {
-    int *px = DATAPTR_OR_NULL(x);
+    int *px = DATAPTR_OR_NULL(x, FALSE);
     if (px != NULL)
 	return px[i];
     else {
@@ -283,7 +283,7 @@ INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
 #define COMPACT_REALSEQ_INCR(x) REAL0(R_altrep_data1(x))[2]
 INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 {
-    double *px = DATAPTR_OR_NULL(x);
+    double *px = DATAPTR_OR_NULL(x, FALSE);
     if (px != NULL)
 	return px[i];
     else {
