@@ -301,7 +301,7 @@ void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x, Rboolean writeable)
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
 
-    void *val = ALTVEC_DISPATCH(Dataptr, x);
+    void *val = ALTVEC_DISPATCH(Dataptr, x, writeable);
 
     R_GCEnabled = enabled;
     return val;
@@ -309,7 +309,7 @@ void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x, Rboolean writeable)
 
 void /*attribute_hidden*/ *ALTVEC_DATAPTR_OR_NULL(SEXP x, Rboolean writeable)
 {
-    return ALTVEC_DISPATCH(Dataptr_or_null, x);
+    return ALTVEC_DISPATCH(Dataptr_or_null, x, writeable);
 }
 
 SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
@@ -501,13 +501,16 @@ static R_xlen_t altrep_Length_default(SEXP x)
     error("no Length method defined");
 }
 
-static void *altvec_Dataptr_default(SEXP x)
+static void *altvec_Dataptr_default(SEXP x, Rboolean writeable)
 {
     /**** use class info for better error message? */
     error("cannot access data pointer for this ALTVEC object");
 }
 
-static void *altvec_Dataptr_or_null_default(SEXP x) { return NULL; }
+static void *altvec_Dataptr_or_null_default(SEXP x, Rboolean writeable)
+{
+    return NULL;
+}
 
 static SEXP altvec_Extract_subset_default(SEXP x, SEXP indx, SEXP call)
 {
@@ -843,7 +846,7 @@ static R_INLINE R_xlen_t compact_intseq_Length(SEXP x)
     return COMPACT_INTSEQ_INFO_LENGTH(info);
 }
 
-static void *compact_intseq_Dataptr(SEXP x)
+static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 {
     if (COMPACT_SEQ_EXPANDED(x) == R_NilValue) {
 	/* no need to re-run if expended data exists */
@@ -874,7 +877,7 @@ static void *compact_intseq_Dataptr(SEXP x)
     return DATAPTR(COMPACT_SEQ_EXPANDED(x));
 }
 
-static void *compact_intseq_Dataptr_or_null(SEXP x)
+static void *compact_intseq_Dataptr_or_null(SEXP x, Rboolean writeable)
 {
     SEXP val = COMPACT_SEQ_EXPANDED(x);
     return val == R_NilValue ? NULL : DATAPTR(val);
@@ -1061,7 +1064,7 @@ static R_INLINE R_xlen_t compact_realseq_Length(SEXP x)
     return REAL0(COMPACT_SEQ_INFO(x))[0];
 }
 
-static void *compact_realseq_Dataptr(SEXP x)
+static void *compact_realseq_Dataptr(SEXP x, Rboolean writeable)
 {
     if (COMPACT_SEQ_EXPANDED(x) == R_NilValue) {
 	PROTECT(x);
@@ -1092,7 +1095,7 @@ static void *compact_realseq_Dataptr(SEXP x)
     return DATAPTR(COMPACT_SEQ_EXPANDED(x));
 }
 
-static void *compact_realseq_Dataptr_or_null(SEXP x)
+static void *compact_realseq_Dataptr_or_null(SEXP x, Rboolean writeable)
 {
     SEXP val = COMPACT_SEQ_EXPANDED(x);
     return val == R_NilValue ? NULL : DATAPTR(val);
@@ -1353,13 +1356,13 @@ static R_INLINE void expand_deferred_string(SEXP x)
     }
 }
 
-static void *deferred_string_Dataptr(SEXP x)
+static void *deferred_string_Dataptr(SEXP x, Rboolean writeable)
 {
     expand_deferred_string(x);
     return DATAPTR(DEFERRED_STRING_EXPANDED(x));
 }
 
-static void *deferred_string_Dataptr_or_null(SEXP x)
+static void *deferred_string_Dataptr_or_null(SEXP x, Rboolean writeable)
 {
     SEXP state = DEFERRED_STRING_STATE(x);
     return state != R_NilValue ? NULL : DATAPTR(DEFERRED_STRING_EXPANDED(x));
@@ -1731,7 +1734,7 @@ static R_xlen_t mmap_Length(SEXP x)
     return MMAP_LENGTH(x);
 }
 
-static void *mmap_Dataptr(SEXP x)
+static void *mmap_Dataptr(SEXP x, Rboolean writeable)
 {
     /* get addr first to get error if the object has been unmapped */
     void *addr = MMAP_ADDR(x);
@@ -1742,7 +1745,7 @@ static void *mmap_Dataptr(SEXP x)
 	error("cannot access data pointer for this mmaped vector");
 }
 
-static void *mmap_Dataptr_or_null(SEXP x)
+static void *mmap_Dataptr_or_null(SEXP x, Rboolean writeable)
 {
     return MMAP_PTROK(x) ? MMAP_ADDR(x) : NULL;
 }
