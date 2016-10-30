@@ -649,8 +649,8 @@ static R_size_t R_NodesInUse = 0;
   case EXPRSXP: \
   case VECSXP: \
     { \
-      int i; \
-      for (i = 0; i < LENGTH(__n__); i++) \
+      R_xlen_t i; \
+      for (i = 0; i < XLENGTH(__n__); i++) \
 	dc__action__(VECTOR_ELT(__n__, i), dc__extra__); \
     } \
     break; \
