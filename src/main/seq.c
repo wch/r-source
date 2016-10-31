@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015  The R Core Team.
+ *  Copyright (C) 1998-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -334,7 +334,7 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 	      type2char(TYPEOF(s)));
 
     nc = xlength(ncopy); // might be 0
-    if (nc == xlength(s))
+    if (nc != 1 && nc == xlength(s))
 	PROTECT(a = rep2(s, ncopy));
     else {
 	if (nc != 1) error(_("invalid '%s' value"), "times");
@@ -432,7 +432,8 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     return a;
 }
 
-/* rep(), allowing for both times and each */
+/* rep(), allowing for both times and each ;
+ * -----  nt == length(times) ;  if (nt == 1)  'times' is *not* accessed  */
 static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, int each, R_xlen_t nt)
 {
     SEXP a;
@@ -580,7 +581,7 @@ done:
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, x, times = R_NilValue /* -Wall */;
+    SEXP ans, x, times = R_NilValue;
     int each = 1, nprotect = 3;
     R_xlen_t i, lx, len = NA_INTEGER, nt;
     static SEXP do_rep_formals = NULL;
@@ -651,18 +652,26 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nt = 1;
     } else {
 	R_xlen_t sum = 0;
-	if(CADR(args) == R_MissingArg) PROTECT(times = ScalarInteger(1));
-	else PROTECT(times = coerceVector(CADR(args), INTSXP));
-	nprotect++;
-	nt = XLENGTH(times);
-	if(nt != 1 && nt != lx * each)
-	    errorcall(call, _("invalid '%s' argument"), "times");
+	nt = CADR(args) == R_MissingArg ? 1 : XLENGTH(CADR(args));
 	if(nt == 1) {
-	    int it = INTEGER(times)[0];
+	    R_xlen_t it;
+	    if(CADR(args) == R_MissingArg) it = 1; else {
+#ifdef LONG_VECTOR_SUPPORT
+	    double rt = asReal(CADR(args));
+	    if (!R_FINITE(rt) || rt < 0)
+		errorcall(call, _("invalid '%s' argument"), "times");
+	    it = (R_xlen_t) rt;
+#else
+	    it = asInteger(CADR(args));
 	    if (it == NA_INTEGER || it < 0)
 		errorcall(call, _("invalid '%s' argument"), "times");
+#endif
+	    }
 	    len = lx * it * each;
-	} else {
+	} else { // nt != 1 -- only for this case 'times' is accessed, here and in rep4()
+	    if(nt != lx * each)
+		errorcall(call, _("invalid '%s' argument"), "times");
+	    PROTECT(times = coerceVector(CADR(args), INTSXP)); nprotect++;
 	    for(i = 0; i < nt; i++) {
 		int it = INTEGER(times)[i];
 		if (it == NA_INTEGER || it < 0)

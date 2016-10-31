@@ -484,6 +484,19 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.3.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
+      work also when \code{times} is larger than the maximal integer.
+      (\PR{16932})
+
+      \item \code{vapply(x, *)} now works with long vectors \code{x}.
+      (\PR{17174})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.3.2}{
   \subsection{NEW FEATURES}{
     \itemize{
