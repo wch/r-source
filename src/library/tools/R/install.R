@@ -105,6 +105,12 @@
         if (!keep.tmpdir && dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
+    # This produces a (by default single) quoted string for use in a 
+    # command sent to another R process.  Currently it only fixes backslashes;
+    # more extensive escaping might be a good idea
+    quote_path <- function(path, quote = "'") 
+    	paste0(quote, gsub("\\\\", "\\\\\\\\", path), quote)
+    	
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -1209,7 +1215,7 @@
             ## FIXME: maybe the quoting as 'lib' is not quite good enough
             ## On a Unix-alike this calls system(input=)
             ## and that uses a temporary file and redirection.
-            cmd <- paste0("tools:::.test_load_package('", pkg_name, "', '", lib, "')")
+            cmd <- paste0("tools:::.test_load_package('", pkg_name, "', ", quote_path(lib), ")")
             ## R_LIBS was set already, but Rprofile/Renviron may change it
             ## R_runR is in check.R
             deps_only <-
