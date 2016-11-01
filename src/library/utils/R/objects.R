@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -266,16 +266,19 @@ getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
     if(!is.null(m <- get0(method, envir = envir, mode = "function")))
         return(m)
     ## also look for registered method in namespaces
-    defenv <- if(!is.na(w <- .knownS3Generics[f])) asNamespace(w)
-    else if(f %in% tools:::.get_internal_S3_generics()) .BaseNamespaceEnv
-    else {
-        genfun <- get(f, mode="function", envir = envir)
-        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-            ## assumes the default method is the S3 generic function
-            genfun <- methods::selectMethod(genfun, "ANY")
-        if (typeof(genfun) == "closure") environment(genfun)
-        else .BaseNamespaceEnv
-    }
+    defenv <-
+	if(!is.na(w <- .knownS3Generics[f]))
+	    asNamespace(w)
+	else if(f %in% tools:::.get_internal_S3_generics())
+	    .BaseNamespaceEnv
+	else {
+	    genfun <- get(f, mode="function", envir = envir)
+	    if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+		## assumes the default method is the S3 generic function
+		genfun <- methods::selectMethod(genfun, "ANY")
+	    if (typeof(genfun) == "closure") environment(genfun)
+	    else .BaseNamespaceEnv
+	}
     S3Table <- get(".__S3MethodsTable__.", envir = defenv)
     if(!is.null(m <- get0(method, envir = S3Table, inherits = FALSE)))
 	m
@@ -312,16 +315,19 @@ isS3method <- function(method, f, class, envir = parent.frame())
 	return(is.na(match(method, tools::nonS3methods(pkg)))) ## TRUE unless an exception
     }
     ## also look for registered method in namespaces
-    defenv <- if(!is.na(w <- .knownS3Generics[f])) asNamespace(w)
-    else if(f %in% tools:::.get_internal_S3_generics()) .BaseNamespaceEnv
-    else {
-        genfun <- get(f, mode="function", envir = envir)
-        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-            ## assumes the default method is the S3 generic function
-            genfun <- methods::selectMethod(genfun, "ANY")
-        if (typeof(genfun) == "closure") environment(genfun)
-        else .BaseNamespaceEnv
-    }
+    defenv <-
+	if(!is.na(w <- .knownS3Generics[f]))
+	    asNamespace(w)
+	else if(f %in% tools:::.get_internal_S3_generics())
+	    .BaseNamespaceEnv
+	else {
+	    genfun <- get(f, mode="function", envir = envir)
+	    if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+		## assumes the default method is the S3 generic function
+		genfun <- methods::selectMethod(genfun, "ANY")
+	    if (typeof(genfun) == "closure") environment(genfun)
+	    else .BaseNamespaceEnv
+	}
     S3Table <- get(".__S3MethodsTable__.", envir = defenv)
     ## return
     exists(method, envir = S3Table, inherits = FALSE)
