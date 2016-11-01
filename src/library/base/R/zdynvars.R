@@ -47,7 +47,7 @@
             new <- Sys.glob(path.expand(new))
             paths <- c(new, .Library.site, .Library)
             paths <- paths[dir.exists(paths)]
-            .lib.loc <<- unique(normalizePath(paths))
+            .lib.loc <<- unique(normalizePath(paths, "/"))
         }
         else
             .lib.loc
