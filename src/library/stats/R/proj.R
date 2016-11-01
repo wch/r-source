@@ -2,7 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2012 The R Core Team
+#  Copyright (C) 1998-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ proj <- function(object, ...) UseMethod("proj")
 
 proj.default <- function(object, onedf = TRUE, ...)
 {
-    if(!is.qr(object$qr))
+    if(!inherits(object$qr, "qr"))
 	stop("argument does not include a 'qr' component")
     if(is.null(object$effects))
 	stop("argument does not include an 'effects' component")

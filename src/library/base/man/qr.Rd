@@ -73,8 +73,7 @@ as.qr(x)
   systems, providing a least-squares fit if appropriate.
 
   \code{is.qr} returns \code{TRUE} if \code{x} is a \code{\link{list}}
-  with components named \code{qr}, \code{rank} and \code{qraux} and
-  \code{FALSE} otherwise.
+  and \code{\link{inherits}} from \code{"qr"}.% not more checks, for speed.
 
   It is not possible to coerce objects to mode \code{"qr"}.  Objects
   either are QR decompositions or they are not.
