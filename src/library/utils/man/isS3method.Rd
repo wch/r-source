@@ -1,6 +1,6 @@
 % File src/library/utils/man/isS3method.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isS3method}
@@ -42,6 +42,12 @@ isS3method("t.test")      # FALSE
 isS3method("t.data.frame")# TRUE
 isS3method("t.lm")        # FALSE - not existing
 isS3method("t.foo.bar")   # FALSE - not existing
+
+## S3 methods with "4 parts" in their name:
+ff <- c("as.list", "as.matrix", "is.na", "row.names", "row.names<-")
+for(m in ff) if(isS3method(m)) stop("wrongly declared an S3 method: ", m)
+(m4 <- paste(ff, "data.frame", sep="."))
+for(m in m4) if(!isS3method(m)) stop("not an S3 method: ", m)
 \dontshow{
 stopifnot(
   !isS3method("t"), !isS3method("t.test"), !isS3method("qr.coef"), !isS3method("sort.list"),

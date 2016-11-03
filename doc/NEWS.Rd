@@ -493,6 +493,9 @@
 
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
+
+      \item \code{isS3method("is.na.data.frame")} and similar are
+      correct now.  (\PR{17171})
     }
   }
 }

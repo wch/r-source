@@ -264,6 +264,7 @@ getS3method <- function(f, class, optional = FALSE, envir = parent.frame())
     }
     method <- paste(f, class, sep=".")
     if(!is.null(m <- get0(method, envir = envir, mode = "function")))
+	## FIXME(?): consider  tools::nonS3methods(<pkg>)  same as isS3method()
         return(m)
     ## also look for registered method in namespaces
     defenv <-
@@ -292,26 +293,31 @@ isS3method <- function(method, f, class, envir = parent.frame())
 {
     if(missing(method)) {
         method <- paste(f, class, sep=".")
-    } else { # !missing(method) : use (f, class)
+    } else { # determine (f, class) from 'method'
 	f.c <- strsplit(method, ".", fixed=TRUE)[[1]]
-	if(length(f.c) < 2 || !is.character(f.c))
+	nfc <- length(f.c)
+	if(nfc < 2 || !is.character(f.c))
 	    return(FALSE) ## stop("Invalid 'method' specification; must be  \"<fun>.<class>\"")
-	f <- f.c[1]
-	class <- if(length(f.c) > 2) ## e.g., t.data.frame
-		     paste(f.c[-1], collapse=".")
-		 else
-		     f.c[2]
+	if(nfc == 2) {
+	    f     <- f.c[[1L]]
+	    class <- f.c[[2L]]
+	} else { ## nfc > 2 : e.g., t.data.frame, is.na.data.frame
+	    for(j in 2:nfc)
+		if(isS3method(f     = paste(f.c[1:(j-1)], collapse="."),
+			      class = paste(f.c[j: nfc ], collapse="."),
+			      envir = envir))
+		    return(TRUE)
+	    return(FALSE)
+	}
     }
     if(!any(f == getKnownS3generics())) { ## either a known generic or found in 'envir'
-        truegf <- findGeneric(f, envir)
-        if(nzchar(truegf)) f <- truegf
-        else
+	if(!nzchar(f <- findGeneric(f, envir)))
             return(FALSE)
     }
     if(!is.null(m <- get0(method, envir = envir, mode = "function"))) {
 	## know: f is a knownS3generic, and method m is a visible function
 	pkg <- if(isNamespace(em <- environment(m))) environmentName(em)
-	       else if(is.primitive(m)) "base" else NULL
+	       else if(is.primitive(m)) "base" ## else NULL
 	return(is.na(match(method, tools::nonS3methods(pkg)))) ## TRUE unless an exception
     }
     ## also look for registered method in namespaces
