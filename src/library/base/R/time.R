@@ -34,12 +34,14 @@ system.time <- function(expr, gcFirst = TRUE)
     on.exit()
     structure(new.time - time, class="proc_time")
 }
-unix.time <- system.time
+unix.time <- function(...) {
+    .Deprecated("system.time")
+    system.time(...)
+}
 
 date <- function() .Internal(date())
 
-summary.proc_time <-
-function(object, ...)
+summary.proc_time <- function(object, ...)
 {
     if(!is.na(object[4L]))
         object[1L] <- object[1L] + object[4L]
@@ -51,8 +53,7 @@ function(object, ...)
     object
 }
 
-print.proc_time <-
-function(x, ...)
+print.proc_time <- function(x, ...)
 {
     print(summary(x, ...))
     invisible(x)

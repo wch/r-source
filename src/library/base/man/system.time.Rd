@@ -1,13 +1,13 @@
 % File src/library/base/man/system.time.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system.time}
 \title{CPU Time Used}
 \usage{
 system.time(expr, gcFirst = TRUE)
-unix.time(expr, gcFirst = TRUE)
+%Deprecated unix.time(expr, gcFirst = TRUE)
 }
 \alias{system.time}
 \alias{unix.time}
@@ -23,8 +23,8 @@ unix.time(expr, gcFirst = TRUE)
   evaluates \code{expr}, and then calls \code{proc.time} once more,
   returning the difference between the two \code{proc.time} calls.
 
-  \code{unix.time} is an alias of \code{system.time}, for
-  compatibility with S.
+  \code{unix.time} has been an alias of \code{system.time}, for
+  compatibility with S, and has finally been deprecated in 2016.
 
   Timings of evaluations of the same expression can vary considerably
   depending on whether the evaluation triggers a garbage collection.  When
@@ -38,7 +38,7 @@ unix.time(expr, gcFirst = TRUE)
 }
 \seealso{
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.
-  
+
   \code{\link{Sys.time}} to get the current date & time.
 }
 \examples{

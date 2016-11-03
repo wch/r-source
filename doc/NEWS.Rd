@@ -384,6 +384,9 @@
 
       \item Use of the C/C++ macro \samp{NO_C_HEADERS} is defunct and
       silently ignored.
+
+      \item \code{unix.time()}, a traditional synonym for
+      \code{system.time()}, has been deprecated.
     }
   }
 
