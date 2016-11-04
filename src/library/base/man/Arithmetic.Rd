@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -96,7 +96,7 @@ x \%/\% y
   \code{1 ^ y} and \code{y ^ 0} are \code{1}, \emph{always}.
   \code{x ^ y} should also give the proper limit result when
   either (numeric) argument is \link{infinite} (one of \code{Inf} or
-  \code{-Inf}). 
+  \code{-Inf}).
 
   Objects such as arrays or time-series can be operated on this
   way provided they are conformable.
@@ -146,7 +146,8 @@ x \%/\% y
   Windows whether it does so or not depends on the version of Windows).
   One place in \R where the difference might be seen is in division by
   zero: \code{1/x} is \code{Inf} or \code{-Inf} depending on the sign of
-  zero \code{x}.
+  zero \code{x}.  Another place is
+  \code{\link{identical}(0, -0, num.eq = FALSE)}.
 }
 \note{
   All logical operations involving a zero-length vector have a
