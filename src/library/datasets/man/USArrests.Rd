@@ -59,7 +59,7 @@ UA.C["Maryland", "UrbanPop"] <- 76.6
 
 ## also +/- 0.5 to restore the original  <n>.5  percentages
 s5u <- c("Colorado", "Florida", "Mississippi", "Wyoming")
-s5d <- c("Florida", "Nebraska")
+s5d <- c("Nebraska", "Pennsylvania")
 UA.C[s5u, "UrbanPop"] <- UA.C[s5u, "UrbanPop"] + 0.5
 UA.C[s5d, "UrbanPop"] <- UA.C[s5d, "UrbanPop"] - 0.5
 
