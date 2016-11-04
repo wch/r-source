@@ -4866,8 +4866,9 @@ before including any system headers, but it is better to only use
 all-upper-case names which have a unique prefix such as the package name.
 
 @item
-@code{typedef}s in OS headers can conflict with those in the package: an
-example is @code{index_t} defined in @file{<sys/types.h>} on Solaris.
+@code{typedef}s in OS headers can conflict with those in the package:
+two examples are @code{ulong} on several OSes and @code{index_t} on
+Solaris.
 
 @item
 If you use OpenMP, check carefully that you have followed the advice in
