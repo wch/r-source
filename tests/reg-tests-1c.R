@@ -2013,11 +2013,18 @@ invisible(replicate(100, {
  .v. <- c(-Inf, vec, Inf)
  isIn <-  .v.[i+1] < x  &  x <= .v.[i+2]
  if(! all(isIn)) {
-     dump(c("x", "vec"), file=stdout());
+     dump(c("x", "vec"), file=stdout())
      stop("not ok at ", paste(which(!isIn), collapse=", "))
  }
 }))
 ## failed in R <= 3.3.1
+
+
+## PR#17132 -- grepRaw(*, fixed = TRUE)
+stopifnot(
+    identical(1L,        grepRaw("abcd",     "abcd",           fixed = TRUE)),
+    identical(integer(), grepRaw("abcdefghi", "a", all = TRUE, fixed = TRUE)))
+## length 0 and seg.faulted in R <= 3.3.2
 
 
 

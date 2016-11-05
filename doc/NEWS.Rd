@@ -499,6 +499,9 @@
 
       \item \code{isS3method("is.na.data.frame")} and similar are
       correct now.  (\PR{17171})
+
+      \item \code{grepRaw(<long>, <short>, fixed = TRUE)} now works,
+      thanks to a patch by Mikko Korpela.  (\PR{17132})
     }
   }
 }
