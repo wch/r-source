@@ -1,6 +1,6 @@
 % File src/library/base/man/grepRaw.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grepRaw}
@@ -79,5 +79,11 @@ grepRaw(pattern, x, offset = 1L, ignore.case = FALSE,
   of the pattern specification.
 
   \code{\link{grep}} for matching character vectors.
+}
+\examples{
+grepRaw("no match", "textText")  # integer(0): no match
+grepRaw("adf", "adadfadfdfadadf") # 3 - the first match
+grepRaw("adf", "adadfadfdfadadf", all=TRUE, fixed=TRUE)
+## [1]  3  6 13 -- three matches
 }
 \keyword{utilities}
