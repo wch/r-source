@@ -372,6 +372,9 @@
       in preparing the tarball.  (Previously on Windows it changed the
       dates on all files; on Unix, it changed some dates when installing
       vignettes.)
+
+      \item \command{R CMD check --no-stop-on-error} now continues running
+      tests even if they give (normal) errors.
     }
   }
 

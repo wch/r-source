@@ -431,7 +431,7 @@ testInstalledPackage <-
 }
 
 .runPackageTests <-
-    function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL, ...)
+    function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL, stop_on_error = TRUE, ...)
 {
     if (!is.null(Log)) Log <- file(Log, "wt")
     WINDOWS <- .Platform$OS.type == "windows"
@@ -523,7 +523,7 @@ testInstalledPackage <-
     Rfiles <- dir(".", pattern="\\.[rR]$")
     for(f in Rfiles) {
         nfail <- nfail + runone(f)
-        if (nfail > 0) return(nfail)
+        if (nfail > 0 && stop_on_error) return(nfail)
     }
     if (!is.null(Log)) close(Log)
     return(nfail)
