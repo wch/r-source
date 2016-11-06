@@ -1987,6 +1987,346 @@ SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 /**
+ ** Attribute and Meta Data Wrappers
+ **/
+
+/*
+ * Wrapper Classes and Objects
+ */
+
+#define NMETA 2
+
+static R_altrep_class_t wrap_integer_class;
+static R_altrep_class_t wrap_real_class;
+static R_altrep_class_t wrap_string_class;
+
+/* cwrapper objects are ALTREP objects designed to hold the attributes
+   of a potentially larte object and/or meta data for the object. */
+
+#define WRAPPER_WRAPPED(x) R_altrep_data1(x)
+#define WRAPPER_SET_WRAPPED(x, v) R_set_altrep_data1(x, v)
+#define WRAPPER_METADATA(x) R_altrep_data2(x)
+#define WRAPPER_SET_METADATA(x, v) R_set_altrep_data2(x, v)
+
+#define WRAPPER_SORTED(x) INTEGER(WRAPPER_METADATA(x))[0]
+#define WRAPPER_NO_NA(x) INTEGER(WRAPPER_METADATA(x))[1]
+
+
+/*
+ * ALTREP Methods
+ */
+
+static SEXP wrapper_Serialized_state(SEXP x)
+{
+    return CONS(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
+}
+
+static SEXP make_wrapper(SEXP, SEXP);
+
+static SEXP wrapper_Unserialize(SEXP class, SEXP state)
+{
+    return make_wrapper(CAR(state), CDR(state));
+}
+
+static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
+{
+    SEXP data = WRAPPER_WRAPPED(x);
+    if (deep)
+	data = duplicate(data);
+#ifndef SWITCH_TO_REFCNT
+    else
+	/* not needed with reference counting */
+	MARK_NOT_MUTABLE(data);
+#endif
+    PROTECT(data);
+    SEXP meta = PROTECT(duplicate(WRAPPER_METADATA(x)));
+
+    SEXP ans = make_wrapper(data, meta);
+
+    UNPROTECT(2);
+    return ans;
+}
+
+Rboolean wrapper_Inspect(SEXP x, int pre, int deep, int pvec,
+			 void (*inspect_subtree)(SEXP, int, int, int))
+{
+    Rboolean srt = WRAPPER_SORTED(x);
+    Rboolean no_na = WRAPPER_NO_NA(x);
+    Rprintf(" wrapper [srt=%d,no_na=%d]\n", srt, no_na);
+    inspect_subtree(WRAPPER_WRAPPED(x), pre, deep, pvec);
+    return TRUE;
+}
+
+static R_xlen_t wrapper_Length(SEXP x)
+{
+    return XLENGTH(WRAPPER_WRAPPED(x));
+}
+
+
+/*
+ * ALTVEC Methods
+ */
+
+static void clear_meta_data(SEXP x)
+{
+    SEXP meta = WRAPPER_METADATA(x);
+    for (int i = 0; i < NMETA; i++)
+	INTEGER(meta)[i] = 0;
+}
+
+static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
+{
+    SEXP data = WRAPPER_WRAPPED(x);
+    if (writeable && MAYBE_SHARED(data)) {
+	PROTECT(x);
+	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
+	UNPROTECT(1);
+    }
+    if (writeable) {
+	/* this may clear meta data in cases where it isn't necessary */
+	clear_meta_data(x);
+	return DATAPTR(WRAPPER_WRAPPED(x));
+    }
+    else
+	return DATAPTR_RO(WRAPPER_WRAPPED(x));
+}
+
+static void *wrapper_Dataptr_or_null(SEXP x, Rboolean writeable)
+{
+    if (writeable)
+	return NULL; /* keep things simple */
+    else
+	return DATAPTR_OR_NULL(WRAPPER_WRAPPED(x), FALSE);
+}
+
+
+/*
+ * ALTINTEGER Methods
+ */
+
+static int wrapper_integer_Elt(SEXP x, R_xlen_t i)
+{
+    return INTEGER_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_integer_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, int *buf)
+{
+    return INTEGER_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+static int wrapper_integer_Is_sorted(SEXP x)
+{
+    if (WRAPPER_SORTED(x))
+	return TRUE;
+    else
+	return INTEGER_IS_SORTED(WRAPPER_WRAPPED(x));
+}
+
+static int wrapper_integer_no_NA(SEXP x)
+{
+    if (WRAPPER_NO_NA(x))
+	return TRUE;
+    else
+	return INTEGER_NO_NA(WRAPPER_WRAPPED(x));
+}
+
+
+/*
+ * ALTREAL Methods
+ */
+
+static double wrapper_real_Elt(SEXP x, R_xlen_t i)
+{
+    return REAL_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_real_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, double *buf)
+{
+    return REAL_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+static int wrapper_real_Is_sorted(SEXP x)
+{
+    if (WRAPPER_SORTED(x))
+	return TRUE;
+    else
+	return REAL_IS_SORTED(WRAPPER_WRAPPED(x));
+}
+
+static int wrapper_real_no_NA(SEXP x)
+{
+    if (WRAPPER_NO_NA(x))
+	return TRUE;
+    else
+	return REAL_NO_NA(WRAPPER_WRAPPED(x));
+}
+
+
+/*
+ * ALTSTRING Methods
+ */
+
+static SEXP wrapper_string_Elt(SEXP x, R_xlen_t i)
+{
+    return STRING_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static int wrapper_string_Is_sorted(SEXP x)
+{
+    if (WRAPPER_SORTED(x))
+	return TRUE;
+    else
+	return STRING_IS_SORTED(WRAPPER_WRAPPED(x));
+}
+
+static int wrapper_string_no_NA(SEXP x)
+{
+    if (WRAPPER_NO_NA(x))
+	return TRUE;
+    else
+	return STRING_NO_NA(WRAPPER_WRAPPED(x));
+}
+
+
+/*
+ * Class Objects and Method Tables
+ */
+
+#define WRAPPKG "wrap"
+
+static void InitWrapIntegerClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altinteger_class("wrap_integer", WRAPPKG, dll);
+    wrap_integer_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTINTEGER methods */
+    R_set_altinteger_Elt_method(cls, wrapper_integer_Elt);
+    R_set_altinteger_Get_region_method(cls, wrapper_integer_Get_region);
+    R_set_altinteger_Is_sorted_method(cls, wrapper_integer_Is_sorted);
+    R_set_altinteger_No_NA_method(cls, wrapper_integer_no_NA);
+}
+
+static void InitWrapRealClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altreal_class("wrap_real", WRAPPKG, dll);
+    wrap_real_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTREAL methods */
+    R_set_altreal_Elt_method(cls, wrapper_real_Elt);
+    R_set_altreal_Get_region_method(cls, wrapper_real_Get_region);
+    R_set_altreal_Is_sorted_method(cls, wrapper_real_Is_sorted);
+    R_set_altreal_No_NA_method(cls, wrapper_real_no_NA);
+}
+
+static void InitWrapStringClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altstring_class("wrap_string", WRAPPKG, dll);
+    wrap_string_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTSTRING methods */
+    R_set_altstring_Elt_method(cls, wrapper_string_Elt);
+    R_set_altstring_Is_sorted_method(cls, wrapper_string_Is_sorted);
+    R_set_altstring_No_NA_method(cls, wrapper_string_no_NA);
+}
+
+
+/*
+ * Constructor
+ */
+
+static SEXP make_wrapper(SEXP x, SEXP meta)
+{
+    /**** if x is itself a wrapper it might be a good idea to fuse */
+    R_altrep_class_t cls;
+    switch(TYPEOF(x)) {
+    case INTSXP: cls = wrap_integer_class; break;
+    case REALSXP: cls = wrap_real_class; break;
+    case STRSXP: cls = wrap_string_class; break;
+    default: error("unsupported type");
+    }
+
+    SEXP ans = R_new_altrep(cls, x, meta);
+
+#ifndef SWITCH_TO_REFCNT
+    if (MAYBE_REFERENCED(x))
+	/* make sure no mutation can happen through another reference */
+	MARK_NOT_MUTABLE(x);
+#endif
+    
+    return ans;
+}
+
+SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x = CAR(args);
+    switch(TYPEOF(x)) {
+    case INTSXP:
+    case REALSXP:
+    case STRSXP: break;
+    default: error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
+    }
+    if (ATTRIB(x) != R_NilValue)
+	/* For objects without references we could move the attributes
+	   to the wrapper. For objects with references the attributes
+	   would have to be shallow duplicated at least. The object/S4
+	   bits would need to be moved as well.	*/
+	error("only vectors without attributes are supported for now");
+
+    int srt = asInteger(CADR(args));
+    if (srt < -1 || srt > 1)
+	error("srt must be -1, 0, or +1");
+    
+    int no_na = asInteger(CADDR(args));
+    if (no_na < 0 || no_na > 1)
+	error("no_na must be 0 or +1");
+
+    SEXP meta = allocVector(INTSXP, NMETA);
+    INTEGER(meta)[0] = srt;
+    INTEGER(meta)[1] = no_na;
+
+    return make_wrapper(x, meta);
+}
+
+
+/**
  ** Initialize ALTREP Classes
  **/
 
@@ -1997,4 +2337,7 @@ void attribute_hidden R_init_altrep()
     InitDefferredStringClass();
     InitMmapIntegerClass(NULL);
     InitMmapRealClass(NULL);
+    InitWrapIntegerClass(NULL);
+    InitWrapRealClass(NULL);
+    InitWrapStringClass(NULL);
 }
