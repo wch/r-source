@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-10-26 r71594) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-11-05 r71631) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1358,8 +1358,31 @@ sigma^2 estimated as 0.001476:  log likelihood = 349.73,  aic = -685.46
 > 
 > ### ** Examples
 > 
+> summary(USArrests)
+     Murder          Assault         UrbanPop          Rape      
+ Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+ 1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+ Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+ Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+ 3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+ Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00  
+> 
 > require(graphics)
 > pairs(USArrests, panel = panel.smooth, main = "USArrests data")
+> 
+> ## Difference between 'USArrests' and its correction
+> USArrests["Maryland", "UrbanPop"] # 67 -- the transcription error
+[1] 67
+> UA.C <- USArrests
+> UA.C["Maryland", "UrbanPop"] <- 76.6
+> 
+> ## also +/- 0.5 to restore the original  <n>.5  percentages
+> s5u <- c("Colorado", "Florida", "Mississippi", "Wyoming")
+> s5d <- c("Nebraska", "Pennsylvania")
+> UA.C[s5u, "UrbanPop"] <- UA.C[s5u, "UrbanPop"] + 0.5
+> UA.C[s5d, "UrbanPop"] <- UA.C[s5d, "UrbanPop"] - 0.5
+> 
+> ## ==> UA.C  is now a *C*orrected version of  USArrests
 > 
 > 
 > 
@@ -3458,7 +3481,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.324 0.02 1.345 0 0 
+Time elapsed:  1.319 0.024 1.348 0 0 
 > grDevices::dev.off()
 null device 
           1 
