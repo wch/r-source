@@ -2000,7 +2000,7 @@ static R_altrep_class_t wrap_integer_class;
 static R_altrep_class_t wrap_real_class;
 static R_altrep_class_t wrap_string_class;
 
-/* cwrapper objects are ALTREP objects designed to hold the attributes
+/* Wrapper objects are ALTREP objects designed to hold the attributes
    of a potentially larte object and/or meta data for the object. */
 
 #define WRAPPER_WRAPPED(x) R_altrep_data1(x)
@@ -2031,6 +2031,11 @@ static SEXP wrapper_Unserialize(SEXP class, SEXP state)
 static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
 {
     SEXP data = WRAPPER_WRAPPED(x);
+
+    /* For a deel copy, duplicate the data. */
+    /* For a shallow copy, mark as immutable in teh NAMED word; with
+       reference counting the reference count will be incremented when
+       the data is installed in the new wrapper object. */
     if (deep)
 	data = duplicate(data);
 #ifndef SWITCH_TO_REFCNT
@@ -2039,11 +2044,13 @@ static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
 	MARK_NOT_MUTABLE(data);
 #endif
     PROTECT(data);
+
+    /* always duplicate the meta data */
     SEXP meta = PROTECT(duplicate(WRAPPER_METADATA(x)));
 
     SEXP ans = make_wrapper(data, meta);
 
-    UNPROTECT(2);
+    UNPROTECT(2); /* data, meta */
     return ans;
 }
 
@@ -2077,13 +2084,18 @@ static void clear_meta_data(SEXP x)
 static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
 {
     SEXP data = WRAPPER_WRAPPED(x);
+
+    /* If the data might be shared and a writeable pointer is
+       requested, then the data needst o be duplicated now. */
     if (writeable && MAYBE_SHARED(data)) {
 	PROTECT(x);
 	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
 	UNPROTECT(1);
     }
+
     if (writeable) {
-	/* this may clear meta data in cases where it isn't necessary */
+	/* If a writeable pointer is requested then the meta-data needs
+	   to be cleared as it may no longer be valid after a write. */
 	clear_meta_data(x);
 	return DATAPTR(WRAPPER_WRAPPED(x));
     }
@@ -2094,7 +2106,10 @@ static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
 static void *wrapper_Dataptr_or_null(SEXP x, Rboolean writeable)
 {
     if (writeable)
-	return NULL; /* keep things simple */
+	/* To keep things simple, return NULL if a writeable pointer
+	   is requested and let the caller decide whether to call
+	   DATAPTR or proceed in some other way. */
+	return NULL;
     else
 	return DATAPTR_OR_NULL(WRAPPER_WRAPPED(x), FALSE);
 }
@@ -2120,6 +2135,7 @@ static int wrapper_integer_Is_sorted(SEXP x)
     if (WRAPPER_SORTED(x))
 	return TRUE;
     else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return INTEGER_IS_SORTED(WRAPPER_WRAPPED(x));
 }
 
@@ -2128,6 +2144,7 @@ static int wrapper_integer_no_NA(SEXP x)
     if (WRAPPER_NO_NA(x))
 	return TRUE;
     else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return INTEGER_NO_NA(WRAPPER_WRAPPED(x));
 }
 
@@ -2152,6 +2169,7 @@ static int wrapper_real_Is_sorted(SEXP x)
     if (WRAPPER_SORTED(x))
 	return TRUE;
     else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return REAL_IS_SORTED(WRAPPER_WRAPPED(x));
 }
 
@@ -2160,6 +2178,7 @@ static int wrapper_real_no_NA(SEXP x)
     if (WRAPPER_NO_NA(x))
 	return TRUE;
     else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return REAL_NO_NA(WRAPPER_WRAPPED(x));
 }
 
@@ -2178,6 +2197,7 @@ static int wrapper_string_Is_sorted(SEXP x)
     if (WRAPPER_SORTED(x))
 	return TRUE;
     else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return STRING_IS_SORTED(WRAPPER_WRAPPED(x));
 }
 
@@ -2186,6 +2206,7 @@ static int wrapper_string_no_NA(SEXP x)
     if (WRAPPER_NO_NA(x))
 	return TRUE;
     else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return STRING_NO_NA(WRAPPER_WRAPPED(x));
 }
 
@@ -2194,7 +2215,7 @@ static int wrapper_string_no_NA(SEXP x)
  * Class Objects and Method Tables
  */
 
-#define WRAPPKG "wrap"
+#define WRAPPKG "base"
 
 static void InitWrapIntegerClass(DllInfo *dll)
 {
@@ -2274,7 +2295,7 @@ static void InitWrapStringClass(DllInfo *dll)
 
 static SEXP make_wrapper(SEXP x, SEXP meta)
 {
-    /**** if x is itself a wrapper it might be a good idea to fuse */
+    /* If x is itself a wrapper it might be a good idea to fuse */
     R_altrep_class_t cls;
     switch(TYPEOF(x)) {
     case INTSXP: cls = wrap_integer_class; break;
