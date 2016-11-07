@@ -657,14 +657,14 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_xlen_t it;
 	    if(CADR(args) == R_MissingArg) it = 1; else {
 #ifdef LONG_VECTOR_SUPPORT
-	    double rt = asReal(CADR(args));
-	    if (!R_FINITE(rt) || rt < 0)
-		errorcall(call, _("invalid '%s' argument"), "times");
-	    it = (R_xlen_t) rt;
+		double rt = asReal(CADR(args));
+		if (!R_FINITE(rt) || rt < 0)
+		    errorcall(call, _("invalid '%s' argument"), "times");
+		it = (R_xlen_t) rt;
 #else
-	    it = asInteger(CADR(args));
-	    if (it == NA_INTEGER || it < 0)
-		errorcall(call, _("invalid '%s' argument"), "times");
+		it = asInteger(CADR(args));
+		if (it == NA_INTEGER || it < 0)
+		    errorcall(call, _("invalid '%s' argument"), "times");
 #endif
 	    }
 	    len = lx * it * each;
