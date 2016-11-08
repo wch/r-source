@@ -656,13 +656,18 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(nt == 1) {
 	    R_xlen_t it;
 	    if(CADR(args) == R_MissingArg) it = 1; else {
+		if(!isVectorAtomic(CADR(args))) {
+		    warningcall(call, _("'%s' is not an atomic vector.  This is deprecated."),
+				"times");
+		    PROTECT(times = coerceVector(CADR(args), REALSXP)); nprotect++;
+		} else times = CADR(args);
 #ifdef LONG_VECTOR_SUPPORT
-		double rt = asReal(CADR(args));
+		double rt = asReal(times); // asReal(CADR(args));
 		if (!R_FINITE(rt) || rt < 0)
 		    errorcall(call, _("invalid '%s' argument"), "times");
 		it = (R_xlen_t) rt;
 #else
-		it = asInteger(CADR(args));
+		it = asInteger(times); // asInteger(CADR(args));
 		if (it == NA_INTEGER || it < 0)
 		    errorcall(call, _("invalid '%s' argument"), "times");
 #endif
@@ -671,6 +676,8 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else { // nt != 1 -- only for this case 'times' is accessed, here and in rep4()
 	    if(nt != lx * each)
 		errorcall(call, _("invalid '%s' argument"), "times");
+	    // FIXME: 1. allow large int., i.e. REALSXP; would need even more changes in rep4()
+	    //        2. this does still work with  list(1,2) [which should be deprecated]
 	    PROTECT(times = coerceVector(CADR(args), INTSXP)); nprotect++;
 	    for(i = 0; i < nt; i++) {
 		int it = INTEGER(times)[i];
