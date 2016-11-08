@@ -31,6 +31,15 @@
       gives a warning and will signal an error in the future, as it has
       always for logic and comparison operations in these cases (e.g.,
       compare \code{matrix(1,1) + 2:3} and \code{matrix(1,1) < 2:3}).
+
+      \item The JIT byte code compiler is now enabled by default at
+      level 3. This means functions will be compiled on first sue and
+      top level loops will be compiled and then run.  Thanks to Tomas
+      Kalibera for extensive work to make this possible. For now, the
+      compiler will not compile code containing explicit calls to
+      \code{browser()}. This is to support single stepping from the
+      \code{browser()} call. The JIT can be disabled using
+      \code{compiler::enableJIT()}.
     }
   }
 

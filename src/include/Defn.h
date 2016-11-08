@@ -780,7 +780,7 @@ extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 # define R_BCINTSTACKSIZE 10000
 extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
 #endif
-extern0 int R_jit_enabled INI_as(0);
+extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
 extern SEXP R_cmpfun(SEXP);

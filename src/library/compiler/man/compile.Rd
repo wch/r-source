@@ -74,10 +74,10 @@ setCompilerOptions(...)
   duplicated (useful for some packages, like \code{lattice}, that store
   closures in lists).  If \code{enable} is 3 then in addition all loops
   are compiled before they are executed.  JIT level 3 requires
-  optimization level 2 or 3. JIT can also be enabled by starting \R with
+  optimization level 2 or 3. JIT level can also be selected by starting \R with
   the environment variable \code{R_ENABLE_JIT} set to one of these
   values. Calling \code{enableJIT} with a negative argument returns the
-  current JIT level.
+  current JIT level. The default JIT level is 3.
 
   \code{compilePKGS} enables or disables compiling packages when they
   are installed.  This requires that the package use lazy loading as
