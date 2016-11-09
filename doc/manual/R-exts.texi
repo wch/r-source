@@ -4846,6 +4846,10 @@ which compares a pointer to the integer @code{0}.  This could just use
 pointers can be tested against @code{nullptr} (C++11 and later) or
 @code{NULL}.
 
+@c gcc6 accepts it, gcc5 does not, it seems.
+Note that although @code{nullptr} was only introduced in C++11, some
+compilers accept it in C++98 mode (but most do not).
+
 @item
 Macros defined by the compiler/OS can cause problems.  Identifiers
 starting with an underscore followed by an upper-case letter or another
