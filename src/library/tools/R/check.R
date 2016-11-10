@@ -2842,23 +2842,22 @@ setRlibs <-
             file.copy(Sys.glob(paste0(testsrcdir, "/*")),
                       testdir, recursive = TRUE)
             setwd(testdir)
-            extra <- character()
-            if (use_gct) extra <- c(extra, "use_gct = TRUE")
-            if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
-            tf <- gsub("\\", "/", tempfile(), fixed=TRUE)
-            extra <- c(extra, paste0('Log="', tf, '"'))
-            if (!stop_on_error) extra <- c(extra, "stop_on_error = FALSE")
+	    logf <- gsub("\\", "/", tempfile(), fixed=TRUE)
+	    extra <- c(if(use_gct) "use_gct = TRUE",
+		       if(use_valgrind) "use_valgrind = TRUE",
+		       if(!stop_on_test_error) "stop_on_error = FALSE",
+		       paste0('Log="', logf, '"'))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
             cmd <- paste0("tools:::.runPackageTestsR(",
-                         paste(extra, collapse = ", "), ")")
+                          paste(extra, collapse = ", "), ")")
             t1 <- proc.time()
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = c("LANGUAGE=en",
-                             "_R_CHECK_INTERNALS2_=1",
-                             if(nzchar(arch)) env0,
-                             jitstr, elibs),
+			     env = c("LANGUAGE=en",
+				     "_R_CHECK_INTERNALS2_=1",
+				     if(nzchar(arch)) env0,
+				     jitstr, elibs),
                              stdout = "", stderr = "", arch = arch)
             t2 <- proc.time()
             if (status) {
@@ -2887,22 +2886,21 @@ setRlibs <-
                         lines <- grep('^Xlib: *extension "RANDR" missing on display',
                                       lines, invert = TRUE, value = TRUE,
                                       useBytes = TRUE)
-                    printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
-                    if (keep > 0L)
-                        printLog(Log, sprintf("Last %i lines of output:\n", keep))
-                    else
-                        printLog(Log, "Complete output:\n")
+		    printLog(Log, sprintf("Running the tests in %s failed.\n",
+					  sQuote(file)))
+		    printLog(Log, if(keep > 0L) sprintf("Last %i lines of output:\n", keep)
+				  else "Complete output:\n")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
                 }
                 return(FALSE)
             } else {
                 print_time(t1, t2, Log)
                 resultLog(Log, "OK")
-                if (Log$con > 0L && file.exists(tf)) {
+                if (Log$con > 0L && file.exists(logf)) {
                     ## write results only to 00check.log
-                    lines <- readLines(tf, warn = FALSE)
+                    lines <- readLines(logf, warn = FALSE)
                     cat(lines, sep="\n", file = Log$con)
-                    unlink(tf)
+                    unlink(logf)
                 }
             }
             setwd(pkgoutdir)
@@ -4290,7 +4288,7 @@ setRlibs <-
             "      --timings         record timings for examples",
             "      --install-args=	command-line args to be passed to INSTALL",
 	    "      --test-dir=       look in this subdirectory for test scripts (default tests)",
-            "      --no-stop-on-error    do not stop running tests after first error",
+            "      --no-stop-on-test-error   do not stop running tests after first error",
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
@@ -4370,7 +4368,7 @@ setRlibs <-
     as_cran <- FALSE
     run_dontrun <- FALSE
     run_donttest <- FALSE
-    stop_on_error <- TRUE
+    stop_on_test_error <- TRUE
 
     libdir <- ""
     outdir <- ""
@@ -4455,8 +4453,8 @@ setRlibs <-
             force_multiarch  <- TRUE
         } else if (a == "--as-cran") {
             as_cran  <- TRUE
-	} else if (a == "--no-stop-on-error") {
-	    stop_on_error <- FALSE
+	} else if (a == "--no-stop-on-test-error") {
+	    stop_on_test_error <- FALSE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -4808,7 +4806,7 @@ setRlibs <-
         }
         if (use_gct) opts <- c(opts, "--use-gct")
         if (use_valgrind) opts <- c(opts, "--use-valgrind")
-	if (!stop_on_error) opts <- c(opts, "--no-stop-on-error")
+	if (!stop_on_test_error) opts <- c(opts, "--no-stop-on-test-error")
         if (as_cran) opts <- c(opts, "--as-cran")
         if (length(opts) > 1L)
             messageLog(Log, "using options ", sQuote(paste(opts, collapse=" ")))

@@ -382,8 +382,8 @@
       dates on all files; on Unix, it changed some dates when installing
       vignettes.)
 
-      \item \command{R CMD check --no-stop-on-error} now continues running
-      tests even if they give (normal) errors.
+      \item \command{R CMD check --no-stop-on-test-error} now continues
+      running tests (in \file{tests/}) even if they give errors.
     }
   }
 
