@@ -4183,6 +4183,10 @@ SEXP R_ClosureExpr(SEXP p)
 #ifdef THREADED_CODE
 typedef union { void *v; int i; } BCODE;
 
+/* Declare opinfo volatile to prevent gcc 6 from making a local copy
+   in bcEval stack frames and thus increasing stack usage
+   dramatically */
+volatile
 static struct { void *addr; int argc; char *instname; } opinfo[OPCOUNT];
 
 #define OP(name,n) \
