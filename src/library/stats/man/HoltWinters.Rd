@@ -1,6 +1,6 @@
 % File src/library/stats/man/HoltWinters.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{HoltWinters}
@@ -107,9 +107,9 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 }
 \references{
   C. C. Holt (1957)
-  Forecasting trends and seasonals by exponentially weighted
-  moving averages,
+  Forecasting seasonals and trends by exponentially weighted moving averages,
   \emph{ONR Research Memorandum, Carnegie Institute of Technology} \bold{52}.
+  (reprint at \url{http://dx.doi.org/10.1016/j.ijforecast.2003.09.015}).
 
   P. R. Winters (1960)
   Forecasting sales by exponentially weighted moving averages,
