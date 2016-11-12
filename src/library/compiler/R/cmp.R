@@ -272,13 +272,8 @@ findLocalsList <- function(elist, cntxt) {
         ## **** need to fix the termination condition used in codetools!!!
         if (last.nsf == nsf) {
             rdsf <- vals %in% specialSyntaxFuns
-            if (any(rdsf)) {
-                msg <- ngettext(sum(rdsf),
-                                "local assignment to syntactic function: ",
-                                "local assignments to syntactic functions: ")
-                cntxt$warn(paste(msg, paste(vals[rdsf], collapse = ", ")),
-                           cntxt)
-            }
+            if (any(rdsf))
+                notifyAssignSyntacticFun(vals[rdsf], cntxt)
             return(vals)
         }
     }
@@ -2841,6 +2836,15 @@ notifyMultipleSwitchDefaults <- function(ndflt, cntxt)
 notifyNoSwitchcases <- function(cntxt)
     if (! suppressAll(cntxt))
         cntxt$warn(gettext("'switch' with no alternatives"), cntxt)
+
+notifyAssignSyntacticFun <- function(funs, cntxt) {
+    if (! suppressAll(cntxt)) {
+        msg <- ngettext(length(funs),
+            "local assignment to syntactic function: ",
+            "local assignments to syntactic functions: ")
+        cntxt$warn(paste(msg, paste(funs, collapse = ", ")), cntxt)
+    }
+}
 
 notifyCompilerError <- function(msg)
     if (!compilerOptions$suppressAll)

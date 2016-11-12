@@ -1373,6 +1373,19 @@ notifyNoSwitchcases <- function(cntxt)
         cntxt$warn(gettext("'switch' with no alternatives"), cntxt)
 @ %def notifyNoSwitchcases
 
+The compiler signals when it encounters that a special syntactic function,
+such as [[for]], has been assigned to.
+<<[[notifyAssignSyntacticFun]] function>>=
+notifyAssignSyntacticFun <- function(funs, cntxt) {
+    if (! suppressAll(cntxt)) {
+        msg <- ngettext(length(funs),
+            "local assignment to syntactic function: ",
+            "local assignments to syntactic functions: ")
+        cntxt$warn(paste(msg, paste(funs, collapse = ", ")), cntxt)
+    }
+}
+@ %def notifyAssignSyntacticFun
+
 When the compiler encounters an error during JIT or package
 compilation, it catches the error and returns the original uncompiled
 code letting the AST interpreter handle it. This can happen due to a
@@ -1828,13 +1841,8 @@ findLocalsList <- function(elist, cntxt) {
         ## **** need to fix the termination condition used in codetools!!!
         if (last.nsf == nsf) {
             rdsf <- vals %in% specialSyntaxFuns
-            if (any(rdsf)) {
-                msg <- ngettext(sum(rdsf),
-                                "local assignment to syntactic function: ",
-                                "local assignments to syntactic functions: ")
-                cntxt$warn(paste(msg, paste(vals[rdsf], collapse = ", ")),
-                           cntxt)
-            }
+            if (any(rdsf))
+                notifyAssignSyntacticFun(vals[rdsf], cntxt)
             return(vals)
         }
     }
@@ -6530,6 +6538,8 @@ Opcodes.names <- names(Opcodes.argc)
 <<[[notifyMultipleSwitchDefaults]] function>>
 
 <<[[notifyNoSwitchcases]] function>>
+
+<<[[notifyAssignSyntacticFun]] function>>
 
 <<[[notifyCompilerError]] function>>
 
