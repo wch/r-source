@@ -20,6 +20,10 @@
 
       \item \code{grepRaw(<long>, <short>, fixed = TRUE)} now works,
       thanks to a patch by Mikko Korpela.  (\PR{17132})
+
+      \item Package installation into a library where the package exists
+      via symbolic link now should work wherever \code{\link{Sys.readlink}()}
+      works, resolving \PR{16725}.
     }
   }
 }
