@@ -449,10 +449,6 @@
       \code{NaN} with a warning and \code{qgeom(1, 1)} is \code{0}.
       (\PR{16972})
 
-      \item Package installation into a library where the package exists
-      via symbolic link now should work wherever \code{Sys.readlink()}
-      works, resolving \PR{16725}.
-
       \item \code{table()} no longer drops an \code{"NaN"} factor level,
       and better obeys \code{exclude = <chr>}, thanks to Suharto Anggono's
       patch for \PR{16936}.  Also, in the case of \code{exclude = NULL}
@@ -514,6 +510,10 @@
 
       \item \code{grepRaw(<long>, <short>, fixed = TRUE)} now works,
       thanks to a patch by Mikko Korpela.  (\PR{17132})
+
+      \item Package installation into a library where the package exists
+      via symbolic link now should work wherever \code{\link{Sys.readlink}()}
+      works, resolving \PR{16725}.
     }
   }
 }
