@@ -75,7 +75,7 @@ tkStartGUI <- function()
                          selectmode = "multiple")
 	load <- function() {
             s <- as.integer(tkcurselection(box))
-            if (!length(s)) return
+            if (!length(s)) return()
             lapply(pkglist[s+1L],  require,  character.only = TRUE)
             tkdestroy(tt)
 	}
@@ -93,7 +93,7 @@ tkStartGUI <- function()
                          selectmode = "multiple")
 	gogetem <- function() {
             s <- as.integer(tkcurselection(box))
-            if (!length(s)) return
+            if (!length(s)) return()
             utils::install.packages(l[s+1L])
             tkdestroy(tt)
 	}
@@ -113,7 +113,7 @@ tkStartGUI <- function()
         entry <- tkentry(Toolbar, textvariable = txtvar)
         showhelp <-  function() {
             s <- as.character(tclObj(txtvar))[1L]
-            if (!length(s)) return
+            if (!length(s)) return()
             nm <- as.name(s)
             print(eval(substitute(help(nm))))
             tclvalue(txtvar) <- ""
