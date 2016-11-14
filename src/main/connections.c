@@ -573,10 +573,10 @@ static Rboolean file_open(Rconnection con)
 	    }
 	} else
 #endif
-	    fp = R_fopen(name, con->mode);
+    fp = R_fopen(name, con->mode);
     } else {  /* use file("stdin") to refer to the file and not the console */
 #ifdef HAVE_FDOPEN
-	fp = fdopen(0, con->mode);
+        fp = fdopen(dup(0), con->mode);
 #else
 	warning(_("cannot open file '%s': %s"), name,
 		"fdopen is not supported on this platform");
@@ -633,7 +633,7 @@ static Rboolean file_open(Rconnection con)
 static void file_close(Rconnection con)
 {
     Rfileconn this = con->private;
-    if(con->isopen && strcmp(con->description, "stdin"))
+    if(con->isopen) // && strcmp(con->description, "stdin"))
 	con->status = fclose(this->fp);
     con->isopen = FALSE;
 #ifdef Win32
@@ -5530,7 +5530,7 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     text = asLogical(CADDDR(args));
     if(text == NA_INTEGER)
         error(_("'text' must be TRUE or FALSE"));
-    
+
     if(incon->isGzcon) {
 	warning(_("this is already a 'gzcon' connection"));
 	return CAR(args);

@@ -491,6 +491,11 @@
 
       \item \code{formatC(x, flag=f)} allows two new flags, and signals an
       error for invalid flags also in the case of character formatting.
+
+      \item Reading from stdin now also closes the connection and
+      hence no longer leaks memory when reading from a full pipe, thanks
+      to Gábor Csárdi, see thread starting at
+      \url{https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html}.
     }
   }
 }
