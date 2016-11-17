@@ -30,7 +30,7 @@ files R_HOME/share/licenses/LGPL-2.1 and R_HOME/share/licenses/LGPL-3.
 This applies only to the header files
 
 src/include/R.h
-4src/include/Rdefines.h
+src/include/Rdefines.h
 src/include/Rgraphics.h
 src/include/Rinternals.h
 src/include/Rmath.h
