@@ -519,6 +519,9 @@
       \item Package installation into a library where the package exists
       via symbolic link now should work wherever \code{\link{Sys.readlink}()}
       works, resolving \PR{16725}.
+
+      \item \code{"Cincinnati"} was missing an \code{"n"} in the
+      \code{precip} dataset.
     }
   }
 }
