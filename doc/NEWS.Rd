@@ -24,6 +24,9 @@
       \item Package installation into a library where the package exists
       via symbolic link now should work wherever \code{\link{Sys.readlink}()}
       works, resolving \PR{16725}.
+
+      \item Fix buffer overflow vulnerability in \code{pdf()} when
+      loading an encoding file.  Reported by Talos (TALOS-2016-0227).
     }
   }
 }
