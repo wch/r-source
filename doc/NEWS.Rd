@@ -500,10 +500,6 @@
       hence no longer leaks memory when reading from a full pipe, thanks
       to Gábor Csárdi, see thread starting at
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html}.
-
-      \item Fix buffer overflow vulnerability in \code{pdf()} when
-      loading an encoding file.  Reported by Talos Security Advisory for
-      R Project (TALOS-2016-0227).
     }
   }
 }
@@ -530,6 +526,9 @@
 
       \item \code{"Cincinnati"} was missing an \code{"n"} in the
       \code{precip} dataset.
+
+      \item Fix buffer overflow vulnerability in \code{pdf()} when
+      loading an encoding file.  Reported by Talos (TALOS-2016-0227).
     }
   }
 }

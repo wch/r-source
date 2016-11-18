@@ -521,7 +521,7 @@ LoadEncoding(const char *encpath, char *encname,
     for(i = 0; i < 256; i++) {
 	if (GetNextItem(fp, buf, i, &state)) { fclose(fp); return 0; }
 	strncpy(encnames[i].cname, buf+1, 39);
-        encnames[i].cname[39] = '\0';
+	encnames[i].cname[39] = '\0';
 	strcat(enccode, " /"); strcat(enccode, encnames[i].cname);
 	if(i%8 == 7) strcat(enccode, "\n");
     }
