@@ -1525,7 +1525,7 @@ functions}.  Note that @R{}'s a builtin function @code{sd()} is something differ
 After this assignment, the standard errors are calculated by
 
 @example
-> incster <- tapply(incomes, statef, stderr)
+> incster <- tapply(incomes, statef, stdError)
 @end example
 
 @noindent
