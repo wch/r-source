@@ -332,6 +332,15 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_S4_OBJECT(x) (((x)->sxpinfo.gp) |= S4_OBJECT_MASK)
 #define UNSET_S4_OBJECT(x) (((x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)
 
+/* JIT optimization support */
+#define NOJIT_MASK ((unsigned short)(1<<5))
+#define NOJIT(x) ((x)->sxpinfo.gp & NOJIT_MASK)
+#define SET_NOJIT(x) (((x)->sxpinfo.gp) |= NOJIT_MASK)
+#define MAYBEJIT_MASK ((unsigned short)(1<<6))
+#define MAYBEJIT(x) ((x)->sxpinfo.gp & MAYBEJIT_MASK)
+#define SET_MAYBEJIT(x) (((x)->sxpinfo.gp) |= MAYBEJIT_MASK)
+#define UNSET_MAYBEJIT(x) (((x)->sxpinfo.gp) &= ~MAYBEJIT_MASK)
+
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
 # define IS_LONG_VEC(x) (SHORT_VEC_LENGTH(x) == R_LONG_VEC_TOKEN)
