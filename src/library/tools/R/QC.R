@@ -186,11 +186,14 @@ function(package, dir, lib.loc = NULL)
         ## to the package in their package slot, so eliminate any
         ## foreign generic functions from code_objs
         if(.isMethodsDispatchOn()) {
-            is <- methods::is # speed
+            is <- methods::is           # speed
             code_objs <-
                 Filter(function(f) {
                     fdef <- code_env[[f]] # faster than get()
-                    if(is(fdef, "genericFunction"))
+                    ## Running methods::is() on data sets can trigger
+                    ## loading additional packages for which startup
+                    ## messages et al need suppressing ...
+                    if(suppressMessages(is(fdef, "genericFunction")))
                         fdef@package == pkgname
                     else
                         TRUE
