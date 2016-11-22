@@ -16,7 +16,7 @@
 \title{Byte Code Compiler}
 \usage{
 cmpfun(f, options = NULL)
-compile(e, env = .GlobalEnv, options = NULL)
+compile(e, env = .GlobalEnv, options = NULL, srcref = NULL)
 cmpfile(infile, outfile, ascii = FALSE, env = .GlobalEnv,
         verbose = FALSE, options = NULL)
 loadcmp(file, envir = .GlobalEnv, chdir = FALSE)
@@ -30,6 +30,7 @@ setCompilerOptions(...)
   \item{f}{a closure.}
   \item{options}{list of named compiler options}
   \item{env}{the top level environment for the compiling.}
+  \item{srcref}{initial source reference for the expression.}
   \item{file,infile,outfile}{pathnames; outfile defaults to infile with a .Rc
                              extension in place of any existing extension.}
   \item{ascii}{logical; should the compiled file be saved in ascii format?}
@@ -73,10 +74,10 @@ setCompilerOptions(...)
   duplicated (useful for some packages, like \code{lattice}, that store
   closures in lists).  If \code{enable} is 3 then in addition all loops
   are compiled before they are executed.  JIT level 3 requires
-  optimization level 2 or 3. JIT can also be enabled by starting \R with
+  optimization level 2 or 3. JIT level can also be selected by starting \R with
   the environment variable \code{R_ENABLE_JIT} set to one of these
   values. Calling \code{enableJIT} with a negative argument returns the
-  current JIT level.
+  current JIT level. The default JIT level is 3.
 
   \code{compilePKGS} enables or disables compiling packages when they
   are installed.  This requires that the package use lazy loading as

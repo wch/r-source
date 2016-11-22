@@ -173,20 +173,6 @@ getGenerics(where, searchForm = FALSE)
 
 \section{Details}{
   \describe{
-    \item{\code{setGeneric}:}{
-      If there is already a non-generic function of this name, it will
-      be used to define the generic unless \code{def} is supplied, and
-      the current function will become the default method for the
-      generic.
-
-      If \code{def} is supplied, this defines the generic function, and
-      no default method will exist (often a good feature, if the
-      function should only be available for a meaningful subset of all
-      objects).
-
-      Arguments \code{group} and \code{valueClass} are retained for
-      consistency with S-Plus, but are currently not used.
-    }
     \item{\code{isGeneric}:}{
       If the \code{fdef} argument is supplied, take this as the
       definition of the generic, and test whether it is really a
@@ -238,14 +224,12 @@ getGenerics(where, searchForm = FALSE)
   }
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
+
 \seealso{
   \code{\link{getMethod}} (also for \code{selectMethod}),
   \code{\link{setGeneric}},

@@ -77,7 +77,7 @@
   have a  \code{.Data} slot with that class.  This is the only use of
   \code{.Data} other than as a pseudo-class indicating the type of the
   object.  In this case the type of the object will be the type of the
-  contained matrix or array. See \code{\link{Classes}} for a general
+  contained matrix or array. See \code{\link{Classes_Details}} for a general
   discussion.
 
   The class \code{"ts"}  is basically an S3 class

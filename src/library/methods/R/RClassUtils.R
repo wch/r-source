@@ -2107,6 +2107,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         what <- subNames[[i]]
         subDef <- getClassDef(what, package=packageSlot(subs[[i]]))
         if(is.null(subDef))
+            subDef <- getClassDef(what, env) # may be the case for members of a classUnion
+        if(is.null(subDef))
             warning(gettextf("undefined subclass %s of class %s; definition not updated",
                              .dQ(what), .dQ(def@className)))
         else if(is.na(match(what, names(subDef@contains)))) {

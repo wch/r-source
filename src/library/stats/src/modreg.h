@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2   The R Core Team.
- *  Copyright (C) 2003     The R Foundation
+ *  Copyright (C) 2001-2016 The R Core Team.
+ *  Copyright (C) 2003-2016 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ void F77_SUB(smart)(int *m, int *mu, int *p, int * q, int *n,
 		    double *w, double *x, double *y,
 		    double *ww, double *smod, int *nsmod, double *sp,
 		    int *nsp, double *dp, int *ndp, double *edf);
-void F77_SUB(setsmu)(void);
+void F77_SUB(setsmu)(int *tr);
 void F77_SUB(pppred)(int *np, double *x, double *smod,
 		     double *y, double *sc);
 void F77_SUB(rbart)(double *penalt, double *dofoff,
@@ -94,9 +94,10 @@ void F77_NAME(sbart)
     (double *penalt, double *dofoff,
      double *xs, double *ys, double *ws, double *ssw,
      int *n, double *knot, int *nk, double *coef,
-     double *sz, double *lev, double *crit, int *icrit,
-     double *spar, int *ispar, int *iter, double *lspar,
-     double *uspar, double *tol, double *eps, int *isetup,
+     double *sz, double *lev, double *crit,
+     int *icrit, double *spar, int *ispar, int *iter,
+     double *lspar, double *uspar, double *tol, double *eps, double *Ratio,
+     int *isetup,
      double *xwy, double *hs0, double *hs1, double *hs2,
      double *hs3, double *sg0, double *sg1, double *sg2,
      double *sg3, double *abd, double *p1ip, double *p2ip,

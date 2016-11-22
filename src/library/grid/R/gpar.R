@@ -53,10 +53,27 @@ validGP <- function(gpars) {
       }
     }
   }
+  checkNA <- function(gparname) {
+      if (!is.na(match(gparname, names(gpars)))) {
+          if (any(is.na(gpars[[gparname]]))) {
+              # ALL NA gets removed (ignored)
+              if (all(is.na(gpars[[gparname]]))) {
+                  gpars[[gparname]] <<- NULL
+              } else {
+                  stop(gettextf("mixture of missing and non-missing values for %s",
+                                gparname),
+                       domain=NA)
+              }
+          }
+      }
+  }
   # fontsize, lineheight, cex, lwd should be numeric and not NULL
   numnotnull("fontsize")
+  checkNA("fontsize")
   numnotnull("lineheight")
+  checkNA("lineheight")
   numnotnull("cex")
+  checkNA("cex")
   numnotnull("lwd")
   numnotnull("lex")
   # gamma defunct in 2.7.0
@@ -126,6 +143,7 @@ validGP <- function(gpars) {
     else {
       check.length("fontfamily")
       gpars$fontfamily <- as.character(gpars$fontfamily)
+      checkNA("fontfamily")
     }
   }
   # fontface can be character or integer;  map character to integer

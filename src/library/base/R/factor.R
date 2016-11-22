@@ -24,16 +24,11 @@ factor <- function(x = character(), levels, labels = levels,
     if (missing(levels)) {
 	y <- unique(x, nmax = nmax)
 	ind <- sort.list(y) # or possibly order(x) which is more (too ?) tolerant
-	y <- as.character(y)
-	levels <- unique(y[ind])
+	levels <- unique(as.character(y)[ind])
     }
     force(ordered) # check if original x is an ordered factor
-    if(!is.character(x)) {
-	if(!is.character(exclude))
-	    exclude <- as.vector(exclude, typeof(x)) # may result in NA
+    if(!is.character(x))
 	x <- as.character(x)
-    } else
-	exclude <- as.vector(exclude, typeof(x)) # may result in NA
     ## levels could be a long vectors, but match will not handle that.
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
@@ -149,12 +144,10 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
     if (length(x) == 0L)
         cat(if(ord)"ordered" else "factor", "(0)\n", sep = "")
     else {
-        ## The idea here is to preserve all relevant attributes such as
-        ## names and dims
-        xx <- x
-        class(xx) <- NULL
-        levels(xx) <- NULL
+        xx <- character(length(x))
         xx[] <- as.character(x)
+        keepAttrs <- setdiff(names(attributes(x)), c("levels", "class"))
+        attributes(xx)[keepAttrs] <- attributes(x)[keepAttrs]
         print(xx, quote = quote, ...)
     }
     maxl <- if(is.null(max.levels)) TRUE else max.levels

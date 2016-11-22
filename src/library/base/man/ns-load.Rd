@@ -61,6 +61,9 @@ isNamespaceLoaded(name)
   the name space (it should not be exported).  Partial loading is used
   to support installation with lazy-loading.
 
+  Optionally the package licence is checked during loading: see section
+  \sQuote{Licenses} in the help for \code{\link{library}}.
+
   \code{loadNamespace} does not attach the name space it loads to the
   search path.  \code{attachNamespace} can be used to attach a frame
   containing the exported values of a name space to the search path (but

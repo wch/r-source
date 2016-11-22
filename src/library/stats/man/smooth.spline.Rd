@@ -13,10 +13,10 @@
   Fits a cubic smoothing spline to the supplied data.
 }
 \usage{
-smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
+smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
               all.knots = FALSE, nknots = .nknots.smspl,
               keep.data = TRUE, df.offset = 0, penalty = 1,
-              control.spar = list(), tol = 1e-6 * IQR(x))
+              control.spar = list(), tol = 1e-6 * IQR(x), keep.stuff = FALSE)
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -30,22 +30,27 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
    the smoother matrix).  Must be in \eqn{(1,n_x]}{(1,nx]},
    \eqn{n_x}{nx} the number of unique x values, see below.}
  \item{spar}{smoothing parameter, typically (but not necessarily) in
-   \eqn{(0,1]}.  The coefficient \eqn{\lambda} of the integral of the
-   squared second derivative in the fit (penalized log likelihood)
-   criterion is a monotone function of \code{spar}, see the details
-   below.  If desired, the internal design-dependent \eqn{\lambda} can
-   be specified instead of the scale free \code{spar}=\eqn{s}, using
-   \code{spar = c(lambda = *)}.}
- \item{cv}{ordinary leave-one-out (\code{TRUE}) or \sQuote{generalized} cross-validation
-   (GCV) when \code{FALSE}; is used for smoothing parameter computation
-   only when both \code{spar} and \code{df} are not specified; it is
-   used however to determine \code{cv.crit} in the result.  Setting it
-   to \code{NA} for speedup skips the evaluation of leverages and any
-   score.}
- \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used as
-   knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
+   \eqn{(0,1]}.  When \code{spar} is specified, the coefficient
+   \eqn{\lambda} of the integral of the squared second derivative in the
+   fit (penalized log likelihood) criterion is a monotone function of
+   \code{spar}, see the details below.  Alternatively \code{lambda} may
+   be specified instead of the \emph{scale free} \code{spar}=\eqn{s}.}
+ \item{lambda}{if desired, the internal design-dependent smoothing
+   parameter \eqn{\lambda} can be specified instead of \code{spar}.
+   This may be desirable for resampling algorithms such as cross
+   validation or the bootstrap.}
+ \item{cv}{ordinary leave-one-out (\code{TRUE}) or \sQuote{generalized}
+   cross-validation (GCV) when \code{FALSE}; is used for smoothing
+   parameter computation only when both \code{spar} and \code{df} are
+   not specified; it is used however to determine \code{cv.crit} in the
+   result.  Setting it to \code{NA} for speedup skips the evaluation of
+   leverages and any score.}
+ \item{all.knots}{if \code{TRUE}, all distinct points in \code{x} are used
+   as knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
-   spaced in \code{1:n}, see also the next argument \code{nknots}.}
+   spaced in \code{1:n}, see also the next argument \code{nknots}.
+   Alternatively, a strictly increasing \code{\link{numeric}} vector
+   specifying \dQuote{all the knots} to be used.}
  \item{nknots}{integer or \code{\link{function}} giving the number of
    knots to use when \code{all.knots = FALSE}.  If a function (as by
    default), the number of knots is \code{nknots(nx)}.  By default for
@@ -86,6 +91,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
    values.  The values are binned into bins of size \code{tol} and
    values which fall into the same bin are regarded as the same.  Must
    be strictly positive (and finite).}
+ \item{keep.stuff}{an experimental \code{\link{logical}} indicating if
+   the result should keep extras from the internal computations.  Should
+   allow to reconstruct the \eqn{X} matrix and more.}
 }
 \details{
   Neither \code{x} nor \code{y} are allowed to containing missing or
@@ -96,7 +104,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   regarded as the same are replaced by the first of their values and the
   corresponding \code{y} and \code{w} are pooled accordingly.
 
-  Unless \code{spar = c(lambda = <value>)} has been specified,
+  Unless \code{lambda} has been specified instead of \code{lambda},
   the computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is
   \eqn{\lambda = r * 256^{3 s - 1}}{\lambda = r * 256^(3*spar - 1)}
@@ -116,10 +124,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   \eqn{c} is the solution of the (ridge regression)
   \eqn{(X' W X + \lambda \Sigma) c = X' W y}.
 
-  If \code{spar} is missing or \code{NULL}, the value of \code{df} is used to
-  determine the degree of smoothing.  If both are missing, leave-one-out
-  cross-validation (ordinary or \sQuote{generalized} as determined by
-  \code{cv}) is used to determine \eqn{\lambda}.
+  If \code{spar} and \code{lambda} are missing or \code{NULL}, the value
+  of \code{df} is used to determine the degree of smoothing.  If
+  \code{df} is missing as well, leave-one-out cross-validation (ordinary
+  or \sQuote{generalized} as determined by \code{cv}) is used to
+  determine \eqn{\lambda}.
+
   Note that from the above relation,
 %%  lam      = r * 256^(3s - 1)
 %%  log(lam) = log(r) + (3s - 1) * log(256)
@@ -139,8 +149,11 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   happen for values larger than 2 or so. Don't think of setting
   \code{spar} or the controls \code{low} and \code{high} outside such a
   safe range, unless you know what you are doing!
+  Similarly, specifying \code{lambda} instead of \code{spar} is
+  delicate, notably as the range of \dQuote{safe} values for
+  \code{lambda} is not scale-invariant and hence entirely data dependent.
 
-  The \sQuote{generalized} cross-validation method will work correctly when
+  The \sQuote{generalized} cross-validation method GCV will work correctly when
   there are duplicated points in \code{x}.  However, it is ambiguous what
   leave-one-out cross-validation means with duplicated points, and the
   internal code uses an approximation that involves leaving out groups
@@ -195,10 +208,14 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   }
   \item{spar}{the value of \code{spar} computed or given, unless it has been
     given as \code{c(lambda = *)}, when it set to \code{NA} here.}
+  \item{ratio}{(when \code{spar} above is not \code{NA}), the value
+    \eqn{r}, the ratio of two matrix traces.}
   \item{lambda}{the value of \eqn{\lambda} corresponding to \code{spar},
     see the details above.}
   \item{iparms}{named integer(3) vector where \code{..$ipars["iter"]}
     gives number of spar computing iterations used.}
+  \item{auxMat}{experimental; when \code{keep.stuff} was true, a
+    \dQuote{flat} numeric vector containing parts of the internal computations.}
   \item{fit}{list for use by \code{\link{predict.smooth.spline}}, with
     components
     \describe{
@@ -212,6 +229,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
     }
   }
   \item{call}{the matched call.}
+
+  \code{method(class = "smooth.spline")} shows a
+  \code{\link{hatvalues}()} method based on the \code{lev} vector above.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
@@ -231,9 +251,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
 \source{
   This function is based on code in the \code{GAMFIT} Fortran program by
   T. Hastie and R. Tibshirani (originally taken from
-  \url{http://lib.stat.cmu.edu/general/}, which is now defunct but
-  mirrors may still be available),
-  which makes use of spline code by Finbarr O'Sullivan.  Its design
+  \url{http://lib.stat.cmu.edu/general/gamfit})
+   which makes use of spline code by Finbarr O'Sullivan.  Its design
   parallels the \code{smooth.spline} function of Chambers & Hastie (1992).
 }
 \seealso{
@@ -292,10 +311,10 @@ lines(s2, col = "gray"); lines(predict(s2, xx), col = 2)
 lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 
 ## Specifying 'lambda' instead of usual spar :
-(s2. <- smooth.spline(y18, spar = c(lambda = s2$lambda), tol = s2$tol))
+(s2. <- smooth.spline(y18, lambda = s2$lambda, tol = s2$tol))
 
 \dontshow{
-nD <- c("spar", "iparms", "call"); nn <- setdiff(names(s2), nD)
+nD <- c("spar", "ratio", "iparms", "call"); nn <- setdiff(names(s2), nD)
 stopifnot(all.equal(s2[nn], s2.[nn], tol = 7e-7), # seen 6.86e-8
           all.equal(predict(s02 , xx),
 		    predict(s02., xx), tol = 1e-15))

@@ -50,7 +50,7 @@
 #include <R_ext/Linpack.h>
 
 
-/*  These get the declarations of some routines refernced here but
+/*  These get the declarations of some routines referenced here but
     not explicitly declared.    This is necessary when we link with
     a C++ compiler because the linkage changes as the declarations
     are (currently) within extern "C" blocks.

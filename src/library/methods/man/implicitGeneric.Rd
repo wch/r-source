@@ -11,9 +11,20 @@
 \alias{implicit generic}
 \title{Manage Implicit Versions of Generic Functions}
 \description{
-  Create or access implicit generic functions, used to enforce
-  consistent generic versions of functions that are not currently
-  generic.  Function \code{implicitGeneric()} returns the implicit
+  The implicit generic mechanism stores generic versions of
+  functions
+  in a table in a package. The package does not want the current
+  version of the function to be a generic, however, and retains the
+  non-generic version.
+
+  When a call to \code{\link{setMethod}} or
+  \code{\link{setGeneric}} creates a generic version for one of these
+  functions, the object in the table is used.
+  This mechanism is only needed if special arguments were used to
+  create the generic; e.g., the \code{signature} or the \code{valueClass}
+  options.
+
+    Function \code{implicitGeneric()} returns the implicit
   generic version, \code{setGenericImplicit()} turns a generic implicit,
   \code{prohibitGeneric()} prevents your function from being made
   generic, and \code{registerImplicitGenerics()} saves a set of implicit
@@ -30,74 +41,69 @@ registerImplicitGenerics(what, where)
   \item{name}{ Character string name of the function.}
   \item{where}{ Package or environment in which to register the implicit
     generics.  When using the functions from the top level of your own
-    package source, this argument can usually be omitted (and should
-    be).}
-  \item{generic}{ Optionally, the generic function definition to be
-    cached, but usually omitted.   See Details section.}
+    package source, this argument should be omitted.}
+  \item{generic}{ Obsolete, and likely to be deprecated.}
   \item{restore}{Should the non-generic version of the function be
-    restored after the current.}
-  \item{what}{For \code{registerImplicitGenerics()}, Optional table of
-    the implicit generics to register, but nearly always omitted.   See
-    Details section.}
+    restored?.}
+  \item{what}{Optional table of
+    the implicit generics to register, but nearly always omitted, when
+    it defaults to a standard metadata name.}
 }
 \details{
-  Multiple packages may define methods for the same function, using the
-  version of a function stored in one package.  All these methods should
-  be marshaled and dispatched consistently when a user calls the
-  function.  For consistency, the generic version of the function must
-  have a unique definition (the same arguments allowed in methods
-  signatures, the same values for optional slots such as the value
-  class, and the same standard or non-standard definition of the
-  function itself).
 
-  If the original function is already an S4 generic, there is no
-  problem.  The implicit generic mechanism enforces consistency when the
-  version in the package owning the function is \emph{not} generic.  If
-  a call to \code{\link{setGeneric}()} attempts to turn a function in
-  another package into a generic, the mechanism compares the proposed
-  new generic function to the implicit generic version of that
-  function. If the two agree, all is well. If not, and if the function
-  belongs to another package, then the new generic will not be
-  associated with that package.  Instead, a warning is issued and a
-  separate generic function is created, with its package slot set to the
-  current package, not the one that owns the non-generic version of the
-  function. The effect is that the new package can still define methods
-  for this function, but it will not share the methods in other
-  packages, since it is forcing a different definition of the generic
-  function.
+  Multiple packages may define methods for the same function, to apply
+  to classes defined in that package.  Arithmetic and other operators,
+  \code{plot()} and many other basic computations are typical
+  examples. It's essential that all such packages write methods for
+  the \emph{same} definition of the generic function.  So long as that
+  generic uses the default choice for signature and other parameters,
+  nothing needs to be done.
 
-  The right way to proceed in nearly all cases is to call
-  \code{\link{setGeneric}("foo")}, giving \emph{only} the name of the
-  function; this will automatically use the implicit generic version.
-  If you don't like that version, the best solution is to convince the
-  owner of the other package to agree with you and to insert code to
-  define the non-default properties of the function (even if the owner
-  does not want \code{foo()} to be a generic by default).
+  If the generic has special properties, these need to be ensured for
+  all packages creating methods for it.  The simplest solution is just
+  to make the function generic in the package that originally owned
+  it.  If for some reason the owner(s) of that package are unwilling
+  to do this, the alternative is to define the correct generic,
+  save it in a special table and restore the non-generic version by
+  calling \code{setGenericImplicit}.
+  
 
-  For any function, the implicit generic form is a standard generic in
-  which all formal arguments, except for \code{\dots}, are allowed in
-  the signature of methods. If that is the suitable generic for a
-  function, no action is needed. If not, the best mechanism is to set up
-  the generic in the code of the package owning the function, and to
-  then call \code{setGenericImplicit()} to record the implicit generic
-  and restore the non-generic version.  See the example.
-
-  Note that the package can define methods for the implicit generic as
+  Note that the package containing the function can define methods for the implicit generic as
   well; when the implicit generic is made a real generic, those methods
   will be included.
 
-  Other than predefining  methods, the usual reason for having a
+  The usual reason for having a
   non-default implicit generic is to provide a non-default signature,
   and the usual reason for \emph{that} is to allow lazy evaluation of
-  some arguments.  See the example.  All arguments in the signature of a
+  some arguments.  All arguments in the signature of a
   generic function must be evaluated at the time the function needs to
-  select a method.  (But those arguments can be missing, with or without
-  a default expression being defined; you can always examine
-  \code{missing(x)} even for arguments in the signature.)
+  select a method.
+  In the base function \code{with()} in the example below, evaluation of the argument
+  \code{expr} must be delayed; therefore, it is excluded from the signature.
 
   If you want to completely prohibit anyone from turning your function
   into a generic, call \code{prohibitGeneric()}.
+
+  Function \code{implicitGeneric()} returns the implicit generic
+  version of the named function.  If there is no table of these or if
+  this function is not in the table, the result of a simple call
+  \code{setGeneric(name)} is returned.
 }
+
+\section{Implicit Generics for Base Functions}{
+Implicit generic versions exist for some functions in the packages
+supplied in the distribution of \R itself.  These are stored in the
+\sQuote{methods} package itself and will always be available.
+
+As emphasized repeatedly in the documentation,
+\code{\link{setGeneric}()} calls for a function in  another package
+should never have non-default settings for arguments such as
+\code{signature}.
+The reasoning applies specially to functions in supplied packages,
+since methods for these are likely to exist in multiple packages.
+A call to \code{implicitGeneric()} will show the generic version.
+}
+
 \value{
   Function \code{implicitGeneric()} returns the implicit generic
   definition (and caches that definition the first time if it has to
@@ -106,28 +112,28 @@ registerImplicitGenerics(what, where)
   The other functions exist for their side effect and return nothing
   useful.
 }
+
 \seealso{\code{\link{setGeneric}}}
 \examples{
 
-### How we would make the function \link{with}() into a generic:
+### How we would make the function with() into a generic:
 
 ## Since the second argument, 'expr' is used literally, we want
 ## with() to only have "data" in the signature.
 
-## Note that 'methods'-internal code now has already extended  with()
-## to do the equivalent of the following
 \dontrun{
 setGeneric("with", signature = "data")
 ## Now we could predefine methods for "with" if we wanted to.
 
-## When ready, we store the generic as implicit, and restore the original
+## When ready, we store the generic as implicit, and restore the
+original
+
 setGenericImplicit("with")
-
-## (This example would only work if we "owned" function with(),
-##  but it is in base.)}
-
-implicitGeneric("with")
 }
 
+implicitGeneric("with")
+
+# (This implicit generic is stored in the 'methods' package.)
+}
 \keyword{programming}
 \keyword{methods}

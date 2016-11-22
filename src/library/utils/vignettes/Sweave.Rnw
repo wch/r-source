@@ -666,7 +666,7 @@ encoding used for the text to be processed.
     in Sweave format?}
 
   Recent versions of ESS (Emacs speaks statistics,
-  \url{http://ess.R-project.org}) automatically recognize files with
+  \url{https://ESS.R-project.org/}) automatically recognize files with
   extension \file{.Rnw} as Sweave files and turn on the correct
   modes. Please follow the instructions on the ESS homepage on how to
   install ESS on your computer.

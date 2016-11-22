@@ -2,13 +2,16 @@
 % Part of the R package, https://www.R-project.org
 % Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
-
 \name{c}
 \title{Combine Values into a Vector or List}
-\usage{
-c(\dots, recursive = FALSE, use.names = TRUE)
-}
 \alias{c}
+\alias{c.default}% existing "conceptually", see ../../tools/R/QC.R
+\usage{
+## S3 Generic function
+c(\dots)
+
+\S3method{c}{default}(\dots, recursive = FALSE, use.names = TRUE)
+}
 \description{
   This is a generic function which combines its arguments.
 

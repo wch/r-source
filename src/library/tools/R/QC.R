@@ -67,6 +67,10 @@ langElts <- c("(", "{", ":", "~",
 	      "&&", "||",
 	      "break", "for", "function", "if", "next", "repeat", "return", "while")
 
+## Code "existing conceptually" in base,
+## typically function names of default methods for .Primitive s:
+conceptual_base_code <- c("c.default")
+
 ##' a "default" print method used "below" (in several *.R):
 .print.via.format <- function(x, ...) {
     writeLines(format(x, ...))
@@ -182,16 +186,19 @@ function(package, dir, lib.loc = NULL)
         ## to the package in their package slot, so eliminate any
         ## foreign generic functions from code_objs
         if(.isMethodsDispatchOn()) {
+            is <- methods::is           # speed
             code_objs <-
                 Filter(function(f) {
-                    ## NB: this get() is expensive as it loads every object
-                    fdef <- get(f, envir = code_env)
-                    if(methods::is(fdef, "genericFunction"))
+                    fdef <- code_env[[f]] # faster than get()
+                    ## Running methods::is() on data sets can trigger
+                    ## loading additional packages for which startup
+                    ## messages et al need suppressing ...
+                    if(suppressMessages(is(fdef, "genericFunction")))
                         fdef@package == pkgname
                     else
                         TRUE
                 },
-                       code_objs)
+                code_objs)
         }
 
         ## Allow group generics to be undocumented other than in base.
@@ -219,8 +226,8 @@ function(package, dir, lib.loc = NULL)
         ## </NOTE>
         ## The bad ones:
         S4_classes <-
-            S4_classes[!sapply(S4_classes,
-                               function(u) utils:::topicName("class", u))
+            S4_classes[!vapply(S4_classes, utils:::topicName, " ",
+                               type = "class", USE.NAMES=FALSE)
                        %in% all_doc_topics]
         undoc_things <-
             c(undoc_things, list("S4 classes" = unique(S4_classes)))
@@ -360,8 +367,9 @@ function(package, dir, lib.loc = NULL,
                 unique(c(objects_in_code, objects_in_ns, ns_S3_methods))
             objects_in_ns <- setdiff(objects_in_ns, objects_in_code)
         }
-        else
-            objects_in_code_or_namespace <- objects_in_code
+	else { ## typically only 'base'
+	    objects_in_code_or_namespace <- objects_in_code
+	}
         package_name <- package
     }
     else {
@@ -437,6 +445,7 @@ function(package, dir, lib.loc = NULL,
             sort(names(baseenv()))
         objects_in_code <-
             c(objects_in_code,
+	      conceptual_base_code,
               Filter(.is_primitive_in_base, objects_in_base),
               c(".First.lib", ".Last.lib", ".Random.seed",
                 ".onLoad", ".onAttach", ".onDetach", ".onUnload"))
@@ -506,8 +515,9 @@ function(package, dir, lib.loc = NULL,
             !identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
                        FALSE)
         if(check_S4_methods) {
+            unRematchDef <- methods::unRematchDefinition
             get_formals_from_method_definition <- function(m)
-                formals(methods::unRematchDefinition(m))
+		formals(unRematchDef(m))
             lapply(.get_S4_generics(code_env),
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
@@ -567,8 +577,8 @@ function(package, dir, lib.loc = NULL,
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
-    ind <- as.logical(sapply(db_usages,
-                             function(x) !is.null(attr(x, "bad_lines"))))
+    ind <- vapply(db_usages,
+                  function(x) !is.null(attr(x, "bad_lines")), NA, USE.NAMES=FALSE)
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     bad_doc_objects <- list()
@@ -585,17 +595,16 @@ function(package, dir, lib.loc = NULL,
 
         ## Get variable names and data set usages first, mostly for
         ## curiosity.
-        ind <- ! sapply(exprs, is.call)
+        ind <- ! vapply(exprs, is.call, NA)
         if(any(ind)) {
             variables_in_usages <-
                 c(variables_in_usages,
                   sapply(exprs[ind], deparse))
             exprs <- exprs[!ind]
         }
-        ind <- as.logical(sapply(exprs,
-                                 function(e)
-                                 (length(e) == 2L)
-                                 && e[[1L]] == as.symbol("data")))
+        ind <- vapply(exprs, function(e) (length(e) == 2L) &&
+                                         e[[1L]] == as.symbol("data"),
+                      NA, USE.NAMES=FALSE)
         if(any(ind)) {
             data_sets <- sapply(exprs[ind],
                                 function(e) as.character(e[[2L]]))
@@ -606,8 +615,7 @@ function(package, dir, lib.loc = NULL,
             exprs <- exprs[!ind]
         }
         ## Split out replacement function usages.
-        ind <- as.logical(sapply(exprs,
-                                 .is_call_from_replacement_function_usage))
+        ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA, USE.NAMES=FALSE)
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
@@ -718,7 +726,7 @@ function(package, dir, lib.loc = NULL,
                 (is.call(b <- body(f))
                  && identical(as.character(b[[1L]]), ".Defunct"))
             }
-            functions[!sapply(functions, is_defunct)]
+            functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
         }
     objects_missing_from_usages <-
         if(!has_namespace) character() else {
@@ -960,7 +968,8 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    idx <- sApply(lapply(db, .Rd_get_doc_type), identical, "class")
+    idx <- vapply(lapply(db, .Rd_get_doc_type), identical, NA, "class",
+		  USE.NAMES=FALSE)
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
@@ -982,7 +991,7 @@ function(package, lib.loc = NULL)
     aliases <- unlist(aliases[idx], use.names = FALSE)
 
     Rd_slots <- lapply(db, .Rd_get_section, "Slots", FALSE)
-    idx <- sapply(Rd_slots, length) > 0L
+    idx <- lengths(Rd_slots) > 0L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]; aliases <- aliases[idx]; Rd_slots <- Rd_slots[idx]
     stats["n.final"] <- length(db)
@@ -1010,7 +1019,8 @@ function(package, lib.loc = NULL)
 		      use.names=FALSE))
     }
 
-    S4topics <- sApply(S4_classes, utils:::topicName, type="class")
+    S4topics <- vapply(S4_classes, utils:::topicName, " ",
+                       type="class", USE.NAMES=FALSE)
     S4_checked <- S4_classes[has.a <- S4topics %in% aliases]
     idx <- match(S4topics[has.a], aliases)
     for(icl in seq_along(S4_checked)) {
@@ -2149,13 +2159,13 @@ function(package, dir, file, lib.loc = NULL,
     if(check_DUP) attr(bad_exprs, "dup_false") <- dup_false
     if (length(bad_pkg)) {              # check against dependencies.
         bases <- .get_standard_package_names()$base
-        bad <- bad_pkg[!bad_pkg %in% bases]
+        bad <- bad_pkg %w/o% bases
         if (length(bad)) {
             depends <- .get_requires_from_package_db(db, "Depends")
             imports <- .get_requires_from_package_db(db, "Imports")
             suggests <- .get_requires_from_package_db(db, "Suggests")
             enhances <- .get_requires_from_package_db(db, "Enhances")
-            bad <- bad[!bad %in% c(depends, imports, suggests, enhances)]
+            bad <- bad %w/o% c(depends, imports, suggests, enhances)
             attr(bad_exprs, "undeclared") <- bad
         }
     }
@@ -2960,10 +2970,10 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             ## These need both to be declared and installed
             ## If people explicitly state 'utils' they ought really to
             ## declare it, but skip for now.
-            bad <- VB[! VB %in% c(package_name, "utils", depends, imports, suggests)]
+            bad <- VB %w/o% c(package_name, "utils", depends, imports, suggests)
             if(length(bad))
                 bad_depends$required_for_checking_but_not_declared <- bad
-            bad2 <- VB[! VB %in% c(package_name, installed)]
+            bad2 <- VB %w/o% c(package_name, installed)
             bad2 <- setdiff(bad2, bad)
             if(length(bad2))
                 bad_depends$required_for_checking_but_not_installed <- bad2
@@ -4189,7 +4199,7 @@ function(package, dir, lib.loc = NULL)
         paste0("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}")
 
     ## Check the targets from the non-anchored xrefs.
-    db[!have_anchor, "bad"] <- !( db[!have_anchor, 1L] %in% unlist(aliases))
+    db[!have_anchor, "bad"] <- db[!have_anchor, 1L] %notin% unlist(aliases)
 
     ## and then check the anchored ones if we can.
     have_colon <- grepl(":", anchor, fixed = TRUE)
@@ -6144,7 +6154,8 @@ function(package, dir, lib.loc = NULL, details = TRUE)
             tab <- get(methods:::.TableMetaName(f, attr(f, "package")),
                        envir = code_env)
             ## The S4 'system' does **copy** base code into packages ....
-            any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") && any(codetools::findGlobals(v) %in% ".Internal"))))
+            any(unlist(eapply(tab, function(v) !inherits(v, "derivedDefaultMethod") &&
+                                   any(codetools::findGlobals(v) %in% ".Internal"))))
         })
         gens[unlist(x)]
     }
@@ -6616,15 +6627,8 @@ function(dir, localOnly = FALSE)
             out$spelling <- a
     }
 
-    parse_description_field <- function(desc, field, default = TRUE)
-    {
-        tmp <- desc[field]
-        if (is.na(tmp)) default
-        else switch(tmp,
-                    "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                    "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                    default)
-    }
+    parse_description_field <- function(desc, field, default=TRUE)
+        str_parse_logic(desc[field], default=default)
 
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
@@ -7508,12 +7512,19 @@ function(x, ...)
                               "    https://CRAN.R-project.org/view=viewname")
                         },
                         if(any(nzchar(z) & !indp & !indv)) {
-                            "  A canonical CRAN URL starts with https://CRAN.R-project.org/"
+                            "  Canonical CRAN.R-project.org URLs use https."
                         }),
                       collapse = "\n")
             },
             if(length(y) && any(nzchar(y$Spaces))) {
                 "  Spaces in an http[s] URL should probably be replaced by %20"
+            },
+            if(length(y) && any(ind <- nzchar(z <- y$R))) {
+                ul <- tolower(z[ind])
+                elts <- unique(sub("^http://([^.]+)[.].*", "\\1", ul))
+                paste(sprintf("  Canonical %s.R-project.org URLs use https.",
+                              elts),
+                      collapse = "\n")
             },
             if(length(y <- x$no_url_checks) && y) {
                 "Checking URLs requires 'libcurl' support in the R build"

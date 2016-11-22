@@ -28,11 +28,11 @@ function(formula, data = NULL,
          col = NULL, main = "", xlab = NULL, ylab = NULL,
          xaxlabels = NULL, yaxlabels = NULL,
          xlim = NULL, ylim = c(0, 1), axes = TRUE, ...,
-         subset = NULL)
+         subset = NULL, drop.unused.levels = FALSE)
 {
     ## extract x, y from formula
     m <- match.call(expand.dots = FALSE)
-    m <- m[c(1L, match(c("formula", "data", "subset"), names(m), 0L))]
+    m <- m[c(1L, match(c("formula", "data", "subset", "drop.unused.levels"), names(m), 0L))]
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval.parent(m)
@@ -121,10 +121,10 @@ function(x, y = NULL,
         breaks <- do.call("hist", breaks)$breaks
         ## categorize x
         x1 <- cut(x, breaks = breaks, include.lowest = TRUE)
-        ## compute rectangle positions on x axis
-        xat <- c(0, cumsum(prop.table(table(x1))))
         ## construct table
         tab <- table(x1, y)
+        ## compute rectangle positions on x axis
+        xat <- c(0, cumsum(prop.table(margin.table(tab, 1)))) # c(0, cumsum(prop.table(table(x1))))
         nx <- NROW(tab)
         xaxlabels <- if(is.null(xaxlabels)) {
 	  if(xnumeric) breaks else c(xorig[1L], xorig[c(diff(as.numeric(x1)) > 0, TRUE)])

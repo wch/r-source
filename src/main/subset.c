@@ -733,23 +733,23 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    R_xlen_t k = i - 1 + nrow * (j - 1);
 		    switch (TYPEOF(x)) {
 		    case REALSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarReal( REAL_ELT(x, k) );
 			break;
 		    case INTSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarInteger( INTEGER_ELT(x, k) );
 			break;
 		    case LGLSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarLogical( LOGICAL_ELT(x, k) );
 			break;
 		    case CPLXSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarComplex( COMPLEX_ELT(x, k) );
 			break;
 		    case RAWSXP:
-			if (k < LENGTH(x))
+			if (k < XLENGTH(x))
 			    return ScalarRaw( RAW(x)[k] );
 			break;
 		    default: break;
@@ -850,14 +850,15 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (type == LANGSXP) {
 	ax = ans;
 	PROTECT(ans = allocList(LENGTH(ax)));
-	if ( LENGTH(ax) > 0 )
+	if ( LENGTH(ax) > 0 ) {
 	    SET_TYPEOF(ans, LANGSXP);
-	for(px = ans, i = 0 ; px != R_NilValue ; px = CDR(px))
-	    SETCAR(px, VECTOR_ELT(ax, i++));
-	setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));
-	setAttrib(ans, R_DimNamesSymbol, getAttrib(ax, R_DimNamesSymbol));
-	setAttrib(ans, R_NamesSymbol, getAttrib(ax, R_NamesSymbol));
-	SET_NAMED(ans, NAMED(ax)); /* PR#7924 */
+	    for(px = ans, i = 0 ; px != R_NilValue ; px = CDR(px))
+		SETCAR(px, VECTOR_ELT(ax, i++));
+	    setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));
+	    setAttrib(ans, R_DimNamesSymbol, getAttrib(ax, R_DimNamesSymbol));
+	    setAttrib(ans, R_NamesSymbol, getAttrib(ax, R_NamesSymbol));
+	    SET_NAMED(ans, NAMED(ax)); /* PR#7924 */
+	}
     }
     else {
 	PROTECT(ans);

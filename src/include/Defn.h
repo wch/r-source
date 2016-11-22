@@ -491,6 +491,7 @@ typedef struct {
 } R_bcstack_t;
 # define PARTIALSXP_MASK (~255)
 # define IS_PARTIAL_SXP_TAG(x) ((x) & PARTIALSXP_MASK)
+# define RAWMEM_TAG 254
 #else
 typedef SEXP R_bcstack_t;
 #endif
@@ -522,7 +523,10 @@ typedef struct RCNTXT {
     void *cenddata;		/* data for C "on.exit" thunk */
     void *vmax;		        /* top of R_alloc stack */
     int intsusp;                /* interrupts are suspended */
-    int gcenabled;		/* R_GCenabled value */
+    int gcenabled;		/* R_GCEnabled value */
+    int bcintactive;            /* R_BCIntActive value */
+    SEXP bcbody;                /* R_BCbody value */
+    void* bcpc;                 /* R_BCpc value */
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
@@ -531,8 +535,9 @@ typedef struct RCNTXT {
     IStackval *intstack;
 #endif
     SEXP srcref;	        /* The source line in effect */
-    int browserfinish;     /* should browser finish this context without stopping */
-    SEXP returnValue;			/* only set during on.exit calls */
+    int browserfinish;          /* should browser finish this context without
+                                   stopping */
+    SEXP returnValue;           /* only set during on.exit calls */
     struct RCNTXT *jumptarget;	/* target for a continuing jump */
     int jumpmask;               /* associated LONGJMP argument */
 } RCNTXT, *context;
@@ -643,7 +648,11 @@ LibExtern char *R_Home;		    /* Root of the R tree */
 extern0 R_size_t R_NSize  INI_as(R_NSIZE);/* Size of cons cell heap */
 extern0 R_size_t R_VSize  INI_as(R_VSIZE);/* Size of the vector heap */
 extern0 int	R_GCEnabled INI_as(1);
-extern0 int     R_in_gc INI_as(0);
+extern0 int	R_in_gc INI_as(0);
+extern0 int	R_BCIntActive INI_as(0); /* bcEval called more recently than
+                                            eval */
+extern0 void*	R_BCpc INI_as(NULL);/* current byte code instruction */
+extern0 SEXP	R_BCbody INI_as(NULL); /* current byte code object */
 extern0 SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern0 SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern0 R_size_t R_Collected;	    /* Number of free cons cells (after gc) */
@@ -765,18 +774,23 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 
 void resetTimeLimits(void);
 
-#define R_BCNODESTACKSIZE 100000
+#define R_BCNODESTACKSIZE 200000
 extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 #ifdef BC_INT_STACK
 # define R_BCINTSTACKSIZE 10000
 extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
 #endif
-extern0 int R_jit_enabled INI_as(0);
+extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
 extern SEXP R_cmpfun(SEXP);
 extern void R_init_jit_enabled(void);
 extern void R_initAsignSymbols(void);
+#ifdef R_USE_SIGNALS
+extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
+#endif
+extern SEXP R_getCurrentSrcref();
+extern SEXP R_getBCInterpreterExpression();
 
 LibExtern SEXP R_CachedScalarReal INI_as(NULL);
 LibExtern SEXP R_CachedScalarInteger INI_as(NULL);

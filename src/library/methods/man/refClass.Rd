@@ -28,18 +28,36 @@
 \alias{externalRefMethod}
 \alias{externalRefMethod-class}
 \description{
-The software described here supports reference classes whose objects have
-fields
-accessed by reference in the style of \dQuote{OOP} languages such as Java and
+The software described here allows packages to define \emph{reference
+  classes} that behave in the style of \dQuote{OOP} languages such as Java and
 C++.
-Computations with these objects invoke methods on them and
-extract or set their fields.
+This model for OOP differs from the functional model implemented by S4
+(and S3) classes and methods, in which methods are defined for generic
+functions.
+Methods for reference classes are \dQuote{encapsulated} in the class definition.
+
+Computations with objects from reference classes invoke methods on them and
+extract or set their fields, using  the \code{`$`} operator in \R.%$
 The field and method computations potentially modify the object.
 All computations referring to the objects see the modifications, in contrast to
 the usual functional programming model in \R.
-Reference classes can be used to program in \R directly or in combination
-with an interface to an OOP-style language, allowing \R-written methods to
-extend the interface.
+
+A call to
+\code{setRefClass} in the source code for a package defines the class and returns a generator object.
+Subsequent calls to the \code{$methods()} %$
+method of the generator will define methods for the class.
+As with functional classes, if the class is exported from the package,
+it will be available when the package is loaded.
+
+Methods are \R functions.  In their usual implementation, they refer to fields
+and other methods of the class directly by name. See the section on
+\dQuote{Writing Reference Methods}.
+
+As with functional classes, reference classes can inherit from other
+reference classes via a \code{contains=} argument to
+\code{setRefClass}.  Fields and methods will be inherited, except where the
+new class overrides method definitions.  See the section on \dQuote{Inheritance}.
+
 }
 \usage{
 setRefClass(Class, fields = , contains = , methods =,
@@ -52,34 +70,22 @@ getRefClass(Class, where =)
 character string name for the class.
 
 In the call to \code{getRefClass()} this argument can also be any
-object from the relevant class;  note also the corresponding reference
-class methods documented in the section on \dQuote{Writing Reference Methods}.
+object from the relevant class.
+
 }
   \item{fields}{
 either a character vector of field names or
 a named list of the fields.  The resulting fields will be accessed with reference semantics (see
-the  section on \dQuote{Reference Objects}).  If the argument is a list, the
-elements of the list can be the character string name of a class, in
-which case the field must be from that class or a subclass.
-
- The element in the list can alternatively be an \emph{accessor
-   function}, a function of one argument that returns
-the field if called with no argument or sets it to the value of the
-argument otherwise.
-Accessor functions are used internally and for inter-system interface
-applications.
-Their definition follows the rules for writing methods for the class:
-they can refer to other fields and can call other methods for this
-class or its superclasses.
-See the section on \dQuote{Implementation} for the internal mechanism
-used by accessor functions.
+the  section on \dQuote{Reference Objects}).  If the argument is a list, each
+element of the list should usually be the character string name of a class, in
+which case the object in the field must be from that class or a
+subclass.  An alternative, but not generally recommended, is to supply an  \emph{accessor
+   function}; see the section on \dQuote{Implementation} for accessor
+ functions and the related internal mechanism.
 
 Note that fields are distinct from
-the slots, if any, in the object.  Slots are, as always, handled by
-standard \R{} object management.
-It is not generally a good idea to mix slots and fields in the same
-class; this confuses the distinction in behavior between reference
-classes and regular S4 classes.  See the comments in the
+slots.  Reference classes should not define class-specific slots. See
+the note on slots in the
 \dQuote{Implementation} section.
 }
   \item{contains}{
@@ -91,27 +97,15 @@ a named list of function definitions that can be invoked on objects
 from this class.  These can also be created by invoking the
 \code{$methods} method on the generator object returned. %$
 See the section on \dQuote{Writing Reference Methods} for details.
-
-Two optional method names are interpreted specially, \code{initialize}
-and \code{finalize}. If an \code{initialize} method is defined, it
-will be invoked when an object is generated from the class.  See the
-discussion of method \code{$new(...)} %$
-in the section \dQuote{Reference Object Generators}.
-
-If a \code{finalize} method is defined, a function will be
-\link[=reg.finalizer]{registered} to invoke it before the environment in
-the object is discarded by the garbage collector; finalizers are
-registered with \code{atexit=TRUE}, and so are also run at the end of
-\R{} sessions. See the matrix viewer example for both initialize and
-finalize methods.}
+}
 
   \item{where}{
-the environment in which to store the class definition (or to begin the
-search for it, in
-the case of \code{getRefClass()}).  Defaults to
-the package namespace or environment for code that is part of an \R{}
-package, and to the global environment for code sourced directly at
-the session top level.
+for \code{setRefClass}, the environment in which to store the class definition.  Should be
+omitted in calls from a package's source code.
+
+For \code{getRefClass}, the environment from which to search for the definition.  If the
+package is not loaded or you need to be specific, use
+\code{\link{asNamespace}} with the package name.
 }
   \item{inheritPackage}{
 Should objects from the new class inherit the package environment of a
@@ -140,48 +134,6 @@ other arguments to be passed to \code{\link{setClass}}.
   with reference class methods for various utilities.  See the section
   on reference class generator objects below.
 
-If the class has a method defined for \code{$initialize()}, %$
-this method will be called once the reference object has been
-created.  You should write such a method for a class that needs to do
-some special initialization.
-In particular, a reference method is recommended rather than a method
-for the S4 generic function \code{initialize()}, because some special initialization is
-required for reference objects \emph{before} the initialization of
-fields.
-As with S4 classes, methods are written for \code{$initialize()} %$
-and not for \code{$new()}, %$
-both for the previous reason and also because \code{$new()} %$
-is invoked on the generator object and would be a method for that class.
-
-The default method for \code{$initialize()} %$
-is equivalent to invoking the method \code{$initFields(...)}. %$
-Named arguments assign initial values to the corresponding fields.
-Unnamed arguments must be objects from this class or a reference
-superclass of this class.
-Fields will be initialized to the contents of the fields in such
-objects, but named arguments override the corresponding inherited
-fields.
-Note that fields are simply assigned.  If the field is itself a
-reference object, that object is not copied.
-The new and previous object will share the reference.
-Also, a field assigned from an unnamed argument counts as an
-assignment for locked fields.
-To override an inherited value for a locked field, the new value must
-be one of the named arguments in the initializing call.
-A later assignment of the field will result in an error.
-
-Initialization methods need some care in design.
-The generator
-for a reference class will be called with no arguments, for example
-when copying the object.
-To ensure that these calls do not fail, the method must have defaults
-for all arguments or check for \code{missing()}.
-The method
-should include \code{\dots} as an argument and
-pass this on via \code{$callSuper()} (or \code{$initFields()} if
-you know that your superclasses have no initialization methods).
-This allows future class definitions that subclass this class, with
-additional fields.
 
 \code{getRefClass()} also returns the generator function for the
 class.  Note that the package slot in the value is the correct package
@@ -232,12 +184,6 @@ created.
 The field itself can optionally have a specified class, meaning that only objects
 from this class or one of its subclasses can be assigned to the field.
 By default, fields have class \code{"ANY"}.
-Fields may also be defined by supplying an accessor function which
-will be called to get or set the field.
-Accessor functions are likely when reference classes are part of an
-inter-system interface.
-The interface will usually supply the accessor functions automatically
-based on the definition of the corresponding class in the other language.
 
 Fields are accessed by reference.
 In particular, invoking a method may modify the content of
@@ -247,15 +193,19 @@ Programming for such classes involves writing new methods for a
 particular class.
 In the \R implementation, these methods are \R functions, with zero or
 more formal arguments.
-The object on which the methods are invoked is not an explicit
+For standard reference methods, the object itself is not an explicit
 argument to the method.
 Instead, fields and methods for the class can be referred to by name
 in the method definition.
-The implementation uses \R environments to make fields and methods
-available by name.
-Additional special fields allow reference to the complete object and
-to the definition of the class.  See the section on \dQuote{Writing
+The implementation uses \R environments to make fields and other methods
+available by name within the method.
+Specifically, the parent environment of the method is the object itself.
+  See the section on \dQuote{Writing
   Reference Methods}.
+This special use of environments is optional.  If a method is defined
+with an initial formal argument \code{.self}, that will be passed in
+as the whole object, and the method follows the standard rules for any
+function in a package.  See the section on \dQuote{External Methods}
 
 The goal of the software described here is to provide a uniform
 programming style in \R for software dealing with reference classes, whether
@@ -267,25 +217,30 @@ languages.
 \section{Writing Reference Methods}{
 Reference methods are functions supplied as elements of a named list,
 either
-when invoking \code{g$methods()} %$}
+when invoking \code{$methods()} %$}
 on a generator object \code{g} or as
 the argument \code{methods} in a call to \code{setRefClass}.
-They are written as ordinary \R functions but have some special
-features and restrictions.
+The two mechanisms have the same effect, but the first makes the code more readable.
+
+Methods are written as ordinary \R functions but have some special
+features and restrictions in their usual form.
+In contrast to some other languages (e.g., Python), the object itself
+does not need to be an argument in the method definition.
 The body of the function can contain calls to any other reference method,
 including those inherited from other reference classes and may refer
-to fields in the object by name.
+to methods and to fields in the object by name.
 
-Alternatively, a method may be an \emph{external} method, a function
-whose first argument is \code{.self}.
-The body of such methods works like any ordinary function.
+Alternatively, a method may be an \emph{external} method.
+This is signalled by \code{.self} being the first formal argument to the method.
+The body of the method then works like any ordinary function.
 The methods are called like other methods (without the \code{.self}
 argument, which is supplied internally and always refers to the object
 itself).
+Inside the method, fields and other methods are accessed in the form
+\code{.self$x}. %$
 External methods exist so that reference classes can inherit the
 package environment of superclasses
-in other packages; see the Section \dQuote{Inter-Package Superclasses
-  and External Methods}.
+in other packages; see the section on \dQuote{External Methods}.
 
 Fields may be modified in a method by using the
 non-local assignment operator, \code{<<-}, as in the \code{$edit} and \code{$undo}
@@ -306,30 +261,37 @@ In particular, methods should not use non-exported entries in the
 package's namespace, because the methods may be inherited by a
 reference class in another package.
 
-Methods for \code{$initialize()} %$
-have special requirements.  See the comments in the \dQuote{Value}
-section.
+Two method names are interpreted specially, \code{initialize}
+and \code{finalize}. If an \code{initialize} method is defined, it
+will be invoked when an object is generated from the class.  See the
+discussion of method \code{$new(...)} %$
+in the section \dQuote{Initialization Methods}.
+
+If a \code{finalize} method is defined, a function will be
+\link[=reg.finalizer]{registered} to invoke it before the environment in
+the object is discarded by the garbage collector; finalizers are
+registered with \code{atexit=TRUE}, and so are also run at the end of
+\R{} sessions. See the matrix viewer example for both initialize and
+finalize methods.
 
 Reference methods can not themselves be generic functions; if you want
 additional function-based method dispatch, write a separate generic
 function and call that from the method.
 
+Two special object names are available.
 The entire object can be referred to in a method by the reserved
-name \code{.self}, as shown in the \code{save=} method of the
-example.
-The special object \code{.refClassDef} contains the definition of the
+name \code{.self}.
+The object \code{.refClassDef} contains the definition of the
 class of the object.
-These fields are read-only (it makes no sense to modify these
-references), with one exception.
+These are accessed as fields but are read-only, with one exception.
 In principal, the \code{.self} field can be modified in the \code{$initialize} %$
 method, because the object is still being created at this stage.
-This is definitely not recommended, unless to set some
-non-reference properties of the object defined for this class, which
-is itself not recommended if it mixes slots and fields.
+This is not recommended, as it can invalidate the object with respect
+to its class.
 
 
 The methods available include methods inherited from superclasses, as
-discussed in the next section.
+discussed in the section \dQuote{Inheritance}.
 
 Only methods actually used will be included in the environment
 corresponding to an individual object.  To declare that a method requires a
@@ -352,6 +314,52 @@ self-documentation from the method definition, in the style of Python.
 If the first element of the body of the method is a literal character
 string (possibly multi-line), that string is interpreted as documentation.
 See the method definitions in the example.
+}
+
+\section{Initialization Methods}{
+If the class has a method defined for \code{$initialize()}, %$
+this method will be called once the reference object has been
+created.  You should write such a method for a class that needs to do
+some special initialization.
+In particular, a reference method is recommended rather than a method
+for the S4 generic function \code{initialize()}, because some special initialization is
+required for reference objects \emph{before} the initialization of
+fields.
+As with S4 classes, methods are written for \code{$initialize()} %$
+and not for \code{$new()}, %$
+both for the previous reason and also because \code{$new()} %$
+is invoked on the generator object and would be a method for that class.
+
+The default method for \code{$initialize()} %$
+is equivalent to invoking the method \code{$initFields(...)}. %$
+Named arguments assign initial values to the corresponding fields.
+Unnamed arguments must be objects from this class or a reference
+superclass of this class.
+Fields will be initialized to the contents of the fields in such
+objects, but named arguments override the corresponding inherited
+fields.
+Note that fields are simply assigned.  If the field is itself a
+reference object, that object is not copied.
+The new and previous object will share the reference.
+Also, a field assigned from an unnamed argument counts as an
+assignment for locked fields.
+To override an inherited value for a locked field, the new value must
+be one of the named arguments in the initializing call.
+A later assignment of the field will result in an error.
+
+Initialization methods need some care in design.
+The generator
+for a reference class will be called with no arguments, for example
+when copying the object.
+To ensure that these calls do not fail, the method must have defaults
+for all arguments or check for \code{missing()}.
+The method
+should include \code{\dots} as an argument and
+pass this on via \code{$callSuper()} (or \code{$initFields()} if
+you know that your superclasses have no initialization methods).
+This allows future class definitions that subclass this class, with
+additional fields.
+
 }
 \section{Inheritance}{
 Reference classes inherit from other reference classes by using the
@@ -376,9 +384,12 @@ way as directly specified methods.
 A method may override a method of the same name in a superclass.
 The overriding method can call the superclass method by
 \code{callSuper(...)} as described below.
+}
 
-All reference classes inherit from the class \code{"envRefClass"},
-which provides the following methods.
+\section{Methods Provided for all Objects}{
+
+All reference classes inherit from the class \code{"envRefClass"}.
+All reference objects can use the following methods.
 
 \describe{
 \item{\code{$callSuper(...)}}{ %$
@@ -506,7 +517,7 @@ implementation may use such names for special purposes.
 
 }
 
-\section{Inter-Package Superclasses  and External Methods}{
+\section{External Methods; Inter-Package Superclasses }{
 The environment of a method in a reference class is the object itself,
 as an environment.
 This allows the method to refer directly to fields and other methods,
@@ -717,6 +728,16 @@ A field associated with a function is implemented as an
 In particular, fields with a specified class are implemented as a
 special form of active binding to enforce valid assignment to the
 field.
+
+As a related feature,  the element in the \code{fields=} list supplied
+to \code{setRefClass} can be an \emph{accessor
+   function}, a function of one argument that returns
+the field if called with no argument or sets it to the value of the
+argument otherwise.
+Accessor functions are used internally and for inter-system interface
+applications, but not generally recommended as they blur the concept
+of fields as data within the object.
+
 A field, say \code{data}, can be accessed generally by an expression
 of the form \code{x$data} %$}
 for any object from the relevant class.
@@ -736,70 +757,26 @@ When a method is invoked on an object, the function defining the method is
 installed in the object's environment, with the same environment as the
 environment of the function.
 
-Because of the implementation, new reference classes can inherit from
-non-reference S4 classes as well as reference classes.
+\emph{Note: Slots.} Because of the implementation, new reference classes can inherit from
+non-reference S4 classes as well as reference classes, and can include
+class-specific slots in the definition.
 This is usually a bad idea, if the slots from the non-reference
 class are thought of as alternatives to fields.
-Unless there is some special argument in favor, mixing the functional
-and reference paradigms for properties of the same object is
-conceptually unclear.
+Slots will as always be treated functionally.
+Therefore, changes to the slots and the fields will behave inconsistently,
+mixing the functional
+and reference paradigms for properties of the same object,
+conceptually unclear and prone to errors.
 In addition, the initialization method for the class will have to sort
 out fields from slots, with a good chance of creating anomalous
 behavior for subclasses of this class.
-Better in general to define fields analogous to the slots in the S4
-class, and to initialize those from an S4 object of that class.
+
+Inheriting from a \link[=setClassUnion]{class union}, however, is a reasonable strategy (with
+all members of the union likely to be reference classes).
 
 }
 
-\section{Inter-System Interfaces}{
-A number of
-languages use a similar reference-based programming model with classes
-and class-based methods.
-Aside from differences in choice of terminology and other details,
-many of these languages are compatible with the programming style
-described here.
-\R interfaces to the languages exist in a number of packages.
 
-The reference class definitions here provide a hook for
-classes in the foreign language to be exposed in \R.
-Access to fields and/or methods in the class can be
-implemented by defining an \R reference class corresponding to
-classes made available through the interface.
-Typically, the inter-system interface will take care of the details of
-creating the \R class, given a description of the foreign class (what fields
-and methods it has, the classes for the fields, whether any are
-read-only, etc.)
-The specifics for the fields and methods can be implemented via
-reference methods for the \R class.
-In particular, the use of active bindings allows field access for
-getting and setting, with
-actual access handled by the inter-system interface.
-
-\R methods and/or fields can be included in the class definition as for any
-reference class.
-The methods can use or set fields and can call other methods transparently
-whether the field or method comes from the interface or is defined
-directly in \R.
-
-For an inter-system interface using this approach, see the code for package \code{Rcpp}, version
-0.8.7 or later.
-}
-% \value{
-% \code{setRefClass()} and \code{getRefClass()} both return a generator object for the class. This is
-% itself a reference object, with methods to generate objects from the
-% class and also for defining new methods and for help-style
-% documentation. See the
-% section on \dQuote{Reference Class Generator Objects} for details.
-% Note that \code{Class} in the call to \code{getRefClass()} can be an
-% object from the corresponding class, and that a similar reference
-% class method \code{$getRefClass()} %$
-% is available as well.
-
-% \code{setRefClass} defines the class and stores its class definition.
-% \code{getRefClass} requires that the class has been defined as a
-% reference class.
-
-% }
 \section{Debugging}{
 The standard \R{} debugging and tracing facilities can be applied to
 reference methods.
@@ -829,17 +806,24 @@ interactive debugging and  \code{trace(what, edit = TRUE)} to edit the
 reference method interactively.
 
 }
-\author{
-  John Chambers
+
+\references{
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 11.)
 }
+
 
 \examples{
 ## a simple editor for matrix objects.  Method  $edit() changes some
 ## range of values; method $undo() undoes the last edit.
 mEdit <- setRefClass("mEdit",
       fields = list( data = "matrix",
-        edits = "list"),
-      methods = list(
+        edits = "list"))
+
+## The basic edit, undo methods
+mEdit$methods(
      edit = function(i, j, value) {
        ## the following string documents the edit method
        'Replaces the range [i, j] of the
@@ -862,7 +846,10 @@ mEdit <- setRefClass("mEdit",
          ## trim the edits list
          length(edits) <<- length(edits) - 2
          invisible(prev)
-     },
+     })
+
+## A method to automatically print objects
+mEdit$methods(
      show = function() {
        'Method for automatically printing matrix editors'
        cat("Reference matrix editor object of class",
@@ -871,7 +858,7 @@ mEdit <- setRefClass("mEdit",
        methods::show(data)
        cat("Undo list is of length", length(edits), "\n")
      }
-     ))
+     )
 
 xMat <- matrix(1:12,4,3)
 xx <- mEdit(data = xMat)
@@ -881,9 +868,9 @@ xx$undo()
 mEdit$help("undo")
 stopifnot(all.equal(xx$data, xMat))
 
-utils::str(xx) # show fields and names of non-trivial methods
+utils::str(xx) # show fields and names of methods
 
-## add a method to save the object
+## A method to save the object
 mEdit$methods(
      save = function(file) {
        'Save the current object on the file

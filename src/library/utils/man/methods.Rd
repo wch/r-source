@@ -97,7 +97,7 @@ methods(generic.function, class)
   \code{\link{S3Methods}}, \code{\link{class}}, \code{\link{getS3method}}.
 
   For S4, \code{\link{getMethod}}, \code{\link{showMethods}},
-  \code{\link{Methods}}.
+  \link[methods]{Introduction} or \code{\link{Methods_Details}}.
 }
 
 \references{

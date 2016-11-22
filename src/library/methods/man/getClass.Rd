@@ -58,22 +58,20 @@ getClassDef(Class, where, package, inherits = TRUE)
   sensible in user code.
 
   The non-null returned value is an object of class
-  \code{\linkS4class{classRepresentation}}.  For all reasonable
-  purposes, use this object only to extract information, rather than trying
-  to modify it: Use functions such as \code{\link{setClass}} and
-  \code{\link{setIs}} to create or modify class definitions.
+  \code{\linkS4class{classRepresentation}}.
+
+  Use functions such as \code{\link{setClass}} and
+  \code{\link{setClassUnion}} to create class definitions.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
+
 \seealso{
-  \link{Classes},
+  \linkS4class{classRepresentation},
   \code{\link{setClass}},
   \code{\link{isClass}}.
 }

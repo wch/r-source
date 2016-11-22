@@ -335,7 +335,7 @@ str.default <-
 	   || (is.language(object) && !is.expression(object) && !any(cl == "formula"))
 	   ) { ##-- Splus: FALSE for 'named vectors'
 	    if(is.atomic(object)) {
-		##-- atomic:   numeric	complex	 character  logical
+		##-- atomic:   numeric{dbl|int} complex character logical raw
 		mod <- substr(mode(object), 1, 4)
 		if     (mod == "nume")
 		    mod <- if(is.integer(object)) "int"
@@ -356,8 +356,9 @@ str.default <-
 		    mod <- paste("Named", mod)
 		    std.attr <- std.attr[std.attr != "names"]
 		}
-		if(has.class && length(cl) == 1) {
-		    if(cl != mod && substr(cl, 1,nchar(mod)) != mod)
+		if(has.class) {
+		    cl <- cl[1L] # and "forget" potential other classes
+		    if(cl != mod && substr(cl, 1L, nchar(mod)) != mod)
 			mod <- paste0("'",cl,"' ", mod)
 		    ## don't show the class *twice*
 		    std.attr <- c(std.attr, "class")

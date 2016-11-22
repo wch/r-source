@@ -100,7 +100,7 @@
 
 ## The command to be used to load the main R binary.
 ## This is usually the FORTRAN 77 or C compiler, but the automatic
-## choice can be overriden by means of this variable.
+## choice can be overridden by means of this variable.
 ## MAIN_LD=
 
 ## The flags which are necessary for loading main program which will
@@ -155,13 +155,13 @@
 
 ## The command which runs the C++ compiler.
 ## This is optional, for use in packages.
-##  It not specified, configure
+## If not specified, configure
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
 ## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
 ## names (from autoconf).
 ## CXX=
 
-## Options for the C++ compiler .
+## Options for the C++ compiler.
 ## CXXFLAGS=
 
 ## Any special flags which must be used when compiling C++ code to be
@@ -249,7 +249,7 @@
 ## empty if that (plus standard) cannot compile the tested C++11 code.
 ## CXX1X=
 
-## The 'standard' for the C++11 compilier, which is invoked as
+## The 'standard' for the C++11 compiler, which is invoked as
 ## $(CXX1X) $(CXX1XSTD) for both compiling and linking DSOs/DLLs.  
 ## '-std=c++11' and '-std=c++0x' are tried in turn by configure.
 ## '-std=gnu++11' is another possibility.
@@ -267,7 +267,7 @@
 ## empty if that (plus standard) cannot compile the tested C++14 code.
 ## CXX14=
 
-## The 'standard' for the C++14 compilier, which is invoked as
+## The 'standard' for the C++14 compiler, which is invoked as
 ## $(CXX1Y) $(CXX1YSTD) for both compiling and linking DSOs/DLLs.  
 ## '-std=c++14' is tried by configure;
 ## '-std=gnu++14' is another possibility.

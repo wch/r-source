@@ -102,7 +102,7 @@ format.pval <- function(pv, digits = max(1L, getOption("digits") - 2L),
 }
 
 ## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998,
-## many corrections by R-core.
+## many corrections by R-core (incl MM).
 formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL,
 		     big.mark = "", big.interval = 3L,
@@ -112,9 +112,16 @@ formatC <- function (x, digits = NULL, width = NULL,
                      drop0trailing = FALSE)
 {
     if(is.object(x)) {
+	if(!(is.atomic(x) || inherits(x, "vector")))
+	    warning("class of 'x' was discarded")
         x <- unclass(x)
-        warning("class of 'x' was discarded")
     }
+    ## sanity check for flags added 2.1.0
+    flag <- as.character(flag)
+    if(length(flag) != 1) stop("'flag' must be a string, i.e., of length 1")
+    nf <- strsplit(flag, "")[[1L]]
+    if(!all(nf %in% c("0", "+", "-", " ", "#", "'", "I")))
+	stop("'flag' should contain only characters from [0+- #'I]")
 
     format.char <- function (x, width, flag)
     {
@@ -176,29 +183,23 @@ formatC <- function (x, digits = NULL, width = NULL,
     i.strlen <-
 	pmax(abs(as.integer(width)),
 	     if(format == "fg" || format == "f") {
-		 xEx <- as.integer(floor(log10(abs(x+ifelse(x==0,1,0)))))
+		 xEx <- as.integer(floor(log10(abs(x + (x==0)))))
 		 as.integer(x < 0 | flag!="") + digits +
 		     if(format == "f") {
 			 2L + pmax(xEx, 0L)
 		     } else {# format == "fg"
-			 pmax(xEx, digits, digits + (-xEx) + 1L) +
-			     ifelse(nzchar(flag), nchar(flag, "b"), 0L) + 1L
+			 1L + pmax(xEx, digits, digits + (-xEx) + 1L) +
+			     length(nf) # == nchar(flag, "b")
 		     }
 	     } else # format == "g" or "e":
-	     rep.int(digits + 8L, n)
+		 rep.int(digits + 8L, n)
 	     )
-    ## sanity check for flags added 2.1.0
-    flag <- as.character(flag)
-    nf <- strsplit(flag, "")[[1L]]
-    if(!all(nf %in% c("0", "+", "-", " ", "#")))
-	stop("'flag' can contain only '0+- #'")
     if(digits > 0 && any(nf == "#"))
 	digits <- -digits # C-code will notice "do not drop trailing zeros"
 
     attr(x, "Csingle") <- NULL	# avoid interpreting as.single
     r <- .Internal(formatC(x, as.character(mode), width, digits,
-                           as.character(format), as.character(flag),
-                           i.strlen))
+			   as.character(format), flag, i.strlen))
     if (some.special) r[!Ok] <- format.char(rQ, width = width, flag = flag)
 
     if(nzchar(big.mark) || nzchar(small.mark) || decimal.mark != "." ||

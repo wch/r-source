@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2015  The R Core Team
+ *  Copyright (C) 2000-2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* Build call: FUN(XX[[<ind>]], ...) */
 
 	SEXP isym = install("i");
-	PROTECT(ind = allocVector(INTSXP, 1));
+	PROTECT(ind = allocVector(realIndx ? REALSXP : INTSXP, 1));
 	defineVar(isym, ind, rho);
 	SET_NAMED(ind, 1);
 

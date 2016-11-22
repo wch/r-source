@@ -95,7 +95,7 @@ setRlibs <-
             c("Modalclust", "aroma.core", "iWebPlots",
               "openair", "oce", "pcalg", "tileHMM"))
             exceptions <- c(exceptions, "KernSmooth")
-        recommended <- recommended[!recommended %in% exceptions]
+        recommended <- recommended %w/o% exceptions
         for(pkg in recommended) {
             if(pkg == thispkg) next
             dir.create(pd <- file.path(tmplib, pkg))
@@ -125,7 +125,7 @@ setRlibs <-
     lp <- .libPaths()
     poss <- c(lp[length(lp)], .Library)
     already <- thispkg
-    more <- unique(deps[!deps %in% already]) # should not depend on itself ...
+    more <- unique(deps %w/o% already) # should not depend on itself ...
     while(length(more)) {
         m0 <- more; more <- character()
         for (pkg in m0) {
@@ -156,7 +156,7 @@ setRlibs <-
             }
         }
         already <- c(already, m0)
-        more <- unique(more[!more %in% already])
+        more <- unique(more %w/o% already)
     }
     if (self) flink(normalizePath(pkgdir), tmplib)
     # print(dir(tmplib))
@@ -1141,7 +1141,7 @@ setRlibs <-
                     wrapLog("Portable packages must use only ASCII",
                             "characters in their demos.\n",
                             "Use \\uxxxx escapes for other characters.\n")
-                    demos <- demos[! basename(demos) %in% bad]
+                    demos <- demos[basename(demos) %notin% bad]
                 }
                 ## check we can parse each demo.
                 bad <- character()
@@ -1516,7 +1516,8 @@ setRlibs <-
                                 paste(utils::tail(out3, -pos),
                                       collapse = " "))
                     miss <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
-                    if(length(miss)) {
+                    ## base has no NAMESPACE
+                    if(length(miss) && pkgname != "base") {
                         msg3 <- if(length(grep("^importFrom\\(\"methods\"",
                                                miss))) {
                             strwrap("to your NAMESPACE file (and ensure that your DESCRIPTION Imports field contains 'methods').")
@@ -1899,7 +1900,7 @@ setRlibs <-
             fi <- list.files("data")
             if (!any(grepl("\\.[Rr]$", fi))) { # code files can do anything
                 dataFiles <- basename(list_files_with_type("data", "data"))
-                odd <- fi[! fi %in% c(dataFiles, "datalist")]
+                odd <- fi %w/o% c(dataFiles, "datalist")
                 if (length(odd)) {
                     warningLog(Log)
                     msg <-
@@ -1977,8 +1978,8 @@ setRlibs <-
         files2 <- dir(file.path(pkgdir, "inst", "doc"), recursive = TRUE,
                      pattern = "[.](cls|sty|drv)$", full.names = TRUE)
         ## Skip Rnews.sty and RJournal.sty for now
-        files2 <- files2[! basename(files2) %in%
-                       c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
+        files2 <- files2[basename(files2) %notin%
+                         c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
         bad <- character()
         for(f in files2) {
             pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
@@ -2009,7 +2010,7 @@ setRlibs <-
         }
 
         files <- dir(doc_dir)
-        files <- files[! files %in% already]
+        files <- files %w/o% already
         bad <- grepl("[.](tex|lyx|png|jpg|jpeg|gif|ico|bst|cls|sty|ps|eps|img)$",
                      files, ignore.case = TRUE)
         bad <- bad | grepl("(Makefile|~$)", files)
@@ -2088,10 +2089,12 @@ setRlibs <-
 			 "")
 		printLog0(Log, paste(msg, collapse = "\n"))
 	    } else {
+                ## allow for some imprecision in file times (in secs)
+                time_tol <- as.double(Sys.getenv("_R_CHECK_FILE_TIMES_TOL_", 10))
 		vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
 		inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
 		if (sum(!is.na(vignette_times)) && sum(!is.na(inst_doc_times)) &&
-                    max(vignette_times, na.rm = TRUE) > max(inst_doc_times, na.rm = TRUE)) {
+                    max(vignette_times, na.rm = TRUE) > max(inst_doc_times, na.rm = TRUE) + time_tol) {
 		    if (!any) warningLog(Log)
 		    any <- TRUE
 		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
@@ -2099,13 +2102,14 @@ setRlibs <-
 					   collapse = ", "),
 				     indent = 2L, exdent = 4L),
 			     "")
-		    keep <- is.na(vignette_times) | vignette_times <= max(inst_doc_times)
+		    keep <- is.na(vignette_times) |
+                        vignette_times <= max(inst_doc_times, na.rm = TRUE) + time_tol
 		    vignette_files <- vignette_files[keep]
 		    vignette_times <- vignette_times[keep]
 		    printLog0(Log, paste(msg, collapse = "\n"))
 		}
 		matches <- match(vignette_files, inst_doc_files)
-		newer <- vignette_times > inst_doc_times[matches]
+		newer <- vignette_times > inst_doc_times[matches] + time_tol
 		newer <- !is.na(matches) & !is.na(newer) & newer
 		if (any(newer)) {
 		    if (!any) warningLog(Log)
@@ -2142,8 +2146,8 @@ setRlibs <-
         }
         files2 <- dir(file.path(pkgdir, "vignettes"), recursive = TRUE,
                      pattern = "[.](cls|sty|drv)$", full.names = TRUE)
-        files2 <- files2[! basename(files2) %in%
-                       c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
+        files2 <- files2[basename(files2) %notin%
+                         c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
         bad <- character()
         for(f in files2) {
             pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
@@ -2838,22 +2842,22 @@ setRlibs <-
             file.copy(Sys.glob(paste0(testsrcdir, "/*")),
                       testdir, recursive = TRUE)
             setwd(testdir)
-            extra <- character()
-            if (use_gct) extra <- c(extra, "use_gct = TRUE")
-            if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
-            tf <- gsub("\\", "/", tempfile(), fixed=TRUE)
-            extra <- c(extra, paste0('Log="', tf, '"'))
+	    logf <- gsub("\\", "/", tempfile(), fixed=TRUE)
+	    extra <- c(if(use_gct) "use_gct = TRUE",
+		       if(use_valgrind) "use_valgrind = TRUE",
+		       if(!stop_on_test_error) "stop_on_error = FALSE",
+		       paste0('Log="', logf, '"'))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
             cmd <- paste0("tools:::.runPackageTestsR(",
-                         paste(extra, collapse = ", "), ")")
+                          paste(extra, collapse = ", "), ")")
             t1 <- proc.time()
             status <- R_runR(cmd,
                              if(nzchar(arch)) R_opts4 else R_opts2,
-                             env = c("LANGUAGE=en",
-                             "_R_CHECK_INTERNALS2_=1",
-                             if(nzchar(arch)) env0,
-                             jitstr, elibs),
+			     env = c("LANGUAGE=en",
+				     "_R_CHECK_INTERNALS2_=1",
+				     if(nzchar(arch)) env0,
+				     jitstr, elibs),
                              stdout = "", stderr = "", arch = arch)
             t2 <- proc.time()
             if (status) {
@@ -2882,22 +2886,21 @@ setRlibs <-
                         lines <- grep('^Xlib: *extension "RANDR" missing on display',
                                       lines, invert = TRUE, value = TRUE,
                                       useBytes = TRUE)
-                    printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
-                    if (keep > 0L)
-                        printLog(Log, sprintf("Last %i lines of output:\n", keep))
-                    else
-                        printLog(Log, "Complete output:\n")
+		    printLog(Log, sprintf("Running the tests in %s failed.\n",
+					  sQuote(file)))
+		    printLog(Log, if(keep > 0L) sprintf("Last %i lines of output:\n", keep)
+				  else "Complete output:\n")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
                 }
                 return(FALSE)
             } else {
                 print_time(t1, t2, Log)
                 resultLog(Log, "OK")
-                if (Log$con > 0L && file.exists(tf)) {
+                if (Log$con > 0L && file.exists(logf)) {
                     ## write results only to 00check.log
-                    lines <- readLines(tf, warn = FALSE)
+                    lines <- readLines(logf, warn = FALSE)
                     cat(lines, sep="\n", file = Log$con)
-                    unlink(tf)
+                    unlink(logf)
                 }
             }
             setwd(pkgoutdir)
@@ -3420,7 +3423,7 @@ setRlibs <-
         }
         if (R_check_executables_exclusions && file.exists("BinaryFiles")) {
             excludes <- readLines("BinaryFiles")
-            execs <- execs[!execs %in% excludes]
+            execs <- execs %w/o% excludes
         }
         if (nb <- length(execs)) {
             msg <- ngettext(nb,
@@ -3456,7 +3459,7 @@ setRlibs <-
         dots <- sub("^./","", dots)
         allowed <-
             c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras")
-        dots <- dots[!dots %in% allowed]
+        dots <- dots %w/o% allowed
         alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
         alldirs <- sub("^./","", alldirs)
         alldirs <- alldirs[alldirs != "."]
@@ -3887,7 +3890,7 @@ setRlibs <-
             f <- file.path(pkgdir, "DESCRIPTION")
             desc <- try(.read_description(f))
             if (inherits(desc, "try-error") || !length(desc)) {
-                resultLog(Log, "EXISTS but not correct format")
+                errorLog(Log, "File DESCRIPTION exists but is not in correct format")
                 summaryLog(Log)
                 do_exit(1L)
             }
@@ -3918,7 +3921,8 @@ setRlibs <-
             summaryLog(Log)
             do_exit(1L)
         } else {
-            resultLog(Log, "NO")
+            errorLog(Log,
+                     "File DESCRIPTION does not exist")
             summaryLog(Log)
             do_exit(1L)
         }
@@ -4284,6 +4288,7 @@ setRlibs <-
             "      --timings         record timings for examples",
             "      --install-args=	command-line args to be passed to INSTALL",
 	    "      --test-dir=       look in this subdirectory for test scripts (default tests)",
+            "      --no-stop-on-test-error   do not stop running tests after first error",
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
@@ -4363,6 +4368,7 @@ setRlibs <-
     as_cran <- FALSE
     run_dontrun <- FALSE
     run_donttest <- FALSE
+    stop_on_test_error <- TRUE
 
     libdir <- ""
     outdir <- ""
@@ -4416,7 +4422,7 @@ setRlibs <-
             ignore_vignettes  <- TRUE
             do_vignettes  <- FALSE
             do_build_vignettes  <- FALSE
-       } else if (a == "--no-manual") {
+	} else if (a == "--no-manual") {
             do_manual  <- FALSE
         } else if (a == "--no-latex") {
             stop("'--no-latex' is defunct: use '--no-manual' instead",
@@ -4447,6 +4453,8 @@ setRlibs <-
             force_multiarch  <- TRUE
         } else if (a == "--as-cran") {
             as_cran  <- TRUE
+	} else if (a == "--no-stop-on-test-error") {
+	    stop_on_test_error <- FALSE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -4729,7 +4737,6 @@ setRlibs <-
         dir.create(pkgoutdir, mode = "0755")
         if (!dir.exists(pkgoutdir)) {
             message(sprintf("ERROR: cannot create check dir %s", sQuote(pkgoutdir)))
-            summaryLog(Log)
             do_exit(1L)
         }
         Log <- newLog(file.path(pkgoutdir, "00check.log"))
@@ -4799,6 +4806,7 @@ setRlibs <-
         }
         if (use_gct) opts <- c(opts, "--use-gct")
         if (use_valgrind) opts <- c(opts, "--use-valgrind")
+	if (!stop_on_test_error) opts <- c(opts, "--no-stop-on-test-error")
         if (as_cran) opts <- c(opts, "--as-cran")
         if (length(opts) > 1L)
             messageLog(Log, "using options ", sQuote(paste(opts, collapse=" ")))
@@ -4824,7 +4832,7 @@ setRlibs <-
             file.exists(file.path(pkgdir, "Makefile.in"))) {
             desc <- try(read.dcf(f))
             if (inherits(desc, "try-error") || !length(desc)) {
-                resultLog(Log, "EXISTS but not correct format")
+                errorLog(Log, "File DESCRIPTION exists but is not in correct format")
                 summaryLog(Log)
                 do_exit(1L)
             }
@@ -4952,7 +4960,7 @@ setRlibs <-
                     } else this_multiarch <- FALSE  # no compiled code
                 }
                 if (this_multiarch && length(R_check_skip_arch))
-                    inst_archs <- inst_archs[!(inst_archs %in% R_check_skip_arch)]
+                    inst_archs <- inst_archs[inst_archs %notin% R_check_skip_arch]
             }
         } else check_incoming <- FALSE  ## end of if (!is_base_pkg)
 

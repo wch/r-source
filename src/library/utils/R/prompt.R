@@ -95,7 +95,7 @@ function(object, filename = NULL, name = NULL,
     ## Construct the definition for \examples.
     x.def <- deparse(x)
     if(any(br <- substr(x.def, 1L, 1L) == "}"))
-        x.def[br] <- paste(" ", x.def[br])
+        x.def[br] <- paste0("  ", x.def[br])
 
     ## escape "%" :
     x.def <- gsub("%", "\\\\%", x.def)

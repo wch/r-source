@@ -40,8 +40,8 @@
  * Linear/constant interpolation then takes place on that interval
 */
 
-/* NB:  R_interv(.) in ./interv.c  is conceptually a special case of
- *	this, where y = 1:n */
+/* NB:  interv(.) in ../../../appl/interv.c
+        ------    is conceptually a special case of this, where y = 1:n */
 
 typedef struct {
     double ylow;

@@ -1,7 +1,7 @@
 #  File src/library/base/R/solve.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,11 +18,10 @@
 
 solve.qr <- function(a, b, ...)
 {
-    if( !is.qr(a) )
+    if(!inherits(a, "qr"))
 	stop("this is the \"qr\" method for the generic function solve()")
     nc <- ncol(a$qr); nr <- nrow(a$qr)
     if( a$rank != min(nc, nr) )
-    if( a$rank != nc )
 	stop("singular matrix 'a' in 'solve'")
     if( missing(b) ) {
 	if( nc != nr )
@@ -46,7 +45,7 @@ solve.default <-
         return(.Internal(La_solve_cmplx(a, b)))
     }
 
-    if(is.qr(a)) {
+    if(inherits(a, "qr")) {
 	warning("solve.default called with a \"qr\" object: use 'qr.solve'")
 	return(solve.qr(a, b, tol))
     }
@@ -63,7 +62,7 @@ solve <- function(a, b, ...) UseMethod("solve")
 
 qr.solve <- function(a, b, tol = 1e-7)
 {
-    if( !is.qr(a) )
+    if(!inherits(a, "qr"))
 	a <- qr(a, tol = tol)
     nc <- ncol(a$qr); nr <- nrow(a$qr)
     if( a$rank != min(nc, nr) )

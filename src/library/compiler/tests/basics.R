@@ -1,5 +1,7 @@
 library(compiler)
 
+options(keep.source=TRUE)
+
 ## very minimal
 x <- 2
 stopifnot(eval(compile(quote(x + 1))) == 3)
@@ -20,12 +22,12 @@ stopifnot(checkCode(quote(x + 1),
 f <- function(x) x
 checkCode(quote({f(1); f(2)}),
           c(GETFUN.OP, 1L,
-            PUSHCONSTARG.OP, 2L,
-            CALL.OP, 3L,
+            PUSHCONSTARG.OP, 3L,
+            CALL.OP, 4L,
             POP.OP,
             GETFUN.OP, 1L,
-            PUSHCONSTARG.OP, 4L,
-            CALL.OP, 5L,
+            PUSHCONSTARG.OP, 6L,
+            CALL.OP, 7L,
             RETURN.OP))
 
 

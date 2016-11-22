@@ -9,7 +9,11 @@ options(warn = 1) # print as they occur
 
 plot(0) # this should remain constant
 str(par(c("usr","xaxp","yaxp")))
-
+stopifnot(all.equal(
+    par(c("usr","xaxp","yaxp"))
+   ,
+    list(usr = c(0.568, 1.432, -1.08, 1.08),
+         xaxp = c(0.6, 1.4, 4), yaxp = c(-1, 1, 4))))
 
 
 ### Test for centring of chars.  All the chars which are plotted should

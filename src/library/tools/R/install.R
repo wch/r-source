@@ -105,6 +105,12 @@
         if (!keep.tmpdir && dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
+    # This produces a (by default single) quoted string for use in a 
+    # command sent to another R process.  Currently it only fixes backslashes;
+    # more extensive escaping might be a good idea
+    quote_path <- function(path, quote = "'") 
+    	paste0(quote, gsub("\\\\", "\\\\\\\\", path), quote)
+    	
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -1056,8 +1062,8 @@
             for(e in ignore)
                 i_files <- grep(e, i_files, perl = TRUE, invert = TRUE,
                                 value = TRUE, ignore.case = TRUE)
-            i_files <- i_files[!i_files %in%
-                               c("inst/doc/Rplots.pdf", "inst/doc/Rplots.ps")]
+            i_files <- i_files %w/o% c("inst/doc/Rplots.pdf",
+                                       "inst/doc/Rplots.ps")
             i_files <- grep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",
                             i_files, perl = TRUE, invert = TRUE,
                             value = TRUE, ignore.case = TRUE)
@@ -1066,7 +1072,7 @@
                 i_files <- grep("inst/doc/.*[.](png|jpg|jpeg|gif|ps|eps)$",
                                 i_files, perl = TRUE, invert = TRUE,
                                 value = TRUE, ignore.case = TRUE)
-            i_files <- i_files[! i_files %in% "Makefile"]
+            i_files <- i_files %w/o% "Makefile"
             i2_files <- gsub("^inst", instdir, i_files)
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
@@ -1107,7 +1113,9 @@
                          "byte-compile and prepare package for lazy loading")
                 ## need to disable JIT
                 Sys.setenv(R_ENABLE_JIT = 0L)
+                compiler::enableJIT(0)
                 compiler::compilePKGS(1L)
+                compiler::setCompilerOptions(suppressAll = FALSE)
                 compiler::setCompilerOptions(suppressUndefined = TRUE)
             } else
                 starsmsg(stars, "preparing package for lazy loading")
@@ -1207,7 +1215,7 @@
             ## FIXME: maybe the quoting as 'lib' is not quite good enough
             ## On a Unix-alike this calls system(input=)
             ## and that uses a temporary file and redirection.
-            cmd <- paste0("tools:::.test_load_package('", pkg_name, "', '", lib, "')")
+            cmd <- paste0("tools:::.test_load_package('", pkg_name, "', ", quote_path(lib), ")")
             ## R_LIBS was set already, but Rprofile/Renviron may change it
             ## R_runR is in check.R
             deps_only <-
@@ -1448,7 +1456,7 @@
             f  <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             if (length(archs) > 1L) {
-                args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+                args <- args0 %w/o% c("--merge-multiarch", "--build")
                 ## this will report '* DONE (foo)' if it works, which
                 ## R CMD check treats as an indication of success.
                 ## so use a backdoor to suppress it.
@@ -1470,7 +1478,7 @@
         } else {
             archs  <- dir(file.path(R.home("bin"), "exec"))
             if (length(archs) > 1L) {
-                args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+                args <- args0 %w/o% c("--merge-multiarch", "--build")
                 ## this will report '* DONE (foo)' if it works, which
                 ## R CMD check treats as an indication of success.
                 ## so use a backdoor to suppress it.
@@ -1525,7 +1533,7 @@
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)
-            new <- nf[!nf %in% of]
+            new <- nf %w/o% of
             if (!length(new))
                 errmsg("cannot extract package from ", sQuote(pkg))
             if (length(new) > 1L)
@@ -2280,21 +2288,21 @@
         type <- "html"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.html", "", basename(have))
-        drop <- have[! have2 %in% c(bfs, "00Index", "R.css")]
+        drop <- have[have2 %notin% c(bfs, "00Index", "R.css")]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("latex" %in% types) {
         type <- "latex"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.tex", "", basename(have))
-        drop <- have[! have2 %in% bfs]
+        drop <- have[have2 %notin% bfs]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("example" %in% types) {
         type <- "example"
         have <- list.files(file.path(outDir, dirname[type]))
         have2 <- sub("\\.R", "", basename(have))
-        drop <- have[! have2 %in% bfs]
+        drop <- have[have2 %notin% bfs]
         unlink(file.path(outDir, dirname[type], drop))
     }
 

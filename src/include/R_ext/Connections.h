@@ -22,16 +22,12 @@
 
 #include <R_ext/Boolean.h>
 
-#ifndef NO_C_HEADERS
-# if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
-#  include <cstddef>
-#  include <cstdarg>
-# else
-#  include <stddef.h> /* for size_t */
-#  include <stdarg.h> /* for va_list */
-# endif
+#if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
+# include <cstddef>
+# include <cstdarg>
 #else
-#warning "use of NO_C_HEADERS is deprecated"
+# include <stddef.h> /* for size_t */
+# include <stdarg.h> /* for va_list */
 #endif
 
 /* IMPORTANT: we do not expect future connection APIs to be

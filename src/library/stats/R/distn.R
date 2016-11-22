@@ -133,7 +133,8 @@ qbeta <- function(p, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     else .Call(C_qnbeta, p, shape1, shape2, ncp, lower.tail, log.p)
 }
 rbeta <- function(n, shape1, shape2, ncp = 0) {
-    if(ncp == 0) .Call(C_rbeta, n, shape1, shape2)
+    if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
+    else if(ncp == 0) .Call(C_rbeta, n, shape1, shape2)
     else {
         X <- rchisq(n, 2*shape1, ncp =ncp)
         X/(X + rchisq(n, 2*shape2))
@@ -211,6 +212,7 @@ qf <- function(p, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE) {
 rf <- function(n, df1, df2, ncp)
 {
     if(missing(ncp)) .Call(C_rf, n, df1, df2)
+    else if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
     else (rchisq(n, df1, ncp=ncp)/df1)/(rchisq(n, df2)/df2)
 }
 
@@ -285,6 +287,7 @@ qt <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
 }
 rt <- function(n, df, ncp) {
     if(missing(ncp)) .Call(C_rt, n, df)
+    else if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
     else rnorm(n, ncp)/sqrt(rchisq(n, df)/df)
 }
 

@@ -833,6 +833,9 @@
 /* Define to 1 if you have the `utime' function. */
 #undef HAVE_UTIME
 
+/* Define to 1 if you have the `utimensat' function. */
+#undef HAVE_UTIMENSAT
+
 /* Define to 1 if you have the `utimes' function. */
 #undef HAVE_UTIMES
 

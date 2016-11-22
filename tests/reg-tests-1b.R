@@ -1815,9 +1815,9 @@ stopifnot(all.equal(hc$height[5:11],
                       3.21380039, 2.9653438476, 6.1418258), tolerance = 1e-9))
 ## Also ensure that hclust() remains fast:
 set.seed(1); nn <- 2000
-tm0 <- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1), nn, nn)))
+tm0 <- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1)^1.1, nn, nn)))
 (tm <- system.time(hc <- hclust(dst, method="average")))
-stopifnot(tm[1] < tm0[1])
+stopifnot(tm[1] <= tm0[1])
 ## was slow  from R 1.9.0 up to R 2.15.0
 
 

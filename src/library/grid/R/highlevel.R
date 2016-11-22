@@ -133,7 +133,7 @@ grid.show.layout <- function(l, newpage=TRUE, vp.ex=0.8,
                              bg="light grey",
                              cell.border="blue", cell.fill="light blue",
                              cell.label=TRUE, label.col="blue",
-                             unit.col="red", vp=NULL) {
+                             unit.col="red", vp=NULL, ...) {
   if (!is.layout(l))
     stop("'l' must be a layout")
   if (newpage)
@@ -154,23 +154,23 @@ grid.show.layout <- function(l, newpage=TRUE, vp.ex=0.8,
         grid.text(paste0("(", i, ", ", j, ")"), gp=gpar(col=label.col))
       if (j==1)
         # recycle heights if necessary
-        grid.text(as.character("["(l$heights, i, top=FALSE)), gp=gp.red,
+        grid.text(format("["(l$heights, i, top=FALSE), ...), gp=gp.red,
               just=c("right", "centre"),
               x=unit(-.05, "inches"), y=unit(.5, "npc"), rot=0)
       if (i==l$nrow)
         # recycle widths if necessary
-        grid.text(as.character("["(l$widths, j, top=FALSE)), gp=gp.red,
+        grid.text(format("["(l$widths, j, top=FALSE), ...), gp=gp.red,
               just=c("centre", "top"),
               x=unit(.5, "npc"), y=unit(-.05, "inches"), rot=0)
       if (j==l$ncol)
         # recycle heights if necessary
-        grid.text(as.character("["(l$heights, i, top=FALSE)), gp=gp.red,
+        grid.text(format("["(l$heights, i, top=FALSE), ...), gp=gp.red,
               just=c("left", "centre"),
               x=unit(1, "npc") + unit(.05, "inches"), y=unit(.5, "npc"),
               rot=0)
       if (i==1)
         # recycle widths if necessary
-        grid.text(as.character("["(l$widths, j, top=FALSE)), gp=gp.red,
+        grid.text(format("["(l$widths, j, top=FALSE), ...), gp=gp.red,
               just=c("centre", "bottom"),
               x=unit(.5, "npc"), y=unit(1, "npc") + unit(.05, "inches"),
               rot=0)

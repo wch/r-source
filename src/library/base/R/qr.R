@@ -16,7 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-is.qr <- function(x) inherits(x, "qr")
+## be fast rather than "complete":
+is.qr <- function(x) is.list(x) && inherits(x, "qr")
 
 qr <- function(x, ...) UseMethod("qr")
 

@@ -136,6 +136,9 @@
      else if (streql(what, "family")) {
 	const char *ss;
 	value = coerceVector(value, STRSXP);
+        if (STRING_ELT(value, 0) == NA_STRING) {
+            SET_STRING_ELT(value, 0, R_BlankString);
+        }
 	lengthCheck(what, value, 1);
 	const void *vmax = vmaxget();
 	ss = translateChar(STRING_ELT(value, 0));

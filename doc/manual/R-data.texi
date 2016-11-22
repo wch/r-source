@@ -445,7 +445,7 @@ writing @acronym{XML} documents within @R{}.
 @c @uref{http://www.omegahat.net/RSXML} for details and examples.
 Package @CRANpkg{StatDataML} on @acronym{CRAN} is one example building
 on @CRANpkg{XML}.  Another interface to the @pkg{libxml2} C library is
-provided by pacakge @CRANpkg{xml2}.
+provided by package @CRANpkg{xml2}.
 
 @cindex yaml
 @acronym{yaml} is another system for structuring text data, with

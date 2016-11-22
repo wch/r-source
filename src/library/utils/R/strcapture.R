@@ -22,6 +22,10 @@ strcapture <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     ntokens <- length(proto) + 1L
     nomatch <- lengths(str) == 0L
     str[nomatch] <- list(rep(NA_character_, ntokens))
+    if (length(str) > 0L && length(str[[1L]]) != ntokens) {
+### FIXME: this will not always detect an error when there are no matches
+        stop("The number of captures in 'pattern' != 'length(proto)'")
+    }
     mat <- matrix(as.character(unlist(str)), ncol=ntokens,
                   byrow=TRUE)[,-1L,drop=FALSE]
     ans <- lapply(seq_along(proto), function(i) {

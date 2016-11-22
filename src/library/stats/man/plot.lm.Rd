@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
@@ -26,7 +26,8 @@
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
     \code{\link{glm}}.}
   \item{which}{if a subset of the plots is required, specify a subset of
-    the numbers \code{1:6}.}
+    the numbers \code{1:6}, see \code{caption} below (and the
+    \sQuote{Details}) for the different kinds.}
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
     graphics annotations, see \code{\link{as.graphicsAnnot}}, of length
@@ -99,8 +100,9 @@
   the x-axis.  (The factor levels are ordered by mean fitted value.)
 
   In the Cook's distance vs leverage/(1-leverage) plot, contours of
-  standardized residuals that are equal in magnitude are lines through
-  the origin.  The contour lines are labelled with the magnitudes.
+  standardized residuals (\code{\link{rstandard}(.)}) that are equal in
+  magnitude are lines through the origin.  The contour lines are
+  labelled with the magnitudes.
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)

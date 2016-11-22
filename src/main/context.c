@@ -166,6 +166,9 @@ static void R_restore_globals(RCNTXT *cptr)
 {
     R_PPStackTop = cptr->cstacktop;
     R_GCEnabled = cptr->gcenabled;
+    R_BCIntActive = cptr->bcintactive;
+    R_BCpc = cptr->bcpc;
+    R_BCbody = cptr->bcbody;
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
     R_interrupts_suspended = cptr->intsusp;
@@ -244,6 +247,9 @@ void begincontext(RCNTXT * cptr, int flags,
 {
     cptr->cstacktop = R_PPStackTop;
     cptr->gcenabled = R_GCEnabled;
+    cptr->bcpc = R_BCpc;
+    cptr->bcbody = R_BCbody;
+    cptr->bcintactive = R_BCIntActive;
     cptr->evaldepth = R_EvalDepth;
     cptr->callflag = flags;
     cptr->call = syscall;
@@ -359,8 +365,7 @@ SEXP attribute_hidden R_sysframe(int n, RCNTXT *cptr)
 	n = -n;
 
     if(n < 0)
-	errorcall(R_GlobalContext->call,
-		  _("not that many frames on the stack"));
+	error(_("not that many frames on the stack"));
 
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
@@ -375,8 +380,7 @@ SEXP attribute_hidden R_sysframe(int n, RCNTXT *cptr)
     if(n == 0 && cptr->nextcontext == NULL)
 	return R_GlobalEnv;
     else
-	errorcall(R_GlobalContext->call,
-		  _("not that many frames on the stack"));
+	error(_("not that many frames on the stack"));
     return R_NilValue;	   /* just for -Wall */
 }
 
@@ -431,40 +435,47 @@ int attribute_hidden framedepth(RCNTXT *cptr)
     return nframe;
 }
 
+static SEXP getCallWithSrcref(RCNTXT *cptr)
+{
+    SEXP result;
+
+    PROTECT(result = shallow_duplicate(cptr->call));
+    if (cptr->srcref && !isNull(cptr->srcref)) {
+	SEXP sref;
+	if (cptr->srcref == R_InBCInterpreter)
+	    /* FIXME: this is expensive, it might be worth changing sys.call */
+	    /* to return srcrefs only on request (add `with.source` option) */
+	    sref = R_findBCInterpreterSrcref(cptr);
+	else
+	    sref = cptr->srcref;
+	setAttrib(result, R_SrcrefSymbol, duplicate(sref));
+    }
+    UNPROTECT(1);
+    return result;
+}
+
 SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
 {
     /* negative n counts back from the current frame */
     /* positive n counts up from the globalEnv */
-    SEXP result;
-
     if (n > 0)
 	n = framedepth(cptr) - n;
     else
 	n = - n;
     if(n < 0)
-	errorcall(R_GlobalContext->call,
-		  _("not that many frames on the stack"));
+	error(_("not that many frames on the stack"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
-	    if (n == 0) {
-		PROTECT(result = shallow_duplicate(cptr->call));
-		if (cptr->srcref && !isNull(cptr->srcref))
-		    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
-		UNPROTECT(1);
-		return result;
-	    } else
+	    if (n == 0)
+		return getCallWithSrcref(cptr);
+	    else
 		n--;
 	}
 	cptr = cptr->nextcontext;
     }
-    if (n == 0 && cptr->nextcontext == NULL) {
-	PROTECT(result = shallow_duplicate(cptr->call));
-	if (cptr->srcref && !isNull(cptr->srcref))
-	    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
-	UNPROTECT(1);
-	return result;
-    }
-    errorcall(R_GlobalContext->call, _("not that many frames on the stack"));
+    if (n == 0 && cptr->nextcontext == NULL)
+	return getCallWithSrcref(cptr);
+    error(_("not that many frames on the stack"));
     return R_NilValue;	/* just for -Wall */
 }
 
@@ -475,8 +486,7 @@ SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
     else
 	n = - n;
     if (n < 0)
-	errorcall(R_GlobalContext->call,
-		  _("not that many frames on the stack"));
+	error(_("not that many frames on the stack"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0)
@@ -488,7 +498,7 @@ SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
     }
     if (n == 0 && cptr->nextcontext == NULL)
 	return duplicate(cptr->callfun);  /***** do we need to DUP? */
-    errorcall(R_GlobalContext->call, _("not that many frames on the stack"));
+    error(_("not that many frames on the stack"));
     return R_NilValue;	/* just for -Wall */
 }
 
@@ -521,6 +531,7 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval=R_NilValue;
     RCNTXT *cptr;
+    RCNTXT *prevcptr = NULL;
     int n;
 
     checkArity(op, args);
@@ -567,12 +578,20 @@ SEXP attribute_hidden do_sysbrowser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	while ( (cptr != R_ToplevelContext) && n > 0 ) {
 	    if (cptr->callflag & CTXT_FUNCTION)
 		  n--;
+	    prevcptr = cptr;
 	    cptr = cptr->nextcontext;
 	}
 	if( !(cptr->callflag & CTXT_FUNCTION) )
-	   error(_("not that many functions on the call stack"));
-	else
-	   SET_RDEBUG(cptr->cloenv, 1);
+	    error(_("not that many functions on the call stack"));
+	if( prevcptr && prevcptr->srcref == R_InBCInterpreter ) {
+	    if ( TYPEOF(cptr->callfun) == CLOSXP &&
+		    TYPEOF(BODY(cptr->callfun)) == BCODESXP )
+		warning(_("debug flag in compiled function has no effect"));
+	    else
+		warning(_("debug will apply when function leaves "
+			  "compiled code"));
+	}
+	SET_RDEBUG(cptr->cloenv, 1);
 	break;
     }
     return(rval);

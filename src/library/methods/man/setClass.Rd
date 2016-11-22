@@ -8,14 +8,18 @@
 \alias{classGeneratorFunction-class}
 \title{Create a Class Definition}
 \description{
-  Create  a class definition, specifying the representation (the
-  slots) and/or the classes contained in this one (the superclasses),
-  plus other optional details.  As a side effect, the class definition
-  is stored in the specified environment.  A generator function
-  is returned as the value of \code{setClass()}, suitable for creating
-  objects from the class if the class is not virtual.  Of the many
-  arguments to the function only \code{Class},
-  \code{slots=} and \code{contains=} are usually needed.
+  Create  a class definition and return a generator function to create
+  objects from the class.  Standard usage will be
+  of the form:
+
+   \code{setClass(Class, slots= , contains =)}
+
+ where \code{Class} is the name of the new class and, if supplied, the arguments    
+  \code{slots=} and \code{contains=} specify the slots
+  in the new class and existing classes from which the new class
+  should inherit.  Calls to \code{setClass()} are normally found in the
+  source of a package; when the package is loaded the class will be
+  defined in the package's namespace.
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
@@ -24,47 +28,59 @@ setClass(Class, representation, prototype, contains=character(),
 }
 \arguments{
   \item{Class}{character string name for the class.}
-  \item{slots}{ a named list or named character vector.
-    The names are the names of the slots in the new class and
-    the elements are the character string names of  the
-    corresponding classes.
+  \item{slots}{  A named vector with the names being those of the slots in
+      the new class.  Each element of the vector specifies an
+      existing class; the corresponding slot must be from this class
+      or a subclass of it.  This argument
+      must be supplied by name, \code{slots=}, in the call, for back compatibility
+      with other arguments no longer recommended.
 
-    In rare cases where there is ambiguity about the class of a slot,
-    because two classes of the same name are imported from different
-    packages, the corresponding element of the argument must have a
-    \code{"package"} attribute to disambiguate the choice.
 
     It is allowed to provide an unnamed character vector as a limiting
     case, with the elements taken as slot names and all slots having
     the unrestricted class \code{"ANY"}.
   }
-  \item{contains}{ the names (and optionally package slots) for the
-    \emph{superclasses} of this class.  The special superclass
-    \code{"VIRTUAL"} causes the new class to be created as a
-    virtual class; see the section on virtual classes in \link{Classes}.}
-  \item{prototype}{ an object providing the default
-    data for the slots in this class.  By default, each will be the
-    prototype object for the superclass.  If provided, using a call to
-    \code{\link{prototype}} will carry out some checks. }
-  \item{where}{ the environment in which to store the definition.
-    Should not be supplied in standard use.  For calls to
-    \code{setClass()} appearing in the source code for a package, will
-    default to the namespace of the package.  For calls typed or sourced
-    at the top level in a session, will default to the global environment.
-  }
-  \item{validity}{ if supplied, should be a validity-checking method
-    for objects from this class (a function that returns \code{TRUE} if
-    its argument is a valid object of this class and one or more strings
-    describing the failures otherwise).  See \code{\link{validObject}}
-    for details.}
-  \item{S3methods, representation, access, version }{All these
-    arguments are deprecated from version 3.0.0 of \R and should be
-    \emph{avoided}.
+  \item{contains}{ A vector specifying existing classes from which
+      this class should inherit. The new class will have all the slots
+      of the superclasses, with the same requirements on the classes
+      of these slots.  This argument
+      must be supplied by name, \code{contains=}, in the call, for back compatibility
+      with other arguments no longer recommended.
+      
+      See the section \sQuote{Virtual Classes} for the special
+      superclass  \code{"VIRTUAL"}.
+      
+    }
+  \item{prototype, where, validity, sealed, package}{
+      \emph{These arguments are currently allowed, but either they are unlikely to be
+        useful or there are modern alternatives that are preferred.}
 
-    \code{S3methods} is a flag indicating that old-style methods
-    will be written involving this class.  Modern versions of \R
-    attempt to match formal and old-style methods consistently, so
-    this argument is largely irrelevant.
+     \code{prototype}: supplies an object with the default
+    data for the slots in this class.  A more flexible approach is to
+    write a method for \code{\link{initialize}()}.
+
+  \code{where}: supplies an environment in which to store the definition.
+    Should not be used:  For calls to
+    \code{setClass()} appearing in the source code for a package the
+    definition will be stored in the namespace of the package.
+
+  \code{validity}: supplied a validity-checking method
+    for objects from this class.  For clearer code, use a separate
+    call to \code{\link{setValidity}()}.
+
+  \code{sealed}: if \code{TRUE}, the class definition will be sealed,
+    so that another call to \code{setClass} will fail on this class
+    name.  But the definition is automatically sealed after the
+    namespace is loaded, so explicit sealing it is not needed.
+
+  \code{package}: supplies an optional package name for the class, but
+  the class attribute should be  the package in which the class
+  definition is assigned, as it is by default.
+  }
+
+  \item{representation, access, version, S3methods }{\emph{All these
+    arguments are deprecated from version 3.0.0 of \R and should be
+    avoided}.
 
     \code{representation} is an argument inherited from S that
     included both \code{slots} and \code{contains}, but the use of
@@ -72,13 +88,9 @@ setClass(Class, representation, prototype, contains=character(),
 
     \code{access} and \code{version} are included for
     historical compatibility with S-Plus, but ignored.
-  }
-  \item{sealed}{ if \code{TRUE}, the class definition will be sealed,
-    so that another call to \code{setClass} will fail on this class name.
-  }
-  \item{package}{ an optional package name for the class.  Should very
-      rarely be used. By default
-    the name of the package in which the class definition is assigned.
+ 
+    \code{S3methods} is a flag indicating that old-style methods
+    will be written involving this class; ignored now.
   }
 }
 
@@ -112,8 +124,10 @@ of all the slots and the classes required for each of them.
 
 The name of the class determines
 which methods apply directly to objects from this class.  The
-inheritance information specifies which methods apply indirectly,
-through inheritance.  See \link{Methods}.
+superclass information specifies which methods apply indirectly,
+through inheritance.  See \link{Methods_Details} for inheritance in method
+selection.
+
 
 The slots in a class definition will be the union of all the slots
 specified directly by \code{slots} and all the slots in all
@@ -123,19 +137,50 @@ direct and inherited slot names must be unique.
 That does not, however, prevent the same class from being inherited
 via more than one path.
 
-One kind of element in the \code{contains=} argument is special, specifying one of the \R
-object types or one of a few other special \R types (\code{matrix} and
-\code{array}).
-See the section on inheriting from object types, below.
 
 
   Slot names \code{"class"} and \code{"Class"} are not allowed.
   There are other slot names with a special meaning; these names start with
   the \code{"."} character.  To be safe, you should define all of
   your own slots with names starting with an alphabetic character.
+
+Some inherited classes will be treated specially---object types, S3
+classes and a few special cases---whether inherited
+directly or indirectly.  See the next three sections.
 }
 
+\section{Virtual Classes}{
 
+      Classes exist for which no actual objects can be created, the
+      \emph{virtual} classes.
+
+
+      The most common and useful form of virtual class is the \emph{class
+        union}, a virtual class that is defined in a call to
+      \code{\link{setClassUnion}()} rather than a call to
+      \code{setClass()}.
+      This call lists the \emph{members} of the union---subclasses
+      that extend the new class.
+      Methods that are written with the class union in the signature
+      are eligible for use with objects from any of the member classes.
+      Class
+      unions can include as members classes whose
+      definition is otherwise sealed, including basic \R data types.
+
+      Calls to \code{setClass()} will also create a virtual class,
+      either when only the \code{Class} argument is supplied (no slots
+      or superclasses) or when the \code{contains=} argument includes
+      the special class name \code{"VIRTUAL"}.
+
+      In the latter case, a
+      virtual class may include
+      slots to provide some common behavior without fully defining
+      the object---see the class \code{\linkS4class{traceable}} for an
+      example.
+      Note that  \code{"VIRTUAL"} does not carry over to subclasses; a
+      class that contains a virtual class is not itself automatically virtual.
+
+}
 
 \section{Inheriting from Object Types}{
 In addition to containing other S4 classes, a class definition can
@@ -146,6 +191,9 @@ object types or one of the special \R pseudo-classes \code{"matrix"} and
 A class can contain at most one of the object types, directly or indirectly.
 When it does, that contained class determines the \dQuote{data part}
 of the class.
+This appears as a pseudo-slot, \code{".Data"} and can be treated as a
+slot but actually determines
+the type of objects from this slot.
 
 Objects from the new class try to inherit the built in
 behavior of the contained type.
@@ -179,12 +227,6 @@ S3 method dispatch and the relevant \code{as.}\emph{type}\code{()}
 functions should behave correctly, but code that uses the type of the
 object directly will not.
 
-Also, keep in mind that the object passed to low-level computations
-will be the underlying object type, \emph{without} any of the slots
-defined in the class.
-To return the full information, you will usually have to define a
-method that sets the data part.
-
 }
 
 \section{Inheriting from S3 Classes}{
@@ -205,7 +247,8 @@ Given an S4 object, S3 method dispatch and the \code{\link{inherits}}
 function should use the S4 inheritance information.
 Given an S3 object, an S4 generic function will dispatch S4 methods
 using the S3 inheritance, provided that inheritance has been declared via
-\code{\link{setOldClass}}.
+\code{\link{setOldClass}}.  For details, see \code{\link{setOldClass}}
+and Section 10.8 of the reference.
 
 }
 
@@ -215,7 +258,7 @@ Class definitions normally belong to packages (but can be defined in
 the  global environment as well, by evaluating the expression on the
 command line or in a file sourced from the command line).
 The corresponding package name is part of the class definition; that
-is, part of the \code{classRepresentation} object holding that
+is, part of the \code{\linkS4class{classRepresentation}} object holding that
 definition.  Thus, two classes with the same name can exist in
 different packages, for most purposes.
 
@@ -225,30 +268,30 @@ corresponding class definition will be found, looking from the
 namespace of the current package, assuming the call in question appears directly in the source for the
 package, as it should to avoid ambiguity.
 The  class definition
-must be found in the namespace of the current package, in the imports for that
-namespace or in the basic classes defined by the methods package.
-(The methods package must be included in the \code{Depends} directive
-of the package's \code{"DESCRIPTION"} file in order for the
-\code{"CMD check"} utility to find these classes.)
+must be already defined in this package, in the imports directives of
+the package's \code{DESCRIPTION} and
+\code{NAMESPACE} files or in the basic classes defined by the methods package.
+(The \sQuote{methods} package must be included in the imports directives
+for any package that uses
+S4 methods and classes, to satisfy the
+\code{"CMD check"} utility.)
 
-When this rule does not identify a class uniquely (because it appears
-in more than one imported package) then the \code{\link{packageSlot}}
-of the character string name needs to be supplied with the name.
+If a package imports two classes of the same name from separate packages, the \code{\link{packageSlot}}
+of the \code{name} argument needs to be set to the package name of the
+particular class.
 This should be a rare occurrence.
 }
 
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
+
 \seealso{
-  \code{\link{Classes}} for a general discussion of classes,
-  \code{\link{Methods}} for an analogous discussion of methods,
+  \code{\link{Classes_Details}} for a general discussion of classes,
+  \code{\link{Methods_Details}} for an analogous discussion of methods,
   \code{\link{makeClassRepresentation}}
 }
 \examples{
@@ -276,7 +319,6 @@ setClass("trackMultiCurve",
          slots = c(x="numeric", y="matrix", smooth="matrix"),
          prototype = list(x=numeric(), y=matrix(0,0,0),
                           smooth= matrix(0,0,0)))
-## See ?setIs for further examples using these classes
 
 ## A class that extends the built-in data type "numeric"
 

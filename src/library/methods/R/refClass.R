@@ -578,6 +578,8 @@ getRefSuperClasses <- function(classes, classDefs) {
     ## allow either name=function, ... or a single list
     if(length(methodDefs) == 1 && is.list(methodDefs[[1]]))
         methodDefs <- methodDefs[[1]]
+    ## append existing local methods, so they are re-analysed for new method names
+    methodDefs <- c(methodDefs, .thisClassMethods(methodsEnv, def@className))
     mnames <- names(methodDefs)
     if(is.null(mnames) || !all(nzchar(mnames)))
         stop("arguments to methods() must be named, or one named list")
@@ -1374,4 +1376,16 @@ getMethodsAndAccessors <- function(Class) {
     attr(object, ".xData") <- newEnv
     assign(".self", object, envir = newEnv)
     object
+}
+
+## return a list of all the methods from this class previously stored in
+## the class's methods environment
+.thisClassMethods <- function(methodsEnv, className) {
+    value <- list()
+    for(what in names(methodsEnv)) {
+        def <- get(what, envir = methodsEnv)
+        if(is(def, "refMethodDef") && def@refClassName == className)
+            value[[what]] <- def@.Data # the function only
+    }
+    value
 }

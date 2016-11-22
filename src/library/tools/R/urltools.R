@@ -320,9 +320,10 @@ function(db, remote = TRUE, verbose = FALSE)
                         m = rep.int("", length(u)),
                         new = rep.int("", length(u)),
                         cran = rep.int("", length(u)),
-                        spaces = rep.int("", length(u))) {
+                        spaces = rep.int("", length(u)),
+                        R = rep.int("", length(u))) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
-                        New = new, CRAN = cran, Spaces = spaces,
+                        New = new, CRAN = cran, Spaces = spaces, R = R,
                         stringsAsFactors = FALSE)
         y$From <- p
         class(y) <- c("check_url_db", "data.frame")
@@ -407,8 +408,9 @@ function(db, remote = TRUE, verbose = FALSE)
                         ul)) ||
                  startsWith(ul, "http://cran.r-project.org") ||
                  any(substring(ul, 1L, nchar(mirrors)) == mirrors))
+        R <- grepl("^http://(www|bugs|journal).r-project.org", ul)
         spaces <- grepl(" ", u)
-        c(if(cran) u else "", if(spaces) u else "")
+        c(if(cran) u else "", if(spaces) u else "", if(R) u else "")
     }
 
     bad <- .gather()
@@ -488,7 +490,9 @@ function(db, remote = TRUE, verbose = FALSE)
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
         ind <- is.na(match(status, c(200L, 405L, NA))) |
-            nzchar(results[, 4L]) | nzchar(results[, 5L])
+            nzchar(results[, 4L]) |
+            nzchar(results[, 5L]) |
+            nzchar(results[, 6L])
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
@@ -500,7 +504,8 @@ function(db, remote = TRUE, verbose = FALSE)
                          .gather(urls[pos], parents[pos], s, m,
                                  results[ind, 3L],
                                  results[ind, 4L],
-                                 results[ind, 5L]))
+                                 results[ind, 5L],
+                                 results[ind, 6L]))
         }
     }
     bad
@@ -530,7 +535,10 @@ function(x, ...)
                   "\nURL contains spaces"),
            ifelse((m <- x$CRAN) == "",
                   "",
-                  "\nCRAN URL not in canonical form")
+                  "\nCRAN URL not in canonical form"),
+           ifelse((m <- x$R) == "",
+                  "",
+                  "\nR-project URL not in canonical form")
            )
 }
 

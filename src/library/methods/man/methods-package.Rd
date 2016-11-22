@@ -14,27 +14,52 @@ Formally defined methods and classes for R objects, plus
 other programming tools, as described in the references.
 }
 \details{
-  This package provides the \sQuote{S4} or \sQuote{S version 4}
+  This package provides the \dQuote{S4} or \dQuote{S version 4}
   approach to methods and classes in a functional language.
 
-  See the documentation entries \code{\link{Classes}},
-  \code{\link{Methods}}, and \code{\link{GenericFunctions}} for general discussion of these topics, at a
-  fairly technical level.  Links from those pages, and the
-  documentation of \code{\link{setClass}} and \code{\link{setMethod}}
-  cover the main programming tools needed.
+  For basic use of the techniques, start with \link{Introduction} and
+  follow the links there to the key functions for programming, notably
+  \code{\link{setClass}} and \code{\link{setMethod}}.
+
+  Some specific topics:
+
+\describe{
+    \item{Classes:}{ Creating one, see \code{\link{setClass}};
+        examining definitions, see \code{\link{getClassDef}} and
+        \linkS4class{classRepresentation}; inheritance and coercing,
+      see \code{\link{is}} and \code{\link{as}}
+      }
+
+  \item{Generic functions:}{  Basic programming, see
+      \code{\link{setGeneric}}; the class of objects, see
+      \linkS4class{genericFunction}; other functions to examine or
+      manipulate them, see \link{GenericFunctions}.
+      }
+   \item{S3:}{Using classes, see \code{\link{setOldClass}}; methods,
+       see \link{Methods_for_S3}.
+     }
+     \item{Reference classes:}{See \link{ReferenceClasses}.
+         }
+    \item{Class unions; virtual classes}{See \code{\link{setClassUnion}}.
+         }
+ 
+}
+These pages will have additional links to related topics.
 
   For a complete
   list of functions and classes, use \code{library(help="methods")}.
 }
 
 \references{
+ Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
+
  Chambers, John M. (2008)
  \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
+  Springer.  (Chapter 10 has some additional details.)
 
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
 }
 \author{
 R Core Team

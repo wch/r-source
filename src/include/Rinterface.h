@@ -29,19 +29,14 @@
 #ifndef RINTERFACE_H_
 #define RINTERFACE_H_
 
-// Support for NO_C_HEADERS added in R 3.3.0
+#include <R_ext/Boolean.h>
+#include <R_ext/RStartup.h>
+
 #ifdef __cplusplus
-# ifndef NO_C_HEADERS
-#  include <cstdio>
-#  ifdef __SUNPRO_CC
-using std::FILE;
-#  endif
-# endif
+# include <cstdio>
 extern "C" {
 #else
-# ifndef NO_C_HEADERS
-#  include <stdio.h>
-#endif
+# include <stdio.h>
 #endif
 
 #if defined(__GNUC__) && __GNUC__ >= 3
@@ -49,9 +44,6 @@ extern "C" {
 #else
 # define NORET
 #endif
-
-#include <R_ext/Boolean.h>
-#include <R_ext/RStartup.h>
 
 /* from Defn.h */
 /* this duplication will be removed in due course */
@@ -91,9 +83,13 @@ void process_site_Renviron(void);
 void process_system_Renviron(void);
 void process_user_Renviron(void);
 
+#ifdef __cplusplus
+extern std::FILE * R_Consolefile;
+extern std::FILE * R_Outputfile;
+#else
 extern FILE * R_Consolefile;
 extern FILE * R_Outputfile;
-
+#endif
 
 /* in ../unix/sys-unix.c */
 void R_setStartTime(void);

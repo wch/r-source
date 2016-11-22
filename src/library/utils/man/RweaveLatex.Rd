@@ -251,11 +251,17 @@ my.Swd <- function(name, width, height, ...)
                  units = "in", type = "quartz", bg = "transparent")
 @
 }
+  Alternatively for \R >= 3.4.0, if the function exists in a package
+  (rather than the \code{.GlobalEnv}) it can be used by setting
+  \code{grdevice = "pkg::my.Swd"} (or with \samp{:::} instead of
+  \samp{::} if the function is not exported).
+
   Currently only one custom device can be used for each chunk, but
   different devices can be used for different chunks.
-
+  
   A replacement for \code{\link{dev.off}} can be provided as a function
-  with suffix \code{.off}, e.g.\sspace{}\code{my.Swd.off()}.
+  with suffix \code{.off}, e.g.\sspace{}\code{my.Swd.off()} or
+  \code{pkg::my.Swd.off()}, respectively.
 }
 
 \section{Hook Functions}{

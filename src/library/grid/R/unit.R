@@ -208,6 +208,10 @@ as.character.unit <- function(x, ...) {
   paste0(x, attr(x, "unit"))
 }
 
+format.unit <- function(x, ...) {
+    paste0(format(unclass(x), ...), attr(x, "unit"))
+}
+
 #########################
 # UNIT ARITHMETIC STUFF
 #########################
@@ -279,6 +283,14 @@ as.character.unit.arithmetic <- function(x, ...) {
     paste0(fname, "(", paste(x$arg1, collapse=", "), ")")
 }
 
+format.unit.arithmetic <- function(x, ...) {
+    fname <- x$fname
+    if (fname == "+" || fname == "-" || fname == "*")
+        paste0(format(x$arg1, ...), fname, format(x$arg2, ...))
+    else
+        paste0(fname, "(", paste(format(x$arg1, ...), collapse=", "), ")")
+}
+
 unit.pmax <- function(...) {
 
   select.i <- function(unit, i) {
@@ -347,6 +359,10 @@ is.unit.list <- function(x) {
 as.character.unit.list <- function(x, ...) {
   ## *apply cannot work on 'x' directly because of "wrong" length()s
   vapply(seq_along(x), function(i) as.character(x[[i]]), "")
+}
+
+format.unit.list <- function(x, ...) {
+    vapply(seq_along(x), function(i) format(x[[i]], ...), "")
 }
 
 #########################

@@ -5,7 +5,7 @@
 
 \name{withVisible}
 \alias{withVisible}
-\title{Return both a value and its visibility}
+\title{Return both a Value and its Visibility}
 \description{
 This function evaluates an expression, returning it in a two element list
 containing its value and a flag showing whether it would automatically print.
@@ -14,10 +14,12 @@ containing its value and a flag showing whether it would automatically print.
 withVisible(x)
 }
 \arguments{
-  \item{x}{ An expression to be evaluated. }
+  \item{x}{an expression to be evaluated.}
 }
 \details{
-  The argument is evaluated in the caller's context.
+  The argument, \emph{not} an \code{\link{expression}} object, rather
+  an (unevaluated function) \code{\link{call}}, is evaluated in the
+  caller's context.
 
   This is a \link{primitive} function.
 }
@@ -25,7 +27,11 @@ withVisible(x)
   \item{value }{The value of \code{x} after evaluation.}
   \item{visible }{logical; whether the value would auto-print.}
 }
-\seealso{\code{\link{invisible}}, \code{\link{eval}}}
+\seealso{\code{\link{invisible}}, \code{\link{eval}};
+  \code{\link{withAutoprint}()} calls \code{\link{source}()} which
+  itself uses \code{withVisible()} in order to correctly
+  \dQuote{auto print}.
+}
 \examples{
 x <- 1
 withVisible(x <- 1) # *$visible is FALSE

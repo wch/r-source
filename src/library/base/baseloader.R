@@ -126,3 +126,9 @@ local({
 
 invisible(force(.ArgsEnv))
 invisible(force(.GenericArgsEnv))
+
+## also force these condition system callback promises to avoid
+## recursive invocation in some rare situations at start-up
+invisible(force(.signalSimpleWarning))
+invisible(force(.handleSimpleError))
+invisible(force(.tryResumeInterrupt))

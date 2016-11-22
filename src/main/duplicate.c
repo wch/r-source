@@ -291,19 +291,13 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
 	return s;
     case CLOSXP:
 	PROTECT(s);
-	if (R_jit_enabled > 1 && TYPEOF(BODY(s)) != BCODESXP) {
-	    int old_enabled = R_jit_enabled;
-	    SEXP new_s;
-	    R_jit_enabled = 0;
-	    new_s = R_cmpfun(s);
-	    SET_BODY(s, BODY(new_s));
-	    R_jit_enabled = old_enabled;
-	}
 	PROTECT(t = allocSExp(CLOSXP));
 	SET_FORMALS(t, FORMALS(s));
 	SET_BODY(t, BODY(s));
 	SET_CLOENV(t, CLOENV(s));
 	DUPLICATE_ATTRIB(t, s, deep);
+	if (NOJIT(s)) SET_NOJIT(t);
+	if (MAYBEJIT(s)) SET_MAYBEJIT(t);
 	UNPROTECT(2);
 	break;
     case LISTSXP:

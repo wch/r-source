@@ -14,7 +14,7 @@
 grid.show.layout(l, newpage=TRUE, vp.ex = 0.8, bg = "light grey",
              cell.border = "blue", cell.fill = "light blue",
              cell.label = TRUE, label.col = "blue",
-             unit.col = "red", vp = NULL)
+             unit.col = "red", vp = NULL, \dots)
 }
 \arguments{
   \item{l}{A Grid layout object.}
@@ -32,6 +32,8 @@ grid.show.layout(l, newpage=TRUE, vp.ex = 0.8, bg = "light grey",
   \item{unit.col}{The colour used for labelling the widths/heights of
     columns/rows.}
   \item{vp}{A Grid viewport object (or NULL).}
+  \item{\dots}{Arguments passed to \code{format} for formatting the
+    layout width and height annotations.}
 }
 \details{
   A viewport is created within \code{vp} to provide a margin for

@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000--2010 The R Core Team
- *  Copyright (C) 2000, 2010 The R Foundation
+ *  Copyright (C) 2000--2016 The R Core Team
+ *  Copyright (C) 2001--2016 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 
 double rbeta(double aa, double bb)
 {
-    if (aa < 0. || bb < 0.)
+    if (ISNAN(aa) || ISNAN(bb) || aa < 0. || bb < 0.)
 	ML_ERR_return_NAN;
     if (!R_FINITE(aa) && !R_FINITE(bb)) // a = b = Inf : all mass at 1/2
 	return 0.5;

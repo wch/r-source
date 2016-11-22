@@ -2,10 +2,14 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2000-2016 The R Core Team.
  *
- *  This program is free software; you can redistribute it and/or modify
+ *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2.1 of the License, or
  *  (at your option) any later version.
+ *
+ *  This file is part of R. R is distributed under the terms of the
+ *  GNU General Public License, either Version 2, June 1991 or Version 3,
+ *  June 2007. See doc/COPYRIGHTS for details of the copyright status of R.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,24 +28,20 @@
    Not part of the API and subject to change without notice.
 
    NB: HAVE_SYS_SELECT_H should be checked and defined before this is
-   included (or <sys/select.h> included if NO_C_HEADERS is defined).
+   included.
  */
 
 #ifndef R_EXT_EVENTLOOP_H
 #define R_EXT_EVENTLOOP_H
 
-#ifndef NO_C_HEADERS
-# ifdef HAVE_SYS_SELECT_H
-#  include <sys/select.h> /* for fd_set, select according to POSIX 2004 */
-# endif
-# ifdef HAVE_SYS_TIME_H
-#  include <sys/time.h>	 /* ... according to earlier POSIX and perhaps HP-UX */
-# endif
-/* NOTE: At one time needed on FreeBSD so that fd_set is defined. */
-# include <sys/types.h>
-#else
-#warning "use of NO_C_HEADERS is deprecated"
+#ifdef HAVE_SYS_SELECT_H
+# include <sys/select.h> /* for fd_set, select according to POSIX 2004 */
 #endif
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>	 /* ... according to earlier POSIX and perhaps HP-UX */
+#endif
+/* NOTE: At one time needed on FreeBSD so that fd_set is defined. */
+#include <sys/types.h>
 
 #ifdef  __cplusplus
 extern "C" {

@@ -29,7 +29,7 @@ spineplot(x, \dots)
           main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), axes = TRUE, \dots,
-          subset = NULL)
+          subset = NULL, drop.unused.levels = FALSE)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single variable
@@ -61,7 +61,9 @@ spineplot(x, \dots)
     level names) are suppressed.}
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
   \item{subset}{an optional vector specifying a subset of observations
-    to be used for plotting.  }
+    to be used for plotting.}
+  \item{drop.unused.levels}{should factors have unused levels dropped?
+    Defaults to \code{FALSE}.}
 }
 \details{
   \code{spineplot} creates either a spinogram or a spine plot.  It can

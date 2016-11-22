@@ -1,6 +1,6 @@
-% File src/library/stats/man/supsmu.Rd
+ % File src/library/stats/man/supsmu.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{supsmu}
@@ -10,7 +10,7 @@
   Smooth the (x, y) values by Friedman's \sQuote{super smoother}.
 }
 \usage{
-supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
+supsmu(x, y, wt =, span = "cv", periodic = FALSE, bass = 0, trace = FALSE)
 }
 \arguments{
   \item{x}{x values for smoothing}
@@ -21,8 +21,10 @@ supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
     cross-validation.}
   \item{periodic}{if \code{TRUE}, the x values are assumed to be in
     \code{[0, 1]} and of period 1.}
-  \item{bass}{controls the smoothness of the fitted curve. Values of up
+  \item{bass}{controls the smoothness of the fitted curve.  Values of up
     to 10 indicate increasing smoothness.}
+  \item{trace}{logical, if true, prints one line of info \dQuote{per
+      spar}, notably useful for \code{"cv"}.}
 }
 \details{
   \code{supsmu} is a running lines smoother which chooses between three

@@ -27,7 +27,8 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Utils.h>
 
-/* This is called from stats/src/bvalue.f, and packages gam and mda */
+/* This is called from stats/src/bvalue.f, 3 x stats/src/s*.f for smooth.spline()
+   and packages gam and mda */
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
 		    int *ilo, int *mflag)
@@ -165,6 +166,8 @@ int findInterval2(double *xt, int n, double x,
 	if (X_grtr(xt[n]))		right_boundary;
 	ihi = n;
     }
+    
+    if (left_open) goto L51; /* There _is_ a path to here, avoiding return and goto */
 
 L50: // ! left_open
     /* **** now xt[ilo] <= x < xt[ihi] . narrow the interval. */

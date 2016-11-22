@@ -292,7 +292,10 @@ void warning(const char *format, ...)
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     RprintTrunc(buf);
     if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
-    warningcall(c ? c->call : R_NilValue, "%s", buf);
+    if (c == R_GlobalContext && R_BCIntActive)
+        warningcall(R_getBCInterpreterExpression(), "%s", buf);
+    else
+        warningcall(c ? c->call : R_NilValue, "%s", buf);
 }
 
 /* declarations for internal condition handling */
@@ -798,7 +801,10 @@ void error(const char *format, ...)
     /* This can be called before R_GlobalContext is defined, so... */
     /* If profiling is on, this can be a CTXT_BUILTIN */
     if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
-    errorcall(c ? c->call : R_NilValue, "%s", buf);
+    if (c == R_GlobalContext && R_BCIntActive)
+        errorcall(R_getBCInterpreterExpression(), "%s", buf);
+    else
+        errorcall(c ? c->call : R_NilValue, "%s", buf);
 }
 
 static void try_jump_to_restart(void)
@@ -1372,8 +1378,14 @@ SEXP R_GetTraceback(int skip)
 		skip--;
 	    else {
 		SETCAR(t, deparse1(c->call, 0, DEFAULTDEPARSE));
-		if (c->srcref && !isNull(c->srcref))
-		    setAttrib(CAR(t), R_SrcrefSymbol, duplicate(c->srcref));
+		if (c->srcref && !isNull(c->srcref)) {
+		    SEXP sref;
+		    if (c->srcref == R_InBCInterpreter)
+			sref = R_findBCInterpreterSrcref(c);
+		    else
+			sref = c->srcref;
+		    setAttrib(CAR(t), R_SrcrefSymbol, duplicate(sref));
+		}
 		t = CDR(t);
 	    }
 	}

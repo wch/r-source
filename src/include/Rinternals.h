@@ -3,11 +3,15 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1999-2016   The R Core Team.
  *
- *  This program is free software; you can redistribute it and/or modify
+ *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2.1 of the License, or
  *  (at your option) any later version.
  *
+ *  This file is part of R. R is distributed under the terms of the
+ *  GNU General Public License, either Version 2, June 1991 or Version 3,
+ *  June 2007. See doc/COPYRIGHTS for details of the copyright status of R.
+ *  
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,24 +30,15 @@
 #ifndef R_INTERNALS_H_
 #define R_INTERNALS_H_
 
-// Support for NO_C_HEADERS added in R 3.3.0
 #ifdef __cplusplus
-# ifndef NO_C_HEADERS
-#  include <cstdio>
-#  include <climits>
-#  include <cstddef>
-# else
-#warning "use of NO_C_HEADERS is deprecated"
-# endif
+# include <cstdio>
+# include <climits>
+# include <cstddef>
 extern "C" {
 #else
-# ifndef NO_C_HEADERS
-#  include <stdio.h>
-#  include <limits.h> /* for INT_MAX */
-#  include <stddef.h> /* for ptrdiff_t */
-# else
-#warning "use of NO_C_HEADERS is deprecated"
-# endif
+# include <stdio.h>
+# include <limits.h> /* for INT_MAX */
+# include <stddef.h> /* for ptrdiff_t */
 #endif
 
 #include <R_ext/Arith.h>
@@ -367,6 +362,15 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
 #define SET_S4_OBJECT(x) (((x)->sxpinfo.gp) |= S4_OBJECT_MASK)
 #define UNSET_S4_OBJECT(x) (((x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)
+
+/* JIT optimization support */
+#define NOJIT_MASK ((unsigned short)(1<<5))
+#define NOJIT(x) ((x)->sxpinfo.gp & NOJIT_MASK)
+#define SET_NOJIT(x) (((x)->sxpinfo.gp) |= NOJIT_MASK)
+#define MAYBEJIT_MASK ((unsigned short)(1<<6))
+#define MAYBEJIT(x) ((x)->sxpinfo.gp & MAYBEJIT_MASK)
+#define SET_MAYBEJIT(x) (((x)->sxpinfo.gp) |= MAYBEJIT_MASK)
+#define UNSET_MAYBEJIT(x) (((x)->sxpinfo.gp) &= ~MAYBEJIT_MASK)
 
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
@@ -738,6 +742,8 @@ LibExtern SEXP	R_Srcref;           /* Current srcref, for debuggers */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
 LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
 LibExtern SEXP	R_MissingArg;	    /* Missing argument marker */
+LibExtern SEXP	R_InBCInterpreter;  /* To be found in BC interp. state
+				       (marker) */
 #ifdef __MAIN__
 attribute_hidden
 #else
@@ -999,11 +1005,13 @@ void R_RunWeakRefFinalizer(SEXP w);
 
 SEXP R_PromiseExpr(SEXP);
 SEXP R_ClosureExpr(SEXP);
+SEXP R_BytecodeExpr(SEXP e);
 void R_initialize_bcode(void);
 SEXP R_bcEncode(SEXP);
 SEXP R_bcDecode(SEXP);
 void R_registerBC(SEXP, SEXP);
 Rboolean R_checkConstants(Rboolean);
+Rboolean R_BCVersionOK(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
 #define BODY_EXPR(e) R_ClosureExpr(e)
 
