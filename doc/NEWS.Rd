@@ -289,7 +289,7 @@
       \item Headers for Unix-only facilities \file{R_ext/GetX11Image.h},
       \file{R_ext/QuartzDevice.h} and \file{R_ext/eventloop.h} are no
       longer installed on Windows.
-      
+
       \item No-longer installed headers \file{GraphicsBase.h},
       \file{RGraphics.h}, \file{Rmodules/RX11.h} and
       \file{Rmodules/Rlapack.h} which had a LGPL license no longer do so.
@@ -529,6 +529,9 @@
 
       \item Fix buffer overflow vulnerability in \code{pdf()} when
       loading an encoding file.  Reported by Talos (TALOS-2016-0227).
+
+      \item \code{getDLLRegisteredRoutines()} now produces its warning
+      correctly when multiple DLLs match, thanks to Matt Dowle's \PR{17184}.
     }
   }
 }
