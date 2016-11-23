@@ -25,8 +25,14 @@
       via symbolic link now should work wherever \code{\link{Sys.readlink}()}
       works, resolving \PR{16725}.
 
+      \item \code{"Cincinnati"} was missing an \code{"n"} in the
+      \code{precip} dataset.
+
       \item Fix buffer overflow vulnerability in \code{pdf()} when
       loading an encoding file.  Reported by Talos (TALOS-2016-0227).
+
+      \item \code{getDLLRegisteredRoutines()} now produces its warning
+      correctly when multiple DLLs match, thanks to Matt Dowle's \PR{17184}.
     }
   }
 }
