@@ -1,7 +1,7 @@
 #  File src/library/base/R/dynload.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -91,7 +91,8 @@ getDLLRegisteredRoutines.character <- function(dll, addNames = TRUE)
     dll <- which.max(w)
     if(sum(w) > 1L)
         warning(gettextf("multiple DLLs match '%s'. Using '%s'",
-                         dll, dll[["path"]]), domain = NA)
+			 names(dll), dlls[[dll]][["path"]]),
+		domain = NA)
 
     getDLLRegisteredRoutines(dlls[[dll]], addNames)
 }

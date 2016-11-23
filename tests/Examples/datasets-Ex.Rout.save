@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-11-14 r71659) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-11-22 r71677) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2770,6 +2770,13 @@ Warning: not plotting observations with leverage one:
 > dotchart(precip[order(precip)], main = "precip data")
 > title(sub = "Average annual precipitation (in.)")
 > 
+> ## Old ("wrong") version of dataset (just name change):
+> precip.O <- local({
++    p <- precip; names(p)[names(p) == "Cincinnati"] <- "Cincinati" ; p })
+> stopifnot(all(precip == precip.O),
++ 	  match("Cincinnati", names(precip)) == 46,
++ 	  identical(names(precip)[-46], names(precip.O)[-46]))
+> 
 > 
 > 
 > cleanEx()
@@ -3481,7 +3488,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.476 0.029 1.51 0 0 
+Time elapsed:  1.427 0.024 1.456 0 0 
 > grDevices::dev.off()
 null device 
           1 
