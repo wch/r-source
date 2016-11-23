@@ -784,10 +784,12 @@ typedef unsigned long R_exprhash_t;
 static R_exprhash_t hash(unsigned char *str, int n, R_exprhash_t hash)
 {
     // djb2 from http://www.cse.yorku.ca/~oz/hash.html
-    int c;
+    // (modified for n-byte lengths)
 
-    while ((c = *str++))
-        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    int i;
+
+    for(i = 0; i < n; i++)
+        hash = ((hash << 5) + hash) + str[i]; /* hash * 33 + c */
 
     return hash;
 }
