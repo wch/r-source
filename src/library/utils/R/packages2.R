@@ -215,7 +215,7 @@ install.packages <-
     }
 
     if(missing(pkgs) || !length(pkgs)) {
-        if(!interactive()) stop("no packages were specified")
+        if(!interactive()) return(invisible(NULL)) # edge case friendly
         ## if no packages were specified, use a menu
 	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
            || (capabilities("tcltk")

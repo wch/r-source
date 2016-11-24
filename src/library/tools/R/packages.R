@@ -424,3 +424,103 @@ function(x) {
     x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
     x[nzchar(x) & (x != "R")]
 }
+
+
+packages.dcf <-
+function(file = "DESCRIPTION", 
+         which = c("Depends","Imports","LinkingTo"), 
+         except.priority = "base") {
+    if (!is.character(file) || !length(file) || !all(file.exists(file)))
+        stop("file argument must be character of filepath(s) to existing DESCRIPTION file(s)")
+    if (!is.character(except.priority) || !length(except.priority) || !all(except.priority %in% c("base","recommended")))
+        stop("except.priority accept 'base', 'recommended' or both")
+    which_all <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    if (identical(which, "all"))
+        which <- which_all
+    else if (identical(which, "most"))
+        which <- c("Depends", "Imports", "LinkingTo", "Suggests")
+    if (!is.character(which) || !length(which) || !all(which %in% which_all))
+        stop("which argument accept only valid dependency relation: ", paste(which_all, collapse=", "))
+    x <- unlist(lapply(file, function(f, which) {
+        dcf <- read.dcf(f, fields = which)
+        dcf[!is.na(dcf)]
+    }, which = which), use.names = FALSE)
+    x <- unlist(lapply(x, tools:::.extract_dependency_package_names))
+    except <- c("R", unlist(tools:::.get_standard_package_names()[except.priority], use.names = FALSE))
+    setdiff(x, except)
+}
+
+repos.dcf <-
+function(file = "DESCRIPTION") {
+    if (!is.character(file) || !length(file) || !all(file.exists(file)))
+        stop("file argument must be character of filepath(s) to existing DESCRIPTION file(s)")
+    x <- unlist(lapply(file, function(f) {
+        dcf <- read.dcf(f, fields = "Additional_repositories")
+        dcf[!is.na(dcf)]
+    }), use.names = FALSE)
+    x <- trimws(unlist(strsplit(trimws(x), ",", fixed = TRUE), use.names = FALSE))
+    unique(x)
+}
+
+mirror.packages <-
+function(pkgs, 
+         which = c("Depends", "Imports", "LinkingTo"), 
+         repos = getOption("repos"), 
+         type = c("source", "mac.binary", "win.binary"), 
+         repodir, 
+         except.repodir = repodir, 
+         except.priority = "base", 
+         method, quiet = TRUE,
+         ...) {
+    if (!length(pkgs)) # edge case friendly
+        return(NULL)
+    if (!is.character(pkgs))
+        stop("pkgs argument must be character vector of packages to mirror from repository")
+    if (missing(repodir) || !is.character(repodir) || length(repodir)!=1L)
+        stop("repodir argument must be non-missing scalar character, local path to repo mirror")
+    if (!dir.exists(repodir) && !dir.create(repodir, recursive = TRUE, showWarnings = FALSE))
+        stop("Path provided in 'repodir' argument does not exists and could not be created")
+    if (missing(type) && .Platform$OS.type == "windows")
+        type <- "win.binary"
+    type <- match.arg(type)
+    destdir <- utils::contrib.url(repodir, type)
+    if (!dir.exists(destdir) && !dir.create(destdir, recursive = TRUE, showWarnings = FALSE))
+        stop("Your repo directory provided in 'repodir' exists, but does not have src/contrib dir tree and it could not be created")
+    if (length(except.repodir) && (!is.character(except.repodir) || length(except.repodir)!=1L || !dir.exists(except.repodir)))
+        stop("except.repodir argument must be non-missing scalar character, local path to existing repo mirror")
+    if (!is.character(except.priority) || !length(except.priority) || !all(except.priority %in% c("base","recommended")))
+        stop("except.priority accept 'base', 'recommended' or both")
+    if (!is.logical(quiet) || length(quiet)!=1L || is.na(quiet))
+        stop("quiet argument must be TRUE or FALSE")
+    which_all <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    if (identical(which, "all"))
+        which <- which_all
+    else if (identical(which, "most"))
+        which <- c("Depends", "Imports", "LinkingTo", "Suggests")
+    if (!is.character(which) || !length(which) || !all(which %in% which_all))
+        stop("which argument accept only valid dependency relations: ", paste(which_all, collapse=", "))
+    
+    db <- utils::available.packages(utils::contrib.url(repos, type), type = type)
+    allpkgs <- c(pkgs, unlist(tools::package_dependencies(unique(pkgs), db, which, recursive = TRUE), use.names = FALSE))
+    except <- c("R", unlist(tools:::.get_standard_package_names()[except.priority], use.names = FALSE))
+    if (length(except.repodir) && file.exists(file.path(utils::contrib.url(except.repodir, type), "PACKAGES"))) {
+        except.curl <- utils::contrib.url(file.path("file:", normalizePath(except.repodir)), type)
+        except <- c(except, rownames(utils::available.packages(except.curl, type = type, fields = "Package")))
+    }
+    newpkgs <- setdiff(allpkgs, except)
+    if (!all(availpkgs<-newpkgs %in% rownames(db)))
+        stop(sprintf("Some packages could not be found in provided repos '%s': %s",
+                     paste(repos, collapse = ", "), paste(newpkgs[!availpkgs], collapse = ", ")))
+    
+    pkgsext <- switch(type,
+                      "source" = "tar.gz",
+                      "mac.binary" = "tgz",
+                      "win.binary" = "zip")
+    pkgsver <- db[db[, "Package"] %in% newpkgs, "Version"]
+    instpkgs <- paste(paste(names(pkgsver), format(package_version(pkgsver)), sep = "_"), pkgsext, sep = ".")
+    unlink(instpkgs[file.exists(file.path(destdir, instpkgs))])
+    dp <- utils::download.packages(pkgs = newpkgs, destdir = destdir, available = db, repos = repos, type = type, method = method, quiet = quiet)
+    tools::write_PACKAGES(dir = destdir, type = type, ...)
+    dp
+}
+

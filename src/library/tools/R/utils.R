@@ -1168,7 +1168,8 @@ function()
                "Roxygen",
                "Acknowledgements",
                "Acknowledgments", # USA/Canadian usage.
-               "biocViews")
+               "biocViews",
+               "Commit")
              ))
 }
 
