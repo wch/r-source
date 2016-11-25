@@ -407,15 +407,6 @@ function(packages = NULL, db = NULL,
 }
 
 
-.package_dependencies <- function(packages = NULL, db,
-         which = c("Depends", "Imports", "LinkingTo"),
-         recursive = FALSE, reverse = FALSE)
-{
-    .Deprecated("package_dependencies")
-    package_dependencies(packages = packages, db = db,
-         which = which, recursive = recursive, reverse = reverse)
-}
-
 .extract_dependency_package_names <-
 function(x) {
     ## Assume a character *string*.
