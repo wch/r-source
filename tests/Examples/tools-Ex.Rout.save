@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-11-22 r71677) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-11-25 r71692) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -591,49 +591,6 @@ attr(,"match.length")
 > 
 > 
 > cleanEx()
-> nameEx("getDepList")
-> ### * getDepList
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: getDepList
-> ### Title: Functions to Retrieve Dependency Information
-> ### Aliases: getDepList pkgDepends
-> ### Keywords: utilities
-> 
-> ### ** Examples
-> 
-> pkgDepends("tools", local = FALSE)
-Warning: 'pkgDepends' is deprecated.
-Use 'package_dependencies()' instead.
-See help("Deprecated")
-Warning: 'package.dependencies' is deprecated.
-Use 'package_dependencies' instead.
-See help("Deprecated")
-Warning: 'getDepList' is deprecated.
-Use 'dependsOnPkgs() or package_dependencies()' instead.
-See help("Deprecated")
-$Depends
-character(0)
-
-$Installed
-character(0)
-
-$Found
-list()
-
-$NotFound
-character(0)
-
-$R
-character(0)
-
-attr(,"class")
-[1] "DependsList"
-> 
-> 
-> 
-> cleanEx()
 > nameEx("getVignetteInfo")
 > ### * getVignetteInfo
 > 
@@ -646,40 +603,6 @@ attr(,"class")
 > 
 > ### ** Examples
 > 
-> 
-> 
-> 
-> cleanEx()
-> nameEx("installFoundDepends")
-> ### * installFoundDepends
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: installFoundDepends
-> ### Title: A function to install unresolved dependencies
-> ### Aliases: installFoundDepends
-> ### Keywords: utilities
-> 
-> ### ** Examples
-> 
-> ## Set up a temporary directory to install packages to
-> tmp <- tempfile()
-> dir.create(tmp)
-> 
-> pDL <- pkgDepends("tools", local = FALSE)
-Warning: 'pkgDepends' is deprecated.
-Use 'package_dependencies()' instead.
-See help("Deprecated")
-Warning: 'package.dependencies' is deprecated.
-Use 'package_dependencies' instead.
-See help("Deprecated")
-Warning: 'getDepList' is deprecated.
-Use 'dependsOnPkgs() or package_dependencies()' instead.
-See help("Deprecated")
-> installFoundDepends(pDL$Found, destdir = tmp)
-Warning: 'installFoundDepends()' is deprecated: It is misleading nowadays
- since it has never taken 'Imports' into consideration
-NULL
 > 
 > 
 > 
