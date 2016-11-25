@@ -2895,7 +2895,7 @@ this is to minimize differences between platforms.
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  A subset of the checking steps can be
 selected by adding command-line options. It also allows customization by
-setting environment variables @w{@env{_R_CHECK_*_}:}, as described in
+setting environment variables @w{@env{_R_CHECK_*_}} as described in
 @ifset UseExternalXrefs
 @ref{Tools, , Tools, R-ints, R Internals}:
 @end ifset
@@ -2922,7 +2922,7 @@ _R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
 @noindent
 which reports unused local assignments.  Not only does this point out
 computations which are unnecessary because their results are unused, it
-also can show errors.  (Two such are to intend to update an object by
+also can uncover errors.  (Two such are to intend to update an object by
 assigning a value but mistype its name or assign in the wrong scope,
 for example using @code{<-} where @code{<<-} was intended.)  This can
 give false positives, most commonly because of non-standard evaluation
