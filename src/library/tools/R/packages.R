@@ -416,7 +416,6 @@ function(x) {
     x[nzchar(x) & (x != "R")]
 }
 
-
 packages.dcf <-
 function(file = "DESCRIPTION", 
          which = c("Depends","Imports","LinkingTo"), 
@@ -433,8 +432,12 @@ function(file = "DESCRIPTION",
     if (!is.character(which) || !length(which) || !all(which %in% which_all))
         stop("which argument accept only valid dependency relation: ", paste(which_all, collapse=", "))
     x <- unlist(lapply(file, function(f, which) {
-        dcf <- read.dcf(f, fields = which)
-        dcf[!is.na(dcf)]
+        dcf <- tryCatch(read.dcf(f, fields = which),
+                        error = identity)
+        if (inherits(dcf, "error") || !length(dcf))
+            warning(gettextf("error reading file '%s'", f),
+                    domain = NA, call. = FALSE)
+        else dcf[!is.na(dcf)]
     }, which = which), use.names = FALSE)
     x <- unlist(lapply(x, tools:::.extract_dependency_package_names))
     except <- c("R", unlist(tools:::.get_standard_package_names()[except.priority], use.names = FALSE))
@@ -446,13 +449,20 @@ function(file = "DESCRIPTION") {
     if (!is.character(file) || !length(file) || !all(file.exists(file)))
         stop("file argument must be character of filepath(s) to existing DESCRIPTION file(s)")
     x <- unlist(lapply(file, function(f) {
-        dcf <- read.dcf(f, fields = "Additional_repositories")
-        dcf[!is.na(dcf)]
+        dcf <- tryCatch(read.dcf(f, fields = "Additional_repositories"),
+                        error = identity)
+        if (inherits(dcf, "error") || !length(dcf))
+            warning(gettextf("error reading file '%s'", f),
+                    domain = NA, call. = FALSE)
+        else dcf[!is.na(dcf)]
     }), use.names = FALSE)
     x <- trimws(unlist(strsplit(trimws(x), ",", fixed = TRUE), use.names = FALSE))
     unique(x)
 }
 
+## Mirror subset of CRAN
+## download dependencies recursively for provided packages
+## put all downloaded packages into local repository
 mirror.packages <-
 function(pkgs, 
          which = c("Depends", "Imports", "LinkingTo"), 
@@ -461,7 +471,8 @@ function(pkgs,
          repodir, 
          except.repodir = repodir, 
          except.priority = "base", 
-         method, quiet = TRUE,
+         method,
+         quiet = TRUE,
          ...) {
     if (!length(pkgs)) # edge case friendly
         return(NULL)
@@ -474,13 +485,13 @@ function(pkgs,
     if (missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
     type <- match.arg(type)
-    destdir <- utils::contrib.url(repodir, type)
+    destdir <- utils::contrib.url(repodir, type = type)
     if (!dir.exists(destdir) && !dir.create(destdir, recursive = TRUE, showWarnings = FALSE))
-        stop("Your repo directory provided in 'repodir' exists, but does not have src/contrib dir tree and it could not be created")
+        stop(sprintf("Your repo directory provided in 'repodir' exists, but does not have '%s' dir tree and it could not be created", destdir))
     if (length(except.repodir) && (!is.character(except.repodir) || length(except.repodir)!=1L || !dir.exists(except.repodir)))
-        stop("except.repodir argument must be non-missing scalar character, local path to existing repo mirror")
+        stop("except.repodir argument must be non-missing scalar character, local path to existing directory")
     if (!is.character(except.priority) || !length(except.priority) || !all(except.priority %in% c("base","recommended")))
-        stop("except.priority accept 'base', 'recommended' or both")
+        stop("except.priority accept 'base', 'recommended', both")
     if (!is.logical(quiet) || length(quiet)!=1L || is.na(quiet))
         stop("quiet argument must be TRUE or FALSE")
     which_all <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
@@ -490,12 +501,13 @@ function(pkgs,
         which <- c("Depends", "Imports", "LinkingTo", "Suggests")
     if (!is.character(which) || !length(which) || !all(which %in% which_all))
         stop("which argument accept only valid dependency relations: ", paste(which_all, collapse=", "))
-    
-    db <- utils::available.packages(utils::contrib.url(repos, type), type = type)
+    ## possible interactive CRAN menu
+    repos.url <- utils::contrib.url(repos, type = type)
+    db <- utils::available.packages(repos.url, type = type)
     allpkgs <- c(pkgs, unlist(tools::package_dependencies(unique(pkgs), db, which, recursive = TRUE), use.names = FALSE))
     except <- c("R", unlist(tools:::.get_standard_package_names()[except.priority], use.names = FALSE))
-    if (length(except.repodir) && file.exists(file.path(utils::contrib.url(except.repodir, type), "PACKAGES"))) {
-        except.curl <- utils::contrib.url(file.path("file:", normalizePath(except.repodir)), type)
+    if (length(except.repodir) && file.exists(file.path(utils::contrib.url(except.repodir, type = type), "PACKAGES"))) {
+        except.curl <- utils::contrib.url(file.path("file:", normalizePath(except.repodir)), type = type)
         except <- c(except, rownames(utils::available.packages(except.curl, type = type, fields = "Package")))
     }
     newpkgs <- setdiff(allpkgs, except)
@@ -507,11 +519,14 @@ function(pkgs,
                       "source" = "tar.gz",
                       "mac.binary" = "tgz",
                       "win.binary" = "zip")
-    pkgsver <- db[db[, "Package"] %in% newpkgs, "Version"]
-    instpkgs <- paste(paste(names(pkgsver), format(package_version(pkgsver)), sep = "_"), pkgsext, sep = ".")
-    unlink(instpkgs[file.exists(file.path(destdir, instpkgs))])
-    dp <- utils::download.packages(pkgs = newpkgs, destdir = destdir, available = db, repos = repos, type = type, method = method, quiet = quiet)
+    pkgsver <- db[db[, "Package"] %in% newpkgs, c("Package", "Version")]
+    dlfiles <- file.path(destdir, paste(paste(pkgsver[,"Package"], pkgsver[,"Version"], sep = "_"), pkgsext, sep = "."))
+    unlink(dlfiles[file.exists(dlfiles)])
+    ## repos argument is not used in download.packages, only as default for contriburl argument
+    ## we provide contriburl to avoid interactive CRAN menu popup twice in mirror.packages
+    dp <- utils::download.packages(pkgs = newpkgs, destdir = destdir, 
+                                   available = db, contriburl = repos.url, 
+                                   type = type, method = method, quiet = quiet)
     tools::write_PACKAGES(dir = destdir, type = type, ...)
     dp
 }
-
