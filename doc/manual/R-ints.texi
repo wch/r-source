@@ -4138,9 +4138,12 @@ Another variable which enables stricter checks is to set
 @env{R_CHECK_CONSTANTS} to @code{5}.  This checks that
 nothing@footnote{The usual culprits are calls to compiled code
 @emph{via} @code{.Call} or @code{.External} which alter their
-arguments.} changes the values of constants in @R{} code.  Unfortunately
-these checkscd  can slow down checking of examples, tests and vignettes, in
-the worst case at least a hundred-fold.
+arguments.} changes the values of `constants'@footnote{things which the
+byte compiler assumes do not change, e.g.@: function bodies.} in @R{}
+code.  Unfortunately these checks can slow down checking of examples,
+tests and vignettes, typically two-fold but in the worst case at least a
+hundred-fold.  For even more comprehensive (but slower) checks, also set
+@env{R_JIT_STRATEGY} to @code{3}.
 
 @node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards
