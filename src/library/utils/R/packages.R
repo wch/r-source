@@ -35,12 +35,7 @@ function(contriburl = contrib.url(repos, type), method,
 
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0L
-        if(dir.exists(repos)) {
-            ## local non-cran, just directory of package sources dirs
-            tools::write_PACKAGES(repos, type = type, unpacked = TRUE, addFiles = TRUE)
-            res0 <- read.dcf(file = file.path(repos, "PACKAGES"))
-            if(length(res0)) rownames(res0) <- res0[, "Package"]
-        } else if(localcran) {
+        if(localcran) {
             ## see note in download.packages
             if(substring(repos, 1L, 8L) == "file:///") {
                 tmpf <- paste(substring(repos, 8L), "PACKAGES", sep = "/")
@@ -716,15 +711,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
             have_fn <- !is.na(File)
             fn[have_fn] <- File[have_fn]
             repos <- available[ok, "Repository"]
-            if(dir.exists(repos)) {
-                ## fn is a directory in this branch
-                fn <- file.path(repos, fn)
-                if(dir.exists(fn))
-                    retval <- rbind(retval, c(p, fn))
-                else
-                    warning(gettextf("package dir %s does not exist on the provided path", sQuote(p)),
-                            domain = NA, immediate. = TRUE)
-            } else if(length(grep("^file:", repos)) > 0L) { # local repository
+            if(length(grep("^file:", repos)) > 0L) { # local repository
                 ## This could be file: + file path or a file:/// URL.
                 if(substring(repos, 1L, 8L) == "file:///") {
                     ## We need to derive the file name from the URL

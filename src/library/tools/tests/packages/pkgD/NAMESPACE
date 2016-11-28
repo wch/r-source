@@ -1,4 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-import(pkgA)
-import(data.table)
-import(drat)

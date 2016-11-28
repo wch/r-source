@@ -519,7 +519,7 @@ function(pkgs,
                       "source" = "tar.gz",
                       "mac.binary" = "tgz",
                       "win.binary" = "zip")
-    pkgsver <- db[db[, "Package"] %in% newpkgs, c("Package", "Version")]
+    pkgsver <- db[db[, "Package"] %in% newpkgs, c("Package", "Version"), drop=FALSE]
     dlfiles <- file.path(destdir, paste(paste(pkgsver[,"Package"], pkgsver[,"Version"], sep = "_"), pkgsext, sep = "."))
     unlink(dlfiles[file.exists(dlfiles)])
     ## repos argument is not used in download.packages, only as default for contriburl argument
