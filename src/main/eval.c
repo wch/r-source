@@ -1110,18 +1110,33 @@ static R_INLINE Rboolean R_CheckJIT(SEXP fun)
 
 SEXP topenv(SEXP, SEXP); /**** should be in a header file */
 
-#define IS_STANDARD_UNHASHED_FRAME(e) (! OBJECT(e) && HASHTAB(e) == R_NilValue)
+/* FIXME: this should not depend on internals from envir.c but does for now. */
+/* copied from envir.c for now */
+#define IS_USER_DATABASE(rho)  (OBJECT((rho)) && inherits((rho), "UserDefinedDatabase"))
+#define IS_STANDARD_UNHASHED_FRAME(e) (! IS_USER_DATABASE(e) && HASHTAB(e) == R_NilValue)
+#define IS_STANDARD_HASHED_FRAME(e) (! IS_USER_DATABASE(e) && HASHTAB(e) != R_NilValue)
 
 /* This makes a snapshot of the local variables in cmpenv and creates
    a new environment with the same top level environment and bindings
    with value R_NilValue for the local variables. This guards against
    the cmpenv changing after being entered in the cache, and also
    allows large values that might be bound to local variables in
-   cmpenv to be reclaimed. If any local frames are not standard frames
-   then cmpenv is returned. This breaks the snapshot idea and is a
-   potential problem. Since we compute the local variables at compile
+   cmpenv to be reclaimed (also, some package tests, e.g. in shiny, test
+   when things get reclaimed). Standard local frames are processed directly,
+   hashed frames are processed via lsInternal3, which involves extra
+   allocations, but should be used rarely. If a local environment is
+   of unsupported type, topenv is returned as a valid conservative
+   answer.
+
+   Since we compute the local variables at compile
    time we should record them in the byte code object and use the
    recorded value. */
+static R_INLINE void cmpenv_enter_frame(SEXP frame, SEXP newenv)
+{
+    for (; frame != R_NilValue; frame = CDR(frame))
+	defineVar(TAG(frame), R_NilValue, newenv);
+}
+
 static R_INLINE SEXP make_cached_cmpenv(SEXP fun)
 {
     SEXP frmls = FORMALS(fun);
@@ -1134,13 +1149,20 @@ static R_INLINE SEXP make_cached_cmpenv(SEXP fun)
 	for (; frmls != R_NilValue; frmls = CDR(frmls))
 	    defineVar(TAG(frmls), R_NilValue, newenv);
 	for (SEXP env = cmpenv; env != top; env = CDR(env)) {
-	    if (IS_STANDARD_UNHASHED_FRAME(env)) {
-		for (SEXP frame = FRAME(env);
-		     frame != R_NilValue;
-		     frame = CDR(frame))
-		    defineVar(TAG(frame), R_NilValue, newenv);
+	    if (IS_STANDARD_UNHASHED_FRAME(env))
+		cmpenv_enter_frame(FRAME(env), newenv);
+	    else if (IS_STANDARD_HASHED_FRAME(env)) {
+		SEXP h = HASHTAB(env);
+		int n = length(h);
+		for (int i = 0; i < n; i++)
+		    cmpenv_enter_frame(VECTOR_ELT(h, i), newenv);
 	    }
-	    else return cmpenv;
+	    else return top;
+		/* topenv is a safe conservative answer; if a closure
+		   defines anything, its environment will not match, and
+		   it will never be compiled */
+		/* FIXME: would it be safe to simply ignore elements of
+		   of these environments? */
 	}
 	return newenv;
     }
@@ -1209,18 +1231,14 @@ static R_INLINE SEXP cmpenv_topenv(SEXP cmpenv)
     return topenv(R_NilValue, cmpenv);
 }
 
-static R_INLINE Rboolean cmpenv_exists_local(SEXP sym, SEXP env, SEXP top)
+static R_INLINE Rboolean cmpenv_exists_local(SEXP sym, SEXP cmpenv, SEXP top)
 {
-    for (; env != top; env = ENCLOS(env)) {
-	if (IS_STANDARD_UNHASHED_FRAME(env)) {
-	    for (SEXP frame = FRAME(env);
-		 frame != R_NilValue;
-		 frame = CDR(frame))
-		if (TAG(frame) == sym)
-		    return TRUE;
-	}
-	else return FALSE;
-    }
+    if (cmpenv != top)
+	for (SEXP frame = FRAME(cmpenv);
+	     frame != R_NilValue;
+	     frame = CDR(frame))
+	    if (TAG(frame) == sym)
+		return TRUE;
     return FALSE;
 }
 
