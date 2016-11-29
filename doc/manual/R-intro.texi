@@ -3377,7 +3377,7 @@ Commands may be grouped together in braces, @code{@{@var{expr_1};
 @var{@dots{}}; @var{expr_m}@}}, in which case the value of the group
 is the result of the last expression in the group evaluated.  Since such
 a group is also an expression it may, for example, be itself included in
-parentheses and used a part of an even larger expression, and so on.
+parentheses and used as part of an even larger expression, and so on.
 
 @node Control statements,  , Grouped expressions, Loops and conditional execution
 @section Control statements
