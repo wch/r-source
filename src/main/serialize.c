@@ -1783,6 +1783,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    R_ReadItemDepth--;
 	}
 	UNPROTECT(1); /* s */
+	if (TYPEOF(s) == BCODESXP && !R_BCVersionOK(s))
+	    return R_BytecodeExpr(s);
 	return s;
     }
 }
@@ -1891,7 +1893,7 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream)
     PROTECT(reps = allocVector(VECSXP, InInteger(stream)));
     ans = ReadBC1(ref_table, reps, stream);
     UNPROTECT(1);
-    return R_BCVersionOK(ans) ? ans : R_BytecodeExpr(ans);
+    return ans;
 }
 
 static void DecodeVersion(int packed, int *v, int *p, int *s)

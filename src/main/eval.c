@@ -7209,9 +7209,9 @@ static void reportModifiedConstant(SEXP crec, SEXP orig, SEXP copy, int idx)
 	PrintValue(VECTOR_ELT(consts, 0));
     } else {
 	REprintf("ERROR: the modified constant is function body:\n");
-	PrintValue(VECTOR_ELT(consts, 0));
-	REprintf("ERROR: the body was originally:\n");
 	PrintValue(orig);
+	REprintf("ERROR: the body was originally:\n");
+	PrintValue(copy);
     }
     findFunctionForBody(VECTOR_ELT(consts, 0));
     R_check_constants = oldcheck;
