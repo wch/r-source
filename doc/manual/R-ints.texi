@@ -4295,7 +4295,7 @@ if you change internal structures.]
 @node Use of TeX dialects, Current and future directions, Testing R code, Top
 @chapter Use of TeX dialects
 
-Various dialects of TeX and used for different purposes in @R{}.  The
+Various dialects of TeX are used for different purposes in @R{}.  The
 policy is that manuals be written in @samp{texinfo}, and for convenience
 the main and Windows FAQs are also.  This has the advantage that is is
 easy to produce @HTML{} and plain text versions as well as typeset manuals.
