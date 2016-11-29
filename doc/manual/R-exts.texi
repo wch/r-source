@@ -8153,8 +8153,8 @@ Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
 in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
-on the path or has been renamed@footnote{as Ubuntu does.}, one can use an
-environment variable, e.g.@:
+on the path or has been renamed@footnote{as Ubuntu is said to do.}, one
+can use an environment variable, e.g.@:
 
 @example
 ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
@@ -8214,6 +8214,12 @@ break __asan_report_error
 @end example
 (See
 @uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
+
+Recent versions@footnote{This is expected to be in @command{gcc} 7 and
+@command{clang} 4.0.0.  Currently for @command{gcc} it is implied by
+@option{-fsanitize=address}.} added the flag
+@option{-fsanitize-address-use-after-scope}: see
+@uref{https://github.com//google//sanitizers//wiki//AddressSanitizerUseAfterScope}.
 
 @menu
 * Using Leak Sanitizer::        
