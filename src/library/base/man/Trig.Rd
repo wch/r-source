@@ -87,7 +87,8 @@ tanpi(x)
    direction.
 
    Complex arguments for  \code{cospi}, \code{sinpi}, and \code{tanpi}
-   are not yet implemented.% but patches are welcome
+   are not yet implemented, and they are a \sQuote{future direction} of
+   ISO/IEC TS 18661-4.% but patches are welcome
 }
 
 \section{S4 methods}{
