@@ -3664,7 +3664,9 @@ setRlibs <-
                              ": warning: .* \\[-Wvla-extension\\]",
                              ": warning: format string contains '[\\]0'",
                              ": warning: .* \\[-Wc[+][+]11-long-long\\]",
-                             ": warning: empty macro arguments are a C99 feature"
+                             ": warning: empty macro arguments are a C99 feature",
+                             ## for non-portable flags (seen in sub-Makefiles)
+                             "warning: .* \\[-Wunknown-warning-option\\]"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
