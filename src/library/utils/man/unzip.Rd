@@ -1,6 +1,6 @@
 % File src/library/utils/man/unzip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unzip}
@@ -84,7 +84,10 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 \seealso{
   \code{\link{unz}} to read a single component from a zip file.
 
-  \code{\link{zip}}.
+  \code{\link{zip}} for packing, i.e., the \dQuote{inverse} of \code{unzip()};
+  further \code{\link{untar}} and \code{\link{tar}}, the corresponding
+  pair for (un)packing tar archives (\dQuote{tarballs}) such as \R
+  source packages.
 }
 
 \keyword{file}

@@ -352,6 +352,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
+  \code{\link{untar}} for manually unpacking source package tarballs.
+  
   \code{\link{INSTALL}}, \code{\link{REMOVE}}, \code{\link{remove.packages}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 
