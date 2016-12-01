@@ -1,6 +1,6 @@
 % File src/library/base/man/Trig.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Trig}
@@ -51,11 +51,18 @@ tanpi(x)
   \code{cospi} etc.
 
   \code{cospi(x)}, \code{sinpi(x)}, and \code{tanpi(x)} are accurate
-  for \code{x} which are multiples of a half.
+  for \code{x} values which are multiples of a half.
 
   All except \code{atan2} are \link{internal generic} \link{primitive}
   functions: methods can be defined for them individually or via the
   \code{\link[=S3groupGeneric]{Math}} group generic.
+  
+  These are all wrappers to system calls of the same name (with prefix
+  \code{c} for complex arguments) where available.  (\code{cospi},
+  \code{sinpi}, and \code{tanpi} are part of a C11 extension
+  and provided by e.g.\sspace{}macOS and Solaris: where not yet
+  available call to \code{cos} \emph{etc} are used, with special cases
+  for  multiples of a half.)
 }
 
 \value{
@@ -82,6 +89,7 @@ tanpi(x)
    Complex arguments for  \code{cospi}, \code{sinpi}, and \code{tanpi}
    are not yet implemented.% but patches are welcome
 }
+
 \section{S4 methods}{
   All except \code{atan2} are S4 generic functions: methods can be defined
   for them individually or via the
@@ -97,9 +105,10 @@ tanpi(x)
   Chapter 4. Elementary Transcendental Functions: Logarithmic,
   Exponential, Circular and Hyperbolic Functions
 
-  For \code{cospi}, \code{sinpi}, and \code{tanpi} the draft C11
-  extension ISO/IEC TS 18661
-  (\url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1785.pdf}).
+  For \code{cospi}, \code{sinpi}, and \code{tanpi} the C11 extension
+  ISO/IEC TS 18661-4:2015 (draft at
+  \url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1785.pdf}).
+  
 }
 \examples{
 x <- seq(-3, 7, by = 1/8)
