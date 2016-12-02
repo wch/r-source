@@ -4140,10 +4140,12 @@ nothing@footnote{The usual culprits are calls to compiled code
 @emph{via} @code{.Call} or @code{.External} which alter their
 arguments.} changes the values of `constants'@footnote{things which the
 byte compiler assumes do not change, e.g.@: function bodies.} in @R{}
-code.  Unfortunately these checks can slow down checking of examples,
-tests and vignettes, typically two-fold but in the worst case at least a
-hundred-fold.  For even more comprehensive (but slower) checks, also set
-@env{R_JIT_STRATEGY} to @code{3}.
+code.  This is best used in conjunction with setting
+@env{R_JIT_STRATEGY} to @code{3}, which checks code on first use (by
+default most code is only checked after byte-compilation on second use).
+Unfortunately these checks slow down checking of examples, tests and
+vignettes, typically two-fold but in the worst cases at least a
+hundred-fold.
 
 @node R coding standards, Testing R code, Tools, Top
 @chapter R coding standards

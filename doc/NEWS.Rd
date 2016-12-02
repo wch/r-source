@@ -15,7 +15,7 @@
       to do so.
 
       \item \code{summary.default()} no longer rounds, but its print
-      method does, resulting in much less extraneous rounding notably of
+      method does resulting in less extraneous rounding, notably of
       numbers in the ten thousands.
 
       \item \code{factor(x, exclude = L)} behaves more rationally when
@@ -32,14 +32,18 @@
       always for logic and comparison operations in these cases (e.g.,
       compare \code{matrix(1,1) + 2:3} and \code{matrix(1,1) < 2:3}).
 
-      \item The JIT byte code compiler is now enabled by default at
-      level 3. This means functions will be compiled on first use and
-      top level loops will be compiled and then run.  Thanks to Tomas
-      Kalibera for extensive work to make this possible. For now, the
-      compiler will not compile code containing explicit calls to
-      \code{browser()}. This is to support single stepping from the
-      \code{browser()} call. The JIT can be disabled using
-      \code{compiler::enableJIT()}.
+      \item The JIT (\sQuote{Just In Time}) byte code compiler is now
+      enabled by default at level 3. This means functions will be
+      compiled on first or second use and top-level loops will be
+      compiled and then run.  Thanks to Tomas Kalibera for extensive
+      work to make this possible.
+
+      For now, the compiler will not compile code containing explicit
+      calls to \code{browser()}: this is to support single stepping from
+      the \code{browser()} call.
+
+      JIT compilation can be disabled using \code{compiler::enableJIT()}
+      or by setting environment variable \env{R_ENABLE_JIT} to \code{0}.
     }
   }
 
@@ -388,6 +392,10 @@
 
       \item \command{R CMD check --no-stop-on-test-error} now continues
       running tests (in \file{tests/}) even if they give errors.
+
+      \item Check customization via environment variables to detect side
+      effects of \code{.Call()} and \code{.External()} calls which alter
+      their arguments is described in §8 of the \sQuote{R Internals} manual.
     }
   }
 
