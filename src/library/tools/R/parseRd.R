@@ -112,8 +112,8 @@ print.Rd <- function(x, deparse = FALSE, ...)
 as.character.Rd <- function(x, deparse = FALSE, ...)
 {
     ZEROARG <- c("\\cr", "\\dots", "\\ldots", "\\R", "\\tab") # Only these cause trouble when {} is added
-    TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method",
-                "\\S4method", "\\tabular")
+    TWOARG <- c("\\section", "\\subsection", "\\item", "\\enc",
+                "\\method", "\\S3method", "\\S4method", "\\tabular")
     USERMACROS <- c("USERMACRO", "\\newcommand", "\\renewcommand")
     EQN <- c("\\deqn", "\\eqn", "\\figure")
     modes <- c(RLIKE = 1L, LATEXLIKE = 2L, VERBATIM = 3L, INOPTION = 4L, COMMENTMODE = 5L, UNKNOWNMODE = 6L)
