@@ -42,7 +42,7 @@
       calls to \code{browser()}: this is to support single stepping from
       the \code{browser()} call.
 
-      JIT compilation can be disabled using \code{compiler::enableJIT()}
+      JIT compilation can be disabled using \code{compiler::enableJIT(0)}
       or by setting environment variable \env{R_ENABLE_JIT} to \code{0}.
     }
   }
@@ -382,16 +382,18 @@
       as tests by \command{R CMD check}. (Wish of \PR{17143})
 
       \item \command{R CMD build} and \command{R CMD check} now use the
-      \emph{union} of \env{R_LIBS} \code{.libPaths()}.  They may not be
-      equivalent, e.g., when the latter is determined by \env{R_PROFILE}.
+      \emph{union} of \env{R_LIBS} and \code{.libPaths()}.  They may not
+      be equivalent, e.g., when the latter is determined by
+      \env{R_PROFILE}.
 
       \item \command{R CMD build} now preserves dates when it copies files
       in preparing the tarball.  (Previously on Windows it changed the
       dates on all files; on Unix, it changed some dates when installing
       vignettes.)
 
-      \item \command{R CMD check --no-stop-on-test-error} now continues
-      running tests (in \file{tests/}) even if they give errors.
+      \item The new option \command{R CMD check --no-stop-on-test-error}
+      allows running the remaining tests (under \file{tests/}) even if
+      one gave an error.
 
       \item Check customization via environment variables to detect side
       effects of \code{.Call()} and \code{.External()} calls which alter
