@@ -3405,6 +3405,13 @@ int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }
 void (SET_S4_OBJECT)(SEXP x){ SET_S4_OBJECT(CHK(x)); }
 void (UNSET_S4_OBJECT)(SEXP x){ UNSET_S4_OBJECT(CHK(x)); }
 
+/* JIT optimization support */
+int (NOJIT)(SEXP x) { return NOJIT(CHK(x)); }
+int (MAYBEJIT)(SEXP x) { return MAYBEJIT(CHK(x)); }
+void (SET_NOJIT)(SEXP x) { SET_NOJIT(CHK(x)); }
+void (SET_MAYBEJIT)(SEXP x) { SET_MAYBEJIT(CHK(x)); }
+void (UNSET_MAYBEJIT)(SEXP x) { UNSET_MAYBEJIT(CHK(x)); }
+
 static int nvec[32] = {
     0,1,1,1,1,1,1,1,  // does NILSXP really count?
     1,0,0,1,1,0,0,0,

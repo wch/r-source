@@ -551,6 +551,13 @@ int (IS_S4_OBJECT)(SEXP x);
 void (SET_S4_OBJECT)(SEXP x);
 void (UNSET_S4_OBJECT)(SEXP x);
 
+/* JIT optimization support */
+int (NOJIT)(SEXP x);
+int (MAYBEJIT)(SEXP x);
+void (SET_NOJIT)(SEXP x);
+void (SET_MAYBEJIT)(SEXP x);
+void (UNSET_MAYBEJIT)(SEXP x);
+
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
 int  (TRUELENGTH)(SEXP x);
