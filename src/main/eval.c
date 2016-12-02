@@ -2758,8 +2758,11 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    ev = CONS_NR(eval(CAR(h), rho), R_NilValue);
-		    if (head==R_NilValue)
+		    if (head==R_NilValue) {
+			UNPROTECT(1); /* h */
 			PROTECT(head = ev);
+			PROTECT(h); /* put current h on top of protect stack */
+		    }
 		    else
 			SETCDR(tail, ev);
 		    COPY_TAG(ev, h);
