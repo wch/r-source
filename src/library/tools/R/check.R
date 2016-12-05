@@ -2795,6 +2795,12 @@ setRlibs <-
             if (status) {
                 print_time(t1, t2, Log)
                 errorLog(Log)
+                if (Log$con > 0L && file.exists(tf)) {
+                    ## write results only to 00check.log
+                    lines <- readLines(tf, warn = FALSE)
+                    cat(lines, sep = "\n", file = Log$con)
+                    unlink(tf)
+                }
                 ## Don't just fail: try to log where the problem occurred.
                 ## First, find the test which failed.
                 ## (Maybe there was an error without a failing test.)
@@ -2823,7 +2829,7 @@ setRlibs <-
                 if (Log$con > 0L && file.exists(tf)) {
                     ## write results only to 00check.log
                     lines <- readLines(tf, warn = FALSE)
-                    cat(lines, sep="\n", file = Log$con)
+                    cat(lines, sep = "\n", file = Log$con)
                     unlink(tf)
                 }
             }
