@@ -2869,34 +2869,37 @@ setRlibs <-
                         sep = "\n", file = Log$con)
                 }
                 ## Don't just fail: try to log where the problem occurred.
-                ## First, find the test which failed.
+                ## First, find the test(s) which failed.
                 ## (Maybe there was an error without a failing test.)
                 bad_files <- dir(".", pattern="\\.Rout\\.fail$")
                 if (length(bad_files)) {
-                    ## Read in output from the (first) failed test.
-                    file <- bad_files[1L]
-                    lines <- readLines(file, warn = FALSE)
-                    file <- file.path(test_dir, sub("out\\.fail$", "", file))
-                    src_files <- dir(".", pattern = "\\.[rR]$")
-                    if (!(basename(file) %in% src_files)) {
-                    	file <- sub("R$", "r", file)  # This assumes only one of foo.r and foo.R exists.
-                    	if (!(basename(file) %in% src_files))
-                    	    file <- sub("r$", "[rR]", file)  # Just in case the test script got deleted somehow, show the pattern.
+                    ## Read in output from the failed test(s)
+                    ## (As from R 3.4.0 there can be more than one
+                    ## with option --no-stop-on-test-error.)
+                    for(f in bad_files) {
+                        lines <- readLines(f, warn = FALSE)
+                        f <- file.path(test_dir, sub("out\\.fail$", "", f))
+                        src_files <- dir(".", pattern = "\\.[rR]$")
+                        if (!(basename(f) %in% src_files)) {
+                            f <- sub("R$", "r", f) # This assumes only one of foo.r and foo.R exists.
+                            if (!(basename(f) %in% src_files))
+                                f <- sub("r$", "[rR]", f) # Just in case the test script got deleted somehow, show the pattern.
+                        }
+                        ll <- length(lines)
+                        keep <- as.integer(Sys.getenv("_R_CHECK_TESTS_NLINES_",
+                                                      "13"))
+                        if (keep > 0L)
+                            lines <- lines[max(1L, ll-keep-1L):ll]
+                        if (R_check_suppress_RandR_message)
+                            lines <- grep('^Xlib: *extension "RANDR" missing on display',
+                                          lines, invert = TRUE, value = TRUE,
+                                          useBytes = TRUE)
+                        printLog(Log, sprintf("Running the tests in %s failed.\n",
+                                              sQuote(f)))
+                        printLog(Log, if(keep > 0L) sprintf("Last %i lines of output:\n", keep)
+                                 else "Complete output:\n")
+                        printLog0(Log, .format_lines_with_indent(lines), "\n")
                     }
-                    ll <- length(lines)
-                    keep <- as.integer(Sys.getenv("_R_CHECK_TESTS_NLINES_",
-                                                  "13"))
-                    if (keep > 0L)
-                        lines <- lines[max(1L, ll-keep-1L):ll]
-                    if (R_check_suppress_RandR_message)
-                        lines <- grep('^Xlib: *extension "RANDR" missing on display',
-                                      lines, invert = TRUE, value = TRUE,
-                                      useBytes = TRUE)
-		    printLog(Log, sprintf("Running the tests in %s failed.\n",
-					  sQuote(file)))
-		    printLog(Log, if(keep > 0L) sprintf("Last %i lines of output:\n", keep)
-				  else "Complete output:\n")
-                    printLog0(Log, .format_lines_with_indent(lines), "\n")
                 }
                 return(FALSE)
             } else {
