@@ -25,6 +25,25 @@ Sys.timezone <- function(location = TRUE)
     if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
     lt <- normalizePath("/etc/localtime") # Linux, macOS, ...
     if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt)
+    else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
+	     dir.exists("/usr/share/zoneinfo") &&
+	     { # Debian etc.
+		 info <- file.info(normalizePath("/etc/timezone"),
+				   extra_cols = FALSE)
+		 (!info$isdir && info$size <= 200L)
+	     } && {
+		 tz1 <- tryCatch(readBin("/etc/timezone", "raw", 200L),
+				 error = function(e) raw(0L))
+		 length(tz1) > 0L &&
+		     all(tz1 %in% as.raw(c(9:10, 13L, 32:126)))
+	     } && {
+		tz2 <- gsub("^[[:space:]]+|[[:space:]]+$", "", rawToChar(tz1))
+		tzp <- file.path("/usr/share/zoneinfo", tz2)
+		file.exists(tzp) && !dir.exists(tzp) &&
+		    identical(file.size(normalizePath(tzp)),
+			      file.size(lt))
+	     })
+	tz2
     else NA_character_
 }
 

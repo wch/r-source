@@ -542,6 +542,10 @@
 
       \item \code{getDLLRegisteredRoutines()} now produces its warning
       correctly when multiple DLLs match, thanks to Matt Dowle's \PR{17184}.
+
+      \item \code{Sys.timezone()} now returns non-NA also on platforms
+      such as \samp{Ubuntu 14.04.5 LTS}, thanks to Mikko Korpela's
+      \PR{17186}.
     }
   }
 }
