@@ -2861,7 +2861,13 @@ setRlibs <-
                              stdout = "", stderr = "", arch = arch)
             t2 <- proc.time()
             if (status) {
+                print_time(t1, t2, Log)
                 errorLog(Log)
+                if (Log$con > 0L && file.exists(logf)) {
+                    ## write individual results only to 00check.log
+                    cat(readLines(logf, warn = FALSE),
+                        sep = "\n", file = Log$con)
+                }
                 ## Don't just fail: try to log where the problem occurred.
                 ## First, find the test which failed.
                 ## (Maybe there was an error without a failing test.)
