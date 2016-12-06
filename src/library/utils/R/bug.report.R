@@ -37,7 +37,7 @@ bug.report <- function(subject = "", address,
 {
     baseR <- function() {
         writeLines(c("  Bug reports on R and the base packages need to be submitted",
-                     "  to the tracker at http://bugs.r-project.org/ .",
+                     "  to the tracker at <https://bugs.R-project.org/>.",
                      "",
                      "  We will now try to open that website in a browser"))
         flush.console()

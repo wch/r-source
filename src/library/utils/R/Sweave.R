@@ -447,7 +447,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             '                  "no" (default), "qpdf", "gs", "gs+qpdf", "both"',
             "  --compact       same as --compact=qpdf",
             "",
-            "Report bugs at bugs.r-project.org .",
+            "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
     }
     do_exit <- function(status = 0L)
@@ -568,7 +568,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --encoding=enc  assume encoding 'enc' for file",
             "  --options=      comma-separated list of Stangle options",
             "",
-            "Report bugs at bugs@r-project.org .",
+            "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
     }
     do_exit <- function(status = 0L)

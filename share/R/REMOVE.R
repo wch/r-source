@@ -29,7 +29,7 @@ Usage <- function() {
         "  -v, --version		print REMOVE version info and exit",
         "  -l, --library=LIB	remove packages from library tree LIB",
         "",
-        "Report bugs at bugs.r-project.org .", sep="\n")
+        "Report bugs at <https://bugs.R-project.org>.", sep="\n")
 }
 
 options(showErrorCalls=FALSE)

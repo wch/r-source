@@ -4316,7 +4316,7 @@ setRlibs <-
             "",
             "By default, all test sections are turned on.",
             "",
-            "Report bugs at bugs.r-project.org .", sep="\n")
+            "Report bugs at <https://bugs.R-project.org>.", sep="\n")
     }
 
 ###--- begin{.check_packages()} "main" ---

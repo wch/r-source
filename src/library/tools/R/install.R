@@ -207,7 +207,7 @@
             paste0("for this one it is ",
 		   if(static_html) "--html" else "--no-html", "."),
             "",
-            "Report bugs at bugs.r-project.org .", sep = "\n")
+            "Report bugs at <https://bugs.R-project.org>.", sep = "\n")
     }
 
 
@@ -1705,7 +1705,7 @@
             "Windows only:",
             "  -d, --debug		build a debug DLL",
             "",
-            "Report bugs at bugs@r-project.org .",
+            "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
 
     ## FIXME shQuote here?

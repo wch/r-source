@@ -751,7 +751,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
             "  -h, --help     print this help message and exit",
             "  -v, --version  print version info and exit",
             "",
-            "Report bugs at bugs.r-project.org .",
+            "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
     }
 
