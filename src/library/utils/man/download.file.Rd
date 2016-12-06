@@ -254,8 +254,23 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \sQuote{(extended) passive} modes: which is used is chosen by the
   client.  The \code{"internal"} and \code{"libcurl"} method use passive
   mode, and that is almost universally used by browsers.  Prior to \R
-  3.2.3 the \code{"wininet"} method used active mode: since it first
+  3.2.3 the \code{"wininet"} method used active mode: nowadays it first
   tries passive and then active.
+}
+\section{Good practice}{
+  Setting the \code{method} should be left to the end user.  Neither
+  \command{wget} nor \command{curl} is widely available: you can check
+  if they are available \emph{via} \code{\link{Sys.which}}, and should
+  do so in a package or script.
+  
+  If you use \code{download.file} in a package or script, you must check
+  the return value, since it is possible that the download will fail
+  with a non-zero status but not an \R error.
+
+  The supported \code{method}s do change: method \code{libcurl} was
+  introduced in \R 3.2.0 and is still optional on Windows -- use
+  \code{\link{capabilities}("libcurl")} in a program to see if it is
+  available.
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
