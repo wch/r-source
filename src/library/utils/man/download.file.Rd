@@ -252,16 +252,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \samp{ftp:} URLs are accessed using the FTP protocol which has a
   number of variants.  One distinction is between \sQuote{active} and
   \sQuote{(extended) passive} modes: which is used is chosen by the
-  client.  The \code{"internal"} and \code{"libcurl"} method use passive
+  client.  The \code{"internal"} and \code{"libcurl"} methods use passive
   mode, and that is almost universally used by browsers.  Prior to \R
   3.2.3 the \code{"wininet"} method used active mode: nowadays it first
   tries passive and then active.
 }
 \section{Good practice}{
-  Setting the \code{method} should be left to the end user.  Neither
-  \command{wget} nor \command{curl} is widely available: you can check
-  if they are available \emph{via} \code{\link{Sys.which}}, and should
-  do so in a package or script.
+  Setting the \code{method} should be left to the end user.  Neither of
+  the \command{wget} nor \command{curl} commnands is widely available:
+  you can check if one is available \emph{via} \code{\link{Sys.which}},
+  and should do so in a package or script.
   
   If you use \code{download.file} in a package or script, you must check
   the return value, since it is possible that the download will fail
