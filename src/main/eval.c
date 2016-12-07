@@ -679,7 +679,7 @@ SEXP eval(SEXP e, SEXP rho)
     case LANGSXP:
 	if (TYPEOF(CAR(e)) == SYMSXP)
 	    /* This will throw an error if the function is not found */
-	    PROTECT(op = findFun(CAR(e), rho));
+	    PROTECT(op = findFun3(CAR(e), rho, e));
 	else
 	    PROTECT(op = eval(CAR(e), rho));
 

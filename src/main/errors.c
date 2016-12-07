@@ -279,10 +279,23 @@ static R_INLINE void RprintTrunc(char *buf)
     }
 }
 
+static SEXP getCurrentCall()
+{
+    RCNTXT *c = R_GlobalContext;
+
+    /* This can be called before R_GlobalContext is defined, so... */
+    /* If profiling is on, this can be a CTXT_BUILTIN */
+
+    if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
+    if (c == R_GlobalContext && R_BCIntActive)
+	return R_getBCInterpreterExpression();
+    else
+	return c ? c->call : R_NilValue;
+}
+
 void warning(const char *format, ...)
 {
     char buf[BUFSIZE], *p;
-    RCNTXT *c = R_GlobalContext;
 
     va_list(ap);
     va_start(ap, format);
@@ -291,11 +304,7 @@ void warning(const char *format, ...)
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     RprintTrunc(buf);
-    if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
-    if (c == R_GlobalContext && R_BCIntActive)
-        warningcall(R_getBCInterpreterExpression(), "%s", buf);
-    else
-        warningcall(c ? c->call : R_NilValue, "%s", buf);
+    warningcall(getCurrentCall(), "%s", buf);
 }
 
 /* declarations for internal condition handling */
@@ -759,6 +768,10 @@ void NORET errorcall(SEXP call, const char *format,...)
 {
     va_list(ap);
 
+    if (call == R_CurrentExpression)
+	/* behave like error( */
+	call = getCurrentCall();
+
     va_start(ap, format);
     vsignalError(call, format, ap);
     va_end(ap);
@@ -792,19 +805,12 @@ SEXP attribute_hidden do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 void error(const char *format, ...)
 {
     char buf[BUFSIZE];
-    RCNTXT *c = R_GlobalContext;
 
     va_list(ap);
     va_start(ap, format);
     Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
     va_end(ap);
-    /* This can be called before R_GlobalContext is defined, so... */
-    /* If profiling is on, this can be a CTXT_BUILTIN */
-    if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
-    if (c == R_GlobalContext && R_BCIntActive)
-        errorcall(R_getBCInterpreterExpression(), "%s", buf);
-    else
-        errorcall(c ? c->call : R_NilValue, "%s", buf);
+    errorcall(getCurrentCall(), "%s", buf);
 }
 
 static void try_jump_to_restart(void)
