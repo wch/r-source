@@ -53,6 +53,7 @@ stopifnot(!is.unsorted(NA))
 
 ## str(.) for large factors should be fast:
 u <- as.character(runif(1e5))
+dummy <- str(u); dummy <- str(u); # force compilation of str
 t1 <- max(0.001, system.time(str(u))[[1]]) # get a baseline > 0
 uf <- factor(u)
 (t2 <- system.time(str(uf))[[1]]) / t1 # typically around 1--2
