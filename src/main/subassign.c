@@ -1962,47 +1962,23 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 */
 SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP nlist, ans, input;
-    int iS;
+    SEXP ans, nlist = R_NilValue;
 
     checkArity(op, args);
 
     /* Note the RHS has already been evaluated at this point */
+    PROTECT(args = fixSubset3Args(call, args, env, &nlist));
 
-    input = allocVector(STRSXP, 1);
-
-    nlist = CADR(args);
-    if (TYPEOF(nlist) == PROMSXP) {
-	PROTECT(input);
-	nlist = eval(nlist, env);
-	UNPROTECT(1);
+    if(R_DispatchOrEvalSP(call, op, "$<-", args, env, &ans)) {
+	UNPROTECT(1); /* args */
+	return(ans);
     }
-    iS = isSymbol(nlist);
-    if (iS)
-	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
-    else if(isString(nlist) )
-	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
-    else {
-	error(_("invalid subscript type '%s'"), type2char(TYPEOF(nlist)));
-	return R_NilValue; /*-Wall*/
-    }
-
-    /* replace the second argument with a string */
-    SETCADR(args, input);
-
-    /* if nlist is a string, it may be destroyed below, but it is ok
-       because we later only use its first element which is protected
-       implicitly through args/input */
-    if(R_DispatchOrEvalSP(call, op, "$<-", args, env, &ans))
-      return(ans);
-
-    if (! iS) {
-	PROTECT(ans);
-	nlist = installTrChar(STRING_ELT(input, 0));
-	UNPROTECT(1);
-    }
-
-    return R_subassign3_dflt(call, CAR(ans), nlist, CADDR(ans));
+    PROTECT(ans);
+    if (nlist == R_NilValue)
+	nlist = installTrChar(STRING_ELT(CADR(args), 0));
+    ans = R_subassign3_dflt(call, CAR(ans), nlist, CADDR(ans));
+    UNPROTECT(2); /* args, ans */
+    return ans;
 }
 
 /* used in "$<-" (above) and methods_list_dispatch.c */
