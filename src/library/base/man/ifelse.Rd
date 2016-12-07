@@ -49,6 +49,14 @@ ifelse(test, yes, no)
   and often much preferable to \code{ifelse(test, yes, no)} whenever
   \code{test} is a simple true/false result, i.e., when
   \code{length(test) == 1}.
+
+  The \code{srcref} attribute of functions is handled specially: if
+  \code{test} is a simple true result and \code{yes} evaluates to a function
+  with \code{srcref} attribute, \code{ifelse} returns \code{yes} including
+  its attribute (the same applies to a false \code{test} and \code{no}
+  argument).  This functionality is only for backwards compatibility, the
+  form \code{if(test) yes else no} should be used whenever \code{yes} and
+  \code{no} are functions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
