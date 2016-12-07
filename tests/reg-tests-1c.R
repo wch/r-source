@@ -2033,6 +2033,25 @@ if(is.na(S.t) || !nzchar(S.t)) stop("could not get timezone")
 ## has been NA_character_  in Ubuntu 14.04.5 LTS
 
 
+## format()ing "illegal"  POSIXlt  objects
+d <- as.POSIXlt("2016-12-06"); d$zone <- 1
+tools::assertError(format(d))
+d$zone <- NULL
+stopifnot(identical(format(d),"2016-12-06"))
+d$zone <- "CET" # = previous, but 'zone' now is last
+tools::assertError(format(d))
+dlt <- structure(
+    list(sec = 52, min = 59L, hour = 18L, mday = 6L, mon = 11L, year = 116L,
+         wday = 2L, yday = 340L, isdst = 0L, zone = "CET", gmtoff = 3600L),
+    class = c("POSIXlt", "POSIXt"), tzone = c("", "CET", "CEST"))
+dlt$sec <- 10000 + 1:10 # almost three hours & uses re-cycling ..
+fd <- format(dlt)
+stopifnot(length(fd) == 10, identical(fd, format(dct <- as.POSIXct(dlt))))
+dlt2 <- as.POSIXlt(dct)
+stopifnot(identical(format(dlt2), fd))
+## The two assertError()s gave a seg.fault in  R <= 3.3.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

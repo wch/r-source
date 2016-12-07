@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -203,7 +203,7 @@
   OSes assume the previous use of \sQuote{local time} based on the
   longitude of a location within the time zone.
   % from the Olson files.
-  
+
   Most operating systems represent \code{POSIXct} times as C type
   \code{long}. This means that on 32-bit OSes this covers the period
   1902 to 2037.  On all known 64-bit platforms and for the code we use
@@ -228,7 +228,7 @@
   There is no reason to suppose that the DST rules will remain the same
   in the future, and indeed the US legislated in 2005 to change its
   rules as from 2007, with a possible future reversion.  So conversions
-  for times more than a year or two ahead are speculative.  
+  for times more than a year or two ahead are speculative.
 }
 \seealso{
   \link{Dates} for dates without times.
@@ -266,6 +266,10 @@
   Not only are components and attributes optional; several components
   may have values meaning \sQuote{not yet determined} and the same time
   represented in different time zones will look quite different.
+
+  Currently the \emph{order} of the list components of \code{"POSIXlt"}
+  objects must not be changed, as several C-based conversion methods
+  rely on the order for efficiency.
 }
 \examples{\donttest{% <-->  may fail on platforms wrongly set up
 (z <- Sys.time())             # the current date, as class "POSIXct"

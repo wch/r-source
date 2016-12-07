@@ -546,6 +546,9 @@
       \item \code{Sys.timezone()} now returns non-NA also on platforms
       such as \samp{Ubuntu 14.04.5 LTS}, thanks to Mikko Korpela's
       \PR{17186}.
+
+      \item \code{format(x)} for an illegal \code{"POSIXlt"} object
+      \code{x} no longer segfaults.
     }
   }
 }

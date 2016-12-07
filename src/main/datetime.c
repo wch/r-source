@@ -764,6 +764,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+// .Internal(as.POSIXct(x, tz)) -- called only from  as.POSIXct.POSIXlt()
 SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans;
@@ -776,7 +777,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     PROTECT(x = duplicate(CAR(args))); /* coerced below */
-    if(!isVectorList(x) || LENGTH(x) < 9)
+    if(!isVectorList(x) || LENGTH(x) < 9) // must be 'POSIXlt'
 	error(_("invalid '%s' argument"), "x");
     if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
 	error(_("invalid '%s' value"), "tz");
@@ -806,9 +807,10 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(int i = 0; i < 6; i++)
 	    if(nlen[i] == 0)
-		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
+		error(_("zero-length component [[%d]] in non-empty \"POSIXlt\" structure"),
+		      i+1);
 	if(nlen[8] == 0)
-	    error(_("zero-length component in non-empty \"POSIXlt\" structure"));
+	    error(_("zero-length component [[%d]] in non-empty \"POSIXlt\" structure"), 9);
     }
     /* coerce fields to integer or real */
     SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
@@ -828,7 +830,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_mon   = INTEGER(VECTOR_ELT(x, 4))[i%nlen[4]];
 	tm.tm_year  = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
 	/* mktime ignores tm.tm_wday and tm.tm_yday */
-	tm.tm_isdst = isgmt ? 0:INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	tm.tm_isdst = isgmt ? 0 : INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
 	if(!R_FINITE(secs) || tm.tm_min == NA_INTEGER ||
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER)
@@ -904,7 +906,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(int i = 0; i < 9; i++)
 	    if(nlen[i] == 0)
-		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
+		error(_("zero-length component [[%d]] in non-empty \"POSIXlt\" structure"),
+		      i+1);
     }
     R_xlen_t N = (n > 0) ? ((m > n) ? m : n) : 0;
     SEXP ans = PROTECT(allocVector(STRSXP, N));
@@ -916,7 +919,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean have_zone = LENGTH(x) >= 10 && XLENGTH(VECTOR_ELT(x, 9)) == n;
 #endif
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
-	error(_("invalid 'zone' component in \"POSIXlt\" structure"));
+	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
     for(R_xlen_t i = 0; i < N; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	// avoid (int) NAN
@@ -1256,9 +1259,10 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(int i = 3; i < 6; i++)
 	    if(nlen[i] == 0)
-		error(_("zero-length component in non-empty \"POSIXlt\" structure"));
+		error(_("zero-length component [[%d]] in non-empty \"POSIXlt\" structure"),
+		      i+1);
 	if(nlen[8] == 0)
-	    error(_("zero-length component in non-empty \"POSIXlt\" structure"));
+	    error(_("zero-length component [[%d]] in non-empty \"POSIXlt\" structure"), 9);
     }
     /* coerce relevant fields to integer */
     for(int i = 3; i < 6; i++)
