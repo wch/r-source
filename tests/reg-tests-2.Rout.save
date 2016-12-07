@@ -6507,7 +6507,7 @@ sample estimates:
 > bar <- as.data.frame(foo)
 > val <- integer(0)
 > try(bar$NewCol <- val)
-Error in `$<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) : 
+Error in `$<-.data.frame`(`*tmp*`, NewCol, value = integer(0)) : 
   replacement has 0 rows, data has 3
 > # similar, not in the report
 > try(bar[["NewCol"]] <- val)
