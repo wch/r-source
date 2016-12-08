@@ -3189,7 +3189,7 @@ or underscore.
 A special case is @emph{package vignettes}.  Vignettes are documents in
 PDF or @HTML{} format obtained from plain text literate source files
 from which @R{} knows how to extract @R{} code and create output (in
-PDF/@HTML{} or intermediate (La)@TeX{}).  Vignette engines do this work,
+PDF/@HTML{} or intermediate @LaTeX{}).  Vignette engines do this work,
 using ``tangle'' and ``weave'' functions respectively.  Sweave, provided
 by the R distribution, is the default engine.  Since @R{} version 3.0.0,
 other vignette engines besides Sweave are supported; see @ref{Non-Sweave
