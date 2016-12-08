@@ -6566,6 +6566,9 @@ function(dir, localOnly = FALSE)
     ## Record to notify about components extending a base license which
     ## permits extensions.
     if(length(extensions <- lic_info$extensions) &&
+       ((length(components <- extensions$components) != 1L) ||
+        (.license_component_is_for_stub_and_ok(components,
+                                               dir) != 0L)) &&
        any(ind <- extensions$extensible)) {
         out$extensions <- extensions$components[ind]
         out$pointers <-
