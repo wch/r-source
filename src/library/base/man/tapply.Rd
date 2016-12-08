@@ -90,7 +90,7 @@ table(groups)
 tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
 tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
 
-n <- 17; fac <- factor(rep(1:3, length = n), levels = 1:5)
+n <- 17; fac <- factor(rep_len(1:3, n), levels = 1:5)
 table(fac)
 tapply(1:n, fac, sum)
 tapply(1:n, fac, sum, simplify = FALSE)

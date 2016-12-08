@@ -98,7 +98,7 @@ xtabs(Freq ~ Gender + Admit, DF)
 summary(xtabs(Freq ~ ., DF))
 
 ## Create a nice display for the warp break data.
-warpbreaks$replicate <- rep(1:9, len = 54)
+warpbreaks$replicate <- rep_len(1:9, 54)
 ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
 
 ### ---- Sparse Examples ----

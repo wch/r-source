@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-11-29 r71704) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-12-07 r71751) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -18149,7 +18149,7 @@ Test for independence of all factors:
 	Chisq = 2000.3, df = 16, p-value = 0
 > 
 > ## Create a nice display for the warp break data.
-> warpbreaks$replicate <- rep(1:9, len = 54)
+> warpbreaks$replicate <- rep_len(1:9, 54)
 > ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
              replicate  1  2  3  4  5  6  7  8  9
 wool tension                                     
