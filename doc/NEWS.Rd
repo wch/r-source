@@ -510,6 +510,12 @@
       hence no longer leaks memory when reading from a full pipe, thanks
       to Gábor Csárdi, see thread starting at
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html}.
+
+      \item Failure to create file in \code{tempdir()} for compressed
+      \code{pdf()} graphics device no longer errors (then later
+      segfaults).  There is now a warning instead of error and
+      compression is turned off for the device.  Thanks to Alec
+      Wysoker (\PR{17191}).
     }
   }
 }

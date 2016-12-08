@@ -7221,10 +7221,16 @@ static void PDF_NewPage(const pGEcontext gc,
 	/* assume tmpname is less than PATH_MAX */
 	strcpy(pd->tmpname, tmp);
 	pd->pdffp = fopen(tmp, "w+b");
+	if (! pd->pdffp) {
+            pd->pdffp = pd->mainfp;
+            pd->useCompression = 0;
+            warning(_("Cannot open temporary file '%s' for compression (reason: %s); compression has been turned off for this device"), 
+                    tmp, strerror(errno));
+        }
 	free(tmp);
-	if(! pd->pdffp) error("cannot open file '%s', reason %s", 
-			      tmp, strerror(errno));
-    } else {
+    } 
+    /* May have turned compression off in previous block */
+    if (!pd->useCompression) {
 	fprintf(pd->pdffp, "%d 0 obj\n<<\n/Length %d 0 R\n>>\nstream\n",
 		pd->nobjs, pd->nobjs + 1);
 	pd->startstream = (int) ftell(pd->pdffp);
