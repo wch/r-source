@@ -4,6 +4,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Algeria [https]",Algeria,Algiers,https://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
+"Australia (Canberra) [https]",Australia,Canberra,https://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
 "Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
 "Australia (Melbourne) [https]",Australia,Melbourne,https://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au,"secure_mirror_from_master"
 "Australia (Melbourne)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au,"secure_mirror_from_master"
