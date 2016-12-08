@@ -1,14 +1,17 @@
-Based on https://opensource.org/licenses/BSD-2-Clause
+Based on <https://opensource.org/licenses/BSD-2-Clause>
 
-This is a template. Complete and ship as file LICENSE the following 2
-lines (only)
+This is a template.  Provide completed entries of the form
 
 YEAR:
 COPYRIGHT HOLDER: 
 
-and specify as
+(separated by empty lines) as file LICENSE, and specify
 
 License: BSD_2_clause + file LICENSE
+
+in file DESCRIPTION.
+
+************************************************************************
 
 Copyright (c) <YEAR>, <COPYRIGHT HOLDER>
 
