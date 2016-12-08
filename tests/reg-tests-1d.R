@@ -436,13 +436,13 @@ stopifnot(
 ## length 0 and seg.faulted in R <= 3.3.2
 
 
-## PR#17186 - Sys.timezone() on some Debian derived platforms
+## PR#17186 - Sys.timezone() on some Debian-derived platforms
 (S.t <- Sys.timezone())
 if(is.na(S.t) || !nzchar(S.t)) stop("could not get timezone")
 ## has been NA_character_  in Ubuntu 14.04.5 LTS
 
 
-## format()ing "illegal"  POSIXlt  objects
+## format()ing invalid hand-constructed  POSIXlt  objects
 d <- as.POSIXlt("2016-12-06"); d$zone <- 1
 tools::assertError(format(d))
 d$zone <- NULL
