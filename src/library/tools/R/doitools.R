@@ -128,6 +128,10 @@ function(packages, lib.loc = NULL, verbose = FALSE, Rd = FALSE)
 check_doi_db <-
 function(db, verbose = FALSE)
 {
+    use_curl <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_URL_DB_USE_CURL_",
+                                         "FALSE"))
+    
     .gather <- function(d = character(),
                         p = list(),
                         s = rep.int("", length(d)),
@@ -139,15 +143,15 @@ function(db, verbose = FALSE)
         y
     }
 
-    .fetch <- function(d) {
+    .fetch <- function(u, d) {
         if(verbose) message(sprintf("processing %s", d))
-        u <- paste0("http://doi.org/", d)
-        ## Do we need to percent encode parts of the DOI name?
         tryCatch(curlGetHeaders(u), error = identity)
     }
 
     .check <- function(d) {
-        h <- .fetch(d)
+        u <- paste0("http://doi.org/", d)
+        ## Do we need to percent encode parts of the DOI name?
+        h <- .fetch(u, d)
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
@@ -155,14 +159,25 @@ function(db, verbose = FALSE)
             s <- as.character(attr(h, "status"))
             msg <- table_of_HTTP_status_codes[s]
         }
+
         ## Similar to URLs, see e.g.
         ##   curl -I -L http://doi.org/10.1016/j.csda.2009.12.005
+        ## (As of 2016-12, this actually gives 400 Bad Request.)
         if(any(grepl("301 Moved Permanently", h, useBytes = TRUE))) {
             ind <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
             new <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
             if((s == "503") && grepl("www.sciencedirect.com", new))
                 s <- "405"
         }
+
+        if((s != "200") && use_curl) {
+            g <- .curl_GET_status(u)
+            if(g == "200") {
+                s <- g
+                msg <- "OK"
+            }
+        }
+
         c(s, msg)
     }
 
@@ -170,8 +185,14 @@ function(db, verbose = FALSE)
 
     if(!NROW(db)) return(bad)
 
-    parents <- split(db$Parent, db$DOI)
-    dois <- names(parents)
+    if(inherits(db, "check_doi_db")) {
+        ## Allow re-checking check results.
+        parents <- db$From
+        dois <- db$DOI
+    } else {
+        parents <- split(db$Parent, db$DOI)
+        dois <- names(parents)
+    }
 
     ## See <https://www.doi.org/doi_handbook/2_Numbering.html#2.2>:
     ##   The DOI prefix shall be composed of a directory indicator
@@ -191,7 +212,7 @@ function(db, verbose = FALSE)
     if(length(pos)) {
         results <- do.call(rbind, lapply(dois[pos], .check))
         status <- as.numeric(results[, 1L])
-        ind <- !(status %in% c(200L, 405L))
+        ind <- (status %notin% c(200L, 405L))
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
