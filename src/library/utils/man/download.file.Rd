@@ -259,7 +259,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \section{Good practice}{
   Setting the \code{method} should be left to the end user.  Neither of
-  the \command{wget} nor \command{curl} commnands is widely available:
+  the \command{wget} nor \command{curl} commands is widely available:
   you can check if one is available \emph{via} \code{\link{Sys.which}},
   and should do so in a package or script.
   
