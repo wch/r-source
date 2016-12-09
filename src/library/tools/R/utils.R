@@ -1492,11 +1492,12 @@ nonS3methods <- function(package)
         list(base = c("all.equal", "all.names", "all.vars", "expand.grid",
              "format.char", "format.info", "format.pval",
              "max.col",
+             "pmax.int", "pmin.int",
              ## the next two only exist in *-defunct.Rd.
              "print.atomic", "print.coefmat",
              "qr.Q", "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty",
              "qr.qy", "qr.resid", "qr.solve",
-             "rep.int", "seq.int", "sort.int", "sort.list"),
+             "rep.int", "sample.int", "seq.int", "sort.int", "sort.list"),
              AMORE = "sim.MLPnet",
              BSDA = "sign.test",
              ChemometricsWithR = "lda.loofun",
@@ -1557,6 +1558,7 @@ nonS3methods <- function(package)
              reposTools = "update.packages2",
              rgeos = "scale.poly",
              sac = "cumsum.test",
+             sfsmisc = "cumsum.test",
              sm = "print.graph",
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
@@ -1817,20 +1819,25 @@ function(file, envir, enc = NA)
     ## as @code{sys.source(file, envir, keep.source = FALSE)}.
     oop <- options(keep.source = FALSE)
     on.exit(options(oop))
-    assignmentSymbolLM <- as.symbol("<-")
-    assignmentSymbolEq <- as.symbol("=")
-    if(!is.na(enc) &&
-       !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-        con <- file(file, encoding = enc)
-        on.exit(close(con))
-    } else con <- file
+
+### <FIXME> for S4, setClass() .. are assignments, but must be called
+    ##         with correct 'where = envir'!
+    ## Possible solution: modified versions of these functions with changed
+    ##                    'where = ...' (default arg) in formals(.)
+    ## stopifnot(require(methods, quietly=TRUE))
+    ## assignmentSymbols <- c(c("<-", "="),
+    ##                        ls(pattern = "^set[A-Z]", pos = "package:methods"))
+    assignmentSymbols <- c("<-", "=")
+### </FIXME>
+    con <-
+	if(!is.na(enc) && !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+	    on.exit(close(con), add = TRUE)
+	    file(file, encoding = enc)
+	} else file
     exprs <- parse(n = -1L, file = con)
-    if(!length(exprs))
-        return(invisible())
-    for(e in Filter(length, exprs)) {
-        if(is.call(e) &&
-           (e[[1L]] == assignmentSymbolLM ||
-            e[[1L]] == assignmentSymbolEq))
+    exprs <- exprs[lengths(exprs) > 0L]
+    for(e in exprs) {
+	if(is.call(e) && as.character(e[[1L]]) %in% assignmentSymbols)
             eval(e, envir)
     }
     invisible()
@@ -1859,11 +1866,9 @@ function(dir, envir, meta = character())
     if(!all(.file_append_ensuring_LFs(con, files)))
         stop("unable to write code files")
     tryCatch(.source_assignments(con, envir, enc = meta["Encoding"]),
-             error =
-             function(e)
-             stop("cannot source package code\n",
-                  conditionMessage(e),
-                  call. = FALSE))
+             error = function(e)
+                 stop("cannot source package code:\n", conditionMessage(e),
+                      call. = FALSE))
 }
 
 ### * .split_dependencies
