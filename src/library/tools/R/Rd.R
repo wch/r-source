@@ -277,7 +277,7 @@ function(package, dir, lib.loc = NULL)
         ## with a DB of the parsed (and platform processed, see
         ## above) Rd objects.
         db_file <- file.path(dir, "help", package)
-        if(file_test("-f", paste(db_file, "rdx", sep = "."))) {
+        if(file_test("-f", paste0(db_file, ".rdx"))) {
             db <- fetchRdDB(db_file)
             pathfile <- file.path(dir, "help", "paths.rds")
             if(file.exists(pathfile)) {

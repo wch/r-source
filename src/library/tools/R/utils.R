@@ -316,7 +316,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                                       shQuote(file)),
                                     env = env0)
 
-        log <- paste(file_path_sans_ext(file), "log", sep = ".")
+        log <- paste0(file_path_sans_ext(file), ".log")
 
         ## With Texinfo 6.1 (precisely, c6637), texi2dvi may not rerun
         ## often enough and give a non-zero status value when it should
@@ -338,7 +338,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## analyze the log files in any case.
         errors <- character()
         ## (La)TeX errors.
-        log <- paste(file_path_sans_ext(file), "log", sep = ".")
+        log <- paste0(file_path_sans_ext(file), ".log")
         if(file_test("-f", log)) {
             lines <- .get_LaTeX_errors_from_log_file(log)
             if(length(lines))
@@ -347,7 +347,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                                 sep = "\n")
         }
         ## BibTeX errors.
-        log <- paste(file_path_sans_ext(file), "blg", sep = ".")
+        log <- paste0(file_path_sans_ext(file), ".blg")
         if(file_test("-f", log)) {
             lines <- .get_BibTeX_errors_from_blg_file(log)
             if(length(lines))
@@ -413,7 +413,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                intern=TRUE, ignore.stderr=TRUE)
         msg <- ""
         ## (La)TeX errors.
-        logfile <- paste(base, "log", sep = ".")
+        logfile <- paste0(base, ".log")
         if(file_test("-f", logfile)) {
             lines <- .get_LaTeX_errors_from_log_file(logfile)
             if(length(lines))
@@ -422,7 +422,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                              sep = "\n")
         }
         ## BibTeX errors.
-        logfile <- paste(base, "blg", sep = ".")
+        logfile <- paste0(base, ".blg")
         if(file_test("-f", logfile)) {
             lines <- .get_BibTeX_errors_from_blg_file(logfile)
             if(length(lines))
@@ -1390,7 +1390,7 @@ function(package, lib.loc)
     ## check interprets all output as indicating a problem.
     if(package != "base")
         .try_quietly({
-            pos <- match(paste("package", package, sep = ":"), search())
+            pos <- match(paste0("package:", package), search())
             if(!is.na(pos)) {
                 detach(pos = pos,
                        unload = ! package %in% c("tcltk", "tools"))
@@ -1425,7 +1425,8 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
            demo = c("R", "r"),
            docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
-                              paste, sep = ""), "Rmd"))
+                              paste0),
+                        "Rmd"))
 }
 
 ### ** .make_S3_group_generic_env
@@ -1856,7 +1857,7 @@ function(dir, envir, meta = character())
         stop("unable to create ", con)
     ## If the (DESCRIPTION) metadata contain a Collate specification,
     ## use this for determining the code files and their order.
-    txt <- meta[c(paste("Collate", .OStype(), sep = "."), "Collate")]
+    txt <- meta[c(paste0("Collate.", .OStype()), "Collate")]
     ind <- which(!is.na(txt))
     files <- if(any(ind))
         Filter(function(x) file_test("-f", x),

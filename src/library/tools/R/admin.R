@@ -238,7 +238,7 @@ function(dir, outDir)
     codeFiles <- list_files_with_type(codeDir, "code", full.names = FALSE)
 
     collationField <-
-        c(paste("Collate", .OStype(), sep = "."), "Collate")
+        c(paste0("Collate.", .OStype()), "Collate")
     if(any(i <- collationField %in% names(db))) {
         collationField <- collationField[i][1L]
         codeFilesInCspec <- .read_collate_field(db[collationField])

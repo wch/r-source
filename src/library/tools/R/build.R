@@ -750,7 +750,7 @@ get_exclude_patterns <- function()
                 lapply(tabs, function(nm) {
                     ## DiceDesign/data/greenwood.table.txt is missing NL
                     x <- readLines(nm, warn = FALSE)
-                    con <- gzfile(paste(nm, "gz", sep = "."), "wb")
+                    con <- gzfile(paste0(nm, ".gz"), "wb")
                     writeLines(x, con)
                     close(con)
                     resaved <<- c(resaved, nm)
@@ -791,7 +791,7 @@ get_exclude_patterns <- function()
         ## Read in ~/.R/build.Renviron[.rarch] (if existent).
         rarch <- .Platform$r_arch
         if (nzchar(rarch) &&
-            file.exists(Renv <- paste("~/.R/build.Renviron", rarch, sep = ".")))
+            file.exists(Renv <- paste0("~/.R/build.Renviron.", rarch)))
             readRenviron(Renv)
         else if (file.exists(Renv <- "~/.R/build.Renviron"))
             readRenviron(Renv)
