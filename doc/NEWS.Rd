@@ -516,6 +516,10 @@
       segfaults).  There is now a warning instead of error and
       compression is turned off for the device.  Thanks to Alec
       Wysoker (\PR{17191}).
+
+      \item Asking for \code{methods()} on \code{"|"} returns only S3
+      methods. See
+      \url{https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html}.
     }
   }
 }

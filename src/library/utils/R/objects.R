@@ -91,10 +91,10 @@ function(generic.function, class, envir=parent.frame())
     sp <- search()
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
     an <- lapply(seq_along(sp), ls)
-    names(an) <- sp
-    an <- unlist(an)
+    lens <- lengths(an)
+    an <- unlist(an, use.names=FALSE)
+    names(an) <- rep(sp, lens)
     an <- an[!duplicated(an)] # removed masked objects, *keep* names
-    names(an) <- sub("[0-9]*$", "", names(an))
     info <- data.frame(visible = rep.int(TRUE, length(an)),
 		       from = .rmpkg(names(an)),
                        row.names = an)
@@ -118,7 +118,7 @@ function(generic.function, class, envir=parent.frame())
             }
         }
 	name <- paste0("^", generic.function, ".")
-        name <- gsub("([.[$+*])", "\\\\\\1",name)
+        name <- gsub("([.|[$+*])", "\\\\\\1",name)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
         ## check that these are all functions
