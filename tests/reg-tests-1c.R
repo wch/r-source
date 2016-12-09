@@ -606,14 +606,17 @@ stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
 
 ### envRefClass check moved to methods package
 
-if(FALSE) { ## takes far too long with JIT compilation
+
+## takes too long with JIT enabled:
+.jit.lev <- compiler::enableJIT(0)
 ## while did not protect its argument, which caused an error
 ## under gctorture, PR#15990
 gctorture()
 suppressWarnings(while(c(FALSE, TRUE)) 1)
 gctorture(FALSE)
 ## gave an error because the test got released when the warning was generated.
-}
+compiler::enableJIT(.jit.lev)# revert
+
 
 ## hist(x, breaks =) with too large bins, PR#15988
 set.seed(5); x <- runif(99)
