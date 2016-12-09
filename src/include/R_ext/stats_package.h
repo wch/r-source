@@ -60,6 +60,10 @@ S_nlminb_iterate(double b[], double d[], double fx, double g[],
 		 double h[], int iv[], int liv, int lv, int n,
 		 double v[], double x[]);
 
+void attribute_hidden
+S_rcont2(int nrow[], int ncol[], int nrowt[], int ncolt[], 
+         int ntotal[], double fact[], int jwork[], int matrix[]);
+
 static R_INLINE int S_v_length(int alg, int n)
 {
     return (alg - 1) ? (105 + (n * (2 * n + 20))) :
@@ -72,4 +76,3 @@ static R_INLINE int S_iv_length(int alg, int n)
 }
 
 #endif /* R_STATS_PACKAGE_H */
-

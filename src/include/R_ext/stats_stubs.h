@@ -70,3 +70,15 @@ S_nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
     fun(b, d, dr, iv, liv, lv, n, nd, p, r, rd, v, x);
 }
 
+void attribute_hidden
+S_rcont2(int nrow[], int ncol[], int nrowt[], int ncolt[], 
+         int ntotal[], double fact[], int jwork[], int matrix[])
+{
+    static void(*fun)(int[], int[], int[], int[], int[], double[], 
+                      int[], int[]) = NULL;
+    if (fun == NULL)
+	fun = (void(*)(int[], int[], int[], int[], int[], double[], 
+                       int[], int[]))
+	    R_GetCCallable("stats", "rcont2");
+    fun(nrow, ncol, nrowt, ncolt, ntotal, fact, jwork, matrix);
+}

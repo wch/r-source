@@ -37,6 +37,7 @@ static const R_CMethodDef CEntries[]  = {
     {"HoltWinters", (DL_FUNC) &HoltWinters, 17},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
+    {"rcont2", (DL_FUNC) &rcont2, 8},
     {NULL, NULL, 0}
 };
 
@@ -305,4 +306,5 @@ void attribute_visible R_init_stats(DllInfo *dll)
     R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC) nlminb_iterate);
     R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC) nlsb_iterate);
     R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC) Rf_divset);
+    R_RegisterCCallable("stats", "rcont2", (DL_FUNC) rcont2);
 }
