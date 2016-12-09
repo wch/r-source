@@ -8214,12 +8214,12 @@ function(x)
     ## bad_lines attribute.
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
-    ## <FIXME>
-    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
-    ## But why should it use the backslash escape?
-    txt <- gsub("\\{", "{", txt, fixed = TRUE)
-    txt <- gsub("\\}", "}", txt, fixed = TRUE)
-    ## </FIXME>
+    ## ## <FIXME>
+    ## ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
+    ## ## But why should it use the backslash escape?
+    ## txt <- gsub("\\{", "{", txt, fixed = TRUE)
+    ## txt <- gsub("\\}", "}", txt, fixed = TRUE)
+    ## ## </FIXME>
     ## now any valid escape by \ is
     ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal
     txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
@@ -8242,7 +8242,7 @@ function(x)
 function(msg, x)
 {
     xx <- strwrap(paste(sQuote(x), collapse = " "), exdent = 2L)
-    if (length(xx) > 1L || (nchar(msg) + nchar(xx) + 1L > 75L))
+    if (length(xx) > 1L || (sum(nchar(msg) + nchar(xx)) + 1L > 75L))
         c(msg, .pretty_format(x))
     else paste(msg, xx, sep = " ")
 }
