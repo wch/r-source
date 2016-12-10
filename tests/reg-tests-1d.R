@@ -461,6 +461,10 @@ stopifnot(identical(format(dlt2), fd))
 ## The two assertError()s gave a seg.fault in  R <= 3.3.2
 
 
+stopifnot(inherits(methods("("), "MethodsFunction"),
+          inherits(methods("{"), "MethodsFunction"))
+## methods("(") and ..("{")  failed in R <= 3.3.2
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

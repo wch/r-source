@@ -559,6 +559,9 @@
 
       \item \code{format(x)} for an illegal \code{"POSIXlt"} object
       \code{x} no longer segfaults.
+
+      \item \code{methods(f)} now also works for \code{f} \code{"("}
+      or \code{"{"}.
     }
   }
 }
