@@ -27,22 +27,32 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
          prefix = "", simplify = TRUE, initial = prefix)
 {
     if(!is.character(x)) x <- as.character(x)
+
     ## Useful variables.
     indentString <- strrep(" ", indent)
     exdentString <- strrep(" ", exdent)
     y <- list()                         # return value
-    UB <- TRUE
-    ## input need not be valid in this locale, e.g. from write.dcf
-    ## but if x has UTF-8 encoding we want to preserve it, so
-    if(all(Encoding(x) == "UTF-8")) UB <- FALSE
-    else {
-        ## Let's convert anything else with a marked encoding
-        ## to the current locale
-        enc <- Encoding(x) %in% c("latin1", "UTF-8")
-        if(length(enc)) x[enc] <- enc2native(x[enc])
-    }
-    z <- lapply(strsplit(x, "\n[ \t\n]*\n", perl = TRUE, useBytes = UB),
-                strsplit, "[ \t\n]", perl = TRUE, useBytes = UB)
+
+    ## Canonicalize invalid input:
+    if(any(ind <- !validEnc(x))) x[ind] <- NA_character_
+    ## Alternatively, could use iconv(x[ind], sub = "byte").
+
+    ## UB <- TRUE
+    ## ## input need not be valid in this locale, e.g. from write.dcf
+    ## ## but if x has UTF-8 encoding we want to preserve it, so
+    ## if(all(Encoding(x) == "UTF-8")) UB <- FALSE
+    ## else {
+    ##     ## Let's convert anything else with a marked encoding
+    ##     ## to the current locale
+    ##     enc <- Encoding(x) %in% c("latin1", "UTF-8")
+    ##     if(length(enc)) x[enc] <- enc2native(x[enc])
+    ## }
+    ## z <- lapply(strsplit(x, "\n[ \t\n]*\n", perl = TRUE, useBytes = UB),
+    ##             strsplit, "[ \t\n]", perl = TRUE, useBytes = UB)
+
+    z <- lapply(strsplit(x, "\n[ \t\n]*\n", perl = TRUE),
+                strsplit, "[ \t\n]", perl = TRUE)
+
     ## Now z[[i]][[j]] is a character vector of all "words" in
     ## paragraph j of x[i].
 
