@@ -837,7 +837,7 @@ setEncoding2, "
         q("no", status = 2L, runLast = FALSE)
     }
     dir.create(build_dir, FALSE)
-    if(!nzchar(output)) output <- paste("Rd2", out_ext, sep = ".")
+    if(!nzchar(output)) output <- paste0("Rd2.", out_ext)
     if(file.exists(output) && !force) {
         cat("file", sQuote(output), "exists; please remove it first\n")
         q("no", status = 1L, runLast = FALSE)
@@ -866,7 +866,7 @@ setEncoding2, "
 
     setwd(startdir)
     cat("Saving output to", sQuote(output), "...\n")
-    file.copy(file.path(build_dir, paste("Rd2", out_ext, sep = ".")), output,
+    file.copy(file.path(build_dir, paste0("Rd2.", out_ext)), output,
               overwrite = force)
     cat("Done\n")
 

@@ -221,9 +221,9 @@ httpd <- function(path, query, ...)
         if(file.exists(fixedfile)) {
             top <- readLines(fixedfile)
             lines <- readLines(file)
-            lines <- gsub(paste(top, "library", sep="/"),
+            lines <- gsub(paste0(top, "/library"),
                           "../../", lines, fixed = TRUE)
-            lines <- gsub(paste(top, "doc/", sep = "/"),
+            lines <- gsub(paste0(top, "/doc/"),
                           "../../../doc/", lines, fixed = TRUE)
             return(list(payload=paste(lines, collapse="\n")))
         }

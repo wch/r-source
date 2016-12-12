@@ -164,7 +164,7 @@ setRlibs <-
     if (nzchar(lib0)) rlibs <- c(lib0, rlibs)
     rlibs <- paste(rlibs, collapse = .Platform$path.sep)
     if(quote) rlibs <- shQuote(rlibs)
-    c(paste("R_LIBS", rlibs, sep = "="),
+    c(paste0("R_LIBS=", rlibs),
       if(WINDOWS) " R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''",
       if(WINDOWS) " R_LIBS_USER='no_such_dir'" else "R_LIBS_USER=''",
       " R_LIBS_SITE='no_such_dir'")
@@ -2784,7 +2784,7 @@ setRlibs <-
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
                 enc <- if (!is.na(e <- desc["Encoding"])) {
-                    paste("--encoding", e, sep="=")
+                    paste0("--encoding=", e)
                 } else ""
                 if (!this_multiarch) {
                     exout <- paste0(pkgname, "-Ex.Rout")
@@ -4358,7 +4358,7 @@ setRlibs <-
         ## Read in ~/.R/check.Renviron[.rarch] (if it exists).
         rarch <- .Platform$r_arch
         if (nzchar(rarch) &&
-            file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
+            file.exists(Renv <- paste0("~/.R/check.Renviron.", rarch)))
             readRenviron(Renv)
         else if (file.exists(Renv <- "~/.R/check.Renviron"))
             readRenviron(Renv)
@@ -4765,7 +4765,7 @@ setRlibs <-
                     domain = NA, call. = FALSE, immediate. = TRUE)
             next
         }
-        pkgoutdir <- file.path(outdir, paste(pkgname0, "Rcheck", sep = "."))
+        pkgoutdir <- file.path(outdir, paste0(pkgname0, ".Rcheck"))
         if (clean && dir.exists(pkgoutdir)) {
             unlink(pkgoutdir, recursive = TRUE)
             if(WINDOWS) Sys.sleep(0.5) # allow for antivirus interference
