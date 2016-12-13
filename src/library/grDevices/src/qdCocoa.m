@@ -67,6 +67,8 @@ static QuartzFunctions_t *qf;
 #define R_GREEN(col)    (((col)>> 8)&255)
 #define R_BLUE(col)     (((col)>>16)&255)
 #define R_ALPHA(col)    (((col)>>24)&255)
+#define R_RGB(r,g,b)    ((r)|((g)<<8)|((b)<<16)|0xFF000000)
+#define R_RGBA(r,g,b,a) ((r)|((g)<<8)|((b)<<16)|((a)<<24))
 
 - (NSColor *) canvasColor
 {
@@ -803,8 +805,9 @@ static void* QuartzCocoa_Cap(QuartzDesc_t dev, void *userInfo) {
                                                    size.width, size.height)];
 
 	int bpp = (int) [rep bitsPerPixel];
+	int spp = (int) [rep samplesPerPixel];
 	NSBitmapFormat bf = [rep bitmapFormat];
-	/* Rprintf("format: bpp=%d, bf=0x%x, bps=%d, planar=%s, colorspace=%s\n", bpp, (int) bf, [rep bitsPerSample], [rep isPlanar] ? "YES" : "NO", [[rep colorSpaceName] UTF8String]); */
+	/* Rprintf("format: bpp=%d, bf=0x%x, bps=%d, spp=%d, planar=%s, colorspace=%s\n", bpp, (int) bf, [rep bitsPerSample], spp, [rep isPlanar] ? "YES" : "NO", [[rep colorSpaceName] UTF8String]); */
 	/* we only support meshed (=interleaved) formats of 8 bits/component with 3 or 4 components. We should really check for RGB/RGBA as well.. */
 	if ([rep isPlanar] || [rep bitsPerSample] != 8 || (bf & NSFloatingPointSamplesBitmapFormat) || (bpp != 24 && bpp != 32)) {
 	    warning("Unsupported image format");
@@ -820,12 +823,17 @@ static void* QuartzCocoa_Cap(QuartzDesc_t dev, void *userInfo) {
          * The ARGB32 needs to be converted to an R ABGR32 */
         rint = (unsigned int *) INTEGER(raster);
 	stride = (bpp == 24) ? 3 : 4; /* convers bpp to stride in bytes */
-	for (i = 0; i < pixels; i++, j += stride)
-	    rint[i] = ((screenData[j + 0]) |
-		       (screenData[j + 1] << 8) |
-		       (screenData[j + 2] << 16) |
-		       0xFF000000); /* alpha is currently ignored and set to 1.0 (why?) */
-	
+
+	if (bf & NSAlphaFirstBitmapFormat) /* ARGB */
+	    for (i = 0; i < pixels; i++, j += stride)
+		rint[i] = R_RGBA(screenData[j + 1], screenData[j + 2], screenData[j + 3], screenData[j]);
+	else if (spp == 4) /* RGBA */
+	    for (i = 0; i < pixels; i++, j += stride)
+		rint[i] = R_RGBA(screenData[j], screenData[j + 1], screenData[j + 2], screenData[j + 3]);
+	else /* RGB */
+	    for (i = 0; i < pixels; i++, j += stride)
+		rint[i] = R_RGB(screenData[j + 0], screenData[j + 1], screenData[j + 2]);
+
 	[rep release];
 	
 	PROTECT(dim = allocVector(INTSXP, 2));
