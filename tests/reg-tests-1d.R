@@ -466,6 +466,13 @@ stopifnot(inherits(methods("("), "MethodsFunction"),
 ## methods("(") and ..("{")  failed in R <= 3.3.2
 
 
+## moved after commit in r71778
+f <- eval(parse(text = "function() { x <- 1 ; for(i in 1:10) { i <- i }}",
+                keep.source = TRUE))
+g <- removeSource(f)
+stopifnot(is.null(attributes(body(g)[[3L]][[4L]])))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

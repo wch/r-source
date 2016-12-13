@@ -227,9 +227,3 @@ if(require("Matrix", .Library)) {
     rm(M)
     detach("package:Matrix", unload=TRUE)
 }##{Matrix}
-
-
-f <- eval(parse(text = "function() { x <- 1 ; for(i in 1:10) { i <- i }}",
-    keep.source=T))
-g <- removeSource(f)
-stopifnot(is.null(attributes(body(g)[[3]][[4]])))
