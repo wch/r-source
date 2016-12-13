@@ -738,6 +738,10 @@
 
       \item \code{findInterval(x, vec, left.open = TRUE)} misbehaved in some
       cases. (Reported by Dmitriy Chernykh.)
+
+      \item \code{dev.capture()} using Quartz Cocoa device (macOS) returned
+      invalid components if the back-end chose to use ARGB instead of RGBA
+      image format. (Reported by Noam Ross.)
     }
   }
 }
