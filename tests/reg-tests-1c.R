@@ -1,4 +1,4 @@
-## Regression tests for R 3.[123].*
+## Regression tests for R 3.[0-3].*
 
 pdf("reg-tests-1c.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
