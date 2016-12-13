@@ -26,6 +26,8 @@ removeSource <- function(fn) {
     recurse <- function(part) {
         if (is.name(part)) return(part)  # handles missing arg, PR#15957
         attr(part, "srcref") <- NULL
+        attr(part, "wholeSrcref") <- NULL
+        attr(part, "srcfile") <- NULL
         if (is.language(part) && is.recursive(part)) {
             for (i in seq_along(part))
             	part[[i]] <- recurse(part[[i]])

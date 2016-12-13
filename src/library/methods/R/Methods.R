@@ -1522,7 +1522,8 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 	return(gettextf("value classes differ: %s, %s",
                         .dQ(gpString(f1@valueClass)),
                         .dQ(gpString(f2@valueClass))))
-    if(!identical(body(f1d), body(f2d)))
+    if(!identical(body(utils::removeSource(f1d)),
+                  body(utils::removeSource(f2d))))
 	return("function body differs")
     if(!identical(f1@signature, f2@signature))
 	return(gettextf("signatures differ:  (%s), (%s)",
