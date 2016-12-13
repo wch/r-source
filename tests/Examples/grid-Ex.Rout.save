@@ -1,5 +1,5 @@
 
-R version 3.3.2 Patched (2016-11-29 r71706) -- "Sincere Pumpkin Patch"
+R version 3.3.2 Patched (2016-12-10 r71781) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2069,7 +2069,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.085 0.011 1.1 0 0 
+Time elapsed:  1.075 0.012 1.092 0 0 
 > grDevices::dev.off()
 null device 
           1 

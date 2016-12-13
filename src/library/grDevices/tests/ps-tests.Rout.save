@@ -1,5 +1,5 @@
 
-R version 3.3.2 Patched (2016-11-29 r71706) -- "Sincere Pumpkin Patch"
+R version 3.3.2 Patched (2016-12-10 r71781) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -95,4 +95,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.390   0.019   0.398 
+  0.361   0.011   0.362 
