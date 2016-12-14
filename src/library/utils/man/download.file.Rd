@@ -99,10 +99,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{\link{available.packages}}.
 
   The \code{"libcurl"} and \code{"wget"} methods follow \samp{http://}
-  and \samp{https://} redirections: the \code{"internal"} method does not.
-  (For method \code{"curl"} use argument \code{extra = "-L"}. To disable
-  redirection in \command{wget}, use \code{extra = "--max-redirect=0"}.)
-  (The \code{"wininet"} method supports some redirections but not all.)
+  and \samp{https://} redirections: the \code{"internal"} method follows
+  \samp{http://} redirections only.  (For method \code{"curl"} use
+  argument \code{extra = "-L"}.  To disable redirection in
+  \command{wget}, use \code{extra = "--max-redirect=0"}.)   The
+  \code{"wininet"} method supports some redirections but not all.
   
   Note that \samp{https://} URLs are not supported by the
   \code{"internal"} method but are supported by the \code{"libcurl"}

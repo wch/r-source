@@ -1,4 +1,4 @@
-## Regression tests for R >= 3.0.0
+## Regression tests for R 3.[123].*
 
 pdf("reg-tests-1c.pdf", encoding = "ISOLatin1.enc")
 
@@ -181,7 +181,7 @@ dbeta(0.1, 9,  9.9e307)
 dbeta(0.1, 9.9e307, 10)
 ## first two hung in R <= 3.0.2
 
-## PR#15465
+## PR#15465 (0-extent matrix / data frame)
 provideDimnames(matrix(nrow = 0, ncol = 1))
 provideDimnames(table(character()))
 as.data.frame(table(character()))
@@ -1445,7 +1445,7 @@ stopifnot(
     identical(chkPretty(MTbd +  0:1), p1) ,
     identical(chkPretty(MTbd + -1:1), p1) ,
     identical(chkPretty(MTbd +  0:3), seqDp("1960-02-09", "1960-02-14")) )
-## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3
+## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3!
 ## and length 1 or 2 instead of about 6 in R 3.2.4
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
 stopifnot(length(p2) >= 5+1,
@@ -1583,7 +1583,7 @@ stopifnot(identical(class(z), "matrix"))
 ## kept "mts" in 3.2.4, PR#16769
 
 
-## match(x, t): fast algorithm for length-1 'x'
+## match(x, t): fast algorithm for length-1 'x' -- PR#16885
 ## a) string 'x'  when only encoding differs
 tmp <- "年付"
 tmp2 <- "\u5e74\u4ed8" ; Encoding(tmp2) <- "UTF-8"
