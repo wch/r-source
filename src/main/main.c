@@ -818,8 +818,8 @@ void setup_Rmainloop(void)
     InitTempDir(); /* must be before InitEd */
     InitMemory();
     InitStringHash(); /* must be before InitNames */
-    InitNames();
     InitBaseEnv();
+    InitNames(); /* must be after InitBaseEnv to use R_EmptyEnv */
     InitGlobalEnv();
     InitDynload();
     InitOptions();

@@ -1931,7 +1931,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 /* to prevent evaluation.  As an example consider */
 /* e <- quote(f(x=1,y=2); names(e) <- c("","a","b") */
 
-static SEXP R_valueSym = NULL; /* initialized in R_initAsignSymbols below */
+static SEXP R_valueSym = NULL; /* initialized in R_initAssignSymbols below */
 
 static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
 {
@@ -2426,7 +2426,7 @@ static SEXP R_Subassign2Sym = NULL;
 static SEXP R_DollarGetsSymbol = NULL;
 static SEXP R_AssignSym = NULL;
 
-void attribute_hidden R_initAsignSymbols(void)
+void attribute_hidden R_initAssignSymbols(void)
 {
     for (int i = 0; i < NUM_ASYM; i++)
 	asymSymbol[i] = install(asym[i]);

@@ -1189,7 +1189,7 @@ void attribute_hidden InitNames()
     for (int i = 0; Spec_name[i]; i++)
 	SET_SPECIAL_SYMBOL(install(Spec_name[i]));
 
-    R_initAsignSymbols();
+    R_initAssignSymbols();
     initializeDDVALSymbols();
     R_initialize_bcode();
 }
