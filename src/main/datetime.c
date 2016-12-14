@@ -299,14 +299,12 @@ static Rboolean have_broken_mktime(void)
 }
 
 #ifndef HAVE_POSIX_LEAPSECONDS
-/* There have (2015/07) been 26 leapseconds: see .leap.seconds in R
- */
-static int n_leapseconds = 26;
-static const time_t leapseconds[] =
+static int n_leapseconds = 27; // 2017-01, sync with .leap.seconds in R (!)
+static const time_t leapseconds[] = // dput(unclass(.leap.seconds)) :
 {  78796800, 94694400,126230400,157766400,189302400,220924800,252460800,
   283996800,315532800,362793600,394329600,425865600,489024000,567993600,
   631152000,662688000,709948800,741484800,773020800,820454400,867715200,
-   915148800,1136073600,1230768000,1341100800,1435708800};
+   915148800,1136073600,1230768000,1341100800,1435708800,1483228800};
 #endif
 
 static double guess_offset (stm *tm)
