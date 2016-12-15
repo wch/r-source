@@ -154,7 +154,7 @@
   zones and leap seconds (according to this version of \R's data,
   \Sexpr{length(.leap.seconds)} days have been 86401 seconds long so
   far, the last being on (actually, immediately before)
-  \Sexpr{format(as.Date(tail(.leap.seconds, 1)))}: the times of the
+  \Sexpr{format(as.Date(utils::tail(.leap.seconds, 1)))}: the times of the
   extra seconds are in the object \code{.leap.seconds}).  The details of
   this are entrusted to the OS services where possible.  It seems that
   some rare systems used to use leap seconds, but all known current
