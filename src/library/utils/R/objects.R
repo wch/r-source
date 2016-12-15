@@ -527,7 +527,7 @@ function(x)
         if(exists(x, envir = ns, inherits = FALSE)) {
             f <- get(x, envir = ns, inherits = FALSE)
 	    objs <- c(objs, list(f))
-            where <- c(where, paste("namespace", i, sep=":"))
+            where <- c(where, paste0("namespace:", i))
             visible <- c(visible, FALSE)
         }
     }

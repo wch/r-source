@@ -264,7 +264,7 @@ install.packages <-
         ## the only known reliable way is to try it
         ok <- dir.exists(lib) # dir might not exist, PR#14311
         if(ok) {
-            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep = "_"))
+            fn <- file.path(lib, paste0("_test_dir_", Sys.getpid()))
             unlink(fn, recursive = TRUE) # precaution
             res <- try(dir.create(fn, showWarnings = FALSE))
             if(inherits(res, "try-error") || !res) ok <- FALSE
@@ -623,7 +623,7 @@ install.packages <-
             Sys.setenv(R_LIBS = libpath)
             on.exit(Sys.setenv(R_LIBS = oldrlibs))
         } else
-            env <- paste("R_LIBS", shQuote(libpath), sep = "=")
+            env <- paste0("R_LIBS=", shQuote(libpath))
         ## </NOTE>
     }
 

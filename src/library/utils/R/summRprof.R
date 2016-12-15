@@ -263,7 +263,7 @@ Rprof_memory_summary <- function(filename, chunksize = 5000,
     names(memcounts) <- c("vsize.small", "vsize.large", "nodes", "duplications")
     if (!aggregate) {
         rownames(memcounts) <- (1L:nrow(memcounts))*sample.interval
-        names(labels) <- paste("stack", label, sep = ":")
+        names(labels) <- paste0("stack:", label)
         memcounts <- cbind(memcounts, labels)
     }
 

@@ -293,7 +293,7 @@ str.default <-
 		std.attr <- c(std.attr, "class")
 	    }
 	    if(no.list || (has.class &&
-			   any(sapply(paste("str", cl, sep = "."),
+			   any(sapply(paste0("str.", cl),
 					#use sys.function(.) ..
 				      function(ob)exists(ob, mode= "function",
 							 inherits= TRUE))))) {

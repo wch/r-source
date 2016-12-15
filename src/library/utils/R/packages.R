@@ -38,13 +38,13 @@ function(contriburl = contrib.url(repos, type), method,
         if(localcran) {
             ## see note in download.packages
             if(substring(repos, 1L, 8L) == "file:///") {
-                tmpf <- paste(substring(repos, 8L), "PACKAGES", sep = "/")
+                tmpf <- paste0(substring(repos, 8L), "/PACKAGES")
                 if(.Platform$OS.type == "windows") {
                     if(length(grep("^/[A-Za-z]:", tmpf)))
                         tmpf <- substring(tmpf, 2L)
                 }
             } else {
-                tmpf <- paste(substring(repos, 6L), "PACKAGES", sep = "/")
+                tmpf <- paste0(substring(repos, 6L), "/PACKAGES")
             }
             res0 <- if(file.exists(dest <- paste0(tmpf, ".rds")))
                 readRDS(dest)
@@ -63,7 +63,7 @@ function(contriburl = contrib.url(repos, type), method,
                 need_dest <- FALSE
                 op <- options(warn = -1L)                
                 z <- tryCatch({
-                    download.file(url = paste(repos, "PACKAGES.rds", sep = "/"),
+                    download.file(url = paste0(repos, "/PACKAGES.rds"),
                                   destfile = dest, method = method,
                                   cacheOK = FALSE, quiet = TRUE, mode = "wb")
                 }, error = identity)
@@ -82,7 +82,7 @@ function(contriburl = contrib.url(repos, type), method,
                     ## FIXME: this should check the return value == 0L
                     z <- tryCatch({
                         ## This is a binary file
-                        download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
+                        download.file(url = paste0(repos, "/PACKAGES.gz"),
                                       destfile = tmpf, method = method,
                                       cacheOK = FALSE, quiet = TRUE, mode = "wb")
                     }, error = identity)
@@ -90,7 +90,7 @@ function(contriburl = contrib.url(repos, type), method,
                         z <- tryCatch({
                             ## read.dcf is going to interpret CRLF as
                             ## LF, so use binary mode to avoid CRLF.
-                            download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                            download.file(url = paste0(repos, "/PACKAGES"),
                                           destfile = tmpf, method = method,
                                           cacheOK = FALSE, quiet = TRUE, mode = "wb")
                         }, error=identity)

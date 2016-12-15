@@ -36,7 +36,7 @@ RweaveLatexSetup <-
     dots <- list(...)
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
-        output <- paste(prefix.string, "tex", sep = ".")
+        output <- paste0(prefix.string, ".tex")
     } else prefix.string <- basename(sub("\\.tex$", "", output))
 
     if (!quiet) cat("Writing to file ", output, "\n",
@@ -95,21 +95,21 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
     ## only once.
     function(object, chunk, options) {
         pdf.Swd <- function(name, width, height, ...)
-            grDevices::pdf(file = paste(chunkprefix, "pdf", sep = "."),
+            grDevices::pdf(file = paste0(chunkprefix, ".pdf"),
                            width = width, height = height,
                            version = options$pdf.version,
                            encoding = options$pdf.encoding,
                            compress = options$pdf.compress)
         eps.Swd <- function(name, width, height, ...)
-            grDevices::postscript(file = paste(name, "eps", sep = "."),
+            grDevices::postscript(file = paste0(name, ".eps"),
                                   width = width, height = height,
                                   paper = "special", horizontal = FALSE)
         png.Swd <- function(name, width, height, options, ...)
-            grDevices::png(filename = paste(chunkprefix, "png", sep = "."),
+            grDevices::png(filename = paste0(chunkprefix, ".png"),
                            width = width, height = height,
                            res = options$resolution, units = "in")
         jpeg.Swd <- function(name, width, height, options, ...)
-            grDevices::jpeg(filename = paste(chunkprefix, "jpeg", sep = "."),
+            grDevices::jpeg(filename = paste0(chunkprefix, ".jpeg"),
                             width = width, height = height,
                             res = options$resolution, units = "in")
 
@@ -134,7 +134,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 devoffs <- c(devoffs, list(grDevices::dev.off))
             }
             if(nzchar(grd <- options$grdevice)) {
-                grdo <- paste(grd, "off", sep = ".")
+                grdo <- paste0(grd, ".off")
                 if(grepl("::", grd, fixed = TRUE)) {
                     devs <- c(devs, eval(parse(text = grd)))
                     devoffs <-
@@ -188,7 +188,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             ## [x][[1L]] avoids partial matching of x
             chunkout <- object$chunkout[chunkprefix][[1L]]
             if (is.null(chunkout)) {
-                chunkout <- file(paste(chunkprefix, "tex", sep = "."), "w")
+                chunkout <- file(paste0(chunkprefix, ".tex"), "w")
                 if (!is.null(options$label))
                     object$chunkout[[chunkprefix]] <- chunkout
                 if(!grepl(.SweaveValidFilenameRegexp, chunkout))
@@ -504,7 +504,7 @@ RweaveLatexWritedoc <- function(object, chunk)
             object$options$label <- "concordance"
             prefix <- RweaveChunkPrefix(object$options)
             object$options$label <- savelabel
-            object$concordfile <- paste(prefix, "tex", sep = ".")
+            object$concordfile <- paste0(prefix, ".tex")
             chunk[pos[1L]] <- sub(object$syntax$docopt,
                                   paste0("\\\\input{", prefix, "}"),
                                   chunk[pos[1L]])
@@ -686,7 +686,7 @@ RtangleSetup <-
     if (is.null(output)) {
         prefix.string <- basename(sub(syntax$extension, "", file))
         ## This is odd, since for split = TRUE it uses the engine name.
-        output <- paste(prefix.string, "R", sep = ".")
+        output <- paste0(prefix.string, ".R")
     } else
         prefix.string <- basename(sub("\\.[rsRS]$", "", output))
 

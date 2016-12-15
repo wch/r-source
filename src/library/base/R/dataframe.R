@@ -500,7 +500,7 @@ data.frame <-
     ## unlist() drops i-th component if it has 0 columns
     vnames <- unlist(vnames[ncols > 0L])
     if(fix.empty.names && any(noname <- !nzchar(vnames)))
-	vnames[noname] <- paste("Var", seq_along(vnames), sep = ".")[noname]
+	vnames[noname] <- paste0("Var.", seq_along(vnames))[noname]
     if(check.names) {
 	if(fix.empty.names)
 	    vnames <- make.names(vnames, unique=TRUE)
