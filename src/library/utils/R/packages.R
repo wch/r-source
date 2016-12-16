@@ -56,6 +56,8 @@ function(contriburl = contrib.url(repos, type), method,
                               paste0("repos_", URLencode(repos, TRUE), ".rds"))
             if(file.exists(dest)) {
                 res0 <- readRDS(dest)
+                ## Be defensive ...
+                if(length(res0)) rownames(res0) <- res0[, "Package"]
             } else {
                 ## Try .rds and readRDS(), and then .gz or plain DCF and
                 ## read.dcf(), catching problems from both missing or
