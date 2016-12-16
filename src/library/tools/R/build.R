@@ -136,7 +136,9 @@ get_exclude_patterns <- function()
             '                        "no" (default), "qpdf", "gs", "gs+qpdf", "both"',
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
             "  --md5                 add MD5 sums",
-           "",
+            "  --log                 log to file 'pkg-00build.log' when processing ",
+            "                        the pkgdir with basename 'pkg'",
+            "",
             "Report bugs at <https://bugs.R-project.org>.", sep = "\n")
     }
 
@@ -777,6 +779,7 @@ get_exclude_patterns <- function()
     vignettes <- TRUE
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     with_md5 <- FALSE
+    with_log <- FALSE
 ##    INSTALL_opts <- character()
     pkgs <- character()
     options(showErrorCalls = FALSE, warn = 1)
@@ -850,6 +853,8 @@ get_exclude_patterns <- function()
             compact_vignettes <- "qpdf"
         } else if (a == "--md5") {
             with_md5 <- TRUE
+        } else if (a == "--log") {
+            with_log <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -879,9 +884,20 @@ get_exclude_patterns <- function()
     }
 
     for(pkg in pkgs) {
-        Log <- newLog() # if not stdin; on.exit(closeLog(Log))
         ## remove any trailing /, for Windows' sake
         pkg <- sub("/$", "", pkg)
+        ## Argh.  For logging we should really know the actual name of
+        ## the package being built, but this needs first establishing
+        ## the actual pkgdir (see below) and then getting the package
+        ## name from the DESCRIPTION file ... and problems in these
+        ## steps (currently) already get logged.  So for now try using
+        ## the basename of pkg (one could try renaming at the end, but
+        ## that will only work in case of success ...)
+        Log <- if(with_log)
+            newLog(paste0(file.path(startdir, basename(pkg)),
+                          "-00build.log"))
+        else
+            newLog()
         ## 'Older versions used $pkg as absolute or relative to $startdir.
         ## This does not easily work if $pkg is a symbolic link.
         ## Hence, we now convert to absolute paths.'
@@ -1076,7 +1092,6 @@ get_exclude_patterns <- function()
 
         setwd(startdir)
         unlink(Tdir, recursive = TRUE)
-        on.exit() # cancel closeLog
         closeLog(Log)
     }
     do_exit(0L)
