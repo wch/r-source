@@ -225,21 +225,21 @@ strptime <- function(x, format, tz = "")
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXct")) stop("wrong class")
-    if(missing(tz) && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
+    if(identical(tz, "") && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
     structure(format.POSIXlt(as.POSIXlt(x, tz), format, usetz, ...),
               names = names(x))
 }
 
-## could handle arrays for max.print; cf print.Date() in ./dates.R
+## could handle arrays for max.print \\ keep in sync with  print.Date() in ./dates.R
 print.POSIXct <-
-print.POSIXlt <- function(x, ...)
+print.POSIXlt <- function(x, tz = "", usetz = TRUE, ...)
 {
     max.print <- getOption("max.print", 9999L)
     if(max.print < length(x)) {
-        print(format(x[seq_len(max.print)], usetz = TRUE), ...)
+        print(format(x[seq_len(max.print)], tz = tz, usetz = usetz), ...)
         cat(' [ reached getOption("max.print") -- omitted',
             length(x) - max.print, 'entries ]\n')
-    } else print(if(length(x)) format(x, usetz = TRUE)
+    } else print(if(length(x)) format(x, tz = tz, usetz = usetz)
 		 else paste(class(x)[1L], "of length 0"), ...)
     invisible(x)
 }

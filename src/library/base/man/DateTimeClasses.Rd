@@ -53,7 +53,7 @@
   representing calendar dates and times.
 }
 \usage{
-\method{print}{POSIXct}(x, \dots)
+\method{print}{POSIXct}(x, tz = "", usetz = TRUE, \dots)
 
 \method{summary}{POSIXct}(object, digits = 15, \dots)
 
@@ -63,17 +63,18 @@
 \special{time1 lop time2}
 }
 \arguments{
-  \item{x, object}{An object to be printed or summarized from one of the
+  \item{x, object}{an object to be printed or summarized from one of the
     date-time classes.}
-  \item{digits}{Number of significant digits for the computations:
+  \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
+  \item{digits}{number of significant digits for the computations:
     should be high enough to represent the least important time unit
     exactly.}
-  \item{\dots}{Further arguments to be passed from or to other methods.}
+  \item{\dots}{further arguments to be passed from or to other methods.}
   \item{time}{date-time objects}
   \item{time1, time2}{date-time objects or character vectors.  (Character
     vectors are converted by \code{\link{as.POSIXct}}.)}
   \item{z}{a numeric vector (in seconds)}
-  \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
+  \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
 \details{

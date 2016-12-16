@@ -261,6 +261,9 @@
       \item \code{ppr()} and \code{supsmu()} get an optional
       \code{trace} argument, and \code{ppr(.., sm.method = ..spline)} is
       no longer limited to sample size \eqn{n \le 2500}{n <= 2500}.
+
+      \item \code{print.POSIXct()} gets optional \code{tz} and
+      \code{usetz} arguments, thanks to a report from Jennifer S. Lyon.
     }
   }
 
