@@ -1518,7 +1518,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     if(!is.null(ns))
         asNamespace(ns)
     else {
-        i <- match(paste("package", what, sep=":"), search())
+        i <- match(paste0("package:", what), search())
         if(is.na(i))
             .GlobalEnv
         else

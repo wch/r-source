@@ -371,7 +371,7 @@ offset <- function(object) object
     ## Character vectors may be auto-converted to factors, but keep them separate for now
     if(is.character(x)) return("character")
     if(is.matrix(x) && is.numeric(x))
-        return(paste("nmatrix", ncol(x), sep="."))
+        return(paste0("nmatrix.", ncol(x)))
     ## this is unclear.  Prior to 2.6.0 we assumed numeric with attributes
     ## meant something, but at least for now model.matrix does not
     ## treat it differently.

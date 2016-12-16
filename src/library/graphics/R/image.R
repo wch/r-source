@@ -44,8 +44,8 @@ image.default <- function (x = seq(0, 1, length.out = nrow(z)),
 	} else stop("no 'z' matrix specified")
     } else if (is.list(x)) {
 	xn <- deparse(substitute(x))
-	if (missing(xlab)) xlab <- paste(xn, "x", sep = "$")
-	if (missing(ylab)) ylab <- paste(xn, "y", sep = "$")
+	if (missing(xlab)) xlab <- paste0(xn, "$x")
+	if (missing(ylab)) ylab <- paste0(xn, "$y")
 	y <- x$y
 	x <- x$x
     } else {

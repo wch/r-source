@@ -8244,7 +8244,7 @@ function(msg, x)
     xx <- strwrap(paste(sQuote(x), collapse = " "), exdent = 2L)
     if (length(xx) > 1L || nchar(msg) + nchar(xx) + 1L > 75L)
         c(msg, .pretty_format(x))
-    else paste(msg, xx, sep = " ")
+    else paste(msg, xx)
 }
 
 ### ** .pretty_print

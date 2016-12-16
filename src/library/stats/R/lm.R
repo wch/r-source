@@ -500,7 +500,7 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
     } else
         class(val) <- "data.frame"
     ## isMlm: conceptually, each "sim_i" could be a *matrix* [unusually]
-    names(val) <- paste("sim", seq_len(nsim), sep="_")
+    names(val) <- paste0("sim_", seq_len(nsim))
     if (!is.null(nm)) row.names(val) <- nm
     attr(val, "seed") <- RNGstate
     val

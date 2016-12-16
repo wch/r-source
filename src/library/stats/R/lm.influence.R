@@ -245,7 +245,7 @@ influence.measures <- function(model)
     h <- infl$hat
     dfbetas <- infl$coefficients / outer(infl$sigma, sqrt(diag(xxi)))
     vn <- variable.names(model); vn[vn == "(Intercept)"] <- "1_"
-    colnames(dfbetas) <- paste("dfb",abbreviate(vn),sep=".")
+    colnames(dfbetas) <- paste0("dfb.", abbreviate(vn))
     ## Compatible to dffits():
     dffits <- e*sqrt(h)/(si*(1-h))
     if(any(ii <- is.infinite(dffits))) dffits[ii] <- NaN

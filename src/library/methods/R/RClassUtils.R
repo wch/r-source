@@ -319,7 +319,7 @@ completeClassDefinition <-
         if(any(undefClasses))
             warning(sprintf(gettext("undefined slot classes in definition of %s: %s", domain = "R-methods"),
                              .dQ(ClassDef@className),
-                             paste(names(properties)[undefClasses], gettextf("(class %s)", .dQ(unlist(properties, recursive = FALSE)[undefClasses])), collapse = ", ", sep = "")),
+                             paste0(names(properties)[undefClasses], gettextf("(class %s)", .dQ(unlist(properties, recursive = FALSE)[undefClasses])), collapse = ", ")),
                     call. = FALSE, domain = NA)
         ClassDef@slots <- properties
         ClassDef
@@ -937,9 +937,9 @@ showExtends <-
             if(!eli@simple) {
                 if(is.function(eli@test) && !identical(body(eli@test), TRUE)) {
                     how[i] <-
-                        paste(how[i], if(is.function(eli@coerce))
+                        paste0(how[i], if(is.function(eli@coerce))
                               ", with explicit test and coerce" else
-                              ", with explicit test", sep="")
+                              ", with explicit test")
                 }
                 else if(is.function(eli@coerce))
                     how[i] <- paste0(how[i], ", with explicit coerce")
@@ -1836,7 +1836,7 @@ substituteFunctionArgs <-
         .GlobalEnv
     else {
         ##FIXME:  the paste should not be needed
-        pkg <- paste("package", package, sep=":")
+        pkg <- paste0("package:", package)
         ## need to allow for versioned installs: prefer exact match.
         m <- charmatch(pkg, search())
         if(is.na(m)) # not attached, better be an available namespace

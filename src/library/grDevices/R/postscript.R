@@ -71,11 +71,11 @@ check.options <-
                                      "differs between new and previous",
                                      "differ between new and previous"),
                             if(any(do.keep)) {
-                                paste("\n\t ==> ",
-                                      gettextf("NOT changing %s",
-                                              paste(sQuote(names(prev[do.keep])),
-                                                    collapse=" & ")),
-                                      sep = "")} else "",
+                                paste0("\n\t ==> ",
+                                       gettextf("NOT changing %s",
+                                                paste(sQuote(names(prev[do.keep])),
+                                                      collapse=" & ")))
+                            } else "",
                             domain = NA, call. = FALSE)
 		}
 	    names(new) <- NULL
