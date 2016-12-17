@@ -114,6 +114,10 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   map filenames to those acceptable on the current system, and treats
   the filenames in the archive as applicable without any re-encoding in
   the current locale.
+
+  The internal implementation does not special-case \sQuote{resource
+  forks} in macOS: that system's \command{tar} command does. This may
+  lead to unexpected files with names with prefix \file{._}.
 }
 
 \value{
