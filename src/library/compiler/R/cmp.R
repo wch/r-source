@@ -2259,14 +2259,16 @@ cmpSpecial <- function(e, cb, cntxt) {
     TRUE
 }
 
-setInlineHandler(".Internal", function(e, cb, cntxt) {
+cmpDotInternalCall <- function(e, cb, cntxt) {
     ee <- e[[2]]
     sym <- ee[[1]]
     if (.Internal(is.builtin.internal(sym)))
         cmpBuiltin(ee, cb, cntxt, internal = TRUE)
     else
         cmpSpecial(e, cb, cntxt)
-})
+}
+
+setInlineHandler(".Internal", cmpDotInternalCall)
 
 
 ##
@@ -2497,10 +2499,8 @@ cmpSimpleInternal <- function(e, cb, cntxt) {
         call <- inlineSimpleInternalCall(e, def)
         if (is.null(call))
             FALSE
-        else {
-            cmp(call, cb, cntxt)
-            TRUE
-        }
+        else
+            cmpDotInternalCall(call, cb, cntxt)
     }
 }
 

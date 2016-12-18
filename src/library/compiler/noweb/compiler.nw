@@ -2323,19 +2323,23 @@ One frequently used [[SPECIAL]] function is [[.Internal]]. When the
 compile the call as for a [[BUILTIN]] function.  For [[.Internal]]
 functions of type [[SPECIAL]] there is less of an advantage, and so
 the [[.Internal]] expression is compiled with [[cmpSpecial]].  It may
-be useful to use introduce a [[GETINTLSPECIAL]] instruction and handle
-these analogously to [[.Internal]] functions of type [[BUILTIN]].
+be useful to introduce a [[GETINTLSPECIAL]] instruction and handle
+these analogously to [[.Internal]] functions of type [[BUILTIN]].  The
+handler is assigned to the variable [[cmpDotInternalCall]] to allow
+its use in inlining.
 %% **** look into adding GETINTLSPECIAL??
 <<inlining handler for [[.Internal]]>>=
-setInlineHandler(".Internal", function(e, cb, cntxt) {
+cmpDotInternalCall <- function(e, cb, cntxt) {
     ee <- e[[2]]
     sym <- ee[[1]]
     if (.Internal(is.builtin.internal(sym)))
         cmpBuiltin(ee, cb, cntxt, internal = TRUE)
     else
         cmpSpecial(e, cb, cntxt)
-})
-@ %def
+}
+
+setInlineHandler(".Internal", cmpDotInternalCall)
+@ %def cmpDotInternalCall
 
 
 \subsection{The [[local]] function}
@@ -3434,10 +3438,8 @@ cmpSimpleInternal <- function(e, cb, cntxt) {
         call <- inlineSimpleInternalCall(e, def)
         if (is.null(call))
             FALSE
-        else {
-            cmp(call, cb, cntxt)
-            TRUE
-        }
+	else
+            cmpDotInternalCall(call, cb, cntxt)
     }
 }
 @ %def cmpSimpleInternal
