@@ -90,7 +90,7 @@ tempdir()
   are replaced in a platform-specific way.  POSIX only requires that the
   replacements be ASCII, which allows \code{.} (so the value may appear
   to have a file extension) and \link{regexp} metacharacters such as
-  \code{+}.  Most commomly the replacements are from the \link{regexp}
+  \code{+}.  Most commonly the replacements are from the \link{regexp}
   pattern \code{[A-Za-z0-9]}, but \code{.} \emph{has} been seen.
 }
 
