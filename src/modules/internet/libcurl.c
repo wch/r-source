@@ -453,7 +453,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd[i], CURLOPT_FAILONERROR, 1L);
 	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
-	curlCommon(hnd[i], 1, 1);
+	curlCommon(hnd[i], 0, 1); /* no redirects when checking existence  */
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
 	if (!cacheOK)
 	    curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
@@ -486,6 +486,8 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
 	curl_easy_setopt(hnd[i], CURLOPT_NOBODY, 0L);
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
+	curl_easy_setopt(hnd[i], CURLOPT_FOLLOWLOCATION, 1L);
+	curl_easy_setopt(hnd[i], CURLOPT_MAXREDIRS, 20L);
 
 	total = 0.;
 	if (!quiet && nurls <= 1) {
