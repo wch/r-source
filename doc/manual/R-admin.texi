@@ -5349,7 +5349,13 @@ If using @command{gcc}, ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.  
+one version of Solaris on a later version.  Note that this can even
+apply to OS patches: some 2016 patches to Solaris 10 changed its C
+header files in way incompatible@footnote{In particular, header
+@file{cmath} in C++11 mode includes @file{math.h} and
+@file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
+of the latter.}  with the modified versions included with OpenCSW's
+binary distribution.
 
 The notes here are for @command{gcc} set up to use the Solaris linker:
 it can also be set up to use GNU @command{ld}, but that has not been
