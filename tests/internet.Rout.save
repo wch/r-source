@@ -1,5 +1,5 @@
 
-R version 3.3.2 Patched (2016-12-10 r71781) -- "Sincere Pumpkin Patch"
+R version 3.3.2 Patched (2016-12-18 r71815) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 9692
+[1] 9722
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")

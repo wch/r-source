@@ -1,5 +1,5 @@
 
-R version 3.3.2 Patched (2016-12-10 r71781) -- "Sincere Pumpkin Patch"
+R version 3.3.2 Patched (2016-12-18 r71815) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.152   0.011   0.152 
+  0.157   0.014   0.159 
