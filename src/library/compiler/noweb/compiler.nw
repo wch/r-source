@@ -3448,7 +3448,8 @@ cmpSimpleInternal <- function(e, cb, cntxt) {
 safeBaseInternals <- c("atan2", "besselY", "beta", "choose",
                        "drop", "inherits", "is.vector", "lbeta", "lchoose",
                        "nchar", "polyroot", "typeof", "vector", "which.max",
-                       "which.min", "is.loaded", "identical")
+                       "which.min", "is.loaded", "identical",
+                       "match", "rep.int", "rep_len")
 
 for (i in safeBaseInternals) setInlineHandler(i,  cmpSimpleInternal)
 @ %def safeBaseInternals
