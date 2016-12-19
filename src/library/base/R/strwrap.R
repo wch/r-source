@@ -33,22 +33,15 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
     exdentString <- strrep(" ", exdent)
     y <- list()                         # return value
 
-    ## Canonicalize invalid input:
-    if(any(ind <- !validEnc(x))) x[ind] <- NA_character_
-    ## Alternatively, could use iconv(x[ind], sub = "byte").
-
-    ## UB <- TRUE
-    ## ## input need not be valid in this locale, e.g. from write.dcf
-    ## ## but if x has UTF-8 encoding we want to preserve it, so
-    ## if(all(Encoding(x) == "UTF-8")) UB <- FALSE
-    ## else {
-    ##     ## Let's convert anything else with a marked encoding
-    ##     ## to the current locale
-    ##     enc <- Encoding(x) %in% c("latin1", "UTF-8")
-    ##     if(length(enc)) x[enc] <- enc2native(x[enc])
-    ## }
-    ## z <- lapply(strsplit(x, "\n[ \t\n]*\n", perl = TRUE, useBytes = UB),
-    ##             strsplit, "[ \t\n]", perl = TRUE, useBytes = UB)
+    ## We use strsplit() to tokenize input into paras and words, and
+    ## hence need to tweak how it handles/transforms encodings.  To
+    ## preserve encodings, it seems "best" to canonicalize to UTF-8
+    ## (ensuring valid UTF-8), and at the end convert back to latin1
+    ## where we originally had latin1.
+    enc <- Encoding(x)
+    x <- enc2utf8(x)
+    if(any(ind <- !validEnc(x)))
+        x[ind] <- iconv(x[ind], "UTF-8", "UTF-8", sub = "byte")
 
     z <- lapply(strsplit(x, "\n[ \t\n]*\n", perl = TRUE),
                 strsplit, "[ \t\n]", perl = TRUE)
@@ -144,6 +137,18 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             c(y, list(yi[-length(yi)]))
         else
             c(y, "")
+    }
+
+    if(length(pos <- which(enc == "latin1"))) {
+        y[pos] <-
+            lapply(y[pos],
+                   function(s) {
+                       e <- Encoding(s)
+                       if(length(p <- which(e == "UTF-8")))
+                           s[p] <- iconv(s[p], "UTF-8", "latin1",
+                                         sub = "byte")
+                       s
+                   })
     }
 
     if(simplify) y <- as.character(unlist(y))

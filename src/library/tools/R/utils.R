@@ -614,6 +614,16 @@ function(txt)
     txt
 }
 
+### ** .enc2latin1
+
+.enc2latin1 <-
+function(x)
+{
+    if(length(pos <- which(Encoding(x) == "UTF-8")))
+        x[pos] <- iconv(x[pos], "UTF-8", "latin1", sub = "byte")
+    x
+}
+
 ### ** .eval_with_capture
 
 .eval_with_capture <-
@@ -1779,15 +1789,17 @@ function(x)
     y <- character()
     if(!is.na(aar <- x["Authors@R"])) {
         aar <- utils:::.read_authors_at_R_field(aar)
+        lat <- identical(enc, "latin1")
         if(is.na(x["Author"])) {
             tmp <- utils:::.format_authors_at_R_field_for_author(aar)
-            ## uses strwrap, so will be in current locale
-            if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
+            if(lat) tmp <- .enc2latin1(tmp)
             y["Author"] <- tmp
         }
-        if(is.na(x["Maintainer"]))
-            y["Maintainer"] <-
-                utils:::.format_authors_at_R_field_for_maintainer(aar)
+        if(is.na(x["Maintainer"])) {
+            tmp <- utils:::.format_authors_at_R_field_for_maintainer(aar)
+            if(lat) tmp <- .enc2latin1(tmp)
+            y["Maintainer"] <- tmp
+        }
     }
     y
 }

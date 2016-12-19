@@ -687,20 +687,12 @@ setRlibs <-
             if(check_incoming && any(!is.na(yorig))) {
                 enc <- db["Encoding"]
                 aar <- utils:::.read_authors_at_R_field(aar)
-                tmp <- utils:::.format_authors_at_R_field_for_author(aar)
-                ## <FIXME>
-                ## ## uses strwrap, so will be in current locale
-                ## if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
-                ## </FIXME>
-                y <- c(Author = tmp,
+                y <- c(Author =
+                       utils:::.format_authors_at_R_field_for_author(aar),
                        Maintainer =
                        utils:::.format_authors_at_R_field_for_maintainer(aar))
                 ## ignore formatting as far as possible
-                clean_up <- function(x) {
-                    x <- gsub("[[:space:]]+", " ", x)
-                    x <- sub("^[[:space:]]+", " ", x)
-                    sub("^[[:space:]]+$", " ", x)
-                }
+                clean_up <- function(x) trimws(gsub("[[:space:]]+", " ", x))
                 yorig <- sapply(yorig, clean_up)
                 y <- sapply(y, clean_up)
                 diff <- y != yorig
