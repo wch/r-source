@@ -727,7 +727,12 @@ function(log, drop_ok = TRUE)
     rqa <- "'|\xe2\x80\x99"
     ## Group when used ...
 
-    drop_ok_status_tags <- c("OK", "NONE", "SKIPPED")
+    if(is.character(drop_ok)) {
+        drop_ok_status_tags <- drop_ok
+        drop_ok <- TRUE
+    } else {
+        drop_ok_status_tags <- c("OK", "NONE", "SKIPPED")
+    }
 
     ## Start by reading in.
     lines <- read_check_log(log)

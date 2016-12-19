@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-12-19 r71815) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-12-19 r71817) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,6 +23,1192 @@ Type 'q()' to quit R.
 > library('tools')
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CRANtools")
+> ### * CRANtools
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CRANtools
+> ### Title: CRAN Package Repository Tools
+> ### Aliases: CRAN_package_db CRAN_check_results CRAN_check_details
+> ###   CRAN_memtest_notes summarize_CRAN_check_status
+> 
+> ### ** Examples
+> 
+> ## IGNORE_RDIFF_BEGIN
+> pdb <- CRAN_package_db()
+> dim(pdb)
+[1] 9731   65
+> ## DESCRIPTION fields included:
+> colnames(pdb)
+ [1] "Package"                 "Version"                
+ [3] "Priority"                "Depends"                
+ [5] "Imports"                 "LinkingTo"              
+ [7] "Suggests"                "Enhances"               
+ [9] "License"                 "License_is_FOSS"        
+[11] "License_restricts_use"   "OS_type"                
+[13] "Archs"                   "MD5sum"                 
+[15] "NeedsCompilation"        "Additional_repositories"
+[17] "Author"                  "Authors@R"              
+[19] "Biarch"                  "BugReports"             
+[21] "BuildKeepEmpty"          "BuildManual"            
+[23] "BuildResaveData"         "BuildVignettes"         
+[25] "Built"                   "ByteCompile"            
+[27] "Classification/ACM"      "Classification/ACM-2012"
+[29] "Classification/JEL"      "Classification/MSC"     
+[31] "Classification/MSC-2010" "Collate"                
+[33] "Collate.unix"            "Collate.windows"        
+[35] "Contact"                 "Copyright"              
+[37] "Date"                    "Description"            
+[39] "Encoding"                "KeepSource"             
+[41] "Language"                "LazyData"               
+[43] "LazyDataCompression"     "LazyLoad"               
+[45] "MailingList"             "Maintainer"             
+[47] "Note"                    "Packaged"               
+[49] "RdMacros"                "SysDataCompression"     
+[51] "SystemRequirements"      "Title"                  
+[53] "Type"                    "URL"                    
+[55] "VignetteBuilder"         "ZipData"                
+[57] "Published"               "Path"                   
+[59] "X-CRAN-Comment"          "Reverse depends"        
+[61] "Reverse imports"         "Reverse linking to"     
+[63] "Reverse suggests"        "Reverse enhances"       
+[65] "MD5sum"                 
+> ## Summarize publication dates:
+> summary(as.Date(pdb$Published))
+        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2005-10-29" "2014-09-14" "2015-12-30" "2015-06-30" "2016-08-24" "2016-12-19" 
+> ## Summarize numbers of packages according to maintainer:
+> summary(lengths(split(pdb$Package, pdb$Maintainer)))
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00    1.00    1.00    1.64    2.00   59.00 
+> ## Packages with 'LASSO' in their Description:
+> pdb$Package[grepl("LASSO", pdb$Description)]
+ [1] "apple"           "CovSelHigh"      "crrp"            "ExactPath"      
+ [5] "expandFunctions" "extlasso"        "FeaLect"         "FindIt"         
+ [9] "glmvsd"          "graphicalVAR"    "ISBF"            "milr"           
+[13] "mpath"           "MVB"             "nets"            "pass"           
+[17] "polywog"         "ppmlasso"        "rqPen"           "SparseLearner"  
+[21] "stR"            
+> 
+> results <- CRAN_check_results()
+> ## Available variables:
+> names(results)
+ [1] "Flavor"     "Package"    "Version"    "Priority"   "Maintainer"
+ [6] "Status"     "Flags"      "T_install"  "T_check"    "T_total"   
+> ## Tabulate overall check status according to flavor:
+> with(results, table(Flavor, Status))
+                                   Status
+Flavor                              ERROR FAIL NOTE   OK WARN
+  r-devel-linux-x86_64-debian-clang    78    0 3390 6090  152
+  r-devel-linux-x86_64-debian-gcc      79    0 3387 6115  140
+  r-devel-linux-x86_64-fedora-clang    78    0 3867 5616  149
+  r-devel-linux-x86_64-fedora-gcc      72    0 3915 5583  142
+  r-devel-macos-x86_64-clang           82    0 3704 5738  155
+  r-devel-windows-ix86+x86_64         117    7 3463 5794  287
+  r-patched-linux-x86_64               57    0 3444 6169   46
+  r-patched-solaris-sparc             219    1 3747 5495  121
+  r-patched-solaris-x86               199    0 3746 5555  113
+  r-release-linux-x86_64               47    1 3450 6162   46
+  r-release-osx-x86_64-mavericks      193   11 3784 5368  367
+  r-release-windows-ix86+x86_64        92    6 3551 5985   52
+  r-oldrel-windows-ix86+x86_64        142    3 2219 7134   47
+> 
+> details <- CRAN_check_details()
+> ## Available variables:
+> names(details)
+[1] "Package" "Version" "Flavor"  "Check"   "Status"  "Output"  "Flags"  
+> ## Tabulate checks according to their status:
+> tab <- with(details, table(Check, Status))
+> ## Inspect some installation problems:
+> bad <- subset(details,
++               ((Check == "whether package can be installed") &
++                (Status != "OK")))
+> head(bad[sample(seq_len(NROW(bad)), NROW(bad)), ])
+Package: spanr 1.0
+Flavor: r-devel-linux-x86_64-fedora-gcc
+Flags: --no-stop-on-test-error
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: GNU Extension: Different type kinds at (1)
+  See ‘/data/gannet/ripley/R/packages/tests-devel/spanr.Rcheck/00install.out’ for details.
+
+Package: BonEV 1.0
+Flavor: r-devel-windows-ix86+x86_64
+Check: whether package can be installed, Result: ERROR
+  Installation failed.
+  See 'd:/Rcompile/CRANpkg/local/3.4/BonEV.Rcheck/00install.out' for details.
+
+Package: MultiBD 0.2.0
+Flavor: r-patched-solaris-x86
+Check: whether package can be installed, Result: ERROR
+  Installation failed.
+  See ‘/home/ripley/R/packages/tests32/MultiBD.Rcheck/00install.out’ for details.
+
+Package: RSAP 0.9
+Flavor: r-release-windows-ix86+x86_64
+Check: whether package can be installed, Result: ERROR
+  Installation failed.
+  See 'd:/Rcompile/CRANpkg/local/3.3new/RSAP.Rcheck/00install.out' for details.
+
+Package: smint 0.4.2
+Flavor: r-devel-linux-x86_64-fedora-clang
+Flags: --no-stop-on-test-error
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: GNU Extension: Symbol ‘ntt’ is used before it is typed at (1)
+  See ‘/data/gannet/ripley/R/packages/tests-clang/smint.Rcheck/00install.out’ for details.
+
+Package: RADami 1.0-3
+Flavor: r-release-windows-ix86+x86_64
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: replacing previous import 'ape::complement' by 'Biostrings::complement' when loading 'RADami'
+  See 'd:/Rcompile/CRANpkg/local/3.3/RADami.Rcheck/00install.out' for details.
+> 
+> mtnotes <- CRAN_memtest_notes()
+> head(mtnotes)
+$alineR
+     Test       Path            
+[1,] "valgrind" "alineR-Ex.Rout"
+
+$`ASAN-history`
+     Test   Path          
+[1,] "Keep" "ASAN-history"
+
+$audio
+     Test       Path           
+[1,] "valgrind" "audio-Ex.Rout"
+
+$BASIX
+     Test          Path           
+[1,] "clang-UBSAN" "BASIX-Ex.Rout"
+
+$BayesSingleSub
+     Test          Path                    
+[1,] "clang-UBSAN" "BayesSingleSub"        
+[2,] "clang-UBSAN" "BayesSingleSub-Ex.Rout"
+[3,] "gcc6-UBSAN"  "BayesSingleSub"        
+[4,] "gcc6-UBSAN"  "BayesSingleSub-Ex.Rout"
+[5,] "gcc7-UBSAN"  "BayesSingleSub"        
+[6,] "gcc7-UBSAN"  "BayesSingleSub-Ex.Rout"
+
+$BayesXsrc
+     Test          Path               
+[1,] "clang-ASAN"  "BayesXsrc"        
+[2,] "clang-UBSAN" "BayesXsrc-Ex.Rout"
+[3,] "gcc6-ASAN"   "BayesXsrc"        
+[4,] "gcc6-UBSAN"  "BayesXsrc-Ex.Rout"
+[5,] "gcc7-ASAN"   "BayesXsrc"        
+[6,] "gcc7-UBSAN"  "BayesXsrc-Ex.Rout"
+
+> ## Show counts of issues according to test:
+> table(do.call(rbind, mtnotes)[, "Test"])
+
+       Keep  clang-ASAN clang-UBSAN   gcc6-ASAN  gcc6-UBSAN   gcc7-ASAN 
+          4          37         114          27          70          26 
+ gcc7-UBSAN    valgrind 
+         69         132 
+> 
+> ## Summarize CRAN check status for 10 random packages
+> ## (reusing the information already read in):
+> pos <- sample(seq_len(NROW(pdb)), 10L)
+> summarize_CRAN_check_status(pdb[pos, "Package"],
++                             results, details, mtnotes)
+Package: tdROC
+**************
+
+Current CRAN status: OK: 13
+See: <https://CRAN.R-project.org/web/checks/check_results_tdROC.html>
+
+Package: bbo
+************
+
+Current CRAN status: NOTE: 12, OK: 1
+See: <https://CRAN.R-project.org/web/checks/check_results_bbo.html>
+
+Version: 0.2
+Check: R code for possible problems, Result: NOTE
+  bbo: no visible global function definition for ‘runif’
+  bbo: no visible global function definition for ‘tail’
+  plot.bbo: no visible global function definition for ‘plot’
+  Undefined global functions or variables:
+    plot runif tail
+  Consider adding
+    importFrom("graphics", "plot")
+    importFrom("stats", "runif")
+    importFrom("utils", "tail")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/bbo-00check.html>
+
+Version: 0.2
+Flags: --no-stop-on-test-error
+Check: R code for possible problems, Result: NOTE
+  bbo: no visible global function definition for ‘runif’
+  bbo: no visible global function definition for ‘tail’
+  plot.bbo: no visible global function definition for ‘plot’
+  Undefined global functions or variables:
+    plot runif tail
+  Consider adding
+    importFrom("graphics", "plot")
+    importFrom("stats", "runif")
+    importFrom("utils", "tail")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/bbo-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/bbo-00check.html>
+
+Package: isopam
+***************
+
+Current CRAN status: NOTE: 13
+See: <https://CRAN.R-project.org/web/checks/check_results_isopam.html>
+
+Version: 0.9-13
+Check: dependencies in R code, Result: NOTE
+  'library' or 'require' call to ‘proxy’ in package code.
+    Please use :: or requireNamespace() instead.
+    See section 'Suggested packages' in the 'Writing R Extensions' manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/isopam-00check.html>
+
+Version: 0.9-13
+Check: R code for possible problems, Result: NOTE
+  isopam : core: no visible global function definition for ‘dist’
+  isopam : core: no visible global function definition for ‘write.table’
+  isopam : core: no visible global function definition for ‘as.dist’
+  isopam : core: no visible global function definition for
+    ‘txtProgressBar’
+  isopam : core: no visible global function definition for
+    ‘setTxtProgressBar’
+  isopam : core: no visible global function definition for ‘aggregate’
+  isopam: no visible binding for global variable ‘var’
+  isopam: no visible global function definition for ‘na.omit’
+  isopam: no visible global function definition for ‘write.table’
+  isopam: no visible global function definition for ‘bmp’
+  isopam: no visible global function definition for ‘dev.off’
+  isotab: no visible global function definition for ‘aggregate’
+  isotab : fshtest: no visible global function definition for ‘dhyper’
+  isotab : fshtest : pnhyper: no visible global function definition for
+    ‘phyper’
+  Undefined global functions or variables:
+    aggregate as.dist bmp dev.off dhyper dist na.omit phyper
+    setTxtProgressBar txtProgressBar var write.table
+  Consider adding
+    importFrom("grDevices", "bmp", "dev.off")
+    importFrom("stats", "aggregate", "as.dist", "dhyper", "dist",
+               "na.omit", "phyper", "var")
+    importFrom("utils", "setTxtProgressBar", "txtProgressBar",
+               "write.table")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/isopam-00check.html>
+
+Version: 0.9-13
+Flags: --no-stop-on-test-error
+Check: dependencies in R code, Result: NOTE
+  'library' or 'require' call to ‘proxy’ in package code.
+    Please use :: or requireNamespace() instead.
+    See section 'Suggested packages' in the 'Writing R Extensions' manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/isopam-00check.html>
+
+Version: 0.9-13
+Flags: --no-stop-on-test-error
+Check: R code for possible problems, Result: NOTE
+  isopam : core: no visible global function definition for ‘dist’
+  isopam : core: no visible global function definition for ‘write.table’
+  isopam : core: no visible global function definition for ‘as.dist’
+  isopam : core: no visible global function definition for
+    ‘txtProgressBar’
+  isopam : core: no visible global function definition for
+    ‘setTxtProgressBar’
+  isopam : core: no visible global function definition for ‘aggregate’
+  isopam: no visible binding for global variable ‘var’
+  isopam: no visible global function definition for ‘na.omit’
+  isopam: no visible global function definition for ‘write.table’
+  isopam: no visible global function definition for ‘bmp’
+  isopam: no visible global function definition for ‘dev.off’
+  isotab: no visible global function definition for ‘aggregate’
+  isotab : fshtest: no visible global function definition for ‘dhyper’
+  isotab : fshtest : pnhyper: no visible global function definition for
+    ‘phyper’
+  Undefined global functions or variables:
+    aggregate as.dist bmp dev.off dhyper dist na.omit phyper
+    setTxtProgressBar txtProgressBar var write.table
+  Consider adding
+    importFrom("grDevices", "bmp", "dev.off")
+    importFrom("stats", "aggregate", "as.dist", "dhyper", "dist",
+               "na.omit", "phyper", "var")
+    importFrom("utils", "setTxtProgressBar", "txtProgressBar",
+               "write.table")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/isopam-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/isopam-00check.html>
+
+Package: LncPath
+****************
+
+Current CRAN status: OK: 13
+See: <https://CRAN.R-project.org/web/checks/check_results_LncPath.html>
+
+Package: janeaustenr
+********************
+
+Current CRAN status: NOTE: 7, OK: 6
+See: <https://CRAN.R-project.org/web/checks/check_results_janeaustenr.html>
+
+Version: 0.1.4
+Flags: --no-stop-on-test-error
+Check: data for non-ASCII characters, Result: NOTE
+    Note: found 1 marked UTF-8 string
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/janeaustenr-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/janeaustenr-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/janeaustenr-00check.html>
+
+Version: 0.1.4
+Check: data for non-ASCII characters, Result: NOTE
+    Note: found 1 marked UTF-8 string
+See: <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/janeaustenr-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/janeaustenr-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/janeaustenr-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/janeaustenr-00check.html>
+
+Package: psych
+**************
+
+Current CRAN status: OK: 13
+See: <https://CRAN.R-project.org/web/checks/check_results_psych.html>
+
+Package: RMC
+************
+
+Current CRAN status: NOTE: 13
+See: <https://CRAN.R-project.org/web/checks/check_results_RMC.html>
+
+Version: 0.2
+Check: R code for possible problems, Result: NOTE
+  .onLoad: warning in dir(dll.path, pattern = this.ext, full = FALSE):
+    partial argument match of ‘full’ to ‘full.names’
+  diagnos.envel: warning in apply(jumpDistRes, MARG = 2, FUN = quantile,
+    probs = perc[1], na.rm = TRUE): partial argument match of ‘MARG’ to
+    ‘MARGIN’
+  diagnos.envel: warning in apply(jumpDistRes, MARG = 2, FUN = quantile,
+    probs = perc[2], na.rm = TRUE): partial argument match of ‘MARG’ to
+    ‘MARGIN’
+  diagnos.envel: no visible global function definition for ‘quantile’
+  diagnos.envel: no visible global function definition for ‘qnorm’
+  diagnos.envel: no visible binding for global variable ‘quantile’
+  hrplot: no visible global function definition for ‘plot’
+  hrplot: no visible global function definition for ‘lines’
+  hrplot: no visible global function definition for ‘abline’
+  hrplot: no visible global function definition for ‘text’
+  sim.chain: no visible global function definition for ‘rnorm’
+  simRandWalk: no visible global function definition for ‘rnorm’
+  Undefined global functions or variables:
+    abline lines plot qnorm quantile rnorm text
+  Consider adding
+    importFrom("graphics", "abline", "lines", "plot", "text")
+    importFrom("stats", "qnorm", "quantile", "rnorm")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/RMC-00check.html>
+
+Version: 0.2
+Check: Rd line widths, Result: NOTE
+  Rd file 'MVfill.Rd':
+    \examples lines wider than 100 characters:
+       imputedData <- MVfill( fm.est2.NA, states=dataEG2.NA[,2], chain.id=dataEG2.NA[,1], X=dataEG2.NA[,3:4])
+  
+  Rd file 'RMC.mod.Rd':
+    \usage lines wider than 90 characters:
+       RMC.mod( states, chain.id=NULL, X=NULL, phi.id=NULL, pi.id=NULL, vcov=FALSE, inits=NULL, contr=list( maxit=1000, epsg=1e-8, epsf=1e-8,  ... [TRUNCATED]
+  
+  Rd file 'RMC.pred.Rd':
+    \examples lines wider than 100 characters:
+       fm.est1 <- RMC.mod( states=dataEG2[,2], chain.id=dataEG2[,1], X=dataEG2[,3:4], vcov=TRUE)       #estimate the model
+       n.cats1 <- fm.est1$stuff$n.cats; n.cats2 <- 5; n.covars <- 2; n.covars2 <- n.covars*n.cats1 + n.covars
+       #specify parameter values, note that parameterisation gives state 1 as a reference state for all categories. This is for convenience on ... [TRUNCATED]
+       gamma <- matrix( rnorm( n.covars2*n.cats2, sd=0.5), nrow=n.covars2, ncol=n.cats2)       #initial design matrix
+       chains2 <- sim.chain( n.chains=5, n.obs=rep( 1000, 5), n.cats=n.cats2, n.covars=n.covars2, beta=beta, gamma=gamma, X=X2)        #simula ... [TRUNCATED]
+       my.pi.id <- apply( beta, FUN=function(x){if( any( x!=0)) 1 else 0}, MARG=1)     #model controlling matrix
+       fm.est2 <- RMC.mod( states=chains2[,2], chain.id=chains2[,1], X=X2, phi.id=my.phi.id, pi.id=my.pi.id, vcov=TRUE)        #estimate the m ... [TRUNCATED]
+       tmp <- cbind( table( chains2[,"state"]) / nrow( chains2), pred2cond$area, sqrt( diag( pred2cond$vcov)), pred2marg$area, sqrt( diag( pre ... [TRUNCATED]
+       colnames( tmp) <- c("observed","conditional prediction", "conditional se", "marginal prediction", "marginal se")
+  
+  Rd file 'diagnos.Rd':
+    \usage lines wider than 90 characters:
+       diagnos.envel( obs.states, chain.id, X=NULL, fit, perc=c( 0.025, 0.975), B=100, contr=list( print.iter=50))
+  
+  Rd file 'examplesForDiagnostics.Rd':
+    \examples lines wider than 100 characters:
+       B<-50   #number of simulations for simulated envelopes. The paper uses 1000 but this can be pretty slow
+       chain <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=1, beta=c(0,0.3,-0.3,0), gamma=c(0.5,0.2,1,0))
+       plot( 1:m, head( chain[chain[,"chain"]==2,"state"],m), type='b', pch=19, main="Start of Example Chain", ylab="State", xlab="Index", axe ... [TRUNCATED]
+       temp.est <- diagnos.envel( obs.states=chain[,2], chain.id=chain[,1], X=chain[,3,drop=FALSE], fit=fm.est, B=B)
+       hrplot( temp.est[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Example Data, state 2" ... [TRUNCATED]
+       hrplot( temp.est[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Example Data, state 3" ... [TRUNCATED]
+       hrplot( temp.est$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Example Data", pch=20)
+       gpar <- matrix( c( c( -0.6, 0), c( 1.1, 1.5), c( 0.2, 0), c( -1.25, -1.5)), nrow=n.covs, ncol=n.cats)
+       bpar <- matrix( c( rep( 0, n.covs), c( -0.9, 0.5), c( 0.8, -0.4), c( -0.4, -0.7)), nrow=n.covs, ncol=n.cats)
+       chain.ns <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=n.covs, beta=bpar, gamma=gpar, X=X)
+       fm.est1 <- RMC.mod( states=chain.ns[,2], chain.id=chain.ns[,1], X=chain.ns[,3:4], phi.id=my.phi.id, pi.id=my.pi.id)
+       temp1 <- diagnos.envel( chain.id=chain.ns[,1], obs.states=chain.ns[,2], X=chain.ns[,3:4], fit=fm.est1, B=B)
+       hrplot( temp1[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Non-Stationary Data, stat ... [TRUNCATED]
+       hrplot( temp1[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Non-Stationary Data, stat ... [TRUNCATED]
+       hrplot( temp1$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Non-Stationary Data", pch=20)
+       chain.orig <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=1, beta=c(0,0.3,-0.3,0), gamma=c(0.5,0.2,1,0))
+       temp1 <- diagnos.envel( chain.id=chain1[,1], obs.state=chain1[,2], X=chain1[,3,drop=FALSE], fm1, B=B)
+       temp2 <- diagnos.envel( chain.id=chain2[,1], obs.state=chain2[,2], X=chain2[,3,drop=FALSE], fm2, B=B)
+       hrplot( temp1[["patch"]][[3]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Data with Patch Outlier", pch= ... [TRUNCATED]
+       hrplot( temp2$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Data with Repetition Outlier", pch ... [TRUNCATED]
+       gpar <- matrix( c( c( -0.6, 0), c( 1.1, 1.5), c( 0.2, 0), c( -1.25, -1.5)), nrow=n.covs, ncol=n.cats)
+       bpar <- matrix( c( rep( 0, n.covs), c( -0.9, 0.5), c( 0.8, -0.4), c( -0.4, -0.7)), nrow=n.covs, ncol=n.cats)
+       chain <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=n.covs, beta=bpar, gamma=gpar, X=X)
+       fm.est1 <- RMC.mod( states=chain[,2], chain.id=chain[,1], X=chain[,3:4], phi.id=my.phi.id, pi.id=my.pi.id)
+       temp <- diagnos.envel( chain.id=chain[,1], obs.states=chain[,2], X=chain[,3,drop=FALSE], fit=fm.est, B=B)
+       temp1 <- diagnos.envel( chain.id=chain[,1], obs.states=chain[,2], X=chain[,-(1:2)], fit=fm.est1, B=B)
+       hrplot( temp[["patch"]][[my.set[1]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Mean Only Model", pch=2 ... [TRUNCATED]
+       hrplot( temp[["patch"]][[my.set[2]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Mean Only Model", pch=2 ... [TRUNCATED]
+       hrplot( temp$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Mean Only Model", pch=20)
+       hrplot( temp1[["patch"]][[my.set[1]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Correct Model", pch=20 ... [TRUNCATED]
+       hrplot( temp1[["patch"]][[my.set[2]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Correct Model", pch=20 ... [TRUNCATED]
+       hrplot( temp1$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Correct Model", pch=20)
+  
+  Rd file 'hrplot.Rd':
+    \examples lines wider than 100 characters:
+       temp.est <- diagnos.envel( obs.states=dataEG1[,2], chain.id=dataEG1[,1], X=dataEG1[,3,drop=FALSE], fit=fm.est, B=B)
+       hrplot( temp.est[["patch"]][[2]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Stationary Data", pch=20)
+       hrplot( temp.est$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Stationary Data", pch=20)
+  
+  Rd file 'sim.chain.Rd':
+    \usage lines wider than 90 characters:
+       sim.chain( n.chains = 5, n.obs = rep( 100, n.chains), n.cats = 3, n.covars = 1, beta = NULL, gamma = NULL, X = NULL)
+    \examples lines wider than 100 characters:
+       #simulate 3 chains with 4 states of length 1500. There is one (constant) covariate. The beta parameters are for the pi probabilities an ... [TRUNCATED]
+       chain <- sim.chain( n.chains=3, n.obs=rep( 1500, 3), n.cats=4, n.covars=1, beta=c(0,0.3,-0.3,0), gamma=c(0.5,0.2,1,0))
+        plot( 1:100, tmpDat[1:100,"state"], main=paste( "Chain", ii), ylab="State", xlab="Index", type='b', pch=20)
+  
+  Rd file 'simRandWalk.Rd':
+    \examples lines wider than 100 characters:
+       plot( 1:ni[1], simDat[1:ni[1],2], type='b', pch=20, ylab="Random Variable", xlab="Index", main="Chain 1")
+       plot( 1:ni[2], simDat[ni[1]+1:ni[2],2], type='b', pch=20, ylab="Random Variable", xlab="Index", main="Chain 2")
+       plot( 1:ni[3], simDat[sum(ni[1:2])+1:ni[3],2], type='b', pch=20, ylab="Random Variable", xlab="Index", main="Chain 3")
+  
+  These lines will be truncated in the PDF manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/RMC-00check.html>
+
+Version: 0.2
+Check: compiled code, Result: NOTE
+  File ‘RMC/libs/RMC.so’:
+    Found ‘_ZSt4cout’, possibly from ‘std::cout’ (C++)
+      Objects: ‘RMC.o’, ‘predict.o’
+    Found ‘rand’, possibly from ‘rand’ (C)
+      Object: ‘ap.o’
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/RMC-00check.html>
+
+Version: 0.2
+Flags: --no-stop-on-test-error
+Check: R code for possible problems, Result: NOTE
+  .onLoad: warning in dir(dll.path, pattern = this.ext, full = FALSE):
+    partial argument match of 'full' to 'full.names'
+  diagnos.envel: warning in apply(jumpDistRes, MARG = 2, FUN = quantile,
+    probs = perc[1], na.rm = TRUE): partial argument match of 'MARG' to
+    'MARGIN'
+  diagnos.envel: warning in apply(jumpDistRes, MARG = 2, FUN = quantile,
+    probs = perc[2], na.rm = TRUE): partial argument match of 'MARG' to
+    'MARGIN'
+  diagnos.envel: no visible global function definition for ‘quantile’
+  diagnos.envel: no visible global function definition for ‘qnorm’
+  diagnos.envel: no visible binding for global variable ‘quantile’
+  hrplot: no visible global function definition for ‘plot’
+  hrplot: no visible global function definition for ‘lines’
+  hrplot: no visible global function definition for ‘abline’
+  hrplot: no visible global function definition for ‘text’
+  sim.chain: no visible global function definition for ‘rnorm’
+  simRandWalk: no visible global function definition for ‘rnorm’
+  Undefined global functions or variables:
+    abline lines plot qnorm quantile rnorm text
+  Consider adding
+    importFrom("graphics", "abline", "lines", "plot", "text")
+    importFrom("stats", "qnorm", "quantile", "rnorm")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/RMC-00check.html>
+
+Version: 0.2
+Flags: --no-stop-on-test-error
+Check: Rd line widths, Result: NOTE
+  Rd file 'MVfill.Rd':
+    \examples lines wider than 100 characters:
+       imputedData <- MVfill( fm.est2.NA, states=dataEG2.NA[,2], chain.id=dataEG2.NA[,1], X=dataEG2.NA[,3:4])
+  
+  Rd file 'RMC.mod.Rd':
+    \usage lines wider than 90 characters:
+       RMC.mod( states, chain.id=NULL, X=NULL, phi.id=NULL, pi.id=NULL, vcov=FALSE, inits=NULL, contr=list( maxit=1000, epsg=1e-8, epsf=1e-8,  ... [TRUNCATED]
+  
+  Rd file 'RMC.pred.Rd':
+    \examples lines wider than 100 characters:
+       fm.est1 <- RMC.mod( states=dataEG2[,2], chain.id=dataEG2[,1], X=dataEG2[,3:4], vcov=TRUE)       #estimate the model
+       n.cats1 <- fm.est1$stuff$n.cats; n.cats2 <- 5; n.covars <- 2; n.covars2 <- n.covars*n.cats1 + n.covars
+       #specify parameter values, note that parameterisation gives state 1 as a reference state for all categories. This is for convenience on ... [TRUNCATED]
+       gamma <- matrix( rnorm( n.covars2*n.cats2, sd=0.5), nrow=n.covars2, ncol=n.cats2)       #initial design matrix
+       chains2 <- sim.chain( n.chains=5, n.obs=rep( 1000, 5), n.cats=n.cats2, n.covars=n.covars2, beta=beta, gamma=gamma, X=X2)        #simula ... [TRUNCATED]
+       my.pi.id <- apply( beta, FUN=function(x){if( any( x!=0)) 1 else 0}, MARG=1)     #model controlling matrix
+       fm.est2 <- RMC.mod( states=chains2[,2], chain.id=chains2[,1], X=X2, phi.id=my.phi.id, pi.id=my.pi.id, vcov=TRUE)        #estimate the m ... [TRUNCATED]
+       tmp <- cbind( table( chains2[,"state"]) / nrow( chains2), pred2cond$area, sqrt( diag( pred2cond$vcov)), pred2marg$area, sqrt( diag( pre ... [TRUNCATED]
+       colnames( tmp) <- c("observed","conditional prediction", "conditional se", "marginal prediction", "marginal se")
+  
+  Rd file 'diagnos.Rd':
+    \usage lines wider than 90 characters:
+       diagnos.envel( obs.states, chain.id, X=NULL, fit, perc=c( 0.025, 0.975), B=100, contr=list( print.iter=50))
+  
+  Rd file 'examplesForDiagnostics.Rd':
+    \examples lines wider than 100 characters:
+       B<-50   #number of simulations for simulated envelopes. The paper uses 1000 but this can be pretty slow
+       chain <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=1, beta=c(0,0.3,-0.3,0), gamma=c(0.5,0.2,1,0))
+       plot( 1:m, head( chain[chain[,"chain"]==2,"state"],m), type='b', pch=19, main="Start of Example Chain", ylab="State", xlab="Index", axe ... [TRUNCATED]
+       temp.est <- diagnos.envel( obs.states=chain[,2], chain.id=chain[,1], X=chain[,3,drop=FALSE], fit=fm.est, B=B)
+       hrplot( temp.est[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Example Data, state 2" ... [TRUNCATED]
+       hrplot( temp.est[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Example Data, state 3" ... [TRUNCATED]
+       hrplot( temp.est$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Example Data", pch=20)
+       gpar <- matrix( c( c( -0.6, 0), c( 1.1, 1.5), c( 0.2, 0), c( -1.25, -1.5)), nrow=n.covs, ncol=n.cats)
+       bpar <- matrix( c( rep( 0, n.covs), c( -0.9, 0.5), c( 0.8, -0.4), c( -0.4, -0.7)), nrow=n.covs, ncol=n.cats)
+       chain.ns <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=n.covs, beta=bpar, gamma=gpar, X=X)
+       fm.est1 <- RMC.mod( states=chain.ns[,2], chain.id=chain.ns[,1], X=chain.ns[,3:4], phi.id=my.phi.id, pi.id=my.pi.id)
+       temp1 <- diagnos.envel( chain.id=chain.ns[,1], obs.states=chain.ns[,2], X=chain.ns[,3:4], fit=fm.est1, B=B)
+       hrplot( temp1[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Non-Stationary Data, stat ... [TRUNCATED]
+       hrplot( temp1[["patch"]][[my.cat]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Non-Stationary Data, stat ... [TRUNCATED]
+       hrplot( temp1$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Non-Stationary Data", pch=20)
+       chain.orig <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=1, beta=c(0,0.3,-0.3,0), gamma=c(0.5,0.2,1,0))
+       temp1 <- diagnos.envel( chain.id=chain1[,1], obs.state=chain1[,2], X=chain1[,3,drop=FALSE], fm1, B=B)
+       temp2 <- diagnos.envel( chain.id=chain2[,1], obs.state=chain2[,2], X=chain2[,3,drop=FALSE], fm2, B=B)
+       hrplot( temp1[["patch"]][[3]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Data with Patch Outlier", pch= ... [TRUNCATED]
+       hrplot( temp2$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Data with Repetition Outlier", pch ... [TRUNCATED]
+       gpar <- matrix( c( c( -0.6, 0), c( 1.1, 1.5), c( 0.2, 0), c( -1.25, -1.5)), nrow=n.covs, ncol=n.cats)
+       bpar <- matrix( c( rep( 0, n.covs), c( -0.9, 0.5), c( 0.8, -0.4), c( -0.4, -0.7)), nrow=n.covs, ncol=n.cats)
+       chain <- sim.chain( n.chains=nc, n.obs=rep( n, nc), n.cats=n.cats, n.covars=n.covs, beta=bpar, gamma=gpar, X=X)
+       fm.est1 <- RMC.mod( states=chain[,2], chain.id=chain[,1], X=chain[,3:4], phi.id=my.phi.id, pi.id=my.pi.id)
+       temp <- diagnos.envel( chain.id=chain[,1], obs.states=chain[,2], X=chain[,3,drop=FALSE], fit=fm.est, B=B)
+       temp1 <- diagnos.envel( chain.id=chain[,1], obs.states=chain[,2], X=chain[,-(1:2)], fit=fm.est1, B=B)
+       hrplot( temp[["patch"]][[my.set[1]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Mean Only Model", pch=2 ... [TRUNCATED]
+       hrplot( temp[["patch"]][[my.set[2]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Mean Only Model", pch=2 ... [TRUNCATED]
+       hrplot( temp$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Mean Only Model", pch=20)
+       hrplot( temp1[["patch"]][[my.set[1]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Correct Model", pch=20 ... [TRUNCATED]
+       hrplot( temp1[["patch"]][[my.set[2]]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Correct Model", pch=20 ... [TRUNCATED]
+       hrplot( temp1$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Correct Model", pch=20)
+  
+  Rd file 'hrplot.Rd':
+    \examples lines wider than 100 characters:
+       temp.est <- diagnos.envel( obs.states=dataEG1[,2], chain.id=dataEG1[,1], X=dataEG1[,3,drop=FALSE], fit=fm.est, B=B)
+       hrplot( temp.est[["patch"]][[2]], ylab="Patch Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Stationary Data", pch=20)
+       hrplot( temp.est$movement, ylab="Movement Residuals - Normal Quantiles", xlab="Normal Quantiles", main="Stationary Data", pch=20)
+  
+  Rd file 'sim.chain.Rd':
+    \usage lines wider than 90 characters:
+       sim.chain( n.chains = 5, n.obs = rep( 100, n.chains), n.cats = 3, n.covars = 1, beta = NULL, gamma = NULL, X = NULL)
+    \examples lines wider than 100 characters:
+       #simulate 3 chains with 4 states of length 1500. There is one (constant) covariate. The beta parameters are for the pi probabilities an ... [TRUNCATED]
+       chain <- sim.chain( n.chains=3, n.obs=rep( 1500, 3), n.cats=4, n.covars=1, beta=c(0,0.3,-0.3,0), gamma=c(0.5,0.2,1,0))
+        plot( 1:100, tmpDat[1:100,"state"], main=paste( "Chain", ii), ylab="State", xlab="Index", type='b', pch=20)
+  
+  Rd file 'simRandWalk.Rd':
+    \examples lines wider than 100 characters:
+       plot( 1:ni[1], simDat[1:ni[1],2], type='b', pch=20, ylab="Random Variable", xlab="Index", main="Chain 1")
+       plot( 1:ni[2], simDat[ni[1]+1:ni[2],2], type='b', pch=20, ylab="Random Variable", xlab="Index", main="Chain 2")
+       plot( 1:ni[3], simDat[sum(ni[1:2])+1:ni[3],2], type='b', pch=20, ylab="Random Variable", xlab="Index", main="Chain 3")
+  
+  These lines will be truncated in the PDF manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/RMC-00check.html>
+
+Version: 0.2
+Flags: --no-stop-on-test-error
+Check: compiled code, Result: NOTE
+  File ‘RMC/libs/RMC.so’:
+    Found ‘_ZNSt3__14coutE’, possibly from ‘std::cout’ (C++)
+      Objects: ‘RMC.o’, ‘predict.o’
+    Found ‘rand’, possibly from ‘rand’ (C)
+      Object: ‘ap.o’
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/RMC-00check.html>
+
+Version: 0.2
+Flags: --no-stop-on-test-error
+Check: compiled code, Result: NOTE
+  File ‘RMC/libs/RMC.so’:
+    Found ‘_ZSt4cout’, possibly from ‘std::cout’ (C++)
+      Objects: ‘RMC.o’, ‘predict.o’
+    Found ‘rand’, possibly from ‘rand’ (C)
+      Object: ‘ap.o’
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/RMC-00check.html>
+
+Version: 0.2
+Flags: --no-stop-on-test-error
+Check: compiled code, Result: NOTE
+  File ‘RMC/libs/RMC.so’:
+    Found ‘__ZNSt3__14coutE’, possibly from ‘std::cout’ (C++)
+      Objects: ‘RMC.o’, ‘predict.o’
+    Found ‘_rand’, possibly from ‘rand’ (C)
+      Object: ‘ap.o’
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/RMC-00check.html>
+
+Version: 0.2
+Check: compiled code, Result: NOTE
+  File ‘RMC/libs/RMC.so’:
+    Found ‘__1cDstdEcout_’, possibly from ‘std::cout’ (C++)
+      Objects: ‘RMC.o’, ‘predict.o’
+    Found ‘rand’, possibly from ‘rand’ (C)
+      Object: ‘ap.o’
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+See: <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/RMC-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/RMC-00check.html>
+
+Version: 0.2
+Check: compiled code, Result: NOTE
+  File ‘RMC/libs/RMC.so’:
+    Found ‘__ZNSt3__14coutE’, possibly from ‘std::cout’ (C++)
+      Objects: ‘RMC.o’, ‘predict.o’
+    Found ‘_rand’, possibly from ‘rand’ (C)
+      Object: ‘ap.o’
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+See: <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/RMC-00check.html>
+
+Version: 0.2
+Check: R code for possible problems, Result: NOTE
+  .onLoad: warning in dir(dll.path, pattern = this.ext, full = FALSE):
+    partial argument match of 'full' to 'full.names'
+  diagnos.envel: warning in apply(jumpDistRes, MARG = 2, FUN = quantile,
+    probs = perc[1], na.rm = TRUE): partial argument match of 'MARG' to
+    'MARGIN'
+  diagnos.envel: warning in apply(jumpDistRes, MARG = 2, FUN = quantile,
+    probs = perc[2], na.rm = TRUE): partial argument match of 'MARG' to
+    'MARGIN'
+See: <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/RMC-00check.html>
+
+Version: 0.2
+Check: compiled code, Result: NOTE
+  File 'RMC/libs/i386/RMC.dll':
+    Found '_ZSt4cout', possibly from 'std::cout' (C++)
+      Objects: 'RMC.o', 'predict.o'
+    Found 'rand', possibly from 'rand' (C)
+      Object: 'ap.o'
+  File 'RMC/libs/x64/RMC.dll':
+    Found '_ZSt4cout', possibly from 'std::cout' (C++)
+      Objects: 'RMC.o', 'predict.o'
+    Found 'rand', possibly from 'rand' (C)
+      Object: 'ap.o'
+  
+  Compiled code should not call entry points which might terminate R nor
+  write to stdout/stderr instead of to the console, nor the system RNG.
+  
+  See 'Writing portable packages' in the 'Writing R Extensions' manual.
+See: <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/RMC-00check.html>
+
+Package: SWATmodel
+******************
+
+Current CRAN status: WARN: 5, NOTE: 8
+See: <https://CRAN.R-project.org/web/checks/check_results_SWATmodel.html>
+
+Version: 0.5.9
+Check: DESCRIPTION meta-information, Result: NOTE
+  Malformed Title field: should not end in a period.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/SWATmodel-00check.html>
+
+Version: 0.5.9
+Check: R code for possible problems, Result: NOTE
+  readSWAT: no visible global function definition for ‘read.fortran’
+  runSWAT2005: no visible global function definition for ‘read.fortran’
+  runSWAT2009: no visible global function definition for ‘read.fortran’
+  runSWAT2012: no visible global function definition for ‘read.fortran’
+  Undefined global functions or variables:
+    read.fortran
+  Consider adding
+    importFrom("utils", "read.fortran")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/SWATmodel-00check.html>
+
+Version: 0.5.9
+Check: Rd line widths, Result: NOTE
+  Rd file 'build_swat_basic.Rd':
+    \examples lines wider than 100 characters:
+       build_swat_basic(dirname="test", iyr="1979", nbyr=13, wsarea=40, elev=200, declat=45, declon=-72, hist_wx=hist_wx) 
+  
+  Rd file 'readSWAT.Rd':
+    \examples lines wider than 100 characters:
+         } else { print ("You need to add your file type to this function if it is not output.sub or output.rch")}
+  
+  These lines will be truncated in the PDF manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: GNU Extension: Nonstandard type declaration REAL*8 at (1)
+    Warning: GNU Extension: Different type kinds at (1)
+    Warning: GNU Extension: initialization of common block variable ‘iset’ in DATA statement at (1)
+    Warning: GNU Extension: Variable ‘iset’ at (1) is in COMMON but only in BLOCK DATA initialization is allowed
+    Warning: GNU Extension: Missing comma at (1)
+    Warning: ‘pst_kg’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘burn_frlb’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘hi_ovr’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘harveff’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘frac_harvk’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘lai_init’ is used uninitialized in this function [-Wuninitialized]
+    Warning: CHARACTER expression will be truncated in assignment (10/13) at (1) [-Wcharacter-truncation]
+    Warning: ‘orig_tnylda’ is used uninitialized in this function [-Wuninitialized]
+    Warning: CHARACTER expression will be truncated in assignment (1/3) at (1) [-Wcharacter-truncation]
+    Warning: ‘fr_curb’ is used uninitialized in this function [-Wuninitialized]
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: installed package size, Result: NOTE
+    installed size is  7.7Mb
+    sub-directories of 1Mb or more:
+      libs   7.5Mb
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: DESCRIPTION meta-information, Result: NOTE
+  Malformed Title field: should not end in a period.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: R code for possible problems, Result: NOTE
+  readSWAT: no visible global function definition for ‘read.fortran’
+  runSWAT2005: no visible global function definition for ‘read.fortran’
+  runSWAT2009: no visible global function definition for ‘read.fortran’
+  runSWAT2012: no visible global function definition for ‘read.fortran’
+  Undefined global functions or variables:
+    read.fortran
+  Consider adding
+    importFrom("utils", "read.fortran")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: Rd line widths, Result: NOTE
+  Rd file 'build_swat_basic.Rd':
+    \examples lines wider than 100 characters:
+       build_swat_basic(dirname="test", iyr="1979", nbyr=13, wsarea=40, elev=200, declat=45, declon=-72, hist_wx=hist_wx) 
+  
+  Rd file 'readSWAT.Rd':
+    \examples lines wider than 100 characters:
+         } else { print ("You need to add your file type to this function if it is not output.sub or output.rch")}
+  
+  These lines will be truncated in the PDF manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: data for non-ASCII characters, Result: NOTE
+    Note: found 8 marked UTF-8 strings
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: GNU Extension: Nonstandard type declaration REAL*8 at (1)
+    Warning: GNU Extension: Different type kinds at (1)
+    Warning: GNU Extension: initialization of common block variable ‘iset’ in DATA statement at (1)
+    Warning: GNU Extension: Variable ‘iset’ at (1) is in COMMON but only in BLOCK DATA initialization is allowed
+    Warning: GNU Extension: Missing comma at (1)
+    Warning: CHARACTER expression will be truncated in assignment (10/13) at (1) [-Wcharacter-truncation]
+    Warning: ‘pst_kg’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘burn_frlb’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘hi_ovr’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘harveff’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘frac_harvk’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘lai_init’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘orig_tnylda’ is used uninitialized in this function [-Wuninitialized]
+    Warning: CHARACTER expression will be truncated in assignment (1/3) at (1) [-Wcharacter-truncation]
+    Warning: ‘fr_curb’ is used uninitialized in this function [-Wuninitialized]
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SWATmodel-00check.html>
+
+Version: 0.5.9
+Flags: --no-stop-on-test-error
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: GNU Extension: Nonstandard type declaration REAL*8 at (1)
+    Warning: GNU Extension: Different type kinds at (1)
+    Warning: GNU Extension: initialization of common block variable ‘iset’ in DATA statement at (1)
+    Warning: GNU Extension: Variable ‘iset’ at (1) is in COMMON but only in BLOCK DATA initialization is allowed
+    Warning: ‘pst_kg’ is used uninitialized in this function [-Wuninitialized]
+    Warning: GNU Extension: Missing comma at (1)
+    Warning: ‘burn_frlb’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘hi_ovr’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘harveff’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘frac_harvk’ is used uninitialized in this function [-Wuninitialized]
+    Warning: ‘lai_init’ is used uninitialized in this function [-Wuninitialized]
+    Warning: CHARACTER expression will be truncated in assignment (10/13) at (1) [-Wcharacter-truncation]
+    Warning: ‘orig_tnylda’ is used uninitialized in this function [-Wuninitialized]
+    Warning: CHARACTER expression will be truncated in assignment (1/3) at (1) [-Wcharacter-truncation]
+    Warning: ‘fr_curb’ is used uninitialized in this function [-Wuninitialized]
+See: <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/SWATmodel-00check.html>
+
+Version: 0.5.9
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: GNU Extension: Nonstandard type declaration REAL*8 at (1)
+    Warning: GNU Extension: Different type kinds at (1)
+    Warning: GNU Extension: initialization of common block variable 'iset' in DATA statement at (1)
+    Warning: GNU Extension: Variable 'iset' at (1) is in COMMON but only in BLOCK DATA initialization is allowed
+    Warning: GNU Extension: Missing comma at (1)
+See: <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/SWATmodel-00check.html>
+
+Version: 0.5.9
+Check: installed package size, Result: NOTE
+    installed size is 25.6Mb
+    sub-directories of 1Mb or more:
+      libs  25.5Mb
+See: <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/SWATmodel-00check.html>
+
+Version: 0.5.9
+Check: data for non-ASCII characters, Result: NOTE
+    Note: found 8 marked UTF-8 strings
+See: <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/SWATmodel-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/SWATmodel-00check.html>
+
+Version: 0.5.9
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: Possible change of value in conversion from REAL(8) to REAL(4) at (1)
+    Warning: Possible change of value in conversion from REAL(4) to INTEGER(4) at (1)
+    Warning: 'erfc' declared at (1) is also the name of an intrinsic.  It can only be called via an explicit interface or if declared EXTERNAL.
+    Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1)
+    Warning: CHARACTER expression will be truncated in assignment (10/13) at (1)
+    apply.f:86:0: warning: ‘pst_kg’ is used uninitialized in this function [-Wuninitialized]
+    burnop.f:29:0: warning: ‘burn_frlb’ is used uninitialized in this function [-Wuninitialized]
+    harvestop.f:166:0: warning: ‘hi_ovr’ is used uninitialized in this function [-Wuninitialized]
+    harvestop.f:195:0: warning: ‘harveff’ is used uninitialized in this function [-Wuninitialized]
+    harvgrainop.f:168:0: warning: ‘harveff’ is used uninitialized in this function [-Wuninitialized]
+    harvkillop.f:175:0: warning: ‘frac_harvk’ is used uninitialized in this function [-Wuninitialized]
+    plantop.f:87:0: warning: ‘lai_init’ is used uninitialized in this function [-Wuninitialized]
+    rewind_init.f:171:0: warning: ‘orig_tnylda’ is used uninitialized in this function [-Wuninitialized]
+    Warning: CHARACTER expression will be truncated in assignment (1/3) at (1)
+    sweep.f:56:0: warning: ‘fr_curb’ is used uninitialized in this function [-Wuninitialized]
+    rewind_init.f:172:0: warning: ‘orig_tnylda’ is used uninitialized in this function [-Wuninitialized]
+See: <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/SWATmodel-00check.html>
+
+Package: season
+***************
+
+Current CRAN status: NOTE: 12, OK: 1
+See: <https://CRAN.R-project.org/web/checks/check_results_season.html>
+
+Version: 0.3-5
+Check: R code for possible problems, Result: NOTE
+  aaft: no visible global function definition for ‘rnorm’
+  aaft: no visible global function definition for ‘runif’
+  casecross: no visible global function definition for ‘as.formula’
+  casecross: no visible global function definition for ‘model.frame’
+  casecross: no visible binding for global variable ‘na.omit’
+  ciPhase: no visible global function definition for ‘quantile’
+  cipolygon: no visible global function definition for ‘polygon’
+  cosinor: no visible global function definition for ‘gaussian’
+  cosinor: no visible global function definition for ‘as.formula’
+  cosinor: no visible global function definition for ‘glm’
+  cosinor: no visible global function definition for ‘residuals’
+  monthglm: no visible global function definition for ‘gaussian’
+  monthglm: no visible global function definition for ‘relevel’
+  monthglm: no visible global function definition for ‘as.formula’
+  monthglm: no visible global function definition for ‘glm’
+  monthglm: no visible global function definition for ‘fitted’
+  monthglm: no visible global function definition for ‘residuals’
+  nonlintest: no visible global function definition for ‘quantile’
+  nonlintest: no visible global function definition for ‘sd’
+  nonlintest: no visible global function definition for ‘median’
+  nscosinor.initial: no visible global function definition for ‘glm’
+  nscosinor.initial: no visible global function definition for ‘fitted’
+  nscosinor.initial: no visible global function definition for ‘sd’
+  nscosinor.initial: no visible global function definition for ‘resid’
+  plot.Cosinor: no visible global function definition for ‘par’
+  plot.Cosinor: no visible global function definition for ‘as.formula’
+  plot.Cosinor: no visible global function definition for ‘plot’
+  plot.Cosinor: no visible global function definition for ‘axis’
+  plot.Cosinor: no visible global function definition for ‘points’
+  plot.Cosinor: no visible global function definition for ‘rug’
+  plot.Monthmean: no visible global function definition for ‘par’
+  plot.Monthmean: no visible global function definition for ‘plot’
+  plot.Monthmean: no visible global function definition for ‘box’
+  plot.Monthmean: no visible global function definition for ‘axis’
+  plot.monthglm: no visible global function definition for ‘par’
+  plot.monthglm: no visible global function definition for ‘qnorm’
+  plot.monthglm: no visible global function definition for ‘plot’
+  plot.monthglm: no visible global function definition for ‘lines’
+  plot.monthglm: no visible global function definition for ‘axis’
+  plot.monthglm: no visible global function definition for ‘points’
+  plot.nsCosinor: no visible binding for global variable ‘time’
+  plotCircle: no visible global function definition for ‘par’
+  plotCircle: no visible global function definition for ‘gray’
+  plotCircle: no visible global function definition for ‘plot’
+  plotCircle: no visible global function definition for ‘polygon’
+  plotCircle: no visible global function definition for ‘text’
+  plotCircular: no visible global function definition for ‘par’
+  plotCircular: no visible global function definition for ‘plot’
+  plotCircular: no visible global function definition for ‘polygon’
+  plotCircular: no visible global function definition for ‘text’
+  rinvgamma: no visible global function definition for ‘rgamma’
+  seasrescheck: no visible global function definition for ‘par’
+  seasrescheck: no visible global function definition for ‘hist’
+  seasrescheck: no visible global function definition for ‘plot’
+  seasrescheck: no visible global function definition for ‘lines’
+  seasrescheck: no visible global function definition for ‘acf’
+  seasrescheck: no visible global function definition for ‘cpgram’
+  sinusoid: no visible global function definition for ‘par’
+  sinusoid: no visible global function definition for ‘plot’
+  sinusoid: no visible global function definition for ‘lines’
+  sinusoid: no visible global function definition for ‘axis’
+  summary.monthglm: no visible global function definition for ‘qnorm’
+  wtest: no visible global function definition for ‘qchisq’
+  wtest: no visible global function definition for ‘pchisq’
+  Undefined global functions or variables:
+    acf as.formula axis box cpgram fitted gaussian glm gray hist lines
+    median model.frame na.omit par pchisq plot points polygon qchisq
+    qnorm quantile relevel resid residuals rgamma rnorm rug runif sd text
+    time
+  Consider adding
+    importFrom("grDevices", "gray")
+    importFrom("graphics", "axis", "box", "hist", "lines", "par", "plot",
+               "points", "polygon", "rug", "text")
+    importFrom("stats", "acf", "as.formula", "cpgram", "fitted",
+               "gaussian", "glm", "median", "model.frame", "na.omit",
+               "pchisq", "qchisq", "qnorm", "quantile", "relevel", "resid",
+               "residuals", "rgamma", "rnorm", "runif", "sd", "time")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/season-00check.html>
+
+Version: 0.3-5
+Flags: --no-stop-on-test-error
+Check: R code for possible problems, Result: NOTE
+  aaft: no visible global function definition for ‘rnorm’
+  aaft: no visible global function definition for ‘runif’
+  casecross: no visible global function definition for ‘as.formula’
+  casecross: no visible global function definition for ‘model.frame’
+  casecross: no visible binding for global variable ‘na.omit’
+  ciPhase: no visible global function definition for ‘quantile’
+  cipolygon: no visible global function definition for ‘polygon’
+  cosinor: no visible global function definition for ‘gaussian’
+  cosinor: no visible global function definition for ‘as.formula’
+  cosinor: no visible global function definition for ‘glm’
+  cosinor: no visible global function definition for ‘residuals’
+  monthglm: no visible global function definition for ‘gaussian’
+  monthglm: no visible global function definition for ‘relevel’
+  monthglm: no visible global function definition for ‘as.formula’
+  monthglm: no visible global function definition for ‘glm’
+  monthglm: no visible global function definition for ‘fitted’
+  monthglm: no visible global function definition for ‘residuals’
+  nonlintest: no visible global function definition for ‘quantile’
+  nonlintest: no visible global function definition for ‘sd’
+  nonlintest: no visible global function definition for ‘median’
+  nscosinor.initial: no visible global function definition for ‘glm’
+  nscosinor.initial: no visible global function definition for ‘fitted’
+  nscosinor.initial: no visible global function definition for ‘sd’
+  nscosinor.initial: no visible global function definition for ‘resid’
+  plot.Cosinor: no visible global function definition for ‘par’
+  plot.Cosinor: no visible global function definition for ‘as.formula’
+  plot.Cosinor: no visible global function definition for ‘plot’
+  plot.Cosinor: no visible global function definition for ‘axis’
+  plot.Cosinor: no visible global function definition for ‘points’
+  plot.Cosinor: no visible global function definition for ‘rug’
+  plot.Monthmean: no visible global function definition for ‘par’
+  plot.Monthmean: no visible global function definition for ‘plot’
+  plot.Monthmean: no visible global function definition for ‘box’
+  plot.Monthmean: no visible global function definition for ‘axis’
+  plot.monthglm: no visible global function definition for ‘par’
+  plot.monthglm: no visible global function definition for ‘qnorm’
+  plot.monthglm: no visible global function definition for ‘plot’
+  plot.monthglm: no visible global function definition for ‘lines’
+  plot.monthglm: no visible global function definition for ‘axis’
+  plot.monthglm: no visible global function definition for ‘points’
+  plot.nsCosinor: no visible binding for global variable ‘time’
+  plotCircle: no visible global function definition for ‘par’
+  plotCircle: no visible global function definition for ‘gray’
+  plotCircle: no visible global function definition for ‘plot’
+  plotCircle: no visible global function definition for ‘polygon’
+  plotCircle: no visible global function definition for ‘text’
+  plotCircular: no visible global function definition for ‘par’
+  plotCircular: no visible global function definition for ‘plot’
+  plotCircular: no visible global function definition for ‘polygon’
+  plotCircular: no visible global function definition for ‘text’
+  rinvgamma: no visible global function definition for ‘rgamma’
+  seasrescheck: no visible global function definition for ‘par’
+  seasrescheck: no visible global function definition for ‘hist’
+  seasrescheck: no visible global function definition for ‘plot’
+  seasrescheck: no visible global function definition for ‘lines’
+  seasrescheck: no visible global function definition for ‘acf’
+  seasrescheck: no visible global function definition for ‘cpgram’
+  sinusoid: no visible global function definition for ‘par’
+  sinusoid: no visible global function definition for ‘plot’
+  sinusoid: no visible global function definition for ‘lines’
+  sinusoid: no visible global function definition for ‘axis’
+  summary.monthglm: no visible global function definition for ‘qnorm’
+  wtest: no visible global function definition for ‘qchisq’
+  wtest: no visible global function definition for ‘pchisq’
+  Undefined global functions or variables:
+    acf as.formula axis box cpgram fitted gaussian glm gray hist lines
+    median model.frame na.omit par pchisq plot points polygon qchisq
+    qnorm quantile relevel resid residuals rgamma rnorm rug runif sd text
+    time
+  Consider adding
+    importFrom("grDevices", "gray")
+    importFrom("graphics", "axis", "box", "hist", "lines", "par", "plot",
+               "points", "polygon", "rug", "text")
+    importFrom("stats", "acf", "as.formula", "cpgram", "fitted",
+               "gaussian", "glm", "median", "model.frame", "na.omit",
+               "pchisq", "qchisq", "qnorm", "quantile", "relevel", "resid",
+               "residuals", "rgamma", "rnorm", "runif", "sd", "time")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/season-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/season-00check.html>
+
+Package: CaDENCE
+****************
+
+Current CRAN status: NOTE: 12, OK: 1
+See: <https://CRAN.R-project.org/web/checks/check_results_CaDENCE.html>
+
+Version: 1.2.3
+Check: DESCRIPTION meta-information, Result: NOTE
+  Checking should be performed on sources prepared by ‘R CMD build’.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-clang/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/CaDENCE-00check.html>
+
+Version: 1.2.3
+Flags: --no-stop-on-test-error
+Check: DESCRIPTION meta-information, Result: NOTE
+  Checking should be performed on sources prepared by ‘R CMD build’.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/CaDENCE-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-macos-x86_64-clang/CaDENCE-00check.html>
+> ## IGNORE_RDIFF_END
+> 
+> 
+> 
 > cleanEx()
 > nameEx("HTMLheader")
 > ### * HTMLheader
@@ -188,7 +1374,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x232e220>
+<environment: 0x563acaa74290>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -438,6 +1624,7 @@ _Journal of the Royal Statistical Society, Series B_, *26*, pp.
 > ### Aliases: check_packages_in_dir summarize_check_packages_in_dir_depends
 > ###   summarize_check_packages_in_dir_results
 > ###   summarize_check_packages_in_dir_timings check_packages_in_dir_changes
+> ###   check_packages_in_dir_details
 > ### Keywords: utilities
 > 
 > ### ** Examples
@@ -939,7 +2126,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.255 0.007 0.263 0 0 
+Time elapsed:  1.668 0.028 1.697 0 0 
 > grDevices::dev.off()
 null device 
           1 
