@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2016-12-19 r71815) -- "Unsuffered Consequences"
+R Under development (unstable) (2016-12-20 r71825) -- "Unsuffered Consequences"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5111,6 +5111,15 @@ Calls: do.call -> <Anonymous>
     ...
 1: do.call(f, mtcars)
 > 
+> ## Debugger can handle a function that has a single function call as its body
+> g <- function(fun) fun(1)
+> debug(g)
+> g(function(x) x+1)
+debugging in: g(function(x) x + 1)
+debug: fun(1)
+Browse[2]> 
+exiting from: g(function(x) x + 1)
+[1] 2
 > options(op)
 > ## unlimited < 2.3.0
 > 
@@ -6362,7 +6371,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x42f1080>
+<bytecode: 0x3e71e68>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6373,7 +6382,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x42f1080>
+<bytecode: 0x3e71e68>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6385,7 +6394,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x42f1080>
+<bytecode: 0x3e71e68>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6407,15 +6416,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x429c0a8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3fd4a68> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x42a8150> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3fcac20> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x42a8150> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3fcac20> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 

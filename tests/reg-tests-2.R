@@ -1753,6 +1753,11 @@ f <- function(...) stop()
 do.call(f, mtcars)
 traceback()
 
+## Debugger can handle a function that has a single function call as its body
+g <- function(fun) fun(1)
+debug(g)
+g(function(x) x+1)
+
 options(op)
 ## unlimited < 2.3.0
 
