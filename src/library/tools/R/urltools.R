@@ -311,9 +311,10 @@ check_url_db <-
 function(db, remote = TRUE, verbose = FALSE)
 {
     use_curl <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_URL_DB_USE_CURL_",
-                                         "FALSE"))
-        
+        config_val_to_logical(Sys.getenv("_R_CHECK_URLS_USE_CURL_",
+                                         "TRUE")) &&
+        requireNamespace("curl", quietly = TRUE)
+         
     .gather <- function(u = character(),
                         p = list(),
                         s = rep.int("", length(u)),

@@ -129,8 +129,9 @@ check_doi_db <-
 function(db, verbose = FALSE)
 {
     use_curl <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_URL_DB_USE_CURL_",
-                                         "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_URLS_USE_CURL_",
+                                         "TRUE")) &&
+        requireNamespace("curl", quietly = TRUE)
     
     .gather <- function(d = character(),
                         p = list(),

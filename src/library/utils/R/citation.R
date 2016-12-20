@@ -430,13 +430,13 @@ function(x,
     if(is.null(braces$email)) braces$email <- c("<", ">")
     if(is.null(braces$role)) braces$role <- c("[", "]")
     if(is.null(braces$comment)) braces$comment <- c("(", ")")
-    braces <- lapply(braces, rep, length.out = 2L)
+    braces <- lapply(braces, rep_len, 2L)
     if(is.null(collapse$given)) collapse$given <- " "
     if(is.null(collapse$family)) collapse$family <- " "
     if(is.null(collapse$email)) collapse$email <- ", "
     if(is.null(collapse$role)) collapse$role <- ", "
     if(is.null(collapse$comment)) collapse$comment <- ", "
-    collapse <- lapply(collapse, rep, length.out = 1L)
+    collapse <- lapply(collapse, rep_len, 1L)
 
     ## extract selected elements
     x <- lapply(unclass(x), "[", include)
