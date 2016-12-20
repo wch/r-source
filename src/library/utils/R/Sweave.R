@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -417,7 +417,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 }
 
 ### For R CMD xxxx ------------------------------------------
-.Sweave <- function(args = NULL)
+.Sweave <- function(args = NULL, no.q = interactive())
 {
     options(warn = 1)
     if (is.null(args)) {
@@ -450,8 +450,12 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
     }
-    do_exit <- function(status = 0L)
-        q("no", status = status, runLast = FALSE)
+    do_exit <-
+	if(no.q)
+	    function(status = 1L) (if(status) stop else message)(
+		".Sweave() exit status ", status)
+	else
+	    function(status = 1L) q("no", status = status, runLast = FALSE)
 
     if (!length(args)) {
         Usage()
@@ -547,7 +551,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     do_exit()
 }
 
-.Stangle <- function(args = NULL)
+.Stangle <- function(args = NULL, no.q = interactive())
 {
     options(warn = 1)
     if (is.null(args)) {
@@ -571,8 +575,12 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
     }
-    do_exit <- function(status = 0L)
-        q("no", status = status, runLast = FALSE)
+    do_exit <-
+	if(no.q)
+	    function(status = 1L) (if(status) stop else message)(
+		".Stangle() exit status ", status)
+	else
+	    function(status = 1L) q("no", status = status, runLast = FALSE)
 
     if (!length(args)) {
         Usage()
