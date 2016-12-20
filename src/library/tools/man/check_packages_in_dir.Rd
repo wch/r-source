@@ -131,11 +131,11 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
   results can conveniently be analyzed as controlled via options
   \code{outputs} and \code{sources}.
 
-  \code{check_packages_in_dir_details} obtains check details as a data
-  frame which can be used for further processing, providing check name,
-  status and output for every check performed and not dropped according
-  to status tag (via variables \code{Check}, \code{Status} and
-  \code{Output}, respectively).
+  \code{check_packages_in_dir_details} analyzes check log files to
+  obtain check details as a data frame which can be used for further
+  processing, providing check name, status and output for every check
+  performed and not dropped according to status tag (via variables
+  \code{Check}, \code{Status} and \code{Output}, respectively).
 }
 \note{
   This functionality is still experimental: interfaces may change in

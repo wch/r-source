@@ -264,6 +264,15 @@
 
       \item \code{print.POSIXct()} gets optional \code{tz} and
       \code{usetz} arguments, thanks to a report from Jennifer S. Lyon.
+
+      \item New function \code{check_packages_in_dir_details()} in
+      package \pkg{tools} for analyzing check log files to obtain check
+      details.
+
+      \item Package \pkg{tools} now exports function
+      \code{CRAN_package_db()} for obtaining information about current
+      packages in the CRAN package repository, and several functions for
+      obtaining the check status of these packages.
     }
   }
 
