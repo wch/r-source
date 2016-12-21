@@ -4755,7 +4755,8 @@ may cause `overloading ambiguity' and you must use @code{std::isnan}
 @emph{etc} explicitly.
 
 It is an error (and make little sense, although has been seen) to call
-these functions for integer arguments.
+these functions for integer arguments: a few compilers give a compilation
+error.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
@@ -4768,6 +4769,10 @@ value: in @R{} code @code{NA_REAL} is usually what is intended, but
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C_002b_002b-Extensions.html}.
+
+Other GNU extensions which have bitten package writers is the use of
+non-portable characters such as @samp{$} in identifiers and use of C++
+headers under @file{ext}.
 
 The GNU Fortran compiler also supports a large number of non-portable
 extensions, the most commonly encountered one being
