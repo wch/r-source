@@ -1,5 +1,6 @@
 R would not be what it is today without the invaluable help of these
-people, who contributed by donating code, bug fixes and documentation:
+people outside of the R core team, who contributed by donating code, bug
+fixes and documentation:
 
 Valerio Aimale, Thomas Baier, Henrik Bengtsson, Roger Bivand,
 Ben Bolker, David Brahm, G"oran Brostr"om, Patrick Burns, Vince Carey,
@@ -60,8 +61,10 @@ email addresses to contributors to the R Project (even without making them
 members of the R Foundation) when in the view of the R Foundation this
 would help advance the R project.
 
-The R Core Group, Roger Bivand, Dirk Eddelbuettel, John Fox, Torsten
-Hothorn, Stefano Iacus, Marc Schwartz, Bill Venables, Hadley Wickham
-and Achim Zeileis are the ordinary members of the R Foundation.  In
-addition, David Meyer and Simon Wood are also e-addressable by
+The R Core Group, Roger Bivand, Jennifer Bryan, Di Cook, Dirk Eddelbuettel,
+John Fox, Bettina Grün, Frank Harrell, Torsten Hothorn, Stefano Iacus,
+Julie Josse,  Balasubramanian Narasimhan, Marc Schwartz, Heather Turner,
+Bill Venables, Hadley Wickham and Achim Zeileis are the ordinary members of
+the R Foundation.
+In addition, David Meyer and Simon Wood are also e-addressable by
 <Firstname>.<Lastname>@R-project.org.
