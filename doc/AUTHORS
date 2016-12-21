@@ -9,10 +9,10 @@ source, currently consisting of
 Douglas Bates
 John Chambers
 Peter Dalgaard
-Seth Falcon
 Robert Gentleman
 Kurt Hornik
 Ross Ihaka
+Tomas Kalibera
 Michael Lawrence
 Friedrich Leisch
 Uwe Ligges
@@ -28,8 +28,9 @@ Duncan Temple Lang
 Luke Tierney
 Simon Urbanek
 
-plus Heiner Schwarte up to October 1999, Guido Masarotto up to June 2003 and
-Stefano Iacus up to July 2014.
+plus Heiner Schwarte up to October 1999, Guido Masarotto up to June 2003,
+Stefano Iacus up to July 2014 and Seth Falcon up to August 2015.
+
 
 Current R-core members can be contacted via email to R-project.org
 with name made up by replacing spaces by dots in the name listed above.
