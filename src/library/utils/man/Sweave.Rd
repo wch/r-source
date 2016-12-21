@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -29,14 +29,17 @@ Stangle(file, driver = Rtangle(),
     supplied without the extension, but the function will only proceed
     if there is exactly one Sweave file in the directory whose
     basename matches \code{file}.}
-  \item{driver}{The actual workhorse, see \sQuote{Details}.}
+  \item{driver}{the actual workhorse, (a function returning) a named
+    \code{\link{list}} of five functions, see \sQuote{Details} or the
+    Sweave manual vignette.}
   \item{syntax}{\code{NULL} or an object of class \code{SweaveSyntax} or
     a character string with its name.
     See the section \sQuote{Syntax Definition}.}
   \item{encoding}{The default encoding to assume for \code{file}.}
-  \item{\dots}{Further arguments passed to the driver's setup function:
-    see section \sQuote{Drivers}, \code{\link{RweaveLatex}} and
-    \code{\link{Rtangle}}.}
+  \item{\dots}{further arguments passed to the driver's setup function:
+    see section \sQuote{Details}, or specifically the arguments of the
+    \code{R...Setup()} function in \code{\link{RweaveLatex}} and
+    \code{\link{Rtangle}}, respectively.}
 }
 
 \details{
@@ -110,7 +113,7 @@ Stangle(file, driver = Rtangle(),
 
   Further Sweave drivers are in, for example, packages \CRANpkg{R2HTML},
   \CRANpkg{ascii}, \CRANpkg{odfWeave} and \CRANpkg{pgfSweave}.
-  
+
   Non-Sweave vignettes may be built with \code{tools::\link[tools]{buildVignette}}.
 }
 

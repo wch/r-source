@@ -273,6 +273,10 @@
       \code{CRAN_package_db()} for obtaining information about current
       packages in the CRAN package repository, and several functions for
       obtaining the check status of these packages.
+
+      \item The (default) Stangle driver \code{Rtangle} allows
+      \code{annotate} to be a function and gets a new
+      \code{drop.evalFALSE} option.
     }
   }
 

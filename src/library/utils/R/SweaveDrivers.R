@@ -222,12 +222,12 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 openSinput <<- TRUE
             }
             leading <- max(leading, 1L) # safety check
-            cat("\n", paste(getOption("prompt"), dce[seq_len(leading)],
-                            sep = "", collapse = "\n"),
+            cat("\n", paste0(getOption("prompt"), dce[seq_len(leading)],
+                             collapse = "\n"),
                 file = chunkout, sep = "")
             if (length(dce) > leading)
-                cat("\n", paste(getOption("continue"), dce[-seq_len(leading)],
-                                sep = "", collapse = "\n"),
+                cat("\n", paste0(getOption("continue"), dce[-seq_len(leading)],
+                                 collapse = "\n"),
                     file = chunkout, sep = "")
             linesout[thisline + seq_along(dce)] <<- srcline
             filenumout[thisline + seq_along(dce)] <<- srcfilenum
@@ -235,13 +235,11 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         }
 
         trySrcLines <- function(srcfile, showfrom, showto, ce) {
-	    lines <- tryCatch(suppressWarnings(getSrcLines(srcfile, showfrom, showto)),
-			      error = function(e)e)
-	    if (inherits(lines, "error")) {
-		lines <- if (is.null(ce)) character()
-		else deparse(ce, width.cutoff = 0.75*getOption("width"))
-            }
-            lines
+	    tryCatch(suppressWarnings(getSrcLines(srcfile, showfrom, showto)),
+                     error = function(e) {
+                         if (is.null(ce)) character()
+                         else deparse(ce, width.cutoff = 0.75*getOption("width"))
+                     })
         }
 
         echoComments <- function(showto) {
@@ -680,7 +678,7 @@ Rtangle <-  function()
 
 RtangleSetup <-
     function(file, syntax, output = NULL, annotate = TRUE, split = FALSE,
-             quiet = FALSE, ...)
+             quiet = FALSE, drop.evalFALSE = FALSE, ...)
 {
     dots <- list(...)
     if (is.null(output)) {
@@ -721,11 +719,25 @@ RtangleSetup <-
     options <- RweaveLatexOptions(options)
 
     list(output = output, annotate = annotate, options = options,
-         chunkout = list(), quiet = quiet, syntax = syntax)
+         chunkout = list(), quiet = quiet, syntax = syntax,
+         drop.evalFALSE = drop.evalFALSE)
 }
 
+.RtangleCodeLabel <- function(chunk) {
+    if(length(lnos <- grep("^#line ", chunk, value = TRUE))) {
+        srclines <- attr(chunk, "srclines")
+        ## srcfilenum <- attr(chunk, "srcFilenum")
+        ## this currently includes the chunk header
+        lno <- if (length(srclines))
+                   paste(min(srclines), max(srclines), sep = "-")
+               else srclines
+        fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])
+        paste(fn, lno, sep = ":")
+    } else
+        "(missing #line/file info)"
+}
 
-RtangleRuncode <-  function(object, chunk, options)
+RtangleRuncode <- function(object, chunk, options)
 {
     if (!(options$engine %in% c("R", "S"))) return(object)
 
@@ -747,23 +759,18 @@ RtangleRuncode <-  function(object, chunk, options)
     } else
         chunkout <- object$output
 
-    if (object$annotate) {
-        lnos <- grep("^#line ", chunk, value = TRUE)
-        if(length(lnos)) {
-            srclines <- attr(chunk, "srclines")
- ##         srcfilenum <- attr(chunk, "srcFilenum")
-            ## this currently includes the chunk header
-            lno <- if (length(srclines)) paste(min(srclines), max(srclines), sep = "-") else srclines
-            fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])
-        }
-        cat("###################################################\n",
-            "### code chunk number ", options$chunknr,
-            ": ",
-            if(!is.null(options$label)) options$label
-            else paste(fn, lno, sep = ":"),
-            ifelse(options$eval, "", " (eval = FALSE)"), "\n",
-            "###################################################\n",
-            file = chunkout, sep = "")
+    showOut <- options$eval || !object$drop.evalFALSE
+    if(showOut) {
+        annotate <- object$annotate
+        if (is.logical(annotate) && annotate) {
+            cat("###################################################\n",
+                "### code chunk number ", options$chunknr, ": ",
+                if(!is.null(ol <- options$label)) ol else .RtangleCodeLabel(chunk),
+                if(!options$eval) " (eval = FALSE)", "\n",
+                "###################################################\n",
+                file = chunkout, sep = "")
+        } else if(is.function(annotate))
+            annotate(options, chunk = chunk, output = chunkout)
     }
 
     ## The next returns a character vector of the logical options
@@ -773,10 +780,12 @@ RtangleRuncode <-  function(object, chunk, options)
         cat("getOption(\"SweaveHooks\")[[\"", k, "\"]]()\n",
             file = chunkout, sep = "")
 
-    if (!options$show.line.nos)
-        chunk <- grep("^#line ", chunk, value = TRUE, invert = TRUE)
-    if (!options$eval) chunk <- paste("##", chunk)
-    cat(chunk, "\n", file = chunkout, sep = "\n")
+    if(showOut) {
+        if (!options$show.line.nos) # drop "#line ...." lines
+            chunk <- grep("^#line ", chunk, value = TRUE, invert = TRUE)
+        if (!options$eval) chunk <- paste("##", chunk)
+        cat(chunk, "\n", file = chunkout, sep = "\n")
+    }
     if (is.null(options$label) && options$split) close(chunkout)
     object
 }

@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -8,8 +8,9 @@
 \alias{RweaveLatexSetup}
 \title{R/LaTeX Driver for Sweave}
 \description{
-  A driver for \code{\link{Sweave}} that translates R code chunks in
-  LaTeX files.
+  A driver for \code{\link{Sweave}} that translates \R code chunks in
+  LaTeX files by \dQuote{running them}, i.e., \code{\link{parse}()} and
+  \code{\link{eval}()} each.
 }
 \usage{
 RweaveLatex()
@@ -258,7 +259,7 @@ my.Swd <- function(name, width, height, ...)
 
   Currently only one custom device can be used for each chunk, but
   different devices can be used for different chunks.
-  
+
   A replacement for \code{\link{dev.off}} can be provided as a function
   with suffix \code{.off}, e.g.\sspace{}\code{my.Swd.off()} or
   \code{pkg::my.Swd.off()}, respectively.
