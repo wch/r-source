@@ -631,7 +631,8 @@ MATH1.OP = 2,
 DOTCALL.OP = 2,
 COLON.OP = 1,
 SEQALONG.OP = 1,
-SEQLEN.OP = 1
+SEQLEN.OP = 1,
+BASEGUARD.OP = 2
 )
 
 Opcodes.names <- names(Opcodes.argc)
@@ -759,6 +760,7 @@ DOTCALL.OP <- 119
 COLON.OP <- 120
 SEQALONG.OP <- 121
 SEQLEN.OP <- 122
+BASEGUARD.OP <- 123
 
 
 ##
@@ -1089,14 +1091,14 @@ cmpSym <- function(sym, cb, cntxt, missingOK = FALSE) {
     }
 }
 
-cmpCall <- function(call, cb, cntxt) {
+cmpCall <- function(call, cb, cntxt, inlineOK = TRUE) {
     sloc <- cb$savecurloc()
     cb$setcurexpr(call)
     cntxt <- make.callContext(cntxt, call)
     fun <- call[[1]]
     args <- call[-1]
     if (typeof(fun) == "symbol") {
-        if (! tryInline(call, cb, cntxt)) {
+        if (! (inlineOK && tryInline(call, cb, cntxt))) {
             if (findLocVar(fun, cntxt))
                 notifyLocalFun(fun, cntxt)
             else {
@@ -1287,7 +1289,7 @@ haveInlineHandler <- function(name, package = "base") {
 
 noInlineSymbols <- c("standardGeneric")
 
-getInlineInfo <- function(name, cntxt) {
+getInlineInfo <- function(name, cntxt, guardOK = FALSE) {
     optimize <- cntxt$optimize
     if (optimize > 0 && ! (name %in% noInlineSymbols)) {
         info <- findCenvVar(name, cntxt$env)
@@ -1306,14 +1308,22 @@ getInlineInfo <- function(name, cntxt) {
                     frame <- top
                 }
                 info$package <- nsName(findHomeNS(name, frame, cntxt))
+                info$guard <- FALSE
                 info
             }
             else if (ftype == "global" &&
                      (optimize >= 3 ||
                       (optimize >= 2 && name %in% languageFuns))) {
                 info$package <- packFrameName(frame)
+                info$guard <- FALSE
                 info
             }
+            else if (guardOK && ftype == "global" &&
+                     packFrameName(frame) == "base") {
+                info$package <- packFrameName(frame)
+                info$guard <- TRUE
+                info
+            }                
             else NULL
         }
     }
@@ -1322,13 +1332,26 @@ getInlineInfo <- function(name, cntxt) {
 
 tryInline <- function(e, cb, cntxt) {
     name <- as.character(e[[1]])
-    info <- getInlineInfo(name, cntxt)
+    info <- getInlineInfo(name, cntxt, guardOK = TRUE)
     if (is.null(info))
         FALSE
     else {
         h <- getInlineHandler(name, info$package)
-        if (! is.null(h))
-            h(e, cb, cntxt)
+        if (! is.null(h)) {
+            if (info$guard) {
+                tailcall <- cntxt$tailcall
+                if (tailcall) cntxttailcall <- FALSE
+                expridx <- cb$putconst(e)
+                endlabel <- cb$makelabel()
+                cb$putcode(BASEGUARD.OP, expridx, endlabel)
+                if (! h(e, cb, cntxt))
+                    cmpCall(e, cb, cntxt, inlineOK = FALSE)
+                cb$putlabel(endlabel)
+                if (tailcall) cb$putcode(RETURN.OP)
+                TRUE
+            }
+            else h(e, cb, cntxt)
+        }
         else FALSE
     }
 }
