@@ -1143,7 +1143,7 @@ static R_INLINE SEXP make_cached_cmpenv(SEXP fun)
     if (cmpenv == top && frmls == R_NilValue)
 	return cmpenv;
     else {
-	SEXP newenv = NewEnvironment(R_NilValue, R_NilValue, top);
+	SEXP newenv = PROTECT(NewEnvironment(R_NilValue, R_NilValue, top));
 	for (; frmls != R_NilValue; frmls = CDR(frmls))
 	    defineVar(TAG(frmls), R_NilValue, newenv);
 	for (SEXP env = cmpenv; env != top; env = CDR(env)) {
@@ -1154,14 +1154,17 @@ static R_INLINE SEXP make_cached_cmpenv(SEXP fun)
 		int n = length(h);
 		for (int i = 0; i < n; i++)
 		    cmpenv_enter_frame(VECTOR_ELT(h, i), newenv);
+	    } else {
+		UNPROTECT(1); /* newenv */
+		return top;
 	    }
-	    else return top;
 		/* topenv is a safe conservative answer; if a closure
 		   defines anything, its environment will not match, and
 		   it will never be compiled */
 		/* FIXME: would it be safe to simply ignore elements of
 		   of these environments? */
 	}
+	UNPROTECT(1); /* newenv */
 	return newenv;
     }
 }
@@ -1174,8 +1177,8 @@ static R_INLINE void set_jit_cache_entry(R_exprhash_t hash, SEXP val)
 
     PROTECT(val);
     SEXP entry = CONS(BODY(val), make_cached_cmpenv(val));
-    SET_TAG(entry, getAttrib(val, R_SrcrefSymbol));
     SET_VECTOR_ELT(JIT_cache, hashidx, entry);
+    SET_TAG(entry, getAttrib(val, R_SrcrefSymbol));
     UNPROTECT(1); /* val */
 
     JIT_cache_hashes[hashidx] = hash;
