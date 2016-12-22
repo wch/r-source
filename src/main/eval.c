@@ -3559,7 +3559,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 /* start of bytecode section */
-static int R_bcVersion = 9;
+static int R_bcVersion = 10;
 static int R_bcMinVersion = 9;
 
 static SEXP R_AddSym = NULL;
@@ -3765,6 +3765,7 @@ enum {
   COLON_OP,
   SEQALONG_OP,
   SEQLEN_OP,
+  BASEGUARD_OP,
   OPCOUNT
 };
 
@@ -5715,6 +5716,32 @@ static R_INLINE int LOOP_NEXT_OFFSET(int loop_state_size)
     return GETSTACK_IVAL_PTR(R_BCNodeStackTop - 1 - loop_state_size);
 }
 
+/* Check whether a call is to a base function; if not use AST interpeter */
+/***** need a faster guard check */
+static R_INLINE SEXP SymbolValue(SEXP sym)
+{
+    if (IS_ACTIVE_BINDING(sym))
+	return eval(sym, R_BaseEnv);
+    else {
+	SEXP value = SYMVALUE(sym);
+	if (TYPEOF(value) == PROMSXP) {
+	    value = PRVALUE(value);
+	    if (value == R_UnboundValue)
+		value = eval(sym, R_BaseEnv);
+	}
+	return value;
+    }
+}
+
+#define DO_BASEGUARD() do {				\
+	SEXP expr = VECTOR_ELT(constants, GETOP());	\
+	int label = GETOP();				\
+	SEXP sym = CAR(expr);				\
+	if (findFun(sym, rho) != SymbolValue(sym)) {	\
+	    BCNPUSH(eval(expr, rho));			\
+	    pc = codebase + label;			\
+	}						\
+    } while (0)
 
 /* The CALLBUILTIN instruction handles calls to both true BUILTINs and
    to .Internals of type BUILTIN. To handle profiling in a way that is
@@ -6992,6 +7019,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(COLON, 1): DO_COLON(); NEXT();
     OP(SEQALONG, 1): DO_SEQ_ALONG(); NEXT();
     OP(SEQLEN, 1): DO_SEQ_LEN(); NEXT();
+    OP(BASEGUARD, 2): DO_BASEGUARD(); NEXT();
     LASTOP;
   }
 
