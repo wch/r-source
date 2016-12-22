@@ -964,10 +964,12 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
     int i;
     SEXP t;
 
-    if (R_compile_pkgs && TYPEOF(s) == CLOSXP && TYPEOF(BODY(s)) != BCODESXP) {
+    if (R_compile_pkgs && TYPEOF(s) == CLOSXP && TYPEOF(BODY(s)) != BCODESXP &&
+        !R_disable_bytecode) {
+
 	SEXP new_s;
 	R_compile_pkgs = FALSE;
-	PROTECT(new_s = R_cmpfun(s));
+	PROTECT(new_s = R_cmpfun1(s));
 	WriteItem (new_s, ref_table, stream);
 	UNPROTECT(1);
 	R_compile_pkgs = TRUE;
