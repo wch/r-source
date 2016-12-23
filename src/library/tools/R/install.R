@@ -1107,7 +1107,8 @@
                           "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
                           "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
                           as.numeric(rcps))
-            BC <- BC || (!is.na(rcp) && rcp > 0)
+            if (!is.na(rcp))
+                BC <- (rcp > 0)
             if (BC) {
                 starsmsg(stars,
                          "byte-compile and prepare package for lazy loading")
