@@ -134,23 +134,28 @@ installed or for just-in-time (JIT) compilation of functions or
 expressions.  The mechanism for enabling these is experimental and
 likely to change.
 
-For now, compilation of packages requires the use of lazy loading and
-can be enabled either by calling [[compilePKGS]] with argument
-[[TRUE]] or by starting R with the environment variable
-[[R_COMPILE_PKGS]] set to a positive integer value.  In a UNIX-like
-environment, for example, installing a package with
+For now, compilation of packages requires the use of lazy loading and can be
+enabled either by calling [[compilePKGS]] with argument [[TRUE]] or by
+starting R with the environment variable [[_R_COMPILE_PKGS_]] set to a
+positive integer value.  These settings are used internally during R build
+to compile the base package (and tools, utils, methods, etc) and by
+[[R CMD INSTALL]].
+Functions are compiled as they are written to the lazy loading database.
+Compilation of packages should only be enabled for that time, because it
+adds noticeable time and space overhead to any serialization.
+
+In a UNIX-like environment, for example, installing a package with
 \begin{verbatim}
 env R_COMPILE_PKGS=1 R CMD INSTALL foo.tar.gz
 \end{verbatim}
-will compile the functions in the package as they are written to the
-lazy loading data base.
+will internally enable package compilation using [[compilePKGS]].
 
 If R is installed from source then the base and required packages can
 be compiled on installation using
 \begin{verbatim}
 make bytecode
 \end{verbatim}
-This does not require setting the [[R_COMPILE_PKGS]] environment variable.
+This does not require setting the [[_R_COMPILE_PKGS_]] environment variable.
 
 JIT compilation can be enabled from within R by calling [[enableJIT]]
 with a non-negative integer argument or by starting R with the

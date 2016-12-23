@@ -934,7 +934,7 @@ void attribute_hidden R_init_jit_enabled(void)
     R_jit_enabled = val;
 
     if (R_compile_pkgs <= 0) {
-	char *compile = getenv("R_COMPILE_PKGS");
+	char *compile = getenv("_R_COMPILE_PKGS_");
 	if (compile != NULL) {
 	    int val = atoi(compile);
 	    if (val > 0)

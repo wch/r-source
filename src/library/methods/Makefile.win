@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 pkg = methods
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
-EXTRAS = R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1
+EXTRAS = _R_COMPILE_PKGS_=1 R_COMPILER_SUPPRESS_ALL=1
 
 all:
 	@$(ECHO) "building package '$(pkg)'"

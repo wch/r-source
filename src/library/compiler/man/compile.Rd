@@ -81,10 +81,15 @@ setCompilerOptions(...)
   level. The default JIT level is \code{3}.
 
   \code{compilePKGS} enables or disables compiling packages when they
-  are installed.  This requires that the package use lazy loading as
+  are installed.  This requires that the package uses lazy loading as
   compilation occurs as functions are written to the lazy loading data
   base. This can also be enabled by starting \R with the environment
-  variable \code{R_COMPILE_PKGS} set to a positive integer value.
+  variable \code{_R_COMPILE_PKGS_} set to a positive integer value.
+  This should not be enabled outside package installation, because it
+  causes any serialized function to be compiled, which comes with
+  time and space overhead. \code{R_COMPILE_PKGS} can be used, instead,
+  to instruct \code{INSTALL} to enable/disable compilation of packages
+  during installation.
 
   Currently the compiler warns about a variety of things.  It does
   this by using \code{cat} to print messages.  Eventually this should

@@ -51,7 +51,7 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R $(top_srcdir)/share/licenses/
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  $(ECHO) "makeLazyLoading(\"$(pkg)\")") | \
-	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
+	  _R_COMPILE_PKGS_=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 
 Rsimple: mkR mkRsimple
