@@ -40,11 +40,17 @@ anyDuplicated(x, incomparables = FALSE, \dots)
 }
 \arguments{
   \item{x}{a vector or a data frame or an array or \code{NULL}.}
-  \item{incomparables}{a vector of values that cannot be compared.
-    \code{FALSE} is a special value, meaning that all values can be
-    compared, and may be the only value accepted for methods other than
-    the default.  It will be coerced internally to the same type as
-       \code{x}.}
+  \item{incomparables}{a list of values that cannot be compared. 
+    For data frames if elements of the list are named they will be 
+    applied to those columns in the supplied data frame if the name 
+    can be matched to a column name. If the list is unnamed, then list 
+    elements will be applied positionally to the data frame columns. 
+    If the list is shorter than the columns of the data frame, then 
+    the list is padded with the default incomparables value, which 
+    is \code{FALSE}. \code{FALSE} is a special value, meaning that all 
+    values can be compared, and may be the only value accepted for methods 
+    other than the default.  It will be coerced internally to the same 
+    type as \code{x}.}
   \item{fromLast}{logical indicating if duplication should be considered
     from the reverse side, i.e., the last (or rightmost) of identical
     elements would correspond to \code{duplicated = FALSE}.}
@@ -141,6 +147,17 @@ x <- c(9:20, 1:5, 3:7, 0:8)
 ## xu == unique(x) but unique(x) is more efficient
 stopifnot(identical(xu,  unique(x)),
           identical(xu2, unique(x, fromLast = TRUE)))
+
+x <- data.frame(a=c('A', 'A','', '','Z', 'Z'),
+                b=c(1, 1, 2, 2, 3, 3),
+                c=factor(c(NA, NA, '', '', 'Z', 'Z')),
+                stringsAsFactors=FALSE)              
+# default
+incomparables1 <- FALSE
+duplicated(x, incomparables=incomparables1)
+# incomparables for multiple columns
+incomparables2 <- list(b=c(2), c=c('Z'))
+duplicated(x, incomparables=incomparables2)
 
 duplicated(iris)[140:143]
 
