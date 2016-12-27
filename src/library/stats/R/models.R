@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,9 @@ formula.default <- function (x = NULL, env = parent.frame(), ...)
     else if (!is.null(attr(x, "formula"))) attr(x, "formula")
     else {
         form <- switch(mode(x),
-                       NULL = structure(NULL, class = "formula"),
-                       character = formula(eval(parse(text = x, keep.source = FALSE)[[1L]])),
+                       NULL = structure(list(), class = "formula"),
+                       character = formula(
+                           eval(parse(text = x, keep.source = FALSE)[[1L]])),
                        call = eval(x), stop("invalid formula"))
         environment(form) <- env
         form

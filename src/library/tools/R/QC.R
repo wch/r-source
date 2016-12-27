@@ -927,7 +927,7 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all classes checked.
     ## </NOTE>
 
-    bad_Rd_objects <- structure(NULL, class = "codocClasses")
+    bad_Rd_objects <- structure(list(), class = "codocClasses")
 
     ## Argument handling.
     if(length(package) != 1L)
@@ -1094,7 +1094,7 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all data frames checked.
     ## </NOTE>
 
-    bad_Rd_objects <- structure(NULL, class = "codocData")
+    bad_Rd_objects <- structure(list(), class = "codocData")
 
     ## Argument handling.
     if(length(package) != 1L)
@@ -4172,20 +4172,20 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         aliases1 <- Rd_aliases(package, lib.loc = lib.loc)
         if(!length(aliases1))
-            return(structure(NULL, class = "check_Rd_xrefs"))
+            return(structure(list(), class = "check_Rd_xrefs"))
         aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(package, lib.loc = lib.loc)
     } else {
         aliases1 <- Rd_aliases(dir = dir)
         if(!length(aliases1))
-            return(structure(NULL, class = "check_Rd_xrefs"))
+            return(structure(list(), class = "check_Rd_xrefs"))
         aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(dir = dir)
     }
 
     ## Flatten the xref db into one big matrix.
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
-    if(nrow(db) == 0L) return(structure(NULL, class = "check_Rd_xrefs"))
+    if(nrow(db) == 0L) return(structure(list(), class = "check_Rd_xrefs"))
 
     ## fixup \link[=dest] form
     anchor <- db[, 2L]

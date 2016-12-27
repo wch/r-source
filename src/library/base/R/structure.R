@@ -1,7 +1,7 @@
 #  File src/library/base/R/structure.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@
 ##
 structure <- function (.Data, ...)
 {
+    if(is.null(.Data))
+        warning("Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n  Consider 'structure(list(), *)' instead.")
+        ## to become: stop("attempt to set an attribute on NULL")
     attrib <- list(...)
     if(length(attrib)) {
         specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")
@@ -30,8 +33,8 @@ structure <- function (.Data, ...)
         ## prior to 2.5.0 factors would deparse to double codes
 	if("factor" %in% attrib[["class", exact = TRUE]]
            && typeof(.Data) == "double")
-	   storage.mode(.Data) <- "integer"
+            storage.mode(.Data) <- "integer"
 	attributes(.Data) <- c(attributes(.Data), attrib)
     }
-    return(.Data)
+    .Data
 }

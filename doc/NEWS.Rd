@@ -429,6 +429,9 @@
 
       \item \code{unix.time()}, a traditional synonym for
       \code{system.time()}, has been deprecated.
+
+      \item \code{structure(NULL, ..)} is now deprecated as you cannot
+      set attributes on \code{\link{NULL}}.
     }
   }
 
