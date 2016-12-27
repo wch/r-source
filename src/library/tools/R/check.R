@@ -729,8 +729,12 @@ setRlibs <-
                 any <- TRUE
                 printLog(Log, "NeedsCompilation field must take value 'yes' or 'no'", "\n")
             }
+            if((ncomp == "no") && dir.exists("src")) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                printLog(Log, "NeedsCompilation field should likely be 'yes'", "\n")
+            }
         }
-
 
         out <- format(.check_package_description2(dfile))
         if (length(out)) {

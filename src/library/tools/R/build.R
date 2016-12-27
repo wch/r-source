@@ -145,9 +145,10 @@ get_exclude_patterns <- function()
     add_build_stamp_to_description_file <- function(ldpath, pkgdir)
     {
         db <- .read_description(ldpath)
-        if(is.na(db["NeedsCompilation"]))
-            db["NeedsCompilation"] <-
-                if(dir.exists(file.path(pkgdir, "src"))) "yes" else "no"
+        if(dir.exists(file.path(pkgdir, "src")))
+            db["NeedsCompilation"] <- "yes"
+        else if(is.na(db["NeedsCompilation"]))
+            db["NeedsCompilation"] <- "no"            
         ## this is an optional function, so could fail
         user <- Sys.info()["user"]
         if(user == "unknown") user <- Sys.getenv("LOGNAME")
