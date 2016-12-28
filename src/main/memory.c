@@ -983,6 +983,9 @@ static void TryToReleasePages(void)
 /* compute size in VEC units so result will fit in LENGTH field for FREESXPs */
 static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 {
+    if (IS_GROWABLE(s))
+	SETLENGTH(s, XTRUELENGTH(s));
+
     R_size_t size;
     switch (TYPEOF(s)) {	/* get size in bytes */
     case CHARSXP:
@@ -3411,6 +3414,10 @@ int (MAYBEJIT)(SEXP x) { return MAYBEJIT(CHK(x)); }
 void (SET_NOJIT)(SEXP x) { SET_NOJIT(CHK(x)); }
 void (SET_MAYBEJIT)(SEXP x) { SET_MAYBEJIT(CHK(x)); }
 void (UNSET_MAYBEJIT)(SEXP x) { UNSET_MAYBEJIT(CHK(x)); }
+
+/* Growable vector support */
+int (IS_GROWABLE)(SEXP x) { return IS_GROWABLE(CHK(x)); }
+void (SET_GROWABLE_BIT)(SEXP x) { SET_GROWABLE_BIT(CHK(x)); }
 
 static int nvec[32] = {
     0,1,1,1,1,1,1,1,  // does NILSXP really count?

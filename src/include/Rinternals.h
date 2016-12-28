@@ -341,6 +341,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_MAYBEJIT(x) (((x)->sxpinfo.gp) |= MAYBEJIT_MASK)
 #define UNSET_MAYBEJIT(x) (((x)->sxpinfo.gp) &= ~MAYBEJIT_MASK)
 
+/* Growable vector support */
+#define GROWABLE_MASK ((unsigned short)(1<<5))
+#define GROWABLE_BIT_SET(x) ((x)->sxpinfo.gp & GROWABLE_MASK)
+#define SET_GROWABLE_BIT(x) (((x)->sxpinfo.gp) |= GROWABLE_MASK)
+#define IS_GROWABLE(x) (GROWABLE_BIT_SET(x) && XLENGTH(x) < XTRUELENGTH(x))
+
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
 # define IS_LONG_VEC(x) (SHORT_VEC_LENGTH(x) == R_LONG_VEC_TOKEN)
@@ -557,6 +563,10 @@ int (MAYBEJIT)(SEXP x);
 void (SET_NOJIT)(SEXP x);
 void (SET_MAYBEJIT)(SEXP x);
 void (UNSET_MAYBEJIT)(SEXP x);
+
+/* Growable vector support */
+int (IS_GROWABLE)(SEXP x);
+void (SET_GROWABLE_BIT)(SEXP x);
 
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
