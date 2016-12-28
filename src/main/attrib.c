@@ -878,15 +878,18 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"), klass);
 	/* else, go ahead, but can't check validity of replacement*/
     }
-    if (CADR(args) != R_NilValue) {
+    SEXP names = CADR(args);
+    if (names != R_NilValue &&
+	! (TYPEOF(names) == STRSXP && ATTRIB(names) == R_NilValue)) {
 	PROTECT(call = allocList(2));
 	SET_TYPEOF(call, LANGSXP);
 	SETCAR(call, R_AsCharacterSymbol);
-	SETCADR(call, CADR(args));
-	SETCADR(args, eval(call, env));
+	SETCADR(call, names);
+	names = eval(call, env);
+	SETCADR(call, R_NilValue); /* decrements REFCNT on names */
 	UNPROTECT(1);
     }
-    setAttrib(CAR(args), R_NamesSymbol, CADR(args));
+    setAttrib(CAR(args), R_NamesSymbol, names);
     UNPROTECT(1);
     SET_NAMED(CAR(args), 0);
     return CAR(args);
