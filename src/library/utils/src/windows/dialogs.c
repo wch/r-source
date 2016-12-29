@@ -24,6 +24,8 @@
 #include <config.h>
 #endif
 
+#include <private/Rinternals.h>
+
 #include <Defn.h>
 #include "graphapp/ga.h"
 #include <windows.h>

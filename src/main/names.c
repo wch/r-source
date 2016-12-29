@@ -27,6 +27,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 
 #include <Print.h>
 #include "arithmetic.h" /* for do_math[1234], do_cmathfuns */

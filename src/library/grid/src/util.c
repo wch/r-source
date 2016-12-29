@@ -20,6 +20,7 @@
 
 #include "grid.h"
 #include <string.h>
+#include <private/Rinternals.h>
 
 /* Get the list element named str, or return NULL.
  * Copied from the Writing R Extensions manual (which copied it from nls)

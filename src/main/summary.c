@@ -24,6 +24,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <R_ext/Itermacros.h>
 
 #include <float.h> // for DBL_MAX

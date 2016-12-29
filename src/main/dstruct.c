@@ -24,6 +24,7 @@
 #endif
 
 #include "Defn.h"
+#include <private/Rinternals.h>
 
 
 /*  mkPRIMSXP - return a builtin function      */

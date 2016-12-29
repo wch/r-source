@@ -23,6 +23,7 @@
 #endif
 
 #include <Defn.h>
+#include <private/Rinternals.h>
 
 #include "statsR.h"
 #undef _

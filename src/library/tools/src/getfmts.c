@@ -24,6 +24,8 @@
 #endif
 
 #include <Defn.h>
+#include <private/Rinternals.h>
+
 #include "RBufferUtils.h"
 
 #undef _

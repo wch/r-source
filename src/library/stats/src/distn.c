@@ -23,6 +23,8 @@
 #include <config.h>
 #endif
 
+#include <private/Rinternals.h>
+
 #include <Defn.h>
 #include <Rmath.h>
 #include "statsR.h"

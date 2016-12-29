@@ -2674,6 +2674,7 @@ AC_CONFIG_FILES(
   src/extra/xdr/Makefile
   src/include/Makefile
   src/include/Rmath.h0
+  src/include/private/Makefile
   src/include/R_ext/Makefile
   src/library/Recommended/Makefile
   src/library/Makefile

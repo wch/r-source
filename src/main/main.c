@@ -33,6 +33,7 @@
 #define R_USE_SIGNALS 1
 #include "Defn.h"
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include "Rinterface.h"
 #include "IOStuff.h"
 #include "Fileio.h"

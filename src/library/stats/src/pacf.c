@@ -22,6 +22,7 @@
 #endif
 
 #include <R.h>
+#include <private/Rinternals.h>
 #include "ts.h"
 
 #ifndef max

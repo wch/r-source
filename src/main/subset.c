@@ -40,6 +40,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 
 /* JMC convinced MM that this was not a good idea: */
 #undef _S4_subsettable

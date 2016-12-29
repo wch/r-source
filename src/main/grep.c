@@ -61,6 +61,7 @@ strsplit grep [g]sub [g]regexpr
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <ctype.h>
 #include <wchar.h>

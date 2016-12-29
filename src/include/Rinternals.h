@@ -303,12 +303,14 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define MARK(x)		((x)->sxpinfo.mark)
 #define TYPEOF(x)	((x)->sxpinfo.type)
 #define NAMED(x)	((x)->sxpinfo.named)
-#define RTRACE(x)	((x)->sxpinfo.trace)
+//@MOVED:
+//#define RTRACE(x)	((x)->sxpinfo.trace)
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
 #define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
-#define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
+//@MOVED:
+//#define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
 
 #if defined(COMPUTE_REFCNT_VALUES)
@@ -434,10 +436,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
-#define SYMVALUE(x)	((x)->u.symsxp.value)
+//@MOVED:
+//#define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
 #define DDVAL_MASK	1
-#define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
+//@MOVED:
+//#define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
 #define SET_DDVAL_BIT(x) (((x)->sxpinfo.gp) |= DDVAL_MASK)
 #define UNSET_DDVAL_BIT(x) (((x)->sxpinfo.gp) &= ~DDVAL_MASK)
 #define SET_DDVAL(x,v) ((v) ? SET_DDVAL_BIT(x) : UNSET_DDVAL_BIT(x)) /* for ..1, ..2 etc */
@@ -544,7 +548,8 @@ void (SET_TYPEOF)(SEXP x, int v);
 void (SET_NAMED)(SEXP x, int v);
 void SET_ATTRIB(SEXP x, SEXP v);
 void DUPLICATE_ATTRIB(SEXP to, SEXP from);
-void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from);
+//@MOVED: SHALLOW_DUPLICATE_ATTRIB used 10 times in stats
+//void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from);
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x);
@@ -618,19 +623,23 @@ SEXP (BODY)(SEXP x);
 SEXP (CLOENV)(SEXP x);
 int  (RDEBUG)(SEXP x);
 int  (RSTEP)(SEXP x);
-int  (RTRACE)(SEXP x);
+//@MOVED: RTRACE used 2 times in stats
+//int  (RTRACE)(SEXP x);
 void (SET_RDEBUG)(SEXP x, int v);
 void (SET_RSTEP)(SEXP x, int v);
-void (SET_RTRACE)(SEXP x, int v);
+//@MOVED: SET_RTRACE used 2 times in stats
+//void (SET_RTRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);
 
 /* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);
-SEXP (SYMVALUE)(SEXP x);
+//@MOVED: SYMVALUE used 1 times in methods
+//SEXP (SYMVALUE)(SEXP x);
 SEXP (INTERNAL)(SEXP x);
-int  (DDVAL)(SEXP x);
+//@MOVED: DDVAL used 1 times in methods
+//int  (DDVAL)(SEXP x);
 void (SET_DDVAL)(SEXP x, int v);
 void SET_PRINTNAME(SEXP x, SEXP v);
 void SET_SYMVALUE(SEXP x, SEXP v);
@@ -654,7 +663,8 @@ SEXP (PRVALUE)(SEXP x);
 int  (PRSEEN)(SEXP x);
 void (SET_PRSEEN)(SEXP x, int v);
 void SET_PRENV(SEXP x, SEXP v);
-void SET_PRVALUE(SEXP x, SEXP v);
+//@MOVED: SET_PRVALUE used 2 times in methods
+//void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v);
 void SET_PRSEEN(SEXP x, int v);
 
@@ -850,11 +860,13 @@ Rboolean Rf_isUnmodifiedSpecSym(SEXP sym, SEXP env);
 Rboolean Rf_isUnordered(SEXP);
 Rboolean Rf_isUnsorted(SEXP, Rboolean);
 SEXP Rf_lengthgets(SEXP, R_len_t);
-SEXP Rf_xlengthgets(SEXP, R_xlen_t);
+//@MOVED:
+//SEXP Rf_xlengthgets(SEXP, R_xlen_t);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP R_lsInternal3(SEXP, Rboolean, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
-SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
+//@MOVED:
+//SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char *);
 SEXP Rf_mkCharLen(const char *, int);
@@ -904,7 +916,8 @@ void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 #endif
 SEXP R_tryEval(SEXP, SEXP, int *);
-SEXP R_tryEvalSilent(SEXP, SEXP, int *);
+//@MOVED: R_tryEvalSilent used 6 times in methods
+//SEXP R_tryEvalSilent(SEXP, SEXP, int *);
 const char *R_curErrorBuf();
 
 Rboolean Rf_isS4(SEXP);
@@ -940,8 +953,9 @@ const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
 /* Calling a function with arguments evaluated */
 SEXP R_forceAndCall(SEXP e, int n, SEXP rho);
 
-/* External pointer interface */
-SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
+//@MOVED: R_MakeExternalPtrFn used 2 times in methods
+///* External pointer interface */
+//SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
 void *R_ExternalPtrAddr(SEXP s);
 SEXP R_ExternalPtrTag(SEXP s);
 SEXP R_ExternalPtrProtected(SEXP s);
@@ -1287,7 +1301,8 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define list6			Rf_list6
 #define listAppend		Rf_listAppend
 #define match			Rf_match
-#define matchE			Rf_matchE
+//@MOVED: matchE used 1 times in utils
+//#define matchE			Rf_matchE
 #define mkChar			Rf_mkChar
 #define mkCharCE		Rf_mkCharCE
 #define mkCharLen		Rf_mkCharLen
@@ -1338,7 +1353,8 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define warningcall		Rf_warningcall
 #define warningcall_immediate	Rf_warningcall_immediate
 #define xlength(x)		Rf_xlength(x)
-#define xlengthgets		Rf_xlengthgets
+//@MOVED: xlengthgets used 1 times in tools
+//#define xlengthgets		Rf_xlengthgets
 
 #endif
 

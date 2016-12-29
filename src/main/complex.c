@@ -56,6 +56,7 @@
 
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <Rmath.h>
 
 #include "arithmetic.h"		/* complex_*  */

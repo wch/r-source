@@ -25,6 +25,7 @@
 
 #include <Defn.h> /* => Utils.h with the protos from here; Rinternals.h */
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
 

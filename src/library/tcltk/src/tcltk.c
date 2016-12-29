@@ -23,6 +23,8 @@
 #define NO_NLS
 #include <Defn.h>
 
+#include <private/Rinternals.h>
+
 #include "tcltk.h" /* declarations of our `public' interface */
 #include <stdlib.h>
 

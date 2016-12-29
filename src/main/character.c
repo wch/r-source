@@ -71,6 +71,7 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <errno.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <R_ext/Itermacros.h>

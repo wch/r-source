@@ -24,6 +24,8 @@
 #include <config.h>
 #endif
 
+#include <private/Rinternals.h>
+
 #include <Defn.h>
 #include <windows.h>
 
