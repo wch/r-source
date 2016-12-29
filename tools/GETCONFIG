@@ -31,6 +31,8 @@ line=`grep "SIZEOF_SIZE_T" config.h`
 echo "${line}"
 line=`grep "HAVE_UINTPTR_T" config.h`
 echo "${line}"
+line=`grep "HAVE_STDINT_H" config.h`
+echo "${line}"
 line=`grep "HAVE_ALLOCA_H" config.h`
 echo "${line}"
 echo

@@ -102,6 +102,10 @@ extern int R_running_as_main_program;
 /* duplicating Defn.h */
 #if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
  typedef unsigned long uintptr_t;
+#else
+#ifdef HAVE_STDINT_H
+# include <stdint.h>
+#endif
 #endif
 
 extern uintptr_t R_CStackLimit;	/* C stack limit */
