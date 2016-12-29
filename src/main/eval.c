@@ -19,8 +19,6 @@
  */
 
 
-#undef HASHING
-
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -1594,25 +1592,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 	UNPROTECT(1);
     }
 
-    /*  It isn't completely clear that this is the right place to do
-	this, but maybe (if the matchArgs above reverses the
-	arguments) it might just be perfect.
-
-	This will not currently work as the entry points in envir.c
-	are static.
-    */
-
-#ifdef  HASHING
-    {
-	SEXP R_NewHashTable(int);
-	SEXP R_HashFrame(SEXP);
-	int nargs = length(arglist);
-	HASHTAB(newrho) = R_NewHashTable(nargs);
-	newrho = R_HashFrame(newrho);
-    }
-#endif
-#undef  HASHING
-
     /*  Set a longjmp target which will catch any explicit returns
 	from the function body.  */
 
@@ -1693,21 +1672,6 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	R_Srcref = savesrcref;
 	UNPROTECT(1);
     }
-
-    /*  It isn't completely clear that this is the right place to do
-	this, but maybe (if the matchArgs above reverses the
-	arguments) it might just be perfect.  */
-
-#ifdef  HASHING
-    {
-	SEXP R_NewHashTable(int);
-	SEXP R_HashFrame(SEXP);
-	int nargs = length(arglist);
-	HASHTAB(newrho) = R_NewHashTable(nargs);
-	newrho = R_HashFrame(newrho);
-    }
-#endif
-#undef  HASHING
 
     /*  Set a longjmp target which will catch any explicit returns
 	from the function body.  */
