@@ -539,6 +539,10 @@
       \item Asking for \code{methods()} on \code{"|"} returns only S3
       methods. See
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html}.
+
+      \item \code{HAVE_UINTPTR_T} and \code{HAVE_STDINT_H} is now
+      passed through to \code{Rconfig.h} such that \code{Rinterface.h}
+      can use the proper types for stack variables.
     }
   }
 }
