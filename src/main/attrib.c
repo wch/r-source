@@ -1229,21 +1229,20 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	nvalues++;
     }
     while (attrs != R_NilValue) {
-	/* treat R_RowNamesSymbol specially */
-	if (TAG(attrs) == R_RowNamesSymbol)
-	    SET_VECTOR_ELT(value, nvalues,
-			   getAttrib(CAR(args), R_RowNamesSymbol));
-	else
-	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
-	if (TAG(attrs) == R_NilValue)
-	    SET_STRING_ELT(names, nvalues, R_BlankString);
-	else
+	SEXP tag = TAG(attrs);
+	if (TYPEOF(tag) == SYMSXP) {
+	    SET_VECTOR_ELT(value, nvalues, getAttrib(CAR(args), tag));
 	    SET_STRING_ELT(names, nvalues, PRINTNAME(TAG(attrs)));
+	}
+	else {
+	    MARK_NOT_MUTABLE(CAR(attrs));
+	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
+	    SET_STRING_ELT(names, nvalues, R_BlankString);
+	}	
 	attrs = CDR(attrs);
 	nvalues++;
     }
     setAttrib(value, R_NamesSymbol, names);
-    SET_NAMED(value, NAMED(CAR(args)));
     UNPROTECT(3);
     return value;
 }
