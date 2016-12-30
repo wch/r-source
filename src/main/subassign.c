@@ -106,15 +106,17 @@ static R_INLINE void SET_VECTOR_ELT_NR(SEXP x, R_xlen_t i, SEXP v)
 
 static R_INLINE SEXP getNames(SEXP x)
 {
-#ifdef SWITCH_TO_REFCNT
-    return getAttrib(x, R_NamesSymbol);
-#else
-    /* don't use getAttrib since that would bump NAMED on the names attribute */
+    /* defer to getAttrib if a 'dim' attribute is present */
+    for (SEXP attr = ATTRIB(x); attr != R_NilValue; attr = CDR(attr))
+	if (TAG(attr) == R_DimSymbol)
+	    return getAttrib(x, R_NamesSymbol);
+
+    /* don't use getAttrib since that would mark as immutable */
     for (SEXP attr = ATTRIB(x); attr != R_NilValue; attr = CDR(attr))
 	if (TAG(attr) == R_NamesSymbol)
 	    return CAR(attr);
+
     return R_NilValue;
-#endif
 }
 
 /* EnlargeVector() takes a vector "x" and changes its length to "newlen".
@@ -125,7 +127,7 @@ static SEXP EnlargeNames(SEXP, R_xlen_t, R_xlen_t);
 
 static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 {
-    R_xlen_t i, len;
+    R_xlen_t i, len, newtruelen;
     SEXP newx, names;
     static SEXP R_CheckBoundsSymbol = NULL;
 
@@ -173,7 +175,12 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	}
     }
 
-    R_xlen_t newtruelen = newlen * expand;
+    if (newlen > len)
+	newtruelen = newlen * expand;
+    else
+	/* sometimes this is called when no expansion is needed */
+	newtruelen = newlen;
+
     /**** for now, don't cross the long vector boundary; drop when
 	  ALTREP is merged */
 #ifdef ALTREP
