@@ -659,6 +659,10 @@ An object of class "foo"
 + 	      TRUE)
 + }
 Loading required package: Matrix
+Note: method with signature 'numeric#dMatrix' chosen for function '>',
+ target signature 'numeric#ddiMatrix'.
+ "ANY#ddiMatrix" would also be valid
+<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
 > 
 > 
 > ## containing "array" ("matrix", "ts", ..)

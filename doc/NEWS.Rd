@@ -594,6 +594,11 @@
 
       \item \code{methods(f)} now also works for \code{f} \code{"("}
       or \code{"{"}.
+
+      %% Not yet ported from trunk
+      \item \code{pmin()} and \code{pmax()} now work again for
+      \code{ordered} factors and 0-length S3 classed objects, thanks to
+      Suharto Anggono's \PR{17195} and \PR{17200}.
     }
   }
 }

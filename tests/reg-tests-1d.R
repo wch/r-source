@@ -472,6 +472,37 @@ f <- eval(parse(text = "function() { x <- 1 ; for(i in 1:10) { i <- i }}",
 g <- removeSource(f)
 stopifnot(is.null(attributes(body(g)[[3L]][[4L]])))
 
+## pmin/pmax of ordered factors -- broken in R 3.3.2  [PR #17195]
+of <- ordered(c(1,5,6))
+set.seed(7); rof <- sample(of, 12, replace=TRUE)
+stopifnot(identical(pmax(rof, of), ordered(pmax(c(rof), c(of)), labels=levels(rof)) -> pmar),
+	  identical(pmax(of, rof), pmar),
+	  identical(pmin(rof, of), ordered(pmin(c(rof), c(of)), labels=levels(rof)) -> pmir),
+	  identical(pmin(of, rof), pmir),
+	  identical(pmin(rof, 5), ordered(pmin(c(rof), 2), levels=1:3, labels=levels(rof))),
+	  identical(pmax(rof, 6), ordered(pmax(c(rof), 3), levels=1:3, labels=levels(rof))),
+	  identical(pmax(rof, 1), rof),
+	  identical(pmin(rof, 6), rof),
+	  identical(pmax(of, 5, rof), ordered(pmax(c(of),2L,c(rof)), levels=1:3,
+                                              labels=levels(of)))
+	  )
+## these were "always" true .. but may change (FIXME ?)
+stopifnot(
+    identical(of,   pmin(of, 3)) # what? error? at least warning?
+    ,
+    identical(pmar, pmax(of, 3, rof))
+)
+## pmin/pmax() of 0-length S3 classed  [PR #17200]
+for(ob0 in list(I(character()), I(0[0]), I(0L[0]),
+                structure(logical(), class="L"),
+                structure(character(), class="CH"))) {
+    stopifnot(identical(ob0, pmax(ob0, ob0)),
+              identical(ob0, pmin(ob0, ob0)),
+              identical(ob0, pmin(ob0, "")),
+              identical(ob0, pmax(ob0, "")))
+}
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
