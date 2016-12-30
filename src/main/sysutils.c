@@ -28,7 +28,7 @@
 #include <Internal.h>
 #include <private/Rinternals.h>
 #include <R_ext/Riconv.h>
-#include <Rinterface.h>
+#include <private/Rinterface.h>
 #include <errno.h>
 
 /*

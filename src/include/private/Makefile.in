@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
 R_PRIVATE_HEADERS = \
-  Rinternals.h
+  Rinternals.h Rinterface.h
 
 DISTFILES = Makefile.in $(R_PRIVATE_HEADERS)
 TIMESTAMPS = $(R_PRIVATE_HEADERS:.h=.ts)

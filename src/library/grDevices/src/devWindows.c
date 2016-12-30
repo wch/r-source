@@ -30,6 +30,7 @@
 
 #define R_USE_SIGNALS 1
 #include <Defn.h>
+#include <private/Rinterface.h>
 #define R_USE_PROTOTYPES 1
 #include <R_ext/GraphicsEngine.h>
 

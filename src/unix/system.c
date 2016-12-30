@@ -53,7 +53,7 @@
 // This creates the interface pointers in this file
 #define __SYSTEM__
 #define R_INTERFACE_PTRS 1
-#include <Rinterface.h>
+#include <private/Rinterface.h>
 #undef __SYSTEM__
 
 #include "Runix.h"

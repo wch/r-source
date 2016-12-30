@@ -58,10 +58,12 @@ extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
 extern void R_Suicide(const char *);
-extern char *R_HomeDir(void);
+//@MOVED: R_HomeDir used 1 times in grDevices
+//extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
-extern void R_setupHistory(void);
+//@MOVED: R_setupHistory used 2 times in utils
+//extern void R_setupHistory(void);
 extern char *R_HistoryFile;	/* Name of the history file */
 extern int R_HistorySize;	/* Size of the history file */
 extern int R_RestoreHistory;	/* restore the history file? */

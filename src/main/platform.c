@@ -40,7 +40,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
-#include <Rinterface.h>
+#include <private/Rinterface.h>
 #include <Fileio.h>
 #include <ctype.h>			/* toupper */
 #include <time.h>			/* for ctime */
