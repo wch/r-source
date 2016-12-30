@@ -1094,6 +1094,11 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	    SET_TAG(val, installTrChar(STRING_ELT(top, i++)));
     }
     UNPROTECT(2);
+
+    /* Mark as immutable so nested complex assignment can't make the
+       dimnames attribute inconsistent with the length */
+    MARK_NOT_MUTABLE(val);
+
     return vec;
 }
 
