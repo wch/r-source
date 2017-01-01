@@ -25,7 +25,8 @@
    It should not be included by package sources unless they are
    providing such a front-end.
 
-   If CSTACK_DEFNS is defined, also define HAVE_UINTPTR_T before including this.
+   If CSTACK_DEFNS is defined, if appropriate define HAVE_UINTPTR_T and
+   include <stdint.h> (or <cstdint>) before including this.
 */
 
 #ifndef RINTERFACE_H_
