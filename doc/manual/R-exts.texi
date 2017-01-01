@@ -13093,7 +13093,9 @@ The macro @code{WORDS_BIGENDIAN} is defined on
 big-endian@footnote{@uref{https://en.wikipedia.org/@/wiki/@/Endianness}.}
 systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
 little-endian systems (nowadays all the commoner @R{} platforms).  It
-can be useful when manipulating binary files.
+can be useful when manipulating binary files.  NB: these macros apply
+only to the C compiler used to build @R{}, not necessarily to another C
+or C++ compiler.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an

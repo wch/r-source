@@ -24,6 +24,8 @@ line=`grep "ENABLE_NLS" config.h`
 echo "${line}"
 line=`grep "HAVE_AQUA" config.h`
 echo "${line}"
+echo "/* NB: the rest are for the C compiler used to build R:"
+echo "   they do not necessarily apply to a C++ compiler */"
 echo "/* Deprecated: use _OPENMP instead */"
 line=`grep "SUPPORT_OPENMP" config.h`
 echo "${line}"
