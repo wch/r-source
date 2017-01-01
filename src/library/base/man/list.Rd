@@ -86,7 +86,8 @@ alist(\dots)
   \code{\link{as.environment}()} method for list objects.
 
   An empty pairlist, \code{pairlist()} is the same as
-  \code{\link{NULL}}.  This is different from \code{list()}.
+  \code{\link{NULL}}.  This is different from \code{list()}: some but
+  not all operations will promote an empty pairlist to an empty list.
 
   \code{as.pairlist} is implemented as \code{\link{as.vector}(x,
   "pairlist")}, and hence will dispatch methods for the generic function

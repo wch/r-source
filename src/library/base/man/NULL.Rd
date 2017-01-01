@@ -1,6 +1,6 @@
 % File src/library/base/man/NULL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NULL}
@@ -18,11 +18,6 @@ is.null(x)
   \code{NULL} represents the null object in \R: it is a \link{reserved}
   word.  \code{NULL} is often returned by expressions and functions
   whose value is undefined.
-
-  \code{as.null} ignores its argument and returns the value \code{NULL}.
-
-  \code{is.null} returns \code{TRUE} if its argument
-  is \code{NULL} and \code{FALSE} otherwise.
 }
 \arguments{
   \item{x}{an object to be tested or coerced.}
@@ -30,12 +25,19 @@ is.null(x)
 }
 \details{
   \code{NULL} can be indexed (see \link{Extract}) in just about any
-  syntactically legal way: whether is makes sense or not, the result is
+  syntactically legal way: whether it makes sense or not, the result is
   always \code{NULL}.  Objects with value \code{NULL} can be changed by
   replacement operators and will be coerced to the type of the
   right-hand side.
 
-  \code{NULL} is also used as the empty \link{pairlist}.
+  \code{NULL} is also used as the empty \link{pairlist}: see the
+  examples. Because pairlists are often promoted to lists, you may
+  encounter \code{NULL} being promoted to an empty list.
+
+  Objects with value \code{NULL} cannot have attributes as there is only
+  one null object: attempts to assign them are either an error
+  (\code{\link{attr}}) or promote the object to an empty list with
+  attribute(s) (\code{\link{attributes}} and \code{\link{structure}}).
 }
 \note{
   \code{is.null} is a \link{primitive} function.
@@ -45,8 +47,15 @@ is.null(x)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
+\value{
+  \code{as.null} ignores its argument and returns \code{NULL}.
+
+  \code{is.null} returns \code{TRUE} if its argument's value
+  is \code{NULL} and \code{FALSE} otherwise.
+}
 \examples{
 is.null(list())     # FALSE (on purpose!)
+is.null(pairlist()) # TRUE
 is.null(integer(0)) # FALSE
 is.null(logical(0)) # FALSE
 as.null(list(a = 1, b = "c"))
