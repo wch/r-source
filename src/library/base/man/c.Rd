@@ -30,7 +30,7 @@ c(\dots)
 \details{
   The output type is determined from the highest type of the components
   in the hierarchy NULL < raw < logical < integer < double < complex < character
-  < list < expression.  Pairlists are treated as lists, but non-vector
+  < list < expression.  Pairlists are treated as lists, whereas non-vector
   components (such names and calls) are treated as one-element lists
   which cannot be unlisted even if \code{recursive = TRUE}.
 
@@ -43,7 +43,7 @@ c(\dots)
   \code{c} is sometimes used for its side effect of removing attributes
   except names, for example to turn an array into a vector.
   \code{as.vector} is a more intuitive way to do this, but also drops
-  names.  Note too that methods other than the default are not required
+  names.  Note that methods other than the default are not required
   to do this (and they will almost certainly preserve a class attribute).
 
   This is a \link{primitive} function.

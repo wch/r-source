@@ -1,6 +1,6 @@
 % File src/library/base/man/attributes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attributes}
@@ -55,6 +55,9 @@ mostattributes(obj) <- value
   The names of a pairlist are not stored as attributes, but are reported
   as if they were (and can be set by the replacement form of
   \code{attributes}).
+  
+  \code{\link{NULL}} objects cannot have attributes and attempts to
+  assign them will promote the object to an empty list.
 
   Both assignment and replacement forms of \code{attributes} are
   \link{primitive} functions.
@@ -64,7 +67,8 @@ mostattributes(obj) <- value
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
-\seealso{\code{\link{attr}}.
+\seealso{
+  \code{\link{attr}},  \code{\link{structure}}.
 }
 \examples{
 x <- cbind(a = 1:3, pi = pi) # simple matrix with dimnames

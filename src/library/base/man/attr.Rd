@@ -1,6 +1,6 @@
 % File src/library/base/man/attr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attr}
@@ -45,6 +45,9 @@ attr(x, which) <- value
 
   The extractor function allows (and does not match) empty and missing
   values of \code{which}: the replacement function does not.
+
+  \code{\link{NULL}} objects cannot have attributes and attempting to
+  assign one by \code{attr} gives an error.
 
   Both are \link{primitive} functions.
 }
