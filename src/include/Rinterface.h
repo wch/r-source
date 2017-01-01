@@ -34,7 +34,6 @@
 #define RINTERFACE_H_
 
 #include <R_ext/Boolean.h>
-#include <R_ext/RStartup.h>
 
 #ifdef __cplusplus
 /* we do not support DO_NOT_USE_CXX_HEADERS in this file */
@@ -122,7 +121,8 @@ extern uintptr_t R_CStackStart;	/* Initial stack address */
 /* formerly in src/unix/devUI.h */
 
 #ifdef R_INTERFACE_PTRS
-#include <Rinternals.h>
+#include <Rinternals.h> // for SEXP
+#include <R_ext/RStartup.h> // for SA_TYPE
 
 #ifdef __SYSTEM__
 # define extern
