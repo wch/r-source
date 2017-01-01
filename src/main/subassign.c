@@ -176,7 +176,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     }
 
     if (newlen > len)
-	newtruelen = newlen * expand;
+	newtruelen = (R_xlen_t) (newlen * expand);
     else
 	/* sometimes this is called when no expansion is needed */
 	newtruelen = newlen;
