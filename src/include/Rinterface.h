@@ -108,10 +108,10 @@ extern int R_running_as_main_program;
 #if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
  typedef unsigned long uintptr_t;
 #else
-# ifdef __cplusplus
-#  include <cstdint>
-# else
+# ifndef __cplusplus
 #  include <stdint.h>
+# elif __cplusplus >= 201103L
+#  include <cstdint>
 # endif
 #endif
 
