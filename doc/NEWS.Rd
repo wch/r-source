@@ -310,14 +310,16 @@
       \file{R_ext/QuartzDevice.h} and \file{R_ext/eventloop.h} are no
       longer installed on Windows.
 
-      \item No-longer installed headers \file{GraphicsBase.h},
+      \item No-longer-installed headers \file{GraphicsBase.h},
       \file{RGraphics.h}, \file{Rmodules/RX11.h} and
       \file{Rmodules/Rlapack.h} which had a LGPL license no longer do so.
         
       \item \code{HAVE_UINTPTR_T} is now defined where appropriate by
       \code{Rconfig.h} so that it can be included before
       \code{Rinterface.h} when \code{CSTACK_DEFNS} is defined and a C
-      compiler (not C++) is in use.
+      compiler (not C++) is in use.  \code{Rinterface.h} now includes C
+      header \file{stdint.h} or C++11 header \file{cstdint} where
+      needed.
     }
   }
 
