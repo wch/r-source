@@ -38,7 +38,7 @@ extern "C" {
 #else
 # include <stdio.h>
 # include <limits.h> /* for INT_MAX */
-# include <stddef.h> /* for ptrdiff_t */
+# include <stddef.h> /* for ptrdiff_t, which is required by C99 */
 #endif
 
 #include <R_ext/Arith.h>
