@@ -313,6 +313,11 @@
       \item No-longer installed headers \file{GraphicsBase.h},
       \file{RGraphics.h}, \file{Rmodules/RX11.h} and
       \file{Rmodules/Rlapack.h} which had a LGPL license no longer do so.
+        
+      \item \code{HAVE_UINTPTR_T} and \code{HAVE_STDINT_H} are now
+      defined where needed by \code{Rconfig.h} so that it can be
+      included before \code{Rinterface.h} when \code{CSTACK_DEFNS} is
+      defined and a C compiler (not C++) is in use.
     }
   }
 
@@ -539,10 +544,6 @@
       \item Asking for \code{methods()} on \code{"|"} returns only S3
       methods. See
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html}.
-
-      \item \code{HAVE_UINTPTR_T} and \code{HAVE_STDINT_H} is now
-      passed through to \code{Rconfig.h} such that \code{Rinterface.h}
-      can use the proper types for stack variables.
     }
   }
 }

@@ -14100,7 +14100,9 @@ extern uintptr_t R_CStackStart; /* Initial stack address */
 @noindent
 Note that @code{uintptr_t} is a C99 type for which a substitute is
 defined in @R{}, so your code needs to define @code{HAVE_UINTPTR_T}
-appropriately.
+appropriately: from C code this can be done by first including
+@file{Rconfig.h} but for usage C++ code the compiler should be tested to
+see if it defines the type.
 
 These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having

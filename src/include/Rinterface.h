@@ -24,6 +24,10 @@
 
    It should not be included by package sources unless they are
    providing such a front-end.
+
+   If CSTACK_DEFNS is defined, also define HAVE_UINTPTR_T before
+   including this perhaps by including Rconfig.h from C code (for C++
+   you need to test the C++ compiler in use).
 */
 
 #ifndef RINTERFACE_H_
@@ -33,6 +37,7 @@
 #include <R_ext/RStartup.h>
 
 #ifdef __cplusplus
+/* we do not support DO_NOT_USE_CXX_HEADERS in this file */
 # include <cstdio>
 extern "C" {
 #else
@@ -103,9 +108,11 @@ extern int R_running_as_main_program;
 #if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
  typedef unsigned long uintptr_t;
 #else
-#ifdef HAVE_STDINT_H
-# include <stdint.h>
-#endif
+# ifdef __cplusplus
+#  include <cstdint>
+# else
+#  include <stdint.h>
+# endif
 #endif
 
 extern uintptr_t R_CStackLimit;	/* C stack limit */
