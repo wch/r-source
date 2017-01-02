@@ -4096,6 +4096,11 @@ If set to a true value, report already registered S3 methods in
 base/recommended packages which are overwritten when this package's
 namespace is loaded. 
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_TESTS_NLINES_
+Number of trailing lines of test output to reproduce in the log.  If
+@code{0} all lines except the @R{} preamble are reproduced.
+Default: 13.
 @end vtable
 
 CRAN's submission checks use something like

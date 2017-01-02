@@ -562,7 +562,15 @@
       (rather than failing silently).
     }
   }
-
+  
+  \subsection{UTILITIES}{
+    \itemize{        
+      \item Enviromental variable \env{_R_CHECK_TESTS_NLINES_} controls
+      how \command{R CMD check} reports failing tests (see §8 of the
+      \sQuote{R Internals} manual).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
