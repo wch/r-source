@@ -25,9 +25,9 @@
    It should not be included by package sources unless they are
    providing such a front-end.
 
-   If CSTACK_DEFNS is defined, also define HAVE_UINTPTR_T before
-   including this perhaps by including Rconfig.h from C code (for C++
-   you need to test the C++ compiler in use).
+   If CSTACK_DEFNS is defined, also define HAVE_UINTPTR_T (if true)
+   before including this, perhaps by including Rconfig.h from C code
+   (for C++ you need to test the C++ compiler in use).
 */
 
 #ifndef RINTERFACE_H_
@@ -103,7 +103,9 @@ void fpu_setup(Rboolean);
 extern int R_running_as_main_program;
 
 #ifdef CSTACK_DEFNS
-/* duplicating Defn.h */
+/* duplicating older Defn.h.
+   Note: this is never used when including Rinterface.h from R itself
+*/
 #if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
  typedef unsigned long uintptr_t;
 #else
