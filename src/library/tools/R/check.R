@@ -2695,7 +2695,7 @@ setRlibs <-
                                       colClasses = c("character", rep("numeric", 3)))
                 o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
                 times <- times[o, ]
-                
+
                 keep <- ((times[[1L]] + times[[2L]] > theta) |
                          (times[[3L]] > theta))
                 if(any(keep)) {
@@ -2906,9 +2906,17 @@ setRlibs <-
                             if (!(basename(f) %in% src_files))
                                 f <- sub("r$", "[rR]", f) # Just in case the test script got deleted somehow, show the pattern.
                         }
-                        ll <- length(lines)
                         keep <- as.integer(Sys.getenv("_R_CHECK_TESTS_NLINES_",
                                                       "13"))
+                        ## keep = 0 means keep all of it, but we will
+                        ## always omit the R preamble and start at the first
+                        ## line with an R prompt.
+                        ll <- length(lines)
+                        st <- grep("^>", lines, useBytes = TRUE)
+                        if (length(st)) {
+                            lines <- lines[st[1L]:ll]
+                            ll <- length(lines)
+                        }
                         if (keep > 0L)
                             lines <- lines[max(1L, ll-keep-1L):ll]
                         if (R_check_suppress_RandR_message)
@@ -2917,7 +2925,8 @@ setRlibs <-
                                           useBytes = TRUE)
                         printLog(Log, sprintf("Running the tests in %s failed.\n",
                                               sQuote(f)))
-                        printLog(Log, if(keep > 0L) sprintf("Last %i lines of output:\n", keep)
+                        printLog(Log, if(keep > 0L && keep < ll)
+                                 sprintf("Last %i lines of output:\n", keep)
                                  else "Complete output:\n")
                         printLog0(Log, .format_lines_with_indent(lines), "\n")
                     }
