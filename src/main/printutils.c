@@ -820,7 +820,14 @@ const char *EncodeElement0(SEXP x, int indx, int quote, const char *dec)
 }
 
 /* EncodeChar is a simple wrapper for EncodeString
-   called by error messages to display CHARSXP values */
+   called by error messages to display CHARSXP values.
+
+   The pointer returned by EncodeChar points into an internal buffer
+   which is overwritten by subsequent calls to EncodeChar/EncodeString.
+   It is the responsibility of the caller to copy the result before
+   any subsequent call to EncodeChar/EncodeString may happen. Note that
+   particularly it is NOT safe to pass the result of EncodeChar as 3rd
+   argument to errorcall (errorcall_cpy can be used instead). */
 //attribute_hidden
 const char *EncodeChar(SEXP x)
 {

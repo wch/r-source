@@ -894,6 +894,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define EncodeString           Rf_EncodeString
 # define EnsureString 		Rf_EnsureString
 # define endcontext		Rf_endcontext
+# define errorcall_cpy		Rf_errorcall_cpy
 # define ErrorMessage		Rf_ErrorMessage
 # define evalList		Rf_evalList
 # define evalListKeepMissing	Rf_evalListKeepMissing
@@ -1239,6 +1240,7 @@ void NORET R_jumpctxt(RCNTXT *, int, SEXP);
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
+void NORET errorcall_cpy(SEXP, const char *, ...);
 void NORET ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);

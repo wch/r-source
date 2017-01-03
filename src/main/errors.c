@@ -791,6 +791,21 @@ void NORET errorcall(SEXP call, const char *format,...)
     va_end(ap);
 }
 
+/* Like errorcall, but copies all data for the error message into a buffer
+   before doing anything else. */
+attribute_hidden
+void NORET errorcall_cpy(SEXP call, const char *format, ...)
+{
+    char buf[BUFSIZE];
+
+    va_list(ap);
+    va_start(ap, format);
+    Rvsnprintf(buf, BUFSIZE, format, ap);
+    va_end(ap);
+
+    errorcall(call, "%s", buf);
+}
+
 SEXP attribute_hidden do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP res;
