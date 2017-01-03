@@ -675,10 +675,17 @@ SEXP eval(SEXP e, SEXP rho)
 	   end up getting duplicated if NAMED = 2.) LT */
 	break;
     case LANGSXP:
-	if (TYPEOF(CAR(e)) == SYMSXP)
+	if (TYPEOF(CAR(e)) == SYMSXP) {
 	    /* This will throw an error if the function is not found */
-	    PROTECT(op = findFun3(CAR(e), rho, e));
-	else
+	    SEXP ecall = e;
+
+	    /* This picks the correct/better error expression for 
+	       replacement calls running in the AST interpreter. */
+	    if (R_GlobalContext != NULL &&
+		    (R_GlobalContext->callflag & CTXT_CCODE))
+		ecall = R_GlobalContext->call;
+	    PROTECT(op = findFun3(CAR(e), rho, ecall));
+	} else
 	    PROTECT(op = eval(CAR(e), rho));
 
 	if(RTRACE(op) && R_current_trace_state()) {
