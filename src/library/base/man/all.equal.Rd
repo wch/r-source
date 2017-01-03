@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -76,9 +76,9 @@ attr.all.equal(target, current, \dots,
   targets.
 
   Remember that arguments which follow \code{\dots} must be specified by
-  (unabbreviated) name: some of them were before \code{\dots} prior to
-  \R 3.1.0.  It is inadvisable to pass unnamed arguments in \code{\dots}
-  as these will match different arguments in different methods.
+  (unabbreviated) name.  It is inadvisable to pass unnamed arguments in
+  \code{\dots} as these will match different arguments in different
+  methods.
 
   Numerical comparisons for \code{scale = NULL} (the default) are
   typically on \emph{relative difference} scale unless the target values

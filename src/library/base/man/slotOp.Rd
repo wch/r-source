@@ -1,6 +1,6 @@
 % File src/library/base/man/slotOp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{slotOp}
@@ -36,9 +36,6 @@ object@name <- value
   internal use only.)  The replacement operator checks that the slot
   already exists on the object (which it should if the object is really
   from the class it claims to be).
-
-  Prior to \R 3.0.0 the replacement operator was in package
-  \pkg{methods} and had a different test for validity of \code{name}.
 
   These are internal generic operators: see \link{InternalMethods}.
 }

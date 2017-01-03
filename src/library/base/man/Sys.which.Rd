@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.which.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-2014 R Core Team
+% Copyright 2007-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.which}
@@ -35,7 +35,7 @@ Sys.which(names)
   executable  or some indication that no executable of that name was
   found.  Typically the indication is \code{""}, but this does depend on
   the OS (and the known exceptions are changed to \code{""}).  Missing
-  values in \code{names} have missing return values (as from \R 3.0.0).
+  values in \code{names} have missing return values.
 
   On Windows the paths will be short paths (8+3 components, no spaces)
   with \code{\\} as the path delimiter.
@@ -45,10 +45,6 @@ Sys.which(names)
   that is not part of e.g.\sspace{}the POSIX standards, exactly what it does is
   OS-dependent.  It will usually do tilde-expansion and it may make use
   of \command{csh} aliases.
-
-  In \R 2.x.y, arguments containing spaces or other metacharacters
-  needed to be escaped as they would be for a shell: for example Windows
-  paths containing spaces needed to be enclosed in double quotes.
 }
 \examples{
 ## the first two are likely to exist everywhere

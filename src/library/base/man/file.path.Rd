@@ -1,6 +1,6 @@
 % File src/library/base/man/file.path.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.path}
@@ -26,8 +26,7 @@ file.path(\dots, fsep = .Platform$file.sep)
 
   Trailing path separators are invalid for Windows file paths apart from
   \file{/} and \file{d:/} (although some functions/utilities do accept
-  them), so as from \R 3.1.0 a trailing \code{/} or \code{\\} is
-  removed.
+  them), so a trailing \code{/} or \code{\\} is removed.
 }
 \value{
   A character vector of the arguments concatenated term-by-term and

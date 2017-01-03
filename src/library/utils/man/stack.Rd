@@ -1,6 +1,6 @@
 % File src/library/utils/man/stack.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stack}
@@ -46,10 +46,9 @@ unstack(x, \dots)
 
   Note that \code{stack} applies to \emph{vectors} (as determined by
   \code{\link{is.vector}}): non-vector columns (e.g., factors) will be
-  ignored (with a warning as from \R 2.15.0).  Where vectors of
-  different types are selected they are concatenated by
-  \code{\link{unlist}} whose help page explains how the type of the
-  result is chosen.
+  ignored with a warning.  Where vectors of different types are selected
+  they are concatenated by \code{\link{unlist}} whose help page explains
+  how the type of the result is chosen.
 
   These functions are generic: the supplied methods handle data frames
   and objects coercible to lists by \code{\link{as.list}}.

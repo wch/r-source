@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/col2rgb.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{col2rgb}
@@ -25,9 +25,9 @@ col2rgb(col, alpha = FALSE)
   \code{\link{NA}} (as integer or character) and \code{"NA"} mean transparent.
 
   Values of \code{col} not of one of these types are coerced: real
-  vectors are coerced to integer and other types to character.  (Prior to
-  \R 3.0.2 factors were coerced to their integer codes: in all other
-  cases the class is still ignored when doing the coercion.)
+  vectors are coerced to integer and other types to character.  (factors
+  are coerced to character: in all other cases the class is
+  ignored when doing the coercion.)
 
   Zero and negative values of \code{col} are an error.
 }

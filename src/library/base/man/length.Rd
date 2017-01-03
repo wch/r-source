@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -56,8 +56,6 @@ length(x) <- value
   (earlier versions of \CRANpkg{sets}). Where a single double value is
   returned that can be represented as an integer it is returned as a
   length-one integer vector.
-
-  As from \R 3.0.0, lengths can be returned as double in base \R.
 }
 
 \seealso{\code{nchar} for counting the number of characters in character

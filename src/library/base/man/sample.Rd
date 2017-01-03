@@ -1,6 +1,6 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sample}
@@ -70,7 +70,7 @@ sample.int(n, size = n, replace = FALSE, prob = NULL,
   \code{sample.int} is a bare interface in which both \code{n} and
   \code{size} must be supplied as integers.
 
-  As from \R 3.0.0, \code{n} can be larger than the largest integer of
+  Argument \code{n} can be larger than the largest integer of
   type \code{integer}, up to the largest representable integer in type
   \code{double}.  Only uniform sampling is supported.  Two
   random numbers are used to ensure uniform sampling of large integers.

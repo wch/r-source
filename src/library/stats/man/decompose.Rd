@@ -1,6 +1,6 @@
 % File src/library/stats/man/decompose.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{decompose}
@@ -48,7 +48,7 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
 }
 \value{
   An object of class \code{"decomposed.ts"} with following components:
-  \item{x}{The original series.  (Only since \R 2.14.0.)}
+  \item{x}{The original series.}
   \item{seasonal}{The seasonal component (i.e., the repeated seasonal figure).}
   \item{figure}{The estimated seasonal figure only.}
   \item{trend}{The trend component.}

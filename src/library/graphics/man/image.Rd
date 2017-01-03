@@ -1,6 +1,6 @@
 % File src/library/graphics/man/image.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{image}
@@ -95,7 +95,7 @@ image(x, \dots)
   The axes (where plotted) make use of the classes of \code{xlim} and
   \code{ylim} (and hence by default the classes of \code{x} and
   \code{y}): this will mean that for example dates are labelled as
-  such.  (As from \R 3.0.1.)
+  such.
 
   Notice that \code{image} interprets the \code{z} matrix as a table of
   \code{f(x[i], y[j])} values, so that the x axis corresponds to row

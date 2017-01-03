@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -51,11 +51,10 @@ load(file, envir = parent.frame(), verbose = FALSE)
   Larger values will print names to a greater depth.
 
   Objects can be saved with references to namespaces, usually as part of
-  the environment of a function or formula.  As from \R 3.1.0 such
-  objects can be loaded even if the namespace is not available: it is
-  replaced by a reference to the global environment with a warning.  The
-  warning identifies the first object with such a reference (but there
-  may be more than one).
+  the environment of a function or formula.  Such objects can be loaded
+  even if the namespace is not available: it is replaced by a reference
+  to the global environment with a warning.  The warning identifies the
+  first object with such a reference (but there may be more than one).
 }
 \value{
   A character vector of the names of objects created, invisibly.

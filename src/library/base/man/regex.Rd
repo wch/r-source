@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -263,10 +263,10 @@
   (letter, digit or underscore in the current locale: in UTF-8 mode only
   ASCII letters and digits are considered) respectively, and their
   upper-case versions represent their negation.  Vertical tab was not
-  regarded as a space character in a \code{C} locale before PCRE 8.34
-  (included in \R 3.0.3).  Sequences \samp{\\h}, \samp{\\v}, \samp{\\H}
-  and \samp{\\V} match horizontal and vertical space or the negation.
-  (In UTF-8 mode, these do match non-ASCII Unicode code points.)
+  regarded as a space character in a \code{C} locale before PCRE 8.34.
+  Sequences \samp{\\h}, \samp{\\v}, \samp{\\H} and \samp{\\V} match
+  horizontal and vertical space or the negation.  (In UTF-8 mode, these
+  do match non-ASCII Unicode code points.)
 
   There are additional escape sequences: \samp{\\cx} is
   \samp{cntrl-x} for any \samp{x}, \samp{\\ddd} is the

@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -195,10 +195,6 @@ getOption(x, default = NULL)
       \code{\link{format}} and \code{\link{as.character}} but not when
       deparsing nor by \code{\link{sprintf}} nor \code{\link{formatC}}
       (which are sometimes used prior to printing.)
-
-      Only single-byte characters were supported prior to \R 3.2.0.
-      In \R 3.2.1 and earlier, multi- (or zero-) character \code{OutDec}
-      were accepted, but always worked only partially.
     }
 
     \item{\code{pager}:}{the command used for displaying text files by

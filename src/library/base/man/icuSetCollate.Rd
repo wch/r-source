@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2015 R Core Team
+% Copyright 2008-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -64,10 +64,10 @@ icuGetCollate(type = c("actual", "valid"))
   Some special values are accepted for \code{locale}:
   \describe{
     \item{\code{"none"}:}{ICU is not used for collation: the OS's
-      collation services are used instead.  (As from \R 3.1.2.)}
+      collation services are used instead.}
     \item{\code{"ASCII"}:}{ICU is not used for collation: the C function
       \code{strcmp} is used instead, which should sort byte-by-byte in
-      (unsigned) numerical order.  (As from \R 3.1.3.)}
+      (unsigned) numerical order.}
     \item{\code{"default"}:}{
       obtains the locale from the OS as is done at the start of the
       session.  If environment variable \env{R_ICU_LOCALE} is set to a

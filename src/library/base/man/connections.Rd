@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -319,8 +319,8 @@ isIncomplete(con)
 
 \section{Compression}{
   \R supports \command{gzip}, \command{bzip2} and \command{xz}
-  compression (added in \R 2.10.0: also read-only support for its
-  precursor \code{lzma} compression).
+  compression (also read-only support for its precursor, \code{lzma}
+  compression).
 
   For reading, the type of compression (if any) can be determined from
   the first few bytes of the file.  Thus for \code{file(raw = FALSE)}

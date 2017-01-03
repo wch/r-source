@@ -1,6 +1,6 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
@@ -65,7 +65,7 @@ splinefunH(x, y, m)
 
   Method \code{"hyman"} computes a \emph{monotone} cubic spline using
   Hyman filtering of an \code{method = "fmm"} fit for strictly monotonic
-  inputs.  (Added in \R 2.15.2.)
+  inputs.
 
   These interpolation splines can also be used for extrapolation, that is
   prediction at points outside the range of \code{x}.  Extrapolation

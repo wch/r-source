@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -89,9 +89,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   interfere with certain encoding and typeface selections.  If you have
   problems in the rendering of certain character sets, try this option.
 
-  As from \R 3.1.0 it also supports the \samp{[inconsolata]} option, to
-  render monospaced text in \code{inconsolata}, the font used by default
-  for \R help pages.
+  It also supports the \samp{[inconsolata]} option, to render monospaced
+  text in \code{inconsolata}, the font used by default for \R help
+  pages.
 
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
   when setting \R output.  Either set

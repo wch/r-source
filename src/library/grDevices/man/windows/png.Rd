@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -126,8 +126,7 @@ tiff(filename = "Rplot\%03d.tif",
   of the TIFF specification) in combination with the compression method,
   which is effective for continuous-tone images, especially colour ones.
   
-  Prior to \R 3.0.3 unknown resolutions in BMP files were sometimes
-  recorded incorrectly: they are now recorded as 72 ppi.
+  Unknown resolutions in BMP files are recorded as 72 ppi.
 }
 
 \value{
@@ -160,7 +159,7 @@ tiff(filename = "Rplot\%03d.tif",
     \item Where support has been compiled in for cairographics, plotting
     on cairo surfaces.  This may use the native platform support for
     fonts, or it may use \code{fontconfig} to support a wide range of
-    font formats.  (This was first available on Windows in \R 2.14.0.)
+    font formats.
   }
   Inevitably there will be differences between the options supported and
   output produced.  Perhaps the most important are support for
