@@ -502,6 +502,19 @@ for(ob0 in list(I(character()), I(0[0]), I(0L[0]),
               identical(ob0, pmax(ob0, "")))
 }
 
+## quantile(x, prob) monotonicity in prob[] - PR#16672
+sortedQ <- function(x, prob, ...)
+    vapply(1:9, function(type)
+        !is.unsorted(quantile(x, prob, type=type, names=FALSE, ...)), NA)
+xN <- c(NA, 10.5999999999999996, NA, NA, NA, 10.5999999999999996,
+        NA, NA, NA, NA, NA, 11.3000000000000007, NA, NA,
+        NA, NA, NA, NA, NA, 5.2000000000000002)
+sQ.xN <- sortedQ(xN, probs = seq(0,1,1/10), na.rm = TRUE)
+x2 <- rep(-0.00090419678460984, 602)
+stopifnot(sQ.xN, sortedQ(x2, (0:5)/5))
+## both not fulfilled in R < 3.4.0
+
+
 
 
 ## keep at end

@@ -277,6 +277,9 @@
       \item The (default) Stangle driver \code{Rtangle} allows
       \code{annotate} to be a function and gets a new
       \code{drop.evalFALSE} option.
+
+      \item The default method for \code{quantile(x, prob)} should now
+      be monotone in \code{prob}, even in border cases, see \PR{16672}.
     }
   }
 
