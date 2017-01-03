@@ -501,6 +501,34 @@ for(ob0 in list(I(character()), I(0[0]), I(0L[0]),
               identical(ob0, pmin(ob0, "")),
               identical(ob0, pmax(ob0, "")))
 }
+## pmin()/pmax() of matching numeric data frames
+mUSJ <- data.matrix(dUSJ <- USJudgeRatings)
+stopifnot(
+    identical(              pmin(dUSJ, 10 - dUSJ),
+              as.data.frame(pmin(mUSJ, 10 - mUSJ))),
+    identical(              pmax(dUSJ, 10 - dUSJ),
+              as.data.frame(pmax(mUSJ, 10 - mUSJ))))
+## had failed for a while.   Note however :
+d1 <- data.frame(y0 = 0:3 +1/2) ; (d1.2 <- d1[1:2, , drop=FALSE])
+stopifnot(## FIXME: The 'NA's really are wrong
+    identical(pmax(d1,2),     data.frame(y0 = c(2, NA, 2.5, 3.5)))
+   ,
+    identical(pmax(d1, 3-d1), data.frame(y0 = .5+c(2, 1:3)))
+   ,
+    identical(pmax(d1.2, 2),  data.frame(y0 = c(2, NA)))
+   ,
+    identical(pmax(d1.2, 2-d1.2),data.frame(y0=c(1.5,1.5)))
+   ,
+    identical(pmin(d1, 2),    data.frame(y0 = c(.5+0:1, NA,NA)))
+   ,
+    identical(pmin(d1, 3-d1), data.frame(y0 = .5+c(0, 1:-1)))
+   ,
+    identical(pmin(d1.2, 2),  data.frame(y0 = c(.5, 1.5)))
+   ,
+    identical(pmin(d1.2, 2-d1.2),data.frame(y0 = c(.5,.5)))
+)
+## some CRAN pkgs have been relying that these at least "worked somehow"
+
 
 ## quantile(x, prob) monotonicity in prob[] - PR#16672
 sortedQ <- function(x, prob, ...)

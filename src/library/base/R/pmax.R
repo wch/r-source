@@ -1,7 +1,7 @@
 #  File src/library/base/R/pmax.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ pmax <- function (..., na.rm = FALSE)
 	mmm <- elts[[1L]] ## attr(mmm, "dim") <- NULL  # dim<- would drop names
 	has.na <- FALSE
 	for (each in elts[-1L]) {
-	    ## attr(each, "dim") <- NULL
+	    ## attr(each, "dim") <- NULL ## FIXME: deal with d.fr.s !
 	    l1 <- length(each); l2 <- length(mmm)
 	    if(l2 && (l2 < l1 || !l1)) {
 		if (l1 %% l2)
@@ -41,15 +41,19 @@ pmax <- function (..., na.rm = FALSE)
 		    warning("an argument will be fractionally recycled")
 		each <- rep(each, length.out = l2)
 	    }
-	    nas <- cbind(as.vector(is.na(mmm)), as.vector(is.na(each)))
-	    if(has.na || (has.na <- any(nas))) {
-		mmm [nas[, 1L]] <- each[nas[, 1L]]
-		each[nas[, 2L]] <- mmm [nas[, 2L]]
+	    na.m <- is.na(mmm)
+	    na.e <- is.na(each)
+	    if(has.na || (has.na <- any(na.m) || any(na.e))) {
+		mmm [na.m] <- each[na.m]
+		each[na.e] <- mmm [na.e]
 	    }
-	    change <- as.vector(mmm < each)
+	    nS4 <- !isS4(mmm)
+	    if(isS4(change <- mmm < each) && (nS4 || !isS4(each)))
+		change <- as(change, "logical")# not as.vector(): kills the d.fr. case
 	    change <- change & !is.na(change)
 	    mmm[change] <- each[change]
-	    if (has.na && !na.rm) mmm[nas[, 1L] | nas[, 2L]] <- NA
+	    if (has.na && !na.rm) mmm[na.m | na.e] <- NA
+	    if(nS4) mostattributes(mmm) <- attributes(elts[[1L]])
 	}
     }
     mmm
@@ -66,7 +70,7 @@ pmin <- function (..., na.rm = FALSE)
 	mmm <- elts[[1L]] ## attr(mmm, "dim") <- NULL  # dim<- would drop names
 	has.na <- FALSE
 	for (each in elts[-1L]) {
-	    ## attr(each, "dim") <- NULL
+	    ## attr(each, "dim") <- NULL ## FIXME: deal with d.fr.s !
 	    l1 <- length(each); l2 <- length(mmm)
 	    if(l2 && (l2 < l1 || !l1)) {
 		if (l1 %% l2)
@@ -77,15 +81,19 @@ pmin <- function (..., na.rm = FALSE)
 		    warning("an argument will be fractionally recycled")
 		each <- rep(each, length.out = l2)
 	    }
-	    nas <- cbind(as.vector(is.na(mmm)), as.vector(is.na(each)))
-	    if(has.na || (has.na <- any(nas))) {
-		mmm [nas[, 1L]] <- each[nas[, 1L]]
-		each[nas[, 2L]] <- mmm [nas[, 2L]]
+	    na.m <- is.na(mmm)
+	    na.e <- is.na(each)
+	    if(has.na || (has.na <- any(na.m) || any(na.e))) {
+		mmm [na.m] <- each[na.m]
+		each[na.e] <- mmm [na.e]
 	    }
-	    change <- as.vector(mmm > each)
+	    nS4 <- !isS4(mmm)
+	    if(isS4(change <- mmm > each) && (nS4 || !isS4(each)))
+		change <- as(change, "logical")# not as.vector(): kills the d.fr. case
 	    change <- change & !is.na(change)
 	    mmm[change] <- each[change]
-	    if (has.na && !na.rm) mmm[nas[, 1L] | nas[, 2L]] <- NA
+	    if (has.na && !na.rm) mmm[na.m | na.e] <- NA
+	    if(nS4) mostattributes(mmm) <- attributes(elts[[1L]])
 	}
     }
     mmm
