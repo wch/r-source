@@ -564,7 +564,6 @@ Windows build would zip up the data directory or not prior to @R{}
 @c DESCRIPTION field Biarch
 The @samp{Biarch} logical field is used on Windows to select the
 @command{INSTALL} option @option{--force-biarch} for this package.
-(Introduced in @R{} 3.0.0.)
 
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to
@@ -960,9 +959,8 @@ LinkingTo: link1, link2
 @end example
 
 @noindent
-As from @R{} 3.0.2 the @samp{LinkingTo} field can have a version
-requirement which is checked at installation.  (In earlier versions of
-@R{} it would cause the specification to be ignored.)
+The @samp{LinkingTo} field can have a version requirement which is
+checked at installation.
 
 Specifying a package in @samp{LinkingTo} suffices if these are C++
 headers containing source code or static linking is done at
@@ -1231,12 +1229,12 @@ if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
 and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
-line for each demo, giving its name and a description separated by a
-tab or at least three spaces. (This index file is not generated
+line for each demo, giving its name and a description separated by a tab
+or at least three spaces. (This index file is not generated
 automatically.)  Note that a demo does not have a specified encoding and
-so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
-@R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
-but this is mainly useful for non-@acronym{ASCII} comments.
+so should be an @acronym{ASCII} file (@pxref{Encoding issues}). Function
+@code{demo()} will use the package encoding if there is one, but this is
+mainly useful for non-@acronym{ASCII} comments.
 
 @cindex .Rinstignore file
 The contents of the @file{inst} subdirectory will be copied recursively
@@ -1250,9 +1248,9 @@ exclude files from being installed, one can specify a list of exclude
 patterns in file @file{.Rinstignore} in the top-level source directory.
 These patterns should be Perl-like regular expressions (see the help for
 @code{regexp} in @R{} for the precise details), one per line, to be
-matched case-insensitively@footnote{on all platforms from @R{} 3.1.0}
-against the file and directory paths, e.g.@: @file{doc/.*[.]png$} will
-exclude all PNG files in @file{inst/doc} based on the extension.
+matched case-insensitively against the file and directory paths, e.g.@:
+@file{doc/.*[.]png$} will exclude all PNG files in @file{inst/doc} based
+on the extension.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
@@ -1398,13 +1396,12 @@ is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
 
 Lazy-loading is not supported for very large datasets (those which when
-serialized exceed 2GB, the limit for the format on 32-bit platforms and
-all platforms prior to @R{} 3.0.0).
+serialized exceed 2GB, the limit for the format on 32-bit platforms).
 
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
-the default (since @R{} 2.12.2) is @code{xz} for files bigger than 1MB
-otherwise @code{gzip}.
+the default is @code{xz} for files bigger than 1MB otherwise
+@code{gzip}.
 
 @node Non-R scripts in packages, Specifying URLs, Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -3003,20 +3000,20 @@ To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl-like regular expressions (see
 the help for @code{regexp} in @R{} for the precise details), one per
-line, to be matched case-insensitively@footnote{on all platforms from
-@R{} 3.1.0.} against the file and directory names relative to the
-top-level package source directory.  In addition, directories from
-source control systems@footnote{called @file{CVS} or @file{.svn} or
-@file{.arch-ids} or @file{.bzr} or @file{.git} (but not files called
-@file{.git}) or @file{.hg}.} or from @command{eclipse}@footnote{called
-@file{.metadata}.}, directories with names ending @file{.Rcheck} or
-@file{Old} or @file{old} and files @file{GNUMakefile}@footnote{which is
-an error: GNU make uses @file{GNUmakefile}.}, @file{Read-and-delete-me}
-or with base names starting with @samp{.#}, or starting and ending with
-@samp{#}, or ending in @samp{~}, @samp{.bak} or @samp{.swp}, are
-excluded by default.  In addition, those files in the @file{R},
-@file{demo} and @file{man} directories which are flagged by @command{R
-CMD check} as having invalid names will be excluded.
+line, to be matched case-insensitively against the file and directory
+names relative to the top-level package source directory.  In addition,
+directories from source control systems@footnote{called @file{CVS} or
+@file{.svn} or @file{.arch-ids} or @file{.bzr} or @file{.git} (but not
+files called @file{.git}) or @file{.hg}.} or from
+@command{eclipse}@footnote{called @file{.metadata}.}, directories with
+names ending @file{.Rcheck} or @file{Old} or @file{old} and files
+@file{GNUMakefile}@footnote{which is an error: GNU make uses
+@file{GNUmakefile}.}, @file{Read-and-delete-me} or with base names
+starting with @samp{.#}, or starting and ending with @samp{#}, or ending
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
+addition, those files in the @file{R}, @file{demo} and @file{man}
+directories which are flagged by @command{R CMD check} as having invalid
+names will be excluded.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
@@ -3399,10 +3396,10 @@ would have been in the locale's encoding.
 @node Non-Sweave vignettes,  , Encodings and vignettes, Writing package vignettes
 @subsection Non-Sweave vignettes
 
-@R{} 3.0.0 and later allow vignettes in formats other than Sweave by
-means of ``vignette engines''.  For example @CRANpkg{knitr} version 1.1
-or later can create @file{.tex} files from a variation on Sweave format,
-and @file{.html} files from a variation on ``markdown'' format. These
+Vignettes in formats other than Sweave are supported @emph{via}
+``vignette engines''.  For example @CRANpkg{knitr} version 1.1 or later
+can create @file{.tex} files from a variation on Sweave format, and
+@file{.html} files from a variation on ``markdown'' format. These
 engines replace the @code{Sweave()} function with other functions to
 convert vignette source files into @LaTeX{} files for processing into
 @file{.pdf}, or directly into @file{.pdf} or @file{.html} files. The
@@ -3496,10 +3493,6 @@ The namespace controls the search strategy for variables used by
 functions in the package.  If not found locally, @R{} searches the
 package namespace first, then the imports, then the base namespace and
 then the normal search path.
-
-Prior to @R{} 2.14.0, namespaces were optional in packages: a default
-namespace was generated on installation in 2.14.x and 2.15.x.  As from
-3.0.0 a namespace is mandatory.
 
 
 @menu
@@ -3643,9 +3636,6 @@ S3method(print, check_so_symbols, .print.via.format)
 @noindent
 when @code{print.check_so_symbols} is not needed.
 
-There used to be a limit on the number of @code{S3method} directives: it
-was @code{500} prior to @R{} 3.0.2.
-
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
 
@@ -3664,16 +3654,15 @@ exported.
 @findex .onUnload
 @findex .onDetach
 @findex .Last.lib
-Packages can use a @code{.onDetach} (as from @R{} 3.0.0) or @code{.Last.lib}
-function (provided the latter is exported from the namespace) when
-@code{detach} is called on the package.  It is called with a single
-argument, the full path to the installed package.  There is also a hook
-@code{.onUnload} which is called when the namespace is unloaded
-(@emph{via} a call to @code{unloadNamespace}, perhaps called by
-@code{detach(unload = TRUE)}) with argument the full path to the installed
-package's directory.  @code{.onUnload} and @code{.onDetach} should be
-defined in the namespace and not exported, but @code{.Last.lib} does
-need to be exported.
+Packages can use a @code{.onDetach} or @code{.Last.lib} function
+(provided the latter is exported from the namespace) when @code{detach}
+is called on the package.  It is called with a single argument, the full
+path to the installed package.  There is also a hook @code{.onUnload}
+which is called when the namespace is unloaded (@emph{via} a call to
+@code{unloadNamespace}, perhaps called by @code{detach(unload = TRUE)})
+with argument the full path to the installed package's directory.
+@code{.onUnload} and @code{.onDetach} should be defined in the namespace
+and not exported, but @code{.Last.lib} does need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
@@ -5286,13 +5275,10 @@ bibentry(bibtype = "Manual",
 @end example
 
 Note the way that information that may need to be updated is picked up
-from object @code{meta}, a parsed version of the @file{DESCRIPTION}
-file@footnote{this object is available since @R{} 2.8.0, so the
-@samp{Depends} field in the @file{DESCRIPTION} file should contain
-something at least as restrictive as @samp{R (>= 2.8}.} -- it is
-tempting to hardcode such information, but it normally then gets
-outdated.  See @code{?bibentry} for further details of the information
-which can be provided.
+from object @code{meta}, a parsed version of the @file{DESCRIPTION} file
+-- it is tempting to hardcode such information, but it normally then
+gets outdated.  See @code{?bibentry} for further details of the
+information which can be provided.
 
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
@@ -6156,9 +6142,9 @@ a hyperlink in @HTML{} and PDF conversion.  Displayed using
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled as `verbatim' text (with percent and
 braces escaped by backslash), and rendered as a hyperlink in @HTML{} and
-PDF conversion.  Linefeeds are removed, and as from @R{} 3.2.0 leading
-and trailing whitespace@footnote{as defined by the @R{} function
-@code{trimws}.} is removed. @xref{Specifying URLs}.
+PDF conversion.  Linefeeds are removed, and leading and trailing
+whitespace@footnote{as defined by the @R{} function @code{trimws}.} is
+removed. @xref{Specifying URLs}.
 
 Displayed using @code{typewriter} font where possible.
 
@@ -6168,8 +6154,8 @@ Indicate a hyperlink to the World Wide Web. The first argument is
 handled as `verbatim' text (with percent and braces escaped by
 backslash) and is used as the @acronym{URL} in the hyperlink, with the
 second argument of @LaTeX{}-like text displayed to the user.  Linefeeds
-are removed from the first argument, and as from @R{} 3.2.0 leading and
-trailing whitespace is removed.
+are removed from the first argument, and leading and trailing whitespace
+is removed.
 
 Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
 place of @samp{(VS.85)}) may not work correctly in versions of @R{}
@@ -8506,11 +8492,11 @@ disabling it.)
 
 A fairly common cause of such crashes is a package which uses @code{.C}
 or @code{.Fortran} and writes beyond (at either end) one of the
-arguments it is passed.  As from @R{} 3.0.0 there is a good way to
-detect this: using @code{options(CBoundsCheck = TRUE)} (which can be
-selected @emph{via} the environment variable @env{R_C_BOUNDS_CHECK=yes)}
-changes the way @code{.C} and @code{.Fortran} work to check if the
-compiled code writes in the 64 bytes at either end of an argument.
+arguments it is passed.  There is a good way to detect this: using
+@code{options(CBoundsCheck = TRUE)} (which can be selected @emph{via}
+the environment variable @env{R_C_BOUNDS_CHECK=yes)} changes the way
+@code{.C} and @code{.Fortran} work to check if the compiled code writes
+in the 64 bytes at either end of an argument.
 
 Another cause of a `crash' is to overrun the C stack.  @R{} tries to
 track that in its own code, but it may happen in third-party compiled
@@ -8897,10 +8883,10 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.  However, prior to @R{} 2.15.2 the detection of
-the correct namespace is unreliable and you are strongly recommended to
-use the @code{PACKAGE} argument for packages to be used with earlier
-versions of @R{}.
+directive will be used.  
+@c However, prior to @R{} 2.15.2 the detection of the correct namespace is
+@c unreliable and you are strongly recommended to use the @code{PACKAGE}
+@c argument for packages to be used with earlier versions of @R{}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
@@ -9171,9 +9157,7 @@ static R_CallMethodDef callMethods[]  = @{
 along with any other routines for the @code{.Call} interface. For
 routines with a variable number of arguments invoked @emph{via} the
 @code{.External} interface, one specifies @code{-1} for the number of
-arguments which tells @R{} not to check the actual number passed.  Note
-that the number of arguments passed to @code{.External} were not
-checked prior to @R{} 3.0.0.
+arguments which tells @R{} not to check the actual number passed.
 
 Routines for use with the @code{.C} and @code{.Fortran} interfaces are
 described with similar data structures, but which have two additional
@@ -11566,9 +11550,9 @@ set to the C @code{NULL} pointer.
 
 Finalizers can be run at many places in the code base and much of it,
 including the @R{} interpreter, is not re-entrant.  So great care is
-needed in choosing the code to be run in a finalizer. As from @R{} 3.0.3
-finalizers are marked to be run at garbage collection but only run at a
-somewhat safe point thereafter.
+needed in choosing the code to be run in a finalizer.  Finalizers are
+marked to be run at garbage collection but only run at a somewhat safe
+point thereafter.
 
 @cindex weak reference
 Weak references are used to allow the programmer to maintain information
@@ -11925,14 +11909,9 @@ This is only recommended for experts.
 Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
 
-@c Note that although @var{n} is @code{size_t}, there may be limits imposed
-@c by @R{}'s internal allocation mechanism.  These will only come into play
-@c on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
-@c just under 16Gb.
-
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
-needs more.  As from @R{} 3.2.0 there is also
+needs more.  There is also
 
 @example
 long double *R_allocLD(size_t @var{n})
@@ -13118,8 +13097,8 @@ header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @samp{2.2}).
 
 Packages which use @code{alloca} need to ensure it is defined: as it is
-part of neither C nor POSIX there is no standard way to do so.  As
-from @R{} 3.2.2 one can use
+part of neither C nor POSIX there is no standard way to do so.  One can
+use
 
 @example
 #include <Rconfig.h> // for HAVE_ALLOCA_H
@@ -13353,7 +13332,7 @@ Let us re-iterate the advice to include system headers before the @R{}
 header files, especially @file{Rinternals.h} (included by
 @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may be
 used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
-@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}, as from @R{} 3.1.0).
+@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
@@ -14439,11 +14418,6 @@ using backslashes).  If it does not, look for version-specific keys like
 algorithm as @code{2.11.0 patched > 2.11.0 > 2.11.0 alpha > 2.8.1}) and
 use its value for @code{InstallPath}.
 @end itemize
-
-Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
-were in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
-@file{R_HOME\bin\x64}.  So you may need to arrange to look first in the
-architecture-specific subdirectory and then in @file{R_HOME\bin}.
 
 @node Function and variable index, Concept index, Linking GUIs and other front-ends to R, Top
 @unnumbered Function and variable index

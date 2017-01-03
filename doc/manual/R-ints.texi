@@ -3420,8 +3420,7 @@ names: the 657 known names are given in the character vector
 Integer or character @code{NA} colours are mapped internally to
 transparent white, as is the character string @code{"NA"}.
 
-The handling of negative colour numbers was undefined (and inconsistent)
-prior to @R{} 3.0.0, which made them an error.  Colours greater than
+Negative colour numbers are an error.  Colours greater than
 @samp{@var{N}} are wrapped around, so that for example with the default
 palette of size 8, colour @samp{10} is colour @samp{2} in the palette.
 
@@ -3566,10 +3565,10 @@ The handling of missing values differs in the two classes of uses.
 Generally these are errors when used in @code{par} but cause the
 corresponding element of the plot to be omitted when used as an element
 of a vector argument.  Originally the interpretation of arguments was
-mainly left to the device, but as from @R{} 3.0.0 some of this is
-pre-empted in the graphics engine (but for example the handling of
-@code{lwd = 0} remains device-specific, with some interpreting it as a
-`thinnest possible' line).
+mainly left to the device, but nowadays some of this is pre-empted in
+the graphics engine (but for example the handling of @code{lwd = 0}
+remains device-specific, with some interpreting it as a `thinnest
+possible' line).
 
 @node Grid graphics,  , Base graphics, Graphics Devices
 @section Grid graphics
@@ -3629,8 +3628,7 @@ standard distribution there are separate applications for 32- and 64-bit
 Intel architectures.
 
 Originally the @R{} sources contained quite a lot of code used only by
-the macOS GUI, but by @R{} 3.0.0 this was been migrated to the
-@command{R.app} sources.
+the macOS GUI, but this was migrated to the @command{R.app} sources.
 
 @command{R.app} starts @R{} as an embedded application with a
 command-line which includes @option{--gui=aqua} (see below).  It uses
@@ -3921,8 +3919,8 @@ to a valid program, or @command{gs} (or on Windows,
 Default: false (but true for CRAN submission checks).
 @item _R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_
 By default the output from running the @R{} code in the vignettes is
-kept only if there is an error.  As from @R{} 3.2.4 this also applies to
-the @file{build_vignettes.log} log from the re-building of vignettes.
+kept only if there is an error.  This also applies to the
+@file{build_vignettes.log} log from the re-building of vignettes.
 Default: false.
 @item _R_CHECK_CLEAN_VIGN_TEST_
 Should the @file{vign_test} directory be removed if the test is

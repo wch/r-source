@@ -6514,12 +6514,11 @@ collection of available packages changes very frequently.
 @findex ::
 @findex :::
 
-All packages have @emph{namespaces}, and have since @R{} 2.14.0.
-Namespaces do three things: they allow the package writer to hide
-functions and data that are meant only for internal use, they prevent
-functions from breaking when a user (or other package writer) picks a
-name that clashes with one in the package, and they provide a way to
-refer to an object within a particular package.
+Packages have @emph{namespaces}, which do three things: they allow the
+package writer to hide functions and data that are meant only for
+internal use, they prevent functions from breaking when a user (or other
+package writer) picks a name that clashes with one in the package, and
+they provide a way to refer to an object within a particular package.
 
 For example, @code{t()} is the transpose function in @R{}, but users
 might define their own function named @code{t}.  Namespaces prevent
