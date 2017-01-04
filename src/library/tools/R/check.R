@@ -3182,18 +3182,33 @@ setRlibs <-
                     if(length(grep("^  When (running|tangling|sourcing)", out,
                                    useBytes = TRUE))) {
                         cat(" failed\n")
-                        res <- c(res,
-                                 paste("when running code in", sQuote(basename(file))),
-                                 "  ...",
-                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "10"))))
+                        keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
+                                                      "10"))
+                        res <- if (keep > 0)
+                            c(res,
+                              paste("when running code in", sQuote(basename(file))),
+                              "  ...",
+                              utils::tail(out, keep))
+                        else
+                            c(res,
+                              paste("when running code in", sQuote(basename(file))),
+                              out)
+
                     } else if(status || ! " *** Run successfully completed ***" %in% out) {
                         ## (Need not be the final line if running under valgrind)
+                        keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
+                                                      "10"))
                         cat(" failed to complete the test\n")
                         out <- c(out, "", "... incomplete output.  Crash?")
-                        res <- c(res,
+                        res <- if (keep > 0)
+                            c(res,
                                  paste("when running code in", sQuote(basename(file))),
                                  "  ...",
-                                 utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "10"))))
+                                 utils::tail(out, keep))
+                        else
+                            c(res,
+                                 paste("when running code in", sQuote(basename(file))),
+                                 out)
                     } else if (file.exists(savefile)) {
                         cmd <- paste0("invisible(tools::Rdiff('",
                                       outfile, "', '", savefile, "',TRUE,TRUE))")
@@ -3255,7 +3270,7 @@ setRlibs <-
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
                                         sep = .Platform$path.sep))
                 on.exit(Sys.setenv(PATH = oPATH))
-                ## And too many inst/doc/Makefile are not safe for
+                ## And too many 'vignettes/Makefile's are not safe for
                 ## parallel makes
                 Sys.setenv(MAKEFLAGS="")
                 ## we could use clean = FALSE, but that would not be
@@ -3277,8 +3292,10 @@ setRlibs <-
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
+                    keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
+                                                  "25"))
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
-                    out <- utils::tail(out, as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_", "25")))
+                    if(keep > 0) out <- utils::tail(out, keep)
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
