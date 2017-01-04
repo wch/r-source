@@ -541,9 +541,15 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0, ans_elt = INTEGER(ans); i < x_len; i++, ans_elt++)
 	    *ans_elt = 1;
     }
+    SEXP dim = getAttrib(x, R_DimSymbol);
+    if(!isNull(dim)) {
+        setAttrib(ans, R_DimSymbol, dim);
+    }
     if(useNames) {
 	SEXP names = getAttrib(x, R_NamesSymbol);
 	if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+        SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+        if(!isNull(dimnames)) setAttrib(ans, R_DimNamesSymbol, names);
     }
     UNPROTECT(1);
     return ans;
