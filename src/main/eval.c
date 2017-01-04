@@ -1472,8 +1472,8 @@ static void PrintCall(SEXP call, SEXP rho)
 /* Apply SEXP op of type CLOSXP to actuals */
 SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 {
-    SEXP formals, actuals, savedrho;
-    volatile SEXP body, newrho;
+    SEXP formals, actuals, savedrho, newrho;
+    volatile SEXP body;
     SEXP f, a;
     RCNTXT cntxt;
 
