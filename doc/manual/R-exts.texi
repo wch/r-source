@@ -4372,6 +4372,19 @@ and libraries are searched once in the order they are specified.  Not
 all linkers allow a space after @option{-L} .
 
 @item
+Great care is needed with the use of @code{LinkingTo}.  This puts one or
+more directories on the include search path ahead of system headers but
+after those specified in the @code{CPPFLAGS} macro of the @R{} build
+(which normally includes @code{-I/usr/local/include}, but most platforms
+ignore that and include it with the system headers).
+
+Any confusion would be avoided by having @code{LinkingTo} headers in a
+directory named after the package.  In any case, name conflicts of
+headers and directories under package @file{include} directories have to
+be avoided, both between packages and between a package and system and
+third-party software.
+
+@item
 The @command{ar} utility is often used in makefiles to make static
 libraries.  Its modifier @code{u} is defined by POSIX but is disabled in
 GNU @command{ar} on some recent Linux distributions which use

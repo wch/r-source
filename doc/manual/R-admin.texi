@@ -4198,12 +4198,14 @@ readline, in non-system directories, use the variables @code{LDFLAGS}
 the C/C++ preprocessors), respectively, to specify these locations.
 These default to @samp{-L/usr/local/lib} (@code{LDFLAGS},
 @samp{-L/usr/local/lib64} on most 64-bit Linux OSes) and
-@samp{-I/usr/local/include} (@code{CPPFLAGS}) to catch the most common
-cases.  If libraries are still not found, then maybe your
+@samp{-I/usr/local/include} (@code{CPPFLAGS}, but note that on most
+systems @file{/usr/local/include} is regarded as a system include
+directory and so instances in that macro will be skipped) to catch the
+most common cases.  If libraries are still not found, then maybe your
 compiler/linker does not support re-ordering of @option{-L} and
-@option{-l} flags (this has been reported to be a problem on HP-UX with
-the native @command{cc}).  In this case, use a different compiler (or a
-front end shell script which does the re-ordering).
+@option{-l} flags (years ago this was reported to be a problem on HP-UX
+with the native @command{cc}).  In this case, use a different compiler
+(or a front-end shell script which does the re-ordering).
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
@@ -5152,6 +5154,11 @@ A large selection of Open Source software can be installed from
 @uref{https://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
 (sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
+
+The Oracle compilers are unusual in not including
+@file{/usr/local/include} in the default include search path: @R{}'s
+default @code{CPPFLAGS=-I/usr/local/include} remedies this.  If you rely
+on OpenCSW software you may need @code{CPPFLAGS=-I/opt/csw/include}
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
