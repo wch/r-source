@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ quantile.default <-
             hi <- ceiling(index)
             x <- sort(x, partial = unique(c(lo, hi)))
             qs <- x[lo]
-	    i <- which(index > lo & x[hi] > qs)
+	    i <- which(index > lo & x[hi] != qs) # '!=' for '>' working w/ complex
 	    h <- (index - lo)[i] # > 0	by construction
 ##	    qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
 ##	    qs[i] <- ifelse(h == 0, qs[i], (1 - h) * qs[i] + h * x[hi[i]])
@@ -91,7 +91,7 @@ quantile.default <-
             ## also h*x might be invalid ... e.g. Dates and ordered factors
             qs <- x[j+2L]
             qs[h == 1] <- x[j+3L][h == 1]
-            other <- (0 < h) & (h < 1) & (x[j+2L] < x[j+3L])
+	    other <- (0 < h) & (h < 1) & (x[j+2L] != x[j+3L]) # '!=' for '<' in complex case
             if(any(other)) qs[other] <- ((1-h)*x[j+2L] + h*x[j+3L])[other]
         }
     } else {
