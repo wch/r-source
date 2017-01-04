@@ -1647,6 +1647,11 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist, op);
 /* *** from here on : "Copy-Paste from applyClosure" (~ l.965) above ***/
 
+    /* Get the srcref record from the closure object. The old srcref was
+       saved in cntxt by begincontext above. */
+
+    R_Srcref = getAttrib(op, R_SrcrefSymbol);
+
     /* Debugging */
 
     SET_RDEBUG(newrho, (RDEBUG(op) && R_current_debug_state()) || RSTEP(op)
@@ -1686,6 +1691,7 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 	PROTECT(tmp = eval(body, newrho));
     }
     cntxt.returnValue = tmp; /* make it available to on.exit */
+    R_Srcref = cntxt.srcref;
     endcontext(&cntxt);
 
     if (RDEBUG(op) && R_current_debug_state()) {
