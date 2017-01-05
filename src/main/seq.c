@@ -773,20 +773,18 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*
   This is a primitive SPECIALSXP with internal argument matching,
-  implementing seq.int.
+  implementing seq.int().
 
    'along' has to be used on an unevaluated argument, and evalList
    tries to evaluate language objects.
  */
-
 #define FEPS 1e-10
-#define myabs(x) (x < 0 ? x : -x)
 /* to match seq.default */
 SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue /* -Wall */, from, to, by, len, along;
     int nargs = length(args), lf;
-    Rboolean One = nargs == 1;
+    Rboolean One = (nargs == 1);
     R_xlen_t i, lout = NA_INTEGER;
     static SEXP do_seq_formals = NULL;
 
@@ -804,17 +802,20 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(args = matchArgs(do_seq_formals, args, call));
 
     from = CAR(args); args = CDR(args);
-    to = CAR(args); args = CDR(args);
-    by = CAR(args); args = CDR(args);
-    len = CAR(args); args = CDR(args);
-    along = CAR(args);
+    to   = CAR(args); args = CDR(args);
+    by   = CAR(args); args = CDR(args);
+    len  = CAR(args); args = CDR(args);
+    along= CAR(args);
+    Rboolean
+	miss_from = (from == R_MissingArg),
+	miss_to   = (to   == R_MissingArg);
 
-    if(One && from != R_MissingArg) {
+    if(One && !miss_from) {
 	lf = length(from);
 	if(lf == 1 && (TYPEOF(from) == INTSXP || TYPEOF(from) == REALSXP)) {
 	    double rfrom = asReal(from);
 	    if (!R_FINITE(rfrom))
-		errorcall(call, "'from' cannot be NA, NaN or infinite");
+		errorcall(call, _("'%s' must be a finite number"), "from");
 	    ans = seq_colon(1.0, rfrom, call);
 	}
 	else if (lf)
@@ -840,41 +841,42 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if(lout == NA_INTEGER) {
-	double rfrom = asReal(from), rto = asReal(to), rby = asReal(by), *ra;
-	if(from == R_MissingArg) rfrom = 1.0;
-	else if(length(from) != 1) error("'from' must be of length 1");
-	if(to == R_MissingArg) rto = 1.0;
-	else if(length(to) != 1) error("'to' must be of length 1");
-	if (!R_FINITE(rfrom))
-	    errorcall(call, "'from' cannot be NA, NaN or infinite");
-	if (!R_FINITE(rto))
-	    errorcall(call, "'to' cannot be NA, NaN or infinite");
+	double rfrom, rto, rby = asReal(by);
+	if(miss_from) rfrom = 1.0;
+	else {
+	    if(length(from) != 1) error(_("'%s' must be of length 1"), "from");
+	    rfrom = asReal(from);
+	    if(!R_FINITE(rfrom))
+		errorcall(call, _("'%s' must be a finite number"), "from");
+	}
+	if(miss_to) rto = 1.0;
+	else {
+	    if(length(to) != 1) error(_("'%s' must be of length 1"), "to");
+	    rto = asReal(to);
+	    if(!R_FINITE(rto))
+		errorcall(call, _("'%s' must be a finite number"), "to");
+	}
 	if(by == R_MissingArg)
 	    ans = seq_colon(rfrom, rto, call);
 	else {
-	    if(length(by) != 1) error("'by' must be of length 1");
-	    double del = rto - rfrom, n, dd;
-	    R_xlen_t nn;
-	    if(!R_FINITE(rfrom))
-		errorcall(call, _("'from' must be finite"));
-	    if(!R_FINITE(rto))
-		errorcall(call, _("'to' must be finite"));
+	    if(length(by) != 1) error(_("'%s' must be of length 1"), "by");
+	    double del = rto - rfrom;
 	    if(del == 0.0 && rto == 0.0) {
-		ans = to;
+		ans = to; // is *not* missing in this case
 		goto done;
 	    }
 	    /* printf("from = %f, to = %f, by = %f\n", rfrom, rto, rby); */
-	    n = del/rby;
+	    double n = del/rby;
 	    if(!R_FINITE(n)) {
 		if(del == 0.0 && rby == 0.0) {
-		    ans = from;
+		    ans = miss_from ? ScalarReal(rfrom) : from;
 		    goto done;
 		} else
 		    errorcall(call, _("invalid '(to - from)/by' in 'seq'"));
 	    }
-	    dd = fabs(del)/fmax2(fabs(rto), fabs(rfrom));
+	    double dd = fabs(del)/fmax2(fabs(rto), fabs(rfrom));
 	    if(dd < 100 * DBL_EPSILON) {
-		ans = from;
+		ans = miss_from ? ScalarReal(rfrom) : from;
 		goto done;
 	    }
 #ifdef LONG_VECTOR_SUPPORT
@@ -885,10 +887,13 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		errorcall(call, _("'by' argument is much too small"));
 	    if(n < - FEPS)
 		errorcall(call, _("wrong sign in 'by' argument"));
-	    if(TYPEOF(from) == INTSXP &&
-	       TYPEOF(to) == INTSXP &&
+
+	    R_xlen_t nn;
+	    if((miss_from || TYPEOF(from) == INTSXP) &&
+	       (miss_to   || TYPEOF(to)   == INTSXP) &&
 	       TYPEOF(by) == INTSXP) {
-		int *ia, ifrom = asInteger(from), iby = asInteger(by);
+		int *ia, ifrom = miss_from ? (int)rfrom : asInteger(from),
+		    iby = asInteger(by);
 		/* With the current limits on integers and FEPS
 		   reduced below 1/INT_MAX this is the same as the
 		   next, so this is future-proofing against longer integers.
@@ -904,7 +909,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    } else {
 		nn = (int)(n + FEPS);
 		ans = allocVector(REALSXP, nn+1);
-		ra = REAL(ans);
+		double *ra = REAL(ans);
 		for(i = 0; i <= nn; i++)
 		    ra[i] = rfrom + (double)i * rby;
 		/* Added in 2.9.0 */
@@ -917,14 +922,27 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(INTSXP, 0);
     } else if (One) {
 	ans = seq_colon(1.0, (double)lout, call);
-    } else if (by == R_MissingArg) {
-	double rfrom = asReal(from), rto = asReal(to), rby;
-	if(to == R_MissingArg) rto = rfrom + (double)lout - 1;
-	if(from == R_MissingArg) rfrom = rto - (double)lout + 1;
-	if(!R_FINITE(rfrom))
-	    errorcall(call, _("'from' must be finite"));
-	if(!R_FINITE(rto))
-	    errorcall(call, _("'to' must be finite"));
+    } else if (by == R_MissingArg) { // and  len := length.out  specified
+	double rfrom = asReal(from), rto = asReal(to), rby = 0; // -Wall
+	if(miss_to)   rto   = rfrom + (double)lout - 1;
+	if(miss_from) rfrom = rto   - (double)lout + 1;
+	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
+	if(!R_FINITE(rto))   errorcall(call, _("'%s' must be a finite number"), "to");
+	if(lout > 2) rby = (rto - rfrom)/(double)(lout - 1);
+	if(rfrom == (int)rfrom &&
+	   (lout <= 1 || rto == (int)rto) &&
+	   (lout <= 2 || rby == (int)rby) &&
+	   rfrom <= INT_MAX && rfrom >= INT_MIN &&
+	   rto   <= INT_MAX && rto   >= INT_MIN) {
+	    ans = allocVector(INTSXP, lout);
+	    if(lout > 0) INTEGER(ans)[0] = rfrom;
+	    if(lout > 1) INTEGER(ans)[lout - 1] = rto;
+	    if(lout > 2)
+		for(i = 1; i < lout-1; i++) {
+//		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
+		    INTEGER(ans)[i] = (int)(rfrom + (double)i*rby);
+		}
+	} else {
 	ans = allocVector(REALSXP, lout);
 	if(lout > 0) REAL(ans)[0] = rfrom;
 	if(lout > 1) REAL(ans)[lout - 1] = rto;
@@ -935,13 +953,12 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		REAL(ans)[i] = rfrom + (double)i*rby;
 	    }
 	}
-    } else if (to == R_MissingArg) {
+	}
+    } else if (miss_to) {
 	double rfrom = asReal(from), rby = asReal(by), rto;
-	if(from == R_MissingArg) rfrom = 1.0;
-	if(!R_FINITE(rfrom))
-	    errorcall(call, _("'from' must be finite"));
-	if(!R_FINITE(rby))
-	    errorcall(call, _("'by' must be finite"));
+	if(miss_from) rfrom = 1.0;
+	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
+	if(!R_FINITE(rby))   errorcall(call, _("'%s' must be a finite number"), "by");
 	rto = rfrom + (double)(lout-1)*rby;
 	if(rby == (int)rby && rfrom <= INT_MAX && rfrom >= INT_MIN
 	   && rto <= INT_MAX && rto >= INT_MIN) {
@@ -957,13 +974,11 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		REAL(ans)[i] = rfrom + (double)i*rby;
 	    }
 	}
-    } else if (from == R_MissingArg) {
+    } else if (miss_from) {
 	double rto = asReal(to), rby = asReal(by),
 	    rfrom = rto - (double)(lout-1)*rby;
-	if(!R_FINITE(rto))
-	    errorcall(call, _("'to' must be finite"));
-	if(!R_FINITE(rby))
-	    errorcall(call, _("'by' must be finite"));
+	if(!R_FINITE(rto)) errorcall(call, _("'%s' must be a finite number"), "to");
+	if(!R_FINITE(rby)) errorcall(call, _("'%s' must be a finite number"), "by");
 	if(rby == (int)rby && rfrom <= INT_MAX && rfrom >= INT_MIN
 	   && rto <= INT_MAX && rto >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);

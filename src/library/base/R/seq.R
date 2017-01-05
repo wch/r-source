@@ -25,7 +25,7 @@ seq.default <-
     if((One <- nargs() == 1L) && !missing(from)) {
 	lf <- length(from)
 	return(if(mode(from) == "numeric" && lf == 1L) {
-            if(!is.finite(from)) stop("'from' cannot be NA, NaN or infinite")
+	    if(!is.finite(from)) stop("'from' must be a finite number")
             1L:from
         } else if(lf) 1L:lf else integer())
     }
@@ -79,7 +79,7 @@ seq.default <-
             }
 	}
     else if(!is.finite(length.out) || length.out < 0L)
-	stop("length must be non-negative number")
+	stop("'length.out' must be a non-negative number")
     else if(length.out == 0L) integer()
     else if (One) seq_len(length.out)
     else if(missing(by)) {

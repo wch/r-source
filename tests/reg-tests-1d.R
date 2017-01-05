@@ -543,6 +543,13 @@ stopifnot(sQ.xN, sortedQ(x2, (0:5)/5))
 ## both not fulfilled in R < 3.4.0
 
 
+## seq.int() anomalies in border cases, partly from Mick Jordan (on R-devel):
+stopifnot(
+    identical(1,         seq.int(to=1,  by=1 )),
+    identical(1:2,       seq.int(to=2L, by=1L)),
+    identical(c(1L, 3L), seq.int(1L, 3L, length.out=2))
+)
+## the first was missing(.), the others "double" in R < 3.4.0
 
 
 ## keep at end

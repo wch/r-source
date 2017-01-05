@@ -555,6 +555,12 @@
 
       \item \code{seq("2", "5")} now works too, equivalently to
       \code{"2":"5"} and \code{seq.int()}.
+
+      \item \code{seq.int(to=1, by=1)} is now correct, other cases are
+      integer (instead of \code{double}) when \code{seq()} is integer
+      too, and the "non-finite" error messages are consistent between
+      \code{seq.default()} and \code{seq.int()}, no longer mentioning
+      \code{NaN} etc.
     }
   }
 }
