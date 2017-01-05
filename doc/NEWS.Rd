@@ -365,6 +365,9 @@
       \item If available, the POSIX 2008 system call \code{utimensat}
       will be used by \code{setFileTime()} and \code{file.copy(copy.date
 	= TRUE)}.  This may result in slightly more accurate file times.
+
+      \item The check for the zlib version is now robust to versions
+      longer than 5 characters, including 1.2.10.
     }
   }
 
@@ -575,6 +578,13 @@
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{      
+      \item The check for the zlib version is now robust to versions
+      longer than 5 characters, including 1.2.10.
+    }
+  }
+  
   \subsection{UTILITIES}{
     \itemize{
       \item Enviromental variable \env{_R_CHECK_TESTS_NLINES_} controls
