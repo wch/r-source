@@ -316,7 +316,7 @@
       \item No-longer-installed headers \file{GraphicsBase.h},
       \file{RGraphics.h}, \file{Rmodules/RX11.h} and
       \file{Rmodules/Rlapack.h} which had a LGPL license no longer do so.
-        
+
       \item \code{HAVE_UINTPTR_T} is now defined where appropriate by
       \code{Rconfig.h} so that it can be included before
       \code{Rinterface.h} when \code{CSTACK_DEFNS} is defined and a C
@@ -565,20 +565,20 @@
       (rather than failing silently).
     }
   }
-  
+
   \subsection{UTILITIES}{
-    \itemize{        
+    \itemize{
       \item Enviromental variable \env{_R_CHECK_TESTS_NLINES_} controls
       how \command{R CMD check} reports failing tests (see §8 of the
       \sQuote{R Internals} manual).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
-      work also when \code{times} is larger than the maximal integer.
-      (\PR{16932})
+      work also when \code{times} is larger than the maximal integer,
+      including when it is of length greater than one. (\PR{16932})
 
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
