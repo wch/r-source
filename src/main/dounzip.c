@@ -496,12 +496,14 @@ R_newunz(const char *description, const char *const mode)
     if(!new->class) {
 	free(new);
 	error(_("allocation of 'unz' connection failed"));
+	/* for Solaris 12.5 */ new = NULL;
     }
     strcpy(new->class, "unz");
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
 	error(_("allocation of 'unz' connection failed"));
+	/* for Solaris 12.5 */ new = NULL;
     }
     init_con(new, description, CE_NATIVE, mode);
 
