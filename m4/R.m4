@@ -3113,10 +3113,11 @@ AC_DEFUN([_R_HEADER_ZLIB],
 #include <string.h>
 #include <zlib.h>
 int main() {
-#ifdef ZLIB_VERSION
-/* Work around Debian bug: it uses 1.2.3.4 even though there was no such
-   version on the master site zlib.net */
-  exit(strncmp(ZLIB_VERSION, "1.2.5", 5) < 0);
+#ifdef ZLIB_VERNUM
+  if (ZLIB_VERNUM < 0x1250) {
+    exit(1);
+  }
+  exit(0);
 #else
   exit(1);
 #endif

@@ -14,6 +14,13 @@
       (rather than failing silently).
     }
   }
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{      
+      \item The check for the zlib version is now robust to versions
+      longer than 5 characters, including 1.2.10.
+    }
+  }
   
   \subsection{UTILITIES}{
     \itemize{        
