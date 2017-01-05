@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2016-12-29 r71854) -- "Unsuffered Consequences"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R Under development (unstable) (2017-01-04 r71896) -- "Unsuffered Consequences"
+Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -7113,9 +7113,9 @@ In pl$ab : partial match of 'ab' to 'abc'
 > try(seq(NaN))
 Error in seq.default(NaN) : 'from' cannot be NA, NaN or infinite
 > try(seq(to = NaN))
-Error in seq.default(to = NaN) : 'to' cannot be NA, NaN or infinite
+Error in seq.default(to = NaN) : 'to' must be a finite number
 > try(seq(NaN, NaN))
-Error in seq.default(NaN, NaN) : 'from' cannot be NA, NaN or infinite
+Error in seq.default(NaN, NaN) : 'from' must be a finite number
 > try(seq.int(NaN))
 Error in seq.int(NaN) : 'from' cannot be NA, NaN or infinite
 > try(seq.int(to = NaN))

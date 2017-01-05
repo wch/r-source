@@ -1,7 +1,7 @@
 #  File src/library/base/R/seq.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,10 +45,10 @@ seq.default <-
     chkDots(...)
     if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
     if (!missing(to) && length(to) != 1L) stop("'to' must be of length 1")
-    if (!missing(from) && !is.finite(from))
-        stop("'from' cannot be NA, NaN or infinite")
-    if (!missing(to) && !is.finite(to))
-        stop("'to' cannot be NA, NaN or infinite")
+    if (!missing(from) && !is.finite(from <- as.numeric(from)))
+	stop("'from' must be a finite number")
+    if (!missing(to) && !is.finite(to <- as.numeric(to)))
+	stop("'to' must be a finite number")
     if(is.null(length.out))
 	if(missing(by))
 	    from:to
