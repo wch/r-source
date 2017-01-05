@@ -49,7 +49,7 @@ pmax <- function (..., na.rm = FALSE)
 	    }
 	    nS4 <- !isS4(mmm)
 	    if(isS4(change <- mmm < each) && (nS4 || !isS4(each)))
-		change <- as(change, "logical")# not as.vector(): kills the d.fr. case
+		change <- methods::as(change, "logical")# not as.vector(): kills the d.fr. case
 	    change <- change & !is.na(change)
 	    mmm[change] <- each[change]
 	    if (has.na && !na.rm) mmm[na.m | na.e] <- NA
@@ -89,7 +89,7 @@ pmin <- function (..., na.rm = FALSE)
 	    }
 	    nS4 <- !isS4(mmm)
 	    if(isS4(change <- mmm > each) && (nS4 || !isS4(each)))
-		change <- as(change, "logical")# not as.vector(): kills the d.fr. case
+		change <- methods::as(change, "logical")# not as.vector(): kills the d.fr. case
 	    change <- change & !is.na(change)
 	    mmm[change] <- each[change]
 	    if (has.na && !na.rm) mmm[na.m | na.e] <- NA
