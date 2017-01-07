@@ -181,7 +181,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     R_xlen_t i, j, nc, n;
     SEXP a, t;
 
-#define R2_SWITCH_LOOP \
+#define R2_SWITCH_LOOP(it) \
     switch (TYPEOF(s)) { \
     case LGLSXP: \
 	for (i = 0; i < nc; i++) { \
@@ -276,13 +276,10 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	} */
     PROTECT(a = allocVector(TYPEOF(s), na));
     n = 0;
-    if (TYPEOF(t) == REALSXP) {
-	double *it = REAL(t);
-	R2_SWITCH_LOOP
-    } else {
-	int *it = INTEGER(t);
-	R2_SWITCH_LOOP
-    }
+    if (TYPEOF(t) == REALSXP)
+	R2_SWITCH_LOOP(REAL(t))
+    else
+	R2_SWITCH_LOOP(INTEGER(t))
     UNPROTECT(2);
     return a;
 }
@@ -474,7 +471,7 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, R_xlen_t each, R_xlen_t nt)
 
     PROTECT(a = allocVector(TYPEOF(x), len));
 
-#define R4_SWITCH_LOOP \
+#define R4_SWITCH_LOOP(itimes) \
     switch (TYPEOF(x)) { \
     case LGLSXP: \
 	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
@@ -599,13 +596,10 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, R_xlen_t each, R_xlen_t nt)
     default:
 	UNIMPLEMENTED_TYPE("rep4", x);
     }
-    else if(TYPEOF(times) == REALSXP) {
-	double *itimes = REAL(times);
-	R4_SWITCH_LOOP
-    } else {
-	int *itimes = INTEGER(times);
-	R4_SWITCH_LOOP
-    }
+    else if(TYPEOF(times) == REALSXP)
+	R4_SWITCH_LOOP(REAL(times))
+    else
+	R4_SWITCH_LOOP(INTEGER(times))
 done:
     UNPROTECT(1);
     return a;
@@ -872,7 +866,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    ans = miss_from ? ScalarReal(rfrom) : from;
 		    goto done;
 		} else
-		    errorcall(call, _("invalid '(to - from)/by' in 'seq'"));
+		    errorcall(call, _("invalid '(to - from)/by'"));
 	    }
 	    double dd = fabs(del)/fmax2(fabs(rto), fabs(rfrom));
 	    if(dd < 100 * DBL_EPSILON) {

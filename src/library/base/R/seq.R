@@ -59,7 +59,7 @@ seq.default <-
 	    if(!(length(n) && is.finite(n))) {
 		if(length(by) && by == 0 && length(del) && del == 0)
 		    return(from)
-		stop("invalid (to - from)/by in seq(.)")
+		stop("invalid '(to - from)/by'")
 	    }
 	    if(n < 0L)
 		stop("wrong sign in 'by' argument")
