@@ -630,6 +630,10 @@
 
       \item \code{methods(f)} now also works for \code{f} \code{"("}
       or \code{"{"}.
+      
+      \item (Windows only)  \code{dir.create()} did not check the length
+      of the path to create, and so could overflow a buffer and crash
+      \R.  \PR{17206}
 
       %% Not yet ported from trunk
       \item \code{pmin()} and \code{pmax()} now work again for
