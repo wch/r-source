@@ -3291,6 +3291,7 @@ setRlibs <-
                                 useBytes = TRUE)
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
+                print_time(t1, t2, Log)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
@@ -3313,7 +3314,6 @@ setRlibs <-
                         unlink(vd2, recursive = TRUE)
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
                             unlink(outfile)
-                    print_time(t1, t2, Log)
                     resultLog(Log, "OK")
                 }
             } else {
