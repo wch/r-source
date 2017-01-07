@@ -551,6 +551,13 @@ stopifnot(
 )
 ## the first was missing(.), the others "double" in R < 3.4.0
 tools::assertError(seq(1,7, by = 1:2))# gave warnings in R < 3.4.0
+## seq() for <complex> / <integer>
+stopifnot(all.equal(seq(1+1i, 9+2i, length.out = 9) -> sCplx,
+                    1:9 + 1i*seq(1,2, by=1/8)),
+          identical(seq(1+1i, 9+2i, along.with = 1:9), sCplx),
+          identical(seq(1L, 3L, by=1L), 1:3)
+)
+## had failed in R-devel for a few days
 
 
 

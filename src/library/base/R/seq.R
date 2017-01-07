@@ -45,9 +45,11 @@ seq.default <-
     chkDots(...)
     if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
     if (!missing(to) && length(to) != 1L) stop("'to' must be of length 1")
-    if (!missing(from) && !is.finite(from <- as.numeric(from)))
+    if (!missing(from) && !is.finite(if(is.numeric(from) || is.complex(from)) from
+				     else from <- as.numeric(from)))
 	stop("'from' must be a finite number")
-    if (!missing(to) && !is.finite(to <- as.numeric(to)))
+    if (!missing(to) && !is.finite(if(is.numeric(to) || is.complex(to)) to
+				     else to <- as.numeric(to)))
 	stop("'to' must be a finite number")
     if(is.null(length.out))
 	if(missing(by))
