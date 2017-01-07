@@ -569,10 +569,13 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t from[PATH_MAX+1], *to;
+	    wchar_t from[PATH_MAX+1], *to, *p;
 	    struct _stati64 sb;
 	    from[PATH_MAX] = L'\0';
-	    wcsncpy(from, filenameToWchar(STRING_ELT(f1, i%n1), TRUE), PATH_MAX);
+	    p = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    if (wcslen(p) >= PATH_MAX)
+	    	error(_("'%s' path too long"), "from");
+	    wcsncpy(from, p, PATH_MAX);
 	    /* This Windows system call does not accept slashes */
 	    for (wchar_t *p = from; *p; p++) if (*p == L'/') *p = L'\\';
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
@@ -643,9 +646,11 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t from[PATH_MAX+1], *to;
-	    from[PATH_MAX] = L'\0';
-	    wcsncpy(from, filenameToWchar(STRING_ELT(f1, i%n1), TRUE), PATH_MAX);
+	    wchar_t from[PATH_MAX+1], *to, *p;
+	    p = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    if (wcslen(p) >= PATH_MAX)
+	    	error(_("'%s' path too long"), "from");
+	    wcscpy(from, p);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
 	    LOGICAL(ans)[i] = CreateHardLinkW(to, from, NULL) != 0;
 	    if(!LOGICAL(ans)[i]) {
@@ -2152,7 +2157,10 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     if (show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
     if (recursive == NA_LOGICAL) recursive = 0;
-    wcscpy(dir, filenameToWchar(STRING_ELT(path, 0), TRUE));
+    p = filenameToWchar(STRING_ELT(path, 0), TRUE);
+    if (wcslen(p) >= MAX_PATH)
+    	error(_("'%s' too long"), "path");
+    wcsncpy(dir, p, MAX_PATH);
     for (p = dir; *p; p++) if (*p == L'/') *p = L'\\';
     /* remove trailing slashes */
     p = dir + wcslen(dir) - 1;
@@ -2347,17 +2355,19 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	dates = asLogical(CAR(args));
 	if (dates == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "copy.dates");
-	wcsncpy(dir,
-		filenameToWchar(STRING_ELT(to, 0), TRUE),
-		PATH_MAX);
+	p = filenameToWchar(STRING_ELT(to, 0), TRUE);
+	if (wcslen(p) >= PATH_MAX)
+	    error(_("'%s' path too long"), "to");
+	wcsncpy(dir, p, PATH_MAX);
 	dir[PATH_MAX - 1] = L'\0';
 	if (*(dir + (wcslen(dir) - 1)) !=  L'\\')
 	    wcsncat(dir, L"\\", PATH_MAX);
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
-		wcsncpy(from,
-			filenameToWchar(STRING_ELT(fn, i), TRUE),
-			PATH_MAX);
+	    	p = filenameToWchar(STRING_ELT(fn, i), TRUE);
+	    	if (wcslen(p) >= PATH_MAX)
+	    	    error(_("'%s' path too long"), "from");
+		wcsncpy(from, p, PATH_MAX);
 		from[PATH_MAX - 1] = L'\0';
 		if(wcslen(from)) {
 		    /* If there was a trailing sep, this is a mistake */
