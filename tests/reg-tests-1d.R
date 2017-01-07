@@ -550,6 +550,8 @@ stopifnot(
     identical(c(1L, 3L), seq.int(1L, 3L, length.out=2))
 )
 ## the first was missing(.), the others "double" in R < 3.4.0
+tools::assertError(seq(1,7, by = 1:2))# gave warnings in R < 3.4.0
+
 
 
 ## keep at end

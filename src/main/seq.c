@@ -838,14 +838,14 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double rfrom, rto, rby = asReal(by);
 	if(miss_from) rfrom = 1.0;
 	else {
-	    if(length(from) != 1) error(_("'%s' must be of length 1"), "from");
+	    if(length(from) != 1) errorcall(call, _("'%s' must be of length 1"), "from");
 	    rfrom = asReal(from);
 	    if(!R_FINITE(rfrom))
 		errorcall(call, _("'%s' must be a finite number"), "from");
 	}
 	if(miss_to) rto = 1.0;
 	else {
-	    if(length(to) != 1) error(_("'%s' must be of length 1"), "to");
+	    if(length(to) != 1) errorcall(call, _("'%s' must be of length 1"), "to");
 	    rto = asReal(to);
 	    if(!R_FINITE(rto))
 		errorcall(call, _("'%s' must be a finite number"), "to");
@@ -853,7 +853,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(by == R_MissingArg)
 	    ans = seq_colon(rfrom, rto, call);
 	else {
-	    if(length(by) != 1) error(_("'%s' must be of length 1"), "by");
+	    if(length(by) != 1) errorcall(call, _("'%s' must be of length 1"), "by");
 	    double del = rto - rfrom;
 	    if(del == 0.0 && rto == 0.0) {
 		ans = to; // is *not* missing in this case

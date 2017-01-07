@@ -55,9 +55,10 @@ seq.default <-
 	else { # dealing with 'by'
 	    del <- to - from
 	    if(del == 0 && to == 0) return(to)
-	    n <- del/by
-	    if(!(length(n) && is.finite(n))) {
-		if(length(by) && by == 0 && length(del) && del == 0)
+            if (length(by) != 1L) stop("'by' must be of length 1")
+	    n <- del/by # of length 1, as {from, to, by} are
+	    if(!is.finite(n)) {
+		if(by == 0 && del == 0)
 		    return(from)
 		stop("invalid '(to - from)/by'")
 	    }
