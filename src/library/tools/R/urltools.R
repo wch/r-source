@@ -461,7 +461,7 @@ function(db, remote = TRUE, verbose = FALSE)
         msg <- rep.int("Invalid URI scheme", len)
         doi <- schemes[ind] == "doi"
         if(any(doi))
-            msg[doi] <- paste(msg[doi], "(use \\doi for DOIs)")
+            msg[doi] <- paste(msg[doi], "(use \\doi for DOIs in Rd markup)")
         bad <- rbind(bad,
                      .gather(urls[ind], parents[ind], m = msg))
     }
