@@ -929,8 +929,8 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   rfrom <= INT_MAX && rfrom >= INT_MIN &&
 	   rto   <= INT_MAX && rto   >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);
-	    if(lout > 0) INTEGER(ans)[0] = rfrom;
-	    if(lout > 1) INTEGER(ans)[lout - 1] = rto;
+	    if(lout > 0) INTEGER(ans)[0] = (int)rfrom;
+	    if(lout > 1) INTEGER(ans)[lout - 1] = (int)rto;
 	    if(lout > 2)
 		for(i = 1; i < lout-1; i++) {
 //		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
