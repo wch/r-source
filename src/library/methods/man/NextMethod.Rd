@@ -38,29 +38,21 @@ callNextMethod(...)
   \code{defined} slot of the method from which \code{callNextMethod} is
   called) is deleted from a copy of the methods for the current generic,
   and \code{\link{selectMethod}} is called to find the next method (the
-  result is cached in a special object, so the search only typically
-  happens once per session per combination of argument classes).
+  result is cached in the method object where the call occurred, so the search typically
+  happens only once per session per combination of argument classes).
 
-  Note that the preceding definition means that the next method is
-  defined uniquely when \code{setMethod} inserts the method containing
-  the \code{callNextMethod} call, given the definitions of the classes
-  in the signature. The choice does not depend on the path that gets us
-  to that method (for example, through inheritance or from another
-  \code{callNextMethod} call). This definition was not enforced in
-  versions of \R prior to 2.3.0, where the method was selected based on
-  the target signature, and so could vary depending on the actual
-  arguments.
+  The next method is defined from the \emph{signature} of the current
+  method, not from the actual classes of the arguments.
+  In particular, modifying any of the arguments has no effect on the
+  selection.
+  As a result, the selected next method can be called with invalid
+  arguments if the calling function assigns objects of a different
+  class before the \code{callNextMethod()} call.
+  Be careful of any assignments to such arguments.
 
-  It is also legal, and often useful, for the method called by
-  \code{callNextMethod} to itself have a call to
-  \code{callNextMethod}. This generally works as you would expect, but
-  for completeness be aware that it is possible to have ambiguous
-  inheritance in the S structure, in the sense that the same two
-  classes can appear as superclasses \emph{in the opposite order} in
-  two other class definitions.  In this case the effect of a nested
-  instance of \code{callNextMethod} is not well defined.  Such
-  inconsistent class hierarchies are both rare and nearly always the
-  result of bad design, but they are possible, and currently undetected.
+  It is possible for the selection of the next method to be ambiguous,
+  even though the original set of methods was consistent.
+  See the section \dQuote{Ambiguous Selection}.
 
   The statement that the method is called with the current arguments is
   more precisely as follows.  Arguments that were missing in the current
@@ -71,17 +63,56 @@ callNextMethod(...)
   means that the next method sees the same actual arguments, but
   arguments are evaluated only once.
 }
+\section{Ambiguous Selection}{
+There are two fairly common situations in which the choice of a next
+method is ambiguous, even when the original set of methods uniquely
+defines all method selection unambiguously.
+In these situations, \code{callNextMethod()} should be replaced,
+either by a call to a specific function or by recalling the generic
+with different arguments.
+
+The most likely situation arises with methods for binary operators,
+typically through one of the group generic functions.
+See the example for class \code{"rnum"} below.
+Examples of this sort usually require three methods: two for the case
+that the first or the second argument comes from the class, and a
+third for the case that both arguments come from the class.
+If that last method uses \code{callNextMethod}, the other two methods
+are equally valid.  The ambiguity is exactly the same that required
+defining the two-argument method in the first place.
+
+In fact, the two possibilities are equally valid conceptually as well
+as formally.
+As in the example below, the logic of the application usually requires
+selecting a computation explicitly or else calling the generic
+function with modified arguments to select an appropriate method.
+
+The other likely source of ambiguity arises from a class that inherits
+directly from more than one other class (a \dQuote{mixin} in standard
+terminology).
+If the generic has methods corresponding to both superclasses, a
+method for the current class is again needed to resolve ambiguity.
+Using \code{callNextMethod} will again reimpose the ambiguity.
+Again, some explicit choice has to be made in the calling method
+instead.
+
+These ambiguities are not the result of bad design, but they do
+require workarounds.
+Other ambiguities usually reflect inconsistencies in the tree of
+inheritances, such as a class appearing in more than one place among
+the superclasses.
+Such cases should be rare, but with the independent definition of
+classes in multiple packages, they can't be ruled out.
+
+}
 \value{
   The value returned by the selected method.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+  Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
 \seealso{\code{\link{callGeneric}} to call the generic function with the
  current dispatch rules (typically for a group generic function);
@@ -89,53 +120,145 @@ callNextMethod(...)
 }
 
 \examples{
+## callNextMethod() used for the Math, Math2 group generic functions
 
-## some class definitions with simple inheritance
-setClass("B0", slots = c(b0 = "numeric"))
-setClass("B1", slots = c(b1 = "character"), contains = "B0")
-setClass("B2", slots = c(b2 = "logical"), contains = "B1")
+## A class to automatically round numeric results to "d" digits
 
-## and a rather silly function to illustrate callNextMethod
+rnum <- setClass("rnum", slots = c(d = "integer"), contains = "numeric")
 
-f <- function(x) class(x)
+## Math functions operate on the rounded numbers, return a plain
+## vector.  The next method will always be the default, usually a primitive.
+setMethod("Math", "rnum",
+          function(x)
+              callNextMethod(round(as.numeric(x), x@d)))
+setMethod("Math2", "rnum",
+          function(x, digits)
+              callNextMethod(round(as.numeric(x), x@d), digits))
 
-setMethod("f", "B0", function(x) c(x@b0^2, callNextMethod()))
-setMethod("f", "B1", function(x) c(paste(x@b1,":"), callNextMethod()))
-setMethod("f", "B2", function(x) c(x@b2, callNextMethod()))
+## Examples of callNextMethod with two arguments in the signature.
 
-b1 <- new("B1", b0 = 2, b1 = "Testing")
+## For arithmetic and one rnum with anything, callNextMethod with no arguments
+## round the full accuracy result, and return as plain vector
+setMethod("Arith", c(e1 ="rnum"),
+          function(e1, e2)
+              as.numeric(round(callNextMethod(), e1@d)))
+setMethod("Arith", c(e2 ="rnum"),
+          function(e1, e2)
+              as.numeric(round(callNextMethod(), e2@d)))
 
-b2 <- new("B2", b2 = FALSE, b1 = "More testing", b0 = 10)
+## A method for BOTH arguments from "rnum" would be ambiguous
+## for callNextMethod(): the two methods above are equally valid.
+## The method chooses the smaller number of digits,
+## and then calls the generic function, postponing the method selection
+## until it's not ambiguous.
+setMethod("Arith", c(e1 ="rnum", e2 = "rnum"),
+          function(e1, e2) {
+              if(e1@d <= e2@d)
+                  callGeneric(e1, as.numeric(e2))
+              else
+                  callGeneric(as.numeric(e1), e2)
+          })
 
-f(b2)
-stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), b2@b0^2, "B2")))
+## For comparisons, callNextMethod with the rounded arguments
+setMethod("Compare", c(e1 = "rnum"),
+          function(e1, e2)
+              callNextMethod(round(e1, e1@d), round(e2, e1@d)))
+setMethod("Compare", c(e2 = "rnum"),
+          function(e1, e2)
+              callNextMethod(round(e1, e2@d), round(e2, e2@d)))
+
+## similarly to the Arith case, the method for two "rnum" objects
+## can not unambiguously use callNextMethod().  Instead, we rely on
+## The rnum() method inhertited from Math2 to return plain vectors.
+setMethod("Compare", c(e1 ="rnum", e2 = "rnum"),
+          function(e1, e2) {
+              d <- min(e1@d, e2@d)
+              callGeneric(round(e1, d), round(e2, d))
+          })
+
+
+
+
+set.seed(867)
+
+x1 <- rnum(10*runif(5), d=1L)
+x2 <- rnum(10*runif(5), d=2L)
+
+x1+1
+x2*2
+x1-x2
+
+## Simple examples to illustrate callNextMethod with and without arguments
+B0 <- setClass("B0", slots = c(s0 = "numeric"))
+
+## and a function to illustrate callNextMethod
+
+f <- function(x, text = "default") {
+    str(x) # print a summary
+    paste(text, ":", class(x))
+}
+
+setGeneric("f")
+setMethod("f", "B0", function(x, text = "B0") {
+    cat("B0 method called with s0 =", x@s0, "\n")
+    callNextMethod()
+})
+
+b0 <- B0(s0 = 1)
+
+## call f() with 2 arguments: callNextMethod passes both to the default method
+f(b0, "first test")
+
+## call f() with 1 argument:  the default "B0" is not passed by callNextMethod
+f(b0)
+
+## Now, a class that extends B0, with no methods for f()
+B1 <- setClass("B1", slots = c(s1 = "character"), contains = "B0")
+b1 <- B1(s0 = 2, s1 = "Testing B1")
+
+## the two cases work as before, by inheriting the "B0" method
+
+f(b1, b1@s1)
 
 f(b1)
 
-## a sneakier method: the *changed* x is used:
-setMethod("f", "B2",
-          function(x) {x@b0 <- 111; c(x@b2, callNextMethod())})
+B2 <- setClass("B2", contains = "B1")
+
+## And, a method for "B2" that calls with explicit arguments.
+## Note that the method selection in callNextMethod
+## uses the class of the *argument* to consistently select the "B0" method
+
+setMethod("f", "B2", function(x, text = "B1 method") {
+    y <- B1(s0 = -x@s0, s1 ="Modified x")
+    callNextMethod(y, text)
+})
+
+b2 <- B2(s1 = "Testing B2", s0 = 10)
+
+f(b2, b2@s1)
+
 f(b2)
-stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), 111^2, "B2")))
+
+
+## Be careful:  the argument passed must be legal for the method selected
+## Although the argument here is numeric, it's still the "B0" method that's called
+setMethod("f", "B2", function(x, text = "B1 method") {
+    callNextMethod(x@s0, text)
+})
+
+##  Now the call will cause an error:
+
+tryCatch(f(b2), error = function(e) cat(e$message,"\n"))
+
 
 \dontshow{
-## a version of the example with 1 more layer of nesting
-
-## next methods calling next methods, with arguments; using group generics
-setMethod("Ops", "B2",
-    function(e1, e2) callNextMethod())
-setMethod("Ops", c("B0"),
-    function(e1, e2) callNextMethod(e1@b0, e2))
-
-b2 + 1 # 11
-
-b1 == 2 # TRUE
-
+##$
 removeClass("B2"); removeClass("B1"); removeClass("B0")
 
 removeGeneric("f")
 
-removeMethods("Ops")
+removeMethods(all=FALSE,"Arith"); removeMethods(all=FALSE,"Compare")
+removeMethods(all=FALSE,"Math"); removeMethods(all=FALSE,"Math2")
 
 ## tests of multiple callNextMethod
 setClass("m1", slots = c(count = "numeric"), contains = "matrix",
@@ -177,7 +300,8 @@ removeClass("m3")
 removeClass("m2")
 removeClass("m1")
 
-removeMethods("[")
+removeMethods(all=FALSE,"[")
+removeMethods(all=FALSE,"Ops")
 }
 
 }
