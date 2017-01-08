@@ -1679,7 +1679,16 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    for (n = 0; *p >= '0' && *p <= '9'; p++) n = (n < MAX_EXPONENT_PREFIX) ? n * 10 + (*p - '0') : n;
 	    if (ans != 0.0) { /* PR#15976:  allow big exponents on 0 */
 		expn += expsign * n;
-		if(exph > 0) expn -= exph;
+		if(exph > 0) {
+		    if (expn - exph < -122) {	/* PR#17199:  fac may overflow below if expn - exph is too small.  
+		                                   2^-122 is a bit bigger than 1E-37, so should be fine on all systems */
+		    	for (n = exph, fac = 1.0; n; n >>= 1, p2 *= p2)
+			    if (n & 1) fac *= p2;
+			ans /= fac;
+			p2 = 2.0;
+		    } else
+			expn -= exph;
+		}
 		if (expn < 0) {
 		    for (n = -expn, fac = 1.0; n; n >>= 1, p2 *= p2)
 			if (n & 1) fac *= p2;
