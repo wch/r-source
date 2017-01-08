@@ -560,6 +560,13 @@ stopifnot(all.equal(seq(1+1i, 9+2i, length.out = 9) -> sCplx,
 ## had failed in R-devel for a few days
 
 
+## Underflow happened when parsing small hex constants PR#17199
+stopifnot(
+    as.double("0x1.00000000d0000p-987") > 0,   # should be 7.645296e-298 
+    as.double("0x1.0000000000000p-1022") > 0,  # should be 2.225074e-308 
+    as.double("0x1.f89fc1a6f6613p-974") > 0    # should be 1.23456e-293
+)
+## 
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
