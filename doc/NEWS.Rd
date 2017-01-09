@@ -280,6 +280,10 @@
 
       \item The default method for \code{quantile(x, prob)} should now
       be monotone in \code{prob}, even in border cases, see \PR{16672}.
+
+      \item \code{bug.report()} now tries to extract an email address
+      from a \samp{BugReports} field, and if there is none, from a
+      \samp{Contacts} field.
     }
   }
 
