@@ -56,8 +56,8 @@ before_install:
   - tools/rsync-recommended
   - mkdir -p extra
   - pushd extra
-  - wget --no-check-certificate http://zlib.net/zlib-$ZLIB_VERSION.tar.gz
-  - tar xzf zlib-$ZLIB_VERSION.tar.gz
+  - wget --no-check-certificate "https://github.com/madler/zlib/archive/v$ZLIB_VERSION.tar.gz"
+  - tar xzf "v$ZLIB_VERSION.tar.gz"
   - pushd "zlib-$ZLIB_VERSION"
   - ./configure --prefix=$PREFIX && make && make install
   - popd
@@ -66,9 +66,9 @@ before_install:
   - pushd "curl-$CURL_VERSION"
   - ./configure --prefix=$PREFIX && make && make install
   - popd
-  - wget https://sourceforge.net/projects/pcre/files/pcre/$PCRE_VERSION/pcre-$PCRE_VERSION.tar.bz2
-  - tar xjf pcre-$PCRE_VERSION.tar.bz2
-  - pushd pcre-$PCRE_VERSION
+  - wget "https://sourceforge.net/projects/pcre/files/pcre/8.38/pcre-$PCRE_VERSION.tar.bz2"
+  - tar xjf "pcre-$PCRE_VERSION.tar.bz2"
+  - pushd "pcre-$PCRE_VERSION"
   - ./configure --prefix=$PREFIX --enable-utf --enable-unicode-properties && make && make install
   - popd
   - popd
