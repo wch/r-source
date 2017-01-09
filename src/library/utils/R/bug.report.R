@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/bug.report.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ bug.report <- function(subject = "", address,
 {
     baseR <- function() {
         writeLines(c("  Bug reports on R and the base packages need to be submitted",
-                     "  to the tracker at http://bugs.r-project.org/ .",
+                     "  to the tracker at <https://bugs.R-project.org/>.",
                      "",
                      "  We will now try to open that website in a browser"))
         flush.console()
@@ -65,11 +65,11 @@ bug.report <- function(subject = "", address,
     BR <- DESC$BugReports
     if (!is.null(BR) && nzchar(BR)) {
         ## do some basic validity checking!
-        if (grepl("http(,s)://", BR)) {
+        if (grepl("https?://", BR)) {
             writeLines(info)
             cat("\nThis package has a bug submission web page, which we will now attempt\n",
                 "to open.  The information above may be useful in your report. If the web\n",
-                "page doesn't work, you should send email to the maintainer,\n",
+                "page does not work, you should send email to the maintainer,\n",
                 DESC$Maintainer, ".\n",
                 sep = "")
             flush.console()
@@ -77,7 +77,7 @@ bug.report <- function(subject = "", address,
             browseURL(DESC$BugReports)
             return(invisible())
         } else {
-            cat("\nThis package has a BugReports field which is not the URL of a web page:\n\n",
+            cat("This package has a BugReports field which is not the URL of a web page:\n\n",
                 "  BugReports: ", BR,
                 "\n\nWe will ignore it and email the maintainer.\n\n", sep = "")
             flush.console()
