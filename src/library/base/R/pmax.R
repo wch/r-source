@@ -29,6 +29,8 @@ pmax <- function (..., na.rm = FALSE)
     } else {
 	mmm <- elts[[1L]] ## attr(mmm, "dim") <- NULL  # dim<- would drop names
 	has.na <- FALSE
+        as <- methods::as
+        asL <- function(x) if(isS4(x)) as(x, "logical") else x
 	for (each in elts[-1L]) {
 	    ## attr(each, "dim") <- NULL ## FIXME: deal with d.fr.s !
 	    l1 <- length(each); l2 <- length(mmm)
@@ -44,12 +46,12 @@ pmax <- function (..., na.rm = FALSE)
 	    na.m <- is.na(mmm)
 	    na.e <- is.na(each)
 	    if(has.na || (has.na <- any(na.m) || any(na.e))) {
-		mmm [na.m] <- each[na.m]
-		each[na.e] <- mmm [na.e]
+		if(any(na.m <- asL(na.m))) mmm [na.m] <- each[na.m]
+		if(any(na.e <- asL(na.e))) each[na.e] <- mmm [na.e]
 	    }
 	    nS4 <- !isS4(mmm)
-	    if(isS4(change <- mmm < each) && (nS4 || !isS4(each)))
-		change <- methods::as(change, "logical")# not as.vector(): kills the d.fr. case
+	    if(isS4(change <- mmm < each) && (nS4 || !isS4(each))) # e.g., keep sparse 'each'
+		change <- as(change, "logical")# not as.vector(): kills the d.fr. case
 	    change <- change & !is.na(change)
 	    mmm[change] <- each[change]
 	    if (has.na && !na.rm) mmm[na.m | na.e] <- NA
@@ -69,6 +71,8 @@ pmin <- function (..., na.rm = FALSE)
     } else {
 	mmm <- elts[[1L]] ## attr(mmm, "dim") <- NULL  # dim<- would drop names
 	has.na <- FALSE
+        as <- methods::as
+        asL <- function(x) if(isS4(x)) as(x, "logical") else x
 	for (each in elts[-1L]) {
 	    ## attr(each, "dim") <- NULL ## FIXME: deal with d.fr.s !
 	    l1 <- length(each); l2 <- length(mmm)
@@ -84,12 +88,12 @@ pmin <- function (..., na.rm = FALSE)
 	    na.m <- is.na(mmm)
 	    na.e <- is.na(each)
 	    if(has.na || (has.na <- any(na.m) || any(na.e))) {
-		mmm [na.m] <- each[na.m]
-		each[na.e] <- mmm [na.e]
+		if(any(na.m <- asL(na.m))) mmm [na.m] <- each[na.m]
+		if(any(na.e <- asL(na.e))) each[na.e] <- mmm [na.e]
 	    }
 	    nS4 <- !isS4(mmm)
-	    if(isS4(change <- mmm > each) && (nS4 || !isS4(each)))
-		change <- methods::as(change, "logical")# not as.vector(): kills the d.fr. case
+	    if(isS4(change <- mmm > each) && (nS4 || !isS4(each))) # e.g., keep sparse 'each'
+		change <- as(change, "logical")# not as.vector(): kills the d.fr. case
 	    change <- change & !is.na(change)
 	    mmm[change] <- each[change]
 	    if (has.na && !na.rm) mmm[na.m | na.e] <- NA
