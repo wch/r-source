@@ -506,10 +506,11 @@ be found.  These @acronym{URL}s are converted to active hyperlinks in
 @acronym{CRAN} package listings.  @xref{Specifying URLs}.
 
 @c DESCRIPTION field BugReports
-The @samp{BugReports} field may contain a single
-@acronym{URL} to which bug reports about the package should be
-submitted.  This @acronym{URL} will be used by @code{bug.report}
-instead of sending an email to the maintainer.
+The @samp{BugReports} field may contain a single @acronym{URL} to which
+bug reports about the package should be submitted.  This @acronym{URL}
+will be used by @code{bug.report} instead of sending an email to the
+maintainer.  A browser is opened for a @samp{http://} or @samp{https://}
+@acronym{URL} (and others are ignored).
 
 @c DESCRIPTION field Priority
 Base and recommended packages (i.e., packages contained in the @R{}
