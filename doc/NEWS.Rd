@@ -431,6 +431,9 @@
       \item Check customization via environment variables to detect side
       effects of \code{.Call()} and \code{.External()} calls which alter
       their arguments is described in §8 of the \sQuote{R Internals} manual.
+      
+      \item \command{R CMD check} now checks any \samp{BugReports} field
+      to be non-empty and a suitable single URL.
     }
   }
 
@@ -648,9 +651,11 @@
       Suharto Anggono's \PR{17195} and \PR{17200}.
       
       \item \code{bug.report()} did not do any validity checking on a
-      package's \samp{BugReports} field.  It now ignores an empty field
-      and only attempts to open \samp{http://} and \samp{https://} URLs,
-      falling back to emailing the maintainer.
+      package's \samp{BugReports} field.  It now ignores an empty field,
+      removes leading whitespace and only attempts to open
+      \samp{http://} and \samp{https://} URLs, falling back to emailing
+      the maintainer.
+      
     }
   }
 }

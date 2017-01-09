@@ -736,6 +736,46 @@ setRlibs <-
             }
         }
 
+        ## check for BugReports field added at R 3.4.0
+        if(!is.na(BR <- db["BugReports"])) {
+            if (nzchar(BR)) {
+                BR <- trimws(BR)
+                msg <- ""
+                ## prior to 3.4.0 this was said to be
+                ## 'a URL to which bug reports about the package
+                ## should be submitted'
+                ## We will take that to mean a http[s]:// URL,
+                isURL <- grepl("^https?://[^ ]*$", BR)
+                ## As from 3.4.0 bug,report() is able to extract
+                ## an email addr.
+                if(!isURL) {
+                    findEmail <- function(x) {
+                        x <- paste(x, collapse = " ")
+                        if (grepl("mailto:", x))
+                            sub(".*mailto:([^ ]+).*", "\\1", x)
+                        else if (grepl("[^<]*<([^>]+)", x))
+                            sub("[^<]*<([^>]+)>.*", "\\1", x)
+                        else NA_character_
+                    }
+                    msg <- if (is.na(findEmail(BR))) {
+                        if (grepl("(^|.* )[^ ]+@[[:alnum:]._]+", BR))
+                            "BugReports field is not a suitable URL but appears to contain an email address\n  not specified by mailto: nor contained in < >"
+                        else
+                            "BugReports field should be the URL of a single webpage"
+                    } else
+                        "BugReports field is not a suitable URL but contains an email address\n  which will be used as from R 3.4.0"
+                }
+            } else {
+                msg <- "BugReports field should not be empty"
+            }
+            if (nzchar(msg)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                printLog(Log, msg, "\n")
+           }
+        }
+
+
         out <- format(.check_package_description2(dfile))
         if (length(out)) {
             if(!any) noteLog(Log)
