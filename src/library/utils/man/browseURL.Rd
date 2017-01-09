@@ -1,6 +1,6 @@
 % File src/library/utils/man/browseURL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browseURL}
@@ -14,7 +14,9 @@ browseURL(url, browser = getOption("browser"),
           encodeIfNeeded = FALSE)
 }
 \arguments{
-  \item{url}{a non-empty character string giving the URL to be loaded.}
+  \item{url}{a non-empty character string giving the URL to be loaded.
+   Some platforms also accept file paths.
+  }
   \item{browser}{a non-empty character string giving the name of the
     program to be used as the HTML browser.  It should be in the PATH,
     or a full path specified.  Alternatively, an \R function to be
@@ -61,8 +63,7 @@ browseURL(url, browser = getOption("browser"),
   remote host.
 
   It is the caller's responsibility to encode \code{url} if necessary
-  (see \code{\link{URLencode}}).  This can be tricky for file URLs,
-  where the format accepted can depend on both browser and OS.
+  (see \code{\link{URLencode}}).
 
   To suppress showing URLs altogether, set \code{browser = "false"}.
   
@@ -95,4 +96,13 @@ browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
           browser = "C:/Program Files/Mozilla Firefox/firefox.exe")
 }}
 #endif
+\section{URL schemes}{
+  Which URL schemes are accepted is platform-specific: expect
+  \samp{http://}, \samp{https://} and \samp{ftp://} to work, but
+  \samp{mailto:} may or may not (and if it does may not use the user's
+  preferred email client).
+  
+  For the \samp{file://} scheme the format accepted (if any) can depend on
+  both browser and OS.
+}
 \keyword{file}
