@@ -61,7 +61,7 @@ bug.report <- function(subject = "", address,
         x <- paste(x, collapse = " ") # could be multiple lines
         if (grepl("mailto:", x))
             sub(".*mailto:([^ ]+).*", "\\1", x)
-        if (grepl("[^<]*<([^>]+)", x))
+        else if (grepl("[^<]*<([^>]+)", x))
             sub("[^<]*<([^>]+)>.*", "\\1", x)
         else if (grepl("(^|.* )[^ ]+@[[:alnum:]._]+", x)) # too generous
             sub("(^|.* )([^ ]+@[[:alnum:]._]+).*", "\\2", x)
@@ -70,17 +70,17 @@ bug.report <- function(subject = "", address,
 
     BR <- DESC$BugReports
     if (!is.null(BR) && nzchar(BR)) {
-        ## do some basic validity checking!
-        if (grepl("^ *https?://", BR)) {
+        BR <- trimws(BR)  # some packages have e.g. leading \n
+        if (grepl("^https?://", BR)) {
             writeLines(info)
             cat("\nThis package has a bug submission web page, which we will now attempt\n",
-                "to open.  The information above may be useful in your report. If the web\n",
-                "page does not work, you should send email to the maintainer,\n",
+                "to open.  The information above may be useful in your report.\n",
+                "If the web page does not work, you should send email to the maintainer,\n",
                 DESC$Maintainer, ".\n",
                 sep = "")
             flush.console()
             Sys.sleep(2)
-            browseURL(DESC$BugReports)
+            browseURL(BR)
             return(invisible())
         } else {
             cat("This package has a BugReports field which is not the URL of a web page:\n\n",
