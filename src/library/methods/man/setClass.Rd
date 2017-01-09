@@ -1,6 +1,6 @@
 % File src/library/methods/man/setClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setClass}
@@ -9,17 +9,19 @@
 \title{Create a Class Definition}
 \description{
   Create  a class definition and return a generator function to create
-  objects from the class.  Standard usage will be
-  of the form:
+  objects from the class.  Typical usage will be
+  of the style:
 
-   \code{setClass(Class, slots= , contains =)}
+   \code{myClass <- setClass("myClass", slots= ...., contains =....)}
 
- where \code{Class} is the name of the new class and, if supplied, the arguments    
+ where the first argument is the name of the new class and, if supplied, the arguments    
   \code{slots=} and \code{contains=} specify the slots
   in the new class and existing classes from which the new class
   should inherit.  Calls to \code{setClass()} are normally found in the
   source of a package; when the package is loaded the class will be
-  defined in the package's namespace.
+  defined in the package's namespace.  Assigning the generator
+  function with the name of the class is  convenient for users, but
+  not a requirement.
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
@@ -28,17 +30,22 @@ setClass(Class, representation, prototype, contains=character(),
 }
 \arguments{
   \item{Class}{character string name for the class.}
-  \item{slots}{  A named vector with the names being those of the slots in
-      the new class.  Each element of the vector specifies an
-      existing class; the corresponding slot must be from this class
-      or a subclass of it.  This argument
+  \item{slots}{  The names and classes for the slots in the new class.  This argument
       must be supplied by name, \code{slots=}, in the call, for back compatibility
       with other arguments no longer recommended.
 
+      The argument must be  vector with a names attribute, the names being those of the slots in
+      the new class.  Each element of the vector specifies an
+      existing class; the corresponding slot must be from this class
+      or a subclass of it.  Usually, this is a character vector
+      naming the classes.  It's also legal for the elements of the
+      vector to be class representation objects, as returned by \code{\link{getClass}}.
 
-    It is allowed to provide an unnamed character vector as a limiting
-    case, with the elements taken as slot names and all slots having
-    the unrestricted class \code{"ANY"}.
+
+    As a limiting
+    case,  the argument may be an unnamed character
+    vector;  the elements are  taken as slot names and all slots have
+    the unrestricted class \code{"ANY"}. 
   }
   \item{contains}{ A vector specifying existing classes from which
       this class should inherit. The new class will have all the slots
@@ -101,7 +108,8 @@ setClass(Class, representation, prototype, contains=character(),
   which will be passed on to the initialize method.  If no
   \code{initialize} method is defined for the class or one of its
   superclasses, the default method expects named arguments with the
-  name of one of the slots.
+  name of one of the slots and unnamed arguments that are objects from
+  one of the contained classes.
 
   Typically the generator function is assigned the name of the class,
   for programming clarity.  This is not a requirement and objects
@@ -132,10 +140,15 @@ selection.
 The slots in a class definition will be the union of all the slots
 specified directly by \code{slots} and all the slots in all
 the contained classes.
-There can only be one slot with a given name; specifically, the
-direct and inherited slot names must be unique.
-That does not, however, prevent the same class from being inherited
-via more than one path.
+There can only be one slot with a given name.
+A class may override the definition of a slot with a given name, but
+\emph{only} if the newly specified class is a subclass of the
+inherited one.
+For example, if the contained class had a slot \code{a} with class
+\code{"ANY"}, then a subclass could specify \code{a} with class
+\code{"numeric"},
+but if the original specification for the slot was class
+\code{"character"}, the new call to \code{setClass} would generate an error.
 
 
 
@@ -220,12 +233,18 @@ classes (either S4 or S3) because setting an attribute overwrites the
 object in all contexts.
 It is possible to define a class that inherits from such types,
 through an indirect mechanism that stores the inherited object in a
-reserved slot.
+reserved slot, \code{".xData"}.
 See the
 example for class \code{"stampedEnv"} below.
+An object from such a class does \emph{not} have a \code{".Data"} pseudo-slot.
+
+For most computations, these classes behave transparently as if they
+inherited directly from the anomalous type.
 S3 method dispatch and the relevant \code{as.}\emph{type}\code{()}
 functions should behave correctly, but code that uses the type of the
 object directly will not.
+For example, \code{as.environment(e1)} would work as expected with the
+\code{"stampedEnv"} class, but \code{typeof(e1)} is \code{"S4"}.
 
 }
 

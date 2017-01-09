@@ -9,17 +9,33 @@
 \alias{setValidity}
 \title{ Test the Validity of an Object }
 \description{
-  The validity of \code{object} related to its class definition is
-  tested.  If the object is valid, \code{TRUE} is returned; otherwise,
-  either a vector of strings describing validity failures is returned,
-  or an error is generated (according to whether \code{test} is
-  \code{TRUE}).  Optionally, all slots in the object can also be validated.
+  \code{validObject()} tests the validity of \code{object} related to
+  its class definition; specifically, it checks that all slots
+  specified in the class definition are present and that the object in
+  the slot is from the required class or a subclass of that class.
 
-  The function \code{setValidity} sets the validity method of a class
-  (but more normally, this method will be supplied as the
-  \code{validity} argument to \code{\link{setClass}}).  The method
-  should be a function of one object that returns \code{TRUE} or a
+  If the object is valid, \code{TRUE} is returned; otherwise, an error
+  is generated, reporting all the validity failures encountered.
+If argument \code{test} is
+  \code{TRUE}, the errors are returned as a character vector rather
+  than generating an error.
+  
+
+  When an object from a class is initialized, the default method for
+  \code{\link{initialize}()} calls \code{validObject}.
+
+A class definition may have a validity method, set by a call to
+  the function \code{setValidity}, in the package or environment that
+  defines the class (or via the \code{validity} argument to \code{\link{setClass}}).  The method
+  should be a function of one object that returns \code{TRUE} or a character-string
   description of the non-validity.
+  If such a method exists, it will be called from \code{validObject}
+  and any strings from failure will be included in the result or the
+  error message.
+Any validity methods defined for superclasses (from the \code{contains=}
+argument to \code{\link{setClass}}, will also be called.
+
+
 }
 \usage{
 validObject(object, test = FALSE, complete = FALSE)
@@ -35,8 +51,8 @@ getValidity(ClassDef)
     function returns a vector of strings describing the problems.  If
     \code{test} is \code{FALSE} (the default) validity failure generates
     an error.}
-  \item{complete}{logical; if \code{TRUE}, validity methods will be
-    applied recursively to any of the slots that have such methods.}
+  \item{complete}{logical; if \code{TRUE}, \code{validObject} is
+      called recursively for each of the slots.  The default is \code{FALSE}.}
   \item{Class}{the name or class definition of the class whose validity
     method is to be set.}
   \item{ClassDef}{a class definition object, as from
@@ -48,35 +64,46 @@ getValidity(ClassDef)
     are found.  Unlike \code{validObject}, it should never generate an
     error.
   }
-  \item{where}{the modified class definition will be stored in this
-    environment.}
+  \item{where}{an environment to store the modified class
+      definition. Should be omitted, specifically  for calls from a package that defines the class.
+    The definition will be stored in the
+    namespace of the package.}
 
-  Note that validity methods do not have to check validity of
-  superclasses: the logic of \code{validObject} ensures these tests are
-  done once only.  As a consequence, if one validity method wants to use
-  another, it should extract and call the method from the other
-  definition of the other class by calling \code{getValidity()}: it
-  should \emph{not} call \code{validObject}.
+}
+\section{Validity methods}{
+ A validity method must be a function of one argument; formally, that
+argument should be named \code{object}.
+If the argument has a different name, \code{setValidity} makes the
+substitution but in obscure cases that might fail, so it's wiser to
+name the
+ argument \code{object}.
+
+A good method checks all the possible errors and returns a character
+vector citing all the exceptions found, rather than returning after
+the first one.
+\code{validObject} will accumulate these errors in its error message
+or its return value.
+
+Note that validity methods do not have to check validity of
+  superclasses: \code{validObject} calls such methods explicitly.
 }
 \details{
-  Validity testing takes place \sQuote{bottom up}: Optionally, if
-  \code{complete=TRUE}, the validity of the object's slots, if any, is
-  tested.  Then, in all cases, for each of the classes that this class
+  Validity testing takes place \sQuote{bottom up}, checking the slots,
+  then the superclasses, then the object's own validity method, if
+  there is one.
+
+For each slot and superclass, the existence of the specified class is
+checked.
+For each slot, the object in the slot is tested for inheritance from
+the corresponding class.
+If  \code{complete} is {TRUE},   \code{validObject} is called
+recursively for the object in the slot.
+
+Then, for each of the classes that this class
   extends (the \sQuote{superclasses}), the explicit validity method of
   that class is called, if one exists.  Finally, the validity method of
   \code{object}'s class is called, if there is one.
 
-  Testing generally stops at the first stage of finding an error, except
-  that all the slots will be examined even if a slot has failed its
-  validity test.
-
-  The standard validity test (with \code{complete=FALSE}) is applied
-  when an object is created via \code{\link{new}} with any optional
-  arguments (without the extra arguments the result is just the class
-  prototype object).
-
-  An attempt is made to fix up the definition of a validity method if
-  its argument is not \code{object}.
 }
 \value{
   \code{validObject} returns \code{TRUE} if the object is valid.
@@ -85,13 +112,10 @@ getValidity(ClassDef)
   with the corresponding strings in the error message.
 }
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
-  Springer.  (For the R version.)
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+Chambers, John M. (2016)
+ \emph{Extending R},
+  Chapman & Hall.
+(Chapters 9 and 10.)
 }
 \seealso{\code{\link{setClass}};
   class \code{\linkS4class{classRepresentation}}.
