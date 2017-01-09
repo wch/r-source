@@ -642,6 +642,11 @@
       \item \code{pmin()} and \code{pmax()} now work again for
       \code{ordered} factors and 0-length S3 classed objects, thanks to
       Suharto Anggono's \PR{17195} and \PR{17200}.
+      
+      \item \code{bug.report()} did not do any validity checking on a
+      package's \samp{BugReports} field.  It now ignores an empty field
+      and only attempts to open \samp{http://} and \samp{https://} URLs,
+      falling back to emailing the maintainer.
     }
   }
 }
