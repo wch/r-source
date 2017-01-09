@@ -71,7 +71,7 @@ bug.report <- function(subject = "", address,
     BR <- DESC$BugReports
     if (!is.null(BR) && nzchar(BR)) {
         ## do some basic validity checking!
-        if (grepl("https?://", BR)) {
+        if (grepl("^ *https?://", BR)) {
             writeLines(info)
             cat("\nThis package has a bug submission web page, which we will now attempt\n",
                 "to open.  The information above may be useful in your report. If the web\n",
