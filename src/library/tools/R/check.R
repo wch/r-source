@@ -737,9 +737,9 @@ setRlibs <-
         }
 
         ## check for BugReports field added at R 3.4.0
-        if(!is.na(BR <- db["BugReports"])) {
-            if (nzchar(BR)) {
-                BR <- trimws(BR)
+        if(!is.na(BR0 <- db["BugReports"])) {
+            if (nzchar(BR0)) {
+                BR <- trimws(BR0)
                 msg <- ""
                 ## prior to 3.4.0 this was said to be
                 ## 'a URL to which bug reports about the package
@@ -764,7 +764,8 @@ setRlibs <-
                             "BugReports field should be the URL of a single webpage"
                     } else
                         "BugReports field is not a suitable URL but contains an email address\n  which will be used as from R 3.4.0"
-                }
+                } else if (grepl("^\n *http", BR0))
+                    msg <- "BugReports field has an empty first line and will not work in R <= 3.3.2"
             } else {
                 msg <- "BugReports field should not be empty"
             }
