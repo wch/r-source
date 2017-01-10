@@ -389,6 +389,15 @@
       \item There is support for compiling C++14 code in packages on
       suitable platforms: see \sQuote{Writing R Extensions} for how to
       request this.
+      
+      \item The order of flags when \samp{LinkingTo} other packages has
+      been changed so their include directories come earlier, before
+      those specified in \code{CPPFLAGS}.  This will only have an effect
+      if non-system include directories are included with \option{-I}
+      flags in \code{CPPFLAGS} (and so not the default
+      \code{-I/usr/local/include} on most platforms).
+      %% This ensures that BH's 'boost' directory gets precedent over
+      %% any Boost headers in, say, /opt/csw/include .
     }
   }
 
