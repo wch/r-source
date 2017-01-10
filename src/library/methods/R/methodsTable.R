@@ -748,12 +748,19 @@
 
 .findMethodInTable <- function(signature, table, fdef = NULL)
 {
-    if(is(fdef, "genericFunction"))
-        signature <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
-    label <- .sigLabel(signature)
+    value <- NULL
+    if(is(fdef, "genericFunction")) {
+        fullSig <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
+        label <- .sigLabel(fullSig)
+        value <- table[[label]]
+    }
+    if(is.null(value)) { # try the original signature
+        label <- .sigLabel(signature)
+        value <- table[[label]]
+    }
 ##     allMethods <- objects(table, all.names=TRUE)
 ##     if(match(label, allMethods, nomatch = 0L))
-    if(!is.null(value <- table[[label]])) {
+    if(!is.null(value)) {
         if(is.environment(value)) {
             pkgs <- names(value)
             if(length(pkgs) == 1)

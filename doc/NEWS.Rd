@@ -655,6 +655,10 @@
       removes leading whitespace and only attempts to open
       \samp{http://} and \samp{https://} URLs, falling back to emailing
       the maintainer.
+
+      \item \code{findMethod} failed if the active signature had
+      expanded beyond what a particular package used. (Example with
+      packages XR and XRJulia on CRAN).
       
     }
   }
