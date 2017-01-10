@@ -1546,7 +1546,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef LONG_VECTOR_SUPPORT
 	if (isVector(s) && IS_LONG_VEC(s))
 	    error(_("long vectors (argument %d) are not supported in %s"),
-		  na + 1, Fort ? ".C" : ".Fortran");
+		  na + 1, Fort ? ".Fortran" : ".C");
 #endif
 	SEXPTYPE t = TYPEOF(s);
 	switch(t) {
