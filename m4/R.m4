@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2016 R Core Team
+### Copyright (C) 1998-2017 R Core Team
 ###
 ### This file is part of R.
 ###

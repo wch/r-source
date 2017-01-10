@@ -1,6 +1,6 @@
 % File src/library/utils/man/globalVariables.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2016 R Core Team
+% Copyright 2012-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{globalVariables}
