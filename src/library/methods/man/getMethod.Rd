@@ -198,17 +198,19 @@ table of methods including the one specified.
 testFun <-  function(x)x
 setGeneric("testFun")
 setMethod("testFun", "numeric", function(x)x+1)
-hasMethod("testFun", "numeric")
-\dontrun{[1] TRUE}
-hasMethod("testFun", "integer") #inherited
-\dontrun{[1] TRUE}
-existsMethod("testFun", "integer")
-\dontrun{[1] FALSE}
-hasMethod("testFun") # default method
-\dontrun{[1] TRUE}
+
+hasMethod("testFun", "numeric") # TRUE
+
+hasMethod("testFun", "integer") #TRUE, inherited
+
+existsMethod("testFun", "integer") #FALSE
+
+hasMethod("testFun") # TRUE, default method
+
 hasMethod("testFun", "ANY")
-\dontrun{[1] FALSE}
+
 \dontshow{
+## Verify the example
 stopifnot(isGeneric("testFun"),
           hasMethod("testFun", "numeric"),
           hasMethod("testFun", "integer"),
