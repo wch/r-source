@@ -743,9 +743,19 @@
     stop("Internal error in finding inherited methods; didn't return a unique method", domain = NA)
 }
 
-.findMethodInTable <- function(signature, table, fdef = NULL)
+.findMethodForFdef <- function(signature, table, fdef = NULL) {
+    value <- .findMethodInTable(signature, table, fdef)
+    if(is.null(value) && is(fdef, "genericFunction")) { # try without expanding signature
+        fullSig <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
+        if(!identical(fullSig, signature))
+            value <- .findMethodInTable(signature, table, fdef, FALSE)
+    }
+    value
+}
+
+.findMethodInTable <- function(signature, table, fdef = NULL , expdSig = TRUE)
 {
-    if(is(fdef, "genericFunction"))
+    if(is(fdef, "genericFunction") && expdSig)
         signature <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
     label <- .sigLabel(signature)
 ##     allMethods <- objects(table, all.names=TRUE)

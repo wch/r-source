@@ -672,7 +672,10 @@ findMethod <- function(f, signature, where = topenv(parent.frame())) {
     for(i in seq_along(where)) {
         wherei <- where[[i]]
         table <- get(fM, wherei, inherits=FALSE)
-        mi <- .findMethodInTable(signature, table, fdef)
+        ## because we are using the table from the package, we must
+        ## search for both the unexpanded & expanded signature, which
+        ## .findMethodInTable does not do.
+        mi <- .findMethodForFdef(signature, table, fdef)
         found[i] <- !is.null(mi)
     }
     value <- where[found]
