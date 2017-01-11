@@ -1796,7 +1796,7 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
     check1arg(args, call, "x");
 
     if (!isString(CAR(args)))
-	errorcall(call, "argumemt is not a character vector");
+	errorcall(call, "argument is not a character vector");
     ans = CAR(args);
     for (i = 0; i < XLENGTH(ans); i++) {
 	el = STRING_ELT(ans, i);
