@@ -676,6 +676,9 @@
       expanded beyond what a particular package used. (Example with
       packages XR and XRJulia on CRAN).
 
+      \item \code{bw.SJ()} and \code{density(*, bw="SJ")} no longer fail
+      because of integer overflow for large sample size n (starting from
+      n as small as 65536).
     }
   }
 }

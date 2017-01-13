@@ -1,6 +1,6 @@
 % File src/library/stats/man/bandwidth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bandwidth}
@@ -60,7 +60,10 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   biased cross-validation respectively.
 
   \code{bw.SJ} implements the methods of Sheather & Jones (1991)
-  to select the bandwidth using pilot estimation of derivatives.\cr
+  to select the bandwidth using pilot estimation of derivatives, based
+  on all pairwise binned distances, hence of complexity \eqn{O(n^2)} and
+  considerably slower than the other bandwidth selectors for larger \eqn{n}.
+    \cr
   The algorithm for method \code{"ste"} solves an equation (via
   \code{\link{uniroot}}) and because of that, enlarges the interval
   \code{c(lower, upper)} when the boundaries were not user-specified and

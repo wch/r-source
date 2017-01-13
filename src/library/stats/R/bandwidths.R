@@ -2,7 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1994-2001 W. N. Venables and B. D. Ripley
-#  Copyright (C) 2001-2014 The R Core Team
+#  Copyright (C) 2001-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -48,13 +48,14 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
     if (is.na(nb) || nb <= 0L) stop("invalid 'nb'")
     storage.mode(x) <- "double"
 
-    method <- match.arg(method)
+    ## NB cnt[] := counts of all binned pair distances ==> O(n^2)
+    ##    sum(cnt) == choose(n,2) == n*(n-1)/2
+    Z <- .Call(C_bw_den, nb, x); d <- Z[[1L]]; cnt <- Z[[2L]]
 
-    fSD <- function(h) ( c1 / SDh(alph2 * h^(5/7)) )^(1/5) - h
+    ## and these use (d, cnt)
     SDh <- function(h) .Call(C_bw_phi4, n, d, cnt, h)
     TDh <- function(h) .Call(C_bw_phi6, n, d, cnt, h)
 
-    Z <- .Call(C_bw_den, nb, x); d <- Z[[1L]]; cnt <- Z[[2L]]
     scale <- min(sd(x), IQR(x)/1.349)
     a <- 1.24 * scale * n^(-1/7)
     b <- 1.23 * scale * n^(-1/9)
@@ -62,7 +63,7 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
     TD  <- -TDh(b)
     if(!is.finite(TD) || TD <= 0)
         stop("sample is too sparse to find TD", domain = NA)
-    if(method == "dpi")
+    if(match.arg(method) == "dpi")
         res <- (c1/SDh((2.394/(n * TD))^(1/7)))^(1/5)
     else {
         if(bnd.Miss <- missing(lower) || missing(upper)) {
@@ -72,6 +73,7 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
         alph2 <- 1.357*(SDh(a)/TD)^(1/7)
         if(!is.finite(alph2))
             stop("sample is too sparse to find alph2", domain  = NA)
+        fSD <- function(h) ( c1 / SDh(alph2 * h^(5/7)) )^(1/5) - h
         itry <- 1L
 	while (fSD(lower) * fSD(upper) > 0) {
 	    if(itry > 99L || !bnd.Miss) # 1.2 ^ 99 = 69'014'979 .. enough
