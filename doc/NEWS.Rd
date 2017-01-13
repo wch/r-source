@@ -80,6 +80,9 @@
       package's \samp{BugReports} field.  It now ignores an empty field
       and only attempts to open \samp{http://} and \samp{https://} URLs,
       falling back to emailing the maintainer.
+      \item \code{bw.SJ()} and \code{density(*, bw="SJ")} no longer fail
+      because of integer overflow for large sample size n (starting from
+      n as small as 65536).
     }
   }
 }
