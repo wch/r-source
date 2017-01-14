@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -225,7 +225,8 @@ strptime <- function(x, format, tz = "")
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXct")) stop("wrong class")
-    if(identical(tz, "") && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
+    ## NB identical(tz, "") is *NOT* the same as missing(tz)
+    if(missing(tz) && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
     structure(format.POSIXlt(as.POSIXlt(x, tz), format, usetz, ...),
               names = names(x))
 }
@@ -235,12 +236,14 @@ print.POSIXct <-
 print.POSIXlt <- function(x, tz = "", usetz = TRUE, ...)
 {
     max.print <- getOption("max.print", 9999L)
+    FORM <- if(missing(tz)) function(z) format(x, usetz = usetz)
+	    else function(z) format(x, tz = tz, usetz = usetz)
     if(max.print < length(x)) {
-        print(format(x[seq_len(max.print)], tz = tz, usetz = usetz), ...)
+	print(FORM(x[seq_len(max.print)]), ...)
         cat(' [ reached getOption("max.print") -- omitted',
             length(x) - max.print, 'entries ]\n')
-    } else print(if(length(x)) format(x, tz = tz, usetz = usetz)
-		 else paste(class(x)[1L], "of length 0"), ...)
+    } else
+	print(if(length(x)) FORM(x) else paste(class(x)[1L], "of length 0"), ...)
     invisible(x)
 }
 

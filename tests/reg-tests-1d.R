@@ -583,6 +583,20 @@ stopifnot(
 )
 ##
 
+
+## format.POSIX[cl]t() after print.POSIXct()
+dt <- "2012-12-12 12:12:12"
+x <- as.POSIXct(dt, tz = "GMT")
+stopifnot(identical(format(x), dt))
+(Sys.t <- Sys.timezone())
+someCET <- paste("Europe", c("Berlin", "Brussels", "Copenhagen", "Madrid",
+                             "Paris", "Rome", "Vienna", "Zurich"), sep="/")
+if(Sys.t %in% someCET)
+    stopifnot(print(TRUE), identical(format(x, tz = ""), "2012-12-12 13:12:12"))
+## had failed for almost a month in R-devel & R-patched
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
