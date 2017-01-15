@@ -128,6 +128,10 @@ R_CPFun CPFun[MAX_CACHE];
 int nCPFun = 0;
 #endif
 
+/* Note that it is likely that dlopen will use up at least one file
+   descriptor for each DLL loaded (it may load further dynamically
+   linked libraries), so we do not want to get close to the fd limit
+   (which may be as low as 256). */
 #define MAX_NUM_DLLS	100
 
 static int CountDLL = 0;
