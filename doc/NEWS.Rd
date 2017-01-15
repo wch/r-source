@@ -271,8 +271,8 @@
 
       \item Package \pkg{tools} now exports function
       \code{CRAN_package_db()} for obtaining information about current
-      packages in the CRAN package repository, and several functions for
-      obtaining the check status of these packages.
+      packages in the \acronym{CRAN} package repository, and several
+      functions for obtaining the check status of these packages.
 
       \item The (default) Stangle driver \code{Rtangle} allows
       \code{annotate} to be a function and gets a new
@@ -679,7 +679,7 @@
 
       \item \code{findMethod} failed if the active signature had
       expanded beyond what a particular package used. (Example with
-      packages XR and XRJulia on CRAN).
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
 
       \item \code{bw.SJ()} and \code{density(*, bw="SJ")} no longer fail
       because of integer overflow for large sample size n (starting from
