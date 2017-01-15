@@ -4335,6 +4335,15 @@ wrong).  Note that symbol names starting with @code{R_} are regarded as
 part of @R{}'s namespace and should not be used in packages.
 
 @item
+It is good practice for DLLs to register their symbols
+(@pxref{Registering native routines}), restrict visibility
+(@pxref{Controlling visibility}) and not allow symbol search
+(@pxref{Registering native routines}).  It should be possible for a DLL
+to have only one visible symbol, @code{R_init_@var{pkgname}}, on
+suitable platforms@footnote{At least Linux and Windows, but not macOS.},
+which would completely avoid symbol conflicts.
+
+@item
 It is not portable to call compiled code in @R{} or other packages
 @emph{via} @code{.Internal}, @code{.C}, @code{.Fortran}, @code{.Call} or
 @code{.External}, since such interfaces are subject to change without
@@ -9123,15 +9132,18 @@ By `native' routine, we mean an entry point in compiled code.
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
 @code{.External}, @R{} must locate the specified native routine by
 looking in the appropriate shared object/DLL.  By default, @R{} uses the
-operating-system-specific dynamic loader to lookup the symbol in all
-loaded DLLs and the @R{} executable or libraries it is linked to.
-Alternatively, the author of the DLL can explicitly register routines
-with @R{} and use a single, platform-independent mechanism for finding
-the routines in the DLL.  One can use this registration mechanism to
-provide additional information about a routine, including the number and
-type of the arguments, and also make it available to @R{} programmers
-under a different name.  In the future, registration may be used to
-implement a form of ``secure'' or limited native access.
+operating-system-specific dynamic loader to lookup the symbol in
+all@footnote{For calls from within a namespace the search is confined to
+the DLL loaded for that package.} loaded DLLs and the @R{} executable
+or libraries it is linked to.  Alternatively, the author of the DLL can
+explicitly register routines with @R{} and use a single,
+platform-independent mechanism for finding the routines in the DLL.  One
+can use this registration mechanism to provide additional information
+about a routine, including the number and type of the arguments, and
+also make it available to @R{} programmers under a different name.
+@c No sing of this in 15 years ....
+@c In the future, registration may be used to
+@c implement a form of ``secure'' or limited native access.
 
 @findex R_registerRoutines
 To register routines with @R{}, one calls the C routine
@@ -9143,7 +9155,7 @@ takes 5 arguments.  The first is the @code{DllInfo} object passed by
 information about the methods.  The remaining 4 arguments are arrays
 describing the routines for each of the 4 different interfaces:
 @code{.C}, @code{.Call}, @code{.Fortran} and @code{.External}.  Each
-argument is a @code{FIND}-terminated array of the element types given in
+argument is a @code{NULL}-terminated array of the element types given in
 the following table:
 
 @quotation
@@ -9155,7 +9167,7 @@ the following table:
 @end multitable
 @end quotation
 
-Currently, the @code{R_ExternalMethodDef} is the same as
+Currently, the @code{R_ExternalMethodDef} type is the same as
 @code{R_CallMethodDef} type and contains fields for the name of the
 routine by which it can be accessed in @R{}, a pointer to the actual
 native symbol (i.e., the routine itself), and the number of arguments
@@ -9223,13 +9235,14 @@ static R_CMethodDef cMethods[] = @{
 @};
 @end example
 
-One can also specify whether each argument is used simply as input, or
-as output, or as both input and output.  The style field in the
-description of a method is used for this.  The purpose is to
-allow@footnote{but this is not currently done.} @R{} to transfer values
-more efficiently across the @R{}-C/FORTRAN interface by avoiding copying
-values when it is not necessary. Typically, one omits this information
-in the registration data.
+@c Never implemented ....
+@c One can also specify whether each argument is used simply as input, or
+@c as output, or as both input and output.  The style field in the
+@c description of a method is used for this.  The purpose is to
+@c allow@footnote{but this is not currently done.} @R{} to transfer values
+@c more efficiently across the @R{}-C/FORTRAN interface by avoiding copying
+@c values when it is not necessary. Typically, one omits this information
+@c in the registration data.
 
 Having created the arrays describing each routine, the last step is to
 actually register them with @R{}.  We do this by calling
@@ -9251,9 +9264,8 @@ This routine will be invoked when @R{} loads the shared object/DLL named
 @code{.Fortran} and @code{.External} interfaces.  In our example, these
 are given as @code{NULL} since we have no routines of these types.
 
-When @R{} unloads a shared object/DLL, its registrations are
-automatically removed.  There is no other facility for unregistering a
-symbol.
+When @R{} unloads a shared object/DLL, its registrations are removed.
+There is no other facility for unregistering a symbol.
 
 Examples of registering routines can be found in the different packages
 in the @R{} source tree (e.g., @pkg{stats}).  Also, there is a
@@ -9277,6 +9289,27 @@ methods can contain
             .C(C_pansari, as.integer(length(q)), p = as.double(q),
                 as.integer(m), as.integer(n))$p
 @end example
+
+@code{R_init_} routines are often of the form
+@example
+void attribute_visible R_init_mylib(DllInfo *dll)
+@{
+    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+...
+@}
+@end example
+
+@noindent
+@findex R_useDynamicSymbols
+The @code{R_useDynamicSymbols} call says the DLL is not to be searched:
+once all @code{.C} etc calls refer to @R{} objects there is no need for
+symbols to be accessible via character strings.  This provides some
+protection against accidentally finding them when people supply a
+character string without a package, and avoids slowing down such
+searches.  (For the visibility attribute @pxref{Controlling
+visibility}.)
+
 
 @menu
 * Speed considerations::        
@@ -13222,11 +13255,6 @@ void attribute_visible R_init_stats(DllInfo *dll)
 ...
 @}
 @end example
-
-@noindent
-The @code{R_useDynamicSymbols} call say the DLL is not to be searched:
-this will speed up symbol lookup by name where the package is not
-specified (explicitly or from a namespace).
 
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by
