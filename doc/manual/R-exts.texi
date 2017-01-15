@@ -9123,15 +9123,15 @@ By `native' routine, we mean an entry point in compiled code.
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
 @code{.External}, @R{} must locate the specified native routine by
 looking in the appropriate shared object/DLL.  By default, @R{} uses the
-operating system-specific dynamic loader to lookup the symbol in all
-loaded DLLs and elsewhere.  Alternatively, the author of the DLL
-can explicitly register routines with @R{} and use a single,
-platform-independent mechanism for finding the routines in the DLL.  One
-can use this registration mechanism to provide additional information
-about a routine, including the number and type of the arguments, and
-also make it available to @R{} programmers under a different name.  In
-the future, registration may be used to implement a form of ``secure''
-or limited native access.
+operating-system-specific dynamic loader to lookup the symbol in all
+loaded DLLs and the @R{} executable or libraries it is linked to.
+Alternatively, the author of the DLL can explicitly register routines
+with @R{} and use a single, platform-independent mechanism for finding
+the routines in the DLL.  One can use this registration mechanism to
+provide additional information about a routine, including the number and
+type of the arguments, and also make it available to @R{} programmers
+under a different name.  In the future, registration may be used to
+implement a form of ``secure'' or limited native access.
 
 @findex R_registerRoutines
 To register routines with @R{}, one calls the C routine
@@ -9298,6 +9298,8 @@ foo <- function(x) .Call("foo", x)
 @end example
 with C code
 @example
+#include <Rinternals.h>
+
 SEXP foo(SEXP x)
 @{
     return x;
@@ -9334,12 +9336,11 @@ Versions using @code{.C()} rather than @code{.Call()} take about 0.2 us
 longer.
 
 These are all quite small differences, but C routines are not uncommonly
-invoked millions of times for run times of a few microseconds, and those
-doing such things may wish to be aware of the differences.
+invoked millions of times for run times of a few microseconds each, and
+those doing such things may wish to be aware of the differences.
 
-On Linux and Solaris there is a much smaller overhead in looking up
-symbols so @code{foo(pi)} takes around 5 times as long as
-@code{foo3(pi)}.
+On Linux and Solaris there is a smaller overhead in looking up
+symbols.
 
 Symbol lookup on Windows used to be far slower, so @R{} maintains a
 small cache.  If the cache is currently empty enough that the symbol can
@@ -9348,6 +9349,10 @@ Solaris: if not it may be slower.  @R{}'s own code always uses
 registered symbols and so these never contribute to the cache: however
 many other packages do rely on symbol lookup.
 
+In more recent versions of @R{} all the standard packages register
+native symbols and do not allow symbol search, so @code{foo()} can only
+look in @file{foo.so} and may be as fast as @code{foo2()}.  This will
+no longer apply when many contributed packages are loaded.
 
 
 @node Linking to native routines in other packages,  , Speed considerations, Registering native routines
@@ -9399,8 +9404,9 @@ loaded@footnote{so there needs to be a corresponding @code{import} or
 (so the path to their compiled code has been registered).
 
 
-A @acronym{CRAN} example of the use of this mechanism is package
-@CRANpkg{lme4}, which links to @CRANpkg{Matrix}.
+@acronym{CRAN} examples of the use of this mechanism are @CRANpkg{coxme}
+linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
+@CRANpkg{zoo}
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
@@ -13173,17 +13179,18 @@ code.
 @section Controlling visibility
 @cindex Visibility
 
-Header @file{R_ext/Visibility} has some definitions for controlling the
+Header @file{R_ext/Visibility.h} has some definitions for controlling the
 visibility of entry points.  These are only effective when
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
 is configured and recorded in header @file{Rconfig.h} (included by
-@file{R_ext/Visibility.h}).  It is generally defined on modern
-Unix-alikes with a recent compiler@footnote{It is defined by the Intel
-compilers, but also hides unsatisfied references and so cannot be used
-with @R{}.}, but not supported on macOS nor Windows.  Minimizing the
-visibility of symbols in a shared library will both speed up its loading
-(unlikely to be significant) and reduce the possibility of linking to
-other entry points of the same name.
+@file{R_ext/Visibility.h}).  It is often defined on modern Unix-alikes
+with a recent compiler@footnote{It is defined by the Intel compilers,
+but also hides unsatisfied references and so cannot be used with @R{}.
+It is not supported by the AIX nor Solaris compilers.}, but not
+supported on macOS nor Windows.  Minimizing the visibility of symbols in
+a shared library will both speed up its loading (unlikely to be
+significant) and reduce the possibility of linking to other entry points
+of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
@@ -13215,6 +13222,11 @@ void attribute_visible R_init_stats(DllInfo *dll)
 ...
 @}
 @end example
+
+@noindent
+The @code{R_useDynamicSymbols} call say the DLL is not to be searched:
+this will speed up symbol lookup by name where the package is not
+specified (explicitly or from a namespace).
 
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by
