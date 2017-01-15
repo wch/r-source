@@ -587,6 +587,11 @@
       too, and the "non-finite" error messages are consistent between
       \code{seq.default()} and \code{seq.int()}, no longer mentioning
       \code{NaN} etc.
+
+      \item \code{download.file(method="libcurl")} does not check for
+      URL existence before attempting downloads; this is more robust to
+      servers that do not support HEAD or range-based retrieval, but may
+      create empty or incomplete files for aborted download requests.
     }
   }
 }
