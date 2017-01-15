@@ -1258,7 +1258,7 @@ function(txt, lst, selective = TRUE)
         lst <- scan(what = character(), text = txt, quiet = TRUE)
     lst <- sort(unique(lst))
     nms <- lapply(lst, utils::find)
-    ind <- sapply(nms, length) > 0L
+    ind <- lengths(nms) > 0L
     imp <- split(lst[ind], substring(unlist(nms[ind]), 9L))
     if(selective) {
         sprintf("importFrom(%s)",
