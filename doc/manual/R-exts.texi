@@ -9305,7 +9305,7 @@ void attribute_visible R_init_mypkg(DllInfo *dll)
 @findex R_useDynamicSymbols
 @findex R_forceSymbols
 The @code{R_useDynamicSymbols} call says the DLL is not to be searched
-for entry points specifies by character strings: the
+for entry points specified by character strings: the
 @code{R_forceSymbols} call only allows @code{.C} etc calls which specify
 entry points by @R{} objects such as @code{C_pansari} (and not by
 character strings).  Each provides some protection against accidentally
