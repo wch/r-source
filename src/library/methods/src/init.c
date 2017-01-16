@@ -63,5 +63,5 @@ R_init_methods(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
-//    R_forceSymbols(dll, TRUE);
+    R_forceSymbols(dll, TRUE);
 }
