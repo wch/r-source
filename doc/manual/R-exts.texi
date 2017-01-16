@@ -9141,9 +9141,19 @@ platform-independent mechanism for finding the routines in the DLL.  One
 can use this registration mechanism to provide additional information
 about a routine, including the number and type of the arguments, and
 also make it available to @R{} programmers under a different name.
-@c No sing of this in 15 years ....
+@c No sign of this in 15 years ....
 @c In the future, registration may be used to
 @c implement a form of ``secure'' or limited native access.
+
+Registering routines has two main advantages: it provides a
+faster@footnote{For unregistered entry points the OS's @code{dlsym}
+routine is used to find addresses.  Its performance varies a lot by OS
+and even in the best case it will need to search a much larger symbol
+table than, say, the table of @code{.Call} entry points.} way to find
+the address of the entry point @emph{via} tables stored in the DLL
+at compilation time, and it provides a run-time check that the entry
+point is called with the right number of arguments and, optionally, the
+right argument types.
 
 @findex R_registerRoutines
 To register routines with @R{}, one calls the C routine
@@ -9274,10 +9284,8 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 
 Once routines are registered, they can be referred to as @R{} objects if
 they this is arranged in the @code{useDynLib} call in the package's
-@file{NAMESPACE} file (see @ref{useDynLib}).  This avoids the overhead
-of looking up an entry point each time it is used, and ensure that the
-entry point in the package is the one used (without a @code{PACKAGE =
-"pkg"} argument).  So for example the @pkg{stats} package has
+@file{NAMESPACE} file (see @ref{useDynLib}).  So for example the
+@pkg{stats} package has
 @example
 # Refer to all C/Fortran routines by their name prefixed by C_
 useDynLib(stats, .registration = TRUE, .fixes = "C_")
@@ -9289,6 +9297,11 @@ methods can contain
             .C(C_pansari, as.integer(length(q)), p = as.double(q),
                 as.integer(m), as.integer(n))$p
 @end example
+
+@noindent
+This avoids the overhead of looking up an entry point each time it is
+used, and ensures that the entry point in the package is the one used
+(without a @code{PACKAGE = "pkg"} argument).
 
 @code{R_init_} routines are often of the form
 @example
@@ -9416,8 +9429,16 @@ many other packages do rely on symbol lookup.
 
 In more recent versions of @R{} all the standard packages register
 native symbols and do not allow symbol search, so @code{foo()} can only
-look in @file{foo.so} and may be as fast as @code{foo2()}.  This will
-no longer apply when many contributed packages are loaded.
+look in @file{foo.so} and may be as fast as @code{foo2()}.  This will no
+longer apply when many contributed packages are loaded, and generally
+those last loaded are searched first.  For example, consider @R{} 3.4.0
+on x86_64 Linux.  In an empty @R{} session, both @code{foo()} and
+@code{foo2()} took about 0.75 us; however after packages
+@CRANpkg{igraph} and @CRANpkg{spatstat} had been loaded (which loaded
+another 12 DLLs), @code{foo()} took 3.6 us but @code{foo2()} still took
+about 0.80 us.  Using registration in a package reduced this to 0.55 us,
+but @code{foo3()} took 0.40 us, times which were unchanged when further
+packages were loaded.
 
 
 @node Linking to native routines in other packages,  , Speed considerations, Registering native routines
