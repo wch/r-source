@@ -4729,7 +4729,8 @@ setRlibs <-
         Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "TRUE")
-        Sys.setenv("_R_CHECK_SYMBOL_REGISTRATION_" = "TRUE")
+### to come once fully documented
+###        Sys.setenv("_R_CHECK_SYMBOL_REGISTRATION_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
