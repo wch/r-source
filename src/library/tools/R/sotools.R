@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2015 The R Core Team
+#  Copyright (C) 2011-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -390,6 +390,9 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
             tab2 <- setdiff(tab2, c("R_InputHandlers", "addInputHandler",
                                     "removeInputHandler"))
         if(length(tab2)) attr(tab, "nonAPI") <- tab2
+        tab2b <- setdiff(c("R_registerRoutines", "R_useDynamicSymbols"),
+                         sub("^_", "", nms))
+        if(length(tab2b)) attr(tab, "RegSym") <- tab2b
         class(tab) <- "check_so_symbols"
         tab
     }
@@ -407,11 +410,16 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
         tab2 <- sub("^_", "", tab2)
-        tab2 <- intersect(tab2, nonAPI)
-        if ("removeInputHandler" %in% tab2)
-            tab2 <- setdiff(tab2, c("R_InputHandlers", "addInputHandler",
+
+        tab2a <- intersect(tab2, nonAPI)
+        if ("removeInputHandler" %in% tab2a)
+            tab2a <- setdiff(tab2a, c("R_InputHandlers", "addInputHandler",
                                     "removeInputHandler"))
-        if(length(tab2)) attr(tab, "nonAPI") <- tab2
+        if(length(tab2a)) attr(tab, "nonAPI") <- tab2a
+
+        tab2b <- setdiff(c("R_registerRoutines", "R_useDynamicSymbols"), tab2)
+        if(length(tab2b)) attr(tab, "RegSym") <- tab2b
+
         class(tab) <- "check_so_symbols"
         tab
     }
@@ -456,6 +464,7 @@ if(.Platform$OS.type == "windows") {
 
         r_arch <- .Platform$r_arch
         useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
+        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_SYMBOL_REGISTRATION_", "FALSE"))
 
         compare <- function(x, strip_ = FALSE) {
             ## Compare symbols in the DLL and in objects:
@@ -505,8 +514,18 @@ if(.Platform$OS.type == "windows") {
                                   .file_path_relative_to_dir(attr(x, "file"),
                                                              dir, TRUE),
                                   class = "check_nonAPI_calls"))
-
         bad <- c(bad, Filter(length, nAPIs))
+
+        if (useSR) {
+            nRS <- lapply(lapply(so_files, check_so_symbols, rarch = "i386"),
+                          function(x) if(length(z <- attr(x, "RegSym")))
+                          structure(z,
+                                    file =
+                                    .file_path_relative_to_dir(attr(x, "file"),
+                                                               dir, TRUE),
+                                    class = "check_RegSym_calls"))
+            bad <- c(bad, Filter(length, nRS))
+        }
 
         so_files <-
             Sys.glob(file.path(dir, "libs/x64",
@@ -531,8 +550,18 @@ if(.Platform$OS.type == "windows") {
                                   .file_path_relative_to_dir(attr(x, "file"),
                                                              dir, TRUE),
                                   class = "check_nonAPI_calls"))
-
         bad2 <- c(bad2, Filter(length, nAPIs))
+
+        if (useSR) {
+            nRS <- lapply(lapply(so_files, check_so_symbols, rarch = "x64"),
+                          function(x) if(length(z <- attr(x, "RegSym")))
+                          structure(z,
+                                    file =
+                                    .file_path_relative_to_dir(attr(x, "file"),
+                                                               dir, TRUE),
+                                    class = "check_RegSym_calls"))
+            bad <- c(bad, Filter(length, nRS))
+        }
 
         if(!length(bad) && !length(bad2)) return(invisible(NULL))
 
@@ -548,6 +577,7 @@ if(.Platform$OS.type == "windows") {
 
         r_arch <- .Platform$r_arch
         useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
+        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_SYMBOL_REGISTRATION_", "FALSE"))
 
         compare <- function(x) {
             ## Compare symbols in the so and in objects:
@@ -596,8 +626,18 @@ if(.Platform$OS.type == "windows") {
                                   .file_path_relative_to_dir(attr(x, "file"),
                                                              dir, TRUE),
                                   class = "check_nonAPI_calls"))
-
         bad <- c(bad, Filter(length, nAPIs))
+
+        if (useSR) {
+            nRS <- lapply(lapply(so_files, check_so_symbols),
+                          function(x) if(length(z <- attr(x, "RegSym")))
+                          structure(z,
+                                    file =
+                                    .file_path_relative_to_dir(attr(x, "file"),
+                                                               dir, TRUE),
+                                    class = "check_RegSym_calls"))
+            bad <- c(bad, Filter(length, nRS))
+        }
         class(bad) <- "check_compiled_code"
         bad
     }
@@ -622,6 +662,20 @@ function(x, ...)
                             paste(sQuote(x), collapse = ", ")),
                       indent = 2L, exdent = 4L)
           } else paste("  Found non-API call to R:", sQuote(x))
+          )
+    else character()
+}
+
+format.check_RegSym_calls <-
+function(x, ...)
+{
+    if(length(x))
+        c(gettextf("File %s:", sQuote(attr(x, "file"))),
+          if (length(x) > 1L) {
+              strwrap(paste("Found no calls to:",
+                            paste(sQuote(x), collapse = ", ")),
+                      indent = 2L, exdent = 4L)
+          } else paste("  Found no call to:", sQuote(x))
           )
     else character()
 }
