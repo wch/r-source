@@ -592,6 +592,9 @@
       URL existence before attempting downloads; this is more robust to
       servers that do not support HEAD or range-based retrieval, but may
       create empty or incomplete files for aborted download requests.
+      
+      \item Bandwidth selectors \code{bw.ucv()}, \code{bw.bcv()} and
+      \code{bw.SJ()} now avoid integer overflow for large sample sizes.
     }
   }
 }
@@ -676,15 +679,20 @@
       removes leading whitespace and only attempts to open
       \samp{http://} and \samp{https://} URLs, falling back to emailing
       the maintainer.
+      
+      \item Bandwidth selectors \code{bw.ucv()} and
+      \code{bw.SJ()} gave incorrect answers or incorrectly reported an
+      error (because of integer overflow) for inputs longer than
+      46341.  Similarly for \code{b2.bcv()} at length 5793.
+
+      Another possible integer overflow is checked and may result in a
+      reported error (rather than an incorrect result) for much longer
+      inputs (millions for a smooth distribution).
 
       \item \code{findMethod} failed if the active signature had
       expanded beyond what a particular package used. (Example with
       packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
-
-      \item \code{bw.SJ()} and \code{density(*, bw="SJ")} no longer fail
-      because of integer overflow for large sample size n (starting from
-      n as small as 65536).
-    }
+   }
   }
 }
 

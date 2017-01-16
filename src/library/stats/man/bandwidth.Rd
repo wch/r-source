@@ -60,14 +60,19 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   biased cross-validation respectively.
 
   \code{bw.SJ} implements the methods of Sheather & Jones (1991)
-  to select the bandwidth using pilot estimation of derivatives, based
-  on all pairwise binned distances, hence of complexity \eqn{O(n^2)} and
-  considerably slower than the other bandwidth selectors for larger \eqn{n}.
-    \cr
+  to select the bandwidth using pilot estimation of derivatives.\cr
   The algorithm for method \code{"ste"} solves an equation (via
   \code{\link{uniroot}}) and because of that, enlarges the interval
   \code{c(lower, upper)} when the boundaries were not user-specified and
   do not bracket the root.
+
+  The last three methods use all pairwise binned distances, hence are of
+  complexity \eqn{O(n^2)} and considerably slower than the first two for
+  larger \eqn{n}.  A faster method for the Sheather--Jones
+  direct-plug-in selector for larger \eqn{n} is available in package
+  \CRANpkg{KernSmooth}, using binning: its function
+  \code{\link[Kernsmooth]{dpik}} is a direct replacement for
+  \code{bw.SJ(method = "dpi")}.
 }
 \value{
   A bandwidth on a scale suitable for the \code{bw} argument

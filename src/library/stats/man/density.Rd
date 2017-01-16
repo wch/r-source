@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -29,8 +29,8 @@ density(x, \dots)
     bandwidth.  See \code{\link{bw.nrd}}. \cr The default,
     \code{"nrd0"}, has remained the default for historical and
     compatibility reasons, rather than as a general recommendation,
-    where e.g., \code{"SJ"} would rather fit (with a computational cost
-    though, for larger sample sizes), see also Venables and Ripley (2002).
+    where e.g., \code{"SJ"} would rather fit, see also Venables and
+    Ripley (2002).
 
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.
