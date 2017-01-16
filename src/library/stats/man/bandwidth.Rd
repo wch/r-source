@@ -71,7 +71,7 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   larger \eqn{n}.  A faster method for the Sheather--Jones
   direct-plug-in selector for larger \eqn{n} is available in package
   \CRANpkg{KernSmooth}, using binning: its function
-  \code{\link[Kernsmooth]{dpik}} is a direct replacement for
+  \code{\link[KernSmooth]{dpik}} is a direct replacement for
   \code{bw.SJ(method = "dpi")}.
 }
 \value{
