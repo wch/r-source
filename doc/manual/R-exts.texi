@@ -9292,23 +9292,55 @@ methods can contain
 
 @code{R_init_} routines are often of the form
 @example
-void attribute_visible R_init_mylib(DllInfo *dll)
+void attribute_visible R_init_mypkg(DllInfo *dll)
 @{
-    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
+    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, ExternalEntries);
     R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
 ...
 @}
 @end example
 
 @noindent
 @findex R_useDynamicSymbols
-The @code{R_useDynamicSymbols} call says the DLL is not to be searched:
-once all @code{.C} etc calls refer to @R{} objects there is no need for
-symbols to be accessible via character strings.  This provides some
-protection against accidentally finding them when people supply a
-character string without a package, and avoids slowing down such
-searches.  (For the visibility attribute @pxref{Controlling
-visibility}.)
+@findex R_forceSymbols
+The @code{R_useDynamicSymbols} call says the DLL is not to be searched
+for entry points specifies by character strings: the
+@code{R_forceSymbols} call only allows @code{.C} etc calls which specify
+entry points by @R{} objects such as @code{C_pansari} (and not by
+character strings).  Each provides some protection against accidentally
+finding your entry points when people supply a character string without
+a package, and avoids slowing down such searches.  (For the visibility
+attribute @pxref{Controlling visibility}.)
+
+In more detail, if a package @code{mypkg} contains entry points
+@code{reg} and @code{unreg} and the first is registered as a 0-argument
+@code{.Call} routine, we could use (from code in the package)
+
+@example
+.Call("reg")
+.Call("unreg")
+@end example
+
+@noindent
+Without or with registration, these will both work.  If
+@code{R_init_mypkg} calls @code{R_useDynamicSymbols(dll, FALSE)}, only
+the first will work.  If in addition to registration the
+@file{NAMESPACE} file contains
+
+@example
+useDynLib(mypkg, .registration = TRUE, .fixes = "C_")
+@end example
+
+@noindent
+then we can call @code{.Call(C_reg)}.  Finally, if @code{R_init_mypkg}
+also calls @code{R_forceSymbols(dll, TRUE)}, only @code{.Call(C_reg)}
+will work (and not @code{.Call("reg")}).  This is usually what we want:
+it ensures that all of our own @code{.Call} calls go directly to the
+intended code in our package and that no one else accidentally finds our
+entry points.  (Should someone need to call our code from outside the
+package, for example for debugging, they can use
+@code{.Call(mypkg:::C_reg)}.)
 
 
 @menu
