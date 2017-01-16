@@ -74,12 +74,20 @@
       
       \item On some systems, very small hexadecimal numbers in hex notation
       would underflow to zero.  (\PR{17199})
-
       
       \item \code{bug.report()} did not do any validity checking on a
       package's \samp{BugReports} field.  It now ignores an empty field
       and only attempts to open \samp{http://} and \samp{https://} URLs,
       falling back to emailing the maintainer.
+      
+      \item Bandwidth selectors \code{bw.ucv()} and
+      \code{bw.SJ()} gave incorrect answers or incorrectly reported an
+      error (because of integer overflow) for inputs longer than
+      46341.  Similarly for \code{b2.bcv()} at length 5793.
+
+      Another possible integer overflow is checked and may result in a
+      reported error (rather than an incorrect result) for much longer
+      inputs (millions for a smooth distribution).
     }
   }
 }
