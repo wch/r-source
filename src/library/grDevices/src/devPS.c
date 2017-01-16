@@ -412,10 +412,10 @@ static int GetNextItem(FILE *fp, char *dest, int c, EncodingInputState *state)
 	/* check for incomplete encoding file */
 	if(!state->p) return 1;
 	while (isspace((int)* state->p)) state->p++;
-	if (state->p == '\0' || *state->p == '%'|| *state->p == '\n') { state->p = NULL; continue; }
+	if (*state->p == '\0' || *state->p == '%'|| *state->p == '\n') { state->p = NULL; continue; }
 	state->p0 = state->p;
 	while (!isspace((int)*state->p)) state->p++;
-	if (state->p != '\0') *state->p++ = '\0';
+	if (*state->p != '\0') *state->p++ = '\0';
 	if(c == 45) strcpy(dest, "/minus"); else strcpy(dest, state->p0);
 	break;
     }
