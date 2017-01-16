@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
- *  Copyright (C) 2012-2014  The R Core Team
+ *  Copyright (C) 2012-2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,10 +53,10 @@ SEXP bw_ucv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 	double delta = i * d / h;
 	delta *= delta;
 	if (delta >= DELMAX) break;
-	term = exp(-delta / 4) - sqrt(8.0) * exp(-delta / 2);
+	term = exp(-delta / 4.) - sqrt(8.0) * exp(-delta / 2.);
 	sum += term * x[i];
     }
-    u = 1 / (2 * n * h * sqrt(PI)) + sum / (n * n * h * sqrt(PI));
+    u = 1 / (2. * n * h * sqrt(PI)) + sum / ((double)n * n * h * sqrt(PI));
     return ScalarReal(u);
 }
 
@@ -72,7 +72,7 @@ SEXP bw_bcv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 	term = exp(-delta / 4) * (delta * delta - 12 * delta + 12);
 	sum += term * x[i];
     }
-    u = 1 / (2 * n * h * sqrt(PI)) + sum / (64 * n * n * h * sqrt(PI));
+    u = 1 / (2. * n * h * sqrt(PI)) + sum / (64. * n * n * h * sqrt(PI));
     return ScalarReal(u);
 }
 
@@ -84,11 +84,11 @@ SEXP bw_phi4(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
     for (int i = 0; i < nbin; i++) {
 	double delta = i * d / h; delta *= delta;
 	if (delta >= DELMAX) break;
-	term = exp(-delta / 2) * (delta * delta - 6 * delta + 3);
+	term = exp(-delta / 2.) * (delta * delta - 6. * delta + 3.);
 	sum += term * x[i];
     }
-    sum = 2 * sum + n * 3;	/* add in diagonal */
-    u = sum / (n * (n - 1) * pow(h, 5.0) * sqrt(2 * PI));
+    sum = 2. * sum + n * 3.;	/* add in diagonal */
+    u = sum / ((double)n * (n - 1) * pow(h, 5.0) * sqrt(2 * PI));
     return ScalarReal(u);
 }
 
@@ -105,7 +105,7 @@ SEXP bw_phi6(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
 	sum += term * x[i];
     }
     sum = 2 * sum - 15 * n;	/* add in diagonal */
-    u = sum / (n * (n - 1) * pow(h, 7.0) * sqrt(2 * PI));
+    u = sum / ((double)n * (n - 1) * pow(h, 7.0) * sqrt(2 * PI));
     return ScalarReal(u);
 }
 
@@ -135,7 +135,10 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 	int ii = (int)(x[i] / dd);
 	for (int j = 0; j < i; j++) {
 	    int jj = (int)(x[j] / dd);
-	    cnt[abs(ii - jj)]++;
+	    int bin = abs(ii - jj);
+	    if(cnt[bin] == INT_MAX)
+		error("maximum count exceeded in pairwise distance binning");
+	    cnt[bin]++;
 	}
     }
 
