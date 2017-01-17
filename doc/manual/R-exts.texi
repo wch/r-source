@@ -9518,6 +9518,9 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
                       double *smo, double *sc, double *edf);
 @end example
 
+@noindent
+(although one can get away with not including the arguments, since they
+are not checked).
 
 @item
 Edit the @file{NAMESPACE} file to create @R{} objects for the registered
@@ -9576,7 +9579,7 @@ If there were any entry points not intended to be used by the package we
 should try to avoid exporting them, for example by making them
 @code{static}.  Now the two relevant entry points are only accessed
 @emph{via} the registration table, we can hide them.  There are two ways
-to do so on some Unix-alikes.  We can do hide individual entry points
+to do so on some Unix-alikes.  We can hide individual entry points
 @emph{via}
 
 @example
@@ -9612,7 +9615,36 @@ R_init_splines(DllInfo *dll)
 @end example
 
 @noindent
-@xref{Controlling visibility} for more details, including using Fortran code.
+@xref{Controlling visibility} for more details, including using Fortran
+code and ways to restrict visibility on Windows.
+
+@item
+We end up with a file @file{src/init.c} containing
+
+@example
+#include <stdlib.h>
+#include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>  // optional
+
+#include "splines.h"
+
+#define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
+
+const static R_CallMethodDef R_CallDef[] = @{
+    CALLDEF(spline_basis, 4),
+    CALLDEF(spline_value, 5),
+   @{NULL, NULL, 0@}
+@};
+
+void
+attribute_visible  // optional
+R_init_splines0(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+@}
+@end example
 
 @end itemize
 
