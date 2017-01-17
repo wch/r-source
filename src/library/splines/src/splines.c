@@ -2,6 +2,7 @@
  *  S or S-PLUS or R.
  *
  *     Copyright (C) 1998 Douglas M. Bates and William N. Venables.
+ *     Copyright (C) 1999-2016 The R Core Team
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
