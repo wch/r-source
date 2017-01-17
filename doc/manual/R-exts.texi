@@ -9474,7 +9474,8 @@ Alternatively, examine the package's @R{} code for all @code{.C},
 @item
 Construct the registration table.
 First write skeleton registration code, conventionally in file
-@file{src/init.c} (or in the only C source file in the package):
+@file{src/init.c} (or at the end of the only C source file in the
+package):
 
 @example
 #include <stdlib.h> // for NULL
@@ -9513,15 +9514,22 @@ points for @code{.Fortran} one needs declarations as if called from C,
 such as
 
 @example
+#include <R_ext/RS.h>
 void F77_NAME(supsmu)(int *n, double *x, double *y,
                       double *w, int *iper, double *span, double *alpha,
                       double *smo, double *sc, double *edf);
 @end example
 
-@noindent
-(although one can get away with not including the arguments, since they
-are not checked).
+One can get away with inaccurate argument lists in the declarations: it
+is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
+@code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
+and @code{.Fortran} are all pointers, specifying them as @code{void *}
+suffices. (For most platforms one can omit all the arguments.)
+@end itemize
 
+The remaining steps are optional but recommended.
+
+@itemize
 @item
 Edit the @file{NAMESPACE} file to create @R{} objects for the registered
 symbols:
@@ -9633,7 +9641,7 @@ We end up with a file @file{src/init.c} containing
 const static R_CallMethodDef R_CallDef[] = @{
     CALLDEF(spline_basis, 4),
     CALLDEF(spline_value, 5),
-   @{NULL, NULL, 0@}
+    @{NULL, NULL, 0@}
 @};
 
 void
@@ -9697,7 +9705,7 @@ loaded@footnote{so there needs to be a corresponding @code{import} or
 (so the path to their compiled code has been registered).
 
 
-@acronym{CRAN} examples of the use of this mechanism are @CRANpkg{coxme}
+@acronym{CRAN} examples of the use of this mechanism include @CRANpkg{coxme}
 linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
 @CRANpkg{zoo}
 
