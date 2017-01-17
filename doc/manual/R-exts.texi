@@ -1745,7 +1745,7 @@ pkg-config --list-all | sort
 * Configure example::           
 * Using F95 code::              
 * Using C++11 code::            
-* Using C++14 code::
+* Using C++14 code::            
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2437,7 +2437,7 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C++11 code,  Using C++14 code, Using F95 code, Configure and cleanup
+@node Using C++11 code, Using C++14 code, Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -7274,7 +7274,7 @@ profile DLLs on Windows.
 @menu
 * Linux::                       
 * Solaris::                     
-* macOS::                        
+* macOS::                       
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code
@@ -9127,6 +9127,12 @@ argument to @code{dyn.load}.  This is (by default) used by
 @section Registering native routines
 @cindex Registering native routines
 
+@menu
+* Speed considerations::        
+* Converting a package to use registration::  
+* Linking to native routines in other packages::  
+@end menu
+
 By `native' routine, we mean an entry point in compiled code.
 
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
@@ -9318,13 +9324,14 @@ void attribute_visible R_init_mypkg(DllInfo *dll)
 @findex R_useDynamicSymbols
 @findex R_forceSymbols
 The @code{R_useDynamicSymbols} call says the DLL is not to be searched
-for entry points specified by character strings: the
-@code{R_forceSymbols} call only allows @code{.C} etc calls which specify
-entry points by @R{} objects such as @code{C_pansari} (and not by
-character strings).  Each provides some protection against accidentally
-finding your entry points when people supply a character string without
-a package, and avoids slowing down such searches.  (For the visibility
-attribute @pxref{Controlling visibility}.)
+for entry points specified by character strings so @code{.C} etc calls
+will only find registered symbols: the @code{R_forceSymbols} call only
+allows @code{.C} etc calls which specify entry points by @R{} objects
+such as @code{C_pansari} (and not by character strings).  Each provides
+some protection against accidentally finding your entry points when
+people supply a character string without a package, and avoids slowing
+down such searches.  (For the visibility attribute @pxref{Controlling
+visibility}.)
 
 In more detail, if a package @code{mypkg} contains entry points
 @code{reg} and @code{unreg} and the first is registered as a 0-argument
@@ -9356,12 +9363,7 @@ package, for example for debugging, they can use
 @code{.Call(mypkg:::C_reg)}.)
 
 
-@menu
-* Speed considerations::        
-* Linking to native routines in other packages::  
-@end menu
-
-@node Speed considerations, Linking to native routines in other packages, Registering native routines, Registering native routines
+@node Speed considerations, Converting a package to use registration, Registering native routines, Registering native routines
 @subsection Speed considerations
 
 Sometimes registering native routines or using a @code{PACKAGE} argument
@@ -9440,8 +9442,181 @@ still took about 0.80 us.  Using registration in a package reduced this
 to 0.55 us and @code{foo3()} took 0.40 us, times which were unchanged
 when further packages were loaded.
 
+@node Converting a package to use registration, Linking to native routines in other packages, Speed considerations, Registering native routines
+@subsection Example: converting a package to use registration
 
-@node Linking to native routines in other packages,  , Speed considerations, Registering native routines
+The @pkg{splines} package was converted to use symbol registration in
+2001, but we can use it as an example of what needs to be done for a
+small package.
+
+@itemize
+
+@item
+Find the relevant entry points.
+This is somewhat OS-specific, but something like the following should be
+possible at the OS command-line
+
+@example
+nm -g /path/to/splines.so | grep " T "
+0000000000002670 T _spline_basis
+0000000000001ec0 T _spline_value
+@end example
+
+@noindent
+This indicates that there are two relevant entry points. (They may or
+may not have a leading underscore, as here.)  Check in the @R{}
+code that they are called by the package and how: in this case they are
+used by @code{.Call}.
+
+Alternatively, examine the package's @R{} code for all @code{.C},
+@code{.Fortran}, @code{.Call} and @code{.External} calls.
+
+@item
+Construct the registration table.
+First write skeleton registration code, conventionally in file
+@file{src/init.c} (or in the only C source file in the package):
+
+@example
+#include <stdlib.h> // for NULL
+#include <R_ext/Rdynload.h>
+
+#define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
+
+const static R_CallMethodDef R_CallDef[] = @{
+   CALLDEF(spline_basis, ?),
+   CALLDEF(spline_value, ?),
+   @{NULL, NULL, 0@}
+@};
+
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+@}
+@end example
+
+@noindent
+and then replace the @code{?} in the skeleton with the actual numbers of
+arguments.  You will need to add declarations of the functions unless
+appending to the only C source file.  Some packages will already have
+these in a header file, or you could create one and include it in
+@file{init.c}, for example @file{splines.h} containing
+
+@example
+#include <Rinternals.h> // for SEXP
+SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
+SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
+@end example
+
+For examples of registering other types of calls, see packages
+@pkg{graphics} and @pkg{stats}.  In particular, when registering entry
+points for @code{.Fortran} one needs declarations as if called from C,
+such as
+
+@example
+void F77_NAME(supsmu)(int *n, double *x, double *y,
+                      double *w, int *iper, double *span, double *alpha,
+                      double *smo, double *sc, double *edf);
+@end example
+
+
+@item
+Edit the @file{NAMESPACE} file to create @R{} objects for the registered
+symbols:
+
+@example
+useDynLib(splines, .registration = TRUE, .fixes = "C_")
+@end example
+
+@item
+Find all the relevant calls in the @R{} code and edit them to use the
+@R{} objects.  This entailed changing the lines
+
+@example
+temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
+y[accept] <- .Call("spline_value", knots, coeff, ord, x[accept], deriv, PACKAGE = "splines")
+y = .Call"spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines"))
+@end example
+@noindent
+to
+
+@example
+temp <- .Call(C_spline_basis, knots, ord, x, derivs)
+y[accept] <- .Call(C_spline_value, knots, coeff, ord, x[accept], deriv)
+y = .Call(C_spline_value, knots, coef(object), ord, x, deriv))
+@end example
+
+@item
+Restrict @code{.Call} to using the @R{} symbols by editing
+@file{src/init.c} to contain
+
+@example
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+@}
+@end example
+
+@item
+Consider visibility.  On some OSes we can hide entry points from the
+loader, which precludes any possible name clashes and calling them
+accidentally (usually with incorrect arguments and crashing the @R{}
+process). If we repeat the first step we now see
+
+@example
+nm -g /path/to/splines.so | grep " T "
+0000000000002e00 T _R_init_splines
+00000000000025e0 T _spline_basis
+0000000000001e20 T _spline_value
+@end example
+
+@noindent
+If there were any entry points not intended to be used by the package we
+should try to avoid exporting them, for example by making them
+@code{static}.  Now the two relevant entry points are only accessed
+@emph{via} the registration table, we can hide them.  There are two ways
+to do so on some Unix-alikes.  We can do hide individual entry points
+@emph{via}
+
+@example
+#include <R_ext/Visibility.h>
+
+SEXP attribute_hidden
+spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
+@dots{}
+
+SEXP attribute_hidden
+spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
+@dots{}
+@end example
+
+@noindent
+Alternatively, we can change the default visibility for all C symbols by
+including
+
+@example
+PKG_CFLAGS = $(C_VISIBILITY)
+@end example
+
+@noindent
+in @file{src/Makevars}, and then we need to allow registration by
+declaring @code{R_init_splines} to be visible:
+
+@example
+#include <R_ext/Visibility.h>
+
+void attribute_visible
+R_init_splines(DllInfo *dll)
+@dots{}
+@end example
+
+@noindent
+@xref{Controlling visibility} for more details, including using Fortran code.
+
+@end itemize
+
+@node Linking to native routines in other packages,  , Converting a package to use registration, Registering native routines
 @subsection Linking to native routines in other packages
 
 In addition to registering C routines to be called by @R{}, it can at
