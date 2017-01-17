@@ -9428,17 +9428,17 @@ registered symbols and so these never contribute to the cache: however
 many other packages do rely on symbol lookup.
 
 In more recent versions of @R{} all the standard packages register
-native symbols and do not allow symbol search, so @code{foo()} can only
-look in @file{foo.so} and may be as fast as @code{foo2()}.  This will no
-longer apply when many contributed packages are loaded, and generally
-those last loaded are searched first.  For example, consider @R{} 3.4.0
-on x86_64 Linux.  In an empty @R{} session, both @code{foo()} and
-@code{foo2()} took about 0.75 us; however after packages
-@CRANpkg{igraph} and @CRANpkg{spatstat} had been loaded (which loaded
-another 12 DLLs), @code{foo()} took 3.6 us but @code{foo2()} still took
-about 0.80 us.  Using registration in a package reduced this to 0.55 us,
-but @code{foo3()} took 0.40 us, times which were unchanged when further
-packages were loaded.
+native symbols and do not allow symbol search, so in a new session
+@code{foo()} can only look in @file{foo.so} and may be as fast as
+@code{foo2()}.  This will no longer apply when many contributed packages
+are loaded, and generally those last loaded are searched first.  For
+example, consider @R{} 3.3.2 on x86_64 Linux.  In an empty @R{} session,
+both @code{foo()} and @code{foo2()} took about 0.75 us; however after
+packages @CRANpkg{igraph} and @CRANpkg{spatstat} had been loaded (which
+loaded another 12 DLLs), @code{foo()} took 3.6 us but @code{foo2()}
+still took about 0.80 us.  Using registration in a package reduced this
+to 0.55 us and @code{foo3()} took 0.40 us, times which were unchanged
+when further packages were loaded.
 
 
 @node Linking to native routines in other packages,  , Speed considerations, Registering native routines
