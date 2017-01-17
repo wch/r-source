@@ -26,6 +26,7 @@ SHLIB = $(pkg)@SHLIB_EXT@
 PKG_CPPFLAGS = \
   -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H \
   @TCLTK_CPPFLAGS@
+PKG_CFLAGS = $(C_VISIBILITY)
 PKG_LIBS = @TCLTK_LIBS@ @LIBM@
 
 all: Makedeps

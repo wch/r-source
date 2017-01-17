@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2015   The R Core Team.
+ *  Copyright (C) 2004-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
 
 #ifndef _WIN32
 /* This really belongs with the X11 module, but it is about devices */
@@ -127,7 +128,7 @@ extern void setup_RdotApp(void);
 extern Rboolean useaqua;
 #endif
 
-void R_init_grDevices(DllInfo *dll)
+void attribute_visible R_init_grDevices(DllInfo *dll)
 {
     initPalette();
     R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);

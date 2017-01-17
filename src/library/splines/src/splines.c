@@ -2,6 +2,7 @@
  *  S or S-PLUS or R.
  *
  *     Copyright (C) 1998 Douglas M. Bates and William N. Venables.
+ *     Copyright (C) 1999-2017 The R Core Team.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -231,10 +232,12 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
 
 #include <R_ext/Rdynload.h>
 
+#define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
+
 const static R_CallMethodDef R_CallDef[] = {
-   {"spline_basis", (DL_FUNC)&spline_basis, 4},
-   {"spline_value", (DL_FUNC)&spline_value, 5},
-   {NULL, NULL, 0}
+    CALLDEF(spline_basis, 4),
+    CALLDEF(spline_value, 5),
+    {NULL, NULL, 0}
 };
 
 
@@ -246,5 +249,5 @@ R_init_splines(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
-//    R_forceSymbols(dll, TRUE); // too few to worry about
+    R_forceSymbols(dll, TRUE);
 }

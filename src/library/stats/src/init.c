@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016   The R Core Team.
+ *  Copyright (C) 2001-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,18 +26,20 @@
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
 
+#define C_DEF(name, n)  {#name, (DL_FUNC) &name, n}
+
 static const R_CMethodDef CEntries[]  = {
-    {"loess_raw", (DL_FUNC) &loess_raw, 24},
-    {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
-    {"loess_dfitse", (DL_FUNC) &loess_dfitse, 16},
-    {"loess_ifit", (DL_FUNC) &loess_ifit, 8},
-    {"loess_ise", (DL_FUNC) &loess_ise, 15},
-    {"multi_burg", (DL_FUNC) &multi_burg, 11},
-    {"multi_yw", (DL_FUNC) &multi_yw, 10},
-    {"HoltWinters", (DL_FUNC) &HoltWinters, 17},
-    {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
-    {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
-    {"rcont2", (DL_FUNC) &rcont2, 8},
+    C_DEF(loess_raw, 24),
+    C_DEF(loess_dfit, 13),
+    C_DEF(loess_dfitse, 16),
+    C_DEF(loess_ifit, 8),
+    C_DEF(loess_ise, 15),
+    C_DEF(multi_burg, 11),
+    C_DEF(multi_yw, 10),
+    C_DEF(HoltWinters, 17),
+    C_DEF(kmeans_Lloyd, 9),
+    C_DEF(kmeans_MacQueen, 9),
+    C_DEF(rcont2,  8),
     {NULL, NULL, 0}
 };
 
