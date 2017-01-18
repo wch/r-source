@@ -9464,9 +9464,10 @@ nm -g /path/to/splines.so | grep " T "
 
 @noindent
 This indicates that there are two relevant entry points. (They may or
-may not have a leading underscore, as here.)  Check in the @R{}
-code that they are called by the package and how: in this case they are
-used by @code{.Call}.
+may not have a leading underscore, as here. Fortran entry points will
+have a trailing underscore.)  Check in the @R{} code that they are
+called by the package and how: in this case they are used by
+@code{.Call}.
 
 Alternatively, examine the package's @R{} code for all @code{.C},
 @code{.Fortran}, @code{.Call} and @code{.External} calls.
@@ -9525,6 +9526,19 @@ is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
 @code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
 and @code{.Fortran} are all pointers, specifying them as @code{void *}
 suffices. (For most platforms one can omit all the arguments.)
+
+@item
+(Optional but highly recommended.)  Restrict @code{.Call} etc to using the
+symbols you chose to register by editing @file{src/init.c} to contain
+
+@example
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+@}
+@end example
+
 @end itemize
 
 The remaining steps are optional but recommended.
