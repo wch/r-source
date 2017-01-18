@@ -31,7 +31,6 @@ static const R_CMethodDef CEntries[] = {
     C_DEF(tcltk_end, 0),
 #else
     C_DEF(tcltk_init, 1),
-//    C_DEF(delTcl, 0),
     C_DEF(RTcl_ActivateConsole, 0),
 #endif
     {NULL, NULL, 0}

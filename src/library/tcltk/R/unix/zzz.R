@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/unix/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -75,6 +75,7 @@
     }
 }
 
+## This would no longer work since registration changed is.loaded
 ## .onUnload <- function(libpath) {
 ##     ## precaution in case the DLL has been unloaded without the namespace
 ##     if(is.loaded("delTcl", PACKAGE="tcltk")) {
