@@ -3449,10 +3449,6 @@ functions in the package.  If not found locally, @R{} searches the
 package namespace first, then the imports, then the base namespace and
 then the normal search path.
 
-Prior to @R{} 2.14.0, namespaces were optional in packages: a default
-namespace was generated on installation in 2.14.x and 2.15.x.  As from
-3.0.0 a namespace is mandatory.
-
 
 @menu
 * Specifying imports and exports::  
@@ -4348,7 +4344,7 @@ include it with the system headers).
 
 Any confusion would be avoided by having @code{LinkingTo} headers in a
 directory named after the package.  In any case, name conflicts of
-headers and directories under package @file{include} directories have to
+headers and directories under package @file{include} directories should
 be avoided, both between packages and between a package and system and
 third-party software.
 
@@ -7231,7 +7227,7 @@ profile DLLs on Windows.
 @menu
 * Linux::                       
 * Solaris::                     
-* macOS::                        
+* macOS::                       
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code
@@ -9084,6 +9080,12 @@ argument to @code{dyn.load}.  This is (by default) used by
 @section Registering native routines
 @cindex Registering native routines
 
+@menu
+* Speed considerations::        
+* Converting a package to use registration::  
+* Linking to native routines in other packages::  
+@end menu
+
 By `native' routine, we mean an entry point in compiled code.
 
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
@@ -9098,9 +9100,19 @@ platform-independent mechanism for finding the routines in the DLL.  One
 can use this registration mechanism to provide additional information
 about a routine, including the number and type of the arguments, and
 also make it available to @R{} programmers under a different name.
-@c No sing of this in 15 years ....
+@c No sign of this in 15 years ....
 @c In the future, registration may be used to
 @c implement a form of ``secure'' or limited native access.
+
+Registering routines has two main advantages: it provides a
+faster@footnote{For unregistered entry points the OS's @code{dlsym}
+routine is used to find addresses.  Its performance varies a lot by OS
+and even in the best case it will need to search a much larger symbol
+table than, say, the table of @code{.Call} entry points.} way to find
+the address of the entry point @emph{via} tables stored in the DLL
+at compilation time, and it provides a run-time check that the entry
+point is called with the right number of arguments and, optionally, the
+right argument types.
 
 @findex R_registerRoutines
 To register routines with @R{}, one calls the C routine
@@ -9149,9 +9161,7 @@ static R_CallMethodDef callMethods[]  = @{
 along with any other routines for the @code{.Call} interface. For
 routines with a variable number of arguments invoked @emph{via} the
 @code{.External} interface, one specifies @code{-1} for the number of
-arguments which tells @R{} not to check the actual number passed.  Note
-that the number of arguments passed to @code{.External} were not
-checked prior to @R{} 3.0.0.
+arguments which tells @R{} not to check the actual number passed.
 
 Routines for use with the @code{.C} and @code{.Fortran} interfaces are
 described with similar data structures, but which have two additional
@@ -9233,10 +9243,8 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 
 Once routines are registered, they can be referred to as @R{} objects if
 they this is arranged in the @code{useDynLib} call in the package's
-@file{NAMESPACE} file (see @ref{useDynLib}).  This avoids the overhead
-of looking up an entry point each time it is used, and ensure that the
-entry point in the package is the one used (without a @code{PACKAGE =
-"pkg"} argument).  So for example the @pkg{stats} package has
+@file{NAMESPACE} file (see @ref{useDynLib}).  So for example the
+@pkg{stats} package has
 @example
 # Refer to all C/Fortran routines by their name prefixed by C_
 useDynLib(stats, .registration = TRUE, .fixes = "C_")
@@ -9249,33 +9257,66 @@ methods can contain
 		as.integer(m), as.integer(n))$p
 @end example
 
+@noindent
+This avoids the overhead of looking up an entry point each time it is
+used, and ensures that the entry point in the package is the one used
+(without a @code{PACKAGE = "pkg"} argument).
+
 @code{R_init_} routines are often of the form
 @example
-void attribute_visible R_init_mylib(DllInfo *dll)
+void attribute_visible R_init_mypkg(DllInfo *dll)
 @{
-    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
+    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, ExternalEntries);
     R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
 ...
 @}
 @end example
 
 @noindent
 @findex R_useDynamicSymbols
-The @code{R_useDynamicSymbols} call says the DLL is not to be searched:
-once all @code{.C} etc calls refer to @R{} objects there is no need for
-symbols to be accessible via character strings.  This provides some
-protection against accidentally finding them when people supply a
-character string without a package, and avoids slowing down such
-searches.  (For the visibility attribute @pxref{Controlling
+@findex R_forceSymbols
+The @code{R_useDynamicSymbols} call says the DLL is not to be searched
+for entry points specified by character strings so @code{.C} etc calls
+will only find registered symbols: the @code{R_forceSymbols} call only
+allows @code{.C} etc calls which specify entry points by @R{} objects
+such as @code{C_pansari} (and not by character strings).  Each provides
+some protection against accidentally finding your entry points when
+people supply a character string without a package, and avoids slowing
+down such searches.  (For the visibility attribute @pxref{Controlling
 visibility}.)
 
+In more detail, if a package @code{mypkg} contains entry points
+@code{reg} and @code{unreg} and the first is registered as a 0-argument
+@code{.Call} routine, we could use (from code in the package)
 
-@menu
-* Speed considerations::        
-* Linking to native routines in other packages::  
-@end menu
+@example
+.Call("reg")
+.Call("unreg")
+@end example
 
-@node Speed considerations, Linking to native routines in other packages, Registering native routines, Registering native routines
+@noindent
+Without or with registration, these will both work.  If
+@code{R_init_mypkg} calls @code{R_useDynamicSymbols(dll, FALSE)}, only
+the first will work.  If in addition to registration the
+@file{NAMESPACE} file contains
+
+@example
+useDynLib(mypkg, .registration = TRUE, .fixes = "C_")
+@end example
+
+@noindent
+then we can call @code{.Call(C_reg)}.  Finally, if @code{R_init_mypkg}
+also calls @code{R_forceSymbols(dll, TRUE)}, only @code{.Call(C_reg)}
+will work (and not @code{.Call("reg")}).  This is usually what we want:
+it ensures that all of our own @code{.Call} calls go directly to the
+intended code in our package and that no one else accidentally finds our
+entry points.  (Should someone need to call our code from outside the
+package, for example for debugging, they can use
+@code{.Call(mypkg:::C_reg)}.)
+
+
+@node Speed considerations, Converting a package to use registration, Registering native routines, Registering native routines
 @subsection Speed considerations
 
 Sometimes registering native routines or using a @code{PACKAGE} argument
@@ -9342,12 +9383,247 @@ registered symbols and so these never contribute to the cache: however
 many other packages do rely on symbol lookup.
 
 In more recent versions of @R{} all the standard packages register
-native symbols and do not allow symbol search, so @code{foo()} can only
-look in @file{foo.so} and may be as fast as @code{foo2()}.  This will
-no longer apply when many contributed packages are loaded.
+native symbols and do not allow symbol search, so in a new session
+@code{foo()} can only look in @file{foo.so} and may be as fast as
+@code{foo2()}.  This will no longer apply when many contributed packages
+are loaded, and generally those last loaded are searched first.  For
+example, consider @R{} 3.3.2 on x86_64 Linux.  In an empty @R{} session,
+both @code{foo()} and @code{foo2()} took about 0.75 us; however after
+packages @CRANpkg{igraph} and @CRANpkg{spatstat} had been loaded (which
+loaded another 12 DLLs), @code{foo()} took 3.6 us but @code{foo2()}
+still took about 0.80 us.  Using registration in a package reduced this
+to 0.55 us and @code{foo3()} took 0.40 us, times which were unchanged
+when further packages were loaded.
 
+@node Converting a package to use registration, Linking to native routines in other packages, Speed considerations, Registering native routines
+@subsection Example: converting a package to use registration
 
-@node Linking to native routines in other packages,  , Speed considerations, Registering native routines
+The @pkg{splines} package was converted to use symbol registration in
+2001, but we can use it as an example of what needs to be done for a
+small package.
+
+@itemize
+
+@item
+Find the relevant entry points.
+This is somewhat OS-specific, but something like the following should be
+possible at the OS command-line
+
+@example
+nm -g /path/to/splines.so | grep " T "
+0000000000002670 T _spline_basis
+0000000000001ec0 T _spline_value
+@end example
+
+@noindent
+This indicates that there are two relevant entry points. (They may or
+may not have a leading underscore, as here. Fortran entry points will
+have a trailing underscore.)  Check in the @R{} code that they are
+called by the package and how: in this case they are used by
+@code{.Call}.
+
+Alternatively, examine the package's @R{} code for all @code{.C},
+@code{.Fortran}, @code{.Call} and @code{.External} calls.
+
+@item
+Construct the registration table.
+First write skeleton registration code, conventionally in file
+@file{src/init.c} (or at the end of the only C source file in the
+package):
+
+@example
+#include <stdlib.h> // for NULL
+#include <R_ext/Rdynload.h>
+
+#define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
+
+const static R_CallMethodDef R_CallDef[] = @{
+   CALLDEF(spline_basis, ?),
+   CALLDEF(spline_value, ?),
+   @{NULL, NULL, 0@}
+@};
+
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+@}
+@end example
+
+@noindent
+and then replace the @code{?} in the skeleton with the actual numbers of
+arguments.  You will need to add declarations of the functions unless
+appending to the only C source file.  Some packages will already have
+these in a header file, or you could create one and include it in
+@file{init.c}, for example @file{splines.h} containing
+
+@example
+#include <Rinternals.h> // for SEXP
+SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
+SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
+@end example
+
+For examples of registering other types of calls, see packages
+@pkg{graphics} and @pkg{stats}.  In particular, when registering entry
+points for @code{.Fortran} one needs declarations as if called from C,
+such as
+
+@example
+#include <R_ext/RS.h>
+void F77_NAME(supsmu)(int *n, double *x, double *y,
+                      double *w, int *iper, double *span, double *alpha,
+                      double *smo, double *sc, double *edf);
+@end example
+
+One can get away with inaccurate argument lists in the declarations: it
+is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
+@code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
+and @code{.Fortran} are all pointers, specifying them as @code{void *}
+suffices. (For most platforms one can omit all the arguments.)
+
+@item
+(Optional but highly recommended.)  Restrict @code{.Call} etc to using the
+symbols you chose to register by editing @file{src/init.c} to contain
+
+@example
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+@}
+@end example
+
+@end itemize
+
+The remaining steps are optional but recommended.
+
+@itemize
+@item
+Edit the @file{NAMESPACE} file to create @R{} objects for the registered
+symbols:
+
+@example
+useDynLib(splines, .registration = TRUE, .fixes = "C_")
+@end example
+
+@item
+Find all the relevant calls in the @R{} code and edit them to use the
+@R{} objects.  This entailed changing the lines
+
+@example
+temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
+y[accept] <- .Call("spline_value", knots, coeff, ord, x[accept], deriv, PACKAGE = "splines")
+y = .Call"spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines"))
+@end example
+@noindent
+to
+
+@example
+temp <- .Call(C_spline_basis, knots, ord, x, derivs)
+y[accept] <- .Call(C_spline_value, knots, coeff, ord, x[accept], deriv)
+y = .Call(C_spline_value, knots, coef(object), ord, x, deriv))
+@end example
+
+@item
+Restrict @code{.Call} to using the @R{} symbols by editing
+@file{src/init.c} to contain
+
+@example
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+@}
+@end example
+
+@item
+Consider visibility.  On some OSes we can hide entry points from the
+loader, which precludes any possible name clashes and calling them
+accidentally (usually with incorrect arguments and crashing the @R{}
+process). If we repeat the first step we now see
+
+@example
+nm -g /path/to/splines.so | grep " T "
+0000000000002e00 T _R_init_splines
+00000000000025e0 T _spline_basis
+0000000000001e20 T _spline_value
+@end example
+
+@noindent
+If there were any entry points not intended to be used by the package we
+should try to avoid exporting them, for example by making them
+@code{static}.  Now the two relevant entry points are only accessed
+@emph{via} the registration table, we can hide them.  There are two ways
+to do so on some Unix-alikes.  We can hide individual entry points
+@emph{via}
+
+@example
+#include <R_ext/Visibility.h>
+
+SEXP attribute_hidden
+spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
+@dots{}
+
+SEXP attribute_hidden
+spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
+@dots{}
+@end example
+
+@noindent
+Alternatively, we can change the default visibility for all C symbols by
+including
+
+@example
+PKG_CFLAGS = $(C_VISIBILITY)
+@end example
+
+@noindent
+in @file{src/Makevars}, and then we need to allow registration by
+declaring @code{R_init_splines} to be visible:
+
+@example
+#include <R_ext/Visibility.h>
+
+void attribute_visible
+R_init_splines(DllInfo *dll)
+@dots{}
+@end example
+
+@noindent
+@xref{Controlling visibility} for more details, including using Fortran
+code and ways to restrict visibility on Windows.
+
+@item
+We end up with a file @file{src/init.c} containing
+
+@example
+#include <stdlib.h>
+#include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>  // optional
+
+#include "splines.h"
+
+#define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
+
+const static R_CallMethodDef R_CallDef[] = @{
+    CALLDEF(spline_basis, 4),
+    CALLDEF(spline_value, 5),
+    @{NULL, NULL, 0@}
+@};
+
+void
+attribute_visible  // optional
+R_init_splines0(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+@}
+@end example
+
+@end itemize
+
+@node Linking to native routines in other packages,  , Converting a package to use registration, Registering native routines
 @subsection Linking to native routines in other packages
 
 In addition to registering C routines to be called by @R{}, it can at
@@ -9396,7 +9672,7 @@ loaded@footnote{so there needs to be a corresponding @code{import} or
 (so the path to their compiled code has been registered).
 
 
-@acronym{CRAN} examples of the use of this mechanism are @CRANpkg{coxme}
+@acronym{CRAN} examples of the use of this mechanism include @CRANpkg{coxme}
 linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
 @CRANpkg{zoo}
 

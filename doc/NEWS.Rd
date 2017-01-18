@@ -16,20 +16,20 @@
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
-    \itemize{      
+    \itemize{
       \item The check for the zlib version is now robust to versions
       longer than 5 characters, including 1.2.10.
     }
   }
-  
+
   \subsection{UTILITIES}{
-    \itemize{        
-      \item Enviromental variable \env{_R_CHECK_TESTS_NLINES_} controls
+    \itemize{
+      \item Environmental variable \env{_R_CHECK_TESTS_NLINES_} controls
       how \command{R CMD check} reports failing tests (see §8 of the
       \sQuote{R Internals} manual).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
@@ -71,14 +71,15 @@
       \item (Windows only)  \code{dir.create()} did not check the length
       of the path to create, and so could overflow a buffer and crash
       \R.  (\PR{17206})
-      
+
       \item On some systems, very small hexadecimal numbers in hex notation
       would underflow to zero.  (\PR{17199})
       
       \item \code{bug.report()} did not do any validity checking on a
-      package's \samp{BugReports} field.  It now ignores an empty field
-      and only attempts to open \samp{http://} and \samp{https://} URLs,
-      falling back to emailing the maintainer.
+      package's \samp{BugReports} field.  It now ignores an empty field,
+      removes leading whitespace and only attempts to open
+      \samp{http://} and \samp{https://} URLs, falling back to emailing
+      the maintainer.
       
       \item Bandwidth selectors \code{bw.ucv()} and
       \code{bw.SJ()} gave incorrect answers or incorrectly reported an
