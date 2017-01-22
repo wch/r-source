@@ -1257,6 +1257,10 @@
       \code{makevars_site()} in package \pkg{tools} to determine the
       location of the user and site specific \file{Makevars} files for
       customizing package compilation.
+
+      \item If a reference class has a validity method,
+       \code{validObject} will be called automatically from the
+       default initialization method for reference classes.
     }
   }
 
