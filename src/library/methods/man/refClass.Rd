@@ -719,7 +719,7 @@ functions as described in the section on \dQuote{Reference Objects}.
 } %% end of \describe
 } %% end of \section
 
-\section{Implementation; Reference Classes as S4 Classe}{
+\section{Implementation; Reference Classes as S4 Classes}{
 Reference classes are implemented as S4 classes with a data part of
 type \code{"environment"}.
 Fields correspond to named objects in the environment.
