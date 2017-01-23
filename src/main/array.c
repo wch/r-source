@@ -588,25 +588,57 @@ SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/*
+ Whenever vector x contains NaN or Inf (or -Inf), the function returns TRUE.
+ It can be imprecise: it can return TRUE in other cases as well.
+
+ A precise version of the function could be implemented as
+
+       for (R_xlen_t i = 0; i < n; i++)
+           if (!R_FINITE(x[i])) return TRUE;
+       return FALSE;
+
+ The present version is imprecise, but faster.
+*/
+static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
+{
+    if ((n&1) != 0 && !R_FINITE(x[0]))
+	return TRUE;
+    for (int i = n&1; i < n; i += 2)
+	/* A precise version could use this condition:
+	 *
+	 * !R_FINITE(x[i]+x[i+1]) && (!R_FINITE(x[i]) || !R_FINITE(x[i+1]))
+	 *
+	 * The present imprecise version has been found to be faster
+	 * with GCC and ICC in the common case when the sum of the two
+	 * values is always finite.
+	 *
+	 * The present version is imprecise because the sum of two very
+	 * large finite values (e.g. 1e308) may be infinite.
+	 */
+	if (!R_FINITE(x[i]+x[i+1]))
+	    return TRUE;
+    return FALSE;
+}
+
 static void matprod(double *x, int nrx, int ncx,
 		    double *y, int nry, int ncy, double *z)
 {
     char *transa = "N", *transb = "N";
     double one = 1.0, zero = 0.0;
     LDOUBLE sum;
-    Rboolean have_na = FALSE;
     R_xlen_t NRX = nrx, NRY = nry;
 
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
 	/* Don't trust the BLAS to handle NA/NaNs correctly: PR#4582
 	 * The test is only O(n) here.
+	 *
+	 * MKL disclaimer: "LAPACK routines assume that input matrices
+	 * do not contain IEEE 754 special values such as INF or NaN values.
+	 * Using these special values may cause LAPACK to return unexpected
+	 * results or become unstable."
 	 */
-	for (R_xlen_t i = 0; i < NRX*ncx; i++)
-	    if (ISNAN(x[i])) {have_na = TRUE; break;}
-	if (!have_na)
-	    for (R_xlen_t i = 0; i < NRY*ncy; i++)
-		if (ISNAN(y[i])) {have_na = TRUE; break;}
-	if (have_na) {
+	if (mayHaveNaNOrInf(x, NRX*ncx) || mayHaveNaNOrInf(y, NRY*ncy)) {
 	    for (int i = 0; i < nrx; i++)
 		for (int k = 0; k < ncy; k++) {
 		    sum = 0.0;
