@@ -9476,8 +9476,9 @@ when further packages were loaded.
 @subsection Example: converting a package to use registration
 
 The @pkg{splines} package was converted to use symbol registration in
-2001, but we can use it as an example of what needs to be done for a
-small package.
+2001, but we can use it as an example@footnote{Because it is a standard
+package, one would need to rename it before attempting to reproduce the
+account here.} of what needs to be done for a small package.
 
 @itemize
 
@@ -9710,7 +9711,7 @@ const static R_CallMethodDef R_CallDef[] = @{
 
 void
 attribute_visible  // optional
-R_init_splines0(DllInfo *dll)
+R_init_splines(DllInfo *dll)
 @{
     R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
