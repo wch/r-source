@@ -33,8 +33,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
-      work also when \code{times} is larger than the maximal integer.
-      (\PR{16932})
+      work also when \code{times} is larger than the maximal integer,
+      including when it is of length greater than one. (\PR{16932})
 
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
@@ -74,13 +74,17 @@
 
       \item On some systems, very small hexadecimal numbers in hex notation
       would underflow to zero.  (\PR{17199})
-      
+
+      \item \code{pmin()} and \code{pmax()} now work again for
+      \code{ordered} factors and 0-length S3 classed objects, thanks to
+      Suharto Anggono's \PR{17195} and \PR{17200}.
+
       \item \code{bug.report()} did not do any validity checking on a
       package's \samp{BugReports} field.  It now ignores an empty field,
       removes leading whitespace and only attempts to open
       \samp{http://} and \samp{https://} URLs, falling back to emailing
       the maintainer.
-      
+
       \item Bandwidth selectors \code{bw.ucv()} and
       \code{bw.SJ()} gave incorrect answers or incorrectly reported an
       error (because of integer overflow) for inputs longer than
