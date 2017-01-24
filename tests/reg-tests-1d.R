@@ -596,6 +596,35 @@ if(Sys.t %in% someCET)
 ## had failed for almost a month in R-devel & R-patched
 
 
+## xtabs() , notably with NA's :
+asArr <- function(x) {
+    attributes(x) <- list(dim=dim(x), dimnames=dimnames(x)); x }
+as_A <- function(x, A) array(x, dim=dim(A), dimnames=dimnames(A))
+DF <- as.data.frame(UCBAdmissions)
+xt <- xtabs(Freq ~ Gender + Admit, DF)
+stopifnot(identical(asArr(xt),
+		    array(c(1198, 557, 1493, 1278), dim = c(2L, 2L),
+			  dimnames = list(Gender = c("Male", "Female"),
+					  Admit = c("Admitted", "Rejected")))))
+options(na.action = "na.omit")
+DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
+tools::assertError(# 'na.fail' should fail :
+	   xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
+xt. <- xtabs(Freq ~ Gender + Admit, DN)
+xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass)
+xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass, sparse=TRUE)# error in R <= 3.3.2
+xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE)
+stopifnot(
+    identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt)),
+    identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)), # not ok in R <= 3.3.2
+    identical(as.vector(xtp), as.vector(xtS)),
+    identical(dim(xtp), dim(xtS)),
+    identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
+	      as_A(c(120, 17, -17, 207, NA, NA, -327, NA, NA), xtN))
+)
+## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

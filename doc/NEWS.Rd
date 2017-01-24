@@ -44,6 +44,11 @@
 
       JIT compilation can be disabled using \code{compiler::enableJIT(0)}
       or by setting environment variable \env{R_ENABLE_JIT} to \code{0}.
+
+      \item \code{xtabs()} works more consistently with \code{NA}s, also
+      in its result no longer setting them to \code{0}.  Further, a new
+      logical option \code{addNA} allows to count \code{NA}s where
+      appropriate.}
     }
   }
 
@@ -592,7 +597,7 @@
       URL existence before attempting downloads; this is more robust to
       servers that do not support HEAD or range-based retrieval, but may
       create empty or incomplete files for aborted download requests.
-      
+
       \item Bandwidth selectors \code{bw.ucv()}, \code{bw.bcv()} and
       \code{bw.SJ()} now avoid integer overflow for large sample sizes.
     }
@@ -669,7 +674,6 @@
       \item On some systems, very small hexadecimal numbers in hex notation
       would underflow to zero.  (\PR{17199})
 
-      %% Not yet ported from trunk
       \item \code{pmin()} and \code{pmax()} now work again for
       \code{ordered} factors and 0-length S3 classed objects, thanks to
       Suharto Anggono's \PR{17195} and \PR{17200}.
@@ -679,7 +683,7 @@
       removes leading whitespace and only attempts to open
       \samp{http://} and \samp{https://} URLs, falling back to emailing
       the maintainer.
-      
+
       \item Bandwidth selectors \code{bw.ucv()} and
       \code{bw.SJ()} gave incorrect answers or incorrectly reported an
       error (because of integer overflow) for inputs longer than
