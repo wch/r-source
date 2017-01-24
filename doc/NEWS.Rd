@@ -48,7 +48,7 @@
       \item \code{xtabs()} works more consistently with \code{NA}s, also
       in its result no longer setting them to \code{0}.  Further, a new
       logical option \code{addNA} allows to count \code{NA}s where
-      appropriate.}
+      appropriate.
     }
   }
 
