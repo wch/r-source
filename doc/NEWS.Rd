@@ -584,6 +584,10 @@
       methods. See
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html}.
 
+      \item \code{dev.capture()} using Quartz Cocoa device (macOS) returned
+      invalid components if the back-end chose to use ARGB instead of RGBA
+      image format. (Reported by Noam Ross.)
+
       \item \code{seq("2", "5")} now works too, equivalently to
       \code{"2":"5"} and \code{seq.int()}.
 
@@ -872,10 +876,6 @@
 
       \item \code{findInterval(x, vec, left.open = TRUE)} misbehaved in some
       cases. (Reported by Dmitriy Chernykh.)
-
-      \item \code{dev.capture()} using Quartz Cocoa device (macOS) returned
-      invalid components if the back-end chose to use ARGB instead of RGBA
-      image format. (Reported by Noam Ross.)
     }
   }
 }
