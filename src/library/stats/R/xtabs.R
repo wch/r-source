@@ -63,7 +63,6 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     na.rm <- ## true iff na.action is na.omit
 	identical(naAct, quote(na.omit)) || identical(naAct, na.omit) ||
         identical(naAct, "na.omit")
-### cat("--> na.rm : ", na.rm, "\n")
     if(!sparse) {
 	x <-
 	    if(is.null(y))
@@ -76,7 +75,10 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 		      dim = c(dim(z[[1L]]), length(z)),
 		      dimnames = c(dimnames(z[[1L]]), list(names(z))))
 	    }
-	## NOT anymore! x[is.na(x)] <- 0L ## ??!
+	if(!is.null(y)) ## tapply(.) gives NA for non-existing combinations
+	    ## (FIXME!) but there are true NA's (from sum(.)ming NA's) which
+	    ## should *NOT* be replaced -- back-compatibility for now
+	    x[is.na(x)] <- 0L
 	class(x) <- c("xtabs", "table")
 	attr(x, "call") <- match.call()
 	x
@@ -102,16 +104,13 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	}
 	rows <- by[[1L]]
 	cols <- by[[2L]]
-	rl <- levels(rows)
-	cl <- levels(cols)
-	if (is.null(y))
-	    y <- rep.int(1, length(rows))
-	methods::as(methods::new("dgTMatrix",
-                                 i = as.integer(rows) - 1L,
-                                 j = as.integer(cols) - 1L,
-                                 x = as.double(y),
-                                 Dim = c(length(rl), length(cl)),
-                                 Dimnames = list(rl, cl)), "CsparseMatrix")
+        dnms <- lapply(by, levels)
+	x <- if (is.null(y)) rep.int(1, length(rows)) else as.double(y)
+	methods::as(methods::new("dgTMatrix", x = x, Dimnames = dnms,
+				 i = as.integer(rows) - 1L,
+				 j = as.integer(cols) - 1L,
+				 Dim = lengths(dnms, use.names=FALSE)),
+		    "CsparseMatrix")
     }
 }
 

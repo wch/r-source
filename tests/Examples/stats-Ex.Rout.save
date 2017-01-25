@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-01-23 r72020) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-01-24 r72026) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -17953,23 +17953,23 @@ agegp   0-39g/day 40-79 80-119 120+
 
        alcgp
 agegp   0-39g/day 40-79 80-119 120+
-  25-34         0     0           0
+  25-34         0     0      0    0
   35-44         0     1      0    2
   45-54         0     5      1    2
   55-64         3     4      3    2
   65-74         2     5      2    1
-  75+                 0            
+  75+           0     0      0    0
 
 , , tobgp = 30+,  = ncases
 
        alcgp
 agegp   0-39g/day 40-79 80-119 120+
   25-34         0     0      0    0
-  35-44         0     0      0     
+  35-44         0     0      0    0
   45-54         0     5      2    4
   55-64         4     3      4    5
-  65-74         0            1    1
-  75+           1     1            
+  65-74         0     0      1    1
+  75+           1     1      0    0
 
 , , tobgp = 0-9g/day,  = ncontrols
 
@@ -17997,23 +17997,23 @@ agegp   0-39g/day 40-79 80-119 120+
 
        alcgp
 agegp   0-39g/day 40-79 80-119 120+
-  25-34         6     4           1
+  25-34         6     4      0    1
   35-44         7    14      2    4
   45-54        10    15      5    3
   55-64        12    17      6    3
   65-74         7     9      3    1
-  75+                 3            
+  75+           0     3      0    0
 
 , , tobgp = 30+,  = ncontrols
 
        alcgp
 agegp   0-39g/day 40-79 80-119 120+
   25-34         5     7      2    2
-  35-44         8     8      1     
+  35-44         8     8      1    0
   45-54         4     7      4    4
   55-64         6     6      4    6
-  65-74         2            1    1
-  75+           3     1            
+  65-74         2     0      1    1
+  75+           3     1      0    0
 
 > ## Output is not really helpful ... flat tables are better:
 > ftable(xtabs(cbind(ncases, ncontrols) ~ ., data = esoph))
@@ -18029,7 +18029,7 @@ agegp alcgp     tobgp
                 30+            0         7
       80-119    0-9g/day       0         2
                 10-19          0         1
-                20-29         NA        NA
+                20-29          0         0
                 30+            0         2
       120+      0-9g/day       0         1
                 10-19          1         1
@@ -18050,7 +18050,7 @@ agegp alcgp     tobgp
       120+      0-9g/day       2         3
                 10-19          0         3
                 20-29          2         4
-                30+           NA        NA
+                30+            0         0
 45-54 0-39g/day 0-9g/day       1        46
                 10-19          0        18
                 20-29          0        10
@@ -18090,7 +18090,7 @@ agegp alcgp     tobgp
       40-79     0-9g/day      17        34
                 10-19          3        10
                 20-29          5         9
-                30+           NA        NA
+                30+            0         0
       80-119    0-9g/day       6        13
                 10-19          4        12
                 20-29          2         3
@@ -18101,7 +18101,7 @@ agegp alcgp     tobgp
                 30+            1         1
 75+   0-39g/day 0-9g/day       1        18
                 10-19          2         6
-                20-29         NA        NA
+                20-29          0         0
                 30+            1         3
       40-79     0-9g/day       2         5
                 10-19          1         3
@@ -18109,12 +18109,12 @@ agegp alcgp     tobgp
                 30+            1         1
       80-119    0-9g/day       1         1
                 10-19          1         1
-                20-29         NA        NA
-                30+           NA        NA
+                20-29          0         0
+                30+            0         0
       120+      0-9g/day       2         2
                 10-19          1         1
-                20-29         NA        NA
-                30+           NA        NA
+                20-29          0         0
+                30+            0         0
 > ## In particular if we have fewer factors ...
 > ftable(xtabs(cbind(ncases, ncontrols) ~ agegp, data = esoph))
        ncases ncontrols
@@ -18208,13 +18208,13 @@ Gender   Admitted Rejected
         Admit
 Gender   Admitted Rejected
   Male       1078     1286
-  Female      540         
+  Female      540        0
 > xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE) # count and indicate NAs
         Admit
 Gender   Admitted Rejected <NA>
   Male       1078     1286  327
-  Female      540              
-  <NA>         17              
+  Female      540        0    0
+  <NA>         17        0    0
 > 
 > ## Create a nice display for the warp break data.
 > warpbreaks$replicate <- rep_len(1:9, 54)
