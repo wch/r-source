@@ -68,7 +68,7 @@ static char *Rconn_getline2(Rconnection con, char *buf, int bufsize)
 
 SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int nwhat, nret, nc, nr, m, k, lastm, need;
+    int nwhat, nret, nc, nr, m, k, lastm, need, i, n_eblanklines = 0;
     Rboolean blank_skip, field_skip = FALSE;
     int whatlen, dynwhat, buflen = 8096; // was 100, but that re-alloced often
     char *line, *buf;
@@ -145,6 +145,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		lastm = -1;
 		field_skip = FALSE;
 		field_fold = TRUE;
+		n_eblanklines = 0;
 	    }
 	} else {
 	    blank_skip = FALSE;
@@ -161,6 +162,10 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 							lastm + nwhat * k))) + 2;
 		    if(tre_regexecb(&eblankline, line, 0, NULL, 0) == 0) {
 			is_eblankline = TRUE;
+			if(field_fold) {
+			    n_eblanklines++;
+			    continue;
+			}
 		    } else {
 			is_eblankline = FALSE;
 			if(field_fold) {
@@ -172,7 +177,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			} else {
 			    offset = 0;
 			}
-			need += (int) strlen(line + offset);
+			need += (int) strlen(line + offset) + n_eblanklines;
 		    }
 		    if(buflen < need) {
 			char *tmp = (char *) realloc(buf, need);
@@ -182,9 +187,18 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			} else buf = tmp;
 			buflen = need;
 		    }
-		    strcpy(buf,CHAR(STRING_ELT(retval, lastm + nwhat * k)));
-		    strcat(buf, "\n");
-		    if(!is_eblankline) strcat(buf, line + offset);
+		    strcpy(buf, CHAR(STRING_ELT(retval, lastm + nwhat * k)));
+		    if(strlen(buf) || !field_fold)
+			strcat(buf, "\n");
+		    if(!is_eblankline) {
+			if(n_eblanklines > 0) {
+			    for(i = 0; i < n_eblanklines; i++) {
+				strcat(buf, "\n");
+			    }
+			    n_eblanklines = 0;
+			}
+			strcat(buf, line + offset);
+		    }
 		    SET_STRING_ELT(retval, lastm + nwhat * k, mkChar(buf));
 		}
 	    } else {
