@@ -88,11 +88,15 @@
       \item Bandwidth selectors \code{bw.ucv()} and
       \code{bw.SJ()} gave incorrect answers or incorrectly reported an
       error (because of integer overflow) for inputs longer than
-      46341.  Similarly for \code{b2.bcv()} at length 5793.
+      46341.  Similarly for \code{bw.bcv()} at length 5793.
 
-      Another possible integer overflow is checked and may result in a
-      reported error (rather than an incorrect result) for much longer
+      Another possible integer overflow is checked and may result in an
+      error report (rather than an incorrect result) for much longer
       inputs (millions for a smooth distribution).
+
+      \item \code{findMethod} failed if the active signature had
+      expanded beyond what a particular package used. (Example with
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
     }
   }
 }
