@@ -296,6 +296,12 @@
       \code{standard = "SI"} allow more standard abbreviations than the
       default ones, e.g., for kilo bytes.  From contributions by Henrik
       Bengtsson.
+
+      \item Improved performance and robustness of matrix multiplication
+      using BLAS: DGEMV is now used instead of DGEMM for matrix/vector and
+      vector/matrix multiplication, DGEMM/DGEMV is bypassed when the input
+      has NaN or Inf values, and performance for these input checks has been
+      improved.
     }
   }
 

@@ -624,8 +624,9 @@ static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
 static void matprod(double *x, int nrx, int ncx,
 		    double *y, int nry, int ncy, double *z)
 {
-    char *transa = "N", *transb = "N";
+    char *transN = "N", *transT = "T";
     double one = 1.0, zero = 0.0;
+    int ione = 1;
     LDOUBLE sum;
     R_xlen_t NRX = nrx, NRY = nry;
 
@@ -646,8 +647,17 @@ static void matprod(double *x, int nrx, int ncx,
 			sum += x[i + j * NRX] * y[j + k * NRY];
 		    z[i + k * NRX] = (double) sum;
 		}
-	} else
-	    F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
+	}
+	else if (ncy == 1) /* matrix-vector or dot product */
+	    F77_CALL(dgemv)(transN, &nrx, &ncx, &one, x,
+	                    &nrx, y, &ione, &zero, z, &ione);
+	else if (nrx == 1) /* vector-matrix */
+	    /* Instead of xY, compute (xY)^T == (Y^T)(x^T)
+	       The result is a vector, so transposing its content is no-op */
+	    F77_CALL(dgemv)(transT, &nry, &ncy, &one, y,
+	                    &nry, x, &ione, &zero, z, &ione);
+	else /* matrix-matrix or outer product */
+	    F77_CALL(dgemm)(transN, transN, &nrx, &ncy, &ncx, &one,
 			    x, &nrx, y, &nry, &zero, z, &nrx);
     } else /* zero-extent operations should return zeroes */
 	for(R_xlen_t i = 0; i < NRX*ncy; i++) z[i] = 0;
@@ -717,10 +727,20 @@ static void symcrossprod(double *x, int nr, int nc, double *z)
 static void crossprod(double *x, int nrx, int ncx,
 		      double *y, int nry, int ncy, double *z)
 {
-    char *transa = "T", *transb = "N";
+    char *transT = "T", *transN = "N";
     double one = 1.0, zero = 0.0;
+    int ione = 1;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+	if (ncy == 1) /* matrix-vector or dot product */
+	    F77_CALL(dgemv)(transT, &nrx, &ncx, &one, x,
+	                    &nrx, y, &ione, &zero, z, &ione);
+	else if (ncx == 1) /* vector-matrix */
+	    /* Instead of (x^T)Y, compute ((x^T)Y)^T == (Y^T)x
+	       The result is a vector, so transposing its content is no-op */
+	    F77_CALL(dgemv)(transT, &nry, &ncy, &one, y,
+	                    &nry, x, &ione, &zero, z, &ione);
+	else /* matrix-matrix  or outer product */
+	    F77_CALL(dgemm)(transT, transN, &ncx, &ncy, &nrx, &one,
 			x, &nrx, y, &nry, &zero, z, &ncx);
     } else { /* zero-extent operations should return zeroes */
 	R_xlen_t NCX = ncx;
@@ -762,10 +782,20 @@ static void symtcrossprod(double *x, int nr, int nc, double *z)
 static void tcrossprod(double *x, int nrx, int ncx,
 		      double *y, int nry, int ncy, double *z)
 {
-    char *transa = "N", *transb = "T";
+    char *transN = "N", *transT = "T";
     double one = 1.0, zero = 0.0;
+    int ione = 1;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(dgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+	if (nry == 1) /* matrix-vector or dot product */
+	    F77_CALL(dgemv)(transN, &nrx, &ncx, &one, x,
+	                    &nrx, y, &ione, &zero, z, &ione);
+	else if (nrx == 1) /* vector-matrix */
+	    /* Instead of x(Y^T), compute (x(Y^T))^T == Y(x^T)
+	       The result is a vector, so transposing its content is no-op */
+	    F77_CALL(dgemv)(transN, &nry, &ncy, &one, y,
+	                    &nry, x, &ione, &zero, z, &ione);
+	else /* matrix-matrix or outer product */
+	    F77_CALL(dgemm)(transN, transT, &nrx, &nry, &ncx, &one,
 			x, &nrx, y, &nry, &zero, z, &nrx);
     } else { /* zero-extent operations should return zeroes */
 	R_xlen_t NRX = nrx;
