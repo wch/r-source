@@ -56,6 +56,7 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     a subsequent chi-squared test for independence of the factors will
     not work.}
 
+  \item{x}{an object of class \code{"xtabs"}.}
   \item{na.print}{character string (or \code{NULL}) indicating how
     \code{\link{NA}} are printed.  The default (\code{""}) does not show
     \code{NA}s clearly, and \code{na.print = "NA"} maybe advisable
