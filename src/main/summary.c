@@ -30,6 +30,7 @@
 
 #include "duplicate.h"
 
+#include <R_ext/Altrep.h> /* isum, rsum are in there right now */
 #define R_MSG_type	_("invalid 'type' (%s) of argument")
 #define imax2(x, y) ((x < y) ? y : x)
 
@@ -47,35 +48,11 @@
 #define DbgP3(s,a,b)
 #endif
 
-#define BUFSIZE 256
-#define GET_REGION_PTR(x, i, n, buf, type) \
-    (ALTREP(x) == 0 ? type##0(x) + (i) : (type##_GET_REGION(x, i, n, buf), buf))
-
-#define ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr) do {	\
-	etype __ibr_buf__[BUFSIZE];					\
-	R_xlen_t __ibr_n__ = XLENGTH(sx);				\
-	R_xlen_t nb;							\
-	for (R_xlen_t idx = 0; idx < __ibr_n__; idx += nb) {		\
-	    nb = __ibr_n__  - idx > BUFSIZE ?				\
-		BUFSIZE :  __ibr_n__ - idx;				\
-	    etype *px = GET_REGION_PTR(sx, idx, nb, __ibr_buf__, vtype); \
-	    expr							\
-	 }							        \
-    } while (0)
-#define ITERATE_BY_REGION(sx, px, idx, nb, etype, vtype, expr) do {	\
-	etype *px = DATAPTR_OR_NULL(sx, FALSE);				\
-	if (px != NULL) {						\
-	    R_xlen_t __ibr_n__ = XLENGTH(sx);				\
-	    R_xlen_t nb = __ibr_n__;					\
-	    for (R_xlen_t idx = 0; idx < __ibr_n__; idx += nb) {	\
-		expr							\
-	     }								\
-	}								\
-	else ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr);	\
-    } while (0)
+/* moved ITERATE_BY_REGION and helpers to R_ext/Itermacros so they can be
+   used in altrep methods as well. */
 
 #ifdef LONG_INT
-static Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
+/*static*/ Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
 {
     LONG_INT s = 0;  // at least 64-bit
     Rboolean updated = FALSE;
@@ -122,7 +99,7 @@ static Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
 }
 #else
 /* Version from R 3.0.0: should never be used with a C99/C11 compiler */
-static Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
+/*static*/ Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
 {
     double s = 0.0;
     Rboolean updated = FALSE;
@@ -150,7 +127,7 @@ static Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
 }
 #endif
 
-static Rboolean rsum(SEXP sx, double *value, Rboolean narm)
+/*static*/ Rboolean rsum(SEXP sx, double *value, Rboolean narm)
 {
     LDOUBLE s = 0.0;
     Rboolean updated = FALSE;
@@ -545,11 +522,48 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
+    
     /* match to foo(..., na.rm=FALSE) */
     PROTECT(args = fixup_NaRm(args));
     PROTECT(call2 = shallow_duplicate(call));
     SETCDR(call2, args);
 
+    /* XXX duped grabbign of narm here. But I don't want to hit dispatchgroup 
+       if I'm an ALTREP. Or do I? */
+    if( ALTREP(CAR(args)) && (CDR(args) == R_NilValue || CDDR(args) == R_NilValue)) {
+	ans = matchArgExact(R_NaRmSymbol, &args);
+	narm = asLogical(ans);
+
+	SEXP toret;
+	SEXP vec = CAR(args);
+	switch(PRIMVAL(op)) {
+	case 0:
+	    if(TYPEOF(vec) == INTSXP) 
+		toret = ScalarInteger(ALTINTEGER_SUM(vec, narm));
+	    else if (TYPEOF(vec) == REALSXP)
+		toret = ScalarReal(ALTREAL_SUM(vec, narm));
+	    break;
+	case 2:
+	    if(TYPEOF(vec) == INTSXP) 
+		toret = ScalarInteger(ALTINTEGER_MIN(vec, narm));
+	    else if (TYPEOF(vec) == REALSXP)
+		toret = ScalarReal(ALTREAL_MIN(vec, narm));
+	    break;
+	case 3:
+	    if(TYPEOF(vec) == INTSXP) 
+		toret = ScalarInteger(ALTINTEGER_MAX(vec, narm));
+	    else if (TYPEOF(vec) == REALSXP)
+		toret = ScalarReal(ALTREAL_MAX(vec, narm));
+	    break;
+	default:
+	    break;
+	}
+	if(toret != NULL) {
+	    UNPROTECT(2); //args, call2
+	    return toret;
+	}
+    }
+    
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
 	UNPROTECT(2); /* call2, args */
 	return(ans);

@@ -257,9 +257,31 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     return a;
 }
 
+SEXP attribute_hidden do_test_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP s, lenout, ans;
+    PROTECT(s = CAR(args));
+    PROTECT(lenout = CADR(args));
+	    
+    if(TYPEOF(s) == INTSXP) {
+	PROTECT(ans =  R_virtrep_vec(s, lenout));
+    } else
+	PROTECT(ans = R_NilValue);
+
+    UNPROTECT(3);
+    return ans;
+    
+}
+	  
 /* rep_len(x, len), also used for rep.int() with scalar 'times' */
 static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
 {
+
+    /* fastpath to rep it out virtually. Evnetually this should be
+       all atomic vector types (or even averything?) but for now just ints to 
+       test it */
+ 
+    
     R_xlen_t i, j;
     SEXP a;
 

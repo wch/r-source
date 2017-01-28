@@ -328,6 +328,32 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 #undef COMPACT_REALSEQ_FIRST
 #undef COMPACT_REALSEQ_INCR
 
+INLINE_FUN double SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
+{
+    double *px = DATAPTR_OR_NULL(x, FALSE);
+    if(px != NULL) {
+	px[i] = v;
+	return v;
+    } else {
+	return ALTREAL_SET_ELT(x, i, v);
+    }
+    return 0.0; /* never hit */
+}
+
+
+INLINE_FUN int SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v)
+{
+    int *px = DATAPTR_OR_NULL(x, FALSE);
+    if(px != NULL) {
+	px[i] = v;
+	return v;
+    } else {
+	return ALTINTEGER_SET_ELT(x, i, v);
+    }
+    return 0; /*never hit*/
+}
+
+
 INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
 {
     return ALTREP(x) ? ALTCOMPLEX_ELT(x, i) : COMPLEX0(x)[i];

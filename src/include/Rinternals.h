@@ -602,14 +602,22 @@ void *ALTVEC_DATAPTR(SEXP x, Rboolean writable);
 void *ALTVEC_DATAPTR_OR_NULL(SEXP x, Rboolean writable);
 SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
 int ALTINTEGER_ELT(SEXP x, R_xlen_t i);
+int ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v);
 int ALTLOGICAL_ELT(SEXP x, R_xlen_t i);
 double ALTREAL_ELT(SEXP x, R_xlen_t i);
+double ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v);
 SEXP ALTSTRING_ELT(SEXP, R_xlen_t);
 void ALTSTRING_SET_ELT(SEXP, R_xlen_t, SEXP);
 Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
 int INTEGER_IS_SORTED(SEXP x);
 int INTEGER_NO_NA(SEXP x);
+int ALTINTEGER_SUM(SEXP x, Rboolean narm);
+double ALTREAL_SUM(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+double ALTREAL_MIN(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+double ALTREAL_MAX(SEXP x, Rboolean narm);
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
 int REAL_IS_SORTED(SEXP x);
 int REAL_NO_NA(SEXP x);
@@ -617,6 +625,7 @@ int STRING_IS_SORTED(SEXP x);
 int STRING_NO_NA(SEXP x);
 SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
 SEXP R_deferred_coerceToString(SEXP v, SEXP sp);
+    SEXP R_virtrep_vec(SEXP, SEXP);
 
 #ifdef LONG_VECTOR_SUPPORT
     R_len_t NORET R_BadLongVector(SEXP, const char *, int);
@@ -1495,6 +1504,7 @@ void R_set_altrep_data2(SEXP x, SEXP v);
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
 #endif
+
 
 
 #ifdef __cplusplus
