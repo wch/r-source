@@ -711,6 +711,9 @@
       \item \code{findMethod} failed if the active signature had
       expanded beyond what a particular package used. (Example with
       packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
+
+      \item \code{qbeta()} underflowed too early in some very asymmetric
+      cases.  (\PR{17178})
     }
   }
 }

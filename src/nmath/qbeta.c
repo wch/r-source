@@ -221,7 +221,7 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 
     R_ifDEBUG_printf(
 	"qbeta(%g, %g, %g, lower_t=%d, log_p=%d):%s\n"
-	"  swap_tail=%d, la=%g, u0=%g (bnd: %g (%g)) ",
+	"  swap_tail=%d, la=%#8g, u0=%#8g (bnd: %g (%g)) ",
 	alpha, p,q, lower_tail, log_p,
 	(log_p && (p_ == 0. || p_ == 1.)) ? (p_==0.?" p_=0":" p_=1") : "",
 	swap_tail, la, u0,
@@ -314,16 +314,17 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
     // Problem: If initial u is completely wrong, we make a wrong decision here
     if(swap_choose &&
        (( swap_tail && u >= -exp(  log_q_cut)) || // ==> "swap back"
-	(!swap_tail && u >= -exp(4*log_q_cut) && pp / qq < 1000.))) { // ==> "swap now" (much less easily)
+	(!swap_tail && u >= -exp(4*log_q_cut) && pp / qq < 1000.) // ==> "swap now"
+	   )) {
 	// "revert swap" -- and use_log_x
 	swap_tail = !swap_tail;
 	R_ifDEBUG_printf(" u = %g (e^u = xinbta = %.16g) ==> ", u, xinbta);
-	if(swap_tail) {
+	if(swap_tail) { // "swap now" (much less easily)
 	    a = R_DT_CIv(alpha); // needed ?
 	    la = R_DT_Clog(alpha);
 	    pp = q; qq = p;
 	}
-	else {
+	else { // swap back :
 	    a = p_;
 	    la = R_DT_log(alpha);
 	    pp = p; qq = q;
@@ -339,18 +340,18 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
    2) The correction step can go outside (u_n > 0 ==>  e^u > 1 is illegal)
    e.g., for  qbeta(0.2066, 0.143891, 0.05)
 */
-    }
+    } else R_ifDEBUG_printf("\n");
 
     if(!use_log_x)
-	use_log_x = (u < log_q_cut);//(per default) <==> xinbta = e^u < 4.54e-5
+	use_log_x = (u < log_q_cut);// <==> xinbta = e^u < exp(log_q_cut)
     Rboolean
 	bad_u = !R_FINITE(u),
 	bad_init = bad_u || xinbta > p_hi;
 
-    R_ifDEBUG_printf(" -> u = %g, e^u = xinbta = %.16g, (Newton acu=%g%s)\n",
-		     u, xinbta, acu,
-		     (bad_u ? ", ** bad u **" :
-		      (use_log_x ? ", on u = log(x) scale" : "")));
+    R_ifDEBUG_printf(" -> u = %g, e^u = xinbta = %.16g, (Newton acu=%g%s%s%s)\n",
+		     u, xinbta, acu, (bad_u ? ", ** bad u **" : ""),
+		     ((bad_init && !bad_u) ? ", ** bad_init **" : ""),
+		     (use_log_x ? ", on u = LOG(x) SCALE" : ""));
 
     double u_n = 1.; // -Wall
     tx = xinbta; // keeping "original initial x" (for now)
@@ -362,7 +363,8 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	   try at smallest positive number: */
 	w = pbeta_raw(DBL_very_MIN, pp, qq, TRUE, log_p);
 	if(w > (log_p ? la : a)) {
-	    R_ifDEBUG_printf(" quantile is left of smallest positive number; \"convergence\"\n");
+	    R_ifDEBUG_printf(
+		" quantile is left of %g; \"convergence\"\n", DBL_very_MIN);
 	    if(log_p || fabs(w - a) < fabs(0 - a)) { // DBL_very_MIN is better than 0
 		tx   = DBL_very_MIN;
 		u_n  = DBL_log_v_MIN;// = log(DBL_very_MIN)
@@ -373,8 +375,8 @@ qbeta_raw(double alpha, double p, double q, int lower_tail, int log_p,
 	    use_log_x = log_p; add_N_step = FALSE; goto L_return;
 	}
 	else {
-	    R_ifDEBUG_printf(" pbeta(smallest pos.) = %g <= %g  --> continuing\n",
-			     w, (log_p ? la : a));
+	    R_ifDEBUG_printf(" pbeta(%g, *) = %g <= %g (= %s) --> continuing\n",
+			     DBL_log_v_MIN, w, (log_p ? la : a), (log_p ? "la" : "a"));
 	    if(u  < DBL_log_v_MIN) {
 		u = DBL_log_v_MIN;// = log(DBL_very_MIN)
 		xinbta = DBL_very_MIN;
@@ -415,7 +417,8 @@ L_Newton:
 
 	for (i_pb=0; i_pb < 1000; i_pb++) {
 	    // using log_p == TRUE  unconditionally here
-	    // FIXME: if exp(u) = xinbta underflows to 0, like different formula pbeta_log(u, *)
+	    /* FIXME: if exp(u) = xinbta underflows to 0,
+	     *  want different formula pbeta_log(u, ..) */
 	    y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ TRUE, TRUE);
 
 	    /* w := Newton step size for   L(u) = log F(e^u)  =!= 0;   u := log(x)
@@ -423,8 +426,8 @@ L_Newton:
 	     *   =  (L(.) - la)*F(.) / {F'(e^u) * e^u } =
 	     *   =  (L(.) - la) * e^L(.) * e^{-log F'(e^u) - u}
 	     *   =  ( y   - la) * e^{ y - u -log F'(e^u)}
-	     and  -log F'(x)= -log f(x) =  + logbeta + (1-p) log(x) + (1-q) log(1-x)
-	     = logbeta + (1-p) u + (1-q) log(1-e^u)
+	     and  -log F'(x)= -log f(x) = - -logbeta + (1-p) log(x) + (1-q) log(1-x)
+	                                = logbeta + (1-p) u + (1-q) log(1-e^u)
 	    */
 	    w = (y == ML_NEGINF) // y = -Inf  well possible: we are on log scale!
 		? 0. : (y - la) * exp(y - u + logbeta + r * u + t * R_Log1_Exp(u));
@@ -432,21 +435,21 @@ L_Newton:
 		break;
 	    if (i_pb >= n_N && w * wprev <= 0.)
 		prev = fmax2(fabs(adj),fpu);
-	    R_ifDEBUG_printf("N(i=%2d): u=%#20.16g, pb(e^u)=%#12.6g, w=%#15.9g, %s prev=%g,",
-			     i_pb, u, y, w,
-			     (i_pb >= n_N && w * wprev <= 0.) ? "new" : "old", prev);
+	    R_ifDEBUG_printf(
+		"N(i=%2d): u=%#20.16g, pb(e^u)=%#15.9g, w=%#15.9g, %s prev=%g,",
+		i_pb, u, y, w,
+		(i_pb >= n_N && w * wprev <= 0.) ? "new" : "old", prev);
 	    g = 1;
 	    for (i_inn=0; i_inn < 1000; i_inn++) {
 		adj = g * w;
-		// take full Newton steps at the beginning; only then safe guard:
-		if (i_pb < n_N || fabs(adj) < prev) {
+		// safe guard (here, from the very beginning)
+		if (fabs(adj) < prev) {
 		    u_n = u - adj; // u_{n+1} = u_n - g*w
 		    if (u_n <= 0.) { // <==> 0 <  xinbta := e^u  <= 1
 			if (prev <= acu || fabs(w) <= acu) {
-			    /* R_ifDEBUG_printf(" -adj=%g, %s <= acu  ==> convergence\n", */
-			    /*	 -adj, (prev <= acu) ? "prev" : "|w|"); */
-			    R_ifDEBUG_printf(" it{in}=%d, -adj=%g, %s <= acu  ==> convergence\n",
-					     i_inn, -adj, (prev <= acu) ? "prev" : "|w|");
+		 	    R_ifDEBUG_printf(
+				" it{in}=%d, -adj=%g, %s <= acu  ==> convergence\n",
+				i_inn, -adj, (prev <= acu) ? "prev" : "|w|");
 			    goto L_converged;
 			}
 			// if (u_n != ML_NEGINF && u_n != 1)
@@ -491,9 +494,10 @@ L_Newton:
 		: (y - a)  * exp(    logbeta + r * log(xinbta) + t * log1p(-xinbta));
 	    if (i_pb >= n_N && w * wprev <= 0.)
 		prev = fmax2(fabs(adj),fpu);
-	    R_ifDEBUG_printf("N(i=%2d): x0=%#17.15g, pb(x0)=%#17.15g, w=%#15.9g, %s prev=%g,",
-			     i_pb, xinbta, y, w,
-			     (i_pb >= n_N && w * wprev <= 0.) ? "new" : "old", prev);
+	    R_ifDEBUG_printf(
+		"N(i=%2d): x0=%#17.15g, pb(x0)=%#15.9g, w=%#15.9g, %s prev=%g,",
+		i_pb, xinbta, y, w,
+		(i_pb >= n_N && w * wprev <= 0.) ? "new" : "old", prev);
 	    g = 1;
 	    for (i_inn=0; i_inn < 1000;i_inn++) {
 		adj = g * w;
@@ -521,7 +525,7 @@ L_Newton:
 	    wprev = w;
 	} // for( i_pb ..)
 
-    } // {else}
+    } // end{else : normal scale Newton}
 
     /*-- NOT converged: Iteration count --*/
     warned = TRUE;

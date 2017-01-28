@@ -1,4 +1,5 @@
 options(warn = 2)# warnings are errors here
+pdf("p-qbeta-strict-tst.pdf")
 
 a <- 25; b <- 6
 x <- 2^-(300:200)
@@ -47,7 +48,7 @@ stopifnot( all.equal(lpb, pbeta(x,a,b,log.=TRUE), tol=2e-16) )# pbeta() check
 
 
 qpb <- qbeta(lpb, a,b, log.p=TRUE)
-stopifnot(qpb > 0)# ok in R-devel, not in R 3.1.x (patched)
+stopifnot(qpb > 0)# ok R >= 3.2.0, not in R 3.1.x
 ## ideally   x == qbeta(pbeta(x, *), *) :
 all.equal(x, qpb, tol=0)# now: 4.986e-15 (was 5.238e-15)
 relE <- 1 - qpb/x
@@ -126,31 +127,38 @@ stopifnot(all.equal(qp1, qp1., tol=8*.Machine$double.eps),
 
 
 a <- 43779; b <- 0.06728; x <- -exp(901/256)
-qx <- qbeta(x , a,b, log=TRUE) ## 157 iterations... maybe should *NOT* use log_x- i.e. u-scale!
-## MM: no: the problem is rather that it does not swap where it should!
-(pq <- pbeta(qx, a,b, log=TRUE))
+(qx <- qbeta(x , a,b, log=TRUE)) ## (157 iterations in log_x scale); fast in orig.scale
+## 0.9993614
+(pq <- pbeta(qx, a,b, log=TRUE)) ## = -33.7686
 1 - pq/x # rel.err ~  8.88e-16 "perfect"
 stopifnot(abs(1 - pq/x) < 1e-15)
 ## but it uses probably the wrong swap_tail decision...
-curve(pbeta(exp(x), a,b, log=TRUE), -1e-3, -1e-7, n=1025)
+curve(pbeta(exp(x), a,b, log=TRUE), -1e-3, -1e-7,   n=1025) # "the same" as
+par(new=TRUE)
+curve(pbeta(  x,    a,b, log=TRUE), 0.999, 1-1e-7, col=2, ylab="", xaxt="n"); axis(3)
+abline(v = qx, h = x, col="light blue", lty = 2)
 
-# as is this one -- the mirror image:
+## as is this one -- the mirror image:
 (x. <- log1p(-exp(x))) #  -2.160156e-15
-(q2 <- qbeta(x., b,a, log=TRUE)) ## => swap_tail=TRUE, and the same 157 outer iter.
-p2 <- pbeta(q2,  b,a, log=TRUE)
-1 - p2/x. #- 2.64233 e-14
+(q. <- qbeta(x., b,a, log=TRUE, lower.tail=FALSE))# very quick convergence: u0 is perfect
+## 1.425625e-223
+(p. <- pbeta(q., b,a, log=TRUE, lower.tail=FALSE))
+stopifnot(all.equal(p., x., tol = 1e-15))
 
-curve(pbeta(x, b,a, log=TRUE), 1e-30, 1e-3, n=1025, log="x")
-curve(pbeta(x, b,a, log=TRUE), 1e-7, 1e-1, n=1025, log="x")
-curve(pbeta(x, b,a, log=TRUE), .0001, .5, n=1025, log="x")
-curve(pbeta(x, b,a, log=TRUE), .001, .5, n=1025, log="x")
-# Flip vertically and use log scale ==> "close" to  x. ~= -2.160156e-15
-curve(-pbeta(x, b,a, log=TRUE), .00001, .002, n=1025, log="xy")
+## very different picture at the *other tail*:
+(q2 <- qbeta(x., b,a, log=TRUE)) ## 0.0006386087
+stopifnot(all.equal(pbeta(q2, b,a, log=TRUE), x., tol= 1e-13)) # Lx 64b: 2.37e-15
+
+curve(pbeta(x, b,a, log=TRUE), 1e-30, .5, n=1025, log="x")
+# Flip vertically and use log scale ==> "close" to  -x. = 2.160156e-15
+curve(-pbeta(x, b,a, log=TRUE), 1e-8, .005, n=1025, log="xy")
+abline(v = q2, h = -x., lty=3, col=2)
 
 ### more extreme (a,b) [still computable with Rmpfr pbetaI():]
 a <- 800; b <- 2
 x <- 2^-c(10*(100:4), 37, 2*(17:14), 27:2, (8:1)/8)
-curve(pbeta(x,a,b, log=TRUE), n=1025, log="x", 1e-200, .1);mtext(R.version.string)
+curve(pbeta(x,a,b, log=TRUE), n=1025, log="x", 1e-200, .1); mtext(R.version.string)
+axis(1, at=0.1); abline(h=0, lty=2)
 
 if(interactive() && require(Rmpfr)) {
     pbi <- pbetaI(x, a,b, log.p=TRUE, precBits = 2048)
@@ -337,7 +345,7 @@ check.pb <- function(pb, true)
 ## i.e., the fix for PR#14230 pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE),
 ## svn diff -c51327 (2010-03-19) was *not* helpful in these cases
 ##
-check.pb(try.pb(437/512, 4711, 19), true = -664.8560)
+check.pb(try.pb(437/512, 4711, 19), true = -664.8560)# did work in R <= 2.10.1 (see above)
 check.pb(try.pb(442/512, 4998, 19), true = -653.6326)
 check.pb(try.pb(430/512, 4208, 20), true = -649.9831)
 check.pb(try.pb(428/512, 4348, 20), true = -693.6123)
@@ -380,7 +388,9 @@ check.pb(try.pb(362/512, 2292, 30), true = -676.8534)
 check.pb(try.pb(369/512, 2495, 30), true = -698.3849)
 
 check.pb(try.pb(326/512, 1900, 38), true = -714.7700)
+## all those check.pb() above *did* work in R <= 2.10.1 ----
 
+## all those below have always underflowed (or worse) -- now give *warning* at least:
 check.pb(try.pb(412/512, 4996, 23), true = -982.6083)#
 check.pb(try.pb(400/512, 4291, 25), true = -949.7046)#
 
