@@ -48,7 +48,8 @@
       \item \code{xtabs()} works more consistently with \code{NA}s, also
       in its result no longer setting them to \code{0}.  Further, a new
       logical option \code{addNA} allows to count \code{NA}s where
-      appropriate.
+      appropriate.  Additionally, for the case \code{sparse=TRUE}, the
+      result's \code{dimnames} are identical to the default case's.
     }
   }
 
@@ -302,6 +303,9 @@
       vector/matrix multiplication, DGEMM/DGEMV is bypassed when the input
       has NaN or Inf values, and performance for these input checks has been
       improved.
+
+      \item \code{tapply()} gets new option \code{default = NA}
+      allowing to change the previously hardcoded value.
     }
   }
 

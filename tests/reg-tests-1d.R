@@ -646,6 +646,12 @@ stopifnot(
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
 
 
+## tapply() with FUN returning raw
+identical(tapply(1:3, 1:3, as.raw),
+	  array(as.raw(1:3), 3L, dimnames=list(1:3)))
+## failed in R < 3.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
