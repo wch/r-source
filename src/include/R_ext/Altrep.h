@@ -180,5 +180,7 @@ DECLARE_METHOD_SETTER(altstring, No_NA)
 Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call);
 Rboolean rsum(SEXP sx, double *value, Rboolean narm);
 
+enum {KNOWN_DECR = -1, UNKNOWN_SORTEDNESS, KNOWN_INCR, KNOWN_UNSORTED};
+#define KNOWN_SORTED(sorted) (sorted == KNOWN_DECR || sorted == KNOWN_INCR)
 
 #endif /* R_EXT_ALTREP_H_ */

@@ -653,7 +653,7 @@ static int altinteger_Sort_check_default(SEXP x) {
     						\
     SEXP ans;					\
     R_xlen_t i;					\
-    if(sorted != 0) {				\
+    if(KNOWN_SORTED(sorted)) {			\
 	R_xlen_t cnt = 0;			\
 	i = LENGTH(x) - 1;			\
 	while(ISNA(ALTPREFIX##_ELT(x, i))) {	\
@@ -670,7 +670,7 @@ static int altinteger_Sort_check_default(SEXP x) {
 	for(R_xlen_t k = LENGTH(x) - cnt; k < LENGTH(x); k++) {		\
 	    ptr[k] = 1;							\
 	}								\
-    } else {	/*sorted == 0	*/					\
+    } else {	/*not known sorted (unknown or known unsorted)	*/	\
 	PROTECT(ans= allocVector(LGLSXP, LENGTH(x)));			\
 	int *ptr = LOGICAL(ans);					\
 	for(i = 0; i < LENGTH(x); i++) {				\
@@ -696,7 +696,7 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
        narm is false, the answer is NA_INTEGER, no need
        to sum at all! */
     if(narm ||
-       INTEGER_IS_SORTED(x) == 0 ||
+       !KNOWN_SORTED(INTEGER_IS_SORTED(x)) ||
        !ISNA(INTEGER_ELT(x, XLENGTH(x)))) {
 	isum(x, &val, narm, R_NilValue);
     }
@@ -708,7 +708,7 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
 	int sorted = ALTPREFIX##_IS_SORTED(x);                  \
 	R_xlen_t pos;						\
 	TYPE val;						\
-	if(sorted == 1) {					\
+	if(sorted == KNOWN_INCR) {				\
 	    if(DOMAX) {						\
 		pos = XLENGTH(x);				\
 		val = ALTPREFIX##_ELT(x, pos);			\
@@ -722,7 +722,7 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
 	    }							\
 	    if(NARM && ISNA(val)) { val = R_NegInf; pos = -1;}	\
 	    return WHICH ? val: pos;				\
-	} else if(sorted == -1) {				\
+	} else if(sorted == KNOWN_DECR) {			\
 	    if(!DOMAX) {					\
 		pos = XLENGTH(x);				\
 		val = ALTPREFIX##_ELT(x, pos);			\
@@ -800,9 +800,64 @@ static SEXP altinteger_As_subscripts_default(SEXP x) {
     return x;
 }
 
+/* right now this returns 1.0, ie we don't know of any compression benefit
+   it could also throw an error and force all classes to implement a method */
 static double altinteger_Compression_ratio_default(SEXP x) {
     //error("altinteger classes must define a specific Compression_Ratio method");
     return 1.0;
+}
+
+static SEXP altinteger_order_default(SEXP x, Rboolean decr, int nalast) {
+    
+    R_xlen_t n = XLENGTH(x);
+    int sorted = INTEGER_IS_SORTED(x);
+    if(sorted == KNOWN_INCR) 
+	return decr ? R_compact_intrange(n, 1) : R_compact_intrange(1, n);
+    else if(sorted == KNOWN_DECR)
+	return decr ? R_compact_intrange(1, n) : R_compact_intrange(n, 1);
+    SEXP ans;
+/* copied from body of do_order in sort.c. Better if it was factored out
+   and callable */
+    if (n != 0) {
+#ifdef LONG_VECTOR_SUPPORT
+	if (n > INT_MAX)  {
+	    
+	    PROTECT(ans = allocVector(REALSXP, n));
+	    R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
+	    for (R_xlen_t i = 0; i < n; i++) in[i] = i;
+	    orderVector1l(in, n, CAR(args), nalast, decreasing,
+			  R_NilValue);
+	    for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = in[i] + 1;
+	} else
+#endif
+	{
+	    PROTECT(ans = allocVector(INTSXP, n));
+	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
+	    orderVector1(INTEGER(ans), (int)n, CAR(args), nalast,
+			 decreasing, R_NilValue);
+	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
+	}
+    } else {
+#ifdef LONG_VECTOR_SUPPORT
+	if (n > INT_MAX)  {
+	    PROTECT(ans = allocVector(REALSXP, n));
+	    R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
+	    for (R_xlen_t i = 0; i < n; i++) in[i] = i;
+	    orderVectorl(in, n, CAR(args), nalast, decreasing,
+			 listgreaterl);
+	    for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = in[i] + 1;
+	} else
+#endif
+	{
+	    PROTECT(ans = allocVector(INTSXP, n));
+	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
+	    orderVector(INTEGER(ans), (int) n, args, nalast,
+			decreasing, listgreater);
+	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
+	}
+    } else return allocVector(INTSXP, 0);
+    UNPROTECT(1);
+    return ans;
 }
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
@@ -894,14 +949,14 @@ anyway */
 	cval = ALTPREF##_ELT(tb, pos);					\
 	while(u != l) {							\
 	    cval = ALTPREF##_ELT(tb, pos);				\
-	    if(ISNA(cval) || (cval > qval && sd == 1) ||		\
-	       (cval < qval && sd == -1) ||				\
+	    if(ISNA(cval) || (cval > qval && sd == KNOWN_INCR) ||	\
+	       (cval < qval && sd == KNOWN_DECR) ||			\
 	       (cval == qval && frst)) {				\
 		/* walk to lower indices, sorted implies na.last */	\
 		u = pos;						\
 		pos = floor((u + l) /2);				\
-	    } else if((cval < qval && sd == 1 )  ||			\
-		      (cval > qval && sd == -1 ) ||			\
+	    } else if((cval < qval && sd == KNOWN_INCR )  ||		\
+		      (cval > qval && sd == KNOWN_DECR ) ||			\
 		      (cval == qval && !frst)) {			\
 		/*walk to higher indices */				\
 		l = pos;						\
@@ -953,7 +1008,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 	SEXP ret;							\
 	int nprot = 0;							\
 	if(TYPEOF(q) == SXPTYPE &&					\
-	   ALTPREFIX##_IS_SORTED(table) != 0 &&				\
+	   KNOWN_SORTED(ALTPREFIX##_IS_SORTED(table)) &&		\
 	   incomp == R_NilValue) {					\
 	    BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, FIRSTONLY, nmatch);	\
 	} else if(FIRSTONLY) {						\
