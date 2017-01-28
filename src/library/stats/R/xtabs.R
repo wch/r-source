@@ -68,17 +68,13 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	    if(is.null(y))
 		table(by, dnn = names(by))
 	    else if(NCOL(y) == 1L)
-		tapply(y, by, sum, na.rm=na.rm)
+		tapply(y, by, sum, na.rm=na.rm, default = 0)
 	    else {
-		z <- lapply(as.data.frame(y), tapply, by, sum, na.rm=na.rm)
+		z <- lapply(as.data.frame(y), tapply, by, sum, na.rm=na.rm, default = 0)
 		array(unlist(z),
 		      dim = c(dim(z[[1L]]), length(z)),
 		      dimnames = c(dimnames(z[[1L]]), list(names(z))))
 	    }
-	if(!is.null(y)) ## tapply(.) gives NA for non-existing combinations
-	    ## (FIXME!) but there are true NA's (from sum(.)ming NA's) which
-	    ## should *NOT* be replaced -- back-compatibility for now
-	    x[is.na(x)] <- 0L
 	class(x) <- c("xtabs", "table")
 	attr(x, "call") <- match.call()
 	x

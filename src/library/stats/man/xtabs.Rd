@@ -76,6 +76,9 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 
   For variables in \code{formula} which are factors, \code{exclude}
   must be specified explicitly; the default exclusions will not be used.
+
+  In \R versions before 3.4.0, e.g., when \code{na.action = na.pass},
+  sometimes zeroes (\code{0}) were returned instead of \code{NA}s.
 }
 \value{
   By default, when \code{sparse = FALSE},
@@ -119,8 +122,9 @@ DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
 tools::assertError(# 'na.fail' should fail :
      xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
 xtabs(Freq ~ Gender + Admit, DN)
-xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass) # Fem x Rej : NA
-xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE) # count and indicate NAs
+xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+## The Female:Rejected combination has NA 'Freq' (and NA prints 'invisibly' as "")
+xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE) # ==> count NAs
 
 ## Create a nice display for the warp break data.
 warpbreaks$replicate <- rep_len(1:9, 54)

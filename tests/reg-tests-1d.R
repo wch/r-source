@@ -633,15 +633,13 @@ xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass, sparse=TRUE)# error i
 xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE)
 xtNS<- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE, sparse=TRUE)
 stopifnot(
-    identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt))
-   ,
-## FIXME  identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt))  , # not ok in R <= 3.3.2
-    eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE))
-    ## FIXME!      eq_A(xtp, xtS) ,
-    ## FIXME!  eq_A(xtN, xtNS),
-    ## FIXME:
-    ## identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
-    ##           as_A(c(120, 17, -17, 207, NA, NA, -327, NA, NA), xtN))
+    identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt)),
+    identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)), # not ok in R <= 3.3.2
+    eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
+    eq_A(xtp, xtS),
+    eq_A(xtN, xtNS),
+    identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
+              as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 )
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
 
