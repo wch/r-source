@@ -4957,11 +4957,13 @@ changed their installation locations.
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-The Fortran compiler for El Capitan from (at the time of writing)
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works on
-Sierra: those at @uref{https://r.research.att.com/} have failure
-reports.  One way to use the Coudert build is to have a
-@file{~/.R/Makevars} file similar to
+The Fortran compiler for El Capitan from
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works
+on Sierra: those at @uref{https://r.research.att.com/} have failure
+reports on Sierra.  (At the time of writing there was a build of
+@command{gfortran}@tie{}6.3 for Sierra on that site, but the
+distribution was incomplete.) One way to use the Coudert build is to
+have a @file{~/.R/Makevars} file similar to
 @smallexample
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
