@@ -996,7 +996,19 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 
     int nomatch = asInteger(CADDR(args));
     SEXP incomp = CADDDR(args);
-
+    /*     
+    if(ALTREP(CADR(args))) {
+	SEXP ans = NULL;
+	if(TYPEOF(CADR(args)) == INTSXP)
+	    ans = ALTINTEGER_MATCH(CADR(args), CAR(args), nomatch,
+				   incomp, env, TRUE);
+	else if(TYPEOF(CADR(args)) == REALSXP)
+	    ans = ALTREAL_MATCH(CADR(args), CAR(args), nomatch,
+				   incomp, env, TRUE);
+	if(ans != NULL)
+	    return ans;
+	
+	    } */
     if (isNull(incomp) || /* S has FALSE to mean empty */
 	(length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0))
 	return match5(CADR(args), CAR(args), nomatch, NULL, env);

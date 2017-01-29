@@ -401,6 +401,12 @@ int INTEGER_NO_NA(SEXP x)
     return ALTREP(x) ? ALTINTEGER_DISPATCH(No_NA, x) : 0;
 }
 
+SEXP ALTINTEGER_IS_NA(SEXP x)
+{
+    return ALTINTEGER_DISPATCH(Is_NA, x);
+}	
+
+
 double attribute_hidden ALTREAL_ELT(SEXP x, R_xlen_t i)
 {
     return ALTREAL_DISPATCH(Elt, x, i);
@@ -492,6 +498,10 @@ int ALTINTEGER_MAX(SEXP x, Rboolean narm)
 
 }
 
+SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
+		      Rboolean first) {
+    return ALTINTEGER_DISPATCH(Match, table, x, nm, incomp, env, first);
+}
 
 double ALTREAL_SUM(SEXP x, Rboolean narm)
 {
@@ -509,6 +519,10 @@ double ALTREAL_MAX(SEXP x, Rboolean narm)
 
 }
 
+SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
+		      Rboolean first) {
+    return ALTREAL_DISPATCH(Match, table, x, nm, incomp, env, first);
+}
 
 
 
@@ -663,12 +677,11 @@ static int altinteger_Sort_check_default(SEXP x) {
 	/* XXX this will be altlogical Rle once it exists*/	\
 	PROTECT(ans= allocVector(LGLSXP, LENGTH(x)));		\
 	int *ptr = LOGICAL(ans);				\
-	for (R_xlen_t j = 0; j < LENGTH(x) - cnt; j++) {	\
-	    ptr[j] = 0;						\
+	if(XLENGTH(x) - cnt > 0) {				\
+	    memset(ptr, 0, XLENGTH(x) - cnt);			\
 	}							\
-									\
-	for(R_xlen_t k = LENGTH(x) - cnt; k < LENGTH(x); k++) {		\
-	    ptr[k] = 1;							\
+	if(cnt > 0) {						\
+	    memset(ptr + XLENGTH(x) - cnt, TRUE, cnt);		\
 	}								\
     } else {	/*not known sorted (unknown or known unsorted)	*/	\
 	PROTECT(ans= allocVector(LGLSXP, LENGTH(x)));			\
@@ -710,7 +723,7 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
 	TYPE val;						\
 	if(sorted == KNOWN_INCR) {				\
 	    if(DOMAX) {						\
-		pos = XLENGTH(x);				\
+		pos = XLENGTH(x) - 1;				\
 		val = ALTPREFIX##_ELT(x, pos);			\
 		while(ISNA(val) && pos > 0) {			\
 		    pos--;					\
@@ -721,10 +734,10 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
 		pos = 0;					\
 	    }							\
 	    if(NARM && ISNA(val)) { val = R_NegInf; pos = -1;}	\
-	    return WHICH ? val: pos;				\
+	    return WHICH ? pos : val;				\
 	} else if(sorted == KNOWN_DECR) {			\
 	    if(!DOMAX) {					\
-		pos = XLENGTH(x);				\
+		pos = XLENGTH(x) -1;				\
 		val = ALTPREFIX##_ELT(x, pos);			\
 		while(ISNA(val) && pos > 0) {			\
 		    pos--;					\
@@ -735,7 +748,7 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
 		pos = 0;					\
 	    }							\
 	    if(NARM && ISNA(val)) { val = R_NegInf; pos = -1;}	\
-	    return WHICH ? val : pos;				\
+	    return WHICH ? pos : val;				\
 	}							\
 	Rboolean noNA = ALTPREFIX##_NO_NA(x);				\
 	TYPE ret = ALTPREFIX##_ELT(x, 0);				\
@@ -765,7 +778,7 @@ static int altinteger_Sum_default(SEXP x, Rboolean narm) {
 		}							\
 	    }								\
 	}								\
-	return WHICH ? ret : pos;					\
+	return WHICH ? pos : ret;					\
 } while (0);
 
 #define LT(x,y) x<y
@@ -784,15 +797,15 @@ static int altinteger_Which_min_default(SEXP x, Rboolean narm) {
     ALT_MINMAX(x, int, INTEGER, LT, FALSE, narm, TRUE)
 }
 
-static int altinteger_Which_max_default(SEXP x, Rboolean narm) {
+static R_xlen_t altinteger_Which_max_default(SEXP x, Rboolean narm) {
     ALT_MINMAX(x, int, INTEGER, GT, TRUE, narm, TRUE)
 }
 
-static int* altinteger_Order_default(SEXP x) {
-    error("altinteger classes must provide order method");
+static SEXP altinteger_Order_default(SEXP x) {
+    return NULL;
 }
 
-static SEXP altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
+static int altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
     error("altinteger classes must define a specific Set_elt method");
 }
 
@@ -815,50 +828,9 @@ static SEXP altinteger_order_default(SEXP x, Rboolean decr, int nalast) {
 	return decr ? R_compact_intrange(n, 1) : R_compact_intrange(1, n);
     else if(sorted == KNOWN_DECR)
 	return decr ? R_compact_intrange(1, n) : R_compact_intrange(n, 1);
-    SEXP ans;
-/* copied from body of do_order in sort.c. Better if it was factored out
-   and callable */
-    if (n != 0) {
-#ifdef LONG_VECTOR_SUPPORT
-	if (n > INT_MAX)  {
-	    
-	    PROTECT(ans = allocVector(REALSXP, n));
-	    R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
-	    for (R_xlen_t i = 0; i < n; i++) in[i] = i;
-	    orderVector1l(in, n, CAR(args), nalast, decreasing,
-			  R_NilValue);
-	    for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = in[i] + 1;
-	} else
-#endif
-	{
-	    PROTECT(ans = allocVector(INTSXP, n));
-	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
-	    orderVector1(INTEGER(ans), (int)n, CAR(args), nalast,
-			 decreasing, R_NilValue);
-	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
-	}
-    } else {
-#ifdef LONG_VECTOR_SUPPORT
-	if (n > INT_MAX)  {
-	    PROTECT(ans = allocVector(REALSXP, n));
-	    R_xlen_t *in = (R_xlen_t *) R_alloc(n, sizeof(R_xlen_t));
-	    for (R_xlen_t i = 0; i < n; i++) in[i] = i;
-	    orderVectorl(in, n, CAR(args), nalast, decreasing,
-			 listgreaterl);
-	    for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = in[i] + 1;
-	} else
-#endif
-	{
-	    PROTECT(ans = allocVector(INTSXP, n));
-	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = (int) i;
-	    orderVector(INTEGER(ans), (int) n, args, nalast,
-			decreasing, listgreater);
-	    for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i]++;
-	}
-    } else return allocVector(INTSXP, 0);
-    UNPROTECT(1);
-    return ans;
+    return NULL;
 }
+
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
@@ -879,8 +851,8 @@ static int altreal_Sort_check_default (SEXP x) {
     error("altreal calsses must provide Sort_check method");
 }
 
-static int* altreal_Order_default(SEXP x) {
-    error("atlreal classes must provide Order method");
+static SEXP altreal_Order_default(SEXP x) {
+    return NULL;
 }
 
 static int altreal_Is_NA_default(SEXP x) {
@@ -908,7 +880,7 @@ static double altreal_Which_min_default(SEXP x, Rboolean narm) {
     ALT_MINMAX(x, double, REAL, LT, FALSE, TRUE, TRUE)
 }
 
-static int altreal_Which_max_default(SEXP x, Rboolean narm) {
+static R_xlen_t altreal_Which_max_default(SEXP x, Rboolean narm) {
     ALT_MINMAX(x, double, REAL, GT, TRUE, TRUE, TRUE)
 }
 
@@ -991,7 +963,7 @@ anyway */
 			    XLENGTH(table), pos,			\
 			    ALTPREFIX##_IS_SORTED(table),		\
 			    ALTPREFIX, FALSE);				\
-		SET_VECTOR_ELT(ret, i, R_compact_realrange(pos, pos2));	\
+		SET_VECTOR_ELT(ret, i, R_compact_intrange(pos, pos2));	\
 	    } else {							\
 		SET_VECTOR_ELT(ret, i, ScalarReal(pos));		\
 	    }								\
@@ -1080,7 +1052,7 @@ static SEXP altinteger_Unique_default(SEXP x) {
     return ans;
 }
 
-static SEXP altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
+static void altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
     error("altreal classes must define a specific Set_elt method");
 }
 
@@ -1564,10 +1536,10 @@ static int compact_intseq_Sum(SEXP x, Rboolean narm)
 	R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
 	R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
-	tmp =  (size/2.0) * (n1 + n1 + inc*size);
+	tmp =  (size/2.0) * (n1 + n1 + inc*(size-1));
 	if(tmp > INT_MAX || tmp < R_INT_MIN) {
 	    warning("Integer overflow in sum. Use sum(as.numeric(.))");
-	    val = ScalarInteger(NA_INTEGER);
+	    val = NA_INTEGER;
 	} else {
 	    val = (int) tmp;
 	}
@@ -2015,7 +1987,7 @@ static SEXP compact_realseq_Serialized_state(SEXP x)
 
 static SEXP compact_realseq_Unserialize(SEXP class, SEXP state)
 {
-    double inc = COMPACT_REALSEQ_INFO_INCR(ALTREP_INFO(x));
+    double inc = COMPACT_REALSEQ_INFO_INCR(state);
     if (inc == 1)
 	return new_compact_realseq(REAL_ELT(state, 0), REAL_ELT(state, 1),  1);
     else if (inc == -1)
@@ -2168,7 +2140,7 @@ static double compact_realseq_Sum(SEXP x, Rboolean narm)
 	R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
 	R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
-	val = (size / 2.0) *( n1 + n1 + inc*size);
+	val = (size / 2.0) *( n1 + n1 + inc*(size-1));
 #ifdef COMPACT_INTSEQ_MUTABLE
     }
 #endif
@@ -2440,10 +2412,10 @@ static void Init##initname##Class()					\
     R_set_altvec_Dataptr_or_null_method(cls, funprefix##_Dataptr_or_null); \
 									\
     /* override ALTREAL methods */					\
-    R_set_altreal_Elt_method(cls, funprefix##_Elt);		\
-    R_set_altreal_Is_sorted_method(cls, funprefix##_Is_sorted);	\
-    R_set_altreal_No_NA_method(cls, funprefix##_No_NA);		\
-    R_set_altreal_Sum_method(cls, funprefix##_Sum);		\
+    R_set_alt##ltype##_Elt_method(cls, funprefix##_Elt);		\
+    R_set_alt##ltype##_Is_sorted_method(cls, funprefix##_Is_sorted);	\
+    R_set_alt##ltype##_No_NA_method(cls, funprefix##_No_NA);		\
+    R_set_alt##ltype##_Sum_method(cls, funprefix##_Sum);		\
 }									\
 									\
 									\

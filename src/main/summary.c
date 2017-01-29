@@ -530,11 +530,12 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* XXX duped grabbign of narm here. But I don't want to hit dispatchgroup 
        if I'm an ALTREP. Or do I? */
+
     if( ALTREP(CAR(args)) && (CDR(args) == R_NilValue || CDDR(args) == R_NilValue)) {
 	ans = matchArgExact(R_NaRmSymbol, &args);
 	narm = asLogical(ans);
 
-	SEXP toret;
+	SEXP toret = NULL;
 	SEXP vec = CAR(args);
 	switch(PRIMVAL(op)) {
 	case 0:
@@ -542,7 +543,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		toret = ScalarInteger(ALTINTEGER_SUM(vec, narm));
 	    else if (TYPEOF(vec) == REALSXP)
 		toret = ScalarReal(ALTREAL_SUM(vec, narm));
-	    break;
+		break; 
 	case 2:
 	    if(TYPEOF(vec) == INTSXP) 
 		toret = ScalarInteger(ALTINTEGER_MIN(vec, narm));
@@ -563,7 +564,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return toret;
 	}
     }
-    
+
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
 	UNPROTECT(2); /* call2, args */
 	return(ans);

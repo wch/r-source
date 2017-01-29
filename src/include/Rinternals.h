@@ -615,6 +615,9 @@ int INTEGER_NO_NA(SEXP x);
 int ALTINTEGER_SUM(SEXP x, Rboolean narm);
 double ALTREAL_SUM(SEXP x, Rboolean narm);
 int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+	
 double ALTREAL_MIN(SEXP x, Rboolean narm);
 int ALTINTEGER_MAX(SEXP x, Rboolean narm);
 double ALTREAL_MAX(SEXP x, Rboolean narm);
