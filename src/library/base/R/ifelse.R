@@ -26,11 +26,19 @@ ifelse <- function (test, yes, no)
         if (length(test) == 1 && is.null(attributes(test))) {
             if (is.na(test)) return(NA)
             else if (test) {
-                if (length(yes) == 1 && is.null(attributes(yes)))
-                    return(yes)
+                if (length(yes) == 1) {
+                    yat <- attributes(yes)
+                    if (is.null(yat) || (is.function(yes) &&
+                                         identical(names(yat), "srcref")))
+                        return(yes)
+                }
             }
-            else if (length(no) == 1 && is.null(attributes(no)))
-                return(no)
+            else if (length(no) == 1) {
+                nat <- attributes(no)
+                if (is.null(nat) || (is.function(no) &&
+                                     identical(names(nat), "srcref")))
+                    return(no)
+            }
         }
     }
     else ## typically a "class"; storage.mode<-() typically fails

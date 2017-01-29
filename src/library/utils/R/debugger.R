@@ -34,7 +34,7 @@ dump.frames <- function(dumpto = "last.dump", to.file = FALSE,
     class(last.dump) <- "dump.frames"
     if(dumpto != "last.dump") assign(dumpto, last.dump)
     if (to.file) # compress=TRUE is now the default.
-        save(list=dumpto, file = paste(dumpto, "rda", sep = "."))
+        save(list=dumpto, file = paste0(dumpto, ".rda"))
     else assign(dumpto, last.dump, envir=.GlobalEnv)
     invisible()
 }

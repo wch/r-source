@@ -1,14 +1,14 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
 \alias{write_PACKAGES}
 \title{Generate PACKAGES files}
 \description{
-  Generate \file{PACKAGES} and \file{PACKAGES.gz} files for a
-  repository of source or Mac/Windows binary packages.
+  Generate \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds}
+  files for a repository of source or Mac/Windows binary packages.
 }
 \usage{
 write_PACKAGES(dir = ".", fields = NULL,
@@ -19,12 +19,15 @@ write_PACKAGES(dir = ".", fields = NULL,
 \arguments{
   \item{dir}{Character vector describing the location of the repository
     (directory including source or binary packages) to generate the
-    \file{PACKAGES} and \file{PACKAGES.gz} files from and write them to.
+    \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files
+    from and write them to.
   }
   \item{fields}{
     a character vector giving the fields to be used in the
-    \file{PACKAGES} and \file{PACKAGES.gz} files in addition to the
-    default ones, or \code{NULL} (default).  The default corresponds to
+    \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files in
+    addition to the default ones, or \code{NULL} (default).
+
+    The default corresponds to
     the fields needed by \code{\link{available.packages}}:
     \code{"Package"}, \code{"Version"}, \code{"Priority"},
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
@@ -56,8 +59,10 @@ write_PACKAGES(dir = ".", fields = NULL,
 \details{
   \code{write_PACKAGES} scans the named directory for R packages,
   extracts information from each package's \file{DESCRIPTION} file, and
-  writes this information into the \file{PACKAGES} and
-  \file{PACKAGES.gz} files.
+  writes this information into the \file{PACKAGES}, \file{PACKAGES.gz}
+  and \file{PACKAGES.rds} files, where the first two represent the
+  information in DCF format, and the third serializes it via
+  \code{\link{saveRDS}}.
 
   Including non-latest versions of packages is only useful if they have
   less constraining version requirements, so for example
@@ -67,22 +72,23 @@ write_PACKAGES(dir = ".", fields = NULL,
 
   Support for repositories with subdirectories and hence for
   \code{subdirs != FALSE} depends on recording a \code{"Path"} field in
-  the \file{PACKAGES} file.
+  the \file{PACKAGES} files.
 
   Support for more general file names (e.g., other types of compression)
-  \emph{via} a \code{"File"} field in the \file{PACKAGES} file can be
+  \emph{via} a \code{"File"} field in the \file{PACKAGES} files can be
   used by \code{\link{download.packages}}.  If the file names are not of
   the standard form, use \code{addFiles = TRUE}.
 
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages
   for Windows in the given directory \code{dir}, and builds files
-  \file{PACKAGES} and \file{PACKAGES.gz} files from this information.
+  \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files from
+  this information.
 }
 \value{
   Invisibly returns the number of packages described in the resulting
-  \file{PACKAGES} and \file{PACKAGES.gz} files.  If \code{0}, no
-  packages were found and no files were written.
+  \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files.  If
+  \code{0}, no packages were found and no files were written.
 }
 \note{
   Processing \file{.tar.gz} archives to extract the \file{DESCRIPTION}

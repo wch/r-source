@@ -1,6 +1,6 @@
 % File src/library/base/man/unlink.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unlink}
@@ -26,10 +26,8 @@
 
 #ifdef unix
   On most platforms \sQuote{file} includes symbolic links, fifos and
-  sockets.  Prior to \R 2.15.0 \code{unlink(x, recursive = TRUE)} would
-  delete the contents of a directory target of a symbolic link: it now
-  only deletes the symbolic link (as \code{unlink(x, recursive = FALSE)}
-  always has).
+  sockets.  \code{unlink(x, recursive = TRUE)}
+  deletes the just symbolic link if the target of such a link is a directory.
 
 #endif
   Wildcard expansion is done by the internal code of

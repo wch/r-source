@@ -203,6 +203,10 @@ envRefSetField <- function(object, field,
         reg.finalizer(selfEnv, function(x) x$.self$finalize(), TRUE)
     lockBinding(".self", selfEnv)
     lockBinding(".refClassDef", selfEnv)
+    ## validObject was called from the S4 initialize; check that
+    ## a method specified for the ref. class is satisfied, if there is one
+    if(is(classDef@validity, "function"))
+        validObject(.Object)
     .Object
 }
 

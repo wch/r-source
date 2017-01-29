@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/Tk.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -280,7 +280,7 @@ tclServiceMode <- function(on = NULL)
 #----
 
 .TkRoot <- .Tk.newwin("")
-tclvar  <- structure(NULL, class = "tclvar")
+tclvar  <- structure(list(), class = "tclvar")
 .TkRoot$env$TclVarCount <- 0
 
 

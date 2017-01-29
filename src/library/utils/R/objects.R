@@ -91,10 +91,10 @@ function(generic.function, class, envir=parent.frame())
     sp <- search()
     methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
     an <- lapply(seq_along(sp), ls)
-    names(an) <- sp
-    an <- unlist(an)
+    lens <- lengths(an)
+    an <- unlist(an, use.names=FALSE)
+    names(an) <- rep(sp, lens)
     an <- an[!duplicated(an)] # removed masked objects, *keep* names
-    names(an) <- sub("[0-9]*$", "", names(an))
     info <- data.frame(visible = rep.int(TRUE, length(an)),
 		       from = .rmpkg(names(an)),
                        row.names = an)
@@ -117,9 +117,7 @@ function(generic.function, class, envir=parent.frame())
                 generic.function <- truegf
             }
         }
-	name <- paste0("^", generic.function, ".")
-        name <- gsub("([.[$+*])", "\\\\\\1",name)
-        info <- info[grep(name, row.names(info)), ]
+	info <- info[startsWith(row.names(info), paste0(generic.function,".")), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
         ## check that these are all functions
         ## might be none at this point
@@ -143,8 +141,8 @@ function(generic.function, class, envir=parent.frame())
             if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
-        S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv),
-                    pattern = name)
+	S3reg <- names(get(".__S3MethodsTable__.", envir = defenv))
+	S3reg <- S3reg[startsWith(S3reg, paste0(generic.function,"."))]
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg =
                               paste("registered S3method for",
@@ -529,7 +527,7 @@ function(x)
         if(exists(x, envir = ns, inherits = FALSE)) {
             f <- get(x, envir = ns, inherits = FALSE)
 	    objs <- c(objs, list(f))
-            where <- c(where, paste("namespace", i, sep=":"))
+            where <- c(where, paste0("namespace:", i))
             visible <- c(visible, FALSE)
         }
     }

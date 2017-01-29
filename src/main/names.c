@@ -1106,6 +1106,7 @@ static void SymbolShortcuts(void)
     R_BaseSymbol = install("base");
     R_SpecSymbol = install("spec");
     R_NamespaceEnvSymbol = install(".__NAMESPACE__.");
+    R_AsCharacterSymbol = install("as.character");
 
     R_dot_Generic = install(".Generic");
     R_dot_Method = install(".Method");
@@ -1165,6 +1166,7 @@ void attribute_hidden InitNames()
     R_MissingArg = mkSymMarker(mkChar(""));
     R_InBCInterpreter = mkSymMarker(mkChar("<in-bc-interp>"));
     R_RestartToken = mkSymMarker(mkChar(""));
+    R_CurrentExpression = mkSymMarker(mkChar("<current-expression>"));
 
     /* String constants (CHARSXP values) */
     /* Note: we don't want NA_STRING to be in the CHARSXP cache, so that
@@ -1193,7 +1195,7 @@ void attribute_hidden InitNames()
     for (int i = 0; Spec_name[i]; i++)
 	SET_SPECIAL_SYMBOL(install(Spec_name[i]));
 
-    R_initAsignSymbols();
+    R_initAssignSymbols();
     initializeDDVALSymbols();
     R_initialize_bcode();
     R_init_altrep();

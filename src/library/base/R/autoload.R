@@ -44,7 +44,7 @@ autoloader <- function (name, package, ...)
     ## reset the autoloader
     autoload(name, package, reset = TRUE, ...)
     ## reevaluate the object
-    where <- match(paste("package", package, sep = ":"), search())
+    where <- match(paste0("package:", package), search())
     if (exists(name, where = where, inherits = FALSE))
 	eval(as.name(name), as.environment(where))
     else

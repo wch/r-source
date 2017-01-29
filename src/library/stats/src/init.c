@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016   The R Core Team.
+ *  Copyright (C) 2001-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,17 +26,20 @@
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
 
+#define C_DEF(name, n)  {#name, (DL_FUNC) &name, n}
+
 static const R_CMethodDef CEntries[]  = {
-    {"loess_raw", (DL_FUNC) &loess_raw, 24},
-    {"loess_dfit", (DL_FUNC) &loess_dfit, 13},
-    {"loess_dfitse", (DL_FUNC) &loess_dfitse, 16},
-    {"loess_ifit", (DL_FUNC) &loess_ifit, 8},
-    {"loess_ise", (DL_FUNC) &loess_ise, 15},
-    {"multi_burg", (DL_FUNC) &multi_burg, 11},
-    {"multi_yw", (DL_FUNC) &multi_yw, 10},
-    {"HoltWinters", (DL_FUNC) &HoltWinters, 17},
-    {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
-    {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
+    C_DEF(loess_raw, 24),
+    C_DEF(loess_dfit, 13),
+    C_DEF(loess_dfitse, 16),
+    C_DEF(loess_ifit, 8),
+    C_DEF(loess_ise, 15),
+    C_DEF(multi_burg, 11),
+    C_DEF(multi_yw, 10),
+    C_DEF(HoltWinters, 17),
+    C_DEF(kmeans_Lloyd, 9),
+    C_DEF(kmeans_MacQueen, 9),
+    C_DEF(rcont2,  8),
     {NULL, NULL, 0}
 };
 
@@ -247,7 +250,7 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-#define FDEF(name)  {#name, (DL_FUNC) &F77_SUB(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
+#define FDEF(name)  {#name, (DL_FUNC) &F77_NAME(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 
 static R_NativePrimitiveArgType lowesw_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
@@ -258,18 +261,18 @@ static R_NativePrimitiveArgType lowesp_t[] = {
 static const R_FortranMethodDef FortEntries[] = {
     FDEF(lowesw),
     FDEF(lowesp),
-    {"setppr", (DL_FUNC) &F77_SUB(setppr), 6},
-    {"smart", (DL_FUNC) &F77_SUB(smart), 16},
-    {"pppred", (DL_FUNC) &F77_SUB(pppred), 5},
-    {"setsmu", (DL_FUNC) &F77_SUB(setsmu), 1},
-    {"rbart", (DL_FUNC) &F77_SUB(rbart), 20},
-    {"bvalus", (DL_FUNC) &F77_SUB(bvalus), 7},
-    {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},
-    {"hclust", (DL_FUNC) &F77_SUB(hclust), 11},
-    {"hcass2", (DL_FUNC) &F77_SUB(hcass2), 6},
-    {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
-    {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
-    {"stl", (DL_FUNC) &F77_SUB(stl), 18},
+    {"setppr", (DL_FUNC) &F77_NAME(setppr), 6},
+    {"smart", (DL_FUNC) &F77_NAME(smart), 16},
+    {"pppred", (DL_FUNC) &F77_NAME(pppred), 5},
+    {"setsmu", (DL_FUNC) &F77_NAME(setsmu), 1},
+    {"rbart", (DL_FUNC) &F77_NAME(rbart), 20},
+    {"bvalus", (DL_FUNC) &F77_NAME(bvalus), 7},
+    {"supsmu", (DL_FUNC) &F77_NAME(supsmu), 10},
+    {"hclust", (DL_FUNC) &F77_NAME(hclust), 11},
+    {"hcass2", (DL_FUNC) &F77_NAME(hcass2), 6},
+    {"kmns", (DL_FUNC) &F77_NAME(kmns), 17},
+    {"eureka", (DL_FUNC) &F77_NAME(eureka), 6},
+    {"stl", (DL_FUNC) &F77_NAME(stl), 18},
     {NULL, NULL, 0}
 };
 
@@ -305,4 +308,5 @@ void attribute_visible R_init_stats(DllInfo *dll)
     R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC) nlminb_iterate);
     R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC) nlsb_iterate);
     R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC) Rf_divset);
+    R_RegisterCCallable("stats", "rcont2", (DL_FUNC) rcont2);
 }

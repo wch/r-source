@@ -20,7 +20,7 @@
    with R modifications for randomness and Win32.  
 
    mkdtemp was required by POSIX 2008: we use this substitute on
-   Windows and Solaris 10.
+   Windows (and formerly on Solaris).
 */
 
 #ifdef HAVE_CONFIG_H

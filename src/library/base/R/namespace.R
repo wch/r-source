@@ -149,7 +149,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
     ns <- asNamespace(ns, base.OK = FALSE)
     nsname <- getNamespaceName(ns)
     nspath <- .getNamespaceInfo(ns, "path")
-    attname <- paste("package", nsname, sep = ":")
+    attname <- paste0("package:", nsname)
     if (attname %in% search())
         stop("namespace is already attached")
     env <- attach(NULL, pos = pos, name = attname)
@@ -236,7 +236,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
-            attr(impenv, "name") <- paste("imports", name, sep = ":")
+            attr(impenv, "name") <- paste0("imports:", name)
             env <- new.env(parent = impenv, hash = TRUE)
             name <- as.character(as.name(name))
             version <- as.character(version)
@@ -245,7 +245,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             info$spec <- c(name = name, version = version)
             setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = baseenv()))
             dimpenv <- new.env(parent = baseenv(), hash = TRUE)
-            attr(dimpenv, "name") <- paste("lazydata", name, sep = ":")
+            attr(dimpenv, "name") <- paste0("lazydata:", name)
             setNamespaceInfo(env, "lazydata", dimpenv)
             setNamespaceInfo(env, "imports", list("base" = TRUE))
             ## this should be an absolute path
@@ -283,7 +283,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             popath <- if (pkgname %in% std) .popath else file.path(pkgpath, "po")
             if(!file.exists(popath)) return()
             bindtextdomain(pkgname, popath)
-            bindtextdomain(paste("R", pkgname, sep = "-"), popath)
+            bindtextdomain(paste0("R-", pkgname), popath)
         }
 
         assignNativeRoutines <- function(dll, lib, env, nativeRoutines) {
@@ -777,7 +777,7 @@ unloadNamespace <- function(ns)
 	}
 	ns <- asNamespace(ns, base.OK = FALSE)
 	nsname <- getNamespaceName(ns)
-	pos <- match(paste("package", nsname, sep = ":"), search())
+	pos <- match(paste0("package:", nsname), search())
 	if (! is.na(pos)) detach(pos = pos)
 	users <- getNamespaceUsers(ns)
 	if (length(users))

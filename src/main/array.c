@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015   The R Core Team
+ *  Copyright (C) 1998-2017   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -541,9 +541,15 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0, ans_elt = INTEGER(ans); i < x_len; i++, ans_elt++)
 	    *ans_elt = 1;
     }
+    SEXP dim = getAttrib(x, R_DimSymbol);
+    if(!isNull(dim)) {
+        setAttrib(ans, R_DimSymbol, dim);
+    }
     if(useNames) {
 	SEXP names = getAttrib(x, R_NamesSymbol);
 	if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+        SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+        if(!isNull(dimnames)) setAttrib(ans, R_DimNamesSymbol, dimnames);
     }
     UNPROTECT(1);
     return ans;
@@ -582,25 +588,58 @@ SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/*
+ Whenever vector x contains NaN or Inf (or -Inf), the function returns TRUE.
+ It can be imprecise: it can return TRUE in other cases as well.
+
+ A precise version of the function could be implemented as
+
+       for (R_xlen_t i = 0; i < n; i++)
+           if (!R_FINITE(x[i])) return TRUE;
+       return FALSE;
+
+ The present version is imprecise, but faster.
+*/
+static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
+{
+    if ((n&1) != 0 && !R_FINITE(x[0]))
+	return TRUE;
+    for (int i = n&1; i < n; i += 2)
+	/* A precise version could use this condition:
+	 *
+	 * !R_FINITE(x[i]+x[i+1]) && (!R_FINITE(x[i]) || !R_FINITE(x[i+1]))
+	 *
+	 * The present imprecise version has been found to be faster
+	 * with GCC and ICC in the common case when the sum of the two
+	 * values is always finite.
+	 *
+	 * The present version is imprecise because the sum of two very
+	 * large finite values (e.g. 1e308) may be infinite.
+	 */
+	if (!R_FINITE(x[i]+x[i+1]))
+	    return TRUE;
+    return FALSE;
+}
+
 static void matprod(double *x, int nrx, int ncx,
 		    double *y, int nry, int ncy, double *z)
 {
-    char *transa = "N", *transb = "N";
+    char *transN = "N", *transT = "T";
     double one = 1.0, zero = 0.0;
+    int ione = 1;
     LDOUBLE sum;
-    Rboolean have_na = FALSE;
     R_xlen_t NRX = nrx, NRY = nry;
 
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
 	/* Don't trust the BLAS to handle NA/NaNs correctly: PR#4582
 	 * The test is only O(n) here.
+	 *
+	 * MKL disclaimer: "LAPACK routines assume that input matrices
+	 * do not contain IEEE 754 special values such as INF or NaN values.
+	 * Using these special values may cause LAPACK to return unexpected
+	 * results or become unstable."
 	 */
-	for (R_xlen_t i = 0; i < NRX*ncx; i++)
-	    if (ISNAN(x[i])) {have_na = TRUE; break;}
-	if (!have_na)
-	    for (R_xlen_t i = 0; i < NRY*ncy; i++)
-		if (ISNAN(y[i])) {have_na = TRUE; break;}
-	if (have_na) {
+	if (mayHaveNaNOrInf(x, NRX*ncx) || mayHaveNaNOrInf(y, NRY*ncy)) {
 	    for (int i = 0; i < nrx; i++)
 		for (int k = 0; k < ncy; k++) {
 		    sum = 0.0;
@@ -608,8 +647,17 @@ static void matprod(double *x, int nrx, int ncx,
 			sum += x[i + j * NRX] * y[j + k * NRY];
 		    z[i + k * NRX] = (double) sum;
 		}
-	} else
-	    F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
+	}
+	else if (ncy == 1) /* matrix-vector or dot product */
+	    F77_CALL(dgemv)(transN, &nrx, &ncx, &one, x,
+	                    &nrx, y, &ione, &zero, z, &ione);
+	else if (nrx == 1) /* vector-matrix */
+	    /* Instead of xY, compute (xY)^T == (Y^T)(x^T)
+	       The result is a vector, so transposing its content is no-op */
+	    F77_CALL(dgemv)(transT, &nry, &ncy, &one, y,
+	                    &nry, x, &ione, &zero, z, &ione);
+	else /* matrix-matrix or outer product */
+	    F77_CALL(dgemm)(transN, transN, &nrx, &ncy, &ncx, &one,
 			    x, &nrx, y, &nry, &zero, z, &nrx);
     } else /* zero-extent operations should return zeroes */
 	for(R_xlen_t i = 0; i < NRX*ncy; i++) z[i] = 0;
@@ -679,10 +727,20 @@ static void symcrossprod(double *x, int nr, int nc, double *z)
 static void crossprod(double *x, int nrx, int ncx,
 		      double *y, int nry, int ncy, double *z)
 {
-    char *transa = "T", *transb = "N";
+    char *transT = "T", *transN = "N";
     double one = 1.0, zero = 0.0;
+    int ione = 1;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+	if (ncy == 1) /* matrix-vector or dot product */
+	    F77_CALL(dgemv)(transT, &nrx, &ncx, &one, x,
+	                    &nrx, y, &ione, &zero, z, &ione);
+	else if (ncx == 1) /* vector-matrix */
+	    /* Instead of (x^T)Y, compute ((x^T)Y)^T == (Y^T)x
+	       The result is a vector, so transposing its content is no-op */
+	    F77_CALL(dgemv)(transT, &nry, &ncy, &one, y,
+	                    &nry, x, &ione, &zero, z, &ione);
+	else /* matrix-matrix  or outer product */
+	    F77_CALL(dgemm)(transT, transN, &ncx, &ncy, &nrx, &one,
 			x, &nrx, y, &nry, &zero, z, &ncx);
     } else { /* zero-extent operations should return zeroes */
 	R_xlen_t NCX = ncx;
@@ -724,10 +782,20 @@ static void symtcrossprod(double *x, int nr, int nc, double *z)
 static void tcrossprod(double *x, int nrx, int ncx,
 		      double *y, int nry, int ncy, double *z)
 {
-    char *transa = "N", *transb = "T";
+    char *transN = "N", *transT = "T";
     double one = 1.0, zero = 0.0;
+    int ione = 1;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(dgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+	if (nry == 1) /* matrix-vector or dot product */
+	    F77_CALL(dgemv)(transN, &nrx, &ncx, &one, x,
+	                    &nrx, y, &ione, &zero, z, &ione);
+	else if (nrx == 1) /* vector-matrix */
+	    /* Instead of x(Y^T), compute (x(Y^T))^T == Y(x^T)
+	       The result is a vector, so transposing its content is no-op */
+	    F77_CALL(dgemv)(transN, &nry, &ncy, &one, y,
+	                    &nry, x, &ione, &zero, z, &ione);
+	else /* matrix-matrix or outer product */
+	    F77_CALL(dgemm)(transN, transT, &nrx, &nry, &ncx, &one,
 			x, &nrx, y, &nry, &zero, z, &nrx);
     } else { /* zero-extent operations should return zeroes */
 	R_xlen_t NRX = nrx;

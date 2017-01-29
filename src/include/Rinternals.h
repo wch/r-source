@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2016   The R Core Team.
+ *  Copyright (C) 1999-2017   The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,7 @@ extern "C" {
 #else
 # include <stdio.h>
 # include <limits.h> /* for INT_MAX */
-# include <stddef.h> /* for ptrdiff_t */
+# include <stddef.h> /* for ptrdiff_t, which is required by C99 */
 #endif
 
 #include <R_ext/Arith.h>
@@ -372,6 +372,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_MAYBEJIT(x) (((x)->sxpinfo.gp) |= MAYBEJIT_MASK)
 #define UNSET_MAYBEJIT(x) (((x)->sxpinfo.gp) &= ~MAYBEJIT_MASK)
 
+/* Growable vector support */
+#define GROWABLE_MASK ((unsigned short)(1<<5))
+#define GROWABLE_BIT_SET(x) ((x)->sxpinfo.gp & GROWABLE_MASK)
+#define SET_GROWABLE_BIT(x) (((x)->sxpinfo.gp) |= GROWABLE_MASK)
+#define IS_GROWABLE(x) (GROWABLE_BIT_SET(x) && XLENGTH(x) < XTRUELENGTH(x))
+
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
 # define IS_LONG_VEC(x) (XLENGTH(x) > R_SHORT_LEN_MAX)
@@ -560,6 +566,17 @@ int (IS_S4_OBJECT)(SEXP x);
 void (SET_S4_OBJECT)(SEXP x);
 void (UNSET_S4_OBJECT)(SEXP x);
 
+/* JIT optimization support */
+int (NOJIT)(SEXP x);
+int (MAYBEJIT)(SEXP x);
+void (SET_NOJIT)(SEXP x);
+void (SET_MAYBEJIT)(SEXP x);
+void (UNSET_MAYBEJIT)(SEXP x);
+
+/* Growable vector support */
+int (IS_GROWABLE)(SEXP x);
+void (SET_GROWABLE_BIT)(SEXP x);
+
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
 int  (TRUELENGTH)(SEXP x);
@@ -614,6 +631,7 @@ int INTEGER_IS_SORTED(SEXP x);
 int INTEGER_NO_NA(SEXP x);
 int ALTINTEGER_SUM(SEXP x, Rboolean narm);
 double ALTREAL_SUM(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
 int ALTINTEGER_MAX(SEXP x, Rboolean narm);
 SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
@@ -756,6 +774,7 @@ LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
 LibExtern SEXP	R_MissingArg;	    /* Missing argument marker */
 LibExtern SEXP	R_InBCInterpreter;  /* To be found in BC interp. state
 				       (marker) */
+LibExtern SEXP	R_CurrentExpression; /* Use current expression (marker) */
 #ifdef __MAIN__
 attribute_hidden
 #else
@@ -764,6 +783,7 @@ extern
 SEXP	R_RestartToken;     /* Marker for restarted function calls */
 
 /* Symbol Table Shortcuts */
+LibExtern SEXP	R_AsCharacterSymbol;/* "as.character" */
 LibExtern SEXP	R_baseSymbol; // <-- backcompatible version of:
 LibExtern SEXP	R_BaseSymbol;	// "base"
 LibExtern SEXP	R_BraceSymbol;	    /* "{" */
@@ -854,6 +874,7 @@ SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
+SEXP Rf_fixSubset3Args(SEXP, SEXP, SEXP, SEXP*);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
@@ -873,6 +894,7 @@ Rboolean R_envHasNoSpecialSymbols(SEXP);
 SEXP Rf_eval(SEXP, SEXP);
 SEXP Rf_ExtractSubset(SEXP, SEXP, SEXP);
 SEXP Rf_findFun(SEXP, SEXP);
+SEXP Rf_findFun3(SEXP, SEXP, SEXP);
 void Rf_findFunctionForBody(SEXP);
 SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
@@ -1243,6 +1265,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define coerceVector		Rf_coerceVector
 #define conformable		Rf_conformable
 #define cons			Rf_cons
+#define fixSubset3Args		Rf_fixSubset3Args
 #define copyListMatrix		Rf_copyListMatrix
 #define copyMatrix		Rf_copyMatrix
 #define copyMostAttrib		Rf_copyMostAttrib
@@ -1260,6 +1283,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define eval			Rf_eval
 #define ExtractSubset		Rf_ExtractSubset
 #define findFun			Rf_findFun
+#define findFun3		Rf_findFun3
 #define findFunctionForBody	Rf_findFunctionForBody
 #define findVar			Rf_findVar
 #define findVarInFrame		Rf_findVarInFrame

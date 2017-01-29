@@ -997,6 +997,9 @@ static void TryToReleasePages(void)
 /* compute size in VEC units so result will fit in LENGTH field for FREESXPs */
 static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 {
+    if (IS_GROWABLE(s))
+	SET_LENGTH(s, XTRUELENGTH(s));
+
     R_size_t size;
     switch (TYPEOF(s)) {	/* get size in bytes */
     case CHARSXP:
@@ -1597,6 +1600,7 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(NA_STRING);
     FORWARD_NODE(R_BlankString);
     FORWARD_NODE(R_BlankScalarString);
+    FORWARD_NODE(R_CurrentExpression);
     FORWARD_NODE(R_UnboundValue);
     FORWARD_NODE(R_RestartToken);
     FORWARD_NODE(R_MissingArg);
@@ -2473,7 +2477,6 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
     SEXP s;     /* For the generational collector it would be safer to
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
-    R_len_t i;
     R_size_t size = 0, alloc_size, old_R_VSize;
     int node_class;
 #if VALGRIND_LEVEL > 0
@@ -2622,7 +2625,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	else {
 	    node_class = LARGE_NODE_CLASS;
 	    alloc_size = size;
-	    for (i = 2; i < NUM_SMALL_NODE_CLASSES; i++) {
+	    for (int i = 2; i < NUM_SMALL_NODE_CLASSES; i++) {
 		if (size <= NodeClassSize[i]) {
 		    node_class = i;
 		    alloc_size = NodeClassSize[i];
@@ -2729,7 +2732,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 #if VALGRIND_LEVEL > 1
 	VALGRIND_MAKE_MEM_DEFINED(STRING_PTR(s), actual_size);
 #endif
-	for (i = 0; i < length; i++)
+	for (R_xlen_t i = 0; i < length; i++)
 	    data[i] = R_NilValue;
     }
     else if(type == STRSXP) {
@@ -2737,7 +2740,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 #if VALGRIND_LEVEL > 1
 	VALGRIND_MAKE_MEM_DEFINED(STRING_PTR(s), actual_size);
 #endif
-	for (i = 0; i < length; i++)
+	for (R_xlen_t i = 0; i < length; i++)
 	    data[i] = R_BlankString;
     }
     else if (type == CHARSXP || type == intCHARSXP) {
@@ -3391,6 +3394,17 @@ void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from) {
 int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }
 void (SET_S4_OBJECT)(SEXP x){ SET_S4_OBJECT(CHK(x)); }
 void (UNSET_S4_OBJECT)(SEXP x){ UNSET_S4_OBJECT(CHK(x)); }
+
+/* JIT optimization support */
+int (NOJIT)(SEXP x) { return NOJIT(CHK(x)); }
+int (MAYBEJIT)(SEXP x) { return MAYBEJIT(CHK(x)); }
+void (SET_NOJIT)(SEXP x) { SET_NOJIT(CHK(x)); }
+void (SET_MAYBEJIT)(SEXP x) { SET_MAYBEJIT(CHK(x)); }
+void (UNSET_MAYBEJIT)(SEXP x) { UNSET_MAYBEJIT(CHK(x)); }
+
+/* Growable vector support */
+int (IS_GROWABLE)(SEXP x) { return IS_GROWABLE(CHK(x)); }
+void (SET_GROWABLE_BIT)(SEXP x) { SET_GROWABLE_BIT(CHK(x)); }
 
 static int nvec[32] = {
     0,1,1,1,1,1,1,1,  // does NILSXP really count?

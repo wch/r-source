@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -178,9 +178,6 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   same: that would be confusing to those reading the output.
 }
 \note{
-  Prior to \R 3.0.2 this copied the class of \code{x} to the return
-  value and could easily create invalid objects.
-
   The default for \code{decimal.mark} in \code{formatC()} was changed in
   \R 3.2.0: for use within \code{\link{print}} methods in packages which might
   be used with earlier versions: use \code{decimal.mark = getOption("OutDec")}

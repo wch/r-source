@@ -571,7 +571,7 @@ function(package, dir, lib.loc = NULL,
     names(db) <- db_names <- .Rd_get_names_from_Rd_db(db)
 
     ## pkg-defunct.Rd is not expected to list arguments
-    ind <- db_names %in% paste(package_name, "defunct", sep = "-")
+    ind <- db_names %in% paste0(package_name, "-defunct")
     db <- db[!ind]
     db_names <- db_names[!ind]
 
@@ -927,7 +927,7 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all classes checked.
     ## </NOTE>
 
-    bad_Rd_objects <- structure(NULL, class = "codocClasses")
+    bad_Rd_objects <- structure(list(), class = "codocClasses")
 
     ## Argument handling.
     if(length(package) != 1L)
@@ -1094,7 +1094,7 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all data frames checked.
     ## </NOTE>
 
-    bad_Rd_objects <- structure(NULL, class = "codocData")
+    bad_Rd_objects <- structure(list(), class = "codocData")
 
     ## Argument handling.
     if(length(package) != 1L)
@@ -3518,7 +3518,7 @@ function(aar, strict = FALSE)
                     non_standard_roles <-
                         lapply(aar$role, setdiff,
                                utils:::MARC_relator_db_codes_used_with_R)
-                    ind <- sapply(non_standard_roles, length) > 0L
+                    ind <- lengths(non_standard_roles) > 0L
                     if(any(ind)) {
                         out$bad_authors_at_R_field_has_persons_with_nonstandard_roles <-
                             sprintf("%s: %s",
@@ -4056,7 +4056,7 @@ function(package, lib.loc = NULL)
 	    }
     }
     checkMethodUsagePackage <- function (pack, ...) {
-	pname <- paste("package", pack, sep = ":")
+	pname <- paste0("package:", pack)
 	if (!pname %in% search())
 	    stop("package must be loaded", domain = NA)
 	checkMethodUsageEnv(if (isNamespaceLoaded(pack))
@@ -4172,20 +4172,20 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         aliases1 <- Rd_aliases(package, lib.loc = lib.loc)
         if(!length(aliases1))
-            return(structure(NULL, class = "check_Rd_xrefs"))
+            return(structure(list(), class = "check_Rd_xrefs"))
         aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(package, lib.loc = lib.loc)
     } else {
         aliases1 <- Rd_aliases(dir = dir)
         if(!length(aliases1))
-            return(structure(NULL, class = "check_Rd_xrefs"))
+            return(structure(list(), class = "check_Rd_xrefs"))
         aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(dir = dir)
     }
 
     ## Flatten the xref db into one big matrix.
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
-    if(nrow(db) == 0L) return(structure(NULL, class = "check_Rd_xrefs"))
+    if(nrow(db) == 0L) return(structure(list(), class = "check_Rd_xrefs"))
 
     ## fixup \link[=dest] form
     anchor <- db[, 2L]
@@ -6566,6 +6566,9 @@ function(dir, localOnly = FALSE)
     ## Record to notify about components extending a base license which
     ## permits extensions.
     if(length(extensions <- lic_info$extensions) &&
+       ((length(components <- extensions$components) != 1L) ||
+        (.license_component_is_for_stub_and_ok(components,
+                                               dir) != 0L)) &&
        any(ind <- extensions$extensible)) {
         out$extensions <- extensions$components[ind]
         out$pointers <-
@@ -7631,8 +7634,7 @@ function(package, dir, lib.loc = NULL)
 
     files_grouped_by_names <- split(files, names)
     files_with_duplicated_names <-
-        files_grouped_by_names[sapply(files_grouped_by_names,
-                                      length) > 1L]
+        files_grouped_by_names[lengths(files_grouped_by_names) > 1L]
     if(length(files_with_duplicated_names))
         out$files_with_duplicated_names <-
             files_with_duplicated_names
@@ -7641,8 +7643,7 @@ function(package, dir, lib.loc = NULL)
         split(rep.int(files, lengths(aliases)),
               unlist(aliases, use.names = FALSE))
     files_with_duplicated_aliases <-
-        files_grouped_by_aliases[sapply(files_grouped_by_aliases,
-                                      length) > 1L]
+        files_grouped_by_aliases[lengths(files_grouped_by_aliases) > 1L]
     if(length(files_with_duplicated_aliases))
         out$files_with_duplicated_aliases <-
             files_with_duplicated_aliases
@@ -8156,7 +8157,7 @@ function(x)
 .package_env <-
 function(package_name)
 {
-    as.environment(paste("package", package_name, sep = ":"))
+    as.environment(paste0("package:", package_name))
 }
 
 ### ** .parse_text_as_much_as_possible
@@ -8211,12 +8212,12 @@ function(x)
     ## bad_lines attribute.
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     ## \usage is only 'verbatim-like'
-    ## <FIXME>
-    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
-    ## But why should it use the backslash escape?
-    txt <- gsub("\\{", "{", txt, fixed = TRUE)
-    txt <- gsub("\\}", "}", txt, fixed = TRUE)
-    ## </FIXME>
+    ## ## <FIXME>
+    ## ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage.
+    ## ## But why should it use the backslash escape?
+    ## txt <- gsub("\\{", "{", txt, fixed = TRUE)
+    ## txt <- gsub("\\}", "}", txt, fixed = TRUE)
+    ## ## </FIXME>
     ## now any valid escape by \ is
     ##   \a \b \f \n \r \t \u \U \v \x \' \" \\ or \octal
     txt <- gsub("(^|[^\\])\\\\($|[^abfnrtuUvx0-9'\"\\])",
@@ -8239,9 +8240,9 @@ function(x)
 function(msg, x)
 {
     xx <- strwrap(paste(sQuote(x), collapse = " "), exdent = 2L)
-    if (length(xx) > 1L || (nchar(msg) + nchar(xx) + 1L > 75L))
+    if (length(xx) > 1L || nchar(msg) + nchar(xx) + 1L > 75L)
         c(msg, .pretty_format(x))
-    else paste(msg, xx, sep = " ")
+    else paste(msg, xx)
 }
 
 ### ** .pretty_print

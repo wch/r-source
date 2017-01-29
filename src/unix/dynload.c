@@ -201,6 +201,11 @@ static int computeDLOpenFlag(int asLocal, int now)
   This is the system/OS-specific version for resolving a
   symbol in a shared object.  A cast would not be legal C.
  */
+/*
+  We are not interested in NULL symbols in the shared object.
+  If we were, this would need to use dlerror() before and after
+  dlsym, and check the second value is NULL.
+ */
 typedef union {void *p; DL_FUNC fn;} fn_ptr;
 static DL_FUNC R_local_dlsym(DllInfo *info, char const *name)
 {

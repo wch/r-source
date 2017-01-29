@@ -12,7 +12,7 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R
 	else \
 	 $(ECHO) "byte-compiling package '$(pkg)'"; \
 	 $(ECHO) "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_COMPILE_PKGS=1 R_COMPILER_SUPPRESS_ALL=1 \
+	  _R_COMPILE_PKGS_=1 R_COMPILER_SUPPRESS_ALL=1 \
 	  R_DEFAULT_PACKAGES=$(DEFPKGS) LC_ALL=C $(R_EXE) > /dev/null; \
 	fi
 

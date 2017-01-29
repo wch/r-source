@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2016-11-22 r71677) -- "Unsuffered Consequences"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R Under development (unstable) (2017-01-29 r72045) -- "Unsuffered Consequences"
+Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -5111,6 +5111,15 @@ Calls: do.call -> <Anonymous>
     ...
 1: do.call(f, mtcars)
 > 
+> ## Debugger can handle a function that has a single function call as its body
+> g <- function(fun) fun(1)
+> debug(g)
+> g(function(x) x+1)
+debugging in: g(function(x) x + 1)
+debug: fun(1)
+Browse[2]> 
+exiting from: g(function(x) x + 1)
+[1] 2
 > options(op)
 > ## unlimited < 2.3.0
 > 
@@ -6362,7 +6371,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x59e7838>
+<bytecode: 0x47c45c0>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6373,7 +6382,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x59e7838>
+<bytecode: 0x47c45c0>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6385,7 +6394,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x59e7838>
+<bytecode: 0x47c45c0>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6407,15 +6416,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x5a3b2f0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x48125b8> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x5a311b8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4808e70> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x5a311b8> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4808e70> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -6507,7 +6516,7 @@ sample estimates:
 > bar <- as.data.frame(foo)
 > val <- integer(0)
 > try(bar$NewCol <- val)
-Error in `$<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) : 
+Error in `$<-.data.frame`(`*tmp*`, NewCol, value = integer(0)) : 
   replacement has 0 rows, data has 3
 > # similar, not in the report
 > try(bar[["NewCol"]] <- val)
@@ -7102,17 +7111,17 @@ In pl$ab : partial match of 'ab' to 'abc'
 > 
 > ## seq() with NaN etc inputs now gives explicit error messages
 > try(seq(NaN))
-Error in seq.default(NaN) : 'from' cannot be NA, NaN or infinite
+Error in seq.default(NaN) : 'from' must be a finite number
 > try(seq(to = NaN))
-Error in seq.default(to = NaN) : 'to' cannot be NA, NaN or infinite
+Error in seq.default(to = NaN) : 'to' must be a finite number
 > try(seq(NaN, NaN))
-Error in seq.default(NaN, NaN) : 'from' cannot be NA, NaN or infinite
+Error in seq.default(NaN, NaN) : 'from' must be a finite number
 > try(seq.int(NaN))
-Error in seq.int(NaN) : 'from' cannot be NA, NaN or infinite
+Error in seq.int(NaN) : 'from' must be a finite number
 > try(seq.int(to = NaN))
-Error in seq.int(to = NaN) : 'to' cannot be NA, NaN or infinite
+Error in seq.int(to = NaN) : 'to' must be a finite number
 > try(seq.int(NaN, NaN))
-Error in seq.int(NaN, NaN) : 'from' cannot be NA, NaN or infinite
+Error in seq.int(NaN, NaN) : 'from' must be a finite number
 > ## R 3.0.1 gave messages from ':' or about negative-length vectors.
 > 
 > 

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.POSIXt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist.POSIXt}
@@ -53,10 +53,10 @@
   Using \code{breaks = "quarters"} will create intervals of 3 calendar
   months, with the intervals beginning on January 1, April 1,
   July 1 or October 1, based upon \code{min(x)} as appropriate.
-  
+
   With the default \code{right = TRUE}, breaks will be set
   on the last day of the previous period when \code{breaks} is
-  \code{"months"}, \code{"quarters"} or \code{"years"}.  Use 
+  \code{"months"}, \code{"quarters"} or \code{"years"}.  Use
   \code{right = FALSE} to set them to the first day of the
   interval shown in each bar.
 }
@@ -70,6 +70,7 @@
 hist(.leap.seconds, "years", freq = TRUE)
 hist(.leap.seconds,
      seq(ISOdate(1970, 1, 1), ISOdate(2020, 1, 1), "5 years"))
+rug(.leap.seconds, lwd=2)
 
 ## 100 random dates in a 10-week period
 random.dates <- as.Date("2001/1/1") + 70*stats::runif(100)

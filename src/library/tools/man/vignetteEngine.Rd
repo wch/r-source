@@ -1,6 +1,6 @@
 % File src/library/tools/man/vignetteEngine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2014 R Core Team
+% Copyright 2013-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vignetteEngine}
@@ -19,7 +19,8 @@ vignetteEngine(name, weave, tangle, pattern = NULL,
 }
 \arguments{
   \item{name}{the name of the engine.}
-  \item{weave}{a function to convert vignette source files to LaTeX output.}
+  \item{weave}{a function to convert vignette source files to PDF/HTML or
+intermediate LaTeX output.}
   \item{tangle}{a function to convert vignette source files to \R code.}
   \item{pattern}{a regular expression pattern for the filenames handled
     by this engine, or \code{NULL} for the default pattern.}

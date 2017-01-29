@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -165,8 +165,7 @@ strptime(x, format, tz = "")
       For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
-      \code{+1400} are accepted as from \R 3.1.1: previous versions only
-      accepted up to \code{+1200}.  (Standard only for output.)} 
+      \code{+1400} are accepted.  (Standard only for output.)} 
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
@@ -306,19 +305,10 @@ strptime(x, format, tz = "")
   \code{strftime} and formatting/printing uses OS facilities and may
   return nonsensical results for non-existent times at DST transitions.
   
-  Much less comprehensive support for output specifications was provided
-  on Windows before \R 3.1.0.
-  
   In a C locale \code{\%c} is required to be
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), that format is
   used by \R on Windows in all locales.
-  
-  That \code{\%A \%a \%B \%b} on input match both full and abbreviated names
-  caused problems in some locales prior to \R 3.0.3: e.g.\sspace{}in French on
-  macOS \samp{juillet} was matched by \code{jui}, the abbreviation for
-  June.
-  
 }
 
 \references{

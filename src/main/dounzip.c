@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2015  The R Core Team
+ *  first part Copyright (C) 2002-2017  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -496,12 +496,14 @@ R_newunz(const char *description, const char *const mode)
     if(!new->class) {
 	free(new);
 	error(_("allocation of 'unz' connection failed"));
+	/* for Solaris 12.5 */ new = NULL;
     }
     strcpy(new->class, "unz");
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
 	error(_("allocation of 'unz' connection failed"));
+	/* for Solaris 12.5 */ new = NULL;
     }
     init_con(new, description, CE_NATIVE, mode);
 
@@ -519,6 +521,7 @@ R_newunz(const char *description, const char *const mode)
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of 'unz' connection failed"));
+	/* for Solaris 12.5 */ new = NULL;
     }
     return new;
 }

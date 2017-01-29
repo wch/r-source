@@ -1,6 +1,6 @@
 % File src/library/stats/man/quantile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quantile}
@@ -159,10 +159,12 @@ quantile(x <- rnorm(1001)) # Extremes & Quartiles by default
 quantile(x,  probs = c(0.1, 0.5, 1, 2, 5, 10, 50, NA)/100)
 
 ### Compare different types
+quantAll <- function(x, prob, ...)
+  t(vapply(1:9, function(typ) quantile(x, prob=prob, type = typ, ...), quantile(x, prob, type=1)))
 p <- c(0.1, 0.5, 1, 2, 5, 10, 50)/100
-res <- matrix(as.numeric(NA), 9, 7)
-for(type in 1:9) res[type, ] <- y <- quantile(x,  p, type = type)
-dimnames(res) <- list(1:9, names(y))
-round(res, 3)
+signif(quantAll(x, p), 4)
+## for complex numbers:
+z <- complex(re=x, im = -10*x)
+signif(quantAll(z, p), 4)
 }
 \keyword{univar}

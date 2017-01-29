@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -53,7 +53,7 @@
   representing calendar dates and times.
 }
 \usage{
-\method{print}{POSIXct}(x, \dots)
+\method{print}{POSIXct}(x, tz = "", usetz = TRUE, \dots)
 
 \method{summary}{POSIXct}(object, digits = 15, \dots)
 
@@ -63,17 +63,18 @@
 \special{time1 lop time2}
 }
 \arguments{
-  \item{x, object}{An object to be printed or summarized from one of the
+  \item{x, object}{an object to be printed or summarized from one of the
     date-time classes.}
-  \item{digits}{Number of significant digits for the computations:
+  \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
+  \item{digits}{number of significant digits for the computations:
     should be high enough to represent the least important time unit
     exactly.}
-  \item{\dots}{Further arguments to be passed from or to other methods.}
+  \item{\dots}{further arguments to be passed from or to other methods.}
   \item{time}{date-time objects}
   \item{time1, time2}{date-time objects or character vectors.  (Character
     vectors are converted by \code{\link{as.POSIXct}}.)}
   \item{z}{a numeric vector (in seconds)}
-  \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
+  \item{lop}{one of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
 \details{
@@ -151,8 +152,10 @@
   attribute (e.g., by \code{c(x)}).
 
   Unfortunately, the conversion is complicated by the operation of time
-  zones and leap seconds (26 days have been 86401 seconds long so far,
-  the last at the time of writing being added in 2015: the times of the
+  zones and leap seconds (according to this version of \R's data,
+  \Sexpr{length(.leap.seconds)} days have been 86401 seconds long so
+  far, the last being on (actually, immediately before)
+  \Sexpr{format(as.Date(utils::tail(.leap.seconds, 1)))}: the times of the
   extra seconds are in the object \code{.leap.seconds}).  The details of
   this are entrusted to the OS services where possible.  It seems that
   some rare systems used to use leap seconds, but all known current
@@ -203,7 +206,7 @@
   OSes assume the previous use of \sQuote{local time} based on the
   longitude of a location within the time zone.
   % from the Olson files.
-  
+
   Most operating systems represent \code{POSIXct} times as C type
   \code{long}. This means that on 32-bit OSes this covers the period
   1902 to 2037.  On all known 64-bit platforms and for the code we use
@@ -228,7 +231,7 @@
   There is no reason to suppose that the DST rules will remain the same
   in the future, and indeed the US legislated in 2005 to change its
   rules as from 2007, with a possible future reversion.  So conversions
-  for times more than a year or two ahead are speculative.  
+  for times more than a year or two ahead are speculative.
 }
 \seealso{
   \link{Dates} for dates without times.
@@ -266,6 +269,10 @@
   Not only are components and attributes optional; several components
   may have values meaning \sQuote{not yet determined} and the same time
   represented in different time zones will look quite different.
+
+  Currently the \emph{order} of the list components of \code{"POSIXlt"}
+  objects must not be changed, as several C-based conversion methods
+  rely on the order for efficiency.
 }
 \examples{\donttest{% <-->  may fail on platforms wrongly set up
 (z <- Sys.time())             # the current date, as class "POSIXct"

@@ -24,12 +24,14 @@ line=`grep "ENABLE_NLS" config.h`
 echo "${line}"
 line=`grep "HAVE_AQUA" config.h`
 echo "${line}"
-echo "/* Deprecated: use _OPENMP instead */"
-line=`grep "SUPPORT_OPENMP" config.h`
-echo "${line}"
+echo "/* NB: the rest are for the C compiler used to build R:"
+echo "   they do not necessarily apply to a C++ compiler */"
 line=`grep "SIZEOF_SIZE_T" config.h`
 echo "${line}"
 line=`grep "HAVE_ALLOCA_H" config.h`
+echo "${line}"
+echo "/* optional C99 type */"
+line=`grep "HAVE_UINTPTR_T" config.h`
 echo "${line}"
 echo
 echo "#endif /* not R_CONFIG_H */"

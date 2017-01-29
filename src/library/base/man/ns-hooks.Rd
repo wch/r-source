@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-hooks.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-hooks}
@@ -38,10 +38,10 @@
   looked for and if found is called (with two unnamed arguments) before
   the package environment is sealed.
 
-  If a function \code{.onDetach} (as from \R 3.0.0) is in the namespace
-  or \code{.Last.lib} is exported from the package, it will be called
-  (with a single argument) when the package is \code{\link{detach}}ed.
-  Beware that it might be called if \code{.onAttach} has failed, so it should be
+  If a function \code{.onDetach} is in the namespace or \code{.Last.lib}
+  is exported from the package, it will be called (with a single
+  argument) when the package is \code{\link{detach}}ed.  Beware that it
+  might be called if \code{.onAttach} has failed, so it should be
   written defensively.  (It is called within \code{\link{tryCatch}}, so
   errors will not stop the package being detached.)
 

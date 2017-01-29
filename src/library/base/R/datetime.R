@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,25 @@ Sys.timezone <- function(location = TRUE)
     if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
     lt <- normalizePath("/etc/localtime") # Linux, macOS, ...
     if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt)
+    else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
+	     dir.exists("/usr/share/zoneinfo") &&
+	     { # Debian etc.
+		 info <- file.info(normalizePath("/etc/timezone"),
+				   extra_cols = FALSE)
+		 (!info$isdir && info$size <= 200L)
+	     } && {
+		 tz1 <- tryCatch(readBin("/etc/timezone", "raw", 200L),
+				 error = function(e) raw(0L))
+		 length(tz1) > 0L &&
+		     all(tz1 %in% as.raw(c(9:10, 13L, 32:126)))
+	     } && {
+		tz2 <- gsub("^[[:space:]]+|[[:space:]]+$", "", rawToChar(tz1))
+		tzp <- file.path("/usr/share/zoneinfo", tz2)
+		file.exists(tzp) && !dir.exists(tzp) &&
+		    identical(file.size(normalizePath(tzp)),
+			      file.size(lt))
+	     })
+	tz2
     else NA_character_
 }
 
@@ -206,22 +225,25 @@ strptime <- function(x, format, tz = "")
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXct")) stop("wrong class")
+    ## NB identical(tz, "") is *NOT* the same as missing(tz)
     if(missing(tz) && !is.null(tzone <- attr(x, "tzone"))) tz <- tzone
     structure(format.POSIXlt(as.POSIXlt(x, tz), format, usetz, ...),
               names = names(x))
 }
 
-## could handle arrays for max.print; cf print.Date() in ./dates.R
+## could handle arrays for max.print \\ keep in sync with  print.Date() in ./dates.R
 print.POSIXct <-
-print.POSIXlt <- function(x, ...)
+print.POSIXlt <- function(x, tz = "", usetz = TRUE, ...)
 {
     max.print <- getOption("max.print", 9999L)
+    FORM <- if(missing(tz)) function(z) format(x, usetz = usetz)
+	    else function(z) format(x, tz = tz, usetz = usetz)
     if(max.print < length(x)) {
-        print(format(x[seq_len(max.print)], usetz = TRUE), ...)
+	print(FORM(x[seq_len(max.print)]), ...)
         cat(' [ reached getOption("max.print") -- omitted',
             length(x) - max.print, 'entries ]\n')
-    } else print(if(length(x)) format(x, usetz = TRUE)
-		 else paste(class(x)[1L], "of length 0"), ...)
+    } else
+	print(if(length(x)) FORM(x) else paste(class(x)[1L], "of length 0"), ...)
     invisible(x)
 }
 

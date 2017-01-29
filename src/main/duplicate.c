@@ -40,6 +40,11 @@
  *  promises requires that the promises be forced and
  *  the value duplicated.  */
 
+#define COPY_TRUELENGTH(to, from) do {			\
+	if (! IS_GROWABLE(from))			\
+	    SET_TRUELENGTH(to, XTRUELENGTH(from));	\
+    } while (0)
+
 /* This macro pulls out the common code in copying an atomic vector.
    The special handling of the scalar case (__n__ == 1) seems to make
    a small but measurable difference, at least for some cases
@@ -62,7 +67,7 @@
       } while(__n__ > 0); \
   } \
   DUPLICATE_ATTRIB(to, from, deep);		 \
-  SET_TRUELENGTH(to, XTRUELENGTH(from)); \
+  COPY_TRUELENGTH(to, from); \
   UNPROTECT(2); \
 } while (0)
 #else
@@ -73,7 +78,7 @@
   if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
   else memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
   DUPLICATE_ATTRIB(to, from, deep); \
-  SET_TRUELENGTH(to, XTRUELENGTH(from)); \
+  COPY_TRUELENGTH(to, from); \
   UNPROTECT(2); \
 } while (0)
 #endif
@@ -330,7 +335,7 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
 	for(i = 0 ; i < n ; i++)
 	    SET_VECTOR_ELT(t, i, duplicate_child(VECTOR_ELT(s, i), deep));
 	DUPLICATE_ATTRIB(t, s, deep);
-	SET_TRUELENGTH(t, TRUELENGTH(s));
+	COPY_TRUELENGTH(t, s);
 	UNPROTECT(2);
 	break;
     case LGLSXP: DUPLICATE_ATOMIC_VECTOR(int, LOGICAL, t, s, deep); break;

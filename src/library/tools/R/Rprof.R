@@ -37,7 +37,7 @@
             "",
             "If 'file' is omitted 'Rprof.out' is used",
             "",
-            "Report bugs at bugs.r-project.org .", sep = "\n")
+            "Report bugs at <https://bugs.R-project.org>.", sep = "\n")
     }
 
     if (is.null(args)) {

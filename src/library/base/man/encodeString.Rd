@@ -1,6 +1,6 @@
 % File src/library/base/man/encodeString.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008, 2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{encodeString}
@@ -58,7 +58,7 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
   A character vector of the same length as \code{x}, with the same
   attributes (including names and dimensions) but with no class set.
 
-  As from \R 3.0.0, marked UTF-8 encodings are preserved.
+  Marked UTF-8 encodings are preserved.
 }
 \seealso{
   \code{\link{print.default}}

@@ -123,7 +123,7 @@ win.print <-
         stop("windows devices should not be used in examples etc", domain = NA)
 
     antialias <- match(match.arg(antialias, aa.win), aa.win)
-    invisible(.External(C_devga, paste("win.print:", printer, sep=""),
+    invisible(.External(C_devga, paste0("win.print:", printer),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_,
@@ -141,7 +141,7 @@ win.metafile <-
 
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     filename <- path.expand(filename)
-    invisible(.External(C_devga, paste("win.metafile:", filename, sep=""),
+    invisible(.External(C_devga, paste0("win.metafile:", filename),
                         width, height, pointsize, FALSE, 1L,
                         NA_real_, NA_real_, "white", 1,
                         NA_integer_, NA_integer_, FALSE, .PSenv, NA,
@@ -245,7 +245,7 @@ setWindowsFonts <- function(fonts, fontNames)
     assign(".Windows.Fonts", fontDB, envir=.WindowsEnv)
 }
 
-printFont <- function(font) paste(font, "\n", sep="")
+printFont <- function(font) paste0(font, "\n")
 
 printFonts <- function(fonts)
     cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),

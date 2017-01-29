@@ -49,7 +49,7 @@ cut.default <-
 	    if(ok) paste0(if(right)"(" else "[",
                           ch.br[-nb], ",", ch.br[-1L],
                           if(right)"]" else ")")
-	    else paste("Range", seq_len(nb - 1L), sep="_")
+	    else paste0("Range_", seq_len(nb - 1L))
         if (ok && include.lowest) {
             if (right)
                 substr(labels[1L], 1L, 1L) <- "[" # was "("

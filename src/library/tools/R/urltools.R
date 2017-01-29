@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2016 The R Core Team
+#  Copyright (C) 2015-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -311,9 +311,10 @@ check_url_db <-
 function(db, remote = TRUE, verbose = FALSE)
 {
     use_curl <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_URL_DB_USE_CURL_",
-                                         "FALSE"))
-        
+        config_val_to_logical(Sys.getenv("_R_CHECK_URLS_USE_CURL_",
+                                         "TRUE")) &&
+        requireNamespace("curl", quietly = TRUE)
+
     .gather <- function(u = character(),
                         p = list(),
                         s = rep.int("", length(u)),
@@ -363,7 +364,7 @@ function(db, remote = TRUE, verbose = FALSE)
         function(u) c(.check_http_A(u), .check_http_B(u))
     else
         function(u) c(rep.int("", 3L), .check_http_B(u))
-    
+
     .check_http_A <- function(u) {
         h <- .fetch(u)
         newLoc <- ""
@@ -460,7 +461,7 @@ function(db, remote = TRUE, verbose = FALSE)
         msg <- rep.int("Invalid URI scheme", len)
         doi <- schemes[ind] == "doi"
         if(any(doi))
-            msg[doi] <- paste(msg[doi], "(use \\doi for DOIs)")
+            msg[doi] <- paste(msg[doi], "(use \\doi for DOIs in Rd markup)")
         bad <- rbind(bad,
                      .gather(urls[ind], parents[ind], m = msg))
     }

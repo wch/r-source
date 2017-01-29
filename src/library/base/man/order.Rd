@@ -1,6 +1,6 @@
 % File src/library/base/man/order.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{order}
@@ -107,8 +107,7 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 }
   both sort the non-\code{NA} values of \code{x}.
 
-  Prior to \R 3.1.0 \code{method = "radix"} was only supported for
-  non-negative integers. Prior to \R 3.3.0 it was only supported for
+  Prior to \R 3.3.0 \code{method = "radix"} was only supported for
   integers of range less than 100,000.
 }
 

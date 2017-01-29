@@ -75,7 +75,12 @@ stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
                           "readNEWS",              # slow, pure R code
                           "findHTMLlinks", "pskill",
                           "texi2dvi", "texi2pdf",  # hang on Windows
-                          "getVignetteInfo"        # very slow on large installation
+                          "getVignetteInfo",       # very slow on large installation
+                          "CRAN_package_db",       # slow, pure R code
+                          "CRAN_check_results",
+                          "CRAN_check_details",
+                          "CRAN_memtest_notes",
+                          "summarize_CRAN_check_status"
                           )
 stop.list[["grDevices"]] <- dev.int
 stop.list[["utils"]] <- c("Rprof", "aspell", # hangs on Windows

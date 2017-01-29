@@ -4,7 +4,8 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Algeria [https]",Algeria,Algiers,https://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
-"Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
+"Australia (Canberra) [https]",Australia,Canberra,https://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au,"secure_mirror_from_master"
+"Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au,"secure_mirror_from_master"
 "Australia (Melbourne) [https]",Australia,Melbourne,https://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au,"secure_mirror_from_master"
 "Australia (Melbourne)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au,"secure_mirror_from_master"
 "Australia (Perth) [https]",Australia,Perth,https://cran.curtin.edu.au/,"Curtin University of Technology","unix # curtin.edu.au",1,au,"secure_mirror_from_master"
@@ -27,8 +28,9 @@ Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexan
 "Canada (MB)",Canada,Winnipeg,http://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca
 "Canada (NS)",Canada,Halifax,http://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",1,ca
 "Canada (ON)",Canada,Toronto,http://cran.utstat.utoronto.ca/,"University of Toronto","Dermot Whelan <wheland # utstat.utoronto.ca>",1,ca
-"Chile [https]",Chile,Santiago,https://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl,"secure_mirror_from_master"
-Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl,"secure_mirror_from_master"
+"Chile 1 [https]",Chile,Santiago,https://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl,"secure_mirror_from_master"
+"Chile 1",Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl,"secure_mirror_from_master"
+"Chile 2 [https]",Chile,Santiago,https://cran.dcc.uchile.cl/,"Departamento de Ciencias de la Computación, Universidad de Chile","Mauricio Vargas <mvargas # dcc.uchile.cl>",1,cl
 "China (Beijing) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Beijing)",China,Beijing,http://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
@@ -104,6 +106,7 @@ Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University 
 "Spain (A Coruña)","Spain","A Coruña",http://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid) [https]",Spain,Madrid,https://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
 "Spain (Madrid)",Spain,Madrid,http://cran.rediris.es/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es,"secure_mirror_from_master"
+"Sweden [https]",Sweden,Umeå,https://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
 Sweden,Sweden,Umeå,http://ftp.acc.umu.se/mirror/CRAN/,"Academic Computer Club, Umeå University","<ftp-adm # acc.umu.se>",1,se,"secure_mirror_from_master"
 "Switzerland [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 Switzerland,Switzerland,Zürich,http://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
@@ -144,6 +147,4 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (TN)",USA,"Oak Ridge",http://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
 "USA (TX) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
 "USA (TX)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
-"USA (WA) [https]",USA,Seattle,https://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","Dan Tenenbaum <dtenenba # fredhutch.org>",1,us,"secure_mirror_from_master"
-"USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA","Dan Tenenbaum <dtenenba # fredhutch.org>",1,us,"secure_mirror_from_master"
 Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",1,ve

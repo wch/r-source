@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -430,13 +430,13 @@ function(x,
     if(is.null(braces$email)) braces$email <- c("<", ">")
     if(is.null(braces$role)) braces$role <- c("[", "]")
     if(is.null(braces$comment)) braces$comment <- c("(", ")")
-    braces <- lapply(braces, rep, length.out = 2L)
+    braces <- lapply(braces, rep_len, 2L)
     if(is.null(collapse$given)) collapse$given <- " "
     if(is.null(collapse$family)) collapse$family <- " "
     if(is.null(collapse$email)) collapse$email <- ", "
     if(is.null(collapse$role)) collapse$role <- ", "
     if(is.null(collapse$comment)) collapse$comment <- ", "
-    collapse <- lapply(collapse, rep, length.out = 1L)
+    collapse <- lapply(collapse, rep_len, 1L)
 
     ## extract selected elements
     x <- lapply(unclass(x), "[", include)
@@ -504,7 +504,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
               header = header, footer = footer, key = key), list(...))
     args <- lapply(args, .listify)
     other <- lapply(other, .listify)
-    max_length <- max(sapply(c(args, other), length))
+    max_length <- max(lengths(c(args, other)))
 
     args_length <- lengths(args)
     if(!all(args_length_ok <- args_length %in% c(1L, max_length)))
@@ -1372,8 +1372,6 @@ function(x)
     format(x, include = c("given", "family", "role", "comment"))
 }
 
-## NB: because of the use of strwrap(), this always outputs
-## in the current locale even if the input has a marked encoding.
 .format_authors_at_R_field_for_author <-
 function(x)
 {
@@ -1390,12 +1388,9 @@ function(x)
     ## all subsequent lines are indented (as .write_description avoids
     ## folding for Author fields).  We use a common indentation of 2,
     ## with an extra indentation of 2 within single author descriptions.
-    out <- paste(lapply(x,
-                        function(e) {
-                            paste(strwrap(e, indent = 0L, exdent = 4L),
-                                  ## simplify = FALSE),
-                                  collapse = "\n")
-                        }),
+    out <- paste(lapply(strwrap(x, indent = 0L, exdent = 4L,
+                                simplify = FALSE),
+                        paste, collapse = "\n"),
                  collapse = ",\n  ")
     if(!is.null(header)) {
         header <- paste(strwrap(header, indent = 0L, exdent = 2L),

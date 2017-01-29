@@ -466,3 +466,22 @@ int R_EditFiles(int nfile, const char **file, const char **title,
     }
     return 1;
 }
+
+/* Returns the limit on the number of open files. On error or when no limit is known,
+   returns a negative number. */
+int R_GetFDLimit() {
+
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
+    struct rlimit rlim;
+    if (getrlimit(RLIMIT_NOFILE, &rlim) == 0) {
+	/* Unlimited number is represented by RLIM_INFINITY, which is larger than any
+	   other limit value. */
+	unsigned long lim1, lim2, lim;
+	lim1 = (unsigned long) rlim.rlim_cur;
+	lim2 = (unsigned long) rlim.rlim_max; 
+	lim = lim1 < lim2 ? lim1 : lim2;
+	return (lim > INT_MAX) ? INT_MAX : lim;
+    }
+#endif
+    return -1;
+}

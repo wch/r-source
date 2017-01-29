@@ -2,7 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 #  Copyright (C) 1994-2001 W. N. Venables and B. D. Ripley
-#  Copyright (C) 2001-2014 The R Core Team
+#  Copyright (C) 2001-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,6 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
 
     method <- match.arg(method)
 
-    fSD <- function(h) ( c1 / SDh(alph2 * h^(5/7)) )^(1/5) - h
     SDh <- function(h) .Call(C_bw_phi4, n, d, cnt, h)
     TDh <- function(h) .Call(C_bw_phi6, n, d, cnt, h)
 
@@ -73,6 +72,7 @@ bw.SJ <- function(x, nb = 1000L, lower = 0.1*hmax, upper = hmax,
         if(!is.finite(alph2))
             stop("sample is too sparse to find alph2", domain  = NA)
         itry <- 1L
+        fSD <- function(h) ( c1 / SDh(alph2 * h^(5/7)) )^(1/5) - h
 	while (fSD(lower) * fSD(upper) > 0) {
 	    if(itry > 99L || !bnd.Miss) # 1.2 ^ 99 = 69'014'979 .. enough
 		stop("no solution in the specified range of bandwidths")

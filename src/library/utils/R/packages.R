@@ -38,55 +38,75 @@ function(contriburl = contrib.url(repos, type), method,
         if(localcran) {
             ## see note in download.packages
             if(substring(repos, 1L, 8L) == "file:///") {
-                tmpf <- paste(substring(repos, 8L), "PACKAGES", sep = "/")
+                tmpf <- paste0(substring(repos, 8L), "/PACKAGES")
                 if(.Platform$OS.type == "windows") {
                     if(length(grep("^/[A-Za-z]:", tmpf)))
                         tmpf <- substring(tmpf, 2L)
                 }
             } else {
-                tmpf <- paste(substring(repos, 6L), "PACKAGES", sep = "/")
+                tmpf <- paste0(substring(repos, 6L), "/PACKAGES")
             }
-            res0 <- read.dcf(file = tmpf)
+            res0 <- if(file.exists(dest <- paste0(tmpf, ".rds")))
+                readRDS(dest)
+            else
+                read.dcf(file = tmpf)
             if(length(res0)) rownames(res0) <- res0[, "Package"]
         } else {
             dest <- file.path(tempdir(),
                               paste0("repos_", URLencode(repos, TRUE), ".rds"))
             if(file.exists(dest)) {
                 res0 <- readRDS(dest)
+                ## Be defensive ...
+                if(length(res0)) rownames(res0) <- res0[, "Package"]
             } else {
-                tmpf <- tempfile()
-                on.exit(unlink(tmpf))
-
-                ## Two kinds of errors can happen: PACKAGES.gz may not
-                ## exist, or a junk error page that is not a valid dcf
-                ## file may be returned.  Handle both, and continue to
-                ## subsequent repositories...
-
-                op <- options(warn = -1L)
-                ## FIXME: this should check the return value == 0L
+                ## Try .rds and readRDS(), and then .gz or plain DCF and
+                ## read.dcf(), catching problems from both missing or
+                ## invalid files.
+                need_dest <- FALSE
+                op <- options(warn = -1L)                
                 z <- tryCatch({
-                    ## This is a binary file
-                    download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
-                                  destfile = tmpf, method = method,
+                    download.file(url = paste0(repos, "/PACKAGES.rds"),
+                                  destfile = dest, method = method,
                                   cacheOK = FALSE, quiet = TRUE, mode = "wb")
                 }, error = identity)
-                if (inherits(z, "error"))
+                options(op)
+                if(!inherits(z, "error"))
+                    z <- res0 <- tryCatch(readRDS(dest),
+                                          error = identity)
+                
+                if(inherits(z, "error")) {
+                    ## Downloading or reading .rds failed, so try the
+                    ## DCF variants.
+                    need_dest <- TRUE
+                    tmpf <- tempfile()
+                    on.exit(unlink(tmpf))
+                    op <- options(warn = -1L)
+                    ## FIXME: this should check the return value == 0L
                     z <- tryCatch({
-                        ## read.dcf is going to interpret CRLF as LF, so use
-                        ## binary mode to avoid CRLF.
-                        download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                        ## This is a binary file
+                        download.file(url = paste0(repos, "/PACKAGES.gz"),
                                       destfile = tmpf, method = method,
                                       cacheOK = FALSE, quiet = TRUE, mode = "wb")
-                    }, error=identity)
-                options(op)
+                    }, error = identity)
+                    if(inherits(z, "error"))
+                        z <- tryCatch({
+                            ## read.dcf is going to interpret CRLF as
+                            ## LF, so use binary mode to avoid CRLF.
+                            download.file(url = paste0(repos, "/PACKAGES"),
+                                          destfile = tmpf, method = method,
+                                          cacheOK = FALSE, quiet = TRUE, mode = "wb")
+                        }, error=identity)
+                    options(op)
 
-                if (!inherits(z, "error"))
-                    z <- res0 <- tryCatch(read.dcf(file = tmpf), error=identity)
+                    if (!inherits(z, "error"))
+                        z <- res0 <- tryCatch(read.dcf(file = tmpf),
+                                              error = identity)
                     
-                unlink(tmpf)
-                on.exit()                    
+                    unlink(tmpf)
+                    on.exit()
+                }
 
-                if (inherits(z, "error")) {
+                if(inherits(z, "error")) {
                     warning(gettextf("unable to access index for repository %s",
                                      repos),
                             ":\n  ", conditionMessage(z),
@@ -96,7 +116,7 @@ function(contriburl = contrib.url(repos, type), method,
 
                 ## Do we want to cache an empty result?
                 if(length(res0)) rownames(res0) <- res0[, "Package"]
-                saveRDS(res0, dest, compress = TRUE)
+                if(need_dest) saveRDS(res0, dest, compress = TRUE)
             } # end of download vs cached
         } # end of localcran vs online
         if (length(res0)) {

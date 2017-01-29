@@ -1,6 +1,6 @@
 % File src/library/utils/man/globalVariables.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2013 R Core Team
+% Copyright 2012-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{globalVariables}
@@ -107,10 +107,6 @@ if(getRversion() >= "3.1.0") utils::suppressForeignCheck("localvariable")
 ## Within your function, do the call like this:
 localvariable <- if (condition) entry1 else entry2
 .Call(localvariable, 1, 2, 3)
-
-## Alternatively, like this:
-if(getRversion() < "3.1.0") dontCheck <- identity
-.Call(dontCheck(if (condition) entry1 else entry2), 1, 2, 3)
 
 ## HOWEVER, it is much better practice to write code
 ## that can be checked thoroughly, e.g.

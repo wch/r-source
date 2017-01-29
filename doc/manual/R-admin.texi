@@ -2274,7 +2274,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 3.2.x or 3.3.x) of @R{}.
+particular series (e.g.@: @R{} 3.4.x or 3.3.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -2689,12 +2689,6 @@ and @option{--build} can be added to zip up the installation.
 @emph{Internationalization} refers to the process of enabling support
 for many human languages, and @emph{localization} to adapting to a
 specific country and language.
-
-@c Prior to 2005 @R{} worked in the ISO Latin-1 8-bit character set and so
-@c covered English and most Western European languages (if not necessarily
-@c their currency symbols).  Since @R{} 2.1.0 it has supported Eastern
-@c European 8-bit character sets, and multi-byte character sets such as
-@c UTF-8 and others used for Chinese, Japanese and Korean.
 
 Current builds of @R{} support all the character sets that the
 underlying OS can handle.  These are interpreted according to the
@@ -3584,7 +3578,7 @@ worked.
 Some add-on packages need a C++ compiler.  This is specified by the
 configure variables @code{CXX}, @code{CXXFLAGS} and similar.
 @command{configure} will normally find a suitable compiler.  However, in
-most cases this will be a C++98 compiler, and as from @R{} 3.1.0 it is
+many cases this will be a C++98 compiler, and it is
 possible to specify an alternative compiler for use with C++11 by the
 configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
 similar (@pxref{C++ Support}).  Again, @command{configure} will normally
@@ -4204,12 +4198,14 @@ readline, in non-system directories, use the variables @code{LDFLAGS}
 the C/C++ preprocessors), respectively, to specify these locations.
 These default to @samp{-L/usr/local/lib} (@code{LDFLAGS},
 @samp{-L/usr/local/lib64} on most 64-bit Linux OSes) and
-@samp{-I/usr/local/include} (@code{CPPFLAGS}) to catch the most common
-cases.  If libraries are still not found, then maybe your
+@samp{-I/usr/local/include} (@code{CPPFLAGS}, but note that on most
+systems @file{/usr/local/include} is regarded as a system include
+directory and so instances in that macro will be skipped) to catch the
+most common cases.  If libraries are still not found, then maybe your
 compiler/linker does not support re-ordering of @option{-L} and
-@option{-l} flags (this has been reported to be a problem on HP-UX with
-the native @command{cc}).  In this case, use a different compiler (or a
-front end shell script which does the re-ordering).
+@option{-l} flags (years ago this was reported to be a problem on HP-UX
+with the native @command{cc}).  In this case, use a different compiler
+(or a front-end shell script which does the re-ordering).
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
@@ -4763,7 +4759,7 @@ as @option{-mp} (shown above) or @option{-fp-model precise -fp-model
 source}, depending on the compiler version.
 
 Others have reported success with versions 10.x and 11.x.  
-% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+@c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 Bjørn-Helge Mevik reported success with version 2015.3 of the compilers,
 using (for a SandyBridge CPU on Centos 6.x)
 
@@ -4961,11 +4957,13 @@ changed their installation locations.
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-The Fortran compiler for El Capitan from (at the time of writing)
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works on
-Sierra: those at @uref{https://r.research.att.com/} have failure
-reports.  One way to use the Coudert build is to have a
-@file{~/.R/Makevars} file similar to
+The Fortran compiler for El Capitan from
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works
+on Sierra: those at @uref{https://r.research.att.com/} have failure
+reports on Sierra.  (At the time of writing there was a build of
+@command{gfortran}@tie{}6.3 for Sierra on that site, but the
+distribution was incomplete.) One way to use the Coudert build is to
+have a @file{~/.R/Makevars} file similar to
 @smallexample
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
@@ -5058,7 +5056,7 @@ JAVA_LIBS="-framework JavaVM"
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
@@ -5080,7 +5078,7 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly. It was the default prior to @R{} 3.3.0.)
+support frameworks correctly.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
@@ -5158,6 +5156,11 @@ A large selection of Open Source software can be installed from
 @uref{https://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
 (sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
+
+The Oracle compilers are unusual in not including
+@file{/usr/local/include} in the default include search path: @R{}'s
+default @code{CPPFLAGS=-I/usr/local/include} remedies this.  If you rely
+on OpenCSW software you may need @code{CPPFLAGS=-I/opt/csw/include}
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
@@ -5349,7 +5352,13 @@ If using @command{gcc}, ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and
 several reports of problems were due to using @command{gcc} compiled on
-one version of Solaris on a later version.  
+one version of Solaris on a later version.  Note that this can even
+apply to OS patches: some 2016 patches to Solaris 10 changed its C
+header files in way incompatible@footnote{In particular, header
+@file{cmath} in C++11 mode includes @file{math.h} and
+@file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
+of the latter.}  with the modified versions included with OpenCSW's
+binary distribution.
 
 The notes here are for @command{gcc} set up to use the Solaris linker:
 it can also be set up to use GNU @command{ld}, but that has not been
@@ -5574,10 +5583,8 @@ environment can be found in the ``R on AIX'' project on R-Forge
 @section FreeBSD
 @cindex FreeBSD
 
-There have been few recent reports on FreeBSD.
-
-There is a `port' at @uref{https://www.freebsd.org/@/ports/@/math.html}, for
-@R{} 3.3.1 at the time of writing.
+There have been few recent reports on FreeBSD: there is a `port' at
+@uref{https://www.freebsd.org/@/ports/@/math.html}.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.

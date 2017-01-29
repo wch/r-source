@@ -405,8 +405,10 @@ stopifnot(unlist(lapply(ggm, function(g) !is.null(getGeneric(g, where = em)))),
 ## the last failed in R 2.7.0 : was not showing  "show"
 
 if(require("Matrix")) {
+    D5. <- Diagonal(x = 5:1)
+    D5N <- D5.; D5N[5,5] <- NA
     stopifnot(isGeneric("dim", where=as.environment("package:Matrix")),
-	      identical((D5. <- Diagonal(x = 5:1)), pmin(D5.)),
+	      identical(D5., pmin(D5.)),
 	      identical(D5., pmax(D5.)),
 	      identical(D5., pmax(D5., -1)),
 	      identical(D5., pmin(D5., 7)),
@@ -414,6 +416,10 @@ if(require("Matrix")) {
 	      identical(as.matrix(pmin(D5.+2 , 3)),
 			pmin(as.matrix(D5.+2), 3)),
 	      identical(pmin(1, D5.), pmin(1, as.matrix(D5.))),
+	      identical(D5N, pmax(D5N, -1)),
+	      identical(D5N, pmin(D5N, 5)),
+	      identical(unname(as.matrix(pmin(D5N+1, 3))),
+			       pmin(as.matrix(D5N)+1, 3)),
 	      ##
 	      TRUE)
 }

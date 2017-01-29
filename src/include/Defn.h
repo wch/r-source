@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2015  The R Core Team.
+ *  Copyright (C) 1998--2017  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -182,7 +182,21 @@ extern void R_WaitEvent(void);
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 
-/* These are all required by C99 */
+/* These headers are all required by C99.
+   However, we use types below such as uintptr_t which are optional in C11.
+   And on some older systems they were in inttypes.h but not stdint.h.
+
+   Up to 2.11.1 (r52035, May 2010) we had
+
+#if !defined(HAVE_INTPTR_T) && !defined(intptr_t)
+ typedef long intptr_t;
+#endif
+#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
+ typedef unsigned long uintptr_t;
+#endif
+    but size_t might be better.
+
+ */
 #ifdef HAVE_INTTYPES_H
 # include <inttypes.h>
 #endif
@@ -783,9 +797,11 @@ extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
 extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
+extern0 int R_disable_bytecode INI_as(0);
 extern SEXP R_cmpfun(SEXP);
+extern SEXP R_cmpfun1(SEXP); /* unconditional fresh compilation */
 extern void R_init_jit_enabled(void);
-extern void R_initAsignSymbols(void);
+extern void R_initAssignSymbols(void);
 #ifdef R_USE_SIGNALS
 extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
 #endif
@@ -878,6 +894,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define EncodeString           Rf_EncodeString
 # define EnsureString 		Rf_EnsureString
 # define endcontext		Rf_endcontext
+# define errorcall_cpy		Rf_errorcall_cpy
 # define ErrorMessage		Rf_ErrorMessage
 # define evalList		Rf_evalList
 # define evalListKeepMissing	Rf_evalListKeepMissing
@@ -1018,6 +1035,7 @@ char	*R_HomeDir(void);
 Rboolean R_FileExists(const char *);
 Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
+int	R_GetFDLimit();
 
 /* environment cell access */
 typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */
@@ -1223,6 +1241,7 @@ void NORET R_jumpctxt(RCNTXT *, int, SEXP);
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
+void NORET errorcall_cpy(SEXP, const char *, ...);
 void NORET ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);

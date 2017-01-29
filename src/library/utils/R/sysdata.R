@@ -33,6 +33,7 @@ function()
           "cre" = "Use for the package maintainer.",
           "ctr" = "Use for authors who have been contracted to write (parts of) the\npackage and hence do not own intellectual property.", 
           "dtc" = "Use for persons who contributed data sets for the package.",
+          "fnd" = "Use for persons or organizations that furnished financial support\nfor the development of the package",
           "ths" = "If the package is part of a thesis, use for the thesis advisor.", 
           "trl" = "If the R code is merely a translation from another language\n(typically S), use for the translator to R.")
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016 The R Core Team.
+ *  Copyright (C) 2001-2017 The R Core Team.
  *  Copyright (C) 2003-2016 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -71,24 +71,23 @@ void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk,
 
 /* Fortran : */
 
-void F77_SUB(lowesw)(double *res, int *n, double *rw, int *pi);
-void F77_SUB(lowesp)(int *n, double *y, double *yhat, double *pwgts,
-		     double *rwgts, int *pi, double *ytilde);
-void F77_SUB(setppr)(double *span1, double *alpha1,
-	int *optlevel, int *ism, double *df1, double *gcvpen1);
-void F77_SUB(smart)(int *m, int *mu, int *p, int * q, int *n,
-		    double *w, double *x, double *y,
-		    double *ww, double *smod, int *nsmod, double *sp,
-		    int *nsp, double *dp, int *ndp, double *edf);
-void F77_SUB(setsmu)(int *tr);
-void F77_SUB(pppred)(int *np, double *x, double *smod,
-		     double *y, double *sc);
-void F77_SUB(rbart)(double *penalt, double *dofoff,
-		    double *xs, double *ys, double *ws, double *ssw,
-		    int *n, double *knot, int *nk, double *coef,
-		    double *sz, double *lev, double *crit, int *iparms,
-		    double *spar, double *parms,
-		    double *scrtch, int *ld4, int *ldnk, int *ier);
+void F77_NAME(lowesw)(double *res, int *n, double *rw, int *pi);
+void F77_NAME(lowesp)(int *n, double *y, double *yhat, double *pwgts,
+		      double *rwgts, int *pi, double *ytilde);
+void F77_NAME(setppr)(double *span1, double *alpha1,
+		      int *optlevel, int *ism, double *df1, double *gcvpen1);
+void F77_NAME(smart)(int *m, int *mu, int *p, int * q, int *n,
+		     double *w, double *x, double *y,
+		     double *ww, double *smod, int *nsmod, double *sp,
+		     int *nsp, double *dp, int *ndp, double *edf);
+void F77_NAME(setsmu)(int *tr);
+void F77_NAME(pppred)(int *np, double *x, double *smod, double *y, double *sc);
+void F77_NAME(rbart)(double *penalt, double *dofoff,
+		     double *xs, double *ys, double *ws, double *ssw,
+		     int *n, double *knot, int *nk, double *coef,
+		     double *sz, double *lev, double *crit, int *iparms,
+		     double *spar, double *parms,
+		     double *scrtch, int *ld4, int *ldnk, int *ier);
 
 void F77_NAME(sbart)
     (double *penalt, double *dofoff,
@@ -118,9 +117,9 @@ void F77_NAME(sslvrg)(double *penalt, double *dofoff,
 		      double *abd, double *p1ip, double *p2ip,
 		      int *ld4, int *ldnk, int *info);
 
-void F77_SUB(bvalus)(int *n, double *knot, double *coef,
-		     int *nk, double *x, double *s, int *order);
-void F77_SUB(supsmu)(int *n, double *x, double *y,
-		     double *w, int *iper, double *span, double *alpha,
-		     double *smo, double *sc, double *edf);
+void F77_NAME(bvalus)(int *n, double *knot, double *coef,
+		      int *nk, double *x, double *s, int *order);
+void F77_NAME(supsmu)(int *n, double *x, double *y,
+		      double *w, int *iper, double *span, double *alpha,
+		      double *smo, double *sc, double *edf);
 #endif

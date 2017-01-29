@@ -1,14 +1,17 @@
-Based on http://opensource.org/licenses/MIT
+Based on <http://opensource.org/licenses/MIT>
 
-This is a template. Complete and ship as file LICENSE the following 2
-lines (only)
+This is a template.  Provide completed entries of the form
 
 YEAR:
 COPYRIGHT HOLDER: 
 
-and specify as
+(separated by empty lines) as file LICENSE, and specify
 
 License: MIT + file LICENSE
+
+in file DESCRIPTION.
+
+************************************************************************
 
 Copyright (c) <YEAR>, <COPYRIGHT HOLDER>
 

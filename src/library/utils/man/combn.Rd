@@ -1,6 +1,6 @@
 % File src/library/utils/man/combn.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{combn}
@@ -36,11 +36,10 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
   \item{\dots}{optionally, further arguments to \code{FUN}.}
 }
 \details{
-  Factors \code{x} are accepted from \R 3.1.0 (although coincidentally
-  they worked for \code{simplify = FALSE} in earlier versions).
+  Factors \code{x} are accepted.
 }
 \value{
-  a \code{\link{list}} or \code{\link{array}}, see the \code{simplify}
+  A \code{\link{list}} or \code{\link{array}}, see the \code{simplify}
   argument above.  In the latter case, the identity
   \code{dim(combn(n, m)) == c(m, choose(n, m))} holds.
 }

@@ -1022,4 +1022,19 @@ for(dist in PDQR) {
 }
 
 
+## qbeta() in very asymmetric cases
+sh2 <- 2^seq(9,16, by=1/16)
+qbet <- qbeta(1e-10, 1.5, shape2=sh2, lower.tail=FALSE)
+plot(sh2, 1- pbeta(qbet, 1.5, sh2, lower.tail=FALSE) * 1e10, log="x")
+dqb <- diff(qbet); d2qb <- diff(dqb); d3qb <- diff(d2qb)
+stopifnot(all.equal(qbet[[1]], 0.047206901483498, tol=1e-12),
+	  max(abs(1- pbeta(qbet, 1.5, sh2, lower.tail=FALSE) * 1e10)) < 1e-12,# Lx 64b: 2.4e-13
+	  0 > dqb, dqb > -0.002,
+	  0 < d2qb, d2qb < 0.00427,
+	  -3.2e-8 > d3qb, d3qb > -3.1e-6,
+	  diff(d3qb) > 1e-9)
+## had discontinuity (from wrong jump out of Newton) in R <= 3.3.2
+
+
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

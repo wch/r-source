@@ -148,6 +148,7 @@ function(dir,
         defaults <- list(which = c("Depends", "Imports", "LinkingTo"),
                          recursive = FALSE,
                          repos = getOption("repos"))
+        defaults0 <- defaults
         pos <- pmatch(names(reverse), names(defaults), nomatch = 0L)
         defaults[pos] <- reverse[pos > 0L]
 
@@ -172,6 +173,22 @@ function(dir,
                                  which = defaults$which,
                                  recursive = defaults$recursive,
                                  reverse = TRUE)
+        }
+
+        add_recommended_maybe <-
+            config_val_to_logical(Sys.getenv("_R_TOOLS_C_P_I_D_ADD_RECOMMENDED_MAYBE_",
+                                             "FALSE"))
+        if(add_recommended_maybe) {
+            ## Add all recommended packages with any dependency on the
+            ## packages to be checked.
+            rnames <-
+                c(rnames,
+                  names(Filter(length,
+                               lapply(package_dependencies(.get_standard_package_names()$recommended,
+                                                           available,
+                                                           which = "all"),
+                                      intersect,
+                                      pnames))))
         }
 
         rnames <- intersect(unlist(rnames, use.names = FALSE),
@@ -727,7 +744,12 @@ function(log, drop_ok = TRUE)
     rqa <- "'|\xe2\x80\x99"
     ## Group when used ...
 
-    drop_ok_status_tags <- c("OK", "NONE", "SKIPPED")
+    if(is.character(drop_ok)) {
+        drop_ok_status_tags <- drop_ok
+        drop_ok <- TRUE
+    } else {
+        drop_ok_status_tags <- c("OK", "NONE", "SKIPPED")
+    }
 
     ## Start by reading in.
     lines <- read_check_log(log)

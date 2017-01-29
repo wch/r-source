@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2015  The R Core Team.
+ *  Copyright (C) 1999-2017  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1425,7 +1425,8 @@ SEXP dynamicfindVar(SEXP symbol, RCNTXT *cptr)
   This could call findVar1.  NB: they behave differently on failure.
 */
 
-SEXP findFun(SEXP symbol, SEXP rho)
+attribute_hidden
+SEXP findFun3(SEXP symbol, SEXP rho, SEXP call)
 {
     SEXP vl;
 
@@ -1463,16 +1464,23 @@ SEXP findFun(SEXP symbol, SEXP rho)
 		TYPEOF(vl) == SPECIALSXP)
 		return (vl);
 	    if (vl == R_MissingArg)
-		error(_("argument \"%s\" is missing, with no default"),
+		errorcall(call,
+		      _("argument \"%s\" is missing, with no default"),
 		      CHAR(PRINTNAME(symbol)));
 	}
 	rho = ENCLOS(rho);
     }
-    error(_("could not find function \"%s\""), EncodeChar(PRINTNAME(symbol)));
+    errorcall_cpy(call,
+                  _("could not find function \"%s\""),
+                  EncodeChar(PRINTNAME(symbol)));
     /* NOT REACHED */
     return R_UnboundValue;
 }
 
+SEXP findFun(SEXP symbol, SEXP rho)
+{
+    return findFun3(symbol, rho, R_CurrentExpression);
+}
 
 /*----------------------------------------------------------------------
 

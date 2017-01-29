@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system2}
@@ -90,12 +90,12 @@ system2(command, args = character(),
 
 \note{
   \code{system2} is a more portable and flexible interface than
-  \code{\link{system}}, introduced in \R 2.12.0.  It allows redirection
-  of output without needing to invoke a shell on Windows, a portable way
-  to set environment variables for the execution of \code{command}, and
-  finer control over the redirection of \code{stdout} and \code{stderr}.
-  Conversely, \code{system} (and \code{shell} on Windows) allows the
-  invocation of arbitrary command lines.
+  \code{\link{system}}.  It allows redirection of output without needing
+  to invoke a shell on Windows, a portable way to set environment
+  variables for the execution of \code{command}, and finer control over
+  the redirection of \code{stdout} and \code{stderr}.  Conversely,
+  \code{system} (and \code{shell} on Windows) allows the invocation of
+  arbitrary command lines.
 
   There is no guarantee that if \code{stdout} and \code{stderr} are both
   \code{TRUE} or the same file that the two streams will be interleaved

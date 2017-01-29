@@ -131,7 +131,7 @@ fi
 
 usage="${usage}
   
-Report bugs at bugs.r-project.org ."
+Report bugs at <https://bugs.R-project.org>."
 
 ## <NOTE>
 ## The variables are basically the precious configure variables (with

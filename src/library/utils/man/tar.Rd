@@ -135,6 +135,21 @@ tar(tarfile, files = NULL,
   conventional to discard fractional seconds.
 }
 
+\note{
+  For users of macOS (formerly OS X).  Apple's HFS and HFS+ file systems
+  have a legacy concept of \sQuote{resource forks} dating from classic
+  Mac OS and rarely used nowadays.  Apple's version of \command{tar}
+  stores these as separate files in the tarball with names prefixed by
+  \file{._}, and unpacks such files into resource forks (if possible):
+  other ways of unpacking (including \code{\link{untar}} in \R) unpack
+  them as separate files.
+
+  When argument \code{tar} is set to the command \command{tar} on macOS,
+  environment variable \env{COPYFILE_DISABLE=1} is set, which for the
+  system version of \command{tar} prevents these separate files being
+  included in the tarball.
+}
+
 \seealso{
   \url{https://en.wikipedia.org/wiki/Tar_(file_format)},
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_06}

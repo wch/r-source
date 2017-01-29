@@ -219,7 +219,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(is.na(package) || (package == ""))
             stop("invalid package name")
 
-	pkgname <- paste("package", package, sep = ":")
+	pkgname <- paste0("package:", package)
 	newpackage <- is.na(match(pkgname, search()))
 	if(newpackage) {
             ## Check for the methods package before attaching this
@@ -576,7 +576,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 {
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
-    loaded <- paste("package", package, sep = ":") %in% search()
+    loaded <- paste0("package:", package) %in% search()
 
     if (!loaded) {
 	if (!quietly)
@@ -629,7 +629,7 @@ function(package = NULL, quiet = FALSE)
     searchpaths <-
         lapply(seq_along(s), function(i) attr(as.environment(i), "path"))
     searchpaths[[length(s)]] <- system.file()
-    pkgs <- paste("package", package, sep = ":")
+    pkgs <- paste0("package:", package)
     pos <- match(pkgs, s)
     if(any(m <- is.na(pos))) {
         if(!quiet) {
@@ -813,7 +813,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
     for(pkg in setdiff(pkgs, "base")) {
         ## allow for multiple occurrences
         depends <- pkgInfo$Depends[names(pkgInfo$Depends) == pkg]
-        attached <- paste("package", pkg, sep = ":") %in% search()
+        attached <- paste0("package:", pkg) %in% search()
         current <- .findVersion(pkg, lib.loc)
         if(is.null(current))
             stop(gettextf("package %s required by %s could not be found",

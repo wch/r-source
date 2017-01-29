@@ -227,4 +227,3 @@ if(require("Matrix", .Library)) {
     rm(M)
     detach("package:Matrix", unload=TRUE)
 }##{Matrix}
-

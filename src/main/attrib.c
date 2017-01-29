@@ -109,7 +109,7 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    if(TYPEOF(s) == INTSXP && LENGTH(s) == 1) {
 		s = getAttrib(vec, R_DimNamesSymbol);
 		if(!isNull(s)) {
-		    SET_NAMED(VECTOR_ELT(s, 0), 2);
+		    MARK_NOT_MUTABLE(VECTOR_ELT(s, 0));
 		    return VECTOR_ELT(s, 0);
 		}
 	    }
@@ -132,7 +132,7 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    }
 	    UNPROTECT(1);
 	    if (any) {
-		if (!isNull(s)) SET_NAMED(s, 2);
+		if (!isNull(s)) MARK_NOT_MUTABLE(s);
 		return (s);
 	    }
 	    return R_NilValue;
@@ -142,7 +142,11 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	if (TAG(s) == name) {
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP)
 		error("old list is no longer allowed for dimnames attribute");
-	    SET_NAMED(CAR(s), 2);
+	    /**** this could be dropped for REFCNT or be less
+		  stringend for NAMED for attributes where the setter
+		  does not have a consistency check that could cail
+		  after mutation in a complex assignment LT */
+	    MARK_NOT_MUTABLE(CAR(s));
 	    return CAR(s);
 	}
     return R_NilValue;
@@ -875,15 +879,18 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"), klass);
 	/* else, go ahead, but can't check validity of replacement*/
     }
-    if (CADR(args) != R_NilValue) {
+    SEXP names = CADR(args);
+    if (names != R_NilValue &&
+	! (TYPEOF(names) == STRSXP && ATTRIB(names) == R_NilValue)) {
 	PROTECT(call = allocList(2));
 	SET_TYPEOF(call, LANGSXP);
-	SETCAR(call, install("as.character"));
-	SETCADR(call, CADR(args));
-	SETCADR(args, eval(call, env));
+	SETCAR(call, R_AsCharacterSymbol);
+	SETCADR(call, names);
+	names = eval(call, env);
+	SETCADR(call, R_NilValue); /* decrements REFCNT on names */
 	UNPROTECT(1);
     }
-    setAttrib(CAR(args), R_NamesSymbol, CADR(args));
+    setAttrib(CAR(args), R_NamesSymbol, names);
     UNPROTECT(1);
     SET_NAMED(CAR(args), 0);
     return CAR(args);
@@ -1088,6 +1095,11 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	    SET_TAG(val, installTrChar(STRING_ELT(top, i++)));
     }
     UNPROTECT(2);
+
+    /* Mark as immutable so nested complex assignment can't make the
+       dimnames attribute inconsistent with the length */
+    MARK_NOT_MUTABLE(val);
+
     return vec;
 }
 
@@ -1177,7 +1189,7 @@ SEXP dimgets(SEXP vec, SEXP val)
     removeAttrib(vec, R_DimNamesSymbol);
     installAttrib(vec, R_DimSymbol, val);
 
-    /* Mark as immutable so nested complex assignment can't made the
+    /* Mark as immutable so nested complex assignment can't make the
        dim attribute inconsistent with the length */
     MARK_NOT_MUTABLE(val);
 
@@ -1218,21 +1230,20 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	nvalues++;
     }
     while (attrs != R_NilValue) {
-	/* treat R_RowNamesSymbol specially */
-	if (TAG(attrs) == R_RowNamesSymbol)
-	    SET_VECTOR_ELT(value, nvalues,
-			   getAttrib(CAR(args), R_RowNamesSymbol));
-	else
-	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
-	if (TAG(attrs) == R_NilValue)
-	    SET_STRING_ELT(names, nvalues, R_BlankString);
-	else
+	SEXP tag = TAG(attrs);
+	if (TYPEOF(tag) == SYMSXP) {
+	    SET_VECTOR_ELT(value, nvalues, getAttrib(CAR(args), tag));
 	    SET_STRING_ELT(names, nvalues, PRINTNAME(TAG(attrs)));
+	}
+	else {
+	    MARK_NOT_MUTABLE(CAR(attrs));
+	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
+	    SET_STRING_ELT(names, nvalues, R_BlankString);
+	}	
 	attrs = CDR(attrs);
 	nvalues++;
     }
     setAttrib(value, R_NamesSymbol, names);
-    SET_NAMED(value, NAMED(CAR(args)));
     UNPROTECT(3);
     return value;
 }

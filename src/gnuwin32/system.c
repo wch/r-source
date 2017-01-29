@@ -1175,3 +1175,14 @@ void saveConsoleTitle(void)
 {
     GetConsoleTitle(oldtitle, 512);
 }
+
+
+/* On Windows, the number of open files is essentially unlimited.
+ * This function returns 16,777,216 based on
+ * https://blogs.technet.microsoft.com/markrussinovich/2009/09/29/pushing-the-limits-of-windows-handles
+ */
+int R_GetFDLimit()
+{
+    long limit = 16L*1024L*1024L;
+    return (limit > INT_MAX) ? INT_MAX : limit;
+}

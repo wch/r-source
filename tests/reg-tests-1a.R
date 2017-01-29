@@ -3011,6 +3011,26 @@ stopifnot(identical(names(cumsum(x)), nm),
           identical(names(cumprod(x)), nm))
 ## 1.9.x dropped names
 
+## cumsum etc preserve NAs
+# double
+x <- c(1, NA,  3)
+r <- c(1, NA, NA)
+stopifnot(identical(cumsum(x), r))
+stopifnot(identical(cumprod(x), r))
+stopifnot(identical(cummin(x), r))
+stopifnot(identical(cummax(x), r))
+# complex
+x <- c(1+1i, NA, 3)
+r <- c(1+1i, NA, NA)
+stopifnot(identical(cumsum(x), r))
+stopifnot(identical(cumprod(x), r))
+# integer
+x <- c(1L, NA, 3L)
+r <- c(1L, NA, NA)
+stopifnot(identical(cumsum(x), r))
+stopifnot(identical(cumprod(x), c(1, NA, NA))) # returns double
+stopifnot(identical(cummin(x), r))
+stopifnot(identical(cummax(x), r))
 
 ## complex superassignments
 e <- c(a=1, b=2)

@@ -506,10 +506,13 @@ be found.  These @acronym{URL}s are converted to active hyperlinks in
 @acronym{CRAN} package listings.  @xref{Specifying URLs}.
 
 @c DESCRIPTION field BugReports
-The @samp{BugReports} field may contain a single
-@acronym{URL} to which bug reports about the package should be
-submitted.  This @acronym{URL} will be used by @code{bug.report}
-instead of sending an email to the maintainer.
+The @samp{BugReports} field may contain a single @acronym{URL} to which
+bug reports about the package should be submitted.  This @acronym{URL}
+will be used by @code{bug.report} instead of sending an email to the
+maintainer.  A browser is opened for a @samp{http://} or @samp{https://}
+@acronym{URL}.  As from @R{} 3.4.0, @code{bug.report} will try to
+extract an email address (preferably from a @samp{mailto:} URL or
+enclosed in angle brackets).
 
 @c DESCRIPTION field Priority
 Base and recommended packages (i.e., packages contained in the @R{}
@@ -564,7 +567,6 @@ Windows build would zip up the data directory or not prior to @R{}
 @c DESCRIPTION field Biarch
 The @samp{Biarch} logical field is used on Windows to select the
 @command{INSTALL} option @option{--force-biarch} for this package.
-(Introduced in @R{} 3.0.0.)
 
 @c DESCRIPTION field BuildVignettes
 The @samp{BuildVignettes} logical field can be set to a false value to
@@ -676,7 +678,9 @@ added by the package management tools.
 There is no restriction on the use of other fields not mentioned here
 (but using other capitalizations of these field names would cause
 confusion).  Fields @code{Note}, @code{Contact} (for contacting the
-authors/developers) and @code{MailingList} are in common use. Some
+authors/developers@footnote{As from @R{} 3.4.0, @code{bug.report} will
+try to extract an email address from a @code{Contact} field if there is
+no @code{BugReports} field.}) and @code{MailingList} are in common use. Some
 repositories (including @acronym{CRAN} and R-forge) add their own
 fields.
 
@@ -718,6 +722,7 @@ One of the ``standard'' short specifications
 GPL-2 GPL-3 LGPL-2 LGPL-2.1 LGPL-3 AGPL-3 Artistic-2.0
 BSD_2_clause BSD_3_clause MIT
 @end example
+@noindent
 as made available @emph{via} @uref{https://www.R-project.org/@/Licenses/} and
 contained in subdirectory @file{share/licenses} of the @R{} source or home
 directory.
@@ -762,6 +767,7 @@ License: GPL-2 | file LICENCE
 License: GPL (>= 2) | BSD_3_clause + file LICENSE
 License: Artistic-2.0 | AGPL-3 + file LICENSE
 @end example
+@noindent
 Please note in particular that ``Public domain'' is not a valid license,
 since it is not recognized in some jurisdictions.
 
@@ -960,9 +966,8 @@ LinkingTo: link1, link2
 @end example
 
 @noindent
-As from @R{} 3.0.2 the @samp{LinkingTo} field can have a version
-requirement which is checked at installation.  (In earlier versions of
-@R{} it would cause the specification to be ignored.)
+The @samp{LinkingTo} field can have a version requirement which is
+checked at installation.
 
 Specifying a package in @samp{LinkingTo} suffices if these are C++
 headers containing source code or static linking is done at
@@ -1231,12 +1236,12 @@ if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
 and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
-line for each demo, giving its name and a description separated by a
-tab or at least three spaces. (This index file is not generated
+line for each demo, giving its name and a description separated by a tab
+or at least three spaces. (This index file is not generated
 automatically.)  Note that a demo does not have a specified encoding and
-so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
-@R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
-but this is mainly useful for non-@acronym{ASCII} comments.
+so should be an @acronym{ASCII} file (@pxref{Encoding issues}). Function
+@code{demo()} will use the package encoding if there is one, but this is
+mainly useful for non-@acronym{ASCII} comments.
 
 @cindex .Rinstignore file
 The contents of the @file{inst} subdirectory will be copied recursively
@@ -1250,9 +1255,9 @@ exclude files from being installed, one can specify a list of exclude
 patterns in file @file{.Rinstignore} in the top-level source directory.
 These patterns should be Perl-like regular expressions (see the help for
 @code{regexp} in @R{} for the precise details), one per line, to be
-matched case-insensitively@footnote{on all platforms from @R{} 3.1.0}
-against the file and directory paths, e.g.@: @file{doc/.*[.]png$} will
-exclude all PNG files in @file{inst/doc} based on the extension.
+matched case-insensitively against the file and directory paths, e.g.@:
+@file{doc/.*[.]png$} will exclude all PNG files in @file{inst/doc} based
+on the extension.
 
 Note that with the exceptions of @file{INDEX},
 @file{LICENSE}/@file{LICENCE} and @file{NEWS}, information files at the
@@ -1398,13 +1403,12 @@ is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
 
 Lazy-loading is not supported for very large datasets (those which when
-serialized exceed 2GB, the limit for the format on 32-bit platforms and
-all platforms prior to @R{} 3.0.0).
+serialized exceed 2GB, the limit for the format on 32-bit platforms).
 
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
-the default (since @R{} 2.12.2) is @code{xz} for files bigger than 1MB
-otherwise @code{gzip}.
+the default is @code{xz} for files bigger than 1MB otherwise
+@code{gzip}.
 
 @node Non-R scripts in packages, Specifying URLs, Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -1743,7 +1747,7 @@ pkg-config --list-all | sort
 * Configure example::           
 * Using F95 code::              
 * Using C++11 code::            
-* Using C++14 code::
+* Using C++14 code::            
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2044,8 +2048,8 @@ conditioned on the use of OpenMP can be used inside @code{#ifdef
 _OPENMP}: note that some toolchains used for @R{} (including that of
 macOS and some others using @command{clang}@footnote{Default builds of
 @command{clang} 3.8.0 and later have support for OpenMP, but the
-@code{libomp} library may not be installed.}) have no OpenMP support at
-all, not even @file{omp.h}.
+@code{libomp} run-time library may not be installed.}) have no OpenMP
+support at all, not even @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -2075,6 +2079,11 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).
 
+For portability, any C/C++ code using the @code{omp_*} functions should
+include the @file{omp.h} header: some compilers (but not all) include it
+when OpenMP mode is switched on (e.g.@: @emph{via} flag
+@option{-fopenmp}).
+
 @c http://openmp.org/wp/openmp-compilers/
 @c clang 3.8.x reports 201307 but has full suport only for 3.1 (201111)
 There is nothing@footnote{In most implementations the
@@ -2091,8 +2100,8 @@ including the flag @option{-fopenmp} for that command).
 
 The performance of OpenMP varies substantially between platforms.  The
 Windows implementation has substantial overheads@footnote{as did the
-GCC-based Apple implementation, but not if the Intel OpenMP runtime was
-used.}, so is only beneficial if quite substantial tasks are run in
+GCC-based Apple implementation, but not the Intel/LLVM OpenMP runtime
+on macOS.}, so is only beneficial if quite substantial tasks are run in
 parallel.  Also, on Windows new threads are started with the
 default@footnote{Windows default, not MinGW-w64 default.} FPU control
 word, so computations done on OpenMP threads will not make use of
@@ -2430,7 +2439,7 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C++11 code,  Using C++14 code, Using F95 code, Configure and cleanup
+@node Using C++11 code, Using C++14 code, Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -2446,7 +2455,7 @@ C99 features which are not otherwise implemented in C++, and C++
 compilers commonly accept C99 extensions to C++98.  A minor
 update@footnote{The changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-to C++11 (C++14) was approved in August 2014.
+to C++11 (C++14) was published in December 2014.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -2480,7 +2489,7 @@ file (or @file{Makevars.win} on Windows) should include the line
 @example
 CXX_STD = CXX11
 @end example
-
+@noindent
 Compilation and linking will then be done with the C++11 compiler.  If
 any other value is given to the @samp{CXX_STD} macro it will be ignored.
 (Further options may become available in the future as the C++ standard
@@ -2568,6 +2577,7 @@ the line
 @example
 CXX_STD = CXX14
 @end example
+
 In the absence of a @file{Makevars} file, C++14 support can also be
 requested by the line:
 @example
@@ -2895,7 +2905,7 @@ this is to minimize differences between platforms.
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  A subset of the checking steps can be
 selected by adding command-line options. It also allows customization by
-setting environment variables @w{@env{_R_CHECK_*_}:}, as described in
+setting environment variables @w{@env{_R_CHECK_*_}} as described in
 @ifset UseExternalXrefs
 @ref{Tools, , Tools, R-ints, R Internals}:
 @end ifset
@@ -2922,7 +2932,7 @@ _R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
 @noindent
 which reports unused local assignments.  Not only does this point out
 computations which are unnecessary because their results are unused, it
-also can show errors.  (Two such are to intend to update an object by
+also can uncover errors.  (Two such are to intend to update an object by
 assigning a value but mistype its name or assign in the wrong scope,
 for example using @code{<-} where @code{<<-} was intended.)  This can
 give false positives, most commonly because of non-standard evaluation
@@ -3003,20 +3013,20 @@ To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl-like regular expressions (see
 the help for @code{regexp} in @R{} for the precise details), one per
-line, to be matched case-insensitively@footnote{on all platforms from
-@R{} 3.1.0.} against the file and directory names relative to the
-top-level package source directory.  In addition, directories from
-source control systems@footnote{called @file{CVS} or @file{.svn} or
-@file{.arch-ids} or @file{.bzr} or @file{.git} (but not files called
-@file{.git}) or @file{.hg}.} or from @command{eclipse}@footnote{called
-@file{.metadata}.}, directories with names ending @file{.Rcheck} or
-@file{Old} or @file{old} and files @file{GNUMakefile}@footnote{which is
-an error: GNU make uses @file{GNUmakefile}.}, @file{Read-and-delete-me}
-or with base names starting with @samp{.#}, or starting and ending with
-@samp{#}, or ending in @samp{~}, @samp{.bak} or @samp{.swp}, are
-excluded by default.  In addition, those files in the @file{R},
-@file{demo} and @file{man} directories which are flagged by @command{R
-CMD check} as having invalid names will be excluded.
+line, to be matched case-insensitively against the file and directory
+names relative to the top-level package source directory.  In addition,
+directories from source control systems@footnote{called @file{CVS} or
+@file{.svn} or @file{.arch-ids} or @file{.bzr} or @file{.git} (but not
+files called @file{.git}) or @file{.hg}.} or from
+@command{eclipse}@footnote{called @file{.metadata}.}, directories with
+names ending @file{.Rcheck} or @file{Old} or @file{old} and files
+@file{GNUMakefile}@footnote{which is an error: GNU make uses
+@file{GNUmakefile}.}, @file{Read-and-delete-me} or with base names
+starting with @samp{.#}, or starting and ending with @samp{#}, or ending
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
+addition, those files in the @file{R}, @file{demo} and @file{man}
+directories which are flagged by @command{R CMD check} as having invalid
+names will be excluded.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
@@ -3189,7 +3199,7 @@ or underscore.
 A special case is @emph{package vignettes}.  Vignettes are documents in
 PDF or @HTML{} format obtained from plain text literate source files
 from which @R{} knows how to extract @R{} code and create output (in
-PDF/@HTML{} or intermediate (La)@TeX{}).  Vignette engines do this work,
+PDF/@HTML{} or intermediate @LaTeX{}).  Vignette engines do this work,
 using ``tangle'' and ``weave'' functions respectively.  Sweave, provided
 by the R distribution, is the default engine.  Since @R{} version 3.0.0,
 other vignette engines besides Sweave are supported; see @ref{Non-Sweave
@@ -3399,10 +3409,10 @@ would have been in the locale's encoding.
 @node Non-Sweave vignettes,  , Encodings and vignettes, Writing package vignettes
 @subsection Non-Sweave vignettes
 
-@R{} 3.0.0 and later allow vignettes in formats other than Sweave by
-means of ``vignette engines''.  For example @CRANpkg{knitr} version 1.1
-or later can create @file{.tex} files from a variation on Sweave format,
-and @file{.html} files from a variation on ``markdown'' format. These
+Vignettes in formats other than Sweave are supported @emph{via}
+``vignette engines''.  For example @CRANpkg{knitr} version 1.1 or later
+can create @file{.tex} files from a variation on Sweave format, and
+@file{.html} files from a variation on ``markdown'' format. These
 engines replace the @code{Sweave()} function with other functions to
 convert vignette source files into @LaTeX{} files for processing into
 @file{.pdf}, or directly into @file{.pdf} or @file{.html} files. The
@@ -3496,10 +3506,6 @@ The namespace controls the search strategy for variables used by
 functions in the package.  If not found locally, @R{} searches the
 package namespace first, then the imports, then the base namespace and
 then the normal search path.
-
-Prior to @R{} 2.14.0, namespaces were optional in packages: a default
-namespace was generated on installation in 2.14.x and 2.15.x.  As from
-3.0.0 a namespace is mandatory.
 
 
 @menu
@@ -3643,9 +3649,6 @@ S3method(print, check_so_symbols, .print.via.format)
 @noindent
 when @code{print.check_so_symbols} is not needed.
 
-There used to be a limit on the number of @code{S3method} directives: it
-was @code{500} prior to @R{} 3.0.2.
-
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
 
@@ -3664,16 +3667,15 @@ exported.
 @findex .onUnload
 @findex .onDetach
 @findex .Last.lib
-Packages can use a @code{.onDetach} (as from @R{} 3.0.0) or @code{.Last.lib}
-function (provided the latter is exported from the namespace) when
-@code{detach} is called on the package.  It is called with a single
-argument, the full path to the installed package.  There is also a hook
-@code{.onUnload} which is called when the namespace is unloaded
-(@emph{via} a call to @code{unloadNamespace}, perhaps called by
-@code{detach(unload = TRUE)}) with argument the full path to the installed
-package's directory.  @code{.onUnload} and @code{.onDetach} should be
-defined in the namespace and not exported, but @code{.Last.lib} does
-need to be exported.
+Packages can use a @code{.onDetach} or @code{.Last.lib} function
+(provided the latter is exported from the namespace) when @code{detach}
+is called on the package.  It is called with a single argument, the full
+path to the installed package.  There is also a hook @code{.onUnload}
+which is called when the namespace is unloaded (@emph{via} a call to
+@code{unloadNamespace}, perhaps called by @code{detach(unload = TRUE)})
+with argument the full path to the installed package's directory.
+@code{.onUnload} and @code{.onDetach} should be defined in the namespace
+and not exported, but @code{.Last.lib} does need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
@@ -4184,21 +4186,20 @@ Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} and
 @command{gfortran}@footnote{@uref{http://fortranwiki.org/@/fortran/@/show/Modernizing+Old+Fortran}
 may help explain some of the warnings from @command{gfortran -Wall
--pedantic}.}  can be used with options @option{-Wall -pedantic} to
-alert you to potential problems.  This is particularly important for
-C++, where @code{g++ -Wall -pedantic} will alert you to the use of GNU
-extensions which fail to compile on most other C++ compilers. If @R{}
-was not configured accordingly, one can achieve this @emph{via} personal
-@file{Makevars} files.
+-pedantic}.}  can be used with options @option{-Wall -pedantic} to alert
+you to potential problems.  This is particularly important for C++,
+where @code{g++ -Wall -pedantic} will alert you to the use of some of
+the GNU extensions which fail to compile on most other C++ compilers. If
+@R{} was not configured accordingly, one can achieve this @emph{via}
+personal @file{Makevars} files.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
 R-admin, R Installation and Administration},
 @end ifset
 
-Although there is a 2011 version of the C++ standard, implementations
-are not universally available.  Portable C++ code needs to follow the
-1998 standard (and not use features from C99).  See also @ref{Using
-C++11 code} to specify a C++11 compiler where available.
+Portable C++ code needs to follow the 1998 standard (and not use
+features from C99), or to specify a C++11 compiler (see @ref{Using C++11
+code}) where available (which is not the case on all @R{} platforms).
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -4247,18 +4248,19 @@ Do be very careful with passing arguments between @R{}, C and
 on some @R{} platforms (including 64-bit Windows), but 64-bit on most
 modern Unix and Linux platforms.  It is rather unlikely that the use of
 @code{long} in C code has been thought through: if you need a longer
-type than @code{int} you should use a configure test for a C99 type such
-as @code{int_fast64_t} (and failing that, @code{long long} @footnote{but
-note that @code{long long} is not a standard C++ type, and C++ compilers
-set up for strict checking will reject it.}) and typedef your own type
-to be @code{long} or @code{long long}, or use another suitable type
-(such as @code{size_t}).
+type than @code{int} you should use a configure test for a C99/C++11
+type such as @code{int_fast64_t} (and failing that, @code{long long}
+@footnote{but note that @code{long long} is not a standard C++98 type,
+and C++ compilers set up for strict checking will reject it.}) and
+typedef your own type to be @code{long} or @code{long long}, or use
+another suitable type (such as @code{size_t}).
 
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
-pointers to and from integers use the C99 integer types @code{intptr_t}
-and @code{uintptr_t} (which are defined in the header @code{<stdint.h>}
-and are not required to be implemented by the C99 standard).
+pointers to and from integers use the C99/C++11 integer types
+@code{intptr_t} and @code{uintptr_t} (which are defined in the header
+@code{<stdint.h>} and are not required to be implemented by the C99
+standard but are used in C code by @R{} itself).
 
 Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
 in C on all @R{} platforms.
@@ -4336,6 +4338,15 @@ wrong).  Note that symbol names starting with @code{R_} are regarded as
 part of @R{}'s namespace and should not be used in packages.
 
 @item
+It is good practice for DLLs to register their symbols
+(@pxref{Registering native routines}), restrict visibility
+(@pxref{Controlling visibility}) and not allow symbol search
+(@pxref{Registering native routines}).  It should be possible for a DLL
+to have only one visible symbol, @code{R_init_@var{pkgname}}, on
+suitable platforms@footnote{At least Linux and Windows, but not macOS.},
+which would completely avoid symbol conflicts.
+
+@item
 It is not portable to call compiled code in @R{} or other packages
 @emph{via} @code{.Internal}, @code{.C}, @code{.Fortran}, @code{.Call} or
 @code{.External}, since such interfaces are subject to change without
@@ -4376,6 +4387,19 @@ are processed first, the Solaris one does not.} the libraries (typically
 specified by @option{-l} options) to be found from those directories,
 and libraries are searched once in the order they are specified.  Not
 all linkers allow a space after @option{-L} .
+
+@item
+Care is needed with the use of @code{LinkingTo}.  This puts one or more
+directories on the include search path ahead of system headers but
+(prior to @R{} 3.4.0) after those specified in the @code{CPPFLAGS} macro
+of the @R{} build (which normally includes @code{-I/usr/local/include},
+but most platforms ignore that and include it with the system headers).
+
+Any confusion would be avoided by having @code{LinkingTo} headers in a
+directory named after the package.  In any case, name conflicts of
+headers and directories under package @file{include} directories should
+be avoided, both between packages and between a package and system and
+third-party software.
 
 @item
 The @command{ar} utility is often used in makefiles to make static
@@ -4435,7 +4459,7 @@ portable, annoyingly so if this is not declared in the
 @command{pandoc}, which is only available for a very limited range of
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
-URLs, which even the build in some major Linux distributions in 2016 did
+URLs, which even the build in some major Linux distributions in 2017 did
 not possess.} that vary by build but are not documented.
 
 An external command can be an optional requirement for an imported
@@ -4664,24 +4688,27 @@ standards (C99, C++98 or where declared C++11/14) and testing that
 extensions (such as POSIX functions) are supported.  Note that the POSIX
 standards only require recently-defined functions to be declared if
 certain macros are defined with large enough values, and on some
-compiler/OS combinations@footnote{This is seen on Linux and Solaris,
-although each has other ways to turn on all extensions, e.g.@: defining
-@code{_GNU_SOURCE} or @code{__EXTENSIONS__}: the GCC compilers by
-default define @code{_GNU_SOURCE} unless a strict standard such as
-@option{-std=c99} is used.  On OS X extensions are declared unless one
-of these macros is given too small a value.} they are not declared
-otherwise.  So you may need to include something like one of
-@footnote{Solaris 10 does not recognize this value of
-@code{_POSIX_C_SOURCE}, nor values of @code{_XOPEN_SOURCE} beyond 600.}
+compiler/OS combinations@footnote{This is seen on Linux, Solaris and
+FreeBSD, although each has other ways to turn on all extensions, e.g.@:
+defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
+@code{_BSD_SOURCE}: the GCC compilers by default define
+@code{_GNU_SOURCE} unless a strict standard such as @option{-std=c99} is
+used.  On OS X extensions are declared unless one of these macros is
+given too small a value.} they are not declared otherwise.  So you may
+need to include something like one of @footnote{Solaris 10 does not
+recognize this value of @code{_POSIX_C_SOURCE}, nor values of
+@code{_XOPEN_SOURCE} beyond 600.}
 @example
 #define _XOPEN_SOURCE 500
 @end example
+@noindent
 or
 @example
 #ifdef __GLIBC__
 # define _POSIX_C_SOURCE 200809L
 #endif
 @end example
+@noindent
 before @emph{any} headers.  (@code{strdup} and @code{strncasecmp} are
 two such functions.)
 
@@ -4755,7 +4782,8 @@ may cause `overloading ambiguity' and you must use @code{std::isnan}
 @emph{etc} explicitly.
 
 It is an error (and make little sense, although has been seen) to call
-these functions for integer arguments.
+these functions for integer arguments: a few compilers give a compilation
+error.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
@@ -4768,6 +4796,10 @@ value: in @R{} code @code{NA_REAL} is usually what is intended, but
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C_002b_002b-Extensions.html}.
+
+Other GNU extensions which have bitten package writers is the use of
+non-portable characters such as @samp{$} in identifiers and use of C++
+headers under @file{ext}.
 
 The GNU Fortran compiler also supports a large number of non-portable
 extensions, the most commonly encountered one being
@@ -4791,9 +4823,9 @@ may be included by other headers.  This is particularly problematic with
 C++11 compilers, as functions like @code{sqrt} and @code{isnan} are
 defined for @code{double} arguments in @file{math.h} and for a range of
 types including @code{double} in @file{cmath}.  Similar issues have been
-seen for @file{stdlib.h} and @file{cstdlib}.  Historically, including
-the C++ version first was a sufficient workaround but for some 2016
-compilers only one can be included.
+seen for @file{stdlib.h} and @file{cstdlib}.  Including the C++ version
+first used to be a sufficient workaround but for some 2016 compilers
+only one could be included.
 
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++
@@ -4827,6 +4859,7 @@ namespace.  One way to do so is to use declarations such as
 @example
 using std::floor;
 @end example
+@noindent
 but it is usually preferable to use explicit namespace prefixes in the code.
 
 Examples seen in @acronym{CRAN} packages include
@@ -4841,6 +4874,7 @@ Some C++ compilers refuse to compile constructs such as
 @example
       if(ptr > 0) @{ ....@}
 @end example
+@noindent
 which compares a pointer to the integer @code{0}.  This could just use
 @code{if(ptr)} (pointer addresses cannot be negative) but if needed
 pointers can be tested against @code{nullptr} (C++11 and later) or
@@ -4904,6 +4938,7 @@ such extensions unless a `feature-test macro' is defined @strong{before}
 ...
 strdup call(s)
 @end example
+@noindent
 where the appropriate value can be found by @command{man strdup} on
 Linux.  (Use of @code{strncasecmp} is similar.)
 
@@ -4922,6 +4957,7 @@ they were introduced in C++11 if at all.  Recent examples from
 @example
 erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
 @end example
+@noindent
 and the POSIX function @code{strdup}.
 
 @end itemize
@@ -5281,13 +5317,10 @@ bibentry(bibtype = "Manual",
 @end example
 
 Note the way that information that may need to be updated is picked up
-from object @code{meta}, a parsed version of the @file{DESCRIPTION}
-file@footnote{this object is available since @R{} 2.8.0, so the
-@samp{Depends} field in the @file{DESCRIPTION} file should contain
-something at least as restrictive as @samp{R (>= 2.8}.} -- it is
-tempting to hardcode such information, but it normally then gets
-outdated.  See @code{?bibentry} for further details of the information
-which can be provided.
+from object @code{meta}, a parsed version of the @file{DESCRIPTION} file
+-- it is tempting to hardcode such information, but it normally then
+gets outdated.  See @code{?bibentry} for further details of the
+information which can be provided.
 
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
@@ -6151,9 +6184,9 @@ a hyperlink in @HTML{} and PDF conversion.  Displayed using
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled as `verbatim' text (with percent and
 braces escaped by backslash), and rendered as a hyperlink in @HTML{} and
-PDF conversion.  Linefeeds are removed, and as from @R{} 3.2.0 leading
-and trailing whitespace@footnote{as defined by the @R{} function
-@code{trimws}.} is removed. @xref{Specifying URLs}.
+PDF conversion.  Linefeeds are removed, and leading and trailing
+whitespace@footnote{as defined by the @R{} function @code{trimws}.} is
+removed. @xref{Specifying URLs}.
 
 Displayed using @code{typewriter} font where possible.
 
@@ -6163,8 +6196,8 @@ Indicate a hyperlink to the World Wide Web. The first argument is
 handled as `verbatim' text (with percent and braces escaped by
 backslash) and is used as the @acronym{URL} in the hyperlink, with the
 second argument of @LaTeX{}-like text displayed to the user.  Linefeeds
-are removed from the first argument, and as from @R{} 3.2.0 leading and
-trailing whitespace is removed.
+are removed from the first argument, and leading and trailing whitespace
+is removed.
 
 Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
 place of @samp{(VS.85)}) may not work correctly in versions of @R{}
@@ -7251,7 +7284,7 @@ profile DLLs on Windows.
 @menu
 * Linux::                       
 * Solaris::                     
-* macOS::                        
+* macOS::                       
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code
@@ -7310,6 +7343,7 @@ dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
                  as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
 system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
 @end example
+@noindent
 with timings from the final step
 @example
    user  system elapsed
@@ -7324,6 +7358,7 @@ with timings from the final step
 "sprintf"                 0.74    17.87       0.98     23.67
 ...
 @end example
+@noindent
 so the conversion from character to @code{POSIXlt} takes most of the
 time.
 
@@ -7336,6 +7371,7 @@ opannotate --source /path/to/R_HOME/bin/exec/R
 ## And for the system time
 opreport -l /lib64/libc.so.6
 @end example
+@noindent
 The first report shows where (which library etc) the time was spent:
 @example
 CPU_CLK_UNHALT...|
@@ -7373,6 +7409,7 @@ samples  %        image name symbol name
 584       1.6015  R           day_of_the_week
 ...
 @end example
+@noindent
 @command{opannotate} shows that 31% of the time in @R{} is spent in
 @file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
 The analysis for @file{libc} showed that calls to @code{wcsftime}
@@ -7692,7 +7729,8 @@ something like
 options(expressions=500)
 @end example
 
-@noindent and re-run the example showing the error.
+@noindent 
+and re-run the example showing the error.
 
 Sometimes there is warning that clearly is the precursor to some later
 error, but it is not obvious where it is coming from.  Setting
@@ -8153,8 +8191,8 @@ Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
 in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
-on the path or has been renamed@footnote{as Ubuntu does.}, one can use an
-environment variable, e.g.@:
+on the path or has been renamed@footnote{as Ubuntu is said to do.}, one
+can use an environment variable, e.g.@:
 
 @example
 ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
@@ -8187,6 +8225,7 @@ CXX = g++ -fsanitize=address -fno-omit-frame-pointer
 F77 = gfortran -fsanitize=address
 FC = gfortran -fsanitize=address
 @end example
+@noindent
 (Note that @code{-fsanitize=address} has to be part of the compiler
 specification to ensure it is used for linking.  These settings will not
 be honoured by packages which ignore @file{~/.R/Makevars}.)  It will
@@ -8212,8 +8251,15 @@ produced: for @command{gdb} or @command{lldb} you could use
 @example
 break __asan_report_error
 @end example
+@noindent
 (See
 @uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
+
+Recent versions@footnote{This is expected to be in @command{gcc} 7 and
+@command{clang} 4.0.0.  Currently for @command{gcc} it is implied by
+@option{-fsanitize=address}.} added the flag
+@option{-fsanitize-address-use-after-scope}: see
+@uref{https://github.com//google//sanitizers//wiki//AddressSanitizerUseAfterScope}.
 
 @menu
 * Using Leak Sanitizer::        
@@ -8309,6 +8355,7 @@ addition,
 @example
 -fsanitize=unsigned-integer-overflow
 @end example
+@noindent
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
@@ -8495,11 +8542,11 @@ disabling it.)
 
 A fairly common cause of such crashes is a package which uses @code{.C}
 or @code{.Fortran} and writes beyond (at either end) one of the
-arguments it is passed.  As from @R{} 3.0.0 there is a good way to
-detect this: using @code{options(CBoundsCheck = TRUE)} (which can be
-selected @emph{via} the environment variable @env{R_C_BOUNDS_CHECK=yes)}
-changes the way @code{.C} and @code{.Fortran} work to check if the
-compiled code writes in the 64 bytes at either end of an argument.
+arguments it is passed.  There is a good way to detect this: using
+@code{options(CBoundsCheck = TRUE)} (which can be selected @emph{via}
+the environment variable @env{R_C_BOUNDS_CHECK=yes)} changes the way
+@code{.C} and @code{.Fortran} work to check if the compiled code writes
+in the 64 bytes at either end of an argument.
 
 Another cause of a `crash' is to overrun the C stack.  @R{} tries to
 track that in its own code, but it may happen in third-party compiled
@@ -8840,6 +8887,7 @@ subroutine.
 @end multitable
 @end quotation
 
+@noindent
 Do please note the first two.  On the 64-bit Unix/Linux/macOS platforms,
 @code{long} is 64-bit whereas @code{int} and @code{INTEGER} are 32-bit.
 Code ported from S-PLUS (which uses @code{long *} for @code{logical} and
@@ -8886,10 +8934,10 @@ package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from the body of a function defined in a package namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
-directive will be used.  However, prior to @R{} 2.15.2 the detection of
-the correct namespace is unreliable and you are strongly recommended to
-use the @code{PACKAGE} argument for packages to be used with earlier
-versions of @R{}.
+directive will be used.  
+@c However, prior to @R{} 2.15.2 the detection of the correct namespace is
+@c unreliable and you are strongly recommended to use the @code{PACKAGE}
+@c argument for packages to be used with earlier versions of @R{}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
@@ -9052,8 +9100,6 @@ unload routines for the @code{mylib} DLL.
 @quotation
 @cartouche
 @example
-#include <R.h>
-#include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 
 void
@@ -9073,10 +9119,12 @@ R_unload_mylib(DllInfo *info)
 @end quotation
 
 If a shared object/DLL is loaded more than once the most recent version
-is used.  More generally, if the same symbol name appears in several
-shared objects, the most recently loaded occurrence is used.  The
-@code{PACKAGE} argument and registration (see the next section) provide
-good ways to avoid any ambiguity in which occurrence is meant.
+is used.@footnote{Strictly this is OS-specific, but no exceptions have
+been seen for many years.}  More generally, if the same symbol name
+appears in several shared objects, the most recently loaded occurrence
+is used.  The @code{PACKAGE} argument and registration (see the next
+section) provide good ways to avoid any ambiguity in which occurrence is
+meant.
 
 On Unix-alikes the paths used to resolve dynamically linked dependent
 libraries are fixed (for security reasons) when the process is launched,
@@ -9098,20 +9146,39 @@ argument to @code{dyn.load}.  This is (by default) used by
 @section Registering native routines
 @cindex Registering native routines
 
+@menu
+* Speed considerations::        
+* Converting a package to use registration::  
+* Linking to native routines in other packages::  
+@end menu
+
 By `native' routine, we mean an entry point in compiled code.
 
 In calls to @code{.C}, @code{.Call}, @code{.Fortran} and
 @code{.External}, @R{} must locate the specified native routine by
 looking in the appropriate shared object/DLL.  By default, @R{} uses the
-operating system-specific dynamic loader to lookup the symbol in all
-loaded DLLs and elsewhere.  Alternatively, the author of the DLL
-can explicitly register routines with @R{} and use a single,
+operating-system-specific dynamic loader to lookup the symbol in
+all@footnote{For calls from within a namespace the search is confined to
+the DLL loaded for that package.} loaded DLLs and the @R{} executable
+or libraries it is linked to.  Alternatively, the author of the DLL can
+explicitly register routines with @R{} and use a single,
 platform-independent mechanism for finding the routines in the DLL.  One
 can use this registration mechanism to provide additional information
 about a routine, including the number and type of the arguments, and
-also make it available to @R{} programmers under a different name.  In
-the future, registration may be used to implement a form of ``secure''
-or limited native access.
+also make it available to @R{} programmers under a different name.
+@c No sign of this in 15 years ....
+@c In the future, registration may be used to
+@c implement a form of ``secure'' or limited native access.
+
+Registering routines has two main advantages: it provides a
+faster@footnote{For unregistered entry points the OS's @code{dlsym}
+routine is used to find addresses.  Its performance varies considerably
+by OS and even in the best case it will need to search a much larger
+symbol table than, say, the table of @code{.Call} entry points.} way to
+find the address of the entry point @emph{via} tables stored in the DLL
+at compilation time, and it provides a run-time check that the entry
+point is called with the right number of arguments and, optionally, the
+right argument types.
 
 @findex R_registerRoutines
 To register routines with @R{}, one calls the C routine
@@ -9123,7 +9190,7 @@ takes 5 arguments.  The first is the @code{DllInfo} object passed by
 information about the methods.  The remaining 4 arguments are arrays
 describing the routines for each of the 4 different interfaces:
 @code{.C}, @code{.Call}, @code{.Fortran} and @code{.External}.  Each
-argument is a @code{FIND}-terminated array of the element types given in
+argument is a @code{NULL}-terminated array of the element types given in
 the following table:
 
 @quotation
@@ -9135,7 +9202,7 @@ the following table:
 @end multitable
 @end quotation
 
-Currently, the @code{R_ExternalMethodDef} is the same as
+Currently, the @code{R_ExternalMethodDef} type is the same as
 @code{R_CallMethodDef} type and contains fields for the name of the
 routine by which it can be accessed in @R{}, a pointer to the actual
 native symbol (i.e., the routine itself), and the number of arguments
@@ -9160,9 +9227,7 @@ static R_CallMethodDef callMethods[]  = @{
 along with any other routines for the @code{.Call} interface. For
 routines with a variable number of arguments invoked @emph{via} the
 @code{.External} interface, one specifies @code{-1} for the number of
-arguments which tells @R{} not to check the actual number passed.  Note
-that the number of arguments passed to @code{.External} were not
-checked prior to @R{} 3.0.0.
+arguments which tells @R{} not to check the actual number passed.
 
 Routines for use with the @code{.C} and @code{.Fortran} interfaces are
 described with similar data structures, but which have two additional
@@ -9195,6 +9260,7 @@ void myC(double *x, int *n, char **names, int *status);
 We would register it as
 
 @example
+@group
 static R_NativePrimitiveArgType myC_t[] = @{
     REALSXP, INTSXP, STRSXP, LGLSXP
 @};
@@ -9203,15 +9269,17 @@ static R_CMethodDef cMethods[] = @{
    @{"myC", (DL_FUNC) &myC, 4, myC_t@}
    @{NULL, NULL, 0@}
 @};
+@end group
 @end example
 
-One can also specify whether each argument is used simply as input, or
-as output, or as both input and output.  The style field in the
-description of a method is used for this.  The purpose is to
-allow@footnote{but this is not currently done.} @R{} to transfer values
-more efficiently across the @R{}-C/FORTRAN interface by avoiding copying
-values when it is not necessary. Typically, one omits this information
-in the registration data.
+@c Never implemented ....
+@c One can also specify whether each argument is used simply as input, or
+@c as output, or as both input and output.  The style field in the
+@c description of a method is used for this.  The purpose is to
+@c allow@footnote{but this is not currently done.} @R{} to transfer values
+@c more efficiently across the @R{}-C/FORTRAN interface by avoiding copying
+@c values when it is not necessary. Typically, one omits this information
+@c in the registration data.
 
 Having created the arrays describing each routine, the last step is to
 actually register them with @R{}.  We do this by calling
@@ -9233,25 +9301,25 @@ This routine will be invoked when @R{} loads the shared object/DLL named
 @code{.Fortran} and @code{.External} interfaces.  In our example, these
 are given as @code{NULL} since we have no routines of these types.
 
-When @R{} unloads a shared object/DLL, its registrations are
-automatically removed.  There is no other facility for unregistering a
-symbol.
+When @R{} unloads a shared object/DLL, its registrations are removed.
+There is no other facility for unregistering a symbol.
 
 Examples of registering routines can be found in the different packages
-in the @R{} source tree (e.g., @pkg{stats}).  Also, there is a
-brief, high-level introduction in @emph{R News} (volume 1/3, September
-2001, pages 20--23, @uref{https://www.r-project.org/@/doc/@/Rnews/Rnews_2001-3.pdf}).
+in the @R{} source tree (e.g., @pkg{stats} and @pkg{graphics}).  Also,
+there is a brief, high-level introduction in @emph{R News} (volume 1/3,
+September 2001, pages 20--23,
+@uref{https://www.r-project.org/@/doc/@/Rnews/Rnews_2001-3.pdf}).
 
 Once routines are registered, they can be referred to as @R{} objects if
 they this is arranged in the @code{useDynLib} call in the package's
-@file{NAMESPACE} file (see @ref{useDynLib}).  This avoids the overhead
-of looking up an entry point each time it is used, and ensure that the
-entry point in the package is the one used (without a @code{PACKAGE =
-"pkg"} argument).  So for example the @pkg{stats} package has
+@file{NAMESPACE} file (see @ref{useDynLib}).  So for example the
+@pkg{stats} package has
 @example
 # Refer to all C/Fortran routines by their name prefixed by C_
 useDynLib(stats, .registration = TRUE, .fixes = "C_")
 @end example
+
+@noindent
 in its @file{NAMESPACE} file, and then @code{ansari.test}'s default
 methods can contain
 @example
@@ -9260,12 +9328,67 @@ methods can contain
                 as.integer(m), as.integer(n))$p
 @end example
 
-@menu
-* Speed considerations::        
-* Linking to native routines in other packages::  
-@end menu
+@noindent
+This avoids the overhead of looking up an entry point each time it is
+used, and ensures that the entry point in the package is the one used
+(without a @code{PACKAGE = "pkg"} argument).
 
-@node Speed considerations, Linking to native routines in other packages, Registering native routines, Registering native routines
+@code{R_init_} routines are often of the form
+@example
+void attribute_visible R_init_mypkg(DllInfo *dll)
+@{
+    R_registerRoutines(dll, CEntries, CallEntries, FortEntries,
+                       ExternalEntries);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+...
+@}
+@end example
+
+@noindent
+@findex R_useDynamicSymbols
+@findex R_forceSymbols
+The @code{R_useDynamicSymbols} call says the DLL is not to be searched
+for entry points specified by character strings so @code{.C} etc calls
+will only find registered symbols: the @code{R_forceSymbols} call only
+allows @code{.C} etc calls which specify entry points by @R{} objects
+such as @code{C_pansari} (and not by character strings).  Each provides
+some protection against accidentally finding your entry points when
+people supply a character string without a package, and avoids slowing
+down such searches.  (For the visibility attribute @pxref{Controlling
+visibility}.)
+
+In more detail, if a package @code{mypkg} contains entry points
+@code{reg} and @code{unreg} and the first is registered as a 0-argument
+@code{.Call} routine, we could use (from code in the package)
+
+@example
+.Call("reg")
+.Call("unreg")
+@end example
+
+@noindent
+Without or with registration, these will both work.  If
+@code{R_init_mypkg} calls @code{R_useDynamicSymbols(dll, FALSE)}, only
+the first will work.  If in addition to registration the
+@file{NAMESPACE} file contains
+
+@example
+useDynLib(mypkg, .registration = TRUE, .fixes = "C_")
+@end example
+
+@noindent
+then we can call @code{.Call(C_reg)}.  Finally, if @code{R_init_mypkg}
+also calls @code{R_forceSymbols(dll, TRUE)}, only @code{.Call(C_reg)}
+will work (and not @code{.Call("reg")}).  This is usually what we want:
+it ensures that all of our own @code{.Call} calls go directly to the
+intended code in our package and that no one else accidentally finds our
+entry points.  (Should someone need to call our code from outside the
+package, for example for debugging, they can use
+@code{.Call(mypkg:::C_reg)}.)
+
+
+@node Speed considerations, Converting a package to use registration, Registering native routines, Registering native routines
 @subsection Speed considerations
 
 Sometimes registering native routines or using a @code{PACKAGE} argument
@@ -9278,12 +9401,17 @@ simple @code{.Call} function might be
 @example
 foo <- function(x) .Call("foo", x)
 @end example
+@noindent
 with C code
 @example
+@group
+#include <Rinternals.h>
+
 SEXP foo(SEXP x)
 @{
     return x;
 @}
+@end group
 @end example
 If we compile with by @command{R CMD SHLIB foo.c}, load the code by
 @code{dyn.load("foo.so")} and run @code{foo(pi)} it took around 22
@@ -9291,6 +9419,7 @@ microseconds (us). Specifying the DLL by
 @example
 foo2 <- function(x) .Call("foo", x, PACKAGE = "foo")
 @end example
+@noindent
 reduced the time to 1.7 us.
 
 Now consider making these functions part of a package whose
@@ -9309,19 +9438,19 @@ now takes about 1 us.  If we register the symbols in the
 @example
 foo3 <- function(x) .Call(C_foo, x)
 @end example
+@noindent
 then the address for the native routine is looked up just once when the
 package is loaded, and @code{foo3(pi)} takes about 0.8 us.
 
-Versions using @code{.C()} rather than @code{.Call()} take about 0.2 us
+Versions using @code{.C()} rather than @code{.Call()} took about 0.2 us
 longer.
 
 These are all quite small differences, but C routines are not uncommonly
-invoked millions of times for run times of a few microseconds, and those
-doing such things may wish to be aware of the differences.
+invoked millions of times for run times of a few microseconds each, and
+those doing such things may wish to be aware of the differences.
 
-On Linux and Solaris there is a much smaller overhead in looking up
-symbols so @code{foo(pi)} takes around 5 times as long as
-@code{foo3(pi)}.
+On Linux and Solaris there is a smaller overhead in looking up
+symbols.
 
 Symbol lookup on Windows used to be far slower, so @R{} maintains a
 small cache.  If the cache is currently empty enough that the symbol can
@@ -9330,9 +9459,271 @@ Solaris: if not it may be slower.  @R{}'s own code always uses
 registered symbols and so these never contribute to the cache: however
 many other packages do rely on symbol lookup.
 
+In more recent versions of @R{} all the standard packages register
+native symbols and do not allow symbol search, so in a new session
+@code{foo()} can only look in @file{foo.so} and may be as fast as
+@code{foo2()}.  This will no longer apply when many contributed packages
+are loaded, and generally those last loaded are searched first.  For
+example, consider @R{} 3.3.2 on x86_64 Linux.  In an empty @R{} session,
+both @code{foo()} and @code{foo2()} took about 0.75 us; however after
+packages @CRANpkg{igraph} and @CRANpkg{spatstat} had been loaded (which
+loaded another 12 DLLs), @code{foo()} took 3.6 us but @code{foo2()}
+still took about 0.80 us.  Using registration in a package reduced this
+to 0.55 us and @code{foo3()} took 0.40 us, times which were unchanged
+when further packages were loaded.
 
+@node Converting a package to use registration, Linking to native routines in other packages, Speed considerations, Registering native routines
+@subsection Example: converting a package to use registration
 
-@node Linking to native routines in other packages,  , Speed considerations, Registering native routines
+The @pkg{splines} package was converted to use symbol registration in
+2001, but we can use it as an example@footnote{Because it is a standard
+package, one would need to rename it before attempting to reproduce the
+account here.} of what needs to be done for a small package.
+
+@itemize
+
+@item
+Find the relevant entry points.
+This is somewhat OS-specific, but something like the following should be
+possible at the OS command-line
+
+@example
+@group
+nm -g /path/to/splines.so | grep " T "
+0000000000002670 T _spline_basis
+0000000000001ec0 T _spline_value
+@end group
+@end example
+
+@noindent
+This indicates that there are two relevant entry points. (They may or
+may not have a leading underscore, as here. Fortran entry points will
+have a trailing underscore.)  Check in the @R{} code that they are
+called by the package and how: in this case they are used by
+@code{.Call}.
+
+Alternatively, examine the package's @R{} code for all @code{.C},
+@code{.Fortran}, @code{.Call} and @code{.External} calls.
+
+@item
+Construct the registration table.
+First write skeleton registration code, conventionally in file
+@file{src/init.c} (or at the end of the only C source file in the
+package):
+
+@example
+@group
+#include <stdlib.h> // for NULL
+#include <R_ext/Rdynload.h>
+
+#define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
+
+const static R_CallMethodDef R_CallDef[] = @{
+   CALLDEF(spline_basis, ?),
+   CALLDEF(spline_value, ?),
+   @{NULL, NULL, 0@}
+@};
+
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+@}
+@end group
+@end example
+
+@noindent
+and then replace the @code{?} in the skeleton with the actual numbers of
+arguments.  You will need to add declarations of the functions unless
+appending to the only C source file.  Some packages will already have
+these in a header file, or you could create one and include it in
+@file{init.c}, for example @file{splines.h} containing
+
+@example
+@group
+#include <Rinternals.h> // for SEXP
+SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
+SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
+@end group
+@end example
+
+For examples of registering other types of calls, see packages
+@pkg{graphics} and @pkg{stats}.  In particular, when registering entry
+points for @code{.Fortran} one needs declarations as if called from C,
+such as
+
+@example
+@group
+#include <R_ext/RS.h>
+void F77_NAME(supsmu)(int *n, double *x, double *y,
+                      double *w, int *iper, double *span, double *alpha,
+                      double *smo, double *sc, double *edf);
+@end group
+@end example
+
+One can get away with inaccurate argument lists in the declarations: it
+is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
+@code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
+and @code{.Fortran} are all pointers, specifying them as @code{void *}
+suffices. (For most platforms one can omit all the arguments.)
+
+@item
+(Optional but highly recommended.)  Restrict @code{.Call} etc to using the
+symbols you chose to register by editing @file{src/init.c} to contain
+
+@example
+@group
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+@}
+@end group
+@end example
+
+@end itemize
+
+The remaining steps are optional but recommended.
+
+@itemize
+@item
+Edit the @file{NAMESPACE} file to create @R{} objects for the registered
+symbols:
+
+@example
+useDynLib(splines, .registration = TRUE, .fixes = "C_")
+@end example
+
+@item
+Find all the relevant calls in the @R{} code and edit them to use the
+@R{} objects.  This entailed changing the lines
+
+@smallexample
+temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
+y[accept] <- .Call("spline_value", knots, coeff, ord, x[accept], deriv, PACKAGE = "splines")
+y = .Call"spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines"))
+@end smallexample
+@noindent
+to
+
+@smallexample
+temp <- .Call(C_spline_basis, knots, ord, x, derivs)
+y[accept] <- .Call(C_spline_value, knots, coeff, ord, x[accept], deriv)
+y = .Call(C_spline_value, knots, coef(object), ord, x, deriv))
+@end smallexample
+
+@item
+Restrict @code{.Call} to using the @R{} symbols by editing
+@file{src/init.c} to contain
+
+@example
+@group
+void R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+@}
+@end group
+@end example
+
+@item
+Consider visibility.  On some OSes we can hide entry points from the
+loader, which precludes any possible name clashes and calling them
+accidentally (usually with incorrect arguments and crashing the @R{}
+process). If we repeat the first step we now see
+
+@example
+@group
+nm -g /path/to/splines.so | grep " T "
+0000000000002e00 T _R_init_splines
+00000000000025e0 T _spline_basis
+0000000000001e20 T _spline_value
+@end group
+@end example
+
+@noindent
+If there were any entry points not intended to be used by the package we
+should try to avoid exporting them, for example by making them
+@code{static}.  Now the two relevant entry points are only accessed
+@emph{via} the registration table, we can hide them.  There are two ways
+to do so on some Unix-alikes.  We can hide individual entry points
+@emph{via}
+
+@example
+@group
+#include <R_ext/Visibility.h>
+
+SEXP attribute_hidden
+spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
+@dots{}
+
+SEXP attribute_hidden
+spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
+@dots{}
+@end group
+@end example
+
+@noindent
+Alternatively, we can change the default visibility for all C symbols by
+including
+
+@example
+PKG_CFLAGS = $(C_VISIBILITY)
+@end example
+
+@noindent
+in @file{src/Makevars}, and then we need to allow registration by
+declaring @code{R_init_splines} to be visible:
+
+@example
+@group
+#include <R_ext/Visibility.h>
+
+void attribute_visible
+R_init_splines(DllInfo *dll)
+@dots{}
+@end group
+@end example
+
+@noindent
+@xref{Controlling visibility} for more details, including using Fortran
+code and ways to restrict visibility on Windows.
+
+@item
+We end up with a file @file{src/init.c} containing
+
+@quotation
+@cartouche
+@example
+#include <stdlib.h>
+#include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>  // optional
+
+#include "splines.h"
+
+#define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
+
+const static R_CallMethodDef R_CallDef[] = @{
+    CALLDEF(spline_basis, 4),
+    CALLDEF(spline_value, 5),
+    @{NULL, NULL, 0@}
+@};
+
+void
+attribute_visible  // optional
+R_init_splines(DllInfo *dll)
+@{
+    R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
+@}
+@end example
+@end cartouche
+@end quotation
+
+@end itemize
+
+@node Linking to native routines in other packages,  , Converting a package to use registration, Registering native routines
 @subsection Linking to native routines in other packages
 
 In addition to registering C routines to be called by @R{}, it can at
@@ -9354,7 +9745,7 @@ available to C code in other packages would include the call
 @example
 R_RegisterCCallable("packA", "myCfun", myCfun);
 @end example
-
+@noindent
 in its initialization function @code{R_init_packA}.  A package
 @pkg{packB} that wants to use this routine would retrieve the function
 pointer with a call of the form
@@ -9381,8 +9772,9 @@ loaded@footnote{so there needs to be a corresponding @code{import} or
 (so the path to their compiled code has been registered).
 
 
-A @acronym{CRAN} example of the use of this mechanism is package
-@CRANpkg{lme4}, which links to @CRANpkg{Matrix}.
+@acronym{CRAN} examples of the use of this mechanism include @CRANpkg{coxme}
+linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
+@CRANpkg{zoo}
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
@@ -9805,7 +10197,7 @@ This needs an entry in @file{Makevars.win} of the form
 @example
 PKG_LIBS= -L<something> -lexB
 @end example
-
+@noindent
 and one possibility is that @code{<something>} is the path to the
 installed @file{pkgB/libs} directory.  To find that we need to ask @R{}
 where it is by something like
@@ -9829,7 +10221,7 @@ all: $(SHLIB) before
 before: libexB.dll.a
 libexB.dll.a: exB.def
 @end example
-
+@noindent
 and then installing package @pkg{packA} will make and use the import
 library for @file{exB.dll}.  (One way to prepare the exports file is to
 use @file{pexports.exe}.)
@@ -11555,9 +11947,9 @@ set to the C @code{NULL} pointer.
 
 Finalizers can be run at many places in the code base and much of it,
 including the @R{} interpreter, is not re-entrant.  So great care is
-needed in choosing the code to be run in a finalizer. As from @R{} 3.0.3
-finalizers are marked to be run at garbage collection but only run at a
-somewhat safe point thereafter.
+needed in choosing the code to be run in a finalizer.  Finalizers are
+marked to be run at garbage collection but only run at a somewhat safe
+point thereafter.
 
 @cindex weak reference
 Weak references are used to allow the programmer to maintain information
@@ -11914,14 +12306,9 @@ This is only recommended for experts.
 Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
 
-@c Note that although @var{n} is @code{size_t}, there may be limits imposed
-@c by @R{}'s internal allocation mechanism.  These will only come into play
-@c on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
-@c just under 16Gb.
-
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
-needs more.  As from @R{} 3.2.0 there is also
+needs more.  There is also
 
 @example
 long double *R_allocLD(size_t @var{n})
@@ -13082,7 +13469,9 @@ The macro @code{WORDS_BIGENDIAN} is defined on
 big-endian@footnote{@uref{https://en.wikipedia.org/@/wiki/@/Endianness}.}
 systems (e.g.@: most OSes on Sparc and PowerPC hardware) and not on
 little-endian systems (nowadays all the commoner @R{} platforms).  It
-can be useful when manipulating binary files.
+can be useful when manipulating binary files.  NB: these macros apply
+only to the C compiler used to build @R{}, not necessarily to another C
+or C++ compiler.
 
 Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
 defines a macro @code{R_VERSION} giving the version number encoded as an
@@ -13105,8 +13494,8 @@ header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @samp{2.2}).
 
 Packages which use @code{alloca} need to ensure it is defined: as it is
-part of neither C nor POSIX there is no standard way to do so.  As
-from @R{} 3.2.2 one can use
+part of neither C nor POSIX there is no standard way to do so.  One can
+use
 
 @example
 #include <Rconfig.h> // for HAVE_ALLOCA_H
@@ -13158,17 +13547,18 @@ code.
 @section Controlling visibility
 @cindex Visibility
 
-Header @file{R_ext/Visibility} has some definitions for controlling the
+Header @file{R_ext/Visibility.h} has some definitions for controlling the
 visibility of entry points.  These are only effective when
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
 is configured and recorded in header @file{Rconfig.h} (included by
-@file{R_ext/Visibility.h}).  It is generally defined on modern
-Unix-alikes with a recent compiler@footnote{It is defined by the Intel
-compilers, but also hides unsatisfied references and so cannot be used
-with @R{}.}, but not supported on macOS nor Windows.  Minimizing the
-visibility of symbols in a shared library will both speed up its loading
-(unlikely to be significant) and reduce the possibility of linking to
-other entry points of the same name.
+@file{R_ext/Visibility.h}).  It is often defined on modern Unix-alikes
+with a recent compiler@footnote{It is defined by the Intel compilers,
+but also hides unsatisfied references and so cannot be used with @R{}.
+It is not supported by the AIX nor Solaris compilers.}, but not
+supported on macOS nor Windows.  Minimizing the visibility of symbols in
+a shared library will both speed up its loading (unlikely to be
+significant) and reduce the possibility of linking to other entry points
+of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
@@ -13340,7 +13730,7 @@ Let us re-iterate the advice to include system headers before the @R{}
 header files, especially @file{Rinternals.h} (included by
 @file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may be
 used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
-@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}, as from @R{} 3.1.0).
+@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
@@ -14087,9 +14477,14 @@ extern uintptr_t R_CStackStart; /* Initial stack address */
 @end example
 
 @noindent
-Note that @code{uintptr_t} is a C99 type for which a substitute is
-defined in @R{}, so your code needs to define @code{HAVE_UINTPTR_T}
-appropriately.
+Note that @code{uintptr_t} is an optional C99 type for which a
+substitute is defined in @R{}, so your code needs to define
+@code{HAVE_UINTPTR_T} appropriately.  To do so, test if the type is
+defined in C header @file{stdint.h} or C++ header @file{cstdint} and if
+so include the header and define @code{HAVE_UINTPTR_T} before including
+@file{Rinterface.h}.  (As from @R{} 3.4.0 for C code one can simply
+include @file{Rconfig.h}, possibly @emph{via} @file{R.h}, and for C++11
+code @file{Rinterface.h} will include the header @file{cstdint}.)
 
 These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having
@@ -14421,11 +14816,6 @@ using backslashes).  If it does not, look for version-specific keys like
 algorithm as @code{2.11.0 patched > 2.11.0 > 2.11.0 alpha > 2.8.1}) and
 use its value for @code{InstallPath}.
 @end itemize
-
-Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
-were in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
-@file{R_HOME\bin\x64}.  So you may need to arrange to look first in the
-architecture-specific subdirectory and then in @file{R_HOME\bin}.
 
 @node Function and variable index, Concept index, Linking GUIs and other front-ends to R, Top
 @unnumbered Function and variable index

@@ -386,6 +386,8 @@ int progress(void *clientp, double dltotal, double dlnow,
 	    if (R_Consolefile) fflush(R_Consolefile);
 	}
 	putdashes(&ndashes, (int)(50*dlnow/total));
+    } else {
+        total = 0.;             /* multiple hops on FOLLOWLOCATION */
     }
     return 0;
 }
@@ -446,7 +448,6 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     FILE *out[nurls];
 
     for(int i = 0; i < nurls; i++) {
-	out[i] = NULL;
 	url = CHAR(STRING_ELT(scmd, i));
 	hnd[i] = curl_easy_init();
 	curl_easy_setopt(hnd[i], CURLOPT_URL, url);
@@ -457,35 +458,19 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
 	if (!cacheOK)
 	    curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
+	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
 
-	/* check that connection can be opened... */
-	curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
-	curl_easy_setopt(hnd[i], CURLOPT_NOBODY, 1L);
-	curl_easy_setopt(hnd[i], CURLOPT_HEADERFUNCTION, &rcvHeaders);
-	curl_easy_setopt(hnd[i], CURLOPT_WRITEHEADER, &headers);
-	/* libcurl (at least 7.40.0) does not respect CURLOPT_NOBODY
-	   for some ftp header info (Content-Length and Accept-ranges). */
-	curl_easy_setopt(hnd[i], CURLOPT_WRITEFUNCTION, &rcvBody);
-	CURLcode ret = curl_easy_perform(hnd[i]);
-	curl_multi_add_handle(mhnd, hnd[i]);
-	if (ret != CURLE_OK) {
-	    n_err += 1;
-	    /* warning signalled via curlMultiCheckerrs */
-	    continue;
-	}
-	/* ...and that destfile can be written */
+	/* check that destfile can be written */
 	file = translateChar(STRING_ELT(sfile, i));
 	out[i] = R_fopen(R_ExpandFileName(file), mode);
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
+	curl_multi_add_handle(mhnd, hnd[i]);
 	if (!out[i]) {
 	    n_err += 1;
 	    warning(_("URL %s: cannot open destfile '%s', reason '%s'"),
 		    url, file, strerror(errno));
 	    continue;
 	}
-	curl_easy_setopt(hnd[i], CURLOPT_WRITEFUNCTION, NULL); /* necessary? */
-	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
-	curl_easy_setopt(hnd[i], CURLOPT_NOBODY, 0L);
-	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
 
 	total = 0.;
 	if (!quiet && nurls <= 1) {
@@ -520,7 +505,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
-	}
+	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
 
 	/* This would allow the negotiation of compressed HTTP transfers,
 	   but it is not clear it is always a good idea.
@@ -582,6 +567,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (int i = 0; i < nurls; i++) {
 	if (out[i])
+            /* FIXME: remove empty / corrupt files on error */
             fclose(out[i]);
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);

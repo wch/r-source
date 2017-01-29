@@ -9,6 +9,7 @@
 \alias{summarize_check_packages_in_dir_results}
 \alias{summarize_check_packages_in_dir_timings}
 \alias{check_packages_in_dir_changes}
+\alias{check_packages_in_dir_details}
 \title{Check Source Packages and Their Reverse Dependencies}
 \description{
   Check source packages in a given directory, optionally with their
@@ -36,6 +37,7 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
 
 check_packages_in_dir_changes(dir, old,
                               outputs = FALSE, sources = FALSE)
+check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
 }
 \arguments{
   \item{dir}{a character string giving the path to the directory with
@@ -82,6 +84,12 @@ check_packages_in_dir_changes(dir, old,
     the checks.}
   \item{sources}{a logical indicating whether to also investigate the
     changes in the source files checked (default: \code{FALSE}).}
+  \item{logs}{a character vector with the paths of \file{00check.log} to
+    analyze.  Only used if \code{dir} was not given.}
+  \item{drop_ok}{a logical indicating whether to drop checks with
+    \sQuote{ok} status, or a character vector with the \sQuote{ok}
+    status tags to drop.  The default corresponds to tags \samp{OK},
+    \samp{NONE} and \samp{SKIPPED}.}
 }
 \details{
   \code{check_packages_in_dir} allows to conveniently check source
@@ -122,6 +130,12 @@ check_packages_in_dir_changes(dir, old,
   and the corresponding check results, possible changes in the check
   results can conveniently be analyzed as controlled via options
   \code{outputs} and \code{sources}.
+
+  \code{check_packages_in_dir_details} analyzes check log files to
+  obtain check details as a data frame which can be used for further
+  processing, providing check name, status and output for every check
+  performed and not dropped according to status tag (via variables
+  \code{Check}, \code{Status} and \code{Output}, respectively).
 }
 \note{
   This functionality is still experimental: interfaces may change in

@@ -364,12 +364,12 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             n.col.vars <- length(col.vars)
             if(is.null(names(col.vars)))
                 names(col.vars) <-
-                    paste("Factor", seq_along(col.vars), sep = ".")
+                    paste0("Factor.", seq_along(col.vars))
             else {
                 nam <- names(col.vars)
                 ind <- which(!nzchar(nam))
                 names(col.vars)[ind] <-
-                    paste("Factor", ind, sep = ".")
+                    paste0("Factor.", ind)
             }
         }
     }

@@ -15,7 +15,7 @@
       to do so.
 
       \item \code{summary.default()} no longer rounds, but its print
-      method does, resulting in much less extraneous rounding notably of
+      method does resulting in less extraneous rounding, notably of
       numbers in the ten thousands.
 
       \item \code{factor(x, exclude = L)} behaves more rationally when
@@ -32,14 +32,24 @@
       always for logic and comparison operations in these cases (e.g.,
       compare \code{matrix(1,1) + 2:3} and \code{matrix(1,1) < 2:3}).
 
-      \item The JIT byte code compiler is now enabled by default at
-      level 3. This means functions will be compiled on first use and
-      top level loops will be compiled and then run.  Thanks to Tomas
-      Kalibera for extensive work to make this possible. For now, the
-      compiler will not compile code containing explicit calls to
-      \code{browser()}. This is to support single stepping from the
-      \code{browser()} call. The JIT can be disabled using
-      \code{compiler::enableJIT()}.
+      \item The JIT (\sQuote{Just In Time}) byte code compiler is now
+      enabled by default at level 3. This means functions will be
+      compiled on first or second use and top-level loops will be
+      compiled and then run.  Thanks to Tomas Kalibera for extensive
+      work to make this possible.
+
+      For now, the compiler will not compile code containing explicit
+      calls to \code{browser()}: this is to support single stepping from
+      the \code{browser()} call.
+
+      JIT compilation can be disabled using \code{compiler::enableJIT(0)}
+      or by setting environment variable \env{R_ENABLE_JIT} to \code{0}.
+
+      \item \code{xtabs()} works more consistently with \code{NA}s, also
+      in its result no longer setting them to \code{0}.  Further, a new
+      logical option \code{addNA} allows to count \code{NA}s where
+      appropriate.  Additionally, for the case \code{sparse=TRUE}, the
+      result's \code{dimnames} are identical to the default case's.
     }
   }
 
@@ -257,6 +267,45 @@
       \item \code{ppr()} and \code{supsmu()} get an optional
       \code{trace} argument, and \code{ppr(.., sm.method = ..spline)} is
       no longer limited to sample size \eqn{n \le 2500}{n <= 2500}.
+
+      \item \code{print.POSIXct()} gets optional \code{tz} and
+      \code{usetz} arguments, thanks to a report from Jennifer S. Lyon.
+
+      \item New function \code{check_packages_in_dir_details()} in
+      package \pkg{tools} for analyzing check log files to obtain check
+      details.
+
+      \item Package \pkg{tools} now exports function
+      \code{CRAN_package_db()} for obtaining information about current
+      packages in the \acronym{CRAN} package repository, and several
+      functions for obtaining the check status of these packages.
+
+      \item The (default) Stangle driver \code{Rtangle} allows
+      \code{annotate} to be a function and gets a new
+      \code{drop.evalFALSE} option.
+
+      \item The default method for \code{quantile(x, prob)} should now
+      be monotone in \code{prob}, even in border cases, see \PR{16672}.
+
+      \item \code{bug.report()} now tries to extract an email address
+      from a \samp{BugReports} field, and if there is none, from a
+      \samp{Contacts} field.
+
+      \item The \code{format()} and \code{print()} methods for
+      \code{object.size()} results get new options \code{standard} and
+      \code{digits}; notably, \code{standard = "IEC"} and
+      \code{standard = "SI"} allow more standard abbreviations than the
+      default ones, e.g., for kilo bytes.  From contributions by Henrik
+      Bengtsson.
+
+      \item Improved performance and robustness of matrix multiplication
+      using BLAS: DGEMV is now used instead of DGEMM for matrix/vector and
+      vector/matrix multiplication, DGEMM/DGEMV is bypassed when the input
+      has NaN or Inf values, and performance for these input checks has been
+      improved.
+
+      \item \code{tapply()} gets new option \code{default = NA}
+      allowing to change the previously hardcoded value.
     }
   }
 
@@ -290,9 +339,16 @@
       \file{R_ext/QuartzDevice.h} and \file{R_ext/eventloop.h} are no
       longer installed on Windows.
 
-      \item No-longer installed headers \file{GraphicsBase.h},
+      \item No-longer-installed headers \file{GraphicsBase.h},
       \file{RGraphics.h}, \file{Rmodules/RX11.h} and
       \file{Rmodules/Rlapack.h} which had a LGPL license no longer do so.
+
+      \item \code{HAVE_UINTPTR_T} is now defined where appropriate by
+      \code{Rconfig.h} so that it can be included before
+      \code{Rinterface.h} when \code{CSTACK_DEFNS} is defined and a C
+      compiler (not C++) is in use.  \code{Rinterface.h} now includes C
+      header \file{stdint.h} or C++11 header \file{cstdint} where
+      needed.
     }
   }
 
@@ -335,6 +391,9 @@
       \item If available, the POSIX 2008 system call \code{utimensat}
       will be used by \code{setFileTime()} and \code{file.copy(copy.date
 	= TRUE)}.  This may result in slightly more accurate file times.
+
+      \item The check for the zlib version is now robust to versions
+      longer than 5 characters, including 1.2.10.
     }
   }
 
@@ -352,6 +411,15 @@
       \item There is support for compiling C++14 code in packages on
       suitable platforms: see \sQuote{Writing R Extensions} for how to
       request this.
+
+      \item The order of flags when \samp{LinkingTo} other packages has
+      been changed so their include directories come earlier, before
+      those specified in \code{CPPFLAGS}.  This will only have an effect
+      if non-system include directories are included with \option{-I}
+      flags in \code{CPPFLAGS} (and so not the default
+      \code{-I/usr/local/include} on most platforms).
+      %% This ensures that BH's 'boost' directory gets precedent over
+      %% any Boost headers in, say, /opt/csw/include .
     }
   }
 
@@ -378,16 +446,25 @@
       as tests by \command{R CMD check}. (Wish of \PR{17143})
 
       \item \command{R CMD build} and \command{R CMD check} now use the
-      \emph{union} of \env{R_LIBS} \code{.libPaths()}.  They may not be
-      equivalent, e.g., when the latter is determined by \env{R_PROFILE}.
+      \emph{union} of \env{R_LIBS} and \code{.libPaths()}.  They may not
+      be equivalent, e.g., when the latter is determined by
+      \env{R_PROFILE}.
 
       \item \command{R CMD build} now preserves dates when it copies files
       in preparing the tarball.  (Previously on Windows it changed the
       dates on all files; on Unix, it changed some dates when installing
       vignettes.)
 
-      \item \command{R CMD check --no-stop-on-test-error} now continues
-      running tests (in \file{tests/}) even if they give errors.
+      \item The new option \command{R CMD check --no-stop-on-test-error}
+      allows running the remaining tests (under \file{tests/}) even if
+      one gave an error.
+
+      \item Check customization via environment variables to detect side
+      effects of \code{.Call()} and \code{.External()} calls which alter
+      their arguments is described in §8 of the \sQuote{R Internals} manual.
+
+      \item \command{R CMD check} now checks any \samp{BugReports} field
+      to be non-empty and a suitable single URL.
     }
   }
 
@@ -403,6 +480,13 @@
 
       \item \code{unix.time()}, a traditional synonym for
       \code{system.time()}, has been deprecated.
+
+      \item \code{structure(NULL, ..)} is now deprecated as you cannot
+      set attributes on \code{\link{NULL}}.
+
+      \item Header \file{Rconfig.h} no longer defines
+      \samp{SUPPORT_OPENMP}; instead use \samp{_OPENMP} (as documented
+      for a long time).
     }
   }
 
@@ -500,16 +584,71 @@
       hence no longer leaks memory when reading from a full pipe, thanks
       to Gábor Csárdi, see thread starting at
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html}.
+
+      \item Failure to create file in \code{tempdir()} for compressed
+      \code{pdf()} graphics device no longer errors (then later
+      segfaults).  There is now a warning instead of error and
+      compression is turned off for the device.  Thanks to Alec
+      Wysoker (\PR{17191}).
+
+      \item Asking for \code{methods()} on \code{"|"} returns only S3
+      methods. See
+      \url{https://stat.ethz.ch/pipermail/r-devel/2016-December/073476.html}.
+
+      \item \code{dev.capture()} using Quartz Cocoa device (macOS) returned
+      invalid components if the back-end chose to use ARGB instead of RGBA
+      image format. (Reported by Noam Ross.)
+
+      \item \code{seq("2", "5")} now works too, equivalently to
+      \code{"2":"5"} and \code{seq.int()}.
+
+      \item \code{seq.int(to=1, by=1)} is now correct, other cases are
+      integer (instead of \code{double}) when \code{seq()} is integer
+      too, and the "non-finite" error messages are consistent between
+      \code{seq.default()} and \code{seq.int()}, no longer mentioning
+      \code{NaN} etc.
+
+      \item \code{download.file(method="libcurl")} does not check for
+      URL existence before attempting downloads; this is more robust to
+      servers that do not support HEAD or range-based retrieval, but may
+      create empty or incomplete files for aborted download requests.
+
+      \item Bandwidth selectors \code{bw.ucv()}, \code{bw.bcv()} and
+      \code{bw.SJ()} now avoid integer overflow for large sample sizes.
     }
   }
 }
 
 \section{\Rlogo CHANGES IN R 3.3.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The internal methods of \code{download.file()} and
+      \code{url()} now report if they are unable to follow the
+      redirection of a \samp{http://} URL to a \samp{https://} URL
+      (rather than failing silently).
+    }
+  }
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The check for the zlib version is now robust to versions
+      longer than 5 characters, including 1.2.10.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item Environmental variable \env{_R_CHECK_TESTS_NLINES_} controls
+      how \command{R CMD check} reports failing tests (see §8 of the
+      \sQuote{R Internals} manual).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
-      work also when \code{times} is larger than the maximal integer.
-      (\PR{16932})
+      work also when \code{times} is larger than the maximal integer,
+      including when it is of length greater than one. (\PR{16932})
 
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
@@ -532,6 +671,49 @@
 
       \item \code{getDLLRegisteredRoutines()} now produces its warning
       correctly when multiple DLLs match, thanks to Matt Dowle's \PR{17184}.
+
+      \item \code{Sys.timezone()} now returns non-NA also on platforms
+      such as \samp{Ubuntu 14.04.5 LTS}, thanks to Mikko Korpela's
+      \PR{17186}.
+
+      \item \code{format(x)} for an illegal \code{"POSIXlt"} object
+      \code{x} no longer segfaults.
+
+      \item \code{methods(f)} now also works for \code{f} \code{"("}
+      or \code{"{"}.
+
+      \item (Windows only)  \code{dir.create()} did not check the length
+      of the path to create, and so could overflow a buffer and crash
+      \R.  (\PR{17206})
+
+      \item On some systems, very small hexadecimal numbers in hex notation
+      would underflow to zero.  (\PR{17199})
+
+      \item \code{pmin()} and \code{pmax()} now work again for
+      \code{ordered} factors and 0-length S3 classed objects, thanks to
+      Suharto Anggono's \PR{17195} and \PR{17200}.
+
+      \item \code{bug.report()} did not do any validity checking on a
+      package's \samp{BugReports} field.  It now ignores an empty field,
+      removes leading whitespace and only attempts to open
+      \samp{http://} and \samp{https://} URLs, falling back to emailing
+      the maintainer.
+
+      \item Bandwidth selectors \code{bw.ucv()} and
+      \code{bw.SJ()} gave incorrect answers or incorrectly reported an
+      error (because of integer overflow) for inputs longer than
+      46341.  Similarly for \code{bw.bcv()} at length 5793.
+
+      Another possible integer overflow is checked and may result in an
+      error report (rather than an incorrect result) for much longer
+      inputs (millions for a smooth distribution).
+
+      \item \code{findMethod} failed if the active signature had
+      expanded beyond what a particular package used. (Example with
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
+
+      \item \code{qbeta()} underflowed too early in some very asymmetric
+      cases.  (\PR{17178})
     }
   }
 }
@@ -1093,6 +1275,10 @@
       \code{makevars_site()} in package \pkg{tools} to determine the
       location of the user and site specific \file{Makevars} files for
       customizing package compilation.
+
+      \item If a reference class has a validity method,
+       \code{validObject} will be called automatically from the
+       default initialization method for reference classes.
     }
   }
 

@@ -30,8 +30,7 @@ static SEXP cumsum(SEXP x, SEXP s)
     LDOUBLE sum = 0.;
     double *rx = REAL(x), *rs = REAL(s);
     for (R_xlen_t i = 0 ; i < XLENGTH(x) ; i++) {
-	if (ISNAN(rx[i])) break;
-	sum += rx[i];
+	sum += rx[i]; /* NA and NaN propagated */
 	rs[i] = (double) sum;
     }
     return s;
@@ -74,7 +73,7 @@ static SEXP cumprod(SEXP x, SEXP s)
     double *rx = REAL(x), *rs = REAL(s);
     prod = 1.0;
     for (R_xlen_t i = 0 ; i < XLENGTH(x) ; i++) {
-	prod *= rx[i];
+	prod *= rx[i]; /* NA and NaN propagated */
 	rs[i] = (double) prod;
     }
     return s;
@@ -164,10 +163,7 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
 	UNPROTECT(1);
 	if(n == 0) return s;
-	for (i = 0 ; i < n ; i++) {
-	    COMPLEX(s)[i].r = NA_REAL;
-	    COMPLEX(s)[i].i = NA_REAL;
-	}
+	/* no need to initialize s, ccum* set all elements */
 	switch (PRIMVAL(op) ) {
 	case 1:	/* cumsum */
 	    return ccumsum(t, s);
@@ -218,7 +214,7 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
 	UNPROTECT(2);
 	if(n == 0) return s;
-	for(i = 0 ; i < n ; i++) REAL(s)[i] = NA_REAL;
+	/* no need to initialize s, cum* set all elements */
 	switch (PRIMVAL(op) ) {
 	case 1:	/* cumsum */
 	    return cumsum(t,s);

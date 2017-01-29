@@ -1,6 +1,6 @@
 % File src/library/base/man/reg.finalizer.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{reg.finalizer}
@@ -42,7 +42,7 @@
   \R's interpreter is not re-entrant and the finalizer could be run in
   the middle of a computation.  So there are many functions which it is
   potentially unsafe to call from \code{f}: one example which caused
-  trouble is \code{\link{options}}.  As from \R 3.0.3 finalizers are
+  trouble is \code{\link{options}}.  Finalizers are
   scheduled at garbage collection but only run at a relatively safe time
   thereafter.
 }

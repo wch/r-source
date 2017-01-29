@@ -154,6 +154,7 @@ export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        RtangleWritedoc, RweaveChunkPrefix, RweaveEvalWithOpt,
        RweaveTryStop, SweaveHooks, RweaveLatexWritedoc,
        RweaveLatexOptions, RweaveLatexFinish,
+       .RtangleCodeLabel,
        makeRweaveLatexCodeRunner)
 
 if(tools:::.OStype() == "unix") {

@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -137,8 +137,7 @@
 }
 \note{
   It is not intended that there be interaction with the user during
-  startup code.  Attempting to do so can crash the \R process,
-  especially so prior to \R 3.0.2.
+  startup code.  Attempting to do so can crash the \R process.
   
 #ifdef unix
   On Unix versions of \R here is also a  file

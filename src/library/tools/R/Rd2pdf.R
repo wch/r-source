@@ -358,7 +358,7 @@
             "Using '-o \"\"' will choose an output filename by removing a '.Rd'",
             "extension from FILE and adding a suitable extension.",
             "",
-            "Report bugs at bugs.r-project.org .", sep = "\n")
+            "Report bugs at <https://bugs.R-project.org>.", sep = "\n")
     }
 
     options(showErrorCalls = FALSE, warn = 1)
@@ -707,7 +707,7 @@ setEncoding2, "
             "The output papersize is set by the environment variable R_PAPERSIZE.",
             "The PDF previewer is set by the environment variable R_PDFVIEWER.",
             "",
-            "Report bugs at bugs.r-project.org .",
+            "Report bugs at <https://bugs.R-project.org>.",
             sep = "\n")
     }
 
@@ -837,7 +837,7 @@ setEncoding2, "
         q("no", status = 2L, runLast = FALSE)
     }
     dir.create(build_dir, FALSE)
-    if(!nzchar(output)) output <- paste("Rd2", out_ext, sep = ".")
+    if(!nzchar(output)) output <- paste0("Rd2.", out_ext)
     if(file.exists(output) && !force) {
         cat("file", sQuote(output), "exists; please remove it first\n")
         q("no", status = 1L, runLast = FALSE)
@@ -866,7 +866,7 @@ setEncoding2, "
 
     setwd(startdir)
     cat("Saving output to", sQuote(output), "...\n")
-    file.copy(file.path(build_dir, paste("Rd2", out_ext, sep = ".")), output,
+    file.copy(file.path(build_dir, paste0("Rd2.", out_ext)), output,
               overwrite = force)
     cat("Done\n")
 

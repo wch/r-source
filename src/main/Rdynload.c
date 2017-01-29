@@ -128,13 +128,15 @@ R_CPFun CPFun[MAX_CACHE];
 int nCPFun = 0;
 #endif
 
-#define MAX_NUM_DLLS	100
+static int MaxNumDLLs = 0; /* initialized in addDLL */
 
 static int CountDLL = 0;
 
 #include <R_ext/Rdynload.h>
 
-static DllInfo LoadedDLL[MAX_NUM_DLLS];
+/* Allocated in addDLL, free'd in DeleteDLL. Hence, if all loaded (added) DLLs
+   were unloaded (deleted), we would not have a memory leak. */
+static DllInfo* LoadedDLL = NULL;
 
 static int addDLL(char *dpath, char *name, HINSTANCE handle);
 static SEXP Rf_MakeDLLInfo(DllInfo *info);
@@ -149,8 +151,6 @@ attribute_hidden OSDynSymbol Rf_osDynSymbol;
 attribute_hidden OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
 void R_init_base(DllInfo *); /* In Registration.c */
-DL_FUNC R_dlsym(DllInfo *dll, char const *name,
-		R_RegisteredNativeSymbol *symbol);
 
 void attribute_hidden
 InitDynload()
@@ -212,7 +212,7 @@ R_addExternalRoutine(DllInfo *info,
 /*
  Returns a reference to the DllInfo object associated with the shared object
  with the path name `path'. This ensures uniqueness rather than having the
- undesirable situation of two object with the same name but in different
+ undesirable situation of two objects with the same name but in different
  directories.
  This is available so that it can be called from arbitrary C routines
  that need to call R_registerRoutines(). The initialization routine
@@ -488,6 +488,10 @@ found:
 	LoadedDLL[i - 1].forceSymbols = LoadedDLL[i].forceSymbols;
     }
     CountDLL--;
+    if (CountDLL == 0) {
+	free(LoadedDLL);
+	LoadedDLL = NULL;
+    }
     return 1;
 }
 
@@ -530,7 +534,7 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
     DllInfo *info = NULL;
 
     DeleteDLL(path);
-    if(CountDLL == MAX_NUM_DLLS) {
+    if(CountDLL == MaxNumDLLs) {
 	strcpy(DLLerror, _("`maximal number of DLLs reached..."));
 	return NULL;
     }
@@ -579,13 +583,6 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     char *dpath,  DLLname[PATH_MAX], *p;
     DllInfo *info;
 
-    info = &LoadedDLL[CountDLL];
-    /* default is to use old-style dynamic lookup.  The object's
-       initialization routine can limit access by setting this to FALSE.
-    */
-    info->useDynamicLookup = TRUE;
-    info->forceSymbols = FALSE;
-
     dpath = (char *) malloc(strlen(path)+1);
     if(dpath == NULL) {
 	strcpy(DLLerror, _("could not allocate space for 'path'"));
@@ -610,7 +607,16 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     if(p > DLLname && strcmp(p, SHLIB_EXT) == 0) *p = '\0';
 #endif
 
-    addDLL(dpath, DLLname, handle);
+    if (addDLL(dpath, DLLname, handle)) {
+	info = &LoadedDLL[CountDLL-1];
+	/* default is to use old-style dynamic lookup.  The object's
+	   initialization routine can limit access by setting this to FALSE.
+	*/
+	info->useDynamicLookup = TRUE;
+	info->forceSymbols = FALSE;
+	return info;
+    } else
+	return NULL;
 
     return(info);
 }
@@ -618,6 +624,43 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
 static int
 addDLL(char *dpath, char *DLLname, HINSTANCE handle)
 {
+    if (CountDLL == 0 && LoadedDLL == NULL) {
+	/* Note that it is likely that dlopen will use up at least one file
+	   descriptor for each DLL loaded (it may load further dynamically
+	   linked libraries), so we do not want to get close to the fd limit
+	   (which may be as low as 256). We currently set the limit to 60%
+	   of the maximum number of DLLs, when known, but never to more
+	   than 1000. If the limit is not known, we set the maximum to 100.
+	*/
+	int fdlimit = R_GetFDLimit();
+	if (fdlimit > 0) {
+	    MaxNumDLLs = (int) (0.6 * fdlimit);
+	    if (MaxNumDLLs > 1000) MaxNumDLLs = 1000;
+	} else
+	    MaxNumDLLs = 100;
+	/* memory is set to zero */
+	LoadedDLL = (DllInfo *) calloc(MaxNumDLLs, sizeof(DllInfo));
+	if (LoadedDLL == NULL) {
+	    strcpy(DLLerror, _("could not allocate space for DLL table"));
+	    if(handle)
+		R_osDynSymbol->closeLibrary(handle);
+	    free(dpath);
+	    return 0;
+	}
+    }
+
+    if(CountDLL == MaxNumDLLs) {
+	/* This check is only for the case when addDLL is called directly,
+	   bypassing AddDLL and R_RegisterDLL, which now happens only for
+	   "base" and "embedding". In practice, the limit should never
+	   be reached here. */
+	if(handle)
+	    R_osDynSymbol->closeLibrary(handle);
+	/* use error directly as the result is not checked by callers */
+	error(_("`maximal number of DLLs reached..."));
+	return 0; /* not reached */
+    }
+
     int ans = CountDLL;
     char *name = (char *) malloc(strlen(DLLname)+1);
     if(name == NULL) {

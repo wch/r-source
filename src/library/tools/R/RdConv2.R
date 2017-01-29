@@ -457,11 +457,10 @@ prepare2_Rd <- function(Rd, Rdfile)
 
     ## Check other sections are unique
     unique_tags <-
-        paste("\\",
-              c("usage", "arguments", "synopsis",
-                "format", "details", "value", "references", "source",
-                "seealso", "examples", "author", "encoding"),
-              sep = "")
+        paste0("\\",
+               c("usage", "arguments", "synopsis",
+                 "format", "details", "value", "references", "source",
+                 "seealso", "examples", "author", "encoding"))
     for (tag in unique_tags) {
         where <- which(sections == tag)
         if(length(where) > 1L) {
@@ -959,12 +958,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     ## \alias, \keyword and \note are allowed to be repeated
     ## Normally prepare_Rd will have dropped duplicates already
     unique_tags <-
-        paste("\\",
-              c("name", "title", # "description" checked above
-                "usage", "arguments",  "synopsis",
-                "format", "details", "value", "references", "source",
-                "seealso", "examples", "author", "encoding"),
-              sep = "")
+        paste0("\\",
+               c("name", "title", # "description" checked above
+                 "usage", "arguments",  "synopsis",
+                 "format", "details", "value", "references", "source",
+                 "seealso", "examples", "author", "encoding"))
     for(tag in intersect(sections[duplicated(sections)], unique_tags))
         warnRd(Rd, Rdfile, level = 5,
                sprintf("multiple sections named '%s' are not allowed", tag))

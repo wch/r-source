@@ -1590,12 +1590,11 @@ string @code{"NA"}.  Programmers who need to specify an explicit string
 @code{NA} should use @samp{as.character(NA)} rather than @code{"NA"}, or
 set elements to @code{NA} using @code{is.na<-}.
 
-As from @R{} 2.5.0 there are constants @code{NA_integer_},
-@code{NA_real_}, @code{NA_complex_} and @code{NA_character_} which will
-generate (in the parser) an @code{NA} value of the appropriate type,
-and will be used in deparsing when it is not otherwise possible to
-identify the type of an @code{NA} (and the @code{control} options ask
-for this to be done).
+There are constants @code{NA_integer_}, @code{NA_real_},
+@code{NA_complex_} and @code{NA_character_} which will generate (in the
+parser) an @code{NA} value of the appropriate type, and will be used in
+deparsing when it is not otherwise possible to identify the type of an
+@code{NA} (and the @code{control} options ask for this to be done).
 
 There is no @code{NA} value for raw vectors.
 
@@ -1647,9 +1646,8 @@ that component, and so on. The result is still a single element.
 The form using @code{$} applies to recursive objects such as lists and
 pairlists.  It allows only a literal character string or a symbol as the
 index.  That is, the index is not computable: for cases where you need
-to evaluate an expression to find the index, use @code{x[[expr]]}.  When
-@code{$} is applied to a non-recursive object the result used to be
-always @code{NULL}: as from @R{} 2.6.0 this is an error.
+to evaluate an expression to find the index, use @code{x[[expr]]}.
+Applying @code{$} to a non-recursive object is an error.
 
 @menu
 * Indexing by vectors::         
@@ -4397,10 +4395,10 @@ eight hex digits.
 A single quote may also be embedded directly in a double-quote delimited
 string and vice versa.
 
-As from @R{} 2.8.0, a `nul' (@code{\0}) is not allowed in a character
-string, so using @code{\0} in a string constant terminates the constant
-(usually with a warning): further characters up to the closing quote are
-scanned but ignored.
+A `nul' (@code{\0}) is not allowed in a character string, so using
+@code{\0} in a string constant terminates the constant (usually with a
+warning): further characters up to the closing quote are scanned but
+ignored.
 
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers

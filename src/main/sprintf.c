@@ -322,7 +322,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 				    size_t nc = strlen(outputString);
 				    char *z = Calloc(nc+1, char);
 				    strcpy(z, outputString);
-				    PROTECT(tmp = lang2(install("as.character"), _this));
+				    PROTECT(tmp = lang2(R_AsCharacterSymbol, _this));
 
 				    COERCE_THIS_TO_A
 				    strcpy(outputString, z);

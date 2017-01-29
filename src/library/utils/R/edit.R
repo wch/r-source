@@ -1,7 +1,7 @@
 #  File src/library/utils/R/edit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -253,10 +253,10 @@ edit.matrix <-
 }
 
 file.edit <-
-  function (..., title = file, editor=getOption("editor"), fileEncoding="")
+  function (..., title = file, editor = getOption("editor"), fileEncoding = "")
 {
     file <- path.expand(c(...))
-    title <- rep(as.character(title), len=length(file))
+    title <- rep_len(as.character(title), length(file))
     if(nzchar(fileEncoding) && fileEncoding != "native.enc") {
         tfile <- file
         for(i in seq_along(file)) {

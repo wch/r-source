@@ -69,14 +69,29 @@ tempdir()
   has no effect on \code{tempdir()}: the per-session temporary directory
   is created before the interpreter is started.
 }
+
 \section{Note on parallel}{
-  \R processes forked by functions such as \code{\link{mclapply}} in
-  package \pkg{parallel} (or \CRANpkg{multicore}) share a per-session
-  temporary directory.  Further, the \sQuote{guaranteed not to be
-    currently in use} applies only at the time of asking, and two
-  children could ask simultaneously.  This is circumvented
-  by ensuring that \code{tempfile} calls in different children try
-  different names.
+  \R processes forked by functions such as \code{\link{mclapply}} and
+  \code{\link{makeForkCluster}} in package \pkg{parallel} share a
+  per-session temporary directory.  Further, the \sQuote{guaranteed not
+    to be currently in use} applies only at the time of asking, and two
+  children could ask simultaneously.  This is circumvented by ensuring
+  that \code{tempfile} calls in different children try different names.
+}
+
+\source{
+  The final component of \code{tempdir()} is created by the POSIX system
+  call \code{mkdtmp}, or if this is not available (e.g.\sspace{}on
+  Windows) a version derived from the source code of GNU \code{glibc}.
+  % The substitute was once used on Solaris 10: this nowadays has the
+  % call but no man page for it. It has used \code{.}
+  
+  It will be of the form \file{RtmpXXXXXX} where the last 6 characters
+  are replaced in a platform-specific way.  POSIX only requires that the
+  replacements be ASCII, which allows \code{.} (so the value may appear
+  to have a file extension) and \link{regexp} metacharacters such as
+  \code{+}.  Most commonly the replacements are from the \link{regexp}
+  pattern \code{[A-Za-z0-9]}, but \code{.} \emph{has} been seen.
 }
 
 \references{

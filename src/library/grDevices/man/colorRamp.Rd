@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colorRamp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{colorRamp}
@@ -41,8 +41,6 @@ colorRampPalette(colors, \dots)
   completely accurate and the color ramp may not reach the extreme
   values in Lab space.  Future changes in the \R color model may change
   the colors produced with \code{space = "Lab"}.
-
-  Argument \code{alpha} has introduced in \R 3.1.0.
 }
 \value{
   \code{colorRamp} returns a \code{\link{function}} with argument a

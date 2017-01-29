@@ -1,6 +1,6 @@
 % File src/library/base/man/array.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{array}
@@ -86,9 +86,6 @@ is.array(x)
 }
 \note{
   \code{is.array} is a \link{primitive} function.
-
-  \R 2.x.y allowed (although documented not to) a zero-length \code{dim}
-  argument, and returned a vector of length one.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

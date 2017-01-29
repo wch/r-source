@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,9 @@ formula.default <- function (x = NULL, env = parent.frame(), ...)
     else if (!is.null(attr(x, "formula"))) attr(x, "formula")
     else {
         form <- switch(mode(x),
-                       NULL = structure(NULL, class = "formula"),
-                       character = formula(eval(parse(text = x, keep.source = FALSE)[[1L]])),
+                       NULL = structure(list(), class = "formula"),
+                       character = formula(
+                           eval(parse(text = x, keep.source = FALSE)[[1L]])),
                        call = eval(x), stop("invalid formula"))
         environment(form) <- env
         form
@@ -371,7 +372,7 @@ offset <- function(object) object
     ## Character vectors may be auto-converted to factors, but keep them separate for now
     if(is.character(x)) return("character")
     if(is.matrix(x) && is.numeric(x))
-        return(paste("nmatrix", ncol(x), sep="."))
+        return(paste0("nmatrix.", ncol(x)))
     ## this is unclear.  Prior to 2.6.0 we assumed numeric with attributes
     ## meant something, but at least for now model.matrix does not
     ## treat it differently.

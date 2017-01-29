@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -746,9 +746,19 @@
     stop("Internal error in finding inherited methods; didn't return a unique method", domain = NA)
 }
 
-.findMethodInTable <- function(signature, table, fdef = NULL)
+.findMethodForFdef <- function(signature, table, fdef = NULL) {
+    value <- .findMethodInTable(signature, table, fdef)
+    if(is.null(value) && is(fdef, "genericFunction")) { # try without expanding signature
+        fullSig <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
+        if(!identical(fullSig, signature))
+            value <- .findMethodInTable(signature, table, fdef, FALSE)
+    }
+    value
+}
+
+.findMethodInTable <- function(signature, table, fdef = NULL , expdSig = TRUE)
 {
-    if(is(fdef, "genericFunction"))
+    if(is(fdef, "genericFunction") && expdSig)
         signature <- .matchSigLength(signature, fdef, environment(fdef), FALSE)
     label <- .sigLabel(signature)
 ##     allMethods <- objects(table, all.names=TRUE)

@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2016-11-22 r71677) -- "Unsuffered Consequences"
-Copyright (C) 2016 The R Foundation for Statistical Computing
+R Under development (unstable) (2017-01-29 r72045) -- "Unsuffered Consequences"
+Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -646,8 +646,10 @@ An object of class "foo"
 > ## the last failed in R 2.7.0 : was not showing  "show"
 > 
 > if(require("Matrix")) {
++     D5. <- Diagonal(x = 5:1)
++     D5N <- D5.; D5N[5,5] <- NA
 +     stopifnot(isGeneric("dim", where=as.environment("package:Matrix")),
-+ 	      identical((D5. <- Diagonal(x = 5:1)), pmin(D5.)),
++ 	      identical(D5., pmin(D5.)),
 + 	      identical(D5., pmax(D5.)),
 + 	      identical(D5., pmax(D5., -1)),
 + 	      identical(D5., pmin(D5., 7)),
@@ -655,10 +657,18 @@ An object of class "foo"
 + 	      identical(as.matrix(pmin(D5.+2 , 3)),
 + 			pmin(as.matrix(D5.+2), 3)),
 + 	      identical(pmin(1, D5.), pmin(1, as.matrix(D5.))),
++ 	      identical(D5N, pmax(D5N, -1)),
++ 	      identical(D5N, pmin(D5N, 5)),
++ 	      identical(unname(as.matrix(pmin(D5N+1, 3))),
++ 			       pmin(as.matrix(D5N)+1, 3)),
 + 	      ##
 + 	      TRUE)
 + }
 Loading required package: Matrix
+Note: method with signature 'numeric#dMatrix' chosen for function '>',
+ target signature 'numeric#ddiMatrix'.
+ "ANY#ddiMatrix" would also be valid
+<sparse>[ <logic> ] : .M.sub.i.logical() maybe inefficient
 > 
 > 
 > ## containing "array" ("matrix", "ts", ..)

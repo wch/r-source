@@ -105,7 +105,7 @@ setQuartzFonts <- function(fonts, fontNames) {
 }
 
 printFont <- function(font) {
-    paste(font, "\n", sep="")
+    paste0(font, "\n")
 }
 
 printFonts <- function(fonts) {
@@ -169,7 +169,7 @@ quartz.save <- function(file, type = 'png', device = dev.cur(), dpi = 100, ...)
     oc$file <- NULL
     oc$device <- quartz
     oc$type <- type
-    if(missing(file)) file <- paste("Rplot", type, sep=".")
+    if(missing(file)) file <- paste0("Rplot.", type)
     oc$file <- file
     oc$dpi <- dpi
     din <- dev.size("in")
