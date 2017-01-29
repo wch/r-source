@@ -1,5 +1,5 @@
 
-R version 3.3.2 Patched (2017-01-18 r72008) -- "Sincere Pumpkin Patch"
+R version 3.3.2 Patched (2017-01-29 r72045) -- "Sincere Pumpkin Patch"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.193 0.002 0.195 0 0 
+Time elapsed:  0.128 0.002 0.13 0 0 
 > 
