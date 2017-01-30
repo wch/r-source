@@ -1,11 +1,21 @@
 language: c
 sudo: false
-env:
-- CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+
+matrix:
+  include:
+    - os: linux
+      sudo: false
+      dist: precise
+      env:
+        - CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+    - os: linux
+      sudo: false
+      dist: trusty
+      env:
+        - CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+
 addons:
   apt:
-    sources:
-    - r-packages-precise
     packages:
     - git-svn
     - bash-completion
@@ -85,7 +95,7 @@ script:
 
 before_deploy:
   - mkdir -p /tmp/R-bin
-  - tar cJf /tmp/R-bin/R-devel.xz -C $(dirname $PREFIX) $(basename $PREFIX)
+  - tar cJf /tmp/R-bin/R-devel-$(lsb_release -cs).xz -C $(dirname $PREFIX) $(basename $PREFIX)
 
 deploy:
   skip_cleanup: true
