@@ -217,3 +217,8 @@ all.equal(p0, p0., tol=0)
 all.equal(p0, p1,  tol=0)
 all.equal(p0, p2,  tol=0)
 all.equal(p1, p2,  tol=0)# interestingly almost the same
+
+## formula ==> print for default method
+ispl <- with(women, interpSpline( height, weight ))
+stopifnot(identical(format(formula(ispl)),
+		    "weight ~ height")) ## was wrongly .Primitive(\"~\")(wei...
