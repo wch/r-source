@@ -1,7 +1,7 @@
 #  File src/library/splines/R/splineClasses.R
 #  Part of the R package, https://www.R-project.org
+#  Copyright (C) 2000-2017 The R Core Team
 #  Copyright (C) 1998 Douglas M. Bates and William N. Venables.
-#  Copyright (C) 2000-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ interpSpline.default <-
     coeff <- if(sparse) Matrix::solve(des, Matrix::..2dge(y), sparse=TRUE)
              else solve(des, y)
     value <- structure(list(knots = knots, coefficients = coeff, order = ord),
-		       formula = do.call(`~`, list(substitute(obj2), substitute(obj1))),
+		       formula = do.call("~", list(substitute(obj2), substitute(obj1))),
 		       class = c("nbSpline", "bSpline", "spline"))
     if (bSpline) return(value)
     ## else convert from B- to poly-Spline:
