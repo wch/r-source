@@ -1922,12 +1922,12 @@ A neat way of doing this uses the @code{outer()} function twice:
 @example
 > d <- outer(0:9, 0:9)
 > fr <- table(outer(d, d, "-"))
-> plot(fr, type="h", xlab="Determinant", ylab="Frequency")
+> plot(fr, xlab="Determinant", ylab="Frequency")
 @end example
 
-Notice the coercion of the @code{names} attribute of the frequency table
-to numeric in order to recover the range of the determinant values.  The
-``obvious'' way of doing this problem with @code{for} loops, to be
+Notice that @code{plot()} here uses a histogram like plot method, because
+it ``sees'' that @code{fr} is of class @code{"table"}.
+The ``obvious'' way of doing this problem with @code{for} loops, to be
 discussed in @ref{Loops and conditional execution}, is so inefficient as
 to be impractical.
 

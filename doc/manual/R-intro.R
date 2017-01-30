@@ -195,7 +195,7 @@ z <- outer(x, y, f)
 
 d <- outer(0:9, 0:9)
 fr <- table(outer(d, d, "-"))
-plot(fr, type="h", xlab="Determinant", ylab="Frequency")
+plot(fr, xlab="Determinant", ylab="Frequency")
 
 ##
 
