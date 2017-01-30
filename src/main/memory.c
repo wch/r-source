@@ -29,11 +29,11 @@
 
 #define USE_RINTERNALS
 
-#include <stdarg.h>
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#include <stdarg.h>
 
 #include <R_ext/RS.h> /* for S4 allocation */
 #include <R_ext/Print.h>
@@ -101,7 +101,7 @@ extern void *Rm_realloc(void * p, size_t n);
 #define free Rm_free
 #endif
 
-/* Length modification macros; formally in Rinternals.h */
+/* Length modification macro; formally in Rinternals.h */
 #define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
@@ -998,7 +998,7 @@ static void TryToReleasePages(void)
 static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 {
     if (IS_GROWABLE(s))
-	SET_LENGTH(s, XTRUELENGTH(s));
+	SET_STDVEC_LENGTH(s, XTRUELENGTH(s));
 
     R_size_t size;
     switch (TYPEOF(s)) {	/* get size in bytes */

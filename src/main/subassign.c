@@ -88,7 +88,11 @@
 #include <Internal.h>
 #include <R_ext/RS.h> /* for test of S4 objects */
 #include <R_ext/Itermacros.h>
-#include <Rdefines.h> /* for SET_LENGTH ??? ~GMB */
+
+/* Length modification macro; formally in Rinternals.h */
+/* Would need to change to allow ALTREP vectors to grow in place. */
+#define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
+
 /* This version of SET_VECTOR_ELT does not increment the REFCNT for
    the new vector->element link. It assumes that the old vector is
    becoming garbage and so it's references become no longer
@@ -149,7 +153,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     if (! MAYBE_SHARED(x) &&
 	IS_GROWABLE(x) &&
 	TRUELENGTH(x) >= newlen) {
-	SET_LENGTH(x, newlen);
+	SET_STDVEC_LENGTH(x, newlen);
 	names = getNames(x);
 	if (!isNull(names)) {
 	    SEXP newnames = EnlargeNames(names, len, newlen);
@@ -242,7 +246,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     }
     if (newtruelen > newlen)
 	SET_TRUELENGTH(newx, newtruelen);
-    SET_LENGTH(newx, newlen);
+    SET_STDVEC_LENGTH(newx, newlen);
 
     /* Adjust the attribute list. */
     names = getNames(x);
