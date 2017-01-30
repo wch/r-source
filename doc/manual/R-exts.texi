@@ -2077,7 +2077,9 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 @noindent
 as the C compiler will be used to link the package code (and there is no
-guarantee that this will work everywhere).
+guarantee that this will work everywhere).  (This does not apply to
+Fortran 9x code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
+both @code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
 
 For portability, any C/C++ code using the @code{omp_*} functions should
 include the @file{omp.h} header: some compilers (but not all) include it
