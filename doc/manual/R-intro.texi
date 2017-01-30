@@ -1922,8 +1922,7 @@ A neat way of doing this uses the @code{outer()} function twice:
 @example
 > d <- outer(0:9, 0:9)
 > fr <- table(outer(d, d, "-"))
-> plot(as.numeric(names(fr)), fr, type="h",
-       xlab="Determinant", ylab="Frequency")
+> plot(fr, type="h", xlab="Determinant", ylab="Frequency")
 @end example
 
 Notice the coercion of the @code{names} attribute of the frequency table
