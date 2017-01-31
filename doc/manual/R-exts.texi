@@ -3366,13 +3366,13 @@ package.) For files where this line is not needed (e.g. chapters
 included within the body of a larger document, or non-Sweave
 vignettes), the encoding may be declared using a comment like
 @example
-%!\VignetteEncoding@{UTF-8@}
+%\VignetteEncoding@{UTF-8@}
 @end example
 @noindent
 If the encoding is UTF-8, this can also be declared using
 the declaration
 @example
-%!\SweaveUTF8
+%\SweaveUTF8
 @end example
 @noindent
 If no declaration is given in the vignette, it will be assumed to be
