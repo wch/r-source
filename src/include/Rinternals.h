@@ -580,6 +580,7 @@ void (SET_GROWABLE_BIT)(SEXP x);
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
 int  (TRUELENGTH)(SEXP x);
+void (SETLENGTH)(SEXP x, R_xlen_t v);
 void (SET_TRUELENGTH)(SEXP x, int v);
 int  (IS_LONG_VEC)(SEXP x);
 int  (LEVELS)(SEXP x);
