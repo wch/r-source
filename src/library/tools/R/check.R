@@ -738,7 +738,7 @@ setRlibs <-
 
         ## check for BugReports field added at R 3.4.0
         ## but read.dcf was altered to skip whitespace, so need to re-read it
-        BR0 <- read.dcf(dfile, keep.white = "BugReports")[,"BugReports"]
+        BR0 <- drop(read.dcf(dfile, keep.white = "BugReports"))["BugReports"]
         if(!is.na(BR0)) {
             if (nzchar(BR0)) {
                 BR <- db["BugReports"]
