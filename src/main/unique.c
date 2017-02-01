@@ -27,6 +27,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
+#include <R_ext/Altrep.h>
 
 #define NIL -1
 #define ARGUSED(x) LEVELS(x)
@@ -994,21 +995,31 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
-    int nomatch = asInteger(CADDR(args));
+    int nomatch = asInteger(CADDR(args)), nprot=0;
     SEXP incomp = CADDDR(args);
-    /*     
-    if(ALTREP(CADR(args))) {
+    SEXP incomp2;
+    if(ALTREP(CADR(args)) && !OBJECT(CADR(args)) && !OBJECT(CAR(args))) {
+	if (isNull(incomp) || /* S has FALSE to mean empty */
+	    (length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0))
+	    incomp2 = NULL;
+	else {
+	    PROTECT(incomp2 = incomp); nprot++;
+	}
 	SEXP ans = NULL;
 	if(TYPEOF(CADR(args)) == INTSXP)
 	    ans = ALTINTEGER_MATCH(CADR(args), CAR(args), nomatch,
-				   incomp, env, TRUE);
+				   incomp2, env, TRUE);
 	else if(TYPEOF(CADR(args)) == REALSXP)
 	    ans = ALTREAL_MATCH(CADR(args), CAR(args), nomatch,
-				   incomp, env, TRUE);
-	if(ans != NULL)
+				   incomp2, env, TRUE);
+
+	if(ans != NULL) {
+	    if(nprot >0) UNPROTECT(nprot);
 	    return ans;
+	}
 	
-	    } */
+    }
+  
     if (isNull(incomp) || /* S has FALSE to mean empty */
 	(length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0))
 	return match5(CADR(args), CAR(args), nomatch, NULL, env);

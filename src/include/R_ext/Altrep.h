@@ -179,8 +179,21 @@ DECLARE_METHOD_SETTER(altstring, No_NA)
 /* need to be shared between summary.c and altrep.c (for Sum methods) */
 Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call);
 Rboolean rsum(SEXP sx, double *value, Rboolean narm);
-
-enum {KNOWN_DECR = -1, UNKNOWN_SORTEDNESS, KNOWN_INCR, KNOWN_UNSORTED};
+/*INT_MIN is NA_INTEGER! */
+enum {KNOWN_DECR = -1, UNKNOWN_SORTEDNESS=INT_MIN, KNOWN_INCR = 1, KNOWN_UNSORTED = 0};
 #define KNOWN_SORTED(sorted) (sorted == KNOWN_DECR || sorted == KNOWN_INCR)
 
-#endif /* R_EXT_ALTREP_H_ */
+SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
+		      Rboolean first);
+SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
+		      Rboolean first);
+int ALTINTEGER_MIN(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+int ALTINTEGER_SUM(SEXP x, Rboolean narm);
+double ALTREAL_SUM(SEXP x, Rboolean narm);
+double ALTREAL_MIN(SEXP x, Rboolean narm);
+double ALTREAL_MAX(SEXP x, Rboolean narm);
+int INTEGER_IS_SORTED(SEXP x);
+int REAL_IS_SORTED(SEXP x);
+
+#endif /* R_EXT_ALTmREP_H_ */

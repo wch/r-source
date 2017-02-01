@@ -108,6 +108,10 @@ static R_INLINE void SET_VECTOR_ELT_NR(SEXP x, R_xlen_t i, SEXP v)
 #endif
 }
 
+/* Length modification macros; formally in Rinternals.h also appears in memory.c */
+#define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
+
+
 static R_INLINE SEXP getNames(SEXP x)
 {
     /* defer to getAttrib if a 'dim' attribute is present */
