@@ -47,7 +47,7 @@ tapply <- function (X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
 	if (simplify && all(lengths(ans) == 1L)) {
 	    ans <- unlist(ans, recursive = FALSE, use.names = FALSE)
 	    if(missing(default))
-		if(length(ans) && is.atomic(ans))
+		if(is.atomic(ans) && length(ans) && !is.factor(ans))
 		    ans[0L][1L] ## [<out-of-bound>] takes correct NA even for raw
 		else NA
 	    else default
