@@ -642,6 +642,12 @@ stopifnot(
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 )
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
+ee <- esoph[esoph[,"ncases"] > 0, c(1:2,4)]
+ee[,"ncases"] <- as.integer(ee[,"ncases"])
+(tt <- xtabs(ncases ~ ., ee))
+stopifnot(identical(as.vector(tt[1:2,]), # *integer* + first value
+		    c(0L, 1L, 0L, 4L, 0L, 0L, 1L, 4L)))
+## keeping integer in sum()mation of integers
 
 
 ## tapply() with FUN returning raw  |  with factor -> returning integer

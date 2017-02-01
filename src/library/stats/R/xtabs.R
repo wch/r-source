@@ -68,9 +68,9 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	    if(is.null(y))
 		table(by, dnn = names(by))
 	    else if(NCOL(y) == 1L)
-		tapply(y, by, sum, na.rm=na.rm, default = 0)
+		tapply(y, by, sum, na.rm=na.rm, default = 0L)
 	    else {
-		z <- lapply(as.data.frame(y), tapply, by, sum, na.rm=na.rm, default = 0)
+		z <- lapply(as.data.frame(y), tapply, by, sum, na.rm=na.rm, default = 0L)
 		array(unlist(z),
 		      dim = c(dim(z[[1L]]), length(z)),
 		      dimnames = c(dimnames(z[[1L]]), list(names(z))))
