@@ -105,12 +105,12 @@
         if (!keep.tmpdir && dir.exists(tmpdir)) unlink(tmpdir, recursive=TRUE)
     }
 
-    # This produces a (by default single) quoted string for use in a 
+    # This produces a (by default single) quoted string for use in a
     # command sent to another R process.  Currently it only fixes backslashes;
     # more extensive escaping might be a good idea
-    quote_path <- function(path, quote = "'") 
+    quote_path <- function(path, quote = "'")
     	paste0(quote, gsub("\\\\", "\\\\\\\\", path), quote)
-    	
+
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -1317,7 +1317,7 @@
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2013 The R Core Team.",
+                "Copyright (C) 2000-2016 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
