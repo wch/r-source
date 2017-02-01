@@ -1,6 +1,6 @@
 % File src/library/base/man/dcf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dcf}
@@ -106,6 +106,10 @@ write.dcf(x, file = "", append = FALSE,
   Note that \R does not require encoding in UTF-8, which is a recent
   Debian requirement.  Nor does it use the Debian-specific sub-format
   which allows comment lines starting with \samp{#}.
+}
+
+\note{
+  As from \R{} 3.4.0, \sQuote{whitespace} in all cases includes newlines.
 }
 \seealso{
   \code{\link{write.table}}.

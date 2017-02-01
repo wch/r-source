@@ -306,6 +306,9 @@
 
       \item \code{tapply()} gets new option \code{default = NA}
       allowing to change the previously hardcoded value.
+      
+      \item \code{read.dcf()} now consistently interprets any
+      \sQuote{whitespace} to be stripped to include newlines.
     }
   }
 
