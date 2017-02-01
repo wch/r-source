@@ -21,7 +21,7 @@
 ## R developers can use this to debug the function by running it
 ## directly as tools:::.check_packages(args), where the args should
 ## be what commandArgs(TRUE) would return, that is a character vector
-## of (space-delimited) terms that would be passed to R CMD checks.
+## of (space-delimited) terms that would be passed to R CMD check.
 
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "", env = "")
@@ -737,9 +737,11 @@ setRlibs <-
         }
 
         ## check for BugReports field added at R 3.4.0
-        if(!is.na(BR0 <- db["BugReports"])) {
+        ## but read.dcf was altered to skip whitespace, so need to re-read it
+        BR0 <- read.dcf(dfile, keep.white = "BugReports")[,"BugReports"]
+        if(!is.na(BR0)) {
             if (nzchar(BR0)) {
-                BR <- trimws(BR0)
+                BR <- db["BugReports"]
                 msg <- ""
                 ## prior to 3.4.0 this was said to be
                 ## 'a URL to which bug reports about the package
