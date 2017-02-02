@@ -1051,7 +1051,7 @@ is left brace, which is implemented as a primitive.} are
 
 `Special' primitive and internal functions evaluate their arguments
 internally @emph{after} @code{R_Visible} has been set, and evaluation of
-the arguments (e.g.@: an assignment as in PR#9263)) can change the value
+the arguments (e.g.@: an assignment as in PR#9263) can change the value
 of the flag.
 
 The @code{R_Visible} flag can also get altered during the evaluation of
@@ -2261,7 +2261,7 @@ break  for function  if  next  repeat  return  while
 @noindent
 ).  One could argue about @code{~}, but it is known to the parser and has
 semantics quite unlike a normal function.  And @code{:} is documented
-with different argument names in its two meanings.)
+with different argument names in its two meanings.
 
 The QC functions @code{codoc} and @code{checkS3methods} also make use of
 these environments (effectively placing them in front of base in the
@@ -2652,7 +2652,7 @@ mounted onto logical directories under that root), Windows has separate
 roots for each physical or logical file system (`volume'), organized
 under @emph{drives} (with file paths starting @code{D:} for an
 @acronym{ASCII} letter, case-insensitively) and @emph{network shares}
-(with paths like @code{\netname\topdir\myfiles\a file}.  There is a
+(with paths like @code{\netname\topdir\myfiles\a file}).  There is a
 current drive, and path names without a drive part are relative to the
 current drive.  Further, each drive has a current directory, and
 relative paths are relative to that current directory, on a particular

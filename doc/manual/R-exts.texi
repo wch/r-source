@@ -463,9 +463,9 @@ Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
 ``authors'' (in particular specifying their precise @emph{roles}), via
-suitable @R{} code. It should create an object of class @code{"person'},
+suitable @R{} code. It should create an object of class @code{"person"},
 by either a call to @code{person} or a series of calls (one per
-``author'') concatenated by @code{c()}): see the example
+``author'') concatenated by @code{c()}: see the example
 @file{DESCRIPTION} file above.  The roles can include @samp{"aut"}
 (author) for full authors, @samp{"cre"} (creator) for the package
 maintainer, and @samp{"ctb"} (contributor) for other contributors,
@@ -1553,7 +1553,7 @@ The definition of the respective @R{} function in @file{foo.R.in} could be
 @group
 foo <- function(x) @{
     if(!@@HAVE_FOO@@)
-      stop("Sorry, library 'foo' is not available"))
+      stop("Sorry, library 'foo' is not available")
     ...
 @end group
 @end example
@@ -1566,7 +1566,7 @@ From this file @command{configure} creates the actual @R{} source file
 @group
 foo <- function(x) @{
     if(!FALSE)
-      stop("Sorry, library 'foo' is not available"))
+      stop("Sorry, library 'foo' is not available")
     ...
 @end group
 @end example
@@ -3351,7 +3351,7 @@ tangle functions are called on the vignette source, it will be converted
 to the encoding of the current @R{} session.
 
 @code{Stangle()} will produce an @R{} code file in the current locale's
-encoding: for a non-@acronym{ASCII} vignette what that is recorded in a
+encoding: for a non-@acronym{ASCII} vignette what that is is recorded in a
 comment at the top of the file.
 
 @code{Sweave()} will produce a @file{.tex} file in the current
@@ -4214,7 +4214,7 @@ features from later standards.
 @R{} has tested that @code{DOUBLE COMPLEX} works (although an extension
 to the Fortran standards) and so is preferred to @code{COMPLEX*16}.
 (Fortran 9x code can use something like
-@code{COMPLEX(KIND=KIND(0.0D0)}@footnote{See
+@code{COMPLEX(KIND=KIND(0.0D0))}@footnote{See
 @uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
 
 
@@ -5179,7 +5179,7 @@ need to add
 and mark strings by
 
 @example
-dngettext(("@var{pkg}", @var{<singular string>}, @var{<plural string>}, n)
+dngettext("@var{pkg}", @var{<singular string>}, @var{<plural string>}, n)
 @end example
 
 @item
@@ -6484,8 +6484,8 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
 @emph{almost always} need to be escaped by @samp{\}, and @samp{\\} can
-be used for backslash and needs to be when there two or more adjacent
-backslashes).  In @R{}-like code quoted strings are handled slightly
+be used for backslash and needs to be when there are two or more adjacent
+backslashes.  In @R{}-like code quoted strings are handled slightly
 differently; see @uref{https://developer.r-project.org/parseRd.pdf,
 ``Parsing Rd files''} for details -- in particular braces should not be
 escaped in quoted strings.
@@ -12003,7 +12003,7 @@ Bioconductor package uses weak references.
 Package @CRANpkg{RODBC} uses external pointers to maintain its
 @emph{channels}, connections to databases.  There can be several
 connections open at once, and the status information for each is stored
-in a C structure (pointed to by @code{this_handle}) in the code extract
+in a C structure (pointed to by @code{thisHandle} in the code extract
 below) that is returned @emph{via} an external pointer as part of the RODBC
 `channel' (as the @code{"handle_ptr"} attribute).  The external pointer
 is created by
@@ -12838,7 +12838,7 @@ may be advantageous when one of them is close to @eqn{1, 1}.
 The Gamma function, the natural logarithm of its absolute value and
 first four derivatives and the n-th derivative of Psi, the digamma
 function, which is the derivative of @code{lgammafn}. In other words,
-@code{digamma(x)} is the same as @code{(psigamma(x,0)},
+@code{digamma(x)} is the same as @code{psigamma(x,0)},
 @code{trigamma(x) == psigamma(x,1)}, etc.
 @end deftypefun
 

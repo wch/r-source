@@ -571,7 +571,7 @@ make mobi
 @noindent
 This requires @command{ebook-convert} from @command{Calibre}
 (@uref{http://calibre-ebook.com/download}), or from most Linux
-distributions).  If necessary the path to @command{ebook-convert} can be
+distributions.  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
 (which contains a commented value suitable for macOS).
 
@@ -2973,7 +2973,7 @@ build.  You can often build both and install them in the same place:
 distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
-objects (see @code{help("Memory-limits")}, some of which stem from the
+objects (see @code{help("Memory-limits")}), some of which stem from the
 use of 32-bit integers (especially in FORTRAN code).  For example, the
 dimensions of an array are limited to @math{2^{31} - 1}.
 
@@ -4566,7 +4566,7 @@ only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
 used, made up of fonts encoded in other encodings.  If the locale you
 are using has an entry in the @samp{XLC_LOCALE} directory (typically
-@file{/usr/share/X11/locale}, it is likely that all you need to do is to
+@file{/usr/share/X11/locale}), it is likely that all you need to do is to
 pick a suitable font specification that has fonts in the encodings
 specified there.  If not, you may have to get hold of a suitable locale
 entry for X11.  This may mean that, for example, Japanese text can be

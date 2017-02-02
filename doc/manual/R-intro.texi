@@ -6674,7 +6674,7 @@ is sometimes useful for exporting names from @R{}.
 
 File @emph{permissions} are a related topic.  @R{} has support for the
 POSIX concepts of read/write/execute permission for owner/group/all but
-this may be only partially supported on the filesystem (so for example
+this may be only partially supported on the filesystem, so for example
 on Windows only read-only files (for the account running the @R{}
 session) are recognized.  Access Control Lists (ACLs) are employed on
 several filesystems, but do not have an agreed standard and @R{} has no
