@@ -1840,7 +1840,7 @@ matching.
 
 The most important example of a class method for @code{[} is that used
 for data frames.  It is not described in detail here (see the help
-page for @code{[.data.frame}, but in broad terms, if two indices are
+page for @code{[.data.frame}), but in broad terms, if two indices are
 supplied (even if one is empty) it creates matrix-like indexing for a
 structure that is basically a list of vectors of the same length.  If a
 single index is supplied, it is interpreted as indexing the list of
