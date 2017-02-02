@@ -1730,9 +1730,13 @@ function(x, dfile)
     }
     ## Avoid declared encodings when writing out.
     Encoding(x) <- "unknown"
+
     ## Avoid folding for fields where we keep whitespace when reading,
     ## plus two where legacy code does not strip whitespace and so
-    ## we should not wrap the field.
+    ## we should not wrap the field.  In R 3.3.x, read.dcf can
+    ## add newlines, so we strip here.
+     if(!is.na(x["BugReports"]))
+         x["BugReports"] <- trimws(x["BugReports"])
     write.dcf(rbind(x), dfile,
               keep.white = c(.keep_white_description_fields,
                              "Maintainer", "BugReports"))
