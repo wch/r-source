@@ -688,3 +688,200 @@ function(file = "symbols.rds")
     names(tables) <- objects
     saveRDS(tables, file = file)
 }
+
+package_ff_call_db <- 
+function(dir)
+{
+    ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
+
+    predicate <- function(e) {
+        (length(e) > 1L) &&
+            !is.na(match(as.character(e[[1L]]), ff_call_names))
+    }
+
+    calls <- .find_calls_in_package_code(dir,
+                                         predicate = predicate,
+                                         recursive = TRUE)
+    calls <- unlist(Filter(length, calls))
+
+    if(!length(calls)) return(NULL)
+    
+    attr(calls, "dir") <- dir
+    calls
+}
+
+native_routine_registration_db_from_ff_call_db <-
+function(calls, dir = NULL)
+{
+    if(!length(calls)) return(NULL)
+    
+    ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
+    ff_call_args <- lapply(ff_call_names,
+                           function(e) args(get(e, baseenv())))
+    names(ff_call_args) <- ff_call_names
+    ff_call_args_names <-
+        lapply(lapply(ff_call_args,
+                      function(e) names(formals(e))), setdiff,
+               "...")
+
+    if(is.null(dir))
+        dir <- attr(calls, "dir")
+
+    package <-
+        .read_description(file.path(dir, "DESCRIPTION"))["Package"]
+
+    nrdb <-
+        lapply(calls,
+               function(e) {
+                   ## First figure out whether ff calls had '...'.
+                   pos <- which(unlist(Map(identical,
+                                           lapply(e, as.character),
+                                           "...")))
+                   ## Then match the call with '...' dropped.
+                   ## Note that only .NAME could be given by name or
+                   ## positionally (the other ff interface named
+                   ## arguments come after '...').
+                   if(length(pos)) e <- e[-pos]
+                   cname <- as.character(e[[1L]])
+                   e <- match.call(ff_call_args[[cname]], e)
+                   ## Only keep ff calls where .NAME is a name or
+                   ## character.
+                   s <- e[[".NAME"]]
+                   if(is.name(s))
+                       s <- deparse(s)[1L]
+                   else if(is.character(s))
+                       s <- s[1L]
+                   else
+                       return(NULL)
+                   ## Drop the ones where PACKAGE gives a different
+                   ## package.
+                   if(!is.null(p <- e[["PACKAGE"]]) &&
+                      !identical(p, package))
+                       return(NULL)
+                   n <- if(length(pos)) {
+                            ## Cannot determine the number of args: use
+                            ## -1 which might be ok for .External().
+                            -1L
+                        } else {
+                            sum(is.na(match(names(e),
+                                            ff_call_args_names[[cname]]))) - 1L
+                        }
+                   ## Could perhaps also record whether 's' was a symbol
+                   ## or a character string ...
+                   cbind(cname, s, n)
+               })
+    nrdb <- do.call(rbind, nrdb)
+    nrdb <- as.data.frame(unique(nrdb), stringsAsFactors = FALSE)
+    nrdb[, 3L] <- as.numeric(nrdb[, 3L])
+    nrdb <- nrdb[order(nrdb[, 1L], nrdb[, 2L], nrdb[, 3L]), ]
+
+    ## Now get the namespace info for the package.
+    info <- parseNamespaceFile(basename(dir), dirname(dir))
+    ## Could have ff calls with symbols imported from other packages:
+    ## try dropping these eventually.
+    imports <- info$imports
+    imports <- imports[lengths(imports) == 2L]
+    imports <- unlist(lapply(imports, `[[`, 2L))
+    
+    info <- info$nativeRoutines[[package]]
+    ## First adjust native routine names for explicit remapping or
+    ## namespace .fixes.
+    if(length(symnames <- info$symbolNames)) {
+        ind <- match(nrdb[, 2L], names(symnames), nomatch = 0L)
+        nrdb[ind > 0L, 2L] <- symnames[ind]
+    } else if(any((fixes <- info$registrationFixes) != "")) {
+        nrdb[, 2L] <-
+            substring(nrdb[, 2L],
+                      nchar(fixes[1L]) + 1L,
+                      nchar(nrdb[, 2L]) - nchar(fixes[2L]))
+    }
+    ## See above.
+    if(any(ind <- !is.na(match(nrdb[, 2L], imports))))
+        nrdb <- nrdb[!ind, , drop = FALSE]
+
+    attr(nrdb, "package") <- package
+    nrdb
+}
+
+format_native_routine_registration_db_for_skeleton <-
+function(nrdb, align = TRUE)
+{
+    if(!length(nrdb))
+        return(character())
+    
+    fmt1 <- function(x, n) {
+        c(if(align) {
+              paste(format(sprintf("    {\"%s\",", x[, 1L])),
+                    format(sprintf(if(n == "Fortran")
+                                       "(DL_FUNC) &F77_SUB(%s),"
+                                   else
+                                       "(DL_FUNC) &%s,",
+                                   x[, 1L])),
+                    format(sprintf("%d},", x[, 2L]),
+                           justify = "right"))
+          } else {
+              sprintf(if(n == "Fortran")
+                          "    {\"%s\", (DL_FUNC) &F77_SUB(%s), %d},"
+                      else
+                          "    {\"%s\", (DL_FUNC) &%s, %d},",
+                      x[, 1L],
+                      x[, 1L],
+                      x[, 2L])
+          },
+          "    {NULL, NULL, 0}")
+    }
+
+    package <- attr(nrdb, "package")
+    
+    nrdb <- split(nrdb[, -1L, drop = FALSE],
+                  factor(nrdb[, 1L],
+                         levels =
+                             c(".C", ".Call", ".Fortran", ".External")))
+    
+    has <- vapply(nrdb, NROW, 0L) > 0L
+    nms <- names(nrdb)
+    entries <- substring(nms, 2L)
+    blocks <- Map(function(x, n) {
+                      c(sprintf("static const R_%sMethodDef %sEntries[] = {",
+                                n, n),
+                        fmt1(x, n),
+                        "};",
+                        "")
+                  },
+                  nrdb[has],
+                  entries[has])
+    c("#include <R.h>",
+      "#include <Rinternals.h>",
+      "#include <R_ext/Rdynload.h>",
+      "",
+      "/* FIXME: ",
+      "   Add declarations for the native routines registered below.",
+      "*/",
+      "",
+      unlist(blocks, use.names = FALSE),
+      sprintf("void R_init_%s(DllInfo *dll)", package),
+      "{",
+      sprintf("    R_registerRoutines(dll, %s);",
+              paste0(ifelse(has,
+                            paste0(entries, "Entries"),
+                            "NULL"),
+                     collapse = ", ")),
+      "    R_useDynamicSymbols(dll, FALSE);",
+      "}")
+}
+
+package_native_routine_registration_db <-
+function(dir)
+{
+    calls <- package_ff_call_db(dir)
+    native_routine_registration_db_from_ff_call_db(calls, dir)
+}
+
+package_native_routine_registration_skeleton <-
+function(dir, con = stdout(), align = TRUE)
+{
+    nrdb <- package_native_routine_registration_db(dir)
+    writeLines(format_native_routine_registration_db_for_skeleton(nrdb,
+                                                                  align),
+               con)
+}
