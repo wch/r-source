@@ -298,6 +298,10 @@
       default ones, e.g., for kilo bytes.  From contributions by Henrik
       Bengtsson.
 
+      \item If a reference class has a validity method,
+      \code{validObject} will be called automatically from the
+      default initialization method for reference classes.
+
       \item Improved performance and robustness of matrix multiplication
       using BLAS: DGEMV is now used instead of DGEMM for matrix/vector and
       vector/matrix multiplication, DGEMM/DGEMV is bypassed when the input
@@ -1285,10 +1289,6 @@
       \code{makevars_site()} in package \pkg{tools} to determine the
       location of the user and site specific \file{Makevars} files for
       customizing package compilation.
-
-      \item If a reference class has a validity method,
-       \code{validObject} will be called automatically from the
-       default initialization method for reference classes.
     }
   }
 
