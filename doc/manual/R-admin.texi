@@ -4853,12 +4853,10 @@ binary distribution of @R{} you will probably need to specify the name
 or path in a personal or site @file{Makevars} file (@pxref{Customizing
 package compilation}).
 
-More recent and complete distributions of @command{clang} are usually
-available from @uref{http://llvm.org/releases/}.  In particular, these
-include support for the `Address Sanitizer' (not included by Apple until
-Xcode 7) and for OpenMP@footnote{This also needs the OpenMP runtime,
-which was distributed separately at that site for 3.7.0.} in version
-3.7.0 and later.
+More recent and complete distributions of @command{clang} are often
+available from @uref{http://llvm.org/releases/}: for example at the time
+of writing for 3.9.0 but not 3.9.1.  In particular, these may include
+support for OpenMP.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
@@ -4957,18 +4955,26 @@ changed their installation locations.
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-The Fortran compiler for El Capitan from
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works
-on Sierra: those at @uref{https://r.research.att.com/} have failure
-reports on Sierra.  (At the time of writing there was a build of
-@command{gfortran}@tie{}6.3 for Sierra on that site, but the
-distribution was incomplete.) One way to use the Coudert build is to
-have a @file{~/.R/Makevars} file similar to
+There are installers@footnote{Some of these are unsigned packages: to
+install them you may need to right-click and select @code{Open with ->
+Installer}.} for Fortran compilers for El Capiton and Sierra at
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
+@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}: those
+at @uref{https://r.research.att.com/} have failure reports on Sierra.
+One way to use the Coudert build with a binary distribution of @R{} is
+to have a @file{~/.R/Makevars} file similar to (El Capitan)
 @smallexample
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end smallexample
+or (Sierra)
+@smallexample
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end smallexample
+
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries
