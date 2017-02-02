@@ -304,9 +304,9 @@
 
       \item Improved performance and robustness of matrix multiplication
       using BLAS: DGEMV is now used instead of DGEMM for matrix/vector and
-      vector/matrix multiplication, DGEMM/DGEMV is bypassed when the input
-      has NaN or Inf values, and performance for these input checks has been
-      improved.
+      vector/matrix multiplication, ZGEMM/DGEMM/DGEMV is bypassed when the
+      input has NaN or Inf values, and performance for these input checks has
+      been improved.
 
       \item \code{tapply()} gets new option \code{default = NA}
       allowing to change the previously hardcoded value.
