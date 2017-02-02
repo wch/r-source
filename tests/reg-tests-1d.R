@@ -656,6 +656,21 @@ stopifnot(identical(tapply(1:3, 1:3, as.raw),
           identical(3:1, as.vector(tapply(1:3, 1:3, factor, levels=3:1))))
 
 
+## str(<list of list>, max.level = 1)
+LoL <- function(lenC, FUN = identity)
+    lapply(seq_along(lenC), function(i) lapply(seq_len(lenC[i]), FUN))
+xx <- LoL(c(7,3,17,798,3))
+str(xx, list.len = 7, max.level = 1)
+str2 <- capture.output(
+ str(xx, list.len = 7, max.level = 2))
+stopifnot(
+    grepl("List of ", capture.output(str(xx, list.len = 7, max.level = 1))),
+    length(str2) == 35, sum(grepl("list output truncated", str2)) == 2,
+    vapply(paste("List of", lengths(xx)), function(pat) any(grepl(pat, str2)), NA)
+)
+## wrongly showed '[list output truncated]'  in R < 3.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

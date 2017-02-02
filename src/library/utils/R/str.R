@@ -322,9 +322,9 @@ str.default <-
                            nest.lev = nest.lev + 1,
                            indent.str = paste(indent.str,".."))
 		}
+		if(list.len < le)
+		    cat(indent.str, "[list output truncated]\n")
 	    }
-	    if(list.len < le)
-		cat(indent.str, "[list output truncated]\n")
 	}
     } else { #- not function, not list
 	if(is.vector(object)
