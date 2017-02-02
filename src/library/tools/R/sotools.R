@@ -689,7 +689,7 @@ function(file = "symbols.rds")
     saveRDS(tables, file = file)
 }
 
-package_ff_call_db <- 
+package_ff_call_db <-
 function(dir)
 {
     ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
@@ -705,7 +705,7 @@ function(dir)
     calls <- unlist(Filter(length, calls))
 
     if(!length(calls)) return(NULL)
-    
+
     attr(calls, "dir") <- dir
     calls
 }
@@ -714,7 +714,7 @@ native_routine_registration_db_from_ff_call_db <-
 function(calls, dir = NULL)
 {
     if(!length(calls)) return(NULL)
-    
+
     ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
     ff_call_args <- lapply(ff_call_names,
                            function(e) args(get(e, baseenv())))
@@ -782,7 +782,7 @@ function(calls, dir = NULL)
     imports <- info$imports
     imports <- imports[lengths(imports) == 2L]
     imports <- unlist(lapply(imports, `[[`, 2L))
-    
+
     info <- info$nativeRoutines[[package]]
     ## First adjust native routine names for explicit remapping or
     ## namespace .fixes.
@@ -808,12 +808,12 @@ function(nrdb, align = TRUE)
 {
     if(!length(nrdb))
         return(character())
-    
+
     fmt1 <- function(x, n) {
         c(if(align) {
               paste(format(sprintf("    {\"%s\",", x[, 1L])),
                     format(sprintf(if(n == "Fortran")
-                                       "(DL_FUNC) &F77_SUB(%s),"
+                                       "(DL_FUNC) &F77_NAME(%s),"
                                    else
                                        "(DL_FUNC) &%s,",
                                    x[, 1L])),
@@ -821,7 +821,7 @@ function(nrdb, align = TRUE)
                            justify = "right"))
           } else {
               sprintf(if(n == "Fortran")
-                          "    {\"%s\", (DL_FUNC) &F77_SUB(%s), %d},"
+                          "    {\"%s\", (DL_FUNC) &F77_NAME(%s), %d},"
                       else
                           "    {\"%s\", (DL_FUNC) &%s, %d},",
                       x[, 1L],
@@ -832,12 +832,12 @@ function(nrdb, align = TRUE)
     }
 
     package <- attr(nrdb, "package")
-    
+
     nrdb <- split(nrdb[, -1L, drop = FALSE],
                   factor(nrdb[, 1L],
                          levels =
                              c(".C", ".Call", ".Fortran", ".External")))
-    
+
     has <- vapply(nrdb, NROW, 0L) > 0L
     nms <- names(nrdb)
     entries <- substring(nms, 2L)
@@ -858,6 +858,7 @@ function(nrdb, align = TRUE)
       "   Add declarations for the native routines registered below.",
       "*/",
       "",
+
       unlist(blocks, use.names = FALSE),
       sprintf("void R_init_%s(DllInfo *dll)", package),
       "{",
