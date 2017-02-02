@@ -334,7 +334,6 @@ void revsort(double *a, int *ib, int n)
     }
 }
 
-
 SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
@@ -353,23 +352,36 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     /* we need consistent behaviour here, including dropping attibutes,
        so as from 2.3.0 we always duplicate. */
-/*
-    if(ALTREP(CAR(args))) {
+    int nprot = 0;
+    SEXP x = PROTECT(CAR(args)); nprot++;   
+    if(ALTREP(x)) {
 	int sorted = UNKNOWN_SORTEDNESS;
-	switch(TYPEOF(CAR(args))) {
+	switch(TYPEOF(x)) {
 	case INTSXP:
-	    sorted = INTEGER_IS_SORTED(
-	PROTECT(ans = ALTREP_DUPLICATE_EX(CAR(args), FALSE));
-	SET_ATTRIB(ans, R_NilValue);
-	SET_OBJECT(ans, 0);
-	switch(
-	}*/
-    PROTECT(ans = duplicate(CAR(args)));
+	    sorted = INTEGER_IS_SORTED(x);
+	    break;
+	case REALSXP:
+	    sorted = REAL_IS_SORTED(x);
+	    break;
+	default:
+	    break;
+	}
+	if((decreasing && sorted == KNOWN_DECR) ||
+	   (!decreasing && sorted == KNOWN_INCR)) {
+	    
+	    PROTECT(ans = ALTREP_DUPLICATE_EX(x, FALSE));nprot++;
+	    SET_ATTRIB(ans, R_NilValue);
+	    SET_OBJECT(ans, 0);
+	    UNPROTECT(nprot);
+	    return ans;
+	}
+    }
+    PROTECT(ans = duplicate(CAR(args))); nprot++;
     SET_ATTRIB(ans, R_NilValue);  /* this is never called with names */
     SET_OBJECT(ans, 0);		  /* we may have just stripped off the class */
     sortVector(ans, decreasing);
-     UNPROTECT(1);
-    return(ans);
+    UNPROTECT(nprot);
+    return(ans); /* wrapping with metadata happens at end of sort.int */
 }
 
 /* faster versions of shellsort, following Sedgewick (1986) */

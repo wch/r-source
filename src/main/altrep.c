@@ -3441,7 +3441,8 @@ static R_xlen_t wrapper_Length(SEXP x)
 static void clear_meta_data(SEXP x)
 {
     SEXP meta = WRAPPER_METADATA(x);
-    for (int i = 0; i < NMETA; i++)
+    INTEGER(meta)[0] = UNKNOWN_SORTEDNESS;
+    for (int i = 1; i < NMETA; i++)
 	INTEGER(meta)[i] = 0;
 }
 
@@ -3657,7 +3658,7 @@ static void InitWrapStringClass(DllInfo *dll)
  * Constructor
  */
 
-static SEXP make_wrapper(SEXP x, SEXP meta)
+SEXP make_wrapper(SEXP x, SEXP meta)
 {
     /* If x is itself a wrapper it might be a good idea to fuse */
     R_altrep_class_t cls;
@@ -3682,22 +3683,18 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x = CAR(args);
+    int nprot = 0;
     switch(TYPEOF(x)) {
     case INTSXP:
     case REALSXP:
     case STRSXP: break;
-    default: error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
+    default:  return x; //error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
     }
-    if (ATTRIB(x) != R_NilValue)
-	/* For objects without references we could move the attributes
-	   to the wrapper. For objects with references the attributes
-	   would have to be shallow duplicated at least. The object/S4
-	   bits would need to be moved as well.	*/
-	error("only vectors without attributes are supported for now");
-
+    
     int srt = asInteger(CADR(args));
-    if (srt < -1 || srt > 1)
-	error("srt must be -1, 0, or +1");
+    if (srt != KNOWN_INCR && srt != KNOWN_DECR && srt != KNOWN_UNSORTED &&
+	srt != UNKNOWN_SORTEDNESS)
+	error("srt must be -1, 0, or +1, or NA");
     
     int no_na = asInteger(CADDR(args));
     if (no_na < 0 || no_na > 1)
@@ -3706,8 +3703,30 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP meta = allocVector(INTSXP, NMETA);
     INTEGER(meta)[0] = srt;
     INTEGER(meta)[1] = no_na;
+    SEXP ans = PROTECT(make_wrapper(x, meta));nprot++;
+    if (ATTRIB(x) != R_NilValue) {
+	/* For objects without references we could move the attributes
+	   to the wrapper. For objects with references the attributes
+	   would have to be shallow duplicated at least. The object/S4
+	   bits would need to be moved as well.	*/
 
-    return make_wrapper(x, meta);
+	/*experimental implementation of what's described above */
+	SEXP attr = PROTECT(ATTRIB(x)); nprot++;
+	if(NAMED(x) <= 1) {
+	    SET_ATTRIB(ans, attr);
+	    SET_ATTRIB(x, R_NilValue);
+	} else {
+	    /* what should happen to the attributes on x??? 
+	     do we need to duplicate x so we can clear them? */
+	    PROTECT(attr = shallow_duplicate(attr));nprot++;
+	    SET_ATTRIB(ans, attr); 
+	}
+	SET_OBJECT(ans, OBJECT(x));
+	IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
+	//error("only vectors without attributes are supported for now");
+    }
+    UNPROTECT(nprot);
+    return ans;
 }
 
 
