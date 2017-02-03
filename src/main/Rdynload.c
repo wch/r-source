@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2015 The R Core Team
+ *  Copyright (C) 1997-2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -128,14 +128,13 @@ R_CPFun CPFun[MAX_CACHE];
 int nCPFun = 0;
 #endif
 
-static int MaxNumDLLs = 0; /* initialized in addDLL */
+static int MaxNumDLLs = 0; /* initialized in initLoadedDLL */
 
 static int CountDLL = 0;
 
 #include <R_ext/Rdynload.h>
 
-/* Allocated in addDLL, free'd in DeleteDLL. Hence, if all loaded (added) DLLs
-   were unloaded (deleted), we would not have a memory leak. */
+/* Allocated in initLoadedDLL at R session start. Never free'd */
 static DllInfo* LoadedDLL = NULL;
 
 static int addDLL(char *dpath, char *name, HINSTANCE handle);
@@ -152,14 +151,66 @@ attribute_hidden OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
 void R_init_base(DllInfo *); /* In Registration.c */
 
+static void initLoadedDLL();
+
 void attribute_hidden
 InitDynload()
 {
-    DllInfo *dll;
+    initLoadedDLL();
     int which = addDLL(strdup("base"), "base", NULL);
-    dll = &LoadedDLL[which];
+    DllInfo *dll = &LoadedDLL[which];
     R_init_base(dll);
     InitFunctionHashing();
+}
+
+/* Allocate LoadedDLL. Errors are reported via R_Suicide, because this is
+   called too early during startup to use error(.) */
+static void initLoadedDLL()
+{
+    if (CountDLL != 0 || LoadedDLL != NULL)
+	R_Suicide("DLL table corruption detected"); /* not translated */
+
+    /* Note that it is likely that dlopen will use up at least one file
+       descriptor for each DLL loaded (it may load further dynamically
+       linked libraries), so we do not want to get close to the fd limit
+       (which may be as low as 256). By default, the maximum number of DLLs
+       that can be loaded is 100. When the fd limit is known, we allow
+       increasing the maximum number of DLLs via environment variable up to
+       60% of the limit on open files, but to no more than 1000.
+    */
+    int maxlimit;
+    int fdlimit = R_GetFDLimit();
+    if (fdlimit > 0) { /* fd limit known */
+	maxlimit = (int) (0.6 * fdlimit);
+	if (maxlimit > 1000) maxlimit = 1000;
+	if (maxlimit < 100)
+	    R_Suicide(_("the limit on the number of open files is too low"));
+    } else
+	maxlimit = 100;
+
+    char *req = getenv("R_MAX_NUM_DLLS");
+    if (req != NULL) {
+	int reqlimit = atoi(req);
+	if (reqlimit < 100)
+	    R_Suicide(_("R_MAX_NUM_DLLS must be at least 100"));
+	if (reqlimit > maxlimit) {
+	    if (maxlimit == 1000)
+		R_Suicide(_("MAX_NUM_DLLS cannot be bigger than 1000"));
+	    
+	    char msg[128];
+	    snprintf(msg, 128,
+	      _("MAX_NUM_DLLS bigger than %d may exhaust open files limit"),
+	      maxlimit);
+	    R_Suicide(msg);
+	}
+	MaxNumDLLs = reqlimit;
+    } else
+	MaxNumDLLs = 100;
+
+    /* memory is set to zero */
+    LoadedDLL = (DllInfo *) calloc(MaxNumDLLs, sizeof(DllInfo));
+    if (LoadedDLL == NULL)
+	R_Suicide(_("could not allocate space for DLL table"));
 }
 
 /* returns DllInfo used by the embedding application.
@@ -487,10 +538,6 @@ found:
 	LoadedDLL[i - 1].forceSymbols = LoadedDLL[i].forceSymbols;
     }
     CountDLL--;
-    if (CountDLL == 0) {
-	free(LoadedDLL);
-	LoadedDLL = NULL;
-    }
     return 1;
 }
 
@@ -623,43 +670,6 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
 static int
 addDLL(char *dpath, char *DLLname, HINSTANCE handle)
 {
-    if (CountDLL == 0 && LoadedDLL == NULL) {
-	/* Note that it is likely that dlopen will use up at least one file
-	   descriptor for each DLL loaded (it may load further dynamically
-	   linked libraries), so we do not want to get close to the fd limit
-	   (which may be as low as 256). We currently set the limit to 60%
-	   of the maximum number of DLLs, when known, but never to more
-	   than 1000. If the limit is not known, we set the maximum to 100.
-	*/
-	int fdlimit = R_GetFDLimit();
-	if (fdlimit > 0) {
-	    MaxNumDLLs = (int) (0.6 * fdlimit);
-	    if (MaxNumDLLs > 1000) MaxNumDLLs = 1000;
-	} else
-	    MaxNumDLLs = 100;
-	/* memory is set to zero */
-	LoadedDLL = (DllInfo *) calloc(MaxNumDLLs, sizeof(DllInfo));
-	if (LoadedDLL == NULL) {
-	    strcpy(DLLerror, _("could not allocate space for DLL table"));
-	    if(handle)
-		R_osDynSymbol->closeLibrary(handle);
-	    free(dpath);
-	    return 0;
-	}
-    }
-
-    if(CountDLL == MaxNumDLLs) {
-	/* This check is only for the case when addDLL is called directly,
-	   bypassing AddDLL and R_RegisterDLL, which now happens only for
-	   "base" and "embedding". In practice, the limit should never
-	   be reached here. */
-	if(handle)
-	    R_osDynSymbol->closeLibrary(handle);
-	/* use error directly as the result is not checked by callers */
-	error(_("`maximal number of DLLs reached..."));
-	return 0; /* not reached */
-    }
-
     int ans = CountDLL;
     char *name = (char *) malloc(strlen(DLLname)+1);
     if(name == NULL) {

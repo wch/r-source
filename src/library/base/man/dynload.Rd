@@ -161,6 +161,14 @@ is.loaded(symbol, PACKAGE = "", type = "")
   and \strong{not} (as in S) that remapped by the defunct functions
   \code{symbol.C} or \code{symbol.For}.
 
+  By default, the maximum number of DLLs that can be loaded is 100, which
+  should be sufficient in almost all cases.  The maximum can be increased up
+  to 1000 via environment variable \env{R_MAX_NUM_DLLS}, which has to be set
+  before starting an R session.  On Unix, \env{R_MAX_NUM_DLLS} is in
+  addition not allowed to be greater than 60\% of the OS limit on the number
+  of open files, which can sometimes be modified using \code{ulimit}. 
+  Increasing \env{R_MAX_NUM_DLLS} comes with memory overhead.
+
   The creation of DLLs and the runtime linking of them into executing
   programs is very platform dependent.  In recent years there has been
   some simplification in the process because the C subroutine call
