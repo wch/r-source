@@ -27,7 +27,8 @@
 #include <Print.h> /* for R_print */
 #include <R_ext/Itermacros.h>
 
-
+static SEXP make_wrapper(SEXP, SEXP);
+#define NMETA 2
 
 
 /**
@@ -952,43 +953,63 @@ anyway */
 	l = lst;							\
 	pos  = floor((u + l) /2.0);					\
 	cval = ALTPREF##_ELT(tb, pos);					\
-	while(u > l +1) {						\
-	    cval = ALTPREF##_ELT(tb, pos);				\
-	    if(ISNA(cval) || (cval > qval && sd == KNOWN_INCR) ||	\
-	       (cval < qval && sd == KNOWN_DECR) ||			\
-	       (cval == qval && frst)) {				\
-		/* walk to lower indices, sorted implies na.last */	\
-		u = pos;						\
-		pos = floor((u + l) /2.0);				\
-	    } else if((cval < qval && sd == KNOWN_INCR )  ||		\
-		      (cval > qval && sd == KNOWN_DECR ) ||		\
-		      (cval == qval && !frst)) {			\
-		/*walk to higher indices */				\
-		l = pos;						\
-		pos = ceil((u+l) / 2.0);				\
+	if(XLENGTH(tb) <= 2) {						\
+	    if(frst) {							\
+		pos = 0;						\
+		cval = ALTPREF##_ELT(tb, 0);				\
+		if(cval != qval && XLENGTH(tb) ==2) {			\
+		    pos = 1;						\
+		    cval = ALTPREF##_ELT(tb, 1);			\
+		}							\
 	    }								\
-	    cval = ALTPREF##_ELT(tb, pos);				\
-	}								\
-	/*last check */							\
-	if(frst && pos == u && ALTPREF##_ELT(tb, l) == qval) {		\
-	    pos = l;							\
-	    cval = qval;						\
-	} else if (!frst && pos == l && ALTPREF##_ELT(tb, u) == qval) { \
-	    pos = u;							\
-	    cval = qval;						\
+	}else {								\
+	    while(u > l +1) {						\
+		cval = ALTPREF##_ELT(tb, pos);				\
+		if(ISNA(cval) || (cval > qval && sd == KNOWN_INCR) ||	\
+		   (cval < qval && sd == KNOWN_DECR) ||			\
+		   (cval == qval && frst)) {				\
+		    /* walk to lower indices, sorted implies na.last */	\
+		    u = pos;						\
+		    pos = floor((u + l) /2.0);				\
+		} else if((cval < qval && sd == KNOWN_INCR )  ||	\
+			  (cval > qval && sd == KNOWN_DECR ) ||		\
+			  (cval == qval && !frst)) {			\
+		    /*walk to higher indices */				\
+		    l = pos;						\
+		    pos = ceil((u+l) / 2.0);				\
+		}							\
+		cval = ALTPREF##_ELT(tb, pos);				\
+	    }								\
+	    /*last check */						\
+	    if(cval != qval) {						\
+		if(pos == u) {						\
+		    pos = l;						\
+		    cval = ALTPREF##_ELT(tb, l);			\
+		} else {						\
+		    pos = u;						\
+		    cval = ALTPREF##_ELT(tb, u);			\
+		}							\
+	    } else if(frst && pos == u && ALTPREF##_ELT(tb, l) == qval) { \
+		pos = l;						\
+		cval = qval;						\
+	    } else if (!frst && pos == l && ALTPREF##_ELT(tb, u) == qval) { \
+		pos = u;						\
+		cval = qval;						\
+	    }								\
 	}								\
     } while(0);
 
 
 /* this always makes a numeric to deal with long vec indices 
    is there a better way? */
+#define TOINDEX(x) (x == nmatch ? x : x+1)
 #define BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, fonly, nm) do {		\
 	if(fonly) {							\
-	    PROTECT(ret = allocVector(REALSXP, XLENGTH(q))); nprot++;	\
+	    PROTECT(ret = allocVector(INTSXP, XLENGTH(q))); nprot++;	\
 	} else {							\
 	    PROTECT(ret = allocVector(VECSXP, XLENGTH(q))); nprot++;	\
 	}								\
-	R_xlen_t pos, pos2, u, l;					\
+	int pos, pos2, u, l;						\
 	TYPE curval, qval, curval2;					\
 	for (R_xlen_t i =0; i < XLENGTH(q); i++) {			\
 	    qval = ALTPREFIX##_ELT(q,i);				\
@@ -997,18 +1018,23 @@ anyway */
 			0,						\
 			ALTPREFIX##_IS_SORTED(table),			\
 			ALTPREFIX, TRUE);				\
-	    if(curval != qval)						\
+	    if(curval != qval)	{					\
+		if(nm == NA_INTEGER)					\
+		    numNA++;						\
 		pos = nm;						\
+	    }								\
 	    if(fonly) {							\
-		SET_REAL_ELT(ret, i, pos) ;				\
+		SET_INTEGER_ELT(ret, i, TOINDEX(pos)) ;		\
 	    } else  if (pos != nm) {					\
 		BINARY_FIND(table, qval, pos2, curval2, u, l,		\
 			    XLENGTH(table) -1, pos,			\
 			    ALTPREFIX##_IS_SORTED(table),		\
 			    ALTPREFIX, FALSE);				\
-		SET_VECTOR_ELT(ret, i, R_compact_intrange(pos, pos2));	\
+		SET_VECTOR_ELT(ret, i,					\
+			       R_compact_intrange(TOINDEX(pos),	\
+						  TOINDEX(pos2)));	\
 	    } else {							\
-		SET_VECTOR_ELT(ret, i, ScalarReal(pos));		\
+		SET_VECTOR_ELT(ret, i, ScalarInteger(TOINDEX(pos)));	\
 	    }								\
 	}								\
     } while(0);
@@ -1022,10 +1048,20 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
     do {								\
 	SEXP ret;							\
 	int nprot = 0;							\
+	int numNA  =0;							\
+	int tsorted = ALTPREFIX##_IS_SORTED(table), qsorted;		\
 	if(TYPEOF(q) == SXPTYPE &&					\
-	   KNOWN_SORTED(ALTPREFIX##_IS_SORTED(table)) &&		\
-	   incomp == R_NilValue) {					\
+	   KNOWN_SORTED(tsorted) &&					\
+	   (incomp == NULL || incomp == R_NilValue)) {			\
 	    BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, FIRSTONLY, nmatch);	\
+	    qsorted = ALTPREFIX##_IS_SORTED(q);				\
+	    if(KNOWN_SORTED(qsorted)) {					\
+		SEXP info = PROTECT(allocVector(INTSXP, NMETA)); nprot++; \
+		INTEGER(info)[0] = qsorted *tsorted;			\
+		INTEGER(info)[1] = numNA == 0;				\
+		/* make a wrapper, sorted = qsorted*tsorted, na = numNA ==0 */ \
+		ret = PROTECT(make_wrapper(ret, info));nprot++;		\
+	    }								\
 	} else if(FIRSTONLY) {						\
 	    UNPROTECT(nprot);						\
 	    return NULL;	/* return to normal codepath */		\
@@ -1042,7 +1078,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 static SEXP altreal_Match_default(SEXP table, SEXP q,
 					    int nmatch, SEXP incomp,
 					    SEXP env,
-					    Rboolean firstonly) {
+				    Rboolean firstonly) {
 
     ALT_MATCH_DEFAULT(double, REALSXP, REAL, firstonly);
 }
@@ -3358,7 +3394,7 @@ SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
  * Wrapper Classes and Objects
  */
 
-#define NMETA 2
+
 
 static R_altrep_class_t wrap_integer_class;
 static R_altrep_class_t wrap_real_class;
@@ -3385,7 +3421,7 @@ static SEXP wrapper_Serialized_state(SEXP x)
     return CONS(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
 }
 
-static SEXP make_wrapper(SEXP, SEXP);
+
 
 static SEXP wrapper_Unserialize(SEXP class, SEXP state)
 {

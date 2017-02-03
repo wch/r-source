@@ -21,7 +21,8 @@ KNOWN_INCR = 1
 KNOWN_DECR = -1
 KNOWN_UNSORTED = 0
 UNKNOWN_SORTEDNESS = NA_integer_
-                                
+
+isWrappable = function(x) is.atomic(x) && mode(x) %in% c("integer", "numeric", "character")
 
 sort <- function(x, decreasing = FALSE, ...)
 {
@@ -63,6 +64,18 @@ sort.int <-
         o <- order(x, na.last = na.last, decreasing = decreasing,
                    method = "radix")
         y <- x[o]
+
+        ## this code is duplicated at end of function, but the return call requires it...
+        if((is.integer(y) || is.numeric(y)) && 
+           (is.na(na.last) || na.last)) {
+            if(decreasing)
+                sorted = KNOWN_DECR
+            else
+                sorted = KNOWN_INCR
+            has.na = length(y) > 0 && is.na(y[length(y)])
+            y = .Internal(wrap_meta(y, sorted, !has.na))
+        }         
+        
         return(if (index.return) list(x = y, ix = o) else y)
     }
     else if (method == "auto" || !is.numeric(x))
