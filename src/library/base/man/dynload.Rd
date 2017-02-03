@@ -1,6 +1,6 @@
 % File src/library/base/man/dynload.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dyn.load}
@@ -161,13 +161,17 @@ is.loaded(symbol, PACKAGE = "", type = "")
   and \strong{not} (as in S) that remapped by the defunct functions
   \code{symbol.C} or \code{symbol.For}.
 
-  By default, the maximum number of DLLs that can be loaded is 100, which
-  should be sufficient in almost all cases.  The maximum can be increased up
-  to 1000 via environment variable \env{R_MAX_NUM_DLLS}, which has to be set
-  before starting an R session.  On Unix, \env{R_MAX_NUM_DLLS} is in
-  addition not allowed to be greater than 60\% of the OS limit on the number
-  of open files, which can sometimes be modified using \code{ulimit}. 
-  Increasing \env{R_MAX_NUM_DLLS} comes with memory overhead.
+  By default, the maximum number of DLLs that can be loaded is 100,
+  which should be sufficient in almost all cases.  As from \R 3.4.0, the
+  maximum can be increased up to 1000 \emph{via} the environment
+  variable \env{R_MAX_NUM_DLLS}, which has to be set before starting an
+  \R{} session.  On Unix, \env{R_MAX_NUM_DLLS} is in addition not
+  allowed to be greater than 60\% of the OS limit on the number of open
+  files (typically 1024, but 256 on macOS), which can sometimes be
+  modified using command \command{ulimit -n} (\command{sh},
+  \command{bash}) or \command{limit descriptors} (\command{csh}) in the
+  shell used to launchd \R{} .  Increasing \env{R_MAX_NUM_DLLS} comes
+  with some memory overhead.
 
   The creation of DLLs and the runtime linking of them into executing
   programs is very platform dependent.  In recent years there has been
