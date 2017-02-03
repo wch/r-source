@@ -4447,11 +4447,11 @@ to be satisfactory.
 The ultimate sources for package @pkg{compiler} are in its @file{noweb}
 directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
-@command{notangle} is required.  This is likely to need to be installed
-from the sources at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can
-also be found on CTAN).  The package sources are only re-created even in
-maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
-been updated.
+@command{notangle} is required.  Some Linux distributions include this
+command in package @pkg{noweb}.  It can also be installed from the sources
+at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can also be found on
+CTAN).  The package sources are only re-created even in maintainer mode if
+@file{src/library/compiler/noweb/compiler.nw} has been updated.
 
 It is likely that in future creating @code{configure} will need the GNU
 `autoconf archive' installed.  This can be found at
