@@ -1,0 +1,93 @@
+% File src/library/tools/man/package_native_routine_registration_skeleton.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 2017 R Core Team
+% Distributed under GPL 2 or later
+
+\name{package_native_routine_registration_skeleton}
+\alias{package_native_routine_registration_skeleton}
+\title{
+  Write Skeleton for Adding Native Routine Registration to a Package
+}
+\description{
+  Write a skeleton for adding native routine registration to a package.
+}
+\usage{
+package_native_routine_registration_skeleton(dir, con = stdout(),
+    align = TRUE, include_declarations = FALSE)
+}
+\arguments{
+  \item{dir}{
+    Top-level directory of a package.
+  }
+  \item{con}{
+    Connection on which to write the skeleton: can be specified as a
+    file path.
+  }
+  \item{align}{
+    Logical: should the registration tables be lined up in three
+    columns each?
+  }
+  \item{include_declarations}{
+    Logical: should the output include declarations for the registered
+    routines?
+  }
+}
+\details{
+  Registration is described in section 5.4.1 of \sQuote{Writing R
+    Extensions}. This function produces a skeleton of the C code which
+  needs to be added to enable registration, conventionally as file
+  \file{src/init.c} or appended to the sole C file of the package.
+
+  Optionally the skeleton will include declarations for the registered
+  routines: they should be checked against the C/Fortran source code,
+  not least as the number of arguments is taken from the \R code.
+  For \code{.Call} and \code{.External} calls they will often suffice,
+  but for \code{.C} and \code{.Fortran} calls the \code{void *}
+  arguments should be replaced by the actual types.
+}
+
+\value{
+  None: the output is written to the connection \code{con}.
+}
+
+\note{
+  This uses static code analysis to find the \code{.C} etc calls: it
+  \emph{will} find those in parts of the \R code \sQuote{commented out} by
+  inclusion in \code{if(FALSE) \{ \dots \}}.
+
+  On the other hand, it will fail to find the entry points in
+  constructs like \preformatted{
+    .Call(if(int) "rle_i" else "rle_d", i, force)
+  }
+
+  Call to entry points in other packages will be skipped if they have an
+  explicit \code{PACKAGE} argument, but not if they use a symbol
+  imported from another package.
+}
+
+\seealso{
+  \code{\link{package.skeleton}}.
+}
+\examples{\dontrun{
+## with an completed splines/DESCRIPTION file,
+tools::package_native_routine_registration_skeleton('splines')
+## produces
+#include <Rinternals.h>
+#include <R_ext/Rdynload.h>
+
+/* FIXME: 
+   Add declarations for the native routines registered below.
+*/
+
+static const R_CallMethodDef CallEntries[] = {
+    {"spline_basis", (DL_FUNC) &spline_basis, 4},
+    {"spline_value", (DL_FUNC) &spline_value, 5},
+    {NULL, NULL, 0}
+};
+
+void R_init_splines(DllInfo *dll)
+{
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}
+}}

@@ -1,6 +1,6 @@
 % File src/library/utils/man/package.skeleton.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package.skeleton}
@@ -86,6 +86,9 @@ package.skeleton(name = "anRpackage", list,
 \seealso{
   \code{\link{prompt}}, \code{\link{promptClass}}, and
   \code{\link{promptMethods}}.
+
+  \code{\link{package_native_routine_registration_skeleton}} for helping
+  in preparing packages with compiled code.
 }
 
 \examples{

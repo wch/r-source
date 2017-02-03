@@ -9540,13 +9540,13 @@ appending to the only C source file.  Some packages will already have
 these in a header file, or you could create one and include it in
 @file{init.c}, for example @file{splines.h} containing
 
-@example
+@smallexample
 @group
 #include <Rinternals.h> // for SEXP
-SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
-SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
+extern SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
+extern SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
 @end group
-@end example
+@end smallexample
 
 For examples of registering other types of calls, see packages
 @pkg{graphics} and @pkg{stats}.  In particular, when registering entry
@@ -9583,6 +9583,9 @@ void R_init_splines(DllInfo *dll)
 @end example
 
 @end itemize
+
+A skeleton for the steps so far can be made using
+@code{package_native_routine_registration_skeleton} in package @pkg{tools}.
 
 The remaining steps are optional but recommended.
 
