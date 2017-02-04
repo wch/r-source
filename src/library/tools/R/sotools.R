@@ -888,8 +888,12 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
             )
     }
 
-    c("#include <R.h>",
-      "#include <Rinternals.h>",
+    headers <- if(NROW(nrdb$.Call) || NROW(nrdb$.External))
+        c("#include <R.h>", "#include <Rinternals.h>")
+    else if(NROW(nrdb$.Fortran)) "#include <R_ext/RS.h>"
+    else character()
+
+    c(headers,
       "#include <R_ext/Rdynload.h>",
       "",
       decls,

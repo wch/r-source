@@ -69,7 +69,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   \code{\link{package.skeleton}}.
 }
 \examples{\dontrun{
-## with an completed splines/DESCRIPTION file,
+## with a completed splines/DESCRIPTION file,
 tools::package_native_routine_registration_skeleton('splines')
 ## produces
 #include <Rinternals.h>
