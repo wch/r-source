@@ -1,6 +1,6 @@
 % File src/library/base/man/stopifnot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
@@ -51,6 +51,9 @@ op <- options(error = expression(NULL))
 
 stopifnot(all.equal(pi, 3.141593),  2 < 2, all(1:10 < 12), "a" < "b")
 stopifnot(all.equal(pi, 3.1415927), 2 < 2, all(1:10 < 12), "a" < "b")
+
+# long all.equal() error messages are abbreviated:
+stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415)))
 
 options(op)  # revert to previous error handler
 }

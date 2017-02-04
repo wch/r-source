@@ -671,6 +671,14 @@ stopifnot(
 ## wrongly showed '[list output truncated]'  in R < 3.4.0
 
 
+## stopifnot(all.equal(.)) message abbreviation
+msg <- tryCatch(stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415))),
+		error = conditionMessage)
+writeLines(msg)
+stopifnot(length(strsplit(msg,"\n")[[1]]) == 1+3+1)
+## was wrong for months in R-devel only
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
