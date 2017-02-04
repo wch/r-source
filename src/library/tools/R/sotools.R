@@ -730,8 +730,8 @@ function(calls, dir = NULL)
     if(is.null(dir))
         dir <- attr(calls, "dir")
 
-    package <-
-        .read_description(file.path(dir, "DESCRIPTION"))["Package"]
+    package <- # drop name
+        as.vector(.read_description(file.path(dir, "DESCRIPTION"))["Package"])
 
     nrdb <-
         lapply(calls,
@@ -775,8 +775,12 @@ function(calls, dir = NULL)
                })
     nrdb <- do.call(rbind, nrdb)
     nrdb <- as.data.frame(unique(nrdb), stringsAsFactors = FALSE)
+
+    if(NROW(nrdb) == 0L || length(nrdb) != 3L)
+        stop("no native symbols were extracted")
     nrdb[, 3L] <- as.numeric(nrdb[, 3L])
     nrdb <- nrdb[order(nrdb[, 1L], nrdb[, 2L], nrdb[, 3L]), ]
+    ## FIXME: look for duplicates.
 
     ## Now get the namespace info for the package.
     info <- parseNamespaceFile(basename(dir), dirname(dir))
@@ -801,6 +805,10 @@ function(calls, dir = NULL)
     ## See above.
     if(any(ind <- !is.na(match(nrdb[, 2L], imports))))
         nrdb <- nrdb[!ind, , drop = FALSE]
+
+    ## Fortran entry points are mapped to l/case
+    dotF <- nrdb$cname == ".Fortran"
+    nrdb[dotF, "s"] <- tolower(nrdb[dotF, "s"])
 
     attr(nrdb, "package") <- package
     nrdb
@@ -894,6 +902,7 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
     else character()
 
     c(headers,
+      "#include <stdlib.h> // for NULL",
       "#include <R_ext/Rdynload.h>",
       "",
       decls,

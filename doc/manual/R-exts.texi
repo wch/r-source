@@ -9283,6 +9283,9 @@ static R_CMethodDef cMethods[] = @{
 @c values when it is not necessary. Typically, one omits this information
 @c in the registration data.
 
+Note that @code{.Fortran} entry points are mapped to lowercase, so
+registration should use lowercase only.
+
 Having created the arrays describing each routine, the last step is to
 actually register them with @R{}.  We do this by calling
 @code{R_registerRoutines}.  For example, if we have the descriptions
