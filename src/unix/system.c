@@ -206,16 +206,12 @@ int Rf_initialize_R(int ac, char **av)
 	   are larger).  We will assume that unrepresentable limits
 	   are very large.
 
-	   This is exceedingly cautious: one would expect cur <= max
-	   and it is extremely unlikely that the soft limit is either
-	   unlimited or unrepresentable.
+	   This is cautious: it is extremely unlikely that the soft
+	   limit is either unlimited or unrepresentable.
 	*/
-	rlim_t lim1 = rlim.rlim_cur, lim2 = rlim.rlim_max;
-	if (lim1 == RLIM_SAVED_CUR || lim1 == RLIM_SAVED_MAX) 
-	    lim1 = RLIM_INFINITY;
-	if (lim2 == RLIM_SAVED_CUR || lim2 == RLIM_SAVED_MAX) 
-	    lim2 = RLIM_INFINITY;
-	rlim_t lim = lim1 < lim2 ? lim1 : lim2;
+	rlim_t lim = rlim.rlim_cur;
+	if (lim == RLIM_SAVED_CUR || lim == RLIM_SAVED_MAX) 
+	    lim = RLIM_INFINITY;
 	if (lim != RLIM_INFINITY) R_CStackLimit = (uintptr_t) lim;
     }
 #if defined(HAVE_LIBC_STACK_END)
@@ -501,16 +497,17 @@ int R_GetFDLimit() {
     /* Historically this was RLIMIT_OFILE on BSD, but we require the
        POSIX version.
 
+       Most often RLIM_INFINITY >= INT_MAX, but not on some 32-bit
+       systems.  On all current systems the limit will be at most a
+       few thousand.
+
        Note that 'unlimited' here probably does not mean it:
        e.g. there is a kernel limit of OPEN_MAX on macOS.
     */
     if (getrlimit(RLIMIT_NOFILE, &rlim) == 0) {
-	rlim_t lim1 = rlim.rlim_cur, lim2 = rlim.rlim_max;
-	if (lim1 == RLIM_SAVED_CUR || lim1 == RLIM_SAVED_MAX) 
-	    lim1 = RLIM_INFINITY;
-	if (lim2 == RLIM_SAVED_CUR || lim2 == RLIM_SAVED_MAX) 
-	    lim2 = RLIM_INFINITY;
-	rlim_t lim = lim1 < lim2 ? lim1 : lim2;
+	rlim_t lim = rlim.rlim_cur;
+	if (lim == RLIM_SAVED_CUR || lim == RLIM_SAVED_MAX) 
+	    lim = RLIM_INFINITY;
 	return (int)((lim > INT_MAX) ? INT_MAX : lim);
     }
 #endif
