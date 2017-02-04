@@ -69,14 +69,13 @@ setCompilerOptions(...)
 
   \code{enableJIT} enables or disables just-in-time (JIT)
   compilation. JIT is disabled if the argument is 0. If \code{level} is
-  1 then closures are compiled before their first use.  If \code{level}
-  is 2, then in addition closures are also compiled before they are
-  duplicated (useful for some packages, like \code{lattice}, that store
-  closures in lists).  If \code{level} is 3 then in addition all loops
-  are compiled before they are executed.  JIT level 3 requires the
-  compiler option \code{optimize} to be 2 or 3.  The JIT level can also
-  be selected by starting \R with the environment variable
-  \code{R_ENABLE_JIT} set to one of these values. Calling
+  1 then larger closures are compiled before their first use.  If
+  \code{level} is 2, then some small closures are also compiled before
+  their second use.  If \code{level} is 3 then in addition
+  all top level loops are compiled before they are executed.  JIT level
+  3 requires the compiler option \code{optimize} to be 2 or 3.  The JIT
+  level can also be selected by starting \R with the environment
+  variable \code{R_ENABLE_JIT} set to one of these values. Calling
   \code{enableJIT} with a negative argument returns the current JIT
   level. The default JIT level is \code{3}.
 
@@ -121,6 +120,7 @@ setCompilerOptions(...)
 \author{Luke Tierney}
 
 \examples{
+oldJIT <- enableJIT(0)
 # a simple example
 f <- function(x) x+1
 fc <- cmpfun(f)
@@ -181,5 +181,6 @@ for (i in 1:1000) la1(y, is.null)
 for (i in 1:1000) la1c(y, is.null)
 for (i in 1:1000) la2(y, is.null)
 for (i in 1:1000) la2c(y, is.null)
-}}
+}
+enableJIT(oldJIT)}
 \keyword{programming}
