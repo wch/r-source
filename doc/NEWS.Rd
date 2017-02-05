@@ -317,6 +317,15 @@
       \item The maximum number of DLLs that can be loaded into R e.g. via
       dyn.load can now be increased by setting the environment variable
       \code{R_MAX_NUM_DLLS} before starting R.
+
+      \item Assigning to an element of a vector beyond the current
+      length now over-allocates by a small fraction. The new vector is
+      marked internally as growable, and the true length of the new
+      vector is stored in the \code{truelength} field. This makes
+      building up a vector result by assigning to the next element
+      beyond the current length more efficient, though pre-allocating is
+      still preferred.  The implementation is subject to change and not
+      intended to be used in packages at this time.
     }
   }
 

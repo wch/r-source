@@ -162,9 +162,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     /* over-committing by 5% seems to be reasonable, but for
        experimenting the environment variable R_EXPAND_Frac can be
        used to adjust this */
-    /**** for now, the default 1.00 preserves the current no
-	  over-commit behavior */
-    static double expand_dflt = 1.00;
+    static double expand_dflt = 1.05;
     static double expand = 0;
     if (expand == 0) {
 	char *envval = getenv("R_EXPAND_FRAC");
