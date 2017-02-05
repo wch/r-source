@@ -156,7 +156,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
        increase its length */
     if (! MAYBE_SHARED(x) &&
 	IS_GROWABLE(x) &&
-	TRUELENGTH(x) >= newlen) {
+	XTRUELENGTH(x) >= newlen) {
 	SET_STDVEC_LENGTH(x, newlen);
 	names = getNames(x);
 	if (!isNull(names)) {
