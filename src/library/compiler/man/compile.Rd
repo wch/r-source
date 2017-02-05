@@ -1,6 +1,6 @@
 % File src/library/compiler/man/compile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2016 R Core Team
+% Copyright 2011-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{compile}
