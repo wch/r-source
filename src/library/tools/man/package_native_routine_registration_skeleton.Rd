@@ -53,9 +53,14 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 
   If an entry point is used with different numbers of arguments in the
   package's \R code, an entry in the table (and optionally, a
-  declaration) is made for each number.  Obviously this needs to be
-  resolved: only \code{.External} calls can have a variable number of
-  arguments, which should be declared as \code{-1}.
+  declaration) is made for each number, and a comment placed in the
+  output.  Obviously this needs to be resolved: only \code{.External}
+  calls can have a variable number of arguments, which should be
+  declared as \code{-1}.
+
+  A surprisingly large number of \acronym{CRAN} packages had calls in \R
+  code to native routines not included in the packages, which will lead
+  to a compilation error when registration C code is added.
 }
 
 \value{
@@ -70,6 +75,10 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   On the other hand, it will fail to find the entry points in
   constructs like \preformatted{
     .Call(if(int) "rle_i" else "rle_d", i, force)
+  }
+  and does not know the value of variables in calls like \preformatted{
+    .Call (cfunction, ...)
+    .Call(..., PACKAGE="sparseLTSEigen")
   }
 
   Call to entry points in other packages will be skipped if they have an

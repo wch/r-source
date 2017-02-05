@@ -757,9 +757,9 @@ function(calls, dir = NULL)
                    else
                        return(NULL)
                    ## Drop the ones where PACKAGE gives a different
-                   ## package.
+                   ## package. Ignore those which are not char strings.
                    if(!is.null(p <- e[["PACKAGE"]]) &&
-                      !identical(p, package))
+                      is.character(p) && !identical(p, package))
                        return(NULL)
                    n <- if(length(pos)) {
                             ## Cannot determine the number of args: use
@@ -780,7 +780,8 @@ function(calls, dir = NULL)
         stop("no native symbols were extracted")
     nrdb[, 3L] <- as.numeric(nrdb[, 3L])
     nrdb <- nrdb[order(nrdb[, 1L], nrdb[, 2L], nrdb[, 3L]), ]
-    ## FIXME: look for duplicates.
+    nms <- nrdb[, "s"]
+    dups <- unique(nms[duplicated(nms)])
 
     ## Now get the namespace info for the package.
     info <- parseNamespaceFile(basename(dir), dirname(dir))
@@ -792,15 +793,17 @@ function(calls, dir = NULL)
 
     info <- info$nativeRoutines[[package]]
     ## First adjust native routine names for explicit remapping or
-    ## namespace .fixes.
+    ## namespace .fixes.  However, a package without registration
+    ## has no way to use the fixes, so this does not seem necessary.
     if(length(symnames <- info$symbolNames)) {
         ind <- match(nrdb[, 2L], names(symnames), nomatch = 0L)
         nrdb[ind > 0L, 2L] <- symnames[ind]
     } else if(any((fixes <- info$registrationFixes) != "")) {
-        nrdb[, 2L] <-
-            substring(nrdb[, 2L],
-                      nchar(fixes[1L]) + 1L,
-                      nchar(nrdb[, 2L]) - nchar(fixes[2L]))
+        ## There are packages which have not used the fixes, e.g. utf8latex
+        ## fixes[1L] is a prefix, fixes[2L] is an undocumented suffix
+        nrdb[, 2L] <- sub(paste0("^", fixes[1L]), "", nrdb[, 2L])
+        if(nzchar(fixes[2L]))
+            nrdb[, 2L] <- sub(paste0(fixes[2L]), "$", "", nrdb[, 2L])
     }
     ## See above.
     if(any(ind <- !is.na(match(nrdb[, 2L], imports))))
@@ -811,6 +814,7 @@ function(calls, dir = NULL)
     nrdb[dotF, "s"] <- tolower(nrdb[dotF, "s"])
 
     attr(nrdb, "package") <- package
+    attr(nrdb, "duplicates") <- dups
     nrdb
 }
 
@@ -843,6 +847,7 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
     }
 
     package <- attr(nrdb, "package")
+    dups <- attr(nrdb, "duplicates")
 
     nrdb <- split(nrdb[, -1L, drop = FALSE],
                   factor(nrdb[, 1L],
@@ -873,20 +878,23 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
             "   Check these declarations against the C/Fortran source code.",
             "*/",
             if(NROW(y <- nrdb$.C)) {
-                 args <- sapply(y$n, function(n)
-                                paste(rep("void *", n), collapse=", "))
+                 args <- sapply(y$n, function(n) if(n >= 0)
+                                paste(rep("void *", n), collapse=", ")
+                                else "/* FIXME */")
                 c("", "/* .C calls */",
                   paste0("extern void ", y$s, "(", args, ");"))
            },
             if(NROW(y <- nrdb$.Call)) {
-                args <- sapply(y$n, function(n)
-                               paste(rep("SEXP", n), collapse=", "))
-                c("", "/* .Call calls */",
+                args <- sapply(y$n, function(n) if(n >= 0)
+                               paste(rep("SEXP", n), collapse=", ")
+                               else "/* FIXME */")
+               c("", "/* .Call calls */",
                   paste0("extern SEXP ", y$s, "(", args, ");"))
             },
             if(NROW(y <- nrdb$.Fortran)) {
-                 args <- sapply(y$n, function(n)
-                                paste(rep("void *", n), collapse=", "))
+                 args <- sapply(y$n, function(n) if(n >= 0)
+                                paste(rep("void *", n), collapse=", ")
+                                else "/* FIXME */")
                 c("", "/* .Fortran calls */",
                   paste0("extern void F77_NAME(", y$s, ")(", args, ");"))
             },
@@ -905,10 +913,20 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
       "#include <stdlib.h> // for NULL",
       "#include <R_ext/Rdynload.h>",
       "",
+      if(length(dups)) {
+          c("/*",
+            "  The following symnbols appear with different usages",
+            "  e.g., with different numbers of arguments:",
+            "", strwrap(dups, indent = 4, exdent = 4), "",
+            "  This needs to be resolved in the tables and any declarations.",
+            "*/", "")
+      },
       decls,
       "",
       unlist(blocks, use.names = FALSE),
-      sprintf("void R_init_%s(DllInfo *dll)", package),
+      ## We cannot use names with '.' in: WRE mentions replacing with "_"
+      sprintf("void R_init_%s(DllInfo *dll)",
+              gsub(".", "_", package, fixed = TRUE)),
       "{",
       sprintf("    R_registerRoutines(dll, %s);",
               paste0(ifelse(has,
