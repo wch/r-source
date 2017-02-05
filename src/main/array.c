@@ -604,7 +604,7 @@ static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
 {
     if ((n&1) != 0 && !R_FINITE(x[0]))
 	return TRUE;
-    for (int i = n&1; i < n; i += 2)
+    for (R_xlen_t i = n&1; i < n; i += 2)
 	/* A precise version could use this condition:
 	 *
 	 * !R_FINITE(x[i]+x[i+1]) && (!R_FINITE(x[i]) || !R_FINITE(x[i+1]))
@@ -621,13 +621,69 @@ static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
     return FALSE;
 }
 
+static Rboolean cmayHaveNaNOrInf(Rcomplex *x, R_xlen_t n)
+{
+    /* With HAVE_FORTRAN_DOUBLE_COMPLEX set, it should be clear that
+       Rcomplex has no padding, so we could probably use mayHaveNaNOrInf,
+       but better safe than sorry... */
+    if ((n&1) != 0 && (!R_FINITE(x[0].r) || !R_FINITE(x[0].i)))
+	return TRUE;
+    for (R_xlen_t i = n&1; i < n; i += 2)
+	if (!R_FINITE(x[i].r+x[i].i+x[i+1].r+x[i+1].i))
+	    return TRUE;
+    return FALSE;
+}
+
+static R_INLINE void simple_matprod(double *x, int nrx, int ncx,
+                                    double *y, int nry, int ncy, double *z)
+{
+    LDOUBLE sum;
+    R_xlen_t NRX = nrx, NRY = nry;
+
+    for (int i = 0; i < nrx; i++)
+	for (int k = 0; k < ncy; k++) {
+	    sum = 0.0;
+	    for (int j = 0; j < ncx; j++)
+		sum += x[i + j * NRX] * y[j + k * NRY];
+	    z[i + k * NRX] = (double) sum;
+	}
+}
+
+static R_INLINE void simple_crossprod(double *x, int nrx, int ncx,
+                                      double *y, int nry, int ncy, double *z)
+{
+    LDOUBLE sum;
+    R_xlen_t NRX = nrx, NRY = nry, NCX = ncx;
+    for (int i = 0; i < ncx; i++)
+	for (int k = 0; k < ncy; k++) {
+	    sum = 0.0;
+	    for (int j = 0; j < nrx; j++)
+		sum += x[j + i * NRX] * y[j + k * NRY];
+	    z[i + k * NCX] = (double) sum;
+	}
+}
+
+static R_INLINE void simple_tcrossprod(double *x, int nrx, int ncx,
+                                       double *y, int nry, int ncy, double *z)
+{
+    LDOUBLE sum;
+    R_xlen_t NRX = nrx, NRY = nry;
+
+    for (int i = 0; i < nrx; i++)
+	for (int k = 0; k < nry; k++) {
+	    sum = 0.0;
+	    for (int j = 0; j < ncx; j++)
+		sum += x[i + j * NRX] * y[k + j * NRY];
+	    z[i + k * NRX] = (double) sum;
+	}
+}
+
 static void matprod(double *x, int nrx, int ncx,
 		    double *y, int nry, int ncy, double *z)
 {
     char *transN = "N", *transT = "T";
     double one = 1.0, zero = 0.0;
     int ione = 1;
-    LDOUBLE sum;
     R_xlen_t NRX = nrx, NRY = nry;
 
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
@@ -639,15 +695,8 @@ static void matprod(double *x, int nrx, int ncx,
 	 * Using these special values may cause LAPACK to return unexpected
 	 * results or become unstable."
 	 */
-	if (mayHaveNaNOrInf(x, NRX*ncx) || mayHaveNaNOrInf(y, NRY*ncy)) {
-	    for (int i = 0; i < nrx; i++)
-		for (int k = 0; k < ncy; k++) {
-		    sum = 0.0;
-		    for (int j = 0; j < ncx; j++)
-			sum += x[i + j * NRX] * y[j + k * NRY];
-		    z[i + k * NRX] = (double) sum;
-		}
-	}
+	if (mayHaveNaNOrInf(x, NRX*ncx) || mayHaveNaNOrInf(y, NRY*ncy))
+	    simple_matprod(x, nrx, ncx, y, nry, ncy, z);
 	else if (ncy == 1) /* matrix-vector or dot product */
 	    F77_CALL(dgemv)(transN, &nrx, &ncx, &one, x,
 	                    &nrx, y, &ione, &zero, z, &ione);
@@ -663,22 +712,10 @@ static void matprod(double *x, int nrx, int ncx,
 	for(R_xlen_t i = 0; i < NRX*ncy; i++) z[i] = 0;
 }
 
-static void cmatprod(Rcomplex *x, int nrx, int ncx,
+static R_INLINE
+void simple_cmatprod(Rcomplex *x, int nrx, int ncx,
 		     Rcomplex *y, int nry, int ncy, Rcomplex *z)
 {
-#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
-    char *transa = "N", *transb = "N";
-    Rcomplex one, zero;
-
-    one.r = 1.0; one.i = zero.r = zero.i = 0.0;
-    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(zgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
-			x, &nrx, y, &nry, &zero, z, &nrx);
-    } else { /* zero-extent operations should return zeroes */
-	R_xlen_t NRX = nrx;
-	for(R_xlen_t i = 0; i < NRX*ncy; i++) z[i].r = z[i].i = 0;
-    }
-#else
     int i, j, k;
     double xij_r, xij_i, yjk_r, yjk_i;
     LDOUBLE sum_i, sum_r;
@@ -686,8 +723,6 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
     R_xlen_t NRX = nrx, NRY = nry;
     for (i = 0; i < nrx; i++)
 	for (k = 0; k < ncy; k++) {
-	    z[i + k * NRX].r = NA_REAL;
-	    z[i + k * NRX].i = NA_REAL;
 	    sum_r = 0.0;
 	    sum_i = 0.0;
 	    for (j = 0; j < ncx; j++) {
@@ -695,18 +730,86 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
 		xij_i = x[i + j * NRX].i;
 		yjk_r = y[j + k * NRY].r;
 		yjk_i = y[j + k * NRY].i;
-		if (ISNAN(xij_r) || ISNAN(xij_i)
-		    || ISNAN(yjk_r) || ISNAN(yjk_i))
-		    goto next_ik;
 		sum_r += (xij_r * yjk_r - xij_i * yjk_i);
 		sum_i += (xij_r * yjk_i + xij_i * yjk_r);
 	    }
-	    z[i + k * NRX].r = sum_r;
-	    z[i + k * NRX].i = sum_i;
-	next_ik:
-	    ;
+	    z[i + k * NRX].r = (double) sum_r;
+	    z[i + k * NRX].i = (double) sum_i;
 	}
+}
+
+static R_INLINE
+void simple_ccrossprod(Rcomplex *x, int nrx, int ncx,
+		       Rcomplex *y, int nry, int ncy, Rcomplex *z)
+{
+    int i, j, k;
+    double xji_r, xji_i, yjk_r, yjk_i;
+    LDOUBLE sum_i, sum_r;
+
+    R_xlen_t NRX = nrx, NRY = nry, NCX = ncx;
+    for (i = 0; i < ncx; i++)
+	for (k = 0; k < ncy; k++) {
+	    sum_r = 0.0;
+	    sum_i = 0.0;
+	    for (j = 0; j < nrx; j++) {
+		xji_r = x[j + i * NRX].r;
+		xji_i = x[j + i * NRX].i;
+		yjk_r = y[j + k * NRY].r;
+		yjk_i = y[j + k * NRY].i;
+		sum_r += (xji_r * yjk_r - xji_i * yjk_i);
+		sum_i += (xji_r * yjk_i + xji_i * yjk_r);
+	    }
+	    z[i + k * NCX].r = (double) sum_r;
+	    z[i + k * NCX].i = (double) sum_i;
+	}
+}
+
+static R_INLINE
+void simple_tccrossprod(Rcomplex *x, int nrx, int ncx,
+		        Rcomplex *y, int nry, int ncy, Rcomplex *z)
+{
+    int i, j, k;
+    double xij_r, xij_i, ykj_r, ykj_i;
+    LDOUBLE sum_i, sum_r;
+
+    R_xlen_t NRX = nrx, NRY = nry;
+    for (i = 0; i < nrx; i++)
+	for (k = 0; k < nry; k++) {
+	    sum_r = 0.0;
+	    sum_i = 0.0;
+	    for (j = 0; j < ncx; j++) {
+		xij_r = x[i + j * NRX].r;
+		xij_i = x[i + j * NRX].i;
+		ykj_r = y[k + j * NRY].r;
+		ykj_i = y[k + j * NRY].i;
+		sum_r += (xij_r * ykj_r - xij_i * ykj_i);
+		sum_i += (xij_r * ykj_i + xij_i * ykj_r);
+	    }
+	    z[i + k * NRX].r = (double) sum_r;
+	    z[i + k * NRX].i = (double) sum_i;
+	}
+}
+
+static void cmatprod(Rcomplex *x, int nrx, int ncx,
+		     Rcomplex *y, int nry, int ncy, Rcomplex *z)
+{
+    char *transa = "N", *transb = "N";
+    Rcomplex one, zero;
+    R_xlen_t NRX = nrx, NRY = nry;
+
+    one.r = 1.0; one.i = zero.r = zero.i = 0.0;
+    if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
+#ifndef HAVE_FORTRAN_DOUBLE_COMPLEX
+	simple_cmatprod(x, nrx, ncx, y, nry, ncy, z);
+#else
+	if (cmayHaveNaNOrInf(x, NRX*ncx) || cmayHaveNaNOrInf(y, NRY*ncy))
+	    simple_cmatprod(x, nrx, ncx, y, nry, ncy, z);
+	else
+	    F77_CALL(zgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
+	                    x, &nrx, y, &nry, &zero, z, &nrx);
 #endif
+    } else /* zero-extent operations should return zeroes */
+	for(R_xlen_t i = 0; i < NRX*ncy; i++) z[i].r = z[i].i = 0;
 }
 
 static void symcrossprod(double *x, int nr, int nc, double *z)
@@ -730,8 +833,12 @@ static void crossprod(double *x, int nrx, int ncx,
     char *transT = "T", *transN = "N";
     double one = 1.0, zero = 0.0;
     int ione = 1;
+    R_xlen_t NRX = nrx, NRY = nry;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	if (ncy == 1) /* matrix-vector or dot product */
+	if (mayHaveNaNOrInf(x, NRX*ncx) || mayHaveNaNOrInf(y, NRY*ncy))
+	    /* see matprod for more details */
+	    simple_crossprod(x, nrx, ncx, y, nry, ncy, z);
+	else if (ncy == 1) /* matrix-vector or dot product */
 	    F77_CALL(dgemv)(transT, &nrx, &ncx, &one, x,
 	                    &nrx, y, &ione, &zero, z, &ione);
 	else if (ncx == 1) /* vector-matrix */
@@ -753,11 +860,19 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 {
     char *transa = "T", *transb = "N";
     Rcomplex one, zero;
+    R_xlen_t NRX = nrx, NRY = nry;
 
     one.r = 1.0; one.i = zero.r = zero.i = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(zgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
-			x, &nrx, y, &nry, &zero, z, &ncx);
+#ifndef HAVE_FORTRAN_DOUBLE_COMPLEX
+	simple_ccrossprod(x, nrx, ncx, y, nry, ncy, z);
+#else
+	if (cmayHaveNaNOrInf(x, NRX*ncx) || cmayHaveNaNOrInf(y, NRY*ncy))
+	    simple_ccrossprod(x, nrx, ncx, y, nry, ncy, z);
+	else
+	    F77_CALL(zgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+	                    x, &nrx, y, &nry, &zero, z, &ncx);
+#endif
     } else { /* zero-extent operations should return zeroes */
 	R_xlen_t NCX = ncx;
 	for(R_xlen_t i = 0; i < NCX*ncy; i++) z[i].r = z[i].i = 0;
@@ -785,8 +900,12 @@ static void tcrossprod(double *x, int nrx, int ncx,
     char *transN = "N", *transT = "T";
     double one = 1.0, zero = 0.0;
     int ione = 1;
+    R_xlen_t NRX = nrx, NRY = nry;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	if (nry == 1) /* matrix-vector or dot product */
+	if (mayHaveNaNOrInf(x, NRX*ncx) || mayHaveNaNOrInf(y, NRY*ncy))
+	    /* see matprod for more details */
+	    simple_tcrossprod(x, nrx, ncx, y, nry, ncy, z);
+	else if (nry == 1) /* matrix-vector or dot product */
 	    F77_CALL(dgemv)(transN, &nrx, &ncx, &one, x,
 	                    &nrx, y, &ione, &zero, z, &ione);
 	else if (nrx == 1) /* vector-matrix */
@@ -808,11 +927,19 @@ static void tccrossprod(Rcomplex *x, int nrx, int ncx,
 {
     char *transa = "N", *transb = "T";
     Rcomplex one, zero;
+    R_xlen_t NRX = nrx, NRY = nry;
 
     one.r = 1.0; one.i = zero.r = zero.i = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
-	F77_CALL(zgemm)(transa, transb, &nrx, &nry, &ncx, &one,
-			x, &nrx, y, &nry, &zero, z, &nrx);
+#ifndef HAVE_FORTRAN_DOUBLE_COMPLEX
+	simple_tccrossprod(x, nrx, ncx, y, nry, ncy, z);
+#else
+	if (cmayHaveNaNOrInf(x, NRX*ncx) || cmayHaveNaNOrInf(y, NRY*ncy))
+	    simple_tccrossprod(x, nrx, ncx, y, nry, ncy, z);
+	else
+	    F77_CALL(zgemm)(transa, transb, &nrx, &nry, &ncx, &one,
+	                    x, &nrx, y, &nry, &zero, z, &nrx);
+#endif
     } else { /* zero-extent operations should return zeroes */
 	R_xlen_t NRX = nrx;
 	for(R_xlen_t i = 0; i < NRX*nry; i++) z[i].r = z[i].i = 0;

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1751,9 +1751,12 @@ function(x, dfile)
     }
     ## Avoid declared encodings when writing out.
     Encoding(x) <- "unknown"
-    ## Avoid folding for fields where we keep whitespace when reading.
+    ## Avoid folding for fields where we keep whitespace when reading,
+    ## plus two where legacy code does not strip whitespace and so
+    ## we should not wrap the field.
     write.dcf(rbind(x), dfile,
-              keep.white = c(.keep_white_description_fields, "Maintainer"))
+              keep.white = c(.keep_white_description_fields,
+                             "Maintainer", "BugReports"))
 }
 
 ### ** .read_repositories

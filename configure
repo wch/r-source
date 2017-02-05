@@ -5662,6 +5662,11 @@ $as_echo "no" >&6; }
 fi
 
 
+if test "x${use_maintainer_mode}" = xyes; then
+  if test "${NOTANGLE}" = false ; then
+    as_fn_error $? "Building R in maintainer mode requires notangle." "$LINENO" 5
+  fi
+fi
 ## javareconf needs this
 # Extract the first word of "realpath", so it can be a program name with args.
 set dummy realpath; ac_word=$2
@@ -25178,7 +25183,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25181: \"$ac_link\") >&5
+(eval echo $as_me:25186: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25253,7 +25258,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25256: \"$ac_link\") >&5
+(eval echo $as_me:25261: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

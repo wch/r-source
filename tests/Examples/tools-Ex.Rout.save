@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-01-29 r72045) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-02-04 r72102) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -784,7 +784,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x754f9a0>
+<environment: 0x7380b08>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1276,6 +1276,43 @@ attr(,"match.length")
 > 
 > 
 > cleanEx()
+> nameEx("package_native_routine_registration_skeleton")
+> ### * package_native_routine_registration_skeleton
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: package_native_routine_registration_skeleton
+> ### Title: Write Skeleton for Adding Native Routine Registration to a
+> ###   Package
+> ### Aliases: package_native_routine_registration_skeleton
+> 
+> ### ** Examples
+> ## Not run: 
+> ##D ## with a completed splines/DESCRIPTION file,
+> ##D tools::package_native_routine_registration_skeleton('splines')
+> ##D ## produces
+> ##D #include <Rinternals.h>
+> ##D #include <R_ext/Rdynload.h>
+> ##D 
+> ##D /* FIXME: 
+> ##D    Add declarations for the native routines registered below.
+> ##D */
+> ##D 
+> ##D static const R_CallMethodDef CallEntries[] = {
+> ##D     {"spline_basis", (DL_FUNC) &spline_basis, 4},
+> ##D     {"spline_value", (DL_FUNC) &spline_value, 5},
+> ##D     {NULL, NULL, 0}
+> ##D };
+> ##D 
+> ##D void R_init_splines(DllInfo *dll)
+> ##D {
+> ##D     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+> ##D     R_useDynamicSymbols(dll, FALSE);
+> ##D }
+> ## End(Not run)
+> 
+> 
+> cleanEx()
 > nameEx("parseLatex")
 > ### * parseLatex
 > 
@@ -1536,7 +1573,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.481 0.027 1.516 0 0 
+Time elapsed:  1.471 0.032 1.512 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rscript}
@@ -89,6 +89,9 @@ Rscript -e "date()" -e "format(Sys.time(), \\"\%a \%b \%d \%X \%Y\\")"
 # in other shells, e.g. bash or tcsh, prefer
 Rscript -e 'date()' -e 'format(Sys.time(), "\%a \%b \%d \%X \%Y")'
 #endif
+
+# Get the same initial packages in the same order as default R:
+Rscript --default-packages=methods,datasets,utils,grDevices,graphics,stats -e 'sessionInfo()'
 
 ## example #! script for a Unix-alike
 

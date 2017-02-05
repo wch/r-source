@@ -642,12 +642,41 @@ stopifnot(
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 )
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
+ee <- esoph[esoph[,"ncases"] > 0, c(1:2,4)]
+ee[,"ncases"] <- as.integer(ee[,"ncases"])
+(tt <- xtabs(ncases ~ ., ee))
+stopifnot(identical(as.vector(tt[1:2,]), # *integer* + first value
+		    c(0L, 1L, 0L, 4L, 0L, 0L, 1L, 4L)))
+## keeping integer in sum()mation of integers
 
 
-## tapply() with FUN returning raw
-identical(tapply(1:3, 1:3, as.raw),
-	  array(as.raw(1:3), 3L, dimnames=list(1:3)))
-## failed in R < 3.4.0
+## tapply() with FUN returning raw  |  with factor -> returning integer
+stopifnot(identical(tapply(1:3, 1:3, as.raw),
+                    array(as.raw(1:3), 3L, dimnames=list(1:3))), ## failed in R < 3.4.0
+          identical(3:1, as.vector(tapply(1:3, 1:3, factor, levels=3:1))))
+
+
+## str(<list of list>, max.level = 1)
+LoL <- function(lenC, FUN = identity)
+    lapply(seq_along(lenC), function(i) lapply(seq_len(lenC[i]), FUN))
+xx <- LoL(c(7,3,17,798,3))
+str(xx, list.len = 7, max.level = 1)
+str2 <- capture.output(
+ str(xx, list.len = 7, max.level = 2))
+stopifnot(
+    grepl("List of ", capture.output(str(xx, list.len = 7, max.level = 1))),
+    length(str2) == 35, sum(grepl("list output truncated", str2)) == 2,
+    vapply(paste("List of", lengths(xx)), function(pat) any(grepl(pat, str2)), NA)
+)
+## wrongly showed '[list output truncated]'  in R < 3.4.0
+
+
+## stopifnot(all.equal(.)) message abbreviation
+msg <- tryCatch(stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415))),
+		error = conditionMessage)
+writeLines(msg)
+stopifnot(length(strsplit(msg,"\n")[[1]]) == 1+3+1)
+## was wrong for months in R-devel only
 
 
 

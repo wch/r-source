@@ -608,6 +608,11 @@ R_PROG_BROWSER
 R_PROG_PDFVIEWER
 ## Noweb - used for maintainer mode only
 AC_PATH_PROG(NOTANGLE, notangle, false)
+if test "x${use_maintainer_mode}" = xyes; then
+  if test "${NOTANGLE}" = false ; then
+    AC_MSG_ERROR([Building R in maintainer mode requires notangle.])
+  fi
+fi
 ## javareconf needs this
 AC_PATH_PROG(REALPATH, realpath, false)
 

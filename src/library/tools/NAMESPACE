@@ -23,7 +23,9 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        package.dependencies,# R/package.dependencies.R man/package.dependencies.Rd
        getDepList, pkgDepends, installFoundDepends,# R/pkgDepends.R man/getDepList.Rd man/installFoundDepends.Rd
        ## but vignetteDepends() calls  getDepList()
-       "package_dependencies", "parseLatex", "parse_Rd",
+       "package_dependencies",
+       "package_native_routine_registration_skeleton",
+       "parseLatex", "parse_Rd",
        "pkgVignettes", "pskill", "psnice", "read.00Index", "readNEWS",
        "resaveRdaFiles", "showNonASCII", "showNonASCIIfile",
        "startDynamicHelp", "testInstalledBasic",

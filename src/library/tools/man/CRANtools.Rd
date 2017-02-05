@@ -1,3 +1,8 @@
+% File src/library/tools/man/CRANtools.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 2016 R Core Team
+% Distributed under GPL 2 or later
+
 \name{CRANtools}
 \title{CRAN Package Repository Tools}
 \alias{CRAN_package_db}

@@ -1922,13 +1922,12 @@ A neat way of doing this uses the @code{outer()} function twice:
 @example
 > d <- outer(0:9, 0:9)
 > fr <- table(outer(d, d, "-"))
-> plot(as.numeric(names(fr)), fr, type="h",
-       xlab="Determinant", ylab="Frequency")
+> plot(fr, xlab="Determinant", ylab="Frequency")
 @end example
 
-Notice the coercion of the @code{names} attribute of the frequency table
-to numeric in order to recover the range of the determinant values.  The
-``obvious'' way of doing this problem with @code{for} loops, to be
+Notice that @code{plot()} here uses a histogram like plot method, because
+it ``sees'' that @code{fr} is of class @code{"table"}.
+The ``obvious'' way of doing this problem with @code{for} loops, to be
 discussed in @ref{Loops and conditional execution}, is so inefficient as
 to be impractical.
 
@@ -6675,7 +6674,7 @@ is sometimes useful for exporting names from @R{}.
 
 File @emph{permissions} are a related topic.  @R{} has support for the
 POSIX concepts of read/write/execute permission for owner/group/all but
-this may be only partially supported on the filesystem (so for example
+this may be only partially supported on the filesystem, so for example
 on Windows only read-only files (for the account running the @R{}
 session) are recognized.  Access Control Lists (ACLs) are employed on
 several filesystems, but do not have an agreed standard and @R{} has no

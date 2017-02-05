@@ -28,9 +28,12 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
   \item{default}{(only in the case of simplification to an array) the
     value with which the array is initialized as
     \code{\link{array}(default, dim = ..)}.  Before \R 3.4.0, this
-    was hard coded to \code{\link{array}()}'s default \code{NA}.  In a
-    numerical case, it may be set, e.g., to \code{FUN(double(0))}, e.g., in
-    the case of \code{FUN = sum} to \code{0}.}
+    was hard coded to \code{\link{array}()}'s default \code{NA}.  If it
+    is \code{NA} (the default), the missing value of the answer type,
+    e.g. \code{\link{NA_real_}}, is chosen (\code{\link{as.raw}(0)} for
+    \code{"raw"}).  In a numerical case, it may be set, e.g., to
+    \code{FUN(integer(0))}, e.g., in the case of \code{FUN = sum} to
+    \code{0} or \code{0L}.}
   \item{simplify}{logical; if \code{FALSE}, \code{tapply} always returns
     an array of mode \code{"list"}; in other words, a \code{\link{list}}
     with a \code{\link{dim}} attribute.  If \code{TRUE} (the default), then if

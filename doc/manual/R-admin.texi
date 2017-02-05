@@ -571,7 +571,7 @@ make mobi
 @noindent
 This requires @command{ebook-convert} from @command{Calibre}
 (@uref{http://calibre-ebook.com/download}), or from most Linux
-distributions).  If necessary the path to @command{ebook-convert} can be
+distributions.  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
 (which contains a commented value suitable for macOS).
 
@@ -2973,7 +2973,7 @@ build.  You can often build both and install them in the same place:
 distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
-objects (see @code{help("Memory-limits")}, some of which stem from the
+objects (see @code{help("Memory-limits")}), some of which stem from the
 use of 32-bit integers (especially in FORTRAN code).  For example, the
 dimensions of an array are limited to @math{2^{31} - 1}.
 
@@ -4447,11 +4447,11 @@ to be satisfactory.
 The ultimate sources for package @pkg{compiler} are in its @file{noweb}
 directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
-@command{notangle} is required.  This is likely to need to be installed
-from the sources at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can
-also be found on CTAN).  The package sources are only re-created even in
-maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
-been updated.
+@command{notangle} is required.  Some Linux distributions include this
+command in package @pkg{noweb}.  It can also be installed from the sources
+at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can also be found on
+CTAN).  The package sources are only re-created even in maintainer mode if
+@file{src/library/compiler/noweb/compiler.nw} has been updated.
 
 It is likely that in future creating @code{configure} will need the GNU
 `autoconf archive' installed.  This can be found at
@@ -4566,7 +4566,7 @@ only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
 used, made up of fonts encoded in other encodings.  If the locale you
 are using has an entry in the @samp{XLC_LOCALE} directory (typically
-@file{/usr/share/X11/locale}, it is likely that all you need to do is to
+@file{/usr/share/X11/locale}), it is likely that all you need to do is to
 pick a suitable font specification that has fonts in the encodings
 specified there.  If not, you may have to get hold of a suitable locale
 entry for X11.  This may mean that, for example, Japanese text can be
@@ -4853,12 +4853,10 @@ binary distribution of @R{} you will probably need to specify the name
 or path in a personal or site @file{Makevars} file (@pxref{Customizing
 package compilation}).
 
-More recent and complete distributions of @command{clang} are usually
-available from @uref{http://llvm.org/releases/}.  In particular, these
-include support for the `Address Sanitizer' (not included by Apple until
-Xcode 7) and for OpenMP@footnote{This also needs the OpenMP runtime,
-which was distributed separately at that site for 3.7.0.} in version
-3.7.0 and later.
+More recent and complete distributions of @command{clang} are often
+available from @uref{http://llvm.org/releases/}: for example at the time
+of writing for 3.9.0 but not 3.9.1.  In particular, these may include
+support for OpenMP.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
@@ -4957,18 +4955,26 @@ changed their installation locations.
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-The Fortran compiler for El Capitan from
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works
-on Sierra: those at @uref{https://r.research.att.com/} have failure
-reports on Sierra.  (At the time of writing there was a build of
-@command{gfortran}@tie{}6.3 for Sierra on that site, but the
-distribution was incomplete.) One way to use the Coudert build is to
-have a @file{~/.R/Makevars} file similar to
+There are installers@footnote{Some of these are unsigned packages: to
+install them you may need to right-click and select @code{Open with ->
+Installer}.} for Fortran compilers for El Capiton and Sierra at
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
+@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}: those
+at @uref{https://r.research.att.com/} have failure reports on Sierra.
+One way to use the Coudert build with a binary distribution of @R{} is
+to have a @file{~/.R/Makevars} file similar to (El Capitan)
 @smallexample
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end smallexample
+or (Sierra)
+@smallexample
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end smallexample
+
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries

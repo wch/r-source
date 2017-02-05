@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ stopifnot <- function(...)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch
     }
     head <- function(x, n = 6L) ## basically utils:::head.default()
-	x[if(n < 0L) max(length(x) + n, 0L) else min(n, length(x))]
+	x[seq_len(if(n < 0L) max(length(x) + n, 0L) else min(n, length(x)))]
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     mc <- match.call()

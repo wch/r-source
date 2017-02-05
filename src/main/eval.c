@@ -1041,7 +1041,8 @@ static R_INLINE Rboolean R_CheckJIT(SEXP fun)
 {
     /* to help with testing */
     if (jit_strategy < 0) {
-	int dflt = STRATEGY_TOP_SMALL_MAYBE;
+	int dflt = R_jit_enabled == 1 ?
+	    STRATEGY_NO_SMALL : STRATEGY_TOP_SMALL_MAYBE;
 	int val = dflt;
 	char *valstr = getenv("R_JIT_STRATEGY");
 	if (valstr != NULL)
