@@ -200,8 +200,6 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 */
     PROTECT(x);
     PROTECT(newx = allocVector(TYPEOF(x), newtruelen));
-    if (newlen < newtruelen)
-	SET_GROWABLE_BIT(newx);
 
     /* Copy the elements into place. */
     switch(TYPEOF(x)) {
@@ -248,9 +246,11 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     default:
 	UNIMPLEMENTED_TYPE("EnlargeVector", x);
     }
-    if (newtruelen > newlen)
+    if (newlen < newtruelen) {
+	SET_GROWABLE_BIT(newx);
 	SET_TRUELENGTH(newx, newtruelen);
-    SET_STDVEC_LENGTH(newx, newlen);
+	SET_STDVEC_LENGTH(newx, newlen);
+    }
 
     /* Adjust the attribute list. */
     names = getNames(x);
