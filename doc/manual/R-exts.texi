@@ -3873,6 +3873,13 @@ which makes the @R{} variables corresponding to the FORTRAN symbols
 @code{F_bkde} and so on, and so avoid clashes with @R{} code in the
 namespace.
 
+@strong{NB}: Using these arguments for a package which does not register
+native symbols merely slows down the package loading (although at the
+time of writing 90 @acronym{CRAN} packages did so).  Once symbols are
+registered, ensure that the corresponding @R{} variables are not
+accidentally exported by a pattern in the @file{NAMESPACE} file.
+
+
 @node An example, Namespaces with S4 classes and methods, useDynLib, Package namespaces
 @subsection An example
 
