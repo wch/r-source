@@ -166,15 +166,6 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
     return len;
 }
 
-INLINE_FUN int TRUELENGTH_EX(SEXP x, const char *file, int line)
-{
-#ifdef LONG_VECTOR_SUPPORT
-    if (IS_LONG_VEC(x))
-	R_BadLongVector(x, file, line);
-#endif
-    return ALTREP(x) ? ALTREP_TRUELENGTH(x) : STDVEC_TRUELENGTH(x);
-}
-
 #ifdef STRICT_TYPECHECK
 # define CHECK_SCALAR_TYPE(x, type)				\
     if (TYPEOF(x) != type || ALTREP(x) || XLENGTH(x) != 1)	\

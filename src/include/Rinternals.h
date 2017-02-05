@@ -396,7 +396,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 #define IS_SCALAR(x, t) (((x)->sxpinfo.type == (t)) && (x)->sxpinfo.scalar)
 #define LENGTH(x) LENGTH_EX(x, __FILE__, __LINE__)
-#define TRUELENGTH(x) TRUELENGTH_EX(x, __FILE__, __LINE__)
+#define TRUELENGTH(x) XTRUELENGTH(x)
 
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
@@ -579,9 +579,9 @@ void (SET_GROWABLE_BIT)(SEXP x);
 
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
-int  (TRUELENGTH)(SEXP x);
+R_xlen_t  (TRUELENGTH)(SEXP x);
 void (SETLENGTH)(SEXP x, R_xlen_t v);
-void (SET_TRUELENGTH)(SEXP x, int v);
+void (SET_TRUELENGTH)(SEXP x, R_xlen_t v);
 int  (IS_LONG_VEC)(SEXP x);
 int  (LEVELS)(SEXP x);
 int  (SETLEVELS)(SEXP x, int v);
@@ -1481,7 +1481,6 @@ R_xlen_t  Rf_xlength(SEXP);
 R_xlen_t  (XLENGTH)(SEXP x);
 R_xlen_t  (XTRUELENGTH)(SEXP x);
 int LENGTH_EX(SEXP x, const char *file, int line);
-int TRUELENGTH_EX(SEXP x, const char *file, int line);
 # ifdef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
 void Rf_unprotect(int);

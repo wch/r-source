@@ -3423,7 +3423,7 @@ static R_INLINE SEXP CHK2(SEXP x)
 
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(CHK2(x)); }
-int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
+R_xlen_t (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
 
 void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 {
@@ -3476,7 +3476,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
     SET_STDVEC_LENGTH(CHK2(x), newlen);
 }
 
-void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK2(x), v); }
+void (SET_TRUELENGTH)(SEXP x, R_xlen_t v) { SET_TRUELENGTH(CHK2(x), v); }
 int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
 #ifdef TESTING_WRITE_BARRIER
 R_xlen_t (STDVEC_LENGTH)(SEXP x) { return STDVEC_LENGTH(CHK2(x)); }
