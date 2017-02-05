@@ -1234,8 +1234,8 @@ if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
 and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
-line for each demo, giving its name and a description separated by a
-tab or at least three spaces. (This index file is not generated
+line for each demo, giving its name and a description separated by a tab
+or at least three spaces. (This index file is not generated
 automatically.)  Note that a demo does not have a specified encoding and
 so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
 @R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
@@ -1406,8 +1406,8 @@ all platforms prior to @R{} 3.0.0).
 
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
-the default (since @R{} 2.12.2) is @code{xz} for files bigger than 1MB
-otherwise @code{gzip}.
+the default is @code{xz} for files bigger than 1MB otherwise
+@code{gzip}.
 
 @node Non-R scripts in packages, Specifying URLs, Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -3821,6 +3821,13 @@ which makes the @R{} variables corresponding to the FORTRAN symbols
 @code{F_bkde} and so on, and so avoid clashes with @R{} code in the
 namespace.
 
+@strong{NB}: Using these arguments for a package which does not register
+native symbols merely slows down the package loading (although at the
+time of writing 90 @acronym{CRAN} packages did so).  Once symbols are
+registered, ensure that the corresponding @R{} variables are not
+accidentally exported by a pattern in the @file{NAMESPACE} file.
+
+
 @node An example, Namespaces with S4 classes and methods, useDynLib, Package namespaces
 @subsection An example
 
@@ -4639,15 +4646,16 @@ standards (C99, C++98 or where declared C++11) and testing that
 extensions (such as POSIX functions) are supported.  Note that the POSIX
 standards only require recently-defined functions to be declared if
 certain macros are defined with large enough values, and on some
-compiler/OS combinations@footnote{This is seen on Linux and Solaris,
-although each has other ways to turn on all extensions, e.g.@: defining
-@code{_GNU_SOURCE} or @code{__EXTENSIONS__}: the GCC compilers by
-default define @code{_GNU_SOURCE} unless a strict standard such as
-@option{-std=c99} is used.  On OS X extensions are declared unless one
-of these macros is given too small a value.} they are not declared
-otherwise.  So you may need to include something like one of
-@footnote{Solaris 10 does not recognize this value of
-@code{_POSIX_C_SOURCE}, nor values of @code{_XOPEN_SOURCE} beyond 600.}
+compiler/OS combinations@footnote{This is seen on Linux, Solaris and
+FreeBSD, although each has other ways to turn on all extensions, e.g.@:
+defining @code{_GNU_SOURCE}, @code{__EXTENSIONS__} or
+@code{_BSD_SOURCE}: the GCC compilers by default define
+@code{_GNU_SOURCE} unless a strict standard such as @option{-std=c99} is
+used.  On OS X extensions are declared unless one of these macros is
+given too small a value.} they are not declared otherwise.  So you may
+need to include something like one of @footnote{Solaris 10 does not
+recognize this value of @code{_POSIX_C_SOURCE}, nor values of
+@code{_XOPEN_SOURCE} beyond 600.}
 @example
 #define _XOPEN_SOURCE 500
 @end example
@@ -5267,13 +5275,10 @@ bibentry(bibtype = "Manual",
 @end example
 
 Note the way that information that may need to be updated is picked up
-from object @code{meta}, a parsed version of the @file{DESCRIPTION}
-file@footnote{this object is available since @R{} 2.8.0, so the
-@samp{Depends} field in the @file{DESCRIPTION} file should contain
-something at least as restrictive as @samp{R (>= 2.8}.} -- it is
-tempting to hardcode such information, but it normally then gets
-outdated.  See @code{?bibentry} for further details of the information
-which can be provided.
+from object @code{meta}, a parsed version of the @file{DESCRIPTION} file
+-- it is tempting to hardcode such information, but it normally then
+gets outdated.  See @code{?bibentry} for further details of the
+information which can be provided.
 
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
@@ -9234,6 +9239,9 @@ static R_CMethodDef cMethods[] = @{
 @c values when it is not necessary. Typically, one omits this information
 @c in the registration data.
 
+Note that @code{.Fortran} entry points are mapped to lowercase, so
+registration should use lowercase only.
+
 Having created the arrays describing each routine, the last step is to
 actually register them with @R{}.  We do this by calling
 @code{R_registerRoutines}.  For example, if we have the descriptions
@@ -9491,13 +9499,13 @@ appending to the only C source file.  Some packages will already have
 these in a header file, or you could create one and include it in
 @file{init.c}, for example @file{splines.h} containing
 
-@example
+@smallexample
 @group
 #include <Rinternals.h> // for SEXP
-SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
-SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
+extern SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
+extern SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
 @end group
-@end example
+@end smallexample
 
 For examples of registering other types of calls, see packages
 @pkg{graphics} and @pkg{stats}.  In particular, when registering entry
@@ -12496,9 +12504,10 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream.
 
 Functions @code{Rvprintf} and @code{REvprintf} are analogues using the
-@code{vprintf} interface.  Because that is a C99 interface, they are
-only defined by @file{R_ext/Print.h} in C++ code if the macro
-@code{R_USE_C99_IN_CXX} is defined when it is included.
+@code{vprintf} interface.  Because that is a C99@footnote{also part of
+C++11.} interface, they are only defined by @file{R_ext/Print.h} in C++
+code if the macro @code{R_USE_C99_IN_CXX} is defined when it is
+included.
 
 Another circumstance when it may be important to use these functions is
 when using parallel computation on a cluster of computational nodes, as
@@ -14758,11 +14767,6 @@ using backslashes).  If it does not, look for version-specific keys like
 algorithm as @code{2.11.0 patched > 2.11.0 > 2.11.0 alpha > 2.8.1}) and
 use its value for @code{InstallPath}.
 @end itemize
-
-Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
-were in @file{R_HOME\bin}, but they are now in @file{R_HOME\bin\i386} or
-@file{R_HOME\bin\x64}.  So you may need to arrange to look first in the
-architecture-specific subdirectory and then in @file{R_HOME\bin}.
 
 @node Function and variable index, Concept index, Linking GUIs and other front-ends to R, Top
 @unnumbered Function and variable index
