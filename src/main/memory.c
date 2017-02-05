@@ -3424,17 +3424,58 @@ static R_INLINE SEXP CHK2(SEXP x)
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(CHK2(x)); }
 int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
-void (SETLENGTH)(SEXP x, R_xlen_t v)
+
+void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 {
     /* For packages data.table, dplyr, etc that abuse SETLENGTH, which
        is not in the API. Should wean them off this and deprecate. */
+
     if (ALTREP(x))
 	error("SETLENGTH() cannot be applied to an ALTVEC object.");
-    if (! isVectorAtomic(x))
-	error("SETLENGTH() can only be applied to a standard atomic vector, "
-	      "not a '%s'", type2char(TYPEOF(x)));
-    SET_STDVEC_LENGTH(CHK2(x), v);
+    if (! isVector(x))
+	error(_("SETLENGTH() can only be applied to a standard vector, "
+		"not a '%s'"), type2char(TYPEOF(x)));
+
+    R_xlen_t len = XLENGTH(x);
+    R_xlen_t truelen = XTRUELENGTH(x);
+    if (IS_GROWABLE(x)) {
+	if (newlen > truelen)
+	    error("SETLENGTH() can't grow vector length to %ld since "
+		  "true length is %ld", newlen, truelen);
+	switch(TYPEOF(x)) {
+	case STRSXP:
+	    for (R_xlen_t i = len; i < newlen; i++)
+		SET_STRING_ELT(x, i, NA_STRING);
+	    break;
+	case EXPRSXP:
+	case VECSXP:
+	    for (R_xlen_t i = len; i < newlen; i++)
+		SET_VECTOR_ELT(x, i, R_NilValue);
+	    break;
+	}
+    }
+    else if (newlen <= len) {
+	if (truelen != 0 &&
+	    truelen != len) /* in case it has been set, e.g. by data.table */
+	    /* should not happen unless someone is doing something strange */
+	    error("SETLENGTH() can't set true length field: already in use");
+	if (TRUE || newlen < len) {
+	    SET_GROWABLE_BIT(x);
+	    SET_TRUELENGTH(x, len);
+	}
+    }
+    else
+#define DATA_DOT_TABLE_WORKAROUND
+#ifdef DATA_DOT_TABLE_WORKAROUND
+        return;
+#else
+	error("can't increase length of non-growable vector from %ld to %ld",
+	      len, newlen);
+#endif
+
+    SET_STDVEC_LENGTH(CHK2(x), newlen);
 }
+
 void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK2(x), v); }
 int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
 #ifdef TESTING_WRITE_BARRIER
