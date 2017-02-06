@@ -29,7 +29,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   }
   \item{character_only}{
     Logical: should only \code{.NAME} arguments specified by character
-    strings (and not as names) be extracted?
+    strings (and not as names of \R objects) be extracted?
   }
   \item{include_declarations}{
     Logical: should the output include declarations for the registered
@@ -42,8 +42,11 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   needs to be added to enable registration, conventionally as file
   \file{src/init.c} or appended to the sole C file of the package.
 
-  If the number of arguments cannot be determined by the code it will
-  be recorded as \code{-1}: such values should be corrected.
+  This function examines the code in the \file{R} directory of the
+  package for calls to \code{.C}, \code{.Fortran}, \code{.Call} and
+  \code{.External} and creates registration information for those it can
+  make sense of.  If the number of arguments used cannot be determined
+  it will be recorded as \code{-1}: such values should be corrected.
 
   Optionally the skeleton will include declarations for the registered
   routines: they should be checked against the C/Fortran source code,
@@ -69,8 +72,8 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   declared as \code{-1}.
 
   A surprisingly large number of \acronym{CRAN} packages had calls in \R
-  code to native routines not included in the packages, which will lead
-  to a compilation error when registration C code is added.
+  code to native routines not included in the package, which will lead
+  to a compilation error when the registration C code is added.
 }
 
 \value{
@@ -78,10 +81,12 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 }
 
 \note{
-  This uses static code analysis to find the \code{.C} etc calls: it
-  \emph{will} find those in parts of the \R code \sQuote{commented out} by
-  inclusion in \code{if(FALSE) \{ \dots \}}.
-
+  This only examines the \file{R} directory: it will not find
+  e.g.\sspace\code{.Call} calls used directly in examples, tests \emph{etc}.
+  
+  Static code analysis is used to find the \code{.C} etc calls: it
+  \emph{will} find those in parts of the \R code \sQuote{commented out}
+  by inclusion in \code{if(FALSE) \{ \dots \}}.
   On the other hand, it will fail to find the entry points in
   constructs like \preformatted{
     .Call(if(int) "rle_i" else "rle_d", i, force)
@@ -92,9 +97,8 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   } (but if \code{character_only} is false, will extract the first as
   \code{"cfunction"}).
 
-  Call to entry points in other packages will be skipped if they have an
-  explicit (character) \code{PACKAGE} argument, but not if they use a
-  symbol imported from another package.
+  Call to entry points in other packages will be ignored if they have an
+  explicit (character string) \code{PACKAGE} argument.
 }
 
 \seealso{
