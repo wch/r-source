@@ -714,7 +714,7 @@ function(dir)
 }
 
 native_routine_registration_db_from_ff_call_db <-
-function(calls, dir = NULL)
+function(calls, dir = NULL, character_only = TRUE)
 {
     if(!length(calls)) return(NULL)
 
@@ -733,6 +733,7 @@ function(calls, dir = NULL)
     package <- # drop name
         as.vector(.read_description(file.path(dir, "DESCRIPTION"))["Package"])
 
+    symbols <- character()
     nrdb <-
         lapply(calls,
                function(e) {
@@ -747,12 +748,16 @@ function(calls, dir = NULL)
                    if(length(pos)) e <- e[-pos]
                    cname <- as.character(e[[1L]])
                    e <- match.call(ff_call_args[[cname]], e)
-                   ## Only keep ff calls where .NAME is a name or
-                   ## character.
+                   ## Only keep ff calls where .NAME is character
+                   ## or (optionally) a name.
                    s <- e[[".NAME"]]
-                   if(is.name(s))
+                   if(is.name(s)) {
                        s <- deparse(s)[1L]
-                   else if(is.character(s))
+                       if(character_only) {
+                           symbols <<- c(symbols, s)
+                           return(NULL)
+                       }
+                   } else if(is.character(s))
                        s <- s[1L]
                    else
                        return(NULL)
@@ -794,11 +799,12 @@ function(calls, dir = NULL)
     info <- info$nativeRoutines[[package]]
     ## First adjust native routine names for explicit remapping or
     ## namespace .fixes.  However, a package without registration
-    ## has no way to use the fixes, so this does not seem necessary.
+    ## has no way to use the fixes.
     if(length(symnames <- info$symbolNames)) {
         ind <- match(nrdb[, 2L], names(symnames), nomatch = 0L)
         nrdb[ind > 0L, 2L] <- symnames[ind]
-    } else if(any((fixes <- info$registrationFixes) != "")) {
+    } else if(!character_only &&
+              any((fixes <- info$registrationFixes) != "")) {
         ## There are packages which have not used the fixes, e.g. utf8latex
         ## fixes[1L] is a prefix, fixes[2L] is an undocumented suffix
         nrdb[, 2L] <- sub(paste0("^", fixes[1L]), "", nrdb[, 2L])
@@ -815,6 +821,7 @@ function(calls, dir = NULL)
 
     attr(nrdb, "package") <- package
     attr(nrdb, "duplicates") <- dups
+    attr(nrdb, "symbols") <- unique(symbols)
     nrdb
 }
 
@@ -848,6 +855,7 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
 
     package <- attr(nrdb, "package")
     dups <- attr(nrdb, "duplicates")
+    symbols <- attr(nrdb, "symbols")
 
     nrdb <- split(nrdb[, -1L, drop = FALSE],
                   factor(nrdb[, 1L],
@@ -913,9 +921,16 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
       "#include <stdlib.h> // for NULL",
       "#include <R_ext/Rdynload.h>",
       "",
+      if(length(symbols)) {
+          c("/*",
+            "  The following symbol(s) for .NAME have been omiited",
+            "", strwrap(symbols, indent = 4, exdent = 4), "",
+            "  Most likely possible values need to be added below.",
+            "*/", "")
+      },
       if(length(dups)) {
           c("/*",
-            "  The following symnbols appear with different usages",
+            "  The following name(s) appear with different usages",
             "  e.g., with different numbers of arguments:",
             "", strwrap(dups, indent = 4, exdent = 4), "",
             "  This needs to be resolved in the tables and any declarations.",
@@ -938,16 +953,17 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
 }
 
 package_native_routine_registration_db <-
-function(dir)
+function(dir, character_only = TRUE)
 {
     calls <- package_ff_call_db(dir)
-    native_routine_registration_db_from_ff_call_db(calls, dir)
+    native_routine_registration_db_from_ff_call_db(calls, dir, character_only)
 }
 
 package_native_routine_registration_skeleton <-
-function(dir, con = stdout(), align = TRUE, include_declarations = FALSE)
+function(dir, con = stdout(), align = TRUE, character_only = TRUE,
+         include_declarations = TRUE)
 {
-    nrdb <- package_native_routine_registration_db(dir)
+    nrdb <- package_native_routine_registration_db(dir, character_only)
     writeLines(format_native_routine_registration_db_for_skeleton(nrdb,
                 align, include_declarations),
                con)

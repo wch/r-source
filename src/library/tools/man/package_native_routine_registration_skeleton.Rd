@@ -13,7 +13,7 @@
 }
 \usage{
 package_native_routine_registration_skeleton(dir, con = stdout(),
-    align = TRUE, include_declarations = FALSE)
+    align = TRUE, character_only = TRUE, include_declarations = TRUE)
 }
 \arguments{
   \item{dir}{
@@ -26,6 +26,10 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   \item{align}{
     Logical: should the registration tables be lined up in three
     columns each?
+  }
+  \item{character_only}{
+    Logical: should only \code{.NAME} arguments specified by character
+    strings (and not as names) be extracted?
   }
   \item{include_declarations}{
     Logical: should the output include declarations for the registered
@@ -43,13 +47,19 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 
   Optionally the skeleton will include declarations for the registered
   routines: they should be checked against the C/Fortran source code,
-  not least as the number of arguments is taken from the \R code.
-  For \code{.Call} and \code{.External} calls they will often suffice,
-  but for \code{.C} and \code{.Fortran} calls the \code{void *}
-  arguments should be replaced by the actual types.  Otherwise
-  declarations need to be included (they may exist earlier in the file
-  if appending to a file, or in a header file which can be included in
-  \file{init.c}).
+  not least as the number of arguments is taken from the \R code.  For
+  \code{.Call} and \code{.External} calls they will often suffice, but
+  for \code{.C} and \code{.Fortran} calls the \code{void *} arguments
+  should be replaced by the actual types.  Otherwise declarations need
+  to be included (they may exist earlier in that file if appending to a
+  file, or in a header file which can be included in \file{init.c}).
+  
+  The default value of \code{character_only} is appropriate when working
+  on a package without any existing registration: \code{character_only =
+  FALSE} can be used to suggest updates for a package which has been
+  extended since registration.  For the default value, if \code{.NAME}
+  values are found which are not character strings this is noted via a
+  comment in the output.
 
   If an entry point is used with different numbers of arguments in the
   package's \R code, an entry in the table (and optionally, a
@@ -79,11 +89,12 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   and does not know the value of variables in calls like \preformatted{
     .Call (cfunction, ...)
     .Call(..., PACKAGE="sparseLTSEigen")
-  }
+  } (but if \code{character_only} is false, will extract the first as
+  \code{"cfunction"}).
 
   Call to entry points in other packages will be skipped if they have an
-  explicit \code{PACKAGE} argument, but not if they use a symbol
-  imported from another package.
+  explicit (character) \code{PACKAGE} argument, but not if they use a
+  symbol imported from another package.
 }
 
 \seealso{
@@ -91,14 +102,20 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 }
 \examples{\dontrun{
 ## with a completed splines/DESCRIPTION file,
-tools::package_native_routine_registration_skeleton('splines')
+tools::package_native_routine_registration_skeleton('splines',,,FALSE)
 ## produces
+#include <R.h>
 #include <Rinternals.h>
+#include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
 /* FIXME: 
-   Add declarations for the native routines registered below.
+   Check these declarations against the C/Fortran source code.
 */
+
+/* .Call calls */
+extern SEXP spline_basis(SEXP, SEXP, SEXP, SEXP);
+extern SEXP spline_value(SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"spline_basis", (DL_FUNC) &spline_basis, 4},

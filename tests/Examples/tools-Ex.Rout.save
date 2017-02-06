@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-02-04 r72102) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-02-05 r72117) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1289,14 +1289,20 @@ attr(,"match.length")
 > ### ** Examples
 > ## Not run: 
 > ##D ## with a completed splines/DESCRIPTION file,
-> ##D tools::package_native_routine_registration_skeleton('splines')
+> ##D tools::package_native_routine_registration_skeleton('splines',,,FALSE)
 > ##D ## produces
+> ##D #include <R.h>
 > ##D #include <Rinternals.h>
+> ##D #include <stdlib.h> // for NULL
 > ##D #include <R_ext/Rdynload.h>
 > ##D 
 > ##D /* FIXME: 
-> ##D    Add declarations for the native routines registered below.
+> ##D    Check these declarations against the C/Fortran source code.
 > ##D */
+> ##D 
+> ##D /* .Call calls */
+> ##D extern SEXP spline_basis(SEXP, SEXP, SEXP, SEXP);
+> ##D extern SEXP spline_value(SEXP, SEXP, SEXP, SEXP, SEXP);
 > ##D 
 > ##D static const R_CallMethodDef CallEntries[] = {
 > ##D     {"spline_basis", (DL_FUNC) &spline_basis, 4},
