@@ -280,25 +280,28 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     oldversion <- as.numeric_version(getNamespaceVersion(package))
                     if (newversion != oldversion) {
                     	## No, so try to unload the previous one
-                    	res <- try(unloadNamespace(package))
-                    	if (inherits(res, "try-error"))
-                    	    stop(gettextf("Package %s version %s cannot be unloaded",
-					  sQuote(package), oldversion), domain=NA)
+                    	res <- tryCatch(unloadNamespace(package),
+					error = function(e)
+					    stop(gettextf("Package %s version %s cannot be unloaded: %s",
+							  sQuote(package), oldversion, conditionMessage(e)),
+						 domain=NA))
                     }
                 }
-                tt <- try({
+		tt <- tryCatch({
                     attr(package, "LibPath") <- which.lib.loc
                     ns <- loadNamespace(package, lib.loc)
                     env <- attachNamespace(ns, pos = pos, deps)
-                })
+		}, error = function(e) {
+		    if (!logical.return)
+			stop(gettextf("package or namespace load failed for %s: %s",
+				      sQuote(package), conditionMessage(e)),
+			     call. = FALSE, domain = NA)
+		})
+		if(logical.return && is.null(tt))
+		    return(FALSE)
+
                 attr(package, "LibPath") <- NULL
-                if (inherits(tt, "try-error"))
-                    if (logical.return)
-                        return(FALSE)
-                    else stop(gettextf("package or namespace load failed for %s",
-                                       sQuote(package)),
-                              call. = FALSE, domain = NA)
-                else {
+                {
                     on.exit(detach(pos = pos))
                     ## If there are S4 generics then the package should
                     ## depend on methods
@@ -315,8 +318,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         return(invisible(.packages()))
                 }
             } else
-            stop(gettextf("package %s does not have a namespace and should be re-installed",
-                          sQuote(package)), domain = NA)
+		stop(gettextf("package %s does not have a namespace and should be re-installed",
+			      sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",
