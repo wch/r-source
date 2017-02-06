@@ -4596,7 +4596,9 @@ directory or elsewhere, for example,
 @cindex Linux
 
 Linux is the main development platform for @R{}, so compilation from the
-sources is normally straightforward with the standard compilers.
+sources is normally straightforward with the standard compilers and
+libraries.@footnote{For example, @code{glibc}: other C libraries such as
+@code{musl} have been used but are not routinely tested.}
 
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
@@ -4652,7 +4654,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 21 we used
+on @cputype{x86_64} with Fedora 24 we used
 
 @example
 CC="gcc -m32"
