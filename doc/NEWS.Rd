@@ -373,12 +373,13 @@
       \item Package \pkg{tools} has a new function
       \code{package_native_routine_registration_skeleton()} to assist
       adding native-symbol registration to a package.  See its help and
-      §5.4.1 of \sQuote{Writing R Extensions} for how to use it.  (When
-      added it successfully automated adding registration to over 90\%
-      of \acronym{CRAN} packages which lacked it.  Many of the failures
-      were newly-detected bugs in the packages, e.g.\sspace50 packages
-      called entry points with varying numbers of arguments and 65
-      packages called entry points not in the package.)
+      §5.4.1 of \sQuote{Writing R Extensions} for how to use it.  (At
+      the time it was added it successfully automated adding
+      registration to over 90\% of \acronym{CRAN} packages which lacked
+      it.  Many of the failures were newly-detected bugs in the
+      packages, e.g.\sspace50 packages called entry points with varying
+      numbers of arguments and 65 packages called entry points not in
+      the package.)
     }
   }
 
@@ -422,9 +423,6 @@
       will be used by \code{Sys.setFileTime()} and
       \code{file.copy(copy.date = TRUE)}.  This may result in slightly
       more accurate file times.
-
-      \item The check for the zlib version is now robust to versions
-      longer than 5 characters, including 1.2.10.
     }
   }
 
@@ -498,7 +496,7 @@
       to be non-empty and a suitable single URL.
     }
   }
-
+      
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item (Windows only) Function \code{setInternet2()} is defunct.
@@ -664,10 +662,11 @@
     }
   }
 
-  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The check for the zlib version is now robust to versions
-      longer than 5 characters, including 1.2.10.
+      \item The \command{configure} check for the \code{zlib} version is
+      now robust to versions longer than 5 characters, including
+      \code{1.2.10}.
     }
   }
 
