@@ -811,9 +811,8 @@ function(calls, dir = NULL, character_only = TRUE)
     imports <- unlist(lapply(imports, `[[`, 2L))
 
     info <- info$nativeRoutines[[package]]
-    ## First adjust native routine names for explicit remapping or
-    ## namespace .fixes.  However, a package without registration
-    ## has no way to use the fixes.
+    ## Adjust native routine names for explicit remapping or
+    ## namespace .fixes.
     if(length(symnames <- info$symbolNames)) {
         ind <- match(nrdb[, 2L], names(symnames), nomatch = 0L)
         nrdb[ind > 0L, 2L] <- symnames[ind]

@@ -3748,7 +3748,9 @@ rather than
 There are at least two benefits to this approach.  Firstly, the symbol
 lookup is done just once for each symbol rather than each time the
 routine is invoked.  Secondly, this removes any ambiguity in resolving
-symbols that might be present in several compiled DLLs.
+symbols that might be present in several compiled DLLs.  However, this
+approach is nowadays deprecated in favour of supplying registration
+information (see below).
 
 In some circumstances, there will already be an @R{} variable in the
 package with the same name as a native symbol. For example, we may have
@@ -3876,7 +3878,7 @@ namespace.
 @strong{NB}: Using these arguments for a package which does not register
 native symbols merely slows down the package loading (although at the
 time of writing 90 @acronym{CRAN} packages did so).  Once symbols are
-registered, ensure that the corresponding @R{} variables are not
+registered, check that the corresponding @R{} variables are not
 accidentally exported by a pattern in the @file{NAMESPACE} file.
 
 
