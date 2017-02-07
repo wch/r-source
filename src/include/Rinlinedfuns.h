@@ -71,6 +71,7 @@
 
 
 #include <string.h> /* for strlen, strcmp */
+#include <R_ext/Altrep.h>
 
 /* define inline-able functions */
 
@@ -349,6 +350,7 @@ INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
 {
     return ALTREP(x) ? ALTCOMPLEX_ELT(x, i) : COMPLEX0(x)[i];
 }
+
 
 #ifdef INLINE_PROTECT
 extern int R_PPStackSize;

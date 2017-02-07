@@ -608,6 +608,7 @@ SEXP * NORET (VECTOR_PTR)(SEXP x);
 void *(RAWDATAPTR)(SEXP x);
 int (IS_SCALAR)(SEXP x, int type);
 int (ALTREP)(SEXP x);
+int (ALTREP_NOEXP)(SEXP x);
 SEXP ALTREP_DUPLICATE_EX(SEXP x, Rboolean deep);
 SEXP ALTREP_COERCE(SEXP x, int type);
 Rboolean ALTREP_INSPECT(SEXP, int, int, int, void (*)(SEXP, int, int, int));
@@ -635,6 +636,7 @@ double ALTREAL_SUM(SEXP x, Rboolean narm);
 int ALTINTEGER_MAX(SEXP x, Rboolean narm);
 int ALTINTEGER_MAX(SEXP x, Rboolean narm);
 SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+SEXP INTEGER_IS_NA(SEXP x);
 SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 	
 double ALTREAL_MIN(SEXP x, Rboolean narm);
@@ -643,11 +645,12 @@ double ALTREAL_MAX(SEXP x, Rboolean narm);
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
 int REAL_IS_SORTED(SEXP x);
 int REAL_NO_NA(SEXP x);
+SEXP REAL_IS_NA(SEXP x);
 int STRING_IS_SORTED(SEXP x);
 int STRING_NO_NA(SEXP x);
 SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
 SEXP R_deferred_coerceToString(SEXP v, SEXP sp);
-    SEXP R_virtrep_vec(SEXP, SEXP);
+SEXP R_virtrep_vec(SEXP, SEXP);
 
 #ifdef LONG_VECTOR_SUPPORT
     R_len_t NORET R_BadLongVector(SEXP, const char *, int);

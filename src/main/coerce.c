@@ -33,6 +33,7 @@
 #define R_MSG_list_vec	_("applies only to lists and vectors")
 #include <Rmath.h>
 #include <Print.h>
+#include <R_ext/Altrep.h> /* for IS_NA and NO_NA stuff */
 
 
 /* This section of code handles type conversion for elements */
@@ -1988,15 +1989,17 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, dims, names, x;
+    SEXP ans = NULL, dims, names, x;
     R_xlen_t i, n;
+    int nprot = 0;
 
     checkArity(op, args);
     check1arg(args, call, "x");
 
     if (DispatchOrEval(call, op, "is.na", args, rho, &ans, 1, 1))
 	return(ans);
-    PROTECT(args = ans);
+    PROTECT(args = ans);nprot++;
+    ans = NULL; /* reset for NULL checks... */
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall_return(call, "is.na " R_MSG_list_vec);
@@ -2006,85 +2009,99 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = xlength(x);
     
     if (isVector(x)) {
-	PROTECT(dims = getAttrib(x, R_DimSymbol));
-	if (isArray(x))
-	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));
-	else
-	    PROTECT(names = getAttrib(x, R_NamesSymbol));
+	PROTECT(dims = getAttrib(x, R_DimSymbol));nprot++;
+	if (isArray(x)) {
+	    PROTECT(names = getAttrib(x, R_DimNamesSymbol));nprot++;
+	} else {
+	    PROTECT(names = getAttrib(x, R_NamesSymbol));nprot++;
+	}
     }
     else dims = names = R_NilValue;
-    PROTECT(ans = allocVector(LGLSXP, n));
-    switch (TYPEOF(x)) {
-    case LGLSXP:
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = (LOGICAL(x)[i] == NA_LOGICAL);
-	break;
+    /*altrep hook */
+    switch(TYPEOF(x)) {
     case INTSXP:
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);
+	ans = INTEGER_IS_NA(x);
 	break;
     case REALSXP:
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = ISNAN(REAL(x)[i]);
+	ans = REAL_IS_NA(x);
+	break;
+    }
+    if(ans != NULL) {
+	PROTECT(ans); nprot++;
+    } else {
+	PROTECT(ans = allocVector(LGLSXP, n));nprot++;
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    for (i = 0; i < n; i++)
+	    LOGICAL(ans)[i] = (LOGICAL(x)[i] == NA_LOGICAL);
 	    break;
-    case CPLXSXP:
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = (ISNAN(COMPLEX(x)[i].r) ||
-			       ISNAN(COMPLEX(x)[i].i));
-	break;
-    case STRSXP:
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = (STRING_ELT(x, i) == NA_STRING);
-	break;
-	
+	case INTSXP:
+	    for (i = 0; i < n; i++)
+		LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);
+	    break;
+	case REALSXP:
+	    for (i = 0; i < n; i++)
+		LOGICAL(ans)[i] = ISNAN(REAL(x)[i]);
+	    break;
+	case CPLXSXP:
+	    for (i = 0; i < n; i++)
+		LOGICAL(ans)[i] = (ISNAN(COMPLEX(x)[i].r) ||
+				   ISNAN(COMPLEX(x)[i].i));
+	    break;
+	case STRSXP:
+	    for (i = 0; i < n; i++)
+		LOGICAL(ans)[i] = (STRING_ELT(x, i) == NA_STRING);
+	    break;
+	    
 /* Same code for LISTSXP and VECSXP : */
 #define LIST_VEC_NA(s)							\
-	if (!isVector(s) || length(s) != 1)				\
-	    LOGICAL(ans)[i] = 0;					\
-	else {								\
-	    switch (TYPEOF(s)) {					\
-	    case LGLSXP:						\
-	    case INTSXP:						\
-		LOGICAL(ans)[i] = (INTEGER(s)[0] == NA_INTEGER);	\
-		break;							\
-	    case REALSXP:						\
-		LOGICAL(ans)[i] = ISNAN(REAL(s)[0]);			\
-		break;							\
-	    case STRSXP:						\
-		LOGICAL(ans)[i] = (STRING_ELT(s, 0) == NA_STRING);	\
-		break;							\
-	    case CPLXSXP:						\
-		LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r) ||		\
-				   ISNAN(COMPLEX(s)[0].i));		\
-		break;							\
-	    default:							\
+	    if (!isVector(s) || length(s) != 1)				\
 		LOGICAL(ans)[i] = 0;					\
-	    }								\
-	}
-	
-    case LISTSXP:
-	for (i = 0; i < n; i++) {
+	    else {							\
+		switch (TYPEOF(s)) {					\
+		case LGLSXP:						\
+		case INTSXP:						\
+		    LOGICAL(ans)[i] = (INTEGER(s)[0] == NA_INTEGER);	\
+		    break;						\
+		case REALSXP:						\
+		    LOGICAL(ans)[i] = ISNAN(REAL(s)[0]);		\
+		    break;						\
+		case STRSXP:						\
+		    LOGICAL(ans)[i] = (STRING_ELT(s, 0) == NA_STRING);	\
+		    break;						\
+		case CPLXSXP:						\
+		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r) ||	\
+				       ISNAN(COMPLEX(s)[0].i));		\
+		    break;						\
+		default:						\
+		    LOGICAL(ans)[i] = 0;				\
+		}							\
+	    }
+	    
+	case LISTSXP:
+	    for (i = 0; i < n; i++) {
 	    LIST_VEC_NA(CAR(x));
 	    x = CDR(x);
+	    }
+	    break;
+	case VECSXP:
+	    for (i = 0; i < n; i++) {
+		SEXP s = VECTOR_ELT(x, i);
+		LIST_VEC_NA(s);
+	    }
+	    break;
+	case RAWSXP:
+	    /* no such thing as a raw NA */
+	    for (i = 0; i < n; i++)
+		LOGICAL(ans)[i] = 0;
+	    break;
+	default:
+	    warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"),
+			"is.na", type2char(TYPEOF(x)));
+	    for (i = 0; i < n; i++)
+		LOGICAL(ans)[i] = 0;
 	}
-	break;
-    case VECSXP:
-	for (i = 0; i < n; i++) {
-	    SEXP s = VECTOR_ELT(x, i);
-	    LIST_VEC_NA(s);
-	}
-	break;
-    case RAWSXP:
-	/* no such thing as a raw NA */
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = 0;
-	break;
-    default:
-	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"),
-		    "is.na", type2char(TYPEOF(x)));
-	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = 0;
-    }
+    } /* ans== NULL after altrep hook */
     if (dims != R_NilValue)
 	setAttrib(ans, R_DimSymbol, dims);
     if (names != R_NilValue) {
@@ -2093,10 +2110,12 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    setAttrib(ans, R_NamesSymbol, names);
     }
+    UNPROTECT(nprot);
+    /*
     if (isVector(x))
 	UNPROTECT(2);
     UNPROTECT(1);
-    UNPROTECT(1); /*ans*/
+    UNPROTECT(1);*/ /*ans*/
     return ans;
 }
 
@@ -2126,6 +2145,8 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (xT) {
     case REALSXP:
     {
+	if(REAL_NO_NA(x))
+	    return FALSE;
 	double *xD = REAL(x);
 	for (i = 0; i < n; i++)
 	    if (ISNAN(xD[i])) return TRUE;
@@ -2133,6 +2154,8 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     case INTSXP:
     {
+	if(INTEGER_NO_NA(x))
+	    return FALSE;
 	int *xI = INTEGER(x);
 	for (i = 0; i < n; i++)
 	    if (xI[i] == NA_INTEGER) return TRUE;

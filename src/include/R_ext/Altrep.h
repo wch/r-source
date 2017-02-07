@@ -195,5 +195,13 @@ double ALTREAL_MIN(SEXP x, Rboolean narm);
 double ALTREAL_MAX(SEXP x, Rboolean narm);
 int INTEGER_IS_SORTED(SEXP x);
 int REAL_IS_SORTED(SEXP x);
+SEXP ALTINTEGER_IS_NA(SEXP x);
+SEXP ALTREAL_IS_NA(SEXP x);
 
-#endif /* R_EXT_ALTmREP_H_ */
+/* is this TOO general? I don't think so..., possible it should be ALTVEC? */
+
+#define ALTREP_INFO(x) R_altrep_data1(x)
+#define ALTREP_EXPANDED(x) R_altrep_data2(x)
+#define ALTREP_NONEXP(x) (ALTREP(x) && ALTREP_EXPANDED(x) == R_NilValue)
+
+#endif /* R_EXT_ALTREP_H_ */

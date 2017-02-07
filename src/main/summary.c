@@ -531,7 +531,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     /* XXX duped grabbign of narm here. But I don't want to hit dispatchgroup 
        if I'm an ALTREP. Or do I? */
 
-    if( ALTREP(CAR(args)) && (CDR(args) == R_NilValue || CDDR(args) == R_NilValue)) {
+    if( ALTREP_NONEXP(CAR(args)) && (CDR(args) == R_NilValue || CDDR(args) == R_NilValue)) {
 	ans = matchArgExact(R_NaRmSymbol, &args);
 	narm = asLogical(ans);
 
