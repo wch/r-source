@@ -326,6 +326,10 @@
       beyond the current length more efficient, though pre-allocating is
       still preferred.  The implementation is subject to change and not
       intended to be used in packages at this time.
+
+      \item Loading the \pkg{parallel} package namespace no longer sets
+      or changes the \code{.Random.seed}, even if \env{R_PARALLEL_PORT}
+      is unset.
     }
   }
 
@@ -369,7 +373,7 @@
       compiler (not C++) is in use.  \code{Rinterface.h} now includes C
       header \file{stdint.h} or C++11 header \file{cstdint} where
       needed.
-      
+
       \item Package \pkg{tools} has a new function
       \code{package_native_routine_registration_skeleton()} to assist
       adding native-symbol registration to a package.  See its help and

@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snow.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -85,8 +85,13 @@ initDefaultClusterOptions <- function(libname)
     port <- Sys.getenv("R_PARALLEL_PORT")
     port <- if (identical(port, "random")) NA else as.integer(port)
     if (is.na(port)) {
+	seed <- .GlobalEnv$.Random.seed
         ran1 <- sample.int(.Machine$integer.max - 1L, 1L) / .Machine$integer.max
         port <- 11000 + 1000 * ((ran1 + unclass(Sys.time()) / 300) %% 1)
+	if(is.null(seed)) ## there was none, initially
+	    rm(    ".Random.seed",       envir = .GlobalEnv, inherits = FALSE)
+	else # reset
+	    assign(".Random.seed", seed, envir = .GlobalEnv, inherits = FALSE)
     }
     Sys.i <- Sys.info()
     options <- list(port = as.integer(port),
