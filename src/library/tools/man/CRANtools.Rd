@@ -64,6 +64,7 @@ summarize_CRAN_check_status(package,
 }
 \examples{
 ## IGNORE_RDIFF_BEGIN
+\dontshow{set.seed(11)}
 pdb <- CRAN_package_db()
 dim(pdb)
 ## DESCRIPTION fields included:

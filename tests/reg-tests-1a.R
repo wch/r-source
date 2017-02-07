@@ -2336,7 +2336,7 @@ x[, num] <- list()
 ## .Random.seed was searched for with inherits=TRUE
 rm(.Random.seed)
 attach(list(.Random.seed=c(0:4)))
-runif(1)
+x <- runif(1)
 detach(2)
 (new <- RNGkind())
 stopifnot(identical(new, c("Mersenne-Twister", "Inversion")))
@@ -2418,6 +2418,7 @@ Quine <- structure(list(Eth = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     .Names = c("Eth", "Sex", "Age", "Slow or fast", "Days"),
     class = "data.frame", row.names = 1:46)
 step(aov(log(Days+2.5) ~ .^4, data=Quine))
+set.seed(11)
 DF <- data.frame(y=rnorm(21), `x 1`=-10:10., check.names = FALSE)
 lm(y ~ ., data = DF)
 (fm <- lm(y ~ `x 1` + I(`x 1`^2), data = DF))

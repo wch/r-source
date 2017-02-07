@@ -109,6 +109,7 @@ stopifnot(identical(c0, strtrim(c0, integer(0))))
 
 
 ## Factors with duplicated levels {created via low-level code}:
+set.seed(11)
 f0 <- factor(sample.int(9, 20, replace=TRUE))
 (f <- structure(f0, "levels" = as.character(c(2:7, 2:4))))
 tools::assertWarning(print(f))
