@@ -62,8 +62,13 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   on a package without any existing registration: \code{character_only =
   FALSE} can be used to suggest updates for a package which has been
   extended since registration.  For the default value, if \code{.NAME}
-  values are found which are not character strings this is noted via a
-  comment in the output.
+  values are found which are not character strings (e.g.\sspace{}names
+  or expressiions) this is noted via a comment in the output.
+
+  Packages which used the earlier form of creating \R objects for native
+  symbols \emph{via} additional arguments in a \code{useDynLib}
+  directive will probably most easily be updated to use registration
+  with \code{character_only = FALSE}.
 
   If an entry point is used with different numbers of arguments in the
   package's \R code, an entry in the table (and optionally, a
@@ -96,7 +101,8 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
     .Call (cfunction, ...)
     .Call(..., PACKAGE="sparseLTSEigen")
   } (but if \code{character_only} is false, will extract the first as
-  \code{"cfunction"}).
+  \code{"cfunction"}).  Calls which have not been fully resolved will be
+  noted \emph{via} comments in the output file.
 
   Call to entry points in other packages will be ignored if they have an
   explicit (character string) \code{PACKAGE} argument.
