@@ -29,7 +29,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   }
   \item{character_only}{
     Logical: should only \code{.NAME} arguments specified by character
-    strings (and not as names of \R objects) be extracted?
+    strings (and not as names of \R objects nor expressions) be extracted?
   }
   \item{include_declarations}{
     Logical: should the output include declarations for the registered
@@ -77,9 +77,10 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   have a variable number of arguments, which should be declared as
   \code{-1}.
 
-  A surprisingly large number of \acronym{CRAN} packages had calls in \R
-  code to native routines not included in the package, which will lead
-  to a compilation error when the registration C code is added.
+  A surprising number of \acronym{CRAN} packages had calls in \R code to
+  native routines not included in the package, which will lead to a
+  \sQuote{loading failed} error during package installation when the
+  registration C code is added.
 }
 
 \value{
