@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015   The R Core Team.
+ *  Copyright (C) 1998-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,6 +72,8 @@
  *	"warning.length"
  *	"warning.expression"
  *	"nwarnings"
+
+ *	"matprod"
 
  *
  * S additionally/instead has (and one might think about some)
@@ -244,9 +246,9 @@ void attribute_hidden InitOptions(void)
     char *p;
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(17));
+    PROTECT(v = val = allocList(18));
 #else
-    PROTECT(v = val = allocList(16));
+    PROTECT(v = val = allocList(17));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -317,6 +319,16 @@ void attribute_hidden InitOptions(void)
 
     SET_TAG(v, install("CBoundsCheck"));
     SETCAR(v, ScalarLogical(R_CBoundsCheck));
+    v = CDR(v);
+
+    SET_TAG(v, install("matprod"));
+    switch(R_Matprod) {
+	case MATPROD_DEFAULT: p = "default"; break;
+	case MATPROD_INTERNAL: p = "internal"; break;
+	case MATPROD_BLAS: p = "blas"; break;
+	case MATPROD_DEFAULT_SIMD: p = "default.simd"; break;
+    }
+    SETCAR(v, mkString(p));
     v = CDR(v);
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
@@ -647,6 +659,22 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		int k = asLogical(argi);
 		R_CBoundsCheck = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
+	    else if (streql(CHAR(namei), "matprod")) {
+		SEXP s = asChar(argi);
+		if (s == NA_STRING || LENGTH(s) == 0)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		if (streql(CHAR(s), "default"))
+		    R_Matprod = MATPROD_DEFAULT;
+		else if (streql(CHAR(s), "internal"))
+		    R_Matprod = MATPROD_INTERNAL;
+		else if (streql(CHAR(s), "blas"))
+		    R_Matprod = MATPROD_BLAS;
+		else if (streql(CHAR(s), "default.simd"))
+		    R_Matprod = MATPROD_DEFAULT_SIMD;
+		else
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

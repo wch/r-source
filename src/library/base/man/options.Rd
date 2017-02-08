@@ -183,6 +183,30 @@ getOption(x, default = NULL)
     when packages are installed.  Defaults to \code{FALSE} unless the
     environment variable \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
 
+    \item{\code{matprod}:}{a scalar string, selects an implementation of
+      matrix product (\code{\%*\%}, \code{crossprod}, \code{tcrossprod}) for
+      double and complex vectors.  \code{"internal"} uses an unoptimized
+      3-loop algorithm which correctly propagates NaN and Inf values and is
+      consistent in precision with other summation algorithms inside R like
+      \code{sum} or \code{colSums} (which now means that it uses a
+      \code{long double} accumulator for summation if available and enabled,
+      see \code{\link{capabilities}}).  \code{"default"} uses BLAS to speed
+      up computation, but to ensure correct propagation of NaN and Inf
+      values it uses an unoptimized 3-loop algorithm for inputs that may
+      contain NaN or Inf values.  When deemed beneficial for performance,
+      \code{"default"} may unconditionally call the 3-loop algorithm without
+      checking the input for NaN/Inf values.  The 3-loop algorithm uses a
+      \code{double} accumulator for summation, which is consistent with the
+      reference BLAS implementation.  \code{"blas"} uses BLAS
+      unconditionally without any checks and should be used with extreme
+      caution. BLAS libraries do not propagate NaN/Inf values correctly and
+      for inputs with NaN/Inf value the results may be undefined.
+      \code{"default.simd"} is experimental and will likely be removed in
+      future versions of R.  It provides the same behavior as
+      \code{"default"}, but the check whether the input containts NaN/Inf
+      values is faster on some SIMD hardware.  On older systems it will run
+      correctly, but may be much slower than \code{"default"}.}
+
     \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
       this option, to limit the amount of information that is printed,
