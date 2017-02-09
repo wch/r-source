@@ -1286,14 +1286,15 @@ is too complex to put in the @file{DESCRIPTION} file.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
-Test code can either be provided directly in a @file{.R} (or @file{.r}) file, or
-@emph{via} a @file{.Rin} file containing code which in turn creates the
-corresponding @file{.R} file (e.g., by collecting all function objects
-in the package and then calling them with the strangest arguments).  The
-results of running a @file{.R} file are written to a @file{.Rout} file.
-If there is a corresponding@footnote{The best way to generate such a
-file is to copy the @file{.Rout} from a successful run of @command{R CMD
-check}.  If you want to generate it separately, do run @R{} with options
+Test code can either be provided directly in a @file{.R} (or @file{.r}
+as from @R{} 3.4.0) file, or @emph{via} a @file{.Rin} file containing
+code which in turn creates the corresponding @file{.R} file (e.g., by
+collecting all function objects in the package and then calling them
+with the strangest arguments).  The results of running a @file{.R} file
+are written to a @file{.Rout} file.  If there is a
+corresponding@footnote{The best way to generate such a file is to copy
+the @file{.Rout} from a successful run of @command{R CMD check}.  If you
+want to generate it separately, do run @R{} with options
 @option{--vanilla --slave} and with environment variable
 @env{LANGUAGE=en} set to get messages in English.  Be careful not to use
 output with the option @option{--timings} (and note that
@@ -9559,6 +9560,14 @@ extern SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
 extern SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
 @end group
 @end smallexample
+@noindent
+Tools are available to create such a header file, at least for C and C++
+code: see the help file for
+@code{package_native_routine_registration_skeleton} in package
+@pkg{tools}. Here we could have used
+@example
+cproto -I/path/to/R/include -e splines.c
+@end example
 
 For examples of registering other types of calls, see packages
 @pkg{graphics} and @pkg{stats}.  In particular, when registering entry
@@ -9597,7 +9606,9 @@ void R_init_splines(DllInfo *dll)
 @end itemize
 
 A skeleton for the steps so far can be made using
-@code{package_native_routine_registration_skeleton} in package @pkg{tools}.
+@code{package_native_routine_registration_skeleton} in package
+@pkg{tools}.  This will optionally create declarations based on the
+usage in the @R{} code.
 
 The remaining steps are optional but recommended.
 

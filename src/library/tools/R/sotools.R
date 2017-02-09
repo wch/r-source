@@ -464,7 +464,7 @@ if(.Platform$OS.type == "windows") {
 
         r_arch <- .Platform$r_arch
         useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
-        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_SYMBOL_REGISTRATION_", "FALSE"))
+        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_NATIVE_ROUINE_REGISTRATION_", "FALSE"))
 
         compare <- function(x, strip_ = FALSE) {
             ## Compare symbols in the DLL and in objects:
@@ -577,7 +577,7 @@ if(.Platform$OS.type == "windows") {
 
         r_arch <- .Platform$r_arch
         useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
-        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_SYMBOL_REGISTRATION_", "FALSE"))
+        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_", "FALSE"))
 
         compare <- function(x) {
             ## Compare symbols in the so and in objects:

@@ -32,8 +32,8 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
     strings (and not as names of \R objects nor expressions) be extracted?
   }
   \item{include_declarations}{
-    Logical: should the output include declarations for the registered
-    routines?
+    Logical: should the output include declarations (also known as
+    \sQuote{prototypes}) for the registered routines?
   }
 }
 \details{
@@ -107,6 +107,24 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 
   Call to entry points in other packages will be ignored if they have an
   explicit (character string) \code{PACKAGE} argument.
+}
+
+\section{Extracting C/C++ protoypes}{
+  There are several tools available to extract function declarations
+  from C or C++ code.  For example,
+
+  For C code one can use \command{cproto}
+  (\url{http://invisible-island.net/cproto/cproto.html}; Windows
+  executables are available), for
+  example\preformatted{
+    cproto -I/path/to/R/include -e *.c
+  }
+  
+  \command{ctags} (commonly distributed with the OS)
+  covers C and C++., listing all function usages by something
+  like\preformatted{
+    ctags -x *.c
+  }.  (The GNU version allows a lot more control.)
 }
 
 \seealso{
