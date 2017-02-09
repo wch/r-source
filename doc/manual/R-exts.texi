@@ -9548,10 +9548,11 @@ void R_init_splines(DllInfo *dll)
 
 @noindent
 and then replace the @code{?} in the skeleton with the actual numbers of
-arguments.  You will need to add declarations of the functions unless
-appending to the only C source file.  Some packages will already have
-these in a header file, or you could create one and include it in
-@file{init.c}, for example @file{splines.h} containing
+arguments.  You will need to add declarations (also known as
+`prototypes') of the functions unless appending to the only C source
+file.  Some packages will already have these in a header file, or you
+could create one and include it in @file{init.c}, for example
+@file{splines.h} containing
 
 @smallexample
 @group
@@ -9561,7 +9562,7 @@ extern SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
 @end group
 @end smallexample
 @noindent
-Tools are available to create such a header file, at least for C and C++
+Tools are available to extract declarations, at least for C and C++
 code: see the help file for
 @code{package_native_routine_registration_skeleton} in package
 @pkg{tools}. Here we could have used
