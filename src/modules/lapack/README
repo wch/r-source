@@ -1,157 +1,62 @@
-The Fortran routines here were extracted from LAPACK 3.1.0, then 3.1.1,
-3.4.1, 3.4.2, 3.5.0, 3.6.0.  (http://www.netlib.org/lapack and mirrors).
+The Fortran routines here were extracted from LAPACK 3.1.0, then
+3.1.1, 3.4.1, 3.4.2, 3.5.0, 3.6.0, 3.6.1, 3.7.0.
+(Sources from http://www.netlib.org/lapack and mirrors).
 
-dlapack?.f are support routines for `real' LAPACK calls
-cmplx.f are support routines for LAPACK calls from complex arithmetic
-routines, that are only used if COMPLEX*16 is supported by the Fortran
-compiler and compatible with the Rcomplex type.
+dlapack.f contains support routines for `real' LAPACK calls.  
+cmplx.f contains support routines for LAPACK calls from complex
+arithmetic routines, that are only used if COMPLEX*16 is supported by
+the Fortran compiler and compatible with the Rcomplex type.
 Neither will be compiled if an external LAPACK is used.
 
 We have tried to avoid including any single-precision routines.
 
-dlapack.f is the concatenation of
 
-dbbcsd.f	dbdsdc.f	dbdsqr.f	ddisna.f	dgbbrd.f
-dgbcon.f	dgbequ.f	dgbequb.f	dgbrfs.f	dgbsv.f
-dgbsvx.f	dgbtf2.f	dgbtrf.f	dgbtrs.f	dgebak.f
-dgebal.f	dgebd2.f	dgebrd.f	dgecon.f	dgeequ.f
-dgeequb.f	dgees.f		dgeesx.f	dgeev.f		dgeevx.f
-dgehd2.f	dgehrd.f	dgejsv.f	dgelq2.f	dgelqf.f
-dgels.f		dgelsd.f	dgelss.f	dgelsy.f	dgemqrt.f
-dgeql2.f	dgeqlf.f	dgeqp3.f	dgeqr2.f	dgeqr2p.f
-dgeqrf.f	dgeqrfp.f	dgeqrt.f	dgeqrt2.f	dgeqrt3.f
-dgerfs.f	dgerq2.f	dgerqf.f	dgesc2.f	dgesdd.f
-dgesv.f		dgesvd.f	dgesvj.f	dgesvx.f	dgetc2.f
-dgetf2.f	dgetrf.f	dgetrf2.f	dgetri.f	dgetrs.f
-dggbak.f	dggbal.f	dgges.f		dggesx.f	dggev.f
-dggevx.f	dggglm.f	dgghrd.f	dgglse.f	dggqrf.f
-dggrqf.f	dgsvj0.f	dgsvj1.f	dgtcon.f	dgtrfs.f
-dgtsv.f		dgtsvx.f	dgttrf.f	dgttrs.f	dgtts2.f
-dhgeqz.f	dhsein.f	dhseqr.f	disnan.f	dlabad.f
-dlabrd.f	dlacn2.f	dlacon.f	dlacpy.f	dladiv.f
-dlae2.f		dlaebz.f	dlaed0.f	dlaed1.f	dlaed2.f
-dlaed3.f	dlaed4.f	dlaed5.f	dlaed6.f	dlaed7.f
-dlaed8.f	dlaed9.f	dlaeda.f	dlaein.f	dlaev2.f
-dlaexc.f	dlag2.f		dlags2.f	dlagtf.f	dlagtm.f
-dlagts.f	dlagv2.f	dlahqr.f	dlahr2.f	dlaic1.f
-dlaisnan.f	dlaln2.f	dlals0.f	dlalsa.f	dlalsd.f
-dlamrg.f	dlaneg.f	dlangb.f	dlange.f	dlangt.f
-dlanhs.f	dlansb.f	dlansf.f	dlansp.f	dlanst.f
-dlansy.f	dlantb.f	dlantp.f	dlantr.f	dlanv2.f
-dlapll.f	dlapmr.f	dlapmt.f	dlapy2.f	dlapy3.f
-dlaqgb.f	dlaqge.f	dlaqp2.f	dlaqps.f	dlaqr0.f
-dlaqr1.f	dlaqr2.f	dlaqr3.f	dlaqr4.f	dlaqr5.f
-dlaqsb.f	dlaqsp.f	dlaqsy.f	dlaqtr.f	dlar1v.f
-dlar2v.f	dlarf.f		dlarfb.f	dlarfg.f	dlarfgp.f
-dlarft.f	dlarfx.f	dlargv.f	dlarnv.f	dlarra.f
-dlarrb.f	dlarrc.f	dlarrd.f	dlarre.f	dlarrf.f
-dlarrj.f	dlarrk.f	dlarrr.f	dlarrv.f	dlarscl2.f
-dlartg.f	dlartgp.f	dlartgs.f	dlartv.f	dlaruv.f
-dlarz.f		dlarzb.f	dlarzt.f	dlas2.f		dlascl.f
-dlascl2.f	dlasd0.f	dlasd1.f	dlasd2.f	dlasd3.f
-dlasd4.f	dlasd5.f	dlasd6.f	dlasd7.f	dlasd8.f
-dlasda.f	dlasdq.f	dlasdt.f	dlaset.f	dlasq1.f
-dlasq2.f	dlasq3.f	dlasq4.f	dlasq5.f	dlasq6.f
-dlasr.f		dlasrt.f	dlassq.f	dlasv2.f	dlaswp.f
-dlasy2.f	dlasyf.f	dlatbs.f	dlatdf.f	dlatps.f
-dlatrd.f	dlatrs.f	dlatrz.f	dlauu2.f	dlauum.f
-dopgtr.f	dopmtr.f	dorbdb.f	dorcsd.f	dorg2l.f
-dorg2r.f	dorgbr.f	dorghr.f	dorgl2.f	dorglq.f
-dorgql.f	dorgqr.f	dorgr2.f	dorgrq.f	dorgtr.f
-dorm2l.f	dorm2r.f	dormbr.f	dormhr.f	dorml2.f
-dormlq.f	dormql.f	dormqr.f	dormr2.f	dormr3.f
-dormrq.f	dormrz.f	dormtr.f	dpbcon.f	dpbequ.f
-dpbrfs.f	dpbstf.f	dpbsv.f		dpbsvx.f	dpbtf2.f
-dpbtrf.f	dpbtrs.f	dpftrf.f	dpftri.f	dpftrs.f
-dpocon.f	dpoequ.f	dpoequb.f	dporfs.f	dposv.f
-dposvx.f	dpotf2.f	dpotrf.f	dpotrf2.f	dpotri.f
-dpotrs.f	dppcon.f	dppequ.f	dpprfs.f	dppsv.f
-dppsvx.f	dpptrf.f	dpptri.f	dpptrs.f	dpstf2.f
-dpstrf.f	dptcon.f	dpteqr.f	dptrfs.f	dptsv.f
-dptsvx.f	dpttrf.f	dpttrs.f	dptts2.f	drscl.f
-dsbev.f		dsbevd.f	dsbevx.f	dsbgst.f	dsbgv.f
-dsbgvd.f	dsbgvx.f	dsbtrd.f	dsfrk.f		dspcon.f
-dspev.f		dspevd.f	dspevx.f	dspgst.f	dspgv.f
-dspgvd.f	dspgvx.f	dsprfs.f	dspsv.f		dspsvx.f
-dsptrd.f	dsptrf.f	dsptri.f	dsptrs.f	dstebz.f
-dstedc.f	dstegr.f	dstein.f	dstemr.f	dsteqr.f
-dsterf.f	dstev.f		dstevd.f	dstevr.f	dstevx.f
-dsycon.f	dsyconv.f	dsyequb.f	dsyev.f		dsyevd.f
-dsyevr.f	dsyevx.f	dsygs2.f	dsygst.f	dsygv.f
-dsygvd.f	dsygvx.f	dsyrfs.f	dsysv.f		dsysvx.f
-dsyswapr.f	dsytd2.f	dsytf2.f	dsytrd.f	dsytrf.f
-dsytri.f	dsytri2.f	dsytri2x.f	dsytrs.f	dsytrs2.f
-dtbcon.f	dtbrfs.f	dtbtrs.f	dtfsm.f		dtftri.f
-dtfttp.f	dtfttr.f	dtgevc.f	dtgex2.f	dtgexc.f
-dtgsen.f	dtgsja.f	dtgsna.f	dtgsy2.f	dtgsyl.f
-dtpcon.f	dtpmqrt.f	dtpqrt.f	dtpqrt2.f	dtprfb.f
-dtprfs.f	dtptri.f	dtptrs.f	dtpttf.f	dtpttr.f
-dtrcon.f	dtrevc.f	dtrexc.f	dtrrfs.f	dtrsen.f
-dtrsna.f	dtrsyl.f	dtrti2.f	dtrtri.f	dtrtrs.f
-dtrttf.f	dtrttp.f	dtzrzf.f	ieeeck.f	iladlc.f
-iladlr.f	ilaenv.f	ilaprec.f	ilatrans.f	ilaver.f
-iparmq.f
-DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
-DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f
-DEPRECATED/dtzrqf.f
-dtrevc3.f
+Preparation
+-----------
 
-dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
-are new in LAPACK 3.6.0 and were added in R 3.3.0.
-dtrevc3 is new in LAPACK 3.6.1 and was added in R 3.4.0.
+dlapack.f and cmplx.f were created in the LAPACK 3.7.0 sources by
+
+dir.create('dble')
+foo <- scan('dble.txt', "")
+file.copy(file.path("SRC", foo), 'dble')
+system('cpp SRC/iparam2stage.F > dble/iparam2stage.f')
+system("cat dble/* > dlapack.f")
+
+dir.create('cmplx ')
+foo <- scan('cmplx.txt', "")
+file.copy(file.path("SRC", foo), 'cmplx')
+system("cat cmplx/* > cmplx.f")
+
+If you update the LAPACK version, you need to copy over the LICENSE
+file and update it in doc/copyrights.  And if you patch the sources,
+*DO* mention it here and add the patch to R.patch.
+
+New LAPACK versions (even point releases) often add new auxiliary
+routines, and these can be hard to track down.  I found it helpful to
+compare the outputs of
+
+nm -g dlapack.o | grep ' T ' | cut -b20-
+nm -g dlapack.o | grep ' U ' | cut -b20-
+
+before and after upating (ditto for cmplx.o).  (This may need
+adjusting for your platform's nm.)
 
 
-
-cmplx.f is the concatenation of
-
-dzsum1.f	ilazlc.f	ilazlr.f	izmax1.f	zbdsqr.f
-zdrscl.f	zgebak.f	zgebal.f	zgebd2.f	zgebrd.f
-zgecon.f	zgeequ.f	zgees.f		zgeev.f		zgehd2.f
-zgehrd.f	zgelq2.f	zgelqf.f	zgels.f		zgelsd.f
-zgeqp3.f	zgeqr2.f	zgeqrf.f	zgerfs.f	zgesc2.f
-zgesdd.f	zgesv.f		zgesvd.f	zgesvx.f	zgetc2.f
-zgetf2.f	zgetrf.f	zgetrf2.f	zgetri.f	zgetrs.f
-zggbak.f	zggbal.f	zgges.f		zggev.f		zgghrd.f
-zheev.f		zheevd.f	zhetd2.f	zhetrd.f	zhgeqz.f
-zhseqr.f	zlabrd.f	zlacgv.f	zlacn2.f	zlacp2.f
-zlacpy.f	zlacrm.f	zladiv.f	zlaed0.f	zlaed7.f
-zlaed8.f	zlahqr.f	zlahr2.f	zlals0.f	zlalsa.f
-zlalsd.f	zlange.f	zlanhe.f	zlanhs.f	zlantr.f
-zlaqge.f	zlaqp2.f	zlaqps.f	zlaqr0.f	zlaqr1.f
-zlaqr2.f	zlaqr3.f	zlaqr4.f	zlaqr5.f	zlarcm.f
-zlarf.f		zlarfb.f	zlarfg.f	zlarft.f	zlarfx.f
-zlartg.f	zlascl.f	zlaset.f	zlasr.f		zlassq.f
-zlaswp.f	zlasyf.f	zlatdf.f	zlatrd.f	zlatrs.f
-zlauu2.f	zlauum.f	zpotf2.f	zpotrf.f	zpotrf2.f
-zpotri.f	zrot.f		zstedc.f	zsteqr.f	zsymv.f
-zsyr.f		zsytf2.f	zsytrf.f	zsytri.f	ztgevc.f
-ztgex2.f	ztgexc.f	ztgsen.f	ztgsy2.f	ztgsyl.f
-ztrcon.f	ztrevc.f	ztrexc.f	ztrsen.f	ztrsyl.f
-ztrti2.f	ztrtri.f	ztrtrs.f	zung2l.f	zung2r.f
-zungbr.f	zunghr.f	zungl2.f	zunglq.f	zungql.f
-zungqr.f	zungr2.f	zungrq.f	zungtr.f	zunm2l.f
-zunm2r.f	zunmbr.f	zunmhr.f	zunml2.f	zunmlq.f
-zunmql.f	zunmqr.f	zunmtr.f        DEPRECATED/zlahrd.f
-ztrevc3.f
+History
+-------
 
 zlahr2 zlaqr0 zlaqr1 zlaqr2 zlaqr3 zlaqr4 zlaqr5 zlartg zpotf2 zpotrf
 zrot ztrexc
-were added in 2.5.0.
+were added in R 2.5.0.
 
 izmax1 zdrscl zgecon zlacn2 zlantr ztrcon
-were added in 2.7.0.
+were added in R 2.7.0.
 
 dzsum1 ilazlc ilazlr zunmhr
-were added in 2.15.2.
+were added in R 2.15.2.
 
 zgelsd zgesdd zlacp2 zlacrm zlals0 zlalsa zlalsd zlarcm
 were added in R 3.1.0.
-
-zgetrf2 zpotrf2
-are new in LAPACK 3.6.0 and were added in R 3.3.0.
-
-ztrevc3 is new in LAPACK 3.6.1 and was added in R 3.4.0.
-
 
 zgeequ zgees zgels zgerfs zgesc2 zgesvx zgetc2 zgetri zggbak zggbal
 zgges zggev zgghrd zheevd zhgeqz zlaed0 zlaed7 zlaed8 zlaqge zlasyf
@@ -159,6 +64,12 @@ zlatdf zlauu2 zlauum zpotri zstedc zsymv zsyr zsytf2 zsytrf zsytri
 ztgevc ztgex2 ztgexc ztgsen ztgsy2 ztgsyl ztrsen ztrsyl ztrti2 ztrtri
 zunm2l zunmql zunmtr
 were added in R 3.3.0 for use by a CRAN package.
+
+dbdsvdx dgesvdx dgetrf2 dgges3 dggev3 dgghd3 dggsvd3 dggsvp3 dorm22 dpotrf2
+zgetrf2 zpotrf2
+were new in LAPACK 3.6.0 and added in R 3.3.0.
+
+dtrevc3 and ztrevc3 were new in LAPACK 3.6.1 and added in R 3.4.0.
 
 -------------------------------------------------
 

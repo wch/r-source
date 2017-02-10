@@ -445,6 +445,9 @@
       binary builds.  The \file{tcltk*.chm} help file is no longer
       included; please consult the online help at
       \url{http://www.tcl.tk/man/} instead.
+  
+      \item The version of LAPACK included in the sources has been
+      updated to 3.7.0: no new routines have been added to \R{}.
     }
   }
 

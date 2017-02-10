@@ -286,23 +286,26 @@ THE SOFTWARE.
 src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
 
   Extracted from
-  *  -- LAPACK computational routine (version 3.6.0) --
+  *  -- LAPACK computational routine (version 3.7.0) --
   *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
   *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-  *     Novemeber 2015
+  *     June 2016
 
   where the version number, providers and date vary by subroutine.
+  For version 3.7.0, many of the copyright dates have been updated
+  even for routines which have not been changed for years.
 
-  LAPACK 3.6.0 contains a LICENSE file, copied to src/modules/lapack
+  LAPACK 3.7.0 contains a LICENSE file, copied to src/modules/lapack
   (but many of these routines were originally copied from earlier
   versions of LAPACK).  For binary distributions it is reproduced here:
 
-  Copyright (c) 1992-2015 The University of Tennessee and The University
+  --- src/modules/lapack/LICENSE ---
+  Copyright (c) 1992-2016 The University of Tennessee and The University
                           of Tennessee Research Foundation.  All rights
                           reserved.
-  Copyright (c) 2000-2015 The University of California Berkeley. All
+  Copyright (c) 2000-2016 The University of California Berkeley. All
                           rights reserved.
-  Copyright (c) 2006-2015 The University of Colorado Denver.  All rights
+  Copyright (c) 2006-2016 The University of Colorado Denver.  All rights
                           reserved.
 
   $COPYRIGHT$
@@ -345,6 +348,7 @@ src/modules/lapack/dlapack.f, cmplx.f, dlamc.f
   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  --- end of src/modules/lapack/LICENSE ---
 
 src/extra/xdr/*
 
