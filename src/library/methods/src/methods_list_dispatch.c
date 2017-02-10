@@ -1019,7 +1019,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 		      R_curErrorBuf());
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
-	lwidth += (int) strlen(STRING_VALUE(thisClass)) + 0;
+	lwidth += (int) strlen(STRING_VALUE(thisClass)) + 1;
     }
     /* make the label */
     const void *vmax = vmaxget();
