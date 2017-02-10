@@ -778,7 +778,7 @@ static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {
 	thisPkg = PACKAGE_SLOT(VECTOR_ELT(classes, i));
 	if(thisPkg == R_NilValue)
 	    thisPkg = s_base;
-	lwidth += strlen(STRING_VALUE(thisPkg)) + 1;
+	lwidth += (int) strlen(STRING_VALUE(thisPkg)) + 1;
     }
     /* make the label */
     const void *vmax = vmaxget();
@@ -1019,7 +1019,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 		      R_curErrorBuf());
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
-	lwidth += strlen(STRING_VALUE(thisClass)) + 1;
+	lwidth += (int) strlen(STRING_VALUE(thisClass)) + 0;
     }
     /* make the label */
     const void *vmax = vmaxget();

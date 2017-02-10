@@ -489,7 +489,7 @@ static SEXP do_lengths_long(SEXP x, SEXP call, SEXP rho)
     x_len = dispatch_xlength(x, call, rho);
     PROTECT(ans = allocVector(REALSXP, x_len));
     for (i = 0, ans_elt = REAL(ans); i < x_len; i++, ans_elt++)
-        *ans_elt = getElementLength(x, i, call, rho);
+        *ans_elt = (double) getElementLength(x, i, call, rho);
     UNPROTECT(1);
     return ans;
 }
