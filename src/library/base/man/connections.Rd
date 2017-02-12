@@ -231,10 +231,9 @@ isIncomplete(con)
 
   No attempt is made to decode a percent-encoded \samp{file:} URL: call
   \code{\link{URLdecode}} if necessary.
-
-  The \code{"internal"} method does not follow re-directed HTTP URLs:
-  both methods \code{"wininet"} (the default on Windows) and
-  \code{"libcurl"} do (including for HTTPS URLs).
+  
+  All the methods attempt to follow redirected HTTP URLs, but the
+  \code{"internal"} method is unable to follow redirections to HTTPS URLs.
 
   Server-side cached data is always accepted.
 
