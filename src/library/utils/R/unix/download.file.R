@@ -44,7 +44,10 @@ download.file <-
 	   },
 	   "internal2" = {
                ## want redirection warning immediately
-               op <- options(warn = 1); on.exit(options(op))
+               if(getOption('warn') == 0L) {
+                   op <- options(warn = 1L)
+                   on.exit(options(op))
+               }
 	       status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
                if (status == 2L) {
                    if(!quiet)
