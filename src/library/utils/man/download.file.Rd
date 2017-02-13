@@ -59,7 +59,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   If \code{method = "auto"} is chosen (the default), on a Unix-alike
   method \code{"libcurl"} is chosen for \samp{https://} and
   \samp{ftps://} URLs and the \code{"internal"} method is chosen for
-  other schemes.
+  other schemes.  If redirection from \samp{http://} to \samp{https://}
+  is encountered, the download is re-tried with method \code{"libcurl"}.
 #endif
 #ifdef windows
   If \code{method = "auto"} is chosen (the default), on Windows the
@@ -117,7 +118,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   does not support them.
 
   Most methods do not percent-encode special characters such as spaces
-  in URLs (see \code{\link{URLencode}}), but it seems the
+  in HTTP URLs (see \code{\link{URLencode}}), but it seems the
   \code{"wininet"} method does.
 
   The remaining details apply to the \code{"internal"}, \code{"wininet"}
