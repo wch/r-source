@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-02-06 r72124) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-02-13 r72167) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -37,6 +37,9 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > ## IGNORE_RDIFF_BEGIN
+> ## Don't show: 
+> set.seed(11)
+> ## End(Don't show)
 > pdb <- CRAN_package_db()
 > dim(pdb)
 [1] 8248   65
@@ -124,46 +127,78 @@ Flavor                              ERROR NOTE   OK WARN
 +               ((Check == "whether package can be installed") &
 +                (Status != "OK")))
 > head(bad[sample(seq_len(NROW(bad)), NROW(bad)), ])
-Package: seqminer 5.0
-Flavor: r-patched-linux-x86_64
-Check: whether package can be installed, Result: WARNING
-  Found the following significant warnings:
-    /usr/include/features.h:148:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
-  See ‘/home/hornik/tmp/R.check/r-patched-gcc/Work/PKGS/seqminer.Rcheck/00install.out’ for details.
-
-Package: RxODE 0.5-1
-Flavor: r-patched-solaris-x86
+Package: covafillr 0.2.1
+Flavor: r-patched-solaris-sparc
 Check: whether package can be installed, Result: ERROR
   Installation failed.
-  See ‘/home/ripley/R/packages/tests32/RxODE.Rcheck/00install.out’ for details.
+  See ‘/home/ripley/R/packages/tests32/covafillr.Rcheck/00install.out’ for details.
 
-Package: RBerkeley 0.7-5
+Package: arulesViz 1.1-0
+Flavor: r-devel-linux-x86_64-debian-gcc
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    Warning: replacing previous import ‘arules::head’ by ‘utils::head’ when loading ‘arulesViz’
+  See ‘/home/hornik/tmp/R.check/r-devel-gcc/Work/PKGS/arulesViz.Rcheck/00install.out’ for details.
+
+Package: HiPLARM 0.1
 Flavor: r-release-osx-x86_64-mavericks
 Check: whether package can be installed, Result: ERROR
   Installation failed.
-  See ‘/Builds/CRAN-QA-Simon/packages/mavericks-x86_64/results/3.2/RBerkeley.Rcheck/00install.out’ for details.
+  See ‘/Builds/CRAN-QA-Simon/packages/mavericks-x86_64/results/3.2/HiPLARM.Rcheck/00install.out’ for details.
 
-Package: NonpModelCheck 1.0
+Package: igraph 1.0.1
+Flavor: r-devel-linux-x86_64-debian-gcc
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    /usr/include/features.h:148:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  See ‘/home/hornik/tmp/R.check/r-devel-gcc/Work/PKGS/igraph.Rcheck/00install.out’ for details.
+
+Package: sparsesvd 0.1
+Flavor: r-devel-linux-x86_64-fedora-clang
+Check: whether package can be installed, Result: WARNING
+  Found the following significant warnings:
+    svdlib.c:201:5: warning: void function 'svdWriteDenseArray' should not return void expression [-Wpedantic]
+  See ‘/data/gannet/ripley/R/packages/tests-clang/sparsesvd.Rcheck/00install.out’ for details.
+
+Package: rJava 0.9-8
 Flavor: r-oldrel-windows-ix86+x86_64
 Check: whether package can be installed, Result: WARNING
   Found the following significant warnings:
-    local_poly_estimator.c:157:1: warning: control reaches end of non-void function [-Wreturn-type]
-    local_poly_estimator.c:52:1: warning: control reaches end of non-void function [-Wreturn-type]
-  See 'd:/Rcompile/CRANpkg/local/3.1/NonpModelCheck.Rcheck/00install.out' for details.
-
-Package: hsdar 0.4.1
-Flavor: r-devel-windows-ix86+x86_64
-Check: whether package can be installed, Result: ERROR
-  Installation failed.
-  See 'd:/Rcompile/CRANpkg/local/3.3/hsdar.Rcheck/00install.out' for details.
-
-Package: mmap 0.6-12
-Flavor: r-oldrel-windows-ix86+x86_64
-Check: whether package can be installed, Result: WARNING
-  Found the following significant warnings:
-    mmap.c:223:48: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    mmap.c:226:46: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-  See 'd:/Rcompile/CRANpkg/local/3.1/mmap.Rcheck/00install.out' for details.
+    Rengine.c:121:14: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:159:14: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:219:10: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:228:9: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:234:9: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:241:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:242:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:243:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:244:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:245:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:246:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:247:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:248:18: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:266:10: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:335:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:341:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:347:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:353:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:359:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:365:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:371:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:377:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:387:34: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:441:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:473:10: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:481:34: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:491:34: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:501:34: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:516:21: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:526:12: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    Rengine.c:560:51: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    jri.c:193:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    jri.c:308:27: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    jri_glue.c:24:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  See 'd:/Rcompile/CRANpkg/local/3.1/rJava.Rcheck/00install.out' for details.
 > 
 > mtnotes <- CRAN_memtest_notes()
 > head(mtnotes)
@@ -209,412 +244,277 @@ $BayesSingleSub
 > pos <- sample(seq_len(NROW(pdb)), 10L)
 > summarize_CRAN_check_status(pdb[pos, "Package"],
 +                             results, details, mtnotes)
-Package: metabolomics
-*********************
-
-Current CRAN status: NOTE: 11, OK: 1
-See: <https://CRAN.R-project.org/web/checks/check_results_metabolomics.html>
-
-Version: 0.1.4
-Check: DESCRIPTION meta-information, Result: NOTE
-  Malformed Description field: should contain one or more complete sentences.
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/metabolomics-00check.html>
-
-Version: 0.1.4
-Check: R code for possible problems, Result: NOTE
-  Dendrogram: no visible global function definition for ‘dist’
-  Dendrogram: no visible global function definition for ‘hclust’
-  Dendrogram: no visible global function definition for ‘par’
-  Dendrogram: no visible global function definition for ‘layout’
-  Dendrogram: no visible global function definition for ‘plot’
-  Dendrogram: no visible global function definition for ‘rect’
-  Dendrogram: no visible global function definition for ‘axis’
-  FoldChange: no visible global function definition for ‘hist’
-  FoldChange: no visible global function definition for ‘write.csv’
-  GroupSummary: no visible binding for global variable ‘sd’
-  HeatMap : <anonymous>: no visible global function definition for ‘dist’
-  HeatMap : <anonymous>: no visible global function definition for
-    ‘hclust’
-  LinearModelFit: no visible global function definition for ‘pt’
-  LinearModelFit: no visible global function definition for ‘pchisq’
-  LinearModelFit: no visible global function definition for ‘pf’
-  LinearModelFit: no visible global function definition for ‘p.adjust’
-  LinearModelFit: no visible global function definition for ‘na.omit’
-  LinearModelFit: no visible global function definition for ‘write.csv’
-  LogTransform: no visible global function definition for ‘write.csv’
-  MetBoxPlots: no visible global function definition for ‘plot’
-  MissingValues: no visible global function definition for ‘runif’
-  MissingValues: no visible global function definition for ‘write.csv’
-  MmsPlot: no visible binding for global variable ‘median’
-  MmsPlot: no visible binding for global variable ‘sd’
-  MmsPlot: no visible global function definition for ‘par’
-  MmsPlot: no visible global function definition for ‘plot’
-  MmsPlot: no visible global function definition for ‘axis’
-  MmsPlot: no visible global function definition for ‘lines’
-  MmsPlot: no visible global function definition for ‘legend’
-  Normalise: no visible binding for global variable ‘median’
-  Normalise: no visible global function definition for ‘model.matrix’
-  Normalise: no visible global function definition for ‘write.csv’
-  PcaPlots: no visible binding for global variable ‘var’
-  PcaPlots: no visible global function definition for ‘prcomp’
-  PcaPlots: no visible global function definition for ‘barplot’
-  PcaPlots: no visible global function definition for ‘pairs’
-  RlaPlots: no visible binding for global variable ‘median’
-  RlaPlots: no visible global function definition for ‘boxplot’
-  RlaPlots: no visible global function definition for ‘abline’
-  ScatterPlot: no visible global function definition for ‘par’
-  ScatterPlot: no visible global function definition for ‘strwidth’
-  ScatterPlot: no visible global function definition for ‘plot’
-  ScatterPlot: no visible global function definition for ‘points’
-  ScatterPlot: no visible global function definition for ‘legend’
-  TTests: no visible global function definition for ‘na.omit’
-  TTests: no visible global function definition for ‘var’
-  TTests: no visible global function definition for ‘t.test’
-  TTests: no visible global function definition for ‘p.adjust’
-  TTests: no visible global function definition for ‘write.csv’
-  TwoGroup: no visible global function definition for ‘write.csv’
-  TwoGroupPlots: no visible global function definition for ‘p.adjust’
-  TwoGroupPlots: no visible global function definition for ‘par’
-  TwoGroupPlots: no visible global function definition for ‘plot’
-  TwoGroupPlots: no visible global function definition for ‘points’
-  TwoGroupPlots: no visible global function definition for ‘abline’
-  TwoGroupPlots: no visible global function definition for ‘text’
-  VolcanoPlot: no visible global function definition for ‘plot’
-  VolcanoPlot: no visible global function definition for ‘abline’
-  VolcanoPlot: no visible global function definition for ‘mtext’
-  VolcanoPlot: no visible global function definition for ‘points’
-  VolcanoPlot: no visible global function definition for ‘text’
-  heatmap_fn: no visible binding for global variable ‘dist’
-  heatmap_fn: no visible binding for global variable ‘hclust’
-  heatmap_fn: no visible global function definition for ‘par’
-  heatmap_fn: no visible global function definition for ‘median’
-  heatmap_fn: no visible global function definition for
-    ‘order.dendrogram’
-  heatmap_fn: no visible global function definition for ‘as.dendrogram’
-  heatmap_fn: no visible global function definition for ‘reorder’
-  heatmap_fn: no visible binding for global variable ‘sd’
-  heatmap_fn: no visible global function definition for ‘layout’
-  heatmap_fn: no visible global function definition for ‘image’
-  heatmap_fn: no visible global function definition for ‘axis’
-  heatmap_fn: no visible global function definition for ‘mtext’
-  heatmap_fn: no visible global function definition for ‘rect’
-  heatmap_fn: no visible global function definition for ‘abline’
-  heatmap_fn: no visible global function definition for ‘lines’
-  heatmap_fn: no visible global function definition for ‘text’
-  heatmap_fn: no visible global function definition for ‘plot’
-  heatmap_fn: no visible global function definition for ‘plot.new’
-  heatmap_fn: no visible global function definition for ‘title’
-  heatmap_fn: no visible global function definition for ‘density’
-  heatmap_fn: no visible global function definition for ‘hist’
-  pic_gen: no visible global function definition for ‘dev.new’
-  pic_gen: no visible global function definition for ‘png’
-  pic_gen: no visible global function definition for ‘jpeg’
-  pic_gen: no visible global function definition for ‘tiff’
-  pic_gen: no visible global function definition for ‘par’
-  pic_gen: no visible global function definition for ‘plot’
-  pic_gen: no visible global function definition for ‘abline’
-  pic_gen: no visible global function definition for ‘text’
-  pic_gen: no visible global function definition for ‘dev.off’
-  print.metabdata: no visible global function definition for ‘head’
-  print.results: no visible global function definition for ‘head’
-  Undefined global functions or variables:
-    abline as.dendrogram axis barplot boxplot density dev.new dev.off
-    dist hclust head hist image jpeg layout legend lines median
-    model.matrix mtext na.omit order.dendrogram p.adjust pairs par pchisq
-    pf plot plot.new png points prcomp pt rect reorder runif sd strwidth
-    t.test text tiff title var write.csv
-  Consider adding
-    importFrom("grDevices", "dev.new", "dev.off", "jpeg", "png", "tiff")
-    importFrom("graphics", "abline", "axis", "barplot", "boxplot", "hist",
-               "image", "layout", "legend", "lines", "mtext", "pairs",
-               "par", "plot", "plot.new", "points", "rect", "strwidth",
-               "text", "title")
-    importFrom("stats", "as.dendrogram", "density", "dist", "hclust",
-               "median", "model.matrix", "na.omit", "order.dendrogram",
-               "p.adjust", "pchisq", "pf", "prcomp", "pt", "reorder",
-               "runif", "sd", "t.test", "var")
-    importFrom("utils", "head", "write.csv")
-  to your NAMESPACE file.
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/metabolomics-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/metabolomics-00check.html>
-
-Package: l2boost
-****************
-
-Current CRAN status: NOTE: 12
-See: <https://CRAN.R-project.org/web/checks/check_results_l2boost.html>
-
-Version: 1.0
-Check: R code for possible problems, Result: NOTE
-  VAR: no visible global function definition for ‘var’
-  cv.l2boost: no visible global function definition for ‘detectCores’
-  elasticNetSim: no visible global function definition for ‘rnorm’
-  error.bars: no visible global function definition for ‘segments’
-  fitted.l2boost: no visible global function definition for ‘predict’
-  l2boost.formula: no visible global function definition for
-    ‘model.frame’
-  l2boost.formula: no visible global function definition for
-    ‘model.matrix’
-  l2boost.formula: no visible global function definition for
-    ‘model.response’
-  mvnorm.l2boost: no visible global function definition for ‘rnorm’
-  plot.l2boost: no visible global function definition for ‘quantile’
-  plot.l2boost: no visible global function definition for ‘matplot’
-  plot.l2boost: no visible global function definition for ‘lines’
-  plot.l2boost: no visible global function definition for ‘plot’
-  plot.lines: no visible global function definition for ‘lines’
-  print.summary.l2boost: no visible global function definition for
-    ‘printCoefmat’
-  residuals.l2boost: no visible global function definition for ‘predict’
-  summary.l2boost: no visible global function definition for ‘coef’
-  summary.l2boost: no visible global function definition for ‘pt’
-  Undefined global functions or variables:
-    coef detectCores lines matplot model.frame model.matrix
-    model.response plot predict printCoefmat pt quantile rnorm segments
-    var
-  Consider adding
-    importFrom("graphics", "lines", "matplot", "plot", "segments")
-    importFrom("stats", "coef", "model.frame", "model.matrix",
-               "model.response", "predict", "printCoefmat", "pt",
-               "quantile", "rnorm", "var")
-  to your NAMESPACE file.
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/l2boost-00check.html>
-
-Version: 1.0
-Check: R code for possible problems, Result: NOTE
-  cv.l2boost: no visible global function definition for ‘detectCores’
-See: <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/l2boost-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/l2boost-00check.html>
-
-Package: NLPutils
+Package: leafletR
 *****************
 
 Current CRAN status: OK: 12
-See: <https://CRAN.R-project.org/web/checks/check_results_NLPutils.html>
+See: <https://CRAN.R-project.org/web/checks/check_results_leafletR.html>
 
-Package: preproviz
-******************
+Package: mda
+************
 
-Current CRAN status: OK: 11
-See: <https://CRAN.R-project.org/web/checks/check_results_preproviz.html>
+Current CRAN status: OK: 12
+See: <https://CRAN.R-project.org/web/checks/check_results_mda.html>
 
-Package: WARN
+Package: MixGHD
+***************
+
+Current CRAN status: OK: 12
+See: <https://CRAN.R-project.org/web/checks/check_results_MixGHD.html>
+
+Package: GeneReg
+****************
+
+Current CRAN status: NOTE: 12
+See: <https://CRAN.R-project.org/web/checks/check_results_GeneReg.html>
+
+Version: 1.1.2
+Check: dependencies in R code, Result: NOTE
+  'library' or 'require' calls to packages already attached by Depends:
+    ‘igraph’ ‘splines’
+    Please remove these calls from your code.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/GeneReg-00check.html>
+
+Version: 1.1.2
+Check: S3 generic/method consistency, Result: NOTE
+  Found the following apparent S3 methods exported but not registered:
+    plot.GeneReg
+  See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
+  manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/GeneReg-00check.html>
+
+Version: 1.1.2
+Check: R code for possible problems, Result: NOTE
+  Found an obsolete/platform-specific call in the following function:
+    ‘timedelay.lm’
+  Found the platform-specific device:
+    ‘x11’
+  dev.new() is the preferred way to open a new device, in the unlikely
+  event one is needed.
+  timedelay.lm: no visible global function definition for ‘lm’
+  timedelay.lm: no visible global function definition for ‘AIC’
+  timedelay.lm: no visible global function definition for ‘pdf’
+  timedelay.lm: no visible global function definition for ‘x11’
+  timedelay.lm: no visible global function definition for ‘rainbow’
+  timedelay.lm: no visible global function definition for ‘title’
+  timedelay.lm: no visible global function definition for ‘lines’
+  timedelay.lm: no visible global function definition for ‘predict’
+  timedelay.lm: no visible global function definition for ‘points’
+  timedelay.lm: no visible global function definition for ‘legend’
+  timedelay.lm: no visible global function definition for ‘dev.off’
+  timedelay.univariate.lm: no visible global function definition for ‘lm’
+  timedelay.univariate.lm: no visible global function definition for
+    ‘AIC’
+  ts.bspline: no visible global function definition for ‘lm’
+  ts.bspline: no visible global function definition for ‘predict’
+  Undefined global functions or variables:
+    AIC dev.off legend lines lm pdf points predict rainbow title x11
+  Consider adding
+    importFrom("grDevices", "dev.off", "pdf", "rainbow", "x11")
+    importFrom("graphics", "legend", "lines", "points", "title")
+    importFrom("stats", "AIC", "lm", "predict")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/GeneReg-00check.html>
+
+Version: 1.1.2
+Check: Rd files, Result: NOTE
+  prepare_Rd: GeneReg-package.Rd:12-13: Dropping empty section \usage
+  prepare_Rd: GeneReg-package.Rd:14-15: Dropping empty section \arguments
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/GeneReg-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/GeneReg-00check.html>
+
+Version: 1.1.2
+Check: R code for possible problems, Result: NOTE
+  timedelay.lm: no visible global function definition for 'lm'
+  timedelay.lm: no visible global function definition for 'AIC'
+  timedelay.lm: no visible global function definition for 'pdf'
+  timedelay.lm: no visible global function definition for 'x11'
+  timedelay.lm: no visible global function definition for 'rainbow'
+  timedelay.lm: no visible global function definition for 'title'
+  timedelay.lm: no visible global function definition for 'lines'
+  timedelay.lm: no visible global function definition for 'predict'
+  timedelay.lm: no visible global function definition for 'points'
+  timedelay.lm: no visible global function definition for 'legend'
+  timedelay.lm: no visible global function definition for 'dev.off'
+  timedelay.univariate.lm: no visible global function definition for 'lm'
+  timedelay.univariate.lm: no visible global function definition for
+    'AIC'
+  ts.bspline: no visible global function definition for 'lm'
+  ts.bspline: no visible global function definition for 'predict'
+  Undefined global functions or variables:
+    AIC dev.off legend lines lm pdf points predict rainbow title x11
+  Consider adding
+    importFrom("grDevices", "dev.off", "pdf", "rainbow", "x11")
+    importFrom("graphics", "legend", "lines", "points", "title")
+    importFrom("stats", "AIC", "lm", "predict")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/GeneReg-00check.html>
+
+Version: 1.1.2
+Check: R code for possible problems, Result: NOTE
+  Found an obsolete/platform-specific call in the following function:
+    ‘timedelay.lm’
+  Found the platform-specific device:
+    ‘x11’
+  dev.new() is the preferred way to open a new device, in the unlikely
+  event one is needed.
+See: <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/GeneReg-00check.html>
+
+Package: RegClust
+*****************
+
+Current CRAN status: NOTE: 11, OK: 1
+See: <https://CRAN.R-project.org/web/checks/check_results_RegClust.html>
+
+Version: 1.0
+Check: DESCRIPTION meta-information, Result: NOTE
+  Malformed Title field: should not end in a period.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/RegClust-00check.html>
+
+Version: 1.0
+Check: R code for possible problems, Result: NOTE
+  cluster.reg: no visible global function definition for ‘rnorm’
+  cluster.reg: no visible global function definition for ‘runif’
+  Undefined global functions or variables:
+    rnorm runif
+  Consider adding
+    importFrom("stats", "rnorm", "runif")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/RegClust-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/RegClust-00check.html>
+
+Package: saves
+**************
+
+Current CRAN status: NOTE: 8, OK: 4
+See: <https://CRAN.R-project.org/web/checks/check_results_saves.html>
+
+Version: 0.5
+Check: R code for possible problems, Result: NOTE
+  loads: no visible global function definition for ‘untar’
+  saves: no visible global function definition for ‘tar’
+  Undefined global functions or variables:
+    tar untar
+  Consider adding
+    importFrom("utils", "tar", "untar")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/saves-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/saves-00check.html>
+
+Package: smcUtils
+*****************
+
+Current CRAN status: NOTE: 9, OK: 3
+See: <https://CRAN.R-project.org/web/checks/check_results_smcUtils.html>
+
+Version: 0.2.2
+Check: R code for possible problems, Result: NOTE
+  branching.resample: no visible global function definition for ‘rbinom’
+  cov.weights: no visible global function definition for ‘var’
+  inverse.cdf.weights: no visible global function definition for ‘runif’
+  multinomial.resample: no visible global function definition for ‘runif’
+  stratified.resample: no visible global function definition for ‘runif’
+  systematic.resample: no visible global function definition for ‘runif’
+  Undefined global functions or variables:
+    rbinom runif var
+  Consider adding
+    importFrom("stats", "rbinom", "runif", "var")
+  to your NAMESPACE file.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/smcUtils-00check.html>
+
+Version: 0.2.2
+Check: Rd line widths, Result: NOTE
+  Rd file 'resampling.Rd':
+    \usage lines wider than 90 characters:
+       residual.resample(   weights, num.samples = length(weights), engine="R", rrf = "stratified")
+  
+  These lines will be truncated in the PDF manual.
+See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/smcUtils-00check.html>,
+     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/smcUtils-00check.html>
+
+Package: MPCI
 *************
 
 Current CRAN status: OK: 12
-See: <https://CRAN.R-project.org/web/checks/check_results_WARN.html>
+See: <https://CRAN.R-project.org/web/checks/check_results_MPCI.html>
 
-Package: emplik2
-****************
-
-Current CRAN status: NOTE: 8, OK: 4
-See: <https://CRAN.R-project.org/web/checks/check_results_emplik2.html>
-
-Version: 1.20
-Check: R code for possible problems, Result: NOTE
-  el2.cen.EMm: no visible global function definition for ‘pchisq’
-  el2.cen.EMs: no visible global function definition for ‘pchisq’
-  el2.test.wts: no visible global function definition for ‘uniroot’
-  Undefined global functions or variables:
-    pchisq uniroot
-  Consider adding
-    importFrom("stats", "pchisq", "uniroot")
-  to your NAMESPACE file.
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/emplik2-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/emplik2-00check.html>
-
-Package: ergmharris
-*******************
+Package: GWASExactHW
+********************
 
 Current CRAN status: OK: 12
-See: <https://CRAN.R-project.org/web/checks/check_results_ergmharris.html>
+See: <https://CRAN.R-project.org/web/checks/check_results_GWASExactHW.html>
 
-Package: rvgtest
+Package: prodlim
 ****************
 
-Current CRAN status: NOTE: 12
-See: <https://CRAN.R-project.org/web/checks/check_results_rvgtest.html>
-
-Version: 0.7.4
-Check: R code for possible problems, Result: NOTE
-  invqdist: no visible global function definition for ‘uniroot’
-  pertadd: no visible binding for global variable ‘rnorm’
-  pertadd: no visible global function definition for ‘runif’
-  pertadd: no visible global function definition for ‘rbinom’
-  pertsub: no visible binding for global variable ‘rnorm’
-  pertsub: no visible global function definition for ‘runif’
-  plot.rvgt.ftable: no visible global function definition for ‘qnorm’
-  plot.rvgt.ftable: no visible global function definition for ‘plot’
-  plot.rvgt.ftable: no visible global function definition for ‘polygon’
-  plot.rvgt.ftable: no visible global function definition for ‘abline’
-  plot.rvgt.ftable: no visible global function definition for ‘lines’
-  plot.rvgt.htest: no visible global function definition for ‘rainbow’
-  plot.rvgt.htest: no visible global function definition for ‘plot’
-  plot.rvgt.htest: no visible global function definition for ‘lines’
-  plot.rvgt.htest: no visible global function definition for ‘points’
-  plot.rvgt.htest: no visible global function definition for ‘text’
-  plot.rvgt.htest: no visible global function definition for ‘abline’
-  plot.rvgt.ierror: no visible global function definition for ‘plot’
-  plot.rvgt.ierror: no visible global function definition for ‘rainbow’
-  plot.rvgt.ierror: no visible global function definition for ‘lines’
-  plot.rvgt.ierror: no visible global function definition for ‘text’
-  plot.rvgt.ierror: no visible global function definition for ‘polygon’
-  plot.rvgt.ierror: no visible global function definition for ‘abline’
-  rvgt.Mtest: no visible global function definition for ‘pnorm’
-  rvgt.chisq: no visible global function definition for ‘chisq.test’
-  rvgt.chisq.level2: no visible global function definition for
-    ‘chisq.test’
-  rvgt.chisq.level2: no visible global function definition for ‘pchisq’
-  rvgt.ftable: no visible global function definition for ‘is’
-  rvgt.ftable : myrdist: no visible global function definition for ‘ur’
-  rvgt.ftable: no visible global function definition for ‘quantile’
-  rvgt.read: no visible global function definition for ‘read.table’
-  uerror: no visible global function definition for ‘is’
-  uerror: no visible global function definition for ‘unuran.is.inversion’
-  uerror : myaqdist: no visible global function definition for ‘uq’
-  uerror: no visible global function definition for ‘quantile’
-  unuran.distr.class: no visible global function definition for
-    ‘unuran.details’
-  xerror: no visible global function definition for ‘is’
-  xerror: no visible global function definition for ‘unuran.is.inversion’
-  xerror : myaqdist: no visible global function definition for ‘uq’
-  xerror: no visible global function definition for ‘quantile’
-  Undefined global functions or variables:
-    abline chisq.test is lines pchisq plot pnorm points polygon qnorm
-    quantile rainbow rbinom read.table rnorm runif text uniroot
-    unuran.details unuran.is.inversion uq ur
-  Consider adding
-    importFrom("grDevices", "rainbow")
-    importFrom("graphics", "abline", "lines", "plot", "points", "polygon",
-               "text")
-    importFrom("methods", "is")
-    importFrom("stats", "chisq.test", "pchisq", "pnorm", "qnorm",
-               "quantile", "rbinom", "rnorm", "runif", "uniroot")
-    importFrom("utils", "read.table")
-  to your NAMESPACE file (and ensure that your DESCRIPTION Imports field
-  contains 'methods').
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/rvgtest-00check.html>
-
-Version: 0.7.4
-Check: R code for possible problems, Result: NOTE
-  rvgt.ftable : myrdist: no visible global function definition for ‘ur’
-  uerror: no visible global function definition for ‘unuran.is.inversion’
-  uerror : myaqdist: no visible global function definition for ‘uq’
-  unuran.distr.class: no visible global function definition for
-    ‘unuran.details’
-  xerror: no visible global function definition for ‘unuran.is.inversion’
-  xerror : myaqdist: no visible global function definition for ‘uq’
-See: <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/rvgtest-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/rvgtest-00check.html>
-
-Package: SGL
-************
-
-Current CRAN status: NOTE: 9, OK: 3
-See: <https://CRAN.R-project.org/web/checks/check_results_SGL.html>
-
-Version: 1.1
-Check: R code for possible problems, Result: NOTE
-  coxCrossVal: no visible binding for global variable ‘sd’
-  error.bars: no visible global function definition for ‘segments’
-  linCrossVal: no visible binding for global variable ‘sd’
-  logitCrossVal: no visible binding for global variable ‘sd’
-  plot.cv.SGL: no visible global function definition for ‘points’
-  Undefined global functions or variables:
-    points sd segments
-  Consider adding
-    importFrom("graphics", "points", "segments")
-    importFrom("stats", "sd")
-  to your NAMESPACE file.
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/SGL-00check.html>
-
-Version: 1.1
-Check: Rd line widths, Result: NOTE
-  Rd file 'SGL.Rd':
-    \usage lines wider than 90 characters:
-       SGL(data, index, type = "linear", maxit = 1000, thresh = 0.001, min.frac = 0.1, nlam = 20, gamma = 0.8, standardize = TRUE, verbose = F ... [TRUNCATED]
-  
-  Rd file 'cvSGL.Rd':
-    \usage lines wider than 90 characters:
-       cvSGL(data, index, type = "linear", maxit = 1000, thresh = 0.001, min.frac = 0.05, nlam = 20, gamma = 0.8, nfold = 10, standardize = TR ... [TRUNCATED]
-  
-  These lines will be truncated in the PDF manual.
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/SGL-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/SGL-00check.html>
-
-Package: choroplethrAdmin1
-**************************
-
-Current CRAN status: NOTE: 12
-See: <https://CRAN.R-project.org/web/checks/check_results_choroplethrAdmin1.html>
-
-Version: 1.1.0
-Check: installed package size, Result: NOTE
-    installed size is 18.0Mb
-    sub-directories of 1Mb or more:
-      data  17.9Mb
-See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-debian-gcc/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-osx-x86_64-clang/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-linux-x86_64/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-linux-x86_64/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-release-windows-ix86+x86_64/choroplethrAdmin1-00check.html>,
-     <https://www.r-project.org/nosvn/R.check/r-oldrel-windows-ix86+x86_64/choroplethrAdmin1-00check.html>
+Current CRAN status: OK: 12
+See: <https://CRAN.R-project.org/web/checks/check_results_prodlim.html>
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -784,7 +684,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x6678738>
+<environment: 0x730ebe0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1579,7 +1479,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.403 0.033 1.439 0 0 
+Time elapsed:  1.397 0.039 1.44 0 0 
 > grDevices::dev.off()
 null device 
           1 
