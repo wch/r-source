@@ -2369,7 +2369,7 @@ For example, to use a different Fortran compiler on macOS
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin14/5.2.0 
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 
