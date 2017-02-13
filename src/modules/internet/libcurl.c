@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2015 The R Core Team
+ *  Copyright (C) 2015-2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,10 +29,15 @@
 #include <Fileio.h>
 #include <errno.h>
 
+#ifdef HAVE_UNISTD_H
+// for unlink
+# include <unistd.h>
+#endif
+
 #ifdef HAVE_LIBCURL
 # include <curl/curl.h>
 /*
-  This need libcurl >= 7.28.0 (Oct 2012) for curl_multi_wait.
+  This needs libcurl >= 7.28.0 (Oct 2012) for curl_multi_wait.
   There is a configure test but it is not used on Windows and system
   software can change.
 */
@@ -566,17 +571,24 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     n_err += curlMultiCheckerrs(mhnd);
 
     for (int i = 0; i < nurls; i++) {
-	if (out[i])
-            /* FIXME: remove empty / corrupt files on error */
+	if (out[i]) {
+            /* FIXME: remove empty / corrupt file on error: see below */
             fclose(out[i]);
+	}
+
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);
     }
     curl_multi_cleanup(mhnd);
     if (!cacheOK) curl_slist_free_all(slist1);
 
-    if (n_err != 0)
+    if (n_err != 0) {
+	if (strchr(mode, 'w')) {
+	    for (int i = 0; i < nurls; i++)
+		unlink(R_ExpandFileName(translateChar(STRING_ELT(sfile, i))));
+	}
 	error(_("cannot download all files"));
+    }
 
     return ScalarInteger(0);
 #endif
