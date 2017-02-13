@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2017   The R Core Team.
+ *  Copyright (C) 2000-2016   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,14 @@
 #include <R_ext/R-ftp-http.h>
 #include <errno.h>
 #include <R_ext/Print.h>
+
+
+/* note, ALL the possible structures have the first two elements */
+typedef struct {
+    DLsize_t length;
+    char *type;
+    void *ctxt;
+} inetconn;
 
 static void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK);
 static int   in_R_HTTPRead(void *ctx, char *dest, int len);
@@ -133,6 +141,12 @@ static Rboolean url_open(Rconnection con)
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
 	  /* error("cannot open URL '%s'", url); */
+	    return FALSE;
+	}
+	DLsize_t len = ((inetconn *)ctxt)->length;
+	((Rurlconn)(con->private))->status = 0;
+	if (len == -999) { // https redirection
+	    ((Rurlconn)(con->private))->status = 2;
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
@@ -409,13 +423,6 @@ static void putdashes(int *pold, int new)
     for(i = old; i < new; i++)  REprintf("=");
     if(R_Consolefile) fflush(R_Consolefile);
 }
-
-/* note, ALL the possible structures have the first two elements */
-typedef struct {
-    DLsize_t length;
-    char *type;
-    void *ctxt;
-} inetconn;
 
 #ifdef Win32
 #include <ga.h>

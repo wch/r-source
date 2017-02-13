@@ -493,10 +493,15 @@ isIncomplete(con)
 #endif
 }
 \note{
+  On a Unix-alike, \code{url} with the default method and an explicit
+  \code{open} argument (as used by for example \code{\link{readLines}}
+  with a character string \code{con} argument specifying a URL) will
+  re-try with method \code{"libcurl"} if an HTTP redirection to a
+  \samp{https://} URL is encountered.
+  
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998).  However \R goes well beyond the S model, for example in output
   text connections and URL, compressed and socket connections.
-
   The default open mode in \R is \code{"r"} except for socket connections.
   This differs from S, where it is the equivalent of \code{"r+"},
   known as \code{"*"}.
