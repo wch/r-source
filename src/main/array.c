@@ -631,7 +631,9 @@ static Rboolean mayHaveNaNOrInf(double *x, R_xlen_t n)
 static Rboolean mayHaveNaNOrInf_simd(double *x, R_xlen_t n)
 {
     double s = 0;
+#if defined(_OPENMP) && _OPENMP >= 201307 && HAVE_OPENMP_SIMDRED
     #pragma omp simd reduction(+:s)
+#endif
     for (R_xlen_t i = 0; i < n; i++)
 	s += x[i];
     return !R_FINITE(s);
@@ -654,7 +656,9 @@ static Rboolean cmayHaveNaNOrInf(Rcomplex *x, R_xlen_t n)
 static Rboolean cmayHaveNaNOrInf_simd(Rcomplex *x, R_xlen_t n)
 {
     double s = 0;
+#if defined(_OPENMP) && _OPENMP >= 201307 && HAVE_OPENMP_SIMDRED
     #pragma omp simd reduction(+:s)
+#endif
     for (R_xlen_t i = 0; i < n; i++) {
 	s += x[i].r;
 	s += x[i].i;

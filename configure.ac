@@ -2626,6 +2626,8 @@ AC_SUBST(XTRA_INTL_CPPFLAGS)
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
 
+R_OPENMP_SIMDRED
+
 ### shell for use in scripts: we allow R_SHELL to set the script,
 ### since some AIX systems have zsh as sh.
 : ${R_SHELL=${SHELL}}

@@ -548,6 +548,9 @@
 /* Define if you have C OpenMP support. */
 #undef HAVE_OPENMP
 
+/* Define if your OpenMP 4 implementation fully supports SIMD reduction */
+#undef HAVE_OPENMP_SIMDRED
+
 /* Define to 1 if you have pangocairo. */
 #undef HAVE_PANGOCAIRO
 

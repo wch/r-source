@@ -4231,6 +4231,56 @@ else
 fi
 ])# R_LIBCURL
 
+## R_OPENMP_SIMDRED
+## ------------
+## Support for SIMD reduction on '+' (part of OpenMP 4.0) in C compiler.
+AC_DEFUN([R_OPENMP_SIMDRED],
+[AC_CACHE_CHECK([whether OpenMP SIMD reduction is supported],
+                [r_cv_openmp_simdred],
+[
+AC_LANG_PUSH(C)
+r_save_CFLAGS="${CFLAGS}"
+CFLAGS="${CFLAGS} ${R_OPENMP_CFLAGS}"
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+
+double ssum(double *x, int n) {
+#if defined(_OPENMP) && _OPENMP >= 201307 /* OpenMP 4.0 */
+    double s = 0;
+    #pragma simd reduction(+:s)
+    for(int i = 0; i < n; i++)
+        s += x[i];
+    return s;
+#else
+    exit(1);
+    return 0; /* not reachable */
+#endif
+}
+
+int main() {
+    /* use volatiles to reduce the risk of the
+       computation being inlined and constant-folded */
+    volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
+    volatile int n = 8;
+    double x[8], s;
+    int i;
+    
+    for(i = 0; i < 8; i++) x[i] = xv[i];
+    s = ssum(x, n);
+    if (s == 36) exit(0);
+    exit(2);
+}
+]])],
+              [r_cv_openmp_simdred=yes],
+              [r_cv_openmp_simdred=no],
+              [r_cv_openmp_simdred=no])
+CFLAGS="${r_save_CFLAGS}"
+])
+if test "x${r_cv_openmp_simdred}" = xyes; then
+  AC_DEFINE(HAVE_OPENMP_SIMDRED, 1,
+            [Define if your OpenMP 4 implementation fully supports SIMD reduction])
+fi
+])# R_OPENMP_SIMDRED
 
 
 ### Local variables: ***
