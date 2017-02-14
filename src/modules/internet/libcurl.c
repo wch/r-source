@@ -32,7 +32,7 @@
 #ifdef HAVE_LIBCURL
 # include <curl/curl.h>
 /*
-  This need libcurl >= 7.28.0 (Oct 2012) for curl_multi_wait.
+  This needs libcurl >= 7.28.0 (Oct 2012) for curl_multi_wait.
   There is a configure test but it is not used on Windows and system
   software can change.
 */
