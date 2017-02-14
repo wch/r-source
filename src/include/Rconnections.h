@@ -36,6 +36,7 @@ typedef enum {HTTPsh, FTPsh, HTTPSsh, FTPSsh} UrlScheme;
 typedef struct urlconn {
     void *ctxt;
     UrlScheme type;
+    int status;
 } *Rurlconn;
 
 /* used in internet module */

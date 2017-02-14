@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,12 +32,28 @@ download.file <-
 	method <-
 	    if(capabilities("libcurl") && grepl("^(ht|f)tps:", url))
 		"libcurl"
-            else "internal"
+            else "internal2"
     }
 
     switch(method,
 	   "internal" = {
 	       status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
+               if (status == 2L) stop(gettextf("cannot open URL '%s'", url))
+	       ## needed for Mac GUI from download.packages etc
+	       if(!quiet) flush.console()
+	   },
+	   "internal2" = {
+               ## want redirection warning immediately
+               if(getOption('warn') == 0L) {
+                   op <- options(warn = 1L)
+                   on.exit(options(op))
+               }
+	       status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
+               if (status == 2L) {
+                   if(!quiet)
+                       message('switching to method = "libcurl" because of redirection to https')
+                   status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK))
+               }
 	       ## needed for Mac GUI from download.packages etc
 	       if(!quiet) flush.console()
 	   },

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2016   The R Core Team.
+ *  Copyright (C) 2000-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -5203,11 +5203,29 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->canseek = 0;
     /* This is referenced in do_getconnection, so set up before
        any warning */
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), 
+					    R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
 	Rboolean success = con->open(con);
+	if(!success) {
+	    if(defmeth && meth == 0 && winmeth == 0 && 
+	       ((Rurlconn)(con->private))->status == 2) {
+		warning("\"internal\" method failed, so trying \"libcurl\"");
+		con_close1(con);
+		con = R_newCurlUrl(url, open, 1);
+		Connections[ncon] = con;
+		con->blocking = block;
+		strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+		con->encname[100 - 1] = '\0';
+		UNPROTECT(1);
+		con->ex_ptr = 
+		    PROTECT(R_MakeExternalPtr(con->id, install("connection"), 
+					      R_NilValue));
+		success = con->open(con);
+	    }
+	}
 	if(!success) {
 	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
