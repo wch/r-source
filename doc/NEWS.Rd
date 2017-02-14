@@ -336,15 +336,6 @@
       \item Loading the \pkg{parallel} package namespace no longer sets
       or changes the \code{.Random.seed}, even if \env{R_PARALLEL_PORT}
       is unset.
-      
-      \item (Unix-alike)
-      For \samp{http://} URLs and the default method (\code{"auto"}),
-      \code{download.file()} switches to \code{method = "libcurl"} if a
-      redirection to a \samp{https://} URL is encountered.
-
-      For \code{url()} with method \code{"default"} and an explicit
-      \code{open} argument, if opening fails because of redirection to
-      an \samp{https://} URL then \code{method = "libcurl"} is tried.
     }
   }
 
@@ -680,10 +671,20 @@
 \section{\Rlogo CHANGES IN R 3.3.2 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item The internal methods of \code{download.file()} and
-      \code{url()} now report if they are unable to follow the
-      redirection of a \samp{http://} URL to a \samp{https://} URL
-      (rather than failing silently).
+      \item Changes when redirection of a \samp{http://} URL to a
+      \samp{https://} URL is encountered:
+      
+      The internal methods of \code{download.file()} and \code{url()}
+      now report that they cannot follow this (rather than failing
+      silently).
+
+      (Unix-alike) \code{download.file(method = "auto")} (the default)
+      re-tries with \code{method = "libcurl"}.
+
+      (Unix-alike) \code{url(method = "default")} with an explicit
+      \code{open} argument re-tries with \code{method = "libcurl"}.
+      This covers many of the usages, e.g.\sspace{}\code{readLines()}
+      with a URL argument.
     }
   }
 
