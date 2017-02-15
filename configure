@@ -47871,7 +47871,9 @@ else
 #include <stdlib.h>
 
 double ssum(double *x, int n) {
-#if defined(_OPENMP) && _OPENMP >= 201307 /* OpenMP 4.0 */
+/* SIMD reduction is supported since OpenMP 4.0. The value of _OPENMP is
+   unreliable in some compilers, so we do not test its value. */
+#if defined(_OPENMP)
     double s = 0;
     #pragma simd reduction(+:s)
     for(int i = 0; i < n; i++)
