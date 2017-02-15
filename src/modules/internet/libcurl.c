@@ -581,24 +581,23 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (int i = 0; i < nurls; i++) {
 	if (out[i]) {
-            /* FIXME: remove empty / corrupt file on error: see below */
             fclose(out[i]);
+	    double dl;
+	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
+	    long status;
+	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
+	    // maybe just code != 200 would suffice here
+	    if (status != 200 && dl == 0. && strchr(mode, 'w'))
+		unlink(R_ExpandFileName(translateChar(STRING_ELT(sfile, i))));
 	}
-
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);
     }
     curl_multi_cleanup(mhnd);
     if (!cacheOK) curl_slist_free_all(slist1);
 
-    if (n_err != 0) {
-	/* FIXME fathom out which failed */
-	if (strchr(mode, 'w')) {
-	    for (int i = 0; i < nurls; i++)
-		unlink(R_ExpandFileName(translateChar(STRING_ELT(sfile, i))));
-	}
-	error(_("cannot download all files"));
-    }
+    if (n_err == nurls) error(_("cannot download all files"));
+    else if (n_err) warning(_("some files were not downloaded"));
 
     return ScalarInteger(0);
 #endif
