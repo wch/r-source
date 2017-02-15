@@ -2473,7 +2473,7 @@ setRlibs <-
                          "Compiled code should not call non-API entry points in R.\n")
             if(nRS)
                 msg <- c(msg,
-                         "It is good practice to use registered native symbols and to disable symbol search.\n")
+                         "It is good practice to register native routines and to disable symbol search.\n")
             wrapLog("\n", paste(msg, collapse = " "), "\n",
                     "See 'Writing portable packages'",
                     "in the 'Writing R Extensions' manual.\n")
