@@ -124,7 +124,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   covers C and C++., listing all function usages by something
   like\preformatted{
     ctags -x *.c
-  }.  (The GNU version allows a lot more control.)
+  }.  (The \sQuote{Exuberant} version allows a lot more control.)
 }
 
 \seealso{
