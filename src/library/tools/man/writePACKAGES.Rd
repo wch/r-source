@@ -90,7 +90,7 @@ write_PACKAGES(dir = ".", fields = NULL,
   For a remote repository there is a tradeoff between download speed and
   time spent by \code{\link{available.packages}} processing the
   downloaded file(s).  For large repositories it is likely to be
-  beneficial to use \code{rds_compress = "bzip2"}.
+  beneficial to use \code{rds_compress = "xz"}.
 }
 \value{
   Invisibly returns the number of packages described in the resulting
