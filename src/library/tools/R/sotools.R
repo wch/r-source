@@ -560,7 +560,7 @@ if(.Platform$OS.type == "windows") {
                                     .file_path_relative_to_dir(attr(x, "file"),
                                                                dir, TRUE),
                                     class = "check_RegSym_calls"))
-            bad <- c(bad, Filter(length, nRS))
+            bad2 <- c(bad2, Filter(length, nRS))
         }
 
         if(!length(bad) && !length(bad2)) return(invisible(NULL))
