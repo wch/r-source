@@ -170,7 +170,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
   files (typically 1024, but 256 on macOS), which can sometimes be
   modified using command \command{ulimit -n} (\command{sh},
   \command{bash}) or \command{limit descriptors} (\command{csh}) in the
-  shell used to launchd \R{} .  Increasing \env{R_MAX_NUM_DLLS} comes
+  shell used to launch \R{} .  Increasing \env{R_MAX_NUM_DLLS} comes
   with some memory overhead.
 
   The creation of DLLs and the runtime linking of them into executing

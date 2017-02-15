@@ -63,7 +63,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   FALSE} can be used to suggest updates for a package which has been
   extended since registration.  For the default value, if \code{.NAME}
   values are found which are not character strings (e.g.\sspace{}names
-  or expressiions) this is noted via a comment in the output.
+  or expressions) this is noted via a comment in the output.
 
   Packages which used the earlier form of creating \R objects for native
   symbols \emph{via} additional arguments in a \code{useDynLib}
@@ -109,7 +109,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   explicit (character string) \code{PACKAGE} argument.
 }
 
-\section{Extracting C/C++ protoypes}{
+\section{Extracting C/C++ prototypes}{
   There are several tools available to extract function declarations
   from C or C++ code.  For example,
 

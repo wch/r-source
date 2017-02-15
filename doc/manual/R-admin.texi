@@ -4959,7 +4959,7 @@ although linked versions under @file{/usr/X11} will be found.
 
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
-Installer}.} for Fortran compilers for El Capiton and Sierra at
+Installer}.} for Fortran compilers for El Capitan and Sierra at
 @uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
 @uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}: those
 at @uref{https://r.research.att.com/} have failure reports on Sierra.
