@@ -105,7 +105,7 @@
       error report (rather than an incorrect result) for much longer
       inputs (millions for a smooth distribution).
 
-      \item \code{findMethod} failed if the active signature had
+      \item \code{findMethod()} failed if the active signature had
       expanded beyond what a particular package used. (Example with
       packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
 
