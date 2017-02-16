@@ -336,6 +336,15 @@
       \item Loading the \pkg{parallel} package namespace no longer sets
       or changes the \code{.Random.seed}, even if \env{R_PARALLEL_PORT}
       is unset.
+      
+      \item (Unix-alike)
+      The default method for \code{download.file()} and \code{url()}
+      now always chooses \code{"libcurl"} except for \samp{file://}
+      URLs.  There will be small changes in the format and wording of
+      messages, and those who use proxies should check that their
+      settings are compatible (see \code{?download.file}: the most
+      commonly used forms work for both methods \code{"internal"} and
+      \code{"libcurl"}).
     }
   }
 

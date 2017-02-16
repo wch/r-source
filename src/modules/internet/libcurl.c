@@ -151,23 +151,27 @@ static int curlMultiCheckerrs(CURLM *mhnd)
     for(int n = 1; n > 0;) {
 	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
 	if (msg && (msg->data.result != CURLE_OK)) {
-	    const char *url, *strerr;
+	    const char *url, *strerr, *type;
 	    long status = 0;
 	    curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &url);
 	    curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE,
 			      &status);
+	    // This reports the redirected URL
 	    if (status >= 400) {
-		if (url && url[0] == 'h')
+		if (url && url[0] == 'h') {
 		    strerr = http_errstr(status);
-		else
+		    type = "HTTP";
+		} else {
 		    strerr = ftp_errstr(status);
-		warning(_("URL '%s': status was '%d %s'"), url, status,
-			strerr);
+		    type = "FTP";
+		}
+		warning(_("cannot open URL '%s': %s status was '%d %s'"),
+			url, type, status, strerr);
 	    } else {
 		strerr = curl_easy_strerror(msg->data.result);
 		warning(_("URL '%s': status was '%s'"), url, strerr);
 	    }
-	    retval += 1;
+	    retval++;
 	}
     }
     return retval;
@@ -297,7 +301,7 @@ static void putdashes(int *pold, int new)
     *pold = new;
 }
 
-#ifdef Win32
+# ifdef Win32
 // ------- Windows progress bar -----------
 #include <ga.h>
 
@@ -364,7 +368,7 @@ int progress(void *clientp, double dltotal, double dlnow,
     return 0;
 }
 
-#else
+# else
 // ------- Unix-alike progress bar -----------
 
 static
@@ -397,10 +401,10 @@ int progress(void *clientp, double dltotal, double dlnow,
     }
     return 0;
 }
-#endif
+# endif // Win32
 
 extern void Rsleep(double timeint);
-#endif
+#endif // HAVE_LIBCURL
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
 
@@ -524,7 +528,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n_err == nurls) {
 	// no dest files could be opened, so bail out
 	curl_multi_cleanup(mhnd);
-	return ScalarInteger(0);
+	return ScalarInteger(1);
     }
 
     R_Busy(1);
@@ -562,9 +566,11 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (R_Consolefile) fflush(R_Consolefile);
 #endif
     if (nurls == 1) {
+	long status;
+	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);
 	double cl, dl;
 	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD, &dl);
-	if (!quiet) {
+	if (!quiet && status == 200) {
 	    if (dl > 1024*1024)
 		REprintf("downloaded %0.1f MB\n\n", (double)dl/1024/1024);
 	    else if (dl > 10240)
@@ -577,7 +583,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
     }
 
-    n_err = curlMultiCheckerrs(mhnd);
+    n_err += curlMultiCheckerrs(mhnd);
 
     for (int i = 0; i < nurls; i++) {
 	if (out[i]) {
@@ -586,7 +592,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
 	    long status;
 	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
-	    // maybe just code != 200 would suffice here
+	    // should we do something about incomplete transfers?
 	    if (status != 200 && dl == 0. && strchr(mode, 'w'))
 		unlink(R_ExpandFileName(translateChar(STRING_ELT(sfile, i))));
 	}
@@ -596,8 +602,10 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     curl_multi_cleanup(mhnd);
     if (!cacheOK) curl_slist_free_all(slist1);
 
-    if (n_err == nurls) error(_("cannot download all files"));
-    else if (n_err) warning(_("some files were not downloaded"));
+    if(nurls > 1) {
+	if (n_err == nurls) error(_("cannot download any files"));
+	else if (n_err) warning(_("some files were not downloaded"));
+    } else if(n_err) error(_("download failed"));
 
     return ScalarInteger(0);
 #endif
@@ -769,7 +777,7 @@ static Rboolean Curl_open(Rconnection con)
 	n_err += fetchData(ctxt);
     if (n_err != 0) {
 	Curl_close(con);
-	error(_("cannot open connection"), n_err);
+	error(_("cannot open the connection"), n_err);
     }
 
     con->isopen = TRUE;

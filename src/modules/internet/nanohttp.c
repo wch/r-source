@@ -1474,12 +1474,10 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 
     if ((ctxt->location != NULL) && (ctxt->returnValue >= 300) &&
         (ctxt->returnValue < 400)) {
-	if(strncmp(ctxt->location, "https://", 8) == 0) {
+	if(strncmp(ctxt->location, "https://", 8) == 0)
 	    RxmlMessage(2, _("\"internal\" method cannot handle https redirection to: '%s'"),
 			ctxt->location);
-	    ctxt->contentLength = -999;
-	    return((void *) ctxt);
-	} else
+	else
 	    RxmlMessage(1, _("redirect to: '%s'"), ctxt->location);
 	while (RxmlNanoHTTPRecv(ctxt)) 
 	    ;  // clang likes this on a separate line

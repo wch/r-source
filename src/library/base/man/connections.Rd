@@ -139,11 +139,10 @@ isIncomplete(con)
   \url{http://curl.haxx.se/libcurl/}) is required on a Unix-alike but
   optional on Windows.  Method \code{"default"} uses method
   \code{"internal"} for \samp{file:} URLs and \code{"libcurl"} for
-  \code{ftps:} URLs.  On a Unix-alike it uses \code{"internal"} for
-  \samp{http:} and \code{ftp:} URLs and \code{"libcurl"} for
-  \samp{https:} URLs; on Windows \code{"wininet"} for \samp{http:},
-  \code{ftp:} and \samp{https:} URLs.  Proxies can be specified: see
-  \code{\link{download.file}}.
+  \code{ftps:} URLs.  On a Unix-alike it uses \code{"libcurl"} for
+  \samp{http:}, \samp{https:} and \samp{ftp:} URLs; on Windows
+  \code{"wininet"} for \samp{http:}, \samp{ftp:} and \samp{https:} URLs.
+  Proxies can be specified: see \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
@@ -493,12 +492,6 @@ isIncomplete(con)
 #endif
 }
 \note{
-  On a Unix-alike, \code{url} with the default method and an explicit
-  \code{open} argument (as used by for example \code{\link{readLines}}
-  with a character string \code{con} argument specifying a URL) will
-  re-try with method \code{"libcurl"} if an HTTP redirection to a
-  \samp{https://} URL is encountered.
-  
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998).  However \R goes well beyond the S model, for example in output
   text connections and URL, compressed and socket connections.

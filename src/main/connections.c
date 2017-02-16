@@ -5066,6 +5066,9 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *cmeth = CHAR(asChar(CAD4R(args)));
     meth = streql(cmeth, "libcurl"); // 1 if "libcurl", else 0
     defmeth = streql(cmeth, "default");
+#ifndef Win32
+    if(defmeth) meth = 1;
+#endif
     if (streql(cmeth, "wininet")) {
 #ifdef Win32
 	winmeth = 1;  // it already was as this is the default
@@ -5204,29 +5207,12 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->canseek = 0;
     /* This is referenced in do_getconnection, so set up before
        any warning */
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), 
+    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"),
 					    R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {
 	Rboolean success = con->open(con);
-	if(!success) {
-	    if(defmeth && meth == 0 && winmeth == 0 && 
-	       ((Rurlconn)(con->private))->status == 2) {
-		warning("\"internal\" method failed, so trying \"libcurl\"");
-		con_close1(con);
-		con = R_newCurlUrl(url, open, 1);
-		Connections[ncon] = con;
-		con->blocking = block;
-		strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
-		con->encname[100 - 1] = '\0';
-		UNPROTECT(1);
-		con->ex_ptr = 
-		    PROTECT(R_MakeExternalPtr(con->id, install("connection"), 
-					      R_NilValue));
-		success = con->open(con);
-	    }
-	}
 	if(!success) {
 	    con_destroy(ncon);
 	    error(_("cannot open the connection"));
