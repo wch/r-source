@@ -523,6 +523,10 @@
 
       \item \command{R CMD check} now checks any \samp{BugReports} field
       to be non-empty and a suitable single URL.
+
+      \item \command{R CMD check --as-cran} now NOTEs if the package does not
+      register its native routines or does not declare its intentions on
+      (native) symbol search.  (This will become a WARNING in due course.)
     }
   }
       
