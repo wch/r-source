@@ -57,8 +57,8 @@
       thanks to a patch by Mikko Korpela.  (\PR{17132})
 
       \item Package installation into a library where the package exists
-      via symbolic link now should work wherever \code{\link{Sys.readlink}()}
-      works, resolving \PR{16725}.
+      \emph{via} symbolic link now should work wherever
+      \code{\link{Sys.readlink}()} works, resolving \PR{16725}.
 
       \item \code{"Cincinnati"} was missing an \code{"n"} in the
       \code{precip} dataset.
@@ -107,7 +107,7 @@
 
       \item \code{findMethod()} failed if the active signature had
       expanded beyond what a particular package used. (Example with
-      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}.)
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
@@ -555,7 +555,7 @@
       not \samp{"Her"} as before) are given special treatment by the
       graphics engine.
 
-      \item S4 values are automatically coerced to vector (via
+      \item S4 values are automatically coerced to vector (\emph{via}
       \code{as.vector}) when subassigned into atomic vectors.
 
       \item \code{findInterval()} gets a \code{left.open} option.
