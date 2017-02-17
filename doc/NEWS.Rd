@@ -454,6 +454,13 @@
       \code{file.copy(copy.date = TRUE)}.  This may result in slightly
       more accurate file times.  (It is available on Linux and FreeBSD
       but not macOS nor Solaris.)
+      
+      \item The minimum version requirement for \code{libcurl} has been
+      reduced to 7.22.0, although at least 7.28.0 is preferred and
+      earlier versions are little tested.  (This is to support Debian
+      Wheezy LTS and Ubuntu 12.04 LTS, although the latter is close to
+      end-of-life.)
+      %% Debian Wheezy LTS is supported until 2018-05-31
     }
   }
 
