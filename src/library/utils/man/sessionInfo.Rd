@@ -34,6 +34,8 @@ sessionInfo(package = NULL)
   \item{running}{a character string describing the OS and version which
     it is running under (as distinct from built under).  This attempts
     to name a Linux distribution and give the OS name on an Apple Mac.}
+  \item{matprod}{a character string, the result of calling
+    \code{\link{options}("matprod")}.}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}

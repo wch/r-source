@@ -103,6 +103,8 @@ sessionInfo <- function(package = NULL)
         pkgDesc <- c(pkgDesc, lapply(loadedOnly, packageDescription))
         z$loadedOnly <- pkgDesc[loadedOnly]
     }
+
+    z$matprod <- as.character(options("matprod"))
     class(z) <- "sessionInfo"
     z
 }
@@ -118,6 +120,8 @@ print.sessionInfo <- function(x, locale = TRUE, ...)
     cat(x$R.version$version.string, "\n", sep = "")
     cat("Platform: ", x$platform, "\n", sep = "")
     if (!is.null(x$running)) cat("Running under: ",  x$running, "\n", sep = "")
+    cat("\n")
+    cat("Matrix products: ", x$matprod, "\n", sep = "")
     cat("\n")
     if(locale) {
         cat("locale:\n")
@@ -154,6 +158,8 @@ toLatex.sessionInfo <- function(object, locale = TRUE, ...)
     z <- c(z,
            paste0("  \\item Running under: \\verb|",
                   gsub(";","|, \\\\verb|", object$running) , "|"))
+
+    z <- c(z, paste0("  \\item Matrix products: ", object$matprod))
 
     z <- c(z, strwrap(paste("\\item Base packages: ",
                          paste(sort(object$basePkgs), collapse = ", ")),
