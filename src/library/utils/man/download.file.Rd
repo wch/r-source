@@ -226,7 +226,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs should
-  try to verify their certificates.  This is usually done using the CA
+  try to verify the site certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated). For further information
   see \url{http://curl.haxx.se/docs/sslcerts.html}.
@@ -268,7 +268,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   
   If you use \code{download.file} in a package or script, you must check
   the return value, since it is possible that the download will fail
-  with a non-zero status but not an \R error.
+  with a non-zero status but not an \R error. (This was more likely
+  prior to \R 3.4.0.)
 
   The supported \code{method}s do change: method \code{libcurl} was
   introduced in \R 3.2.0 and is still optional on Windows -- use

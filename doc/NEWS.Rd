@@ -354,6 +354,13 @@
       \item Loading the \pkg{parallel} package namespace no longer sets
       or changes the \code{.Random.seed}, even if \env{R_PARALLEL_PORT}
       is unset.
+
+      NB: This can break reproducibility of output, and did for a
+      \acronym{CRAN} package.
+
+      \item Methods \code{"wget"} and \code{"curl"} for
+      \code{download.file()} now give an \R error rather than a non-zero
+      return value when the external command has a non-zero status.
     }
   }
 

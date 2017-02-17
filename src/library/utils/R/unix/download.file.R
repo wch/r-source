@@ -54,6 +54,7 @@ download.file <-
 				      paste(extra, collapse = " "),
 				      shQuote(url),
 				      "-O", shQuote(path.expand(destfile))))
+               if(status) stop("'wget' call had nonzero exit status")
 	   },
 	   "curl" = {
 	       if(length(url) != 1L || typeof(url) != "character")
@@ -66,6 +67,7 @@ download.file <-
 				      paste(extra, collapse = " "),
 				      shQuote(url),
 				      " -o", shQuote(path.expand(destfile))))
+               if(status) stop("'curl' call had nonzero exit status")
 	   },
 	   "lynx" =
 	       stop("method 'lynx' is defunct", domain = NA))
