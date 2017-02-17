@@ -9,8 +9,8 @@
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item (Unix-alike)
-      The default method for \code{download.file()} and \code{url()}
-      now chooses \code{"libcurl"} except for \samp{file://}
+      The default methods for \code{download.file()} and \code{url()}
+      now choose \code{"libcurl"} except for \samp{file://}
       URLs.  There will be small changes in the format and wording of
       messages, including in rare cases if an issue is a warning or an
       error.  For example, when HTTP re-direction occurs, messages often
@@ -18,14 +18,13 @@
 
       Those who use proxies should check that their settings are
       compatible (see \code{?download.file}: the most commonly used
-      forms work for both methods \code{"internal"} and
-      \code{"libcurl"}).
+      forms work for both \code{"internal"} and \code{"libcurl"}).
       
       \item \code{table()} has been amended to be more internally
-      consistent and become back compatible to \R <= 2.7.2 again.
-      Consequently, \code{table(1:2, exclude=NULL)} no longer contains a
-      zero count for \code{<NA>}, but \code{useNA = "always"} continues
-      to do so.
+      consistent and become back compatible to \R \eqn{\le}{<=} 2.7.2
+      again.  Consequently, \code{table(1:2, exclude = NULL)} no longer
+      contains a zero count for \code{<NA>}, but \code{useNA = "always"}
+      continues to do so.
 
       \item \code{summary.default()} no longer rounds, but its print
       method does resulting in less extraneous rounding, notably of
@@ -45,11 +44,11 @@
       always for logic and comparison operations in these cases (e.g.,
       compare \code{matrix(1,1) + 2:3} and \code{matrix(1,1) < 2:3}).
 
-      \item The JIT (\sQuote{Just In Time}) byte code compiler is now
-      enabled by default at level 3. This means functions will be
+      \item The JIT (\sQuote{Just In Time}) byte-code compiler is now
+      enabled by default at its level 3. This means functions will be
       compiled on first or second use and top-level loops will be
-      compiled and then run.  Thanks to Tomas Kalibera for extensive
-      work to make this possible.
+      compiled and then run.  (Thanks to Tomas Kalibera for extensive
+      work to make this possible.)
 
       For now, the compiler will not compile code containing explicit
       calls to \code{browser()}: this is to support single stepping from
@@ -72,7 +71,7 @@
       is now used instead of DGEMM).
 
       One can now choose from alternative matrix product implementations
-      via \code{options(matprod = )}.  The \code{"internal"}
+      \emph{via} \code{options(matprod = )}.  The \code{"internal"}
       implementation is not optimized for speed but consistent in
       precision with other summations in R (using \code{long double}
       accumulators where available).  \code{"blas"} calls BLAS directly
@@ -87,8 +86,8 @@
 
       \item Add \code{signature} argument to \code{debug()},
       \code{debugonce()}, \code{undebug()} and \code{isdebugged()} for
-      more conveniently debugging S3 and S4 methods. Based on a patch by
-      Gabe Becker.
+      more conveniently debugging S3 and S4 methods.  (Based on a patch by
+      Gabe Becker.)
 
       \item Add \code{utils::debugcall()} and
       \code{utils::undebugcall()} for debugging the function that would
@@ -96,7 +95,7 @@
       an S4 generic or standard S3 generic, \code{debugcall()} debugs the
       method that would be dispatched. A number of internal utilities
       were added to support this, most notably
-      \code{utils::isS3stdGeneric()}. Based on a patch by Gabe Becker.
+      \code{utils::isS3stdGeneric()}.  (Based on a patch by Gabe Becker.)
 
       \item Add \code{utils::strcapture()}. Given a character vector and
       a regular expression containing capture expressions,
@@ -122,15 +121,15 @@
       of only the latter.
 
       \item \code{isSymmetric(m)} is much faster for large asymmetric
-      matrices \code{m} via pre-tests and a new option \code{tol1}
+      matrices \code{m} \emph{via} pre-tests and a new option \code{tol1}
       (with which strict back compatibility is possible but not the
       default).
 
       \item The result of \code{eigen()} now is of class \code{"eigen"}
       in the default case when eigenvectors are computed.
 
-      \item Zero-length date and datetime objects (\code{"POSIX[cl]?t"})
-      now \code{print()} \dQuote{recognizably}.
+      \item Zero-length date and date-time objects (of classes
+      \code{"POSIX[cl]?t"}) now \code{print()} \dQuote{recognizably}.
 
       \item \code{xy.coords()} and \code{xyz.coords()} get a new
       \code{setLab} option.
@@ -143,9 +142,9 @@
       \item \code{stopifnot(E, ..)} now reports differences when
       \code{E} is a call to \code{all.equal()} and that is not true.
 
-      \item \code{boxplot(<formula>, *)} gets optional arguments
+      \item \code{boxplot(<formula>, *)} gain optional arguments
       \code{drop}, \code{sep}, and \code{lex.order} to pass to
-      \code{split.default()} which itself newly gets an argument
+      \code{split.default()} which itself gains an argument
       \code{lex.order} to pass to \code{interaction()} for more
       flexibility.
 
@@ -155,7 +154,7 @@
       \item \code{sample.int()} gains an explicit \code{useHash} option
       (with a back compatible default).
 
-      \item \code{identical()} gets an \code{ignore.srcref} option
+      \item \code{identical()} gains an \code{ignore.srcref} option
       which drops \code{"srcref"} and similar attributes when true (as
       by default).
 
@@ -164,8 +163,9 @@
       complex and numeric).
 
       \item \code{smooth.spline()} now allows direct specification of
-      lambda, gets a \code{hatvalues()} method and keeps \code{tol} in
-      the result, and optionally parts of the internal matrix computations.
+      \code{lambda}, gets a \code{hatvalues()} method and keeps
+      \code{tol} in the result, and optionally parts of the internal
+      matrix computations.
 
       \item \code{addNA()} is faster now, e.g.{} when applied twice.
       (Part of \PR{16895}.)
@@ -178,9 +178,9 @@
       now produce a warning when printed and an error in \code{levels<-}
       instead of a warning.
 
-      \item Illegal factors, e.g., with duplicated levels (illegal but
-      constructable) now give a warning when printed, via new function
-      \code{.valid.factor()}.
+      \item Invalid factors, e.g., with duplicated levels (invalid but
+      constructable) now give a warning when printed, \emph{via} new
+      function \code{.valid.factor()}.
 
       \item \code{sessionInfo()} has been updated for Apple's change in
       OS naming as from \sQuote{10.12} (\sQuote{macOS Sierra} \emph{vs}
@@ -203,7 +203,7 @@
       available. Some read operations cannot be resumed properly when
       interrupted and do not provide a \code{"resume"} restart.
 
-      \item Radix sort is now the \code{"auto"} algorithm for
+      \item Radix sort is now chosen by \code{method = "auto"} for
       \code{sort.int()} for double vectors (and hence used for
       \code{sort()} for unclassed double vectors), excluding
       \sQuote{long} vectors.
@@ -242,9 +242,9 @@
       %% \item New \code{orderL(lst, ....)} for use in \code{do.call()} to
       %% avoid the name problem seen in \PR{17119}.
 
-      \item \code{try()} gains a new argument \code{outFile} with a default
-      that can be modified via \code{options(try.outFile = .)}, useful
-      notably for \code{Sweave}.
+      \item \code{try()} gains a new argument \code{outFile} with a
+      default that can be modified \emph{via} \code{options(try.outFile
+      = .)}, useful notably for \code{Sweave}.
 
       \item The unexported low-level functions in package \pkg{parallel}
       for passing serialized \R objects to and from forked children now
@@ -254,7 +254,7 @@
       serialization should be avoided if at all possible).
 
       \item Connections now \code{print()} without error, even if
-      invalid, i.e., typically after having been closed.
+      invalid, i.e., typically after having been destroyed.
 
       \item \code{apropos()} and \code{find(simple.words = FALSE)} no
       longer match object names starting with \samp{.} which are known
@@ -296,12 +296,13 @@
       \code{trace} argument, and \code{ppr(.., sm.method = ..spline)} is
       no longer limited to sample size \eqn{n \le 2500}{n <= 2500}.
 
-      \item \code{print.POSIXct()} gets optional \code{tz} and
-      \code{usetz} arguments, thanks to a report from Jennifer S. Lyon.
+      \item The \code{POSIXct} method for \code{print()} gets optional
+      \code{tz} and \code{usetz} arguments, thanks to a report from
+      Jennifer S. Lyon.
 
       \item New function \code{check_packages_in_dir_details()} in
-      package \pkg{tools} for analyzing check log files to obtain check
-      details.
+      package \pkg{tools} for analyzing package-check log files to
+      obtain check details.
 
       \item Package \pkg{tools} now exports function
       \code{CRAN_package_db()} for obtaining information about current
@@ -322,9 +323,9 @@
       \item The \code{format()} and \code{print()} methods for
       \code{object.size()} results get new options \code{standard} and
       \code{digits}; notably, \code{standard = "IEC"} and
-      \code{standard = "SI"} allow more standard abbreviations than the
-      default ones, e.g., for kilo bytes.  From contributions by Henrik
-      Bengtsson.
+      \code{standard = "SI"} allow more standard (but less common)
+      abbreviations than the default ones, e.g.\sspace{}for kilobytes.
+      (From contributions by Henrik Bengtsson.)
 
       \item If a reference class has a validity method,
       \code{validObject} will be called automatically from the
@@ -336,9 +337,10 @@
       \item \code{read.dcf()} now consistently interprets any
       \sQuote{whitespace} to be stripped to include newlines.
 
-      \item The maximum number of DLLs that can be loaded into R e.g. via
-      dyn.load can now be increased by setting the environment variable
-      \code{R_MAX_NUM_DLLS} before starting R.
+      \item The maximum number of DLLs that can be loaded into R
+      e.g.\sspace{}\emph{via} \code{dyn.load()} can now be increased by
+      setting the environment variable \code{R_MAX_NUM_DLLS} before
+      starting R.
 
       \item Assigning to an element of a vector beyond the current
       length now over-allocates by a small fraction. The new vector is
@@ -358,10 +360,10 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item Entry points \code{R_MakeExternalPtrFn} and
-      \code{R_ExternalPtrFn} are now declared in \file{Rinternals.h} to
-      facilitate creating and retrieving an \R{} external pointer from a
-      C function pointer without ISO C warnings about the conversion of
-      function pointers.
+      \code{R_ExternalPtrFn} are now declared in header
+      \file{Rinternals.h} to facilitate creating and retrieving an \R{}
+      external pointer from a C function pointer without ISO C warnings
+      about the conversion of function pointers.
 
       \item There was an exception for the native Solaris C++ compiler
       to the dropping (in \R 3.3.0) of legacy C++ headers from headers
@@ -478,7 +480,8 @@
       those specified in \code{CPPFLAGS}.  This will only have an effect
       if non-system include directories are included with \option{-I}
       flags in \code{CPPFLAGS} (and so not the default
-      \code{-I/usr/local/include} on most platforms).
+      \code{-I/usr/local/include} which is treated as a system include
+      directory on most platforms).
       %% This ensures that BH's 'boost' directory gets precedent over
       %% any Boost headers in, say, /opt/csw/include .
     }
@@ -489,7 +492,7 @@
       \item Running \command{R CMD check --as-cran} with
       \env{_R_CHECK_CRAN_INCOMING_REMOTE_} false now skips tests that
       require remote access.  The remaining (local) tests typically
-      run very quickly compared to the remote tests.
+      run quickly compared to the remote tests.
 
       \item \command{R CMD build} will now give priority to vignettes
       produced from files in the \file{vignettes} directory over those
@@ -520,9 +523,10 @@
       allows running the remaining tests (under \file{tests/}) even if
       one gave an error.
 
-      \item Check customization via environment variables to detect side
-      effects of \code{.Call()} and \code{.External()} calls which alter
-      their arguments is described in §8 of the \sQuote{R Internals} manual.
+      \item Check customization \emph{via} environment variables to
+      detect side effects of \code{.Call()} and \code{.External()} calls
+      which alter their arguments is described in §8 of the \sQuote{R
+      Internals} manual.
 
       \item \command{R CMD check} now checks any \samp{BugReports} field
       to be non-empty and a suitable single URL.
@@ -639,12 +643,13 @@
       \item \code{as.character.factor()} respects S4 inheritance when
       checking the type of its argument. (\PR{17141})
 
-      \item \code{print.factor()} no longer sets the class of the factor
-      to \code{NULL}, which would violate a basic constraint of an S4
-      object.
+      \item The \code{factor} method for \code{print()} no longer sets
+      the class of the factor to \code{NULL}, which would violate a
+      basic constraint of an S4 object.
 
-      \item \code{formatC(x, flag=f)} allows two new flags, and signals an
-      error for invalid flags also in the case of character formatting.
+      \item \code{formatC(x, flag = f)} allows two new flags, and
+      signals an error for invalid flags also in the case of character
+      formatting.
 
       \item Reading from stdin now also closes the connection and
       hence no longer leaks memory when reading from a full pipe, thanks
@@ -674,7 +679,7 @@
       \code{seq.default()} and \code{seq.int()}, no longer mentioning
       \code{NaN} etc.
 
-      \item \code{download.file(method="libcurl")} does not check for
+      \item \code{download.file(method = "libcurl")} does not check for
       URL existence before attempting downloads; this is more robust to
       servers that do not support HEAD or range-based retrieval, but may
       create empty or incomplete files for aborted download requests.
@@ -741,8 +746,8 @@
       thanks to a patch by Mikko Korpela.  (\PR{17132})
 
       \item Package installation into a library where the package exists
-      via symbolic link now should work wherever \code{\link{Sys.readlink}()}
-      works, resolving \PR{16725}.
+      \emph{via} symbolic link now should work wherever
+      \code{\link{Sys.readlink}()} works, resolving \PR{16725}.
 
       \item \code{"Cincinnati"} was missing an \code{"n"} in the
       \code{precip} dataset.
@@ -791,7 +796,7 @@
 
       \item \code{findMethod()} failed if the active signature had
       expanded beyond what a particular package used. (Example with
-      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}).
+      packages \CRANpkg{XR} and \CRANpkg{XRJulia} on \acronym{CRAN}.)
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
@@ -1239,7 +1244,7 @@
       not \samp{"Her"} as before) are given special treatment by the
       graphics engine.
 
-      \item S4 values are automatically coerced to vector (via
+      \item S4 values are automatically coerced to vector (\emph{via}
       \code{as.vector}) when subassigned into atomic vectors.
 
       \item \code{findInterval()} gets a \code{left.open} option.
