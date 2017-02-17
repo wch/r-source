@@ -9652,6 +9652,9 @@ y[accept] <- .Call(C_spline_value, knots, coeff, ord, x[accept], deriv)
 y = .Call(C_spline_value, knots, coef(object), ord, x, deriv))
 @end smallexample
 
+Check that there is no @code{exportPattern} directive which
+unintentionally exports the newly created @R{} objects.
+
 @item
 Restrict @code{.Call} to using the @R{} symbols by editing
 @file{src/init.c} to contain
