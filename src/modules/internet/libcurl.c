@@ -41,9 +41,45 @@
   There is a configure test but it is not used on Windows and system
   software can change.
 */
-# if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
-# error libcurl 7.28.0 or later is required.
+# if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 22)
+# error libcurl 7.22.0 or later is required.
 # endif
+extern void Rsleep(double timeint);
+#endif
+
+# if (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
+
+#define curl_multi_wait R_curl_multi_wait
+
+static CURLMcode 
+R_curl_multi_wait(CURLM *multi_handle,
+		  /* IGNORED */ void *unused,
+		  /* IGNORED */ unsigned int extra, 
+		  int timeout_ms, int *ret)
+{
+    fd_set fdread;
+    fd_set fdwrite;
+    fd_set fdexcep;
+    FD_ZERO(&fdread);
+    FD_ZERO(&fdwrite);
+    FD_ZERO(&fdexcep);
+
+    struct timeval timeout;
+
+    timeout.tv_sec = timeout_ms / 1000;
+    timeout.tv_usec = (timeout_ms % 1000) * 1000;
+
+    int maxfd = -1;
+    CURLMcode
+	mc = curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
+    if (maxfd == -1) {
+	*ret = 0;
+	Rsleep(0.1);
+    } else
+	*ret = select(maxfd+1, &fdread, &fdwrite, &fdexcep, &timeout);
+
+    return mc;
+}
 #endif
 
 SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -402,8 +438,6 @@ int progress(void *clientp, double dltotal, double dlnow,
     return 0;
 }
 # endif // Win32
-
-extern void Rsleep(double timeint);
 #endif // HAVE_LIBCURL
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
@@ -465,7 +499,9 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
 	curlCommon(hnd[i], 1, 1);
+#if (LIBCURL_VERSION_MINOR >= 25)
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
+#endif
 	if (!cacheOK)
 	    curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
 
@@ -761,7 +797,9 @@ static Rboolean Curl_open(Rconnection con)
     curl_easy_setopt(ctxt->hnd, CURLOPT_FAILONERROR, 1L);
     curlCommon(ctxt->hnd, 1, 1);
     curl_easy_setopt(ctxt->hnd, CURLOPT_NOPROGRESS, 1L);
+#if (LIBCURL_VERSION_MINOR >= 25)
     curl_easy_setopt(ctxt->hnd, CURLOPT_TCP_KEEPALIVE, 1L);
+#endif
 
     curl_easy_setopt(ctxt->hnd, CURLOPT_WRITEFUNCTION, rcvData);
     curl_easy_setopt(ctxt->hnd, CURLOPT_WRITEDATA, ctxt);

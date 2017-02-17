@@ -3298,14 +3298,19 @@ Unicode properties can be checked at run-time by calling
 @noindent  
 The @option{--enable-jit} flag is supported for most common CPUs.
 
+@c libcurl 7.22.0 was released in Sep 2011, in Ubuntu 12.04 LTS,
+@c   end-of-life Apr 2017
+@c libcurl 7.26.0 was released in May 2012, still in Debian 7 Wheezy LTS,
+@c   end-of-life May 2018. 
 @c libcurl 7.28.0 was released in Oct 2012
-Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
+Library @code{libcurl} (version 7.22.0 or later@footnote{but not a major
 version greater than 7 should there ever be one: the major version has
-been 7 since 2000.}) is required.  Information on @code{libcurl} is
-found from the @command{curl-config} script: if that is missing or needs
-to be overridden@footnote{for example to specify static linking with a
-build which has both shared and static libraries.} there are macros to
-do so described in file @file{config.site}.
+been 7 since 2000.}) is required, with at least 7.28.0 being desirable.
+Information on @code{libcurl} is found from the @command{curl-config}
+script: if that is missing or needs to be overridden@footnote{for
+example to specify static linking with a build which has both shared and
+static libraries.} there are macros to do so described in file
+@file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
@@ -4977,6 +4982,8 @@ FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end smallexample
 
+These compilers are also available from a @code{CRAN} mirror: select
+`Other' under `Software' from the left-hand menu.
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries

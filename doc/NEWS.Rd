@@ -13,7 +13,8 @@
       now chooses \code{"libcurl"} except for \samp{file://}
       URLs.  There will be small changes in the format and wording of
       messages, including in rare cases if an issue is a warning or an
-      error.
+      error.  For example, when HTTP re-direction occurs, messages often
+      refer to the final URL rather than the specified one.
 
       Those who use proxies should check that their settings are
       compatible (see \code{?download.file}: the most commonly used
@@ -54,8 +55,9 @@
       calls to \code{browser()}: this is to support single stepping from
       the \code{browser()} call.
 
-      JIT compilation can be disabled using \code{compiler::enableJIT(0)}
-      or by setting environment variable \env{R_ENABLE_JIT} to \code{0}.
+      JIT compilation can be disabled for the rest of the session using
+      \code{compiler::enableJIT(0)} or by setting environment variable
+      \env{R_ENABLE_JIT} to \code{0}.
 
       \item \code{xtabs()} works more consistently with \code{NA}s, also
       in its result no longer setting them to \code{0}.  Further, a new
@@ -64,17 +66,18 @@
       result's \code{dimnames} are identical to the default case's.
 
       \item Matrix products now consistently bypass BLAS when the inputs
-      have NaN/Inf values. Performance of the check of inputs has been
-      improved. Performance when BLAS is used is improved for
-      matrix/vector and vector/matrix multiplication (DGEMV is now used
-      instead of DGEMM).
+      have \code{NaN}/\code{Inf} values. Performance of the check of
+      inputs has been improved. Performance when BLAS is used is
+      improved for matrix/vector and vector/matrix multiplication (DGEMV
+      is now used instead of DGEMM).
 
       One can now choose from alternative matrix product implementations
       via \code{options(matprod = )}.  The \code{"internal"}
       implementation is not optimized for speed but consistent in
-      precision with other summations in R (uses \code{long double}
-      accumulators).  \code{"blas"} calls BLAS directly for best speed,
-      yet usually with undefined behavior for inputs with NaN/Inf.
+      precision with other summations in R (using \code{long double}
+      accumulators where available).  \code{"blas"} calls BLAS directly
+      for best speed, yet usually with undefined behavior for inputs
+      with \code{NaN}/\code{Inf}.
     }
   }
 
@@ -524,9 +527,10 @@
       \item \command{R CMD check} now checks any \samp{BugReports} field
       to be non-empty and a suitable single URL.
 
-      \item \command{R CMD check --as-cran} now NOTEs if the package does not
-      register its native routines or does not declare its intentions on
-      (native) symbol search.  (This will become a WARNING in due course.)
+      \item \command{R CMD check --as-cran} now NOTEs if the package
+      does not register its native routines or does not declare its
+      intentions on (native) symbol search.  (This will become a WARNING
+      in due course.)
     }
   }
       
