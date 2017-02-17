@@ -670,9 +670,12 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    R_Matprod = MATPROD_INTERNAL;
 		else if (streql(CHAR(s), "blas"))
 		    R_Matprod = MATPROD_BLAS;
-		else if (streql(CHAR(s), "default.simd"))
+		else if (streql(CHAR(s), "default.simd")) {
 		    R_Matprod = MATPROD_DEFAULT_SIMD;
-		else
+#if !defined(_OPENMP) || !defined(HAVE_OPENMP_SIMDRED)
+		    warning(_("OpenMP SIMD is not supported in this build of R"));
+#endif
+		} else
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
