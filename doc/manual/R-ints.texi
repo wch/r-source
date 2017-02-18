@@ -4103,7 +4103,11 @@ Default: 13.
 
 @item _R_CHECK_NATIVE_ROUTINE_REGISTRATION_
 If set to a true value, report if the entry points to register native
-routines and to suppress dynamic search are not found in a package's DLL.
+routines and to suppress dynamic search are not found in a package's
+DLL.  (@strong{NB:} this requires system commands @command{nm} and on
+Windows, @command{objdump.exe} to be on the @env{PATH}.  This would be
+normal when using a package with compiled code (which are the only ones
+this checks), but Windows' users should check.)
 Default: false (but true for CRAN submission checks).
 @end vtable
 
