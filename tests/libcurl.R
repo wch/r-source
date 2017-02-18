@@ -64,7 +64,7 @@ tf <- tempfile()
 testDownloadFile404 <- tryCatch(suppressWarnings({
     download.file("http://httpbin.org/status/404", tf, method="libcurl")
 }), error=function(e) {
-    conditionMessage(e) == "download failed"
+    conditionMessage(e) == "cannot open URL 'http://httpbin.org/status/404'"
 })
 stopifnot(testDownloadFile404, !file.exists(tf))
 
