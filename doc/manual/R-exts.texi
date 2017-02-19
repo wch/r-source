@@ -4491,6 +4491,10 @@ package but needed for examples or tests in the package itself.  Such
 usage should always be conditional on a test for existence (perhaps
 using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.
+
+@item
+Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
+and @code{macroman} are.  See the help for @code{file} for more details.
 @end itemize
 
 Do be careful in what your tests (and examples) actually test.  Bad
