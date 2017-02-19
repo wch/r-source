@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2015 The R Core Team
+#  Copyright (C) 2011-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,10 @@ if(.Platform$OS.type == "windows") {
     {
         ## reasonable to assume this on the path
         DLL_nm <- "objdump.exe"
-        if(!nzchar(Sys.which(DLL_nm))) return()
+        if(!nzchar(Sys.which(DLL_nm))) {
+            warning("this requires 'objdump.exe' to be on the PATH")
+            return()
+        }
         f <- file_path_as_absolute(f)
         s0 <- suppressWarnings(system2(DLL_nm, c("-x", shQuote(f)),
                                        stdout = TRUE, stderr = TRUE))
@@ -39,7 +42,10 @@ if(.Platform$OS.type == "windows") {
 read_symbols_from_object_file <- function(f)
 {
     ## reasonable to assume this on the path
-    if(!nzchar(nm <- Sys.which("nm"))) return()
+    if(!nzchar(nm <- Sys.which("nm"))) {
+        warning("this requires 'nm' to be on the PATH")
+        return()
+    }
     f <- file_path_as_absolute(f)
     if(!(file.size(f))) return()
     s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
