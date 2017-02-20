@@ -3085,8 +3085,8 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     Dl_info dl_info1, dl_info2;
 
-    if (!dladdr(do_eSoftVersion, &dl_info1)) ok = FALSE;
-    if (!dladdr(dladdr, &dl_info2)) ok = FALSE;
+    if (!dladdr((void *)do_eSoftVersion, &dl_info1)) ok = FALSE;
+    if (!dladdr((void *)dladdr, &dl_info2)) ok = FALSE;
 
     if (ok && !strcmp(dl_info1.dli_fname, dl_info2.dli_fname)) {
 
