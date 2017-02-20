@@ -111,6 +111,10 @@
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
+              
+      \item \command{R CMD Rd2pdf} had problems with packages with
+      non-ASCII titles in \file{.Rd} files (usually the titles were
+      omitted).
     }
   }
 }
