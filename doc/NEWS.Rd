@@ -361,6 +361,10 @@
       \item Methods \code{"wget"} and \code{"curl"} for
       \code{download.file()} now give an \R error rather than a non-zero
       return value when the external command has a non-zero status.
+      
+      \item Encoding name \code{"utf8"} is mapped to \code{"UTF-8"}.
+      Many implementations of \code{iconv} accept \code{"utf8"}, but not
+      GNU \pkg{libiconv} (including the current version 1.15).
     }
   }
 
