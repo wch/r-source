@@ -50,7 +50,10 @@ typedef unsigned int R_NativeObjectArgType;
    information about the arguments of native routines 
    and whether they are used to return information.
    The hope is that we can minimize copying objects even 
-   further. Not currently in use.
+   further.
+
+   Arguments to .C/.Fortan with style = R_ARG_IN are replaced by NULL
+   in the return value.
 */
 typedef enum {R_ARG_IN, R_ARG_OUT, R_ARG_IN_OUT, R_IRRELEVANT} R_NativeArgStyle;
 
