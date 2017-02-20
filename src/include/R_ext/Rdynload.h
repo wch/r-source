@@ -52,7 +52,7 @@ typedef unsigned int R_NativeObjectArgType;
    The hope is that we can minimize copying objects even 
    further.
 
-   Arguments to .C/.Fortan with style = R_ARG_IN are replaced by NULL
+   Arguments to .C/.Fortran with style = R_ARG_IN are replaced by NULL
    in the return value.
 */
 typedef enum {R_ARG_IN, R_ARG_OUT, R_ARG_IN_OUT, R_IRRELEVANT} R_NativeArgStyle;
