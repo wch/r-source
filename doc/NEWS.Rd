@@ -365,7 +365,10 @@
       \item Encoding name \code{"utf8"} is mapped to \code{"UTF-8"}.
       Many implementations of \code{iconv} accept \code{"utf8"}, but not
       GNU \pkg{libiconv} (including the current version 1.15).
-    }
+
+      \item \code{"sessionInfo"} shows the full path to the library or
+      executable file with BLAS/LAPACK implementation currently in use (not
+      available on Windows).
   }
 
   \subsection{C-LEVEL FACILITIES}{

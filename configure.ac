@@ -1902,6 +1902,9 @@ AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
+AC_CHECK_FUNCS([dladdr dlsym])
+AC_CHECK_DECLS([dladdr,dlsym], , , [#include<dlfcn.h>])
+AC_CHECK_DECLS([RTLD_DEFAULT,RTLD_NEXT], , , [#include<dlfcn.h>])
 
 ## Lots of uses of getwd(), file.access(), Sys.glob().
 ## We don't need times() except as a fallback for getrusage and
