@@ -708,6 +708,10 @@
       \item \code{str()} no longer shows \code{"list output truncated"},
       in cases that list was not shown at all.  Thanks to Neal Fultz
       (\PR{17219})
+      
+      \item \command{R CMD Rd2pdf} ran in the \code{C} locale which
+      caused problems for packages with non-ASCII titles.  Now only
+      collation is done as in the \code{C} locale.
     }
   }
 }
