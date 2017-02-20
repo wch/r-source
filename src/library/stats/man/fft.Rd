@@ -1,6 +1,6 @@
 % File src/library/stats/man/fft.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fft}
@@ -17,7 +17,7 @@ mvfft(z, inverse = FALSE)
 }
 \arguments{
   \item{z}{a real or complex array containing the values to be
-    transformed.}
+    transformed.  Long vectors are not supported.}
   \item{inverse}{if \code{TRUE}, the unnormalized inverse transform is
     computed (the inverse has a \code{+} in the exponent of \eqn{e},
     but here, we do \emph{not} divide by \code{1/length(x)}).}
