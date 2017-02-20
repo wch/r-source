@@ -369,6 +369,7 @@
       \item \code{"sessionInfo"} shows the full path to the library or
       executable file with BLAS/LAPACK implementation currently in use (not
       available on Windows).
+    }
   }
 
   \subsection{C-LEVEL FACILITIES}{
@@ -711,10 +712,6 @@
       \item \code{str()} no longer shows \code{"list output truncated"},
       in cases that list was not shown at all.  Thanks to Neal Fultz
       (\PR{17219})
-      
-      \item \command{R CMD Rd2pdf} ran in the \code{C} locale which
-      caused problems for packages with non-ASCII titles.  Now only
-      collation is done as in the \code{C} locale.
     }
   }
 }
@@ -825,6 +822,10 @@
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
+              
+      \item \command{R CMD Rd2pdf} had problems with packages with
+      non-ASCII titles in \file{.Rd} files (usually the titles were
+      omitted).
     }
   }
 }
