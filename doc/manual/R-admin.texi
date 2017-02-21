@@ -3271,15 +3271,16 @@ be accepted with a deprecation warning) is required (or just its library
 and headers if packaged separately).  PCRE must be built with UTF-8
 support (not the default, and checked by @command{configure}) and
 support for Unicode properties is assumed by some @R{} packages.  JIT
-support is desirable for the best performance: support for this and
-Unicode properties can be checked at run-time by calling
-@code{pcre_config()}.  If building PCRE for use with @R{} a suitable
-@command{configure} command might be
+support is desirable for the best performance (but not used by @R{}
+itself prior to 3.4.0): support for this and Unicode properties can be
+checked at run-time by calling @code{pcre_config()}.  If building PCRE
+for use with @R{} a suitable @command{configure} command might be
 @example
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
-The @option{--enable-jit} flag is supported for most common CPUs.
+The @option{--enable-jit} flag is supported as from PCRE 8.20 for most
+common CPUs.
 
 @c libcurl 7.28.0 was released in Oct 2012
 Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
