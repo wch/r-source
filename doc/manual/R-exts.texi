@@ -9289,7 +9289,7 @@ We would register it as
 
 @example
 @group
-static const R_NativePrimitiveArgType myC_t[] = @{
+static R_NativePrimitiveArgType myC_t[] = @{
     REALSXP, INTSXP, STRSXP, LGLSXP
 @};
 

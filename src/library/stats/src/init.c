@@ -254,9 +254,9 @@ static const R_CallMethodDef CallEntries[] = {
 #define FDEF(name)  {#name, (DL_FUNC) &F77_NAME(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 
-static const R_NativePrimitiveArgType lowesw_t[] = {
+static R_NativePrimitiveArgType lowesw_t[] = {
     REALSXP, INTSXP, REALSXP, INTSXP};
-static const R_NativePrimitiveArgType lowesp_t[] = {
+static R_NativePrimitiveArgType lowesp_t[] = {
     INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, REALSXP};
 
 
