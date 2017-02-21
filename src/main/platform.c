@@ -3080,7 +3080,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     Rboolean ok = TRUE;
 
-    /* blas */
+    /* BLAS */
     void *dgemm_addr = dlsym(RTLD_DEFAULT, dgemm_name);
 
     Dl_info dl_info1, dl_info2;
@@ -3090,8 +3090,10 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (ok && !strcmp(dl_info1.dli_fname, dl_info2.dli_fname)) {
 
-	/* dladdr is not inside R, hence we probably have the PLT for dynamically
-	   linked symbols; lets use dlsym(RTLD_NEXT) to get real symbol addresses */
+	/* dladdr is not inside R, hence we probably have the PLT for
+	   dynamically linked symbols; lets use dlsym(RTLD_NEXT) to
+	   get real symbol addresses.
+	*/
 
 	if (dlsym(RTLD_DEFAULT, "do_eSoftVersion") == NULL
 	    && dlsym(RTLD_DEFAULT, "dladdr") != NULL) {
@@ -3118,7 +3120,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, mkChar(res));
     }
 
-    /* lapack */
+    /* LAPACK */
 
     /* this call forces the lapack module to be loaded */
     SEXP laver = do_lapack(R_NilValue, INTERNAL(install("La_version")),
