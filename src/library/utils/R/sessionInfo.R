@@ -105,8 +105,8 @@ sessionInfo <- function(package = NULL)
     }
     z$matprod <- as.character(options("matprod"))
     es <- extSoftVersion()
-    z$blas <- as.character(es["blas"]) #drop name
-    z$lapack <- as.character(gsub(".* ", "", es["lapack"])) #drop API version
+    z$blas <- as.character(es["BLAS"]) #drop name
+    z$lapack <- as.character(gsub(".* ", "", es["LAPACK"])) #drop API version
     class(z) <- "sessionInfo"
     z
 }
@@ -128,11 +128,11 @@ print.sessionInfo <- function(x, locale = TRUE, ...)
     if (is.null(blas)) blas <- ""
     lapack <- x$lapack
     if (is.null(lapack)) lapack <- ""
-    if (blas == lapack && blas != "")
+    if (blas == lapack && nzchar(blas))
         cat("BLAS/LAPACK: ", blas, "\n", sep = "")
     else {
-        if (blas != "") cat("BLAS: ", blas, "\n", sep = "")
-        if (lapack != "") cat("LAPACK: ", x$lapack, "\n", sep = "")
+        if (nzchar(blas)) cat("BLAS: ", blas, "\n", sep = "")
+        if (nzchar(lapack)) cat("LAPACK: ", x$lapack, "\n", sep = "")
     }
     cat("\n")
     if(locale) {
@@ -177,12 +177,12 @@ toLatex.sessionInfo <- function(object, locale = TRUE, ...)
     lapack <- object$lapack
     if (is.null(lapack)) lapack <- ""
 
-    if (blas == lapack && blas != "")
+    if (blas == lapack && nzchar(blas))
         z <- c(z, paste0("  \\item BLAS/LAPACK: \\verb|", blas, "|"))
     else {
-        if (blas != "")
+        if (nzchar(blas))
             z <- c(z, paste0("  \\item BLAS: \\verb|", blas, "|"))
-        if (lapack != "")
+        if (nzchar(lapack))
             z <- c(z, paste0("  \\item LAPACK: \\verb|", lapack, "|"))
     }
 

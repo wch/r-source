@@ -36,7 +36,10 @@ extSoftVersion()
   otherwise \code{""}).}
   \item{BLAS}{Name of the binary/executable file with the implementation of
   \code{BLAS} in use (if known, otherwise \code{""}).}
-  \item{
+  \item{LAPACK}{The API version of LAPACK in use (the result of calling
+  \code{\link{La_version}()}). If known, the name of the binary/executable
+  file with the implementation of \code{LAPACK} in use is appended, using
+  \code{" "} as separator.}
 
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
