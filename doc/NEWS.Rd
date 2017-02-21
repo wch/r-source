@@ -41,6 +41,14 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item (C-level Native routine registration.)  The undocumented
+      \code{styles} component of \code{R_CMethodDef} and
+      \code{RFortranMethodDef} is deprecated.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
