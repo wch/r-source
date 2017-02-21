@@ -12,17 +12,17 @@
       \samp{https://} URL is encountered:
       
       \itemize{
-	\item The internal methods of \code{download.file()} and \code{url()}
-      now report that they cannot follow this (rather than failing
-      silently).
+	\item The internal methods of \code{download.file()} and
+	\code{url()} now report that they cannot follow this (rather
+	than failing silently).
 
-      \item (Unix-alike) \code{download.file(method = "auto")} (the default)
-      re-tries with \code{method = "libcurl"}.
+	\item (Unix-alike) \code{download.file(method = "auto")} (the
+	default) re-tries with \code{method = "libcurl"}.
 
-      \item (Unix-alike) \code{url(method = "default")} with an explicit
-      \code{open} argument re-tries with \code{method = "libcurl"}.
-      This covers many of the usages, e.g.\sspace{}\code{readLines()}
-      with a URL argument.
+	\item (Unix-alike) \code{url(method = "default")} with an
+	explicit \code{open} argument re-tries with
+	\code{method = "libcurl"}.  This covers many of the usages,
+	e.g.\sspace{}\code{readLines()} with a URL argument.
       }
     }
   }
@@ -47,7 +47,7 @@
     \itemize{
       \item (C-level Native routine registration.)  The undocumented
       \code{styles} field of the components of \code{R_CMethodDef} and
-      \code{RFortranMethodDef} is deprecated.
+      \code{R_FortranMethodDef} is deprecated.
     }
   }
 
