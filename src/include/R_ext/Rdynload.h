@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-12  The R Core Team.
+ *  Copyright (C) 2001-2017  The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -46,12 +46,7 @@ typedef unsigned int R_NativePrimitiveArgType;
 typedef unsigned int R_NativeObjectArgType;
 
 
-/* In the near future, we may support registering 
-   information about the arguments of native routines 
-   and whether they are used to return information.
-   The hope is that we can minimize copying objects even 
-   further.
-
+/*
    Arguments to .C/.Fortran with style = R_ARG_IN are replaced by NULL
    in the return value.
 */
@@ -78,16 +73,12 @@ typedef struct {
 typedef R_CMethodDef R_FortranMethodDef;
 
 
-
 typedef struct {
     const char *name;
     DL_FUNC     fun;
     int         numArgs;
-/* In the future, we will put types in here for the different arguments.
-   We need a richer type system to do this effectively so that one
-   can specify types for new classes.
-*/
 } R_CallMethodDef;
+
 typedef R_CallMethodDef R_ExternalMethodDef;
 
 
@@ -122,10 +113,11 @@ DL_FUNC R_FindSymbol(char const *, char const *,
                        R_RegisteredNativeSymbol *symbol);
 
 
-/* Experimental interface for exporting and importing functions from
-   one package for use from C code in a package.  The registration
-   part probably ought to be integrated with the other registrations.
-   The naming of these routines may be less than ideal. */
+/* Interface for exporting and importing functions from one package
+   for use from C code in a package.  The registration part probably
+   ought to be integrated with the other registrations.  The naming of
+   these routines may be less than ideal.
+*/
 
 void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr);
 DL_FUNC R_GetCCallable(const char *package, const char *name);
