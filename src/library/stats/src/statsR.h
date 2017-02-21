@@ -192,6 +192,7 @@ SEXP pRho(SEXP q, SEXP sn, SEXP lower);
 SEXP SWilk(SEXP x);
 
 SEXP bw_den(SEXP nbin, SEXP sx);
+SEXP bw_den_binned(SEXP sx);
 SEXP bw_ucv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 SEXP bw_bcv(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);
 SEXP bw_phi4(SEXP sn, SEXP sd, SEXP cnt, SEXP sh);

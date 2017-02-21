@@ -108,12 +108,11 @@ SEXP bw_phi6(SEXP sn, SEXP sd, SEXP cnt, SEXP sh)
     return ScalarReal(u);
 }
 
-/* This would be impracticable for long vectors.  Better to bin x first */
-
-/* 
+/*
    Use double cnt as from R 3.4.0, as counts can exceed INT_MAX for
    large n (65537 in the worse case but typically not at n = 1 million
-   for a smooth distribution).
+   for a smooth distribution -- and this is by default no longer used
+   for n > 500).
 */
 
 SEXP bw_den(SEXP nbin, SEXP sx)
@@ -144,6 +143,28 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 	    cnt[abs(ii - jj)] += 1.0;
 	}
     }
+
+    UNPROTECT(1);
+    return ans;
+}
+
+/* Input: counts for nb bins */
+SEXP bw_den_binned(SEXP sx)
+{
+    int nb = LENGTH(sx);
+    int *x = INTEGER(sx);
+
+    SEXP ans = PROTECT(allocVector(REALSXP, nb));
+    double *cnt = REAL(ans);
+    for (int ib = 0; ib < nb; ib++) cnt[ib] = 0.0;
+
+    for (int ii = 0; ii < nb; ii++) {
+	int w = x[ii];
+	cnt[0] += w*(w-1.); // don't count distances to self
+	for (int jj = 0; jj < ii; jj++)
+	    cnt[ii - jj] += w * x[jj];
+    }
+    cnt[0] *= 0.5; // counts in the same bin got double-counted
 
     UNPROTECT(1);
     return ans;

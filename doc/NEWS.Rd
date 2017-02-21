@@ -366,9 +366,15 @@
       Many implementations of \code{iconv} accept \code{"utf8"}, but not
       GNU \pkg{libiconv} (including the current version 1.15).
 
-      \item \code{"sessionInfo"} shows the full path to the library or
-      executable file with BLAS/LAPACK implementation currently in use (not
-      available on Windows).
+      \item \code{sessionInfo()} shows the full paths to the library or
+      executable files providing the BLAS/LAPACK implementations
+      currently in use (not available on Windows).
+
+      \item The binning algorithm used by bandwidth selectors
+      \code{bw.ucv()}, \code{bw.bcv()} and \code{bw.SJ()} switches to a
+      version linear in the input size \code{n} for \code{n > nb/2}.
+      (The calculations are the same, but for large \code{n/nb} it is
+      worth doing the binning in advance.)
     }
   }
 
