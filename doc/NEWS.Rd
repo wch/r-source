@@ -11,17 +11,19 @@
       \item Changes when redirection of a \samp{http://} URL to a
       \samp{https://} URL is encountered:
       
-      The internal methods of \code{download.file()} and \code{url()}
+      \itemize{
+	\item The internal methods of \code{download.file()} and \code{url()}
       now report that they cannot follow this (rather than failing
       silently).
 
-      (Unix-alike) \code{download.file(method = "auto")} (the default)
+      \item (Unix-alike) \code{download.file(method = "auto")} (the default)
       re-tries with \code{method = "libcurl"}.
 
-      (Unix-alike) \code{url(method = "default")} with an explicit
+      \item (Unix-alike) \code{url(method = "default")} with an explicit
       \code{open} argument re-tries with \code{method = "libcurl"}.
       This covers many of the usages, e.g.\sspace{}\code{readLines()}
       with a URL argument.
+      }
     }
   }
 
@@ -44,7 +46,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item (C-level Native routine registration.)  The undocumented
-      \code{styles} component of \code{R_CMethodDef} and
+      \code{styles} field of the components of \code{R_CMethodDef} and
       \code{RFortranMethodDef} is deprecated.
     }
   }
