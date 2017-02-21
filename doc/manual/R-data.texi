@@ -2359,8 +2359,8 @@ Addison-Wesley.
 Also available at @uref{http://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
 
 @noindent
-B.@: D.@: Ripley (2001) Connections. \@emph{R News}, @strong{1/1}, 16--7.
-  \@uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+B.@: D.@: Ripley (2001) Connections. @emph{R News}, @strong{1/1}, 16--7.
+  @uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 
 
 @noindent
