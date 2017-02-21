@@ -1451,7 +1451,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, pa, s;
     R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
     R_NativePrimitiveArgType *checkTypes = NULL;
-    R_NativeArgStyle *argStyles = NULL;
     const void *vmax;
     char symName[MaxSymbolBytes];
 
@@ -1480,7 +1479,6 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		      nargs, symbol.symbol.c->numArgs, symName);
 
 	checkTypes = symbol.symbol.c->types;
-	argStyles = symbol.symbol.c->styles;
     }
 
     /* Construct the return value */
@@ -2329,191 +2327,186 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     for (na = 0, pa = args ; pa != R_NilValue ; pa = CDR(pa), na++) {
-	if(argStyles && argStyles[na] == R_ARG_IN) {
-	    SET_VECTOR_ELT(ans, na, R_NilValue);
-	    continue;
-	} else {
-	    void *p = cargs[na];
-	    SEXP arg = CAR(pa);
-	    s = VECTOR_ELT(ans, na);
-	    R_NativePrimitiveArgType type =
-		checkTypes ? checkTypes[na] : TYPEOF(arg);
-	    R_xlen_t n = xlength(arg);
+	void *p = cargs[na];
+	SEXP arg = CAR(pa);
+	s = VECTOR_ELT(ans, na);
+	R_NativePrimitiveArgType type =
+	    checkTypes ? checkTypes[na] : TYPEOF(arg);
+	R_xlen_t n = xlength(arg);
 
-	    switch(type) {
-	    case RAWSXP:
-		if (copy) {
-		    s = allocVector(type, n);
-		    unsigned char *ptr = (unsigned char *) p;
-		    memcpy(RAW(s), ptr, n * sizeof(Rbyte));
-		    ptr += n * sizeof(Rbyte);
-		    for (int i = 0; i < NG; i++)
-			if(*ptr++ != FILL)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    ptr = (unsigned char *) p;
-		    for (int i = 0; i < NG; i++)
-			if(*--ptr != FILL)
-			    error("array under-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		}
-		break;
-	    case INTSXP:
-		if (copy) {
-		    s = allocVector(type, n);
-		    unsigned char *ptr = (unsigned char *) p;
-		    memcpy(INTEGER(s), ptr, n * sizeof(int));
-		    ptr += n * sizeof(int);
-		    for (int i = 0; i < NG; i++)
-			if(*ptr++ != FILL)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    ptr = (unsigned char *) p;
-		    for (int i = 0; i < NG; i++)
-			if(*--ptr != FILL)
-			    error("array under-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		}
-		break;
-	    case LGLSXP:
-		if (copy) {
-		    s = allocVector(type, n);
-		    unsigned char *ptr = (unsigned char *) p;
-		    int *iptr = (int*) ptr, tmp;
-		    for (R_xlen_t i = 0 ; i < n ; i++) {
-			tmp =  iptr[i];
-			LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
-		    }
-		    ptr += n * sizeof(int);
-		    for (int i = 0; i < NG;  i++)
-			if(*ptr++ != FILL)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    ptr = (unsigned char *) p;
-		    for (int i = 0; i < NG; i++)
-			if(*--ptr != FILL)
-			    error("array under-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		} else {
-		    int *iptr = INTEGER(arg), tmp;
-		    for (R_xlen_t i = 0 ; i < n ; i++) {
-			tmp =  iptr[i];
-			iptr[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
-		    }
-		}
-		break;
-	    case REALSXP:
-	    case SINGLESXP:
-		if (copy) {
-		    s = allocVector(REALSXP, n);
-		    if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
-			float *sptr = (float*) p;
-			for(R_xlen_t i = 0 ; i < n ; i++)
-			    REAL(s)[i] = (double) sptr[i];
-		    } else {
-			unsigned char *ptr = (unsigned char *) p;
-			memcpy(REAL(s), ptr, n * sizeof(double));
-			ptr += n * sizeof(double);
-			for (int i = 0; i < NG; i++)
-			    if(*ptr++ != FILL)
-				error("array over-run in %s(\"%s\") in %s argument %d\n",
-				      Fort ? ".Fortran" : ".C",
-				      symName, type2char(type), na+1);
-			ptr = (unsigned char *) p;
-			for (int i = 0; i < NG; i++)
-			    if(*--ptr != FILL)
-				error("array under-run in %s(\"%s\") in %s argument %d\n",
-				      Fort ? ".Fortran" : ".C",
-				      symName, type2char(type), na+1);
-		    }
-		} else {
-		    if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
-			s = allocVector(REALSXP, n);
-			float *sptr = (float*) p;
-			for(int i = 0 ; i < n ; i++)
-			    REAL(s)[i] = (double) sptr[i];
-		    }
-		}
-		break;
-	    case CPLXSXP:
-		if (copy) {
-		    s = allocVector(type, n);
-		    unsigned char *ptr = (unsigned char *) p;
-		    memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
-		    ptr += n * sizeof(Rcomplex);
-		    for (int i = 0; i < NG;  i++)
-			if(*ptr++ != FILL)
-			    error("array over-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		    ptr = (unsigned char *) p;
-		    for (int i = 0; i < NG; i++)
-			if(*--ptr != FILL)
-			    error("array under-run in %s(\"%s\") in %s argument %d\n",
-				  Fort ? ".Fortran" : ".C",
-				  symName, type2char(type), na+1);
-		}
-		break;
-	    case STRSXP:
-		if(Fort) {
-		    char buf[256];
-		    /* only return one string: warned on the R -> Fortran step */
-		    strncpy(buf, (char*)p, 255);
-		    buf[255] = '\0';
-		    PROTECT(s = allocVector(type, 1));
-		    SET_STRING_ELT(s, 0, mkChar(buf));
-		    UNPROTECT(1);
-		} else if (copy) {
-		    SEXP ss = arg;
-		    PROTECT(s = allocVector(type, n));
-		    char **cptr = (char**) p, **cptr0 = (char**) cargs0[na];
-		    for (R_xlen_t i = 0 ; i < n ; i++) {
-			unsigned char *ptr = (unsigned char *) cptr[i];
-			SET_STRING_ELT(s, i, mkChar(cptr[i]));
-			if (cptr[i] == cptr0[i]) {
-			    const char *z = translateChar(STRING_ELT(ss, i));
-			    for (int j = 0; j < NG; j++)
-				if(*--ptr != FILL)
-				    error("array under-run in .C(\"%s\") in character argument %d, element %d",
-					  symName, na+1, (int)(i+1));
-			    ptr = (unsigned char *) cptr[i];
-			    ptr += strlen(z) + 1;
-			    for (int j = 0; j < NG;  j++)
-				if(*ptr++ != FILL) {
-				    // force termination
-				    unsigned char *p = ptr;
-				    for (int k = 1; k < NG - j; k++, p++)
-					if (*p == FILL) *p = '\0';
-				    error("array over-run in .C(\"%s\") in character argument %d, element %d\n'%s'->'%s'\n",
-					  symName, na+1, (int)(i+1),
-					  z, cptr[i]);
-				}
-			}
-		    }
-		    UNPROTECT(1);
-		} else {
-		    PROTECT(s = allocVector(type, n));
-		    char **cptr = (char**) p;
-		    for (R_xlen_t i = 0 ; i < n ; i++)
-			SET_STRING_ELT(s, i, mkChar(cptr[i]));
-		    UNPROTECT(1);
-		}
-		break;
-	    default:
-		break;
+	switch(type) {
+	case RAWSXP:
+	    if (copy) {
+		s = allocVector(type, n);
+		unsigned char *ptr = (unsigned char *) p;
+		memcpy(RAW(s), ptr, n * sizeof(Rbyte));
+		ptr += n * sizeof(Rbyte);
+		for (int i = 0; i < NG; i++)
+		    if(*ptr++ != FILL)
+			error("array over-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+		ptr = (unsigned char *) p;
+		for (int i = 0; i < NG; i++)
+		    if(*--ptr != FILL)
+			error("array under-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
 	    }
-	    if (s != arg) {
-		PROTECT(s);
-		SHALLOW_DUPLICATE_ATTRIB(s, arg);
-		SET_VECTOR_ELT(ans, na, s);
+	    break;
+	case INTSXP:
+	    if (copy) {
+		s = allocVector(type, n);
+		unsigned char *ptr = (unsigned char *) p;
+		memcpy(INTEGER(s), ptr, n * sizeof(int));
+		ptr += n * sizeof(int);
+		for (int i = 0; i < NG; i++)
+		    if(*ptr++ != FILL)
+			error("array over-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+		ptr = (unsigned char *) p;
+		for (int i = 0; i < NG; i++)
+		    if(*--ptr != FILL)
+			error("array under-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+	    }
+	    break;
+	case LGLSXP:
+	    if (copy) {
+		s = allocVector(type, n);
+		unsigned char *ptr = (unsigned char *) p;
+		int *iptr = (int*) ptr, tmp;
+		for (R_xlen_t i = 0 ; i < n ; i++) {
+		    tmp =  iptr[i];
+		    LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
+		}
+		ptr += n * sizeof(int);
+		for (int i = 0; i < NG;  i++)
+		    if(*ptr++ != FILL)
+			error("array over-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+		ptr = (unsigned char *) p;
+		for (int i = 0; i < NG; i++)
+		    if(*--ptr != FILL)
+			error("array under-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+	    } else {
+		int *iptr = INTEGER(arg), tmp;
+		for (R_xlen_t i = 0 ; i < n ; i++) {
+		    tmp =  iptr[i];
+		    iptr[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
+		}
+	    }
+	    break;
+	case REALSXP:
+	case SINGLESXP:
+	    if (copy) {
+		s = allocVector(REALSXP, n);
+		if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+		    float *sptr = (float*) p;
+		    for(R_xlen_t i = 0 ; i < n ; i++)
+			REAL(s)[i] = (double) sptr[i];
+		} else {
+		    unsigned char *ptr = (unsigned char *) p;
+		    memcpy(REAL(s), ptr, n * sizeof(double));
+		    ptr += n * sizeof(double);
+		    for (int i = 0; i < NG; i++)
+			if(*ptr++ != FILL)
+			    error("array over-run in %s(\"%s\") in %s argument %d\n",
+				  Fort ? ".Fortran" : ".C",
+				  symName, type2char(type), na+1);
+		    ptr = (unsigned char *) p;
+		    for (int i = 0; i < NG; i++)
+			if(*--ptr != FILL)
+			    error("array under-run in %s(\"%s\") in %s argument %d\n",
+				  Fort ? ".Fortran" : ".C",
+				  symName, type2char(type), na+1);
+		}
+	    } else {
+		if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+		    s = allocVector(REALSXP, n);
+		    float *sptr = (float*) p;
+		    for(int i = 0 ; i < n ; i++)
+			REAL(s)[i] = (double) sptr[i];
+		}
+	    }
+	    break;
+	case CPLXSXP:
+	    if (copy) {
+		s = allocVector(type, n);
+		unsigned char *ptr = (unsigned char *) p;
+		memcpy(COMPLEX(s), p, n * sizeof(Rcomplex));
+		ptr += n * sizeof(Rcomplex);
+		for (int i = 0; i < NG;  i++)
+		    if(*ptr++ != FILL)
+			error("array over-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+		ptr = (unsigned char *) p;
+		for (int i = 0; i < NG; i++)
+		    if(*--ptr != FILL)
+			error("array under-run in %s(\"%s\") in %s argument %d\n",
+			      Fort ? ".Fortran" : ".C",
+			      symName, type2char(type), na+1);
+	    }
+	    break;
+	case STRSXP:
+	    if(Fort) {
+		char buf[256];
+		/* only return one string: warned on the R -> Fortran step */
+		strncpy(buf, (char*)p, 255);
+		buf[255] = '\0';
+		PROTECT(s = allocVector(type, 1));
+		SET_STRING_ELT(s, 0, mkChar(buf));
+		UNPROTECT(1);
+	    } else if (copy) {
+		SEXP ss = arg;
+		PROTECT(s = allocVector(type, n));
+		char **cptr = (char**) p, **cptr0 = (char**) cargs0[na];
+		for (R_xlen_t i = 0 ; i < n ; i++) {
+		    unsigned char *ptr = (unsigned char *) cptr[i];
+		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
+		    if (cptr[i] == cptr0[i]) {
+			const char *z = translateChar(STRING_ELT(ss, i));
+			for (int j = 0; j < NG; j++)
+			    if(*--ptr != FILL)
+				error("array under-run in .C(\"%s\") in character argument %d, element %d",
+				      symName, na+1, (int)(i+1));
+			ptr = (unsigned char *) cptr[i];
+			ptr += strlen(z) + 1;
+			for (int j = 0; j < NG;  j++)
+			    if(*ptr++ != FILL) {
+				// force termination
+				unsigned char *p = ptr;
+				for (int k = 1; k < NG - j; k++, p++)
+				    if (*p == FILL) *p = '\0';
+				error("array over-run in .C(\"%s\") in character argument %d, element %d\n'%s'->'%s'\n",
+				      symName, na+1, (int)(i+1),
+				      z, cptr[i]);
+			    }
+		    }
+		}
+		UNPROTECT(1);
+	    } else {
+		PROTECT(s = allocVector(type, n));
+		char **cptr = (char**) p;
+		for (R_xlen_t i = 0 ; i < n ; i++)
+		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 		UNPROTECT(1);
 	    }
+	    break;
+	default:
+	    break;
+	}
+	if (s != arg) {
+	    PROTECT(s);
+	    SHALLOW_DUPLICATE_ATTRIB(s, arg);
+	    SET_VECTOR_ELT(ans, na, s);
+	    UNPROTECT(1);
 	}
     }
     UNPROTECT(1);

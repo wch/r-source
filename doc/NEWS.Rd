@@ -585,6 +585,10 @@
       \item Header \file{Rconfig.h} no longer defines
       \samp{SUPPORT_OPENMP}; instead use \samp{_OPENMP} (as documented
       for a long time).
+      
+      \item (C-level Native routine registration.)  The deprecated
+      \code{styles} component of \code{R_CMethodDef} and
+      \code{RFortranMethodDef} no longer does anything.
     }
   }
 
@@ -755,6 +759,14 @@
       \item Environmental variable \env{_R_CHECK_TESTS_NLINES_} controls
       how \command{R CMD check} reports failing tests (see §8 of the
       \sQuote{R Internals} manual).
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item (C-level Native routine registration.)  The undocumented
+      \code{styles} component of \code{R_CMethodDef} and
+      \code{RFortranMethodDef} is deprecated.
     }
   }
 
