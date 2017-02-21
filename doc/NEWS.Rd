@@ -723,6 +723,10 @@
       \item \code{str()} no longer shows \code{"list output truncated"},
       in cases that list was not shown at all.  Thanks to Neal Fultz
       (\PR{17219})
+
+      \item Fix for \code{cairo_pdf()} (and \code{svg()} and
+      \code{cairo_ps()}) when replaying saved display list that contains
+      mix of \pkg{grid} and \pkg{graphics} output.  Thanks to Yihui Xie.
     }
   }
 }
