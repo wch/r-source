@@ -34,12 +34,9 @@ extSoftVersion()
   library in use (if known).}
   \item{readline}{The version of \code{readline} in use (if any,
   otherwise \code{""}).}
-  \item{blas}{Name of the binary/executable file with the implementation of
+  \item{BLAS}{Name of the binary/executable file with the implementation of
   \code{BLAS} in use (if known, otherwise \code{""}).}
-  \item{lapack}{The API version of LAPACK in use (the result of calling
-  \code{\link{La_version}()}). If known, the name of the binary/executable
-  file with the implementation of \code{LAPACK} in use is appended, using
-  \code{" "} as separator.}
+  \item{
 
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
@@ -59,10 +56,10 @@ extSoftVersion()
   external BLAS implementation that had been copied, hard-linked or renamed
   by the system administrator.  For an external BLAS, a shared object file
   will be given and its path/name may indicate the vendor/version. 
-  Typically, the R version of LAPACK will appear as \code{libRlapack.so}
+  Typically, the \R version of LAPACK will appear as \code{libRlapack.so}
   (\code{libRlapack.dylib}), but again this name may also be shown for an
   external implementation of LAPACK that had been given this name.  The
-  detection only works on Linux and macOS, not on Windows.
+  detection does not work on Windows.
 }
 \seealso{
   \code{\link{libcurlVersion}} for the version of \code{libCurl}.

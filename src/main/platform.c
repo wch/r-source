@@ -3139,8 +3139,8 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 #endif
-    SET_STRING_ELT(nms, i++, mkChar("blas"));
-    SET_STRING_ELT(nms, i++, mkChar("lapack"));
+    SET_STRING_ELT(nms, i++, mkChar("BLAS"));
+    SET_STRING_ELT(nms, i++, mkChar("LAPACK"));
 
     UNPROTECT(2);
     return ans;
