@@ -3831,13 +3831,13 @@ static R_NativePrimitiveArgType foo_t[] = @{
     REALSXP, INTSXP, STRSXP, LGLSXP
 @};
 
-static R_CMethodDef cMethods[] = @{
+static const R_CMethodDef cMethods[] = @{
    @{"foo", (DL_FUNC) &foo, 4, foo_t@},
    @{"bar_sym", (DL_FUNC) &bar, 0@},
-   @{NULL, NULL, 0@}
+   @{NULL, NULL, 0, NULL@}
 @};
 
-static R_CallMethodDef callMethods[] = @{
+static const R_CallMethodDef callMethods[] = @{
    @{"R_call_sym", (DL_FUNC) &R_call, 4@},
    @{"R_version_sym", (DL_FUNC) &R_version, 0@},
    @{NULL, NULL, 0@}
@@ -9245,7 +9245,7 @@ SEXP myCall(SEXP a, SEXP b, SEXP c);
 we would describe this as
 
 @example
-static R_CallMethodDef callMethods[]  = @{
+static const R_CallMethodDef callMethods[]  = @{
   @{"myCall", (DL_FUNC) &myCall, 3@},
   @{NULL, NULL, 0@}
 @};
@@ -9289,13 +9289,13 @@ We would register it as
 
 @example
 @group
-static R_NativePrimitiveArgType myC_t[] = @{
+static const R_NativePrimitiveArgType myC_t[] = @{
     REALSXP, INTSXP, STRSXP, LGLSXP
 @};
 
-static R_CMethodDef cMethods[] = @{
+static const R_CMethodDef cMethods[] = @{
    @{"myC", (DL_FUNC) &myC, 4, myC_t@}
-   @{NULL, NULL, 0@}
+   @{NULL, NULL, 0, NULL@}
 @};
 @end group
 @end example
@@ -9549,7 +9549,7 @@ package):
 
 #define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
 
-const static R_CallMethodDef R_CallDef[] = @{
+static const R_CallMethodDef R_CallDef[] = @{
    CALLDEF(spline_basis, ?),
    CALLDEF(spline_value, ?),
    @{NULL, NULL, 0@}
@@ -9751,7 +9751,7 @@ We end up with a file @file{src/init.c} containing
 
 #define CALLDEF(name, n)  @{#name, (DL_FUNC) &name, n@}
 
-const static R_CallMethodDef R_CallDef[] = @{
+static const R_CallMethodDef R_CallDef[] = @{
     CALLDEF(spline_basis, 4),
     CALLDEF(spline_value, 5),
     @{NULL, NULL, 0@}

@@ -217,7 +217,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 	    {0, 0, 0, 0, /*startline = */TRUE, 0,
 	     NULL,
 	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
-	     DEFAULT_Cutoff, FALSE, 0, TRUE, FALSE, INT_MAX, TRUE, 0};
+	     DEFAULT_Cutoff, FALSE, 0, TRUE, FALSE, INT_MAX, TRUE, 0, FALSE};
     localData.cutoff = cutoff;
     localData.backtick = backtick;
     localData.opts = opts;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015   The R Core Team.
+ *  Copyright (C) 1998-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -827,7 +827,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *p, *encoding;
     RCNTXT cntxt;
     LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE, FALSE, FALSE};
+		      FALSE, 0, FALSE, FALSE, FALSE, FALSE, FALSE, {FALSE}};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
