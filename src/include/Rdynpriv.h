@@ -73,9 +73,7 @@ typedef struct {
     DL_FUNC     fun;
     int         numArgs;
 
-    R_NativePrimitiveArgType *types;
-    R_NativeArgStyle *styles;
-   
+    R_NativePrimitiveArgType *types;   
 } Rf_DotCSymbol;
 
 typedef Rf_DotCSymbol Rf_DotFortranSymbol;
@@ -85,9 +83,6 @@ typedef struct {
     char       *name;
     DL_FUNC     fun;
     int         numArgs;
-    R_NativeObjectArgType *types;
-
-    R_NativeArgStyle *styles;
 } Rf_DotCallSymbol;
 
 typedef Rf_DotCallSymbol Rf_DotExternalSymbol;

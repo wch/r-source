@@ -366,19 +366,6 @@ R_setPrimitiveArgTypes(const R_FortranMethodDef * const croutine,
 }
 
 static void
-R_setArgStyles(const R_FortranMethodDef * const croutine,
-	       Rf_DotFortranSymbol *sym)
-{
-    sym->styles = (R_NativeArgStyle *)
-	malloc(sizeof(R_NativeArgStyle) * (size_t) croutine->numArgs);
-    if(!sym->styles)
-	error("allocation failure in R_setArgStyles");
-    if(sym->styles)
-	memcpy(sym->styles, croutine->styles,
-	       sizeof(R_NativeArgStyle) * (size_t) croutine->numArgs);
-}
-
-static void
 R_addFortranRoutine(DllInfo *info,
 		    const R_FortranMethodDef * const croutine,
 		    Rf_DotFortranSymbol *sym)
@@ -388,8 +375,6 @@ R_addFortranRoutine(DllInfo *info,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
 	R_setPrimitiveArgTypes(croutine, sym);
-    if(croutine->styles)
-	R_setArgStyles(croutine, sym);
 }
 
 static void
@@ -402,8 +387,6 @@ R_addExternalRoutine(DllInfo *info,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
 
-
-
 static void
 R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
 	      Rf_DotCSymbol *sym)
@@ -413,9 +396,6 @@ R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
 	R_setPrimitiveArgTypes(croutine, sym);
-    if(croutine->styles)
-	R_setArgStyles(croutine, sym);
-
 }
 
 static void

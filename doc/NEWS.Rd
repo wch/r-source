@@ -589,6 +589,7 @@
       \item (C-level Native routine registration.)  The deprecated
       \code{styles} component of \code{R_CMethodDef} and
       \code{RFortranMethodDef} no longer does anything.
+      %% used by packages RandomFieldUtils SOD aster aster2 polyapost potts
     }
   }
 
