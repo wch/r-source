@@ -243,8 +243,8 @@
       %% avoid the name problem seen in \PR{17119}.
 
       \item \code{try()} gains a new argument \code{outFile} with a
-      default that can be modified \emph{via} \code{options(try.outFile
-      = .)}, useful notably for \code{Sweave}.
+      default that can be modified \emph{via}
+      \code{options(try.outFile = .)}, useful notably for \code{Sweave}.
 
       \item The unexported low-level functions in package \pkg{parallel}
       for passing serialized \R objects to and from forked children now
@@ -474,7 +474,8 @@
       will be used by \code{Sys.setFileTime()} and
       \code{file.copy(copy.date = TRUE)}.  This may result in slightly
       more accurate file times.  (It is available on Linux and FreeBSD
-      but not macOS nor Solaris.)
+      but not macOS.)
+      %% My Solaris 10 system does not have it, but Oracle's online help does
       
       \item The minimum version requirement for \code{libcurl} has been
       reduced to 7.22.0, although at least 7.28.0 is preferred and
@@ -588,7 +589,7 @@
       
       \item (C-level Native routine registration.)  The deprecated
       \code{styles} component of \code{R_CMethodDef} and
-      \code{RFortranMethodDef} no longer does anything.
+      \code{R_FortranMethodDef} no longer does anything.
       %% used by packages RandomFieldUtils SOD aster aster2 polyapost potts
     }
   }
@@ -737,17 +738,19 @@
       \item Changes when redirection of a \samp{http://} URL to a
       \samp{https://} URL is encountered:
       
-      The internal methods of \code{download.file()} and \code{url()}
-      now report that they cannot follow this (rather than failing
-      silently).
+      \itemize{
+	\item The internal methods of \code{download.file()} and
+	\code{url()} now report that they cannot follow this (rather
+	than failing silently).
 
-      (Unix-alike) \code{download.file(method = "auto")} (the default)
-      re-tries with \code{method = "libcurl"}.
+	\item (Unix-alike) \code{download.file(method = "auto")} (the
+	default) re-tries with \code{method = "libcurl"}.
 
-      (Unix-alike) \code{url(method = "default")} with an explicit
-      \code{open} argument re-tries with \code{method = "libcurl"}.
-      This covers many of the usages, e.g.\sspace{}\code{readLines()}
-      with a URL argument.
+	\item (Unix-alike) \code{url(method = "default")} with an
+	explicit \code{open} argument re-tries with
+	\code{method = "libcurl"}.  This covers many of the usages,
+	e.g.\sspace{}\code{readLines()} with a URL argument.
+      }
     }
   }
 
@@ -770,8 +773,8 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item (C-level Native routine registration.)  The undocumented
-      \code{styles} component of \code{R_CMethodDef} and
-      \code{RFortranMethodDef} is deprecated.
+      \code{styles} field of the components of \code{R_CMethodDef} and
+      \code{R_FortranMethodDef} is deprecated.
     }
   }
 
