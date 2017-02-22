@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -169,6 +169,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   substrings corresponding to parenthesized subexpressions of
   \code{pattern}, with attribute \code{"match.length"} a vector
   giving the lengths of the matches (or \eqn{-1} for no match).
+  
+  Where matching failed because of resource limits (especially for PCRE)
+  this is regarded as a non-match.
 }
 
 \section{Warning}{
@@ -196,15 +199,19 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   checked before matching, and the actual matching will be faster.
   Often byte-based matching suffices in a UTF-8 locale since byte
   patterns of one character never match part of another.
+
+  PCRE-based matching puts additional effort into \sQuote{studying} the
+  compiled pattern when \code{x}/\code{text} has length greater than
+  10.
 }
 
 \source{
   The C code for POSIX-style regular expression matching has changed
-  over the years.  As from \R 2.10.0 the TRE library of Ville Laurikari
-  (\url{http://laurikari.net/tre/}) is used.  The POSIX standard does
-  give some room for interpretation, especially in the handling of
-  invalid regular expressions and the collation of character ranges, so
-  the results will have changed slightly over the years.
+  over the years.  As from \R 2.10.0 (Oct 2009) the TRE library of Ville
+  Laurikari (\url{http://laurikari.net/tre/}) is used.  The POSIX
+  standard does give some room for interpretation, especially in the
+  handling of invalid regular expressions and the collation of character
+  ranges, so the results will have changed slightly over the years.
 
   For Perl-style matching PCRE (\url{http://www.pcre.org}) is used.
 }
