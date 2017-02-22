@@ -3092,25 +3092,28 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* dladdr is not inside R, hence we probably have the PLT for
 	   dynamically linked symbols; lets use dlsym(RTLD_NEXT) to
-	   get real symbol addresses.
+	   get the real address for dgemm.
+
+	   PLT is used on Linux and on Solaris when the main binary
+	   is _not_ position independent. PLT is not used on macOS.
 	*/
+	if (dgemm_addr != NULL) {
 
-	if (dlsym(RTLD_DEFAULT, "do_eSoftVersion") == NULL
-	    && dlsym(RTLD_DEFAULT, "dladdr") != NULL) {
+	    /* If dgemm_addr is NULL, dgemm is statically linked and
+	       we are on Linux. On Solaris, dgemm_addr is never NULL.
+	    */
+	    void *dgemm_next_addr = dlsym(RTLD_NEXT, dgemm_name);
+	    if (dgemm_next_addr != NULL)
 
-	    /* (some) static symbols can be recognized by that dlsym
-	       returns NULL for RTLD_DEFAULT */
+		/* If dgemm_next_addr is NULL, dgemm is statically linked.
+		   Otherwise, it is linked dynamically and dgemm_next_addr
+		   is its true address (dgemm points to PLT).
 
-	    if (dgemm_addr != NULL) {
-		void *dgemm_next_addr = dlsym(RTLD_NEXT, dgemm_name);
-		if (dgemm_next_addr != NULL)
-		    /* dgemm_next_addr is NULL when dgemm is statically linked
-		       yet export-dynamic, while at the same time eSoftVersion
-		       is statically linked but not export-dynamic  */
-		    dgemm_addr = dgemm_next_addr;
-	    }
-	} else
-	    ok = FALSE;
+		   On Linux, dgemm_next_addr is only NULL here when
+		   dgemm is export-dynamic (yet statically linked).
+		*/
+		dgemm_addr = dgemm_next_addr;
+	}
     }
 
     char buf[PATH_MAX+1];
@@ -3125,6 +3128,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* this call forces the lapack module to be loaded */
     SEXP laver = do_lapack(R_NilValue, INTERNAL(install("La_version")),
                            R_NilValue, R_NilValue);
+    PROTECT(laver);
     if (isString(laver) && length(laver) == 1) {
 	const char *laverstr = CHAR(STRING_ELT(laver, 0));
 	void *ilaver_addr = (void *)R_FindSymbol(ilaver_name, "lapack", 0);
@@ -3140,6 +3144,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_STRING_ELT(ans, i+1, mkChar(laverstr));
 	}
     }
+    UNPROTECT(1); /* laver */
 #endif
     SET_STRING_ELT(nms, i++, mkChar("BLAS"));
     SET_STRING_ELT(nms, i++, mkChar("LAPACK"));
