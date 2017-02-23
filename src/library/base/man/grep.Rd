@@ -169,7 +169,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   substrings corresponding to parenthesized subexpressions of
   \code{pattern}, with attribute \code{"match.length"} a vector
   giving the lengths of the matches (or \eqn{-1} for no match).
-  JIT
+
   Where matching failed because of resource limits (especially for PCRE)
   this is regarded as a non-match, usually with a warning.
 }
