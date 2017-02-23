@@ -253,8 +253,8 @@
       returning gigabyte results from forked processes \emph{via}
       serialization should be avoided if at all possible).
 
-      \item Connections now \code{print()} without error, even if
-      invalid, i.e., typically after having been destroyed.
+      \item Connections now \code{print()} without error even if
+      invalid, e.g.\sspace{}after having been destroyed.
 
       \item \code{apropos()} and \code{find(simple.words = FALSE)} no
       longer match object names starting with \samp{.} which are known
@@ -361,10 +361,10 @@
       \item Methods \code{"wget"} and \code{"curl"} for
       \code{download.file()} now give an \R error rather than a non-zero
       return value when the external command has a non-zero status.
-      
+
       \item Encoding name \code{"utf8"} is mapped to \code{"UTF-8"}.
       Many implementations of \code{iconv} accept \code{"utf8"}, but not
-      GNU \pkg{libiconv} (including the current version 1.15).
+      GNU \pkg{libiconv} (including the late 2016 version 1.15).
 
       \item \code{sessionInfo()} shows the full paths to the library or
       executable files providing the BLAS/LAPACK implementations
@@ -373,8 +373,27 @@
       \item The binning algorithm used by bandwidth selectors
       \code{bw.ucv()}, \code{bw.bcv()} and \code{bw.SJ()} switches to a
       version linear in the input size \code{n} for \code{n > nb/2}.
-      (The calculations are the same, but for large \code{n/nb} it is
+      (The calculations are the same, but for larger \code{n/nb} it is
       worth doing the binning in advance.)
+ 
+      \item \code{grep(perl = TRUE)} and friends can now make use of
+      PCRE's Just-In-Time mechanism, for PCRE \eqn{\le}{>=} 8.20 on
+      platforms where JIT is supported.  It is used by default whenever
+      the \code{pattern} is studied, which by default requires an input
+      \code{x} of length at least 10.  (Based on a patch from Mikko
+      Korpela.)
+
+      This is controlled by a new option \code{PCRE_use_JIT}.
+
+      Note that in general this makes little difference to the speed,
+      and may take a little longer: its benefits are most evident on
+      strings of thousands of characters.  As a side effect it reduces
+      the chances of C stack overflow in the PCRE library on very long
+      strings (millions of characters).
+
+      \item There is a new option \code{PCRE_study} which controls when
+      \code{grep(perl = TRUE)} and friends \sQuote{study} the compiled
+      pattern.
     }
   }
 
@@ -726,8 +745,9 @@
       (\PR{17219})
 
       \item Fix for \code{cairo_pdf()} (and \code{svg()} and
-      \code{cairo_ps()}) when replaying saved display list that contains
-      mix of \pkg{grid} and \pkg{graphics} output.  Thanks to Yihui Xie.
+      \code{cairo_ps()}) when replaying a saved display list that contains
+      a mix of \pkg{grid} and \pkg{graphics} output.
+      (Report by Yihui Xie.)
     }
   }
 }

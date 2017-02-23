@@ -3280,18 +3280,21 @@ possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
 later are required.
 
-@c PCRE[1] 8.32 is from Nov 2012, but Ubuntu 14.04LTS does not have it 
+@c PCRE[1] 8.32 is from Nov 2012, but Ubuntu 14.04LTS has 8.31 
 @c and that is supported until Apr 2019.
+@c Debian Wheezy has 8.30, Ubuntu 12.04LTS has 8.12
 PCRE@footnote{sometimes known as PCRE1, and not PCRE2 which started at
 version 10.0.} (version 8.32 or later, although versions 8.10--8.31 will
 be accepted with a deprecation warning) is required (or just its library
-and headers if packaged separately).  PCRE must be built with UTF-8
-support (not the default, and checked by @command{configure}) and
-support for Unicode properties is assumed by some @R{} packages.  JIT
-support is desirable for the best performance: support for this and
-Unicode properties can be checked at run-time by calling
-@code{pcre_config()}.  If building PCRE for use with @R{} a suitable
-@command{configure} command might be
+and headers if packaged separately).  Only the `8-bit' interface is used
+(and only that is built by default when installing from sources).  PCRE
+must be built with UTF-8 support (not the default, and checked by
+@command{configure}) and support for Unicode properties is assumed by
+some @R{} packages.  JIT support (optionally available from 8.20) is
+desirable for the best performance: support for this and Unicode
+properties can be checked at run-time by calling @code{pcre_config()}.
+If building PCRE for use with @R{} a suitable @command{configure}
+command might be
 @example
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example

@@ -261,7 +261,19 @@ getOption(x, default = NULL)
       \code{"a4"}, or \code{"letter"} in US and Canadian locales.
 #endif
     }
+    
+    \item{\code{PCRE_study}:}{Logical or integer: should
+      \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
+      patterns?  Either logical or a numerical threshold for the number
+      of strings to be matched before the pattern is studied (the
+      default is \code{10})).  Missing logical values are treated as
+      false.}
 
+    \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
+	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
+      of PCRE's Just-In-Time compiler for studied patterns, if
+      avaliable?  Missing values are treated as false.}
+      
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},
 #ifdef unix

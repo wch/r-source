@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -122,7 +122,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   Invalid inputs in the current locale are warned about up to 5 times.
 
-  Caseless matching with \code{PERL = TRUE} for non-ASCII characters
+  Caseless matching with \code{perl = TRUE} for non-ASCII characters
   depends on the PCRE library being compiled with \sQuote{Unicode
   property support}: an external library might not be.
 }
@@ -169,6 +169,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   substrings corresponding to parenthesized subexpressions of
   \code{pattern}, with attribute \code{"match.length"} a vector
   giving the lengths of the matches (or \eqn{-1} for no match).
+  JIT
+  Where matching failed because of resource limits (especially for PCRE)
+  this is regarded as a non-match, usually with a warning.
 }
 
 \section{Warning}{
@@ -184,7 +187,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   very long strings, you will want to consider the options used.
   Generally PCRE will be faster than the default regular expression
   engine, and \code{fixed = TRUE} faster still (especially when each
-  pattern is matched only a few times).
+  pattern is matched only a few times).  People working with PCRE and
+  very long strings (millions of bytes) on 64-bit machines may want to
+  increase the constant \code{JIT_STACK_MAX} in file \file{src/main/grep.c}.
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as
@@ -196,15 +201,22 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   checked before matching, and the actual matching will be faster.
   Often byte-based matching suffices in a UTF-8 locale since byte
   patterns of one character never match part of another.
+
+  PCRE-based matching by default puts additional effort into
+  \sQuote{studying} the compiled pattern when \code{x}/\code{text} has
+  length at least 10.  As from \R 3.4.0 that study may use the PCRE JIT
+  compiler on platforms where it is available (see
+  \code{\link{pcre_config}}).  The details are controlled by
+  \code{\link{options}} \code{PCRE_study} amd \code{PCRE_use_JIT}.
 }
 
 \source{
   The C code for POSIX-style regular expression matching has changed
-  over the years.  As from \R 2.10.0 the TRE library of Ville Laurikari
-  (\url{http://laurikari.net/tre/}) is used.  The POSIX standard does
-  give some room for interpretation, especially in the handling of
-  invalid regular expressions and the collation of character ranges, so
-  the results will have changed slightly over the years.
+  over the years.  As from \R 2.10.0 (Oct 2009) the TRE library of Ville
+  Laurikari (\url{http://laurikari.net/tre/}) is used.  The POSIX
+  standard does give some room for interpretation, especially in the
+  handling of invalid regular expressions and the collation of character
+  ranges, so the results will have changed slightly over the years.
 
   For Perl-style matching PCRE (\url{http://www.pcre.org}) is used.
 }
@@ -237,6 +249,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{apropos}} uses regexps and has more examples.
 
   \code{\link{grepRaw}} for matching raw vectors.
+  
+  Options \code{PCRE_study} amd \code{PCRE_use_JIT}.
 }
 \examples{
 grep("[a-z]", letters)
@@ -253,11 +267,11 @@ gsub("([ab])", "\\\\1_\\\\1_", "abc and ABC")
 txt <- c("The", "licenses", "for", "most", "software", "are",
   "designed", "to", "take", "away", "your", "freedom",
   "to", "share", "and", "change", "it.",
-   "", "By", "contrast,", "the", "GNU", "General", "Public", "License",
-   "is", "intended", "to", "guarantee", "your", "freedom", "to",
-   "share", "and", "change", "free", "software", "--",
-   "to", "make", "sure", "the", "software", "is",
-   "free", "for", "all", "its", "users")
+  "", "By", "contrast,", "the", "GNU", "General", "Public", "License",
+  "is", "intended", "to", "guarantee", "your", "freedom", "to",
+  "share", "and", "change", "free", "software", "--",
+  "to", "make", "sure", "the", "software", "is",
+  "free", "for", "all", "its", "users")
 ( i <- grep("[gu]", txt) ) # indices
 stopifnot( txt[i] == grep("[gu]", txt, value = TRUE) )
 
