@@ -83,9 +83,9 @@ strsplit grep [g]sub [g]regexpr
 # define PCRE_STUDY_JIT_COMPILE 0
 #else
 /* 
-   Maximum stack size: note this is reserved but not allocated until needed.
-   The help says 1M suffices, but we found more was needed for strings
-   around a million bytes.
+   Default maximum stack size: note this is reserved but not allocated
+   until needed.  The help says 1M suffices, but we found more was
+   needed for strings around a million bytes.
 */
 #define JIT_STACK_MAX 64*1024*1024
 /* 
@@ -94,6 +94,25 @@ strsplit grep [g]sub [g]regexpr
    more than 10 strings.
  */
 static pcre_jit_stack *jit_stack = NULL; // allocated at first use.
+
+static void setup_jit(pcre_extra *re_pe)
+{
+    if (!jit_stack) {
+	int stmax = JIT_STACK_MAX;
+	char *p = getenv("R_PCRE_JIT_STACK_MAXSIZE");
+	if (p) {
+	    char *endp;
+	    double xdouble = R_strtod(p, &endp);
+	    if (xdouble >= 0 && xdouble <= 1000) 
+		stmax = (int)(xdouble*1024*1024);
+	    else warning ("R_PCRE_JIT_STACK_MAXSIZE invalid and ignored");
+	}
+	jit_stack = pcre_jit_stack_alloc(32*1024, stmax);
+    }
+    if (jit_stack)
+	pcre_assign_jit_stack(re_pe, NULL, jit_stack);
+}
+
 #endif
 
 #ifndef MAX
@@ -465,12 +484,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 #if PCRE_STUDY_JIT_COMPILE
-	    else {
-		if (!jit_stack)
-		    jit_stack = pcre_jit_stack_alloc(32*1024, JIT_STACK_MAX);
-		if (jit_stack)
-		    pcre_assign_jit_stack(re_pe, NULL, jit_stack);
-	    }
+	    else setup_jit(re_pe);
 #endif
 
 	    vmax2 = vmaxget();
@@ -967,12 +981,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 #if PCRE_STUDY_JIT_COMPILE
-	    else {
-		if (!jit_stack)
-		    jit_stack = pcre_jit_stack_alloc(32*1024, JIT_STACK_MAX);
-		if (jit_stack)
-		    pcre_assign_jit_stack(re_pe, NULL, jit_stack);
-	    }
+	    else setup_jit(re_pe);
 #endif
 	}
     } else {
@@ -1759,12 +1768,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 #if PCRE_STUDY_JIT_COMPILE
-	    else {
-		if (!jit_stack)
-		    jit_stack = pcre_jit_stack_alloc(32*1024, JIT_STACK_MAX);
-		if (jit_stack)
-		    pcre_assign_jit_stack(re_pe, NULL, jit_stack);
-	    }
+	    else setup_jit(re_pe);
 #endif
 	}
 	replen = strlen(srep);
@@ -2595,12 +2599,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 #if PCRE_STUDY_JIT_COMPILE
-	    else {
-		if (!jit_stack)
-		    jit_stack = pcre_jit_stack_alloc(32*1024, JIT_STACK_MAX);
-		if (jit_stack)
-		    pcre_assign_jit_stack(re_pe, NULL, jit_stack);
-	    }
+	    else setup_jit(re_pe);
 #endif
 	}
 	/* also extract info for named groups */

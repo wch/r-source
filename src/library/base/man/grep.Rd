@@ -188,8 +188,10 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   Generally PCRE will be faster than the default regular expression
   engine, and \code{fixed = TRUE} faster still (especially when each
   pattern is matched only a few times).  People working with PCRE and
-  very long strings (millions of bytes) on 64-bit machines may want to
-  increase the constant \code{JIT_STACK_MAX} in file \file{src/main/grep.c}.
+  very long strings can adjust the maximum stack size by setting
+  environment variable \env{R_PCRE_JIT_STACK_MAXSIZE} before JIT is used
+  to a value between \code{1} and \code{1000} in MB: the default is
+  \code{64}.
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as
