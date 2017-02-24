@@ -1,5 +1,5 @@
 
-R version 3.3.2 Patched (2017-02-14 r72171) -- "Sincere Pumpkin Patch"
+R version 3.3.3 beta (2017-02-23 r72250) -- "Another Canoe"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.241   0.008   0.237 
+  0.221   0.018   0.228 
