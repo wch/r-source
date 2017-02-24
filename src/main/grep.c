@@ -113,7 +113,9 @@ static void setup_jit(pcre_extra *re_pe)
 	pcre_assign_jit_stack(re_pe, NULL, jit_stack);
 }
 
-#endif
+#endif // PCRE >= 8.20
+
+
 
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -195,6 +197,54 @@ static void pcre_exec_error(int rc, R_xlen_t i)
 #endif
     }
 }
+
+static long R_pcre_max_recursions()
+{
+    uintptr_t ans, stack_used, current_frame;
+    /* Approximate size of stack frame in PCRE match(), actually
+       platform / compiler dependent.  Estimate found at
+       https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=16757
+    */
+    const uintptr_t recursion_size = 600;
+
+    const uintptr_t fallback_used = 10000;
+    const long fallback_limit = 10000;
+    int use_recursion;
+    pcre_config(PCRE_CONFIG_STACKRECURSE, &use_recursion);
+    if (!use_recursion) return -1L;
+    if (R_CStackLimit == -1) return fallback_limit;
+    current_frame = (uintptr_t) &ans;
+    /* Approximate number of bytes used in the stack, or fallback */
+    if (R_CStackDir == 1) {
+	stack_used =  (R_CStackStart >= current_frame) ?
+	    R_CStackStart - current_frame : fallback_used;
+    } else {
+	stack_used = (current_frame >= R_CStackStart) ?
+	    current_frame - R_CStackStart : fallback_used;
+    }
+    if (stack_used >= R_CStackLimit) return 0L;
+    ans = (R_CStackLimit - stack_used) / recursion_size;
+    return (long) ((ans <= LONG_MAX) ? ans : -1L);
+}
+
+static void 
+set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
+{
+    pcre_extra *re_pe = *re_pe_ptr;
+    if (limit >= 0) {
+	if (!re_pe) {
+	    // this will be freed by pcre_free_study
+	    re_pe = (pcre_extra *) calloc(1, sizeof(pcre_extra));
+	    if (!re_pe)
+		warning("allocation failure in set_pcre_recursion_limit");
+	    re_pe->flags = PCRE_EXTRA_MATCH_LIMIT_RECURSION;
+	    *re_pe_ptr = re_pe;
+	} else
+	    re_pe->flags = re_pe->flags | PCRE_EXTRA_MATCH_LIMIT_RECURSION;
+	re_pe->match_limit_recursion = (unsigned long) limit;
+    }
+}
+
 
 /* strsplit is going to split the strings in the first argument into
  * tokens depending on the second argument. The characters of the second
@@ -486,6 +536,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 #if PCRE_STUDY_JIT_COMPILE
 	    else setup_jit(re_pe);
 #endif
+	    set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
 
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
@@ -984,6 +1035,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else setup_jit(re_pe);
 #endif
 	}
+	set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
     } else {
 	int cflags = REG_NOSUB | REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
@@ -1771,6 +1823,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else setup_jit(re_pe);
 #endif
 	}
+	set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
 	replen = strlen(srep);
     } else {
 	int cflags = REG_EXTENDED;
@@ -2602,6 +2655,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else setup_jit(re_pe);
 #endif
 	}
+	set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
 	/* also extract info for named groups */
 	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMECOUNT, &name_count);
 	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMEENTRYSIZE, &name_entry_size);

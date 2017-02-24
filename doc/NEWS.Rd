@@ -394,6 +394,12 @@
       \item There is a new option \code{PCRE_study} which controls when
       \code{grep(perl = TRUE)} and friends \sQuote{study} the compiled
       pattern.
+
+      \item \code{grep(perl = TRUE)} and friends set a maximal recursion
+      limit, taking into account \R's estimate of the remaining C stack
+      space.  This reduces the chance of C stack overflow, but because
+      it is conservative may return a non-match with a warning in
+      examples that succeeded before. (\PR{16757})
     }
   }
 
@@ -610,6 +616,10 @@
       \code{styles} component of \code{R_CMethodDef} and
       \code{R_FortranMethodDef} no longer does anything.
       %% used by packages RandomFieldUtils SOD aster aster2 polyapost potts
+      
+      \item The deprecated support for PCRE versions older than 8.20
+      will be removed in \R 3.4.1. (Versions 8.20--8.31 will still be
+      accepted but deprecated.)
     }
   }
 
