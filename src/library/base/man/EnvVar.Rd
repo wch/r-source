@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-2014 R Core Team
+% Copyright 2007-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -17,6 +17,7 @@
 \alias{R_INCLUDE_DIR}
 \alias{MAKEINDEX}
 \alias{R_PAPERSIZE}
+\alias{R_PCRE_JIT_STACK_MAXSIZE}
 \alias{R_PDFVIEWER}
 \alias{R_PLATFORM}
 \alias{R_RD4PDF}
@@ -113,6 +114,8 @@
     \item{\env{R_PAPERSIZE}:}{Optional.  Used to set the default for
       \code{\link{options}("papersize")}, e.g.\sspace{}used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
+    \item{\env{R_PCRE_JIT_STACK_MAXSIZE}:}{Optional.  Consulted when
+      PCRE's JIT pattern compiler is first used.  See \code{\link{grep}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
