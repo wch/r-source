@@ -206,6 +206,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   compiler on platforms where it is available (see
   \code{\link{pcre_config}}).  The details are controlled by
   \code{\link{options}} \code{PCRE_study} amd \code{PCRE_use_JIT}.
+  (Some timing comparisons can be seen by running file
+  \file{tests/PCRE.R} in the \R sources (and perhaps installed).)
   People working with PCRE and very long strings can adjust the maximum
   size of the JIT stack by setting environment variable
   \env{R_PCRE_JIT_STACK_MAXSIZE} before JIT is used to a value between

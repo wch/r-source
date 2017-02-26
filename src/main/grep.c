@@ -181,7 +181,7 @@ static void pcre_exec_error(int rc, R_xlen_t i)
 		(int) i + 1);
 	break;
     case PCRE_ERROR_RECURSIONLIMIT:
-	warning("recursion limit reached in PCRE for element %d",
+	warning("recursion limit reached in PCRE for element %d\n  consider increasing the C stack size for the R process",
 		(int) i + 1);
 	break;
     case PCRE_ERROR_INTERNAL:
