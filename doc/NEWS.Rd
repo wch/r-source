@@ -788,7 +788,7 @@
     \itemize{
       \item The \command{configure} check for the \code{zlib} version is
       now robust to versions longer than 5 characters, including
-      \code{1.2.10}.
+      \code{1.2.11}.
     }
   }
 
