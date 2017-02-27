@@ -1667,7 +1667,8 @@ SEXP attribute_hidden do_strrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		strcpy(buf, xi);
 		buf += nc;
 	    }
-	    SET_STRING_ELT(s, is, markKnown(cbuf, STRING_ELT(x, ix)));
+	    SET_STRING_ELT(s, is,
+			   mkCharCE(cbuf, getCharCE(STRING_ELT(x, ix))));
 	    Free(cbuf);
 	    vmaxset(vmax);
 	}
