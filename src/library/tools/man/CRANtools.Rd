@@ -1,6 +1,6 @@
 % File src/library/tools/man/CRANtools.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2016 R Core Team
+% Copyright 2016-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{CRANtools}
@@ -65,7 +65,8 @@ summarize_CRAN_check_status(package,
 \examples{
 ## IGNORE_RDIFF_BEGIN
 \dontshow{set.seed(11)}
-pdb <- CRAN_package_db()
+pdb <- try(CRAN_package_db())
+if(inherits(pdb, "data.frame")) withAutoprint({
 dim(pdb)
 ## DESCRIPTION fields included:
 colnames(pdb)
@@ -103,5 +104,6 @@ table(do.call(rbind, mtnotes)[, "Test"])
 pos <- sample(seq_len(NROW(pdb)), 10L)
 summarize_CRAN_check_status(pdb[pos, "Package"],
                             results, details, mtnotes)
+}) # withAutoprint(..)
 ## IGNORE_RDIFF_END
 }
