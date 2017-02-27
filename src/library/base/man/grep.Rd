@@ -84,9 +84,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   Arguments which should be character strings or character vectors are
   coerced to character if possible.
 
-  Each of these functions (apart from \code{regexec}, which currently
-  does not support Perl-style regular expressions) operates in one of
-  three modes:
+  Each of these functions operates in one of three modes:
   \enumerate{
     \item \code{fixed = TRUE}: use exact matching.
     \item \code{perl = TRUE}: use Perl-style regular expressions.
