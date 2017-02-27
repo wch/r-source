@@ -778,6 +778,9 @@
       \code{cairo_ps()}) when replaying a saved display list that contains
       a mix of \pkg{grid} and \pkg{graphics} output.
       (Report by Yihui Xie.)
+
+      \item \code{rep(3, list(4))} works again, as \code{\link{list}}s
+      \emph{are} vectors.
     }
   }
 }

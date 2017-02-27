@@ -680,6 +680,21 @@ stopifnot(length(strsplit(msg,"\n")[[1]]) == 1+3+1)
 ## was wrong for months in R-devel only
 
 
+## available.packages() (not) caching in case of errors
+tools::assertWarning(ap1 <- available.packages(repos = "http://foo.bar"))
+tools::assertWarning(ap2 <- available.packages(repos = "http://foo.bar"))
+stopifnot(nrow(ap1) == 0, identical(ap1, ap2))
+## had failed for a while in R-devel (left empty *.rds file)
+
+
+## rep()/rep.int() : when 'times' is a list
+stopifnot(identical(rep    (4,   list(3)), c(4,4,4)),
+          identical(rep.int(4,   list(3)), c(4,4,4)),
+          identical(rep.int(4:5, list(2,1)), c(4L,4:5)),
+          identical(rep    (4:5, list(2,1)), c(4L,4:5)))
+## partly failed in R 3.3.{2,3}
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -344,6 +344,7 @@ static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
     return a;
 }
 
+// .Internal(rep.int(x, times))
 SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -352,14 +353,15 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a;
 
     if (!isVector(ncopy))
-	error(_("incorrect type for second argument"));
+	error(_("invalid type (%s) for '%s' (must be a vector)"),
+	      type2char(TYPEOF(ncopy)), "times");
 
     if (!isVector(s) && s != R_NilValue)
 	error(_("attempt to replicate an object of type '%s'"),
 	      type2char(TYPEOF(s)));
 
     nc = xlength(ncopy); // might be 0
-    if (nc != 1 && nc == xlength(s))
+    if (nc == xlength(s))
 	PROTECT(a = rep2(s, ncopy));
     else {
 	if (nc != 1) error(_("invalid '%s' value"), "times");
