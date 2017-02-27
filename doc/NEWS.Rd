@@ -10,7 +10,7 @@
     \itemize{
       \item Changes when redirection of a \samp{http://} URL to a
       \samp{https://} URL is encountered:
-      
+
       \itemize{
 	\item The internal methods of \code{download.file()} and
 	\code{url()} now report that they cannot follow this (rather
@@ -54,8 +54,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
-      work also when \code{times} is larger than the maximal integer,
-      including when it is of length greater than one. (\PR{16932})
+      work also when \code{times} is of length one and larger than the
+      maximal integer.
 
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
@@ -121,7 +121,7 @@
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
-              
+
       \item \command{R CMD Rd2pdf} had problems with packages with
       non-ASCII titles in \file{.Rd} files (usually the titles were
       omitted).
