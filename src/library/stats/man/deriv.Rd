@@ -1,6 +1,6 @@
 % File src/library/stats/man/deriv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2013, 2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deriv}
@@ -72,6 +72,11 @@ deriv3(expr, \dots)
   \code{digamma} and \code{trigamma}, as well as \code{psigamma} for one
   or two arguments (but derivative only with respect to the first).
   (Note that only the standard normal distribution is considered.)
+  \cr
+  Since \R 3.4.0, the single-variable functions \code{\link{log1p}},
+  \code{expm1}, \code{log2}, \code{log10}, \code{\link{cospi}},
+  \code{sinpi}, \code{tanpi}, \code{\link{factorial}}, and
+  \code{lfactorial} are supported as well.
 }
 \value{
   \code{D} returns a call and therefore can easily be iterated
@@ -155,6 +160,27 @@ DD(expression(sin(x^2)), "x", 3)
 -sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) *
     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
 }
+
+## New (R 3.4.0, 2017):
+D(quote(log1p(x^2)), "x") ## log1p(x) = log(1 + x)
+stopifnot(identical(
+       D(quote(log1p(x^2)), "x"),
+       D(quote(log(1+x^2)), "x")))
+D(quote(expm1(x^2)), "x") ## expm1(x) = exp(x) - 1
+stopifnot(identical(
+       D(quote(expm1(x^2)), "x") -> Dex1,
+       D(quote(exp(x^2)-1), "x")),
+       identical(Dex1, quote(exp(x^2) * (2 * x))))
+
+D(quote(sinpi(x^2)), "x") ## sinpi(x) = sin(pi*x)
+D(quote(cospi(x^2)), "x") ## cospi(x) = cos(pi*x)
+D(quote(tanpi(x^2)), "x") ## tanpi(x) = tan(pi*x)
+
+stopifnot(identical(D(quote(log2 (x^2)), "x"),
+                    quote(2 * x/(x^2 * log(2)))),
+          identical(D(quote(log10(x^2)), "x"),
+                    quote(2 * x/(x^2 * log(10)))))
+
 }
 \keyword{math}
 \keyword{nonlinear}

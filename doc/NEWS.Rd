@@ -19,7 +19,7 @@
       Those who use proxies should check that their settings are
       compatible (see \code{?download.file}: the most commonly used
       forms work for both \code{"internal"} and \code{"libcurl"}).
-      
+
       \item \code{table()} has been amended to be more internally
       consistent and become back compatible to \R \eqn{\le}{<=} 2.7.2
       again.  Consequently, \code{table(1:2, exclude = NULL)} no longer
@@ -375,7 +375,7 @@
       version linear in the input size \code{n} for \code{n > nb/2}.
       (The calculations are the same, but for larger \code{n/nb} it is
       worth doing the binning in advance.)
- 
+
       \item \code{grep(perl = TRUE)} and friends can now make use of
       PCRE's Just-In-Time mechanism, for PCRE \eqn{\le}{>=} 8.20 on
       platforms where JIT is supported.  It is used by default whenever
@@ -404,11 +404,15 @@
       \item \code{getGraphicsEvent()} now works on
       \code{X11(type="cairo")} devices.  Thanks to Frederick Eaton (for
       reviving an earlier patch).
-      
+
       \item There is a new argument \code{onIdle} for
       \code{getGraphicsEvent()}, which allows an R function to be run
       whenever there are no pending graphics events.  This is currently
       only supported on X11 devices.  Thanks to Frederick Eaton.
+
+      \item The \code{deriv()} and similar functions now can compute
+      derivatives of \code{log1p()}, \code{sinpi()} and similar one
+      argument functions, thanks to a contribution by Jerry Lewis.
     }
   }
 
@@ -510,7 +514,7 @@
       more accurate file times.  (It is available on Linux and FreeBSD
       but not macOS.)
       %% My Solaris 10 system does not have it, but Oracle's online help does
-      
+
       \item The minimum version requirement for \code{libcurl} has been
       reduced to 7.22.0, although at least 7.28.0 is preferred and
       earlier versions are little tested.  (This is to support Debian
@@ -526,7 +530,7 @@
       binary builds.  The \file{tcltk*.chm} help file is no longer
       included; please consult the online help at
       \url{http://www.tcl.tk/man/} instead.
-  
+
       \item The version of LAPACK included in the sources has been
       updated to 3.7.0: no new routines have been added to \R{}.
     }
@@ -600,7 +604,7 @@
       in due course.)
     }
   }
-      
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item (Windows only) Function \code{setInternet2()} is defunct.
@@ -620,12 +624,12 @@
       \item Header \file{Rconfig.h} no longer defines
       \samp{SUPPORT_OPENMP}; instead use \samp{_OPENMP} (as documented
       for a long time).
-      
+
       \item (C-level Native routine registration.)  The deprecated
       \code{styles} component of \code{R_CMethodDef} and
       \code{R_FortranMethodDef} no longer does anything.
       %% used by packages RandomFieldUtils SOD aster aster2 polyapost potts
-      
+
       \item The deprecated support for PCRE versions older than 8.20
       will be removed in \R 3.4.1. (Versions 8.20--8.31 will still be
       accepted but deprecated.)
@@ -776,7 +780,7 @@
     \itemize{
       \item Changes when redirection of a \samp{http://} URL to a
       \samp{https://} URL is encountered:
-      
+
       \itemize{
 	\item The internal methods of \code{download.file()} and
 	\code{url()} now report that they cannot follow this (rather
@@ -887,7 +891,7 @@
 
       \item \code{qbeta()} underflowed too early in some very asymmetric
       cases.  (\PR{17178})
-              
+
       \item \command{R CMD Rd2pdf} had problems with packages with
       non-ASCII titles in \file{.Rd} files (usually the titles were
       omitted).
