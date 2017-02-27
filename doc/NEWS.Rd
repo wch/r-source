@@ -376,12 +376,17 @@
       (The calculations are the same, but for larger \code{n/nb} it is
       worth doing the binning in advance.)
 
+      \item There is a new option \code{PCRE_study} which controls when
+      \code{grep(perl = TRUE)} and friends \sQuote{study} the compiled
+      pattern.  Previously this was done for 11 or more input strings:
+      it now defaults to 10 or more (but most examples need many more
+      for the difference from studying to be noticeable).
+      
       \item \code{grep(perl = TRUE)} and friends can now make use of
       PCRE's Just-In-Time mechanism, for PCRE \eqn{\le}{>=} 8.20 on
       platforms where JIT is supported.  It is used by default whenever
-      the \code{pattern} is studied, which by default requires an input
-      \code{x} of length at least 10.  (Based on a patch from Mikko
-      Korpela.)
+      the \code{pattern} is studied (see the prnextevious item).  (Based on
+      a patch from Mikko Korpela.)
 
       This is controlled by a new option \code{PCRE_use_JIT}.
 
@@ -389,20 +394,16 @@
       and may take a little longer: its benefits are most evident on
       strings of thousands of characters.  As a side effect it reduces
       the chances of C stack overflow in the PCRE library on very long
-      strings (millions of characters).
-
-      \item There is a new option \code{PCRE_study} which controls when
-      \code{grep(perl = TRUE)} and friends \sQuote{study} the compiled
-      pattern.
+      strings (millions of characters, but see next item).
 
       \item \code{grep(perl = TRUE)} and friends set a maximal recursion
       limit, taking into account \R's estimate of the remaining C stack
       space.  This reduces the chance of C stack overflow, but because
-      it is conservative may return a non-match with a warning in
-      examples that succeeded before. (\PR{16757})
+      it is conservative may report a non-match with a warning in
+      examples that matched before. (\PR{16757})
 
       \item \code{getGraphicsEvent()} now works on
-      \code{X11(type="cairo")} devices.  Thanks to Frederick Eaton (for
+      \code{X11(type = "cairo")} devices.  Thanks to Frederick Eaton (for
       reviving an earlier patch).
 
       \item There is a new argument \code{onIdle} for
@@ -520,9 +521,9 @@
 
       \item The minimum version requirement for \code{libcurl} has been
       reduced to 7.22.0, although at least 7.28.0 is preferred and
-      earlier versions are little tested.  (This is to support Debian
-      Wheezy LTS and Ubuntu 12.04 LTS, although the latter is close to
-      end-of-life.)
+      earlier versions are little tested.  (This is to support Debian 7
+      \sQuote{Wheezy} LTS and Ubuntu \sQuote{Precise} 12.04 LTS,
+      although the latter is close to end-of-life.)
       %% Debian Wheezy LTS is supported until 2018-05-31
     }
   }
