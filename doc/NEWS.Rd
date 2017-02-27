@@ -755,6 +755,10 @@
       \code{seq.default()} and \code{seq.int()}, no longer mentioning
       \code{NaN} etc.
 
+      \item \code{rep(x, times)} and \code{rep.int(x, times)} now work
+      also when \code{times} is larger than the maximal integer and of
+      length greater than one. (\PR{16932})
+
       \item \code{download.file(method = "libcurl")} does not check for
       URL existence before attempting downloads; this is more robust to
       servers that do not support HEAD or range-based retrieval, but may
@@ -824,8 +828,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
-      work also when \code{times} is larger than the maximal integer,
-      including when it is of length greater than one. (\PR{16932})
+      work also when \code{times} is of length one and larger than the
+      maximal integer.
 
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
