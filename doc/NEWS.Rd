@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.3.2 patched}{
+\section{\Rlogo CHANGES IN R 3.3.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item Changes when redirection of a \samp{http://} URL to a
