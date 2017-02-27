@@ -1,6 +1,6 @@
 % File src/library/stats/man/median.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{median}
@@ -8,13 +8,15 @@
 \alias{median}
 \alias{median.default}
 \usage{
-median(x, na.rm = FALSE)
+median(x, na.rm = FALSE, \dots)
 }
 \arguments{
   \item{x}{an object for which a method has been defined, or a
     numeric vector containing the values whose median is to be computed.}
   \item{na.rm}{a logical value indicating whether \code{NA}
     values should be stripped before the computation proceeds.}
+  \item{\dots}{potentially further arguments for methods; not used in
+    the default method.}
 }
 \description{
   Compute the sample median.

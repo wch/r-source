@@ -413,6 +413,9 @@
       \item The \code{deriv()} and similar functions now can compute
       derivatives of \code{log1p()}, \code{sinpi()} and similar one
       argument functions, thanks to a contribution by Jerry Lewis.
+
+      \item \code{median()} gets a formal \code{\dots} argument, so
+      methods with extra arguments can be provided.
     }
   }
 
