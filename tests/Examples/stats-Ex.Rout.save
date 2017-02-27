@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-02-23 r72248) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-02-27 r72262) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6189,6 +6189,32 @@ function (b0, b1, th, x)
 > ##D -sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) *
 > ##D     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
 > ## End(Not run)
+> 
+> ## New (R 3.4.0, 2017):
+> D(quote(log1p(x^2)), "x") ## log1p(x) = log(1 + x)
+2 * x/(1 + x^2)
+> stopifnot(identical(
++        D(quote(log1p(x^2)), "x"),
++        D(quote(log(1+x^2)), "x")))
+> D(quote(expm1(x^2)), "x") ## expm1(x) = exp(x) - 1
+exp(x^2) * (2 * x)
+> stopifnot(identical(
++        D(quote(expm1(x^2)), "x") -> Dex1,
++        D(quote(exp(x^2)-1), "x")),
++        identical(Dex1, quote(exp(x^2) * (2 * x))))
+> 
+> D(quote(sinpi(x^2)), "x") ## sinpi(x) = sin(pi*x)
+cospi(x^2) * (pi * (2 * x))
+> D(quote(cospi(x^2)), "x") ## cospi(x) = cos(pi*x)
+-(sinpi(x^2) * (pi * (2 * x)))
+> D(quote(tanpi(x^2)), "x") ## tanpi(x) = tan(pi*x)
+pi * (2 * x)/cospi(x^2)^2
+> 
+> stopifnot(identical(D(quote(log2 (x^2)), "x"),
++                     quote(2 * x/(x^2 * log(2)))),
++           identical(D(quote(log10(x^2)), "x"),
++                     quote(2 * x/(x^2 * log(10)))))
+> 
 > 
 > 
 > 
