@@ -74,6 +74,8 @@
  *	"nwarnings"
 
  *	"matprod"
+ *      "PCRE_study"
+ *      "PCRE_use_JIT"
 
  *
  * S additionally/instead has (and one might think about some)
@@ -246,9 +248,9 @@ void attribute_hidden InitOptions(void)
     char *p;
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(18));
+    PROTECT(v = val = allocList(20));
 #else
-    PROTECT(v = val = allocList(17));
+    PROTECT(v = val = allocList(19));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -329,6 +331,19 @@ void attribute_hidden InitOptions(void)
 	case MATPROD_DEFAULT_SIMD: p = "default.simd"; break;
     }
     SETCAR(v, mkString(p));
+    v = CDR(v);
+
+    SET_TAG(v, install("PCRE_study"));
+    if (R_PCRE_study == -1) 
+	SETCAR(v, ScalarLogical(TRUE));
+    else if (R_PCRE_study == -2) 
+	SETCAR(v, ScalarLogical(FALSE));
+    else
+	SETCAR(v, ScalarInteger(R_PCRE_study));
+    v = CDR(v);
+
+    SET_TAG(v, install("PCRE_use_JIT"));
+    SETCAR(v, ScalarLogical(R_PCRE_use_JIT));
     v = CDR(v);
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
@@ -678,6 +693,29 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		} else
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
+	    }
+	    else if (streql(CHAR(namei), "PCRE_study")) {
+		if (TYPEOF(argi) == LGLSXP) {
+		    int k = asLogical(argi) > 0;
+		    R_PCRE_study = k ? -1 : -2;
+		    SET_VECTOR_ELT(value, i, 
+				   SetOption(tag, ScalarLogical(k)));
+		} else {
+		    R_PCRE_study = asInteger(argi);
+		    if (R_PCRE_study < 0) {
+			R_PCRE_study = -2;
+			SET_VECTOR_ELT(value, i, 
+				       SetOption(tag, ScalarLogical(-2)));
+		    } else
+			SET_VECTOR_ELT(value, i, 
+				       SetOption(tag, ScalarInteger(R_PCRE_study)));
+		}
+	    }
+	    else if (streql(CHAR(namei), "PCRE_use_JIT")) {
+		int use_JIT = asLogical(argi);
+		R_PCRE_use_JIT = (use_JIT > 0); // NA_LOGICAL is < 0
+		SET_VECTOR_ELT(value, i, 
+			       SetOption(tag, ScalarLogical(R_PCRE_use_JIT)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

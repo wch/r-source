@@ -264,10 +264,10 @@ getOption(x, default = NULL)
     
     \item{\code{PCRE_study}:}{Logical or integer: should
       \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
-      patterns?  Either logical or a numerical threshold for the number
-      of strings to be matched before the pattern is studied (the
-      default is \code{10})).  Missing logical values are treated as
-      false.}
+      patterns?  Either logical or a numerical threshold for the minimum
+      number of strings to be matched for the pattern to be studied (the
+      default is \code{10})).  Missing values and negative numbers are
+      treated as false.}
 
     \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use

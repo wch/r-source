@@ -858,6 +858,11 @@ LibExtern SEXP R_TrueValue INI_as(NULL);
 LibExtern SEXP R_FalseValue INI_as(NULL);
 LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 
+/* for PCRE as from R 3.4.0 */
+extern0 Rboolean R_PCRE_use_JIT INI_as(TRUE);
+extern0 int R_PCRE_study INI_as(10);
+
+
 #ifdef __MAIN__
 # undef extern
 # undef extern0
