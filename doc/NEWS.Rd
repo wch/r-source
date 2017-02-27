@@ -400,6 +400,15 @@
       space.  This reduces the chance of C stack overflow, but because
       it is conservative may return a non-match with a warning in
       examples that succeeded before. (\PR{16757})
+
+      \item \code{getGraphicsEvent()} now works on
+      \code{X11(type="cairo")} devices.  Thanks to Frederick Eaton (for
+      reviving an earlier patch).
+      
+      \item There is a new argument \code{onIdle} for
+      \code{getGraphicsEvent()}, which allows an R function to be run
+      whenever there are no pending graphics events.  This is currently
+      only supported on X11 devices.  Thanks to Frederick Eaton.
     }
   }
 
