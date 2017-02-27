@@ -34,7 +34,7 @@ rep_len(x, length.out)
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
-      \item{\code{times}}{A integer vector giving the (non-negative) number of
+      \item{\code{times}}{An integer vector giving the (non-negative) number of
         times to repeat each element if of length \code{length(x)}, or to
         repeat the whole vector if of length 1.  Negative or \code{NA}
 	values are an error.}
