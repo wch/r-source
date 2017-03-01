@@ -32,6 +32,9 @@
 
 #include "duplicate.h"
 
+#include <complex.h>
+#include "Rcomplex.h"	/* toC99 */
+
 /* "GetRowNames" and "GetColNames" are utility routines which
  * locate and return the row names and column names from the
  * dimnames attribute of a matrix.  They are useful because
@@ -803,19 +806,17 @@ static void internal_cmatprod(Rcomplex *x, int nrx, int ncx,
     LDOUBLE sum_i, sum_r;
 #define CMATPROD_BODY					    \
     int i, j, k;					    \
-    double xij_r, xij_i, yjk_r, yjk_i;			    \
+    double complex xij, yjk;				    \
     R_xlen_t NRX = nrx, NRY = nry;			    \
     for (i = 0; i < nrx; i++)				    \
 	for (k = 0; k < ncy; k++) {			    \
 	    sum_r = 0.0;				    \
 	    sum_i = 0.0;				    \
 	    for (j = 0; j < ncx; j++) {			    \
-		xij_r = x[i + j * NRX].r;		    \
-		xij_i = x[i + j * NRX].i;		    \
-		yjk_r = y[j + k * NRY].r;		    \
-		yjk_i = y[j + k * NRY].i;		    \
-		sum_r += (xij_r * yjk_r - xij_i * yjk_i);   \
-		sum_i += (xij_r * yjk_i + xij_i * yjk_r);   \
+		xij = toC99(x + (i + j * NRX));		    \
+		yjk = toC99(y + (j + k * NRY));		    \
+		sum_r += creal(xij * yjk);		    \
+		sum_i += cimag(xij * yjk);		    \
 	    }						    \
 	    z[i + k * NRX].r = (double) sum_r;		    \
 	    z[i + k * NRX].i = (double) sum_i;		    \
@@ -836,19 +837,17 @@ static void internal_ccrossprod(Rcomplex *x, int nrx, int ncx,
     LDOUBLE sum_i, sum_r;
 #define CCROSSPROD_BODY					    \
     int i, j, k;					    \
-    double xji_r, xji_i, yjk_r, yjk_i;			    \
+    double complex xji, yjk;				    \
     R_xlen_t NRX = nrx, NRY = nry, NCX = ncx;		    \
     for (i = 0; i < ncx; i++)				    \
 	for (k = 0; k < ncy; k++) {			    \
 	    sum_r = 0.0;				    \
 	    sum_i = 0.0;				    \
 	    for (j = 0; j < nrx; j++) {			    \
-		xji_r = x[j + i * NRX].r;		    \
-		xji_i = x[j + i * NRX].i;		    \
-		yjk_r = y[j + k * NRY].r;		    \
-		yjk_i = y[j + k * NRY].i;		    \
-		sum_r += (xji_r * yjk_r - xji_i * yjk_i);   \
-		sum_i += (xji_r * yjk_i + xji_i * yjk_r);   \
+		xji = toC99(x + (j + i * NRX));		    \
+		yjk = toC99(y + (j + k * NRY));		    \
+		sum_r += creal(xji * yjk);		    \
+		sum_i += cimag(xji * yjk);		    \
 	    }						    \
 	    z[i + k * NCX].r = (double) sum_r;		    \
 	    z[i + k * NCX].i = (double) sum_i;		    \
@@ -869,19 +868,17 @@ static void internal_tccrossprod(Rcomplex *x, int nrx, int ncx,
     LDOUBLE sum_i, sum_r;
 #define TCCROSSPROD_BODY				    \
     int i, j, k;					    \
-    double xij_r, xij_i, ykj_r, ykj_i;			    \
+    double complex xij, ykj;				    \
     R_xlen_t NRX = nrx, NRY = nry;			    \
     for (i = 0; i < nrx; i++)				    \
 	for (k = 0; k < nry; k++) {			    \
 	    sum_r = 0.0;				    \
 	    sum_i = 0.0;				    \
 	    for (j = 0; j < ncx; j++) {			    \
-		xij_r = x[i + j * NRX].r;		    \
-		xij_i = x[i + j * NRX].i;		    \
-		ykj_r = y[k + j * NRY].r;		    \
-		ykj_i = y[k + j * NRY].i;		    \
-		sum_r += (xij_r * ykj_r - xij_i * ykj_i);   \
-		sum_i += (xij_r * ykj_i + xij_i * ykj_r);   \
+		xij = toC99(x + (i + j * NRX));		    \
+		ykj = toC99(y + (k + j * NRY));		    \
+		sum_r += creal(xij * ykj);		    \
+		sum_i += cimag(xij * ykj);		    \
 	    }						    \
 	    z[i + k * NRX].r = (double) sum_r;		    \
 	    z[i + k * NRX].i = (double) sum_i;		    \

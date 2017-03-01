@@ -60,49 +60,13 @@
 
 #include "arithmetic.h"		/* complex_*  */
 #include <complex.h>
+#include "Rcomplex.h"		/* I, C99_COMPLEX2, SET_C99_COMPLEX, toC99 */
 #include <R_ext/Itermacros.h>
 
 
 /* interval at which to check interrupts, a guess */
 #define NINTERRUPT 10000000
 
-
-/* GCC has problems with header files on e.g. Solaris.
-   That OS defines the imaginary type, but GCC does not.
-   Probably needed elsewhere, e.g. AIX, HP-UX (PR#15083)
-   And use on Win32/64 suppresses warnings.
-   The warning is also seen on macOS 10.5, but not later.
-*/
-#if defined(__GNUC__) && (defined(__sun__) || defined(__hpux__) || defined(Win32))
-# undef  I
-# define I (__extension__ 1.0iF)
-#endif
-
-
-/*
-   Note: this could use the C11 CMPLX() macro.
-   As could mycpow, z_tan and some of the substitutes.
- */
-static R_INLINE double complex toC99(Rcomplex *x)
-{
-#if __GNUC__
-    double complex ans = (double complex) 0; /* -Wall */
-    __real__ ans = x->r;
-    __imag__ ans = x->i;
-    return ans;
-#else
-    return x->r + x->i * I;
-#endif
-}
-#define C99_COMPLEX2(x, i) toC99(COMPLEX(x) + i)
-
-static R_INLINE void
-SET_C99_COMPLEX(Rcomplex *x, R_xlen_t i, double complex value)
-{
-    Rcomplex *ans = x+i;
-    ans->r = creal(value);
-    ans->i = cimag(value);
-}
 
 SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {

@@ -17,7 +17,7 @@ stopifnot(is.nan(log(0) %*% 0))
 ## matrix products
 for(mopt in c("default","internal","default.simd")) {
 
-  # matprod="blas" is excluded because some tests fails due to issues
+  # matprod="blas" is excluded because some tests fail due to issues
   # in NaN/Inf propagation even in Rblas
   options(matprod=mopt)
 
@@ -113,3 +113,23 @@ for(mopt in c("default","internal","default.simd")) {
   stopifnot(identical(tcrossprod(m1, m1), m1 %*% t(m1)))
 }
 
+## check that propagation of NaN/Inf values in multiplication of complex
+## numbers is the same as in multiplication of complex matrices
+
+for(mopt in c("default","internal","default.simd")) {
+  # matprod="blas" is excluded because some tests fail due to issues
+  # in NaN/Inf propagation even in Rblas
+  options(matprod=mopt)
+
+  vals <- c(0, 1, NaN, Inf)
+  for(ar in vals)
+  for(ai in vals)
+  for(br in vals)
+  for(bi in vals) {
+    a = ar + 1i * ai
+    b = br + 1i * bi
+    stopifnot(identical(a * b, as.complex(a %*% b)))
+    stopifnot(identical(a * b, as.complex(crossprod(a,b))))
+    stopifnot(identical(a * b, as.complex(tcrossprod(a,b))))
+  }
+}
