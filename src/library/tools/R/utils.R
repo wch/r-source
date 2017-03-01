@@ -1089,7 +1089,7 @@ function()
             repos <- .get_repositories()[nms, "URL"]
             names(repos) <- nms
             if(repos["CRAN"] == "@CRAN@")
-                repos["CRAN"] <- "http://CRAN.R-project.org"
+                repos["CRAN"] <- "https://CRAN.R-project.org"
         }
     }
     repos

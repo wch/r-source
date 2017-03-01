@@ -417,6 +417,10 @@
 
       \item \code{median()} gets a formal \code{\dots} argument, so
       methods with extra arguments can be provided.
+      
+      \item Package \pkg{tools} gains functions such as
+      \code{CRAN_check_results()} to obtain information on the current
+      check status of CRAN packages.
     }
   }
 

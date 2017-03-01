@@ -1,7 +1,7 @@
 #  File src/library/tools/R/CRANtools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2014-2016 The R Core Team
+#  Copyright (C) 2014-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,23 +17,23 @@
 #  https://www.R-project.org/Licenses/
 
 summarize_CRAN_check_status <-
-function(package, results = NULL, details = NULL, mtnotes = NULL)
+function(packages, results = NULL, details = NULL, mtnotes = NULL)
 {
     if(is.null(results))
         results <- CRAN_check_results()
     results <-
-        results[!is.na(match(results$Package, package)) & !is.na(results$Status), ]
+        results[!is.na(match(results$Package, packages)) & !is.na(results$Status), ]
 
     if(!NROW(results)) {
-        s <- character(length(package))
-        names(s) <- package
+        s <- character(length(packages))
+        names(s) <- packages
         return(s)
     }
 
     if(any(results$Status != "OK")) {
         if(is.null(details))
             details <- CRAN_check_details()
-        details <- details[!is.na(match(details$Package, package)), ]
+        details <- details[!is.na(match(details$Package, packages)), ]
         ## Remove all ok stubs.
         details <- details[details$Check != "*", ]
         ## Remove trailing white space from outputs ... remove eventually
@@ -138,12 +138,12 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
               collapse = "\n\n")
     }
 
-    s <- if(length(package) == 1L) {
-        summarize(package, results, details, mtnotes[[package]])
+    s <- if(length(packages) == 1L) {
+        summarize(packages, results, details, mtnotes[[packages]])
     } else {
-        results <- split(results, factor(results$Package, package))
-        details <- split(details, factor(details$Package, package))
-        unlist(lapply(package,
+        results <- split(results, factor(results$Package, packages))
+        details <- split(details, factor(details$Package, packages))
+        unlist(lapply(packages,
                       function(p) {
                           summarize(p,
                                     results[[p]],
@@ -152,7 +152,7 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
                       }))
     }
 
-    names(s) <- package
+    names(s) <- packages
     class(s) <- "summarize_CRAN_check_status"
     s
 }
@@ -620,7 +620,7 @@ function(packages)
     fmt <- function(x) {
         if(length(x)) paste(sort(x), collapse = " ") else NA_character_
     }
-    
+
     y <- lapply(packages,
                 function(p) {
                     c(Package = p,
@@ -660,7 +660,7 @@ function(packages, which = c("Depends", "Imports", "LinkingTo"),
          recursive = FALSE)
 {
     db <- CRAN_package_db()
-        
+
     rdepends <- package_dependencies(packages, db, which,
                                      recursive = recursive,
                                      reverse = TRUE)
