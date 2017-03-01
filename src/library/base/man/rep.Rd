@@ -34,16 +34,18 @@ rep_len(x, length.out)
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
-      \item{\code{times}}{an integer valued vector giving the
+      \item{\code{times}}{an integer-valued vector giving the
 	(non-negative) number of times to repeat each element if of
 	length \code{length(x)}, or to repeat the whole vector if of
-	length 1.  Negative or \code{NA} values are an error.}
+	length 1.  Negative or \code{NA} values are an error.  A
+	\code{double} vector is accepted, other inputs being coerced to
+	an integer or double vector.}
       \item{\code{length.out}}{non-negative integer.  The desired length of the
-        output vector.  Other inputs will be coerced to an integer
+        output vector.  Other inputs will be coerced to a double
 	vector and the first element taken.  Ignored if \code{NA} or invalid.}
       \item{\code{each}}{non-negative integer.  Each element of \code{x}
 	is repeated \code{each} times.  Other inputs will be coerced to
-	an integer vector and the first element taken.  Treated as
+	an integer or double vector and the first element taken.  Treated as
 	\code{1} if \code{NA} or invalid.}
     }
   }

@@ -757,15 +757,15 @@
       \item \code{seq("2", "5")} now works too, equivalently to
       \code{"2":"5"} and \code{seq.int()}.
 
-      \item \code{seq.int(to=1, by=1)} is now correct, other cases are
+      \item \code{seq.int(to = 1, by = 1)} is now correct, other cases are
       integer (instead of \code{double}) when \code{seq()} is integer
       too, and the "non-finite" error messages are consistent between
       \code{seq.default()} and \code{seq.int()}, no longer mentioning
       \code{NaN} etc.
 
       \item \code{rep(x, times)} and \code{rep.int(x, times)} now work
-      also when \code{times} is larger than the maximal integer and of
-      length greater than one. (\PR{16932})
+      when \code{times} is larger than the largest value representable
+      in an integer vector.  (\PR{16932})
 
       \item \code{download.file(method = "libcurl")} does not check for
       URL existence before attempting downloads; this is more robust to
