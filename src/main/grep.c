@@ -234,8 +234,8 @@ static long R_pcre_max_recursions()
 static void 
 set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
 {
-    pcre_extra *re_pe = *re_pe_ptr;
-    if (limit >= 0) {
+    if (R_PCRE_limit_recursion && limit >= 0) {
+	pcre_extra *re_pe = *re_pe_ptr;
 	if (!re_pe) {
 	    // this will be freed by pcre_free_study so cannot use Calloc
 	    re_pe = (pcre_extra *) calloc(1, sizeof(pcre_extra));
@@ -3012,9 +3012,9 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
     int res;
 
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(LGLSXP, 3));
+    SEXP ans = PROTECT(allocVector(LGLSXP, 4));
     int *lans = LOGICAL(ans);
-    SEXP nm = allocVector(STRSXP, 3);
+    SEXP nm = allocVector(STRSXP, 4);
     setAttrib(ans, R_NamesSymbol, nm);
     SET_STRING_ELT(nm, 0, mkChar("UTF-8"));
     pcre_config(PCRE_CONFIG_UTF8, &res); lans[0] = res;
@@ -3028,6 +3028,8 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
     res = FALSE;
 #endif
     lans[2] = res;
+    pcre_config(PCRE_CONFIG_STACKRECURSE, &res); lans[3] = res;
+    SET_STRING_ELT(nm, 3, mkChar("stack"));
     UNPROTECT(1);
     return ans;
 }

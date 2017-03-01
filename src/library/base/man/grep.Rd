@@ -209,7 +209,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   People working with PCRE and very long strings can adjust the maximum
   size of the JIT stack by setting environment variable
   \env{R_PCRE_JIT_STACK_MAXSIZE} before JIT is used to a value between
-  \code{1} and \code{1000} in MB: the default is \code{64}.
+  \code{1} and \code{1000} in MB: the default is \code{64}.  (Then would
+  usually be wise to set the \link{option} \code{PCRE_limit_recursion}.)
 }
 
 \source{

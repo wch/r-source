@@ -262,7 +262,18 @@ getOption(x, default = NULL)
 #endif
     }
     
-    \item{\code{PCRE_study}:}{Logical or integer: should
+    \item{\code{PCRE_limit_recursion}:}{Logical: should
+      \code{\link{grep}(perl = TRUE)} and similar limit the maximal
+      recursion allowed when matching?  Missing values are treated as
+      false.  PCRE can be built not to use a recursion stack (see
+      \code{\link{pcre_config}}, but it is by default with a recursion
+      limit of 10000000 which potentially needs a very large C stack:
+      see the discussion at
+      \url{http://www.pcre.org/original/doc/html/pcrestack.html}.
+      If true, the limit is reduced using \R's estimate of the C stack
+      size available (if known), otherwise 10000.}
+       
+     \item{\code{PCRE_study}:}{Logical or integer: should
       \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
       patterns?  Either logical or a numerical threshold for the minimum
       number of strings to be matched for the pattern to be studied (the

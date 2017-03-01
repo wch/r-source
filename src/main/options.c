@@ -248,9 +248,9 @@ void attribute_hidden InitOptions(void)
     char *p;
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(20));
+    PROTECT(v = val = allocList(21));
 #else
-    PROTECT(v = val = allocList(19));
+    PROTECT(v = val = allocList(20));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -344,6 +344,10 @@ void attribute_hidden InitOptions(void)
 
     SET_TAG(v, install("PCRE_use_JIT"));
     SETCAR(v, ScalarLogical(R_PCRE_use_JIT));
+    v = CDR(v);
+
+    SET_TAG(v, install("PCRE_limit_recursion"));
+    SETCAR(v, ScalarLogical(R_PCRE_limit_recursion));
     v = CDR(v);
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
@@ -716,6 +720,12 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_PCRE_use_JIT = (use_JIT > 0); // NA_LOGICAL is < 0
 		SET_VECTOR_ELT(value, i, 
 			       SetOption(tag, ScalarLogical(R_PCRE_use_JIT)));
+	    }
+	    else if (streql(CHAR(namei), "PCRE_limit_recursion")) {
+		int val = asLogical(argi);
+		R_PCRE_limit_recursion = (val > 0); // NA_LOGICAL is < 0
+		SET_VECTOR_ELT(value, i, 
+			       SetOption(tag, ScalarLogical(R_PCRE_limit_recursion)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

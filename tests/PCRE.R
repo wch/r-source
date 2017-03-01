@@ -6,7 +6,7 @@
 ## This is expected to throw a warning at some point, depending on the
 ## system and stack size.
 
-op <- options(warn = 1)
+op <- options(warn = 1, PCRE_limit_recursion = TRUE)
 for (n in seq(5000L, 10000L, 1000L)) {
     print(n)
     x <- paste0(rep("a", n), collapse="")

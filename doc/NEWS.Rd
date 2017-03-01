@@ -396,11 +396,13 @@
       the chances of C stack overflow in the PCRE library on very long
       strings (millions of characters, but see next item).
 
-      \item \code{grep(perl = TRUE)} and friends set a maximal recursion
-      limit, taking into account \R's estimate of the remaining C stack
-      space.  This reduces the chance of C stack overflow, but because
-      it is conservative may report a non-match with a warning in
-      examples that matched before. (\PR{16757})
+      \item There is a new option \code{PCRE_limit_recursion} for
+      \code{grep(perl = TRUE)} and friends to set a recursion limit
+      taking into account \R's estimate of the remaining C stack space
+      (or 10000 if that is not available).  This reduces the chance of C
+      stack overflow, but because it is conservative may report a
+      non-match with a warning in examples that matched
+      before. (\PR{16757})
 
       \item \code{getGraphicsEvent()} now works on
       \code{X11(type = "cairo")} devices.  Thanks to Frederick Eaton (for
@@ -417,10 +419,6 @@
 
       \item \code{median()} gets a formal \code{\dots} argument, so
       methods with extra arguments can be provided.
-      
-      \item Package \pkg{tools} gains functions such as
-      \code{CRAN_check_results()} to obtain information on the current
-      check status of CRAN packages.
     }
   }
 
@@ -510,7 +508,7 @@
       has been removed.
 
       \item \command{configure} checks that the compiler specified by
-      \samp{CXX} \samp{CXXFLAGS} is able to compile C++ code.
+      \samp{$CXX $CXXFLAGS} is able to compile C++ code.
 
       \item \command{configure} checks for the required header
       \file{sys/select.h} (or \file{sys/time.h} on legacy systems) and
@@ -783,9 +781,10 @@
       \code{cairo_ps()}) when replaying a saved display list that contains
       a mix of \pkg{grid} and \pkg{graphics} output.
       (Report by Yihui Xie.)
-
-      \item \code{rep(3, list(4))} works again, as \code{\link{list}}s
-      \emph{are} vectors.
+      
+      %% It never failed in a released version of R: pre-3.3.3 did
+      %% \item \code{rep(3, list(4))} works again, as \code{\link{list}}s
+      %% \emph{are} vectors.
     }
   }
 }
