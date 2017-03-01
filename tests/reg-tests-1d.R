@@ -627,21 +627,26 @@ options(na.action = "na.omit")
 DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
 
 tools::assertError(# 'na.fail' should fail :
-	   xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
+	   xtabs(Freq ~ Gender + Admit, DN, na.action = na.fail))
 xt. <- xtabs(Freq ~ Gender + Admit, DN)
-xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass)
-xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass, sparse=TRUE)# error in R <= 3.3.2
-xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE)
-xtNS<- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE, sparse=TRUE)
+xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
 stopifnot(
     identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt)),
     identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)), # not ok in R <= 3.3.2
-    eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
-    eq_A(xtp, xtS),
-    eq_A(xtN, xtNS),
     identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 )
+## 'sparse = TRUE requires recommended package Matrix
+if(requireNamespace('Matrix')) {
+    xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
+    xtNS <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, sparse = TRUE)
+    stopifnot(
+        eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
+        eq_A(xtp, xtS),
+        eq_A(xtN, xtNS)
+   )
+}
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
 ee <- esoph[esoph[,"ncases"] > 0, c(1:2,4)]
 ee[,"ncases"] <- as.integer(ee[,"ncases"])
