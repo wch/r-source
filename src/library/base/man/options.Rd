@@ -283,7 +283,7 @@ getOption(x, default = NULL)
     \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
       of PCRE's Just-In-Time compiler for studied patterns, if
-      avaliable?  Missing values are treated as false.}
+      available?  Missing values are treated as false.}
       
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},

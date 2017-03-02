@@ -385,7 +385,7 @@
       \item \code{grep(perl = TRUE)} and friends can now make use of
       PCRE's Just-In-Time mechanism, for PCRE \eqn{\le}{>=} 8.20 on
       platforms where JIT is supported.  It is used by default whenever
-      the \code{pattern} is studied (see the prnextevious item).  (Based on
+      the \code{pattern} is studied (see the previous item).  (Based on
       a patch from Mikko Korpela.)
 
       This is controlled by a new option \code{PCRE_use_JIT}.
