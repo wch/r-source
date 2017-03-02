@@ -347,6 +347,7 @@ void attribute_hidden InitOptions(void)
     v = CDR(v);
 
     SET_TAG(v, install("PCRE_limit_recursion"));
+    R_PCRE_limit_recursion = NA_LOGICAL;
     SETCAR(v, ScalarLogical(R_PCRE_limit_recursion));
     v = CDR(v);
 
@@ -722,8 +723,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 			       SetOption(tag, ScalarLogical(R_PCRE_use_JIT)));
 	    }
 	    else if (streql(CHAR(namei), "PCRE_limit_recursion")) {
-		int val = asLogical(argi);
-		R_PCRE_limit_recursion = (val > 0); // NA_LOGICAL is < 0
+		R_PCRE_limit_recursion = asLogical(argi);
 		SET_VECTOR_ELT(value, i, 
 			       SetOption(tag, ScalarLogical(R_PCRE_limit_recursion)));
 	    }

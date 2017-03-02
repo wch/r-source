@@ -402,7 +402,8 @@
       (or 10000 if that is not available).  This reduces the chance of C
       stack overflow, but because it is conservative may report a
       non-match with a warning in examples that matched
-      before. (\PR{16757})
+      before.  By default it is enabled if any input string has at least
+      1000 bytes.  (\PR{16757})
 
       \item \code{getGraphicsEvent()} now works on
       \code{X11(type = "cairo")} devices.  Thanks to Frederick Eaton (for
@@ -414,8 +415,8 @@
       only supported on X11 devices.  Thanks to Frederick Eaton.
 
       \item The \code{deriv()} and similar functions now can compute
-      derivatives of \code{log1p()}, \code{sinpi()} and similar one
-      argument functions, thanks to a contribution by Jerry Lewis.
+      derivatives of \code{log1p()}, \code{sinpi()} and similar
+      one-argument functions, thanks to a contribution by Jerry Lewis.
 
       \item \code{median()} gets a formal \code{\dots} argument, so
       methods with extra arguments can be provided.
