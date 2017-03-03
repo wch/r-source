@@ -3246,7 +3246,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     SEXP ans, sav_expr = expr;
     if(GenerateCode) {
 	if (isString(expr))
-	    expr = installChar(STRING_ELT(expr, 0));
+	    expr = installTrChar(STRING_ELT(expr, 0));
 	PROTECT(expr);
 	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg && TAG(CDR(args)) == R_NilValue )
 	    ans = lang1(expr);

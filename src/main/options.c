@@ -369,7 +369,7 @@ SEXP attribute_hidden do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x = CAR(args);
     if (!isString(x) || LENGTH(x) != 1)
 	error(_("'%s' must be a character string"), "x");
-    return duplicate(GetOption1(installChar(STRING_ELT(x, 0))));
+    return duplicate(GetOption1(installTrChar(STRING_ELT(x, 0))));
 }
 
 
@@ -736,7 +736,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    const char *tag;
 	    if (!isString(argi) || LENGTH(argi) <= 0)
 		error(_("invalid argument"));
-	    tag = CHAR(STRING_ELT(argi, 0));
+	    tag = translateChar(STRING_ELT(argi, 0));
 	    if (streql(tag, "par.ask.default")) {
 		error(_("\"par.ask.default\" has been replaced by \"device.ask.default\""));
 	    }
