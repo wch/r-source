@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2017  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -404,7 +404,7 @@ static SEXP numeric_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     } else {
         NUMERIC_RELOP(double, REAL, ISNAN, double, REAL, ISNAN);
     }
-    
+
     UNPROTECT(2);
     return ans;
 }
@@ -662,7 +662,7 @@ static SEXP bitwiseNot(SEXP a)
 	}
 	break;
     default:
-	UNIMPLEMENTED_TYPE("bitNot", a);
+	UNIMPLEMENTED_TYPE("bitwNot", a);
     }
     if(np) UNPROTECT(np);
     return ans;
