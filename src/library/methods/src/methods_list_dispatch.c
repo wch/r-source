@@ -681,7 +681,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	    SEXP generic = findVarInFrame3(ev, R_dot_Generic, TRUE);
 	    if(generic == R_UnboundValue)
 	        error("internal error in 'callNextMethod': '.Generic' was not assigned in the frame of the method call");
-	    op = INTERNAL(install(CHAR(asChar(generic))));
+	    op = INTERNAL(installChar(asChar(generic)));
 	    prim_case = TRUE;
 	}
     }
