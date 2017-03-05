@@ -171,7 +171,7 @@
       (Part of \PR{16895}.)
 
       \item New option \code{rstandard(<lm>, type = "predicted")}
-      provides the \dQuote{PRESS}-related leave-one-out
+      provides the \dQuote{PRESS}--related leave-one-out
       cross-validation errors for linear models.
 
       \item After seven years of deprecation, duplicated factor levels
@@ -734,9 +734,9 @@
       signals an error for invalid flags also in the case of character
       formatting.
 
-      \item Reading from stdin now also closes the connection and
-      hence no longer leaks memory when reading from a full pipe, thanks
-      to Gábor Csárdi, see thread starting at
+      \item Reading from \code{file("stdin"}} now also closes the
+      connection and hence no longer leaks memory when reading from a
+      full pipe, thanks to Gábor Csárdi, see thread starting at
       \url{https://stat.ethz.ch/pipermail/r-devel/2016-November/073360.html}.
 
       \item Failure to create file in \code{tempdir()} for compressed
