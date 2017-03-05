@@ -838,10 +838,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{rep(x, times)} and \code{rep.int(x, times)} now both
-      work also when \code{times} is of length one and larger than the
-      maximal integer.
-
       \item \code{vapply(x, *)} now works with long vectors \code{x}.
       (\PR{17174})
 
