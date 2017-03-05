@@ -64,7 +64,7 @@
 
       \item Package installation into a library where the package exists
       \emph{via} symbolic link now should work wherever
-      \code{\link{Sys.readlink}()} works, resolving \PR{16725}.
+      \code{Sys.readlink()} works, resolving \PR{16725}.
 
       \item \code{"Cincinnati"} was missing an \code{"n"} in the
       \code{precip} dataset.
@@ -864,7 +864,7 @@
 
       \item \code{xpdrows.data.frame()} was not checking for unique
       row names; in particular, this affected assignment to non-existing
-      rows via numerical indexing. (\PR{16570})
+      rows \emph{via} numerical indexing. (\PR{16570})
 
       \item \code{tail.matrix()} did not work for zero rows matrices,
       and could produce row \dQuote{labels} such as \code{"[1e+05,]"}.
@@ -2573,9 +2573,9 @@
       \item \code{options(list())} now works (trivially). (\PR{15979})
 
       \item \code{merge(<dendrogram>, ..)} now works correctly for two
-      `independent' dendrograms (\PR{15648}), and still compatibly via
-      \code{adjust = "auto"} e.g. for two branches of an existing
-      dendrogram.
+      `independent' dendrograms (\PR{15648}), and still compatibly
+      \emph{via} \code{adjust = "auto"} e.g. for two branches of an
+      existing dendrogram.
 
       \item The \code{plot} method for \code{"hclust"} objects gets an
       optional argument \code{check}; when that is true (the default) it
@@ -2628,7 +2628,8 @@
 
       \item Work around a bug in OS X Yosemite where key environment
       variables may be duplicated causing issues in subprocesses. The
-      duplicates are now removed on R startup (via Rprofile). (\PR{16042})
+      duplicates are now removed on \R startup (\emph{via}
+      Rprofile). (\PR{16042})
 
       \item Adjust X11 auto-launch detection in DISPLAY on OS X to
       recognize latest XQuartz.
@@ -2942,7 +2943,7 @@
       otherwise only names, dims and dimnames are.
 
       \item \code{colorRamp()} and \code{colorRampPalette()} now allow
-      non-opaque colours and a ramp in opacity via the new argument
+      non-opaque colours and a ramp in opacity \emph{via} the new argument
       \code{alpha = TRUE}.  (Suggested by Alberto Krone-Martins, but
       optionally as there are existing uses which expect only RGB values.)
       % https://stat.ethz.ch/pipermail/r-devel/2013-July/067046.html
@@ -3826,8 +3827,8 @@
       \item \code{col2rgb()} now converts factors to character strings
       not integer codes (suggested by Bryan Hanson).
 
-      \item \code{tail(warnings())} now works, via the new \code{`[`}
-      method.
+      \item \code{tail(warnings())} now works, \emph{via} the new
+      \code{`[`} method.
 
       \item There is now support for the LaTeX style file \file{zi4.sty}
       which has in some distributions replaced \file{inconsolata.sty}.
@@ -3866,8 +3867,8 @@
 
       \item Methods invoked by \code{NextMethod()} had a different
       dynamic parent to the generic. This was causing trouble where S3
-      methods invoked via lazy evaluation could lose track of their
-      generic.  (\PR{15267})
+      methods invoked \emph{via} lazy evaluation could lose track of
+      their generic.  (\PR{15267})
 
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
@@ -4248,8 +4249,9 @@
       \command{Rterm} or \command{Rgui}) would lose any
       zero-length strings from the command line arguments. (\PR{15406})
 
-      \item Errors in the encoding specified on the command line via
-      \command{--encoding=foo} were not handled properly.  (\PR{15405})
+      \item Errors in the encoding specified on the command line
+      \emph{via} \command{--encoding=foo} were not handled properly.
+      (\PR{15405})
 
       \item If \code{x} is a symbol, \code{is.vector(x, "name")} now
       returns \code{TRUE}, since \code{"name"} and \code{"symbol"}
@@ -4847,14 +4849,14 @@
       \item The \code{parse()} function has a new parameter
       \code{keep.source}, which defaults to \code{options("keep.source")}.
 
-      \item Profiling via \code{Rprof()} now optionally records information
-      at the statement level, not just the function level.
+      \item Profiling \emph{via} \code{Rprof()} now optionally records
+      information at the statement level, not just the function level.
 
       \item The \code{Rprof()} function now quotes function names in
       in its output file on Windows, to be consistent with the quoting
       in Unix.
 
-      \item Profiling via \code{Rprof()} now optionally records
+      \item Profiling \emph{via} \code{Rprof()} now optionally records
       information about time spent in GC.
 
       \item The HTML help page for a package now displays non-vignette
@@ -5279,7 +5281,7 @@
       affinity settings like OpenBLAS) -- the function is rather
       intended to support affinity control in high-level parallel
       functions.  In the future, \R may supplement lack of affinity
-      control in the OS by its own bookkeeping via \code{mcaffinity()}
+      control in the OS by its own bookkeeping \emph{via} \code{mcaffinity()}
       related to processes and threads it spawns.
 
       \item \code{mcparallel()} has a new argument \code{mc.affinity}
@@ -5470,7 +5472,7 @@
       reentrant, leading to errors in rare circumstances such as a
       garbage collection triggering a recursive call.
 
-      \item Field assignments in reference class objects via
+      \item Field assignments in reference class objects \emph{via}
       \code{$<-} were not being checked
       because the magic incantation to turn methods on for that
       primitive operator had been inadvertently omitted. %$
