@@ -47,7 +47,7 @@ typedef unsigned int R_NativeObjectArgType;
 
 
 /*
-   Values for styles: unused, and deprecated in R 3.4.0.
+   Values for styles: deprecated in R 3.3.3.
 */
 typedef enum {R_ARG_IN, R_ARG_OUT, R_ARG_IN_OUT, R_IRRELEVANT} R_NativeArgStyle;
 
@@ -65,7 +65,7 @@ typedef struct {
     int         numArgs;
 
     R_NativePrimitiveArgType *types;
-    R_NativeArgStyle         *styles;  // deprecated
+    R_NativeArgStyle         *styles;  // deprecated in R 3.3.3
 
 } R_CMethodDef;
 
