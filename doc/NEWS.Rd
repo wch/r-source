@@ -381,7 +381,7 @@
       pattern.  Previously this was done for 11 or more input strings:
       it now defaults to 10 or more (but most examples need many more
       for the difference from studying to be noticeable).
-      
+
       \item \code{grep(perl = TRUE)} and friends can now make use of
       PCRE's Just-In-Time mechanism, for PCRE \eqn{\ge}{>=} 8.20 on
       platforms where JIT is supported.  It is used by default whenever
@@ -785,10 +785,14 @@
       \code{cairo_ps()}) when replaying a saved display list that contains
       a mix of \pkg{grid} and \pkg{graphics} output.
       (Report by Yihui Xie.)
-      
+
       %% It never failed in a released version of R: pre-3.3.3 did
       %% \item \code{rep(3, list(4))} works again, as \code{\link{list}}s
       %% \emph{are} vectors.
+
+      \item The \code{str()} and \code{as.hclust()} methods for
+      \code{"dendrogram"} now also work for deeply nested dendrograms
+      thanks to non-recursive implementations by Bradley Broom.
     }
   }
 }

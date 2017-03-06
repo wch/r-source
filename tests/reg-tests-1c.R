@@ -1563,6 +1563,17 @@ stopifnot(identical(class(z), "matrix"))
 ## kept "mts" in 3.2.4, PR#16769
 
 
+## as.hclust() and str() for deeply nested dendrograms
+op <- options(expressions = 300) # so problem triggers early
+d500 <- mkDend(500, 'x', 'single')
+sink(tempfile()); str(d500) ; sink()
+hc2 <- as.hclust(d500)
+options(op)
+## gave .. nested too deeply / node stack overflow / "C stack usage ..."
+## for R <= 3.3.z
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
