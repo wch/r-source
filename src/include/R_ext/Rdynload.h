@@ -47,7 +47,7 @@ typedef unsigned int R_NativeObjectArgType;
 
 
 /*
-   Values for styles: deprecated in R 3.3.3.
+   Values for styles: deprecated in R 3.3.3 but still used by some packages.
 */
 typedef enum {R_ARG_IN, R_ARG_OUT, R_ARG_IN_OUT, R_IRRELEVANT} R_NativeArgStyle;
 

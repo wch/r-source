@@ -634,8 +634,11 @@
 
       \item (C-level Native routine registration.)  The deprecated
       \code{styles} component of \code{R_CMethodDef} and
-      \code{R_FortranMethodDef} no longer does anything.
+      \code{R_FortranMethodDef} no longer does anything.  (It should not
+      be initialized in those structures as the component will be
+      remvoed in the future.)
       %% used by packages RandomFieldUtils SOD aster aster2 polyapost potts
+      %% C++ error in the first, C warning in the last 4
 
       \item The deprecated support for PCRE versions older than 8.20
       will be removed in \R 3.4.1. (Versions 8.20--8.31 will still be
