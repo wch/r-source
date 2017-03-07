@@ -65,7 +65,7 @@ typedef struct {
     int         numArgs;
 
     R_NativePrimitiveArgType *types;
-    R_NativeArgStyle         *styles;  // deprecated in R 3.3.3
+    R_NativeArgStyle         *styles;  // deprecated in 3.3.3, defunct in 3.4.0
 
 } R_CMethodDef;
 

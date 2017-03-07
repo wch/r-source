@@ -4904,6 +4904,7 @@ strlen strncmp strtol tan trunc
 @end example
 
 @item
+@c including clang as from 4.0.0
 Some C++ compilers refuse to compile constructs such as
 @example
       if(ptr > 0) @{ ....@}
