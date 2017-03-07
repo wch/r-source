@@ -636,7 +636,7 @@
       \code{styles} member of \code{R_CMethodDef} and
       \code{R_FortranMethodDef} structures no longer does anything.  (It
       should not be initialized in those structures as the member will
-      be remvoed in the future.)
+      be removed in the future.)
       %% Set by packages RandomFieldUtils SOD aster aster2 polyapost potts
       %% Packages earth fuzzyRankTests rcdd initialize 'styles' to NULL.
 
